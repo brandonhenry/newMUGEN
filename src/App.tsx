@@ -29,7 +29,7 @@ export default function App() {
   const [p2Id, setP2Id] = useState('dax');
   const [stageId, setStageId] = useState(stages[0].id);
   const [mode, setMode] = useState<MatchMode>('ai');
-  const { readInputs, setVirtualAction, clearMenuInputs } = useControls(mode);
+  const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode);
 
   useEffect(() => {
     let mounted = true;
@@ -120,6 +120,7 @@ export default function App() {
             readInputs={readInputs}
             setVirtualAction={setVirtualAction}
             clearMenuInputs={clearMenuInputs}
+            getLastInput={getLastInput}
             onMenu={() => setScreen('menu')}
             onCharacterSelect={() => setScreen('select')}
           />
@@ -414,6 +415,7 @@ function FightScreen({
   readInputs,
   setVirtualAction,
   clearMenuInputs,
+  getLastInput,
   onMenu,
   onCharacterSelect
 }: {
@@ -424,6 +426,7 @@ function FightScreen({
   readInputs: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
+  getLastInput: () => string;
   onMenu: () => void;
   onCharacterSelect: () => void;
 }) {
@@ -431,6 +434,7 @@ function FightScreen({
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, mode));
   const matchRef = useRef(match);
   const pauseLatch = useRef(false);
+  const frameInputRef = useRef('none');
 
   useEffect(() => {
     matchRef.current = match;
@@ -446,6 +450,21 @@ function FightScreen({
       const delta = Math.min(0.05, (now - previous) / 1000);
       previous = now;
       const [p1Input, p2Input] = readInputs();
+      frameInputRef.current =
+        p1Input.right ? 'p1:right' :
+        p1Input.left ? 'p1:left' :
+        p1Input.up ? 'p1:up' :
+        p1Input.down ? 'p1:down' :
+        p1Input.jab ? 'p1:jab' :
+        p1Input.kick ? 'p1:kick' :
+        p1Input.heavy ? 'p1:heavy' :
+        p1Input.special ? 'p1:special' :
+        p2Input.right ? 'p2:right' :
+        p2Input.left ? 'p2:left' :
+        p2Input.up ? 'p2:up' :
+        p2Input.down ? 'p2:down' :
+        p2Input.jab ? 'p2:jab' :
+        'none';
       if (p1Input.pause || p2Input.pause) {
         if (!pauseLatch.current) {
           setPaused((value) => !value);
@@ -494,7 +513,7 @@ function FightScreen({
       <GameScene match={match} />
       <div className="impact-flash" />
       <FightHud match={match} />
-      <FightDebug match={match} paused={paused} />
+      <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />
       <TouchControls onAction={setVirtualAction} />
       {match.message && <div className="match-message">{match.message}</div>}
       {paused && (
@@ -545,7 +564,17 @@ function FightScreen({
   );
 }
 
-function FightDebug({ match, paused }: { match: MatchSnapshot; paused: boolean }) {
+function FightDebug({
+  match,
+  paused,
+  lastInput,
+  frameInput
+}: {
+  match: MatchSnapshot;
+  paused: boolean;
+  lastInput: string;
+  frameInput: string;
+}) {
   const [p1, p2] = match.fighters;
   return (
     <div className="fight-debug" aria-hidden="true">
@@ -555,6 +584,8 @@ function FightDebug({ match, paused }: { match: MatchSnapshot; paused: boolean }
       <span data-testid="p1-state">{p1.state}</span>
       <span data-testid="p2-state">{p2.state}</span>
       <span data-testid="p2-hp">{p2.hp.toFixed(0)}</span>
+      <span data-testid="last-input">{lastInput}</span>
+      <span data-testid="frame-input">{frameInput}</span>
     </div>
   );
 }

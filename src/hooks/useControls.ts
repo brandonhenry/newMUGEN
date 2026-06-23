@@ -50,6 +50,7 @@ const buttonMap: Partial<Record<number, ActionName>> = {
 export function useControls(mode: MatchMode) {
   const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const virtualRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
+  const lastInputRef = useRef('none');
   const modeRef = useRef(mode);
 
   useEffect(() => {
@@ -63,26 +64,33 @@ export function useControls(mode: MatchMode) {
       const aiArrowAction = modeRef.current === 'ai' ? arrowKeys[event.code] : undefined;
       if (p1Action) {
         inputRefs.current[0][p1Action] = pressed;
+        if (pressed) lastInputRef.current = `p1:${p1Action}`;
         event.preventDefault();
       }
       if (aiArrowAction) {
         inputRefs.current[0][aiArrowAction] = pressed;
+        if (pressed) lastInputRef.current = `p1:${aiArrowAction}`;
         event.preventDefault();
         return;
       }
       if (p2Action) {
         inputRefs.current[1][p2Action] = pressed;
+        if (pressed) lastInputRef.current = `p2:${p2Action}`;
         event.preventDefault();
       }
     };
 
     const onKeyDown = (event: KeyboardEvent) => onKey(event, true);
     const onKeyUp = (event: KeyboardEvent) => onKey(event, false);
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('keyup', onKeyUp);
+    window.addEventListener('keydown', onKeyDown, true);
+    window.addEventListener('keyup', onKeyUp, true);
+    document.addEventListener('keydown', onKeyDown, true);
+    document.addEventListener('keyup', onKeyUp, true);
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener('keydown', onKeyDown, true);
+      window.removeEventListener('keyup', onKeyUp, true);
+      document.removeEventListener('keydown', onKeyDown, true);
+      document.removeEventListener('keyup', onKeyUp, true);
     };
   }, []);
 
@@ -90,7 +98,9 @@ export function useControls(mode: MatchMode) {
     const pads = navigator.getGamepads?.() ?? [];
     const merged: [InputFrame, InputFrame] = [emptyInputFrame(), emptyInputFrame()];
     for (let player = 0; player < 2; player += 1) {
-      Object.assign(merged[player], inputRefs.current[player], virtualRefs.current[player]);
+      for (const action of Object.keys(merged[player]) as ActionName[]) {
+        merged[player][action] = inputRefs.current[player][action] || virtualRefs.current[player][action];
+      }
       const pad = pads[player];
       if (pad) {
         const horizontal = pad.axes[0] ?? 0;
@@ -118,5 +128,7 @@ export function useControls(mode: MatchMode) {
     inputRefs.current[1].pause = false;
   }, []);
 
-  return { readInputs, setVirtualAction, clearMenuInputs };
+  const getLastInput = useCallback(() => lastInputRef.current, []);
+
+  return { readInputs, setVirtualAction, clearMenuInputs, getLastInput };
 }

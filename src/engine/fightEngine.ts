@@ -30,10 +30,10 @@ export function createMatch(
     mode,
     timer: ROUND_TIME,
     round: 1,
-    countdown: 2.8,
+    countdown: 0,
     winnerSlot: null,
-    phase: 'intro',
-    message: 'ROUND 1',
+    phase: 'fighting',
+    message: '',
     lastHitId: 0,
     cameraShake: 0
   };
@@ -245,9 +245,9 @@ function resetRound(match: MatchSnapshot) {
   match.fighters[1].roundsWon = rounds[1];
   match.round += 1;
   match.timer = ROUND_TIME;
-  match.countdown = 2.4;
-  match.phase = 'intro';
-  match.message = `ROUND ${match.round}`;
+  match.countdown = 0;
+  match.phase = 'fighting';
+  match.message = '';
 }
 
 function resolveFacing(match: MatchSnapshot) {

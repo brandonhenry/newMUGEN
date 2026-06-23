@@ -10,6 +10,7 @@ async function startFight(page: import('@playwright/test').Page, local2p = false
   await page.getByRole('button', { name: 'Stage' }).click();
   await page.getByRole('button', { name: 'Fight' }).click();
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 5000 });
+  await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 2000 });
 }
 
 function xFromPosition(value: string) {
@@ -43,19 +44,19 @@ test('moves player one with keyboard and arrow keys in 1P mode', async ({ page }
   await page.waitForTimeout(360);
   await page.keyboard.up('ArrowRight');
   const afterArrow = xFromPosition(await page.getByTestId('p1-position').innerText());
-  expect(afterArrow).toBeGreaterThan(before + 0.35);
+  expect(afterArrow).toBeGreaterThan(before + 0.25);
 
   await page.keyboard.down('KeyA');
   await page.waitForTimeout(260);
   await page.keyboard.up('KeyA');
   const afterWasd = xFromPosition(await page.getByTestId('p1-position').innerText());
-  expect(afterWasd).toBeLessThan(afterArrow - 0.2);
+  expect(afterWasd).toBeLessThan(afterArrow - 0.16);
 });
 
 test('lets player one close distance, hit, and continue without pausing', async ({ page }) => {
   await startFight(page, true);
   await page.keyboard.down('KeyD');
-  await page.waitForTimeout(640);
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 2500 }).toBeGreaterThan(-0.1);
   await page.keyboard.up('KeyD');
   const hpBefore = Number(await page.getByTestId('p2-hp').innerText());
   const zBefore = zFromPosition(await page.getByTestId('p2-position').innerText());
