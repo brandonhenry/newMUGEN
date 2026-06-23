@@ -1,0 +1,37 @@
+{
+  "id": "astra",
+  "displayName": "Astra",
+  "modelPath": "builtin://astra",
+  "scale": 1,
+  "cameraOffset": [0, 1.25, 0],
+  "stats": { "health": 100, "speed": 5.2, "sidestepSpeed": 4.5, "jumpForce": 8.5, "gravity": 18 },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "jump": "jump",
+    "block": "block",
+    "jab": "jab",
+    "kick": "kick",
+    "heavy": "heavy",
+    "special": "special",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "knockdown": "knockdown",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    { "id": "jab", "label": "Flash Jab", "input": "jab", "startup": 0.1, "active": 0.12, "recovery": 0.24, "damage": 7, "blockDamage": 1, "range": 1.45, "push": 0.7, "hitstun": 0.32, "knockdown": false, "hitbox": { "offset": [0, 1.2, 0.62], "size": [0.62, 0.48, 0.58] } },
+    { "id": "kick", "label": "Arc Kick", "input": "kick", "startup": 0.16, "active": 0.14, "recovery": 0.32, "damage": 10, "blockDamage": 2, "range": 1.65, "push": 0.95, "hitstun": 0.4, "knockdown": false, "hitbox": { "offset": [0, 0.85, 0.74], "size": [0.72, 0.42, 0.64] } },
+    { "id": "heavy", "label": "Meteor Palm", "input": "heavy", "startup": 0.26, "active": 0.12, "recovery": 0.48, "damage": 16, "blockDamage": 4, "range": 1.5, "push": 1.3, "hitstun": 0.56, "knockdown": true, "hitbox": { "offset": [0, 1.08, 0.64], "size": [0.78, 0.58, 0.58] } },
+    { "id": "special", "label": "Comet Step", "input": "special", "startup": 0.22, "active": 0.22, "recovery": 0.5, "damage": 14, "blockDamage": 3, "range": 1.95, "push": 1.55, "hitstun": 0.52, "knockdown": false, "hitbox": { "offset": [0, 1.05, 0.9], "size": [0.92, 0.64, 0.72] } }
+  ],
+  "hurtboxes": [{ "offset": [0, 1, 0], "size": [0.85, 1.9, 0.58] }],
+  "inputMap": { "jab": "J", "kick": "K", "heavy": "L", "special": "U", "block": "I" },
+  "colors": { "primary": "#2ee6ff", "secondary": "#ff4da6", "accent": "#f7f7f2" },
+  "aiProfile": { "aggression": 0.62, "guard": 0.46, "spacing": 1.52, "specialChance": 0.24 }
+}
