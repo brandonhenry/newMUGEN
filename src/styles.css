@@ -946,6 +946,72 @@ button {
   line-height: 1.45;
 }
 
+.support-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(8px, 1.2vw, 16px);
+}
+
+.patreon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2vw, 24px);
+  width: min(100%, 540px);
+  min-height: clamp(64px, 7vw, 86px);
+  border-radius: 14px;
+  padding: 0 clamp(22px, 4vw, 36px);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 120, 74, 0.98), rgba(223, 54, 20, 0.98)),
+    #f4512c;
+  box-shadow:
+    0 18px 38px rgba(244, 81, 44, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  transition-property: transform, box-shadow, filter;
+  transition-duration: 170ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.patreon-button:hover,
+.patreon-button:focus-visible {
+  outline: 0;
+  filter: brightness(1.05);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.18),
+    0 22px 44px rgba(244, 81, 44, 0.36),
+    0 1px 0 rgba(255, 255, 255, 0.24) inset;
+}
+
+.patreon-button:active {
+  transform: scale(0.97);
+}
+
+.patreon-mark {
+  display: inline-grid;
+  place-items: center;
+  width: clamp(42px, 5vw, 58px);
+  height: clamp(42px, 5vw, 58px);
+  border: 5px solid currentColor;
+  border-radius: 999px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0;
+  line-height: 1;
+}
+
+.patreon-mark::before {
+  content: "";
+  width: 9px;
+  height: 24px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateX(-6px);
+}
+
 .stage-screen {
   position: relative;
   align-content: stretch;
