@@ -5,7 +5,7 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 ## Required Files
 
 - `character.json`: Manifest for stats, model loading, moves, hitboxes, colors, and AI.
-- `sprite-sheet.svg` or `sprite-sheet.png`: Local 2D source sheet for `spriteVoxel` fighters.
+- `sprite-sheet.svg`, `sprite-sheet.png`, or `source.png`: Local 2D source art for `spriteVoxel` fighters.
 - `model.glb` or `model.gltf`: Optional external character model for `glb` fighters. Characters may also use `builtin://{id}` for the bundled low-poly renderer.
 - Portrait/select images are optional for v1. If missing, the character select screen renders a styled initials plate.
 
@@ -66,9 +66,14 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 
 `renderMode` can be:
 
-- `spriteVoxel`: Uses a local sprite sheet as the source art and renders a chunky voxelized 3D fighter in the browser. Use `modelPath: "spritevoxel://{id}"`, `spriteSheetPath`, and `voxelProfile`.
+- `spriteVoxel`: Uses local 2D source art and renders a chunky voxelized 3D fighter in the browser. Use `modelPath: "spritevoxel://{id}"`, `spriteSheetPath`, and `voxelProfile`.
 - `glb`: Loads `model.glb` or `model.gltf`.
 - `procedural`: Uses the built-in low-poly fallback renderer.
+
+`voxelProfile` can be:
+
+- `shinobi-orange` or `shinobi-blue`: Uses the built-in articulated voxel body with a fixed palette.
+- `image-source`: Loads `spriteSheetPath`, removes blue-screen/background pixels, downsamples the remaining silhouette into voxel boxes, and groups the extracted pixels into head, torso, arms, and legs for procedural combat animation. This works best with a full-body T-pose or wide stance on a flat, high-contrast background.
 
 ## Move Timing
 
@@ -103,7 +108,7 @@ External GLB/GLTF characters should include clips named:
 
 If a clip is missing, the game falls back to a safe default pose and the character viewer reports a loader warning. This lets roster work continue before every animation is final.
 
-Sprite-voxel characters do not require authored GLB clips. The runtime maps combat states to procedural voxel limb animation while preserving the local sprite-sheet palette and silhouette.
+Sprite-voxel characters do not require authored GLB clips. Built-in palette profiles map combat states to procedural voxel limb animation. `image-source` profiles derive the visible voxel silhouette and colors directly from the character source image, then animate extracted body-part groups.
 
 ## Adding A Character
 

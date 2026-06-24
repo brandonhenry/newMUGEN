@@ -8,6 +8,7 @@ import { createMatch, stepMatch } from './fightEngine';
 describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
     expect(starterCharacters.map((character) => [character.id, validateCharacter(character)])).toEqual([
+      ['kiro', []],
       ['astra', []],
       ['dax', []]
     ]);

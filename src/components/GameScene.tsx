@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Suspense, useEffect, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import type { CharacterDefinition, FighterRuntime, FighterState, MatchSnapshot, MoveInput } from '../types';
@@ -296,7 +296,11 @@ function FighterRig({ fighter }: { fighter: FighterRuntime }) {
     <group ref={group} scale={fighter.character.scale}>
       <Bounds fit={false}>
         {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
-          <VoxelSpriteFighter fighter={fighter} progress={progress} />
+          fighter.character.voxelProfile === 'image-source' ? (
+            <ImageVoxelFighter fighter={fighter} progress={progress} />
+          ) : (
+            <VoxelSpriteFighter fighter={fighter} progress={progress} />
+          )
         ) : fighter.character.modelPath.startsWith('builtin://') ? (
           <ProceduralFighter fighter={fighter} color={color} progress={progress} />
         ) : (
@@ -305,6 +309,308 @@ function FighterRig({ fighter }: { fighter: FighterRuntime }) {
       </Bounds>
     </group>
   );
+}
+
+type ImageVoxelPart = 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
+
+type ImageVoxel = {
+  part: ImageVoxelPart;
+  position: [number, number, number];
+  size: [number, number, number];
+  color: string;
+};
+
+function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; progress: number }) {
+  const root = useRef<THREE.Group>(null);
+  const torso = useRef<THREE.Group>(null);
+  const head = useRef<THREE.Group>(null);
+  const leadArm = useRef<THREE.Group>(null);
+  const rearArm = useRef<THREE.Group>(null);
+  const leadLeg = useRef<THREE.Group>(null);
+  const rearLeg = useRef<THREE.Group>(null);
+  const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
+
+  useEffect(() => {
+    let canceled = false;
+    if (!fighter.character.spriteSheetPath) return undefined;
+    extractImageVoxels(fighter.character.spriteSheetPath).then((nextVoxels) => {
+      if (!canceled) setVoxels(nextVoxels);
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [fighter.character.spriteSheetPath]);
+
+  const parts = useMemo(() => buildVoxelParts(voxels), [voxels]);
+
+  useFrame((state, delta) => {
+    const t = state.clock.elapsedTime;
+    const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
+    const walk = moving ? Math.sin(t * 12) : 0;
+    const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
+    const block = fighter.state === 'block' ? 1 : 0;
+    const crouch = fighter.state === 'crouch' ? 1 : 0;
+    const hit = fighter.state === 'hit' ? fighter.hitFlash : 0;
+    const jump = fighter.state === 'jump' ? 1 : 0;
+    const smooth = 1 - Math.pow(0.001, delta);
+
+    if (root.current) {
+      root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, crouch ? -0.28 : 0, smooth);
+      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, crouch ? 0.84 : jump ? 1.04 : 1, smooth);
+    }
+    if (torso.current) {
+      torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.26 - crouch * 0.18 + hit * 0.2, smooth);
+      torso.current.rotation.z = THREE.MathUtils.lerp(torso.current.rotation.z, attack * 0.11 * fighter.facing, smooth);
+    }
+    if (head.current) {
+      head.current.position.y = THREE.MathUtils.lerp(
+        head.current.position.y,
+        parts.head.anchor[1] - crouch * 0.12 + Math.sin(t * 4) * 0.012,
+        smooth
+      );
+      head.current.rotation.x = THREE.MathUtils.lerp(head.current.rotation.x, hit * 0.2, smooth);
+    }
+    if (leadArm.current) {
+      leadArm.current.rotation.x = THREE.MathUtils.lerp(leadArm.current.rotation.x, -attack * 0.95 - block * 0.62 + walk * 0.2, smooth);
+      leadArm.current.rotation.z = THREE.MathUtils.lerp(leadArm.current.rotation.z, block * 0.32 + attack * 0.18, smooth);
+      leadArm.current.position.z = THREE.MathUtils.lerp(leadArm.current.position.z, attack * 0.42 + block * 0.12, smooth);
+    }
+    if (rearArm.current) {
+      rearArm.current.rotation.x = THREE.MathUtils.lerp(rearArm.current.rotation.x, attack * 0.26 - block * 0.5 - walk * 0.2, smooth);
+      rearArm.current.rotation.z = THREE.MathUtils.lerp(rearArm.current.rotation.z, -block * 0.24, smooth);
+      rearArm.current.position.z = THREE.MathUtils.lerp(rearArm.current.position.z, block * 0.1, smooth);
+    }
+    if (leadLeg.current) {
+      leadLeg.current.rotation.x = THREE.MathUtils.lerp(leadLeg.current.rotation.x, walk * 0.34 + jump * 0.22 - crouch * 0.26, smooth);
+    }
+    if (rearLeg.current) {
+      rearLeg.current.rotation.x = THREE.MathUtils.lerp(rearLeg.current.rotation.x, -walk * 0.34 - jump * 0.2 - crouch * 0.2, smooth);
+    }
+  });
+
+  if (voxels.length === 0) {
+    return <VoxelSpriteFighter fighter={fighter} progress={progress} />;
+  }
+
+  return (
+    <group ref={root}>
+      <ImageVoxelPartGroup part={parts.head} groupRef={head} />
+      <ImageVoxelPartGroup part={parts.torso} groupRef={torso} />
+      <ImageVoxelPartGroup part={parts.leadArm} groupRef={leadArm} />
+      <ImageVoxelPartGroup part={parts.rearArm} groupRef={rearArm} />
+      <ImageVoxelPartGroup part={parts.leadLeg} groupRef={leadLeg} />
+      <ImageVoxelPartGroup part={parts.rearLeg} groupRef={rearLeg} />
+      <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.32, 0.38, 32]} />
+        <meshBasicMaterial color={fighter.character.colors.accent} transparent opacity={0.3} />
+      </mesh>
+    </group>
+  );
+}
+
+function ImageVoxelPartGroup({
+  part,
+  groupRef
+}: {
+  part: { anchor: [number, number, number]; voxels: ImageVoxel[] };
+  groupRef: React.RefObject<THREE.Group>;
+}) {
+  return (
+    <group ref={groupRef} position={part.anchor}>
+      {part.voxels.map((voxel, index) => (
+        <VoxelBox
+          key={`${voxel.part}-${index}`}
+          position={[
+            voxel.position[0] - part.anchor[0],
+            voxel.position[1] - part.anchor[1],
+            voxel.position[2] - part.anchor[2]
+          ]}
+          size={voxel.size}
+          color={voxel.color}
+        />
+      ))}
+    </group>
+  );
+}
+
+function buildVoxelParts(voxels: ImageVoxel[]) {
+  const partNames: ImageVoxelPart[] = ['head', 'torso', 'leadArm', 'rearArm', 'leadLeg', 'rearLeg'];
+  return Object.fromEntries(
+    partNames.map((part) => {
+      const partVoxels = voxels.filter((voxel) => voxel.part === part);
+      return [part, { anchor: getPartAnchor(part, partVoxels), voxels: partVoxels }];
+    })
+  ) as Record<ImageVoxelPart, { anchor: [number, number, number]; voxels: ImageVoxel[] }>;
+}
+
+function getPartAnchor(part: ImageVoxelPart, voxels: ImageVoxel[]): [number, number, number] {
+  const fallback: Record<ImageVoxelPart, [number, number, number]> = {
+    head: [0, 1.55, 0],
+    torso: [0, 1.08, 0],
+    leadArm: [0.5, 1.1, 0],
+    rearArm: [-0.5, 1.1, 0],
+    leadLeg: [0.17, 0.48, 0],
+    rearLeg: [-0.17, 0.48, 0]
+  };
+  if (voxels.length === 0) return fallback[part];
+  const min = new THREE.Vector3(Infinity, Infinity, Infinity);
+  const max = new THREE.Vector3(-Infinity, -Infinity, -Infinity);
+  for (const voxel of voxels) {
+    min.min(new THREE.Vector3(...voxel.position));
+    max.max(new THREE.Vector3(...voxel.position));
+  }
+  return [(min.x + max.x) / 2, (min.y + max.y) / 2, 0];
+}
+
+async function extractImageVoxels(src: string): Promise<ImageVoxel[]> {
+  const image = new Image();
+  image.src = src;
+  await image.decode();
+
+  const canvas = document.createElement('canvas');
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return [];
+  context.drawImage(image, 0, 0);
+  const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  const background = averageCornerColor(imageData);
+  const bounds = getForegroundBounds(imageData, background);
+  if (!bounds) return [];
+
+  const bboxWidth = bounds.maxX - bounds.minX + 1;
+  const bboxHeight = bounds.maxY - bounds.minY + 1;
+  const rows = 52;
+  const columns = Math.max(28, Math.min(50, Math.round(rows * (bboxWidth / bboxHeight))));
+  const modelHeight = 2.05;
+  const modelWidth = modelHeight * (bboxWidth / bboxHeight);
+  const cellWidth = modelWidth / columns;
+  const cellHeight = modelHeight / rows;
+  const voxels: ImageVoxel[] = [];
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const sample = sampleCell(imageData, bounds, background, column, row, columns, rows);
+      if (!sample) continue;
+      const x = ((column + 0.5) / columns) * modelWidth - modelWidth / 2;
+      const y = modelHeight - (row + 0.5) * cellHeight + 0.02;
+      const topRatio = row / rows;
+      const xRatio = (column + 0.5) / columns - 0.5;
+      const depth = 0.1 + sample.foregroundRatio * 0.08;
+      voxels.push({
+        part: classifyImageVoxel(topRatio, xRatio),
+        position: [x, y, sample.brightness > 150 ? 0.02 : -0.01],
+        size: [cellWidth * 0.96, cellHeight * 0.96, depth],
+        color: sample.color
+      });
+    }
+  }
+
+  return voxels;
+}
+
+function getForegroundBounds(imageData: ImageData, background: [number, number, number]) {
+  const { width, height, data } = imageData;
+  const bounds = { minX: width, minY: height, maxX: 0, maxY: 0 };
+  for (let y = 0; y < height; y += 2) {
+    for (let x = 0; x < width; x += 2) {
+      const offset = (y * width + x) * 4;
+      if (!isForegroundPixel(data[offset], data[offset + 1], data[offset + 2], data[offset + 3], background)) continue;
+      bounds.minX = Math.min(bounds.minX, x);
+      bounds.minY = Math.min(bounds.minY, y);
+      bounds.maxX = Math.max(bounds.maxX, x);
+      bounds.maxY = Math.max(bounds.maxY, y);
+    }
+  }
+  if (bounds.minX >= bounds.maxX || bounds.minY >= bounds.maxY) return null;
+  const padX = Math.round((bounds.maxX - bounds.minX) * 0.02);
+  const padY = Math.round((bounds.maxY - bounds.minY) * 0.02);
+  return {
+    minX: Math.max(0, bounds.minX - padX),
+    minY: Math.max(0, bounds.minY - padY),
+    maxX: Math.min(width - 1, bounds.maxX + padX),
+    maxY: Math.min(height - 1, bounds.maxY + padY)
+  };
+}
+
+function averageCornerColor(imageData: ImageData): [number, number, number] {
+  const { width, height, data } = imageData;
+  const points = [
+    [2, 2],
+    [width - 3, 2],
+    [2, height - 3],
+    [width - 3, height - 3]
+  ];
+  const total = points.reduce(
+    (sum, [x, y]) => {
+      const offset = (y * width + x) * 4;
+      return [sum[0] + data[offset], sum[1] + data[offset + 1], sum[2] + data[offset + 2]];
+    },
+    [0, 0, 0]
+  );
+  return [total[0] / points.length, total[1] / points.length, total[2] / points.length];
+}
+
+function sampleCell(
+  imageData: ImageData,
+  bounds: { minX: number; minY: number; maxX: number; maxY: number },
+  background: [number, number, number],
+  column: number,
+  row: number,
+  columns: number,
+  rows: number
+) {
+  const { width, data } = imageData;
+  const cellMinX = Math.floor(bounds.minX + ((bounds.maxX - bounds.minX) * column) / columns);
+  const cellMaxX = Math.floor(bounds.minX + ((bounds.maxX - bounds.minX) * (column + 1)) / columns);
+  const cellMinY = Math.floor(bounds.minY + ((bounds.maxY - bounds.minY) * row) / rows);
+  const cellMaxY = Math.floor(bounds.minY + ((bounds.maxY - bounds.minY) * (row + 1)) / rows);
+  let foreground = 0;
+  let samples = 0;
+  let red = 0;
+  let green = 0;
+  let blue = 0;
+
+  for (let y = cellMinY; y <= cellMaxY; y += Math.max(1, Math.floor((cellMaxY - cellMinY) / 4))) {
+    for (let x = cellMinX; x <= cellMaxX; x += Math.max(1, Math.floor((cellMaxX - cellMinX) / 4))) {
+      const offset = (y * width + x) * 4;
+      samples += 1;
+      if (!isForegroundPixel(data[offset], data[offset + 1], data[offset + 2], data[offset + 3], background)) continue;
+      foreground += 1;
+      red += data[offset];
+      green += data[offset + 1];
+      blue += data[offset + 2];
+    }
+  }
+
+  const foregroundRatio = samples > 0 ? foreground / samples : 0;
+  if (foregroundRatio < 0.22 || foreground === 0) return null;
+  const color = quantizeColor(red / foreground, green / foreground, blue / foreground);
+  return {
+    color,
+    brightness: (red + green + blue) / foreground / 3,
+    foregroundRatio
+  };
+}
+
+function isForegroundPixel(red: number, green: number, blue: number, alpha: number, background: [number, number, number]) {
+  if (alpha < 24) return false;
+  const blueScreen = blue > 165 && blue > red * 1.7 && blue > green * 1.2;
+  if (blueScreen) return false;
+  const distance = Math.hypot(red - background[0], green - background[1], blue - background[2]);
+  return distance > 72;
+}
+
+function quantizeColor(red: number, green: number, blue: number) {
+  const snap = (value: number) => Math.max(0, Math.min(255, Math.round(value / 17) * 17));
+  return `#${[snap(red), snap(green), snap(blue)].map((value) => value.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function classifyImageVoxel(topRatio: number, xRatio: number): ImageVoxelPart {
+  if (topRatio < 0.29) return 'head';
+  if (topRatio > 0.58) return xRatio >= 0 ? 'leadLeg' : 'rearLeg';
+  if (Math.abs(xRatio) > 0.26) return xRatio >= 0 ? 'leadArm' : 'rearArm';
+  return 'torso';
 }
 
 function VoxelSpriteFighter({ fighter, progress }: { fighter: FighterRuntime; progress: number }) {

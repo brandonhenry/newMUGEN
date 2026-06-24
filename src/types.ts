@@ -60,7 +60,7 @@ export type CharacterDefinition = {
   renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
   spriteSheetPath?: string;
-  voxelProfile?: 'shinobi-orange' | 'shinobi-blue';
+  voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source';
   scale: number;
   cameraOffset: Vec3Tuple;
   stats: {
