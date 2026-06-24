@@ -10,8 +10,8 @@ import type {
 } from '../types';
 import { emptyInputFrame } from '../types';
 
-const ARENA_LIMIT_X = 4.8;
-const ARENA_LIMIT_Z = 2.1;
+const ARENA_LIMIT_X = 5.1;
+const ARENA_LIMIT_Z = 3.6;
 const ROUND_TIME = 60;
 const START_DISTANCE = 2.6;
 const ROUND_OVER_DELAY = 2.1;
@@ -101,7 +101,11 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     position: { x, y: 0, z: 0 },
     velocityY: 0,
     facing: slot === 1 ? 1 : -1,
+    facingYaw: slot === 1 ? Math.PI / 2 : -Math.PI / 2,
     state: 'idle',
+    sidestepTimer: 0,
+    sidestepDirection: 0,
+    jumpInputHeld: false,
     currentMove: null,
     actionTimer: 0,
     hitConnected: false,
@@ -115,8 +119,11 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
 function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: InputFrame, dt: number) {
   const fighter = match.fighters[fighterIndex];
   const opponent = match.fighters[fighterIndex === 0 ? 1 : 0];
+  const jumpPressed = input.up && !fighter.jumpInputHeld;
+  fighter.jumpInputHeld = input.up;
   fighter.blockFlash = Math.max(0, fighter.blockFlash - dt * 5);
   fighter.hitFlash = Math.max(0, fighter.hitFlash - dt * 4);
+  fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
 
   if (fighter.actionTimer > 0) {
     fighter.actionTimer = Math.max(0, fighter.actionTimer - dt);
@@ -160,14 +167,35 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   const forward = input.right ? 1 : input.left ? -1 : 0;
-  const sidestep = input.up ? -1 : input.down ? 1 : 0;
-  const forwardTowardOpponent = Math.sign(opponent.position.x - fighter.position.x) || fighter.facing;
-  const speedScale = input.block ? 0.42 : 1;
+  const laneWalk = input.sidewalkUp ? -1 : input.sidewalkDown ? 1 : 0;
+  const sidestepTap = input.sidestepUp ? -1 : input.sidestepDown ? 1 : 0;
+  const grounded = fighter.position.y === 0 && fighter.velocityY === 0;
+  const crouching = input.down && grounded;
+  const jumping = fighter.position.y > 0 || fighter.velocityY !== 0;
+  const speedScale = input.block ? 0.42 : crouching ? 0.18 : 1;
+
+  if (jumpPressed && grounded && !input.block && !input.down) {
+    fighter.velocityY = fighter.character.stats.jumpForce;
+    fighter.state = 'jump';
+  }
+
+  if (sidestepTap !== 0 && fighter.sidestepTimer === 0) {
+    fighter.sidestepTimer = 0.18;
+    fighter.sidestepDirection = sidestepTap;
+  }
+
+  const sidestep = fighter.sidestepTimer > 0 ? fighter.sidestepDirection : laneWalk;
 
   if (input.block) {
     fighter.state = 'block';
-  } else if (sidestep !== 0) {
+  } else if (crouching) {
+    fighter.state = 'crouch';
+  } else if (jumping || fighter.velocityY > 0) {
+    fighter.state = 'jump';
+  } else if (fighter.sidestepTimer > 0) {
     fighter.state = 'sidestep';
+  } else if (laneWalk !== 0) {
+    fighter.state = 'walk';
   } else if (forward !== 0) {
     fighter.state = 'walk';
   } else {
@@ -175,10 +203,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (forward !== 0) {
-    fighter.position.x += forward * fighter.character.stats.speed * speedScale * dt * forwardTowardOpponent;
+    moveAlongOpponentAxis(fighter, opponent, forward * fighter.character.stats.speed * speedScale * dt);
   }
   if (sidestep !== 0) {
-    fighter.position.z += sidestep * fighter.character.stats.sidestepSpeed * speedScale * dt;
+    const sidestepScale = fighter.sidestepTimer > 0 ? 1.75 : 1.08;
+    orbitAroundOpponent(fighter, opponent, -sidestep * fighter.character.stats.sidestepSpeed * sidestepScale * speedScale * dt);
   }
 
   fighter.position.x = clamp(fighter.position.x, -ARENA_LIMIT_X, ARENA_LIMIT_X);
@@ -197,20 +226,23 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   if (!move || attacker.state !== 'attack' || attacker.hitConnected) return;
   const elapsed = move.startup + move.active + move.recovery - attacker.actionTimer;
   if (elapsed < move.startup || elapsed > move.startup + move.active) return;
-  const dx = Math.abs(defender.position.x - attacker.position.x);
-  const dz = Math.abs(defender.position.z - attacker.position.z);
-  const laneWidth = Math.max(0.6, move.hitbox.size[0] + defender.character.hurtboxes[0].size[0] * 0.5);
-  if (dx > move.range || dz > laneWidth) return;
+  const dx = defender.position.x - attacker.position.x;
+  const dz = defender.position.z - attacker.position.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance > move.range) return;
 
   const blocked = defender.state === 'block' && defender.facing === -attacker.facing;
   attacker.hitConnected = true;
   match.lastHitId += 1;
   match.cameraShake = blocked ? 0.18 : 0.38;
+  const pushX = distance > 0 ? dx / distance : attacker.facing;
+  const pushZ = distance > 0 ? dz / distance : 0;
 
   if (blocked) {
     defender.hp = Math.max(0, defender.hp - move.blockDamage);
     defender.blockFlash = 1;
-    defender.position.x += attacker.facing * move.push * 0.14;
+    defender.position.x += pushX * move.push * 0.14;
+    defender.position.z += pushZ * move.push * 0.14;
     return;
   }
 
@@ -220,7 +252,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   defender.actionTimer = move.knockdown ? 0.46 : 0;
   defender.currentMove = null;
   defender.state = move.knockdown ? 'knockdown' : 'hit';
-  defender.position.x += attacker.facing * move.push * 0.28;
+  defender.position.x += pushX * move.push * 0.28;
+  defender.position.z += pushZ * move.push * 0.28;
 }
 
 function finishRound(match: MatchSnapshot) {
@@ -254,20 +287,47 @@ function resolveFacing(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
   p1.facing = p1.position.x <= p2.position.x ? 1 : -1;
   p2.facing = p2.position.x <= p1.position.x ? 1 : -1;
+  p1.facingYaw = Math.atan2(p2.position.x - p1.position.x, p2.position.z - p1.position.z);
+  p2.facingYaw = Math.atan2(p1.position.x - p2.position.x, p1.position.z - p2.position.z);
 }
 
 function resolveBodyCollision(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
   const minDistance = 0.72;
   const dx = p2.position.x - p1.position.x;
-  if (Math.abs(dx) < minDistance) {
-    const correction = (minDistance - Math.abs(dx)) / 2;
-    const direction = dx >= 0 ? 1 : -1;
-    p1.position.x -= correction * direction;
-    p2.position.x += correction * direction;
+  const dz = p2.position.z - p1.position.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance < minDistance) {
+    const correction = (minDistance - distance) / 2;
+    const directionX = distance > 0 ? dx / distance : 1;
+    const directionZ = distance > 0 ? dz / distance : 0;
+    p1.position.x -= correction * directionX;
+    p1.position.z -= correction * directionZ;
+    p2.position.x += correction * directionX;
+    p2.position.z += correction * directionZ;
   }
   p1.position.x = clamp(p1.position.x, -ARENA_LIMIT_X, ARENA_LIMIT_X);
   p2.position.x = clamp(p2.position.x, -ARENA_LIMIT_X, ARENA_LIMIT_X);
+  p1.position.z = clamp(p1.position.z, -ARENA_LIMIT_Z, ARENA_LIMIT_Z);
+  p2.position.z = clamp(p2.position.z, -ARENA_LIMIT_Z, ARENA_LIMIT_Z);
+}
+
+function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime, amount: number) {
+  const dx = opponent.position.x - fighter.position.x;
+  const dz = opponent.position.z - fighter.position.z;
+  const distance = Math.hypot(dx, dz) || 1;
+  fighter.position.x += (dx / distance) * amount;
+  fighter.position.z += (dz / distance) * amount;
+}
+
+function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, arcDistance: number) {
+  const dx = fighter.position.x - opponent.position.x;
+  const dz = fighter.position.z - opponent.position.z;
+  const radius = Math.max(0.92, Math.hypot(dx, dz));
+  const angle = Math.atan2(dz, dx);
+  const nextAngle = angle + arcDistance / radius;
+  fighter.position.x = opponent.position.x + Math.cos(nextAngle) * radius;
+  fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
 }
 
 function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number): InputFrame {
@@ -280,10 +340,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   if (distance > profile.spacing) input.right = true;
   if (distance < profile.spacing * 0.72) input.left = true;
   if (Math.abs(laneDiff) > 0.45) {
-    if (laneDiff < 0) input.up = true;
-    if (laneDiff > 0) input.down = true;
+    if (laneDiff < 0) input.sidewalkUp = true;
+    if (laneDiff > 0) input.sidewalkDown = true;
   } else if (beat > 0.82) {
-    input.up = true;
+    input.sidestepUp = true;
   }
 
   const danger = opponent.state === 'attack' && distance < 1.9;

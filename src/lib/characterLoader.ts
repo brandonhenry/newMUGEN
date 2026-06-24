@@ -31,6 +31,9 @@ export function validateCharacter(character: CharacterDefinition): string[] {
   if (!character.id) warnings.push('Missing id.');
   if (!character.displayName) warnings.push('Missing displayName.');
   if (!character.modelPath) warnings.push('Missing modelPath.');
+  if (character.renderMode === 'spriteVoxel' && !character.spriteSheetPath) {
+    warnings.push('Sprite-voxel character is missing spriteSheetPath.');
+  }
   if (!character.moves.length) warnings.push('No moves defined.');
   for (const clip of requiredClips) {
     if (!character.animations[clip]) {

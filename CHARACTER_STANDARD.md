@@ -5,7 +5,8 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 ## Required Files
 
 - `character.json`: Manifest for stats, model loading, moves, hitboxes, colors, and AI.
-- `model.glb` or `model.gltf`: External character model. Starter characters may use `builtin://{id}` for the bundled low-poly renderer.
+- `sprite-sheet.svg` or `sprite-sheet.png`: Local 2D source sheet for `spriteVoxel` fighters.
+- `model.glb` or `model.gltf`: Optional external character model for `glb` fighters. Characters may also use `builtin://{id}` for the bundled low-poly renderer.
 - Portrait/select images are optional for v1. If missing, the character select screen renders a styled initials plate.
 
 ## Manifest Shape
@@ -14,7 +15,10 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 {
   "id": "myfighter",
   "displayName": "My Fighter",
-  "modelPath": "/characters/myfighter/model.glb",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://myfighter",
+  "spriteSheetPath": "/characters/myfighter/sprite-sheet.svg",
+  "voxelProfile": "shinobi-orange",
   "scale": 1,
   "cameraOffset": [0, 1.2, 0],
   "stats": {
@@ -60,6 +64,12 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 }
 ```
 
+`renderMode` can be:
+
+- `spriteVoxel`: Uses a local sprite sheet as the source art and renders a chunky voxelized 3D fighter in the browser. Use `modelPath: "spritevoxel://{id}"`, `spriteSheetPath`, and `voxelProfile`.
+- `glb`: Loads `model.glb` or `model.gltf`.
+- `procedural`: Uses the built-in low-poly fallback renderer.
+
 ## Move Timing
 
 Move timing is in seconds. Total animation lock is `startup + active + recovery`.
@@ -93,9 +103,11 @@ External GLB/GLTF characters should include clips named:
 
 If a clip is missing, the game falls back to a safe default pose and the character viewer reports a loader warning. This lets roster work continue before every animation is final.
 
+Sprite-voxel characters do not require authored GLB clips. The runtime maps combat states to procedural voxel limb animation while preserving the local sprite-sheet palette and silhouette.
+
 ## Adding A Character
 
 1. Create `public/characters/{id}/`.
-2. Add `character.json` and a GLB/GLTF model.
+2. Add `character.json` plus either a sprite sheet for `spriteVoxel` or a GLB/GLTF model for `glb`.
 3. Add the id to `public/characters/index.json`.
 4. Launch the app, open Character Viewer, and check loader warnings, scale, colors, hurtboxes, and moves.

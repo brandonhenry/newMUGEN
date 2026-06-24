@@ -5,13 +5,16 @@ import {
   Home,
   Pause,
   Play,
+  Rotate3D,
   RotateCcw,
   Settings,
   Swords,
-  Users
+  Users,
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
-import { type CSSProperties, useEffect, useRef, useState } from 'react';
-import { GameScene } from './components/GameScene';
+import { type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useEffect, useRef, useState } from 'react';
+import { CharacterPreviewCanvas, GameScene, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
 import { createMatch, stepMatch } from './engine/fightEngine';
@@ -323,8 +326,8 @@ function SettingsScreen({
         <SegmentedControl value={mode} setValue={setMode} />
       </header>
       <div className="control-grid">
-        <ControlPanel title="Player 1" rows={['WASD move / sidestep', 'Arrows also move P1 in 1P vs AI', 'J jab, K kick, L heavy', 'U special, I block, Esc pause']} />
-        <ControlPanel title="Player 2" rows={['Arrows move / sidestep in Local 2P', 'Numpad 1 jab, 2 kick, 3 heavy', 'Numpad 4 special, 5 block', 'Space confirm']} />
+        <ControlPanel title="Player 1" rows={['A/D forward and back', 'W jump, S crouch', 'Double tap W/S to move lane', 'J jab, K kick, L heavy, U special, I block']} />
+        <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'Up jumps, Down crouches', 'Double tap Up/Down to move lane', 'Numpad 1-5 attacks and block']} />
         <ControlPanel title="Gamepad" rows={['Left stick or d-pad movement', 'Face buttons attack', 'Shoulders block and special', 'Start pauses the match']} />
         <ControlPanel title="Touch" rows={['On-screen movement pad', 'Action buttons appear in fight', 'Works best in landscape', 'Player 1 controls by default']} />
       </div>
@@ -357,7 +360,25 @@ function CharacterViewer({
   onBack: () => void;
 }) {
   const [activeId, setActiveId] = useState(roster[0]?.id ?? '');
+  const [pose, setPose] = useState<PreviewPose>('idle');
+  const [rotationTurn, setRotationTurn] = useState(0);
+  const [zoom, setZoom] = useState(0.28);
   const active = roster.find((character) => character.id === activeId) ?? roster[0];
+  const poses: Array<{ id: PreviewPose; label: string }> = [
+    { id: 'idle', label: 'Idle' },
+    { id: 'walk', label: 'Walk' },
+    { id: 'jump', label: 'Jump' },
+    { id: 'crouch', label: 'Crouch' },
+    { id: 'block', label: 'Block' },
+    { id: 'jab', label: 'Jab' },
+    { id: 'kick', label: 'Kick' },
+    { id: 'heavy', label: 'Heavy' },
+    { id: 'special', label: 'Special' },
+    { id: 'hit', label: 'Hit' },
+    { id: 'knockdown', label: 'Down' },
+    { id: 'win', label: 'Win' },
+    { id: 'lose', label: 'Lose' }
+  ];
   return (
     <div className="viewer-screen">
       <header className="section-header">
@@ -381,9 +402,68 @@ function CharacterViewer({
             </button>
           ))}
         </div>
+        <article className="model-viewer-panel">
+          <div className="model-viewer-stage">
+            <CharacterPreviewCanvas character={active} pose={pose} rotationTurn={rotationTurn} zoom={zoom} />
+          </div>
+          <div className="viewer-actions">
+            <button className="secondary-button" onClick={() => setRotationTurn((value) => value + 1)}>
+              <Rotate3D size={18} />
+              Rotate
+            </button>
+            <div className="zoom-controls" aria-label="Model zoom controls">
+              <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
+                <ZoomOut size={18} />
+              </button>
+              <input
+                aria-label="Zoom level"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={zoom}
+                onChange={(event) => setZoom(Number(event.target.value))}
+                data-testid="viewer-zoom-slider"
+              />
+              <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
+                <ZoomIn size={18} />
+              </button>
+            </div>
+            <span>Drag to rotate. Scroll or pinch to zoom.</span>
+          </div>
+          <div className="animation-grid" aria-label="Animation previews">
+            {poses.map((option) => (
+              <button
+                key={option.id}
+                className={pose === option.id ? 'active' : ''}
+                onClick={() => setPose(option.id)}
+                data-testid={`viewer-pose-${option.id}`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </article>
         <article className="manifest-panel">
           <h3>{active.displayName}</h3>
-          <p>Health {active.stats.health} · Speed {active.stats.speed} · Model {active.modelPath}</p>
+          <p>Health {active.stats.health} · Speed {active.stats.speed} · Source {active.spriteSheetPath ?? active.modelPath}</p>
+          {active.spriteSheetPath && (
+            <img className="sprite-sheet-preview" src={active.spriteSheetPath} alt={`${active.displayName} sprite sheet`} />
+          )}
+          <div className="viewer-stat-grid">
+            <span>
+              <strong>{active.stats.sidestepSpeed}</strong>
+              Lane
+            </span>
+            <span>
+              <strong>{active.stats.jumpForce}</strong>
+              Jump
+            </span>
+            <span>
+              <strong>{active.scale}</strong>
+              Scale
+            </span>
+          </div>
           <div className="move-list">
             {active.moves.map((move) => (
               <span key={move.id}>{move.label}</span>
@@ -435,10 +515,15 @@ function FightScreen({
   const matchRef = useRef(match);
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
+  const screenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     matchRef.current = match;
   }, [match]);
+
+  useEffect(() => {
+    screenRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     let frame = 0;
@@ -455,6 +540,10 @@ function FightScreen({
         p1Input.left ? 'p1:left' :
         p1Input.up ? 'p1:up' :
         p1Input.down ? 'p1:down' :
+        p1Input.sidestepUp ? 'p1:sidestepUp' :
+        p1Input.sidestepDown ? 'p1:sidestepDown' :
+        p1Input.sidewalkUp ? 'p1:sidewalkUp' :
+        p1Input.sidewalkDown ? 'p1:sidewalkDown' :
         p1Input.jab ? 'p1:jab' :
         p1Input.kick ? 'p1:kick' :
         p1Input.heavy ? 'p1:heavy' :
@@ -463,6 +552,10 @@ function FightScreen({
         p2Input.left ? 'p2:left' :
         p2Input.up ? 'p2:up' :
         p2Input.down ? 'p2:down' :
+        p2Input.sidestepUp ? 'p2:sidestepUp' :
+        p2Input.sidestepDown ? 'p2:sidestepDown' :
+        p2Input.sidewalkUp ? 'p2:sidewalkUp' :
+        p2Input.sidewalkDown ? 'p2:sidewalkDown' :
         p2Input.jab ? 'p2:jab' :
         'none';
       if (p1Input.pause || p2Input.pause) {
@@ -508,8 +601,23 @@ function FightScreen({
     setPaused(false);
   };
 
+  const handleSurfaceKey = (event: ReactKeyboardEvent<HTMLDivElement>, pressed: boolean) => {
+    if (event.defaultPrevented) return;
+    const binding = getSurfaceKeyBinding(event.nativeEvent, mode);
+    if (!binding) return;
+    setVirtualAction(binding.player, binding.action, pressed);
+    event.preventDefault();
+  };
+
   return (
-    <div className="fight-screen">
+    <div
+      className="fight-screen"
+      ref={screenRef}
+      tabIndex={-1}
+      onPointerDown={() => screenRef.current?.focus()}
+      onKeyDown={(event) => handleSurfaceKey(event, true)}
+      onKeyUp={(event) => handleSurfaceKey(event, false)}
+    >
       <GameScene match={match} />
       <div className="impact-flash" />
       <FightHud match={match} />
@@ -564,6 +672,82 @@ function FightScreen({
   );
 }
 
+const surfacePlayerOneKeys: Record<string, ActionName> = {
+  KeyW: 'up',
+  w: 'up',
+  W: 'up',
+  KeyS: 'down',
+  s: 'down',
+  S: 'down',
+  KeyA: 'left',
+  a: 'left',
+  A: 'left',
+  KeyD: 'right',
+  d: 'right',
+  D: 'right',
+  KeyJ: 'jab',
+  j: 'jab',
+  J: 'jab',
+  KeyK: 'kick',
+  k: 'kick',
+  K: 'kick',
+  KeyL: 'heavy',
+  l: 'heavy',
+  L: 'heavy',
+  KeyU: 'special',
+  u: 'special',
+  U: 'special',
+  KeyI: 'block',
+  i: 'block',
+  I: 'block',
+  Enter: 'confirm',
+  Escape: 'pause'
+};
+
+const surfacePlayerTwoKeys: Record<string, ActionName> = {
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
+  Numpad1: 'jab',
+  '1': 'jab',
+  Digit1: 'jab',
+  Numpad2: 'kick',
+  '2': 'kick',
+  Digit2: 'kick',
+  Numpad3: 'heavy',
+  '3': 'heavy',
+  Digit3: 'heavy',
+  Numpad4: 'special',
+  '4': 'special',
+  Digit4: 'special',
+  Numpad5: 'block',
+  '5': 'block',
+  Digit5: 'block',
+  ShiftRight: 'block',
+  Shift: 'block',
+  Space: 'confirm',
+  ' ': 'confirm'
+};
+
+const surfaceAiArrowKeys: Record<string, ActionName> = {
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  ArrowLeft: 'left',
+  ArrowRight: 'right'
+};
+
+function getSurfaceKeyBinding(event: KeyboardEvent, mode: MatchMode): { player: 1 | 2; action: ActionName } | null {
+  const keyId = surfacePlayerOneKeys[event.code] || surfacePlayerTwoKeys[event.code] || surfaceAiArrowKeys[event.code] ? event.code : event.key;
+  const p1Action = surfacePlayerOneKeys[keyId];
+  if (p1Action) return { player: 1, action: p1Action };
+  const aiAction = mode === 'ai' ? surfaceAiArrowKeys[keyId] : undefined;
+  if (aiAction) return { player: 1, action: aiAction };
+  const p2Action = surfacePlayerTwoKeys[keyId];
+  if (p2Action) return { player: 2, action: p2Action };
+  return null;
+}
+
 function FightDebug({
   match,
   paused,
@@ -581,6 +765,8 @@ function FightDebug({
       <span data-testid="match-phase">{paused ? 'paused' : match.phase}</span>
       <span data-testid="p1-position">{`${p1.position.x.toFixed(3)},${p1.position.z.toFixed(3)}`}</span>
       <span data-testid="p2-position">{`${p2.position.x.toFixed(3)},${p2.position.z.toFixed(3)}`}</span>
+      <span data-testid="p1-height">{p1.position.y.toFixed(3)}</span>
+      <span data-testid="p2-height">{p2.position.y.toFixed(3)}</span>
       <span data-testid="p1-state">{p1.state}</span>
       <span data-testid="p2-state">{p2.state}</span>
       <span data-testid="p2-hp">{p2.hp.toFixed(0)}</span>

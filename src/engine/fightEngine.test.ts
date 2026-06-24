@@ -25,6 +25,46 @@ describe('fight engine', () => {
     expect(next.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
   });
 
+  it('uses up for jump, down for crouch, and lane inputs for 3D movement', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const jump = emptyInputFrame();
+    jump.up = true;
+    match = stepMatch(match, jump, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('jump');
+    expect(match.fighters[0].velocityY).toBeGreaterThan(0);
+    expect(match.fighters[0].position.z).toBe(0);
+
+    for (let i = 0; i < 80; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const crouch = emptyInputFrame();
+    crouch.down = true;
+    match = stepMatch(match, crouch, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('crouch');
+    expect(match.fighters[0].position.z).toBe(0);
+
+    const laneWalk = emptyInputFrame();
+    laneWalk.sidewalkDown = true;
+    const radiusBefore = Math.hypot(
+      match.fighters[0].position.x - match.fighters[1].position.x,
+      match.fighters[0].position.z - match.fighters[1].position.z
+    );
+    const xBeforeWalk = match.fighters[0].position.x;
+    const beforeWalk = match.fighters[0].position.z;
+    match = stepMatch(match, laneWalk, emptyInputFrame(), 10 / 60);
+    const radiusAfter = Math.hypot(
+      match.fighters[0].position.x - match.fighters[1].position.x,
+      match.fighters[0].position.z - match.fighters[1].position.z
+    );
+    expect(match.fighters[0].position.z).toBeGreaterThan(beforeWalk + 0.35);
+    expect(match.fighters[0].position.x).not.toBeCloseTo(xBeforeWalk, 3);
+    expect(radiusAfter).toBeCloseTo(radiusBefore, 1);
+  });
+
   it('applies block chip instead of full damage', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -71,10 +111,11 @@ describe('fight engine', () => {
       attack.jab = false;
     }
     const zBefore = match.fighters[1].position.z;
+    const xBefore = match.fighters[1].position.x;
     const moveAfterHit = emptyInputFrame();
-    moveAfterHit.up = true;
+    moveAfterHit.sidewalkUp = true;
     match = stepMatch(match, emptyInputFrame(), moveAfterHit, 1 / 60);
     expect(match.phase).toBe('fighting');
-    expect(match.fighters[1].position.z).toBeLessThan(zBefore);
+    expect(Math.abs(match.fighters[1].position.z - zBefore) + Math.abs(match.fighters[1].position.x - xBefore)).toBeGreaterThan(0.01);
   });
 });

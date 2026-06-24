@@ -5,6 +5,10 @@ export type ActionName =
   | 'down'
   | 'left'
   | 'right'
+  | 'sidestepUp'
+  | 'sidestepDown'
+  | 'sidewalkUp'
+  | 'sidewalkDown'
   | 'jab'
   | 'kick'
   | 'heavy'
@@ -53,7 +57,10 @@ export type MoveDefinition = {
 export type CharacterDefinition = {
   id: string;
   displayName: string;
+  renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
+  spriteSheetPath?: string;
+  voxelProfile?: 'shinobi-orange' | 'shinobi-blue';
   scale: number;
   cameraOffset: Vec3Tuple;
   stats: {
@@ -87,6 +94,10 @@ export type StageDefinition = {
   floor: string;
   rail: string;
   light: string;
+  worldModelPath?: string;
+  worldModelScale?: number;
+  worldModelPosition?: Vec3Tuple;
+  worldModelRotation?: Vec3Tuple;
 };
 
 export type InputFrame = Record<ActionName, boolean>;
@@ -100,7 +111,11 @@ export type FighterRuntime = {
   position: { x: number; y: number; z: number };
   velocityY: number;
   facing: 1 | -1;
+  facingYaw: number;
   state: FighterState;
+  sidestepTimer: number;
+  sidestepDirection: -1 | 0 | 1;
+  jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
   actionTimer: number;
   hitConnected: boolean;
@@ -129,6 +144,10 @@ export const emptyInputFrame = (): InputFrame => ({
   down: false,
   left: false,
   right: false,
+  sidestepUp: false,
+  sidestepDown: false,
+  sidewalkUp: false,
+  sidewalkDown: false,
   jab: false,
   kick: false,
   heavy: false,
