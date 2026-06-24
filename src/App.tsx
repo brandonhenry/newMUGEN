@@ -16,19 +16,21 @@ import {
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type ReactNode, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
 import { createMatch, stepMatch } from './engine/fightEngine';
-import { useControls } from './hooks/useControls';
+import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
+import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import {
   emptyInputFrame,
   type ActionName,
   type CharacterDefinition,
   type CpuDifficulty,
+  type GameSettings,
   type HitLevel,
   type InputFrame,
   type MatchMode,
@@ -334,7 +336,8 @@ export default function App() {
   const [stageId, setStageId] = useState(stages[0].id);
   const [mode, setMode] = useState<MatchMode>('ai');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
-  const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode);
+  const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
+  const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
 
   useEffect(() => {
     debugHypotheses();
@@ -369,6 +372,10 @@ export default function App() {
       } satisfies StoredAnimationOverrides)
     );
   }, [animationOverrides]);
+
+  useEffect(() => {
+    writeGameSettings(settings);
+  }, [settings]);
 
   const setCharacterAnimationFrames = (characterId: string, animationKey: string, frames: string[]) => {
     debugLog(4, 'viewer frame override requested', {
@@ -417,6 +424,7 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (settings.display.reducedMotion) return;
     anime.remove('.screen-panel > *');
     anime({
       targets: '.screen-panel > *',
@@ -426,7 +434,7 @@ export default function App() {
       duration: 460,
       easing: 'easeOutCubic'
     });
-  }, [screen]);
+  }, [screen, settings.display.reducedMotion]);
 
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
@@ -498,6 +506,8 @@ export default function App() {
             setMode={setMode}
             cpuDifficulty={cpuDifficulty}
             setCpuDifficulty={setCpuDifficulty}
+            settings={settings}
+            setSettings={setSettings}
             onBack={() => setScreen('menu')}
           />
         )}
@@ -519,6 +529,7 @@ export default function App() {
             stage={selectedStage}
             mode={mode}
             cpuDifficulty={cpuDifficulty}
+            settings={settings}
             readInputs={readInputs}
             setVirtualAction={setVirtualAction}
             clearMenuInputs={clearMenuInputs}
@@ -908,45 +919,238 @@ function StageSelect({
   );
 }
 
+type SettingsTab = 'game' | 'controls' | 'camera' | 'display' | 'audio';
+
+const settingsTabs: SettingsTab[] = ['game', 'controls', 'camera', 'display', 'audio'];
+const tabLabels: Record<SettingsTab, string> = {
+  game: 'Game',
+  controls: 'Controls',
+  camera: 'Camera',
+  display: 'Display',
+  audio: 'Audio'
+};
+const sidebars: Record<SettingsTab, string[]> = {
+  game: ['Match Rules', 'Training', 'Assist', 'Defaults'],
+  controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
+  camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
+  display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
+  audio: ['Master Mix', 'Music', 'SFX', 'Mute']
+};
+const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'block', 'confirm', 'pause'];
+const actionLabels: Record<ActionName, string> = {
+  up: 'Up / Jump',
+  down: 'Down / Crouch',
+  left: 'Left',
+  right: 'Right',
+  sidestepUp: 'Sidestep Up',
+  sidestepDown: 'Sidestep Down',
+  sidewalkUp: 'Sidewalk Up',
+  sidewalkDown: 'Sidewalk Down',
+  jab: '1 Left Hand',
+  heavy: '2 Right Hand',
+  kick: '3 Left Foot',
+  special: '4 Right Foot',
+  block: 'Block',
+  confirm: 'Confirm',
+  back: 'Back',
+  pause: 'Pause'
+};
+
 function SettingsScreen({
   mode,
   setMode,
   cpuDifficulty,
   setCpuDifficulty,
+  settings,
+  setSettings,
   onBack
 }: {
   mode: MatchMode;
   setMode: (mode: MatchMode) => void;
   cpuDifficulty: CpuDifficulty;
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
+  settings: GameSettings;
+  setSettings: Dispatch<SetStateAction<GameSettings>>;
   onBack: () => void;
 }) {
+  const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
+  const [activePlayer, setActivePlayer] = useState<1 | 2>(1);
+  const [remapRequest, setRemapRequest] = useState<{ player: 1 | 2; action: ActionName } | null>(null);
+  const [duplicateRequest, setDuplicateRequest] = useState<{ key: string; owner: string } | null>(null);
+  const [inputTest, setInputTest] = useState('Press a key to test bindings');
+
+  const updateSettings = (recipe: (current: GameSettings) => GameSettings) => {
+    setSettings((current) => sanitizeGameSettings(recipe(cloneSettings(current))));
+  };
+
+  useEffect(() => {
+    if (!remapRequest) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const nextKey = event.code || event.key;
+      const duplicate = findDuplicateKeyboardBinding(settings, nextKey, remapRequest);
+      if (duplicate && (duplicateRequest?.key !== nextKey || duplicateRequest.owner !== duplicate.owner)) {
+        setDuplicateRequest({ key: nextKey, owner: duplicate.owner });
+        return;
+      }
+      updateSettings((current) => setKeyboardBinding(current, remapRequest.player, remapRequest.action, nextKey));
+      setInputTest(`P${remapRequest.player} ${actionLabels[remapRequest.action]} = ${formatKeyName(nextKey)}`);
+      setRemapRequest(null);
+      setDuplicateRequest(null);
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, [duplicateRequest, remapRequest, settings]);
+
+  useEffect(() => {
+    if (remapRequest) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      const bindings = getKeyboardBindingsForEvent(event, mode, settings.controls);
+      setInputTest(bindings.length > 0 ? bindings.map((binding) => `P${binding.player} ${actionLabels[binding.action]}`).join(' / ') : `Unbound: ${formatKeyName(event.code || event.key)}`);
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, [mode, remapRequest, settings.controls]);
+
+  const renderEditor = () => {
+    if (activeTab === 'game') {
+      return (
+        <div className="settings-list">
+          <SettingRow label="Match Mode" value={modeLabel(mode)}>
+            <SegmentedControl value={mode} setValue={setMode} />
+          </SettingRow>
+          <SettingRow label="Round Timer" value={`${settings.game.roundTimer}s`}>
+            <input type="range" min={30} max={99} step={1} value={settings.game.roundTimer} onChange={(event) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer: Number(event.target.value) } }))} />
+          </SettingRow>
+          {usesCpuDifficulty(mode) && (
+            <SettingRow label="CPU Difficulty" value={cpuDifficultyLabels[cpuDifficulty]}>
+              <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />
+            </SettingRow>
+          )}
+          <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
+          <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
+        </div>
+      );
+    }
+
+    if (activeTab === 'controls') {
+      const keyboard = settings.controls.keyboard[activePlayer - 1];
+      const gamepad = settings.controls.gamepad[activePlayer - 1];
+      return (
+        <div className="settings-list">
+          <SettingRow label="Player" value={`P${activePlayer}`}>
+            <div className="mini-segmented">
+              <button className={activePlayer === 1 ? 'active' : ''} onClick={() => setActivePlayer(1)}>P1</button>
+              <button className={activePlayer === 2 ? 'active' : ''} onClick={() => setActivePlayer(2)}>P2</button>
+            </div>
+          </SettingRow>
+          {controlActions.map((action) => (
+            <div className="binding-row" key={action}>
+              <div>
+                <strong>{actionLabels[action]}</strong>
+                <small>{keyboard[action].map(formatKeyName).join(' / ') || 'Unbound'}</small>
+              </div>
+              <button className={remapRequest?.player === activePlayer && remapRequest.action === action ? 'capture' : ''} onClick={() => {
+                setActivePlayer(activePlayer);
+                setRemapRequest({ player: activePlayer, action });
+                setDuplicateRequest(null);
+              }}>
+                {remapRequest?.player === activePlayer && remapRequest.action === action ? 'Press key' : 'Remap'}
+              </button>
+              <div className="gamepad-stepper" aria-label={`${actionLabels[action]} gamepad button`}>
+                <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, -1))}>-</button>
+                <span>B{gamepad[action]?.[0] ?? '-'}</span>
+                <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, 1))}>+</button>
+              </div>
+            </div>
+          ))}
+          {duplicateRequest && <p className="settings-warning">{duplicateRequest.key} is already bound to {duplicateRequest.owner}. Press it again to replace that binding.</p>}
+          <div className="settings-actions-row">
+            <button className="secondary-button" onClick={() => setSettings((current) => ({ ...current, controls: cloneSettings(defaultGameSettings).controls }))}>
+              <RotateCcw size={16} />
+              Reset Controls
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    if (activeTab === 'camera') {
+      return (
+        <div className="settings-list">
+          <SettingSlider label="Distance" value={settings.camera.distance} min={0.7} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, distance: value } }))} />
+          <SettingSlider label="Height" value={settings.camera.height} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, height: value } }))} />
+          <SettingSlider label="Smoothing" value={settings.camera.smoothing} min={0.35} max={1.5} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, smoothing: value } }))} />
+          <SettingSlider label="Zoom Bias" value={settings.camera.zoomBias} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, zoomBias: value } }))} />
+        </div>
+      );
+    }
+
+    if (activeTab === 'display') {
+      return (
+        <div className="settings-list">
+          <SettingSlider label="HUD Scale" value={settings.display.hudScale} min={0.78} max={1.25} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, hudScale: value } }))} />
+          <SettingRow label="Touch Controls" value={settings.display.touchControls.toUpperCase()}>
+            <div className="mini-segmented">
+              {(['auto', 'on', 'off'] as const).map((value) => (
+                <button key={value} className={settings.display.touchControls === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, touchControls: value } }))}>{value}</button>
+              ))}
+            </div>
+          </SettingRow>
+          <SettingToggle label="Reduced Motion" checked={settings.display.reducedMotion} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, reducedMotion: checked } }))} />
+          <SettingToggle label="Debug Overlay" checked={settings.display.debugOverlay} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, debugOverlay: checked } }))} />
+        </div>
+      );
+    }
+
+    return (
+      <div className="settings-list">
+        <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
+        <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
+        <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
+        <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
+      </div>
+    );
+  };
+
   return (
     <div className="settings-screen">
-      <header className="section-header with-actions">
+      <header className="options-header">
         <div>
-          <span>Input</span>
-          <h2>Controls</h2>
+          <span>Options</span>
+          <h2>{tabLabels[activeTab]}</h2>
         </div>
-        <SegmentedControl value={mode} setValue={setMode} />
+        <nav className="options-tabs" aria-label="Options tabs">
+          <span>L1</span>
+          {settingsTabs.map((tab) => (
+            <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
+              {tabLabels[tab]}
+            </button>
+          ))}
+          <span>R1</span>
+        </nav>
       </header>
-      {usesCpuDifficulty(mode) && (
-        <section className="settings-strip" aria-label="CPU difficulty">
-          <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} />
-          <p>Lower CPUs hesitate and poke. Higher CPUs press more often, block earlier, and try directional combo routes.</p>
+      <section className="options-layout">
+        <aside className="options-sidebar">
+          {sidebars[activeTab].map((item, index) => (
+            <button key={item} className={index === 0 ? 'active' : ''}>{item}</button>
+          ))}
+          <button onClick={() => setSettings(cloneSettings(defaultGameSettings))}>Restore All Defaults</button>
+        </aside>
+        <section className="options-editor" aria-label={`${tabLabels[activeTab]} settings`}>
+          {renderEditor()}
         </section>
-      )}
-      <div className="control-grid">
-        <ControlPanel title="Player 1" rows={['WASD movement in playable modes', 'Hold back to block', '1/U left hand, 2/I right hand', '3/J left foot, 4/K right foot', 'Directions alter combo routes']} />
-        <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'CPU controls this side in AI modes', 'Training mode keeps this side as a dummy', 'Hold back to block', '1 left hand, 2 right hand', '3 left foot, 4 right foot']} />
-        <ControlPanel title="Gamepad" rows={['Left stick or d-pad movement', 'Face buttons attack', 'Shoulders block and special', 'Start pauses the match']} />
-        <ControlPanel title="Modes" rows={['1P vs AI: player one fights CPU', 'Local 2P: both sides playable', 'Training: CPU dummy never fights back', 'CPU vs CPU: both fighters autoplay', 'Pause still works during CPU battles']} />
-      </div>
-      <button className="secondary-button" onClick={onBack}>
-        <Home size={18} />
-        Back
-      </button>
+        <aside className="options-preview">
+          <OptionsPreview tab={activeTab} settings={settings} inputTest={inputTest} activePlayer={activePlayer} />
+        </aside>
+      </section>
       <footer className="settings-support-footer" aria-label="Community links">
+        <button className="secondary-button" onClick={onBack}>
+          <Home size={18} />
+          Back
+        </button>
         <div className="support-actions">
           <a className="support-button discord-button" href="https://discord.gg/yDcrFsmTx7" target="_blank" rel="noreferrer">
             <span className="discord-mark" aria-hidden="true">Discord</span>
@@ -960,6 +1164,153 @@ function SettingsScreen({
       </footer>
     </div>
   );
+}
+
+function SettingRow({ label, value, children }: { label: string; value: string; children: ReactNode }) {
+  return (
+    <article className="setting-row">
+      <div>
+        <strong>{label}</strong>
+        <small>{value}</small>
+      </div>
+      <div>{children}</div>
+    </article>
+  );
+}
+
+function SettingSlider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <SettingRow label={label} value={`${Math.round(value * 100)}%`}>
+      <input type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} />
+    </SettingRow>
+  );
+}
+
+function SettingToggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (checked: boolean) => void }) {
+  return (
+    <article className="setting-row">
+      <div>
+        <strong>{label}</strong>
+        <small>{checked ? 'On' : 'Off'}</small>
+      </div>
+      <button className={`toggle-switch ${checked ? 'is-on' : ''}`} onClick={() => onChange(!checked)} aria-pressed={checked}>
+        <span />
+      </button>
+    </article>
+  );
+}
+
+function OptionsPreview({
+  tab,
+  settings,
+  inputTest,
+  activePlayer
+}: {
+  tab: SettingsTab;
+  settings: GameSettings;
+  inputTest: string;
+  activePlayer: 1 | 2;
+}) {
+  const keyboard = settings.controls.keyboard[activePlayer - 1];
+  return (
+    <div className="options-preview-card">
+      <span>{tabLabels[tab]} Preview</span>
+      {tab === 'controls' ? (
+        <>
+          <div className="controller-outline" aria-hidden="true">
+            <span>LS</span>
+            <span>RS</span>
+            <b>1</b>
+            <b>2</b>
+            <b>3</b>
+            <b>4</b>
+          </div>
+          <p>{inputTest}</p>
+          <small>P{activePlayer} primary attack keys: {['jab', 'heavy', 'kick', 'special'].map((action) => keyboard[action as ActionName][0] ? formatKeyName(keyboard[action as ActionName][0]) : '-').join(' / ')}</small>
+        </>
+      ) : (
+        <>
+          <strong>{previewTitle(tab, settings)}</strong>
+          <p>{previewBody(tab)}</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+function findDuplicateKeyboardBinding(settings: GameSettings, key: string, target: { player: 1 | 2; action: ActionName }) {
+  for (let player = 1; player <= 2; player += 1) {
+    const keyboard = settings.controls.keyboard[player - 1];
+    for (const action of Object.keys(keyboard) as ActionName[]) {
+      if (player === target.player && action === target.action) continue;
+      if (keyboard[action].includes(key)) return { owner: `P${player} ${actionLabels[action]}` };
+    }
+  }
+  return null;
+}
+
+function setKeyboardBinding(settings: GameSettings, player: 1 | 2, action: ActionName, key: string): GameSettings {
+  const next = cloneSettings(settings);
+  next.controls.keyboard.forEach((keyboard) => {
+    for (const candidate of Object.keys(keyboard) as ActionName[]) {
+      keyboard[candidate] = keyboard[candidate].filter((value) => value !== key);
+    }
+  });
+  const bindings = next.controls.keyboard[player - 1][action];
+  next.controls.keyboard[player - 1][action] = [key, ...bindings.filter((value) => value !== key)].slice(0, 3);
+  return next;
+}
+
+function adjustGamepadButton(settings: GameSettings, player: 1 | 2, action: ActionName, delta: number): GameSettings {
+  const next = cloneSettings(settings);
+  const current = next.controls.gamepad[player - 1][action]?.[0] ?? 0;
+  next.controls.gamepad[player - 1][action] = [Math.min(16, Math.max(0, current + delta))];
+  return next;
+}
+
+function formatKeyName(key: string) {
+  return key
+    .replace(/^Key/, '')
+    .replace(/^Digit/, '')
+    .replace(/^Numpad/, 'Num ')
+    .replace('Arrow', '')
+    .replace('Space', 'Spacebar')
+    .replace('Escape', 'Esc');
+}
+
+function modeLabel(mode: MatchMode) {
+  if (mode === 'ai') return '1P vs AI';
+  if (mode === 'local2p') return 'Local 2P';
+  if (mode === 'training') return 'Training';
+  return 'CPU vs CPU';
+}
+
+function previewTitle(tab: SettingsTab, settings: GameSettings) {
+  if (tab === 'game') return `${settings.game.roundTimer}s rounds`;
+  if (tab === 'camera') return `Camera ${Math.round(settings.camera.distance * 100)} / ${Math.round(settings.camera.height * 100)}`;
+  if (tab === 'display') return `HUD ${Math.round(settings.display.hudScale * 100)}%`;
+  return settings.audio.muted ? 'Muted' : `Master ${Math.round(settings.audio.master * 100)}%`;
+}
+
+function previewBody(tab: SettingsTab) {
+  if (tab === 'game') return 'These values are applied when a new fight or rematch starts.';
+  if (tab === 'camera') return 'Camera tuning affects the live fight camera that keeps both fighters centered.';
+  if (tab === 'display') return 'Display settings affect HUD, touch controls, reduced motion, and debug overlays.';
+  return 'Audio values are persisted now and ready for future music and SFX playback.';
 }
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
@@ -1515,6 +1866,7 @@ function FightScreen({
   stage,
   mode,
   cpuDifficulty,
+  settings,
   readInputs,
   setVirtualAction,
   clearMenuInputs,
@@ -1527,6 +1879,7 @@ function FightScreen({
   stage: StageDefinition;
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
+  settings: GameSettings;
   readInputs: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
@@ -1535,7 +1888,14 @@ function FightScreen({
   onCharacterSelect: () => void;
 }) {
   const [paused, setPaused] = useState(false);
-  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, mode, cpuDifficulty));
+  const matchOptions = useMemo(
+    () => ({
+      roundTime: settings.game.roundTimer,
+      trainingInfiniteHealth: settings.game.trainingInfiniteHealth
+    }),
+    [settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+  );
+  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, mode, cpuDifficulty, matchOptions));
   const matchRef = useRef(match);
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
@@ -1608,7 +1968,7 @@ function FightScreen({
   }, [clearMenuInputs, paused, readInputs]);
 
   const reset = () => {
-    const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty);
+    const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty, matchOptions);
     matchRef.current = fresh;
     setMatch(fresh);
     setPaused(false);
@@ -1616,7 +1976,7 @@ function FightScreen({
 
   const handleSurfaceKey = (event: ReactKeyboardEvent<HTMLDivElement>, pressed: boolean) => {
     if (event.defaultPrevented) return;
-    const binding = getSurfaceKeyBinding(event.nativeEvent, mode);
+    const binding = getSurfaceKeyBinding(event.nativeEvent, mode, settings.controls);
     if (!binding) return;
     setVirtualAction(binding.player, binding.action, pressed);
     event.preventDefault();
@@ -1631,10 +1991,10 @@ function FightScreen({
       onKeyDown={(event) => handleSurfaceKey(event, true)}
       onKeyUp={(event) => handleSurfaceKey(event, false)}
     >
-      <GameScene match={match} />
-      <FightHud match={match} />
-      <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />
-      <TouchControls onAction={setVirtualAction} />
+      <GameScene match={match} cameraSettings={settings.camera} />
+      <FightHud match={match} hudScale={settings.display.hudScale} />
+      {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
       {match.message && <div className="match-message">{match.message}</div>}
       {paused && (
         <div className="pause-overlay">
@@ -1713,89 +2073,8 @@ function ConfiguredMoveList({ characters }: { characters: [CharacterDefinition, 
   );
 }
 
-const surfacePlayerOneKeys: Record<string, ActionName> = {
-  KeyW: 'up',
-  w: 'up',
-  W: 'up',
-  KeyS: 'down',
-  s: 'down',
-  S: 'down',
-  KeyA: 'left',
-  a: 'left',
-  A: 'left',
-  KeyD: 'right',
-  d: 'right',
-  D: 'right',
-  KeyU: 'jab',
-  u: 'jab',
-  U: 'jab',
-  Digit1: 'jab',
-  '1': 'jab',
-  Numpad1: 'jab',
-  KeyI: 'heavy',
-  i: 'heavy',
-  I: 'heavy',
-  Digit2: 'heavy',
-  '2': 'heavy',
-  Numpad2: 'heavy',
-  KeyJ: 'kick',
-  j: 'kick',
-  J: 'kick',
-  Digit3: 'kick',
-  '3': 'kick',
-  Numpad3: 'kick',
-  KeyK: 'special',
-  k: 'special',
-  K: 'special',
-  Digit4: 'special',
-  '4': 'special',
-  Numpad4: 'special',
-  Enter: 'confirm',
-  Escape: 'pause'
-};
-
-const surfacePlayerTwoKeys: Record<string, ActionName> = {
-  ArrowUp: 'up',
-  ArrowDown: 'down',
-  ArrowLeft: 'left',
-  ArrowRight: 'right',
-  Numpad1: 'jab',
-  '1': 'jab',
-  Digit1: 'jab',
-  Numpad2: 'heavy',
-  '2': 'heavy',
-  Digit2: 'heavy',
-  Numpad3: 'kick',
-  '3': 'kick',
-  Digit3: 'kick',
-  Numpad4: 'special',
-  '4': 'special',
-  Digit4: 'special',
-  Numpad5: 'block',
-  '5': 'block',
-  Digit5: 'block',
-  ShiftRight: 'block',
-  Shift: 'block',
-  Space: 'confirm',
-  ' ': 'confirm'
-};
-
-const surfaceAiArrowKeys: Record<string, ActionName> = {
-  ArrowUp: 'up',
-  ArrowDown: 'down',
-  ArrowLeft: 'left',
-  ArrowRight: 'right'
-};
-
-function getSurfaceKeyBinding(event: KeyboardEvent, mode: MatchMode): { player: 1 | 2; action: ActionName } | null {
-  const keyId = surfacePlayerOneKeys[event.code] || surfacePlayerTwoKeys[event.code] || surfaceAiArrowKeys[event.code] ? event.code : event.key;
-  const p1Action = surfacePlayerOneKeys[keyId];
-  if (p1Action) return { player: 1, action: p1Action };
-  const aiAction = mode === 'ai' ? surfaceAiArrowKeys[keyId] : undefined;
-  if (aiAction) return { player: 1, action: aiAction };
-  const p2Action = surfacePlayerTwoKeys[keyId];
-  if (p2Action) return { player: 2, action: p2Action };
-  return null;
+function getSurfaceKeyBinding(event: KeyboardEvent, mode: MatchMode, controls: GameSettings['controls']): { player: 1 | 2; action: ActionName } | null {
+  return getKeyboardBindingsForEvent(event, mode, controls)[0] ?? null;
 }
 
 function FightDebug({
@@ -1829,10 +2108,10 @@ function FightDebug({
   );
 }
 
-function FightHud({ match }: { match: MatchSnapshot }) {
+function FightHud({ match, hudScale }: { match: MatchSnapshot; hudScale: number }) {
   const [p1, p2] = match.fighters;
   return (
-    <div className="fight-hud">
+    <div className="fight-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
       <HealthBar fighter={p1} align="left" />
       <div className="round-box">
         <strong>{Math.ceil(match.timer)}</strong>

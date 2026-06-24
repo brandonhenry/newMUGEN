@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { starterCharacters } from '../data/characters';
 import { stages } from '../data/stages';
 import { normalizeMove, validateCharacter } from '../lib/characterLoader';
+import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from '../lib/gameSettings';
+import { getKeyboardBindingsForEvent } from '../hooks/useControls';
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition } from '../types';
 import { createMatch, stepMatch } from './fightEngine';
 
@@ -30,6 +32,29 @@ describe('character manifests', () => {
     expect(legacy.activeFrames).toBe(7);
     expect(legacy.recoveryFrames).toBe(14);
     expect(legacy.hitLevel).toBe('high');
+  });
+
+  it('sanitizes partial settings and fills defaults', () => {
+    const settings = sanitizeGameSettings({
+      game: { roundTimer: 75 },
+      controls: { keyboard: [{ jab: ['KeyP'] }] },
+      display: { touchControls: 'on' }
+    });
+
+    expect(settings.game.roundTimer).toBe(75);
+    expect(settings.controls.keyboard[0].jab).toEqual(['KeyP']);
+    expect(settings.controls.keyboard[0].up).toEqual(defaultGameSettings.controls.keyboard[0].up);
+    expect(settings.controls.keyboard[1].right).toEqual(defaultGameSettings.controls.keyboard[1].right);
+    expect(settings.display.touchControls).toBe('on');
+    expect(settings.camera.distance).toBe(defaultGameSettings.camera.distance);
+  });
+
+  it('resolves remapped keyboard bindings', () => {
+    const settings = cloneSettings(defaultGameSettings);
+    settings.controls.keyboard[0].jab = ['KeyP'];
+    const event = new KeyboardEvent('keydown', { code: 'KeyP', key: 'p' });
+
+    expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([{ player: 1, action: 'jab' }]);
   });
 });
 
@@ -97,6 +122,25 @@ describe('fight engine', () => {
     expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
     expect(match.timer).toBe(60);
+  });
+
+  it('allows training health reset to be disabled', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5, { trainingInfiniteHealth: false });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].hp = 0;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('roundOver');
+    expect(match.fighters[1].hp).toBe(0);
+  });
+
+  it('uses custom round timer settings for new matches', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { roundTime: 45 });
+
+    expect(match.roundTime).toBe(45);
+    expect(match.timer).toBe(45);
   });
 
   it('keeps CPU fighters attacking during an extended exchange', () => {

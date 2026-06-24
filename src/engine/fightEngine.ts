@@ -4,6 +4,7 @@ import type {
   FighterRuntime,
   InputFrame,
   MatchMode,
+  MatchOptions,
   MatchSnapshot,
   MoveDefinition,
   MoveInput,
@@ -38,14 +39,18 @@ export function createMatch(
   p2: CharacterDefinition,
   stage: StageDefinition,
   mode: MatchMode,
-  cpuDifficulty: CpuDifficulty = 3
+  cpuDifficulty: CpuDifficulty = 3,
+  options: MatchOptions = {}
 ): MatchSnapshot {
+  const roundTime = clamp(Math.round(options.roundTime ?? ROUND_TIME), 30, 99);
   return {
     fighters: [createFighter(1, p1, -START_DISTANCE / 2), createFighter(2, p2, START_DISTANCE / 2)],
     stage,
     mode,
     cpuDifficulty,
-    timer: ROUND_TIME,
+    roundTime,
+    trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
+    timer: roundTime,
     round: 1,
     countdown: 0,
     winnerSlot: null,
@@ -103,9 +108,9 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   resolveBodyCollision(next);
   resolveHits(next);
 
-  next.timer = next.mode === 'training' ? ROUND_TIME : Math.max(0, next.timer - dt);
+  next.timer = next.mode === 'training' && next.trainingInfiniteHealth ? next.roundTime : Math.max(0, next.timer - dt);
   const ko = next.fighters.find((fighter) => fighter.hp <= 0);
-  if (next.mode === 'training') {
+  if (next.mode === 'training' && next.trainingInfiniteHealth) {
     refillTrainingHealth(next);
   } else if (ko || next.timer <= 0) {
     finishRound(next);
@@ -752,7 +757,7 @@ function resetRound(match: MatchSnapshot) {
   match.fighters[0].roundsWon = rounds[0];
   match.fighters[1].roundsWon = rounds[1];
   match.round += 1;
-  match.timer = ROUND_TIME;
+  match.timer = match.roundTime;
   match.countdown = 0;
   match.phase = 'fighting';
   match.message = '';

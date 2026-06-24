@@ -3,6 +3,7 @@ import type { ActionName } from '../types';
 
 type TouchControlsProps = {
   onAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
+  forceVisible?: boolean;
 };
 
 const movement: ActionName[] = ['up', 'left', 'right', 'down'];
@@ -19,7 +20,7 @@ const movementIcons = {
   right: <ChevronRight size={20} />
 };
 
-export function TouchControls({ onAction }: TouchControlsProps) {
+export function TouchControls({ onAction, forceVisible = false }: TouchControlsProps) {
   const bind = (player: 1 | 2, action: ActionName) => ({
     onPointerDown: () => onAction(player, action, true),
     onPointerUp: () => onAction(player, action, false),
@@ -28,7 +29,7 @@ export function TouchControls({ onAction }: TouchControlsProps) {
   });
 
   return (
-    <div className="touch-controls" aria-label="Touch controls">
+    <div className={`touch-controls ${forceVisible ? 'force-visible' : ''}`} aria-label="Touch controls">
       <div className="touch-pad">
         {movement.map((action) => (
           <button key={action} className={`touch-button touch-${action}`} {...bind(1, action)} aria-label={action}>

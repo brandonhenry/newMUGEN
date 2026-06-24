@@ -4,17 +4,25 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import type { CharacterDefinition, FighterRuntime, FighterState, MatchSnapshot, MoveInput, StageDefinition } from '../types';
+import type { CharacterDefinition, FighterRuntime, FighterState, GameSettings, MatchSnapshot, MoveInput, StageDefinition } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
 import { debugLogThrottled } from '../lib/debugLogger';
 
 type GameSceneProps = {
   match: MatchSnapshot;
+  cameraSettings?: GameSettings['camera'];
+};
+
+const defaultCameraSettings: GameSettings['camera'] = {
+  distance: 1,
+  height: 1,
+  smoothing: 1,
+  zoomBias: 1
 };
 
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
-export function GameScene({ match }: GameSceneProps) {
+export function GameScene({ match, cameraSettings = defaultCameraSettings }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <color attach="background" args={['#101114']} />
@@ -26,7 +34,7 @@ export function GameScene({ match }: GameSceneProps) {
       <directionalLight castShadow position={[3, 6, 4]} intensity={1.8} color={match.stage.light} shadow-mapSize={[1024, 1024]} />
       <pointLight position={[-4, 2, -3]} color={match.fighters[0].character.colors.primary} intensity={8} distance={7} />
       <pointLight position={[4, 2, 3]} color={match.fighters[1].character.colors.primary} intensity={8} distance={7} />
-      <CameraRig match={match} />
+      <CameraRig match={match} settings={cameraSettings} />
       <Arena stage={match.stage} />
       <FighterRig fighter={match.fighters[0]} />
       <FighterRig fighter={match.fighters[1]} />
@@ -357,7 +365,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
   };
 }
 
-function CameraRig({ match }: { match: MatchSnapshot }) {
+function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
   const { camera, size } = useThree();
   const target = useMemo(() => new THREE.Vector3(), []);
   useFrame((_, delta) => {
@@ -383,10 +391,11 @@ function CameraRig({ match }: { match: MatchSnapshot }) {
     const horizontalFit = (distance * 0.5 + 1.55) / Math.tan(horizontalFov / 2);
     const verticalSpan = 2.65 + Math.max(p1.position.y, p2.position.y) * 0.55;
     const verticalFit = verticalSpan / Math.tan(verticalFov / 2);
-    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2), 5.2, 18);
-    const cameraHeight = THREE.MathUtils.clamp(2.35 + cameraDistance * 0.13 + Math.max(p1.position.y, p2.position.y) * 0.22, 2.75, 5.6);
+    const distanceScale = settings.distance * settings.zoomBias;
+    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2) * distanceScale, 4.8, 21);
+    const cameraHeight = THREE.MathUtils.clamp((2.35 + cameraDistance * 0.13 + Math.max(p1.position.y, p2.position.y) * 0.22) * settings.height, 2.2, 6.4);
     const desired = new THREE.Vector3(midX + cameraX * cameraDistance, cameraHeight, midZ + cameraZ * cameraDistance);
-    camera.position.lerp(desired, 1 - Math.pow(0.00001, delta));
+    camera.position.lerp(desired, 1 - Math.pow(0.00001, delta * settings.smoothing));
     target.set(midX, midY, midZ);
     camera.lookAt(target);
   });

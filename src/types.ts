@@ -135,6 +135,45 @@ export type InputFrame = Record<ActionName, boolean>;
 export type MatchMode = 'ai' | 'local2p' | 'cpu' | 'training';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
+export type PlayerControlBindings = Record<ActionName, string[]>;
+export type PlayerGamepadBindings = Partial<Record<ActionName, number[]>>;
+export type ControlBindingMap = {
+  keyboard: [PlayerControlBindings, PlayerControlBindings];
+  gamepad: [PlayerGamepadBindings, PlayerGamepadBindings];
+};
+
+export type GameSettings = {
+  game: {
+    roundTimer: number;
+    trainingInfiniteHealth: boolean;
+    inputAssist: boolean;
+  };
+  controls: ControlBindingMap;
+  camera: {
+    distance: number;
+    height: number;
+    smoothing: number;
+    zoomBias: number;
+  };
+  display: {
+    hudScale: number;
+    touchControls: 'auto' | 'on' | 'off';
+    reducedMotion: boolean;
+    debugOverlay: boolean;
+  };
+  audio: {
+    master: number;
+    music: number;
+    sfx: number;
+    muted: boolean;
+  };
+};
+
+export type MatchOptions = {
+  roundTime?: number;
+  trainingInfiniteHealth?: boolean;
+};
+
 export type FighterRuntime = {
   slot: 1 | 2;
   character: CharacterDefinition;
@@ -178,6 +217,8 @@ export type MatchSnapshot = {
   stage: StageDefinition;
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
+  roundTime: number;
+  trainingInfiniteHealth: boolean;
   timer: number;
   round: number;
   countdown: number;

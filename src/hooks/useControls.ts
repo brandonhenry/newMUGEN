@@ -1,87 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react';
-import type { ActionName, InputFrame, MatchMode } from '../types';
+import type { ActionName, ControlBindingMap, InputFrame, MatchMode, PlayerControlBindings } from '../types';
 import { emptyInputFrame } from '../types';
-
-const playerOneKeys: Record<string, ActionName> = {
-  KeyW: 'up',
-  w: 'up',
-  W: 'up',
-  KeyS: 'down',
-  s: 'down',
-  S: 'down',
-  KeyA: 'left',
-  a: 'left',
-  A: 'left',
-  KeyD: 'right',
-  d: 'right',
-  D: 'right',
-  KeyU: 'jab',
-  u: 'jab',
-  U: 'jab',
-  Digit1: 'jab',
-  Numpad1: 'jab',
-  '1': 'jab',
-  KeyI: 'heavy',
-  i: 'heavy',
-  I: 'heavy',
-  Digit2: 'heavy',
-  Numpad2: 'heavy',
-  '2': 'heavy',
-  KeyJ: 'kick',
-  j: 'kick',
-  J: 'kick',
-  Digit3: 'kick',
-  Numpad3: 'kick',
-  '3': 'kick',
-  KeyK: 'special',
-  k: 'special',
-  K: 'special',
-  Digit4: 'special',
-  Numpad4: 'special',
-  '4': 'special',
-  Enter: 'confirm',
-  Escape: 'pause'
-};
-
-const playerTwoKeys: Record<string, ActionName> = {
-  ArrowUp: 'up',
-  ArrowDown: 'down',
-  ArrowLeft: 'left',
-  ArrowRight: 'right',
-  Numpad1: 'jab',
-  Digit1: 'jab',
-  '1': 'jab',
-  Numpad2: 'heavy',
-  Digit2: 'heavy',
-  '2': 'heavy',
-  Numpad3: 'kick',
-  Digit3: 'kick',
-  '3': 'kick',
-  Numpad4: 'special',
-  Digit4: 'special',
-  '4': 'special',
-  Numpad5: 'block',
-  '5': 'block',
-  ShiftRight: 'block',
-  Shift: 'block',
-  Space: 'confirm'
-};
+import { defaultGameSettings } from '../lib/gameSettings';
 
 const aiModeArrowKeys: Record<string, ActionName> = {
   ArrowUp: 'up',
   ArrowDown: 'down',
   ArrowLeft: 'left',
   ArrowRight: 'right'
-};
-
-const buttonMap: Partial<Record<number, ActionName>> = {
-  0: 'jab',
-  1: 'kick',
-  2: 'heavy',
-  3: 'special',
-  4: 'block',
-  5: 'block',
-  9: 'pause'
 };
 
 type VerticalTapState = {
@@ -92,7 +18,7 @@ type VerticalTapState = {
 
 const DOUBLE_TAP_MS = 1000;
 
-export function useControls(mode: MatchMode) {
+export function useControls(mode: MatchMode, controls: ControlBindingMap = defaultGameSettings.controls) {
   const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const virtualRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const verticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([
@@ -101,37 +27,25 @@ export function useControls(mode: MatchMode) {
   ]);
   const lastInputRef = useRef('none');
   const modeRef = useRef(mode);
+  const controlsRef = useRef(controls);
 
   useEffect(() => {
     modeRef.current = mode;
   }, [mode]);
 
   useEffect(() => {
+    controlsRef.current = controls;
+  }, [controls]);
+
+  useEffect(() => {
     const onKey = (event: KeyboardEvent, pressed: boolean) => {
-      const keyId = normalizeKeyEvent(event);
-      const p1Action = playerOneKeys[keyId];
-      const p2Action = playerTwoKeys[keyId];
-      const aiArrowAction = modeRef.current === 'ai' ? aiModeArrowKeys[keyId] : undefined;
-      if (p1Action) {
-        if (!applyVerticalTap(inputRefs.current[0], verticalTapRefs.current[0], p1Action, pressed)) {
-          inputRefs.current[0][p1Action] = pressed;
+      const bindings = getKeyboardBindingsForEvent(event, modeRef.current, controlsRef.current);
+      for (const binding of bindings) {
+        const playerIndex = binding.player - 1;
+        if (!applyVerticalTap(inputRefs.current[playerIndex], verticalTapRefs.current[playerIndex], binding.action, pressed)) {
+          inputRefs.current[playerIndex][binding.action] = pressed;
         }
-        if (pressed) lastInputRef.current = `p1:${p1Action}`;
-        event.preventDefault();
-      }
-      if (aiArrowAction) {
-        if (!applyVerticalTap(inputRefs.current[0], verticalTapRefs.current[0], aiArrowAction, pressed)) {
-          inputRefs.current[0][aiArrowAction] = pressed;
-        }
-        if (pressed) lastInputRef.current = `p1:${aiArrowAction}`;
-        event.preventDefault();
-        return;
-      }
-      if (p2Action) {
-        if (!applyVerticalTap(inputRefs.current[1], verticalTapRefs.current[1], p2Action, pressed)) {
-          inputRefs.current[1][p2Action] = pressed;
-        }
-        if (pressed) lastInputRef.current = `p2:${p2Action}`;
+        if (pressed) lastInputRef.current = `p${binding.player}:${binding.action}`;
         event.preventDefault();
       }
     };
@@ -165,8 +79,9 @@ export function useControls(mode: MatchMode) {
         merged[player].right ||= horizontal > 0.35;
         merged[player].up ||= vertical < -0.35;
         merged[player].down ||= vertical > 0.35;
-        for (const [index, action] of Object.entries(buttonMap)) {
-          if (pad.buttons[Number(index)]?.pressed && action) merged[player][action] = true;
+        const gamepadBindings = controlsRef.current.gamepad[player];
+        for (const action of Object.keys(gamepadBindings) as ActionName[]) {
+          if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) merged[player][action] = true;
         }
       }
     }
@@ -191,9 +106,31 @@ export function useControls(mode: MatchMode) {
   return { readInputs, setVirtualAction, clearMenuInputs, getLastInput };
 }
 
-function normalizeKeyEvent(event: KeyboardEvent) {
-  if (playerOneKeys[event.code] || playerTwoKeys[event.code] || aiModeArrowKeys[event.code]) return event.code;
-  return event.key;
+export function getKeyboardBindingsForEvent(
+  event: KeyboardEvent,
+  mode: MatchMode,
+  controls: ControlBindingMap = defaultGameSettings.controls
+): Array<{ player: 1 | 2; action: ActionName }> {
+  const matches: Array<{ player: 1 | 2; action: ActionName }> = [];
+  const keyIds = [event.code, event.key].filter(Boolean);
+  const p1Action = findActionForKey(controls.keyboard[0], keyIds);
+  const p2Action = findActionForKey(controls.keyboard[1], keyIds);
+  const aiAction = mode === 'ai' ? findActionForKey(aiModeArrowKeys, keyIds) : undefined;
+  if (p1Action) matches.push({ player: 1, action: p1Action });
+  if (aiAction && !matches.some((match) => match.player === 1 && match.action === aiAction)) matches.push({ player: 1, action: aiAction });
+  if (p2Action) matches.push({ player: 2, action: p2Action });
+  return matches;
+}
+
+function findActionForKey(bindings: PlayerControlBindings | Record<string, ActionName>, keyIds: string[]) {
+  for (const [actionOrKey, valuesOrAction] of Object.entries(bindings)) {
+    if (Array.isArray(valuesOrAction)) {
+      if (valuesOrAction.some((value) => keyIds.includes(value))) return actionOrKey as ActionName;
+    } else if (keyIds.includes(actionOrKey)) {
+      return valuesOrAction;
+    }
+  }
+  return undefined;
 }
 
 function applyVerticalTap(input: InputFrame, state: VerticalTapState, action: ActionName, pressed: boolean) {
