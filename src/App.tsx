@@ -454,6 +454,7 @@ export default function App() {
             onPlay={() => setScreen('select')}
             onSettings={() => setScreen('settings')}
             onViewer={() => setScreen('viewer')}
+            onExit={() => setScreen('title')}
           />
         )}
         {screen === 'select' && (
@@ -544,16 +545,19 @@ function MenuScreen({
   roster,
   onPlay,
   onSettings,
-  onViewer
+  onViewer,
+  onExit
 }: {
   roster: CharacterDefinition[];
   onPlay: () => void;
   onSettings: () => void;
   onViewer: () => void;
+  onExit: () => void;
 }) {
   const p1 = roster.find((character) => character.id === 'kiro') ?? roster[0];
   const p2 = roster.find((character) => character.id === 'riven') ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4) : null));
+  const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
 
   useEffect(() => {
@@ -594,8 +598,9 @@ function MenuScreen({
     { label: 'Arcade', action: onPlay },
     { label: 'Versus', action: onPlay },
     { label: 'Training', action: onPlay },
-    { label: 'Character Viewer', action: onViewer },
-    { label: 'Options', action: onSettings }
+    { label: 'Characters', action: onViewer },
+    { label: 'Options', action: onSettings },
+    { label: 'Exit', action: onExit }
   ];
 
   return (
@@ -610,7 +615,15 @@ function MenuScreen({
         <img className="kore-menu-logo" src="/brand/kore-logo.png" alt="K.O.R.E" />
         <nav className="arcade-menu-list" aria-label="Main menu">
           {menuItems.map((item, index) => (
-            <button key={item.label} className={index === 0 ? 'is-active' : ''} onClick={item.action}>
+            <button
+              key={item.label}
+              className={index === activeMenuIndex ? 'is-active' : ''}
+              onPointerEnter={() => setActiveMenuIndex(index)}
+              onMouseEnter={() => setActiveMenuIndex(index)}
+              onMouseMove={() => setActiveMenuIndex(index)}
+              onFocus={() => setActiveMenuIndex(index)}
+              onClick={item.action}
+            >
               {item.label}
             </button>
           ))}
@@ -1086,7 +1099,7 @@ function CharacterViewer({
     <div className="viewer-screen">
       <header className="section-header">
         <span>Character Select</span>
-        <h2>Character Viewer</h2>
+        <h2>Characters</h2>
       </header>
       <div className="viewer-layout">
         <div className="roster-list compact loader-bar">

@@ -280,6 +280,13 @@ button {
   outline: 0;
 }
 
+.arcade-menu-list:has(button:hover) button.is-active:not(:hover),
+.arcade-menu-list:has(button:focus-visible) button.is-active:not(:focus-visible) {
+  color: rgba(247, 247, 242, 0.82);
+  background: transparent;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.34);
+}
+
 .arcade-menu-list button:active {
   transform: scale(0.96);
 }
