@@ -532,7 +532,7 @@ function FightScreen({
     const fixedStep = 1 / 60;
 
     const tick = (now: number) => {
-      const delta = Math.min(0.05, (now - previous) / 1000);
+      const delta = Math.min(0.2, (now - previous) / 1000);
       previous = now;
       const [p1Input, p2Input] = readInputs();
       frameInputRef.current =

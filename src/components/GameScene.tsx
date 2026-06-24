@@ -320,6 +320,8 @@ type ImageVoxel = {
   color: string;
 };
 
+const imageVoxelCache = new Map<string, Promise<ImageVoxel[]>>();
+
 function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; progress: number }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
@@ -328,23 +330,30 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
   const rearArm = useRef<THREE.Group>(null);
   const leadLeg = useRef<THREE.Group>(null);
   const rearLeg = useRef<THREE.Group>(null);
+  const activeFrameSrc = useRef(getImageVoxelFramePath(fighter, progress, 0));
+  const [frameSrc, setFrameSrc] = useState(activeFrameSrc.current);
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
 
   useEffect(() => {
     let canceled = false;
-    if (!fighter.character.spriteSheetPath) return undefined;
-    extractImageVoxels(fighter.character.spriteSheetPath).then((nextVoxels) => {
+    if (!frameSrc) return undefined;
+    getCachedImageVoxels(frameSrc).then((nextVoxels) => {
       if (!canceled) setVoxels(nextVoxels);
     });
     return () => {
       canceled = true;
     };
-  }, [fighter.character.spriteSheetPath]);
+  }, [frameSrc]);
 
   const parts = useMemo(() => buildVoxelParts(voxels), [voxels]);
 
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
+    const nextFrameSrc = getImageVoxelFramePath(fighter, progress, t);
+    if (nextFrameSrc !== activeFrameSrc.current) {
+      activeFrameSrc.current = nextFrameSrc;
+      setFrameSrc(nextFrameSrc);
+    }
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
     const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
@@ -408,6 +417,38 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
   );
 }
 
+function getCachedImageVoxels(src: string): Promise<ImageVoxel[]> {
+  const cached = imageVoxelCache.get(src);
+  if (cached) return cached;
+  const request = loadImageVoxels(src);
+  imageVoxelCache.set(src, request);
+  return request;
+}
+
+function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elapsedTime: number) {
+  const frames = fighter.character.animationFrames;
+  if (!frames) return fighter.character.spriteSheetPath;
+  const key = getImageVoxelAnimationKey(fighter);
+  const sequence = frames[key] ?? frames.idle;
+  if (!sequence?.length) return fighter.character.spriteSheetPath;
+  const fps = fighter.character.animationFps ?? 8;
+  const frameIndex =
+    fighter.state === 'attack'
+      ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
+      : key === 'idle' || key === 'crouch' || key === 'block' || key === 'hitLight' || key === 'hitHeavy' || key === 'win' || key === 'lose'
+        ? 0
+      : Math.floor(elapsedTime * fps) % sequence.length;
+  return sequence[frameIndex];
+}
+
+function getImageVoxelAnimationKey(fighter: FighterRuntime) {
+  if (fighter.state === 'attack') return fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
+  if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
+  if (fighter.state === 'hit') return fighter.hitFlash > 0.45 ? 'hitHeavy' : 'hitLight';
+  return fighter.state;
+}
+
 function ImageVoxelPartGroup({
   part,
   groupRef
@@ -415,22 +456,55 @@ function ImageVoxelPartGroup({
   part: { anchor: [number, number, number]; voxels: ImageVoxel[] };
   groupRef: React.RefObject<THREE.Group>;
 }) {
+  const mesh = useMemo(() => buildInstancedVoxelMesh(part), [part]);
+
+  useEffect(() => {
+    return () => {
+      mesh?.geometry.dispose();
+      const material = mesh?.material;
+      if (Array.isArray(material)) {
+        material.forEach((entry) => entry.dispose());
+      } else {
+        material?.dispose();
+      }
+    };
+  }, [mesh]);
+
   return (
     <group ref={groupRef} position={part.anchor}>
-      {part.voxels.map((voxel, index) => (
-        <VoxelBox
-          key={`${voxel.part}-${index}`}
-          position={[
-            voxel.position[0] - part.anchor[0],
-            voxel.position[1] - part.anchor[1],
-            voxel.position[2] - part.anchor[2]
-          ]}
-          size={voxel.size}
-          color={voxel.color}
-        />
-      ))}
+      {mesh && <primitive object={mesh} />}
     </group>
   );
+}
+
+function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }) {
+  if (part.voxels.length === 0) return null;
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshStandardMaterial({
+    roughness: 0.56,
+    metalness: 0.06,
+    vertexColors: true
+  });
+  const mesh = new THREE.InstancedMesh(geometry, material, part.voxels.length);
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const rotation = new THREE.Quaternion();
+  const color = new THREE.Color();
+
+  part.voxels.forEach((voxel, index) => {
+    position.set(voxel.position[0] - part.anchor[0], voxel.position[1] - part.anchor[1], voxel.position[2] - part.anchor[2]);
+    scale.set(voxel.size[0], voxel.size[1], voxel.size[2]);
+    matrix.compose(position, rotation, scale);
+    mesh.setMatrixAt(index, matrix);
+    mesh.setColorAt(index, color.set(voxel.color));
+  });
+
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.instanceMatrix.needsUpdate = true;
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  return mesh;
 }
 
 function buildVoxelParts(voxels: ImageVoxel[]) {
@@ -480,10 +554,12 @@ async function extractImageVoxels(src: string): Promise<ImageVoxel[]> {
 
   const bboxWidth = bounds.maxX - bounds.minX + 1;
   const bboxHeight = bounds.maxY - bounds.minY + 1;
-  const rows = 52;
-  const columns = Math.max(28, Math.min(50, Math.round(rows * (bboxWidth / bboxHeight))));
-  const modelHeight = 2.05;
-  const modelWidth = modelHeight * (bboxWidth / bboxHeight);
+  const rows = 24;
+  const columns = Math.max(18, Math.min(26, Math.round(rows * (bboxWidth / bboxHeight))));
+  const aspect = bboxWidth / bboxHeight;
+  const maxModelWidth = 2.65;
+  const modelHeight = Math.min(2.05, maxModelWidth / aspect);
+  const modelWidth = modelHeight * aspect;
   const cellWidth = modelWidth / columns;
   const cellHeight = modelHeight / rows;
   const voxels: ImageVoxel[] = [];
@@ -507,6 +583,28 @@ async function extractImageVoxels(src: string): Promise<ImageVoxel[]> {
   }
 
   return voxels;
+}
+
+async function loadPrecomputedImageVoxels(src: string) {
+  const path = getPrecomputedVoxelPath(src);
+  if (!path) return null;
+  try {
+    const response = await fetch(path);
+    if (!response.ok) return null;
+    return (await response.json()) as ImageVoxel[];
+  } catch {
+    return null;
+  }
+}
+
+function getPrecomputedVoxelPath(src: string) {
+  const match = src.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
+  if (!match) return null;
+  return `${match[1]}/voxels/${match[2]}.json`;
+}
+
+async function loadImageVoxels(src: string) {
+  return (await loadPrecomputedImageVoxels(src)) ?? extractImageVoxels(src);
 }
 
 function getForegroundBounds(imageData: ImageData, background: [number, number, number]) {

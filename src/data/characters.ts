@@ -20,14 +20,60 @@ const animationNames = {
   lose: 'lose'
 };
 
+const kiroFrame = (index: number) => `/characters/kiro/frames/frame-${index.toString().padStart(3, '0')}.png`;
+
+const kiroAnimationFrames = {
+  idle: [64, 65, 66, 67, 68, 69].map(kiroFrame),
+  walkForward: [191, 192, 193, 194, 195, 196, 197].map(kiroFrame),
+  walkBack: [197, 196, 195, 194, 193, 192, 191].map(kiroFrame),
+  sidestepLeft: [75, 76, 77, 78, 79].map(kiroFrame),
+  sidestepRight: [80, 81, 82, 83, 84].map(kiroFrame),
+  crouch: [124, 125].map(kiroFrame),
+  jump: [203, 204, 205, 206, 207].map(kiroFrame),
+  block: [144, 145].map(kiroFrame),
+  jab: [75, 76, 77, 78, 79].map(kiroFrame),
+  kick: [154, 155, 156].map(kiroFrame),
+  heavy: [103, 104, 105, 106, 107].map(kiroFrame),
+  special: [90, 91, 92, 93].map(kiroFrame),
+  hitLight: [31, 32, 33].map(kiroFrame),
+  hitHeavy: [34, 35, 36, 37].map(kiroFrame),
+  knockdown: [36, 37, 38, 39].map(kiroFrame),
+  win: [225, 226, 227].map(kiroFrame),
+  lose: [158, 160].map(kiroFrame)
+};
+
+const rivenFrame = (index: number) => `/characters/riven/frames/frame-${index.toString().padStart(3, '0')}.png`;
+
+const rivenAnimationFrames = {
+  idle: [60, 61, 62, 63, 64].map(rivenFrame),
+  walkForward: [193, 194, 195, 196, 197, 198].map(rivenFrame),
+  walkBack: [198, 197, 196, 195, 194, 193].map(rivenFrame),
+  sidestepLeft: [4, 5, 6, 7, 8, 9].map(rivenFrame),
+  sidestepRight: [9, 8, 7, 6, 5, 4].map(rivenFrame),
+  crouch: [54, 55].map(rivenFrame),
+  jump: [145, 146, 147, 148].map(rivenFrame),
+  block: [100, 101].map(rivenFrame),
+  jab: [114, 115, 116, 117].map(rivenFrame),
+  kick: [80, 81, 82, 83].map(rivenFrame),
+  heavy: [130, 131, 132, 133, 134, 135].map(rivenFrame),
+  special: [150, 151, 152, 153].map(rivenFrame),
+  hitLight: [29, 30, 31].map(rivenFrame),
+  hitHeavy: [32, 33, 34, 35].map(rivenFrame),
+  knockdown: [31, 32, 33, 34, 35].map(rivenFrame),
+  win: [40, 41, 42].map(rivenFrame),
+  lose: [170, 171, 172, 173].map(rivenFrame)
+};
+
 export const starterCharacters: CharacterDefinition[] = [
   {
     id: 'kiro',
     displayName: 'Kiro',
     renderMode: 'spriteVoxel',
     modelPath: 'spritevoxel://kiro',
-    spriteSheetPath: '/characters/kiro/source.png',
+    spriteSheetPath: '/characters/kiro/animation-sheet.png',
     voxelProfile: 'image-source',
+    animationFrames: kiroAnimationFrames,
+    animationFps: 5,
     scale: 1.08,
     cameraOffset: [0, 1.22, 0],
     stats: { health: 104, speed: 5.05, sidestepSpeed: 4.35, jumpForce: 8.2, gravity: 18 },
@@ -98,6 +144,86 @@ export const starterCharacters: CharacterDefinition[] = [
     inputMap: { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },
     colors: { primary: '#ff8a1f', secondary: '#111224', accent: '#ffd84d' },
     aiProfile: { aggression: 0.68, guard: 0.4, spacing: 1.45, specialChance: 0.25 }
+  },
+  {
+    id: 'riven',
+    displayName: 'Riven',
+    renderMode: 'spriteVoxel',
+    modelPath: 'spritevoxel://riven',
+    spriteSheetPath: '/characters/riven/animation-sheet.png',
+    voxelProfile: 'image-source',
+    animationFrames: rivenAnimationFrames,
+    animationFps: 5,
+    scale: 1.08,
+    cameraOffset: [0, 1.22, 0],
+    stats: { health: 98, speed: 5.35, sidestepSpeed: 4.55, jumpForce: 8, gravity: 18 },
+    animations: animationNames,
+    moves: [
+      {
+        id: 'jab',
+        label: 'Volt Jab',
+        input: 'jab',
+        startup: 0.09,
+        active: 0.12,
+        recovery: 0.22,
+        damage: 7,
+        blockDamage: 1,
+        range: 1.44,
+        push: 0.7,
+        hitstun: 0.32,
+        knockdown: false,
+        hitbox: { offset: [0, 1.18, 0.63], size: [0.64, 0.46, 0.58] }
+      },
+      {
+        id: 'kick',
+        label: 'Shadow Kick',
+        input: 'kick',
+        startup: 0.16,
+        active: 0.14,
+        recovery: 0.3,
+        damage: 11,
+        blockDamage: 2,
+        range: 1.68,
+        push: 1,
+        hitstun: 0.4,
+        knockdown: false,
+        hitbox: { offset: [0, 0.84, 0.76], size: [0.78, 0.42, 0.66] }
+      },
+      {
+        id: 'heavy',
+        label: 'Blade Break',
+        input: 'heavy',
+        startup: 0.24,
+        active: 0.15,
+        recovery: 0.44,
+        damage: 18,
+        blockDamage: 4,
+        range: 1.62,
+        push: 1.34,
+        hitstun: 0.58,
+        knockdown: true,
+        hitbox: { offset: [0, 1.06, 0.72], size: [0.92, 0.58, 0.66] }
+      },
+      {
+        id: 'special',
+        label: 'Storm Step',
+        input: 'special',
+        startup: 0.2,
+        active: 0.23,
+        recovery: 0.48,
+        damage: 16,
+        blockDamage: 3,
+        range: 2.55,
+        push: 1.62,
+        hitstun: 0.54,
+        knockdown: false,
+        hitbox: { offset: [0, 1.03, 0.92], size: [1, 0.62, 0.76] }
+      }
+    ],
+    hurtboxes: [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }],
+    inputMap: { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },
+    colors: { primary: '#7b4cff', secondary: '#f2f2f2', accent: '#ffd45e' },
+    aiProfile: { aggression: 0.74, guard: 0.34, spacing: 1.38, specialChance: 0.28 }
   },
   {
     id: 'astra',

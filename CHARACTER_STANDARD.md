@@ -75,6 +75,11 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 - `shinobi-orange` or `shinobi-blue`: Uses the built-in articulated voxel body with a fixed palette.
 - `image-source`: Loads `spriteSheetPath`, removes blue-screen/background pixels, downsamples the remaining silhouette into voxel boxes, and groups the extracted pixels into head, torso, arms, and legs for procedural combat animation. This works best with a full-body T-pose or wide stance on a flat, high-contrast background.
 
+`image-source` characters can also define:
+
+- `animationFrames`: A map of animation keys to local frame image paths. Supported keys match the standard animation names: `idle`, `walkForward`, `walkBack`, `sidestepLeft`, `sidestepRight`, `crouch`, `jump`, `block`, `jab`, `kick`, `heavy`, `special`, `hitLight`, `hitHeavy`, `knockdown`, `win`, and `lose`.
+- `animationFps`: Playback speed for looping frame sets. Attack frames are selected from move progress instead of looping.
+
 ## Move Timing
 
 Move timing is in seconds. Total animation lock is `startup + active + recovery`.

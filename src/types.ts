@@ -61,6 +61,8 @@ export type CharacterDefinition = {
   modelPath: string;
   spriteSheetPath?: string;
   voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source';
+  animationFrames?: Record<string, string[]>;
+  animationFps?: number;
   scale: number;
   cameraOffset: Vec3Tuple;
   stats: {

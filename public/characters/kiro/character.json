@@ -173,6 +173,115 @@
     "specialChance": 0.25
   },
   "renderMode": "spriteVoxel",
-  "spriteSheetPath": "/characters/kiro/source.png",
-  "voxelProfile": "image-source"
+  "spriteSheetPath": "/characters/kiro/animation-sheet.png",
+  "voxelProfile": "image-source",
+  "animationFrames": {
+    "idle": [
+      "/characters/kiro/frames/frame-064.png",
+      "/characters/kiro/frames/frame-065.png",
+      "/characters/kiro/frames/frame-066.png",
+      "/characters/kiro/frames/frame-067.png",
+      "/characters/kiro/frames/frame-068.png",
+      "/characters/kiro/frames/frame-069.png"
+    ],
+    "walkForward": [
+      "/characters/kiro/frames/frame-191.png",
+      "/characters/kiro/frames/frame-192.png",
+      "/characters/kiro/frames/frame-193.png",
+      "/characters/kiro/frames/frame-194.png",
+      "/characters/kiro/frames/frame-195.png",
+      "/characters/kiro/frames/frame-196.png",
+      "/characters/kiro/frames/frame-197.png"
+    ],
+    "walkBack": [
+      "/characters/kiro/frames/frame-197.png",
+      "/characters/kiro/frames/frame-196.png",
+      "/characters/kiro/frames/frame-195.png",
+      "/characters/kiro/frames/frame-194.png",
+      "/characters/kiro/frames/frame-193.png",
+      "/characters/kiro/frames/frame-192.png",
+      "/characters/kiro/frames/frame-191.png"
+    ],
+    "sidestepLeft": [
+      "/characters/kiro/frames/frame-075.png",
+      "/characters/kiro/frames/frame-076.png",
+      "/characters/kiro/frames/frame-077.png",
+      "/characters/kiro/frames/frame-078.png",
+      "/characters/kiro/frames/frame-079.png"
+    ],
+    "sidestepRight": [
+      "/characters/kiro/frames/frame-080.png",
+      "/characters/kiro/frames/frame-081.png",
+      "/characters/kiro/frames/frame-082.png",
+      "/characters/kiro/frames/frame-083.png",
+      "/characters/kiro/frames/frame-084.png"
+    ],
+    "crouch": [
+      "/characters/kiro/frames/frame-124.png",
+      "/characters/kiro/frames/frame-125.png"
+    ],
+    "jump": [
+      "/characters/kiro/frames/frame-203.png",
+      "/characters/kiro/frames/frame-204.png",
+      "/characters/kiro/frames/frame-205.png",
+      "/characters/kiro/frames/frame-206.png",
+      "/characters/kiro/frames/frame-207.png"
+    ],
+    "block": [
+      "/characters/kiro/frames/frame-144.png",
+      "/characters/kiro/frames/frame-145.png"
+    ],
+    "jab": [
+      "/characters/kiro/frames/frame-075.png",
+      "/characters/kiro/frames/frame-076.png",
+      "/characters/kiro/frames/frame-077.png",
+      "/characters/kiro/frames/frame-078.png",
+      "/characters/kiro/frames/frame-079.png"
+    ],
+    "kick": [
+      "/characters/kiro/frames/frame-154.png",
+      "/characters/kiro/frames/frame-155.png",
+      "/characters/kiro/frames/frame-156.png"
+    ],
+    "heavy": [
+      "/characters/kiro/frames/frame-103.png",
+      "/characters/kiro/frames/frame-104.png",
+      "/characters/kiro/frames/frame-105.png",
+      "/characters/kiro/frames/frame-106.png",
+      "/characters/kiro/frames/frame-107.png"
+    ],
+    "special": [
+      "/characters/kiro/frames/frame-090.png",
+      "/characters/kiro/frames/frame-091.png",
+      "/characters/kiro/frames/frame-092.png",
+      "/characters/kiro/frames/frame-093.png"
+    ],
+    "hitLight": [
+      "/characters/kiro/frames/frame-031.png",
+      "/characters/kiro/frames/frame-032.png",
+      "/characters/kiro/frames/frame-033.png"
+    ],
+    "hitHeavy": [
+      "/characters/kiro/frames/frame-034.png",
+      "/characters/kiro/frames/frame-035.png",
+      "/characters/kiro/frames/frame-036.png",
+      "/characters/kiro/frames/frame-037.png"
+    ],
+    "knockdown": [
+      "/characters/kiro/frames/frame-036.png",
+      "/characters/kiro/frames/frame-037.png",
+      "/characters/kiro/frames/frame-038.png",
+      "/characters/kiro/frames/frame-039.png"
+    ],
+    "win": [
+      "/characters/kiro/frames/frame-225.png",
+      "/characters/kiro/frames/frame-226.png",
+      "/characters/kiro/frames/frame-227.png"
+    ],
+    "lose": [
+      "/characters/kiro/frames/frame-158.png",
+      "/characters/kiro/frames/frame-160.png"
+    ]
+  },
+  "animationFps": 5
 }

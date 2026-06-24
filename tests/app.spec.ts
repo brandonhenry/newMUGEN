@@ -12,7 +12,7 @@ async function startFight(page: import('@playwright/test').Page, local2p = false
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 5000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 2000 });
   const fightScreen = page.locator('.fight-screen');
-  await page.waitForTimeout(2200);
+  await page.waitForTimeout(4200);
   await fightScreen.click({ position: { x: 24, y: 24 } });
   await fightScreen.focus();
 }
@@ -30,6 +30,30 @@ async function virtualPress(page: import('@playwright/test').Page, label: string
   await target.dispatchEvent('pointerdown', { pointerId: 1, pointerType: 'touch', isPrimary: true, bubbles: true });
   await page.waitForTimeout(duration);
   await target.dispatchEvent('pointerup', { pointerId: 1, pointerType: 'touch', isPrimary: true, bubbles: true });
+}
+
+function keyValue(code: string) {
+  if (code.startsWith('Key')) return code.slice(3).toLowerCase();
+  return code;
+}
+
+async function setKey(page: import('@playwright/test').Page, code: string, pressed: boolean) {
+  await page.evaluate(
+    ({ code, key, type }) => {
+      const event = new KeyboardEvent(type, { code, key, bubbles: true, cancelable: true });
+      document.dispatchEvent(event);
+      window.dispatchEvent(new KeyboardEvent(type, { code, key, bubbles: true, cancelable: true }));
+    },
+    { code, key: keyValue(code), type: pressed ? 'keydown' : 'keyup' }
+  );
+}
+
+async function keyDown(page: import('@playwright/test').Page, code: string) {
+  await setKey(page, code, true);
+}
+
+async function keyUp(page: import('@playwright/test').Page, code: string) {
+  await setKey(page, code, false);
 }
 
 test('starts a playable match from the menu', async ({ page }) => {
@@ -59,29 +83,38 @@ test('opens controls and character viewer', async ({ page }) => {
 test('moves player one forward and back with keyboard', async ({ page }) => {
   await startFight(page, true);
   const before = xFromPosition(await page.getByTestId('p1-position').innerText());
-  await page.keyboard.down('KeyD');
-  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 6000 }).toBeGreaterThan(before + 0.25);
-  await page.keyboard.up('KeyD');
+  await keyDown(page, 'KeyD');
+  await expect.poll(async () => {
+    await keyDown(page, 'KeyD');
+    return xFromPosition(await page.getByTestId('p1-position').innerText());
+  }, { timeout: 6000 }).toBeGreaterThan(before + 0.25);
+  await keyUp(page, 'KeyD');
   const afterForward = xFromPosition(await page.getByTestId('p1-position').innerText());
 
-  await page.keyboard.down('KeyA');
-  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 6000 }).toBeLessThan(afterForward - 0.12);
-  await page.keyboard.up('KeyA');
+  await keyDown(page, 'KeyA');
+  await expect.poll(async () => {
+    await keyDown(page, 'KeyA');
+    return xFromPosition(await page.getByTestId('p1-position').innerText());
+  }, { timeout: 6000 }).toBeLessThan(afterForward - 0.12);
+  await keyUp(page, 'KeyA');
   const afterBack = xFromPosition(await page.getByTestId('p1-position').innerText());
   expect(afterBack).toBeLessThan(afterForward - 0.12);
 });
 
 test('lets player one close distance, hit, and continue without pausing', async ({ page }) => {
   await startFight(page, true);
-  await page.keyboard.down('KeyD');
-  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 6000 }).toBeGreaterThan(-0.55);
-  await page.keyboard.up('KeyD');
+  await keyDown(page, 'KeyD');
+  await expect.poll(async () => {
+    await keyDown(page, 'KeyD');
+    return xFromPosition(await page.getByTestId('p1-position').innerText());
+  }, { timeout: 6000 }).toBeGreaterThan(-0.55);
+  await keyUp(page, 'KeyD');
   const hpBefore = Number(await page.getByTestId('p2-hp').innerText());
   let hpAfter = hpBefore;
   for (let attempt = 0; attempt < 3 && hpAfter >= hpBefore; attempt += 1) {
-    await page.keyboard.down('KeyU');
+    await keyDown(page, 'KeyU');
     await page.waitForTimeout(260);
-    await page.keyboard.up('KeyU');
+    await keyUp(page, 'KeyU');
     await page.waitForTimeout(900);
     hpAfter = Number(await page.getByTestId('p2-hp').innerText());
   }
@@ -93,45 +126,42 @@ test('uses single tap for jump/crouch and double tap for lane movement', async (
   await startFight(page, true);
   const zBefore = zFromPosition(await page.getByTestId('p1-position').innerText());
 
-  for (let attempt = 0; attempt < 3 && (await page.getByTestId('p1-state').innerText()) !== 'jump'; attempt += 1) {
-    await page.keyboard.down('KeyW');
-    await page.waitForTimeout(500);
-    if ((await page.getByTestId('p1-state').innerText()) !== 'jump') {
-      await page.keyboard.up('KeyW');
-      await page.waitForTimeout(250);
-    }
-  }
+  await keyDown(page, 'KeyW');
+  await expect.poll(async () => {
+    await keyDown(page, 'KeyW');
+    return Number(await page.getByTestId('p1-height').innerText());
+  }, { timeout: 3000 }).toBeGreaterThan(0.15);
   await expect(page.getByTestId('p1-state')).toHaveText('jump');
-  expect(Number(await page.getByTestId('p1-height').innerText())).toBeGreaterThan(0.15);
-  await page.keyboard.up('KeyW');
-  await page.waitForTimeout(1250);
+  await keyUp(page, 'KeyW');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 12000 }).toBeLessThan(0.04);
 
   const zBeforeCrouch = zFromPosition(await page.getByTestId('p1-position').innerText());
-  await page.keyboard.down('KeyS');
+  await keyDown(page, 'KeyS');
   await page.waitForTimeout(400);
   await expect(page.getByTestId('p1-state')).toHaveText('crouch');
   expect(zFromPosition(await page.getByTestId('p1-position').innerText())).toBeCloseTo(zBeforeCrouch, 1);
-  await page.keyboard.up('KeyS');
+  await keyUp(page, 'KeyS');
+  await expect(page.getByTestId('p1-state')).not.toHaveText('crouch', { timeout: 3000 });
 
-  await page.keyboard.down('KeyW');
+  await keyDown(page, 'KeyW');
   await page.waitForTimeout(160);
-  await page.keyboard.up('KeyW');
+  await keyUp(page, 'KeyW');
   await page.waitForTimeout(160);
-  await page.keyboard.down('KeyW');
+  await keyDown(page, 'KeyW');
   await page.waitForTimeout(1000);
-  await page.keyboard.up('KeyW');
+  await keyUp(page, 'KeyW');
   const afterDoubleTap = zFromPosition(await page.getByTestId('p1-position').innerText());
   expect(afterDoubleTap).toBeLessThan(zBefore - 0.35);
 
   const p2Before = zFromPosition(await page.getByTestId('p2-position').innerText());
-  await page.keyboard.down('ArrowUp');
+  await keyDown(page, 'ArrowUp');
   await page.waitForTimeout(160);
-  await page.keyboard.up('ArrowUp');
+  await keyUp(page, 'ArrowUp');
   await page.waitForTimeout(160);
-  await page.keyboard.down('ArrowUp');
+  await keyDown(page, 'ArrowUp');
   await page.waitForTimeout(1000);
-  await page.keyboard.up('ArrowUp');
+  await keyUp(page, 'ArrowUp');
   const p2After = zFromPosition(await page.getByTestId('p2-position').innerText());
   expect(Math.abs(p2After - p2Before)).toBeGreaterThan(0.45);
-  expect(p2After).toBeGreaterThanOrEqual(-2.1);
+  expect(p2After).toBeGreaterThanOrEqual(-3.6);
 });

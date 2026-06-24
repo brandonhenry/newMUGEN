@@ -34,6 +34,9 @@ export function validateCharacter(character: CharacterDefinition): string[] {
   if (character.renderMode === 'spriteVoxel' && !character.spriteSheetPath) {
     warnings.push('Sprite-voxel character is missing spriteSheetPath.');
   }
+  if (character.voxelProfile === 'image-source' && !character.animationFrames && !character.spriteSheetPath) {
+    warnings.push('Image-source voxel character needs animationFrames or spriteSheetPath.');
+  }
   if (!character.moves.length) warnings.push('No moves defined.');
   for (const clip of requiredClips) {
     if (!character.animations[clip]) {

@@ -9,6 +9,7 @@ describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
     expect(starterCharacters.map((character) => [character.id, validateCharacter(character)])).toEqual([
       ['kiro', []],
+      ['riven', []],
       ['astra', []],
       ['dax', []]
     ]);

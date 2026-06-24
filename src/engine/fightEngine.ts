@@ -176,6 +176,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
 
   if (jumpPressed && grounded && !input.block && !input.down) {
     fighter.velocityY = fighter.character.stats.jumpForce;
+    fighter.position.y = Math.max(fighter.position.y, 0.18);
     fighter.state = 'jump';
   }
 
@@ -206,7 +207,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     moveAlongOpponentAxis(fighter, opponent, forward * fighter.character.stats.speed * speedScale * dt);
   }
   if (sidestep !== 0) {
-    const sidestepScale = fighter.sidestepTimer > 0 ? 1.75 : 1.08;
+    const sidestepScale = fighter.sidestepTimer > 0 ? 1.75 : 1.35;
     orbitAroundOpponent(fighter, opponent, -sidestep * fighter.character.stats.sidestepSpeed * sidestepScale * speedScale * dt);
   }
 
@@ -365,6 +366,7 @@ function applyGravity(fighter: FighterRuntime, dt: number) {
     if (fighter.position.y <= 0) {
       fighter.position.y = 0;
       fighter.velocityY = 0;
+      if (fighter.state === 'jump') fighter.state = 'idle';
     }
   }
 }
