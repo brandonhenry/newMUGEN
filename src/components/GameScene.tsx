@@ -393,7 +393,7 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
   }
 
   return (
-    <group ref={root}>
+    <group ref={root} rotation={[0, -Math.PI / 2, 0]}>
       <ImageVoxelPartGroup part={parts.head} groupRef={head} />
       <ImageVoxelPartGroup part={parts.torso} groupRef={torso} />
       <ImageVoxelPartGroup part={parts.leadArm} groupRef={leadArm} />
