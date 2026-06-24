@@ -39,9 +39,15 @@ export type BoxSpec = {
 };
 
 export type MoveDefinition = {
-  id: MoveInput;
+  id: string;
   label: string;
   input: MoveInput;
+  command?: string;
+  notation?: string;
+  animationKey?: string;
+  comboKey?: string;
+  comboStep?: number;
+  route?: string;
   startup: number;
   active: number;
   recovery: number;
@@ -60,8 +66,10 @@ export type CharacterDefinition = {
   renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
   spriteSheetPath?: string;
+  spriteFrameCount?: number;
   voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source';
   animationFrames?: Record<string, string[]>;
+  animationFrameRates?: Record<string, number>;
   animationFps?: number;
   scale: number;
   cameraOffset: Vec3Tuple;
@@ -104,7 +112,7 @@ export type StageDefinition = {
 
 export type InputFrame = Record<ActionName, boolean>;
 
-export type MatchMode = 'ai' | 'local2p';
+export type MatchMode = 'ai' | 'local2p' | 'cpu';
 
 export type FighterRuntime = {
   slot: 1 | 2;
@@ -121,6 +129,14 @@ export type FighterRuntime = {
   currentMove: MoveDefinition | null;
   actionTimer: number;
   hitConnected: boolean;
+  previewAnimationKey?: string;
+  commandHistory: Array<{ token: string; age: number }>;
+  previousDirectionToken: string;
+  comboTimer: number;
+  comboStep: number;
+  comboSequence: MoveInput[];
+  previousAttackInputs: Record<MoveInput, boolean>;
+  wasCrouching: boolean;
   roundsWon: number;
   stunTimer: number;
   blockFlash: number;

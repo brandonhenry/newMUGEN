@@ -1,5 +1,6 @@
 import { starterCharacters } from '../data/characters';
 import type { CharacterDefinition } from '../types';
+import { debugLog } from './debugLogger';
 
 const requiredClips = [
   'idle',
@@ -56,17 +57,27 @@ export async function loadCharacterRoster(): Promise<CharacterLoadResult> {
     const index = (await fetch('/characters/index.json').then((response) => response.json())) as {
       characters: string[];
     };
+    debugLog(2, 'character index fetched', { characterIds: index.characters });
     const loaded = await Promise.all(
       index.characters.map((id) =>
         fetch(`/characters/${id}/character.json`).then((response) => response.json() as Promise<CharacterDefinition>)
       )
     );
     const characters = loaded.length > 0 ? loaded : starterCharacters;
+    debugLog(2, 'character manifests loaded', {
+      characters: characters.map((character) => ({
+        id: character.id,
+        displayName: character.displayName,
+        walkForward: character.animationFrames?.walkForward?.map((frame) => frame.match(/frame-(\d+)\.png$/)?.[1]),
+        walkForwardFps: character.animationFrameRates?.walkForward ?? character.animationFps
+      }))
+    });
     return {
       characters,
       warnings: Object.fromEntries(characters.map((character) => [character.id, validateCharacter(character)]))
     };
   } catch {
+    debugLog(2, 'manifest load failed, using bundled starter characters');
     return {
       characters: starterCharacters,
       warnings: Object.fromEntries(starterCharacters.map((character) => [character.id, validateCharacter(character)]))

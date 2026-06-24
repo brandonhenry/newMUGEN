@@ -3,8 +3,10 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import type { CharacterDefinition, FighterRuntime, FighterState, MatchSnapshot, MoveInput } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
+import { debugLogThrottled } from '../lib/debugLogger';
 
 type GameSceneProps = {
   match: MatchSnapshot;
@@ -33,14 +35,96 @@ export function GameScene({ match }: GameSceneProps) {
   );
 }
 
+export function MenuAttractScene({ match }: GameSceneProps) {
+  return (
+    <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
+      <color attach="background" args={['#020615']} />
+      <fog attach="fog" args={['#071337', 8, 24]} />
+      <ambientLight intensity={0.42} color="#a9c7ff" />
+      <directionalLight castShadow position={[-3, 6, 3]} intensity={1.65} color="#dbe8ff" shadow-mapSize={[1024, 1024]} />
+      <pointLight position={[-3.3, 1.6, 2.1]} color={match.fighters[0].character.colors.primary} intensity={5.2} distance={6} />
+      <pointLight position={[3.3, 1.6, 2.1]} color={match.fighters[1].character.colors.primary} intensity={5.2} distance={6} />
+      <MenuAttractCamera match={match} />
+      <MenuMoonStage />
+      <group position={[0, 0, 1.75]} scale={0.82}>
+        <FighterRig fighter={match.fighters[0]} />
+        <FighterRig fighter={match.fighters[1]} />
+      </group>
+      <ContactShadows position={[0, -0.01, 1.75]} opacity={0.32} scale={10} blur={3} far={3.5} />
+    </Canvas>
+  );
+}
+
+function MenuAttractCamera({ match }: { match: MatchSnapshot }) {
+  const { camera } = useThree();
+  const target = useMemo(() => new THREE.Vector3(), []);
+  useFrame((state, delta) => {
+    const [p1, p2] = match.fighters;
+    const midX = (p1.position.x + p2.position.x) / 2;
+    const drift = Math.sin(state.clock.elapsedTime * 0.18) * 0.22;
+    const desired = new THREE.Vector3(midX * 0.2 + drift, 2.35, 7.4);
+    camera.position.lerp(desired, 1 - Math.pow(0.001, delta));
+    target.set(midX * 0.12, 1.0, 1.65);
+    camera.lookAt(target);
+  });
+  return null;
+}
+
+function MenuMoonStage() {
+  const silhouettes = useMemo(
+    () => [
+      [-5.5, 0.04, -4.6, 1.4, 1.15],
+      [-4.1, 0.04, -4.9, 1.8, 0.88],
+      [-2.5, 0.04, -4.7, 1.1, 1.32],
+      [2.1, 0.04, -4.8, 1.55, 1.05],
+      [3.9, 0.04, -4.6, 1.2, 1.28],
+      [5.2, 0.04, -4.9, 1.7, 0.92]
+    ],
+    []
+  );
+  return (
+    <group>
+      <mesh position={[0, 3.9, -6.7]}>
+        <circleGeometry args={[1.55, 72]} />
+        <meshBasicMaterial color="#f1f5ff" transparent opacity={0.92} />
+      </mesh>
+      <mesh position={[0, 3.9, -6.72]}>
+        <ringGeometry args={[1.55, 1.9, 72]} />
+        <meshBasicMaterial color="#7db8ff" transparent opacity={0.18} />
+      </mesh>
+      {silhouettes.map(([x, y, z, width, height], index) => (
+        <mesh key={index} position={[x, y + height / 2, z]}>
+          <coneGeometry args={[width, height, 3]} />
+          <meshBasicMaterial color="#030712" transparent opacity={0.78} />
+        </mesh>
+      ))}
+      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.035, 1.1]}>
+        <planeGeometry args={[18, 10, 28, 20]} />
+        <meshStandardMaterial color="#07182c" roughness={0.22} metalness={0.68} transparent opacity={0.92} />
+      </mesh>
+      <mesh position={[0, -0.018, 1.1]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[3.25, 3.7, 96]} />
+        <meshBasicMaterial color="#2ee6ff" transparent opacity={0.22} />
+      </mesh>
+      <mesh position={[0, -0.012, 1.1]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[3.25, 96]} />
+        <meshStandardMaterial color="#0d2140" emissive="#0a2c5a" emissiveIntensity={0.35} roughness={0.34} metalness={0.35} transparent opacity={0.55} />
+      </mesh>
+      <gridHelper args={[12, 12, '#2ee6ff', '#14345d']} position={[0, 0.004, 1.1]} />
+    </group>
+  );
+}
+
 export function CharacterPreviewCanvas({
   character,
   pose,
+  animationKey,
   rotationTurn,
   zoom
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
+  animationKey?: string;
   rotationTurn: number;
   zoom: number;
 }) {
@@ -56,12 +140,13 @@ export function CharacterPreviewCanvas({
       <Suspense fallback={null}>
         <Environment preset="city" />
       </Suspense>
-      <ambientLight intensity={0.7} />
-      <directionalLight castShadow position={[2.8, 4.6, 3.4]} intensity={2.1} color="#f7f7f2" shadow-mapSize={[1024, 1024]} />
+      <ambientLight intensity={1.05} />
+      <directionalLight castShadow position={[2.8, 4.6, 3.4]} intensity={2.65} color="#f7f7f2" shadow-mapSize={[1024, 1024]} />
+      <pointLight position={[0, 2.4, 3.2]} color="#ffffff" intensity={5} distance={6} />
       <pointLight position={[-2, 1.8, 2]} color={character.colors.primary} intensity={6} distance={5} />
       <pointLight position={[2.2, 1.2, -2.2]} color={character.colors.accent} intensity={4} distance={5} />
       <PreviewFloor color={character.colors.primary} />
-      <PreviewFighter character={character} pose={pose} rotationTurn={rotationTurn} />
+      <PreviewFighter key={character.id} character={character} pose={pose} animationKey={animationKey} rotationTurn={rotationTurn} />
       <PreviewCamera zoom={zoom} />
       <OrbitControls
         makeDefault
@@ -117,10 +202,12 @@ function PreviewFloor({ color }: { color: string }) {
 function PreviewFighter({
   character,
   pose,
+  animationKey,
   rotationTurn
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
+  animationKey?: string;
   rotationTurn: number;
 }) {
   const fighter = useRef(createPreviewFighter(character));
@@ -135,10 +222,11 @@ function PreviewFighter({
     const t = state.clock.elapsedTime;
     runtime.character = character;
     runtime.facing = 1;
+    runtime.previewAnimationKey = animationKey;
     runtime.position.x = 0;
     runtime.position.z = 0;
-    runtime.blockFlash = pose === 'block' ? 0.7 : 0;
-    runtime.hitFlash = pose === 'hit' ? 0.8 : 0;
+    runtime.blockFlash = 0;
+    runtime.hitFlash = 0;
     runtime.currentMove = null;
     runtime.actionTimer = 0;
     runtime.velocityY = 0;
@@ -153,6 +241,7 @@ function PreviewFighter({
       runtime.position.y = 0;
     } else {
       runtime.state = pose;
+      runtime.sidestepDirection = animationKey === 'sidestepLeft' ? -1 : animationKey === 'sidestepRight' ? 1 : 0;
       runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(t * 2.4)) * 0.95 : 0;
     }
 
@@ -189,6 +278,14 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     currentMove: null,
     actionTimer: 0,
     hitConnected: false,
+    previewAnimationKey: undefined,
+    commandHistory: [],
+    previousDirectionToken: 'N',
+    comboTimer: 0,
+    comboStep: 0,
+    comboSequence: [],
+    previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
+    wasCrouching: false,
     roundsWon: 0,
     stunTimer: 0,
     blockFlash: 0,
@@ -213,9 +310,8 @@ function CameraRig({ match }: { match: MatchSnapshot }) {
       cameraX *= -1;
       cameraZ *= -1;
     }
-    const shake = match.cameraShake * Math.sin(performance.now() * 0.055) * 0.18;
     const cameraDistance = 5.7 + distance * 0.34;
-    const desired = new THREE.Vector3(midX + cameraX * cameraDistance + shake, 2.7 + distance * 0.16, midZ + cameraZ * cameraDistance);
+    const desired = new THREE.Vector3(midX + cameraX * cameraDistance, 2.7 + distance * 0.16, midZ + cameraZ * cameraDistance);
     camera.position.lerp(desired, 1 - Math.pow(0.001, delta));
     target.set(midX, 1.05, midZ);
     camera.lookAt(target);
@@ -291,7 +387,7 @@ function FighterRig({ fighter }: { fighter: FighterRuntime }) {
     group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : 0, fighter.facingYaw, hitLean + attackLean);
   });
 
-  const color = fighter.hitFlash > 0 ? '#ffffff' : fighter.blockFlash > 0 ? fighter.character.colors.accent : fighter.character.colors.primary;
+  const color = fighter.character.colors.primary;
   return (
     <group ref={group} scale={fighter.character.scale}>
       <Bounds fit={false}>
@@ -359,7 +455,7 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
     const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const crouch = fighter.state === 'crouch' ? 1 : 0;
-    const hit = fighter.state === 'hit' ? fighter.hitFlash : 0;
+    const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
     const smooth = 1 - Math.pow(0.001, delta);
 
@@ -431,21 +527,39 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const key = getImageVoxelAnimationKey(fighter);
   const sequence = frames[key] ?? frames.idle;
   if (!sequence?.length) return fighter.character.spriteSheetPath;
-  const fps = fighter.character.animationFps ?? 8;
+  const fps = fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
   const frameIndex =
     fighter.state === 'attack'
       ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
-      : key === 'idle' || key === 'crouch' || key === 'block' || key === 'hitLight' || key === 'hitHeavy' || key === 'win' || key === 'lose'
+      : key === 'idle' || key === 'crouch' || key === 'block' || key === 'hitLight' || key === 'win' || key === 'lose'
         ? 0
       : Math.floor(elapsedTime * fps) % sequence.length;
+  debugLogThrottled(9, 'voxel animation key resolved', {
+    characterId: fighter.character.id,
+    slot: fighter.slot,
+    state: fighter.state,
+    animationKey: key,
+    fps,
+    sequence: sequence.map((frame) => frame.match(/frame-(\d+)\.png$/)?.[1] ?? frame)
+  });
+  debugLogThrottled(10, 'voxel frame source selected', {
+    characterId: fighter.character.id,
+    slot: fighter.slot,
+    animationKey: key,
+    frameIndex,
+    frameSource: sequence[frameIndex],
+    elapsedTime: Number(elapsedTime.toFixed(2)),
+    progress: Number(progress.toFixed(2))
+  });
   return sequence[frameIndex];
 }
 
 function getImageVoxelAnimationKey(fighter: FighterRuntime) {
-  if (fighter.state === 'attack') return fighter.currentMove?.input ?? 'jab';
+  if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
+  if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
   if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
-  if (fighter.state === 'hit') return fighter.hitFlash > 0.45 ? 'hitHeavy' : 'hitLight';
+  if (fighter.state === 'hit') return 'hitLight';
   return fighter.state;
 }
 
@@ -479,31 +593,38 @@ function ImageVoxelPartGroup({
 
 function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }) {
   if (part.voxels.length === 0) return null;
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshStandardMaterial({
-    roughness: 0.56,
-    metalness: 0.06,
-    vertexColors: true
+  const baseGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const geometries = part.voxels.map((voxel) => {
+    const geometry = baseGeometry.clone();
+    const color = new THREE.Color(voxel.color);
+    const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
+    for (let index = 0; index < colors.length; index += 3) {
+      colors[index] = color.r;
+      colors[index + 1] = color.g;
+      colors[index + 2] = color.b;
+    }
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.applyMatrix4(
+      new THREE.Matrix4().compose(
+        new THREE.Vector3(voxel.position[0] - part.anchor[0], voxel.position[1] - part.anchor[1], voxel.position[2] - part.anchor[2]),
+        new THREE.Quaternion(),
+        new THREE.Vector3(voxel.size[0], voxel.size[1], voxel.size[2])
+      )
+    );
+    return geometry;
   });
-  const mesh = new THREE.InstancedMesh(geometry, material, part.voxels.length);
-  const matrix = new THREE.Matrix4();
-  const position = new THREE.Vector3();
-  const scale = new THREE.Vector3();
-  const rotation = new THREE.Quaternion();
-  const color = new THREE.Color();
-
-  part.voxels.forEach((voxel, index) => {
-    position.set(voxel.position[0] - part.anchor[0], voxel.position[1] - part.anchor[1], voxel.position[2] - part.anchor[2]);
-    scale.set(voxel.size[0], voxel.size[1], voxel.size[2]);
-    matrix.compose(position, rotation, scale);
-    mesh.setMatrixAt(index, matrix);
-    mesh.setColorAt(index, color.set(voxel.color));
+  baseGeometry.dispose();
+  const geometry = mergeGeometries(geometries, false);
+  geometries.forEach((entry) => entry.dispose());
+  if (!geometry) return null;
+  const material = new THREE.MeshBasicMaterial({
+    color: '#ffffff',
+    vertexColors: true,
+    toneMapped: false
   });
-
+  const mesh = new THREE.Mesh(geometry, material);
   mesh.castShadow = true;
   mesh.receiveShadow = true;
-  mesh.instanceMatrix.needsUpdate = true;
-  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
   return mesh;
 }
 
@@ -728,7 +849,7 @@ function VoxelSpriteFighter({ fighter, progress }: { fighter: FighterRuntime; pr
     const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const crouch = fighter.state === 'crouch' ? 1 : 0;
-    const hit = fighter.state === 'hit' ? fighter.hitFlash : 0;
+    const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
 
     const smooth = 1 - Math.pow(0.001, delta);
@@ -867,7 +988,7 @@ function ExternalFighter({ fighter, url, progress }: { fighter: FighterRuntime; 
   useFrame((_, delta) => {
     if (!wrapper.current) return;
     const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
-    const hit = fighter.state === 'hit' ? fighter.hitFlash : 0;
+    const hit = 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const crouch = fighter.state === 'crouch' ? 1 : 0;
     const knockdown = fighter.state === 'knockdown' ? 1 : 0;
@@ -926,7 +1047,7 @@ function ProceduralFighter({
     const side = fighter.state === 'sidestep' ? Math.sin(t * 13) * 0.16 : 0;
     const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
     const block = fighter.state === 'block' ? 1 : 0;
-    const hit = fighter.state === 'hit' ? fighter.hitFlash : 0;
+    const hit = 0;
     const crouch = fighter.state === 'crouch' ? -0.3 : block ? -0.12 : 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
 

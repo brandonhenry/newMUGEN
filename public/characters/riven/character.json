@@ -1,6 +1,6 @@
 {
   "id": "riven",
-  "displayName": "Riven",
+  "displayName": "Sasuke",
   "modelPath": "spritevoxel://riven",
   "scale": 1.08,
   "cameraOffset": [
@@ -174,72 +174,76 @@
   },
   "renderMode": "spriteVoxel",
   "spriteSheetPath": "/characters/riven/animation-sheet.png",
+  "spriteFrameCount": 209,
   "voxelProfile": "image-source",
   "animationFrames": {
     "idle": [
-      "/characters/riven/frames/frame-060.png",
-      "/characters/riven/frames/frame-061.png",
-      "/characters/riven/frames/frame-062.png",
-      "/characters/riven/frames/frame-063.png",
-      "/characters/riven/frames/frame-064.png"
+      "/characters/riven/frames/frame-000.png",
+      "/characters/riven/frames/frame-001.png",
+      "/characters/riven/frames/frame-002.png",
+      "/characters/riven/frames/frame-003.png"
     ],
     "walkForward": [
-      "/characters/riven/frames/frame-193.png",
-      "/characters/riven/frames/frame-194.png",
-      "/characters/riven/frames/frame-195.png",
-      "/characters/riven/frames/frame-196.png",
-      "/characters/riven/frames/frame-197.png",
-      "/characters/riven/frames/frame-198.png"
-    ],
-    "walkBack": [
-      "/characters/riven/frames/frame-198.png",
-      "/characters/riven/frames/frame-197.png",
-      "/characters/riven/frames/frame-196.png",
-      "/characters/riven/frames/frame-195.png",
-      "/characters/riven/frames/frame-194.png",
-      "/characters/riven/frames/frame-193.png"
-    ],
-    "sidestepLeft": [
       "/characters/riven/frames/frame-004.png",
       "/characters/riven/frames/frame-005.png",
       "/characters/riven/frames/frame-006.png",
       "/characters/riven/frames/frame-007.png",
       "/characters/riven/frames/frame-008.png",
-      "/characters/riven/frames/frame-009.png"
+      "/characters/riven/frames/frame-009.png",
+      "/characters/riven/frames/frame-010.png",
+      "/characters/riven/frames/frame-011.png",
+      "/characters/riven/frames/frame-012.png",
+      "/characters/riven/frames/frame-013.png"
+    ],
+    "walkBack": [
+      "/characters/riven/frames/frame-077.png",
+      "/characters/riven/frames/frame-076.png",
+      "/characters/riven/frames/frame-075.png",
+      "/characters/riven/frames/frame-074.png",
+      "/characters/riven/frames/frame-073.png",
+      "/characters/riven/frames/frame-072.png"
+    ],
+    "sidestepLeft": [
+      "/characters/riven/frames/frame-065.png",
+      "/characters/riven/frames/frame-066.png"
     ],
     "sidestepRight": [
-      "/characters/riven/frames/frame-009.png",
-      "/characters/riven/frames/frame-008.png",
-      "/characters/riven/frames/frame-007.png",
-      "/characters/riven/frames/frame-006.png",
-      "/characters/riven/frames/frame-005.png",
-      "/characters/riven/frames/frame-004.png"
+      "/characters/riven/frames/frame-175.png",
+      "/characters/riven/frames/frame-176.png",
+      "/characters/riven/frames/frame-177.png",
+      "/characters/riven/frames/frame-178.png",
+      "/characters/riven/frames/frame-179.png"
     ],
     "crouch": [
       "/characters/riven/frames/frame-054.png",
       "/characters/riven/frames/frame-055.png"
     ],
     "jump": [
-      "/characters/riven/frames/frame-145.png",
-      "/characters/riven/frames/frame-146.png",
-      "/characters/riven/frames/frame-147.png",
-      "/characters/riven/frames/frame-148.png"
+      "/characters/riven/frames/frame-040.png",
+      "/characters/riven/frames/frame-041.png",
+      "/characters/riven/frames/frame-042.png",
+      "/characters/riven/frames/frame-043.png",
+      "/characters/riven/frames/frame-044.png"
     ],
     "block": [
-      "/characters/riven/frames/frame-100.png",
-      "/characters/riven/frames/frame-101.png"
+      "/characters/riven/frames/frame-023.png",
+      "/characters/riven/frames/frame-024.png",
+      "/characters/riven/frames/frame-025.png",
+      "/characters/riven/frames/frame-026.png",
+      "/characters/riven/frames/frame-027.png"
     ],
     "jab": [
-      "/characters/riven/frames/frame-114.png",
-      "/characters/riven/frames/frame-115.png",
-      "/characters/riven/frames/frame-116.png",
-      "/characters/riven/frames/frame-117.png"
+      "/characters/riven/frames/frame-078.png",
+      "/characters/riven/frames/frame-079.png",
+      "/characters/riven/frames/frame-080.png",
+      "/characters/riven/frames/frame-081.png"
     ],
     "kick": [
-      "/characters/riven/frames/frame-080.png",
-      "/characters/riven/frames/frame-081.png",
-      "/characters/riven/frames/frame-082.png",
-      "/characters/riven/frames/frame-083.png"
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-121.png",
+      "/characters/riven/frames/frame-122.png",
+      "/characters/riven/frames/frame-123.png",
+      "/characters/riven/frames/frame-124.png"
     ],
     "heavy": [
       "/characters/riven/frames/frame-130.png",
@@ -250,10 +254,10 @@
       "/characters/riven/frames/frame-135.png"
     ],
     "special": [
-      "/characters/riven/frames/frame-150.png",
-      "/characters/riven/frames/frame-151.png",
-      "/characters/riven/frames/frame-152.png",
-      "/characters/riven/frames/frame-153.png"
+      "/characters/riven/frames/frame-145.png",
+      "/characters/riven/frames/frame-146.png",
+      "/characters/riven/frames/frame-147.png",
+      "/characters/riven/frames/frame-148.png"
     ],
     "hitLight": [
       "/characters/riven/frames/frame-029.png",
@@ -274,16 +278,68 @@
       "/characters/riven/frames/frame-035.png"
     ],
     "win": [
-      "/characters/riven/frames/frame-040.png",
-      "/characters/riven/frames/frame-041.png",
-      "/characters/riven/frames/frame-042.png"
+      "/characters/riven/frames/frame-154.png",
+      "/characters/riven/frames/frame-155.png",
+      "/characters/riven/frames/frame-156.png",
+      "/characters/riven/frames/frame-157.png",
+      "/characters/riven/frames/frame-158.png",
+      "/characters/riven/frames/frame-159.png",
+      "/characters/riven/frames/frame-160.png"
     ],
     "lose": [
       "/characters/riven/frames/frame-170.png",
       "/characters/riven/frames/frame-171.png",
       "/characters/riven/frames/frame-172.png",
       "/characters/riven/frames/frame-173.png"
+    ],
+    "cmd:f+2": [
+      "/characters/riven/frames/frame-078.png",
+      "/characters/riven/frames/frame-079.png",
+      "/characters/riven/frames/frame-080.png",
+      "/characters/riven/frames/frame-081.png"
+    ],
+    "cmd:d/f+1": [
+      "/characters/riven/frames/frame-112.png",
+      "/characters/riven/frames/frame-113.png",
+      "/characters/riven/frames/frame-114.png",
+      "/characters/riven/frames/frame-115.png"
+    ],
+    "cmd:qcf+3": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-121.png",
+      "/characters/riven/frames/frame-122.png",
+      "/characters/riven/frames/frame-123.png",
+      "/characters/riven/frames/frame-124.png"
+    ],
+    "cmd:SS+4": [
+      "/characters/riven/frames/frame-145.png",
+      "/characters/riven/frames/frame-146.png",
+      "/characters/riven/frames/frame-147.png",
+      "/characters/riven/frames/frame-148.png"
     ]
   },
-  "animationFps": 5
+  "animationFps": 5,
+  "animationFrameRates": {
+    "idle": 4,
+    "walkForward": 12,
+    "walkBack": 7,
+    "sidestepLeft": 10,
+    "sidestepRight": 12,
+    "crouch": 4,
+    "jump": 8,
+    "block": 5,
+    "jab": 11,
+    "kick": 10,
+    "heavy": 10,
+    "special": 11,
+    "hitLight": 8,
+    "hitHeavy": 10,
+    "knockdown": 8,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+2": 11,
+    "cmd:d/f+1": 10,
+    "cmd:qcf+3": 10,
+    "cmd:SS+4": 11
+  }
 }

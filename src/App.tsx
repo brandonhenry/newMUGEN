@@ -1,5 +1,6 @@
 import anime from 'animejs';
 import {
+  ChevronDown,
   Eye,
   Gamepad2,
   Home,
@@ -7,27 +8,252 @@ import {
   Play,
   Rotate3D,
   RotateCcw,
+  Save,
   Settings,
   Swords,
   Users,
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useEffect, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, type PreviewPose } from './components/GameScene';
+import { type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
 import { createMatch, stepMatch } from './engine/fightEngine';
 import { useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
-import type { ActionName, CharacterDefinition, InputFrame, MatchMode, MatchSnapshot, StageDefinition } from './types';
+import { debugHypotheses, debugLog } from './lib/debugLogger';
+import { emptyInputFrame, type ActionName, type CharacterDefinition, type InputFrame, type MatchMode, type MatchSnapshot, type StageDefinition } from './types';
 
 type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer';
+type CharacterAnimationOverride = {
+  frames?: Record<string, string[]>;
+  speeds?: Record<string, number>;
+};
+type AnimationOverrideMap = Record<string, CharacterAnimationOverride>;
+type StoredAnimationOverrides = {
+  revision: string;
+  overrides: AnimationOverrideMap;
+};
+type NotationToken = string;
+type AnimationSlot = {
+  key: string;
+  label: string;
+  pose: PreviewPose;
+  notation: NotationToken[];
+  category: 'stance' | 'raw' | 'direction' | 'motion' | 'state' | 'special';
+  command?: string;
+};
+
+const ANIMATION_STORAGE_KEY = 'newmugen.animationOverrides';
+const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
+const menuAttractStage: StageDefinition = {
+  id: 'kore-menu-moon',
+  name: 'K.O.R.E Moon Stage',
+  subtitle: 'Menu attract arena',
+  floor: '#07182c',
+  rail: '#2ee6ff',
+  light: '#dbe8ff'
+};
+
+const baseAnimationSlots: AnimationSlot[] = [
+  { key: 'idle', label: 'Neutral', pose: 'idle', notation: ['N'], category: 'stance' },
+  { key: 'walkForward', label: 'Forward', pose: 'walk', notation: ['f'], category: 'stance' },
+  { key: 'walkBack', label: 'Back', pose: 'walk', notation: ['b'], category: 'stance' },
+  { key: 'sidestepLeft', label: 'Side Up', pose: 'sidestep', notation: ['↑↑'], category: 'stance' },
+  { key: 'sidestepRight', label: 'Side Down', pose: 'sidestep', notation: ['↓↓'], category: 'stance' },
+  { key: 'jump', label: 'Jump', pose: 'jump', notation: ['u'], category: 'stance' },
+  { key: 'crouch', label: 'Crouch', pose: 'crouch', notation: ['d'], category: 'stance' },
+  { key: 'block', label: 'Block', pose: 'block', notation: ['b'], category: 'stance' },
+  { key: 'jab', label: 'Left Punch', pose: 'jab', notation: ['1'], category: 'stance' },
+  { key: 'heavy', label: 'Right Punch', pose: 'heavy', notation: ['2'], category: 'stance' },
+  { key: 'kick', label: 'Left Kick', pose: 'kick', notation: ['3'], category: 'stance' },
+  { key: 'special', label: 'Right Kick', pose: 'special', notation: ['4'], category: 'stance' },
+  { key: 'hitLight', label: 'Hit', pose: 'hit', notation: ['HIT'], category: 'stance' },
+  { key: 'knockdown', label: 'Knockdown', pose: 'knockdown', notation: ['KD'], category: 'stance' },
+  { key: 'win', label: 'Win', pose: 'win', notation: ['WIN'], category: 'stance' },
+  { key: 'lose', label: 'Lose', pose: 'lose', notation: ['LOSE'], category: 'stance' }
+];
+
+const buttonCombos = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '1+2',
+  '1+3',
+  '1+4',
+  '2+3',
+  '2+4',
+  '3+4',
+  '1+2+3',
+  '1+2+4',
+  '1+3+4',
+  '2+3+4',
+  '1+2+3+4'
+];
+const directionPrefixes = ['f', 'F', 'b', 'B', 'd', 'D', 'u', 'U', 'd/f', 'D/F', 'd/b', 'D/B', 'u/f', 'U/F', 'u/b', 'U/B'];
+const motionPrefixes = ['f,f', 'b,b', 'f,F', 'qcf', 'qcb', 'hcf', 'hcb', 'dp', 'rdp', 'cd'];
+const statePrefixes = ['WR', 'WS', 'FC', 'SS', 'SSL', 'SSR', 'BT', 'iWS', 'iWR', 'cc'];
+const specialPrefixes = ['H.', 'R.'];
+const animationSlots = buildAnimationSlots();
+const slotCategoryOptions: Array<{ value: AnimationSlot['category'] | 'all'; label: string }> = [
+  { value: 'stance', label: 'Stances' },
+  { value: 'raw', label: 'Raw Buttons' },
+  { value: 'direction', label: 'Directions' },
+  { value: 'motion', label: 'Motions' },
+  { value: 'state', label: 'States' },
+  { value: 'special', label: 'Heat/Rage' },
+  { value: 'all', label: 'All' }
+];
+
+function buildAnimationSlots(): AnimationSlot[] {
+  const commandSlots: AnimationSlot[] = [];
+  const pushCommand = (command: string, category: AnimationSlot['category']) => {
+    commandSlots.push({
+      key: commandAnimationKey(command),
+      label: command,
+      pose: commandPose(command),
+      notation: parseNotationTokens(command),
+      category,
+      command
+    });
+  };
+
+  buttonCombos.forEach((combo) => pushCommand(combo, 'raw'));
+  directionPrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}+${combo}`, 'direction')));
+  motionPrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}+${combo}`, 'motion')));
+  statePrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}+${combo}`, 'state')));
+  specialPrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}${combo}`, 'special')));
+
+  return [...baseAnimationSlots, ...commandSlots];
+}
+
+function commandAnimationKey(command: string) {
+  return `cmd:${command}`;
+}
+
+function commandPose(command: string): PreviewPose {
+  if (command.includes('3')) return 'kick';
+  if (command.includes('4')) return 'special';
+  if (command.includes('2')) return 'heavy';
+  return 'jab';
+}
+
+function parseNotationTokens(command: string): string[] {
+  return command.split(/([,+~<:_\[\]*])/).filter(Boolean);
+}
+
+function readAnimationOverrides(): AnimationOverrideMap {
+  try {
+    const raw = window.localStorage.getItem(ANIMATION_STORAGE_KEY);
+    debugLog(1, 'storage read', { key: ANIMATION_STORAGE_KEY, hasRawValue: Boolean(raw) });
+    if (!raw) return {};
+    const stored = JSON.parse(raw) as StoredAnimationOverrides | AnimationOverrideMap | Record<string, Record<string, string[]>>;
+    if ('revision' in stored) {
+      const revisionMatches = stored.revision === ANIMATION_DEFAULTS_REVISION;
+      debugLog(1, 'revisioned storage parsed', {
+        storedRevision: stored.revision,
+        expectedRevision: ANIMATION_DEFAULTS_REVISION,
+        revisionMatches,
+        characterIds: Object.keys(stored.overrides ?? {})
+      });
+      return revisionMatches ? sanitizeAnimationOverrides(stored.overrides as AnimationOverrideMap) : {};
+    }
+    const parsed = stored as AnimationOverrideMap | Record<string, Record<string, string[]>>;
+    return sanitizeAnimationOverrides(Object.fromEntries(
+      Object.entries(parsed).map(([characterId, override]) => {
+        if ('frames' in override || 'speeds' in override) return [characterId, override];
+        return [characterId, { frames: override as Record<string, string[]> }];
+      })
+    ) as AnimationOverrideMap);
+  } catch {
+    return {};
+  }
+}
+
+function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationOverrideMap {
+  const next: AnimationOverrideMap = {};
+  for (const [characterId, override] of Object.entries(overrides)) {
+    next[characterId] = {
+      frames: { ...(override.frames ?? {}) },
+      speeds: { ...(override.speeds ?? {}) }
+    };
+  }
+
+  const obsoleteNarutoForward = next.kiro?.frames?.walkForward?.map(getFrameIndex).join(',');
+  if (obsoleteNarutoForward === '191,192,193,194,195,196,197') {
+    debugLog(5, 'removed obsolete Naruto forward override', { obsoleteNarutoForward });
+    delete next.kiro?.frames?.walkForward;
+    delete next.kiro?.speeds?.walkForward;
+  }
+
+  const sanitized = Object.fromEntries(
+    Object.entries(next).filter(([, override]) => Object.keys(override.frames ?? {}).length > 0 || Object.keys(override.speeds ?? {}).length > 0)
+  );
+  debugLog(5, 'sanitized animation overrides', {
+    beforeCharacterIds: Object.keys(overrides),
+    afterCharacterIds: Object.keys(sanitized)
+  });
+  return sanitized;
+}
+
+function applyAnimationOverrides(characters: CharacterDefinition[], overrides: AnimationOverrideMap) {
+  const sanitizedOverrides = sanitizeAnimationOverrides(overrides);
+  const effectiveCharacters = characters.map((character) => {
+    const characterOverrides = sanitizedOverrides[character.id];
+    if (!characterOverrides) return character;
+    return {
+      ...character,
+      animationFrames: {
+        ...character.animationFrames,
+        ...characterOverrides.frames
+      },
+      animationFrameRates: {
+        ...character.animationFrameRates,
+        ...characterOverrides.speeds
+      }
+    };
+  });
+  debugLog(3, 'effective roster built', {
+    source: characters.map((character) => ({
+      id: character.id,
+      walkForward: character.animationFrames?.walkForward?.map(getFrameIndex),
+      walkForwardFps: character.animationFrameRates?.walkForward ?? character.animationFps
+    })),
+    effective: effectiveCharacters.map((character) => ({
+      id: character.id,
+      walkForward: character.animationFrames?.walkForward?.map(getFrameIndex),
+      walkForwardFps: character.animationFrameRates?.walkForward ?? character.animationFps
+    })),
+    overrideCharacterIds: Object.keys(sanitizedOverrides)
+  });
+  return effectiveCharacters;
+}
+
+function getFrameIndex(path: string) {
+  const match = path.match(/frame-(\d+)\.png$/);
+  return match ? Number(match[1]) : -1;
+}
+
+function framePath(character: CharacterDefinition, index: number) {
+  return `/characters/${character.id}/frames/frame-${index.toString().padStart(3, '0')}.png`;
+}
+
+function characterPortraitPath(character: CharacterDefinition) {
+  return character.animationFrames?.idle?.[0] ?? framePath(character, 0);
+}
+
+function isLocalDevHost() {
+  return ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+}
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
-  const roster = rosterResult?.characters ?? [];
+  const [animationOverrides, setAnimationOverrides] = useState<AnimationOverrideMap>(() => readAnimationOverrides());
+  const sourceRoster = rosterResult?.characters ?? [];
+  const roster = useMemo(() => applyAnimationOverrides(sourceRoster, animationOverrides), [sourceRoster, animationOverrides]);
   const [p1Id, setP1Id] = useState('astra');
   const [p2Id, setP2Id] = useState('dax');
   const [stageId, setStageId] = useState(stages[0].id);
@@ -35,9 +261,14 @@ export default function App() {
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode);
 
   useEffect(() => {
+    debugHypotheses();
     let mounted = true;
     loadCharacterRoster().then((result) => {
       if (!mounted) return;
+      debugLog(3, 'roster result accepted by app', {
+        characterIds: result.characters.map((character) => character.id),
+        warnings: result.warnings
+      });
       setRosterResult(result);
       setP1Id(result.characters[0]?.id ?? 'astra');
       setP2Id(result.characters[1]?.id ?? result.characters[0]?.id ?? 'dax');
@@ -47,6 +278,53 @@ export default function App() {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    const sanitizedOverrides = sanitizeAnimationOverrides(animationOverrides);
+    debugLog(1, 'storage write', {
+      revision: ANIMATION_DEFAULTS_REVISION,
+      overrideCharacterIds: Object.keys(sanitizedOverrides)
+    });
+    window.localStorage.setItem(
+      ANIMATION_STORAGE_KEY,
+      JSON.stringify({
+        revision: ANIMATION_DEFAULTS_REVISION,
+        overrides: sanitizedOverrides
+      } satisfies StoredAnimationOverrides)
+    );
+  }, [animationOverrides]);
+
+  const setCharacterAnimationFrames = (characterId: string, animationKey: string, frames: string[]) => {
+    debugLog(4, 'viewer frame override requested', {
+      characterId,
+      animationKey,
+      frames: frames.map(getFrameIndex)
+    });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        frames: {
+          ...(current[characterId]?.frames ?? {}),
+          [animationKey]: frames
+        }
+      }
+    }));
+  };
+
+  const setCharacterAnimationSpeed = (characterId: string, animationKey: string, speed: number) => {
+    debugLog(8, 'viewer speed override requested', { characterId, animationKey, speed });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        speeds: {
+          ...(current[characterId]?.speeds ?? {}),
+          [animationKey]: speed
+        }
+      }
+    }));
+  };
 
   useEffect(() => {
     anime.remove('.screen-panel > *');
@@ -83,6 +361,7 @@ export default function App() {
         {screen === 'title' && <TitleScreen onStart={() => setScreen('menu')} />}
         {screen === 'menu' && (
           <MenuScreen
+            roster={roster}
             onPlay={() => setScreen('select')}
             onSettings={() => setScreen('settings')}
             onViewer={() => setScreen('viewer')}
@@ -111,7 +390,13 @@ export default function App() {
         )}
         {screen === 'settings' && <SettingsScreen mode={mode} setMode={setMode} onBack={() => setScreen('menu')} />}
         {screen === 'viewer' && (
-          <CharacterViewer roster={roster} warnings={rosterResult?.warnings ?? {}} onBack={() => setScreen('menu')} />
+          <CharacterViewer
+            roster={roster}
+            sourceRoster={sourceRoster}
+            onAnimationFramesChange={setCharacterAnimationFrames}
+            onAnimationSpeedChange={setCharacterAnimationSpeed}
+            onBack={() => setScreen('menu')}
+          />
         )}
         {screen === 'fight' && (
           <FightScreen
@@ -137,7 +422,7 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
   return (
     <div className="title-screen">
       <div className="brand-kicker">Browser 3D roster fighter</div>
-      <h1>newMUGEN</h1>
+      <img className="title-logo" src="/brand/kore-logo.png" alt="K.O.R.E" />
       <p>Side-step, block, punish, and build the roster one manifest at a time.</p>
       <button className="primary-button" onClick={onStart} autoFocus>
         <Play size={18} />
@@ -148,39 +433,104 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
 }
 
 function MenuScreen({
+  roster,
   onPlay,
   onSettings,
   onViewer
 }: {
+  roster: CharacterDefinition[];
   onPlay: () => void;
   onSettings: () => void;
   onViewer: () => void;
 }) {
+  const p1 = roster.find((character) => character.id === 'kiro') ?? roster[0];
+  const p2 = roster.find((character) => character.id === 'riven') ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'local2p') : null));
+  const matchRef = useRef<MatchSnapshot | null>(attractMatch);
+
+  useEffect(() => {
+    if (!p1 || !p2) return;
+    const fresh = createMatch(p1, p2, menuAttractStage, 'local2p');
+    matchRef.current = fresh;
+    setAttractMatch(fresh);
+  }, [p1, p2]);
+
+  useEffect(() => {
+    if (!p1 || !p2) return;
+    let frame = 0;
+    let last = performance.now();
+    let accumulator = 0;
+    let elapsed = 0;
+    const fixedStep = 1 / 60;
+
+    const tick = (now: number) => {
+      accumulator += Math.min(0.05, (now - last) / 1000);
+      last = now;
+      while (accumulator >= fixedStep) {
+        elapsed += fixedStep;
+        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'local2p');
+        if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
+          matchRef.current = createMatch(p1, p2, menuAttractStage, 'local2p');
+        } else {
+          matchRef.current = stepMatch(current, makeMenuAttractInput(1, elapsed), makeMenuAttractInput(2, elapsed), fixedStep);
+        }
+        accumulator -= fixedStep;
+      }
+      setAttractMatch(matchRef.current);
+      frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [p1, p2]);
+
+  const menuItems = [
+    { label: 'Arcade', action: onPlay },
+    { label: 'Versus', action: onPlay },
+    { label: 'Training', action: onPlay },
+    { label: 'Character Viewer', action: onViewer },
+    { label: 'Options', action: onSettings }
+  ];
+
   return (
     <div className="menu-screen">
-      <header className="section-header">
-        <span>Arcade build</span>
-        <h2>Main Menu</h2>
-      </header>
-      <div className="menu-grid">
-        <button className="menu-tile" onClick={onPlay}>
-          <Swords />
-          <strong>Fight</strong>
-          <span>Character select, stage select, then match.</span>
-        </button>
-        <button className="menu-tile" onClick={onViewer}>
-          <Eye />
-          <strong>Character Viewer</strong>
-          <span>Inspect roster manifests and loader warnings.</span>
-        </button>
-        <button className="menu-tile" onClick={onSettings}>
-          <Settings />
-          <strong>Controls</strong>
-          <span>Keyboard, gamepad, mobile, and match mode.</span>
-        </button>
-      </div>
+      {attractMatch && (
+        <div className="menu-attract-background" aria-hidden="true">
+          <MenuAttractScene match={attractMatch} />
+        </div>
+      )}
+      <div className="menu-vignette" />
+      <section className="kore-menu-overlay" aria-label="K.O.R.E main menu">
+        <img className="kore-menu-logo" src="/brand/kore-logo.png" alt="K.O.R.E" />
+        <nav className="arcade-menu-list" aria-label="Main menu">
+          {menuItems.map((item, index) => (
+            <button key={item.label} className={index === 0 ? 'is-active' : ''} onClick={item.action}>
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      </section>
     </div>
   );
+}
+
+function makeMenuAttractInput(slot: 1 | 2, elapsed: number): InputFrame {
+  const input = emptyInputFrame();
+  const phase = elapsed % 6.8;
+  const attackBeat = elapsed % 1.35;
+  if (slot === 1) input.right = phase < 4.7;
+  if (slot === 2) input.left = phase < 4.7;
+  if (phase > 4.9) {
+    if (slot === 1) input.left = true;
+    if (slot === 2) input.right = true;
+  }
+  if (phase > 2.2 && phase < 2.45) input.sidestepUp = true;
+  if (phase > 5.45 && phase < 5.65) input.sidestepDown = true;
+  if (attackBeat < 0.08) input.jab = true;
+  if (attackBeat > 0.46 && attackBeat < 0.54) input.kick = true;
+  if (attackBeat > 0.92 && attackBeat < 1.0) input.heavy = true;
+  if (phase > 3.1 && phase < 3.22) input.special = true;
+  return input;
 }
 
 function CharacterSelect({
@@ -204,54 +554,101 @@ function CharacterSelect({
   onBack: () => void;
   onNext: () => void;
 }) {
-  return (
-    <div className="select-screen">
-      <header className="section-header with-actions">
-        <div>
-          <span>Roster</span>
-          <h2>Character Select</h2>
-        </div>
-        <SegmentedControl value={mode} setValue={setMode} />
-      </header>
-      <div className="fighter-columns">
-        <RosterColumn label="Player 1" selected={p1Id} roster={roster} onSelect={setP1Id} />
-        <RosterColumn label={mode === 'ai' ? 'CPU' : 'Player 2'} selected={p2Id} roster={roster} onSelect={setP2Id} />
-      </div>
-      <FooterActions onBack={onBack} onNext={onNext} nextLabel="Stage" />
-    </div>
-  );
-}
+  const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
+  const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
+  const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
+  const targetLabel = selectTarget === 1 ? `${getSlotLabel(mode, 1).toUpperCase()} >>` : `${getSlotLabel(mode, 2).toUpperCase()} >>`;
+  const assignCharacter = (id: string) => {
+    if (selectTarget === 1) {
+      setP1Id(id);
+      return;
+    }
+    setP2Id(id);
+  };
 
-function RosterColumn({
-  label,
-  selected,
-  roster,
-  onSelect
-}: {
-  label: string;
-  selected: string;
-  roster: CharacterDefinition[];
-  onSelect: (id: string) => void;
-}) {
-  return (
-    <div className="roster-column">
-      <h3>{label}</h3>
-      <div className="roster-list">
-        {roster.map((character) => (
-          <button
-            key={character.id}
-            className={`fighter-card ${selected === character.id ? 'is-selected' : ''}`}
-            style={{ '--fighter-color': character.colors.primary } as CSSProperties}
-            onClick={() => onSelect(character.id)}
-          >
-            <span className="portrait">{character.displayName.slice(0, 2).toUpperCase()}</span>
-            <span>
-              <strong>{character.displayName}</strong>
-              <small>{character.moves.map((move) => move.label).slice(0, 2).join(' / ')}</small>
-            </span>
-          </button>
-        ))}
+  if (!p1Character || !p2Character) {
+    return (
+      <div className="select-screen">
+        <header className="section-header">
+          <div>
+            <span>Roster</span>
+            <h2>Character Select</h2>
+          </div>
+        </header>
+        <p>No fighters are available.</p>
+        <FooterActions onBack={onBack} onNext={onBack} nextLabel="Back" />
       </div>
+    );
+  }
+
+  return (
+    <div className="select-screen versus-select-screen">
+      <button
+        type="button"
+        className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''}`}
+        style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
+        onClick={() => setSelectTarget(1)}
+      >
+        <span className="versus-player-kicker">{getSlotLabel(mode, 1)}</span>
+        <img src={characterPortraitPath(p1Character)} alt="" />
+        <span className="versus-hero-name">{p1Character.displayName}</span>
+        <span className="versus-hero-meta">{p1Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
+      </button>
+
+      <section className="versus-roster-panel" aria-label="Character select">
+        <div className="versus-select-top">
+          <div>
+            <span>Character Select</span>
+            <h2>{targetLabel}</h2>
+          </div>
+          <SegmentedControl value={mode} setValue={setMode} />
+        </div>
+
+        <div className="versus-target-tabs" aria-label="Choose selection target">
+          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => setSelectTarget(1)}>
+            {getSlotShortLabel(mode, 1)}
+          </button>
+          <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
+            {getSlotShortLabel(mode, 2)}
+          </button>
+        </div>
+
+        <div className="versus-roster-grid">
+          {roster.map((character) => {
+            const isP1 = p1Id === character.id;
+            const isP2 = p2Id === character.id;
+            return (
+              <button
+                key={character.id}
+                type="button"
+                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''}`}
+                style={{ '--fighter-color': character.colors.primary } as CSSProperties}
+                onClick={() => assignCharacter(character.id)}
+                aria-label={`Select ${character.displayName}`}
+              >
+                <img src={characterPortraitPath(character)} alt="" />
+                <span>{character.displayName}</span>
+                <small>{isP1 ? getSlotShortLabel(mode, 1) : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? getSlotShortLabel(mode, 2) : ''}</small>
+              </button>
+            );
+          })}
+        </div>
+
+        <FooterActions onBack={onBack} onNext={onNext} nextLabel="Stage" />
+      </section>
+
+      <button
+        type="button"
+        className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''}`}
+        style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
+        onClick={() => setSelectTarget(2)}
+      >
+        <span className="versus-player-kicker">{getSlotLabel(mode, 2)}</span>
+        <img src={characterPortraitPath(p2Character)} alt="" />
+        <span className="versus-hero-name">{p2Character.displayName}</span>
+        <span className="versus-hero-meta">{p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
+      </button>
+      <div className="versus-floor-glow" aria-hidden="true" />
     </div>
   );
 }
@@ -267,8 +664,24 @@ function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mo
         <Users size={16} />
         Local 2P
       </button>
+      <button className={value === 'cpu' ? 'active' : ''} onClick={() => setValue('cpu')}>
+        <Swords size={16} />
+        CPU vs CPU
+      </button>
     </div>
   );
+}
+
+function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
+  if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (slot === 2 && mode === 'ai') return 'CPU';
+  return slot === 1 ? 'Player 1' : 'Player 2';
+}
+
+function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
+  if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (slot === 2 && mode === 'ai') return 'CPU';
+  return slot === 1 ? 'P1' : 'P2';
 }
 
 function StageSelect({
@@ -326,10 +739,10 @@ function SettingsScreen({
         <SegmentedControl value={mode} setValue={setMode} />
       </header>
       <div className="control-grid">
-        <ControlPanel title="Player 1" rows={['A/D forward and back', 'W jump, S crouch', 'Double tap W/S to move lane', 'J jab, K kick, L heavy, U special, I block']} />
-        <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'Up jumps, Down crouches', 'Double tap Up/Down to move lane', 'Numpad 1-5 attacks and block']} />
+        <ControlPanel title="Player 1" rows={['WASD movement in playable modes', 'Hold back to block', '1/U left hand, 2/I right hand', '3/J left foot, 4/K right foot', 'Directions alter combo routes']} />
+        <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'CPU controls this side in AI modes', 'Hold back to block', '1 left hand, 2 right hand', '3 left foot, 4 right foot']} />
         <ControlPanel title="Gamepad" rows={['Left stick or d-pad movement', 'Face buttons attack', 'Shoulders block and special', 'Start pauses the match']} />
-        <ControlPanel title="Touch" rows={['On-screen movement pad', 'Action buttons appear in fight', 'Works best in landscape', 'Player 1 controls by default']} />
+        <ControlPanel title="Modes" rows={['1P vs AI: player one fights CPU', 'Local 2P: both sides playable', 'CPU vs CPU: both fighters autoplay', 'Pause still works during CPU battles']} />
       </div>
       <button className="secondary-button" onClick={onBack}>
         <Home size={18} />
@@ -352,131 +765,285 @@ function ControlPanel({ title, rows }: { title: string; rows: string[] }) {
 
 function CharacterViewer({
   roster,
-  warnings,
+  sourceRoster,
+  onAnimationFramesChange,
+  onAnimationSpeedChange,
   onBack
 }: {
   roster: CharacterDefinition[];
-  warnings: Record<string, string[]>;
+  sourceRoster: CharacterDefinition[];
+  onAnimationFramesChange: (characterId: string, animationKey: string, frames: string[]) => void;
+  onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
   onBack: () => void;
 }) {
   const [activeId, setActiveId] = useState(roster[0]?.id ?? '');
-  const [pose, setPose] = useState<PreviewPose>('idle');
+  const [selectedAnimationKey, setSelectedAnimationKey] = useState(animationSlots[0].key);
+  const [slotCategory, setSlotCategory] = useState<AnimationSlot['category'] | 'all'>('stance');
+  const [slotSearch, setSlotSearch] = useState('');
   const [rotationTurn, setRotationTurn] = useState(0);
   const [zoom, setZoom] = useState(0.28);
+  const [isEditingAnimation, setIsEditingAnimation] = useState(false);
+  const [manifestSaveStatus, setManifestSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const active = roster.find((character) => character.id === activeId) ?? roster[0];
-  const poses: Array<{ id: PreviewPose; label: string }> = [
-    { id: 'idle', label: 'Idle' },
-    { id: 'walk', label: 'Walk' },
-    { id: 'jump', label: 'Jump' },
-    { id: 'crouch', label: 'Crouch' },
-    { id: 'block', label: 'Block' },
-    { id: 'jab', label: 'Jab' },
-    { id: 'kick', label: 'Kick' },
-    { id: 'heavy', label: 'Heavy' },
-    { id: 'special', label: 'Special' },
-    { id: 'hit', label: 'Hit' },
-    { id: 'knockdown', label: 'Down' },
-    { id: 'win', label: 'Win' },
-    { id: 'lose', label: 'Lose' }
-  ];
+  const sourceActive = sourceRoster.find((character) => character.id === active.id) ?? active;
+  const selectedSlot = animationSlots.find((slot) => slot.key === selectedAnimationKey) ?? animationSlots[0];
+  const frameCount =
+    active.spriteFrameCount ??
+    Math.max(0, ...Object.values(active.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
+  const frameBank = useMemo(
+    () => Array.from({ length: frameCount }, (_, index) => framePath(active, index)),
+    [active, frameCount]
+  );
+  const selectedFrames = active.animationFrames?.[selectedSlot.key] ?? [];
+  const defaultFrames = sourceActive.animationFrames?.[selectedSlot.key] ?? selectedFrames;
+  const selectedSpeed = active.animationFrameRates?.[selectedSlot.key] ?? active.animationFps ?? 8;
+  const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlot.key] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
+  const selectedFrameSet = new Set(selectedFrames);
+  const visibleSlots = animationSlots.filter((slot) => {
+    const categoryMatches = slotCategory === 'all' || slot.category === slotCategory;
+    const search = slotSearch.trim().toLowerCase();
+    const searchMatches = !search || slot.label.toLowerCase().includes(search) || slot.command?.toLowerCase().includes(search);
+    return categoryMatches && searchMatches;
+  });
+
+  useEffect(() => {
+    debugLog(6, 'viewer active character and slot', {
+      activeId: active.id,
+      displayName: active.displayName,
+      selectedAnimationKey,
+      selectedSlotLabel: selectedSlot.label
+    });
+    debugLog(7, 'viewer effective animation selection', {
+      characterId: active.id,
+      animationKey: selectedSlot.key,
+      effectiveFrames: selectedFrames.map(getFrameIndex),
+      defaultFrames: defaultFrames.map(getFrameIndex),
+      effectiveFps: selectedSpeed,
+      defaultFps: defaultSpeed
+    });
+  }, [active.id, active.displayName, defaultFrames, defaultSpeed, selectedAnimationKey, selectedFrames, selectedSlot.key, selectedSlot.label, selectedSpeed]);
+
+  const updateSelectedFrames = (frames: string[]) => {
+    if (frames.length === 0) return;
+    onAnimationFramesChange(active.id, selectedSlot.key, frames);
+  };
+
+  const updateSelectedSpeed = (speed: number) => {
+    if (!Number.isFinite(speed)) return;
+    const normalized = Math.max(1, Math.min(24, Number(speed.toFixed(1))));
+    onAnimationSpeedChange(active.id, selectedSlot.key, normalized);
+  };
+
+  const resetSelectedAnimation = () => {
+    updateSelectedFrames(defaultFrames);
+    updateSelectedSpeed(defaultSpeed);
+  };
+
+  const saveActiveManifest = async () => {
+    setManifestSaveStatus('saving');
+    try {
+      const response = await fetch('/__newmugen/dev/save-character-manifest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          animationFrames: active.animationFrames ?? {},
+          animationFrameRates: active.animationFrameRates ?? {}
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setManifestSaveStatus('saved');
+      window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to save character manifest', error);
+      setManifestSaveStatus('error');
+    }
+  };
+
+  const toggleFrame = (path: string) => {
+    if (selectedFrameSet.has(path)) {
+      if (selectedFrames.length <= 1) return;
+      updateSelectedFrames(selectedFrames.filter((frame) => frame !== path));
+      return;
+    }
+    updateSelectedFrames([...selectedFrames, path]);
+  };
+
   return (
     <div className="viewer-screen">
       <header className="section-header">
-        <span>Loader</span>
+        <span>Character Select</span>
         <h2>Character Viewer</h2>
       </header>
       <div className="viewer-layout">
-        <div className="roster-list compact">
+        <div className="roster-list compact loader-bar">
           {roster.map((character) => (
             <button
               key={character.id}
-              className={`fighter-card ${active.id === character.id ? 'is-selected' : ''}`}
+              className={`fighter-card viewer-character-card ${active.id === character.id ? 'is-selected' : ''}`}
               style={{ '--fighter-color': character.colors.primary } as CSSProperties}
               onClick={() => setActiveId(character.id)}
+              aria-label={character.displayName}
+              title={character.displayName}
             >
-              <span className="portrait">{character.displayName.slice(0, 2).toUpperCase()}</span>
-              <span>
-                <strong>{character.displayName}</strong>
-                <small>{character.modelPath}</small>
-              </span>
+              <img src={characterPortraitPath(character)} alt="" />
             </button>
           ))}
         </div>
         <article className="model-viewer-panel">
           <div className="model-viewer-stage">
-            <CharacterPreviewCanvas character={active} pose={pose} rotationTurn={rotationTurn} zoom={zoom} />
+            <CharacterPreviewCanvas character={active} pose={selectedSlot.pose} animationKey={selectedSlot.key} rotationTurn={rotationTurn} zoom={zoom} />
           </div>
           <div className="viewer-actions">
-            <button className="secondary-button" onClick={() => setRotationTurn((value) => value + 1)}>
-              <Rotate3D size={18} />
-              Rotate
-            </button>
-            <div className="zoom-controls" aria-label="Model zoom controls">
-              <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
-                <ZoomOut size={18} />
+            <div className="viewer-action-row">
+              <button className="secondary-button" onClick={() => setRotationTurn((value) => value + 1)}>
+                <Rotate3D size={18} />
+                Rotate
               </button>
-              <input
-                aria-label="Zoom level"
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={zoom}
-                onChange={(event) => setZoom(Number(event.target.value))}
-                data-testid="viewer-zoom-slider"
-              />
-              <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
-                <ZoomIn size={18} />
-              </button>
-            </div>
-            <span>Drag to rotate. Scroll or pinch to zoom.</span>
-          </div>
-          <div className="animation-grid" aria-label="Animation previews">
-            {poses.map((option) => (
               <button
-                key={option.id}
-                className={pose === option.id ? 'active' : ''}
-                onClick={() => setPose(option.id)}
-                data-testid={`viewer-pose-${option.id}`}
+                className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
+                onClick={() => setIsEditingAnimation((current) => !current)}
+                data-testid="toggle-animation-editor"
               >
-                {option.label}
+                <Settings size={18} />
+                {isEditingAnimation ? 'Browse Moves' : 'Edit Selected'}
               </button>
-            ))}
+              <div className="zoom-controls" aria-label="Model zoom controls">
+                <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
+                  <ZoomOut size={18} />
+                </button>
+                <input
+                  aria-label="Zoom level"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={zoom}
+                  onChange={(event) => setZoom(Number(event.target.value))}
+                  data-testid="viewer-zoom-slider"
+                />
+                <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
+                  <ZoomIn size={18} />
+                </button>
+              </div>
+              <span>Drag to rotate. Scroll or pinch to zoom.</span>
+            </div>
+            <div className="viewer-action-row editor-control-row">
+              <div className="editing-title">
+                <span>{isEditingAnimation ? 'Editing' : 'Selected'}</span>
+                <strong>
+                  <NotationGroup tokens={selectedSlot.notation} />
+                  {selectedSlot.label}
+                </strong>
+              </div>
+              {isEditingAnimation && (
+                <div className="frame-picker-actions">
+                  <label className="speed-control">
+                    <span>FPS</span>
+                    <input
+                      aria-label={`${selectedSlot.label} animation speed`}
+                      type="range"
+                      min="1"
+                      max="24"
+                      step="0.5"
+                      value={selectedSpeed}
+                      onChange={(event) => updateSelectedSpeed(Number(event.target.value))}
+                      data-testid="animation-speed-slider"
+                    />
+                    <input
+                      aria-label={`${selectedSlot.label} animation speed value`}
+                      type="number"
+                      min="1"
+                      max="24"
+                      step="0.5"
+                      value={selectedSpeed}
+                      onChange={(event) => updateSelectedSpeed(Number(event.target.value))}
+                      data-testid="animation-speed-input"
+                    />
+                  </label>
+                  <button className="secondary-button compact-button" onClick={() => updateSelectedFrames([...selectedFrames].reverse())}>
+                    Reverse
+                  </button>
+                  <button className="secondary-button compact-button" onClick={resetSelectedAnimation}>
+                    Reset
+                  </button>
+                  {isLocalDevHost() && (
+                    <>
+                      <button
+                        className="secondary-button compact-button dev-save-button"
+                        onClick={saveActiveManifest}
+                        disabled={manifestSaveStatus === 'saving'}
+                        data-testid="save-character-manifest"
+                      >
+                        <Save size={14} />
+                        {manifestSaveStatus === 'saving' ? 'Saving' : 'Save JSON'}
+                      </button>
+                      {manifestSaveStatus !== 'idle' && (
+                        <span className={`manifest-save-status is-${manifestSaveStatus}`}>
+                          {manifestSaveStatus === 'saved' ? 'Saved to manifest' : manifestSaveStatus === 'error' ? 'Save failed' : 'Writing'}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </article>
-        <article className="manifest-panel">
-          <h3>{active.displayName}</h3>
-          <p>Health {active.stats.health} · Speed {active.stats.speed} · Source {active.spriteSheetPath ?? active.modelPath}</p>
-          {active.spriteSheetPath && (
-            <img className="sprite-sheet-preview" src={active.spriteSheetPath} alt={`${active.displayName} sprite sheet`} />
+          {isEditingAnimation ? (
+            <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
+              {active.spriteSheetPath && (
+                <div className="sprite-sheet-stage">
+                  <span>{active.spriteSheetPath}</span>
+                  <img className="sprite-sheet-preview" src={active.spriteSheetPath} alt={`${active.displayName} sprite sheet`} />
+                </div>
+              )}
+              <div className="selected-frame-strip" aria-label="Selected frames">
+                {selectedFrames.map((frame, index) => (
+                  <button key={`${frame}-${index}`} onClick={() => toggleFrame(frame)} title={`Remove frame ${getFrameIndex(frame)}`}>
+                    <img src={frame} alt={`Selected frame ${getFrameIndex(frame)}`} />
+                    <span>{getFrameIndex(frame)}</span>
+                  </button>
+                ))}
+              </div>
+              <div className="frame-bank" aria-label="All extracted frames">
+                {frameBank.map((frame) => (
+                  <button
+                    key={frame}
+                    className={selectedFrameSet.has(frame) ? 'active' : ''}
+                    onClick={() => toggleFrame(frame)}
+                    title={`Frame ${getFrameIndex(frame)}`}
+                  >
+                    <img src={frame} alt={`Frame ${getFrameIndex(frame)}`} loading="lazy" />
+                    <span>{getFrameIndex(frame)}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          ) : (
+            <div className={`animation-grid ${slotCategory === 'stance' ? 'is-stance-grid' : 'is-command-grid'}`} aria-label="Animation previews">
+              <div className="command-toolbar">
+                <CommandCategorySelect value={slotCategory} onChange={setSlotCategory} />
+                <input
+                  aria-label="Search move slots"
+                  placeholder="Search notation"
+                  value={slotSearch}
+                  onChange={(event) => setSlotSearch(event.target.value)}
+                />
+              </div>
+              {visibleSlots.map((option) => (
+                <button
+                  key={option.key}
+                  className={selectedSlot.key === option.key ? 'active' : ''}
+                  onClick={() => setSelectedAnimationKey(option.key)}
+                  title={option.label}
+                  data-testid={`viewer-pose-${option.key}`}
+                >
+                  <NotationGroup tokens={option.notation} />
+                  {option.label}
+                </button>
+              ))}
+            </div>
           )}
-          <div className="viewer-stat-grid">
-            <span>
-              <strong>{active.stats.sidestepSpeed}</strong>
-              Lane
-            </span>
-            <span>
-              <strong>{active.stats.jumpForce}</strong>
-              Jump
-            </span>
-            <span>
-              <strong>{active.scale}</strong>
-              Scale
-            </span>
-          </div>
-          <div className="move-list">
-            {active.moves.map((move) => (
-              <span key={move.id}>{move.label}</span>
-            ))}
-          </div>
-          <div className="warning-box">
-            <strong>Loader warnings</strong>
-            {(warnings[active.id]?.length ?? 0) === 0 ? (
-              <p>No manifest warnings.</p>
-            ) : (
-              warnings[active.id].map((warning) => <p key={warning}>{warning}</p>)
-            )}
-          </div>
         </article>
       </div>
       <button className="secondary-button" onClick={onBack}>
@@ -485,6 +1052,117 @@ function CharacterViewer({
       </button>
     </div>
   );
+}
+
+function CommandCategorySelect({
+  value,
+  onChange
+}: {
+  value: AnimationSlot['category'] | 'all';
+  onChange: (value: AnimationSlot['category'] | 'all') => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const selected = slotCategoryOptions.find((option) => option.value === value) ?? slotCategoryOptions[0];
+
+  return (
+    <div className={`custom-select ${open ? 'is-open' : ''}`} onBlur={(event) => {
+      const nextTarget = event.relatedTarget;
+      if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) setOpen(false);
+    }}>
+      <button
+        type="button"
+        className="custom-select-trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="Move slot category"
+        onClick={() => setOpen((current) => !current)}
+      >
+        <span>{selected.label}</span>
+        <ChevronDown size={18} />
+      </button>
+      {open && (
+        <div className="custom-select-menu" role="listbox" aria-label="Move slot category options" tabIndex={-1}>
+          {slotCategoryOptions.map((option) => (
+            <button
+              type="button"
+              key={option.value}
+              role="option"
+              aria-selected={option.value === value}
+              className={option.value === value ? 'is-selected' : ''}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => {
+                onChange(option.value);
+                setOpen(false);
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function NotationGroup({ tokens }: { tokens: NotationToken[] }) {
+  return (
+    <span className="notation-group" aria-hidden="true">
+      {tokens.map((token, index) => (
+        <span key={`${token}-${index}`} className={`notation-token token-${safeClassToken(token)}`}>
+          {notationLabel(token)}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function notationLabel(token: NotationToken) {
+  const labels: Record<string, string> = {
+    N: 'N',
+    n: 'N',
+    f: '→',
+    F: '→*',
+    b: '←',
+    B: '←*',
+    u: '↑',
+    U: '↑*',
+    d: '↓',
+    D: '↓*',
+    'u/b': '↖',
+    'u/f': '↗',
+    'd/b': '↙',
+    'd/f': '↘',
+    'U/B': '↖*',
+    'U/F': '↗*',
+    'D/B': '↙*',
+    'D/F': '↘*',
+    'f,f': '→→',
+    'b,b': '←←',
+    '↑↑': '↑↑',
+    '↓↓': '↓↓',
+    '1': '1',
+    '2': '2',
+    '3': '3',
+    '4': '4',
+    HIT: 'HIT',
+    KD: 'KD',
+    '+': '+',
+    ',': ',',
+    '~': '~',
+    '<': '<',
+    ':': ':',
+    '_': '_',
+    '*': '*',
+    win: 'WIN',
+    WIN: 'WIN',
+    lose: 'LOSE',
+    LOSE: 'LOSE'
+  };
+  return labels[token] ?? token;
+}
+
+function safeClassToken(token: string) {
+  return token.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'symbol';
 }
 
 function FightScreen({
@@ -583,17 +1261,6 @@ function FightScreen({
     return () => cancelAnimationFrame(frame);
   }, [clearMenuInputs, paused, readInputs]);
 
-  useEffect(() => {
-    if (match.lastHitId > 0) {
-      anime({
-        targets: '.impact-flash',
-        opacity: [0.32, 0],
-        duration: 220,
-        easing: 'easeOutQuad'
-      });
-    }
-  }, [match.lastHitId]);
-
   const reset = () => {
     const fresh = createMatch(p1, p2, stage, mode);
     matchRef.current = fresh;
@@ -619,7 +1286,6 @@ function FightScreen({
       onKeyUp={(event) => handleSurfaceKey(event, false)}
     >
       <GameScene match={match} />
-      <div className="impact-flash" />
       <FightHud match={match} />
       <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />
       <TouchControls onAction={setVirtualAction} />
@@ -628,6 +1294,7 @@ function FightScreen({
         <div className="pause-overlay">
           <Pause size={32} />
           <h2>Paused</h2>
+          <ConfiguredMoveList characters={[p1, p2]} />
           <div className="overlay-actions">
             <button className="primary-button" onClick={() => setPaused(false)}>
               <Play size={18} />
@@ -672,6 +1339,33 @@ function FightScreen({
   );
 }
 
+function ConfiguredMoveList({ characters }: { characters: [CharacterDefinition, CharacterDefinition] }) {
+  return (
+    <div className="pause-movelist">
+      {characters.map((character, index) => {
+        const configured = animationSlots.filter((slot) => slot.command && (character.animationFrames?.[slot.key]?.length ?? 0) > 0);
+        return (
+          <section key={character.id}>
+            <h3>{index === 0 ? 'P1' : 'P2'} {character.displayName}</h3>
+            {configured.length === 0 ? (
+              <p>No custom commands configured.</p>
+            ) : (
+              <div>
+                {configured.slice(0, 36).map((slot) => (
+                  <span key={slot.key}>
+                    <NotationGroup tokens={slot.notation} />
+                    {slot.label}
+                  </span>
+                ))}
+              </div>
+            )}
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
 const surfacePlayerOneKeys: Record<string, ActionName> = {
   KeyW: 'up',
   w: 'up',
@@ -685,21 +1379,30 @@ const surfacePlayerOneKeys: Record<string, ActionName> = {
   KeyD: 'right',
   d: 'right',
   D: 'right',
-  KeyJ: 'jab',
-  j: 'jab',
-  J: 'jab',
-  KeyK: 'kick',
-  k: 'kick',
-  K: 'kick',
-  KeyL: 'heavy',
-  l: 'heavy',
-  L: 'heavy',
-  KeyU: 'special',
-  u: 'special',
-  U: 'special',
-  KeyI: 'block',
-  i: 'block',
-  I: 'block',
+  KeyU: 'jab',
+  u: 'jab',
+  U: 'jab',
+  Digit1: 'jab',
+  '1': 'jab',
+  Numpad1: 'jab',
+  KeyI: 'heavy',
+  i: 'heavy',
+  I: 'heavy',
+  Digit2: 'heavy',
+  '2': 'heavy',
+  Numpad2: 'heavy',
+  KeyJ: 'kick',
+  j: 'kick',
+  J: 'kick',
+  Digit3: 'kick',
+  '3': 'kick',
+  Numpad3: 'kick',
+  KeyK: 'special',
+  k: 'special',
+  K: 'special',
+  Digit4: 'special',
+  '4': 'special',
+  Numpad4: 'special',
   Enter: 'confirm',
   Escape: 'pause'
 };
@@ -712,12 +1415,12 @@ const surfacePlayerTwoKeys: Record<string, ActionName> = {
   Numpad1: 'jab',
   '1': 'jab',
   Digit1: 'jab',
-  Numpad2: 'kick',
-  '2': 'kick',
-  Digit2: 'kick',
-  Numpad3: 'heavy',
-  '3': 'heavy',
-  Digit3: 'heavy',
+  Numpad2: 'heavy',
+  '2': 'heavy',
+  Digit2: 'heavy',
+  Numpad3: 'kick',
+  '3': 'kick',
+  Digit3: 'kick',
   Numpad4: 'special',
   '4': 'special',
   Digit4: 'special',

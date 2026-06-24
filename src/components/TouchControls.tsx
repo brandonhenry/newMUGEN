@@ -6,7 +6,12 @@ type TouchControlsProps = {
 };
 
 const movement: ActionName[] = ['up', 'left', 'right', 'down'];
-const attacks: ActionName[] = ['jab', 'kick', 'heavy', 'special', 'block'];
+const attacks: Array<{ action: ActionName; label: string }> = [
+  { action: 'jab', label: '1 LH' },
+  { action: 'heavy', label: '2 RH' },
+  { action: 'kick', label: '3 LF' },
+  { action: 'special', label: '4 RF' }
+];
 const movementIcons = {
   up: <ChevronUp size={20} />,
   down: <ChevronDown size={20} />,
@@ -32,9 +37,9 @@ export function TouchControls({ onAction }: TouchControlsProps) {
         ))}
       </div>
       <div className="touch-actions">
-        {attacks.map((action) => (
+        {attacks.map(({ action, label }) => (
           <button key={action} className="touch-button action-button" {...bind(1, action)}>
-            {action}
+            {label}
           </button>
         ))}
       </div>

@@ -9,9 +9,7 @@ describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
     expect(starterCharacters.map((character) => [character.id, validateCharacter(character)])).toEqual([
       ['kiro', []],
-      ['riven', []],
-      ['astra', []],
-      ['dax', []]
+      ['riven', []]
     ]);
   });
 });
@@ -25,6 +23,50 @@ describe('fight engine', () => {
     p1.right = true;
     const next = stepMatch(match, p1, emptyInputFrame(), 1 / 60);
     expect(next.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
+  });
+
+  it('drives both fighters from AI in CPU vs CPU mode', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const p1StartX = match.fighters[0].position.x;
+    const p2StartX = match.fighters[1].position.x;
+
+    for (let i = 0; i < 6; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].position.x).toBeGreaterThan(p1StartX);
+    expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
+  });
+
+  it('keeps movement directions correct after fighters swap sides', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = 1.3;
+    match.fighters[1].position.x = -1.3;
+
+    const toward = emptyInputFrame();
+    toward.left = true;
+    const towardResult = stepMatch(match, toward, emptyInputFrame(), 1 / 60);
+    expect(towardResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
+
+    const away = emptyInputFrame();
+    away.right = true;
+    const awayResult = stepMatch(match, away, emptyInputFrame(), 1 / 60);
+    expect(awayResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
+    expect(awayResult.fighters[0].state).toBe('block');
+
+    const laneUp = emptyInputFrame();
+    laneUp.sidewalkUp = true;
+    const laneUpResult = stepMatch(match, laneUp, emptyInputFrame(), 10 / 60);
+    expect(laneUpResult.fighters[0].position.z).toBeLessThan(match.fighters[0].position.z - 0.35);
+
+    const laneDown = emptyInputFrame();
+    laneDown.sidewalkDown = true;
+    const laneDownResult = stepMatch(match, laneDown, emptyInputFrame(), 10 / 60);
+    expect(laneDownResult.fighters[0].position.z).toBeGreaterThan(match.fighters[0].position.z + 0.35);
   });
 
   it('uses up for jump, down for crouch, and lane inputs for 3D movement', () => {
@@ -84,6 +126,78 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - 1);
   });
 
+  it('blocks while holding away from the opponent on either side', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const p1Back = emptyInputFrame();
+    p1Back.left = true;
+    match = stepMatch(match, p1Back, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('block');
+
+    match.fighters[0].position.x = 1.3;
+    match.fighters[1].position.x = -1.3;
+    const p1BackAfterSwap = emptyInputFrame();
+    p1BackAfterSwap.right = true;
+    match = stepMatch(match, p1BackAfterSwap, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('block');
+  });
+
+  it('builds combo routes from repeated limbs and directions', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.9;
+    match.fighters[1].position.x = 0.9;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+
+    for (let i = 0; i < 8; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const oneAgain = emptyInputFrame();
+    oneAgain.jab = true;
+    match = stepMatch(match, oneAgain, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-jab');
+    expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
+
+    for (let i = 0; i < 8; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const downForwardFour = emptyInputFrame();
+    downForwardFour.down = true;
+    downForwardFour.right = true;
+    downForwardFour.special = true;
+    match = stepMatch(match, downForwardFour, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.route).toBe('down-forward');
+    expect(match.fighters[0].currentMove?.comboKey).toContain('special');
+  });
+
+  it('uses configured Tekken-style command moves when their frame slot exists', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.9;
+    match.fighters[1].position.x = 0.9;
+
+    const forwardOne = emptyInputFrame();
+    forwardOne.right = true;
+    forwardOne.jab = true;
+    match = stepMatch(match, forwardOne, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.command).toBe('f+1');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:f+1');
+    expect(match.fighters[0].currentMove?.comboKey).toBe('f+1:jab');
+  });
+
   it('finishes a round when health reaches zero', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -112,6 +226,9 @@ describe('fight engine', () => {
       match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
       attack.jab = false;
     }
+    expect(match.cameraShake).toBe(0);
+    expect(match.lastHitId).toBe(0);
+    expect(match.fighters[1].hitFlash).toBe(0);
     const zBefore = match.fighters[1].position.z;
     const xBefore = match.fighters[1].position.x;
     const moveAfterHit = emptyInputFrame();
