@@ -103,9 +103,11 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   resolveBodyCollision(next);
   resolveHits(next);
 
-  next.timer = Math.max(0, next.timer - dt);
+  next.timer = next.mode === 'training' ? ROUND_TIME : Math.max(0, next.timer - dt);
   const ko = next.fighters.find((fighter) => fighter.hp <= 0);
-  if (ko || next.timer <= 0) {
+  if (next.mode === 'training') {
+    refillTrainingHealth(next);
+  } else if (ko || next.timer <= 0) {
     finishRound(next);
   }
 
@@ -729,6 +731,17 @@ function finishRound(match: MatchSnapshot) {
     fighter.moveFrame = 0;
     fighter.stunFramesRemaining = 0;
     fighter.blockstunFramesRemaining = 0;
+  });
+}
+
+function refillTrainingHealth(match: MatchSnapshot) {
+  match.phase = 'fighting';
+  match.countdown = 0;
+  match.message = '';
+  match.winnerSlot = null;
+  match.fighters.forEach((fighter) => {
+    if (fighter.hp <= 0) fighter.hp = fighter.character.stats.health;
+    fighter.roundsWon = 0;
   });
 }
 

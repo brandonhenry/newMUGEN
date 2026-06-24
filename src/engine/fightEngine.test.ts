@@ -79,6 +79,26 @@ describe('fight engine', () => {
     expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
   });
 
+  it('keeps training mode infinite by refilling zero health without ending the round', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.timer = 0.01;
+    match.fighters[0].hp = 0;
+    match.fighters[1].hp = -4;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('fighting');
+    expect(match.round).toBe(1);
+    expect(match.winnerSlot).toBeNull();
+    expect(match.fighters[0].roundsWon).toBe(0);
+    expect(match.fighters[1].roundsWon).toBe(0);
+    expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+    expect(match.timer).toBe(60);
+  });
+
   it('keeps CPU fighters attacking during an extended exchange', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu');
     match.phase = 'fighting';
