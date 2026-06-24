@@ -32,6 +32,8 @@ export type FighterState =
   | 'lose';
 
 export type MoveInput = 'jab' | 'kick' | 'heavy' | 'special';
+export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
+export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
 
 export type BoxSpec = {
   offset: Vec3Tuple;
@@ -48,16 +50,37 @@ export type MoveDefinition = {
   comboKey?: string;
   comboStep?: number;
   route?: string;
-  startup: number;
-  active: number;
-  recovery: number;
+  startupFrames: number;
+  activeFrames: number;
+  recoveryFrames: number;
+  startup?: number;
+  active?: number;
+  recovery?: number;
   damage: number;
   blockDamage: number;
+  hitLevel: HitLevel;
+  onBlockFrames: number;
+  onHitFrames: number;
+  onCounterHitFrames: number;
+  whiffRecoveryFrames?: number;
   range: number;
-  push: number;
-  hitstun: number;
+  pushback: number;
+  blockPushback: number;
+  push?: number;
+  hitstun?: number;
+  launchHeight?: number;
+  tracking: MoveTracking;
+  armorStartFrame?: number | null;
+  armorEndFrame?: number | null;
+  cancelWindows?: Array<{ startFrame: number; endFrame: number; into?: MoveInput[] }>;
   knockdown: boolean;
   hitbox: BoxSpec;
+};
+
+export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {
+  id?: string;
+  input?: MoveInput;
+  hitbox?: Partial<BoxSpec>;
 };
 
 export type CharacterDefinition = {
@@ -82,6 +105,7 @@ export type CharacterDefinition = {
   };
   animations: Record<string, string>;
   moves: MoveDefinition[];
+  moveOverrides?: Record<string, MoveOverride>;
   hurtboxes: BoxSpec[];
   inputMap: Record<string, string>;
   colors: {
@@ -104,15 +128,12 @@ export type StageDefinition = {
   floor: string;
   rail: string;
   light: string;
-  worldModelPath?: string;
-  worldModelScale?: number;
-  worldModelPosition?: Vec3Tuple;
-  worldModelRotation?: Vec3Tuple;
 };
 
 export type InputFrame = Record<ActionName, boolean>;
 
 export type MatchMode = 'ai' | 'local2p' | 'cpu';
+export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
 export type FighterRuntime = {
   slot: 1 | 2;
@@ -128,6 +149,8 @@ export type FighterRuntime = {
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
   actionTimer: number;
+  actionFramesRemaining: number;
+  moveFrame: number;
   hitConnected: boolean;
   previewAnimationKey?: string;
   commandHistory: Array<{ token: string; age: number }>;
@@ -139,6 +162,13 @@ export type FighterRuntime = {
   wasCrouching: boolean;
   roundsWon: number;
   stunTimer: number;
+  stunFramesRemaining: number;
+  blockstunFramesRemaining: number;
+  getupInvulnerableFrames: number;
+  getupForward: -1 | 0 | 1;
+  getupLane: -1 | 0 | 1;
+  getupStarted: boolean;
+  juggleDamage: number;
   blockFlash: number;
   hitFlash: number;
 };
@@ -147,6 +177,7 @@ export type MatchSnapshot = {
   fighters: [FighterRuntime, FighterRuntime];
   stage: StageDefinition;
   mode: MatchMode;
+  cpuDifficulty: CpuDifficulty;
   timer: number;
   round: number;
   countdown: number;

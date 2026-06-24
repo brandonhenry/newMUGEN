@@ -16,19 +16,33 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, type PreviewPose } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
 import { createMatch, stepMatch } from './engine/fightEngine';
 import { useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
-import { emptyInputFrame, type ActionName, type CharacterDefinition, type InputFrame, type MatchMode, type MatchSnapshot, type StageDefinition } from './types';
+import {
+  emptyInputFrame,
+  type ActionName,
+  type CharacterDefinition,
+  type CpuDifficulty,
+  type HitLevel,
+  type InputFrame,
+  type MatchMode,
+  type MatchSnapshot,
+  type MoveDefinition,
+  type MoveOverride,
+  type MoveTracking,
+  type StageDefinition
+} from './types';
 
 type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer';
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
+  moves?: Record<string, MoveOverride>;
 };
 type AnimationOverrideMap = Record<string, CharacterAnimationOverride>;
 type StoredAnimationOverrides = {
@@ -106,6 +120,15 @@ const slotCategoryOptions: Array<{ value: AnimationSlot['category'] | 'all'; lab
   { value: 'special', label: 'Heat/Rage' },
   { value: 'all', label: 'All' }
 ];
+const hitLevelOptions: HitLevel[] = ['high', 'mid', 'low', 'throw', 'special'];
+const trackingOptions: MoveTracking[] = ['none', 'weakLeft', 'weakRight', 'medium', 'strong', 'homing'];
+const cpuDifficultyLabels: Record<CpuDifficulty, string> = {
+  1: 'Easy',
+  2: 'Casual',
+  3: 'Normal',
+  4: 'Hard',
+  5: 'K.O.R.E'
+};
 
 function buildAnimationSlots(): AnimationSlot[] {
   const commandSlots: AnimationSlot[] = [];
@@ -177,7 +200,8 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
   for (const [characterId, override] of Object.entries(overrides)) {
     next[characterId] = {
       frames: { ...(override.frames ?? {}) },
-      speeds: { ...(override.speeds ?? {}) }
+      speeds: { ...(override.speeds ?? {}) },
+      moves: sanitizeMoveOverrideMap(override.moves ?? {})
     };
   }
 
@@ -189,13 +213,59 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
   }
 
   const sanitized = Object.fromEntries(
-    Object.entries(next).filter(([, override]) => Object.keys(override.frames ?? {}).length > 0 || Object.keys(override.speeds ?? {}).length > 0)
+    Object.entries(next).filter(
+      ([, override]) =>
+        Object.keys(override.frames ?? {}).length > 0 ||
+        Object.keys(override.speeds ?? {}).length > 0 ||
+        Object.keys(override.moves ?? {}).length > 0
+    )
   );
   debugLog(5, 'sanitized animation overrides', {
     beforeCharacterIds: Object.keys(overrides),
     afterCharacterIds: Object.keys(sanitized)
   });
   return sanitized;
+}
+
+function sanitizeMoveOverrideMap(overrides: Record<string, MoveOverride>) {
+  return Object.fromEntries(
+    Object.entries(overrides)
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [key, sanitizeMoveOverride(value)])
+  );
+}
+
+function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
+  const next: MoveOverride = {};
+  const numericKeys: Array<keyof MoveOverride> = [
+    'startupFrames',
+    'activeFrames',
+    'recoveryFrames',
+    'damage',
+    'blockDamage',
+    'onBlockFrames',
+    'onHitFrames',
+    'onCounterHitFrames',
+    'whiffRecoveryFrames',
+    'range',
+    'pushback',
+    'blockPushback',
+    'launchHeight',
+    'armorStartFrame',
+    'armorEndFrame'
+  ];
+  for (const key of numericKeys) {
+    const value = override[key];
+    if (Number.isFinite(value)) {
+      (next as Record<string, number>)[key] = Number(value);
+    }
+  }
+  if (override.label) next.label = override.label;
+  if (override.hitLevel && hitLevelOptions.includes(override.hitLevel)) next.hitLevel = override.hitLevel;
+  if (override.tracking && trackingOptions.includes(override.tracking)) next.tracking = override.tracking;
+  if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
+  if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
+  return next;
 }
 
 function applyAnimationOverrides(characters: CharacterDefinition[], overrides: AnimationOverrideMap) {
@@ -212,6 +282,10 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
       animationFrameRates: {
         ...character.animationFrameRates,
         ...characterOverrides.speeds
+      },
+      moveOverrides: {
+        ...character.moveOverrides,
+        ...characterOverrides.moves
       }
     };
   });
@@ -258,6 +332,7 @@ export default function App() {
   const [p2Id, setP2Id] = useState('dax');
   const [stageId, setStageId] = useState(stages[0].id);
   const [mode, setMode] = useState<MatchMode>('ai');
+  const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode);
 
   useEffect(() => {
@@ -326,6 +401,20 @@ export default function App() {
     }));
   };
 
+  const setCharacterMoveOverride = (characterId: string, moveKey: string, override: MoveOverride) => {
+    debugLog(9, 'viewer frame data override requested', { characterId, moveKey, override });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        moves: {
+          ...(current[characterId]?.moves ?? {}),
+          [moveKey]: sanitizeMoveOverride(override)
+        }
+      }
+    }));
+  };
+
   useEffect(() => {
     anime.remove('.screen-panel > *');
     anime({
@@ -373,9 +462,11 @@ export default function App() {
             p1Id={p1Id}
             p2Id={p2Id}
             mode={mode}
+            cpuDifficulty={cpuDifficulty}
             setP1Id={setP1Id}
             setP2Id={setP2Id}
             setMode={setMode}
+            setCpuDifficulty={setCpuDifficulty}
             onBack={() => setScreen('menu')}
             onNext={() => setScreen('stage')}
           />
@@ -388,23 +479,33 @@ export default function App() {
             onFight={() => setScreen('fight')}
           />
         )}
-        {screen === 'settings' && <SettingsScreen mode={mode} setMode={setMode} onBack={() => setScreen('menu')} />}
+        {screen === 'settings' && (
+          <SettingsScreen
+            mode={mode}
+            setMode={setMode}
+            cpuDifficulty={cpuDifficulty}
+            setCpuDifficulty={setCpuDifficulty}
+            onBack={() => setScreen('menu')}
+          />
+        )}
         {screen === 'viewer' && (
           <CharacterViewer
             roster={roster}
             sourceRoster={sourceRoster}
             onAnimationFramesChange={setCharacterAnimationFrames}
             onAnimationSpeedChange={setCharacterAnimationSpeed}
+            onMoveOverrideChange={setCharacterMoveOverride}
             onBack={() => setScreen('menu')}
           />
         )}
         {screen === 'fight' && (
           <FightScreen
-            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}`}
+            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${cpuDifficulty}`}
             p1={p1}
             p2={p2}
             stage={selectedStage}
             mode={mode}
+            cpuDifficulty={cpuDifficulty}
             readInputs={readInputs}
             setVirtualAction={setVirtualAction}
             clearMenuInputs={clearMenuInputs}
@@ -419,15 +520,22 @@ export default function App() {
 }
 
 function TitleScreen({ onStart }: { onStart: () => void }) {
+  const titleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    event.preventDefault();
+    onStart();
+  };
+
   return (
-    <div className="title-screen">
-      <div className="brand-kicker">Browser 3D roster fighter</div>
+    <div ref={titleRef} className="title-screen" tabIndex={0} onClick={onStart} onKeyDown={handleKeyDown} aria-label="K.O.R.E title screen. Press any key.">
       <img className="title-logo" src="/brand/kore-logo.png" alt="K.O.R.E" />
-      <p>Side-step, block, punish, and build the roster one manifest at a time.</p>
-      <button className="primary-button" onClick={onStart} autoFocus>
-        <Play size={18} />
-        Start
-      </button>
+      <span className="press-any-key">PRESS ANY KEY</span>
     </div>
   );
 }
@@ -445,12 +553,12 @@ function MenuScreen({
 }) {
   const p1 = roster.find((character) => character.id === 'kiro') ?? roster[0];
   const p2 = roster.find((character) => character.id === 'riven') ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'local2p') : null));
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4) : null));
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
 
   useEffect(() => {
     if (!p1 || !p2) return;
-    const fresh = createMatch(p1, p2, menuAttractStage, 'local2p');
+    const fresh = createMatch(p1, p2, menuAttractStage, 'cpu', 4);
     matchRef.current = fresh;
     setAttractMatch(fresh);
   }, [p1, p2]);
@@ -460,19 +568,17 @@ function MenuScreen({
     let frame = 0;
     let last = performance.now();
     let accumulator = 0;
-    let elapsed = 0;
     const fixedStep = 1 / 60;
 
     const tick = (now: number) => {
       accumulator += Math.min(0.05, (now - last) / 1000);
       last = now;
       while (accumulator >= fixedStep) {
-        elapsed += fixedStep;
-        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'local2p');
+        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'cpu', 4);
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = createMatch(p1, p2, menuAttractStage, 'local2p');
+          matchRef.current = createMatch(p1, p2, menuAttractStage, 'cpu', 4);
         } else {
-          matchRef.current = stepMatch(current, makeMenuAttractInput(1, elapsed), makeMenuAttractInput(2, elapsed), fixedStep);
+          matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
         }
         accumulator -= fixedStep;
       }
@@ -514,33 +620,16 @@ function MenuScreen({
   );
 }
 
-function makeMenuAttractInput(slot: 1 | 2, elapsed: number): InputFrame {
-  const input = emptyInputFrame();
-  const phase = elapsed % 6.8;
-  const attackBeat = elapsed % 1.35;
-  if (slot === 1) input.right = phase < 4.7;
-  if (slot === 2) input.left = phase < 4.7;
-  if (phase > 4.9) {
-    if (slot === 1) input.left = true;
-    if (slot === 2) input.right = true;
-  }
-  if (phase > 2.2 && phase < 2.45) input.sidestepUp = true;
-  if (phase > 5.45 && phase < 5.65) input.sidestepDown = true;
-  if (attackBeat < 0.08) input.jab = true;
-  if (attackBeat > 0.46 && attackBeat < 0.54) input.kick = true;
-  if (attackBeat > 0.92 && attackBeat < 1.0) input.heavy = true;
-  if (phase > 3.1 && phase < 3.22) input.special = true;
-  return input;
-}
-
 function CharacterSelect({
   roster,
   p1Id,
   p2Id,
   mode,
+  cpuDifficulty,
   setP1Id,
   setP2Id,
   setMode,
+  setCpuDifficulty,
   onBack,
   onNext
 }: {
@@ -548,9 +637,11 @@ function CharacterSelect({
   p1Id: string;
   p2Id: string;
   mode: MatchMode;
+  cpuDifficulty: CpuDifficulty;
   setP1Id: (id: string) => void;
   setP2Id: (id: string) => void;
   setMode: (mode: MatchMode) => void;
+  setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   onBack: () => void;
   onNext: () => void;
 }) {
@@ -601,7 +692,10 @@ function CharacterSelect({
             <span>Character Select</span>
             <h2>{targetLabel}</h2>
           </div>
-          <SegmentedControl value={mode} setValue={setMode} />
+          <div className="mode-stack">
+            <SegmentedControl value={mode} setValue={setMode} />
+            {mode !== 'local2p' && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />}
+          </div>
         </div>
 
         <div className="versus-target-tabs" aria-label="Choose selection target">
@@ -672,6 +766,39 @@ function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mo
   );
 }
 
+function CpuDifficultyControl({
+  value,
+  setValue,
+  compact = false
+}: {
+  value: CpuDifficulty;
+  setValue: (difficulty: CpuDifficulty) => void;
+  compact?: boolean;
+}) {
+  const update = (rawValue: string) => {
+    const next = Math.min(5, Math.max(1, Number(rawValue))) as CpuDifficulty;
+    setValue(next);
+  };
+
+  return (
+    <label className={`cpu-difficulty ${compact ? 'is-compact' : ''}`}>
+      <span>CPU Difficulty</span>
+      <div>
+        <input
+          type="range"
+          min={1}
+          max={5}
+          step={1}
+          value={value}
+          onChange={(event) => update(event.target.value)}
+          aria-label="CPU difficulty"
+        />
+        <strong>{cpuDifficultyLabels[value]}</strong>
+      </div>
+    </label>
+  );
+}
+
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (slot === 2 && mode === 'ai') return 'CPU';
@@ -695,26 +822,48 @@ function StageSelect({
   onBack: () => void;
   onFight: () => void;
 }) {
+  const selectedStage = stages.find((stage) => stage.id === selected) ?? stages[0];
+
   return (
     <div className="stage-screen">
-      <header className="section-header">
-        <span>Arena</span>
+      <header className="stage-select-header">
         <h2>Stage Select</h2>
       </header>
-      <div className="stage-grid">
+
+      <section
+        className="stage-hero"
+        style={{ '--stage-color': selectedStage.rail, '--stage-floor': selectedStage.floor } as CSSProperties}
+        aria-label={`${selectedStage.name} selected stage preview`}
+      >
+        <div className="stage-hero-preview">
+          <StagePreviewCanvas stage={selectedStage} />
+        </div>
+        <div className="stage-hero-label">
+          <strong>{selectedStage.name}</strong>
+          <small>{selectedStage.subtitle}</small>
+        </div>
+      </section>
+
+      <div className="stage-thumbnail-grid" aria-label="Stage choices">
         {stages.map((stage) => (
           <button
             key={stage.id}
-            className={`stage-card ${selected === stage.id ? 'is-selected' : ''}`}
+            className={`stage-thumbnail ${selected === stage.id ? 'is-selected' : ''}`}
             style={{ '--stage-color': stage.rail, '--stage-floor': stage.floor } as CSSProperties}
             onClick={() => setSelected(stage.id)}
+            aria-label={`Select ${stage.name}`}
           >
-            <span className="stage-preview" />
+            <span className="stage-thumbnail-flag" aria-hidden="true">
+              {selected === stage.id ? '1P' : ''}
+            </span>
+            <span className="stage-preview" data-testid={`stage-preview-${stage.id}`}>
+              <StagePreviewCanvas stage={stage} />
+            </span>
             <strong>{stage.name}</strong>
-            <small>{stage.subtitle}</small>
           </button>
         ))}
       </div>
+
       <FooterActions onBack={onBack} onNext={onFight} nextLabel="Fight" />
     </div>
   );
@@ -723,10 +872,14 @@ function StageSelect({
 function SettingsScreen({
   mode,
   setMode,
+  cpuDifficulty,
+  setCpuDifficulty,
   onBack
 }: {
   mode: MatchMode;
   setMode: (mode: MatchMode) => void;
+  cpuDifficulty: CpuDifficulty;
+  setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   onBack: () => void;
 }) {
   return (
@@ -738,6 +891,10 @@ function SettingsScreen({
         </div>
         <SegmentedControl value={mode} setValue={setMode} />
       </header>
+      <section className="settings-strip" aria-label="CPU difficulty">
+        <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} />
+        <p>Lower CPUs hesitate and poke. Higher CPUs press more often, block earlier, and try directional combo routes.</p>
+      </section>
       <div className="control-grid">
         <ControlPanel title="Player 1" rows={['WASD movement in playable modes', 'Hold back to block', '1/U left hand, 2/I right hand', '3/J left foot, 4/K right foot', 'Directions alter combo routes']} />
         <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'CPU controls this side in AI modes', 'Hold back to block', '1 left hand, 2 right hand', '3 left foot, 4 right foot']} />
@@ -750,6 +907,49 @@ function SettingsScreen({
       </button>
     </div>
   );
+}
+
+function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
+  if (!isMoveSlotPose(slot.pose) && !slot.command) return null;
+  const baseInput = isMoveSlotPose(slot.pose) ? slot.pose : commandPose(slot.command ?? slot.label);
+  const baseMove = character.moves.find((move) => move.input === baseInput) ?? character.moves[0] ?? null;
+  if (!baseMove) return null;
+  const overrideKeys = [slot.key, slot.command, baseMove.id, baseMove.input].filter(Boolean) as string[];
+  return overrideKeys.reduce<MoveDefinition>((move, key) => {
+    const override = character.moveOverrides?.[key];
+    return override ? mergeMoveOverride(move, override) : move;
+  }, baseMove);
+}
+
+function mergeMoveOverride(move: MoveDefinition, override: MoveOverride): MoveDefinition {
+  return {
+    ...move,
+    ...override,
+    hitbox: override.hitbox
+      ? {
+          offset: override.hitbox.offset ?? move.hitbox.offset,
+          size: override.hitbox.size ?? move.hitbox.size
+        }
+      : move.hitbox
+  };
+}
+
+function isMoveSlotPose(pose: PreviewPose): pose is MoveDefinition['input'] {
+  return pose === 'jab' || pose === 'kick' || pose === 'heavy' || pose === 'special';
+}
+
+function formatFrameSummary(move: MoveDefinition | null) {
+  if (!move) return 'No move data';
+  const hitText = move.knockdown ? 'KD' : move.launchHeight ? 'Launch' : signedFrame(move.onHitFrames);
+  return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitText} OH`;
+}
+
+function signedFrame(value: number) {
+  return value > 0 ? `+${value}` : `${value}`;
+}
+
+function capitalize(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function ControlPanel({ title, rows }: { title: string; rows: string[] }) {
@@ -768,12 +968,14 @@ function CharacterViewer({
   sourceRoster,
   onAnimationFramesChange,
   onAnimationSpeedChange,
+  onMoveOverrideChange,
   onBack
 }: {
   roster: CharacterDefinition[];
   sourceRoster: CharacterDefinition[];
   onAnimationFramesChange: (characterId: string, animationKey: string, frames: string[]) => void;
   onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
+  onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onBack: () => void;
 }) {
   const [activeId, setActiveId] = useState(roster[0]?.id ?? '');
@@ -799,6 +1001,8 @@ function CharacterViewer({
   const selectedSpeed = active.animationFrameRates?.[selectedSlot.key] ?? active.animationFps ?? 8;
   const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlot.key] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
   const selectedFrameSet = new Set(selectedFrames);
+  const selectedMove = resolveSlotMove(active, selectedSlot);
+  const selectedMoveOverride = active.moveOverrides?.[selectedSlot.key] ?? {};
   const visibleSlots = animationSlots.filter((slot) => {
     const categoryMatches = slotCategory === 'all' || slot.category === slotCategory;
     const search = slotSearch.trim().toLowerCase();
@@ -839,6 +1043,14 @@ function CharacterViewer({
     updateSelectedSpeed(defaultSpeed);
   };
 
+  const updateSelectedMoveOverride = (patch: MoveOverride) => {
+    if (!selectedMove) return;
+    onMoveOverrideChange(active.id, selectedSlot.key, {
+      ...selectedMoveOverride,
+      ...patch
+    });
+  };
+
   const saveActiveManifest = async () => {
     setManifestSaveStatus('saving');
     try {
@@ -848,7 +1060,8 @@ function CharacterViewer({
         body: JSON.stringify({
           characterId: active.id,
           animationFrames: active.animationFrames ?? {},
-          animationFrameRates: active.animationFrameRates ?? {}
+          animationFrameRates: active.animationFrameRates ?? {},
+          moveOverrides: active.moveOverrides ?? {}
         })
       });
       if (!response.ok) throw new Error(await response.text());
@@ -935,6 +1148,7 @@ function CharacterViewer({
                   <NotationGroup tokens={selectedSlot.notation} />
                   {selectedSlot.label}
                 </strong>
+                <small>{formatFrameSummary(selectedMove)}</small>
               </div>
               {isEditingAnimation && (
                 <div className="frame-picker-actions">
@@ -991,6 +1205,9 @@ function CharacterViewer({
           </div>
           {isEditingAnimation ? (
             <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
+              {selectedMove && (
+                <FrameDataEditor move={selectedMove} onChange={updateSelectedMoveOverride} />
+              )}
               {active.spriteSheetPath && (
                 <div className="sprite-sheet-stage">
                   <span>{active.spriteSheetPath}</span>
@@ -1040,6 +1257,7 @@ function CharacterViewer({
                 >
                   <NotationGroup tokens={option.notation} />
                   {option.label}
+                  <small>{formatFrameSummary(resolveSlotMove(active, option))}</small>
                 </button>
               ))}
             </div>
@@ -1051,6 +1269,79 @@ function CharacterViewer({
         Back
       </button>
     </div>
+  );
+}
+
+function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (patch: MoveOverride) => void }) {
+  const updateNumber = (key: keyof MoveOverride, value: string, min = Number.NEGATIVE_INFINITY) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return;
+    onChange({ [key]: Math.max(min, numeric) } as MoveOverride);
+  };
+
+  return (
+    <section className="frame-data-editor" aria-label="Frame data editor">
+      <header>
+        <span>Frame Data</span>
+        <strong>{`i${move.startupFrames} / ${signedFrame(move.onBlockFrames)} / ${move.knockdown ? 'KD' : move.launchHeight ? 'Launch' : signedFrame(move.onHitFrames)}`}</strong>
+        <small>{move.startupFrames + move.activeFrames + move.recoveryFrames} total frames</small>
+      </header>
+      <div className="frame-data-grid">
+        <FrameNumberInput label="Startup" value={move.startupFrames} min={1} onChange={(value) => updateNumber('startupFrames', value, 1)} />
+        <FrameNumberInput label="Active" value={move.activeFrames} min={1} onChange={(value) => updateNumber('activeFrames', value, 1)} />
+        <FrameNumberInput label="Recovery" value={move.recoveryFrames} min={1} onChange={(value) => updateNumber('recoveryFrames', value, 1)} />
+        <FrameNumberInput label="On Block" value={move.onBlockFrames} onChange={(value) => updateNumber('onBlockFrames', value)} />
+        <FrameNumberInput label="On Hit" value={move.onHitFrames} onChange={(value) => updateNumber('onHitFrames', value)} />
+        <FrameNumberInput label="Counter Hit" value={move.onCounterHitFrames} onChange={(value) => updateNumber('onCounterHitFrames', value)} />
+        <FrameNumberInput label="Damage" value={move.damage} min={1} onChange={(value) => updateNumber('damage', value, 1)} />
+        <FrameNumberInput label="Block Dmg" value={move.blockDamage} min={0} onChange={(value) => updateNumber('blockDamage', value, 0)} />
+        <label>
+          <span>Hit Level</span>
+          <select value={move.hitLevel} onChange={(event) => onChange({ hitLevel: event.target.value as HitLevel })}>
+            {hitLevelOptions.map((option) => (
+              <option key={option} value={option}>{capitalize(option)}</option>
+            ))}
+          </select>
+        </label>
+        <FrameNumberInput label="Range" value={move.range} min={0.1} step={0.05} onChange={(value) => updateNumber('range', value, 0.1)} />
+        <FrameNumberInput label="Pushback" value={move.pushback} min={0} step={0.05} onChange={(value) => updateNumber('pushback', value, 0)} />
+        <FrameNumberInput label="Block Push" value={move.blockPushback} min={0} step={0.05} onChange={(value) => updateNumber('blockPushback', value, 0)} />
+        <label>
+          <span>Tracking</span>
+          <select value={move.tracking} onChange={(event) => onChange({ tracking: event.target.value as MoveTracking })}>
+            {trackingOptions.map((option) => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
+        </label>
+        <FrameNumberInput label="Launch" value={move.launchHeight ?? 0} min={0} step={0.1} onChange={(value) => updateNumber('launchHeight', value, 0)} />
+        <label className="frame-toggle">
+          <span>Knockdown</span>
+          <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />
+        </label>
+      </div>
+    </section>
+  );
+}
+
+function FrameNumberInput({
+  label,
+  value,
+  min,
+  step = 1,
+  onChange
+}: {
+  label: string;
+  value: number;
+  min?: number;
+  step?: number;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label>
+      <span>{label}</span>
+      <input type="number" value={Number(value.toFixed(step < 1 ? 2 : 0))} min={min} step={step} onChange={(event) => onChange(event.target.value)} />
+    </label>
   );
 }
 
@@ -1170,6 +1461,7 @@ function FightScreen({
   p2,
   stage,
   mode,
+  cpuDifficulty,
   readInputs,
   setVirtualAction,
   clearMenuInputs,
@@ -1181,6 +1473,7 @@ function FightScreen({
   p2: CharacterDefinition;
   stage: StageDefinition;
   mode: MatchMode;
+  cpuDifficulty: CpuDifficulty;
   readInputs: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
@@ -1189,7 +1482,7 @@ function FightScreen({
   onCharacterSelect: () => void;
 }) {
   const [paused, setPaused] = useState(false);
-  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, mode));
+  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, mode, cpuDifficulty));
   const matchRef = useRef(match);
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
@@ -1262,7 +1555,7 @@ function FightScreen({
   }, [clearMenuInputs, paused, readInputs]);
 
   const reset = () => {
-    const fresh = createMatch(p1, p2, stage, mode);
+    const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty);
     matchRef.current = fresh;
     setMatch(fresh);
     setPaused(false);
@@ -1355,6 +1648,7 @@ function ConfiguredMoveList({ characters }: { characters: [CharacterDefinition, 
                   <span key={slot.key}>
                     <NotationGroup tokens={slot.notation} />
                     {slot.label}
+                    <small>{formatFrameSummary(resolveSlotMove(character, slot))}</small>
                   </span>
                 ))}
               </div>
@@ -1466,6 +1760,9 @@ function FightDebug({
   return (
     <div className="fight-debug" aria-hidden="true">
       <span data-testid="match-phase">{paused ? 'paused' : match.phase}</span>
+      <span data-testid="match-mode">{match.mode}</span>
+      <span data-testid="cpu-difficulty">{match.cpuDifficulty}</span>
+      <span data-testid="match-timer">{match.timer.toFixed(2)}</span>
       <span data-testid="p1-position">{`${p1.position.x.toFixed(3)},${p1.position.z.toFixed(3)}`}</span>
       <span data-testid="p2-position">{`${p2.position.x.toFixed(3)},${p2.position.z.toFixed(3)}`}</span>
       <span data-testid="p1-height">{p1.position.y.toFixed(3)}</span>

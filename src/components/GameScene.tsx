@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import type { CharacterDefinition, FighterRuntime, FighterState, MatchSnapshot, MoveInput } from '../types';
+import type { CharacterDefinition, FighterRuntime, FighterState, MatchSnapshot, MoveInput, StageDefinition } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
 import { debugLogThrottled } from '../lib/debugLogger';
 
@@ -18,7 +18,7 @@ export function GameScene({ match }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <color attach="background" args={['#101114']} />
-      <fog attach="fog" args={['#101114', 8, 18]} />
+      <fog attach="fog" args={['#101114', 14, 58]} />
       <Suspense fallback={null}>
         <Environment preset="city" />
       </Suspense>
@@ -30,9 +30,41 @@ export function GameScene({ match }: GameSceneProps) {
       <Arena stage={match.stage} />
       <FighterRig fighter={match.fighters[0]} />
       <FighterRig fighter={match.fighters[1]} />
-      <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={12} blur={2.4} far={3} />
+      <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
     </Canvas>
   );
+}
+
+export function StagePreviewCanvas({ stage }: { stage: StageDefinition }) {
+  return (
+    <Canvas
+      shadows
+      frameloop="demand"
+      dpr={[1, 1.25]}
+      camera={{ position: [0, 7.4, 12.4], fov: 38 }}
+      data-testid={`stage-preview-canvas-${stage.id}`}
+      aria-label={`${stage.name} stage preview`}
+    >
+      <color attach="background" args={['#080b12']} />
+      <fog attach="fog" args={['#101114', 16, 56]} />
+      <ambientLight intensity={0.58} color="#dbe8ff" />
+      <directionalLight castShadow position={[4, 8, 5]} intensity={1.9} color={stage.light} shadow-mapSize={[512, 512]} />
+      <pointLight position={[-5, 2.2, 3]} color={stage.rail} intensity={5.2} distance={9} />
+      <StagePreviewCamera />
+      <group position={[0, -0.05, 0]} scale={0.82}>
+        <Arena stage={stage} />
+      </group>
+    </Canvas>
+  );
+}
+
+function StagePreviewCamera() {
+  const { camera, invalidate } = useThree();
+  useEffect(() => {
+    camera.lookAt(0, 0.2, -0.8);
+    invalidate();
+  }, [camera, invalidate]);
+  return null;
 }
 
 export function MenuAttractScene({ match }: GameSceneProps) {
@@ -56,15 +88,34 @@ export function MenuAttractScene({ match }: GameSceneProps) {
 }
 
 function MenuAttractCamera({ match }: { match: MatchSnapshot }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const target = useMemo(() => new THREE.Vector3(), []);
   useFrame((state, delta) => {
     const [p1, p2] = match.fighters;
     const midX = (p1.position.x + p2.position.x) / 2;
+    const midZ = (p1.position.z + p2.position.z) / 2 + 1.75;
+    const dx = p2.position.x - p1.position.x;
+    const dz = p2.position.z - p1.position.z;
+    const distance = Math.hypot(dx, dz);
+    const lineLength = distance || 1;
+    let cameraX = -dz / lineLength;
+    let cameraZ = dx / lineLength;
+    if (cameraZ < 0) {
+      cameraX *= -1;
+      cameraZ *= -1;
+    }
+    const perspective = camera as THREE.PerspectiveCamera;
+    const aspect = size.width / Math.max(1, size.height);
+    const verticalFov = THREE.MathUtils.degToRad(perspective.fov);
+    const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * aspect);
+    const horizontalFit = (distance * 0.5 + 1.25) / Math.tan(horizontalFov / 2);
+    const verticalFit = (2.2 + Math.max(p1.position.y, p2.position.y) * 0.45) / Math.tan(verticalFov / 2);
+    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 6.4), 6.4, 13.5);
+    const height = THREE.MathUtils.clamp(2.25 + cameraDistance * 0.08 + Math.max(p1.position.y, p2.position.y) * 0.18, 2.35, 3.75);
     const drift = Math.sin(state.clock.elapsedTime * 0.18) * 0.22;
-    const desired = new THREE.Vector3(midX * 0.2 + drift, 2.35, 7.4);
-    camera.position.lerp(desired, 1 - Math.pow(0.001, delta));
-    target.set(midX * 0.12, 1.0, 1.65);
+    const desired = new THREE.Vector3(midX + cameraX * cameraDistance + drift, height, midZ + cameraZ * cameraDistance);
+    camera.position.lerp(desired, 1 - Math.pow(0.00001, delta));
+    target.set(midX, 0.95 + Math.max(p1.position.y, p2.position.y) * 0.14, midZ);
     camera.lookAt(target);
   });
   return null;
@@ -229,15 +280,19 @@ function PreviewFighter({
     runtime.hitFlash = 0;
     runtime.currentMove = null;
     runtime.actionTimer = 0;
+    runtime.actionFramesRemaining = 0;
+    runtime.moveFrame = 0;
     runtime.velocityY = 0;
 
     if (isMovePose(pose)) {
       const move = character.moves.find((candidate) => candidate.input === pose) ?? character.moves[0] ?? null;
-      const total = move ? move.startup + move.active + move.recovery : 1;
+      const total = move ? move.startupFrames + move.activeFrames + move.recoveryFrames : 1;
       const phase = (t * 1.35) % 1;
       runtime.state = 'attack';
       runtime.currentMove = move;
-      runtime.actionTimer = total * (1 - phase);
+      runtime.moveFrame = Math.round(total * phase);
+      runtime.actionFramesRemaining = Math.max(0, total - runtime.moveFrame);
+      runtime.actionTimer = runtime.actionFramesRemaining / 60;
       runtime.position.y = 0;
     } else {
       runtime.state = pose;
@@ -277,6 +332,8 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     jumpInputHeld: false,
     currentMove: null,
     actionTimer: 0,
+    actionFramesRemaining: 0,
+    moveFrame: 0,
     hitConnected: false,
     previewAnimationKey: undefined,
     commandHistory: [],
@@ -288,18 +345,26 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     wasCrouching: false,
     roundsWon: 0,
     stunTimer: 0,
+    stunFramesRemaining: 0,
+    blockstunFramesRemaining: 0,
+    getupInvulnerableFrames: 0,
+    getupForward: 0,
+    getupLane: 0,
+    getupStarted: false,
+    juggleDamage: 0,
     blockFlash: 0,
     hitFlash: 0
   };
 }
 
 function CameraRig({ match }: { match: MatchSnapshot }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const target = useMemo(() => new THREE.Vector3(), []);
   useFrame((_, delta) => {
     const [p1, p2] = match.fighters;
     const midX = (p1.position.x + p2.position.x) / 2;
     const midZ = (p1.position.z + p2.position.z) / 2;
+    const midY = Math.max(0.92, 0.86 + (p1.position.y + p2.position.y) * 0.18);
     const dx = p2.position.x - p1.position.x;
     const dz = p2.position.z - p1.position.z;
     const distance = Math.hypot(dx, dz);
@@ -310,67 +375,81 @@ function CameraRig({ match }: { match: MatchSnapshot }) {
       cameraX *= -1;
       cameraZ *= -1;
     }
-    const cameraDistance = 5.7 + distance * 0.34;
-    const desired = new THREE.Vector3(midX + cameraX * cameraDistance, 2.7 + distance * 0.16, midZ + cameraZ * cameraDistance);
-    camera.position.lerp(desired, 1 - Math.pow(0.001, delta));
-    target.set(midX, 1.05, midZ);
+
+    const perspective = camera as THREE.PerspectiveCamera;
+    const aspect = size.width / Math.max(1, size.height);
+    const verticalFov = THREE.MathUtils.degToRad(perspective.fov);
+    const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * aspect);
+    const horizontalFit = (distance * 0.5 + 1.55) / Math.tan(horizontalFov / 2);
+    const verticalSpan = 2.65 + Math.max(p1.position.y, p2.position.y) * 0.55;
+    const verticalFit = verticalSpan / Math.tan(verticalFov / 2);
+    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2), 5.2, 18);
+    const cameraHeight = THREE.MathUtils.clamp(2.35 + cameraDistance * 0.13 + Math.max(p1.position.y, p2.position.y) * 0.22, 2.75, 5.6);
+    const desired = new THREE.Vector3(midX + cameraX * cameraDistance, cameraHeight, midZ + cameraZ * cameraDistance);
+    camera.position.lerp(desired, 1 - Math.pow(0.00001, delta));
+    target.set(midX, midY, midZ);
     camera.lookAt(target);
   });
   return null;
 }
 
 function Arena({ stage }: { stage: MatchSnapshot['stage'] }) {
+  const horizonBlocks = useMemo(
+    () => [
+      [-18, 0.55, -12, 4.8, 1.1, 0.5],
+      [-12, 0.72, -13.2, 3.2, 1.44, 0.5],
+      [-6.4, 0.46, -12.4, 4.1, 0.92, 0.5],
+      [7, 0.58, -12.8, 5.4, 1.16, 0.5],
+      [14.8, 0.82, -13.6, 3.8, 1.64, 0.5],
+      [21, 0.42, -12.2, 6.2, 0.84, 0.5]
+    ] as const,
+    []
+  );
+
   return (
     <group>
-      {stage.worldModelPath && <WorldStage stage={stage} />}
-      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[11.2, 8.2, 24, 18]} />
-        <meshStandardMaterial color={stage.floor} roughness={0.74} metalness={0.16} transparent opacity={stage.worldModelPath ? 0.74 : 1} />
+      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.045, 0]}>
+        <planeGeometry args={[96, 42, 48, 24]} />
+        <meshStandardMaterial color={stage.floor} roughness={0.34} metalness={0.46} transparent opacity={0.96} />
       </mesh>
-      <mesh receiveShadow position={[0, 0.018, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[10.2, 7.4, 22, 16]} />
-        <meshStandardMaterial color={stage.floor} roughness={0.62} metalness={0.24} />
+      <mesh receiveShadow position={[0, -0.018, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[38, 19, 36, 18]} />
+        <meshStandardMaterial color="#0d2140" emissive="#08284f" emissiveIntensity={0.2} roughness={0.42} metalness={0.35} transparent opacity={0.74} />
       </mesh>
-      <gridHelper args={[10, 10, stage.rail, '#3a4048']} position={[0, 0.032, 0]} />
-      {[-3.85, 3.85].map((z) => (
-        <mesh key={z} position={[0, 0.22, z]} castShadow>
-          <boxGeometry args={[10.4, 0.13, 0.13]} />
-          <meshStandardMaterial color={stage.rail} emissive={stage.rail} emissiveIntensity={0.45} />
+      <gridHelper args={[48, 48, stage.rail, '#14345d']} position={[0, 0.004, 0]} />
+      <gridHelper args={[96, 48, '#174d88', '#071d35']} position={[0, -0.006, 0]} />
+      <mesh position={[0, -0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[4.2, 96]} />
+        <meshStandardMaterial color="#102a4c" emissive="#0a2c5a" emissiveIntensity={0.24} roughness={0.34} metalness={0.35} transparent opacity={0.48} />
+      </mesh>
+      <mesh position={[0, -0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[4.2, 4.72, 96]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.22} />
+      </mesh>
+      {[-10, 10].map((x) => (
+        <mesh key={`lane-${x}`} position={[x, 0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.04, 18]} />
+          <meshBasicMaterial color={stage.rail} transparent opacity={0.28} />
         </mesh>
       ))}
-      {[-5.1, 5.1].map((x) => (
-        <mesh key={x} position={[x, 0.22, 0]} castShadow>
-          <boxGeometry args={[0.13, 0.13, 7.9]} />
-          <meshStandardMaterial color={stage.rail} emissive={stage.rail} emissiveIntensity={0.28} />
+      <mesh position={[0, 0.012, -9]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+        <planeGeometry args={[0.04, 36]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.24} />
+      </mesh>
+      {horizonBlocks.map(([x, y, z, width, height, depth], index) => (
+        <mesh key={`horizon-${index}`} position={[x, y, z]} castShadow receiveShadow>
+          <boxGeometry args={[width, height, depth]} />
+          <meshStandardMaterial color="#030712" emissive="#061326" emissiveIntensity={0.32} roughness={0.62} metalness={0.12} transparent opacity={0.74} />
         </mesh>
       ))}
-      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[3.25, 3.7, 72]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.18} />
+      <mesh position={[0, 3.65, -14.4]}>
+        <circleGeometry args={[1.65, 72]} />
+        <meshBasicMaterial color="#f1f5ff" transparent opacity={0.58} />
       </mesh>
-    </group>
-  );
-}
-
-function WorldStage({ stage }: { stage: MatchSnapshot['stage'] }) {
-  const gltf = useGLTF(stage.worldModelPath ?? '');
-  const model = useMemo(() => {
-    const scene = clone(gltf.scene);
-    scene.traverse((object) => {
-      if (object instanceof THREE.Mesh) {
-        object.castShadow = true;
-        object.receiveShadow = true;
-        object.frustumCulled = true;
-      }
-    });
-    return scene;
-  }, [gltf.scene]);
-  const scale = stage.worldModelScale ?? 1;
-  const position = stage.worldModelPosition ?? [0, 0, 0];
-  const rotation = stage.worldModelRotation ?? [0, 0, 0];
-  return (
-    <group position={position} rotation={rotation} scale={scale}>
-      <primitive object={model} />
+      <mesh position={[0, 3.65, -14.42]}>
+        <ringGeometry args={[1.65, 2.05, 72]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.15} />
+      </mesh>
     </group>
   );
 }

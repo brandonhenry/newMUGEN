@@ -1,5 +1,5 @@
 import { starterCharacters } from '../data/characters';
-import type { CharacterDefinition } from '../types';
+import type { CharacterDefinition, HitLevel, MoveDefinition, MoveTracking } from '../types';
 import { debugLog } from './debugLogger';
 
 const requiredClips = [
@@ -27,6 +27,91 @@ export type CharacterLoadResult = {
   warnings: Record<string, string[]>;
 };
 
+const framesPerSecond = 60;
+
+export function normalizeCharacter(character: CharacterDefinition): CharacterDefinition {
+  return {
+    ...character,
+    moves: (character.moves ?? []).map(normalizeMove),
+    moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {})
+  };
+}
+
+export function normalizeMove(move: MoveDefinition): MoveDefinition {
+  const legacyStartup = typeof move.startup === 'number' ? move.startup : undefined;
+  const legacyActive = typeof move.active === 'number' ? move.active : undefined;
+  const legacyRecovery = typeof move.recovery === 'number' ? move.recovery : undefined;
+  const startupFrames = normalizeFrameCount(move.startupFrames, legacyStartup, 10);
+  const activeFrames = normalizeFrameCount(move.activeFrames, legacyActive, 2);
+  const recoveryFrames = normalizeFrameCount(move.recoveryFrames, legacyRecovery, 16);
+  const hitstunFrames = normalizeFrameCount(undefined, move.hitstun, 12);
+  const pushback = finiteOr(move.pushback, finiteOr(move.push, 0.7));
+  return {
+    ...move,
+    startupFrames,
+    activeFrames,
+    recoveryFrames,
+    damage: Math.max(1, Math.round(finiteOr(move.damage, 1))),
+    blockDamage: Math.max(0, Math.round(finiteOr(move.blockDamage, 0))),
+    hitLevel: normalizeHitLevel(move.hitLevel),
+    onBlockFrames: Math.round(finiteOr(move.onBlockFrames, -Math.max(1, recoveryFrames - 12))),
+    onHitFrames: Math.round(finiteOr(move.onHitFrames, Math.max(2, hitstunFrames - recoveryFrames))),
+    onCounterHitFrames: Math.round(finiteOr(move.onCounterHitFrames, Math.max(4, hitstunFrames + 2 - recoveryFrames))),
+    whiffRecoveryFrames: move.whiffRecoveryFrames === undefined ? undefined : Math.max(0, Math.round(finiteOr(move.whiffRecoveryFrames, recoveryFrames))),
+    range: Math.max(0.1, finiteOr(move.range, 1.3)),
+    pushback,
+    blockPushback: finiteOr(move.blockPushback, pushback * 0.45),
+    launchHeight: move.launchHeight === undefined ? undefined : Math.max(0, finiteOr(move.launchHeight, 0)),
+    tracking: normalizeTracking(move.tracking),
+    armorStartFrame: normalizeNullableFrame(move.armorStartFrame),
+    armorEndFrame: normalizeNullableFrame(move.armorEndFrame),
+    cancelWindows: Array.isArray(move.cancelWindows)
+      ? move.cancelWindows
+          .map((window) => ({
+            startFrame: Math.max(1, Math.round(finiteOr(window.startFrame, 1))),
+            endFrame: Math.max(1, Math.round(finiteOr(window.endFrame, window.startFrame))),
+            into: window.into
+          }))
+          .filter((window) => window.endFrame >= window.startFrame)
+      : undefined,
+    knockdown: Boolean(move.knockdown)
+  };
+}
+
+function sanitizeMoveOverrides(overrides: CharacterDefinition['moveOverrides']) {
+  return Object.fromEntries(
+    Object.entries(overrides ?? {})
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [key, value])
+  );
+}
+
+function normalizeFrameCount(value: unknown, legacySeconds: number | undefined, fallback: number) {
+  if (Number.isFinite(value)) return Math.max(1, Math.round(Number(value)));
+  if (Number.isFinite(legacySeconds)) return Math.max(1, Math.round(Number(legacySeconds) * framesPerSecond));
+  return fallback;
+}
+
+function normalizeNullableFrame(value: unknown) {
+  if (value === null || value === undefined) return null;
+  if (!Number.isFinite(value)) return null;
+  return Math.max(1, Math.round(Number(value)));
+}
+
+function finiteOr(value: unknown, fallback: number) {
+  return Number.isFinite(value) ? Number(value) : fallback;
+}
+
+function normalizeHitLevel(value: unknown): HitLevel {
+  return value === 'high' || value === 'mid' || value === 'low' || value === 'throw' || value === 'special' ? value : 'mid';
+}
+
+function normalizeTracking(value: unknown): MoveTracking {
+  return value === 'none' || value === 'weakLeft' || value === 'weakRight' || value === 'medium' || value === 'strong' || value === 'homing'
+    ? value
+    : 'medium';
+}
+
 export function validateCharacter(character: CharacterDefinition): string[] {
   const warnings: string[] = [];
   if (!character.id) warnings.push('Missing id.');
@@ -45,9 +130,10 @@ export function validateCharacter(character: CharacterDefinition): string[] {
     }
   }
   for (const move of character.moves) {
-    const total = move.startup + move.active + move.recovery;
+    const total = move.startupFrames + move.activeFrames + move.recoveryFrames;
     if (total <= 0) warnings.push(`${move.id} has invalid timing.`);
     if (move.damage <= 0) warnings.push(`${move.id} should deal positive damage.`);
+    if (!move.hitLevel) warnings.push(`${move.id} is missing hit level.`);
   }
   return warnings;
 }
@@ -63,7 +149,7 @@ export async function loadCharacterRoster(): Promise<CharacterLoadResult> {
         fetch(`/characters/${id}/character.json`).then((response) => response.json() as Promise<CharacterDefinition>)
       )
     );
-    const characters = loaded.length > 0 ? loaded : starterCharacters;
+    const characters = (loaded.length > 0 ? loaded : starterCharacters).map(normalizeCharacter);
     debugLog(2, 'character manifests loaded', {
       characters: characters.map((character) => ({
         id: character.id,
@@ -79,8 +165,8 @@ export async function loadCharacterRoster(): Promise<CharacterLoadResult> {
   } catch {
     debugLog(2, 'manifest load failed, using bundled starter characters');
     return {
-      characters: starterCharacters,
-      warnings: Object.fromEntries(starterCharacters.map((character) => [character.id, validateCharacter(character)]))
+      characters: starterCharacters.map(normalizeCharacter),
+      warnings: Object.fromEntries(starterCharacters.map((character) => [character.id, validateCharacter(normalizeCharacter(character))]))
     };
   }
 }

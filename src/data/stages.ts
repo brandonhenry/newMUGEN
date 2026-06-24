@@ -3,15 +3,11 @@ import type { StageDefinition } from '../types';
 export const stages: StageDefinition[] = [
   {
     id: 'metro-ring',
-    name: 'Dungeon Core',
-    subtitle: 'Large 3D world with a centered fight ring',
-    floor: '#20242a',
+    name: 'Infinite Grid',
+    subtitle: 'Wide procedural arena for movement testing',
+    floor: '#07182c',
     rail: '#2ee6ff',
-    light: '#f6fbff',
-    worldModelPath: '/stages/dungeon-world/dungeon_warkarma.glb',
-    worldModelScale: 0.32,
-    worldModelPosition: [0, -0.32, -3.8],
-    worldModelRotation: [0, 0, 0]
+    light: '#dbe8ff'
   },
   {
     id: 'forge-yard',

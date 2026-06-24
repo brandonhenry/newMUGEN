@@ -12,6 +12,7 @@ type DevManifestPayload = {
   characterId?: string;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
+  moveOverrides?: Record<string, Record<string, unknown>>;
 };
 
 function newMugenDevManifestWriter() {
@@ -40,6 +41,7 @@ function newMugenDevManifestWriter() {
           const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
+          manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
           await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 
           response.statusCode = 200;
@@ -53,6 +55,48 @@ function newMugenDevManifestWriter() {
       });
     }
   };
+}
+
+function sanitizeMoveOverrideMap(overrides: Record<string, Record<string, unknown>>) {
+  return Object.fromEntries(
+    Object.entries(overrides)
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [key, sanitizeMoveOverride(value)])
+  );
+}
+
+function sanitizeMoveOverride(override: Record<string, unknown>) {
+  const allowed = new Set([
+    'label',
+    'startupFrames',
+    'activeFrames',
+    'recoveryFrames',
+    'damage',
+    'blockDamage',
+    'hitLevel',
+    'onBlockFrames',
+    'onHitFrames',
+    'onCounterHitFrames',
+    'whiffRecoveryFrames',
+    'range',
+    'pushback',
+    'blockPushback',
+    'launchHeight',
+    'tracking',
+    'armorStartFrame',
+    'armorEndFrame',
+    'knockdown',
+    'cancelWindows'
+  ]);
+  return Object.fromEntries(
+    Object.entries(override).filter(([key, value]) => {
+      if (!allowed.has(key)) return false;
+      if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
+      if (key === 'knockdown') return typeof value === 'boolean';
+      if (key === 'cancelWindows') return Array.isArray(value);
+      return Number.isFinite(value);
+    })
+  );
 }
 
 function readRequestBody(request: IncomingMessage) {
