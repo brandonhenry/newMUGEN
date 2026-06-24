@@ -11,6 +11,7 @@ import {
   Save,
   Settings,
   Swords,
+  Target,
   Users,
   ZoomIn,
   ZoomOut
@@ -451,7 +452,18 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
-            onPlay={() => setScreen('select')}
+            onArcade={() => {
+              setMode('ai');
+              setScreen('select');
+            }}
+            onVersus={() => {
+              setMode('local2p');
+              setScreen('select');
+            }}
+            onTraining={() => {
+              setMode('training');
+              setScreen('select');
+            }}
             onSettings={() => setScreen('settings')}
             onViewer={() => setScreen('viewer')}
             onExit={() => setScreen('title')}
@@ -543,13 +555,17 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
 
 function MenuScreen({
   roster,
-  onPlay,
+  onArcade,
+  onVersus,
+  onTraining,
   onSettings,
   onViewer,
   onExit
 }: {
   roster: CharacterDefinition[];
-  onPlay: () => void;
+  onArcade: () => void;
+  onVersus: () => void;
+  onTraining: () => void;
   onSettings: () => void;
   onViewer: () => void;
   onExit: () => void;
@@ -595,9 +611,9 @@ function MenuScreen({
   }, [p1, p2]);
 
   const menuItems = [
-    { label: 'Arcade', action: onPlay },
-    { label: 'Versus', action: onPlay },
-    { label: 'Training', action: onPlay },
+    { label: 'Arcade', action: onArcade },
+    { label: 'Versus', action: onVersus },
+    { label: 'Training', action: onTraining },
     { label: 'Characters', action: onViewer },
     { label: 'Options', action: onSettings },
     { label: 'Exit', action: onExit }
@@ -707,7 +723,7 @@ function CharacterSelect({
           </div>
           <div className="mode-stack">
             <SegmentedControl value={mode} setValue={setMode} />
-            {mode !== 'local2p' && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />}
+            {usesCpuDifficulty(mode) && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />}
           </div>
         </div>
 
@@ -771,6 +787,10 @@ function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mo
         <Users size={16} />
         Local 2P
       </button>
+      <button className={value === 'training' ? 'active' : ''} onClick={() => setValue('training')}>
+        <Target size={16} />
+        Training
+      </button>
       <button className={value === 'cpu' ? 'active' : ''} onClick={() => setValue('cpu')}>
         <Swords size={16} />
         CPU vs CPU
@@ -814,14 +834,20 @@ function CpuDifficultyControl({
 
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && mode === 'ai') return 'CPU';
   return slot === 1 ? 'Player 1' : 'Player 2';
 }
 
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && mode === 'ai') return 'CPU';
   return slot === 1 ? 'P1' : 'P2';
+}
+
+function usesCpuDifficulty(mode: MatchMode) {
+  return mode === 'ai' || mode === 'cpu';
 }
 
 function StageSelect({
@@ -904,15 +930,17 @@ function SettingsScreen({
         </div>
         <SegmentedControl value={mode} setValue={setMode} />
       </header>
-      <section className="settings-strip" aria-label="CPU difficulty">
-        <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} />
-        <p>Lower CPUs hesitate and poke. Higher CPUs press more often, block earlier, and try directional combo routes.</p>
-      </section>
+      {usesCpuDifficulty(mode) && (
+        <section className="settings-strip" aria-label="CPU difficulty">
+          <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} />
+          <p>Lower CPUs hesitate and poke. Higher CPUs press more often, block earlier, and try directional combo routes.</p>
+        </section>
+      )}
       <div className="control-grid">
         <ControlPanel title="Player 1" rows={['WASD movement in playable modes', 'Hold back to block', '1/U left hand, 2/I right hand', '3/J left foot, 4/K right foot', 'Directions alter combo routes']} />
-        <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'CPU controls this side in AI modes', 'Hold back to block', '1 left hand, 2 right hand', '3 left foot, 4 right foot']} />
+        <ControlPanel title="Player 2" rows={['Arrows in Local 2P', 'CPU controls this side in AI modes', 'Training mode keeps this side as a dummy', 'Hold back to block', '1 left hand, 2 right hand', '3 left foot, 4 right foot']} />
         <ControlPanel title="Gamepad" rows={['Left stick or d-pad movement', 'Face buttons attack', 'Shoulders block and special', 'Start pauses the match']} />
-        <ControlPanel title="Modes" rows={['1P vs AI: player one fights CPU', 'Local 2P: both sides playable', 'CPU vs CPU: both fighters autoplay', 'Pause still works during CPU battles']} />
+        <ControlPanel title="Modes" rows={['1P vs AI: player one fights CPU', 'Local 2P: both sides playable', 'Training: CPU dummy never fights back', 'CPU vs CPU: both fighters autoplay', 'Pause still works during CPU battles']} />
       </div>
       <button className="secondary-button" onClick={onBack}>
         <Home size={18} />

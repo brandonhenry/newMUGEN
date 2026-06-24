@@ -91,7 +91,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   }
 
   const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty) : p1Input;
-  const input2 = next.mode === 'ai' || next.mode === 'cpu' ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty) : p2Input;
+  const input2 =
+    next.mode === 'training'
+      ? emptyInputFrame()
+      : next.mode === 'ai' || next.mode === 'cpu'
+        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty)
+        : p2Input;
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
   resolveFacing(next);

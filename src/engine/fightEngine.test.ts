@@ -59,6 +59,26 @@ describe('fight engine', () => {
     expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
   });
 
+  it('keeps the opponent dummy passive in training mode', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.72;
+    match.fighters[1].position.x = 0.72;
+    const p2Attack = emptyInputFrame();
+    p2Attack.left = true;
+    p2Attack.jab = true;
+    p2Attack.heavy = true;
+
+    for (let i = 0; i < 120; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), p2Attack, 1 / 60);
+      expect(match.fighters[1].state).not.toBe('attack');
+      expect(match.fighters[1].currentMove).toBeNull();
+    }
+
+    expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
+  });
+
   it('keeps CPU fighters attacking during an extended exchange', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu');
     match.phase = 'fighting';

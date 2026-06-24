@@ -132,7 +132,7 @@ export type StageDefinition = {
 
 export type InputFrame = Record<ActionName, boolean>;
 
-export type MatchMode = 'ai' | 'local2p' | 'cpu';
+export type MatchMode = 'ai' | 'local2p' | 'cpu' | 'training';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
 export type FighterRuntime = {
