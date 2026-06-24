@@ -942,16 +942,22 @@ function SettingsScreen({
         <ControlPanel title="Gamepad" rows={['Left stick or d-pad movement', 'Face buttons attack', 'Shoulders block and special', 'Start pauses the match']} />
         <ControlPanel title="Modes" rows={['1P vs AI: player one fights CPU', 'Local 2P: both sides playable', 'Training: CPU dummy never fights back', 'CPU vs CPU: both fighters autoplay', 'Pause still works during CPU battles']} />
       </div>
-      <div className="support-actions">
-        <a className="patreon-button" href="https://www.patreon.com/cw/playKORE" target="_blank" rel="noreferrer">
-          <span className="patreon-mark" aria-hidden="true">p</span>
-          <span>Become a patron</span>
-        </a>
-      </div>
       <button className="secondary-button" onClick={onBack}>
         <Home size={18} />
         Back
       </button>
+      <footer className="settings-support-footer" aria-label="Community links">
+        <div className="support-actions">
+          <a className="support-button discord-button" href="https://discord.gg/yDcrFsmTx7" target="_blank" rel="noreferrer">
+            <span className="discord-mark" aria-hidden="true">Discord</span>
+            <span>Join the Discord</span>
+          </a>
+          <a className="support-button patreon-button" href="https://www.patreon.com/cw/playKORE" target="_blank" rel="noreferrer">
+            <span className="patreon-mark" aria-hidden="true">p</span>
+            <span>Become a patron</span>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
