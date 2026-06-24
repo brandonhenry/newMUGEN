@@ -23,7 +23,7 @@ export function isDebugEnabled() {
 export function debugLog(hypothesis: number, label: string, payload: DebugPayload = {}) {
   if (!isDebugEnabled()) return;
   const hypothesisLabel = DEBUG_HYPOTHESES[hypothesis - 1] ?? `H${hypothesis}`;
-  console.info(`[newMUGEN debug] ${hypothesisLabel} | ${label}`, payload);
+  console.info(`[KORE debug] ${hypothesisLabel} | ${label}`, payload);
 }
 
 export function debugLogThrottled(hypothesis: number, label: string, payload: DebugPayload = {}, intervalMs = 900) {

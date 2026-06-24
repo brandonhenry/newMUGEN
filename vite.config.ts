@@ -5,7 +5,7 @@ import { defineConfig, type ViteDevServer } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react(), newMugenDevManifestWriter()]
+  plugins: [react(), koreDevManifestWriter()]
 });
 
 type DevManifestPayload = {
@@ -15,11 +15,11 @@ type DevManifestPayload = {
   moveOverrides?: Record<string, Record<string, unknown>>;
 };
 
-function newMugenDevManifestWriter() {
+function koreDevManifestWriter() {
   return {
-    name: 'newmugen-dev-manifest-writer',
+    name: 'kore-dev-manifest-writer',
     configureServer(server: ViteDevServer) {
-      server.middlewares.use('/__newmugen/dev/save-character-manifest', async (request: IncomingMessage, response: ServerResponse) => {
+      server.middlewares.use('/__kore/dev/save-character-manifest', async (request: IncomingMessage, response: ServerResponse) => {
         if (request.method !== 'POST') {
           response.statusCode = 405;
           response.setHeader('Content-Type', 'application/json');

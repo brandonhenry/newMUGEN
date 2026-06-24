@@ -59,11 +59,11 @@ type AnimationSlot = {
   command?: string;
 };
 
-const ANIMATION_STORAGE_KEY = 'newmugen.animationOverrides';
+const ANIMATION_STORAGE_KEY = 'kore.animationOverrides';
 const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
 const menuAttractStage: StageDefinition = {
   id: 'kore-menu-moon',
-  name: 'K.O.R.E Moon Stage',
+  name: 'KORE Moon Stage',
   subtitle: 'Menu attract arena',
   floor: '#07182c',
   rail: '#2ee6ff',
@@ -127,7 +127,7 @@ const cpuDifficultyLabels: Record<CpuDifficulty, string> = {
   2: 'Casual',
   3: 'Normal',
   4: 'Hard',
-  5: 'K.O.R.E'
+  5: 'KORE'
 };
 
 function buildAnimationSlots(): AnimationSlot[] {
@@ -434,9 +434,9 @@ export default function App() {
   if (screen === 'boot' || !p1 || !p2) {
     return (
       <main className="app-shell boot-shell">
-        <section className="boot-mark" aria-label="Loading newMUGEN">
+        <section className="boot-mark" aria-label="Loading KORE">
           <Swords size={34} />
-          <h1>newMUGEN</h1>
+          <h1>KORE</h1>
           <p>Loading fighters</p>
         </section>
       </main>
@@ -534,8 +534,8 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
   };
 
   return (
-    <div ref={titleRef} className="title-screen" tabIndex={0} onClick={onStart} onKeyDown={handleKeyDown} aria-label="K.O.R.E title screen. Press any key.">
-      <img className="title-logo" src="/brand/kore-logo.png" alt="K.O.R.E" />
+    <div ref={titleRef} className="title-screen" tabIndex={0} onClick={onStart} onKeyDown={handleKeyDown} aria-label="KORE title screen. Press any key.">
+      <img className="title-logo" src="/brand/kore-logo-generated.png" alt="KORE" />
       <span className="press-any-key">PRESS ANY KEY</span>
     </div>
   );
@@ -611,8 +611,8 @@ function MenuScreen({
         </div>
       )}
       <div className="menu-vignette" />
-      <section className="kore-menu-overlay" aria-label="K.O.R.E main menu">
-        <img className="kore-menu-logo" src="/brand/kore-logo.png" alt="K.O.R.E" />
+      <section className="kore-menu-overlay" aria-label="KORE main menu">
+        <img className="kore-menu-logo" src="/brand/kore-logo-generated.png" alt="KORE" />
         <nav className="arcade-menu-list" aria-label="Main menu">
           {menuItems.map((item, index) => (
             <button
@@ -1067,7 +1067,7 @@ function CharacterViewer({
   const saveActiveManifest = async () => {
     setManifestSaveStatus('saving');
     try {
-      const response = await fetch('/__newmugen/dev/save-character-manifest', {
+      const response = await fetch('/__kore/dev/save-character-manifest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

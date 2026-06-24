@@ -1,4 +1,4 @@
-# newMUGEN Character Standard
+# KORE Character Standard
 
 Characters live in `public/characters/{characterId}/` and are discovered from `public/characters/index.json`.
 
