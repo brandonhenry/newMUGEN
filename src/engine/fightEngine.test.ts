@@ -655,6 +655,77 @@ describe('fight engine', () => {
     expect(match.fighters[0].actionFramesRemaining - match.fighters[1].blockstunFramesRemaining).toBe(10);
   });
 
+  it('gives the blocker at least a small plus-frame punish window on block', () => {
+    const safeAttacker: CharacterDefinition = {
+      ...starterCharacters[0],
+      moveOverrides: {
+        jab: {
+          startupFrames: 1,
+          activeFrames: 1,
+          recoveryFrames: 20,
+          onBlockFrames: 4
+        }
+      }
+    };
+    let match = createMatch(safeAttacker, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    const block = emptyInputFrame();
+    block.block = true;
+    for (let i = 0; i < 5; i += 1) {
+      match = stepMatch(match, attack, block, 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[0].actionFramesRemaining - match.fighters[1].blockstunFramesRemaining).toBeGreaterThanOrEqual(3);
+    expect(match.fighters[1].blockPunishWindowFrames).toBeGreaterThanOrEqual(15);
+  });
+
+  it('lets CPU punish during its post-block advantage window', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = starterCharacters[0].moves[0];
+    match.fighters[0].actionFramesRemaining = 18;
+    match.fighters[0].actionTimer = 18 / 60;
+    match.fighters[0].moveFrame = starterCharacters[0].moves[0].startupFrames + starterCharacters[0].moves[0].activeFrames + 1;
+    match.fighters[0].hitConnected = true;
+    match.fighters[1].blockPunishWindowFrames = 12;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('attack');
+    expect(match.fighters[1].currentMove?.input).toBe('jab');
+  });
+
+  it('makes low difficulty CPUs miss more post-block punish windows', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 1);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = starterCharacters[0].moves[0];
+    match.fighters[0].actionFramesRemaining = 18;
+    match.fighters[0].actionTimer = 18 / 60;
+    match.fighters[0].moveFrame = starterCharacters[0].moves[0].startupFrames + starterCharacters[0].moves[0].activeFrames + 1;
+    match.fighters[0].hitConnected = true;
+    match.fighters[1].blockPunishWindowFrames = 12;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).not.toBe('attack');
+    expect(match.fighters[1].currentMove).toBeNull();
+  });
+
   it('blocks while holding away from the opponent on either side', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -673,7 +744,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('block');
   });
 
-  it('allows hit-confirm continuation into a different mapped move', () => {
+  it('does not allow unauthored neutral continuation during recovery', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -694,9 +765,9 @@ describe('fight engine', () => {
     const three = emptyInputFrame();
     three.kick = true;
     match = stepMatch(match, three, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
-    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-kick');
-    expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
+    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
 
   it('prevents repeating the same exact landed attack inside one combo', () => {
@@ -744,7 +815,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.command).toBe('f+1');
   });
 
-  it('builds directional combo routes after a confirmed different move', () => {
+  it('uses configured full-movelist directional routes after a confirmed hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -758,13 +829,30 @@ describe('fight engine', () => {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
-    const downForwardFour = emptyInputFrame();
-    downForwardFour.down = true;
-    downForwardFour.right = true;
-    downForwardFour.special = true;
-    match = stepMatch(match, downForwardFour, emptyInputFrame(), 1 / 60);
+    const downForwardTwo = emptyInputFrame();
+    downForwardTwo.down = true;
+    downForwardTwo.right = true;
+    downForwardTwo.heavy = true;
+    match = stepMatch(match, downForwardTwo, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.route).toBe('down-forward');
-    expect(match.fighters[0].currentMove?.comboKey).toContain('special');
+    expect(match.fighters[0].currentMove?.command).toBe('d/f+2');
+    expect(match.fighters[0].currentMove?.comboKey).toContain('heavy');
+  });
+
+  it('does not start an unauthored full-movelist command slot', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.9;
+    match.fighters[1].position.x = 0.9;
+
+    const missingForwardKick = emptyInputFrame();
+    missingForwardKick.right = true;
+    missingForwardKick.kick = true;
+    match = stepMatch(match, missingForwardKick, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).not.toBe('attack');
+    expect(match.fighters[0].currentMove).toBeNull();
   });
 
   it('uses configured Tekken-style command moves when their frame slot exists', () => {
@@ -815,7 +903,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.onBlockFrames).toBe(4);
   });
 
-  it('keeps whiffed moves in recovery until total frames complete', () => {
+  it('keeps whiffed moves locked through recovery plus a light whiff penalty', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -825,7 +913,8 @@ describe('fight engine', () => {
     attack.heavy = true;
     match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
     attack.heavy = false;
-    const total = starterCharacters[0].moves[2].startupFrames + starterCharacters[0].moves[2].activeFrames + starterCharacters[0].moves[2].recoveryFrames;
+    const whiffExtraFrames = 4;
+    const total = starterCharacters[0].moves[2].startupFrames + starterCharacters[0].moves[2].activeFrames + starterCharacters[0].moves[2].recoveryFrames + whiffExtraFrames;
 
     for (let i = 0; i < total - 1; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -836,7 +925,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('idle');
   });
 
-  it('does not allow a second attack during whiff recovery', () => {
+  it('does not allow movement or a second attack during whiff penalty recovery', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -848,12 +937,22 @@ describe('fight engine', () => {
     for (let i = 0; i < 12; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
+    const xBeforeMash = match.fighters[0].position.x;
 
     const mash = emptyInputFrame();
     mash.kick = true;
+    mash.right = true;
     match = stepMatch(match, mash, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('jab');
     expect(match.fighters[0].comboStep).toBe(1);
+    expect(match.fighters[0].position.x).toBe(xBeforeMash);
+    expect(match.fighters[0].whiffRecoveryApplied).toBe(true);
+  });
+
+  it('keeps whiff penalty lighter than blocked disadvantage', () => {
+    const heavy = starterCharacters[0].moves[2];
+    const whiffExtraFrames = heavy.whiffRecoveryFrames ?? 4;
+    expect(whiffExtraFrames).toBeLessThan(Math.abs(heavy.onBlockFrames));
   });
 
   it('does not allow combo continuation after a blocked move by default', () => {
@@ -926,8 +1025,28 @@ describe('fight engine', () => {
     expect(Math.abs(match.fighters[1].position.z - zBefore) + Math.abs(match.fighters[1].position.x - xBefore)).toBeGreaterThan(0.01);
   });
 
-  it('launches into juggle float instead of immediate knockdown for non-knockdown launcher routes', () => {
-    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+  it('launches into juggle float for an authored non-knockdown launcher command', () => {
+    const launcherCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:u+1': starterCharacters[0].animationFrames?.jab ?? []
+      },
+      moveOverrides: {
+        'cmd:u+1': {
+          launchHeight: 2.2,
+          knockdown: false,
+          startupFrames: 4,
+          activeFrames: 3,
+          recoveryFrames: 18,
+          hitbox: {
+            offset: [0, 1.22, 0.94],
+            size: [0.72, 0.92, 1.3]
+          }
+        }
+      }
+    };
+    let match = createMatch(launcherCharacter, starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;

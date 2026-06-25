@@ -253,6 +253,7 @@ export type FighterRuntime = {
   moveFrame: number;
   hitConnected: boolean;
   hitConfirmed: boolean;
+  whiffRecoveryApplied: boolean;
   previewAnimationKey?: string;
   commandHistory: Array<{ token: string; age: number }>;
   previousDirectionToken: string;
@@ -267,6 +268,7 @@ export type FighterRuntime = {
   stunTimer: number;
   stunFramesRemaining: number;
   blockstunFramesRemaining: number;
+  blockPunishWindowFrames: number;
   getupInvulnerableFrames: number;
   getupForward: -1 | 0 | 1;
   getupLane: -1 | 0 | 1;
