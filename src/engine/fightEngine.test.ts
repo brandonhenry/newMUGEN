@@ -11,7 +11,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition } from '../types';
-import { createMatch, stepMatch } from './fightEngine';
+import { activeMoveProgress, createMatch, stepMatch } from './fightEngine';
 
 describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
@@ -38,6 +38,46 @@ describe('character manifests', () => {
     expect(legacy.activeFrames).toBe(7);
     expect(legacy.recoveryFrames).toBe(14);
     expect(legacy.hitLevel).toBe('high');
+  });
+
+  it('drives attack animation progress from startup active and recovery frames', () => {
+    const frameDataCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 4,
+              activeFrames: 6,
+              recoveryFrames: 8,
+              range: 0.1
+            }
+          : move
+      )
+    };
+    let match = createMatch(frameDataCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -5;
+    match.fighters[1].position.x = 5;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.startupFrames).toBe(4);
+    expect(match.fighters[0].currentMove?.activeFrames).toBe(6);
+    expect(match.fighters[0].currentMove?.recoveryFrames).toBe(8);
+    expect(match.fighters[0].actionFramesRemaining).toBe(18);
+    expect(activeMoveProgress(match.fighters[0])).toBe(0);
+
+    for (let frame = 0; frame < 6; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].moveFrame).toBe(6);
+    expect(activeMoveProgress(match.fighters[0])).toBeCloseTo(6 / 18, 4);
+    expect(match.fighters[0].state).toBe('attack');
   });
 
   it('sanitizes partial settings and fills defaults', () => {

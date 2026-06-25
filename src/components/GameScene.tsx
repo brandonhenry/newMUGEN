@@ -338,10 +338,10 @@ function PreviewFighter({
     if (isMovePose(pose)) {
       const move = character.moves.find((candidate) => candidate.input === pose) ?? character.moves[0] ?? null;
       const total = move ? move.startupFrames + move.activeFrames + move.recoveryFrames : 1;
-      const phase = (t * 1.35) % 1;
+      const timelineFrame = Math.floor(t * 60) % Math.max(1, total);
       runtime.state = 'attack';
       runtime.currentMove = move;
-      runtime.moveFrame = Math.round(total * phase);
+      runtime.moveFrame = timelineFrame;
       runtime.actionFramesRemaining = Math.max(0, total - runtime.moveFrame);
       runtime.actionTimer = runtime.actionFramesRemaining / 60;
       runtime.position.y = 0;
@@ -806,9 +806,9 @@ function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeS
             <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} />
           )
         ) : fighter.character.modelPath.startsWith('builtin://') ? (
-          <ProceduralFighter fighter={fighter} color={color} progress={progress} timeScale={timeScale} />
+          <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} />
         ) : (
-          <ExternalFighter fighter={fighter} url={fighter.character.modelPath} progress={progress} timeScale={timeScale} />
+          <ExternalFighter fighter={fighter} url={fighter.character.modelPath} timeScale={timeScale} />
         )}
       </Bounds>
     </group>
@@ -1464,7 +1464,7 @@ function getVoxelPalette(character: CharacterDefinition) {
   };
 }
 
-function ExternalFighter({ fighter, url, progress, timeScale = 1 }: { fighter: FighterRuntime; url: string; progress: number; timeScale?: number }) {
+function ExternalFighter({ fighter, url, timeScale = 1 }: { fighter: FighterRuntime; url: string; timeScale?: number }) {
   const gltf = useGLTF(url);
   const model = useMemo(() => clone(gltf.scene), [gltf.scene]);
   const wrapper = useRef<THREE.Group>(null);
@@ -1485,10 +1485,18 @@ function ExternalFighter({ fighter, url, progress, timeScale = 1 }: { fighter: F
 
   useFrame((_, delta) => {
     if (!wrapper.current) return;
-    Object.values(actions).forEach((action) => {
-      if (action) action.timeScale = timeScale;
+    const liveProgress = activeMoveProgress(fighter);
+    Object.entries(actions).forEach(([name, action]) => {
+      if (!action) return;
+      if (fighter.state === 'attack' && name === desiredClip) {
+        const clipDuration = action.getClip().duration || 1;
+        action.timeScale = 0;
+        action.time = THREE.MathUtils.clamp(liveProgress, 0, 0.999) * clipDuration;
+      } else {
+        action.timeScale = timeScale;
+      }
     });
-    const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
     const hit = 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const crouch = fighter.state === 'crouch' ? 1 : 0;
@@ -1525,12 +1533,10 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
 function ProceduralFighter({
   fighter,
   color,
-  progress,
   timeScale = 1
 }: {
   fighter: FighterRuntime;
   color: string;
-  progress: number;
   timeScale?: number;
 }) {
   const root = useRef<THREE.Group>(null);
@@ -1548,10 +1554,11 @@ function ProceduralFighter({
   useFrame((_, delta) => {
     scaledTime.current += delta * timeScale;
     const t = scaledTime.current;
+    const liveProgress = activeMoveProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 11) : 0;
     const side = fighter.state === 'sidestep' ? Math.sin(t * 13) * 0.16 : 0;
-    const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const hit = 0;
     const crouch = fighter.state === 'crouch' ? -0.3 : block ? -0.12 : 0;
