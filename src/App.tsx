@@ -605,10 +605,8 @@ function sampleHdVoxelCell(
   const cellMinY = Math.floor(bounds.minY + ((bounds.maxY - bounds.minY + 1) * row) / rows);
   const cellMaxY = Math.min(bounds.maxY, Math.floor(bounds.minY + ((bounds.maxY - bounds.minY + 1) * (row + 1)) / rows));
   let foreground = 0;
-  let coloredForeground = 0;
   let samples = 0;
   const colorVotes = new Map<string, number>();
-  const coloredVotes = new Map<string, number>();
   let brightness = 0;
 
   for (let y = cellMinY; y <= cellMaxY; y += 1) {
@@ -624,20 +622,12 @@ function sampleHdVoxelCell(
       foreground += 1;
       brightness += (red + green + blue) / 3;
       colorVotes.set(color, (colorVotes.get(color) ?? 0) + 1);
-      if (!isDarkOutlinePixel(red, green, blue)) {
-        coloredForeground += 1;
-        coloredVotes.set(color, (coloredVotes.get(color) ?? 0) + 1);
-      }
     }
   }
 
   const foregroundRatio = samples > 0 ? foreground / samples : 0;
   if (foregroundRatio < 0.12 || foreground === 0) return null;
-  const colorSource = coloredForeground > 0 ? coloredVotes : colorVotes;
-  const votedColor = [...colorSource.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '#ffffff';
-  const centerX = Math.round((cellMinX + cellMaxX) / 2);
-  const centerY = Math.round((cellMinY + cellMaxY) / 2);
-  const color = coloredForeground > 0 ? votedColor : sampleNearbyNonDarkColor(imageData, centerX, centerY, background, fidelity) ?? softenDarkVoxelColor(votedColor);
+  const color = [...colorVotes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '#ffffff';
   return {
     color,
     brightness: brightness / foreground,
@@ -647,57 +637,12 @@ function sampleHdVoxelCell(
 
 function isHdForegroundPixel(red: number, green: number, blue: number, alpha: number, background: [number, number, number], alphaThreshold: number) {
   if (alpha < alphaThreshold) return false;
+  if (alpha >= 250) return true;
   const blueScreen = blue > 150 && blue > red * 1.45 && blue > green * 1.1;
   const purpleScreen = blue > 120 && red > 90 && green < 140 && Math.abs(red - blue) < 95;
   if (blueScreen || purpleScreen) return false;
   const distance = Math.hypot(red - background[0], green - background[1], blue - background[2]);
   return alpha > 220 || distance > 58;
-}
-
-function isDarkOutlinePixel(red: number, green: number, blue: number) {
-  return red + green + blue < 78;
-}
-
-function sampleNearbyNonDarkColor(
-  imageData: ImageData,
-  centerX: number,
-  centerY: number,
-  background: [number, number, number],
-  fidelity: Required<VoxelFidelitySettings>
-) {
-  const { width, height, data } = imageData;
-  for (let radius = 1; radius <= 8; radius += 1) {
-    const votes = new Map<string, number>();
-    for (let y = Math.max(0, centerY - radius); y <= Math.min(height - 1, centerY + radius); y += 1) {
-      for (let x = Math.max(0, centerX - radius); x <= Math.min(width - 1, centerX + radius); x += 1) {
-        const offset = (y * width + x) * 4;
-        const red = data[offset];
-        const green = data[offset + 1];
-        const blue = data[offset + 2];
-        if (
-          isDarkOutlinePixel(red, green, blue) ||
-          !isHdForegroundPixel(red, green, blue, data[offset + 3], background, fidelity.alphaThreshold)
-        ) {
-          continue;
-        }
-        const color = quantizeHdColor(red, green, blue, fidelity.paletteSnap);
-        votes.set(color, (votes.get(color) ?? 0) + 1);
-      }
-    }
-    const match = [...votes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
-    if (match) return match;
-  }
-  return null;
-}
-
-function softenDarkVoxelColor(color: string) {
-  const match = color.match(/^#([0-9a-f]{6})$/i);
-  if (!match) return '#303039';
-  const red = parseInt(match[1].slice(0, 2), 16);
-  const green = parseInt(match[1].slice(2, 4), 16);
-  const blue = parseInt(match[1].slice(4, 6), 16);
-  if (red + green + blue >= 78) return color;
-  return '#303039';
 }
 
 function quantizeHdColor(red: number, green: number, blue: number, snap: number) {

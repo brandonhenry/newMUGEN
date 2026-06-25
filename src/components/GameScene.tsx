@@ -822,6 +822,7 @@ type ImageVoxel = {
   position: [number, number, number];
   size: [number, number, number];
   color: string;
+  source?: 'hd' | 'legacy';
 };
 
 type HdImageVoxelPayload = {
@@ -1083,7 +1084,7 @@ function normalizeImageVoxelForRender(voxel: ImageVoxel): ImageVoxel {
       THREE.MathUtils.clamp(voxel.position[2] * 0.28, -0.018, 0.018)
     ],
     size: [voxel.size[0] * IMAGE_VOXEL_PIXEL_SCALE, voxel.size[1] * IMAGE_VOXEL_PIXEL_SCALE, depth],
-    color: enhanceVoxelColor(voxel.color)
+    color: voxel.source === 'hd' ? voxel.color : enhanceVoxelColor(voxel.color)
   };
 }
 
@@ -1201,7 +1202,8 @@ function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null 
     part: voxel.part,
     position: [voxel.x, voxel.y, voxel.z],
     size: [voxel.w, voxel.h, voxel.d],
-    color: candidate.palette[voxel.c] ?? '#ffffff'
+    color: candidate.palette[voxel.c] ?? '#ffffff',
+    source: 'hd'
   }));
 }
 
