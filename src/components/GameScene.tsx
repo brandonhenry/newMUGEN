@@ -1,10 +1,10 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import type { CharacterDefinition, FighterRuntime, FighterState, GameSettings, MatchSnapshot, MoveInput, StageDefinition } from '../types';
+import type { CharacterDefinition, FighterRuntime, FighterState, GameSettings, MatchSnapshot, MoveInput, StageDefinition, StageLayerDefinition, StagePropDefinition } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
 import { debugLogThrottled } from '../lib/debugLogger';
 
@@ -415,6 +415,10 @@ function Arena({ stage }: { stage: MatchSnapshot['stage'] }) {
     []
   );
 
+  if (stage.renderMode === 'spriteCutout') {
+    return <SpriteCutoutStage stage={stage} />;
+  }
+
   return (
     <group>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.045, 0]}>
@@ -461,6 +465,209 @@ function Arena({ stage }: { stage: MatchSnapshot['stage'] }) {
       </mesh>
     </group>
   );
+}
+
+function SpriteCutoutStage({ stage }: { stage: StageDefinition }) {
+  const hillColor = stage.world?.backgroundColor ?? '#10291c';
+  return (
+    <group>
+      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.052, 0]}>
+        <planeGeometry args={[96, 42, 32, 18]} />
+        <meshStandardMaterial color={stage.floor} roughness={0.78} metalness={0.02} />
+      </mesh>
+      <mesh receiveShadow position={[0, -0.028, 0.05]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[5.35, 72]} />
+        <meshStandardMaterial color="#d7be6d" roughness={0.84} metalness={0.02} />
+      </mesh>
+      <mesh receiveShadow position={[0, -0.024, 0.05]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[14.8, 5.6]} />
+        <meshStandardMaterial color="#d2b35e" roughness={0.86} metalness={0.02} transparent opacity={0.78} />
+      </mesh>
+      <mesh receiveShadow position={[0, -0.018, 3.7]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[34, 9.2]} />
+        <meshStandardMaterial color="#2f7a3c" roughness={0.9} transparent opacity={0.76} />
+      </mesh>
+      <mesh receiveShadow position={[0, -0.018, -5.6]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[42, 12]} />
+        <meshStandardMaterial color="#265f33" roughness={0.9} transparent opacity={0.72} />
+      </mesh>
+      <mesh position={[-7, 1.15, -14]} rotation={[0, 0, -0.14]}>
+        <coneGeometry args={[4.9, 2.4, 3]} />
+        <meshStandardMaterial color={hillColor} roughness={0.95} />
+      </mesh>
+      <mesh position={[-1.4, 1.3, -14.8]} rotation={[0, 0, 0.08]}>
+        <coneGeometry args={[5.8, 2.7, 3]} />
+        <meshStandardMaterial color="#2f8c82" roughness={0.96} />
+      </mesh>
+      <mesh position={[5.8, 1.1, -14.2]} rotation={[0, 0, 0.18]}>
+        <coneGeometry args={[4.6, 2.2, 3]} />
+        <meshStandardMaterial color="#4aa08c" roughness={0.96} />
+      </mesh>
+      <mesh position={[0, 1.75, -15.2]}>
+        <boxGeometry args={[42, 0.18, 0.2]} />
+        <meshBasicMaterial color="#b9edf5" transparent opacity={0.32} />
+      </mesh>
+      <gridHelper args={[28, 14, '#6bbf58', '#325f30']} position={[0, 0.002, 0]} />
+      <mesh position={[0, 0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[4.8, 5.05, 72]} />
+        <meshBasicMaterial color="#f0d27b" transparent opacity={0.26} />
+      </mesh>
+      {(stage.backgroundLayers ?? []).map((layer) => (
+        <StageTexturePlane key={layer.id} imagePath={layer.imagePath} position={layer.position} scale={layer.scale} opacity={layer.opacity ?? 1} />
+      ))}
+      {(stage.props ?? []).filter((prop) => !prop.hidden).map((prop) => (
+        <StagePropPlane key={prop.id} prop={prop} />
+      ))}
+    </group>
+  );
+}
+
+function StageTexturePlane({
+  imagePath,
+  position,
+  scale,
+  opacity
+}: {
+  imagePath: string;
+  position: [number, number, number];
+  scale: [number, number, number];
+  opacity: number;
+}) {
+  const texture = useLoader(THREE.TextureLoader, imagePath);
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
+  return (
+    <mesh position={position} scale={scale} renderOrder={position[2] < 0 ? -10 : 2}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial map={texture} transparent opacity={opacity} alphaTest={0.04} side={THREE.DoubleSide} depthWrite={false} />
+    </mesh>
+  );
+}
+
+function StagePropPlane({ prop }: { prop: StagePropDefinition }) {
+  const group = useRef<THREE.Group>(null);
+  useFrame(({ camera }) => {
+    if (prop.billboard && group.current) {
+      group.current.quaternion.copy(camera.quaternion);
+    }
+  });
+  return (
+    <group ref={group} position={prop.position} rotation={prop.rotation ?? [0, 0, 0]}>
+      {prop.renderMode === 'voxel' ? (
+        <StageVoxelProp prop={prop} />
+      ) : (
+        <StageTexturePlane imagePath={prop.imagePath} position={[0, 0, 0]} scale={prop.scale} opacity={prop.opacity ?? 1} />
+      )}
+    </group>
+  );
+}
+
+function StageVoxelProp({ prop }: { prop: StagePropDefinition }) {
+  const texture = useLoader(THREE.TextureLoader, prop.imagePath);
+  const geometry = useMemo(() => buildStageVoxelGeometry(texture, prop), [texture, prop.imagePath, prop.voxelDepth, prop.voxelScale]);
+
+  useEffect(() => {
+    return () => geometry?.dispose();
+  }, [geometry]);
+
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
+
+  if (!geometry) {
+    return <StageTexturePlane imagePath={prop.imagePath} position={[0, 0, 0]} scale={prop.scale} opacity={prop.opacity ?? 1} />;
+  }
+
+  return (
+    <mesh geometry={geometry} scale={prop.scale} castShadow receiveShadow>
+      <meshStandardMaterial color="#ffffff" vertexColors roughness={0.82} metalness={0.02} transparent opacity={prop.opacity ?? 1} />
+    </mesh>
+  );
+}
+
+function buildStageVoxelGeometry(texture: THREE.Texture, prop: StagePropDefinition) {
+  const image = texture.image as CanvasImageSource & { naturalWidth?: number; naturalHeight?: number; width?: number; height?: number };
+  const width = Math.round(Number(image?.naturalWidth ?? image?.width ?? 0));
+  const height = Math.round(Number(image?.naturalHeight ?? image?.height ?? 0));
+  if (!image || width <= 0 || height <= 0) return null;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return null;
+  context.imageSmoothingEnabled = false;
+  context.drawImage(image, 0, 0, width, height);
+  const pixels = context.getImageData(0, 0, width, height);
+  const sampleStep = Math.max(2, Math.min(12, Math.round(prop.voxelScale ?? 4)));
+  const depth = Math.max(0.04, Math.min(0.6, prop.voxelDepth ?? 0.16));
+  const cellWidth = 1 / Math.ceil(width / sampleStep);
+  const cellHeight = 1 / Math.ceil(height / sampleStep);
+  const geometries: THREE.BoxGeometry[] = [];
+  const base = new THREE.BoxGeometry(cellWidth * 0.98, cellHeight * 0.98, depth);
+
+  for (let y = 0; y < height; y += sampleStep) {
+    for (let x = 0; x < width; x += sampleStep) {
+      const sample = sampleStageVoxelColor(pixels, x, y, sampleStep);
+      if (!sample) continue;
+      const geometry = base.clone();
+      const color = new THREE.Color(sample.color);
+      const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
+      for (let index = 0; index < colors.length; index += 3) {
+        colors[index] = color.r;
+        colors[index + 1] = color.g;
+        colors[index + 2] = color.b;
+      }
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      const localX = ((x + sampleStep * 0.5) / width) - 0.5;
+      const localY = 0.5 - ((y + sampleStep * 0.5) / height);
+      const localZ = (sample.brightness - 128) / 1800;
+      geometry.translate(localX, localY, localZ);
+      geometries.push(geometry);
+    }
+  }
+
+  base.dispose();
+  if (geometries.length === 0) return null;
+  const geometry = mergeGeometries(geometries, false);
+  geometries.forEach((entry) => entry.dispose());
+  return geometry;
+}
+
+function sampleStageVoxelColor(imageData: ImageData, originX: number, originY: number, sampleStep: number) {
+  const { width, height, data } = imageData;
+  let red = 0;
+  let green = 0;
+  let blue = 0;
+  let alpha = 0;
+  let count = 0;
+  for (let y = originY; y < Math.min(height, originY + sampleStep); y += 1) {
+    for (let x = originX; x < Math.min(width, originX + sampleStep); x += 1) {
+      const offset = (y * width + x) * 4;
+      if (data[offset + 3] <= 24) continue;
+      red += data[offset];
+      green += data[offset + 1];
+      blue += data[offset + 2];
+      alpha += data[offset + 3];
+      count += 1;
+    }
+  }
+  if (count / (sampleStep * sampleStep) < 0.16) return null;
+  const r = red / count;
+  const g = green / count;
+  const b = blue / count;
+  const snap = (value: number) => Math.max(0, Math.min(255, Math.round(value / 12) * 12));
+  return {
+    color: `#${[snap(r), snap(g), snap(b)].map((value) => value.toString(16).padStart(2, '0')).join('')}`,
+    brightness: (r + g + b + alpha / count) / 4
+  };
 }
 
 function FighterRig({ fighter }: { fighter: FighterRuntime }) {

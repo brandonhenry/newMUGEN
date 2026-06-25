@@ -1,6 +1,6 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { defineConfig, type ViteDevServer } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -13,6 +13,49 @@ type DevManifestPayload = {
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   moveOverrides?: Record<string, Record<string, unknown>>;
+  spriteFrameEdits?: Record<string, Record<string, unknown>>;
+};
+
+type DevSpriteFramePayload = {
+  characterId?: string;
+  frameIndex?: number;
+  edit?: Record<string, unknown>;
+  pngDataUrl?: string;
+};
+
+type DevImportCharacterPayload = {
+  characterId?: string;
+  sheetDataUrl?: string;
+  sourceName?: string;
+  frames?: Array<{
+    index?: number;
+    dataUrl?: string;
+    box?: unknown;
+    width?: number;
+    height?: number;
+    row?: number;
+  }>;
+  manifest?: Record<string, unknown>;
+};
+
+type DevStagePayload = {
+  stageId?: string;
+  stage?: Record<string, unknown>;
+};
+
+type DevImportStagePayload = {
+  stageId?: string;
+  sourceDataUrl?: string;
+  sourceName?: string;
+  pieces?: Array<{
+    id?: string;
+    name?: string;
+    dataUrl?: string;
+    box?: unknown;
+    width?: number;
+    height?: number;
+  }>;
+  stage?: Record<string, unknown>;
 };
 
 function koreDevManifestWriter() {
@@ -42,11 +85,294 @@ function koreDevManifestWriter() {
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
+          manifest.spriteFrameEdits = sanitizeSpriteFrameEditMap(payload.spriteFrameEdits ?? {});
           await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: true, characterId, manifestPath }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-sprite-frame', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevSpriteFramePayload;
+          const characterId = payload.characterId ?? '';
+          const frameIndex = Math.round(Number(payload.frameIndex));
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !Number.isFinite(frameIndex) || frameIndex < 0 || frameIndex > 9999) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid character id or frame index' }));
+            return;
+          }
+
+          const edit = sanitizeSpriteFrameEdit({ ...(payload.edit ?? {}), index: frameIndex });
+          const characterDir = resolve(server.config.root, 'public', 'characters', characterId);
+          const framesJsonPath = resolve(characterDir, 'frames', 'frames.json');
+          const framePath = resolve(characterDir, 'frames', `frame-${frameIndex.toString().padStart(3, '0')}.png`);
+          const manifestPath = resolve(characterDir, 'character.json');
+
+          const pngBuffer = dataUrlToPngBuffer(payload.pngDataUrl);
+          await mkdir(dirname(framePath), { recursive: true });
+          await writeFile(framePath, pngBuffer);
+
+          const frameData = JSON.parse(await readFile(framesJsonPath, 'utf8')) as {
+            frames?: Array<Record<string, unknown>>;
+            count?: number;
+          };
+          const frames = Array.isArray(frameData.frames) ? frameData.frames : [];
+          const frameEntry = {
+            index: frameIndex,
+            path: `/characters/${characterId}/frames/frame-${frameIndex.toString().padStart(3, '0')}.png`,
+            box: edit.box,
+            width: edit.width,
+            height: edit.height,
+            row: edit.row,
+            rotation: edit.rotation ?? 0,
+            offset: edit.offset ?? [0, 0],
+            scale: edit.scale ?? 1,
+            hidden: edit.hidden ?? false
+          };
+          const existingIndex = frames.findIndex((frame) => Number(frame.index) === frameIndex);
+          if (existingIndex >= 0) frames[existingIndex] = frameEntry;
+          else frames.push(frameEntry);
+          frameData.frames = frames.sort((a, b) => Number(a.index) - Number(b.index));
+          frameData.count = Math.max(Number(frameData.count) || 0, frameIndex + 1);
+          await writeFile(framesJsonPath, `${JSON.stringify(frameData, null, 2)}\n`, 'utf8');
+
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          const edits = sanitizeSpriteFrameEditMap((manifest.spriteFrameEdits as Record<string, Record<string, unknown>> | undefined) ?? {});
+          edits[String(frameIndex)] = frameEntry;
+          manifest.spriteFrameEdits = edits;
+          manifest.spriteFrameCount = Math.max(Number(manifest.spriteFrameCount) || 0, frameIndex + 1);
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, characterId, frameIndex, framePath, framesJsonPath, manifestPath }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-character', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportCharacterPayload;
+          const characterId = payload.characterId ?? '';
+          if (!/^[a-z0-9-]+$/i.test(characterId)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid character id' }));
+            return;
+          }
+          const frames = Array.isArray(payload.frames) ? payload.frames : [];
+          if (frames.length === 0 || frames.length > 2000) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Expected 1-2000 frames' }));
+            return;
+          }
+          const manifest = sanitizeImportedManifest(payload.manifest ?? {}, characterId, frames.length);
+          const characterDir = resolve(server.config.root, 'public', 'characters', characterId);
+          const framesDir = resolve(characterDir, 'frames');
+          await mkdir(framesDir, { recursive: true });
+
+          await writeFile(resolve(characterDir, 'animation-sheet.png'), dataUrlToPngBuffer(payload.sheetDataUrl));
+
+          const frameEntries = frames
+            .map((frame, fallbackIndex) => {
+              const index = Math.max(0, Math.round(finiteOr(frame.index, fallbackIndex)));
+              const framePath = `/characters/${characterId}/frames/frame-${index.toString().padStart(3, '0')}.png`;
+              return {
+                index,
+                dataUrl: frame.dataUrl,
+                path: framePath,
+                box: normalizeBox(frame.box),
+                width: Math.max(1, Math.round(finiteOr(frame.width, 32))),
+                height: Math.max(1, Math.round(finiteOr(frame.height, 32))),
+                row: Math.max(0, Math.round(finiteOr(frame.row, 0)))
+              };
+            })
+            .sort((a, b) => a.index - b.index);
+
+          await Promise.all(
+            frameEntries.map((frame) =>
+              writeFile(resolve(framesDir, `frame-${frame.index.toString().padStart(3, '0')}.png`), dataUrlToPngBuffer(frame.dataUrl))
+            )
+          );
+
+          await writeFile(
+            resolve(framesDir, 'frames.json'),
+            `${JSON.stringify({
+              source: payload.sourceName ?? 'imported sprite sheet',
+              count: frameEntries.length,
+              frames: frameEntries.map(({ dataUrl, ...frame }) => frame)
+            }, null, 2)}\n`,
+            'utf8'
+          );
+          await writeFile(resolve(characterDir, 'character.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          const indexPath = resolve(server.config.root, 'public', 'characters', 'index.json');
+          const index = JSON.parse(await readFile(indexPath, 'utf8')) as { characters?: string[] };
+          const characterIds = Array.isArray(index.characters) ? index.characters : [];
+          if (!characterIds.includes(characterId)) characterIds.push(characterId);
+          await writeFile(indexPath, `${JSON.stringify({ characters: characterIds }, null, 2)}\n`, 'utf8');
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, characterId, frameCount: frameEntries.length }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-stage', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevStagePayload;
+          const stageId = payload.stageId ?? '';
+          if (!isSafeId(stageId)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid stage id' }));
+            return;
+          }
+          const stageDir = resolve(server.config.root, 'public', 'stages', stageId);
+          await mkdir(stageDir, { recursive: true });
+          const stage = sanitizeStageManifest(payload.stage ?? {}, stageId);
+          await writeFile(resolve(stageDir, 'stage.json'), `${JSON.stringify(stage, null, 2)}\n`, 'utf8');
+          await updateStageIndex(server.config.root, stageId);
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, stageId }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-stage', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportStagePayload;
+          const stageId = payload.stageId ?? '';
+          if (!isSafeId(stageId)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid stage id' }));
+            return;
+          }
+          const pieces = Array.isArray(payload.pieces) ? payload.pieces.slice(0, 200) : [];
+          if (pieces.length === 0) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Expected stage pieces' }));
+            return;
+          }
+          const stageDir = resolve(server.config.root, 'public', 'stages', stageId);
+          const piecesDir = resolve(stageDir, 'pieces');
+          await mkdir(piecesDir, { recursive: true });
+          await writeFile(resolve(stageDir, 'source.png'), dataUrlToPngBuffer(payload.sourceDataUrl));
+          await Promise.all(
+            pieces.map((piece, index) => {
+              const pieceId = sanitizePieceId(piece.id ?? `piece-${index.toString().padStart(3, '0')}`);
+              return writeFile(resolve(piecesDir, `${pieceId}.png`), dataUrlToPngBuffer(piece.dataUrl));
+            })
+          );
+          await writeFile(
+            resolve(stageDir, 'pieces.json'),
+            `${JSON.stringify({
+              source: payload.sourceName ?? 'imported stage sheet',
+              pieces: pieces.map((piece, index) => {
+                const pieceId = sanitizePieceId(piece.id ?? `piece-${index.toString().padStart(3, '0')}`);
+                return {
+                  id: pieceId,
+                  name: piece.name ?? pieceId,
+                  imagePath: `/stages/${stageId}/pieces/${pieceId}.png`,
+                  box: normalizeBox(piece.box),
+                  width: Math.max(1, Math.round(finiteOr(piece.width, 32))),
+                  height: Math.max(1, Math.round(finiteOr(piece.height, 32)))
+                };
+              })
+            }, null, 2)}\n`,
+            'utf8'
+          );
+          const stage = sanitizeStageManifest(payload.stage ?? {}, stageId);
+          await writeFile(resolve(stageDir, 'stage.json'), `${JSON.stringify(stage, null, 2)}\n`, 'utf8');
+          await updateStageIndex(server.config.root, stageId);
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, stageId, pieceCount: pieces.length }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-stage-piece', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as {
+            stageId?: string;
+            pieceId?: string;
+            pngDataUrl?: string;
+          };
+          const stageId = payload.stageId ?? '';
+          const pieceId = sanitizePieceId(payload.pieceId ?? '');
+          if (!isSafeId(stageId) || !pieceId) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid stage or piece id' }));
+            return;
+          }
+          const piecePath = resolve(server.config.root, 'public', 'stages', stageId, 'pieces', `${pieceId}.png`);
+          await mkdir(dirname(piecePath), { recursive: true });
+          await writeFile(piecePath, dataUrlToPngBuffer(payload.pngDataUrl));
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, stageId, pieceId }));
         } catch (error) {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
@@ -110,6 +436,13 @@ function readRequestBody(request: IncomingMessage) {
   });
 }
 
+function dataUrlToPngBuffer(dataUrl: unknown) {
+  if (typeof dataUrl !== 'string') throw new Error('Missing PNG data URL');
+  const match = dataUrl.match(/^data:image\/png;base64,([a-z0-9+/=]+)$/i);
+  if (!match) throw new Error('Invalid PNG data URL');
+  return Buffer.from(match[1], 'base64');
+}
+
 function sanitizeFrameMap(frames: Record<string, string[]>) {
   return Object.fromEntries(
     Object.entries(frames)
@@ -124,4 +457,213 @@ function sanitizeRateMap(rates: Record<string, number>) {
       .filter(([, value]) => Number.isFinite(value))
       .map(([key, value]) => [key, Number(value)])
   );
+}
+
+function sanitizeSpriteFrameEditMap(edits: Record<string, Record<string, unknown>>) {
+  return Object.fromEntries(
+    Object.entries(edits)
+      .filter(([key, value]) => /^\d+$/.test(key) && value && typeof value === 'object')
+      .map(([key, value]) => [key, sanitizeSpriteFrameEdit({ ...value, index: Number(key) })])
+  );
+}
+
+function sanitizeSpriteFrameEdit(edit: Record<string, unknown>) {
+  const index = Math.max(0, Math.round(finiteOr(edit.index, 0)));
+  const box = normalizeBox(edit.box);
+  const width = Math.max(1, Math.round(finiteOr(edit.width, box[2] - box[0])));
+  const height = Math.max(1, Math.round(finiteOr(edit.height, box[3] - box[1])));
+  const offset = normalizeOffset(edit.offset);
+  const rotation = normalizeRotation(edit.rotation);
+  const scale = Math.max(0.25, Math.min(4, finiteOr(edit.scale, 1)));
+  return {
+    index,
+    path: typeof edit.path === 'string' ? edit.path : undefined,
+    box,
+    width,
+    height,
+    row: Number.isFinite(edit.row) ? Math.round(Number(edit.row)) : undefined,
+    rotation,
+    offset,
+    scale,
+    hidden: Boolean(edit.hidden)
+  };
+}
+
+function normalizeBox(value: unknown): [number, number, number, number] {
+  const fallback: [number, number, number, number] = [0, 0, 32, 32];
+  if (!Array.isArray(value) || value.length < 4) return fallback;
+  const x1 = Math.max(0, Math.round(finiteOr(value[0], fallback[0])));
+  const y1 = Math.max(0, Math.round(finiteOr(value[1], fallback[1])));
+  const x2 = Math.max(x1 + 1, Math.round(finiteOr(value[2], fallback[2])));
+  const y2 = Math.max(y1 + 1, Math.round(finiteOr(value[3], fallback[3])));
+  return [x1, y1, x2, y2];
+}
+
+function normalizeOffset(value: unknown): [number, number] {
+  if (!Array.isArray(value) || value.length < 2) return [0, 0];
+  return [
+    Math.round(finiteOr(value[0], 0)),
+    Math.round(finiteOr(value[1], 0))
+  ];
+}
+
+function normalizeRotation(value: unknown) {
+  const rotation = Math.round(finiteOr(value, 0) / 90) * 90;
+  return ((rotation % 360) + 360) % 360;
+}
+
+function finiteOr(value: unknown, fallback: number) {
+  return Number.isFinite(value) ? Number(value) : fallback;
+}
+
+function isSafeId(value: string) {
+  return /^[a-z0-9-]+$/i.test(value);
+}
+
+function sanitizePieceId(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48);
+}
+
+async function updateStageIndex(root: string, stageId: string) {
+  const indexPath = resolve(root, 'public', 'stages', 'index.json');
+  let ids: string[] = [];
+  try {
+    const index = JSON.parse(await readFile(indexPath, 'utf8')) as { stages?: string[] };
+    ids = Array.isArray(index.stages) ? index.stages : [];
+  } catch {
+    ids = [];
+  }
+  if (!ids.includes(stageId)) ids.push(stageId);
+  await mkdir(dirname(indexPath), { recursive: true });
+  await writeFile(indexPath, `${JSON.stringify({ stages: ids }, null, 2)}\n`, 'utf8');
+}
+
+function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) {
+  const colors = {
+    floor: typeof stage.floor === 'string' ? stage.floor : '#07182c',
+    rail: typeof stage.rail === 'string' ? stage.rail : '#2ee6ff',
+    light: typeof stage.light === 'string' ? stage.light : '#dbe8ff'
+  };
+  return {
+    ...stage,
+    id: stageId,
+    name: typeof stage.name === 'string' && stage.name.trim() ? stage.name.trim() : stageId,
+    subtitle: typeof stage.subtitle === 'string' ? stage.subtitle : 'Sprite-cutout arena',
+    renderMode: stage.renderMode === 'spriteCutout' ? 'spriteCutout' : 'procedural',
+    floor: colors.floor,
+    rail: colors.rail,
+    light: colors.light,
+    sourcePath: typeof stage.sourcePath === 'string' ? stage.sourcePath : `/stages/${stageId}/source.png`,
+    thumbnailPath: typeof stage.thumbnailPath === 'string' ? stage.thumbnailPath : undefined,
+    world: sanitizeStageWorld(stage.world),
+    camera: stage.camera && typeof stage.camera === 'object' ? stage.camera : undefined,
+    lighting: stage.lighting && typeof stage.lighting === 'object' ? stage.lighting : undefined,
+    backgroundLayers: sanitizeStageLayers(stage.backgroundLayers),
+    props: sanitizeStageProps(stage.props)
+  };
+}
+
+function sanitizeStageWorld(value: unknown) {
+  const world = value && typeof value === 'object' ? value as Record<string, unknown> : {};
+  return {
+    width: Math.max(12, finiteOr(world.width, 96)),
+    depth: Math.max(8, finiteOr(world.depth, 42)),
+    floorY: finiteOr(world.floorY, -0.045),
+    backgroundColor: typeof world.backgroundColor === 'string' ? world.backgroundColor : '#101114'
+  };
+}
+
+function sanitizeStageLayers(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((layer) => layer && typeof layer === 'object')
+    .map((raw, index) => {
+      const layer = raw as Record<string, unknown>;
+      return {
+        id: typeof layer.id === 'string' ? layer.id : `layer-${index}`,
+        imagePath: typeof layer.imagePath === 'string' ? layer.imagePath : '',
+        position: normalizeVec3(layer.position, [0, 3, -12]),
+        scale: normalizeVec3(layer.scale, [12, 8, 1]),
+        opacity: Math.max(0, Math.min(1, finiteOr(layer.opacity, 1)))
+      };
+    })
+    .filter((layer) => layer.imagePath);
+}
+
+function sanitizeStageProps(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((prop) => prop && typeof prop === 'object')
+    .map((raw, index) => {
+      const prop = raw as Record<string, unknown>;
+      return {
+        id: typeof prop.id === 'string' ? prop.id : `prop-${index}`,
+        name: typeof prop.name === 'string' ? prop.name : `Prop ${index + 1}`,
+        imagePath: typeof prop.imagePath === 'string' ? prop.imagePath : '',
+        position: normalizeVec3(prop.position, [0, 1, 0]),
+        scale: normalizeVec3(prop.scale, [1, 1, 1]),
+        rotation: normalizeVec3(prop.rotation, [0, 0, 0]),
+        opacity: Math.max(0, Math.min(1, finiteOr(prop.opacity, 1))),
+        billboard: Boolean(prop.billboard),
+        renderMode: prop.renderMode === 'voxel' ? 'voxel' : 'plane',
+        voxelDepth: Math.max(0.04, Math.min(0.8, finiteOr(prop.voxelDepth, 0.16))),
+        voxelScale: Math.max(2, Math.min(12, Math.round(finiteOr(prop.voxelScale, 4)))),
+        hidden: Boolean(prop.hidden),
+        locked: Boolean(prop.locked)
+      };
+    })
+    .filter((prop) => prop.imagePath);
+}
+
+function normalizeVec3(value: unknown, fallback: [number, number, number]): [number, number, number] {
+  if (!Array.isArray(value) || value.length < 3) return fallback;
+  return [
+    finiteOr(value[0], fallback[0]),
+    finiteOr(value[1], fallback[1]),
+    finiteOr(value[2], fallback[2])
+  ];
+}
+
+function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId: string, frameCount: number) {
+  const displayName = typeof manifest.displayName === 'string' && manifest.displayName.trim() ? manifest.displayName.trim() : characterId;
+  const colors = manifest.colors && typeof manifest.colors === 'object' ? manifest.colors as Record<string, unknown> : {};
+  const stats = manifest.stats && typeof manifest.stats === 'object' ? manifest.stats as Record<string, unknown> : {};
+  const animationFrames = sanitizeFrameMap((manifest.animationFrames as Record<string, string[]> | undefined) ?? {});
+  const animationFrameRates = sanitizeRateMap((manifest.animationFrameRates as Record<string, number> | undefined) ?? {});
+  const moves = Array.isArray(manifest.moves) ? manifest.moves : [];
+  return {
+    ...manifest,
+    id: characterId,
+    displayName,
+    renderMode: 'spriteVoxel',
+    modelPath: `spritevoxel://${characterId}`,
+    spriteSheetPath: `/characters/${characterId}/animation-sheet.png`,
+    spriteFrameCount: frameCount,
+    voxelProfile: 'image-source',
+    animationFrames,
+    animationFrameRates,
+    animationFps: Math.max(1, finiteOr(manifest.animationFps, 6)),
+    scale: Math.max(0.25, finiteOr(manifest.scale, 1.08)),
+    cameraOffset: Array.isArray(manifest.cameraOffset) && manifest.cameraOffset.length >= 3 ? manifest.cameraOffset : [0, 1.22, 0],
+    stats: {
+      health: Math.max(1, Math.round(finiteOr(stats.health, 100))),
+      speed: Math.max(1, finiteOr(stats.speed, 5)),
+      sidestepSpeed: Math.max(1, finiteOr(stats.sidestepSpeed, 4.35)),
+      jumpForce: Math.max(1, finiteOr(stats.jumpForce, 8)),
+      gravity: Math.max(1, finiteOr(stats.gravity, 18))
+    },
+    moves,
+    moveOverrides: sanitizeMoveOverrideMap((manifest.moveOverrides as Record<string, Record<string, unknown>> | undefined) ?? {}),
+    spriteFrameEdits: sanitizeSpriteFrameEditMap((manifest.spriteFrameEdits as Record<string, Record<string, unknown>> | undefined) ?? {}),
+    hurtboxes: Array.isArray(manifest.hurtboxes) && manifest.hurtboxes.length > 0 ? manifest.hurtboxes : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }],
+    inputMap: manifest.inputMap && typeof manifest.inputMap === 'object' ? manifest.inputMap : { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },
+    colors: {
+      primary: typeof colors.primary === 'string' ? colors.primary : '#2ee6ff',
+      secondary: typeof colors.secondary === 'string' ? colors.secondary : '#111224',
+      accent: typeof colors.accent === 'string' ? colors.accent : '#ffd45e'
+    },
+    aiProfile: manifest.aiProfile && typeof manifest.aiProfile === 'object'
+      ? manifest.aiProfile
+      : { aggression: 0.62, guard: 0.42, spacing: 1.45, specialChance: 0.22 }
+  };
 }

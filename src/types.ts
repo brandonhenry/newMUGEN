@@ -83,6 +83,19 @@ export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox
   hitbox?: Partial<BoxSpec>;
 };
 
+export type SpriteFrameEdit = {
+  index: number;
+  path?: string;
+  box: [number, number, number, number];
+  width: number;
+  height: number;
+  row?: number;
+  rotation?: number;
+  offset?: [number, number];
+  scale?: number;
+  hidden?: boolean;
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -90,6 +103,7 @@ export type CharacterDefinition = {
   modelPath: string;
   spriteSheetPath?: string;
   spriteFrameCount?: number;
+  spriteFrameEdits?: Record<string, SpriteFrameEdit>;
   voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source';
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
@@ -125,9 +139,52 @@ export type StageDefinition = {
   id: string;
   name: string;
   subtitle: string;
+  renderMode?: 'procedural' | 'spriteCutout';
   floor: string;
   rail: string;
   light: string;
+  sourcePath?: string;
+  thumbnailPath?: string;
+  world?: {
+    width: number;
+    depth: number;
+    floorY?: number;
+    backgroundColor?: string;
+  };
+  camera?: {
+    previewPosition?: Vec3Tuple;
+    previewTarget?: Vec3Tuple;
+  };
+  lighting?: {
+    ambient?: string;
+    sky?: string;
+  };
+  backgroundLayers?: StageLayerDefinition[];
+  props?: StagePropDefinition[];
+};
+
+export type StageLayerDefinition = {
+  id: string;
+  imagePath: string;
+  position: Vec3Tuple;
+  scale: Vec3Tuple;
+  opacity?: number;
+};
+
+export type StagePropDefinition = {
+  id: string;
+  name: string;
+  imagePath: string;
+  position: Vec3Tuple;
+  scale: Vec3Tuple;
+  rotation?: Vec3Tuple;
+  opacity?: number;
+  billboard?: boolean;
+  renderMode?: 'plane' | 'voxel';
+  voxelDepth?: number;
+  voxelScale?: number;
+  hidden?: boolean;
+  locked?: boolean;
 };
 
 export type InputFrame = Record<ActionName, boolean>;

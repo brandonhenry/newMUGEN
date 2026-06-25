@@ -10,8 +10,10 @@ import {
   RotateCcw,
   Save,
   Settings,
+  Shuffle,
   Swords,
   Target,
+  Upload,
   Users,
   ZoomIn,
   ZoomOut
@@ -25,6 +27,7 @@ import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
+import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
 import {
   emptyInputFrame,
   type ActionName,
@@ -38,14 +41,17 @@ import {
   type MoveDefinition,
   type MoveOverride,
   type MoveTracking,
-  type StageDefinition
+  type SpriteFrameEdit,
+  type StageDefinition,
+  type StagePropDefinition
 } from './types';
 
-type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer';
+type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
   moves?: Record<string, MoveOverride>;
+  sprites?: Record<string, SpriteFrameEdit>;
 };
 type AnimationOverrideMap = Record<string, CharacterAnimationOverride>;
 type StoredAnimationOverrides = {
@@ -204,7 +210,8 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
     next[characterId] = {
       frames: { ...(override.frames ?? {}) },
       speeds: { ...(override.speeds ?? {}) },
-      moves: sanitizeMoveOverrideMap(override.moves ?? {})
+      moves: sanitizeMoveOverrideMap(override.moves ?? {}),
+      sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
   }
 
@@ -220,7 +227,8 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
       ([, override]) =>
         Object.keys(override.frames ?? {}).length > 0 ||
         Object.keys(override.speeds ?? {}).length > 0 ||
-        Object.keys(override.moves ?? {}).length > 0
+        Object.keys(override.moves ?? {}).length > 0 ||
+        Object.keys(override.sprites ?? {}).length > 0
     )
   );
   debugLog(5, 'sanitized animation overrides', {
@@ -271,6 +279,41 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   return next;
 }
 
+function sanitizeSpriteFrameEditMap(edits: Record<string, SpriteFrameEdit>) {
+  return Object.fromEntries(
+    Object.entries(edits)
+      .filter(([key, value]) => /^\d+$/.test(key) && value && typeof value === 'object')
+      .map(([key, value]) => [key, sanitizeSpriteFrameEdit(value)])
+  );
+}
+
+function sanitizeSpriteFrameEdit(edit: SpriteFrameEdit): SpriteFrameEdit {
+  const x1 = Math.max(0, Math.round(Number(edit.box?.[0] ?? 0)));
+  const y1 = Math.max(0, Math.round(Number(edit.box?.[1] ?? 0)));
+  const x2 = Math.max(x1 + 1, Math.round(Number(edit.box?.[2] ?? x1 + 32)));
+  const y2 = Math.max(y1 + 1, Math.round(Number(edit.box?.[3] ?? y1 + 32)));
+  const rotation = normalizeRotation(edit.rotation ?? 0);
+  const offset: [number, number] = Array.isArray(edit.offset)
+    ? [Math.round(Number(edit.offset[0]) || 0), Math.round(Number(edit.offset[1]) || 0)]
+    : [0, 0];
+  return {
+    index: Math.max(0, Math.round(Number(edit.index) || 0)),
+    path: edit.path,
+    box: [x1, y1, x2, y2],
+    width: Math.max(1, Math.round(Number(edit.width) || x2 - x1)),
+    height: Math.max(1, Math.round(Number(edit.height) || y2 - y1)),
+    row: Number.isFinite(edit.row) ? Math.round(Number(edit.row)) : undefined,
+    rotation,
+    offset,
+    scale: Math.max(0.25, Math.min(4, Number(edit.scale) || 1)),
+    hidden: Boolean(edit.hidden)
+  };
+}
+
+function normalizeRotation(value: number) {
+  return ((Math.round(value / 90) * 90) % 360 + 360) % 360;
+}
+
 function applyAnimationOverrides(characters: CharacterDefinition[], overrides: AnimationOverrideMap) {
   const sanitizedOverrides = sanitizeAnimationOverrides(overrides);
   const effectiveCharacters = characters.map((character) => {
@@ -289,6 +332,10 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
       moveOverrides: {
         ...character.moveOverrides,
         ...characterOverrides.moves
+      },
+      spriteFrameEdits: {
+        ...character.spriteFrameEdits,
+        ...characterOverrides.sprites
       }
     };
   });
@@ -328,9 +375,11 @@ function isLocalDevHost() {
 export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
+  const [stageResult, setStageResult] = useState<StageLoadResult | null>(null);
   const [animationOverrides, setAnimationOverrides] = useState<AnimationOverrideMap>(() => readAnimationOverrides());
   const sourceRoster = rosterResult?.characters ?? [];
   const roster = useMemo(() => applyAnimationOverrides(sourceRoster, animationOverrides), [sourceRoster, animationOverrides]);
+  const stageRoster = stageResult?.stages ?? stages;
   const [p1Id, setP1Id] = useState('astra');
   const [p2Id, setP2Id] = useState('dax');
   const [stageId, setStageId] = useState(stages[0].id);
@@ -342,15 +391,21 @@ export default function App() {
   useEffect(() => {
     debugHypotheses();
     let mounted = true;
-    loadCharacterRoster().then((result) => {
+    Promise.all([loadCharacterRoster(), loadStageRoster()]).then(([result, loadedStages]) => {
       if (!mounted) return;
       debugLog(3, 'roster result accepted by app', {
         characterIds: result.characters.map((character) => character.id),
         warnings: result.warnings
       });
+      debugLog(3, 'stage roster result accepted by app', {
+        stageIds: loadedStages.stages.map((stage) => stage.id),
+        warnings: loadedStages.warnings
+      });
       setRosterResult(result);
+      setStageResult(loadedStages);
       setP1Id(result.characters[0]?.id ?? 'astra');
       setP2Id(result.characters[1]?.id ?? result.characters[0]?.id ?? 'dax');
+      setStageId(loadedStages.stages[0]?.id ?? stages[0].id);
       window.setTimeout(() => setScreen('title'), 650);
     });
     return () => {
@@ -423,6 +478,40 @@ export default function App() {
     }));
   };
 
+  const setCharacterSpriteFrameEdit = (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => {
+    debugLog(10, 'viewer sprite frame edit requested', { characterId, frameIndex, edit });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        sprites: {
+          ...(current[characterId]?.sprites ?? {}),
+          [String(frameIndex)]: sanitizeSpriteFrameEdit(edit)
+        }
+      }
+    }));
+  };
+
+  const reloadRoster = async (preferredCharacterId?: string) => {
+    const result = await loadCharacterRoster();
+    setRosterResult(result);
+    if (preferredCharacterId && result.characters.some((character) => character.id === preferredCharacterId)) {
+      setP1Id(preferredCharacterId);
+      const other = result.characters.find((character) => character.id !== preferredCharacterId);
+      if (other) setP2Id(other.id);
+    }
+  };
+
+  const reloadStages = async (preferredStageId?: string) => {
+    const result = await loadStageRoster();
+    setStageResult(result);
+    if (preferredStageId && result.stages.some((stage) => stage.id === preferredStageId)) {
+      setStageId(preferredStageId);
+    } else if (!result.stages.some((stage) => stage.id === stageId)) {
+      setStageId(result.stages[0]?.id ?? stages[0].id);
+    }
+  };
+
   useEffect(() => {
     if (settings.display.reducedMotion) return;
     anime.remove('.screen-panel > *');
@@ -438,7 +527,7 @@ export default function App() {
 
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
-  const selectedStage = stages.find((stage) => stage.id === stageId) ?? stages[0];
+  const selectedStage = stageRoster.find((stage) => stage.id === stageId) ?? stageRoster[0] ?? stages[0];
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -474,6 +563,7 @@ export default function App() {
             }}
             onSettings={() => setScreen('settings')}
             onViewer={() => setScreen('viewer')}
+            onStages={() => setScreen('stageEditor')}
             onExit={() => setScreen('title')}
           />
         )}
@@ -495,9 +585,17 @@ export default function App() {
         {screen === 'stage' && (
           <StageSelect
             selected={stageId}
+            stages={stageRoster}
             setSelected={setStageId}
             onBack={() => setScreen('select')}
             onFight={() => setScreen('fight')}
+          />
+        )}
+        {screen === 'stageEditor' && (
+          <StageEditor
+            stages={stageRoster}
+            onReload={reloadStages}
+            onBack={() => setScreen('menu')}
           />
         )}
         {screen === 'settings' && (
@@ -518,6 +616,8 @@ export default function App() {
             onAnimationFramesChange={setCharacterAnimationFrames}
             onAnimationSpeedChange={setCharacterAnimationSpeed}
             onMoveOverrideChange={setCharacterMoveOverride}
+            onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
+            onImportComplete={reloadRoster}
             onBack={() => setScreen('menu')}
           />
         )}
@@ -571,6 +671,7 @@ function MenuScreen({
   onTraining,
   onSettings,
   onViewer,
+  onStages,
   onExit
 }: {
   roster: CharacterDefinition[];
@@ -579,10 +680,12 @@ function MenuScreen({
   onTraining: () => void;
   onSettings: () => void;
   onViewer: () => void;
+  onStages: () => void;
   onExit: () => void;
 }) {
-  const p1 = roster.find((character) => character.id === 'kiro') ?? roster[0];
-  const p2 = roster.find((character) => character.id === 'riven') ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
+  const [attractIds] = useState(() => pickAttractCharacterIds(roster));
+  const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
+  const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
@@ -626,6 +729,7 @@ function MenuScreen({
     { label: 'Versus', action: onVersus },
     { label: 'Training', action: onTraining },
     { label: 'Characters', action: onViewer },
+    ...(isLocalDevHost() ? [{ label: 'Stages', action: onStages }] : []),
     { label: 'Options', action: onSettings },
     { label: 'Exit', action: onExit }
   ];
@@ -658,6 +762,15 @@ function MenuScreen({
       </section>
     </div>
   );
+}
+
+function pickAttractCharacterIds(roster: CharacterDefinition[]): [string, string] {
+  if (roster.length === 0) return ['', ''];
+  const firstIndex = Math.floor(Math.random() * roster.length);
+  const first = roster[firstIndex];
+  const opponents = roster.filter((character) => character.id !== first.id);
+  const second = opponents.length > 0 ? opponents[Math.floor(Math.random() * opponents.length)] : first;
+  return [first.id, second.id];
 }
 
 function CharacterSelect({
@@ -863,11 +976,13 @@ function usesCpuDifficulty(mode: MatchMode) {
 
 function StageSelect({
   selected,
+  stages,
   setSelected,
   onBack,
   onFight
 }: {
   selected: string;
+  stages: StageDefinition[];
   setSelected: (id: string) => void;
   onBack: () => void;
   onFight: () => void;
@@ -917,6 +1032,491 @@ function StageSelect({
       <FooterActions onBack={onBack} onNext={onFight} nextLabel="Fight" />
     </div>
   );
+}
+
+type StagePieceDraft = {
+  id: string;
+  name: string;
+  dataUrl: string;
+  box: [number, number, number, number];
+  width: number;
+  height: number;
+};
+
+type StageImportDraft = {
+  id: string;
+  name: string;
+  subtitle: string;
+  floor: string;
+  rail: string;
+  light: string;
+};
+
+function StageEditor({
+  stages,
+  onReload,
+  onBack
+}: {
+  stages: StageDefinition[];
+  onReload: (preferredStageId?: string) => Promise<void>;
+  onBack: () => void;
+}) {
+  const [mode, setMode] = useState<'edit' | 'import'>('edit');
+  const [selectedStageId, setSelectedStageId] = useState(stages[0]?.id ?? '');
+  const [editableStage, setEditableStage] = useState<StageDefinition>(stages[0] ?? defaultStageDraft());
+  const [selectedPropId, setSelectedPropId] = useState('');
+  const [draft, setDraft] = useState<StageImportDraft>(() => randomStageDraft());
+  const [sourceDataUrl, setSourceDataUrl] = useState('');
+  const [sourceName, setSourceName] = useState('');
+  const [pieces, setPieces] = useState<StagePieceDraft[]>([]);
+  const [importStage, setImportStage] = useState<StageDefinition | null>(null);
+  const [status, setStatus] = useState<'idle' | 'working' | 'ready' | 'saving' | 'saved' | 'error'>('idle');
+
+  useEffect(() => {
+    const next = stages.find((stage) => stage.id === selectedStageId) ?? stages[0] ?? defaultStageDraft();
+    setEditableStage(next);
+    setSelectedPropId(next.props?.[0]?.id ?? '');
+  }, [selectedStageId, stages]);
+
+  const selectedProp = editableStage.props?.find((prop) => prop.id === selectedPropId) ?? editableStage.props?.[0];
+
+  const updateSelectedProp = (patch: Partial<StagePropDefinition>) => {
+    if (!selectedProp) return;
+    setEditableStage((current) => ({
+      ...current,
+      props: (current.props ?? []).map((prop) => prop.id === selectedProp.id ? { ...prop, ...patch } : prop)
+    }));
+  };
+
+  const duplicateSelectedProp = () => {
+    if (!selectedProp) return;
+    const copy: StagePropDefinition = {
+      ...selectedProp,
+      id: `${selectedProp.id}-copy-${Date.now().toString(36)}`,
+      name: `${selectedProp.name} Copy`,
+      position: [selectedProp.position[0] + 0.55, selectedProp.position[1], selectedProp.position[2]]
+    };
+    setEditableStage((current) => ({ ...current, props: [...(current.props ?? []), copy] }));
+    setSelectedPropId(copy.id);
+  };
+
+  const addStageProp = () => {
+    const imagePath = editableStage.thumbnailPath ?? editableStage.backgroundLayers?.[0]?.imagePath ?? editableStage.sourcePath;
+    if (!imagePath) return;
+    const prop: StagePropDefinition = {
+      id: `prop-${Date.now().toString(36)}`,
+      name: 'New Prop',
+      imagePath,
+      position: [0, 1, -2],
+      scale: [1.5, 1.5, 1],
+      opacity: 1,
+      billboard: false,
+      renderMode: 'voxel',
+      voxelDepth: 0.16,
+      voxelScale: 4,
+      hidden: false,
+      locked: false
+    };
+    setEditableStage((current) => ({ ...current, props: [...(current.props ?? []), prop] }));
+    setSelectedPropId(prop.id);
+  };
+
+  const removeSelectedProp = () => {
+    if (!selectedProp) return;
+    setEditableStage((current) => ({
+      ...current,
+      props: (current.props ?? []).filter((prop) => prop.id !== selectedProp.id)
+    }));
+    setSelectedPropId('');
+  };
+
+  const saveEditedStage = async () => {
+    setStatus('saving');
+    try {
+      const response = await fetch('/__kore/dev/save-stage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stageId: editableStage.id, stage: editableStage })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setStatus('saved');
+      await onReload(editableStage.id);
+      window.setTimeout(() => setStatus('idle'), 1500);
+    } catch (error) {
+      console.error('Failed to save stage', error);
+      setStatus('error');
+    }
+  };
+
+  const importSource = async (file: File | undefined) => {
+    if (!file) return;
+    setStatus('working');
+    try {
+      const result = await detectStagePieces(file);
+      setSourceDataUrl(result.sourceDataUrl);
+      setSourceName(file.name);
+      setPieces(result.pieces);
+      const nextStage = buildImportedStageDraft(draft, result.pieces, result.sourceDataUrl, true);
+      setImportStage(nextStage);
+      setStatus('ready');
+    } catch (error) {
+      console.error('Failed to import stage sheet', error);
+      setStatus('error');
+    }
+  };
+
+  const updateDraft = (patch: Partial<StageImportDraft>) => {
+    setDraft((current) => {
+      const next = { ...current, ...patch };
+      if (patch.name && !patch.id) next.id = slugifyCharacterId(patch.name);
+      if (patch.id) next.id = slugifyCharacterId(patch.id);
+      if (pieces.length) setImportStage(buildImportedStageDraft(next, pieces, sourceDataUrl, true));
+      return next;
+    });
+  };
+
+  const saveImportedStage = async () => {
+    if (!importStage || !sourceDataUrl || pieces.length === 0) return;
+    setStatus('saving');
+    try {
+      const response = await fetch('/__kore/dev/import-stage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stageId: draft.id,
+          sourceDataUrl,
+          sourceName,
+          pieces,
+          stage: buildImportedStageDraft(draft, pieces, sourceDataUrl, false)
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setStatus('saved');
+      await onReload(draft.id);
+      setMode('edit');
+      setSelectedStageId(draft.id);
+    } catch (error) {
+      console.error('Failed to save imported stage', error);
+      setStatus('error');
+    }
+  };
+
+  return (
+    <div className="stage-editor-screen">
+      <header className="section-header">
+        <span>Local Dev</span>
+        <h2>Stages</h2>
+      </header>
+      <div className="stage-editor-tabs">
+        <button className={mode === 'edit' ? 'active' : ''} onClick={() => setMode('edit')}>Edit Existing</button>
+        <button className={mode === 'import' ? 'active' : ''} onClick={() => setMode('import')}>Import Stage</button>
+      </div>
+
+      {mode === 'edit' ? (
+        <section className="stage-editor-layout">
+          <aside className="stage-editor-panel">
+            <label>
+              <span>Stage</span>
+              <select value={selectedStageId} onChange={(event) => setSelectedStageId(event.target.value)}>
+                {stages.map((stage) => <option key={stage.id} value={stage.id}>{stage.name}</option>)}
+              </select>
+            </label>
+            <div className="stage-prop-list">
+              {(editableStage.props ?? []).map((prop) => (
+                <button key={prop.id} className={prop.id === selectedProp?.id ? 'active' : ''} onClick={() => setSelectedPropId(prop.id)}>
+                  <span>{prop.name}</span>
+                  <small>{prop.hidden ? 'Hidden' : prop.billboard ? 'Billboard' : 'Fixed'}</small>
+                </button>
+              ))}
+            </div>
+            <div className="import-action-row">
+              <button className="secondary-button compact-button" onClick={addStageProp}>Add Prop</button>
+              <button className="secondary-button compact-button" onClick={duplicateSelectedProp} disabled={!selectedProp}>Duplicate</button>
+              <button className="secondary-button compact-button" onClick={removeSelectedProp} disabled={!selectedProp}>Remove</button>
+              <button className="secondary-button compact-button dev-save-button" onClick={saveEditedStage}>
+                <Save size={14} />
+                Save Stage
+              </button>
+              {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
+            </div>
+            {selectedProp && <StagePropEditor prop={selectedProp} onChange={updateSelectedProp} />}
+          </aside>
+          <main className="stage-editor-preview">
+            <StagePreviewCanvas stage={editableStage} />
+          </main>
+        </section>
+      ) : (
+        <section className="stage-editor-layout">
+          <aside className="stage-editor-panel">
+            <label className="file-drop">
+              <Upload size={26} />
+              <strong>{sourceName || 'Choose stage spritesheet'}</strong>
+              <small>{status === 'working' ? 'Cutting pieces...' : 'Auto-cut props and build a 3D arena'}</small>
+              <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => importSource(event.target.files?.[0])} />
+            </label>
+            <div className="import-field-grid">
+              <label><span>Name</span><input value={draft.name} onChange={(event) => updateDraft({ name: event.target.value })} /></label>
+              <label><span>ID</span><input value={draft.id} onChange={(event) => updateDraft({ id: event.target.value })} /></label>
+              <label><span>Subtitle</span><input value={draft.subtitle} onChange={(event) => updateDraft({ subtitle: event.target.value })} /></label>
+              <label><span>Floor</span><input type="color" value={draft.floor} onChange={(event) => updateDraft({ floor: event.target.value })} /></label>
+              <label><span>Rail</span><input type="color" value={draft.rail} onChange={(event) => updateDraft({ rail: event.target.value })} /></label>
+              <label><span>Light</span><input type="color" value={draft.light} onChange={(event) => updateDraft({ light: event.target.value })} /></label>
+            </div>
+            <div className="import-action-row">
+              <button className="secondary-button" onClick={() => updateDraft(randomStageDraft())}>
+                <Shuffle size={16} />
+                Randomize
+              </button>
+              <button className="secondary-button dev-save-button" onClick={saveImportedStage} disabled={!importStage || status === 'saving'}>
+                <Save size={16} />
+                {status === 'saving' ? 'Saving' : 'Save Stage'}
+              </button>
+              {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
+            </div>
+          </aside>
+          <main className="stage-editor-preview">
+            {importStage ? <StagePreviewCanvas stage={importStage} /> : <div className="stage-empty-preview">Upload a stage sheet to preview the arena.</div>}
+            <div className="stage-piece-grid">
+              {pieces.map((piece) => (
+                <span key={piece.id}>
+                  <img src={piece.dataUrl} alt={piece.name} />
+                  <small>{piece.name}</small>
+                </span>
+              ))}
+            </div>
+          </main>
+        </section>
+      )}
+      <button className="secondary-button" onClick={onBack}>
+        <Home size={18} />
+        Back
+      </button>
+    </div>
+  );
+}
+
+function StagePropEditor({ prop, onChange }: { prop: StagePropDefinition; onChange: (patch: Partial<StagePropDefinition>) => void }) {
+  const setPosition = (axis: 0 | 1 | 2, value: string) => {
+    const next: [number, number, number] = [...prop.position] as [number, number, number];
+    next[axis] = Number(value) || 0;
+    onChange({ position: next });
+  };
+  const setScale = (axis: 0 | 1 | 2, value: string) => {
+    const next: [number, number, number] = [...prop.scale] as [number, number, number];
+    next[axis] = Math.max(0.05, Number(value) || 1);
+    onChange({ scale: next });
+  };
+  return (
+    <div className="stage-prop-editor">
+      <FrameNumberInput label="X" value={prop.position[0]} step={0.1} onChange={(value) => setPosition(0, value)} />
+      <FrameNumberInput label="Y" value={prop.position[1]} step={0.1} onChange={(value) => setPosition(1, value)} />
+      <FrameNumberInput label="Z" value={prop.position[2]} step={0.1} onChange={(value) => setPosition(2, value)} />
+      <FrameNumberInput label="Scale X" value={prop.scale[0]} min={0.05} step={0.05} onChange={(value) => setScale(0, value)} />
+      <FrameNumberInput label="Scale Y" value={prop.scale[1]} min={0.05} step={0.05} onChange={(value) => setScale(1, value)} />
+      <FrameNumberInput label="Opacity" value={prop.opacity ?? 1} min={0} step={0.05} onChange={(value) => onChange({ opacity: Math.max(0, Math.min(1, Number(value) || 0)) })} />
+      <label>
+        <span>Render</span>
+        <select value={prop.renderMode ?? 'plane'} onChange={(event) => onChange({ renderMode: event.target.value as StagePropDefinition['renderMode'] })}>
+          <option value="voxel">Voxel</option>
+          <option value="plane">Plane</option>
+        </select>
+      </label>
+      <FrameNumberInput label="Voxel Step" value={prop.voxelScale ?? 4} min={2} step={1} onChange={(value) => onChange({ voxelScale: Math.max(2, Number(value) || 4) })} />
+      <FrameNumberInput label="Voxel Depth" value={prop.voxelDepth ?? 0.16} min={0.04} step={0.02} onChange={(value) => onChange({ voxelDepth: Math.max(0.04, Number(value) || 0.16) })} />
+      <label className="frame-toggle"><span>Billboard</span><input type="checkbox" checked={Boolean(prop.billboard)} onChange={(event) => onChange({ billboard: event.target.checked })} /></label>
+      <label className="frame-toggle"><span>Hidden</span><input type="checkbox" checked={Boolean(prop.hidden)} onChange={(event) => onChange({ hidden: event.target.checked })} /></label>
+    </div>
+  );
+}
+
+function defaultStageDraft(): StageDefinition {
+  return {
+    id: 'empty-stage',
+    name: 'Empty Stage',
+    subtitle: 'No stage loaded',
+    renderMode: 'procedural',
+    floor: '#07182c',
+    rail: '#2ee6ff',
+    light: '#dbe8ff'
+  };
+}
+
+function randomStageDraft(): StageImportDraft {
+  const names = ['Training Area', 'Forest Ring', 'Skyline Yard', 'River Dojo', 'Pixel Grove'];
+  const name = `${names[Math.floor(Math.random() * names.length)]} ${Math.floor(10 + Math.random() * 90)}`;
+  return {
+    id: slugifyCharacterId(name),
+    name,
+    subtitle: 'Sprite-cutout arena',
+    floor: '#2f6f3f',
+    rail: '#2ee6ff',
+    light: '#dbe8ff'
+  };
+}
+
+async function detectStagePieces(file: File): Promise<{ sourceDataUrl: string; pieces: StagePieceDraft[] }> {
+  const sourceDataUrl = await readFileAsDataUrl(file);
+  const image = await loadImage(sourceDataUrl);
+  const canvas = document.createElement('canvas');
+  canvas.width = image.naturalWidth || image.width;
+  canvas.height = image.naturalHeight || image.height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) throw new Error('Could not create stage canvas');
+  context.imageSmoothingEnabled = false;
+  context.drawImage(image, 0, 0);
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+  const background = [pixels.data[0], pixels.data[1], pixels.data[2], pixels.data[3]];
+  const rowHasInk = new Array(canvas.height).fill(false);
+
+  for (let y = 0; y < canvas.height; y += 1) {
+    for (let x = 0; x < canvas.width; x += 1) {
+      const offset = (y * canvas.width + x) * 4;
+      if (isStageInkPixel(pixels.data, offset, background)) {
+        rowHasInk[y] = true;
+      }
+    }
+  }
+
+  const rows = groupBooleanRuns(rowHasInk, 6, 8);
+  const boxes: Array<{ box: [number, number, number, number]; area: number }> = [];
+  rows.forEach(([rowStart, rowEnd]) => {
+    const columns = new Array(canvas.width).fill(false);
+    for (let y = rowStart; y <= rowEnd; y += 1) {
+      for (let x = 0; x < canvas.width; x += 1) {
+        const offset = (y * canvas.width + x) * 4;
+        if (isStageInkPixel(pixels.data, offset, background)) columns[x] = true;
+      }
+    }
+    groupBooleanRuns(columns, 7, 8).forEach(([columnStart, columnEnd]) => {
+      const box = trimStageBox(pixels.data, canvas.width, canvas.height, columnStart, rowStart, columnEnd, rowEnd, background);
+      const width = box[2] - box[0];
+      const height = box[3] - box[1];
+      if (width >= 12 && height >= 12) boxes.push({ box, area: width * height });
+    });
+  });
+
+  return {
+    sourceDataUrl: canvas.toDataURL('image/png'),
+    pieces: boxes
+      .sort((a, b) => (a.box[1] - b.box[1]) || (a.box[0] - b.box[0]))
+      .slice(0, 80)
+      .map((entry, index) => {
+        const width = entry.box[2] - entry.box[0];
+        const height = entry.box[3] - entry.box[1];
+        return {
+          id: `piece-${index.toString().padStart(3, '0')}`,
+          name: index === 0 ? 'Backdrop' : `Piece ${index}`,
+          dataUrl: cropStagePieceDataUrl(image, entry.box, background),
+          box: entry.box,
+          width,
+          height
+        };
+      })
+  };
+}
+
+function isStageInkPixel(data: Uint8ClampedArray, offset: number, background: number[]) {
+  const alpha = data[offset + 3];
+  if (alpha <= 16) return false;
+  const red = data[offset];
+  const green = data[offset + 1];
+  const blue = data[offset + 2];
+  const bgDistance = Math.abs(red - background[0]) + Math.abs(green - background[1]) + Math.abs(blue - background[2]) + Math.abs(alpha - background[3]);
+  const isMagentaMatte = red > 220 && blue > 190 && green < 80;
+  const isFlatGreenMatte = green > 120 && red < 110 && blue < 130;
+  return bgDistance > 34 && !isMagentaMatte && !isFlatGreenMatte;
+}
+
+function trimStageBox(data: Uint8ClampedArray, width: number, height: number, x1: number, y1: number, x2: number, y2: number, background: number[]): [number, number, number, number] {
+  let left = x2;
+  let top = y2;
+  let right = x1;
+  let bottom = y1;
+  for (let y = Math.max(0, y1); y <= Math.min(height - 1, y2); y += 1) {
+    for (let x = Math.max(0, x1); x <= Math.min(width - 1, x2); x += 1) {
+      const offset = (y * width + x) * 4;
+      if (isStageInkPixel(data, offset, background)) {
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      }
+    }
+  }
+  return [Math.max(0, left), Math.max(0, top), Math.min(width, right + 1), Math.min(height, bottom + 1)];
+}
+
+function cropStagePieceDataUrl(image: HTMLImageElement, box: [number, number, number, number], background: number[]) {
+  const canvas = document.createElement('canvas');
+  const width = Math.max(1, box[2] - box[0]);
+  const height = Math.max(1, box[3] - box[1]);
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return '';
+  context.imageSmoothingEnabled = false;
+  context.drawImage(image, box[0], box[1], width, height, 0, 0, width, height);
+  const data = context.getImageData(0, 0, width, height);
+  for (let offset = 0; offset < data.data.length; offset += 4) {
+    if (!isStageInkPixel(data.data, offset, background)) data.data[offset + 3] = 0;
+  }
+  context.putImageData(data, 0, 0);
+  return canvas.toDataURL('image/png');
+}
+
+function buildImportedStageDraft(draft: StageImportDraft, pieces: StagePieceDraft[], sourceDataUrl: string, preview: boolean): StageDefinition {
+  const imagePath = (piece: StagePieceDraft) => preview ? piece.dataUrl : `/stages/${draft.id}/pieces/${piece.id}.png`;
+  const backdrop = pieces.reduce((largest, piece) => piece.width * piece.height > largest.width * largest.height ? piece : largest, pieces[0]);
+  const propPieces = pieces.filter((piece) => piece.id !== backdrop?.id).slice(0, 24);
+  const props: StagePropDefinition[] = propPieces.map((piece, index) => {
+    const side = index % 2 === 0 ? -1 : 1;
+    const lane = Math.floor(index / 2);
+    const x = side * (3.8 + (lane % 4) * 1.2);
+    const z = -4.8 + (lane % 5) * 1.55;
+    const height = Math.max(0.8, Math.min(3.4, piece.height / 48));
+    const width = Math.max(0.8, Math.min(4.2, piece.width / 48));
+    return {
+      id: `prop-${piece.id}`,
+      name: piece.name,
+      imagePath: imagePath(piece),
+      position: [x, height / 2 - 0.05, z],
+      scale: [width, height, 1],
+      opacity: 1,
+      billboard: false,
+      renderMode: 'voxel',
+      voxelDepth: 0.16,
+      voxelScale: 4
+    };
+  });
+  return {
+    id: draft.id,
+    name: draft.name,
+    subtitle: draft.subtitle,
+    renderMode: 'spriteCutout',
+    floor: draft.floor,
+    rail: draft.rail,
+    light: draft.light,
+    sourcePath: preview ? sourceDataUrl : `/stages/${draft.id}/source.png`,
+    thumbnailPath: pieces[0] ? imagePath(pieces[0]) : undefined,
+    world: { width: 96, depth: 42, floorY: -0.045, backgroundColor: '#10291c' },
+    lighting: { ambient: '#dbe8ff', sky: '#9bdfff' },
+    backgroundLayers: [],
+    props: [
+      ...(backdrop ? [{
+        id: `prop-${backdrop.id}`,
+        name: backdrop.name,
+        imagePath: imagePath(backdrop),
+        position: [-5.2, 1.4, -5.4] as [number, number, number],
+        scale: [3.2, 3.2, 1] as [number, number, number],
+        opacity: 1,
+        billboard: false,
+        renderMode: 'voxel' as const,
+        voxelDepth: 0.18,
+        voxelScale: 5
+      }] : []),
+      ...props
+    ]
+  };
 }
 
 type SettingsTab = 'game' | 'controls' | 'camera' | 'display' | 'audio';
@@ -1373,6 +1973,8 @@ function CharacterViewer({
   onAnimationFramesChange,
   onAnimationSpeedChange,
   onMoveOverrideChange,
+  onSpriteFrameEditChange,
+  onImportComplete,
   onBack
 }: {
   roster: CharacterDefinition[];
@@ -1380,6 +1982,8 @@ function CharacterViewer({
   onAnimationFramesChange: (characterId: string, animationKey: string, frames: string[]) => void;
   onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
+  onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
+  onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
   const [activeId, setActiveId] = useState(roster[0]?.id ?? '');
@@ -1388,10 +1992,18 @@ function CharacterViewer({
   const [slotSearch, setSlotSearch] = useState('');
   const [rotationTurn, setRotationTurn] = useState(0);
   const [zoom, setZoom] = useState(0.28);
-  const [isEditingAnimation, setIsEditingAnimation] = useState(false);
+  const [editorMode, setEditorMode] = useState<'browse' | 'animation' | 'sprite'>('browse');
+  const [showImporter, setShowImporter] = useState(false);
+  const [showSpriteSheetPreview, setShowSpriteSheetPreview] = useState(false);
+  const [selectedSpriteFrameIndex, setSelectedSpriteFrameIndex] = useState(0);
+  const [spriteFrameMeta, setSpriteFrameMeta] = useState<Record<string, SpriteFrameEdit>>({});
   const [manifestSaveStatus, setManifestSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [spriteSaveStatus, setSpriteSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const active = roster.find((character) => character.id === activeId) ?? roster[0];
   const sourceActive = sourceRoster.find((character) => character.id === active.id) ?? active;
+  const isLocalDev = isLocalDevHost();
+  const isEditingAnimation = editorMode === 'animation';
+  const isEditingSpriteSheet = editorMode === 'sprite';
   const selectedSlot = animationSlots.find((slot) => slot.key === selectedAnimationKey) ?? animationSlots[0];
   const frameCount =
     active.spriteFrameCount ??
@@ -1413,6 +2025,43 @@ function CharacterViewer({
     const searchMatches = !search || slot.label.toLowerCase().includes(search) || slot.command?.toLowerCase().includes(search);
     return categoryMatches && searchMatches;
   });
+  const selectedSpriteFramePath = framePath(active, selectedSpriteFrameIndex);
+
+  useEffect(() => {
+    if (!active?.id) return;
+    const firstSelectedIndex = getFrameIndex(selectedFrames[0] ?? '');
+    if (firstSelectedIndex >= 0) setSelectedSpriteFrameIndex(firstSelectedIndex);
+  }, [active.id, selectedAnimationKey]);
+
+  useEffect(() => {
+    let mounted = true;
+    setSpriteFrameMeta({});
+    fetch(`/characters/${active.id}/frames/frames.json`)
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data: { frames?: SpriteFrameEdit[] } | null) => {
+        if (!mounted) return;
+        const entries = Object.fromEntries(
+          (data?.frames ?? [])
+            .filter((frame) => Number.isFinite(frame.index) && Array.isArray(frame.box))
+            .map((frame) => [String(frame.index), sanitizeSpriteFrameEdit(frame)])
+        );
+        setSpriteFrameMeta(entries);
+      })
+      .catch(() => {
+        if (mounted) setSpriteFrameMeta({});
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [active.id]);
+
+  useEffect(() => {
+    if (!isLocalDev && editorMode !== 'browse') setEditorMode('browse');
+  }, [editorMode, isLocalDev]);
+
+  useEffect(() => {
+    if (editorMode !== 'animation') setShowSpriteSheetPreview(false);
+  }, [editorMode, selectedAnimationKey, active.id]);
 
   useEffect(() => {
     debugLog(6, 'viewer active character and slot', {
@@ -1465,7 +2114,8 @@ function CharacterViewer({
           characterId: active.id,
           animationFrames: active.animationFrames ?? {},
           animationFrameRates: active.animationFrameRates ?? {},
-          moveOverrides: active.moveOverrides ?? {}
+          moveOverrides: active.moveOverrides ?? {},
+          spriteFrameEdits: active.spriteFrameEdits ?? {}
         })
       });
       if (!response.ok) throw new Error(await response.text());
@@ -1485,6 +2135,48 @@ function CharacterViewer({
     }
     updateSelectedFrames([...selectedFrames, path]);
   };
+
+  const saveSpriteFrame = async (edit: SpriteFrameEdit, pngDataUrl: string) => {
+    setSpriteSaveStatus('saving');
+    try {
+      const nextEdit = sanitizeSpriteFrameEdit({
+        ...edit,
+        index: selectedSpriteFrameIndex,
+        path: selectedSpriteFramePath
+      });
+      const response = await fetch('/__kore/dev/save-sprite-frame', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          frameIndex: selectedSpriteFrameIndex,
+          edit: nextEdit,
+          pngDataUrl
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      onSpriteFrameEditChange(active.id, selectedSpriteFrameIndex, nextEdit);
+      setSpriteFrameMeta((current) => ({ ...current, [String(selectedSpriteFrameIndex)]: nextEdit }));
+      setSpriteSaveStatus('saved');
+      window.setTimeout(() => setSpriteSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to save sprite frame', error);
+      setSpriteSaveStatus('error');
+    }
+  };
+
+  if (showImporter && isLocalDev) {
+    return (
+      <CharacterImportScreen
+        onBack={() => setShowImporter(false)}
+        onImportComplete={async (characterId) => {
+          await onImportComplete(characterId);
+          setActiveId(characterId);
+          setShowImporter(false);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="viewer-screen">
@@ -1507,52 +2199,84 @@ function CharacterViewer({
             </button>
           ))}
         </div>
-        <article className="model-viewer-panel">
-          <div className="model-viewer-stage">
-            <CharacterPreviewCanvas character={active} pose={selectedSlot.pose} animationKey={selectedSlot.key} rotationTurn={rotationTurn} zoom={zoom} />
-          </div>
+        <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
+          {!isEditingSpriteSheet && (
+            <div className="model-viewer-stage">
+              <CharacterPreviewCanvas character={active} pose={selectedSlot.pose} animationKey={selectedSlot.key} rotationTurn={rotationTurn} zoom={zoom} />
+            </div>
+          )}
           <div className="viewer-actions">
             <div className="viewer-action-row">
-              <button className="secondary-button" onClick={() => setRotationTurn((value) => value + 1)}>
-                <Rotate3D size={18} />
-                Rotate
-              </button>
-              <button
-                className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
-                onClick={() => setIsEditingAnimation((current) => !current)}
-                data-testid="toggle-animation-editor"
-              >
-                <Settings size={18} />
-                {isEditingAnimation ? 'Browse Moves' : 'Edit Selected'}
-              </button>
-              <div className="zoom-controls" aria-label="Model zoom controls">
-                <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
-                  <ZoomOut size={18} />
+              {!isEditingSpriteSheet && (
+                <>
+                  <button className="secondary-button" onClick={() => setRotationTurn((value) => value + 1)}>
+                    <Rotate3D size={18} />
+                    Rotate
+                  </button>
+                  {isLocalDev && (
+                    <>
+                      <button
+                        className="secondary-button"
+                        onClick={() => setShowImporter(true)}
+                        data-testid="open-character-importer"
+                      >
+                        <Upload size={18} />
+                        Import Character
+                      </button>
+                      <button
+                        className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
+                        onClick={() => setEditorMode((current) => (current === 'animation' ? 'browse' : 'animation'))}
+                        data-testid="toggle-animation-editor"
+                      >
+                        <Settings size={18} />
+                        {isEditingAnimation ? 'Browse Moves' : 'Edit Selected'}
+                      </button>
+                      <button
+                        className="secondary-button"
+                        onClick={() => setEditorMode('sprite')}
+                        data-testid="toggle-sprite-editor"
+                      >
+                        <Target size={18} />
+                        Edit Spritesheet
+                      </button>
+                    </>
+                  )}
+                  <div className="zoom-controls" aria-label="Model zoom controls">
+                    <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
+                      <ZoomOut size={18} />
+                    </button>
+                    <input
+                      aria-label="Zoom level"
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={zoom}
+                      onChange={(event) => setZoom(Number(event.target.value))}
+                      data-testid="viewer-zoom-slider"
+                    />
+                    <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
+                      <ZoomIn size={18} />
+                    </button>
+                  </div>
+                  <span>Drag to rotate. Scroll or pinch to zoom.</span>
+                </>
+              )}
+              {isEditingSpriteSheet && (
+                <button className="secondary-button active-tool" onClick={() => setEditorMode('browse')} data-testid="close-sprite-editor">
+                  <Eye size={18} />
+                  Browse Moves
                 </button>
-                <input
-                  aria-label="Zoom level"
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={zoom}
-                  onChange={(event) => setZoom(Number(event.target.value))}
-                  data-testid="viewer-zoom-slider"
-                />
-                <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
-                  <ZoomIn size={18} />
-                </button>
-              </div>
-              <span>Drag to rotate. Scroll or pinch to zoom.</span>
+              )}
             </div>
             <div className="viewer-action-row editor-control-row">
               <div className="editing-title">
-                <span>{isEditingAnimation ? 'Editing' : 'Selected'}</span>
+                <span>{isEditingSpriteSheet ? 'Editing Spritesheet' : isEditingAnimation ? 'Editing' : 'Selected'}</span>
                 <strong>
                   <NotationGroup tokens={selectedSlot.notation} />
-                  {selectedSlot.label}
+                  {isEditingSpriteSheet ? `Frame ${selectedSpriteFrameIndex}` : selectedSlot.label}
                 </strong>
-                <small>{formatFrameSummary(selectedMove)}</small>
+                <small>{isEditingSpriteSheet ? selectedSpriteFramePath : formatFrameSummary(selectedMove)}</small>
               </div>
               {isEditingAnimation && (
                 <div className="frame-picker-actions">
@@ -1585,34 +2309,51 @@ function CharacterViewer({
                   <button className="secondary-button compact-button" onClick={resetSelectedAnimation}>
                     Reset
                   </button>
-                  {isLocalDevHost() && (
-                    <>
-                      <button
-                        className="secondary-button compact-button dev-save-button"
-                        onClick={saveActiveManifest}
-                        disabled={manifestSaveStatus === 'saving'}
-                        data-testid="save-character-manifest"
-                      >
-                        <Save size={14} />
-                        {manifestSaveStatus === 'saving' ? 'Saving' : 'Save JSON'}
-                      </button>
-                      {manifestSaveStatus !== 'idle' && (
-                        <span className={`manifest-save-status is-${manifestSaveStatus}`}>
-                          {manifestSaveStatus === 'saved' ? 'Saved to manifest' : manifestSaveStatus === 'error' ? 'Save failed' : 'Writing'}
-                        </span>
-                      )}
-                    </>
+                  <label className="sprite-sheet-toggle">
+                    <input
+                      type="checkbox"
+                      checked={showSpriteSheetPreview}
+                      onChange={(event) => setShowSpriteSheetPreview(event.target.checked)}
+                    />
+                    <span>Show spritesheet</span>
+                  </label>
+                  <button
+                    className="secondary-button compact-button dev-save-button"
+                    onClick={saveActiveManifest}
+                    disabled={manifestSaveStatus === 'saving'}
+                    data-testid="save-character-manifest"
+                  >
+                    <Save size={14} />
+                    {manifestSaveStatus === 'saving' ? 'Saving' : 'Save JSON'}
+                  </button>
+                  {manifestSaveStatus !== 'idle' && (
+                    <span className={`manifest-save-status is-${manifestSaveStatus}`}>
+                      {manifestSaveStatus === 'saved' ? 'Saved to manifest' : manifestSaveStatus === 'error' ? 'Save failed' : 'Writing'}
+                    </span>
                   )}
                 </div>
               )}
             </div>
           </div>
-          {isEditingAnimation ? (
+          {isEditingSpriteSheet ? (
+            <SpriteSheetFrameEditor
+              character={active}
+              frameBank={frameBank}
+              frameMeta={spriteFrameMeta}
+              selectedFrameIndex={selectedSpriteFrameIndex}
+              selectedFrames={selectedFrames}
+              selectedFrameSet={selectedFrameSet}
+              saveStatus={spriteSaveStatus}
+              onSelectFrame={setSelectedSpriteFrameIndex}
+              onToggleFrame={toggleFrame}
+              onSave={saveSpriteFrame}
+            />
+          ) : isEditingAnimation ? (
             <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
               {selectedMove && (
                 <FrameDataEditor move={selectedMove} onChange={updateSelectedMoveOverride} />
               )}
-              {active.spriteSheetPath && (
+              {showSpriteSheetPreview && active.spriteSheetPath && (
                 <div className="sprite-sheet-stage">
                   <span>{active.spriteSheetPath}</span>
                   <img className="sprite-sheet-preview" src={active.spriteSheetPath} alt={`${active.displayName} sprite sheet`} />
@@ -1726,6 +2467,857 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
       </div>
     </section>
   );
+}
+
+function createDefaultSpriteFrameEdit(character: CharacterDefinition, frameIndex: number, frameMeta?: SpriteFrameEdit): SpriteFrameEdit {
+  const fromCharacter = character.spriteFrameEdits?.[String(frameIndex)];
+  const source = fromCharacter ?? frameMeta;
+  if (source) {
+    return sanitizeSpriteFrameEdit({
+      ...source,
+      index: frameIndex,
+      path: framePath(character, frameIndex)
+    });
+  }
+  return {
+    index: frameIndex,
+    path: framePath(character, frameIndex),
+    box: [0, 0, 64, 64],
+    width: 64,
+    height: 64,
+    rotation: 0,
+    offset: [0, 0],
+    scale: 1,
+    hidden: false
+  };
+}
+
+function renderSpriteFrameCanvas(sheet: HTMLImageElement | null, canvas: HTMLCanvasElement | null, edit: SpriteFrameEdit) {
+  if (!sheet || !canvas || !sheet.complete || sheet.naturalWidth <= 0 || sheet.naturalHeight <= 0) return;
+  const context = canvas.getContext('2d');
+  if (!context) return;
+  const [x1, y1, x2, y2] = edit.box;
+  const sourceWidth = Math.max(1, x2 - x1);
+  const sourceHeight = Math.max(1, y2 - y1);
+  const scale = Math.max(0.25, edit.scale ?? 1);
+  const rotation = normalizeRotation(edit.rotation ?? 0);
+  canvas.width = Math.max(1, Math.round(edit.width || sourceWidth));
+  canvas.height = Math.max(1, Math.round(edit.height || sourceHeight));
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.imageSmoothingEnabled = false;
+  context.save();
+  context.translate(canvas.width / 2 + (edit.offset?.[0] ?? 0), canvas.height / 2 + (edit.offset?.[1] ?? 0));
+  context.rotate((rotation * Math.PI) / 180);
+  context.scale(scale, scale);
+  context.drawImage(sheet, x1, y1, sourceWidth, sourceHeight, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
+  context.restore();
+}
+
+function SpriteSheetFrameEditor({
+  character,
+  frameBank,
+  frameMeta,
+  selectedFrameIndex,
+  selectedFrames,
+  selectedFrameSet,
+  saveStatus,
+  onSelectFrame,
+  onToggleFrame,
+  onSave
+}: {
+  character: CharacterDefinition;
+  frameBank: string[];
+  frameMeta: Record<string, SpriteFrameEdit>;
+  selectedFrameIndex: number;
+  selectedFrames: string[];
+  selectedFrameSet: Set<string>;
+  saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  onSelectFrame: (index: number) => void;
+  onToggleFrame: (path: string) => void;
+  onSave: (edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
+}) {
+  const sheetRef = useRef<HTMLImageElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [sheetSize, setSheetSize] = useState({ width: 1, height: 1 });
+  const [edit, setEdit] = useState<SpriteFrameEdit>(() => createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]));
+  const selectedFramePath = framePath(character, selectedFrameIndex);
+  const selectedSequenceIndex = selectedFrames.findIndex((frame) => getFrameIndex(frame) === selectedFrameIndex);
+  const selectedInMove = selectedSequenceIndex >= 0;
+  const cropWidth = Math.max(1, edit.box[2] - edit.box[0]);
+  const cropHeight = Math.max(1, edit.box[3] - edit.box[1]);
+  const pngWidth = Math.max(1, Math.round(edit.width || cropWidth));
+  const pngHeight = Math.max(1, Math.round(edit.height || cropHeight));
+
+  useEffect(() => {
+    setEdit(createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]));
+  }, [character.id, frameMeta, selectedFrameIndex]);
+
+  useEffect(() => {
+    renderSpriteFrameCanvas(sheetRef.current, canvasRef.current, edit);
+  }, [edit, sheetSize]);
+
+  const patchEdit = (patch: Partial<SpriteFrameEdit>) => {
+    setEdit((current) => sanitizeSpriteFrameEdit({
+      ...current,
+      ...patch,
+      index: selectedFrameIndex,
+      path: selectedFramePath
+    }));
+  };
+
+  const updateBox = (key: 'x' | 'y' | 'width' | 'height', value: string) => {
+    const numeric = Math.max(0, Math.round(Number(value) || 0));
+    const [x1, y1, x2, y2] = edit.box;
+    if (key === 'x') patchEdit({ box: [numeric, y1, Math.max(numeric + 1, numeric + cropWidth), y2] });
+    if (key === 'y') patchEdit({ box: [x1, numeric, x2, Math.max(numeric + 1, numeric + cropHeight)] });
+    if (key === 'width') patchEdit({ box: [x1, y1, x1 + Math.max(1, numeric), y2] });
+    if (key === 'height') patchEdit({ box: [x1, y1, x2, y1 + Math.max(1, numeric)] });
+  };
+
+  const updatePngSize = (key: 'width' | 'height', value: string) => {
+    const numeric = Math.max(1, Math.round(Number(value) || 1));
+    patchEdit(key === 'width' ? { width: numeric } : { height: numeric });
+  };
+
+  const nudgeBox = (dx: number, dy: number) => {
+    const [x1, y1, x2, y2] = edit.box;
+    patchEdit({
+      box: [
+        Math.max(0, x1 + dx),
+        Math.max(0, y1 + dy),
+        Math.max(1, x2 + dx),
+        Math.max(1, y2 + dy)
+      ]
+    });
+  };
+
+  const resizeBox = (dx: number, dy: number) => {
+    const [x1, y1, x2, y2] = edit.box;
+    patchEdit({
+      box: [x1, y1, Math.max(x1 + 1, x2 + dx), Math.max(y1 + 1, y2 + dy)],
+    });
+  };
+
+  const resizePng = (dx: number, dy: number) => {
+    patchEdit({
+      width: Math.max(1, pngWidth + dx),
+      height: Math.max(1, pngHeight + dy)
+    });
+  };
+
+  const nudgeSprite = (dx: number, dy: number) => {
+    patchEdit({
+      offset: [
+        Math.round((edit.offset?.[0] ?? 0) + dx),
+        Math.round((edit.offset?.[1] ?? 0) + dy)
+      ]
+    });
+  };
+
+  const saveFrame = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    await onSave(
+      {
+        ...sanitizeSpriteFrameEdit(edit),
+        path: selectedFramePath,
+        width: canvas.width,
+        height: canvas.height
+      },
+      canvas.toDataURL('image/png')
+    );
+  };
+
+  return (
+    <section className="sprite-crop-editor" aria-label="Spritesheet crop editor">
+      <div className="sprite-crop-stage">
+        <div className="sprite-sheet-crop-map">
+          <img
+            ref={sheetRef}
+            src={character.spriteSheetPath}
+            alt={`${character.displayName} sprite sheet crop map`}
+            onLoad={(event) => {
+              const image = event.currentTarget;
+              setSheetSize({ width: image.naturalWidth || 1, height: image.naturalHeight || 1 });
+              renderSpriteFrameCanvas(image, canvasRef.current, edit);
+            }}
+          />
+          <span
+            className="sprite-crop-box"
+            style={{
+              left: `${(edit.box[0] / sheetSize.width) * 100}%`,
+              top: `${(edit.box[1] / sheetSize.height) * 100}%`,
+              width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
+              height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
+            }}
+          />
+        </div>
+        <div className="sprite-crop-preview-panel">
+          <span>Selected Crop</span>
+          <canvas ref={canvasRef} className="sprite-crop-canvas" aria-label={`Rendered frame ${selectedFrameIndex}`} />
+          <strong>{`Frame ${selectedFrameIndex}`}</strong>
+          <small>{`${cropWidth} x ${cropHeight} crop | ${pngWidth} x ${pngHeight} PNG`}</small>
+          {edit.hidden && <em>Removed from generated frame list</em>}
+        </div>
+      </div>
+      <div className="sprite-crop-controls">
+        <div className="sprite-crop-fields">
+          <FrameNumberInput label="Crop X" value={edit.box[0]} min={0} onChange={(value) => updateBox('x', value)} />
+          <FrameNumberInput label="Crop Y" value={edit.box[1]} min={0} onChange={(value) => updateBox('y', value)} />
+          <FrameNumberInput label="Crop W" value={cropWidth} min={1} onChange={(value) => updateBox('width', value)} />
+          <FrameNumberInput label="Crop H" value={cropHeight} min={1} onChange={(value) => updateBox('height', value)} />
+          <FrameNumberInput label="PNG W" value={pngWidth} min={1} onChange={(value) => updatePngSize('width', value)} />
+          <FrameNumberInput label="PNG H" value={pngHeight} min={1} onChange={(value) => updatePngSize('height', value)} />
+          <FrameNumberInput label="Offset X" value={edit.offset?.[0] ?? 0} onChange={(value) => patchEdit({ offset: [Math.round(Number(value) || 0), edit.offset?.[1] ?? 0] })} />
+          <FrameNumberInput label="Offset Y" value={edit.offset?.[1] ?? 0} onChange={(value) => patchEdit({ offset: [edit.offset?.[0] ?? 0, Math.round(Number(value) || 0)] })} />
+          <FrameNumberInput label="Scale" value={edit.scale ?? 1} min={0.25} step={0.05} onChange={(value) => patchEdit({ scale: Number(value) || 1 })} />
+          <FrameNumberInput label="Rotation" value={edit.rotation ?? 0} step={90} onChange={(value) => patchEdit({ rotation: normalizeRotation(Number(value) || 0) })} />
+        </div>
+        <div className="sprite-crop-button-grid">
+          <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.max(0, selectedFrameIndex - 1))}>Prev</button>
+          <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.min(frameBank.length - 1, selectedFrameIndex + 1))}>Next</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(-1, 0)}>Crop Left</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(1, 0)}>Crop Right</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(0, -1)}>Crop Up</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(0, 1)}>Crop Down</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(1, 0)}>W +</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(-1, 0)}>W -</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(0, 1)}>H +</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(0, -1)}>H -</button>
+          <button className="secondary-button compact-button" onClick={() => resizePng(-1, 0)}>PNG W -</button>
+          <button className="secondary-button compact-button" onClick={() => resizePng(1, 0)}>PNG W +</button>
+          <button className="secondary-button compact-button" onClick={() => resizePng(0, -1)}>PNG H -</button>
+          <button className="secondary-button compact-button" onClick={() => resizePng(0, 1)}>PNG H +</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeSprite(-1, 0)}>Move Left</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeSprite(1, 0)}>Move Right</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeSprite(0, -1)}>Move Up</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeSprite(0, 1)}>Move Down</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ offset: [0, 0] })}>Center</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ width: cropWidth, height: cropHeight })}>Fit PNG</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ scale: Math.max(0.25, Number(((edit.scale ?? 1) - 0.05).toFixed(2))) })}>Shrink Sprite</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ scale: Math.min(4, Number(((edit.scale ?? 1) + 0.05).toFixed(2))) })}>Grow Sprite</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ rotation: normalizeRotation((edit.rotation ?? 0) - 90) })}>Rotate -90</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ rotation: normalizeRotation((edit.rotation ?? 0) + 90) })}>Rotate +90</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ hidden: !edit.hidden })}>{edit.hidden ? 'Add / Restore' : 'Remove Frame'}</button>
+          <button className="secondary-button compact-button" onClick={() => onToggleFrame(selectedFramePath)}>{selectedInMove ? 'Remove From Move' : 'Add To Move'}</button>
+          <button className="secondary-button compact-button" onClick={() => setEdit(createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]))}>Reset Crop</button>
+          <button className="secondary-button compact-button dev-save-button" onClick={saveFrame} disabled={saveStatus === 'saving'}>
+            <Save size={14} />
+            {saveStatus === 'saving' ? 'Saving' : 'Save Frame'}
+          </button>
+          {saveStatus !== 'idle' && (
+            <span className={`manifest-save-status is-${saveStatus}`}>
+              {saveStatus === 'saved' ? 'Saved frame' : saveStatus === 'error' ? 'Save failed' : 'Writing'}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="sprite-frame-bank" aria-label="Extracted sprite frames">
+        {frameBank.map((frame) => {
+          const index = getFrameIndex(frame);
+          const meta = frameMeta[String(index)];
+          return (
+            <button
+              key={frame}
+              className={`${index === selectedFrameIndex ? 'active' : ''} ${meta?.hidden ? 'is-hidden-frame' : ''} ${selectedFrameSet.has(frame) ? 'in-selected-move' : ''}`}
+              onClick={() => onSelectFrame(index)}
+              title={`Frame ${index}`}
+            >
+              <img src={frame} alt={`Frame ${index}`} loading="lazy" />
+              <span>{index}</span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+type ImportedFrame = {
+  index: number;
+  dataUrl: string;
+  box: [number, number, number, number];
+  width: number;
+  height: number;
+  row: number;
+};
+
+type ImportDraft = {
+  displayName: string;
+  id: string;
+  health: number;
+  speed: number;
+  sidestepSpeed: number;
+  jumpForce: number;
+  primary: string;
+  secondary: string;
+  accent: string;
+};
+
+function CharacterImportScreen({
+  onBack,
+  onImportComplete
+}: {
+  onBack: () => void;
+  onImportComplete: (characterId: string) => Promise<void>;
+}) {
+  const [draft, setDraft] = useState<ImportDraft>(() => randomImportDraft());
+  const [sheetDataUrl, setSheetDataUrl] = useState('');
+  const [sheetName, setSheetName] = useState('');
+  const [detectedFrames, setDetectedFrames] = useState<ImportedFrame[]>([]);
+  const [animationFrames, setAnimationFrames] = useState<Record<string, number[]>>({});
+  const [selectedAnimationKey, setSelectedAnimationKey] = useState('idle');
+  const [detectStatus, setDetectStatus] = useState<'idle' | 'working' | 'ready' | 'error'>('idle');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const selectedSlot = animationSlots.find((slot) => slot.key === selectedAnimationKey) ?? animationSlots[0];
+  const selectedFrameIndexes = animationFrames[selectedAnimationKey] ?? [];
+  const selectedIndexSet = new Set(selectedFrameIndexes);
+
+  const updateDraft = (patch: Partial<ImportDraft>) => {
+    setDraft((current) => {
+      const next = { ...current, ...patch };
+      if (patch.displayName && !patch.id) next.id = slugifyCharacterId(patch.displayName);
+      if (patch.id) next.id = slugifyCharacterId(patch.id);
+      return next;
+    });
+  };
+
+  const randomize = () => {
+    setDraft(randomImportDraft());
+  };
+
+  const importSheet = async (file: File | undefined) => {
+    if (!file) return;
+    setDetectStatus('working');
+    setSaveStatus('idle');
+    try {
+      const result = await detectSpriteSheetFrames(file);
+      setSheetName(file.name);
+      setSheetDataUrl(result.sheetDataUrl);
+      setDetectedFrames(result.frames);
+      setAnimationFrames(inferImportedAnimationFrameMap(result.frames.length));
+      setSelectedAnimationKey('idle');
+      setDetectStatus('ready');
+    } catch (error) {
+      console.error('Failed to import sprite sheet', error);
+      setDetectStatus('error');
+    }
+  };
+
+  const toggleFrameForAnimation = (index: number) => {
+    setAnimationFrames((current) => {
+      const existing = current[selectedAnimationKey] ?? [];
+      const nextFrames = existing.includes(index) ? existing.filter((frame) => frame !== index) : [...existing, index].sort((a, b) => a - b);
+      return { ...current, [selectedAnimationKey]: nextFrames.length > 0 ? nextFrames : existing };
+    });
+  };
+
+  const saveImportedCharacter = async () => {
+    if (!sheetDataUrl || detectedFrames.length === 0 || !draft.id) return;
+    setSaveStatus('saving');
+    try {
+      const manifest = buildImportedCharacterManifest(draft, detectedFrames.length, animationFrames);
+      const response = await fetch('/__kore/dev/import-character', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: draft.id,
+          sheetDataUrl,
+          frames: detectedFrames,
+          manifest,
+          sourceName: sheetName
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setSaveStatus('saved');
+      await onImportComplete(draft.id);
+    } catch (error) {
+      console.error('Failed to save imported character', error);
+      setSaveStatus('error');
+    }
+  };
+
+  return (
+    <div className="character-import-screen">
+      <header className="section-header">
+        <span>Local Dev</span>
+        <h2>Import Character</h2>
+      </header>
+      <section className="import-layout">
+        <aside className="import-settings-panel">
+          <label className="file-drop">
+            <Upload size={26} />
+            <strong>{sheetName || 'Choose spritesheet PNG'}</strong>
+            <small>{detectStatus === 'working' ? 'Detecting frames...' : 'Auto-crop and infer move slots'}</small>
+            <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => importSheet(event.target.files?.[0])} />
+          </label>
+          <div className="import-field-grid">
+            <label>
+              <span>Name</span>
+              <input value={draft.displayName} onChange={(event) => updateDraft({ displayName: event.target.value })} />
+            </label>
+            <label>
+              <span>ID</span>
+              <input value={draft.id} onChange={(event) => updateDraft({ id: event.target.value })} />
+            </label>
+            <label>
+              <span>Health</span>
+              <input type="number" value={draft.health} onChange={(event) => updateDraft({ health: Number(event.target.value) || 100 })} />
+            </label>
+            <label>
+              <span>Speed</span>
+              <input type="number" step="0.05" value={draft.speed} onChange={(event) => updateDraft({ speed: Number(event.target.value) || 5 })} />
+            </label>
+            <label>
+              <span>Sidestep</span>
+              <input type="number" step="0.05" value={draft.sidestepSpeed} onChange={(event) => updateDraft({ sidestepSpeed: Number(event.target.value) || 4.3 })} />
+            </label>
+            <label>
+              <span>Jump</span>
+              <input type="number" step="0.05" value={draft.jumpForce} onChange={(event) => updateDraft({ jumpForce: Number(event.target.value) || 8 })} />
+            </label>
+            <label>
+              <span>Primary</span>
+              <input type="color" value={draft.primary} onChange={(event) => updateDraft({ primary: event.target.value })} />
+            </label>
+            <label>
+              <span>Accent</span>
+              <input type="color" value={draft.accent} onChange={(event) => updateDraft({ accent: event.target.value })} />
+            </label>
+          </div>
+          <div className="import-action-row">
+            <button className="secondary-button" onClick={randomize}>
+              <Shuffle size={16} />
+              Randomize
+            </button>
+            <button className="secondary-button dev-save-button" onClick={saveImportedCharacter} disabled={saveStatus === 'saving' || detectedFrames.length === 0}>
+              <Save size={16} />
+              {saveStatus === 'saving' ? 'Saving' : 'Save Character'}
+            </button>
+            {saveStatus !== 'idle' && (
+              <span className={`manifest-save-status is-${saveStatus}`}>{saveStatus === 'saved' ? 'Saved' : saveStatus === 'error' ? 'Save failed' : 'Writing'}</span>
+            )}
+          </div>
+        </aside>
+        <main className="import-workbench">
+          <div className="import-preview-header">
+            <div>
+              <span>Detected Frames</span>
+              <strong>{detectedFrames.length > 0 ? `${detectedFrames.length} frames` : 'No sheet loaded'}</strong>
+            </div>
+            <CommandCategorySelect value={selectedSlot.category} onChange={(category) => {
+              const nextSlot = animationSlots.find((slot) => category === 'all' || slot.category === category) ?? animationSlots[0];
+              setSelectedAnimationKey(nextSlot.key);
+            }} />
+          </div>
+          <div className="import-slot-strip" aria-label="Imported animation slots">
+            {baseAnimationSlots.map((slot) => (
+              <button key={slot.key} className={slot.key === selectedAnimationKey ? 'active' : ''} onClick={() => setSelectedAnimationKey(slot.key)}>
+                <NotationGroup tokens={slot.notation} />
+                <span>{slot.label}</span>
+                <small>{(animationFrames[slot.key] ?? []).length} frames</small>
+              </button>
+            ))}
+          </div>
+          <div className="import-selected-preview">
+            <div>
+              <span>Editing</span>
+              <strong>{selectedSlot.label}</strong>
+              <small>Click detected frames to add/remove them from this move.</small>
+            </div>
+            <div className="import-animation-preview">
+              {selectedFrameIndexes.map((index) => {
+                const frame = detectedFrames[index];
+                return frame ? <img key={`${selectedAnimationKey}-${index}`} src={frame.dataUrl} alt={`Preview frame ${index}`} /> : null;
+              })}
+            </div>
+          </div>
+          <div className="import-frame-grid" aria-label="Detected frame bank">
+            {detectedFrames.map((frame) => (
+              <button
+                key={frame.index}
+                className={selectedIndexSet.has(frame.index) ? 'active' : ''}
+                onClick={() => toggleFrameForAnimation(frame.index)}
+                title={`Frame ${frame.index}`}
+              >
+                <img src={frame.dataUrl} alt={`Detected frame ${frame.index}`} loading="lazy" />
+                <span>{frame.index}</span>
+              </button>
+            ))}
+          </div>
+        </main>
+      </section>
+      <button className="secondary-button" onClick={onBack}>
+        <Home size={18} />
+        Back To Characters
+      </button>
+    </div>
+  );
+}
+
+function randomImportDraft(): ImportDraft {
+  const names = ['Nova', 'Kade', 'Vex', 'Rune', 'Sora', 'Jett', 'Nyx', 'Ari', 'Zane', 'Mika'];
+  const primary = randomHexColor();
+  const accent = randomHexColor();
+  const displayName = `${names[Math.floor(Math.random() * names.length)]}-${Math.floor(100 + Math.random() * 900)}`;
+  return {
+    displayName,
+    id: slugifyCharacterId(displayName),
+    health: Math.round(92 + Math.random() * 22),
+    speed: Number((4.7 + Math.random() * 0.9).toFixed(2)),
+    sidestepSpeed: Number((4.05 + Math.random() * 0.75).toFixed(2)),
+    jumpForce: Number((7.6 + Math.random() * 0.9).toFixed(2)),
+    primary,
+    secondary: '#111224',
+    accent
+  };
+}
+
+function randomHexColor() {
+  return `#${Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0')}`;
+}
+
+function slugifyCharacterId(value: string) {
+  return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 32) || 'imported-fighter';
+}
+
+async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: string; frames: ImportedFrame[] }> {
+  const sheetDataUrl = await readFileAsDataUrl(file);
+  const image = await loadImage(sheetDataUrl);
+  const canvas = document.createElement('canvas');
+  canvas.width = image.naturalWidth || image.width;
+  canvas.height = image.naturalHeight || image.height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) throw new Error('Could not create canvas context');
+  context.imageSmoothingEnabled = false;
+  context.drawImage(image, 0, 0);
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+  const background = [pixels.data[0], pixels.data[1], pixels.data[2], pixels.data[3]];
+  const rowHasInk = new Array(canvas.height).fill(false);
+  const columnHasInk = new Array(canvas.width).fill(false);
+
+  for (let y = 0; y < canvas.height; y += 1) {
+    for (let x = 0; x < canvas.width; x += 1) {
+      const offset = (y * canvas.width + x) * 4;
+      if (isSpritePixel(pixels.data, offset, background)) {
+        rowHasInk[y] = true;
+        columnHasInk[x] = true;
+      }
+    }
+  }
+
+  const rowGroups = groupBooleanRuns(rowHasInk, 6, 6);
+  const boxes: Array<{ box: [number, number, number, number]; row: number }> = [];
+  rowGroups.forEach(([rowStart, rowEnd], rowIndex) => {
+    const columns = new Array(canvas.width).fill(false);
+    for (let y = rowStart; y <= rowEnd; y += 1) {
+      for (let x = 0; x < canvas.width; x += 1) {
+        const offset = (y * canvas.width + x) * 4;
+        if (isSpritePixel(pixels.data, offset, background)) columns[x] = true;
+      }
+    }
+    const columnGroups = groupBooleanRuns(columns, 6, 5);
+    columnGroups.forEach(([columnStart, columnEnd]) => {
+      const box = trimSpriteBox(pixels.data, canvas.width, canvas.height, columnStart, rowStart, columnEnd, rowEnd, background);
+      const width = box[2] - box[0];
+      const height = box[3] - box[1];
+      if (width >= 8 && height >= 8) boxes.push({ box, row: rowIndex });
+    });
+  });
+
+  const frames = boxes
+    .sort((a, b) => (a.box[1] - b.box[1]) || (a.box[0] - b.box[0]))
+    .map((entry, index) => ({
+      index,
+      box: entry.box,
+      width: entry.box[2] - entry.box[0],
+      height: entry.box[3] - entry.box[1],
+      row: entry.row,
+      dataUrl: cropFrameDataUrl(image, entry.box)
+    }));
+
+  if (frames.length === 0) throw new Error('No frames detected');
+  return { sheetDataUrl: canvas.toDataURL('image/png'), frames };
+}
+
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error ?? new Error('File read failed'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function loadImage(src: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('Image load failed'));
+    image.src = src;
+  });
+}
+
+function isSpritePixel(data: Uint8ClampedArray, offset: number, background: number[]) {
+  const alpha = data[offset + 3];
+  if (alpha <= 16) return false;
+  if (background[3] <= 16) return alpha > 16;
+  const distance =
+    Math.abs(data[offset] - background[0]) +
+    Math.abs(data[offset + 1] - background[1]) +
+    Math.abs(data[offset + 2] - background[2]) +
+    Math.abs(alpha - background[3]);
+  return distance > 34;
+}
+
+function groupBooleanRuns(values: boolean[], gapTolerance: number, minLength: number): Array<[number, number]> {
+  const groups: Array<[number, number]> = [];
+  let start = -1;
+  let last = -1;
+  let gap = 0;
+  values.forEach((value, index) => {
+    if (value) {
+      if (start < 0) start = index;
+      last = index;
+      gap = 0;
+      return;
+    }
+    if (start >= 0) {
+      gap += 1;
+      if (gap > gapTolerance) {
+        if (last - start + 1 >= minLength) groups.push([start, last]);
+        start = -1;
+        last = -1;
+        gap = 0;
+      }
+    }
+  });
+  if (start >= 0 && last - start + 1 >= minLength) groups.push([start, last]);
+  return groups;
+}
+
+function trimSpriteBox(data: Uint8ClampedArray, width: number, height: number, x1: number, y1: number, x2: number, y2: number, background: number[]): [number, number, number, number] {
+  let left = x2;
+  let top = y2;
+  let right = x1;
+  let bottom = y1;
+  for (let y = Math.max(0, y1); y <= Math.min(height - 1, y2); y += 1) {
+    for (let x = Math.max(0, x1); x <= Math.min(width - 1, x2); x += 1) {
+      const offset = (y * width + x) * 4;
+      if (isSpritePixel(data, offset, background)) {
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      }
+    }
+  }
+  return [Math.max(0, left), Math.max(0, top), Math.min(width, right + 1), Math.min(height, bottom + 1)];
+}
+
+function cropFrameDataUrl(image: HTMLImageElement, box: [number, number, number, number]) {
+  const canvas = document.createElement('canvas');
+  const width = Math.max(1, box[2] - box[0]);
+  const height = Math.max(1, box[3] - box[1]);
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d');
+  if (!context) return '';
+  context.imageSmoothingEnabled = false;
+  context.drawImage(image, box[0], box[1], width, height, 0, 0, width, height);
+  return canvas.toDataURL('image/png');
+}
+
+function inferImportedAnimationFrameMap(count: number): Record<string, number[]> {
+  const safe = (indexes: number[]) => indexes.filter((index) => index >= 0 && index < count);
+  const fallback = count > 0 ? [0] : [];
+  const pick = (indexes: number[]) => {
+    const frames = safe(indexes);
+    return frames.length > 0 ? frames : fallback;
+  };
+  return {
+    idle: pick([0, 1, 2, 3]),
+    walkForward: pick([4, 5, 6, 7, 8, 9]),
+    walkBack: pick([9, 8, 7, 6, 5, 4]),
+    sidestepLeft: pick([10, 11, 12]),
+    sidestepRight: pick([13, 14, 15]),
+    crouch: pick([16, 17]),
+    jump: pick([18, 19, 20, 21]),
+    block: pick([22, 23, 24]),
+    jab: pick([25, 26, 27, 28]),
+    kick: pick([29, 30, 31, 32]),
+    heavy: pick([33, 34, 35, 36]),
+    special: pick([37, 38, 39, 40]),
+    hitLight: pick([41, 42]),
+    hitHeavy: pick([43, 44, 45]),
+    knockdown: pick([46, 47, 48, 49]),
+    win: pick([50, 51, 52]),
+    lose: pick([53, 54, 55])
+  };
+}
+
+function importedFramePath(characterId: string, index: number) {
+  return `/characters/${characterId}/frames/frame-${index.toString().padStart(3, '0')}.png`;
+}
+
+function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, frameMap: Record<string, number[]>): CharacterDefinition {
+  const animationFrames = Object.fromEntries(
+    Object.entries(frameMap).map(([key, indexes]) => [key, indexes.map((index) => importedFramePath(draft.id, index))])
+  );
+  return {
+    id: draft.id,
+    displayName: draft.displayName,
+    renderMode: 'spriteVoxel',
+    modelPath: `spritevoxel://${draft.id}`,
+    spriteSheetPath: `/characters/${draft.id}/animation-sheet.png`,
+    spriteFrameCount: frameCount,
+    voxelProfile: 'image-source',
+    animationFrames,
+    animationFrameRates: {
+      idle: 5,
+      walkForward: 10,
+      walkBack: 8,
+      sidestepLeft: 10,
+      sidestepRight: 10,
+      crouch: 5,
+      jump: 8,
+      block: 5,
+      jab: 12,
+      kick: 10,
+      heavy: 9,
+      special: 10,
+      hitLight: 8,
+      hitHeavy: 8,
+      knockdown: 8,
+      win: 5,
+      lose: 4
+    },
+    animationFps: 6,
+    scale: 1.08,
+    cameraOffset: [0, 1.22, 0],
+    stats: {
+      health: Math.max(1, Math.round(draft.health)),
+      speed: Math.max(1, draft.speed),
+      sidestepSpeed: Math.max(1, draft.sidestepSpeed),
+      jumpForce: Math.max(1, draft.jumpForce),
+      gravity: 18
+    },
+    animations: {
+      idle: 'idle',
+      walkForward: 'walkForward',
+      walkBack: 'walkBack',
+      sidestepLeft: 'sidestepLeft',
+      sidestepRight: 'sidestepRight',
+      crouch: 'crouch',
+      jump: 'jump',
+      block: 'block',
+      jab: 'jab',
+      kick: 'kick',
+      heavy: 'heavy',
+      special: 'special',
+      hitLight: 'hitLight',
+      hitHeavy: 'hitHeavy',
+      knockdown: 'knockdown',
+      win: 'win',
+      lose: 'lose'
+    },
+    moves: buildImportedMoves(),
+    hurtboxes: [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }],
+    inputMap: { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },
+    colors: { primary: draft.primary, secondary: draft.secondary, accent: draft.accent },
+    aiProfile: {
+      aggression: 0.58 + Math.random() * 0.24,
+      guard: 0.32 + Math.random() * 0.28,
+      spacing: 1.34 + Math.random() * 0.28,
+      specialChance: 0.18 + Math.random() * 0.16
+    }
+  };
+}
+
+function buildImportedMoves(): MoveDefinition[] {
+  return [
+    {
+      id: 'jab',
+      label: 'Imported 1',
+      input: 'jab',
+      startupFrames: 10,
+      activeFrames: 2,
+      recoveryFrames: 12,
+      damage: 7,
+      blockDamage: 1,
+      hitLevel: 'high',
+      onBlockFrames: 1,
+      onHitFrames: 8,
+      onCounterHitFrames: 10,
+      range: 1.42,
+      pushback: 0.7,
+      blockPushback: 0.35,
+      tracking: 'medium',
+      knockdown: false,
+      hitbox: { offset: [0, 1.18, 0.62], size: [0.64, 0.46, 0.58] }
+    },
+    {
+      id: 'kick',
+      label: 'Imported 3',
+      input: 'kick',
+      startupFrames: 16,
+      activeFrames: 3,
+      recoveryFrames: 18,
+      damage: 11,
+      blockDamage: 2,
+      hitLevel: 'mid',
+      onBlockFrames: -8,
+      onHitFrames: 4,
+      onCounterHitFrames: 7,
+      range: 1.62,
+      pushback: 0.95,
+      blockPushback: 0.44,
+      tracking: 'medium',
+      knockdown: false,
+      hitbox: { offset: [0, 0.82, 0.72], size: [0.76, 0.42, 0.64] }
+    },
+    {
+      id: 'heavy',
+      label: 'Imported 2',
+      input: 'heavy',
+      startupFrames: 15,
+      activeFrames: 3,
+      recoveryFrames: 24,
+      damage: 18,
+      blockDamage: 4,
+      hitLevel: 'mid',
+      onBlockFrames: -13,
+      onHitFrames: 18,
+      onCounterHitFrames: 22,
+      range: 1.54,
+      pushback: 1.3,
+      blockPushback: 0.62,
+      launchHeight: 2.1,
+      tracking: 'weakLeft',
+      knockdown: true,
+      hitbox: { offset: [0, 1.08, 0.66], size: [0.82, 0.58, 0.6] }
+    },
+    {
+      id: 'special',
+      label: 'Imported 4',
+      input: 'special',
+      startupFrames: 18,
+      activeFrames: 4,
+      recoveryFrames: 25,
+      damage: 16,
+      blockDamage: 3,
+      hitLevel: 'mid',
+      onBlockFrames: -9,
+      onHitFrames: 14,
+      onCounterHitFrames: 18,
+      range: 2.35,
+      pushback: 1.5,
+      blockPushback: 0.76,
+      tracking: 'strong',
+      knockdown: false,
+      hitbox: { offset: [0, 1.05, 0.9], size: [0.94, 0.64, 0.72] }
+    }
+  ];
 }
 
 function FrameNumberInput({
