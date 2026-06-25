@@ -34,6 +34,10 @@ const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
 const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
+const UNIVERSAL_RANGE_BUFFER = 0.26;
+const UNIVERSAL_HITBOX_FORWARD_PADDING = 0.22;
+const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.1;
+const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.06;
 const AI_RECENT_MEMORY_LIMIT = 12;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
@@ -987,7 +991,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const dx = defender.position.x - attacker.position.x;
   const dz = defender.position.z - attacker.position.z;
   const distance = Math.hypot(dx, dz);
-  if (distance > move.range) return;
+  if (distance > move.range + UNIVERSAL_RANGE_BUFFER) return;
   if (!hitboxIntersectsAnyHurtbox(attacker, defender, move)) return;
 
   const blocked = defender.state === 'block' && defender.facing === -attacker.facing;
@@ -1199,7 +1203,14 @@ function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb 
   const centerX = attacker.position.x + facing * hitbox.offset[2];
   const centerY = attacker.position.y + hitbox.offset[1];
   const centerZ = attacker.position.z + hitbox.offset[0];
-  return makeAabb(centerX, centerY, centerZ, hitbox.size[2], hitbox.size[1], hitbox.size[0]);
+  return makeAabb(
+    centerX,
+    centerY,
+    centerZ,
+    hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING,
+    hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+    hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING
+  );
 }
 
 function hurtboxToWorldAabb(defender: FighterRuntime, hurtbox: BoxSpec): Aabb {

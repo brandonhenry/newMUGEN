@@ -343,6 +343,22 @@ describe('fight engine', () => {
     expect(movingFrames).toBeGreaterThan(20);
   });
 
+  it('lets CPU vs CPU fighters connect attacks without needing point-blank spacing', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 4);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const startHp = [match.fighters[0].hp, match.fighters[1].hp];
+
+    for (let i = 0; i < 900; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.phase !== 'fighting') break;
+    }
+
+    expect(match.lastHitId).toBeGreaterThan(0);
+    expect(match.fighters[0].hp).toBeLessThan(startHp[0]);
+    expect(match.fighters[1].hp).toBeLessThan(startHp[1]);
+  });
+
   it('keeps CPU fighters from attacking until their selected move is in range', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
     match.phase = 'fighting';
@@ -650,6 +666,24 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].damage);
+  });
+
+  it('gives attacks a small universal reach buffer so close-but-not-perfect hits connect', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.62;
+    match.fighters[1].position.x = 0.62;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[1].hp).toBeLessThan(starterCharacters[1].stats.health);
   });
 
   it('lets crouching defenders duck under high jabs', () => {
