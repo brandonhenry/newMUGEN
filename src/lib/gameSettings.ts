@@ -18,6 +18,7 @@ const p1Keyboard: PlayerControlBindings = {
   heavy: ['KeyI', 'Digit2', 'Numpad2'],
   kick: ['KeyJ', 'Digit3', 'Numpad3'],
   special: ['KeyK', 'Digit4', 'Numpad4'],
+  charge: ['KeyO'],
   block: [],
   confirm: ['Enter'],
   back: [],
@@ -37,6 +38,7 @@ const p2Keyboard: PlayerControlBindings = {
   heavy: ['Numpad2', 'Digit2'],
   kick: ['Numpad3', 'Digit3'],
   special: ['Numpad4', 'Digit4'],
+  charge: ['Numpad6', 'Digit6'],
   block: ['Numpad5', 'Digit5', 'ShiftRight'],
   confirm: ['Space'],
   back: [],
@@ -48,6 +50,7 @@ const defaultGamepad: PlayerGamepadBindings = {
   kick: [1],
   heavy: [2],
   special: [3],
+  charge: [6],
   block: [4, 5],
   pause: [9]
 };

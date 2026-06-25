@@ -373,6 +373,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     slot: 1,
     character,
     hp: character.stats.health,
+    ki: 0,
     position: { x: 0, y: 0, z: 0 },
     velocityY: 0,
     facing: 1,

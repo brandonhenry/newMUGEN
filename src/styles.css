@@ -3401,6 +3401,28 @@ button {
   transform: scaleX(-1);
 }
 
+.ki-track {
+  overflow: hidden;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(0, 18, 24, 0.66);
+  border: 1px solid rgba(72, 224, 255, 0.26);
+  box-shadow: 0 0 12px rgba(42, 211, 255, 0.18) inset;
+}
+
+.ki-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2de3ff, #7af7ff 55%, #fff7b3);
+  box-shadow: 0 0 14px rgba(45, 227, 255, 0.72);
+  transition: width 140ms linear;
+}
+
+.health.right .ki-track {
+  transform: scaleX(-1);
+}
+
 .round-box {
   display: grid;
   place-items: center;

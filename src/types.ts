@@ -13,6 +13,7 @@ export type ActionName =
   | 'kick'
   | 'heavy'
   | 'special'
+  | 'charge'
   | 'block'
   | 'confirm'
   | 'back'
@@ -77,6 +78,8 @@ export type MoveDefinition = {
   hitbox: BoxSpec;
   hurtboxes?: BoxSpec[];
   hurtboxOffset?: Vec3Tuple;
+  kiCost?: number;
+  kiBurst?: boolean;
 };
 
 export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {
@@ -239,6 +242,7 @@ export type FighterRuntime = {
   slot: 1 | 2;
   character: CharacterDefinition;
   hp: number;
+  ki: number;
   position: { x: number; y: number; z: number };
   velocityY: number;
   facing: 1 | -1;
@@ -308,6 +312,7 @@ export const emptyInputFrame = (): InputFrame => ({
   kick: false,
   heavy: false,
   special: false,
+  charge: false,
   block: false,
   confirm: false,
   back: false,

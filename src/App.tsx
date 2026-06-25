@@ -1599,7 +1599,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
   audio: ['Master Mix', 'Music', 'SFX', 'Mute']
 };
-const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'block', 'confirm', 'pause'];
+const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
   up: 'Up / Jump',
   down: 'Down / Crouch',
@@ -1613,6 +1613,7 @@ const actionLabels: Record<ActionName, string> = {
   heavy: '2 Right Hand',
   kick: '3 Left Foot',
   special: '4 Right Foot',
+  charge: 'Charge Ki',
   block: 'Block',
   confirm: 'Confirm',
   back: 'Back',
@@ -3747,6 +3748,8 @@ function FightDebug({
       <span data-testid="p1-state">{p1.state}</span>
       <span data-testid="p2-state">{p2.state}</span>
       <span data-testid="p2-hp">{p2.hp.toFixed(0)}</span>
+      <span data-testid="p1-ki">{p1.ki.toFixed(0)}</span>
+      <span data-testid="p2-ki">{p2.ki.toFixed(0)}</span>
       <span data-testid="last-input">{lastInput}</span>
       <span data-testid="frame-input">{frameInput}</span>
     </div>
@@ -3769,6 +3772,7 @@ function FightHud({ match, hudScale }: { match: MatchSnapshot; hudScale: number 
 
 function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right' }) {
   const percent = Math.max(0, Math.min(100, (fighter.hp / fighter.character.stats.health) * 100));
+  const kiPercent = Math.max(0, Math.min(100, fighter.ki));
   return (
     <div className={`health ${align}`}>
       <div className="health-label">
@@ -3777,6 +3781,9 @@ function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][numb
       </div>
       <div className="health-track">
         <span style={{ width: `${percent}%`, background: fighter.character.colors.primary }} />
+      </div>
+      <div className="ki-track" aria-label={`${fighter.character.displayName} ki`}>
+        <span style={{ width: `${kiPercent}%` }} />
       </div>
     </div>
   );

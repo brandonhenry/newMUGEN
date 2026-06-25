@@ -323,6 +323,28 @@ describe('fight engine', () => {
     expect(kore.uniqueMoves).toBeGreaterThan(easy.uniqueMoves);
   });
 
+  it('makes high difficulty CPU take hitstun pressure openings more often than easy CPU', () => {
+    const stepOpening = (difficulty: 1 | 5) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].hp = 999;
+      match.fighters[1].hp = 999;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      match.fighters[1].state = 'hit';
+      match.fighters[1].stunFramesRemaining = 180;
+      match.fighters[1].actionFramesRemaining = 180;
+      match.fighters[1].stunTimer = 3;
+      match.fighters[1].actionTimer = 3;
+
+      return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    };
+
+    expect(stepOpening(5).fighters[0].currentMove?.input).toBe('jab');
+    expect(stepOpening(1).fighters[0].currentMove).toBeNull();
+  });
+
   it('prevents CPU jump decisions even at high difficulty', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
     match.phase = 'fighting';
@@ -789,7 +811,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
 
-  it('prevents repeating the same exact landed attack inside one combo', () => {
+  it('prevents repeating the same exact landed attack as a direct cancel before recovery', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -810,6 +832,94 @@ describe('fight engine', () => {
     match = stepMatch(match, sameOne, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+  });
+
+  it('allows the same attack again after recovery when hit advantage keeps the defender stuck', () => {
+    const plusJabCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 3,
+              activeFrames: 2,
+              recoveryFrames: 4,
+              onHitFrames: 18,
+              comboKey: 'neutral:jab'
+            }
+          : move
+      )
+    };
+    let match = createMatch(plusJabCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 24 && match.fighters[0].actionFramesRemaining > 0; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[0].comboTimer).toBeGreaterThan(0);
+
+    const secondOne = emptyInputFrame();
+    secondOne.jab = true;
+    match = stepMatch(match, secondOne, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+  });
+
+  it('charges ki while holding the charge input in neutral', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+
+    match = stepMatch(match, charge, emptyInputFrame(), 1);
+
+    expect(match.fighters[0].ki).toBeCloseTo(28, 3);
+    expect(match.fighters[0].state).toBe('idle');
+  });
+
+  it('builds ki when attacks connect during combos', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const one = emptyInputFrame();
+    one.jab = true;
+
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    one.jab = false;
+    for (let i = 0; i < 14; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].ki).toBeGreaterThan(0);
+  });
+
+  it('spends ki on charge plus attack for a powered move', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 30;
+    const chargedAttack = emptyInputFrame();
+    chargedAttack.charge = true;
+    chargedAttack.jab = true;
+
+    match = stepMatch(match, chargedAttack, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].ki).toBe(0);
+    expect(match.fighters[0].currentMove?.kiBurst).toBe(true);
+    expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
   });
 
   it('allows the same button again when it resolves to a different command move', () => {

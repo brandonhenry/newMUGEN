@@ -11,7 +11,8 @@ const attacks: Array<{ action: ActionName; label: string }> = [
   { action: 'jab', label: '1 LH' },
   { action: 'heavy', label: '2 RH' },
   { action: 'kick', label: '3 LF' },
-  { action: 'special', label: '4 RF' }
+  { action: 'special', label: '4 RF' },
+  { action: 'charge', label: 'KI' }
 ];
 const movementIcons = {
   up: <ChevronUp size={20} />,

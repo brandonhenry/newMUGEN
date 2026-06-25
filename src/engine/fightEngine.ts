@@ -31,6 +31,13 @@ const AI_RECENT_MEMORY_LIMIT = 8;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
+const PRESSURE_LANE_TOLERANCE = 0.82;
+const KI_MAX = 100;
+const KI_CHARGE_PER_SECOND = 28;
+const KI_HIT_GAIN = 9;
+const KI_BLOCK_GAIN = 4;
+const KI_DEFENDER_BLOCK_GAIN = 5;
+const KI_BURST_COST = 30;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const limbNames: Record<MoveInput, string> = {
@@ -134,6 +141,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     slot,
     character,
     hp: character.stats.health,
+    ki: 0,
     position: { x, y: 0, z: 0 },
     velocityY: 0,
     facing: slot === 1 ? 1 : -1,
@@ -271,6 +279,14 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
+  if (input.charge) {
+    fighter.ki = clamp(fighter.ki + KI_CHARGE_PER_SECOND * dt, 0, KI_MAX);
+    fighter.state = 'idle';
+    applyGravity(fighter, dt);
+    updateAttackInputMemory(fighter, input);
+    return;
+  }
+
   const forward = resolveForwardInput(fighter, opponent, input);
   const holdingBack = forward < 0;
   const blocking = input.block || holdingBack;
@@ -382,19 +398,23 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   if (!baseMove) return false;
 
   const route = getComboRoute(fighter, opponent, input);
-  const continuing = fighter.comboTimer > 0 || (fighter.state === 'attack' && fighter.comboStep > 0);
+  const cancelingCurrentAttack = fighter.state === 'attack' && (fighter.actionFramesRemaining > 0 || fighter.actionTimer > 0);
+  const continuing = cancelingCurrentAttack || fighter.comboTimer > 0;
   const comboStep = continuing ? Math.min(5, fighter.comboStep + 1) : 1;
   const sequence = continuing ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
   const command = findConfiguredCommand(fighter, opponent, input, moveInput);
-  if (!command && (continuing || hasCommandInputIntent(fighter, opponent, input, moveInput))) return false;
+  if (!command && (cancelingCurrentAttack || hasCommandInputIntent(fighter, opponent, input, moveInput))) return false;
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
+  const charged = input.charge && fighter.ki >= KI_BURST_COST;
+  const resolvedMove = charged ? buildKiBurstMove(move) : move;
   const identity = getMoveIdentity(move);
-  if (continuing && fighter.comboUsedKeys.includes(identity)) return false;
+  if (cancelingCurrentAttack && fighter.comboUsedKeys.includes(identity)) return false;
   fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
+  if (charged) fighter.ki = clamp(fighter.ki - KI_BURST_COST, 0, KI_MAX);
 
-  fighter.currentMove = move;
+  fighter.currentMove = resolvedMove;
   fighter.state = 'attack';
-  fighter.actionFramesRemaining = totalMoveFrames(move);
+  fighter.actionFramesRemaining = totalMoveFrames(resolvedMove);
   fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
   fighter.moveFrame = 0;
   fighter.hitConnected = false;
@@ -411,6 +431,26 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
     moveAlongOpponentAxis(fighter, opponent, forwardNudge + specialNudge);
   }
   return true;
+}
+
+function buildKiBurstMove(move: MoveDefinition): MoveDefinition {
+  return {
+    ...move,
+    id: `${move.id}-ki`,
+    label: `Ki ${move.label}`,
+    damage: Math.round(move.damage * 1.35 + 3),
+    blockDamage: Math.round(move.blockDamage * 1.5 + 1),
+    hitLevel: move.hitLevel === 'throw' ? move.hitLevel : 'special',
+    onBlockFrames: move.onBlockFrames - 2,
+    onHitFrames: move.onHitFrames + 5,
+    onCounterHitFrames: move.onCounterHitFrames + 7,
+    range: move.range + 0.18,
+    pushback: move.pushback + 0.32,
+    blockPushback: move.blockPushback + 0.24,
+    comboKey: `${move.comboKey ?? move.id}:ki`,
+    kiCost: KI_BURST_COST,
+    kiBurst: true
+  };
 }
 
 function buildComboMove(
@@ -701,6 +741,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   if (blocked) {
     attacker.hitConfirmed = false;
+    attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
+    defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
     defender.hp = Math.max(0, defender.hp - move.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(move);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
@@ -716,6 +758,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
 
   attacker.hitConfirmed = true;
+  attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
   const identity = getMoveIdentity(move);
   if (!attacker.comboUsedKeys.includes(identity)) {
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
@@ -1037,7 +1080,8 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const opponentMoveFrame = opponent.currentMove ? opponent.moveFrame : 0;
   const isIncomingSoon = !opponent.currentMove || opponentMoveFrame >= opponent.currentMove.startupFrames - settings.reactionLeadFrames;
   const canStartAction = ai.actionFramesRemaining === 0 && ai.actionTimer === 0;
-  const canAct = (canStartAction || shouldContinueCombo) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown';
+  const canAttemptCancel = shouldContinueCombo && canComboCancel(ai);
+  const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown';
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
   const punishAccepted = punishRoll < settings.punishResponse;
   const punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
@@ -1063,6 +1107,32 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     return input;
   }
 
+  const opening = getAiOpening(ai, opponent, distance, laneDiff);
+  const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
+  const pressureAccepted = (difficulty >= 5 && opening.kind === 'hitstun') || pressureRoll < settings.pressureResponse;
+  const pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
+  const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
+  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (opening.kind === 'hitstun' ? 0.24 : 0);
+  const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * PRESSURE_LANE_TOLERANCE;
+  if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
+    input.block = false;
+    input[awayKey] = false;
+    input[towardKey] = distance > pressureReach * 0.78;
+    input.sidestepUp = false;
+    input.sidestepDown = false;
+    input.sidewalkUp = false;
+    input.sidewalkDown = false;
+    input[pressureMoveInput] = true;
+    return input;
+  }
+  if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && distance < pressureReach + 0.88) {
+    input.block = false;
+    input[awayKey] = false;
+    input[towardKey] = true;
+    return input;
+  }
+  const missedKnownOpening = opening.kind !== 'none' && canStartAction && canAct && !pressureAccepted;
+
   input.block = danger && (difficulty >= 3 || isIncomingSoon) && blockRoll < Math.min(0.96, Math.max(0.05, profile.guard + settings.guardBonus));
   if (input.block) {
     input[awayKey] = true;
@@ -1070,7 +1140,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   }
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
-  const canPressure = !input.block && canAct && inStrikeRange && !tooClose;
+  const canPressure = !missedKnownOpening && !input.block && canAct && inStrikeRange && !tooClose;
   const attackPulse = attackPhase < settings.attackPulse || (shouldContinueCombo && comboPhase < settings.comboPulse);
   if (canPressure && attackPulse) {
     applyAiRoute(input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
@@ -1138,6 +1208,61 @@ function chooseAiPunishMoveInput(ai: FighterRuntime, difficulty: CpuDifficulty, 
   return fresh?.input ?? sorted[0]?.input ?? 'jab';
 }
 
+type AiOpening = {
+  kind: 'none' | 'hitstun' | 'whiff';
+  frames: number;
+};
+
+function getAiOpening(ai: FighterRuntime, opponent: FighterRuntime, distance: number, laneDiff: number): AiOpening {
+  if (ai.state === 'knockdown' || ai.stunFramesRemaining > 0 || ai.blockstunFramesRemaining > 0) return { kind: 'none', frames: 0 };
+  if (opponent.state === 'knockdown' || opponent.getupInvulnerableFrames > 0) return { kind: 'none', frames: 0 };
+
+  if (opponent.state === 'hit' && opponent.stunFramesRemaining > 0) {
+    return { kind: 'hitstun', frames: opponent.stunFramesRemaining };
+  }
+
+  const move = opponent.currentMove;
+  const whiffing =
+    opponent.state === 'attack' &&
+    move &&
+    opponent.actionFramesRemaining > 0 &&
+    !opponent.hitConnected &&
+    (opponent.whiffRecoveryApplied || opponent.moveFrame >= move.startupFrames + move.activeFrames);
+  const whiffRange = move ? move.range + 1.05 : 2.2;
+  if (whiffing && distance <= whiffRange && Math.abs(laneDiff) <= whiffRange * 0.95) {
+    return { kind: 'whiff', frames: opponent.actionFramesRemaining };
+  }
+
+  return { kind: 'none', frames: 0 };
+}
+
+function chooseAiPressureMoveInput(
+  ai: FighterRuntime,
+  difficulty: CpuDifficulty,
+  opening: AiOpening,
+  selector: number,
+  routeRoll: number
+): MoveInput {
+  const sorted = ai.character.moves
+    .filter((move, index, moves) => moves.findIndex((candidate) => candidate.input === move.input) === index)
+    .sort((a, b) => a.startupFrames - b.startupFrames);
+  if (sorted.length === 0) return 'jab';
+
+  const jab = sorted.find((move) => move.input === 'jab');
+  if (opening.kind === 'hitstun' && jab && difficulty >= 3) return 'jab';
+  if (opening.kind === 'whiff' && difficulty >= 4) {
+    const launcher = sorted.find((move) => move.launchHeight || move.knockdown || move.damage >= 16);
+    if (launcher && opening.frames >= launcher.startupFrames + 2 && routeRoll > 38) return launcher.input;
+  }
+
+  if (difficulty <= 2 && sorted.length > 1) {
+    const choiceIndex = Math.min(sorted.length - 1, Math.floor(positiveModulo(selector + routeRoll + ai.slot * 5, 100) / (difficulty === 1 ? 42 : 31)));
+    return sorted[choiceIndex]?.input ?? sorted[0]?.input ?? 'jab';
+  }
+
+  return sorted[0]?.input ?? 'jab';
+}
+
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {
   return ai.comboUsedKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
 }
@@ -1154,6 +1279,7 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     maxComboSteps: Math.round(lerp(1, 5, t)),
     guardBonus: lerp(-0.2, 0.5, t),
     punishResponse: lerp(0.08, 0.98, t),
+    pressureResponse: lerp(0.08, 0.96, t),
     reactionLeadFrames: Math.round(lerp(-2, 8, t)),
     spacingScale: lerp(1.08, 0.78, t),
     pressureBonus: lerp(0.28, 0.9, t),
