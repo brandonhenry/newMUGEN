@@ -1144,6 +1144,31 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.hitLevel).toBe('mid');
   });
 
+  it('does not direct-cancel a non-authored same attack while recovery remains', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const kick = emptyInputFrame();
+    kick.kick = true;
+    match = stepMatch(match, kick, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 18 && !match.fighters[0].hitConfirmed; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].hitConfirmed).toBe(true);
+    expect(match.fighters[0].actionFramesRemaining).toBeGreaterThan(0);
+
+    const sameKick = emptyInputFrame();
+    sameKick.kick = true;
+    match = stepMatch(match, sameKick, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:kick');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
+  });
+
   it('allows the same attack again after recovery when hit advantage keeps the defender stuck', () => {
     const plusJabCharacter: CharacterDefinition = {
       ...starterCharacters[0],
@@ -1183,6 +1208,48 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('attack');
     expect(match.fighters[0].currentMove?.input).toBe('jab');
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+  });
+
+  it('lets repeated same-button links happen only after recovery and makes them less plus', () => {
+    const plusKickCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'kick'
+          ? {
+              ...move,
+              startupFrames: 3,
+              activeFrames: 2,
+              recoveryFrames: 4,
+              onHitFrames: 25,
+              onCounterHitFrames: 28,
+              comboKey: 'neutral:kick'
+            }
+          : move
+      )
+    };
+    let match = createMatch(plusKickCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const kick = emptyInputFrame();
+    kick.kick = true;
+    match = stepMatch(match, kick, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 20 && match.fighters[0].actionFramesRemaining > 0; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(0);
+
+    const secondKick = emptyInputFrame();
+    secondKick.kick = true;
+    match = stepMatch(match, secondKick, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].currentMove?.recoveryFrames).toBeGreaterThan(plusKickCharacter.moves[1].recoveryFrames);
+    expect(match.fighters[0].currentMove?.onHitFrames).toBeLessThan(plusKickCharacter.moves[1].onHitFrames);
   });
 
   it('charges ki while holding the charge input in neutral', () => {
