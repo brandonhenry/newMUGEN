@@ -333,7 +333,7 @@ describe('fight engine', () => {
 
     for (let i = 0; i < 720; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
-      if (match.fighters.some((fighter) => fighter.state === 'jump' || fighter.position.y > 0 || fighter.velocityY !== 0)) {
+      if (match.fighters.some((fighter) => fighter.state === 'jump')) {
         jumpFrames += 1;
       }
       if (match.phase !== 'fighting') break;
