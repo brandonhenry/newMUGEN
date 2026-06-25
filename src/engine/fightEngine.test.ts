@@ -182,7 +182,7 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
     match.phase = 'roundOver';
     match.countdown = 0.01;
-    match.message = `${starterCharacters[0].displayName} takes the round`;
+    match.message = 'K.O.';
     match.fighters[0].roundsWon = 1;
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -268,6 +268,8 @@ describe('fight engine', () => {
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
     expect(match.phase).toBe('roundOver');
+    expect(match.message).toBe('K.O.');
+    expect(match.visualTimeScale).toBeLessThan(1);
     expect(match.fighters[1].hp).toBe(0);
   });
 
@@ -1215,7 +1217,101 @@ describe('fight engine', () => {
       attack.heavy = false;
     }
     expect(match.phase).toBe('roundOver');
+    expect(match.message).toBe('K.O.');
+    expect(match.visualTimeScale).toBeLessThan(1);
     expect(match.fighters[0].roundsWon).toBe(1);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.9);
+    expect(match.phase).toBe('roundOver');
+    expect(match.visualTimeScale).toBe(1);
+  });
+
+  it('emits a combo popup event on multi-hit combos', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      range: 2.5
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+    match.fighters[0].comboHits = 1;
+    match.fighters[0].comboDamage = 7;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.combatEvents).toHaveLength(1);
+    expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'combo', hits: 2 });
+    expect(match.combatEvents[0].damage).toBeGreaterThan(7);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'combo', hits: 2 });
+  });
+
+  it('emits a punish popup event when a block punish lands', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].blockPunishWindowFrames = 10;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      range: 2.5
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.combatEvents).toHaveLength(1);
+    expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'punish', hits: 1 });
+  });
+
+  it('emits a whiff punish popup event when hitting whiff recovery', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      range: 2.5
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+    match.fighters[1].state = 'attack';
+    match.fighters[1].currentMove = {
+      ...starterCharacters[1].moves[0],
+      startupFrames: 1,
+      activeFrames: 1,
+      recoveryFrames: 20,
+      range: 1
+    };
+    match.fighters[1].moveFrame = 4;
+    match.fighters[1].actionFramesRemaining = 12;
+    match.fighters[1].actionTimer = 12 / 60;
+    match.fighters[1].whiffRecoveryApplied = true;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.combatEvents).toHaveLength(1);
+    expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'whiffPunish', hits: 1 });
   });
 
   it('keeps the fight phase active without hit-stop and accepts movement after hitstun', () => {

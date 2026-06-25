@@ -39,8 +39,8 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings }: Gam
       <pointLight position={[4, 2, 3]} color={match.fighters[1].character.colors.primary} intensity={8} distance={7} />
       <CameraRig match={match} settings={cameraSettings} />
       <Arena stage={match.stage} />
-      <FighterRig fighter={match.fighters[0]} />
-      <FighterRig fighter={match.fighters[1]} />
+      <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
+      <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
       <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
     </Canvas>
   );
@@ -396,6 +396,8 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     comboStep: 0,
     comboSequence: [],
     comboUsedKeys: [],
+    comboHits: 0,
+    comboDamage: 0,
     aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
@@ -776,13 +778,15 @@ function sampleStageVoxelColor(imageData: ImageData, originX: number, originY: n
   };
 }
 
-function FighterRig({ fighter }: { fighter: FighterRuntime }) {
+function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeScale?: number }) {
   const group = useRef<THREE.Group>(null);
+  const scaledTime = useRef(0);
   const progress = activeMoveProgress(fighter);
-  useFrame((state) => {
+  useFrame((_, delta) => {
     if (!group.current) return;
+    scaledTime.current += delta * timeScale;
     const liveProgress = activeMoveProgress(fighter);
-    const bob = fighter.state === 'idle' ? Math.sin(state.clock.elapsedTime * 4 + fighter.slot) * 0.025 : 0;
+    const bob = fighter.state === 'idle' ? Math.sin(scaledTime.current * 4 + fighter.slot) * 0.025 : 0;
     const hitLean = fighter.state === 'hit' ? -fighter.facing * 0.16 : 0;
     const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
     group.current.position.set(fighter.position.x, fighter.position.y + bob, fighter.position.z);
@@ -795,14 +799,14 @@ function FighterRig({ fighter }: { fighter: FighterRuntime }) {
       <Bounds fit={false}>
         {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
           fighter.character.voxelProfile === 'image-source' ? (
-            <ImageVoxelFighter fighter={fighter} progress={progress} />
+            <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} />
           ) : (
-            <VoxelSpriteFighter fighter={fighter} progress={progress} />
+            <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} />
           )
         ) : fighter.character.modelPath.startsWith('builtin://') ? (
-          <ProceduralFighter fighter={fighter} color={color} progress={progress} />
+          <ProceduralFighter fighter={fighter} color={color} progress={progress} timeScale={timeScale} />
         ) : (
-          <ExternalFighter fighter={fighter} url={fighter.character.modelPath} progress={progress} />
+          <ExternalFighter fighter={fighter} url={fighter.character.modelPath} progress={progress} timeScale={timeScale} />
         )}
       </Bounds>
     </group>
@@ -824,7 +828,7 @@ const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
 const IMAGE_VOXEL_MIN_DEPTH = 0.14;
 const IMAGE_VOXEL_MAX_DEPTH = 0.28;
 
-function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; progress: number }) {
+function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: FighterRuntime; progress: number; timeScale?: number }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
   const head = useRef<THREE.Group>(null);
@@ -833,6 +837,7 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
   const leadLeg = useRef<THREE.Group>(null);
   const rearLeg = useRef<THREE.Group>(null);
   const activeFrameSrc = useRef(getImageVoxelFramePath(fighter, progress, 0));
+  const scaledTime = useRef(0);
   const [frameSrc, setFrameSrc] = useState(activeFrameSrc.current);
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
 
@@ -849,8 +854,9 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
 
   const parts = useMemo(() => buildVoxelParts(voxels), [voxels]);
 
-  useFrame((state, delta) => {
-    const t = state.clock.elapsedTime;
+  useFrame((_, delta) => {
+    scaledTime.current += delta * timeScale;
+    const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const nextFrameSrc = getImageVoxelFramePath(fighter, liveProgress, t);
     if (nextFrameSrc !== activeFrameSrc.current) {
@@ -1267,7 +1273,7 @@ function classifyImageVoxel(topRatio: number, xRatio: number): ImageVoxelPart {
   return 'torso';
 }
 
-function VoxelSpriteFighter({ fighter, progress }: { fighter: FighterRuntime; progress: number }) {
+function VoxelSpriteFighter({ fighter, progress, timeScale = 1 }: { fighter: FighterRuntime; progress: number; timeScale?: number }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
   const head = useRef<THREE.Group>(null);
@@ -1276,9 +1282,11 @@ function VoxelSpriteFighter({ fighter, progress }: { fighter: FighterRuntime; pr
   const leadLeg = useRef<THREE.Group>(null);
   const rearLeg = useRef<THREE.Group>(null);
   const palette = getVoxelPalette(fighter.character);
+  const scaledTime = useRef(0);
 
-  useFrame((state, delta) => {
-    const t = state.clock.elapsedTime;
+  useFrame((_, delta) => {
+    scaledTime.current += delta * timeScale;
+    const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
@@ -1402,7 +1410,7 @@ function getVoxelPalette(character: CharacterDefinition) {
   };
 }
 
-function ExternalFighter({ fighter, url, progress }: { fighter: FighterRuntime; url: string; progress: number }) {
+function ExternalFighter({ fighter, url, progress, timeScale = 1 }: { fighter: FighterRuntime; url: string; progress: number; timeScale?: number }) {
   const gltf = useGLTF(url);
   const model = useMemo(() => clone(gltf.scene), [gltf.scene]);
   const wrapper = useRef<THREE.Group>(null);
@@ -1423,6 +1431,9 @@ function ExternalFighter({ fighter, url, progress }: { fighter: FighterRuntime; 
 
   useFrame((_, delta) => {
     if (!wrapper.current) return;
+    Object.values(actions).forEach((action) => {
+      if (action) action.timeScale = timeScale;
+    });
     const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
     const hit = 0;
     const block = fighter.state === 'block' ? 1 : 0;
@@ -1460,11 +1471,13 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
 function ProceduralFighter({
   fighter,
   color,
-  progress
+  progress,
+  timeScale = 1
 }: {
   fighter: FighterRuntime;
   color: string;
   progress: number;
+  timeScale?: number;
 }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Mesh>(null);
@@ -1476,9 +1489,11 @@ function ProceduralFighter({
   const secondary = fighter.character.colors.secondary;
   const accent = fighter.character.colors.accent;
   const bulk = fighter.character.id === 'dax' ? 1.12 : 0.95;
+  const scaledTime = useRef(0);
 
-  useFrame((state, delta) => {
-    const t = state.clock.elapsedTime;
+  useFrame((_, delta) => {
+    scaledTime.current += delta * timeScale;
+    const t = scaledTime.current;
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 11) : 0;
     const side = fighter.state === 'sidestep' ? Math.sin(t * 13) * 0.16 : 0;

@@ -36,6 +36,7 @@ export type FighterState =
 export type MoveInput = 'jab' | 'kick' | 'heavy' | 'special';
 export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
+export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish';
 
 export type BoxSpec = {
   offset: Vec3Tuple;
@@ -81,6 +82,15 @@ export type MoveDefinition = {
   hurtboxOffset?: Vec3Tuple;
   kiCost?: number;
   kiBurst?: boolean;
+};
+
+export type CombatPopupEvent = {
+  id: number;
+  slot: 1 | 2;
+  kind: CombatPopupKind;
+  hits: number;
+  damage: number;
+  moveLabel: string;
 };
 
 export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {
@@ -267,6 +277,8 @@ export type FighterRuntime = {
   comboStep: number;
   comboSequence: MoveInput[];
   comboUsedKeys: string[];
+  comboHits: number;
+  comboDamage: number;
   aiRecentComboKeys: string[];
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;
@@ -299,6 +311,8 @@ export type MatchSnapshot = {
   phase: 'intro' | 'fighting' | 'roundOver' | 'matchOver';
   message: string;
   lastHitId: number;
+  combatEvents: CombatPopupEvent[];
+  visualTimeScale: number;
   cameraShake: number;
 };
 

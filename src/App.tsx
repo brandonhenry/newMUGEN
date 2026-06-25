@@ -33,6 +33,7 @@ import {
   emptyInputFrame,
   type ActionName,
   type CharacterDefinition,
+  type CombatPopupEvent,
   type CpuDifficulty,
   type GameSettings,
   type HitLevel,
@@ -48,6 +49,7 @@ import {
 } from './types';
 
 type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
+type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
@@ -3564,10 +3566,31 @@ function FightScreen({
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
   const screenRef = useRef<HTMLDivElement>(null);
+  const seenCombatEventIds = useRef<Set<number>>(new Set());
+  const lastCombatEventId = useRef(0);
+  const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
 
   useEffect(() => {
     matchRef.current = match;
   }, [match]);
+
+  useEffect(() => {
+    if (match.lastHitId < lastCombatEventId.current) {
+      seenCombatEventIds.current.clear();
+      setCombatPopups([]);
+    }
+    lastCombatEventId.current = match.lastHitId;
+
+    match.combatEvents.forEach((event) => {
+      if (seenCombatEventIds.current.has(event.id)) return;
+      seenCombatEventIds.current.add(event.id);
+      const popup: ActiveCombatPopup = { ...event, uid: Date.now() + event.id };
+      setCombatPopups((current) => [...current.filter((item) => item.slot !== event.slot).slice(-2), popup].slice(-4));
+      window.setTimeout(() => {
+        setCombatPopups((current) => current.filter((item) => item.uid !== popup.uid));
+      }, 2600);
+    });
+  }, [match.combatEvents, match.lastHitId]);
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -3657,9 +3680,10 @@ function FightScreen({
     >
       <GameScene match={match} cameraSettings={settings.camera} />
       <FightHud match={match} hudScale={settings.display.hudScale} />
+      <CombatPopupLayer popups={combatPopups} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
-      {match.message && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''}`}>{match.message}</div>}
+      {match.message && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}>{match.message}</div>}
       {paused && (
         <div className="pause-overlay">
           <Pause size={32} />
@@ -3787,6 +3811,47 @@ function FightHud({ match, hudScale }: { match: MatchSnapshot; hudScale: number 
         <span>R{match.round}</span>
       </div>
       <HealthBar fighter={p2} align="right" />
+    </div>
+  );
+}
+
+function CombatPopupLayer({ popups }: { popups: ActiveCombatPopup[] }) {
+  const leftPopups = popups.filter((popup) => popup.slot === 1);
+  const rightPopups = popups.filter((popup) => popup.slot === 2);
+  return (
+    <div className="combat-popup-layer" aria-live="polite">
+      <div className="combat-popup-column left">
+        {leftPopups.map((popup) => (
+          <CombatPopupCard key={popup.uid} popup={popup} />
+        ))}
+      </div>
+      <div className="combat-popup-column right">
+        {rightPopups.map((popup) => (
+          <CombatPopupCard key={popup.uid} popup={popup} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
+  const punishLabel = popup.kind === 'whiffPunish' ? 'Whiff Punish' : popup.kind === 'punish' ? 'Punish' : '';
+  return (
+    <div className={`combat-popup-card ${popup.kind}`}>
+      {popup.hits >= 2 && (
+        <>
+          <div className="combo-line">
+            <strong>{popup.hits}</strong>
+            <span>Hit Combo</span>
+          </div>
+          <div className="damage-line">
+            <strong>{Math.round(popup.damage)}</strong>
+            <span>Damage</span>
+          </div>
+        </>
+      )}
+      {punishLabel && <div className="punish-line">{punishLabel}</div>}
+      <small>{popup.moveLabel}</small>
     </div>
   );
 }

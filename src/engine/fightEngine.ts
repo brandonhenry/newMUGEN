@@ -18,6 +18,8 @@ const ARENA_LIMIT_Z = 9;
 const ROUND_TIME = 60;
 const START_DISTANCE = 2.6;
 const ROUND_OVER_DELAY = 2.1;
+const KO_SLOWMO_SECONDS = 0.8;
+const KO_SLOWMO_TIME_SCALE = 0.24;
 const ROUND_INTRO_ENTRY_SECONDS = 1.2;
 const ROUND_INTRO_ROUND_SECONDS = 0.95;
 const ROUND_INTRO_FIGHT_SECONDS = 0.65;
@@ -75,6 +77,8 @@ export function createMatch(
     phase: 'fighting',
     message: '',
     lastHitId: 0,
+    combatEvents: [],
+    visualTimeScale: 1,
     cameraShake: 0
   };
   if (match.introEnabled) beginRoundIntro(match);
@@ -88,6 +92,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   if (next.phase === 'matchOver') return next;
 
   if (next.phase === 'intro') {
+    next.visualTimeScale = 1;
     next.countdown = Math.max(0, next.countdown - dt);
     if (next.countdown <= 0) {
       next.phase = 'fighting';
@@ -105,12 +110,14 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
   if (next.phase === 'roundOver') {
     next.countdown -= dt;
+    updateRoundOverVisuals(next);
     if (next.countdown <= 0) {
       const winner = next.fighters.find((fighter) => fighter.roundsWon >= 2);
       if (winner) {
         next.phase = 'matchOver';
         next.winnerSlot = winner.slot;
         next.message = `${winner.character.displayName} wins`;
+        next.visualTimeScale = 1;
         next.fighters.forEach((fighter) => {
           fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
         });
@@ -176,6 +183,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     comboStep: 0,
     comboSequence: [],
     comboUsedKeys: [],
+    comboHits: 0,
+    comboDamage: 0,
     aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
@@ -207,6 +216,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.comboStep = 0;
     fighter.comboSequence = [];
     fighter.comboUsedKeys = [];
+    fighter.comboHits = 0;
+    fighter.comboDamage = 0;
   }
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
@@ -757,6 +768,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   const blocked = defender.state === 'block' && defender.facing === -attacker.facing;
   const counterHit = isCounterHit(defender);
+  const whiffPunish = isWhiffPunish(defender);
+  const blockPunish = attacker.blockPunishWindowFrames > 0;
   attacker.hitConnected = true;
   const pushX = distance > 0 ? dx / distance : attacker.facing;
   const pushZ = distance > 0 ? dz / distance : 0;
@@ -782,11 +795,14 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   attacker.hitConfirmed = true;
   attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
+  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
   const identity = getMoveIdentity(move);
   if (!attacker.comboUsedKeys.includes(identity)) {
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
+  pushCombatPopupEvent(match, attacker, move, whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null);
 
   const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
@@ -820,6 +836,33 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
   defender.position.x += pushX * move.pushback * 0.28;
   defender.position.z += pushZ * move.pushback * 0.28;
+}
+
+function isWhiffPunish(defender: FighterRuntime) {
+  const move = defender.currentMove;
+  if (defender.state !== 'attack' || !move || defender.hitConnected) return false;
+  return defender.whiffRecoveryApplied || defender.moveFrame >= move.startupFrames + move.activeFrames;
+}
+
+function pushCombatPopupEvent(
+  match: MatchSnapshot,
+  attacker: FighterRuntime,
+  move: MoveDefinition,
+  kind: 'combo' | 'punish' | 'whiffPunish' | null
+) {
+  if (!kind) return;
+  match.lastHitId += 1;
+  match.combatEvents = [
+    ...match.combatEvents,
+    {
+      id: match.lastHitId,
+      slot: attacker.slot,
+      kind,
+      hits: attacker.comboHits,
+      damage: attacker.comboDamage,
+      moveLabel: move.label
+    }
+  ].slice(-8);
 }
 
 function enterKnockdown(fighter: FighterRuntime, frames: number) {
@@ -955,7 +998,8 @@ function finishRound(match: MatchSnapshot) {
   winner.roundsWon += 1;
   match.phase = 'roundOver';
   match.countdown = ROUND_OVER_DELAY;
-  match.message = `${winner.character.displayName} takes the round`;
+  match.message = 'K.O.';
+  match.visualTimeScale = KO_SLOWMO_TIME_SCALE;
   match.fighters.forEach((fighter) => {
     fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
     fighter.currentMove = null;
@@ -972,6 +1016,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.phase = 'fighting';
   match.countdown = 0;
   match.message = '';
+  match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.fighters.forEach((fighter) => {
     if (fighter.hp <= 0) fighter.hp = fighter.character.stats.health;
@@ -983,6 +1028,7 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.phase = 'intro';
   match.countdown = ROUND_INTRO_TOTAL_SECONDS;
   match.message = '';
+  match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.fighters.forEach((fighter) => {
     fighter.state = 'entry';
@@ -1014,6 +1060,11 @@ function updateRoundIntro(match: MatchSnapshot) {
   });
 }
 
+function updateRoundOverVisuals(match: MatchSnapshot) {
+  const elapsed = ROUND_OVER_DELAY - Math.max(0, match.countdown);
+  match.visualTimeScale = elapsed < KO_SLOWMO_SECONDS ? KO_SLOWMO_TIME_SCALE : 1;
+}
+
 function resetRound(match: MatchSnapshot) {
   const rounds: [number, number] = [match.fighters[0].roundsWon, match.fighters[1].roundsWon];
   const [p1Character, p2Character] = [match.fighters[0].character, match.fighters[1].character];
@@ -1025,6 +1076,7 @@ function resetRound(match: MatchSnapshot) {
   match.countdown = 0;
   match.phase = 'fighting';
   match.message = '';
+  match.visualTimeScale = 1;
   if (match.introEnabled) beginRoundIntro(match);
 }
 
