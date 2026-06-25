@@ -47,6 +47,7 @@ const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
 const PRESSURE_LANE_TOLERANCE = 0.82;
 const AI_DECISION_BUCKETS_PER_SECOND = 4;
+const AI_SEED_MODULUS = 1_000_000;
 const KI_MAX = 100;
 const KI_CHARGE_PER_SECOND = 28;
 const KI_HIT_GAIN = 9;
@@ -78,6 +79,7 @@ export function createMatch(
     stage,
     mode,
     cpuDifficulty,
+    aiSeed: normalizeAiSeed(options.aiSeed),
     roundTime,
     trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
     introEnabled: options.playIntro ?? false,
@@ -140,12 +142,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true) : p1Input;
+  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
       ? emptyInputFrame()
       : next.mode === 'ai' || next.mode === 'cpu'
-        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu')
+        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed)
         : p2Input;
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
@@ -776,7 +778,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 14,
     activeFrames: 2,
     recoveryFrames: 19,
-    damage: 15,
+    damage: 8,
     blockDamage: 1,
     hitLevel: 'mid',
     onBlockFrames: -7,
@@ -789,7 +791,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 21,
     activeFrames: 2,
     recoveryFrames: 17,
-    damage: 17,
+    damage: 12,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -5,
@@ -802,7 +804,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 16,
     activeFrames: 2,
     recoveryFrames: 22,
-    damage: 18,
+    damage: 12,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -9,
@@ -815,7 +817,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 20,
     activeFrames: 3,
     recoveryFrames: 25,
-    damage: 20,
+    damage: 14,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -12,
@@ -841,7 +843,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 22,
     activeFrames: 3,
     recoveryFrames: 21,
-    damage: 24,
+    damage: 15,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -2,
@@ -855,7 +857,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 27,
-    damage: 18,
+    damage: 13,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -12,
@@ -869,7 +871,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 21,
     activeFrames: 3,
     recoveryFrames: 20,
-    damage: 10,
+    damage: 9,
     blockDamage: 1,
     hitLevel: 'low',
     onBlockFrames: -11,
@@ -882,7 +884,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 26,
-    damage: 16,
+    damage: 12,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -13,
@@ -895,7 +897,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 17,
     activeFrames: 3,
     recoveryFrames: 23,
-    damage: 15,
+    damage: 11,
     blockDamage: 2,
     hitLevel: 'high',
     onBlockFrames: -8,
@@ -908,7 +910,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 21,
     activeFrames: 3,
     recoveryFrames: 29,
-    damage: 22,
+    damage: 15,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -14,
@@ -922,7 +924,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 8,
     activeFrames: 2,
     recoveryFrames: 18,
-    damage: 10,
+    damage: 8,
     blockDamage: 1,
     hitLevel: 'high',
     onBlockFrames: -6,
@@ -935,7 +937,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 25,
-    damage: 16,
+    damage: 12,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -10,
@@ -949,7 +951,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 22,
     activeFrames: 3,
     recoveryFrames: 30,
-    damage: 20,
+    damage: 13,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -17,
@@ -963,7 +965,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 19,
     activeFrames: 3,
     recoveryFrames: 28,
-    damage: 21,
+    damage: 15,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -13,
@@ -976,7 +978,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 24,
-    damage: 17,
+    damage: 11,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -9,
@@ -989,7 +991,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 23,
     activeFrames: 3,
     recoveryFrames: 30,
-    damage: 22,
+    damage: 15,
     blockDamage: 3,
     hitLevel: 'low',
     onBlockFrames: -18,
@@ -1002,7 +1004,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 24,
-    damage: 17,
+    damage: 11,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -11,
@@ -1015,7 +1017,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 15,
     activeFrames: 2,
     recoveryFrames: 22,
-    damage: 15,
+    damage: 10,
     blockDamage: 1,
     hitLevel: 'mid',
     onBlockFrames: -8,
@@ -1028,7 +1030,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 20,
     activeFrames: 3,
     recoveryFrames: 28,
-    damage: 23,
+    damage: 15,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -14,
@@ -1042,7 +1044,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 16,
     activeFrames: 3,
     recoveryFrames: 23,
-    damage: 16,
+    damage: 11,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -7,
@@ -1055,7 +1057,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 22,
     activeFrames: 3,
     recoveryFrames: 31,
-    damage: 24,
+    damage: 15,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -16,
@@ -1069,7 +1071,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 14,
     activeFrames: 2,
     recoveryFrames: 21,
-    damage: 14,
+    damage: 10,
     blockDamage: 1,
     hitLevel: 'high',
     onBlockFrames: -6,
@@ -1082,7 +1084,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 19,
     activeFrames: 3,
     recoveryFrames: 28,
-    damage: 21,
+    damage: 14,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -13,
@@ -1096,7 +1098,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 26,
-    damage: 20,
+    damage: 13,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -11,
@@ -1109,7 +1111,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 20,
     activeFrames: 3,
     recoveryFrames: 25,
-    damage: 15,
+    damage: 10,
     blockDamage: 2,
     hitLevel: 'low',
     onBlockFrames: -16,
@@ -1122,7 +1124,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 20,
     activeFrames: 3,
     recoveryFrames: 27,
-    damage: 19,
+    damage: 13,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -13,
@@ -1136,7 +1138,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 20,
     activeFrames: 3,
     recoveryFrames: 27,
-    damage: 19,
+    damage: 13,
     blockDamage: 2,
     hitLevel: 'mid',
     onBlockFrames: -12,
@@ -1149,7 +1151,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 21,
     activeFrames: 3,
     recoveryFrames: 29,
-    damage: 21,
+    damage: 14,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -14,
@@ -1162,7 +1164,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     startupFrames: 16,
     activeFrames: 3,
     recoveryFrames: 25,
-    damage: 21,
+    damage: 14,
     blockDamage: 3,
     hitLevel: 'mid',
     onBlockFrames: -9,
@@ -1175,6 +1177,10 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
 
 export function getAuthoredNeutralStringRouteCount() {
   return Object.keys(neutralStringFrameData).length;
+}
+
+export function getAuthoredNeutralStringDamageCeiling() {
+  return Math.max(0, ...Object.values(neutralStringFrameData).map((move) => move.damage ?? 0));
 }
 
 function updateCommandHistory(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {
@@ -1783,7 +1789,7 @@ function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, 
   fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
 }
 
-function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false): InputFrame {
+function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0): InputFrame {
   const input = emptyInputFrame();
   const dx = opponent.position.x - ai.position.x;
   const dz = opponent.position.z - ai.position.z;
@@ -1793,32 +1799,38 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const elapsed = ROUND_TIME - timer;
   const settings = getCpuDifficultySettings(difficulty);
   const leadRatio = (ai.hp - opponent.hp) / Math.max(1, ai.character.stats.health);
-  const leaderBrake = cpuDuel && leadRatio > 0.08;
-  const beat = Math.sin(timer * 2.7 + ai.hp * 0.03 + ai.slot * 0.9);
-  const blockRoll = (Math.sin(elapsed * 7.2 + ai.slot * 1.7 + ai.hp * 0.02) + 1) / 2;
-  const attackCycle = settings.attackCycle - profile.aggression * settings.aggressionCycleBonus;
-  const attackPhase = positiveModulo(elapsed + ai.slot * 0.18, attackCycle);
-  const comboPhase = positiveModulo(elapsed + ai.slot * 0.11, settings.comboCycle);
-  const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp), 100);
-  const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp), 100);
+  const leaderBrake = cpuDuel ? clamp((leadRatio - 0.14) / 0.34, 0, 1) : 0;
+  const leaderCloseout = leaderBrake > 0.18;
+  const style = getAiSeedStyle(aiSeed, ai.slot);
+  const beat = Math.sin(timer * (2.45 + style.tempo * 0.48) + ai.hp * 0.03 + ai.slot * 0.9 + style.phase);
+  const blockRoll = (Math.sin(elapsed * (6.4 + style.guardTempo * 1.5) + ai.slot * 1.7 + ai.hp * 0.02 + style.phase * 0.7) + 1) / 2;
+  const attackCycle = Math.max(0.12, (settings.attackCycle - profile.aggression * settings.aggressionCycleBonus) * style.attackCycleScale);
+  const comboCycle = Math.max(0.1, settings.comboCycle * style.comboCycleScale);
+  const attackPhase = positiveModulo(elapsed + ai.slot * 0.18 + style.attackPhaseOffset, attackCycle);
+  const comboPhase = positiveModulo(elapsed + ai.slot * 0.11 + style.comboPhaseOffset, comboCycle);
+  const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp) + style.selectorJitter, 100);
+  const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp) + style.routeJitter, 100);
   let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
-  if (aiDecisionRoll(ai, opponent, elapsed, 6) < settings.suboptimalMoveRate) {
+  if (leaderCloseout) {
+    selectedMoveInput = chooseAiCloseoutMoveInput(ai, selectedMoveInput, selector, routeRoll);
+  } else if (aiDecisionRoll(ai, opponent, elapsed, 6, aiSeed) < settings.suboptimalMoveRate * style.imperfectionScale) {
     selectedMoveInput = chooseAiImperfectMoveInput(ai, selectedMoveInput, selector, routeRoll);
   }
   const selectedMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? ai.character.moves[0] ?? null;
-  const shouldContinueCombo = ai.comboTimer > 0 && ai.comboStep < settings.maxComboSteps;
+  const maxComboSteps = leaderCloseout ? Math.max(2, Math.min(settings.maxComboSteps, leaderBrake > 0.72 ? 2 : 3)) : settings.maxComboSteps;
+  const shouldContinueCombo = ai.comboTimer > 0 && ai.comboStep < maxComboSteps;
   const selectedMoveReach = (selectedMove?.range ?? 1.35) + settings.rangeBuffer + (shouldContinueCombo ? 0.26 : 0);
 
   const opponentSide = getOpponentSideSign(ai, opponent);
   const towardKey = opponentSide > 0 ? 'right' : 'left';
   const awayKey = opponentSide > 0 ? 'left' : 'right';
-  const desiredSpacing = clamp(Math.min(profile.spacing * settings.spacingScale, selectedMoveReach * 0.88), 0.88, selectedMoveReach);
+  const desiredSpacing = clamp(Math.min(profile.spacing * settings.spacingScale * style.spacingScale, selectedMoveReach * 0.9), 0.82, selectedMoveReach);
   const tooClose = distance < Math.max(0.72, desiredSpacing * 0.58);
   const tooFar = distance > selectedMoveReach;
   const farAway = distance > selectedMoveReach + settings.runInBuffer;
   const resetRhythm = Math.sin(elapsed * 1.17 + ai.slot * 1.9);
 
-  const spacingMistake = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 2) < settings.spacingMistakeRate;
+  const spacingMistake = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 2, aiSeed) < settings.spacingMistakeRate * style.imperfectionScale;
   if (spacingMistake && !farAway && distance < selectedMoveReach + 0.95) {
     input[awayKey] = true;
     input[towardKey] = false;
@@ -1826,7 +1838,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     input[towardKey] = true;
   } else if (tooFar && resetRhythm > -0.42) {
     input[towardKey] = true;
-  } else if (leaderBrake && distance < selectedMoveReach + 0.75 && resetRhythm > -0.52) {
+  } else if (leaderBrake > 0.72 && distance < selectedMoveReach * 0.74 && resetRhythm > 0.18) {
     input[awayKey] = true;
   } else if (tooClose || resetRhythm < -0.72) {
     input[awayKey] = true;
@@ -1851,10 +1863,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const canAttemptCancel = shouldContinueCombo && canComboCancel(ai);
   const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown';
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
-  const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3) < settings.punishDropRate;
+  const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, aiSeed) < settings.punishDropRate * style.imperfectionScale;
   const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;
   let punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
-  if (aiDecisionRoll(ai, opponent, elapsed, 7) < settings.suboptimalPunishRate) {
+  if (aiDecisionRoll(ai, opponent, elapsed, 7, aiSeed) < settings.suboptimalPunishRate * style.imperfectionScale) {
     punishMoveInput = chooseAiImperfectMoveInput(ai, punishMoveInput, selector + 13, routeRoll + 7);
   }
   const punishMove = ai.character.moves.find((move) => move.input === punishMoveInput) ?? selectedMove;
@@ -1881,12 +1893,14 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
 
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
   const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
-  const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4) < settings.pressureDropRate;
+  const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4, aiSeed) < settings.pressureDropRate * style.imperfectionScale;
   const pressureAccepted =
     !pressureDropped &&
-    pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - (leaderBrake ? settings.leaderPressurePenalty * 1.6 : 0));
+    pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - settings.leaderPressurePenalty * leaderBrake * 0.55);
   let pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
-  if (aiDecisionRoll(ai, opponent, elapsed, 8) < settings.suboptimalPressureRate) {
+  if (leaderCloseout && opening.kind !== 'none') {
+    pressureMoveInput = chooseAiCloseoutMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
+  } else if (aiDecisionRoll(ai, opponent, elapsed, 8, aiSeed) < settings.suboptimalPressureRate * style.imperfectionScale) {
     pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   }
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
@@ -1912,20 +1926,22 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   }
   const missedKnownOpening = opening.kind !== 'none' && canStartAction && canAct && !pressureAccepted;
 
-  input.block = danger && (difficulty >= 3 || isIncomingSoon) && blockRoll < Math.min(0.96, Math.max(0.05, profile.guard + settings.guardBonus + (leaderBrake ? 0.12 : 0)));
+  input.block = danger && (difficulty >= 3 || isIncomingSoon) && blockRoll < Math.min(0.9, Math.max(0.05, profile.guard + settings.guardBonus + style.guardBias + leaderBrake * 0.04));
   if (input.block) {
     input[awayKey] = true;
     input[towardKey] = false;
   }
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
-  const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5) < settings.attackHesitationRate;
+  const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5, aiSeed) < settings.attackHesitationRate * style.imperfectionScale;
   const canPressure = !missedKnownOpening && !attackHesitation && !input.block && canAct && inStrikeRange && !tooClose;
-  const attackPulse = attackPhase < settings.attackPulse * (leaderBrake ? 0.38 : 1) || (shouldContinueCombo && comboPhase < settings.comboPulse * (leaderBrake ? 0.48 : 1));
+  const leaderAttackScale = leaderCloseout ? 1.12 - leaderBrake * 0.08 : 1;
+  const leaderComboScale = leaderCloseout ? 0.74 - leaderBrake * 0.14 : 1;
+  const attackPulse = attackPhase < settings.attackPulse * style.attackPulseScale * leaderAttackScale || (shouldContinueCombo && comboPhase < settings.comboPulse * style.comboPulseScale * leaderComboScale);
   if (canPressure && attackPulse) {
-    applyAiRoute(ai, input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
+    applyAiRoute(ai, input, towardKey, awayKey, leaderCloseout ? Math.min(difficulty, 2) as CpuDifficulty : difficulty, ai.comboStep, selector, routeRoll);
     input[selectedMoveInput] = true;
-    if (difficulty >= 4 && routeRoll > 78) {
+    if (!leaderCloseout && difficulty >= 4 && routeRoll > 78) {
       const secondButton = routeRoll > 90 ? 'special' : routeRoll > 84 ? 'heavy' : 'kick';
       input[secondButton] = true;
     }
@@ -1991,6 +2007,20 @@ function chooseAiImperfectMoveInput(ai: FighterRuntime, preferred: MoveInput, se
   if (availableInputs.length === 0) return preferred;
   const index = positiveModulo(selector + routeRoll * 3 + ai.slot * 11 + Math.floor(ai.hp), availableInputs.length);
   return availableInputs[index] ?? preferred;
+}
+
+function chooseAiCloseoutMoveInput(ai: FighterRuntime, preferred: MoveInput, selector: number, routeRoll: number): MoveInput {
+  const moves = ai.character.moves.filter((move) => !move.launchHeight && !move.knockdown && move.damage <= 11);
+  const preferredMove = moves.find((move) => move.input === preferred);
+  if (preferredMove && preferredMove.input !== 'special') return preferredMove.input;
+
+  const pokeOrder: MoveInput[] = routeRoll % 3 === 0 ? ['kick', 'jab', 'heavy'] : ['jab', 'kick', 'heavy'];
+  const ordered = pokeOrder
+    .map((input) => moves.find((move) => move.input === input))
+    .filter((move): move is MoveDefinition => Boolean(move));
+  if (ordered.length === 0) return preferred;
+  const fresh = ordered.find((move) => !inputRecentlyUsed(ai, move.input) && !inputAlreadyUsedInCombo(ai, move.input));
+  return (fresh ?? ordered[positiveModulo(selector + routeRoll, ordered.length)] ?? ordered[0]).input;
 }
 
 function chooseAiPunishMoveInput(ai: FighterRuntime, difficulty: CpuDifficulty, selector: number, routeRoll: number): MoveInput {
@@ -2091,9 +2121,10 @@ function canMakeAiDecisionMistake(ai: FighterRuntime) {
   return ai.actionFramesRemaining === 0 && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown' && ai.state !== 'juggle';
 }
 
-function aiDecisionRoll(ai: FighterRuntime, opponent: FighterRuntime, elapsed: number, salt: number) {
+function aiDecisionRoll(ai: FighterRuntime, opponent: FighterRuntime, elapsed: number, salt: number, aiSeed = 0) {
   const bucket = Math.floor(elapsed * AI_DECISION_BUCKETS_PER_SECOND);
   const seed =
+    normalizeAiSeed(aiSeed) * 0.0113 +
     bucket * 12.9898 +
     ai.slot * 78.233 +
     opponent.slot * 37.719 +
@@ -2102,6 +2133,58 @@ function aiDecisionRoll(ai: FighterRuntime, opponent: FighterRuntime, elapsed: n
     salt * 19.19;
   const raw = Math.sin(seed) * 43758.5453;
   return raw - Math.floor(raw);
+}
+
+function getAiSeedStyle(aiSeed: number, slot: 1 | 2) {
+  const seed = normalizeAiSeed(aiSeed);
+  if (seed === 0) {
+    return {
+      phase: 0,
+      tempo: 0.5208333333333334,
+      guardTempo: 0.5333333333333333,
+      attackCycleScale: 1,
+      comboCycleScale: 1,
+      attackPulseScale: 1,
+      comboPulseScale: 1,
+      guardBias: 0,
+      spacingScale: 1,
+      imperfectionScale: 1,
+      attackPhaseOffset: 0,
+      comboPhaseOffset: 0,
+      selectorJitter: 0,
+      routeJitter: 0
+    };
+  }
+  const attackFlavor = seededUnit(seed, slot * 11 + 1);
+  const comboFlavor = seededUnit(seed, slot * 11 + 2);
+  const guardFlavor = seededUnit(seed, slot * 11 + 3);
+  const spacingFlavor = seededUnit(seed, slot * 11 + 4);
+  const mistakeFlavor = seededUnit(seed, slot * 11 + 5);
+  return {
+    phase: seededUnit(seed, slot * 11 + 6) * Math.PI * 2,
+    tempo: seededUnit(seed, slot * 11 + 7) * 2 - 1,
+    guardTempo: seededUnit(seed, slot * 11 + 8),
+    attackCycleScale: lerp(0.88, 1.16, attackFlavor),
+    comboCycleScale: lerp(0.86, 1.2, comboFlavor),
+    attackPulseScale: lerp(0.88, 1.18, attackFlavor),
+    comboPulseScale: lerp(0.82, 1.22, comboFlavor),
+    guardBias: lerp(-0.14, 0.08, guardFlavor),
+    spacingScale: lerp(0.9, 1.14, spacingFlavor),
+    imperfectionScale: lerp(0.85, 1.28, mistakeFlavor),
+    attackPhaseOffset: seededUnit(seed, slot * 11 + 9) * 0.75,
+    comboPhaseOffset: seededUnit(seed, slot * 11 + 10) * 0.55,
+    selectorJitter: Math.floor(seededUnit(seed, slot * 11 + 11) * 100),
+    routeJitter: Math.floor(seededUnit(seed, slot * 11 + 12) * 100)
+  };
+}
+
+function seededUnit(seed: number, salt: number) {
+  const raw = Math.sin(normalizeAiSeed(seed) * 0.0137 + salt * 78.233) * 43758.5453;
+  return raw - Math.floor(raw);
+}
+
+function normalizeAiSeed(seed: number | undefined) {
+  return positiveModulo(Math.floor(Number.isFinite(seed) ? Number(seed) : 0), AI_SEED_MODULUS);
 }
 
 function getCpuDifficultySettings(difficulty: CpuDifficulty) {

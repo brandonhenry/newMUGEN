@@ -727,6 +727,14 @@ function isLocalDevHost() {
   return ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
 }
 
+function freshAiSeed() {
+  return Math.floor((Date.now() + performance.now() * 1000 + Math.random() * 1_000_000) % 1_000_000);
+}
+
+function withFreshAiSeed<T extends object>(options: T): T & { aiSeed: number } {
+  return { ...options, aiSeed: freshAiSeed() };
+}
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
@@ -1068,13 +1076,13 @@ function MenuScreen({
   const [attractIds] = useState(() => pickAttractCharacterIds(roster));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4) : null));
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
 
   useEffect(() => {
     if (!p1 || !p2) return;
-    const fresh = createMatch(p1, p2, menuAttractStage, 'cpu', 4);
+    const fresh = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() });
     matchRef.current = fresh;
     setAttractMatch(fresh);
   }, [p1, p2]);
@@ -1090,9 +1098,9 @@ function MenuScreen({
       accumulator += Math.min(0.05, (now - last) / 1000);
       last = now;
       while (accumulator >= fixedStep) {
-        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'cpu', 4);
+        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() });
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = createMatch(p1, p2, menuAttractStage, 'cpu', 4);
+          matchRef.current = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() });
         } else {
           matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
         }
@@ -3980,7 +3988,7 @@ function FightScreen({
     }),
     [settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
-  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, matchOptions));
+  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
@@ -4044,7 +4052,7 @@ function FightScreen({
     const hostCharacter = roster.find((character) => character.id === hostCharacterId) ?? p1;
     const guestCharacter = roster.find((character) => character.id === guestCharacterId) ?? p2;
     const onlineStage = stages.find((item) => item.id === onlineStageId) ?? stage;
-    return createMatch(hostCharacter, guestCharacter, onlineStage, 'online', cpuDifficulty, matchOptions);
+    return createMatch(hostCharacter, guestCharacter, onlineStage, 'online', cpuDifficulty, withFreshAiSeed(matchOptions));
   }, [cpuDifficulty, matchOptions, p1, p2, roster, stage, stages]);
 
   const publishOnlineSnapshot = useCallback((force = false) => {
@@ -4358,7 +4366,7 @@ function FightScreen({
               matchRef.current.phase === 'matchOver' ||
               matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.character.stats.health * 0.2);
             matchRef.current = shouldRefreshWarmup
-              ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, matchOptions)
+              ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, withFreshAiSeed(matchOptions))
               : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
           } else {
             matchRef.current = stepMatch(matchRef.current, p1Input, p2Input, fixedStep);
@@ -4376,7 +4384,7 @@ function FightScreen({
 
   const requestOnlineRematch = () => {
     if (!isOnline || onlineStateRef.current !== 'connected') {
-      const warmup = createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, matchOptions);
+      const warmup = createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions));
       matchRef.current = warmup;
       setMatch(warmup);
       setPaused(false);
@@ -4393,7 +4401,7 @@ function FightScreen({
       requestOnlineRematch();
       return;
     }
-    const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty, matchOptions);
+    const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty, withFreshAiSeed(matchOptions));
     matchRef.current = fresh;
     setMatch(fresh);
     setPaused(false);

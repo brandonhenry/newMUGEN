@@ -286,6 +286,7 @@ export type MatchOptions = {
   roundTime?: number;
   trainingInfiniteHealth?: boolean;
   playIntro?: boolean;
+  aiSeed?: number;
 };
 
 export type FighterRuntime = {
@@ -341,6 +342,7 @@ export type MatchSnapshot = {
   stage: StageDefinition;
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
+  aiSeed: number;
   roundTime: number;
   trainingInfiniteHealth: boolean;
   introEnabled: boolean;

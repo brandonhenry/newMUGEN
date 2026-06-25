@@ -11,7 +11,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition } from '../types';
-import { activeMoveProgress, createMatch, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
+import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
 
 describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
@@ -33,6 +33,23 @@ describe('character manifests', () => {
         `${character.displayName} launcher hit advantage`
       ).toBe(true);
     }
+  });
+
+  it('keeps starter and shared string damage inside the v1 balance budget', () => {
+    for (const character of starterCharacters) {
+      const authoredMoves = [
+        ...character.moves.map((move) => ({ key: move.id, damage: move.damage })),
+        ...Object.entries(character.moveOverrides ?? {})
+          .filter(([, move]) => move.damage != null)
+          .map(([key, move]) => ({ key, damage: move.damage ?? 0 }))
+      ];
+
+      for (const move of authoredMoves) {
+        expect(move.damage, `${character.displayName} ${move.key}`).toBeLessThanOrEqual(16);
+      }
+    }
+
+    expect(getAuthoredNeutralStringDamageCeiling()).toBeLessThanOrEqual(15);
   });
 
   it('converts legacy second timing to frame timing', () => {
@@ -478,6 +495,98 @@ describe('fight engine', () => {
     );
     expect(attackFrames).toBe(0);
     expect(endDistance).toBeGreaterThan(startDistance);
+  });
+
+  it('keeps a leading CPU active instead of over-braking into a comeback', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 160;
+    match.fighters[1].hp = 90;
+    match.fighters[0].position.x = -0.78;
+    match.fighters[1].position.x = 0.78;
+
+    let leaderAttackStarts = 0;
+    let leaderBackWalkFrames = 0;
+    let wasAttacking = false;
+
+    for (let i = 0; i < 540; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const leader = match.fighters[0];
+      const opponentSide = leader.position.x <= match.fighters[1].position.x ? 1 : -1;
+      const walkingAway = leader.state === 'walk' && ((opponentSide > 0 && leader.position.x < -0.78) || (opponentSide < 0 && leader.position.x > -0.78));
+      const isAttacking = leader.state === 'attack' && Boolean(leader.currentMove);
+      if (isAttacking && !wasAttacking) leaderAttackStarts += 1;
+      if (walkingAway) leaderBackWalkFrames += 1;
+      wasAttacking = isAttacking;
+      if (match.phase !== 'fighting') break;
+    }
+
+    expect(leaderAttackStarts).toBeGreaterThanOrEqual(2);
+    expect(leaderBackWalkFrames).toBeLessThan(180);
+  });
+
+  it('makes a leading CPU close rounds with pokes instead of max-damage launcher routes', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 160;
+    match.fighters[1].hp = 90;
+    match.fighters[0].position.x = -0.82;
+    match.fighters[1].position.x = 0.82;
+
+    let leaderAttackStarts = 0;
+    let maxLeaderComboStep = 0;
+    let usedLauncher = false;
+    let maxLeaderMoveDamage = 0;
+    let wasAttacking = false;
+
+    for (let i = 0; i < 540; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const leader = match.fighters[0];
+      const isAttacking = leader.state === 'attack' && Boolean(leader.currentMove);
+      if (isAttacking && !wasAttacking && leader.currentMove) {
+        leaderAttackStarts += 1;
+        maxLeaderComboStep = Math.max(maxLeaderComboStep, leader.currentMove.comboStep ?? 1);
+        maxLeaderMoveDamage = Math.max(maxLeaderMoveDamage, leader.currentMove.damage);
+        usedLauncher = usedLauncher || Boolean(leader.currentMove.launchHeight);
+      }
+      wasAttacking = isAttacking;
+      if (match.phase !== 'fighting') break;
+    }
+
+    expect(leaderAttackStarts).toBeGreaterThanOrEqual(2);
+    expect(maxLeaderComboStep).toBeLessThanOrEqual(3);
+    expect(maxLeaderMoveDamage).toBeLessThanOrEqual(13);
+    expect(usedLauncher).toBe(false);
+  });
+
+  it('varies CPU route choices when matches use different AI seeds', () => {
+    const sampleRoute = (aiSeed: number) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5, { aiSeed });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].hp = 999;
+      match.fighters[1].hp = 999;
+      const keys: string[] = [];
+      const wasAttacking: [boolean, boolean] = [false, false];
+
+      for (let i = 0; i < 420; i += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        match.fighters.forEach((fighter, index) => {
+          const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
+          if (isAttacking && !wasAttacking[index] && fighter.currentMove) {
+            keys.push(`${fighter.slot}:${fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`}`);
+          }
+          wasAttacking[index] = isAttacking;
+        });
+        if (keys.length >= 8 || match.phase !== 'fighting') break;
+      }
+
+      return keys.join('|');
+    };
+
+    expect(sampleRoute(111)).not.toBe(sampleRoute(222));
   });
 
   it('scales CPU attack frequency and route complexity by difficulty', () => {
@@ -1249,7 +1358,7 @@ describe('fight engine', () => {
     match = stepMatch(match, sameOne, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-jab');
-    expect(match.fighters[0].currentMove?.damage).toBe(15);
+    expect(match.fighters[0].currentMove?.damage).toBe(8);
     expect(match.fighters[0].currentMove?.onBlockFrames).toBe(-7);
     expect(match.fighters[0].currentMove?.onHitFrames).toBe(4);
     expect(match.fighters[0].currentMove?.hitLevel).toBe('mid');
