@@ -357,8 +357,16 @@
       "startupFrames": 9
     },
     "kick": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "damage": 9,
+      "blockDamage": 1,
       "onBlockFrames": -23,
       "launchHeight": 2.2
+    },
+    "special": {
+      "activeFrames": 6,
+      "recoveryFrames": 18
     }
   },
   "spriteFrameEdits": {}
