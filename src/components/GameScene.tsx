@@ -800,7 +800,7 @@ function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeS
     <group ref={group} scale={fighter.character.scale}>
       <Bounds fit={false}>
         {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
-          fighter.character.voxelProfile === 'image-source' ? (
+          fighter.character.voxelProfile === 'image-source' || fighter.character.voxelProfile === 'hd-image-source' ? (
             <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} />
           ) : (
             <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} />
@@ -824,11 +824,33 @@ type ImageVoxel = {
   color: string;
 };
 
+type HdImageVoxelPayload = {
+  format: 'kore-hd-voxels-v1';
+  palette: string[];
+  voxels: Array<{
+    part: ImageVoxelPart;
+    x: number;
+    y: number;
+    z: number;
+    w: number;
+    h: number;
+    d: number;
+    c: number;
+  }>;
+};
+
 const imageVoxelCache = new Map<string, Promise<ImageVoxel[]>>();
 const IMAGE_VOXEL_PIXEL_SCALE = 1.2;
 const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
 const IMAGE_VOXEL_MIN_DEPTH = 0.14;
 const IMAGE_VOXEL_MAX_DEPTH = 0.28;
+
+function getImageVoxelLodStep(character: CharacterDefinition) {
+  if (character.voxelProfile !== 'hd-image-source') return 1;
+  if (typeof window === 'undefined') return 1;
+  const mobileStep = character.voxelFidelity?.lod?.mobileStep ?? 2;
+  return window.innerWidth < 760 ? Math.max(1, Math.round(mobileStep)) : 1;
+}
 
 function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: FighterRuntime; progress: number; timeScale?: number }) {
   const root = useRef<THREE.Group>(null);
@@ -842,19 +864,20 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
   const scaledTime = useRef(0);
   const [frameSrc, setFrameSrc] = useState(activeFrameSrc.current);
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
+  const lodStep = getImageVoxelLodStep(fighter.character);
 
   useEffect(() => {
     let canceled = false;
     if (!frameSrc) return undefined;
-    getCachedImageVoxels(frameSrc).then((nextVoxels) => {
+    getCachedImageVoxels(frameSrc, fighter.character).then((nextVoxels) => {
       if (!canceled) setVoxels(nextVoxels);
     });
     return () => {
       canceled = true;
     };
-  }, [frameSrc]);
+  }, [fighter.character, frameSrc]);
 
-  const parts = useMemo(() => buildVoxelParts(voxels), [voxels]);
+  const parts = useMemo(() => buildVoxelParts(voxels, lodStep), [lodStep, voxels]);
 
   useFrame((_, delta) => {
     scaledTime.current += delta * timeScale;
@@ -928,11 +951,12 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
   );
 }
 
-function getCachedImageVoxels(src: string): Promise<ImageVoxel[]> {
-  const cached = imageVoxelCache.get(src);
+function getCachedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[]> {
+  const cacheKey = `${character.id}:${character.voxelProfile ?? 'image-source'}:${src}`;
+  const cached = imageVoxelCache.get(cacheKey);
   if (cached) return cached;
-  const request = loadImageVoxels(src);
-  imageVoxelCache.set(src, request);
+  const request = loadImageVoxels(src, character);
+  imageVoxelCache.set(cacheKey, request);
   return request;
 }
 
@@ -1071,11 +1095,11 @@ function enhanceVoxelColor(color: string) {
   return `#${source.getHexString()}`;
 }
 
-function buildVoxelParts(voxels: ImageVoxel[]) {
+function buildVoxelParts(voxels: ImageVoxel[], lodStep = 1) {
   const partNames: ImageVoxelPart[] = ['head', 'torso', 'leadArm', 'rearArm', 'leadLeg', 'rearLeg'];
   return Object.fromEntries(
     partNames.map((part) => {
-      const partVoxels = voxels.filter((voxel) => voxel.part === part);
+      const partVoxels = voxels.filter((voxel, index) => voxel.part === part && (lodStep <= 1 || index % lodStep === 0));
       return [part, { anchor: getPartAnchor(part, partVoxels), voxels: partVoxels }];
     })
   ) as Record<ImageVoxelPart, { anchor: [number, number, number]; voxels: ImageVoxel[] }>;
@@ -1149,26 +1173,44 @@ async function extractImageVoxels(src: string): Promise<ImageVoxel[]> {
   return voxels;
 }
 
-async function loadPrecomputedImageVoxels(src: string) {
-  const path = getPrecomputedVoxelPath(src);
+async function loadPrecomputedImageVoxels(src: string, character: CharacterDefinition) {
+  const path = getPrecomputedVoxelPath(src, character.voxelProfile === 'hd-image-source');
   if (!path) return null;
   try {
     const response = await fetch(path);
     if (!response.ok) return null;
-    return (await response.json()) as ImageVoxel[];
+    const payload = await response.json();
+    return normalizePrecomputedImageVoxels(payload);
   } catch {
     return null;
   }
 }
 
-function getPrecomputedVoxelPath(src: string) {
+function getPrecomputedVoxelPath(src: string, hd = false) {
   const match = src.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
   if (!match) return null;
-  return `${match[1]}/voxels/${match[2]}.json`;
+  return `${match[1]}/${hd ? 'voxels-hd' : 'voxels'}/${match[2]}.json`;
 }
 
-async function loadImageVoxels(src: string) {
-  return (await loadPrecomputedImageVoxels(src)) ?? extractImageVoxels(src);
+function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null {
+  if (Array.isArray(payload)) return payload as ImageVoxel[];
+  if (!payload || typeof payload !== 'object') return null;
+  const candidate = payload as HdImageVoxelPayload;
+  if (candidate.format !== 'kore-hd-voxels-v1' || !Array.isArray(candidate.palette) || !Array.isArray(candidate.voxels)) return null;
+  return candidate.voxels.map((voxel) => ({
+    part: voxel.part,
+    position: [voxel.x, voxel.y, voxel.z],
+    size: [voxel.w, voxel.h, voxel.d],
+    color: candidate.palette[voxel.c] ?? '#ffffff'
+  }));
+}
+
+async function loadImageVoxels(src: string, character: CharacterDefinition) {
+  if (character.voxelProfile === 'hd-image-source') {
+    const hdVoxels = await loadPrecomputedImageVoxels(src, character);
+    if (hdVoxels) return hdVoxels;
+  }
+  return (await loadPrecomputedImageVoxels(src, { ...character, voxelProfile: 'image-source' })) ?? extractImageVoxels(src);
 }
 
 function getForegroundBounds(imageData: ImageData, background: [number, number, number]) {

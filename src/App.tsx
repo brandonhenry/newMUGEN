@@ -45,7 +45,8 @@ import {
   type MoveTracking,
   type SpriteFrameEdit,
   type StageDefinition,
-  type StagePropDefinition
+  type StagePropDefinition,
+  type VoxelFidelitySettings
 } from './types';
 
 type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
@@ -69,6 +70,42 @@ type AnimationSlot = {
   notation: NotationToken[];
   category: 'stance' | 'raw' | 'direction' | 'motion' | 'state' | 'special';
   command?: string;
+};
+
+type HdVoxelRun = {
+  part: 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+  h: number;
+  d: number;
+  c: number;
+};
+
+type HdVoxelPayload = {
+  format: 'kore-hd-voxels-v1';
+  palette: string[];
+  voxels: HdVoxelRun[];
+  source: {
+    frame: string;
+    width: number;
+    height: number;
+    sampleStep: number;
+  };
+};
+
+const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
+  resolutionScale: 2,
+  maxRows: 64,
+  depth: 0.24,
+  alphaThreshold: 24,
+  paletteSnap: 1,
+  mergeRuns: true,
+  lod: {
+    mobileStep: 2,
+    farStep: 2
+  }
 };
 
 const ANIMATION_STORAGE_KEY = 'kore.animationOverrides';
@@ -379,7 +416,9 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       animationFrames: character.animationFrames ?? {},
       animationFrameRates: character.animationFrameRates ?? {},
       moveOverrides: character.moveOverrides ?? {},
-      spriteFrameEdits: character.spriteFrameEdits ?? {}
+      spriteFrameEdits: character.spriteFrameEdits ?? {},
+      voxelProfile: character.voxelProfile ?? 'image-source',
+      voxelFidelity: character.voxelFidelity ?? defaultVoxelFidelitySettings
     })
   });
   if (!response.ok) throw new Error(await response.text());
@@ -392,6 +431,335 @@ function getFrameIndex(path: string) {
 
 function framePath(character: CharacterDefinition, index: number) {
   return `/characters/${character.id}/frames/frame-${index.toString().padStart(3, '0')}.png`;
+}
+
+function normalizeVoxelFidelity(settings?: VoxelFidelitySettings): Required<VoxelFidelitySettings> {
+  const lod = settings?.lod ?? {};
+  const defaultMobileStep = defaultVoxelFidelitySettings.lod.mobileStep ?? 2;
+  const defaultFarStep = defaultVoxelFidelitySettings.lod.farStep ?? 2;
+  return {
+    resolutionScale: Math.max(1, Math.min(4, Number(settings?.resolutionScale) || defaultVoxelFidelitySettings.resolutionScale)),
+    maxRows: Math.max(24, Math.min(96, Math.round(Number(settings?.maxRows) || defaultVoxelFidelitySettings.maxRows))),
+    depth: Math.max(0.08, Math.min(0.5, Number(settings?.depth) || defaultVoxelFidelitySettings.depth)),
+    alphaThreshold: Math.max(1, Math.min(254, Math.round(Number(settings?.alphaThreshold) || defaultVoxelFidelitySettings.alphaThreshold))),
+    paletteSnap: Math.max(1, Math.min(32, Math.round(Number(settings?.paletteSnap) || defaultVoxelFidelitySettings.paletteSnap))),
+    mergeRuns: settings?.mergeRuns !== false,
+    lod: {
+      mobileStep: Math.max(1, Math.min(4, Math.round(Number(lod.mobileStep) || defaultMobileStep))),
+      farStep: Math.max(1, Math.min(4, Math.round(Number(lod.farStep) || defaultFarStep)))
+    }
+  };
+}
+
+async function saveHdVoxelsToDev(character: CharacterDefinition, onProgress?: (completed: number, total: number) => void) {
+  const frameCount =
+    character.spriteFrameCount ??
+    Math.max(0, ...Object.values(character.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
+  const fidelity = normalizeVoxelFidelity(character.voxelFidelity);
+  const frames: Array<{ frameIndex: number; payload: HdVoxelPayload }> = [];
+  for (let index = 0; index < frameCount; index += 1) {
+    frames.push({
+      frameIndex: index,
+      payload: await buildHdVoxelPayload(framePath(character, index), fidelity)
+    });
+    onProgress?.(index + 1, frameCount);
+  }
+  const response = await fetch('/__kore/dev/save-hd-voxels', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      characterId: character.id,
+      voxelProfile: 'hd-image-source',
+      voxelFidelity: fidelity,
+      frames
+    })
+  });
+  if (!response.ok) throw new Error(await response.text());
+}
+
+async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelitySettings>): Promise<HdVoxelPayload> {
+  const image = new Image();
+  image.crossOrigin = 'anonymous';
+  image.src = src;
+  await image.decode();
+
+  const canvas = document.createElement('canvas');
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return emptyHdVoxelPayload(src, canvas.width, canvas.height, 1);
+  context.imageSmoothingEnabled = false;
+  context.drawImage(image, 0, 0);
+  const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  const background = averageImageCornerColor(imageData);
+  const bounds = getHdForegroundBounds(imageData, background, fidelity.alphaThreshold);
+  if (!bounds) return emptyHdVoxelPayload(src, canvas.width, canvas.height, 1);
+
+  const bboxWidth = bounds.maxX - bounds.minX + 1;
+  const bboxHeight = bounds.maxY - bounds.minY + 1;
+  const targetRows = Math.max(24, Math.min(128, Math.round(fidelity.maxRows * fidelity.resolutionScale)));
+  const sampleStep = Math.max(1, Math.ceil(bboxHeight / targetRows));
+  const rows = Math.max(1, Math.ceil(bboxHeight / sampleStep));
+  const columns = Math.max(1, Math.ceil(bboxWidth / sampleStep));
+  const aspect = bboxWidth / bboxHeight;
+  const maxModelWidth = 2.65;
+  const modelHeight = Math.min(2.08, maxModelWidth / aspect);
+  const modelWidth = modelHeight * aspect;
+  const cellWidth = modelWidth / columns;
+  const cellHeight = modelHeight / rows;
+  const palette: string[] = [];
+  const paletteIndex = new Map<string, number>();
+  const cells: Array<HdVoxelRun & { row: number; column: number }> = [];
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const sample = sampleHdVoxelCell(imageData, bounds, background, fidelity, column, row, columns, rows);
+      if (!sample) continue;
+      const colorIndex = getPaletteIndex(sample.color, palette, paletteIndex);
+      const x = ((column + 0.5) / columns) * modelWidth - modelWidth / 2;
+      const y = modelHeight - (row + 0.5) * cellHeight + 0.02;
+      cells.push({
+        row,
+        column,
+        part: classifyHdVoxelPart(row / rows, (column + 0.5) / columns - 0.5),
+        x: roundVoxelNumber(x),
+        y: roundVoxelNumber(y),
+        z: sample.brightness > 150 ? 0.018 : -0.012,
+        w: roundVoxelNumber(cellWidth * 0.98),
+        h: roundVoxelNumber(cellHeight * 0.98),
+        d: roundVoxelNumber(fidelity.depth * (0.78 + sample.foregroundRatio * 0.22)),
+        c: colorIndex
+      });
+    }
+  }
+
+  return {
+    format: 'kore-hd-voxels-v1',
+    palette,
+    voxels: fidelity.mergeRuns ? mergeHdVoxelRuns(cells, cellWidth) : cells.map(({ row: _row, column: _column, ...cell }) => cell),
+    source: {
+      frame: src,
+      width: canvas.width,
+      height: canvas.height,
+      sampleStep
+    }
+  };
+}
+
+function emptyHdVoxelPayload(frame: string, width: number, height: number, sampleStep: number): HdVoxelPayload {
+  return {
+    format: 'kore-hd-voxels-v1',
+    palette: [],
+    voxels: [],
+    source: { frame, width, height, sampleStep }
+  };
+}
+
+function averageImageCornerColor(imageData: ImageData): [number, number, number] {
+  const { width, height, data } = imageData;
+  const points = [
+    [1, 1],
+    [Math.max(0, width - 2), 1],
+    [1, Math.max(0, height - 2)],
+    [Math.max(0, width - 2), Math.max(0, height - 2)]
+  ];
+  const total = points.reduce(
+    (sum, [x, y]) => {
+      const offset = (y * width + x) * 4;
+      return [sum[0] + data[offset], sum[1] + data[offset + 1], sum[2] + data[offset + 2]];
+    },
+    [0, 0, 0]
+  );
+  return [total[0] / points.length, total[1] / points.length, total[2] / points.length];
+}
+
+function getHdForegroundBounds(imageData: ImageData, background: [number, number, number], alphaThreshold: number) {
+  const { width, height, data } = imageData;
+  const bounds = { minX: width, minY: height, maxX: 0, maxY: 0 };
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const offset = (y * width + x) * 4;
+      if (!isHdForegroundPixel(data[offset], data[offset + 1], data[offset + 2], data[offset + 3], background, alphaThreshold)) continue;
+      bounds.minX = Math.min(bounds.minX, x);
+      bounds.minY = Math.min(bounds.minY, y);
+      bounds.maxX = Math.max(bounds.maxX, x);
+      bounds.maxY = Math.max(bounds.maxY, y);
+    }
+  }
+  return bounds.minX <= bounds.maxX && bounds.minY <= bounds.maxY ? bounds : null;
+}
+
+function sampleHdVoxelCell(
+  imageData: ImageData,
+  bounds: { minX: number; minY: number; maxX: number; maxY: number },
+  background: [number, number, number],
+  fidelity: Required<VoxelFidelitySettings>,
+  column: number,
+  row: number,
+  columns: number,
+  rows: number
+) {
+  const { width, data } = imageData;
+  const cellMinX = Math.floor(bounds.minX + ((bounds.maxX - bounds.minX + 1) * column) / columns);
+  const cellMaxX = Math.min(bounds.maxX, Math.floor(bounds.minX + ((bounds.maxX - bounds.minX + 1) * (column + 1)) / columns));
+  const cellMinY = Math.floor(bounds.minY + ((bounds.maxY - bounds.minY + 1) * row) / rows);
+  const cellMaxY = Math.min(bounds.maxY, Math.floor(bounds.minY + ((bounds.maxY - bounds.minY + 1) * (row + 1)) / rows));
+  let foreground = 0;
+  let coloredForeground = 0;
+  let samples = 0;
+  const colorVotes = new Map<string, number>();
+  const coloredVotes = new Map<string, number>();
+  let brightness = 0;
+
+  for (let y = cellMinY; y <= cellMaxY; y += 1) {
+    for (let x = cellMinX; x <= cellMaxX; x += 1) {
+      const offset = (y * width + x) * 4;
+      samples += 1;
+      const red = data[offset];
+      const green = data[offset + 1];
+      const blue = data[offset + 2];
+      const alpha = data[offset + 3];
+      if (!isHdForegroundPixel(red, green, blue, alpha, background, fidelity.alphaThreshold)) continue;
+      const color = quantizeHdColor(red, green, blue, fidelity.paletteSnap);
+      foreground += 1;
+      brightness += (red + green + blue) / 3;
+      colorVotes.set(color, (colorVotes.get(color) ?? 0) + 1);
+      if (!isDarkOutlinePixel(red, green, blue)) {
+        coloredForeground += 1;
+        coloredVotes.set(color, (coloredVotes.get(color) ?? 0) + 1);
+      }
+    }
+  }
+
+  const foregroundRatio = samples > 0 ? foreground / samples : 0;
+  if (foregroundRatio < 0.12 || foreground === 0) return null;
+  const colorSource = coloredForeground > 0 ? coloredVotes : colorVotes;
+  const votedColor = [...colorSource.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '#ffffff';
+  const centerX = Math.round((cellMinX + cellMaxX) / 2);
+  const centerY = Math.round((cellMinY + cellMaxY) / 2);
+  const color = coloredForeground > 0 ? votedColor : sampleNearbyNonDarkColor(imageData, centerX, centerY, background, fidelity) ?? softenDarkVoxelColor(votedColor);
+  return {
+    color,
+    brightness: brightness / foreground,
+    foregroundRatio
+  };
+}
+
+function isHdForegroundPixel(red: number, green: number, blue: number, alpha: number, background: [number, number, number], alphaThreshold: number) {
+  if (alpha < alphaThreshold) return false;
+  const blueScreen = blue > 150 && blue > red * 1.45 && blue > green * 1.1;
+  const purpleScreen = blue > 120 && red > 90 && green < 140 && Math.abs(red - blue) < 95;
+  if (blueScreen || purpleScreen) return false;
+  const distance = Math.hypot(red - background[0], green - background[1], blue - background[2]);
+  return alpha > 220 || distance > 58;
+}
+
+function isDarkOutlinePixel(red: number, green: number, blue: number) {
+  return red + green + blue < 78;
+}
+
+function sampleNearbyNonDarkColor(
+  imageData: ImageData,
+  centerX: number,
+  centerY: number,
+  background: [number, number, number],
+  fidelity: Required<VoxelFidelitySettings>
+) {
+  const { width, height, data } = imageData;
+  for (let radius = 1; radius <= 8; radius += 1) {
+    const votes = new Map<string, number>();
+    for (let y = Math.max(0, centerY - radius); y <= Math.min(height - 1, centerY + radius); y += 1) {
+      for (let x = Math.max(0, centerX - radius); x <= Math.min(width - 1, centerX + radius); x += 1) {
+        const offset = (y * width + x) * 4;
+        const red = data[offset];
+        const green = data[offset + 1];
+        const blue = data[offset + 2];
+        if (
+          isDarkOutlinePixel(red, green, blue) ||
+          !isHdForegroundPixel(red, green, blue, data[offset + 3], background, fidelity.alphaThreshold)
+        ) {
+          continue;
+        }
+        const color = quantizeHdColor(red, green, blue, fidelity.paletteSnap);
+        votes.set(color, (votes.get(color) ?? 0) + 1);
+      }
+    }
+    const match = [...votes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    if (match) return match;
+  }
+  return null;
+}
+
+function softenDarkVoxelColor(color: string) {
+  const match = color.match(/^#([0-9a-f]{6})$/i);
+  if (!match) return '#303039';
+  const red = parseInt(match[1].slice(0, 2), 16);
+  const green = parseInt(match[1].slice(2, 4), 16);
+  const blue = parseInt(match[1].slice(4, 6), 16);
+  if (red + green + blue >= 78) return color;
+  return '#303039';
+}
+
+function quantizeHdColor(red: number, green: number, blue: number, snap: number) {
+  const quantize = (value: number) => Math.max(0, Math.min(255, Math.round(value / snap) * snap));
+  return `#${[quantize(red), quantize(green), quantize(blue)].map((value) => value.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function getPaletteIndex(color: string, palette: string[], paletteIndex: Map<string, number>) {
+  const existing = paletteIndex.get(color);
+  if (existing !== undefined) return existing;
+  const nextIndex = palette.length;
+  palette.push(color);
+  paletteIndex.set(color, nextIndex);
+  return nextIndex;
+}
+
+function mergeHdVoxelRuns(cells: Array<HdVoxelRun & { row: number; column: number }>, cellWidth: number): HdVoxelRun[] {
+  const sorted = [...cells].sort((a, b) => a.row - b.row || a.column - b.column);
+  const merged: HdVoxelRun[] = [];
+  let run: (HdVoxelRun & { row: number; column: number; count: number }) | null = null;
+  const flush = () => {
+    if (!run) return;
+    const { row: _row, column: _column, count, ...voxel } = run;
+    merged.push({
+      ...voxel,
+      x: roundVoxelNumber(run.x + ((count - 1) * cellWidth) / 2),
+      w: roundVoxelNumber(run.w * count)
+    });
+    run = null;
+  };
+
+  for (const cell of sorted) {
+    const canMerge =
+      run &&
+      run.row === cell.row &&
+      run.column + run.count === cell.column &&
+      run.part === cell.part &&
+      run.c === cell.c &&
+      Math.abs(run.y - cell.y) < 0.0001 &&
+      Math.abs(run.z - cell.z) < 0.0001 &&
+      Math.abs(run.h - cell.h) < 0.0001 &&
+      Math.abs(run.d - cell.d) < 0.0001;
+    if (!canMerge) {
+      flush();
+      run = { ...cell, count: 1 };
+    } else {
+      run!.count += 1;
+    }
+  }
+  flush();
+  return merged;
+}
+
+function classifyHdVoxelPart(topRatio: number, xRatio: number): HdVoxelRun['part'] {
+  if (topRatio < 0.29) return 'head';
+  if (topRatio > 0.58) return xRatio >= 0 ? 'leadLeg' : 'rearLeg';
+  if (Math.abs(xRatio) > 0.26) return xRatio >= 0 ? 'leadArm' : 'rearArm';
+  return 'torso';
+}
+
+function roundVoxelNumber(value: number) {
+  return Number(value.toFixed(5));
 }
 
 function characterPortraitPath(character: CharacterDefinition) {
@@ -2069,6 +2437,9 @@ function CharacterViewer({
   const [spriteFrameMeta, setSpriteFrameMeta] = useState<Record<string, SpriteFrameEdit>>({});
   const [manifestSaveStatus, setManifestSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [spriteSaveStatus, setSpriteSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
+  const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
+  const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
   const active = roster.find((character) => character.id === activeId) ?? roster[0];
   const sourceActive = sourceRoster.find((character) => character.id === active.id) ?? active;
   const isLocalDev = isLocalDevHost();
@@ -2089,6 +2460,13 @@ function CharacterViewer({
   const selectedFrameSet = new Set(selectedFrames);
   const selectedMove = resolveSlotMove(active, selectedSlot);
   const selectedMoveOverride = active.moveOverrides?.[selectedSlot.key] ?? {};
+  const previewCharacter = previewHdVoxels
+    ? {
+        ...active,
+        voxelProfile: 'hd-image-source' as const,
+        voxelFidelity: normalizeVoxelFidelity(active.voxelFidelity)
+      }
+    : active;
   const visibleSlots = animationSlots.filter((slot) => {
     const categoryMatches = slotCategory === 'all' || slot.category === slotCategory;
     const search = slotSearch.trim().toLowerCase();
@@ -2187,6 +2565,28 @@ function CharacterViewer({
     }
   };
 
+  const rebuildHdVoxels = async () => {
+    setHdVoxelStatus('building');
+    setHdVoxelProgress({ completed: 0, total: frameCount });
+    try {
+      await saveHdVoxelsToDev(
+        {
+          ...active,
+          voxelProfile: 'hd-image-source',
+          voxelFidelity: normalizeVoxelFidelity(active.voxelFidelity)
+        },
+        (completed, total) => setHdVoxelProgress({ completed, total })
+      );
+      setPreviewHdVoxels(true);
+      await onImportComplete(active.id);
+      setHdVoxelStatus('saved');
+      window.setTimeout(() => setHdVoxelStatus('idle'), 2200);
+    } catch (error) {
+      console.error('Failed to rebuild HD voxels', error);
+      setHdVoxelStatus('error');
+    }
+  };
+
   const toggleFrame = (path: string) => {
     if (selectedFrameSet.has(path)) {
       if (selectedFrames.length <= 1) return;
@@ -2262,7 +2662,7 @@ function CharacterViewer({
         <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
             <div className="model-viewer-stage">
-              <CharacterPreviewCanvas character={active} pose={selectedSlot.pose} animationKey={selectedSlot.key} rotationTurn={rotationTurn} zoom={zoom} />
+              <CharacterPreviewCanvas character={previewCharacter} pose={selectedSlot.pose} animationKey={selectedSlot.key} rotationTurn={rotationTurn} zoom={zoom} />
             </div>
           )}
           <div className="viewer-actions">
@@ -2298,6 +2698,23 @@ function CharacterViewer({
                       >
                         <Target size={18} />
                         Edit Spritesheet
+                      </button>
+                      <button
+                        className={`secondary-button ${previewHdVoxels ? 'active-tool' : ''}`}
+                        onClick={() => setPreviewHdVoxels((current) => !current)}
+                        data-testid="toggle-hd-voxel-preview"
+                      >
+                        <Eye size={18} />
+                        {previewHdVoxels ? 'HD Preview On' : 'HD Preview'}
+                      </button>
+                      <button
+                        className="secondary-button"
+                        onClick={rebuildHdVoxels}
+                        disabled={hdVoxelStatus === 'building'}
+                        data-testid="rebuild-hd-voxels"
+                      >
+                        <Target size={18} />
+                        {hdVoxelStatus === 'building' ? 'Building HD' : 'Rebuild HD Voxels'}
                       </button>
                     </>
                   )}
@@ -2389,6 +2806,15 @@ function CharacterViewer({
                   {manifestSaveStatus !== 'idle' && (
                     <span className={`manifest-save-status is-${manifestSaveStatus}`}>
                       {manifestSaveStatus === 'saved' ? 'Saved to manifest' : manifestSaveStatus === 'error' ? 'Save failed' : 'Writing'}
+                    </span>
+                  )}
+                  {hdVoxelStatus !== 'idle' && (
+                    <span className={`manifest-save-status is-${hdVoxelStatus === 'saved' ? 'saved' : hdVoxelStatus === 'error' ? 'error' : 'saving'}`}>
+                      {hdVoxelStatus === 'building'
+                        ? `HD ${hdVoxelProgress.completed}/${hdVoxelProgress.total}`
+                        : hdVoxelStatus === 'saved'
+                          ? 'HD voxels saved'
+                          : 'HD build failed'}
                     </span>
                   )}
                 </div>

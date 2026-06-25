@@ -14,6 +14,8 @@ type DevManifestPayload = {
   animationFrameRates?: Record<string, number>;
   moveOverrides?: Record<string, Record<string, unknown>>;
   spriteFrameEdits?: Record<string, Record<string, unknown>>;
+  voxelProfile?: string;
+  voxelFidelity?: Record<string, unknown>;
 };
 
 type DevSpriteFramePayload = {
@@ -21,6 +23,16 @@ type DevSpriteFramePayload = {
   frameIndex?: number;
   edit?: Record<string, unknown>;
   pngDataUrl?: string;
+};
+
+type DevHdVoxelPayload = {
+  characterId?: string;
+  voxelProfile?: string;
+  voxelFidelity?: Record<string, unknown>;
+  frames?: Array<{
+    frameIndex?: number;
+    payload?: Record<string, unknown>;
+  }>;
 };
 
 type DevImportCharacterPayload = {
@@ -86,6 +98,8 @@ function koreDevManifestWriter() {
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
           manifest.spriteFrameEdits = sanitizeSpriteFrameEditMap(payload.spriteFrameEdits ?? {});
+          if (payload.voxelProfile) manifest.voxelProfile = sanitizeVoxelProfile(payload.voxelProfile);
+          if (payload.voxelFidelity) manifest.voxelFidelity = sanitizeVoxelFidelity(payload.voxelFidelity);
           await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 
           response.statusCode = 200;
@@ -161,6 +175,58 @@ function koreDevManifestWriter() {
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: true, characterId, frameIndex, framePath, framesJsonPath, manifestPath }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-hd-voxels', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevHdVoxelPayload;
+          const characterId = payload.characterId ?? '';
+          if (!/^[a-z0-9-]+$/i.test(characterId)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid character id' }));
+            return;
+          }
+          const frames = Array.isArray(payload.frames) ? payload.frames : [];
+          if (frames.length === 0 || frames.length > 2500) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Expected 1-2500 HD voxel frames' }));
+            return;
+          }
+
+          const characterDir = resolve(server.config.root, 'public', 'characters', characterId);
+          const voxelsDir = resolve(characterDir, 'voxels-hd');
+          const manifestPath = resolve(characterDir, 'character.json');
+          await mkdir(voxelsDir, { recursive: true });
+
+          for (const frame of frames) {
+            const frameIndex = Math.round(Number(frame.frameIndex));
+            if (!Number.isFinite(frameIndex) || frameIndex < 0 || frameIndex > 9999 || !frame.payload || typeof frame.payload !== 'object') continue;
+            const framePath = resolve(voxelsDir, `frame-${frameIndex.toString().padStart(3, '0')}.json`);
+            await writeFile(framePath, `${JSON.stringify(sanitizeHdVoxelPayload(frame.payload))}\n`, 'utf8');
+          }
+
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          manifest.voxelProfile = sanitizeVoxelProfile(payload.voxelProfile ?? 'hd-image-source');
+          manifest.voxelFidelity = sanitizeVoxelFidelity(payload.voxelFidelity ?? {});
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, characterId, frameCount: frames.length, voxelsDir, manifestPath }));
         } catch (error) {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
@@ -457,6 +523,57 @@ function sanitizeRateMap(rates: Record<string, number>) {
       .filter(([, value]) => Number.isFinite(value))
       .map(([key, value]) => [key, Number(value)])
   );
+}
+
+function sanitizeVoxelProfile(value: string) {
+  return value === 'hd-image-source' ? 'hd-image-source' : value === 'image-source' ? 'image-source' : 'image-source';
+}
+
+function sanitizeVoxelFidelity(value: Record<string, unknown>) {
+  const lod = value.lod && typeof value.lod === 'object' ? value.lod as Record<string, unknown> : {};
+  return {
+    resolutionScale: Math.max(1, Math.min(4, finiteOr(value.resolutionScale, 2))),
+    maxRows: Math.max(24, Math.min(96, Math.round(finiteOr(value.maxRows, 64)))),
+    depth: Math.max(0.08, Math.min(0.5, finiteOr(value.depth, 0.24))),
+    alphaThreshold: Math.max(1, Math.min(254, Math.round(finiteOr(value.alphaThreshold, 24)))),
+    paletteSnap: Math.max(1, Math.min(32, Math.round(finiteOr(value.paletteSnap, 1)))),
+    mergeRuns: value.mergeRuns !== false,
+    lod: {
+      mobileStep: Math.max(1, Math.min(4, Math.round(finiteOr(lod.mobileStep, 2)))),
+      farStep: Math.max(1, Math.min(4, Math.round(finiteOr(lod.farStep, 2))))
+    }
+  };
+}
+
+function sanitizeHdVoxelPayload(payload: Record<string, unknown>) {
+  const palette = Array.isArray(payload.palette)
+    ? payload.palette.filter((color): color is string => typeof color === 'string' && /^#[0-9a-f]{6}$/i.test(color)).slice(0, 512)
+    : [];
+  const allowedParts = new Set(['head', 'torso', 'leadArm', 'rearArm', 'leadLeg', 'rearLeg']);
+  const voxels = Array.isArray(payload.voxels)
+    ? payload.voxels
+        .filter((voxel): voxel is Record<string, unknown> => Boolean(voxel) && typeof voxel === 'object')
+        .map((voxel) => {
+          const part = typeof voxel.part === 'string' && allowedParts.has(voxel.part) ? voxel.part : 'torso';
+          return {
+            part,
+            x: Number(finiteOr(voxel.x, 0).toFixed(5)),
+            y: Number(finiteOr(voxel.y, 0).toFixed(5)),
+            z: Number(finiteOr(voxel.z, 0).toFixed(5)),
+            w: Number(Math.max(0.001, finiteOr(voxel.w, 0.05)).toFixed(5)),
+            h: Number(Math.max(0.001, finiteOr(voxel.h, 0.05)).toFixed(5)),
+            d: Number(Math.max(0.001, finiteOr(voxel.d, 0.18)).toFixed(5)),
+            c: Math.max(0, Math.min(Math.max(0, palette.length - 1), Math.round(finiteOr(voxel.c, 0))))
+          };
+        })
+        .slice(0, 12000)
+    : [];
+  return {
+    format: 'kore-hd-voxels-v1',
+    palette,
+    voxels,
+    source: payload.source && typeof payload.source === 'object' ? payload.source : undefined
+  };
 }
 
 function sanitizeSpriteFrameEditMap(edits: Record<string, Record<string, unknown>>) {

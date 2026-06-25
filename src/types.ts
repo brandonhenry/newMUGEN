@@ -112,6 +112,19 @@ export type SpriteFrameEdit = {
   hidden?: boolean;
 };
 
+export type VoxelFidelitySettings = {
+  resolutionScale?: number;
+  maxRows?: number;
+  depth?: number;
+  alphaThreshold?: number;
+  paletteSnap?: number;
+  mergeRuns?: boolean;
+  lod?: {
+    mobileStep?: number;
+    farStep?: number;
+  };
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -120,7 +133,8 @@ export type CharacterDefinition = {
   spriteSheetPath?: string;
   spriteFrameCount?: number;
   spriteFrameEdits?: Record<string, SpriteFrameEdit>;
-  voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source';
+  voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source' | 'hd-image-source';
+  voxelFidelity?: VoxelFidelitySettings;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   animationFps?: number;
