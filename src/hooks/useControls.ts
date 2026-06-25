@@ -10,21 +10,39 @@ const aiModeArrowKeys: Record<string, ActionName> = {
   ArrowRight: 'right'
 };
 
-type VerticalTapState = {
+type VerticalInputSource = 'keyboard' | 'virtual';
+
+export type VerticalTapState = {
   lastUpTap: number;
   lastDownTap: number;
   laneDirection: -1 | 0 | 1;
+  laneMode: 'none' | 'holdCandidate' | 'walk';
+  laneStartedAt: number;
+  laneStepConsumed: boolean;
+  heldAction: 'up' | 'down' | null;
+  source: VerticalInputSource | null;
 };
 
-const DOUBLE_TAP_MS = 1000;
+const DOUBLE_TAP_MS = 280;
+const LANE_HOLD_MS = 135;
+
+export function createVerticalTapState(): VerticalTapState {
+  return {
+    lastUpTap: Number.NEGATIVE_INFINITY,
+    lastDownTap: Number.NEGATIVE_INFINITY,
+    laneDirection: 0,
+    laneMode: 'none',
+    laneStartedAt: Number.NEGATIVE_INFINITY,
+    laneStepConsumed: false,
+    heldAction: null,
+    source: null
+  };
+}
 
 export function useControls(mode: MatchMode, controls: ControlBindingMap = defaultGameSettings.controls) {
   const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const virtualRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
-  const verticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([
-    { lastUpTap: Number.NEGATIVE_INFINITY, lastDownTap: Number.NEGATIVE_INFINITY, laneDirection: 0 },
-    { lastUpTap: Number.NEGATIVE_INFINITY, lastDownTap: Number.NEGATIVE_INFINITY, laneDirection: 0 }
-  ]);
+  const verticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
   const lastInputRef = useRef('none');
   const modeRef = useRef(mode);
   const controlsRef = useRef(controls);
@@ -42,7 +60,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       const bindings = getKeyboardBindingsForEvent(event, modeRef.current, controlsRef.current);
       for (const binding of bindings) {
         const playerIndex = binding.player - 1;
-        if (!applyVerticalTap(inputRefs.current[playerIndex], verticalTapRefs.current[playerIndex], binding.action, pressed)) {
+        if (!applyVerticalTap(inputRefs.current[playerIndex], verticalTapRefs.current[playerIndex], binding.action, pressed, 'keyboard')) {
           inputRefs.current[playerIndex][binding.action] = pressed;
         }
         if (pressed) lastInputRef.current = `p${binding.player}:${binding.action}`;
@@ -68,9 +86,14 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
     const pads = navigator.getGamepads?.() ?? [];
     const merged: [InputFrame, InputFrame] = [emptyInputFrame(), emptyInputFrame()];
     for (let player = 0; player < 2; player += 1) {
+      const now = performance.now();
+      prepareVerticalTapForRead(inputRefs.current[player], verticalTapRefs.current[player], 'keyboard', now);
+      prepareVerticalTapForRead(virtualRefs.current[player], verticalTapRefs.current[player], 'virtual', now);
       for (const action of Object.keys(merged[player]) as ActionName[]) {
         merged[player][action] = inputRefs.current[player][action] || virtualRefs.current[player][action];
       }
+      consumeVerticalTapAfterRead(inputRefs.current[player], verticalTapRefs.current[player], 'keyboard');
+      consumeVerticalTapAfterRead(virtualRefs.current[player], verticalTapRefs.current[player], 'virtual');
       const pad = pads[player];
       if (pad) {
         const horizontal = pad.axes[0] ?? 0;
@@ -89,7 +112,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   }, []);
 
   const setVirtualAction = useCallback((player: 1 | 2, action: ActionName, pressed: boolean) => {
-    if (!applyVerticalTap(virtualRefs.current[player - 1], verticalTapRefs.current[player - 1], action, pressed)) {
+    if (!applyVerticalTap(virtualRefs.current[player - 1], verticalTapRefs.current[player - 1], action, pressed, 'virtual')) {
       virtualRefs.current[player - 1][action] = pressed;
     }
   }, []);
@@ -133,34 +156,100 @@ function findActionForKey(bindings: PlayerControlBindings | Record<string, Actio
   return undefined;
 }
 
-function applyVerticalTap(input: InputFrame, state: VerticalTapState, action: ActionName, pressed: boolean) {
+export function applyVerticalTap(
+  input: InputFrame,
+  state: VerticalTapState,
+  action: ActionName,
+  pressed: boolean,
+  source: VerticalInputSource = 'keyboard',
+  now = performance.now()
+) {
   if (action !== 'up' && action !== 'down') return false;
-  const now = performance.now();
+  const sidestepAction = action === 'up' ? 'sidestepUp' : 'sidestepDown';
   const laneAction = action === 'up' ? 'sidewalkUp' : 'sidewalkDown';
+  const oppositeSidestepAction = action === 'up' ? 'sidestepDown' : 'sidestepUp';
   const oppositeLaneAction = action === 'up' ? 'sidewalkDown' : 'sidewalkUp';
   const direction = action === 'up' ? -1 : 1;
   const lastTapKey = action === 'up' ? 'lastUpTap' : 'lastDownTap';
 
   if (pressed) {
-    if (input[action] || input[laneAction]) return true;
+    if (state.heldAction === action && state.source === source) return true;
     if (now - state[lastTapKey] <= DOUBLE_TAP_MS) {
       input[action] = false;
-      input[laneAction] = true;
+      input[sidestepAction] = true;
+      input[laneAction] = false;
+      input[oppositeSidestepAction] = false;
       input[oppositeLaneAction] = false;
       state.laneDirection = direction;
+      state.laneMode = 'holdCandidate';
+      state.laneStartedAt = now;
+      state.laneStepConsumed = false;
+      state.heldAction = action;
+      state.source = source;
       state[lastTapKey] = Number.NEGATIVE_INFINITY;
     } else {
+      resetLaneState(input, state, source);
       input[action] = true;
+      input[sidestepAction] = false;
       input[laneAction] = false;
-      state.laneDirection = 0;
+      state.heldAction = action;
+      state.source = source;
       state[lastTapKey] = now;
     }
   } else {
     input[action] = false;
-    if (state.laneDirection === direction) {
-      input[laneAction] = false;
-      state.laneDirection = 0;
-    }
+    if (state.heldAction !== action || state.source !== source) return true;
+    input[sidestepAction] = false;
+    input[laneAction] = false;
+    state.heldAction = null;
+    if (state.laneDirection === direction) resetLaneState(input, state, source);
   }
   return true;
+}
+
+export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource, now = performance.now()) {
+  if (state.source !== source || state.laneDirection === 0 || state.laneMode === 'none') return;
+  const action = state.laneDirection < 0 ? 'up' : 'down';
+  const sidestepAction = action === 'up' ? 'sidestepUp' : 'sidestepDown';
+  const laneAction = action === 'up' ? 'sidewalkUp' : 'sidewalkDown';
+
+  if (state.laneMode === 'holdCandidate') {
+    if (!state.laneStepConsumed) {
+      input[sidestepAction] = true;
+      input[laneAction] = false;
+      return;
+    }
+    if (state.heldAction === action && now - state.laneStartedAt >= LANE_HOLD_MS) {
+      input[sidestepAction] = false;
+      input[laneAction] = true;
+      state.laneMode = 'walk';
+    }
+  }
+
+  if (state.laneMode === 'walk') {
+    input[sidestepAction] = false;
+    input[laneAction] = state.heldAction === action;
+  }
+}
+
+export function consumeVerticalTapAfterRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource) {
+  if (state.source !== source || state.laneDirection === 0 || state.laneMode !== 'holdCandidate' || state.laneStepConsumed) return;
+  const action = state.laneDirection < 0 ? 'up' : 'down';
+  const sidestepAction = action === 'up' ? 'sidestepUp' : 'sidestepDown';
+  if (!input[sidestepAction]) return;
+  input[sidestepAction] = false;
+  state.laneStepConsumed = true;
+}
+
+function resetLaneState(input: InputFrame, state: VerticalTapState, source: VerticalInputSource) {
+  if (state.source !== source && state.source !== null) return;
+  input.sidestepUp = false;
+  input.sidestepDown = false;
+  input.sidewalkUp = false;
+  input.sidewalkDown = false;
+  state.laneDirection = 0;
+  state.laneMode = 'none';
+  state.laneStartedAt = Number.NEGATIVE_INFINITY;
+  state.laneStepConsumed = false;
+  state.source = null;
 }

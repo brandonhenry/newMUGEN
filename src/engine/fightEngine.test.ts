@@ -3,7 +3,13 @@ import { starterCharacters } from '../data/characters';
 import { stages } from '../data/stages';
 import { normalizeMove, validateCharacter } from '../lib/characterLoader';
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from '../lib/gameSettings';
-import { getKeyboardBindingsForEvent } from '../hooks/useControls';
+import {
+  applyVerticalTap,
+  consumeVerticalTapAfterRead,
+  createVerticalTapState,
+  getKeyboardBindingsForEvent,
+  prepareVerticalTapForRead
+} from '../hooks/useControls';
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition } from '../types';
 import { createMatch, stepMatch } from './fightEngine';
 
@@ -55,6 +61,72 @@ describe('character manifests', () => {
     const event = new KeyboardEvent('keydown', { code: 'KeyP', key: 'p' });
 
     expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([{ player: 1, action: 'jab' }]);
+  });
+
+  it('keeps single up and down presses as jump and crouch', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
+    expect(input.up).toBe(true);
+    expect(input.sidestepUp).toBe(false);
+    expect(input.sidewalkUp).toBe(false);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 140);
+
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 520);
+    expect(input.down).toBe(true);
+    expect(input.sidestepDown).toBe(false);
+    expect(input.sidewalkDown).toBe(false);
+  });
+
+  it('turns double tap up or down into one lane step', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 130);
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 210);
+    prepareVerticalTapForRead(input, state, 'keyboard', 211);
+    expect(input.up).toBe(false);
+    expect(input.sidestepUp).toBe(true);
+    expect(input.sidewalkUp).toBe(false);
+
+    consumeVerticalTapAfterRead(input, state, 'keyboard');
+    prepareVerticalTapForRead(input, state, 'keyboard', 240);
+    expect(input.sidestepUp).toBe(false);
+    expect(input.sidewalkUp).toBe(false);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 250);
+
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 500);
+    applyVerticalTap(input, state, 'down', false, 'keyboard', 530);
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 610);
+    prepareVerticalTapForRead(input, state, 'keyboard', 611);
+    expect(input.down).toBe(false);
+    expect(input.sidestepDown).toBe(true);
+    expect(input.sidewalkDown).toBe(false);
+  });
+
+  it('promotes the held second vertical tap into continuous lane walking until release', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 100);
+    applyVerticalTap(input, state, 'down', false, 'keyboard', 125);
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 200);
+    prepareVerticalTapForRead(input, state, 'keyboard', 201);
+    consumeVerticalTapAfterRead(input, state, 'keyboard');
+
+    prepareVerticalTapForRead(input, state, 'keyboard', 360);
+    expect(input.sidestepDown).toBe(false);
+    expect(input.sidewalkDown).toBe(true);
+
+    applyVerticalTap(input, state, 'down', false, 'keyboard', 390);
+    expect(input.sidewalkDown).toBe(false);
+
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 700);
+    expect(input.down).toBe(true);
+    expect(input.sidestepDown).toBe(false);
+    expect(input.sidewalkDown).toBe(false);
   });
 });
 
