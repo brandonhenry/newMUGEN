@@ -252,12 +252,15 @@ export type FighterRuntime = {
   actionFramesRemaining: number;
   moveFrame: number;
   hitConnected: boolean;
+  hitConfirmed: boolean;
   previewAnimationKey?: string;
   commandHistory: Array<{ token: string; age: number }>;
   previousDirectionToken: string;
   comboTimer: number;
   comboStep: number;
   comboSequence: MoveInput[];
+  comboUsedKeys: string[];
+  aiRecentComboKeys: string[];
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;
   roundsWon: number;

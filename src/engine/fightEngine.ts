@@ -27,6 +27,7 @@ const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
 const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
+const AI_RECENT_MEMORY_LIMIT = 8;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const limbNames: Record<MoveInput, string> = {
@@ -143,11 +144,14 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     actionFramesRemaining: 0,
     moveFrame: 0,
     hitConnected: false,
+    hitConfirmed: false,
     commandHistory: [],
     previousDirectionToken: 'N',
     comboTimer: 0,
     comboStep: 0,
     comboSequence: [],
+    comboUsedKeys: [],
+    aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
     roundsWon: 0,
@@ -173,6 +177,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
   fighter.comboTimer = Math.max(0, fighter.comboTimer - dt);
+  if (fighter.comboTimer === 0 && fighter.state !== 'attack') {
+    fighter.comboStep = 0;
+    fighter.comboSequence = [];
+    fighter.comboUsedKeys = [];
+  }
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
@@ -185,6 +194,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     if (fighter.actionFramesRemaining === 0 && fighter.state !== 'knockdown') {
       fighter.currentMove = null;
       fighter.hitConnected = false;
+      fighter.hitConfirmed = false;
       fighter.moveFrame = 0;
       fighter.state = 'idle';
     }
@@ -193,6 +203,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     if (fighter.actionTimer === 0 && fighter.state !== 'knockdown') {
       fighter.currentMove = null;
       fighter.hitConnected = false;
+      fighter.hitConfirmed = false;
       fighter.moveFrame = 0;
       fighter.state = 'idle';
     }
@@ -351,12 +362,12 @@ function canComboCancel(fighter: FighterRuntime) {
   if (!move) return false;
   const cancelWindow = move.cancelWindows?.find((window) => fighter.moveFrame >= window.startFrame && fighter.moveFrame <= window.endFrame);
   if (cancelWindow) return true;
-  return fighter.moveFrame >= move.startupFrames;
+  return fighter.hitConfirmed && fighter.moveFrame >= move.startupFrames;
 }
 
-function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput) {
+function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput): boolean {
   const baseMove = fighter.character.moves.find((candidate) => candidate.input === moveInput);
-  if (!baseMove) return;
+  if (!baseMove) return false;
 
   const command = findConfiguredCommand(fighter, opponent, input, moveInput);
   const route = getComboRoute(fighter, opponent, input);
@@ -364,6 +375,9 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const comboStep = continuing ? Math.min(5, fighter.comboStep + 1) : 1;
   const sequence = continuing ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
+  const identity = getMoveIdentity(move);
+  if (continuing && fighter.comboUsedKeys.includes(identity)) return false;
+  fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
 
   fighter.currentMove = move;
   fighter.state = 'attack';
@@ -371,15 +385,18 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
   fighter.moveFrame = 0;
   fighter.hitConnected = false;
+  fighter.hitConfirmed = false;
   fighter.comboTimer = COMBO_WINDOW;
   fighter.comboStep = comboStep;
   fighter.comboSequence = sequence;
+  if (!continuing) fighter.comboUsedKeys = [];
 
   const forwardNudge = route.toward ? 0.18 : route.away ? -0.08 : 0;
   const specialNudge = moveInput === 'special' ? 0.18 : 0;
   if (forwardNudge || specialNudge) {
     moveAlongOpponentAxis(fighter, opponent, forwardNudge + specialNudge);
   }
+  return true;
 }
 
 function buildComboMove(
@@ -492,6 +509,14 @@ function applyMoveOverrides(
     pushback: Math.max(0, merged.pushback),
     blockPushback: Math.max(0, merged.blockPushback)
   };
+}
+
+function getMoveIdentity(move: MoveDefinition) {
+  return move.command ?? `${move.route ?? 'neutral'}:${move.input}`;
+}
+
+function addRecentComboKey(keys: string[], key: string) {
+  return [...keys.filter((candidate) => candidate !== key), key].slice(-AI_RECENT_MEMORY_LIMIT);
 }
 
 const inputToButton: Record<MoveInput, string> = {
@@ -654,6 +679,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const attackerRemaining = Math.max(0, attacker.actionFramesRemaining || secondsToFrames(attacker.actionTimer));
 
   if (blocked) {
+    attacker.hitConfirmed = false;
     defender.hp = Math.max(0, defender.hp - move.blockDamage);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + move.onBlockFrames);
     defender.stunFramesRemaining = 0;
@@ -664,6 +690,13 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.position.z += pushZ * move.blockPushback * 0.14;
     return;
   }
+
+  attacker.hitConfirmed = true;
+  const identity = getMoveIdentity(move);
+  if (!attacker.comboUsedKeys.includes(identity)) {
+    attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
+  }
+  attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
 
   const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
@@ -920,7 +953,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const comboPhase = positiveModulo(elapsed + ai.slot * 0.11, settings.comboCycle);
   const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp), 100);
   const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp), 100);
-  const selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector);
+  const selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
   const selectedMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? ai.character.moves[0] ?? null;
   const shouldContinueCombo = ai.comboTimer > 0 && ai.comboStep < settings.maxComboSteps;
   const selectedMoveReach = (selectedMove?.range ?? 1.35) + settings.rangeBuffer + (shouldContinueCombo ? 0.26 : 0);
@@ -984,20 +1017,45 @@ function chooseAiMoveInput(
   ai: FighterRuntime,
   profile: CharacterDefinition['aiProfile'],
   settings: ReturnType<typeof getCpuDifficultySettings>,
-  selector: number
+  selector: number,
+  routeRoll: number
 ): MoveInput {
+  const availableInputs = moveInputs.filter((input) => ai.character.moves.some((move) => move.input === input));
+  if (availableInputs.length === 0) return 'jab';
+
   if (ai.comboTimer > 0 && ai.comboStep > 0) {
     const sequence = ai.comboSequence;
     const previous = sequence[sequence.length - 1];
-    if (settings.maxComboSteps >= 4 && previous === 'jab') return selector > 54 ? 'heavy' : 'jab';
-    if (settings.maxComboSteps >= 3 && previous === 'kick') return selector > 62 ? 'special' : 'kick';
+    const preferred = settings.maxComboSteps >= 4 && previous === 'jab' ? (selector > 54 ? 'heavy' : 'kick') : settings.maxComboSteps >= 3 && previous === 'kick' ? (selector > 62 ? 'special' : 'heavy') : null;
+    if (preferred && availableInputs.includes(preferred) && !inputAlreadyUsedInCombo(ai, preferred)) return preferred;
   }
 
-  const specialThreshold = 100 - Math.min(0.7, profile.specialChance * settings.specialScale) * 100;
-  if (selector > specialThreshold) return 'special';
-  if (selector > settings.heavyThreshold) return 'heavy';
-  if (selector > settings.kickThreshold) return 'kick';
-  return 'jab';
+  const scored = availableInputs.map((input, index) => {
+    const isRecent = ai.aiRecentComboKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
+    const comboRepeat = inputAlreadyUsedInCombo(ai, input);
+    const wave = positiveModulo(selector + routeRoll * (index + 2) + ai.slot * 13 + input.length * 17, 100) / 100;
+    const base =
+      input === 'jab'
+        ? 0.58
+        : input === 'kick'
+          ? settings.kickPreference
+          : input === 'heavy'
+            ? settings.heavyPreference
+            : Math.min(0.9, profile.specialChance * settings.specialScale + 0.16);
+    const recentPenalty = isRecent ? settings.recentPenalty : 0;
+    const comboPenalty = comboRepeat ? 1.2 : 0;
+    return {
+      input,
+      score: base + wave * settings.varietyRoll - recentPenalty - comboPenalty
+    };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored[0]?.input ?? availableInputs[0];
+}
+
+function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {
+  return ai.comboUsedKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
 }
 
 function getCpuDifficultySettings(difficulty: CpuDifficulty) {
@@ -1017,6 +1075,10 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     rangeBuffer: lerp(0.08, 0.28, t),
     runInBuffer: lerp(0.92, 0.36, t),
     specialScale: lerp(0.35, 1.55, t),
+    recentPenalty: lerp(0.26, 0.54, t),
+    varietyRoll: lerp(0.18, 0.42, t),
+    kickPreference: lerp(0.4, 0.58, t),
+    heavyPreference: lerp(0.24, 0.62, t),
     heavyThreshold: Math.round(lerp(88, 58, t)),
     kickThreshold: Math.round(lerp(66, 36, t))
   };
@@ -1102,7 +1164,12 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       ...fighter,
       character: fighter.character,
       position: { ...fighter.position },
-      currentMove: fighter.currentMove
+      currentMove: fighter.currentMove,
+      commandHistory: fighter.commandHistory.map((entry) => ({ ...entry })),
+      comboSequence: [...fighter.comboSequence],
+      comboUsedKeys: [...fighter.comboUsedKeys],
+      aiRecentComboKeys: [...fighter.aiRecentComboKeys],
+      previousAttackInputs: { ...fighter.previousAttackInputs }
     })) as [FighterRuntime, FighterRuntime]
   };
 }

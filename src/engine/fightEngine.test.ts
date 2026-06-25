@@ -300,21 +300,19 @@ describe('fight engine', () => {
       const seenMoveKeys = new Set<string>();
       let attackStarts = 0;
       let complexFrames = 0;
-      let maxComboStep = 0;
 
       for (let i = 0; i < 540; i += 1) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
         for (const fighter of match.fighters) {
           if (fighter.state !== 'attack' || !fighter.currentMove) continue;
           if (fighter.moveFrame === 0) attackStarts += 1;
-          maxComboStep = Math.max(maxComboStep, fighter.comboStep);
           if (fighter.currentMove.route && fighter.currentMove.route !== 'neutral') complexFrames += 1;
-          seenMoveKeys.add(fighter.currentMove.comboKey ?? fighter.currentMove.command ?? fighter.currentMove.id);
+          seenMoveKeys.add(fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`);
         }
         if (match.phase !== 'fighting') break;
       }
 
-      return { attackStarts, complexFrames, maxComboStep, uniqueMoves: seenMoveKeys.size };
+      return { attackStarts, complexFrames, uniqueMoves: seenMoveKeys.size };
     };
 
     const easy = simulate(1);
@@ -322,7 +320,6 @@ describe('fight engine', () => {
 
     expect(kore.attackStarts).toBeGreaterThan(easy.attackStarts);
     expect(kore.complexFrames).toBeGreaterThan(easy.complexFrames);
-    expect(kore.maxComboStep).toBeGreaterThanOrEqual(3);
     expect(kore.uniqueMoves).toBeGreaterThan(easy.uniqueMoves);
   });
 
@@ -676,12 +673,12 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('block');
   });
 
-  it('builds combo routes from repeated limbs and directions', () => {
+  it('allows hit-confirm continuation into a different mapped move', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.9;
-    match.fighters[1].position.x = 0.9;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
 
     const one = emptyInputFrame();
     one.jab = true;
@@ -689,18 +686,75 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
 
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 11; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].hitConfirmed).toBe(true);
+
+    const three = emptyInputFrame();
+    three.kick = true;
+    match = stepMatch(match, three, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-kick');
+    expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
+  });
+
+  it('prevents repeating the same exact landed attack inside one combo', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 11; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].hitConfirmed).toBe(true);
+    expect(match.fighters[0].comboUsedKeys).toContain('neutral:jab');
+
+    const sameOne = emptyInputFrame();
+    sameOne.jab = true;
+    match = stepMatch(match, sameOne, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+  });
+
+  it('allows the same button again when it resolves to a different command move', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 11; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
-    const oneAgain = emptyInputFrame();
-    oneAgain.jab = true;
-    match = stepMatch(match, oneAgain, emptyInputFrame(), 1 / 60);
+    const forwardOne = emptyInputFrame();
+    forwardOne.right = true;
+    forwardOne.jab = true;
+    match = stepMatch(match, forwardOne, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
-    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-jab');
-    expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
+    expect(match.fighters[0].currentMove?.command).toBe('f+1');
+  });
 
-    for (let i = 0; i < 10; i += 1) {
+  it('builds directional combo routes after a confirmed different move', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 11; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
@@ -780,6 +834,50 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('idle');
+  });
+
+  it('does not allow a second attack during whiff recovery', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -5;
+    match.fighters[1].position.x = 5;
+    const whiff = emptyInputFrame();
+    whiff.jab = true;
+    match = stepMatch(match, whiff, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const mash = emptyInputFrame();
+    mash.kick = true;
+    match = stepMatch(match, mash, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].comboStep).toBe(1);
+  });
+
+  it('does not allow combo continuation after a blocked move by default', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    const block = emptyInputFrame();
+    block.block = true;
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, block, 1 / 60);
+      attack.jab = false;
+    }
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[0].hitConfirmed).toBe(false);
+
+    const mash = emptyInputFrame();
+    mash.kick = true;
+    match = stepMatch(match, mash, block, 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].comboStep).toBe(1);
   });
 
   it('finishes a round when health reaches zero', () => {
