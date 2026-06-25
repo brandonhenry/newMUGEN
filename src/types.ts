@@ -279,6 +279,8 @@ export type FighterRuntime = {
   comboUsedKeys: string[];
   comboHits: number;
   comboDamage: number;
+  bufferedMoveInput: MoveInput | null;
+  bufferedMoveFrames: number;
   aiRecentComboKeys: string[];
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;

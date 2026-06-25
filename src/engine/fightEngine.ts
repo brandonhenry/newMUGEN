@@ -44,6 +44,8 @@ const KI_HIT_GAIN = 9;
 const KI_BLOCK_GAIN = 4;
 const KI_DEFENDER_BLOCK_GAIN = 5;
 const KI_BURST_COST = 30;
+const ATTACK_BUFFER_FRAMES = 16;
+const MAX_COMBO_STEPS = 6;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const limbNames: Record<MoveInput, string> = {
@@ -185,6 +187,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     comboUsedKeys: [],
     comboHits: 0,
     comboDamage: 0,
+    bufferedMoveInput: null,
+    bufferedMoveFrames: 0,
     aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
@@ -211,6 +215,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.jumpInputHeld = input.up;
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
+  fighter.bufferedMoveFrames = Math.max(0, fighter.bufferedMoveFrames - frameDelta);
+  if (fighter.bufferedMoveFrames === 0) fighter.bufferedMoveInput = null;
   fighter.comboTimer = Math.max(0, fighter.comboTimer - dt);
   if (fighter.comboTimer === 0 && fighter.state !== 'attack') {
     fighter.comboStep = 0;
@@ -223,6 +229,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
   const freshMoveInput = getFreshMoveInput(fighter, input);
+  if (freshMoveInput) bufferMoveInput(fighter, freshMoveInput);
 
   if (fighter.actionFramesRemaining > 0) {
     fighter.moveFrame += frameDelta;
@@ -288,8 +295,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.state === 'attack' && (fighter.actionFramesRemaining > 0 || fighter.actionTimer > 0)) {
-    if (freshMoveInput && canComboCancel(fighter)) {
-      startComboAttack(fighter, opponent, input, freshMoveInput);
+    const bufferedMove = fighter.bufferedMoveInput;
+    if (bufferedMove && canComboCancel(fighter) && startComboAttack(fighter, opponent, input, bufferedMove, 'cancel')) {
+      clearBufferedMoveInput(fighter);
       applyGravity(fighter, dt);
       updateAttackInputMemory(fighter, input);
       return;
@@ -305,9 +313,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
-  const moveInput = freshMoveInput;
+  const moveInput = fighter.bufferedMoveInput ?? freshMoveInput;
   if (moveInput) {
-    startComboAttack(fighter, opponent, input, moveInput);
+    if (startComboAttack(fighter, opponent, input, moveInput, fighter.comboTimer > 0 ? 'link' : 'neutral')) {
+      clearBufferedMoveInput(fighter);
+    }
     applyGravity(fighter, dt);
     updateAttackInputMemory(fighter, input);
     return;
@@ -376,6 +386,16 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   updateAttackInputMemory(fighter, input);
 }
 
+function bufferMoveInput(fighter: FighterRuntime, moveInput: MoveInput) {
+  fighter.bufferedMoveInput = moveInput;
+  fighter.bufferedMoveFrames = ATTACK_BUFFER_FRAMES;
+}
+
+function clearBufferedMoveInput(fighter: FighterRuntime) {
+  fighter.bufferedMoveInput = null;
+  fighter.bufferedMoveFrames = 0;
+}
+
 function getFreshMoveInput(fighter: FighterRuntime, input: InputFrame): MoveInput | null {
   return moveInputs.find((action) => input[action] && !fighter.previousAttackInputs[action]) ?? null;
 }
@@ -424,25 +444,25 @@ function canComboCancel(fighter: FighterRuntime) {
   if (!move) return false;
   const cancelWindow = move.cancelWindows?.find((window) => fighter.moveFrame >= window.startFrame && fighter.moveFrame <= window.endFrame);
   if (cancelWindow) return true;
-  return fighter.hitConfirmed && fighter.moveFrame >= move.startupFrames;
+  return fighter.hitConfirmed && fighter.moveFrame >= move.startupFrames + move.activeFrames;
 }
 
-function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput): boolean {
+function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput, chainMode: 'neutral' | 'cancel' | 'link' = 'neutral'): boolean {
   const baseMove = fighter.character.moves.find((candidate) => candidate.input === moveInput);
   if (!baseMove) return false;
 
   const route = getComboRoute(fighter, opponent, input);
   const cancelingCurrentAttack = fighter.state === 'attack' && (fighter.actionFramesRemaining > 0 || fighter.actionTimer > 0);
   const continuing = cancelingCurrentAttack || fighter.comboTimer > 0;
-  const comboStep = continuing ? Math.min(5, fighter.comboStep + 1) : 1;
+  const comboStep = continuing ? Math.min(MAX_COMBO_STEPS, fighter.comboStep + 1) : 1;
   const sequence = continuing ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
   const command = findConfiguredCommand(fighter, opponent, input, moveInput);
-  if (!command && (cancelingCurrentAttack || hasCommandInputIntent(fighter, opponent, input, moveInput))) return false;
+  if (continuing && !canChainInto(fighter, chainMode)) return false;
+  if (!command && hasCommandInputIntent(fighter, opponent, input, moveInput)) return false;
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
   const charged = input.charge && fighter.ki >= KI_BURST_COST;
   const resolvedMove = charged ? buildKiBurstMove(move) : move;
   const identity = getMoveIdentity(move);
-  if (cancelingCurrentAttack && fighter.comboUsedKeys.includes(identity)) return false;
   fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
   if (charged) fighter.ki = clamp(fighter.ki - KI_BURST_COST, 0, KI_MAX);
 
@@ -459,11 +479,23 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   fighter.comboSequence = sequence;
   if (!continuing) fighter.comboUsedKeys = [];
 
-  const forwardNudge = route.toward ? 0.18 : route.away ? -0.08 : 0;
+  const forwardNudge = route.toward ? 0.18 : route.away ? -0.08 : continuing ? 0.16 : 0;
   const specialNudge = moveInput === 'special' ? 0.18 : 0;
   if (forwardNudge || specialNudge) {
     moveAlongOpponentAxis(fighter, opponent, forwardNudge + specialNudge);
   }
+  return true;
+}
+
+function canChainInto(fighter: FighterRuntime, chainMode: 'neutral' | 'cancel' | 'link') {
+  if (chainMode === 'neutral') return true;
+  const current = fighter.currentMove;
+  if (chainMode === 'cancel') {
+    if (!current || !fighter.hitConfirmed) return false;
+    const cancelWindow = current.cancelWindows?.find((window) => fighter.moveFrame >= window.startFrame && fighter.moveFrame <= window.endFrame);
+    return Boolean(cancelWindow) || fighter.moveFrame >= current.startupFrames + current.activeFrames;
+  }
+  if (fighter.comboTimer <= 0 || fighter.comboHits <= 0 || fighter.stunFramesRemaining > 0 || fighter.blockstunFramesRemaining > 0 || fighter.state === 'knockdown') return false;
   return true;
 }
 
@@ -496,13 +528,13 @@ function buildComboMove(
   sequence: MoveInput[],
   command?: CommandCandidate | null
 ): MoveDefinition {
-  const sequenceBonus = Math.min(0.32, (comboStep - 1) * 0.08);
+  const sequenceBonus = Math.min(0.38, (comboStep - 1) * 0.075);
   const repeatBonus = sequence.length >= 2 && sequence[sequence.length - 1] === sequence[sequence.length - 2] ? 0.06 : 0;
   const lowBonus = route.low ? 0.08 : 0;
   const launcherBonus = route.launcher ? 0.1 : 0;
   const damageScale = 1 + sequenceBonus + repeatBonus + lowBonus + launcherBonus;
   const speedScale = route.toward ? 0.9 : route.away ? 1.08 : route.low ? 1.04 : 1;
-  const rangeBonus = route.toward ? 0.26 : route.low ? 0.12 : route.launcher ? 0.18 : 0;
+  const rangeBonus = (route.toward ? 0.26 : route.low ? 0.12 : route.launcher ? 0.18 : 0) + Math.min(0.5, Math.max(0, comboStep - 1) * 0.14);
   const pushBonus = route.toward ? 0.24 : route.away ? 0.08 : route.launcher ? 0.32 : 0;
   const commandKey = command?.animationKey;
   const generatedComboKey = command ? `${command.notation}:${sequence.join('-')}` : `${route.key}:${sequence.join('-')}`;
@@ -518,7 +550,7 @@ function buildComboMove(
     comboStep,
     route: route.key,
     startupFrames: Math.max(4, Math.round(baseMove.startupFrames * speedScale - Math.min(3, comboStep - 1))),
-    activeFrames: baseMove.activeFrames + (comboStep > 2 ? 1 : 0),
+    activeFrames: baseMove.activeFrames + (comboStep > 2 ? 1 : 0) + (comboStep >= 5 ? 1 : 0),
     recoveryFrames: Math.max(8, Math.round(baseMove.recoveryFrames * (route.away ? 0.92 : 1) - Math.min(4, comboStep - 1))),
     damage: Math.round(baseMove.damage * damageScale),
     blockDamage: Math.max(baseMove.blockDamage, Math.round(baseMove.blockDamage * (1 + sequenceBonus * 0.55))),
@@ -530,7 +562,7 @@ function buildComboMove(
     onCounterHitFrames: baseMove.onCounterHitFrames + Math.min(7, comboStep + 1) + (route.launcher ? 5 : 0),
     hitLevel: route.low ? 'low' : baseMove.hitLevel,
     launchHeight: route.launcher ? Math.max(baseMove.launchHeight ?? 0, 2.1) : baseMove.launchHeight,
-    knockdown: baseMove.knockdown || comboStep >= 5,
+    knockdown: baseMove.knockdown || comboStep >= MAX_COMBO_STEPS,
     hitbox: {
       offset: [
         baseMove.hitbox.offset[0],
@@ -1228,8 +1260,9 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const pressureAccepted = (difficulty >= 5 && opening.kind === 'hitstun') || pressureRoll < settings.pressureResponse;
   const pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
-  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (opening.kind === 'hitstun' ? 0.24 : 0);
-  const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * PRESSURE_LANE_TOLERANCE;
+  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
+  const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
+  const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
     input.block = false;
     input[awayKey] = false;
@@ -1284,7 +1317,16 @@ function chooseAiMoveInput(
   if (ai.comboTimer > 0 && ai.comboStep > 0) {
     const sequence = ai.comboSequence;
     const previous = sequence[sequence.length - 1];
-    const preferred = settings.maxComboSteps >= 4 && previous === 'jab' ? (selector > 54 ? 'heavy' : 'kick') : settings.maxComboSteps >= 3 && previous === 'kick' ? (selector > 62 ? 'special' : 'heavy') : null;
+    const preferred =
+      settings.maxComboSteps >= 5 && previous === 'heavy'
+        ? (selector > 55 ? 'special' : 'kick')
+        : settings.maxComboSteps >= 4 && previous === 'jab'
+          ? (selector > 54 ? 'heavy' : 'kick')
+          : settings.maxComboSteps >= 3 && previous === 'kick'
+            ? (selector > 62 ? 'special' : 'heavy')
+            : settings.maxComboSteps >= 2 && previous === 'jab'
+              ? 'kick'
+              : null;
     if (preferred && availableInputs.includes(preferred) && !inputAlreadyUsedInCombo(ai, preferred)) return preferred;
   }
 
@@ -1390,9 +1432,9 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     attackCycle: lerp(1.3, 0.42, t),
     aggressionCycleBonus: lerp(0.07, 0.18, t),
     attackPulse: lerp(0.045, 0.12, t),
-    comboCycle: lerp(0.54, 0.21, t),
-    comboPulse: lerp(0.035, 0.105, t),
-    maxComboSteps: Math.round(lerp(1, 5, t)),
+    comboCycle: lerp(0.58, 0.16, t),
+    comboPulse: lerp(0.04, 0.22, t),
+    maxComboSteps: Math.round(lerp(2, MAX_COMBO_STEPS, t)),
     guardBonus: lerp(-0.2, 0.5, t),
     punishResponse: lerp(0.08, 0.98, t),
     pressureResponse: lerp(0.08, 0.96, t),

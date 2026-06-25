@@ -410,6 +410,37 @@ describe('fight engine', () => {
     expect(stepOpening(1).fighters[0].currentMove).toBeNull();
   });
 
+  it('higher CPU difficulty extends hit-confirmed routes longer than easy CPU', () => {
+    const simulatePressure = (difficulty: 1 | 5) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].hp = 999;
+      match.fighters[1].hp = 999;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      match.fighters[0].comboTimer = 0.5;
+      match.fighters[0].comboStep = 1;
+      match.fighters[0].comboSequence = ['jab'];
+      match.fighters[0].comboHits = 1;
+      match.fighters[1].state = 'hit';
+      match.fighters[1].stunFramesRemaining = 180;
+      match.fighters[1].actionFramesRemaining = 180;
+      match.fighters[1].stunTimer = 3;
+      match.fighters[1].actionTimer = 3;
+      let peakStep = match.fighters[0].comboStep;
+
+      for (let i = 0; i < 180; i += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        peakStep = Math.max(peakStep, match.fighters[0].comboStep);
+      }
+
+      return peakStep;
+    };
+
+    expect(simulatePressure(5)).toBeGreaterThan(simulatePressure(1));
+  });
+
   it('prevents CPU jump decisions even at high difficulty', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
     match.phase = 'fighting';
@@ -850,7 +881,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('block');
   });
 
-  it('does not allow unauthored neutral continuation during recovery', () => {
+  it('buffers player attack inputs and chains them after a confirmed hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -863,7 +894,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
 
-    for (let i = 0; i < 11; i += 1) {
+    for (let i = 0; i < 20; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
     expect(match.fighters[0].hitConfirmed).toBe(true);
@@ -871,12 +902,71 @@ describe('fight engine', () => {
     const three = emptyInputFrame();
     three.kick = true;
     match = stepMatch(match, three, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
-    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
+  });
+
+  it('expires buffered attack inputs if no chain window opens', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -5;
+    match.fighters[1].position.x = 5;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+    const earlyKick = emptyInputFrame();
+    earlyKick.kick = true;
+    match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
+
+    for (let i = 0; i < 20; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
     expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
 
-  it('prevents repeating the same exact landed attack as a direct cancel before recovery', () => {
+  it('allows a four-hit player string when frame data keeps the route valid', () => {
+    const frameDataComboCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 3,
+        activeFrames: 3,
+        recoveryFrames: 8,
+        onHitFrames: 28,
+        onCounterHitFrames: 32,
+        range: 3,
+        pushback: 0.08,
+        launchHeight: undefined,
+        knockdown: false
+      }))
+    };
+    let match = createMatch(frameDataComboCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const route: Array<keyof ReturnType<typeof emptyInputFrame>> = ['jab', 'kick', 'jab', 'special'];
+
+    route.forEach((button, index) => {
+      const input = emptyInputFrame();
+      input[button] = true;
+      match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      for (let i = 0; i < 18 && match.fighters[0].comboStep < index + 1; i += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+    });
+
+    expect(match.fighters[0].comboStep).toBeGreaterThanOrEqual(4);
+    expect(match.fighters[0].comboSequence.slice(0, 4)).toEqual(['jab', 'kick', 'jab', 'special']);
+  });
+
+  it('allows repeating the same exact landed attack when frame data allows direct cancel timing', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -895,8 +985,8 @@ describe('fight engine', () => {
     const sameOne = emptyInputFrame();
     sameOne.jab = true;
     match = stepMatch(match, sameOne, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
-    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-jab');
   });
 
   it('allows the same attack again after recovery when hit advantage keeps the defender stuck', () => {

@@ -398,6 +398,8 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     comboUsedKeys: [],
     comboHits: 0,
     comboDamage: 0,
+    bufferedMoveInput: null,
+    bufferedMoveFrames: 0,
     aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
