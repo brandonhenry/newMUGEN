@@ -3343,16 +3343,17 @@ button {
 
 .fight-hud {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  right: 16px;
+  top: 14px;
+  left: 18px;
+  right: 18px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) clamp(126px, 13vw, 178px) minmax(0, 1fr);
   align-items: start;
-  gap: 12px;
+  gap: 18px;
   pointer-events: none;
   transform: scale(var(--hud-scale, 1));
   transform-origin: top center;
+  z-index: 12;
 }
 
 .health {
@@ -3373,7 +3374,7 @@ button {
   display: flex;
   align-items: end;
   gap: 11px;
-  min-height: 82px;
+  min-height: 78px;
 }
 
 .health.right .health-identity {
@@ -3382,8 +3383,8 @@ button {
 
 .hud-portrait {
   position: relative;
-  width: clamp(76px, 8.5vw, 112px);
-  height: clamp(64px, 6.8vw, 88px);
+  width: clamp(78px, 8vw, 104px);
+  height: clamp(62px, 6.3vw, 82px);
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.58);
   border-bottom-color: rgba(255, 126, 36, 0.94);
@@ -3404,13 +3405,13 @@ button {
 .hud-portrait img {
   position: absolute;
   left: 50%;
-  top: -18%;
-  width: 150%;
+  top: 50%;
+  width: 82%;
   height: auto;
   max-width: none;
   image-rendering: pixelated;
-  transform: translateX(-50%) scale(2.35);
-  transform-origin: top center;
+  transform: translate(-50%, -48%) scale(1.7);
+  transform-origin: center center;
   filter: saturate(1.12) contrast(1.08);
 }
 
@@ -3538,15 +3539,20 @@ button {
 .round-box {
   display: grid;
   place-items: center;
-  min-height: 58px;
+  align-self: start;
+  justify-self: center;
+  min-height: 78px;
+  min-width: clamp(126px, 13vw, 178px);
+  margin-top: clamp(58px, 6.4vw, 72px);
   background: transparent;
   box-shadow: none;
   font-variant-numeric: tabular-nums;
+  z-index: 14;
 }
 
 .round-box strong {
   color: #4a1714;
-  font-size: clamp(42px, 5vw, 72px);
+  font-size: clamp(68px, 8.2vw, 112px);
   font-weight: 950;
   line-height: 1;
   letter-spacing: 0;
@@ -3559,12 +3565,14 @@ button {
 
 .combat-popup-layer {
   position: absolute;
-  inset: 112px 24px auto;
+  top: clamp(178px, 22vh, 240px);
+  left: 26px;
+  right: 26px;
   display: grid;
   grid-template-columns: minmax(180px, 310px) minmax(180px, 310px);
   justify-content: space-between;
   pointer-events: none;
-  z-index: 7;
+  z-index: 9;
 }
 
 .combat-popup-column {
@@ -3685,7 +3693,7 @@ button {
 @keyframes combatPopupFloat {
   0% {
     opacity: 0;
-    transform: translateY(22px) scale(0.92);
+    transform: translateY(-14px) scale(0.92);
     filter: blur(4px);
   }
 
@@ -3697,12 +3705,12 @@ button {
 
   72% {
     opacity: 1;
-    transform: translateY(-10px) scale(1);
+    transform: translateY(10px) scale(1);
   }
 
   100% {
     opacity: 0;
-    transform: translateY(-36px) scale(0.96);
+    transform: translateY(28px) scale(0.96);
   }
 }
 
@@ -4134,19 +4142,53 @@ button {
   }
 
   .fight-hud {
-    grid-template-columns: minmax(0, 1fr) 66px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
     gap: 7px;
     left: 8px;
     right: 8px;
     top: 8px;
   }
 
+  .health-identity {
+    min-height: 54px;
+    gap: 6px;
+  }
+
+  .hud-portrait {
+    width: 50px;
+    height: 42px;
+  }
+
   .health-label {
     font-size: 12px;
+    min-width: 72px;
+    padding: 5px 9px 4px;
+  }
+
+  .health-label strong {
+    font-size: 0.86rem;
   }
 
   .round-box {
     min-height: 52px;
+    min-width: 76px;
+  }
+
+  .round-box strong {
+    font-size: 52px;
+    -webkit-text-stroke-width: 2px;
+  }
+
+  .combat-popup-layer {
+    top: 132px;
+    left: 12px;
+    right: 12px;
+    grid-template-columns: minmax(128px, 1fr) minmax(128px, 1fr);
+  }
+
+  .combat-popup-card {
+    min-width: min(220px, 46vw);
+    padding: 10px 12px;
   }
 
   .match-message {
