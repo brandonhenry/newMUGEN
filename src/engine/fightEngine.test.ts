@@ -419,8 +419,8 @@ describe('fight engine', () => {
     }
 
     expect(match.lastHitId).toBeGreaterThan(0);
-    expect(match.fighters[0].hp).toBeLessThan(startHp[0]);
-    expect(match.fighters[1].hp).toBeLessThan(startHp[1]);
+    const totalDamage = startHp[0] - match.fighters[0].hp + (startHp[1] - match.fighters[1].hp);
+    expect(totalDamage).toBeGreaterThan(0);
   });
 
   it('keeps CPU fighters from attacking until their selected move is in range', () => {
@@ -1030,6 +1030,33 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].state).toBe('attack');
     expect(match.fighters[1].currentMove?.input).toBe('jab');
+  });
+
+  it('keeps max difficulty CPUs imperfect across repeated punish windows', () => {
+    let punishStarts = 0;
+    const attempts = 48;
+
+    for (let i = 0; i < attempts; i += 1) {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.timer = match.roundTime - i * 0.23;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = starterCharacters[0].moves[0];
+      match.fighters[0].actionFramesRemaining = 18;
+      match.fighters[0].actionTimer = 18 / 60;
+      match.fighters[0].moveFrame = starterCharacters[0].moves[0].startupFrames + starterCharacters[0].moves[0].activeFrames + 1;
+      match.fighters[0].hitConnected = true;
+      match.fighters[1].blockPunishWindowFrames = 12;
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[1].state === 'attack') punishStarts += 1;
+    }
+
+    expect(punishStarts).toBeGreaterThan(Math.floor(attempts * 0.55));
+    expect(punishStarts).toBeLessThan(attempts);
   });
 
   it('makes low difficulty CPUs miss more post-block punish windows', () => {

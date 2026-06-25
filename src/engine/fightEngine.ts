@@ -46,6 +46,7 @@ const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
 const PRESSURE_LANE_TOLERANCE = 0.82;
+const AI_DECISION_BUCKETS_PER_SECOND = 4;
 const KI_MAX = 100;
 const KI_CHARGE_PER_SECOND = 28;
 const KI_HIT_GAIN = 9;
@@ -1800,7 +1801,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const comboPhase = positiveModulo(elapsed + ai.slot * 0.11, settings.comboCycle);
   const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp), 100);
   const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp), 100);
-  const selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
+  let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
+  if (aiDecisionRoll(ai, opponent, elapsed, 6) < settings.suboptimalMoveRate) {
+    selectedMoveInput = chooseAiImperfectMoveInput(ai, selectedMoveInput, selector, routeRoll);
+  }
   const selectedMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? ai.character.moves[0] ?? null;
   const shouldContinueCombo = ai.comboTimer > 0 && ai.comboStep < settings.maxComboSteps;
   const selectedMoveReach = (selectedMove?.range ?? 1.35) + settings.rangeBuffer + (shouldContinueCombo ? 0.26 : 0);
@@ -1814,7 +1818,11 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const farAway = distance > selectedMoveReach + settings.runInBuffer;
   const resetRhythm = Math.sin(elapsed * 1.17 + ai.slot * 1.9);
 
-  if (farAway) {
+  const spacingMistake = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 2) < settings.spacingMistakeRate;
+  if (spacingMistake && !farAway && distance < selectedMoveReach + 0.95) {
+    input[awayKey] = true;
+    input[towardKey] = false;
+  } else if (farAway) {
     input[towardKey] = true;
   } else if (tooFar && resetRhythm > -0.42) {
     input[towardKey] = true;
@@ -1843,8 +1851,12 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const canAttemptCancel = shouldContinueCombo && canComboCancel(ai);
   const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown';
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
-  const punishAccepted = punishRoll < settings.punishResponse;
-  const punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
+  const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3) < settings.punishDropRate;
+  const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;
+  let punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
+  if (aiDecisionRoll(ai, opponent, elapsed, 7) < settings.suboptimalPunishRate) {
+    punishMoveInput = chooseAiImperfectMoveInput(ai, punishMoveInput, selector + 13, routeRoll + 7);
+  }
   const punishMove = ai.character.moves.find((move) => move.input === punishMoveInput) ?? selectedMove;
   const punishReach = (punishMove?.range ?? 1.28) + settings.rangeBuffer;
   const punishReady = punishAccepted && ai.blockPunishWindowFrames > 0 && canStartAction && canAct && opponent.state === 'attack' && opponent.actionFramesRemaining > 0;
@@ -1869,8 +1881,14 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
 
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
   const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
-  const pressureAccepted = pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - (leaderBrake ? settings.leaderPressurePenalty * 1.6 : 0));
-  const pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
+  const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4) < settings.pressureDropRate;
+  const pressureAccepted =
+    !pressureDropped &&
+    pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - (leaderBrake ? settings.leaderPressurePenalty * 1.6 : 0));
+  let pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
+  if (aiDecisionRoll(ai, opponent, elapsed, 8) < settings.suboptimalPressureRate) {
+    pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
+  }
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
   const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
@@ -1901,7 +1919,8 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   }
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
-  const canPressure = !missedKnownOpening && !input.block && canAct && inStrikeRange && !tooClose;
+  const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5) < settings.attackHesitationRate;
+  const canPressure = !missedKnownOpening && !attackHesitation && !input.block && canAct && inStrikeRange && !tooClose;
   const attackPulse = attackPhase < settings.attackPulse * (leaderBrake ? 0.38 : 1) || (shouldContinueCombo && comboPhase < settings.comboPulse * (leaderBrake ? 0.48 : 1));
   if (canPressure && attackPulse) {
     applyAiRoute(ai, input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
@@ -1965,6 +1984,13 @@ function chooseAiMoveInput(
 
   scored.sort((a, b) => b.score - a.score);
   return scored[0]?.input ?? availableInputs[0];
+}
+
+function chooseAiImperfectMoveInput(ai: FighterRuntime, preferred: MoveInput, selector: number, routeRoll: number): MoveInput {
+  const availableInputs = moveInputs.filter((input) => input !== preferred && ai.character.moves.some((move) => move.input === input));
+  if (availableInputs.length === 0) return preferred;
+  const index = positiveModulo(selector + routeRoll * 3 + ai.slot * 11 + Math.floor(ai.hp), availableInputs.length);
+  return availableInputs[index] ?? preferred;
 }
 
 function chooseAiPunishMoveInput(ai: FighterRuntime, difficulty: CpuDifficulty, selector: number, routeRoll: number): MoveInput {
@@ -2061,6 +2087,23 @@ function getAdjustedPressureResponse(ai: FighterRuntime, opening: AiOpening, set
   return clamp(settings.pressureResponse + hitstunBonus - fatiguePenalty, 0.04, 0.92);
 }
 
+function canMakeAiDecisionMistake(ai: FighterRuntime) {
+  return ai.actionFramesRemaining === 0 && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown' && ai.state !== 'juggle';
+}
+
+function aiDecisionRoll(ai: FighterRuntime, opponent: FighterRuntime, elapsed: number, salt: number) {
+  const bucket = Math.floor(elapsed * AI_DECISION_BUCKETS_PER_SECOND);
+  const seed =
+    bucket * 12.9898 +
+    ai.slot * 78.233 +
+    opponent.slot * 37.719 +
+    Math.floor(ai.hp) * 0.117 +
+    Math.floor(opponent.hp) * 0.173 +
+    salt * 19.19;
+  const raw = Math.sin(seed) * 43758.5453;
+  return raw - Math.floor(raw);
+}
+
 function getCpuDifficultySettings(difficulty: CpuDifficulty) {
   const level = clamp(difficulty, 1, 5);
   const t = (level - 1) / 4;
@@ -2074,6 +2117,13 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     guardBonus: lerp(-0.2, 0.5, t),
     punishResponse: lerp(0.08, 0.98, t),
     pressureResponse: lerp(0.08, 0.96, t),
+    punishDropRate: lerp(0.6, 0.1, t),
+    pressureDropRate: lerp(0.52, 0.12, t),
+    attackHesitationRate: lerp(0.36, 0.08, t),
+    spacingMistakeRate: lerp(0.28, 0.06, t),
+    suboptimalMoveRate: lerp(0.5, 0.14, t),
+    suboptimalPunishRate: lerp(0.5, 0.12, t),
+    suboptimalPressureRate: lerp(0.46, 0.12, t),
     hitstunPressureBonus: lerp(0.02, 0.08, t),
     stalePressurePenalty: lerp(0.08, 0.24, t),
     leaderPressurePenalty: lerp(0.08, 0.22, t),
