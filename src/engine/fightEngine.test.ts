@@ -323,6 +323,25 @@ describe('fight engine', () => {
     expect(kore.uniqueMoves).toBeGreaterThan(easy.uniqueMoves);
   });
 
+  it('prevents CPU jump decisions even at high difficulty', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    let jumpFrames = 0;
+
+    for (let i = 0; i < 720; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters.some((fighter) => fighter.state === 'jump' || fighter.position.y > 0 || fighter.velocityY !== 0)) {
+        jumpFrames += 1;
+      }
+      if (match.phase !== 'fighting') break;
+    }
+
+    expect(jumpFrames).toBe(0);
+  });
+
   it('makes CPU fighters block incoming close attacks', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu');
     match.phase = 'fighting';

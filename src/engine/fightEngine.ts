@@ -1081,6 +1081,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     }
   }
 
+  input.up = false;
   return input;
 }
 
@@ -1185,8 +1186,7 @@ function applyAiRoute(
   }
 
   if (difficulty >= 3 && routeRoll > 52) {
-    input.down = routeRoll < 76;
-    input.up = routeRoll >= 76 && routeRoll < 88;
+    input.down = true;
   }
 
   if (difficulty >= 4 && routeRoll > 68) {
@@ -1196,11 +1196,6 @@ function applyAiRoute(
 
   if (difficulty >= 5) {
     if (comboStep >= 2 && selector > 34) input[towardKey] = true;
-    if (routeRoll > 88) {
-      input.up = true;
-      input.down = false;
-      input[towardKey] = true;
-    }
   }
 }
 
