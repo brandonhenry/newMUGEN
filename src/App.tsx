@@ -631,12 +631,9 @@ function sampleHdVoxelCell(
   const foregroundRatio = samples > 0 ? foreground / samples : 0;
   if (foregroundRatio < 0.12 || foreground === 0) return null;
   const color = [...colorVotes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '#ffffff';
-  const centerX = Math.round((cellMinX + cellMaxX) / 2);
-  const centerY = Math.round((cellMinY + cellMaxY) / 2);
-  const sideColor = sampleNearbyBleedColor(imageData, centerX, centerY, background, fidelity) ?? color;
   return {
     color,
-    sideColor,
+    sideColor: color,
     brightness: brightness / foreground,
     foregroundRatio
   };
@@ -650,43 +647,6 @@ function isHdForegroundPixel(red: number, green: number, blue: number, alpha: nu
   if (blueScreen || purpleScreen) return false;
   const distance = Math.hypot(red - background[0], green - background[1], blue - background[2]);
   return alpha > 220 || distance > 58;
-}
-
-function isDarkVoxelColor(red: number, green: number, blue: number) {
-  return red + green + blue < 78;
-}
-
-function sampleNearbyBleedColor(
-  imageData: ImageData,
-  centerX: number,
-  centerY: number,
-  background: [number, number, number],
-  fidelity: Required<VoxelFidelitySettings>
-) {
-  const { width, height, data } = imageData;
-  for (let radius = 1; radius <= 6; radius += 1) {
-    const votes = new Map<string, number>();
-    for (let y = Math.max(0, centerY - radius); y <= Math.min(height - 1, centerY + radius); y += 1) {
-      for (let x = Math.max(0, centerX - radius); x <= Math.min(width - 1, centerX + radius); x += 1) {
-        const offset = (y * width + x) * 4;
-        const red = data[offset];
-        const green = data[offset + 1];
-        const blue = data[offset + 2];
-        const alpha = data[offset + 3];
-        if (
-          isDarkVoxelColor(red, green, blue) ||
-          !isHdForegroundPixel(red, green, blue, alpha, background, fidelity.alphaThreshold)
-        ) {
-          continue;
-        }
-        const color = quantizeHdColor(red, green, blue, fidelity.paletteSnap);
-        votes.set(color, (votes.get(color) ?? 0) + 1);
-      }
-    }
-    const winner = [...votes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
-    if (winner) return winner;
-  }
-  return null;
 }
 
 function quantizeHdColor(red: number, green: number, blue: number, snap: number) {

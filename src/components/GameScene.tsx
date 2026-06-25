@@ -1041,7 +1041,7 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
     const geometry = baseGeometry.clone();
     const renderVoxel = normalizeImageVoxelForRender(voxel);
     const color = new THREE.Color(renderVoxel.color);
-    const sideColor = new THREE.Color(renderVoxel.sideColor ?? renderVoxel.color);
+    const sideColor = new THREE.Color(renderVoxel.color);
     const normals = geometry.getAttribute('normal');
     const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
     for (let index = 0; index < colors.length; index += 3) {
