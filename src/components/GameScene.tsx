@@ -780,9 +780,10 @@ function FighterRig({ fighter }: { fighter: FighterRuntime }) {
   const progress = activeMoveProgress(fighter);
   useFrame((state) => {
     if (!group.current) return;
+    const liveProgress = activeMoveProgress(fighter);
     const bob = fighter.state === 'idle' ? Math.sin(state.clock.elapsedTime * 4 + fighter.slot) * 0.025 : 0;
     const hitLean = fighter.state === 'hit' ? -fighter.facing * 0.16 : 0;
-    const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(progress * Math.PI) * 0.2 : 0;
+    const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
     group.current.position.set(fighter.position.x, fighter.position.y + bob, fighter.position.z);
     group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : 0, fighter.facingYaw, hitLean + attackLean);
   });
@@ -817,6 +818,10 @@ type ImageVoxel = {
 };
 
 const imageVoxelCache = new Map<string, Promise<ImageVoxel[]>>();
+const IMAGE_VOXEL_PIXEL_SCALE = 1.2;
+const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
+const IMAGE_VOXEL_MIN_DEPTH = 0.14;
+const IMAGE_VOXEL_MAX_DEPTH = 0.28;
 
 function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; progress: number }) {
   const root = useRef<THREE.Group>(null);
@@ -845,14 +850,15 @@ function ImageVoxelFighter({ fighter, progress }: { fighter: FighterRuntime; pro
 
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
-    const nextFrameSrc = getImageVoxelFramePath(fighter, progress, t);
+    const liveProgress = activeMoveProgress(fighter);
+    const nextFrameSrc = getImageVoxelFramePath(fighter, liveProgress, t);
     if (nextFrameSrc !== activeFrameSrc.current) {
       activeFrameSrc.current = nextFrameSrc;
       setFrameSrc(nextFrameSrc);
     }
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
-    const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const crouch = fighter.state === 'crouch' ? 1 : 0;
     const hit = 0;
@@ -996,7 +1002,8 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
   const baseGeometry = new THREE.BoxGeometry(1, 1, 1);
   const geometries = part.voxels.map((voxel) => {
     const geometry = baseGeometry.clone();
-    const color = new THREE.Color(voxel.color);
+    const renderVoxel = normalizeImageVoxelForRender(voxel);
+    const color = new THREE.Color(renderVoxel.color);
     const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
     for (let index = 0; index < colors.length; index += 3) {
       colors[index] = color.r;
@@ -1006,9 +1013,13 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     geometry.applyMatrix4(
       new THREE.Matrix4().compose(
-        new THREE.Vector3(voxel.position[0] - part.anchor[0], voxel.position[1] - part.anchor[1], voxel.position[2] - part.anchor[2]),
+        new THREE.Vector3(
+          renderVoxel.position[0] - part.anchor[0],
+          renderVoxel.position[1] - part.anchor[1],
+          renderVoxel.position[2] - part.anchor[2]
+        ),
         new THREE.Quaternion(),
-        new THREE.Vector3(voxel.size[0], voxel.size[1], voxel.size[2])
+        new THREE.Vector3(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2])
       )
     );
     return geometry;
@@ -1026,6 +1037,28 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   return mesh;
+}
+
+function normalizeImageVoxelForRender(voxel: ImageVoxel): ImageVoxel {
+  const depth = THREE.MathUtils.clamp(voxel.size[2] * IMAGE_VOXEL_DEPTH_SCALE, IMAGE_VOXEL_MIN_DEPTH, IMAGE_VOXEL_MAX_DEPTH);
+  return {
+    ...voxel,
+    position: [
+      voxel.position[0],
+      voxel.position[1],
+      THREE.MathUtils.clamp(voxel.position[2] * 0.28, -0.018, 0.018)
+    ],
+    size: [voxel.size[0] * IMAGE_VOXEL_PIXEL_SCALE, voxel.size[1] * IMAGE_VOXEL_PIXEL_SCALE, depth],
+    color: enhanceVoxelColor(voxel.color)
+  };
+}
+
+function enhanceVoxelColor(color: string) {
+  const source = new THREE.Color(color);
+  const hsl = { h: 0, s: 0, l: 0 };
+  source.getHSL(hsl);
+  source.setHSL(hsl.h, Math.min(1, hsl.s * 1.12), Math.min(0.86, Math.max(0.045, hsl.l * 1.08 + 0.025)));
+  return `#${source.getHexString()}`;
 }
 
 function buildVoxelParts(voxels: ImageVoxel[]) {
@@ -1244,9 +1277,10 @@ function VoxelSpriteFighter({ fighter, progress }: { fighter: FighterRuntime; pr
 
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
+    const liveProgress = activeMoveProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
-    const attack = fighter.state === 'attack' ? Math.sin(progress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' ? 1 : 0;
     const crouch = fighter.state === 'crouch' ? 1 : 0;
     const hit = 0;
