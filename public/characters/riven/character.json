@@ -247,18 +247,27 @@
       "/characters/riven/frames/frame-124.png"
     ],
     "heavy": [
-      "/characters/riven/frames/frame-130.png",
-      "/characters/riven/frames/frame-131.png",
-      "/characters/riven/frames/frame-132.png",
-      "/characters/riven/frames/frame-133.png",
-      "/characters/riven/frames/frame-134.png",
-      "/characters/riven/frames/frame-135.png"
+      "/characters/riven/frames/frame-135.png",
+      "/characters/riven/frames/frame-081.png",
+      "/characters/riven/frames/frame-082.png",
+      "/characters/riven/frames/frame-083.png",
+      "/characters/riven/frames/frame-084.png",
+      "/characters/riven/frames/frame-085.png",
+      "/characters/riven/frames/frame-086.png",
+      "/characters/riven/frames/frame-087.png",
+      "/characters/riven/frames/frame-088.png",
+      "/characters/riven/frames/frame-089.png",
+      "/characters/riven/frames/frame-090.png"
     ],
     "special": [
-      "/characters/riven/frames/frame-145.png",
-      "/characters/riven/frames/frame-146.png",
-      "/characters/riven/frames/frame-147.png",
-      "/characters/riven/frames/frame-148.png"
+      "/characters/riven/frames/frame-092.png",
+      "/characters/riven/frames/frame-093.png",
+      "/characters/riven/frames/frame-094.png",
+      "/characters/riven/frames/frame-095.png",
+      "/characters/riven/frames/frame-096.png",
+      "/characters/riven/frames/frame-097.png",
+      "/characters/riven/frames/frame-098.png",
+      "/characters/riven/frames/frame-099.png"
     ],
     "hitLight": [
       "/characters/riven/frames/frame-029.png",
@@ -329,7 +338,7 @@
     "crouch": 4,
     "jump": 8,
     "block": 5,
-    "jab": 11,
+    "jab": 10.5,
     "kick": 10,
     "heavy": 10,
     "special": 11,
@@ -343,6 +352,10 @@
     "cmd:qcf+3": 10,
     "cmd:SS+4": 11
   },
-  "moveOverrides": {},
+  "moveOverrides": {
+    "jab": {
+      "startupFrames": 9
+    }
+  },
   "spriteFrameEdits": {}
 }

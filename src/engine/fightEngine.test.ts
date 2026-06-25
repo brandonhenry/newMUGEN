@@ -906,6 +906,37 @@ describe('fight engine', () => {
     expect(match.fighters[0].ki).toBeGreaterThan(0);
   });
 
+  it('builds a smaller amount of ki for the defender when blocking', () => {
+    let hitMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    hitMatch.phase = 'fighting';
+    hitMatch.countdown = 0;
+    hitMatch.fighters[0].position.x = -0.45;
+    hitMatch.fighters[1].position.x = 0.45;
+    const hitAttack = emptyInputFrame();
+    hitAttack.jab = true;
+    hitMatch = stepMatch(hitMatch, hitAttack, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 14; i += 1) {
+      hitMatch = stepMatch(hitMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    let blockMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    blockMatch.phase = 'fighting';
+    blockMatch.countdown = 0;
+    blockMatch.fighters[0].position.x = -0.45;
+    blockMatch.fighters[1].position.x = 0.45;
+    const blockAttack = emptyInputFrame();
+    blockAttack.jab = true;
+    const block = emptyInputFrame();
+    block.block = true;
+    blockMatch = stepMatch(blockMatch, blockAttack, block, 1 / 60);
+    for (let i = 0; i < 14; i += 1) {
+      blockMatch = stepMatch(blockMatch, emptyInputFrame(), block, 1 / 60);
+    }
+
+    expect(blockMatch.fighters[1].ki).toBeGreaterThan(0);
+    expect(blockMatch.fighters[1].ki).toBeLessThan(hitMatch.fighters[0].ki);
+  });
+
   it('spends ki on charge plus attack for a powered move', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
