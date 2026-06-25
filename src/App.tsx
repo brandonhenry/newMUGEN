@@ -81,6 +81,7 @@ type HdVoxelRun = {
   h: number;
   d: number;
   c: number;
+  s?: number;
 };
 
 type HdVoxelPayload = {
@@ -516,6 +517,7 @@ async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelity
       const sample = sampleHdVoxelCell(imageData, bounds, background, fidelity, column, row, columns, rows);
       if (!sample) continue;
       const colorIndex = getPaletteIndex(sample.color, palette, paletteIndex);
+      const sideColorIndex = getPaletteIndex(sample.sideColor, palette, paletteIndex);
       const x = ((column + 0.5) / columns) * modelWidth - modelWidth / 2;
       const y = modelHeight - (row + 0.5) * cellHeight + 0.02;
       cells.push({
@@ -528,7 +530,8 @@ async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelity
         w: roundVoxelNumber(cellWidth * 0.98),
         h: roundVoxelNumber(cellHeight * 0.98),
         d: roundVoxelNumber(fidelity.depth * (0.78 + sample.foregroundRatio * 0.22)),
-        c: colorIndex
+        c: colorIndex,
+        s: sideColorIndex
       });
     }
   }
@@ -628,8 +631,12 @@ function sampleHdVoxelCell(
   const foregroundRatio = samples > 0 ? foreground / samples : 0;
   if (foregroundRatio < 0.12 || foreground === 0) return null;
   const color = [...colorVotes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '#ffffff';
+  const centerX = Math.round((cellMinX + cellMaxX) / 2);
+  const centerY = Math.round((cellMinY + cellMaxY) / 2);
+  const sideColor = sampleNearbyBleedColor(imageData, centerX, centerY, background, fidelity) ?? color;
   return {
     color,
+    sideColor,
     brightness: brightness / foreground,
     foregroundRatio
   };
@@ -643,6 +650,43 @@ function isHdForegroundPixel(red: number, green: number, blue: number, alpha: nu
   if (blueScreen || purpleScreen) return false;
   const distance = Math.hypot(red - background[0], green - background[1], blue - background[2]);
   return alpha > 220 || distance > 58;
+}
+
+function isDarkVoxelColor(red: number, green: number, blue: number) {
+  return red + green + blue < 78;
+}
+
+function sampleNearbyBleedColor(
+  imageData: ImageData,
+  centerX: number,
+  centerY: number,
+  background: [number, number, number],
+  fidelity: Required<VoxelFidelitySettings>
+) {
+  const { width, height, data } = imageData;
+  for (let radius = 1; radius <= 6; radius += 1) {
+    const votes = new Map<string, number>();
+    for (let y = Math.max(0, centerY - radius); y <= Math.min(height - 1, centerY + radius); y += 1) {
+      for (let x = Math.max(0, centerX - radius); x <= Math.min(width - 1, centerX + radius); x += 1) {
+        const offset = (y * width + x) * 4;
+        const red = data[offset];
+        const green = data[offset + 1];
+        const blue = data[offset + 2];
+        const alpha = data[offset + 3];
+        if (
+          isDarkVoxelColor(red, green, blue) ||
+          !isHdForegroundPixel(red, green, blue, alpha, background, fidelity.alphaThreshold)
+        ) {
+          continue;
+        }
+        const color = quantizeHdColor(red, green, blue, fidelity.paletteSnap);
+        votes.set(color, (votes.get(color) ?? 0) + 1);
+      }
+    }
+    const winner = [...votes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    if (winner) return winner;
+  }
+  return null;
 }
 
 function quantizeHdColor(red: number, green: number, blue: number, snap: number) {
@@ -681,6 +725,7 @@ function mergeHdVoxelRuns(cells: Array<HdVoxelRun & { row: number; column: numbe
       run.column + run.count === cell.column &&
       run.part === cell.part &&
       run.c === cell.c &&
+      run.s === cell.s &&
       Math.abs(run.y - cell.y) < 0.0001 &&
       Math.abs(run.z - cell.z) < 0.0001 &&
       Math.abs(run.h - cell.h) < 0.0001 &&

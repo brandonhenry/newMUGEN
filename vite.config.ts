@@ -563,7 +563,8 @@ function sanitizeHdVoxelPayload(payload: Record<string, unknown>) {
             w: Number(Math.max(0.001, finiteOr(voxel.w, 0.05)).toFixed(5)),
             h: Number(Math.max(0.001, finiteOr(voxel.h, 0.05)).toFixed(5)),
             d: Number(Math.max(0.001, finiteOr(voxel.d, 0.18)).toFixed(5)),
-            c: Math.max(0, Math.min(Math.max(0, palette.length - 1), Math.round(finiteOr(voxel.c, 0))))
+            c: Math.max(0, Math.min(Math.max(0, palette.length - 1), Math.round(finiteOr(voxel.c, 0)))),
+            s: Math.max(0, Math.min(Math.max(0, palette.length - 1), Math.round(finiteOr(voxel.s, finiteOr(voxel.c, 0)))))
           };
         })
         .slice(0, 12000)

@@ -822,6 +822,7 @@ type ImageVoxel = {
   position: [number, number, number];
   size: [number, number, number];
   color: string;
+  sideColor?: string;
   source?: 'hd' | 'legacy';
 };
 
@@ -837,6 +838,7 @@ type HdImageVoxelPayload = {
     h: number;
     d: number;
     c: number;
+    s?: number;
   }>;
 };
 
@@ -1039,11 +1041,16 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
     const geometry = baseGeometry.clone();
     const renderVoxel = normalizeImageVoxelForRender(voxel);
     const color = new THREE.Color(renderVoxel.color);
+    const sideColor = new THREE.Color(renderVoxel.sideColor ?? renderVoxel.color);
+    const normals = geometry.getAttribute('normal');
     const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
     for (let index = 0; index < colors.length; index += 3) {
-      colors[index] = color.r;
-      colors[index + 1] = color.g;
-      colors[index + 2] = color.b;
+      const vertexIndex = index / 3;
+      const useSideColor = Math.abs(normals.getZ(vertexIndex)) < 0.5;
+      const vertexColor = useSideColor ? sideColor : color;
+      colors[index] = vertexColor.r;
+      colors[index + 1] = vertexColor.g;
+      colors[index + 2] = vertexColor.b;
     }
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     geometry.applyMatrix4(
@@ -1203,6 +1210,7 @@ function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null 
     position: [voxel.x, voxel.y, voxel.z],
     size: [voxel.w, voxel.h, voxel.d],
     color: candidate.palette[voxel.c] ?? '#ffffff',
+    sideColor: candidate.palette[voxel.s ?? voxel.c] ?? candidate.palette[voxel.c] ?? '#ffffff',
     source: 'hd'
   }));
 }
