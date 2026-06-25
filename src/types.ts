@@ -143,6 +143,7 @@ export type StageDefinition = {
   floor: string;
   rail: string;
   light: string;
+  skyboxPath?: string;
   sourcePath?: string;
   thumbnailPath?: string;
   world?: {

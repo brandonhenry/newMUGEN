@@ -6,6 +6,7 @@
   "floor": "#3f8f4c",
   "rail": "#f0d27b",
   "light": "#e6f5d6",
+  "skyboxPath": "/stages/shared/default-skybox.png",
   "sourcePath": "/stages/training-area/source.png",
   "thumbnailPath": "/stages/training-area/pieces/giant-tree.png",
   "world": {
@@ -22,34 +23,34 @@
     {
       "id": "field-day-backdrop",
       "imagePath": "/stages/training-area/backgrounds/field-day.png",
-      "position": [0, 3.65, -17.8],
-      "scale": [34, 8.5, 1],
+      "position": [0, 2.65, -17.8],
+      "scale": [34, 5.8, 1],
       "rotation": [0, 0, 0],
       "opacity": 1
     },
     {
       "id": "rock-mountain-left-skybox",
       "imagePath": "/stages/training-area/backgrounds/rock-mountains.png",
-      "position": [-18.5, 3.5, -2.8],
-      "scale": [27, 7.3, 1],
+      "position": [-18.5, 2.5, -2.8],
+      "scale": [27, 5.2, 1],
       "rotation": [0, 1.5708, 0],
       "opacity": 0.72
     },
     {
       "id": "forest-cavern-right-skybox",
       "imagePath": "/stages/training-area/backgrounds/forest-cavern.png",
-      "position": [18.5, 3.2, -2.8],
-      "scale": [27, 7.0, 1],
+      "position": [18.5, 2.3, -2.8],
+      "scale": [27, 5.0, 1],
       "rotation": [0, -1.5708, 0],
       "opacity": 0.54
     },
     {
       "id": "stone-valley-far-panel",
       "imagePath": "/stages/training-area/backgrounds/stone-valley.png",
-      "position": [0, 2.75, -16.9],
-      "scale": [28, 5.4, 1],
+      "position": [0, 1.95, -16.9],
+      "scale": [28, 3.7, 1],
       "rotation": [0, 0, 0],
-      "opacity": 0.46
+      "opacity": 0.34
     }
   ],
   "props": [

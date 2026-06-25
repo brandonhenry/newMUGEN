@@ -42,6 +42,7 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     floor: stage.floor ?? '#07182c',
     rail: stage.rail ?? '#2ee6ff',
     light: stage.light ?? '#dbe8ff',
+    skyboxPath: stage.skyboxPath,
     world: stage.world
       ? {
           width: finiteOr(stage.world.width, 96),

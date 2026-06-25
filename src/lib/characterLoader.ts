@@ -140,13 +140,13 @@ export function validateCharacter(character: CharacterDefinition): string[] {
 
 export async function loadCharacterRoster(): Promise<CharacterLoadResult> {
   try {
-    const index = (await fetch('/characters/index.json').then((response) => response.json())) as {
+    const index = (await fetch('/characters/index.json', { cache: 'no-store' }).then((response) => response.json())) as {
       characters: string[];
     };
     debugLog(2, 'character index fetched', { characterIds: index.characters });
     const loaded = await Promise.all(
       index.characters.map((id) =>
-        fetch(`/characters/${id}/character.json`).then((response) => response.json() as Promise<CharacterDefinition>)
+        fetch(`/characters/${id}/character.json`, { cache: 'no-store' }).then((response) => response.json() as Promise<CharacterDefinition>)
       )
     );
     const characters = (loaded.length > 0 ? loaded : starterCharacters).map(normalizeCharacter);

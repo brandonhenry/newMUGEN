@@ -242,9 +242,6 @@
       "/characters/kiro/frames/frame-014.png"
     ],
     "block": [
-      "/characters/kiro/frames/frame-144.png",
-      "/characters/kiro/frames/frame-145.png",
-      "/characters/kiro/frames/frame-146.png",
       "/characters/kiro/frames/frame-147.png"
     ],
     "jab": [
@@ -259,17 +256,16 @@
       "/characters/kiro/frames/frame-088.png"
     ],
     "heavy": [
-      "/characters/kiro/frames/frame-103.png",
-      "/characters/kiro/frames/frame-104.png",
-      "/characters/kiro/frames/frame-105.png",
-      "/characters/kiro/frames/frame-106.png",
-      "/characters/kiro/frames/frame-107.png"
-    ],
-    "special": [
-      "/characters/kiro/frames/frame-090.png",
       "/characters/kiro/frames/frame-091.png",
       "/characters/kiro/frames/frame-092.png",
-      "/characters/kiro/frames/frame-093.png"
+      "/characters/kiro/frames/frame-093.png",
+      "/characters/kiro/frames/frame-094.png"
+    ],
+    "special": [
+      "/characters/kiro/frames/frame-114.png",
+      "/characters/kiro/frames/frame-115.png",
+      "/characters/kiro/frames/frame-116.png",
+      "/characters/kiro/frames/frame-117.png"
     ],
     "hitLight": [
       "/characters/kiro/frames/frame-028.png",
@@ -345,5 +341,7 @@
     "cmd:d/f+2": 9,
     "cmd:qcf+4": 11,
     "cmd:WS+4": 9
-  }
+  },
+  "moveOverrides": {},
+  "spriteFrameEdits": {}
 }

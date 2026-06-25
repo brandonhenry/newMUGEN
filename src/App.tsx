@@ -2,6 +2,7 @@ import anime from 'animejs';
 import {
   ChevronDown,
   Eye,
+  EyeOff,
   Gamepad2,
   Home,
   Pause,
@@ -319,25 +320,7 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
   const effectiveCharacters = characters.map((character) => {
     const characterOverrides = sanitizedOverrides[character.id];
     if (!characterOverrides) return character;
-    return {
-      ...character,
-      animationFrames: {
-        ...character.animationFrames,
-        ...characterOverrides.frames
-      },
-      animationFrameRates: {
-        ...character.animationFrameRates,
-        ...characterOverrides.speeds
-      },
-      moveOverrides: {
-        ...character.moveOverrides,
-        ...characterOverrides.moves
-      },
-      spriteFrameEdits: {
-        ...character.spriteFrameEdits,
-        ...characterOverrides.sprites
-      }
-    };
+    return applyCharacterAnimationOverride(character, characterOverrides);
   });
   debugLog(3, 'effective roster built', {
     source: characters.map((character) => ({
@@ -353,6 +336,51 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
     overrideCharacterIds: Object.keys(sanitizedOverrides)
   });
   return effectiveCharacters;
+}
+
+function applyCharacterAnimationOverride(character: CharacterDefinition, override: CharacterAnimationOverride): CharacterDefinition {
+  return {
+    ...character,
+    animationFrames: {
+      ...character.animationFrames,
+      ...(override.frames ?? {})
+    },
+    animationFrameRates: {
+      ...character.animationFrameRates,
+      ...(override.speeds ?? {})
+    },
+    moveOverrides: {
+      ...character.moveOverrides,
+      ...(override.moves ?? {})
+    },
+    spriteFrameEdits: {
+      ...character.spriteFrameEdits,
+      ...(override.sprites ?? {})
+    }
+  };
+}
+
+function removeCharacterOverride(overrides: AnimationOverrideMap, characterIds: string[]) {
+  const next = { ...overrides };
+  characterIds.forEach((characterId) => {
+    delete next[characterId];
+  });
+  return next;
+}
+
+async function saveCharacterManifestToDev(character: CharacterDefinition) {
+  const response = await fetch('/__kore/dev/save-character-manifest', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      characterId: character.id,
+      animationFrames: character.animationFrames ?? {},
+      animationFrameRates: character.animationFrameRates ?? {},
+      moveOverrides: character.moveOverrides ?? {},
+      spriteFrameEdits: character.spriteFrameEdits ?? {}
+    })
+  });
+  if (!response.ok) throw new Error(await response.text());
 }
 
 function getFrameIndex(path: string) {
@@ -376,7 +404,7 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
   const [stageResult, setStageResult] = useState<StageLoadResult | null>(null);
-  const [animationOverrides, setAnimationOverrides] = useState<AnimationOverrideMap>(() => readAnimationOverrides());
+  const [animationOverrides, setAnimationOverrides] = useState<AnimationOverrideMap>({});
   const sourceRoster = rosterResult?.characters ?? [];
   const roster = useMemo(() => applyAnimationOverrides(sourceRoster, animationOverrides), [sourceRoster, animationOverrides]);
   const stageRoster = stageResult?.stages ?? stages;
@@ -414,19 +442,35 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    window.localStorage.removeItem(ANIMATION_STORAGE_KEY);
+  }, []);
+
+  useEffect(() => {
+    if (!isLocalDevHost() || sourceRoster.length === 0) return;
     const sanitizedOverrides = sanitizeAnimationOverrides(animationOverrides);
-    debugLog(1, 'storage write', {
-      revision: ANIMATION_DEFAULTS_REVISION,
-      overrideCharacterIds: Object.keys(sanitizedOverrides)
-    });
-    window.localStorage.setItem(
-      ANIMATION_STORAGE_KEY,
-      JSON.stringify({
-        revision: ANIMATION_DEFAULTS_REVISION,
-        overrides: sanitizedOverrides
-      } satisfies StoredAnimationOverrides)
-    );
-  }, [animationOverrides]);
+    const characterIds = Object.keys(sanitizedOverrides);
+    if (characterIds.length === 0) return;
+    const timeout = window.setTimeout(async () => {
+      try {
+        const sourceById = new Map(sourceRoster.map((character) => [character.id, character]));
+        await Promise.all(
+          characterIds.map((characterId) => {
+            const sourceCharacter = sourceById.get(characterId);
+            if (!sourceCharacter) return Promise.resolve();
+            const effectiveCharacter = applyCharacterAnimationOverride(sourceCharacter, sanitizedOverrides[characterId]);
+            return saveCharacterManifestToDev(effectiveCharacter);
+          })
+        );
+        const result = await loadCharacterRoster();
+        setRosterResult(result);
+        setAnimationOverrides((current) => removeCharacterOverride(current, characterIds));
+        debugLog(4, 'dev animation edits persisted to manifests', { characterIds });
+      } catch (error) {
+        console.error('Failed to auto-save character manifest edits', error);
+      }
+    }, 650);
+    return () => window.clearTimeout(timeout);
+  }, [animationOverrides, sourceRoster]);
 
   useEffect(() => {
     writeGameSettings(settings);
@@ -495,6 +539,9 @@ export default function App() {
   const reloadRoster = async (preferredCharacterId?: string) => {
     const result = await loadCharacterRoster();
     setRosterResult(result);
+    if (preferredCharacterId) {
+      setAnimationOverrides((current) => removeCharacterOverride(current, [preferredCharacterId]));
+    }
     if (preferredCharacterId && result.characters.some((character) => character.id === preferredCharacterId)) {
       setP1Id(preferredCharacterId);
       const other = result.characters.find((character) => character.id !== preferredCharacterId);
@@ -1071,6 +1118,7 @@ function StageEditor({
   const [pieces, setPieces] = useState<StagePieceDraft[]>([]);
   const [importStage, setImportStage] = useState<StageDefinition | null>(null);
   const [status, setStatus] = useState<'idle' | 'working' | 'ready' | 'saving' | 'saved' | 'error'>('idle');
+  const [showStageControls, setShowStageControls] = useState(true);
 
   useEffect(() => {
     const next = stages.find((stage) => stage.id === selectedStageId) ?? stages[0] ?? defaultStageDraft();
@@ -1224,6 +1272,10 @@ function StageEditor({
                 </select>
               </label>
               <div className="stage-viewport-actions">
+                <button className="secondary-button compact-button" onClick={() => setShowStageControls((current) => !current)}>
+                  {showStageControls ? <EyeOff size={14} /> : <Eye size={14} />}
+                  {showStageControls ? 'Hide Controls' : 'Show Controls'}
+                </button>
                 <button className="secondary-button compact-button" onClick={addStageProp}>Add Prop</button>
                 <button className="secondary-button compact-button" onClick={duplicateSelectedProp} disabled={!selectedProp}>Duplicate</button>
                 <button className="secondary-button compact-button" onClick={removeSelectedProp} disabled={!selectedProp}>Remove</button>
@@ -1235,15 +1287,17 @@ function StageEditor({
               </div>
               <small>Drag to rotate. Scroll to zoom. Right-drag or shift-drag to pan. Click a prop in the world to select it.</small>
             </div>
-            <div className="stage-viewport-props">
-              {(editableStage.props ?? []).map((prop) => (
-                <button key={prop.id} className={prop.id === selectedProp?.id ? 'active' : ''} onClick={() => setSelectedPropId(prop.id)}>
-                  <span>{prop.name}</span>
-                  <small>{prop.hidden ? 'Hidden' : prop.billboard ? 'Billboard' : prop.renderMode === 'voxel' ? 'Voxel' : 'Plane'}</small>
-                </button>
-              ))}
-            </div>
-            {selectedProp && (
+            {showStageControls && (
+              <div className="stage-viewport-props">
+                {(editableStage.props ?? []).map((prop) => (
+                  <button key={prop.id} className={prop.id === selectedProp?.id ? 'active' : ''} onClick={() => setSelectedPropId(prop.id)}>
+                    <span>{prop.name}</span>
+                    <small>{prop.hidden ? 'Hidden' : prop.billboard ? 'Billboard' : prop.renderMode === 'voxel' ? 'Voxel' : 'Plane'}</small>
+                  </button>
+                ))}
+              </div>
+            )}
+            {showStageControls && selectedProp && (
               <div className="stage-viewport-inspector">
                 <header>
                   <span>Selected</span>
@@ -2116,18 +2170,8 @@ function CharacterViewer({
   const saveActiveManifest = async () => {
     setManifestSaveStatus('saving');
     try {
-      const response = await fetch('/__kore/dev/save-character-manifest', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          characterId: active.id,
-          animationFrames: active.animationFrames ?? {},
-          animationFrameRates: active.animationFrameRates ?? {},
-          moveOverrides: active.moveOverrides ?? {},
-          spriteFrameEdits: active.spriteFrameEdits ?? {}
-        })
-      });
-      if (!response.ok) throw new Error(await response.text());
+      await saveCharacterManifestToDev(active);
+      await onImportComplete(active.id);
       setManifestSaveStatus('saved');
       window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
     } catch (error) {

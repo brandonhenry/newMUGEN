@@ -553,6 +553,7 @@ function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) 
     floor: colors.floor,
     rail: colors.rail,
     light: colors.light,
+    skyboxPath: typeof stage.skyboxPath === 'string' ? stage.skyboxPath : undefined,
     sourcePath: typeof stage.sourcePath === 'string' ? stage.sourcePath : `/stages/${stageId}/source.png`,
     thumbnailPath: typeof stage.thumbnailPath === 'string' ? stage.thumbnailPath : undefined,
     world: sanitizeStageWorld(stage.world),

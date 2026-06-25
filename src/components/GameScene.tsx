@@ -20,16 +20,19 @@ const defaultCameraSettings: GameSettings['camera'] = {
   zoomBias: 1
 };
 
+const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
+
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, cameraSettings = defaultCameraSettings }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
-      <color attach="background" args={['#101114']} />
-      <fog attach="fog" args={['#101114', 14, 58]} />
+      <color attach="background" args={['#8deeff']} />
+      <fog attach="fog" args={['#a7f0ff', 34, 145]} />
       <Suspense fallback={null}>
         <Environment preset="city" />
       </Suspense>
+      <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
       <ambientLight intensity={0.55} />
       <directionalLight castShadow position={[3, 6, 4]} intensity={1.8} color={match.stage.light} shadow-mapSize={[1024, 1024]} />
       <pointLight position={[-4, 2, -3]} color={match.fighters[0].character.colors.primary} intensity={8} distance={7} />
@@ -60,8 +63,9 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
       data-testid={`stage-preview-canvas-${stage.id}`}
       aria-label={`${stage.name} stage preview`}
     >
-      <color attach="background" args={['#080b12']} />
-      <fog attach="fog" args={['#101114', 16, 56]} />
+      <color attach="background" args={['#8deeff']} />
+      <fog attach="fog" args={['#a7f0ff', 30, 145]} />
+      <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
       <ambientLight intensity={0.58} color="#dbe8ff" />
       <directionalLight castShadow position={[4, 8, 5]} intensity={1.9} color={stage.light} shadow-mapSize={[512, 512]} />
       <pointLight position={[-5, 2.2, 3]} color={stage.rail} intensity={5.2} distance={9} />
@@ -92,6 +96,26 @@ function StagePreviewCamera() {
     invalidate();
   }, [camera, invalidate]);
   return null;
+}
+
+function DefaultSkybox({ imagePath }: { imagePath: string }) {
+  const texture = useLoader(THREE.TextureLoader, imagePath);
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    texture.repeat.set(1, 1);
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
+
+  return (
+    <mesh scale={[1, 0.72, 1]} rotation={[0, Math.PI, 0]} renderOrder={-1000}>
+      <sphereGeometry args={[190, 64, 32]} />
+      <meshBasicMaterial map={texture} side={THREE.BackSide} depthWrite={false} depthTest={false} toneMapped={false} fog={false} />
+    </mesh>
+  );
 }
 
 export function MenuAttractScene({ match }: GameSceneProps) {
