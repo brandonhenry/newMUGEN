@@ -1,5 +1,5 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF } from '@react-three/drei';
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
@@ -43,11 +43,18 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings }: Gam
   );
 }
 
-export function StagePreviewCanvas({ stage }: { stage: StageDefinition }) {
+type StagePreviewCanvasProps = {
+  stage: StageDefinition;
+  interactive?: boolean;
+  selectedPropId?: string;
+  onSelectProp?: (propId: string) => void;
+};
+
+export function StagePreviewCanvas({ stage, interactive = false, selectedPropId, onSelectProp }: StagePreviewCanvasProps) {
   return (
     <Canvas
       shadows
-      frameloop="demand"
+      frameloop={interactive ? 'always' : 'demand'}
       dpr={[1, 1.25]}
       camera={{ position: [0, 7.4, 12.4], fov: 38 }}
       data-testid={`stage-preview-canvas-${stage.id}`}
@@ -60,8 +67,20 @@ export function StagePreviewCanvas({ stage }: { stage: StageDefinition }) {
       <pointLight position={[-5, 2.2, 3]} color={stage.rail} intensity={5.2} distance={9} />
       <StagePreviewCamera />
       <group position={[0, -0.05, 0]} scale={0.82}>
-        <Arena stage={stage} />
+        <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />
       </group>
+      {interactive && (
+        <OrbitControls
+          makeDefault
+          enableDamping
+          enablePan
+          enableRotate
+          enableZoom
+          minDistance={5}
+          maxDistance={32}
+          target={[0, 0.8, -2.4]}
+        />
+      )}
     </Canvas>
   );
 }
@@ -402,7 +421,15 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   return null;
 }
 
-function Arena({ stage }: { stage: MatchSnapshot['stage'] }) {
+function Arena({
+  stage,
+  selectedPropId,
+  onSelectProp
+}: {
+  stage: MatchSnapshot['stage'];
+  selectedPropId?: string;
+  onSelectProp?: (propId: string) => void;
+}) {
   const horizonBlocks = useMemo(
     () => [
       [-18, 0.55, -12, 4.8, 1.1, 0.5],
@@ -416,7 +443,7 @@ function Arena({ stage }: { stage: MatchSnapshot['stage'] }) {
   );
 
   if (stage.renderMode === 'spriteCutout') {
-    return <SpriteCutoutStage stage={stage} />;
+    return <SpriteCutoutStage stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
   }
 
   return (
@@ -467,7 +494,15 @@ function Arena({ stage }: { stage: MatchSnapshot['stage'] }) {
   );
 }
 
-function SpriteCutoutStage({ stage }: { stage: StageDefinition }) {
+function SpriteCutoutStage({
+  stage,
+  selectedPropId,
+  onSelectProp
+}: {
+  stage: StageDefinition;
+  selectedPropId?: string;
+  onSelectProp?: (propId: string) => void;
+}) {
   const hillColor = stage.world?.backgroundColor ?? '#10291c';
   return (
     <group>
@@ -513,10 +548,10 @@ function SpriteCutoutStage({ stage }: { stage: StageDefinition }) {
         <meshBasicMaterial color="#f0d27b" transparent opacity={0.26} />
       </mesh>
       {(stage.backgroundLayers ?? []).map((layer) => (
-        <StageTexturePlane key={layer.id} imagePath={layer.imagePath} position={layer.position} scale={layer.scale} opacity={layer.opacity ?? 1} />
+        <StageTexturePlane key={layer.id} imagePath={layer.imagePath} position={layer.position} scale={layer.scale} rotation={layer.rotation} opacity={layer.opacity ?? 1} />
       ))}
       {(stage.props ?? []).filter((prop) => !prop.hidden).map((prop) => (
-        <StagePropPlane key={prop.id} prop={prop} />
+        <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
       ))}
     </group>
   );
@@ -526,11 +561,13 @@ function StageTexturePlane({
   imagePath,
   position,
   scale,
+  rotation,
   opacity
 }: {
   imagePath: string;
   position: [number, number, number];
   scale: [number, number, number];
+  rotation?: [number, number, number];
   opacity: number;
 }) {
   const texture = useLoader(THREE.TextureLoader, imagePath);
@@ -541,28 +578,67 @@ function StageTexturePlane({
     texture.needsUpdate = true;
   }, [texture]);
   return (
-    <mesh position={position} scale={scale} renderOrder={position[2] < 0 ? -10 : 2}>
+    <mesh position={position} rotation={rotation ?? [0, 0, 0]} scale={scale} renderOrder={position[2] < 0 ? -10 : 2}>
       <planeGeometry args={[1, 1]} />
       <meshBasicMaterial map={texture} transparent opacity={opacity} alphaTest={0.04} side={THREE.DoubleSide} depthWrite={false} />
     </mesh>
   );
 }
 
-function StagePropPlane({ prop }: { prop: StagePropDefinition }) {
+function StagePropPlane({
+  prop,
+  selected = false,
+  onSelectProp
+}: {
+  prop: StagePropDefinition;
+  selected?: boolean;
+  onSelectProp?: (propId: string) => void;
+}) {
   const group = useRef<THREE.Group>(null);
   useFrame(({ camera }) => {
     if (prop.billboard && group.current) {
       group.current.quaternion.copy(camera.quaternion);
     }
   });
+  const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
+    if (!onSelectProp) return;
+    event.stopPropagation();
+    onSelectProp(prop.id);
+  };
   return (
-    <group ref={group} position={prop.position} rotation={prop.rotation ?? [0, 0, 0]}>
+    <group ref={group} position={prop.position} rotation={prop.rotation ?? [0, 0, 0]} onPointerDown={handlePointerDown}>
+      {onSelectProp && <StagePropHitTarget prop={prop} onPointerDown={handlePointerDown} />}
       {prop.renderMode === 'voxel' ? (
         <StageVoxelProp prop={prop} />
       ) : (
         <StageTexturePlane imagePath={prop.imagePath} position={[0, 0, 0]} scale={prop.scale} opacity={prop.opacity ?? 1} />
       )}
+      {selected && <StagePropSelectionFrame prop={prop} />}
     </group>
+  );
+}
+
+function StagePropHitTarget({
+  prop,
+  onPointerDown
+}: {
+  prop: StagePropDefinition;
+  onPointerDown: (event: ThreeEvent<PointerEvent>) => void;
+}) {
+  return (
+    <mesh scale={[Math.max(0.28, Math.abs(prop.scale[0]) * 1.22), Math.max(0.28, Math.abs(prop.scale[1]) * 1.22), 1]} position={[0, 0, 0.1]} onPointerDown={onPointerDown} renderOrder={20}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial color="#ffffff" transparent opacity={0.001} depthWrite={false} depthTest={false} side={THREE.DoubleSide} />
+    </mesh>
+  );
+}
+
+function StagePropSelectionFrame({ prop }: { prop: StagePropDefinition }) {
+  return (
+    <mesh scale={[Math.max(0.05, Math.abs(prop.scale[0]) * 1.08), Math.max(0.05, Math.abs(prop.scale[1]) * 1.08), 1]} position={[0, 0, 0.04]} renderOrder={12}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial color="#2ee6ff" wireframe transparent opacity={0.9} depthTest={false} />
+    </mesh>
   );
 }
 

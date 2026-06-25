@@ -584,6 +584,7 @@ function sanitizeStageLayers(value: unknown) {
         imagePath: typeof layer.imagePath === 'string' ? layer.imagePath : '',
         position: normalizeVec3(layer.position, [0, 3, -12]),
         scale: normalizeVec3(layer.scale, [12, 8, 1]),
+        rotation: normalizeVec3(layer.rotation, [0, 0, 0]),
         opacity: Math.max(0, Math.min(1, finiteOr(layer.opacity, 1)))
       };
     })

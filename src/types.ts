@@ -168,6 +168,7 @@ export type StageLayerDefinition = {
   imagePath: string;
   position: Vec3Tuple;
   scale: Vec3Tuple;
+  rotation?: Vec3Tuple;
   opacity?: number;
 };
 

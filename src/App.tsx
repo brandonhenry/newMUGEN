@@ -1213,36 +1213,45 @@ function StageEditor({
       </div>
 
       {mode === 'edit' ? (
-        <section className="stage-editor-layout">
-          <aside className="stage-editor-panel">
-            <label>
-              <span>Stage</span>
-              <select value={selectedStageId} onChange={(event) => setSelectedStageId(event.target.value)}>
-                {stages.map((stage) => <option key={stage.id} value={stage.id}>{stage.name}</option>)}
-              </select>
-            </label>
-            <div className="stage-prop-list">
+        <section className="stage-editor-layout is-viewport-editor">
+          <main className="stage-editor-preview is-interactive">
+            <StagePreviewCanvas stage={editableStage} interactive selectedPropId={selectedProp?.id} onSelectProp={setSelectedPropId} />
+            <div className="stage-viewport-toolbar">
+              <label>
+                <span>Stage</span>
+                <select value={selectedStageId} onChange={(event) => setSelectedStageId(event.target.value)}>
+                  {stages.map((stage) => <option key={stage.id} value={stage.id}>{stage.name}</option>)}
+                </select>
+              </label>
+              <div className="stage-viewport-actions">
+                <button className="secondary-button compact-button" onClick={addStageProp}>Add Prop</button>
+                <button className="secondary-button compact-button" onClick={duplicateSelectedProp} disabled={!selectedProp}>Duplicate</button>
+                <button className="secondary-button compact-button" onClick={removeSelectedProp} disabled={!selectedProp}>Remove</button>
+                <button className="secondary-button compact-button dev-save-button" onClick={saveEditedStage}>
+                  <Save size={14} />
+                  Save Stage
+                </button>
+                {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
+              </div>
+              <small>Drag to rotate. Scroll to zoom. Right-drag or shift-drag to pan. Click a prop in the world to select it.</small>
+            </div>
+            <div className="stage-viewport-props">
               {(editableStage.props ?? []).map((prop) => (
                 <button key={prop.id} className={prop.id === selectedProp?.id ? 'active' : ''} onClick={() => setSelectedPropId(prop.id)}>
                   <span>{prop.name}</span>
-                  <small>{prop.hidden ? 'Hidden' : prop.billboard ? 'Billboard' : 'Fixed'}</small>
+                  <small>{prop.hidden ? 'Hidden' : prop.billboard ? 'Billboard' : prop.renderMode === 'voxel' ? 'Voxel' : 'Plane'}</small>
                 </button>
               ))}
             </div>
-            <div className="import-action-row">
-              <button className="secondary-button compact-button" onClick={addStageProp}>Add Prop</button>
-              <button className="secondary-button compact-button" onClick={duplicateSelectedProp} disabled={!selectedProp}>Duplicate</button>
-              <button className="secondary-button compact-button" onClick={removeSelectedProp} disabled={!selectedProp}>Remove</button>
-              <button className="secondary-button compact-button dev-save-button" onClick={saveEditedStage}>
-                <Save size={14} />
-                Save Stage
-              </button>
-              {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
-            </div>
-            {selectedProp && <StagePropEditor prop={selectedProp} onChange={updateSelectedProp} />}
-          </aside>
-          <main className="stage-editor-preview">
-            <StagePreviewCanvas stage={editableStage} />
+            {selectedProp && (
+              <div className="stage-viewport-inspector">
+                <header>
+                  <span>Selected</span>
+                  <strong>{selectedProp.name}</strong>
+                </header>
+                <StagePropEditor prop={selectedProp} onChange={updateSelectedProp} />
+              </div>
+            )}
           </main>
         </section>
       ) : (

@@ -2987,6 +2987,10 @@ button {
   gap: 16px;
 }
 
+.stage-editor-layout.is-viewport-editor {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .stage-editor-panel,
 .stage-editor-preview {
   border-radius: 8px;
@@ -3011,7 +3015,9 @@ button {
 }
 
 .stage-editor-panel label > span,
-.stage-prop-editor label span {
+.stage-prop-editor label span,
+.stage-viewport-toolbar label span,
+.stage-viewport-inspector header span {
   color: var(--text-muted);
   font-size: 11px;
   font-weight: 900;
@@ -3019,7 +3025,8 @@ button {
   text-transform: uppercase;
 }
 
-.stage-editor-panel select {
+.stage-editor-panel select,
+.stage-viewport-toolbar select {
   min-height: 38px;
   border: 0;
   border-radius: 6px;
@@ -3095,8 +3102,135 @@ button {
   min-width: 0;
 }
 
+.stage-editor-preview.is-interactive {
+  position: relative;
+  min-height: min(72vh, 820px);
+  overflow: hidden;
+  padding: 0;
+}
+
 .stage-editor-preview canvas {
   min-height: 520px;
+}
+
+.stage-editor-preview.is-interactive canvas {
+  width: 100% !important;
+  min-height: min(72vh, 820px);
+  cursor: grab;
+}
+
+.stage-editor-preview.is-interactive canvas:active {
+  cursor: grabbing;
+}
+
+.stage-viewport-toolbar,
+.stage-viewport-props,
+.stage-viewport-inspector {
+  position: absolute;
+  z-index: 4;
+  border-radius: 8px;
+  background: rgba(12, 14, 20, 0.84);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 16px 40px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
+}
+
+.stage-viewport-toolbar {
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: grid;
+  grid-template-columns: minmax(190px, 280px) minmax(0, 1fr);
+  align-items: end;
+  gap: 10px;
+  padding: 12px;
+}
+
+.stage-viewport-toolbar label {
+  display: grid;
+  gap: 6px;
+}
+
+.stage-viewport-toolbar small {
+  grid-column: 1 / -1;
+  color: rgba(247, 247, 242, 0.68);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.stage-viewport-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.stage-viewport-props {
+  left: 12px;
+  top: 132px;
+  bottom: 12px;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  width: min(300px, calc(50% - 18px));
+  padding: 10px;
+  overflow: auto;
+}
+
+.stage-viewport-props button {
+  display: grid;
+  justify-items: start;
+  gap: 3px;
+  min-height: 50px;
+  border: 0;
+  border-radius: 7px;
+  padding: 9px 10px;
+  color: #f7f7f2;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.stage-viewport-props button.active {
+  color: #f7f7f2;
+  background: rgba(46, 230, 255, 0.18);
+  box-shadow: 0 0 0 2px #2ee6ff inset;
+}
+
+.stage-viewport-props button span {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stage-viewport-props button small {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.stage-viewport-inspector {
+  right: 12px;
+  top: 132px;
+  bottom: 12px;
+  width: min(440px, calc(50% - 18px));
+  padding: 12px;
+  overflow: auto;
+}
+
+.stage-viewport-inspector header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.stage-viewport-inspector header strong {
+  color: #f7f7f2;
+  font-size: 20px;
+  font-weight: 950;
 }
 
 .stage-empty-preview {
@@ -3615,6 +3749,32 @@ button {
     min-width: 0;
     min-height: 58px;
     font-size: clamp(16px, 4.8vw, 20px);
+  }
+
+  .stage-viewport-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .stage-viewport-actions {
+    justify-content: stretch;
+  }
+
+  .stage-viewport-actions button {
+    flex: 1;
+  }
+
+  .stage-viewport-props {
+    top: 188px;
+    bottom: auto;
+    width: calc(50% - 18px);
+    max-height: 260px;
+  }
+
+  .stage-viewport-inspector {
+    top: 188px;
+    bottom: auto;
+    width: calc(50% - 18px);
+    max-height: 360px;
   }
 
   .menu-grid,
