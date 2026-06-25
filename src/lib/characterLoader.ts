@@ -1,5 +1,5 @@
 import { starterCharacters } from '../data/characters';
-import type { CharacterDefinition, HitLevel, MoveDefinition, MoveTracking } from '../types';
+import type { BoxSpec, CharacterDefinition, HitLevel, MoveDefinition, MoveTracking, Vec3Tuple } from '../types';
 import { debugLog } from './debugLogger';
 
 const requiredClips = [
@@ -33,7 +33,11 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
   return {
     ...character,
     moves: (character.moves ?? []).map(normalizeMove),
-    moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {})
+    moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
+    hurtboxes:
+      Array.isArray(character.hurtboxes) && character.hurtboxes.length > 0
+        ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))
+        : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }]
   };
 }
 
@@ -74,7 +78,10 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
           }))
           .filter((window) => window.endFrame >= window.startFrame)
       : undefined,
-    knockdown: Boolean(move.knockdown)
+    knockdown: Boolean(move.knockdown),
+    hitbox: normalizeBoxSpec(move.hitbox, { offset: [0, 1, 0.65], size: [0.72, 0.5, 0.62] }),
+    hurtboxes: Array.isArray(move.hurtboxes) ? move.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] })) : undefined,
+    hurtboxOffset: normalizeVec3(move.hurtboxOffset)
   };
 }
 
@@ -110,6 +117,22 @@ function normalizeTracking(value: unknown): MoveTracking {
   return value === 'none' || value === 'weakLeft' || value === 'weakRight' || value === 'medium' || value === 'strong' || value === 'homing'
     ? value
     : 'medium';
+}
+
+function normalizeBoxSpec(box: unknown, fallback: BoxSpec): BoxSpec {
+  if (!box || typeof box !== 'object') return fallback;
+  const candidate = box as Partial<BoxSpec>;
+  const normalizedSize = normalizeVec3(candidate.size);
+  return {
+    offset: normalizeVec3(candidate.offset) ?? fallback.offset,
+    size: normalizedSize ? (normalizedSize.map((value) => Math.max(0.01, value)) as Vec3Tuple) : fallback.size
+  };
+}
+
+function normalizeVec3(value: unknown): Vec3Tuple | undefined {
+  if (!Array.isArray(value) || value.length < 3) return undefined;
+  const next: Vec3Tuple = [finiteOr(value[0], 0), finiteOr(value[1], 0), finiteOr(value[2], 0)];
+  return next;
 }
 
 export function validateCharacter(character: CharacterDefinition): string[] {

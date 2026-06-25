@@ -75,6 +75,8 @@ export type MoveDefinition = {
   cancelWindows?: Array<{ startFrame: number; endFrame: number; into?: MoveInput[] }>;
   knockdown: boolean;
   hitbox: BoxSpec;
+  hurtboxes?: BoxSpec[];
+  hurtboxOffset?: Vec3Tuple;
 };
 
 export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {

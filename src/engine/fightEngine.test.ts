@@ -410,12 +410,129 @@ describe('fight engine', () => {
     expect(radiusAfter).toBeCloseTo(radiusBefore, 1);
   });
 
+  it('hits a standing defender only when the active hitbox overlaps their hurtbox', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].damage);
+  });
+
+  it('lets crouching defenders duck under high jabs', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'crouch';
+    match.fighters[1].wasCrouching = true;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    const crouch = emptyInputFrame();
+    crouch.down = true;
+
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, attack, crouch, 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+    expect(match.fighters[0].hitConnected).toBe(false);
+  });
+
+  it('lets jumping defenders pass above low attacks', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].position.y = 1.08;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].state = 'jump';
+    const lowKick = emptyInputFrame();
+    lowKick.down = true;
+    lowKick.kick = true;
+
+    for (let i = 0; i < 22; i += 1) {
+      match = stepMatch(match, lowKick, emptyInputFrame(), 1 / 60);
+      lowKick.kick = false;
+      match.fighters[1].position.y = 1.08;
+      match.fighters[1].velocityY = 0.1;
+      match.fighters[1].state = 'jump';
+    }
+
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+  });
+
+  it('lets sidestepped defenders avoid narrow forward attacks while still inside range', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].position.z = 0.82;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+  });
+
+  it('uses move-specific evasive hurtboxes to make an otherwise valid jab whiff', () => {
+    const evasiveDefender: CharacterDefinition = {
+      ...starterCharacters[1],
+      moves: starterCharacters[1].moves.map((move) =>
+        move.id === 'jab'
+          ? {
+              ...move,
+              hurtboxes: [{ offset: [0, 0.42, 0], size: [0.82, 0.72, 0.56] }]
+            }
+          : move
+      )
+    };
+    let match = createMatch(starterCharacters[0], evasiveDefender, stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'attack';
+    match.fighters[1].currentMove = evasiveDefender.moves[0];
+    match.fighters[1].actionFramesRemaining = 30;
+    match.fighters[1].actionTimer = 30 / 60;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+      match.fighters[1].state = 'attack';
+      match.fighters[1].currentMove = evasiveDefender.moves[0];
+      match.fighters[1].actionFramesRemaining = 30;
+      match.fighters[1].actionTimer = 30 / 60;
+    }
+
+    expect(match.fighters[1].hp).toBe(evasiveDefender.stats.health);
+  });
+
   it('applies block chip instead of full damage', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
     const attack = emptyInputFrame();
     attack.jab = true;
     const block = emptyInputFrame();
@@ -431,8 +548,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
 
     const attack = emptyInputFrame();
     attack.jab = true;
@@ -450,8 +567,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
     match.fighters[1].state = 'knockdown';
     match.fighters[1].actionFramesRemaining = 80;
     match.fighters[1].actionTimer = 80 / 60;
@@ -474,8 +591,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
     match.fighters[1].state = 'knockdown';
     match.fighters[1].actionFramesRemaining = 12;
     match.fighters[1].actionTimer = 12 / 60;
@@ -526,8 +643,8 @@ describe('fight engine', () => {
     let match = createMatch(attacker, starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
 
     const attack = emptyInputFrame();
     attack.jab = true;
@@ -669,8 +786,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.fighters[1].hp = 1;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.5;
+    match.fighters[1].position.x = 0.5;
     const attack = emptyInputFrame();
     attack.heavy = true;
     for (let i = 0; i < 40; i += 1) {
@@ -685,8 +802,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
     const attack = emptyInputFrame();
     attack.jab = true;
     for (let i = 0; i < 12; i += 1) {
@@ -715,8 +832,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
     const launcher = emptyInputFrame();
     launcher.up = true;
     launcher.jab = true;
@@ -735,8 +852,8 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].position.x = -0.7;
-    match.fighters[1].position.x = 0.7;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
     match.fighters[1].position.y = 0.5;
     match.fighters[1].velocityY = 0.2;
     match.fighters[1].state = 'hit';

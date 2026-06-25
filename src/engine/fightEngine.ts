@@ -1,4 +1,5 @@
 import type {
+  BoxSpec,
   CharacterDefinition,
   CpuDifficulty,
   FighterRuntime,
@@ -25,6 +26,7 @@ const GETUP_INVULNERABLE_FRAMES = 20;
 const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
+const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const limbNames: Record<MoveInput, string> = {
@@ -642,6 +644,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const dz = defender.position.z - attacker.position.z;
   const distance = Math.hypot(dx, dz);
   if (distance > move.range) return;
+  if (!hitboxIntersectsAnyHurtbox(attacker, defender, move)) return;
 
   const blocked = defender.state === 'block' && defender.facing === -attacker.facing;
   const counterHit = isCounterHit(defender);
@@ -714,6 +717,82 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
 
 function isActiveMoveFrame(move: MoveDefinition, moveFrame: number) {
   return moveFrame >= move.startupFrames && moveFrame < move.startupFrames + move.activeFrames;
+}
+
+type Aabb = {
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+  minZ: number;
+  maxZ: number;
+};
+
+function hitboxIntersectsAnyHurtbox(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
+  const attackBox = moveHitboxToWorldAabb(attacker, move.hitbox);
+  return getCurrentHurtboxes(defender).some((hurtbox) => boxesIntersect(attackBox, hurtboxToWorldAabb(defender, hurtbox)));
+}
+
+function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb {
+  const facing = attacker.facing || 1;
+  const centerX = attacker.position.x + facing * hitbox.offset[2];
+  const centerY = attacker.position.y + hitbox.offset[1];
+  const centerZ = attacker.position.z + hitbox.offset[0];
+  return makeAabb(centerX, centerY, centerZ, hitbox.size[2], hitbox.size[1], hitbox.size[0]);
+}
+
+function hurtboxToWorldAabb(defender: FighterRuntime, hurtbox: BoxSpec): Aabb {
+  const centerX = defender.position.x + hurtbox.offset[2] * (defender.facing || 1);
+  const centerY = defender.position.y + hurtbox.offset[1];
+  const centerZ = defender.position.z + hurtbox.offset[0];
+  return makeAabb(centerX, centerY, centerZ, hurtbox.size[2], hurtbox.size[1], hurtbox.size[0]);
+}
+
+function makeAabb(centerX: number, centerY: number, centerZ: number, sizeX: number, sizeY: number, sizeZ: number): Aabb {
+  return {
+    minX: centerX - sizeX / 2,
+    maxX: centerX + sizeX / 2,
+    minY: centerY - sizeY / 2,
+    maxY: centerY + sizeY / 2,
+    minZ: centerZ - sizeZ / 2,
+    maxZ: centerZ + sizeZ / 2
+  };
+}
+
+function boxesIntersect(a: Aabb, b: Aabb) {
+  return a.minX <= b.maxX && a.maxX >= b.minX && a.minY <= b.maxY && a.maxY >= b.minY && a.minZ <= b.maxZ && a.maxZ >= b.minZ;
+}
+
+function getCurrentHurtboxes(fighter: FighterRuntime): BoxSpec[] {
+  const base = fighter.state === 'attack' && fighter.currentMove?.hurtboxes?.length ? fighter.currentMove.hurtboxes : fighter.character.hurtboxes;
+  const source = base.length > 0 ? base : [DEFAULT_HURTBOX];
+  const offset = fighter.state === 'attack' ? fighter.currentMove?.hurtboxOffset : undefined;
+  return source.map((box) => applyPoseToHurtbox(fighter, offset ? offsetHurtbox(box, offset) : box));
+}
+
+function offsetHurtbox(box: BoxSpec, offset: [number, number, number]): BoxSpec {
+  return {
+    offset: [box.offset[0] + offset[0], box.offset[1] + offset[1], box.offset[2] + offset[2]],
+    size: box.size
+  };
+}
+
+function applyPoseToHurtbox(fighter: FighterRuntime, box: BoxSpec): BoxSpec {
+  if (fighter.state === 'crouch' || fighter.wasCrouching) {
+    const bottom = box.offset[1] - box.size[1] / 2;
+    const sizeY = Math.min(box.size[1] * 0.42, 0.82);
+    return {
+      offset: [box.offset[0], bottom + sizeY / 2, box.offset[2]],
+      size: [box.size[0] * 0.94, sizeY, box.size[2] * 0.94]
+    };
+  }
+  if (fighter.state === 'jump' || fighter.position.y > 0 || fighter.velocityY > 0) {
+    return {
+      offset: [box.offset[0], box.offset[1] + 0.34, box.offset[2]],
+      size: [box.size[0] * 0.96, box.size[1] * 0.9, box.size[2] * 0.96]
+    };
+  }
+  return box;
 }
 
 function isCounterHit(defender: FighterRuntime) {
