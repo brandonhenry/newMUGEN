@@ -4184,7 +4184,6 @@ function FightHud({ match, hudScale }: { match: MatchSnapshot; hudScale: number 
       <HealthBar fighter={p1} align="left" />
       <div className="round-box">
         <strong>{Math.ceil(match.timer)}</strong>
-        <span>R{match.round}</span>
       </div>
       <HealthBar fighter={p2} align="right" />
     </div>

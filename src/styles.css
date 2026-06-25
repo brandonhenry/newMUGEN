@@ -3454,22 +3454,23 @@ button {
 .round-box {
   display: grid;
   place-items: center;
-  gap: 2px;
-  min-height: 64px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.48);
-  box-shadow: var(--shadow-lg);
+  min-height: 58px;
+  background: transparent;
+  box-shadow: none;
   font-variant-numeric: tabular-nums;
 }
 
 .round-box strong {
-  font-size: 28px;
+  color: #4a1714;
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 950;
   line-height: 1;
-}
-
-.round-box span {
-  color: var(--text-muted);
-  font-weight: 800;
+  letter-spacing: 0;
+  -webkit-text-stroke: 3px rgba(244, 244, 238, 0.9);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.72),
+    0 0 14px rgba(255, 239, 210, 0.28),
+    0 8px 22px rgba(0, 0, 0, 0.74);
 }
 
 .combat-popup-layer {
