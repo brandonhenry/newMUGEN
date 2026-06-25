@@ -3423,6 +3423,34 @@ button {
   transform: scaleX(-1);
 }
 
+.round-pips {
+  display: flex;
+  gap: 7px;
+  min-height: 10px;
+  align-items: center;
+}
+
+.health.right .round-pips {
+  justify-content: flex-end;
+}
+
+.round-pips span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.32);
+}
+
+.round-pips span.won {
+  background: radial-gradient(circle at 35% 30%, #fff8c5, #ffcd4a 48%, #e16a12 100%);
+  border-color: rgba(255, 244, 180, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.42),
+    0 0 14px rgba(255, 205, 74, 0.72);
+}
+
 .round-box {
   display: grid;
   place-items: center;
@@ -3457,6 +3485,31 @@ button {
     0 2px 0 rgba(0, 0, 0, 0.55),
     0 20px 80px rgba(0, 0, 0, 0.7);
   text-transform: uppercase;
+}
+
+.match-message.intro-message {
+  letter-spacing: 0.08em;
+  animation: introCalloutPulse 620ms ease-out both;
+}
+
+@keyframes introCalloutPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.78);
+    filter: blur(8px);
+  }
+
+  28% {
+    opacity: 1;
+    transform: scale(1.08);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
 }
 
 .pause-overlay {

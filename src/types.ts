@@ -29,6 +29,7 @@ export type FighterState =
   | 'attack'
   | 'hit'
   | 'knockdown'
+  | 'entry'
   | 'win'
   | 'lose';
 
@@ -236,6 +237,7 @@ export type GameSettings = {
 export type MatchOptions = {
   roundTime?: number;
   trainingInfiniteHealth?: boolean;
+  playIntro?: boolean;
 };
 
 export type FighterRuntime = {
@@ -289,6 +291,7 @@ export type MatchSnapshot = {
   cpuDifficulty: CpuDifficulty;
   roundTime: number;
   trainingInfiniteHealth: boolean;
+  introEnabled: boolean;
   timer: number;
   round: number;
   countdown: number;

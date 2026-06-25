@@ -18,6 +18,10 @@ const ARENA_LIMIT_Z = 9;
 const ROUND_TIME = 60;
 const START_DISTANCE = 2.6;
 const ROUND_OVER_DELAY = 2.1;
+const ROUND_INTRO_ENTRY_SECONDS = 1.2;
+const ROUND_INTRO_ROUND_SECONDS = 0.95;
+const ROUND_INTRO_FIGHT_SECONDS = 0.65;
+const ROUND_INTRO_TOTAL_SECONDS = ROUND_INTRO_ENTRY_SECONDS + ROUND_INTRO_ROUND_SECONDS + ROUND_INTRO_FIGHT_SECONDS;
 const COMBO_WINDOW = 0.58;
 const FRAMES_PER_SECOND = 60;
 const KNOCKDOWN_MIN_FRAMES = 34;
@@ -56,13 +60,14 @@ export function createMatch(
   options: MatchOptions = {}
 ): MatchSnapshot {
   const roundTime = clamp(Math.round(options.roundTime ?? ROUND_TIME), 30, 99);
-  return {
+  const match: MatchSnapshot = {
     fighters: [createFighter(1, p1, -START_DISTANCE / 2), createFighter(2, p2, START_DISTANCE / 2)],
     stage,
     mode,
     cpuDifficulty,
     roundTime,
     trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
+    introEnabled: options.playIntro ?? false,
     timer: roundTime,
     round: 1,
     countdown: 0,
@@ -72,6 +77,8 @@ export function createMatch(
     lastHitId: 0,
     cameraShake: 0
   };
+  if (match.introEnabled) beginRoundIntro(match);
+  return match;
 }
 
 export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: InputFrame, dt: number): MatchSnapshot {
@@ -82,10 +89,16 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
   if (next.phase === 'intro') {
     next.countdown = Math.max(0, next.countdown - dt);
-    next.message = next.countdown > 1.8 ? `ROUND ${next.round}` : next.countdown > 0.75 ? 'READY' : 'FIGHT';
     if (next.countdown <= 0) {
       next.phase = 'fighting';
       next.message = '';
+      next.fighters.forEach((fighter) => {
+        fighter.state = 'idle';
+        fighter.actionTimer = 0;
+        fighter.actionFramesRemaining = 0;
+      });
+    } else {
+      updateRoundIntro(next);
     }
     return next;
   }
@@ -966,6 +979,41 @@ function refillTrainingHealth(match: MatchSnapshot) {
   });
 }
 
+function beginRoundIntro(match: MatchSnapshot) {
+  match.phase = 'intro';
+  match.countdown = ROUND_INTRO_TOTAL_SECONDS;
+  match.message = '';
+  match.winnerSlot = null;
+  match.fighters.forEach((fighter) => {
+    fighter.state = 'entry';
+    fighter.currentMove = null;
+    fighter.actionTimer = ROUND_INTRO_TOTAL_SECONDS;
+    fighter.actionFramesRemaining = secondsToFrames(ROUND_INTRO_TOTAL_SECONDS);
+    fighter.moveFrame = 0;
+    fighter.hitConnected = false;
+    fighter.hitConfirmed = false;
+    fighter.whiffRecoveryApplied = false;
+    fighter.stunTimer = 0;
+    fighter.stunFramesRemaining = 0;
+    fighter.blockstunFramesRemaining = 0;
+    fighter.blockPunishWindowFrames = 0;
+    fighter.getupInvulnerableFrames = 0;
+    fighter.velocityY = 0;
+    fighter.position.y = 0;
+  });
+}
+
+function updateRoundIntro(match: MatchSnapshot) {
+  const inEntry = match.countdown > ROUND_INTRO_ROUND_SECONDS + ROUND_INTRO_FIGHT_SECONDS;
+  const inRoundCall = match.countdown > ROUND_INTRO_FIGHT_SECONDS;
+  match.message = inEntry ? '' : inRoundCall ? `ROUND ${match.round}` : 'FIGHT';
+  match.fighters.forEach((fighter) => {
+    fighter.state = inEntry ? 'entry' : 'idle';
+    fighter.actionTimer = match.countdown;
+    fighter.actionFramesRemaining = secondsToFrames(match.countdown);
+  });
+}
+
 function resetRound(match: MatchSnapshot) {
   const rounds: [number, number] = [match.fighters[0].roundsWon, match.fighters[1].roundsWon];
   const [p1Character, p2Character] = [match.fighters[0].character, match.fighters[1].character];
@@ -977,6 +1025,7 @@ function resetRound(match: MatchSnapshot) {
   match.countdown = 0;
   match.phase = 'fighting';
   match.message = '';
+  if (match.introEnabled) beginRoundIntro(match);
 }
 
 function resolveFacing(match: MatchSnapshot) {

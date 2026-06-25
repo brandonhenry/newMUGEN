@@ -932,7 +932,7 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const frames = fighter.character.animationFrames;
   if (!frames) return fighter.character.spriteSheetPath;
   const key = getImageVoxelAnimationKey(fighter);
-  const sequence = frames[key] ?? frames.idle;
+  const sequence = frames[key] ?? (key === 'entry' ? frames.win : undefined) ?? frames.idle;
   if (!sequence?.length) return fighter.character.spriteSheetPath;
   const fps = fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
   const frameIndex =
@@ -967,6 +967,7 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
   if (fighter.state === 'hit') return 'hitLight';
+  if (fighter.state === 'entry') return 'entry';
   return fighter.state;
 }
 
@@ -1450,6 +1451,7 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
   if (fighter.state === 'crouch') return find('crouch', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'block') return find('idle', 'standing') ?? names[0];
   if (fighter.state === 'hit' || fighter.state === 'knockdown') return find('death', 'no', 'idle') ?? names[0];
+  if (fighter.state === 'entry') return find('intro', 'entry', 'taunt', 'wave', 'yes', 'idle') ?? names[0];
   if (fighter.state === 'win') return find('dance', 'yes', 'wave') ?? names[0];
   if (fighter.state === 'lose') return find('death', 'no') ?? names[0];
   return find('idle', 'standing') ?? names[0];

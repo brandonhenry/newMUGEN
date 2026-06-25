@@ -3554,7 +3554,8 @@ function FightScreen({
   const matchOptions = useMemo(
     () => ({
       roundTime: settings.game.roundTimer,
-      trainingInfiniteHealth: settings.game.trainingInfiniteHealth
+      trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
+      playIntro: true
     }),
     [settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
@@ -3658,7 +3659,7 @@ function FightScreen({
       <FightHud match={match} hudScale={settings.display.hudScale} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
-      {match.message && <div className="match-message">{match.message}</div>}
+      {match.message && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''}`}>{match.message}</div>}
       {paused && (
         <div className="pause-overlay">
           <Pause size={32} />
@@ -3797,13 +3798,17 @@ function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][numb
     <div className={`health ${align}`}>
       <div className="health-label">
         <strong>{fighter.character.displayName}</strong>
-        <span>{fighter.roundsWon} rounds</span>
       </div>
       <div className="health-track">
         <span style={{ width: `${percent}%`, background: fighter.character.colors.primary }} />
       </div>
       <div className="ki-track" aria-label={`${fighter.character.displayName} ki`}>
         <span style={{ width: `${kiPercent}%` }} />
+      </div>
+      <div className="round-pips" aria-label={`${fighter.character.displayName} rounds won`}>
+        {[0, 1].map((pip) => (
+          <span key={pip} className={pip < fighter.roundsWon ? 'won' : ''} />
+        ))}
       </div>
     </div>
   );

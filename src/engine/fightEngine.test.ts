@@ -131,6 +131,69 @@ describe('character manifests', () => {
 });
 
 describe('fight engine', () => {
+  it('starts fight-created matches in an entry intro when enabled', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
+
+    expect(match.phase).toBe('intro');
+    expect(match.message).toBe('');
+    expect(match.fighters[0].state).toBe('entry');
+    expect(match.fighters[1].state).toBe('entry');
+  });
+
+  it('keeps default/menu-style matches immediate when intro is not enabled', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu');
+
+    expect(match.phase).toBe('fighting');
+    expect(match.introEnabled).toBe(false);
+  });
+
+  it('shows round and fight callouts after the entry intro', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1.25);
+    expect(match.phase).toBe('intro');
+    expect(match.message).toBe('ROUND 1');
+    expect(match.fighters[0].state).toBe('idle');
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1);
+    expect(match.phase).toBe('intro');
+    expect(match.message).toBe('FIGHT');
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.7);
+    expect(match.phase).toBe('fighting');
+    expect(match.message).toBe('');
+  });
+
+  it('ignores movement and attacks during round intro', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
+    const startX = match.fighters[0].position.x;
+    const attack = emptyInputFrame();
+    attack.right = true;
+    attack.jab = true;
+
+    match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('intro');
+    expect(match.fighters[0].position.x).toBe(startX);
+    expect(match.fighters[0].currentMove).toBeNull();
+  });
+
+  it('starts round two with intro while preserving round wins', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
+    match.phase = 'roundOver';
+    match.countdown = 0.01;
+    match.message = `${starterCharacters[0].displayName} takes the round`;
+    match.fighters[0].roundsWon = 1;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('intro');
+    expect(match.round).toBe(2);
+    expect(match.fighters[0].roundsWon).toBe(1);
+    expect(match.fighters[1].roundsWon).toBe(0);
+    expect(match.fighters[0].state).toBe('entry');
+  });
+
   it('moves fighters toward each other with right input', () => {
     const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
