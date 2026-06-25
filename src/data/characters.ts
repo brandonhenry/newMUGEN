@@ -139,7 +139,7 @@ export const starterCharacters: CharacterDefinition[] = [
     moves: [
       {
         id: 'jab',
-        label: 'Spark Jab',
+        label: 'Shadow Clone Strike',
         input: 'jab',
         startupFrames: 10,
         activeFrames: 2,
@@ -159,7 +159,7 @@ export const starterCharacters: CharacterDefinition[] = [
       },
       {
         id: 'kick',
-        label: 'Leaf Kick',
+        label: 'Uzumaki Barrage',
         input: 'kick',
         startupFrames: 16,
         activeFrames: 3,
@@ -179,7 +179,7 @@ export const starterCharacters: CharacterDefinition[] = [
       },
       {
         id: 'heavy',
-        label: 'Rising Palm',
+        label: 'Rasengan',
         input: 'heavy',
         startupFrames: 15,
         activeFrames: 3,
@@ -200,7 +200,7 @@ export const starterCharacters: CharacterDefinition[] = [
       },
       {
         id: 'special',
-        label: 'Blue Rush',
+        label: 'Wind Style: Rasenshuriken',
         input: 'special',
         startupFrames: 18,
         activeFrames: 4,
@@ -222,6 +222,12 @@ export const starterCharacters: CharacterDefinition[] = [
     hurtboxes: [{ offset: [0, 1, 0], size: [0.86, 1.92, 0.58] }],
     inputMap: { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },
     colors: { primary: '#ff8a1f', secondary: '#111224', accent: '#ffd84d' },
+    moveOverrides: {
+      'cmd:f+1': { label: 'Naruto Barrage' },
+      'cmd:d/f+2': { label: 'Giant Rasengan' },
+      'cmd:qcf+4': { label: 'Wind Style: Rasengan' },
+      'cmd:WS+4': { label: 'Shadow Clone Uppercut' }
+    },
     aiProfile: { aggression: 0.68, guard: 0.4, spacing: 1.45, specialChance: 0.25 }
   },
   {
@@ -242,7 +248,7 @@ export const starterCharacters: CharacterDefinition[] = [
     moves: [
       {
         id: 'jab',
-        label: 'Volt Jab',
+        label: 'Lion Combo',
         input: 'jab',
         startupFrames: 9,
         activeFrames: 2,
@@ -262,7 +268,7 @@ export const starterCharacters: CharacterDefinition[] = [
       },
       {
         id: 'kick',
-        label: 'Shadow Kick',
+        label: 'Leaf Gale',
         input: 'kick',
         startupFrames: 15,
         activeFrames: 3,
@@ -282,7 +288,7 @@ export const starterCharacters: CharacterDefinition[] = [
       },
       {
         id: 'heavy',
-        label: 'Blade Break',
+        label: 'Chidori',
         input: 'heavy',
         startupFrames: 14,
         activeFrames: 3,
@@ -303,7 +309,7 @@ export const starterCharacters: CharacterDefinition[] = [
       },
       {
         id: 'special',
-        label: 'Storm Step',
+        label: 'Fire Style: Fireball Jutsu',
         input: 'special',
         startupFrames: 17,
         activeFrames: 4,
@@ -325,6 +331,12 @@ export const starterCharacters: CharacterDefinition[] = [
     hurtboxes: [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }],
     inputMap: { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },
     colors: { primary: '#7b4cff', secondary: '#f2f2f2', accent: '#ffd45e' },
+    moveOverrides: {
+      'cmd:f+2': { label: 'Chidori Spear' },
+      'cmd:d/f+1': { label: 'Phoenix Flower Jutsu' },
+      'cmd:qcf+3': { label: 'Fire Style: Dragon Flame' },
+      'cmd:SS+4': { label: 'Sharingan Counter' }
+    },
     aiProfile: { aggression: 0.74, guard: 0.34, spacing: 1.38, specialChance: 0.28 }
   }
 ];

@@ -2012,6 +2012,10 @@ function formatFrameSummary(move: MoveDefinition | null) {
   return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitText} OH`;
 }
 
+function formatMoveSlotLabel(slot: AnimationSlot, move: MoveDefinition | null) {
+  return move?.label ?? slot.label;
+}
+
 function signedFrame(value: number) {
   return value > 0 ? `+${value}` : `${value}`;
 }
@@ -2328,7 +2332,7 @@ function CharacterViewer({
                 <span>{isEditingSpriteSheet ? 'Editing Spritesheet' : isEditingAnimation ? 'Editing' : 'Selected'}</span>
                 <strong>
                   <NotationGroup tokens={selectedSlot.notation} />
-                  {isEditingSpriteSheet ? `Frame ${selectedSpriteFrameIndex}` : selectedSlot.label}
+                  {isEditingSpriteSheet ? `Frame ${selectedSpriteFrameIndex}` : formatMoveSlotLabel(selectedSlot, selectedMove)}
                 </strong>
                 <small>{isEditingSpriteSheet ? selectedSpriteFramePath : formatFrameSummary(selectedMove)}</small>
               </div>
@@ -2446,19 +2450,23 @@ function CharacterViewer({
                   onChange={(event) => setSlotSearch(event.target.value)}
                 />
               </div>
-              {visibleSlots.map((option) => (
-                <button
-                  key={option.key}
-                  className={selectedSlot.key === option.key ? 'active' : ''}
-                  onClick={() => setSelectedAnimationKey(option.key)}
-                  title={option.label}
-                  data-testid={`viewer-pose-${option.key}`}
-                >
-                  <NotationGroup tokens={option.notation} />
-                  {option.label}
-                  <small>{formatFrameSummary(resolveSlotMove(active, option))}</small>
-                </button>
-              ))}
+              {visibleSlots.map((option) => {
+                const move = resolveSlotMove(active, option);
+                const label = formatMoveSlotLabel(option, move);
+                return (
+                  <button
+                    key={option.key}
+                    className={selectedSlot.key === option.key ? 'active' : ''}
+                    onClick={() => setSelectedAnimationKey(option.key)}
+                    title={label}
+                    data-testid={`viewer-pose-${option.key}`}
+                  >
+                    <NotationGroup tokens={option.notation} />
+                    {label}
+                    <small>{formatFrameSummary(move)}</small>
+                  </button>
+                );
+              })}
             </div>
           )}
         </article>
@@ -3712,13 +3720,16 @@ function ConfiguredMoveList({ characters }: { characters: [CharacterDefinition, 
               <p>No custom commands configured.</p>
             ) : (
               <div>
-                {configured.slice(0, 36).map((slot) => (
-                  <span key={slot.key}>
-                    <NotationGroup tokens={slot.notation} />
-                    {slot.label}
-                    <small>{formatFrameSummary(resolveSlotMove(character, slot))}</small>
-                  </span>
-                ))}
+                {configured.slice(0, 36).map((slot) => {
+                  const move = resolveSlotMove(character, slot);
+                  return (
+                    <span key={slot.key}>
+                      <NotationGroup tokens={slot.notation} />
+                      {formatMoveSlotLabel(slot, move)}
+                      <small>{formatFrameSummary(move)}</small>
+                    </span>
+                  );
+                })}
               </div>
             )}
           </section>
