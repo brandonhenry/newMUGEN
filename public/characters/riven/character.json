@@ -41,13 +41,13 @@
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
-      "recoveryFrames": 12,
-      "damage": 7,
-      "blockDamage": 1,
+      "recoveryFrames": 14,
+      "damage": 5,
+      "blockDamage": 0,
       "hitLevel": "high",
-      "onBlockFrames": 1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 10,
+      "onBlockFrames": -2,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 11,
       "range": 1.44,
       "pushback": 0.7,
       "blockPushback": 0.34,
@@ -70,15 +70,15 @@
       "id": "kick",
       "label": "Leaf Gale",
       "input": "kick",
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 18,
-      "damage": 11,
+      "recoveryFrames": 20,
+      "damage": 17,
       "blockDamage": 2,
       "hitLevel": "mid",
-      "onBlockFrames": -9,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 7,
+      "onBlockFrames": -7,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 14,
       "range": 1.68,
       "pushback": 1,
       "blockPushback": 0.46,
@@ -101,21 +101,20 @@
       "id": "heavy",
       "label": "Chidori",
       "input": "heavy",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
-      "damage": 18,
-      "blockDamage": 4,
-      "hitLevel": "mid",
-      "onBlockFrames": -14,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 22,
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 9,
+      "blockDamage": 1,
+      "hitLevel": "high",
+      "onBlockFrames": -7,
+      "onHitFrames": 2,
+      "onCounterHitFrames": 5,
       "range": 1.62,
       "pushback": 1.34,
       "blockPushback": 0.64,
-      "launchHeight": 2.25,
       "tracking": "weakRight",
-      "knockdown": true,
+      "knockdown": false,
       "hitbox": {
         "offset": [
           0,
@@ -133,15 +132,15 @@
       "id": "special",
       "label": "Fire Style: Fireball Jutsu",
       "input": "special",
-      "startupFrames": 17,
-      "activeFrames": 4,
-      "recoveryFrames": 26,
-      "damage": 16,
+      "startupFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 18,
       "blockDamage": 3,
-      "hitLevel": "mid",
-      "onBlockFrames": -11,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "hitLevel": "high",
+      "onBlockFrames": -9,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 32,
       "range": 2.55,
       "pushback": 1.62,
       "blockPushback": 0.78,
@@ -411,35 +410,82 @@
     "cmd:SS+4": 11
   },
   "moveOverrides": {
-    "jab": {
-      "label": "Lion Combo",
-      "startupFrames": 9
-    },
-    "kick": {
-      "label": "Leaf Gale",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "damage": 9,
-      "blockDamage": 1,
-      "onBlockFrames": -23,
-      "launchHeight": 2.2
-    },
-    "special": {
-      "label": "Fire Style: Fireball Jutsu",
-      "activeFrames": 6,
-      "recoveryFrames": 18
-    },
     "cmd:f+2": {
-      "label": "Chidori Spear"
+      "label": "Chidori Spear",
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 29,
+      "damage": 20,
+      "hitLevel": "mid",
+      "onBlockFrames": -18,
+      "onHitFrames": 23,
+      "onCounterHitFrames": 33,
+      "launchHeight": 2.25,
+      "knockdown": false
     },
     "cmd:d/f+1": {
-      "label": "Phoenix Flower Jutsu"
+      "label": "Phoenix Flower Jutsu",
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 10,
+      "hitLevel": "mid",
+      "onBlockFrames": -1,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 8
     },
     "cmd:qcf+3": {
-      "label": "Fire Style: Dragon Flame"
+      "label": "Fire Style: Dragon Flame",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 24,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 29,
+      "launchHeight": 1.9,
+      "knockdown": false
     },
     "cmd:SS+4": {
-      "label": "Sharingan Counter"
+      "label": "Sharingan Counter",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
+      "damage": 21,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 32,
+      "launchHeight": 1.7,
+      "knockdown": false
+    },
+    "neutral:jab-jab": {
+      "label": "Lion Combo Second"
+    },
+    "neutral:jab-heavy": {
+      "label": "Lion Combo Chidori"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Lion Combo Launcher"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Fireball Ender"
+    },
+    "neutral:jab-kick": {
+      "label": "Lion Low Sweep"
+    },
+    "neutral:heavy-jab": {
+      "label": "Chidori Follow-Up"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Chidori Chain"
+    },
+    "neutral:heavy-kick": {
+      "label": "Chidori Gale"
+    },
+    "neutral:kick-jab": {
+      "label": "Leaf Gale Follow-Up"
     }
   },
   "spriteFrameEdits": {}

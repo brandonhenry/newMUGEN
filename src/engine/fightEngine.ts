@@ -532,34 +532,36 @@ function buildComboMove(
   const repeatBonus = sequence.length >= 2 && sequence[sequence.length - 1] === sequence[sequence.length - 2] ? 0.06 : 0;
   const lowBonus = route.low ? 0.08 : 0;
   const launcherBonus = route.launcher ? 0.1 : 0;
-  const damageScale = 1 + sequenceBonus + repeatBonus + lowBonus + launcherBonus;
+  const stringScale = Math.max(0.52, 0.82 - Math.max(0, comboStep - 2) * 0.06);
+  const damageScale = comboStep <= 1 ? 1 + lowBonus + launcherBonus : stringScale + repeatBonus + lowBonus + launcherBonus;
   const speedScale = route.toward ? 0.9 : route.away ? 1.08 : route.low ? 1.04 : 1;
   const rangeBonus = (route.toward ? 0.26 : route.low ? 0.12 : route.launcher ? 0.18 : 0) + Math.min(0.5, Math.max(0, comboStep - 1) * 0.14);
   const pushBonus = route.toward ? 0.24 : route.away ? 0.08 : route.launcher ? 0.32 : 0;
   const commandKey = command?.animationKey;
   const generatedComboKey = command ? `${command.notation}:${sequence.join('-')}` : `${route.key}:${sequence.join('-')}`;
+  const stringKey = buttonSequenceKey(sequence);
 
   const generated: MoveDefinition = {
     ...baseMove,
     id: command?.animationKey ?? baseMove.id,
-    label: command ? `${command.notation} ${limbNames[moveInput]}` : `${route.label} ${limbNames[moveInput]} ${comboStep}`,
+    label: command ? `${command.notation} ${limbNames[moveInput]}` : comboStep > 1 ? `${stringKey} String` : `${route.label} ${limbNames[moveInput]} ${comboStep}`,
     command: command?.notation,
     notation: command?.notation,
     animationKey: command?.animationKey,
     comboKey: generatedComboKey,
     comboStep,
     route: route.key,
-    startupFrames: Math.max(4, Math.round(baseMove.startupFrames * speedScale - Math.min(3, comboStep - 1))),
+    startupFrames: Math.max(4, Math.round(baseMove.startupFrames * speedScale + (comboStep > 1 ? Math.min(8, comboStep * 2) : 0) - Math.min(2, comboStep - 1))),
     activeFrames: baseMove.activeFrames + (comboStep > 2 ? 1 : 0) + (comboStep >= 5 ? 1 : 0),
-    recoveryFrames: Math.max(8, Math.round(baseMove.recoveryFrames * (route.away ? 0.92 : 1) - Math.min(4, comboStep - 1))),
-    damage: Math.round(baseMove.damage * damageScale),
+    recoveryFrames: Math.max(8, Math.round(baseMove.recoveryFrames * (route.away ? 0.92 : 1) + Math.max(0, comboStep - 1) * 2 - (route.toward ? 1 : 0))),
+    damage: Math.max(3, Math.round(baseMove.damage * damageScale)),
     blockDamage: Math.max(baseMove.blockDamage, Math.round(baseMove.blockDamage * (1 + sequenceBonus * 0.55))),
     range: baseMove.range + rangeBonus,
     pushback: baseMove.pushback + pushBonus,
     blockPushback: baseMove.blockPushback + pushBonus * 0.4,
-    onBlockFrames: baseMove.onBlockFrames + (route.away ? 2 : route.toward ? -1 : 0),
-    onHitFrames: baseMove.onHitFrames + Math.min(5, comboStep) + (route.launcher ? 4 : 0),
-    onCounterHitFrames: baseMove.onCounterHitFrames + Math.min(7, comboStep + 1) + (route.launcher ? 5 : 0),
+    onBlockFrames: baseMove.onBlockFrames + (route.away ? 2 : route.toward ? -1 : 0) - Math.max(0, comboStep - 1) * 2,
+    onHitFrames: baseMove.onHitFrames + (comboStep <= 1 ? 0 : Math.max(-5, 3 - comboStep * 2)) + (route.launcher ? 4 : 0),
+    onCounterHitFrames: baseMove.onCounterHitFrames + (comboStep <= 1 ? 0 : Math.max(-4, 5 - comboStep)) + (route.launcher ? 5 : 0),
     hitLevel: route.low ? 'low' : baseMove.hitLevel,
     launchHeight: route.launcher ? Math.max(baseMove.launchHeight ?? 0, 2.1) : baseMove.launchHeight,
     knockdown: baseMove.knockdown || comboStep >= MAX_COMBO_STEPS,
@@ -577,7 +579,7 @@ function buildComboMove(
     }
   };
 
-  return applyMoveOverrides(character, generated, baseMove, commandKey);
+  return applyMoveOverrides(character, applyStringFrameData(generated, route, sequence, command), baseMove, commandKey);
 }
 
 type CommandCandidate = {
@@ -631,6 +633,27 @@ function applyMoveOverrides(
   };
 }
 
+function applyStringFrameData(generated: MoveDefinition, route: ComboRoute, sequence: MoveInput[], command?: CommandCandidate | null): MoveDefinition {
+  if (command || route.key !== 'neutral') return generated;
+  const stringKey = buttonSequenceKey(sequence);
+  const tuning = neutralStringFrameData[stringKey];
+  if (!tuning) return generated;
+  return {
+    ...generated,
+    ...tuning,
+    label: tuning.label ?? generated.label,
+    comboKey: generated.comboKey,
+    comboStep: generated.comboStep,
+    route: generated.route,
+    input: generated.input,
+    hitbox: generated.hitbox
+  };
+}
+
+function buttonSequenceKey(sequence: MoveInput[]) {
+  return sequence.map((input) => inputToButton[input]).join(',');
+}
+
 function getMoveIdentity(move: MoveDefinition) {
   return move.command ?? `${move.route ?? 'neutral'}:${move.input}`;
 }
@@ -651,6 +674,173 @@ const buttonToInput: Record<string, MoveInput> = {
   '2': 'heavy',
   '3': 'kick',
   '4': 'special'
+};
+
+type StringFrameTuning = Partial<Pick<
+  MoveDefinition,
+  | 'label'
+  | 'startupFrames'
+  | 'activeFrames'
+  | 'recoveryFrames'
+  | 'damage'
+  | 'blockDamage'
+  | 'hitLevel'
+  | 'onBlockFrames'
+  | 'onHitFrames'
+  | 'onCounterHitFrames'
+  | 'launchHeight'
+  | 'knockdown'
+>>;
+
+const neutralStringFrameData: Record<string, StringFrameTuning> = {
+  '1,1': {
+    label: '1,1 String',
+    startupFrames: 14,
+    activeFrames: 2,
+    recoveryFrames: 19,
+    damage: 15,
+    blockDamage: 1,
+    hitLevel: 'mid',
+    onBlockFrames: -7,
+    onHitFrames: 4,
+    onCounterHitFrames: 7,
+    knockdown: false
+  },
+  '1,1,3': {
+    label: '1,1,3 Ender',
+    startupFrames: 21,
+    activeFrames: 2,
+    recoveryFrames: 17,
+    damage: 17,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -5,
+    onHitFrames: 6,
+    onCounterHitFrames: 14,
+    knockdown: false
+  },
+  '1,2': {
+    label: '1,2 String',
+    startupFrames: 12,
+    activeFrames: 2,
+    recoveryFrames: 20,
+    damage: 9,
+    blockDamage: 1,
+    hitLevel: 'mid',
+    onBlockFrames: -8,
+    onHitFrames: 6,
+    onCounterHitFrames: 8,
+    knockdown: false
+  },
+  '1,2,3': {
+    label: '1,2,3 Launcher',
+    startupFrames: 22,
+    activeFrames: 3,
+    recoveryFrames: 21,
+    damage: 24,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -2,
+    onHitFrames: 20,
+    onCounterHitFrames: 29,
+    launchHeight: 2.2,
+    knockdown: false
+  },
+  '1,2,4': {
+    label: '1,2,4 Ender',
+    startupFrames: 18,
+    activeFrames: 3,
+    recoveryFrames: 27,
+    damage: 18,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -12,
+    onHitFrames: 18,
+    onCounterHitFrames: 22,
+    launchHeight: 1.45,
+    knockdown: false
+  },
+  '1,3': {
+    label: '1,3 Low String',
+    startupFrames: 21,
+    activeFrames: 3,
+    recoveryFrames: 20,
+    damage: 10,
+    blockDamage: 1,
+    hitLevel: 'low',
+    onBlockFrames: -11,
+    onHitFrames: 0,
+    onCounterHitFrames: 4,
+    knockdown: false
+  },
+  '2,1': {
+    label: '2,1 String',
+    startupFrames: 8,
+    activeFrames: 2,
+    recoveryFrames: 18,
+    damage: 10,
+    blockDamage: 1,
+    hitLevel: 'high',
+    onBlockFrames: -6,
+    onHitFrames: 6,
+    onCounterHitFrames: 8,
+    knockdown: false
+  },
+  '2,1,2': {
+    label: '2,1,2 Tornado',
+    startupFrames: 18,
+    activeFrames: 3,
+    recoveryFrames: 25,
+    damage: 16,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -10,
+    onHitFrames: 16,
+    onCounterHitFrames: 22,
+    launchHeight: 1.75,
+    knockdown: false
+  },
+  '2,3': {
+    label: '2,3 Launcher',
+    startupFrames: 22,
+    activeFrames: 3,
+    recoveryFrames: 30,
+    damage: 20,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -17,
+    onHitFrames: 11,
+    onCounterHitFrames: 18,
+    launchHeight: 1.85,
+    knockdown: false
+  },
+  '3,1': {
+    label: '3,1 Mid String',
+    startupFrames: 18,
+    activeFrames: 3,
+    recoveryFrames: 24,
+    damage: 17,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -11,
+    onHitFrames: 8,
+    onCounterHitFrames: 27,
+    knockdown: false
+  },
+  '1+2': {
+    label: '1+2 Power Mid',
+    startupFrames: 16,
+    activeFrames: 3,
+    recoveryFrames: 25,
+    damage: 21,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -9,
+    onHitFrames: 20,
+    onCounterHitFrames: 27,
+    launchHeight: 1.85,
+    knockdown: false
+  }
 };
 
 function updateCommandHistory(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {

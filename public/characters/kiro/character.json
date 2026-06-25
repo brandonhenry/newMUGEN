@@ -41,13 +41,13 @@
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 12,
-      "damage": 7,
-      "blockDamage": 1,
+      "recoveryFrames": 14,
+      "damage": 5,
+      "blockDamage": 0,
       "hitLevel": "high",
-      "onBlockFrames": 1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 10,
+      "onBlockFrames": -2,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 11,
       "range": 1.42,
       "pushback": 0.72,
       "blockPushback": 0.36,
@@ -70,15 +70,15 @@
       "id": "kick",
       "label": "Uzumaki Barrage",
       "input": "kick",
-      "startupFrames": 16,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 18,
-      "damage": 11,
+      "recoveryFrames": 20,
+      "damage": 17,
       "blockDamage": 2,
       "hitLevel": "mid",
-      "onBlockFrames": -8,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 7,
+      "onBlockFrames": -7,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 14,
       "range": 1.62,
       "pushback": 0.98,
       "blockPushback": 0.44,
@@ -101,21 +101,20 @@
       "id": "heavy",
       "label": "Rasengan",
       "input": "heavy",
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
-      "damage": 18,
-      "blockDamage": 4,
-      "hitLevel": "mid",
-      "onBlockFrames": -13,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 22,
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 9,
+      "blockDamage": 1,
+      "hitLevel": "high",
+      "onBlockFrames": -7,
+      "onHitFrames": 2,
+      "onCounterHitFrames": 5,
       "range": 1.54,
       "pushback": 1.3,
       "blockPushback": 0.62,
-      "launchHeight": 2.2,
       "tracking": "weakLeft",
-      "knockdown": true,
+      "knockdown": false,
       "hitbox": {
         "offset": [
           0,
@@ -133,15 +132,15 @@
       "id": "special",
       "label": "Wind Style: Rasenshuriken",
       "input": "special",
-      "startupFrames": 18,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
-      "damage": 16,
+      "startupFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 18,
       "blockDamage": 3,
-      "hitLevel": "mid",
+      "hitLevel": "high",
       "onBlockFrames": -9,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 32,
       "range": 2.48,
       "pushback": 1.58,
       "blockPushback": 0.78,
@@ -386,25 +385,85 @@
     "cmd:WS+4": 9
   },
   "moveOverrides": {
-    "jab": {
-      "label": "Shadow Clone Strike",
-      "onHitFrames": 3
-    },
     "cmd:f+1": {
-      "label": "Naruto Barrage"
+      "label": "Naruto Barrage",
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 17,
+      "onBlockFrames": -7,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 9
     },
     "cmd:d/f+2": {
-      "label": "Giant Rasengan"
+      "label": "Giant Rasengan",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 18,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 24,
+      "launchHeight": 2.2,
+      "knockdown": false
     },
     "cmd:qcf+4": {
-      "label": "Wind Style: Rasengan"
+      "label": "Wind Style: Rasengan",
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 24,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 24,
+      "launchHeight": 1.8,
+      "knockdown": false
     },
     "cmd:WS+4": {
-      "label": "Shadow Clone Uppercut"
+      "label": "Shadow Clone Uppercut",
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 16,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 23,
+      "launchHeight": 1.9,
+      "knockdown": false
     },
     "cmd:3+4": {
       "launchHeight": 2.2,
       "knockdown": false
+    },
+    "neutral:jab-jab": {
+      "label": "Shadow Clone Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Clone Rasengan"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Clone Barrage Launcher"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Rasenshuriken Ender"
+    },
+    "neutral:jab-kick": {
+      "label": "Clone Low Sweep"
+    },
+    "neutral:heavy-jab": {
+      "label": "Rasengan Follow-Up"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Double Rasengan"
+    },
+    "neutral:heavy-kick": {
+      "label": "Rasengan Axe Kick"
+    },
+    "neutral:kick-jab": {
+      "label": "Uzumaki Barrage Step"
     }
   },
   "spriteFrameEdits": {

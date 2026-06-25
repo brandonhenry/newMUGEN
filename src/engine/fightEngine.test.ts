@@ -715,7 +715,7 @@ describe('fight engine', () => {
       match = stepMatch(match, attack, block, 1 / 60);
       attack.jab = false;
     }
-    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - 1);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].blockDamage);
   });
 
   it('only resolves a hit during active frames', () => {
@@ -991,19 +991,19 @@ describe('fight engine', () => {
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;
     match.fighters[1].position.x = 0.45;
-    const route: Array<keyof ReturnType<typeof emptyInputFrame>> = ['jab', 'kick', 'jab', 'special'];
+    const route: Array<keyof ReturnType<typeof emptyInputFrame>> = ['jab', 'heavy', 'kick', 'special'];
 
     route.forEach((button, index) => {
       const input = emptyInputFrame();
       input[button] = true;
       match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
-      for (let i = 0; i < 18 && match.fighters[0].comboStep < index + 1; i += 1) {
+      for (let i = 0; i < 54 && (match.fighters[0].comboStep < index + 1 || !match.fighters[0].hitConfirmed); i += 1) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
       }
     });
 
     expect(match.fighters[0].comboStep).toBeGreaterThanOrEqual(4);
-    expect(match.fighters[0].comboSequence.slice(0, 4)).toEqual(['jab', 'kick', 'jab', 'special']);
+    expect(match.fighters[0].comboSequence.slice(0, 4)).toEqual(['jab', 'heavy', 'kick', 'special']);
   });
 
   it('allows repeating the same exact landed attack when frame data allows direct cancel timing', () => {
@@ -1027,6 +1027,10 @@ describe('fight engine', () => {
     match = stepMatch(match, sameOne, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab-jab');
+    expect(match.fighters[0].currentMove?.damage).toBe(15);
+    expect(match.fighters[0].currentMove?.onBlockFrames).toBe(-7);
+    expect(match.fighters[0].currentMove?.onHitFrames).toBe(4);
+    expect(match.fighters[0].currentMove?.hitLevel).toBe('mid');
   });
 
   it('allows the same attack again after recovery when hit advantage keeps the defender stuck', () => {
