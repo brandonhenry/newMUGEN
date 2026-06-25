@@ -68,6 +68,8 @@ export type CompactMatchSnapshot = {
   stageId: string;
   mode: 'online';
   cpuDifficulty: MatchSnapshot['cpuDifficulty'];
+  aiSeed: number;
+  roundAiSeed: number;
   roundTime: number;
   trainingInfiniteHealth: boolean;
   introEnabled: boolean;
@@ -106,6 +108,8 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     stageId: match.stage.id,
     mode: 'online',
     cpuDifficulty: match.cpuDifficulty,
+    aiSeed: match.aiSeed,
+    roundAiSeed: match.roundAiSeed,
     roundTime: match.roundTime,
     trainingInfiniteHealth: match.trainingInfiniteHealth,
     introEnabled: match.introEnabled,
@@ -129,6 +133,8 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     ...base,
     mode: 'online',
     cpuDifficulty: snapshot.cpuDifficulty,
+    aiSeed: snapshot.aiSeed ?? base.aiSeed,
+    roundAiSeed: snapshot.roundAiSeed ?? base.roundAiSeed,
     roundTime: snapshot.roundTime,
     trainingInfiniteHealth: snapshot.trainingInfiniteHealth,
     introEnabled: snapshot.introEnabled,

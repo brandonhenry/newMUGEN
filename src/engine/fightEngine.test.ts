@@ -589,6 +589,25 @@ describe('fight engine', () => {
     expect(sampleRoute(111)).not.toBe(sampleRoute(222));
   });
 
+  it('rerolls round AI seed between rounds while keeping the match AI seed', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 4444 });
+    const initialMatchSeed = match.aiSeed;
+    const initialRoundSeed = match.roundAiSeed;
+
+    match.fighters[1].hp = 0;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.phase).toBe('roundOver');
+
+    for (let i = 0; i < 150; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.phase).toBe('fighting');
+    expect(match.round).toBe(2);
+    expect(match.aiSeed).toBe(initialMatchSeed);
+    expect(match.roundAiSeed).not.toBe(initialRoundSeed);
+  });
+
   it('scales CPU attack frequency and route complexity by difficulty', () => {
     const simulate = (difficulty: 1 | 5) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);

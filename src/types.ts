@@ -343,6 +343,7 @@ export type MatchSnapshot = {
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   aiSeed: number;
+  roundAiSeed: number;
   roundTime: number;
   trainingInfiniteHealth: boolean;
   introEnabled: boolean;

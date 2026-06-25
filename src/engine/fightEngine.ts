@@ -74,12 +74,14 @@ export function createMatch(
   options: MatchOptions = {}
 ): MatchSnapshot {
   const roundTime = clamp(Math.round(options.roundTime ?? ROUND_TIME), 30, 99);
+  const aiSeed = normalizeAiSeed(options.aiSeed);
   const match: MatchSnapshot = {
     fighters: [createFighter(1, p1, -START_DISTANCE / 2), createFighter(2, p2, START_DISTANCE / 2)],
     stage,
     mode,
     cpuDifficulty,
-    aiSeed: normalizeAiSeed(options.aiSeed),
+    aiSeed,
+    roundAiSeed: makeRoundAiSeed(aiSeed, 1),
     roundTime,
     trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
     introEnabled: options.playIntro ?? false,
@@ -142,12 +144,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed) : p1Input;
+  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
       ? emptyInputFrame()
       : next.mode === 'ai' || next.mode === 'cpu'
-        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed)
+        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
         : p2Input;
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
@@ -1717,6 +1719,7 @@ function resetRound(match: MatchSnapshot) {
   match.fighters[0].roundsWon = rounds[0];
   match.fighters[1].roundsWon = rounds[1];
   match.round += 1;
+  match.roundAiSeed = makeRoundAiSeed(match.aiSeed, match.round);
   match.timer = match.roundTime;
   match.countdown = 0;
   match.phase = 'fighting';
@@ -1789,7 +1792,7 @@ function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, 
   fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
 }
 
-function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0): InputFrame {
+function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {
   const input = emptyInputFrame();
   const dx = opponent.position.x - ai.position.x;
   const dz = opponent.position.z - ai.position.z;
@@ -1802,18 +1805,20 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const leaderBrake = cpuDuel ? clamp((leadRatio - 0.14) / 0.34, 0, 1) : 0;
   const leaderCloseout = leaderBrake > 0.18;
   const style = getAiSeedStyle(aiSeed, ai.slot);
-  const beat = Math.sin(timer * (2.45 + style.tempo * 0.48) + ai.hp * 0.03 + ai.slot * 0.9 + style.phase);
-  const blockRoll = (Math.sin(elapsed * (6.4 + style.guardTempo * 1.5) + ai.slot * 1.7 + ai.hp * 0.02 + style.phase * 0.7) + 1) / 2;
+  const roundStyle = getAiSeedStyle(roundAiSeed, ai.slot);
+  const roundPhase = style.phase + roundStyle.phase * 0.35;
+  const beat = Math.sin(timer * (2.45 + (style.tempo + roundStyle.tempo * 0.28) * 0.48) + ai.hp * 0.03 + ai.slot * 0.9 + roundPhase);
+  const blockRoll = (Math.sin(elapsed * (6.4 + (style.guardTempo + roundStyle.guardTempo * 0.25) * 1.5) + ai.slot * 1.7 + ai.hp * 0.02 + roundPhase * 0.7) + 1) / 2;
   const attackCycle = Math.max(0.12, (settings.attackCycle - profile.aggression * settings.aggressionCycleBonus) * style.attackCycleScale);
   const comboCycle = Math.max(0.1, settings.comboCycle * style.comboCycleScale);
-  const attackPhase = positiveModulo(elapsed + ai.slot * 0.18 + style.attackPhaseOffset, attackCycle);
-  const comboPhase = positiveModulo(elapsed + ai.slot * 0.11 + style.comboPhaseOffset, comboCycle);
-  const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp) + style.selectorJitter, 100);
-  const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp) + style.routeJitter, 100);
+  const attackPhase = positiveModulo(elapsed + ai.slot * 0.18 + style.attackPhaseOffset + roundStyle.attackPhaseOffset * 0.65, attackCycle);
+  const comboPhase = positiveModulo(elapsed + ai.slot * 0.11 + style.comboPhaseOffset + roundStyle.comboPhaseOffset * 0.75, comboCycle);
+  const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp) + style.selectorJitter + roundStyle.selectorJitter, 100);
+  const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp) + style.routeJitter + roundStyle.routeJitter, 100);
   let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
   if (leaderCloseout) {
     selectedMoveInput = chooseAiCloseoutMoveInput(ai, selectedMoveInput, selector, routeRoll);
-  } else if (aiDecisionRoll(ai, opponent, elapsed, 6, aiSeed) < settings.suboptimalMoveRate * style.imperfectionScale) {
+  } else if (aiDecisionRoll(ai, opponent, elapsed, 6, roundAiSeed) < settings.suboptimalMoveRate * style.imperfectionScale) {
     selectedMoveInput = chooseAiImperfectMoveInput(ai, selectedMoveInput, selector, routeRoll);
   }
   const selectedMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? ai.character.moves[0] ?? null;
@@ -1830,7 +1835,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const farAway = distance > selectedMoveReach + settings.runInBuffer;
   const resetRhythm = Math.sin(elapsed * 1.17 + ai.slot * 1.9);
 
-  const spacingMistake = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 2, aiSeed) < settings.spacingMistakeRate * style.imperfectionScale;
+  const spacingMistake = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 2, roundAiSeed) < settings.spacingMistakeRate * style.imperfectionScale;
   if (spacingMistake && !farAway && distance < selectedMoveReach + 0.95) {
     input[awayKey] = true;
     input[towardKey] = false;
@@ -1863,10 +1868,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const canAttemptCancel = shouldContinueCombo && canComboCancel(ai);
   const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown';
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
-  const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, aiSeed) < settings.punishDropRate * style.imperfectionScale;
+  const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, roundAiSeed) < settings.punishDropRate * style.imperfectionScale;
   const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;
   let punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
-  if (aiDecisionRoll(ai, opponent, elapsed, 7, aiSeed) < settings.suboptimalPunishRate * style.imperfectionScale) {
+  if (aiDecisionRoll(ai, opponent, elapsed, 7, roundAiSeed) < settings.suboptimalPunishRate * style.imperfectionScale) {
     punishMoveInput = chooseAiImperfectMoveInput(ai, punishMoveInput, selector + 13, routeRoll + 7);
   }
   const punishMove = ai.character.moves.find((move) => move.input === punishMoveInput) ?? selectedMove;
@@ -1893,14 +1898,14 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
 
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
   const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
-  const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4, aiSeed) < settings.pressureDropRate * style.imperfectionScale;
+  const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4, roundAiSeed) < settings.pressureDropRate * style.imperfectionScale;
   const pressureAccepted =
     !pressureDropped &&
     pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - settings.leaderPressurePenalty * leaderBrake * 0.55);
   let pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
   if (leaderCloseout && opening.kind !== 'none') {
     pressureMoveInput = chooseAiCloseoutMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
-  } else if (aiDecisionRoll(ai, opponent, elapsed, 8, aiSeed) < settings.suboptimalPressureRate * style.imperfectionScale) {
+  } else if (aiDecisionRoll(ai, opponent, elapsed, 8, roundAiSeed) < settings.suboptimalPressureRate * style.imperfectionScale) {
     pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   }
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
@@ -1933,7 +1938,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   }
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
-  const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5, aiSeed) < settings.attackHesitationRate * style.imperfectionScale;
+  const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5, roundAiSeed) < settings.attackHesitationRate * style.imperfectionScale;
   const canPressure = !missedKnownOpening && !attackHesitation && !input.block && canAct && inStrikeRange && !tooClose;
   const leaderAttackScale = leaderCloseout ? 1.12 - leaderBrake * 0.08 : 1;
   const leaderComboScale = leaderCloseout ? 0.74 - leaderBrake * 0.14 : 1;
@@ -2185,6 +2190,14 @@ function seededUnit(seed: number, salt: number) {
 
 function normalizeAiSeed(seed: number | undefined) {
   return positiveModulo(Math.floor(Number.isFinite(seed) ? Number(seed) : 0), AI_SEED_MODULUS);
+}
+
+function makeRoundAiSeed(aiSeed: number, round: number) {
+  const seed = normalizeAiSeed(aiSeed);
+  if (seed === 0) return 0;
+  const roundValue = Math.max(1, Math.floor(round));
+  const roll = Math.floor(seededUnit(seed, roundValue * 101 + 31) * AI_SEED_MODULUS);
+  return normalizeAiSeed(seed + roll + roundValue * 7919);
 }
 
 function getCpuDifficultySettings(difficulty: CpuDifficulty) {

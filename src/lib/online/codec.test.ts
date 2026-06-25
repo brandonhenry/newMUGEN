@@ -19,7 +19,7 @@ describe('online codec', () => {
   });
 
   it('hydrates render-critical match state from a compact snapshot', () => {
-    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { playIntro: true });
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { aiSeed: 9090, playIntro: true });
     match.fighters[0].hp = 42;
     match.fighters[0].ki = 78;
     match.fighters[0].position.x = 1.25;
@@ -37,5 +37,7 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].ki).toBe(78);
     expect(hydrated.fighters[0].position.x).toBe(1.25);
     expect(hydrated.fighters[1].roundsWon).toBe(1);
+    expect(hydrated.aiSeed).toBe(match.aiSeed);
+    expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);
   });
 });
