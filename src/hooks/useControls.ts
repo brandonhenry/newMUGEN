@@ -15,6 +15,9 @@ type VerticalInputSource = 'keyboard' | 'virtual';
 export type VerticalTapState = {
   lastUpTap: number;
   lastDownTap: number;
+  holdAction: 'up' | 'down' | null;
+  holdStartedAt: number;
+  holdActivated: boolean;
   laneDirection: -1 | 0 | 1;
   laneMode: 'none' | 'holdCandidate' | 'walk';
   laneStartedAt: number;
@@ -25,11 +28,15 @@ export type VerticalTapState = {
 
 const DOUBLE_TAP_MS = 280;
 const LANE_HOLD_MS = 135;
+const VERTICAL_HOLD_MS = 150;
 
 export function createVerticalTapState(): VerticalTapState {
   return {
     lastUpTap: Number.NEGATIVE_INFINITY,
     lastDownTap: Number.NEGATIVE_INFINITY,
+    holdAction: null,
+    holdStartedAt: Number.NEGATIVE_INFINITY,
+    holdActivated: false,
     laneDirection: 0,
     laneMode: 'none',
     laneStartedAt: Number.NEGATIVE_INFINITY,
@@ -184,14 +191,20 @@ export function applyVerticalTap(
       state.laneMode = 'holdCandidate';
       state.laneStartedAt = now;
       state.laneStepConsumed = false;
+      state.holdAction = null;
+      state.holdStartedAt = Number.NEGATIVE_INFINITY;
+      state.holdActivated = false;
       state.heldAction = action;
       state.source = source;
       state[lastTapKey] = Number.NEGATIVE_INFINITY;
     } else {
       resetLaneState(input, state, source);
-      input[action] = true;
+      input[action] = false;
       input[sidestepAction] = false;
       input[laneAction] = false;
+      state.holdAction = action;
+      state.holdStartedAt = now;
+      state.holdActivated = false;
       state.heldAction = action;
       state.source = source;
       state[lastTapKey] = now;
@@ -201,17 +214,35 @@ export function applyVerticalTap(
     if (state.heldAction !== action || state.source !== source) return true;
     input[sidestepAction] = false;
     input[laneAction] = false;
+    const completedHold = state.holdAction === action && state.holdActivated;
+    if (state.holdAction === action) {
+      state.holdAction = null;
+      state.holdStartedAt = Number.NEGATIVE_INFINITY;
+      state.holdActivated = false;
+    }
+    if (completedHold) state[lastTapKey] = Number.NEGATIVE_INFINITY;
     state.heldAction = null;
     if (state.laneDirection === direction) resetLaneState(input, state, source);
+    if (state.laneDirection === 0) state.source = null;
   }
   return true;
 }
 
 export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource, now = performance.now()) {
+  if (state.source === source && state.holdAction && state.heldAction === state.holdAction) {
+    if (now - state.holdStartedAt >= VERTICAL_HOLD_MS) {
+      state.holdActivated = true;
+      input[state.holdAction] = true;
+    } else {
+      input[state.holdAction] = false;
+    }
+  }
+
   if (state.source !== source || state.laneDirection === 0 || state.laneMode === 'none') return;
   const action = state.laneDirection < 0 ? 'up' : 'down';
   const sidestepAction = action === 'up' ? 'sidestepUp' : 'sidestepDown';
   const laneAction = action === 'up' ? 'sidewalkUp' : 'sidewalkDown';
+  input[action] = false;
 
   if (state.laneMode === 'holdCandidate') {
     if (!state.laneStepConsumed) {
@@ -251,5 +282,8 @@ function resetLaneState(input: InputFrame, state: VerticalTapState, source: Vert
   state.laneMode = 'none';
   state.laneStartedAt = Number.NEGATIVE_INFINITY;
   state.laneStepConsumed = false;
+  state.holdAction = null;
+  state.holdStartedAt = Number.NEGATIVE_INFINITY;
+  state.holdActivated = false;
   state.source = null;
 }

@@ -108,20 +108,43 @@ describe('character manifests', () => {
     expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([{ player: 1, action: 'jab' }]);
   });
 
-  it('keeps single up and down presses as jump and crouch', () => {
+  it('turns single up and down holds into jump and crouch without firing on tap', () => {
     const input = emptyInputFrame();
     const state = createVerticalTapState();
 
     applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
-    expect(input.up).toBe(true);
+    prepareVerticalTapForRead(input, state, 'keyboard', 180);
+    expect(input.up).toBe(false);
     expect(input.sidestepUp).toBe(false);
     expect(input.sidewalkUp).toBe(false);
-    applyVerticalTap(input, state, 'up', false, 'keyboard', 140);
+    prepareVerticalTapForRead(input, state, 'keyboard', 260);
+    expect(input.up).toBe(true);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 280);
+    expect(input.up).toBe(false);
 
     applyVerticalTap(input, state, 'down', true, 'keyboard', 520);
+    prepareVerticalTapForRead(input, state, 'keyboard', 600);
+    expect(input.down).toBe(false);
+    prepareVerticalTapForRead(input, state, 'keyboard', 680);
     expect(input.down).toBe(true);
     expect(input.sidestepDown).toBe(false);
     expect(input.sidewalkDown).toBe(false);
+  });
+
+  it('does not turn a completed jump hold into the first tap of a lane step', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
+    prepareVerticalTapForRead(input, state, 'keyboard', 270);
+    expect(input.up).toBe(true);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 285);
+
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 330);
+    prepareVerticalTapForRead(input, state, 'keyboard', 331);
+    expect(input.up).toBe(false);
+    expect(input.sidestepUp).toBe(false);
+    expect(input.sidewalkUp).toBe(false);
   });
 
   it('turns double tap up or down into one lane step', () => {
@@ -169,6 +192,9 @@ describe('character manifests', () => {
     expect(input.sidewalkDown).toBe(false);
 
     applyVerticalTap(input, state, 'down', true, 'keyboard', 700);
+    prepareVerticalTapForRead(input, state, 'keyboard', 780);
+    expect(input.down).toBe(false);
+    prepareVerticalTapForRead(input, state, 'keyboard', 860);
     expect(input.down).toBe(true);
     expect(input.sidestepDown).toBe(false);
     expect(input.sidewalkDown).toBe(false);
