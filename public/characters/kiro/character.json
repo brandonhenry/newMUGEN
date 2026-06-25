@@ -398,8 +398,8 @@
       "damage": 18,
       "hitLevel": "mid",
       "onBlockFrames": -13,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 24,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 34,
       "launchHeight": 2.2,
       "knockdown": false
     },
@@ -411,8 +411,8 @@
       "damage": 24,
       "hitLevel": "mid",
       "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 24,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 32,
       "launchHeight": 1.8,
       "knockdown": false
     },
@@ -424,14 +424,23 @@
       "damage": 16,
       "hitLevel": "mid",
       "onBlockFrames": -10,
-      "onHitFrames": 17,
-      "onCounterHitFrames": 23,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
       "launchHeight": 1.9,
       "knockdown": false
     },
     "cmd:3+4": {
       "launchHeight": 2.2,
-      "knockdown": false
+      "knockdown": false,
+      "label": "Shadow Clone Rising Kick",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
+      "damage": 17,
+      "hitLevel": "mid",
+      "onBlockFrames": -11,
+      "onHitFrames": 27,
+      "onCounterHitFrames": 33
     },
     "neutral:jab-jab": {
       "label": "Shadow Clone Feint"
@@ -463,6 +472,66 @@
     "cmd:1+4": {
       "recoveryFrames": 12,
       "onBlockFrames": -7
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Clone Palm Break"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Clone Low Check"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Shadow Clone Cyclone"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Clone Sweep Rasengan"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Sweep Rasenshuriken"
+    },
+    "neutral:jab-special": {
+      "label": "Clone Spiral Kick"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Spiral Feint Rasengan"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Rasengan Clone Ender"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Rasengan Barrage Ender"
+    },
+    "neutral:heavy-special": {
+      "label": "Wind Feint"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Wind Sweep"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Barrage Clone Ender"
+    },
+    "neutral:kick-heavy": {
+      "label": "Barrage Palm"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Barrage Rasengan"
+    },
+    "neutral:kick-special": {
+      "label": "Barrage Cyclone"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Rising Rasengan"
+    },
+    "neutral:special-jab": {
+      "label": "Rasenshuriken Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Rasenshuriken Smash"
+    },
+    "neutral:special-heavy": {
+      "label": "Spiral Impact"
+    },
+    "neutral:special-kick": {
+      "label": "Wind Sweep Kick"
     }
   },
   "spriteFrameEdits": {

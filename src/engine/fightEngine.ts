@@ -12,7 +12,7 @@ import type {
   ImpactSparkKind,
   StageDefinition
 } from '../types';
-import { emptyInputFrame } from '../types';
+import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 
 const ARENA_LIMIT_X = 18;
 const ARENA_LIMIT_Z = 9;
@@ -33,6 +33,9 @@ const GETUP_INVULNERABLE_FRAMES = 20;
 const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
+const JUGGLE_REFLOAT_VELOCITY = 1.28;
+const JUGGLE_KEEP_CLOSE_DISTANCE = 1.08;
+const JUGGLE_KEEP_CLOSE_PULL = 0.24;
 const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
 const UNIVERSAL_RANGE_BUFFER = 0.26;
 const UNIVERSAL_HITBOX_FORWARD_PADDING = 0.22;
@@ -120,7 +123,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     next.countdown -= dt;
     updateRoundOverVisuals(next);
     if (next.countdown <= 0) {
-      const winner = next.fighters.find((fighter) => fighter.roundsWon >= 2);
+      const winner = next.fighters.find((fighter) => fighter.roundsWon >= ROUNDS_TO_WIN);
       if (winner) {
         next.phase = 'matchOver';
         next.winnerSlot = winner.slot;
@@ -235,7 +238,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
   const freshMoveInput = getFreshMoveInput(fighter, input);
-  if (freshMoveInput) bufferMoveInput(fighter, freshMoveInput);
+  if (freshMoveInput && canBufferFreshMoveInput(fighter)) bufferMoveInput(fighter, freshMoveInput);
 
   if (fighter.actionFramesRemaining > 0) {
     fighter.moveFrame += frameDelta;
@@ -248,7 +251,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.hitConfirmed = false;
       fighter.whiffRecoveryApplied = false;
       fighter.moveFrame = 0;
-      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
+      fighter.state = getPostLockState(fighter);
     }
   } else if (fighter.actionTimer > 0) {
     fighter.actionTimer = Math.max(0, fighter.actionTimer - dt);
@@ -258,7 +261,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.hitConfirmed = false;
       fighter.whiffRecoveryApplied = false;
       fighter.moveFrame = 0;
-      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
+      fighter.state = getPostLockState(fighter);
     }
   }
 
@@ -267,12 +270,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.blockstunFramesRemaining = Math.max(0, fighter.blockstunFramesRemaining - frameDelta);
     fighter.stunTimer = framesToSeconds(Math.max(fighter.stunFramesRemaining, fighter.blockstunFramesRemaining));
     if (fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.state !== 'knockdown') {
-      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
+      fighter.state = getPostLockState(fighter);
     }
   } else if (fighter.stunTimer > 0) {
     fighter.stunTimer = Math.max(0, fighter.stunTimer - dt);
     if (fighter.stunTimer === 0 && fighter.state !== 'knockdown') {
-      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
+      fighter.state = getPostLockState(fighter);
     }
   }
   if (fighter.blockstunFramesRemaining === 0) {
@@ -290,6 +293,16 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.juggleDamage = 0;
     }
     applyGravity(fighter, dt);
+    updateAttackInputMemory(fighter, input);
+    return;
+  }
+
+  if (fighter.state === 'juggle') {
+    applyGravity(fighter, dt);
+    if (!isAirborne(fighter) && fighter.stunFramesRemaining === 0 && fighter.actionFramesRemaining === 0 && fighter.stunTimer === 0 && fighter.actionTimer === 0) {
+      fighter.state = 'idle';
+      fighter.juggleDamage = 0;
+    }
     updateAttackInputMemory(fighter, input);
     return;
   }
@@ -405,6 +418,12 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
   fighter.bufferedMoveFrames = 0;
 }
 
+function canBufferFreshMoveInput(fighter: FighterRuntime) {
+  if (fighter.state === 'attack') return true;
+  if (fighter.state === 'juggle' || fighter.state === 'knockdown') return false;
+  return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
+}
+
 function getFreshMoveInput(fighter: FighterRuntime, input: InputFrame): MoveInput | null {
   return moveInputs.find((action) => input[action] && !fighter.previousAttackInputs[action]) ?? null;
 }
@@ -514,7 +533,7 @@ function canChainInto(fighter: FighterRuntime, chainMode: 'neutral' | 'cancel' |
 
 function canLinkAfterHit(fighter: FighterRuntime, opponent: FighterRuntime) {
   if (fighter.comboTimer <= 0 || fighter.comboHits <= 0) return false;
-  return opponent.stunFramesRemaining > 0 || opponent.state === 'hit' || isAirborne(opponent);
+  return opponent.stunFramesRemaining > 0 || opponent.state === 'hit' || opponent.state === 'juggle' || isAirborne(opponent);
 }
 
 function shouldDropSameMoveRecoveryBuffer(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput) {
@@ -1344,9 +1363,11 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
-  const wasAirborne = isAirborne(defender);
+  const wasJuggled = defender.state === 'juggle';
+  const wasAirborne = isAirborne(defender) || wasJuggled;
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
-  const juggleDamage = (wasAirborne || launchHeight > 0 ? defender.juggleDamage : 0) + move.damage;
+  const entersJuggle = launchHeight > 0 || wasJuggled;
+  const juggleDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
   const forceKnockdown = move.knockdown || juggleDamage >= JUGGLE_DAMAGE_LIMIT;
   defender.hp = Math.max(0, defender.hp - move.damage);
   defender.blockstunFramesRemaining = 0;
@@ -1361,13 +1382,17 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.stunTimer = framesToSeconds(stunFrames);
     defender.actionFramesRemaining = stunFrames;
     defender.actionTimer = framesToSeconds(stunFrames);
-    defender.state = 'hit';
+    defender.state = entersJuggle ? 'juggle' : 'hit';
     defender.juggleDamage = juggleDamage;
   }
 
-  if (!forceKnockdown && launchHeight > 0) {
-    defender.position.y = Math.max(defender.position.y, 0.18);
-    defender.velocityY = wasAirborne ? Math.max(defender.velocityY, Math.min(1.45, launchHeight * 0.62)) : Math.max(defender.velocityY, launchHeight);
+  if (!forceKnockdown && entersJuggle) {
+    const refloatVelocity = launchHeight > 0
+      ? (wasAirborne ? Math.min(1.55, Math.max(JUGGLE_REFLOAT_VELOCITY, launchHeight * 0.64)) : launchHeight)
+      : JUGGLE_REFLOAT_VELOCITY;
+    defender.position.y = Math.max(defender.position.y, wasAirborne ? 0.36 : 0.18);
+    defender.velocityY = Math.max(defender.velocityY, refloatVelocity);
+    applyJuggleFloatCorrection(attacker, defender);
   } else if (!forceKnockdown && wasAirborne) {
     defender.position.y = Math.max(defender.position.y, 0.28);
     defender.velocityY = Math.max(defender.velocityY, 1.15);
@@ -1456,8 +1481,33 @@ function isActiveMoveFrame(move: MoveDefinition, moveFrame: number) {
   return moveFrame >= move.startupFrames && moveFrame < move.startupFrames + move.activeFrames;
 }
 
+function getPostLockState(fighter: FighterRuntime): FighterRuntime['state'] {
+  if (
+    fighter.state === 'juggle' &&
+    (isAirborne(fighter) ||
+      fighter.stunFramesRemaining > 0 ||
+      fighter.actionFramesRemaining > 0 ||
+      fighter.stunTimer > 0 ||
+      fighter.actionTimer > 0)
+  ) {
+    return 'juggle';
+  }
+  if (fighter.state === 'hit' && isAirborne(fighter)) return 'hit';
+  return 'idle';
+}
+
 function isAirborne(fighter: FighterRuntime) {
   return fighter.position.y > 0 || fighter.velocityY !== 0;
+}
+
+function applyJuggleFloatCorrection(attacker: FighterRuntime, defender: FighterRuntime) {
+  const dx = defender.position.x - attacker.position.x;
+  const dz = defender.position.z - attacker.position.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance <= JUGGLE_KEEP_CLOSE_DISTANCE || distance === 0) return;
+  const pull = Math.min(JUGGLE_KEEP_CLOSE_PULL, distance - JUGGLE_KEEP_CLOSE_DISTANCE);
+  defender.position.x -= (dx / distance) * pull;
+  defender.position.z -= (dz / distance) * pull;
 }
 
 function applyWhiffRecoveryIfNeeded(fighter: FighterRuntime) {
@@ -1938,7 +1988,7 @@ function getAiOpening(ai: FighterRuntime, opponent: FighterRuntime, distance: nu
   if (ai.state === 'knockdown' || ai.stunFramesRemaining > 0 || ai.blockstunFramesRemaining > 0) return { kind: 'none', frames: 0 };
   if (opponent.state === 'knockdown' || opponent.getupInvulnerableFrames > 0) return { kind: 'none', frames: 0 };
 
-  if (opponent.state === 'hit' && opponent.stunFramesRemaining > 0) {
+  if ((opponent.state === 'hit' || opponent.state === 'juggle') && opponent.stunFramesRemaining > 0) {
     return { kind: 'hitstun', frames: opponent.stunFramesRemaining };
   }
 

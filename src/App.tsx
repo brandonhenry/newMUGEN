@@ -16,10 +16,11 @@ import {
   Target,
   Upload,
   Users,
+  Wifi,
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type ReactNode, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
@@ -29,7 +30,12 @@ import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLo
 import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
+import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
+import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
+import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
+import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import {
+  ROUNDS_TO_WIN,
   emptyInputFrame,
   type ActionName,
   type CharacterDefinition,
@@ -51,6 +57,7 @@ import {
 
 type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
+type OnlineWins = [number, number];
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
@@ -928,6 +935,10 @@ export default function App() {
               setMode('training');
               setScreen('select');
             }}
+            onOnline={() => {
+              setMode('online');
+              setScreen('select');
+            }}
             onSettings={() => setScreen('settings')}
             onViewer={() => setScreen('viewer')}
             onStages={() => setScreen('stageEditor')}
@@ -994,6 +1005,8 @@ export default function App() {
             p1={p1}
             p2={p2}
             stage={selectedStage}
+            roster={roster}
+            stages={stageRoster}
             mode={mode}
             cpuDifficulty={cpuDifficulty}
             settings={settings}
@@ -1036,6 +1049,7 @@ function MenuScreen({
   onArcade,
   onVersus,
   onTraining,
+  onOnline,
   onSettings,
   onViewer,
   onStages,
@@ -1045,6 +1059,7 @@ function MenuScreen({
   onArcade: () => void;
   onVersus: () => void;
   onTraining: () => void;
+  onOnline: () => void;
   onSettings: () => void;
   onViewer: () => void;
   onStages: () => void;
@@ -1095,6 +1110,7 @@ function MenuScreen({
     { label: 'Arcade', action: onArcade },
     { label: 'Versus', action: onVersus },
     { label: 'Training', action: onTraining },
+    { label: 'Online', action: onOnline },
     { label: 'Characters', action: onViewer },
     ...(isLocalDevHost() ? [{ label: 'Stages', action: onStages }] : []),
     { label: 'Options', action: onSettings },
@@ -1282,6 +1298,10 @@ function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mo
         <Target size={16} />
         Training
       </button>
+      <button className={value === 'online' ? 'active' : ''} onClick={() => setValue('online')}>
+        <Wifi size={16} />
+        Online
+      </button>
       <button className={value === 'cpu' ? 'active' : ''} onClick={() => setValue('cpu')}>
         <Swords size={16} />
         CPU vs CPU
@@ -1325,6 +1345,7 @@ function CpuDifficultyControl({
 
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && mode === 'ai') return 'CPU';
   return slot === 1 ? 'Player 1' : 'Player 2';
@@ -1332,6 +1353,7 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
 
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && mode === 'ai') return 'CPU';
   return slot === 1 ? 'P1' : 'P2';
@@ -3921,6 +3943,8 @@ function FightScreen({
   p1,
   p2,
   stage,
+  roster,
+  stages,
   mode,
   cpuDifficulty,
   settings,
@@ -3934,6 +3958,8 @@ function FightScreen({
   p1: CharacterDefinition;
   p2: CharacterDefinition;
   stage: StageDefinition;
+  roster: CharacterDefinition[];
+  stages: StageDefinition[];
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   settings: GameSettings;
@@ -3945,6 +3971,7 @@ function FightScreen({
   onCharacterSelect: () => void;
 }) {
   const [paused, setPaused] = useState(false);
+  const isOnline = mode === 'online';
   const matchOptions = useMemo(
     () => ({
       roundTime: settings.game.roundTimer,
@@ -3953,7 +3980,7 @@ function FightScreen({
     }),
     [settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
-  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, mode, cpuDifficulty, matchOptions));
+  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, matchOptions));
   const matchRef = useRef(match);
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
@@ -3961,10 +3988,35 @@ function FightScreen({
   const seenCombatEventIds = useRef<Set<number>>(new Set());
   const lastCombatEventId = useRef(0);
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
+  const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
+  const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
+  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? 'LOOKING FOR MATCH' : '');
+  const [onlineWins, setOnlineWins] = useState<OnlineWins>([0, 0]);
+  const onlineSessionRef = useRef<OnlinePeerSession | null>(null);
+  const onlineRoomRef = useRef<OnlineMatchResult | null>(null);
+  const onlineRoleRef = useRef<OnlineRole | null>(null);
+  const onlineStateRef = useRef<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
+  const remoteInputRef = useRef<InputFrame>(emptyInputFrame());
+  const onlineWinsRef = useRef<OnlineWins>([0, 0]);
+  const onlineRematchReadyRef = useRef({ local: false, remote: false });
+  const onlineWinnerRecordedRef = useRef(false);
+  const onlineSnapshotSequenceRef = useRef(0);
+  const onlineInputSequenceRef = useRef(0);
+  const onlineLatestSnapshotRef = useRef(-1);
+  const onlineLastSnapshotAtRef = useRef(0);
+  const onlineClosingRef = useRef(false);
 
   useEffect(() => {
     matchRef.current = match;
   }, [match]);
+
+  useEffect(() => {
+    onlineStateRef.current = onlineState;
+  }, [onlineState]);
+
+  useEffect(() => {
+    onlineRoleRef.current = onlineRole;
+  }, [onlineRole]);
 
   useEffect(() => {
     if (match.lastHitId < lastCombatEventId.current) {
@@ -3987,6 +4039,266 @@ function FightScreen({
   useEffect(() => {
     screenRef.current?.focus();
   }, []);
+
+  const makeOnlineMatch = useCallback((hostCharacterId: string, guestCharacterId: string, onlineStageId: string) => {
+    const hostCharacter = roster.find((character) => character.id === hostCharacterId) ?? p1;
+    const guestCharacter = roster.find((character) => character.id === guestCharacterId) ?? p2;
+    const onlineStage = stages.find((item) => item.id === onlineStageId) ?? stage;
+    return createMatch(hostCharacter, guestCharacter, onlineStage, 'online', cpuDifficulty, matchOptions);
+  }, [cpuDifficulty, matchOptions, p1, p2, roster, stage, stages]);
+
+  const publishOnlineSnapshot = useCallback((force = false) => {
+    if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
+    const now = performance.now();
+    if (!force && now - onlineLastSnapshotAtRef.current < 33) return;
+    onlineLastSnapshotAtRef.current = now;
+    onlineSessionRef.current?.send({
+      type: 'snapshot',
+      snapshot: compactMatchSnapshot(matchRef.current, onlineSnapshotSequenceRef.current += 1),
+      wins: onlineWinsRef.current
+    });
+  }, []);
+
+  const startOnlineRematch = useCallback(() => {
+    const current = matchRef.current;
+    const fresh = makeOnlineMatch(current.fighters[0].character.id, current.fighters[1].character.id, current.stage.id);
+    matchRef.current = fresh;
+    setMatch(fresh);
+    onlineWinnerRecordedRef.current = false;
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    setOnlineStatusText('CONNECTED');
+    onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
+    publishOnlineSnapshot(true);
+  }, [makeOnlineMatch, publishOnlineSnapshot]);
+
+  const markOnlineDisconnected = useCallback((message = 'Opponent disconnected') => {
+    onlineClosingRef.current = true;
+    try {
+      onlineSessionRef.current?.close();
+    } catch {
+      // no-op
+    }
+    onlineSessionRef.current = null;
+    onlineStateRef.current = 'disconnected';
+    onlineRoleRef.current = null;
+    onlineRoomRef.current = null;
+    remoteInputRef.current = emptyInputFrame();
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineWinsRef.current = [0, 0];
+    setOnlineState('disconnected');
+    setOnlineRole(null);
+    setOnlineWins([0, 0]);
+    setOnlineStatusText(message);
+  }, []);
+
+  const cleanupOnline = useCallback((notifyOpponent = true) => {
+    if (!isOnline) return;
+    const session = onlineSessionRef.current;
+    const room = onlineRoomRef.current;
+    onlineClosingRef.current = true;
+    if (notifyOpponent) {
+      try {
+        session?.send({ type: 'leave', reason: 'left' });
+      } catch {
+        // no-op
+      }
+    }
+    try {
+      session?.close();
+    } catch {
+      // no-op
+    }
+    onlineSessionRef.current = null;
+    onlineRoomRef.current = null;
+    onlineRoleRef.current = null;
+    onlineStateRef.current = 'idle';
+    remoteInputRef.current = emptyInputFrame();
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineWinsRef.current = [0, 0];
+    if (room || session?.peerId) {
+      void leaveOnlineRoom({ roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId }).catch(() => undefined);
+    }
+  }, [isOnline]);
+
+  const recordOnlineMatchWin = useCallback((candidate: MatchSnapshot) => {
+    if (candidate.phase !== 'matchOver' || !candidate.winnerSlot || onlineWinnerRecordedRef.current) return;
+    const wins: OnlineWins = [...onlineWinsRef.current] as OnlineWins;
+    wins[candidate.winnerSlot - 1] += 1;
+    onlineWinsRef.current = wins;
+    onlineWinnerRecordedRef.current = true;
+    setOnlineWins(wins);
+    setOnlineStatusText('REMATCH?');
+    publishOnlineSnapshot(true);
+  }, [publishOnlineSnapshot]);
+
+  const handleOnlineMessage = useCallback((message: OnlineMessage) => {
+    if (message.type === 'hello') {
+      if (message.protocol !== ONLINE_PROTOCOL_VERSION) {
+        onlineSessionRef.current?.send({ type: 'error', message: 'Protocol mismatch' });
+        markOnlineDisconnected('Version mismatch');
+        return;
+      }
+      if (onlineRoleRef.current === 'host') {
+        const onlineMatch = makeOnlineMatch(p1.id, message.characterId, onlineRoomRef.current?.stageId ?? stage.id);
+        matchRef.current = onlineMatch;
+        setMatch(onlineMatch);
+        onlineStateRef.current = 'connected';
+        setOnlineState('connected');
+        setOnlineStatusText('CONNECTED');
+        publishOnlineSnapshot(true);
+      }
+      return;
+    }
+    if (message.type === 'input') {
+      if (onlineRoleRef.current === 'host') remoteInputRef.current = decodeInputFrame(message.frame);
+      return;
+    }
+    if (message.type === 'snapshot') {
+      if (onlineRoleRef.current !== 'guest' || message.snapshot.sequence <= onlineLatestSnapshotRef.current) return;
+      onlineLatestSnapshotRef.current = message.snapshot.sequence;
+      const current = matchRef.current;
+      const needsBase =
+        current.fighters[0].character.id !== message.snapshot.p1CharacterId ||
+        current.fighters[1].character.id !== message.snapshot.p2CharacterId ||
+        current.stage.id !== message.snapshot.stageId ||
+        current.mode !== 'online';
+      const base = needsBase
+        ? makeOnlineMatch(message.snapshot.p1CharacterId, message.snapshot.p2CharacterId, message.snapshot.stageId)
+        : current;
+      const hydrated = hydrateMatchSnapshot(base, message.snapshot);
+      matchRef.current = hydrated;
+      onlineWinsRef.current = message.wins;
+      setMatch(hydrated);
+      setOnlineWins(message.wins);
+      onlineStateRef.current = 'connected';
+      setOnlineState('connected');
+      setOnlineStatusText('CONNECTED');
+      return;
+    }
+    if (message.type === 'rematchReady') {
+      onlineRematchReadyRef.current.remote = true;
+      if (onlineRoleRef.current === 'host' && onlineRematchReadyRef.current.local) startOnlineRematch();
+      return;
+    }
+    if (message.type === 'rematchStart') {
+      onlineRematchReadyRef.current = { local: false, remote: false };
+      onlineWinnerRecordedRef.current = false;
+      onlineWinsRef.current = message.wins;
+      setOnlineWins(message.wins);
+      setOnlineStatusText('REMATCH STARTING');
+      return;
+    }
+    if (message.type === 'leave') {
+      markOnlineDisconnected('Opponent disconnected');
+      return;
+    }
+    if (message.type === 'error') {
+      markOnlineDisconnected(message.message);
+    }
+  }, [makeOnlineMatch, markOnlineDisconnected, p1.id, publishOnlineSnapshot, stage.id, startOnlineRematch]);
+
+  useEffect(() => {
+    if (!isOnline) return undefined;
+    let cancelled = false;
+    let matchmakingTimer = 0;
+    onlineClosingRef.current = false;
+    onlineStateRef.current = 'searching';
+    onlineRoleRef.current = null;
+    onlineRoomRef.current = null;
+    remoteInputRef.current = emptyInputFrame();
+    onlineWinsRef.current = [0, 0];
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineWinnerRecordedRef.current = false;
+    onlineLatestSnapshotRef.current = -1;
+    onlineSnapshotSequenceRef.current = 0;
+    setOnlineState('searching');
+    setOnlineRole(null);
+    setOnlineWins([0, 0]);
+    setOnlineStatusText('LOOKING FOR MATCH');
+
+    const start = async () => {
+      try {
+        const session = await createOnlinePeerSession({
+          characterId: p1.id,
+          onConnection: () => {
+            if (onlineRoleRef.current === 'guest') setOnlineStatusText('CONNECTING');
+          },
+          onMessage: handleOnlineMessage,
+          onClose: () => {
+            if (!onlineClosingRef.current && onlineStateRef.current === 'connected') markOnlineDisconnected('Opponent disconnected');
+          },
+          onError: (error) => {
+            if (onlineClosingRef.current) return;
+            if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'connecting') {
+              markOnlineDisconnected(error.message || 'Online connection error');
+            } else {
+              setOnlineStatusText('LOOKING FOR MATCH');
+            }
+          }
+        });
+        if (cancelled) {
+          session.close();
+          return;
+        }
+        onlineSessionRef.current = session;
+
+        const poll = async () => {
+          if (cancelled || !onlineSessionRef.current) return;
+          if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'disconnected') return;
+          if (onlineRoleRef.current === 'guest' && onlineStateRef.current === 'connecting') return;
+          const currentRoom = onlineRoomRef.current;
+          const result = await matchmakeOnline({
+            peerId: session.peerId,
+            characterId: p1.id,
+            stageId: stage.id,
+            roomId: currentRoom?.role === 'host' ? currentRoom.roomId : undefined,
+            ownerToken: currentRoom?.role === 'host' ? currentRoom.ownerToken : undefined
+          });
+          if (cancelled) return;
+          onlineRoomRef.current = result;
+          onlineRoleRef.current = result.role;
+          setOnlineRole(result.role);
+          if (result.role === 'guest') {
+            onlineStateRef.current = 'connecting';
+            setOnlineState('connecting');
+            setOnlineStatusText('MATCH FOUND');
+            session.connect(result.hostPeerId);
+          } else {
+            onlineStateRef.current = 'searching';
+            setOnlineState('searching');
+            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : 'LOOKING FOR MATCH');
+          }
+        };
+
+        await poll();
+        matchmakingTimer = window.setInterval(() => {
+          void poll().catch((error) => {
+            if (!cancelled) setOnlineStatusText(error instanceof Error ? error.message : 'MATCHMAKING ERROR');
+          });
+        }, 2000);
+      } catch (error) {
+        if (!cancelled) {
+          setOnlineState('error');
+          onlineStateRef.current = 'error';
+          setOnlineStatusText(error instanceof Error ? error.message : 'ONLINE ERROR');
+        }
+      }
+    };
+
+    void start();
+    return () => {
+      cancelled = true;
+      window.clearInterval(matchmakingTimer);
+      cleanupOnline(true);
+    };
+  }, [cleanupOnline, handleOnlineMessage, isOnline, markOnlineDisconnected, p1.id, stage.id]);
+
+  useEffect(() => {
+    if (!isOnline) return undefined;
+    const onBeforeUnload = () => cleanupOnline(true);
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [cleanupOnline, isOnline]);
 
   useEffect(() => {
     let frame = 0;
@@ -4021,7 +4333,8 @@ function FightScreen({
         p2Input.sidewalkDown ? 'p2:sidewalkDown' :
         p2Input.jab ? 'p2:jab' :
         'none';
-      if (p1Input.pause || p2Input.pause) {
+      const localOnlineInput = mergeInputFrames(p1Input, p2Input);
+      if (!isOnline && (p1Input.pause || p2Input.pause)) {
         if (!pauseLatch.current) {
           setPaused((value) => !value);
           pauseLatch.current = true;
@@ -4034,23 +4347,66 @@ function FightScreen({
       if (!paused) {
         accumulator += delta;
         while (accumulator >= fixedStep) {
-          matchRef.current = stepMatch(matchRef.current, p1Input, p2Input, fixedStep);
+          if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'guest') {
+            onlineSessionRef.current?.send({ type: 'input', sequence: onlineInputSequenceRef.current += 1, frame: encodeInputFrame(localOnlineInput) });
+          } else if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'host') {
+            matchRef.current = stepMatch(matchRef.current, localOnlineInput, remoteInputRef.current, fixedStep);
+            recordOnlineMatchWin(matchRef.current);
+            publishOnlineSnapshot(matchRef.current.phase !== 'fighting');
+          } else if (isOnline) {
+            const shouldRefreshWarmup =
+              matchRef.current.phase === 'matchOver' ||
+              matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.character.stats.health * 0.2);
+            matchRef.current = shouldRefreshWarmup
+              ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, matchOptions)
+              : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+          } else {
+            matchRef.current = stepMatch(matchRef.current, p1Input, p2Input, fixedStep);
+          }
           accumulator -= fixedStep;
         }
-        setMatch(matchRef.current);
+        if (!(isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'guest')) setMatch(matchRef.current);
       }
       frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [clearMenuInputs, paused, readInputs]);
+  }, [clearMenuInputs, cpuDifficulty, isOnline, matchOptions, p1, p2, paused, publishOnlineSnapshot, readInputs, recordOnlineMatchWin, stage]);
+
+  const requestOnlineRematch = () => {
+    if (!isOnline || onlineStateRef.current !== 'connected') {
+      const warmup = createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, matchOptions);
+      matchRef.current = warmup;
+      setMatch(warmup);
+      setPaused(false);
+      return;
+    }
+    onlineRematchReadyRef.current.local = true;
+    setOnlineStatusText('WAITING FOR REMATCH');
+    onlineSessionRef.current?.send({ type: 'rematchReady' });
+    if (onlineRoleRef.current === 'host' && onlineRematchReadyRef.current.remote) startOnlineRematch();
+  };
 
   const reset = () => {
+    if (isOnline) {
+      requestOnlineRematch();
+      return;
+    }
     const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty, matchOptions);
     matchRef.current = fresh;
     setMatch(fresh);
     setPaused(false);
+  };
+
+  const leaveToMenu = () => {
+    cleanupOnline(true);
+    onMenu();
+  };
+
+  const leaveToCharacterSelect = () => {
+    cleanupOnline(true);
+    onCharacterSelect();
   };
 
   const handleSurfaceKey = (event: ReactKeyboardEvent<HTMLDivElement>, pressed: boolean) => {
@@ -4071,11 +4427,19 @@ function FightScreen({
       onKeyUp={(event) => handleSurfaceKey(event, false)}
     >
       <GameScene match={match} cameraSettings={settings.camera} sparkSettings={settings.display.impactSparks} reducedMotion={settings.display.reducedMotion} />
-      <FightHud match={match} hudScale={settings.display.hudScale} />
+      <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
       <CombatPopupLayer popups={combatPopups} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
       {match.message && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}>{match.message}</div>}
+      {isOnline && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
+        <div className="match-message online-search-message">{onlineStatusText}</div>
+      )}
+      {isOnline && onlineState === 'connected' && (
+        <div className="online-status-pill">
+          {onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE
+        </div>
+      )}
       {paused && (
         <div className="pause-overlay">
           <Pause size={32} />
@@ -4090,31 +4454,47 @@ function FightScreen({
               <RotateCcw size={18} />
               Restart
             </button>
-            <button className="secondary-button" onClick={onCharacterSelect}>
+            <button className="secondary-button" onClick={leaveToCharacterSelect}>
               <Users size={18} />
               Select
             </button>
-            <button className="secondary-button" onClick={onMenu}>
+            <button className="secondary-button" onClick={leaveToMenu}>
               <Home size={18} />
               Menu
             </button>
           </div>
         </div>
       )}
-      {match.phase === 'matchOver' && (
+      {isOnline && (onlineState === 'disconnected' || onlineState === 'error') && (
+        <div className="pause-overlay online-disconnect-overlay">
+          <Wifi size={34} />
+          <h2>{onlineStatusText || 'Opponent disconnected'}</h2>
+          <div className="overlay-actions">
+            <button className="primary-button" onClick={leaveToCharacterSelect}>
+              <Wifi size={18} />
+              Online Search
+            </button>
+            <button className="secondary-button" onClick={leaveToMenu}>
+              <Home size={18} />
+              Menu
+            </button>
+          </div>
+        </div>
+      )}
+      {match.phase === 'matchOver' && (!isOnline || onlineState === 'connected') && (
         <div className="pause-overlay results-overlay">
           <Swords size={34} />
           <h2>{match.message}</h2>
           <div className="overlay-actions">
             <button className="primary-button" onClick={reset}>
               <RotateCcw size={18} />
-              Rematch
+              {isOnline && onlineRematchReadyRef.current.local ? 'Waiting' : 'Rematch'}
             </button>
-            <button className="secondary-button" onClick={onCharacterSelect}>
+            <button className="secondary-button" onClick={leaveToCharacterSelect}>
               <Users size={18} />
               Character Select
             </button>
-            <button className="secondary-button" onClick={onMenu}>
+            <button className="secondary-button" onClick={leaveToMenu}>
               <Home size={18} />
               Menu
             </button>
@@ -4160,6 +4540,14 @@ function getSurfaceKeyBinding(event: KeyboardEvent, mode: MatchMode, controls: G
   return getKeyboardBindingsForEvent(event, mode, controls)[0] ?? null;
 }
 
+function mergeInputFrames(primary: InputFrame, secondary: InputFrame): InputFrame {
+  const merged = emptyInputFrame();
+  for (const action of Object.keys(merged) as ActionName[]) {
+    merged[action] = primary[action] || secondary[action];
+  }
+  return merged;
+}
+
 function FightDebug({
   match,
   paused,
@@ -4193,15 +4581,15 @@ function FightDebug({
   );
 }
 
-function FightHud({ match, hudScale }: { match: MatchSnapshot; hudScale: number }) {
+function FightHud({ match, hudScale, onlineWins }: { match: MatchSnapshot; hudScale: number; onlineWins?: OnlineWins }) {
   const [p1, p2] = match.fighters;
   return (
     <div className="fight-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
-      <HealthBar fighter={p1} align="left" />
+      <HealthBar fighter={p1} align="left" onlineWins={onlineWins?.[0]} />
       <div className="round-box">
         <strong>{Math.ceil(match.timer)}</strong>
       </div>
-      <HealthBar fighter={p2} align="right" />
+      <HealthBar fighter={p2} align="right" onlineWins={onlineWins?.[1]} />
     </div>
   );
 }
@@ -4247,7 +4635,7 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
   );
 }
 
-function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right' }) {
+function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; onlineWins?: number }) {
   const percent = Math.max(0, Math.min(100, (fighter.hp / fighter.character.stats.health) * 100));
   const kiPercent = Math.max(0, Math.min(100, fighter.ki));
   const isDanger = percent <= 25;
@@ -4269,10 +4657,11 @@ function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][numb
         <span style={{ width: `${kiPercent}%` }} />
       </div>
       <div className="round-pips" aria-label={`${fighter.character.displayName} rounds won`}>
-        {[0, 1].map((pip) => (
+        {Array.from({ length: ROUNDS_TO_WIN }, (_, pip) => (
           <span key={pip} className={pip < fighter.roundsWon ? 'won' : ''} />
         ))}
       </div>
+      {onlineWins !== undefined && onlineWins > 0 && <div className="online-wins">WINS: {onlineWins}</div>}
     </div>
   );
 }

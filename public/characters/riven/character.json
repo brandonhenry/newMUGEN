@@ -442,8 +442,8 @@
       "damage": 24,
       "hitLevel": "mid",
       "onBlockFrames": -8,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 29,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 35,
       "launchHeight": 1.9,
       "knockdown": false
     },
@@ -455,8 +455,8 @@
       "damage": 21,
       "hitLevel": "mid",
       "onBlockFrames": -9,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 32,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 34,
       "launchHeight": 1.7,
       "knockdown": false
     },
@@ -486,6 +486,66 @@
     },
     "neutral:kick-jab": {
       "label": "Leaf Gale Follow-Up"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Lion Fang Chidori"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Lion Sweep Check"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Lion Flame Ender"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Lion Sweep Chidori"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Lion Flame Sweep"
+    },
+    "neutral:jab-special": {
+      "label": "Lion Fire Feint"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Fire Feint Chidori"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Chidori Flame Ender"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Chidori Dragon Ender"
+    },
+    "neutral:heavy-special": {
+      "label": "Chidori Fire Chain"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Chidori Sweep"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Leaf Gale Fireball"
+    },
+    "neutral:kick-heavy": {
+      "label": "Leaf Gale Chidori"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Leaf Gale Dragon Flame"
+    },
+    "neutral:kick-special": {
+      "label": "Leaf Gale Fire Feint"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Rising Chidori"
+    },
+    "neutral:special-jab": {
+      "label": "Fireball Lion Tap"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Fireball Chidori Smash"
+    },
+    "neutral:special-heavy": {
+      "label": "Dragon Flame Chidori"
+    },
+    "neutral:special-kick": {
+      "label": "Fire Style Sweep"
     }
   },
   "spriteFrameEdits": {}

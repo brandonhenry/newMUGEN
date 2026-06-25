@@ -1,5 +1,7 @@
 export type Vec3Tuple = [number, number, number];
 
+export const ROUNDS_TO_WIN = 3;
+
 export type ActionName =
   | 'up'
   | 'down'
@@ -28,6 +30,7 @@ export type FighterState =
   | 'block'
   | 'attack'
   | 'hit'
+  | 'juggle'
   | 'knockdown'
   | 'entry'
   | 'win'
@@ -234,7 +237,7 @@ export type StagePropDefinition = {
 
 export type InputFrame = Record<ActionName, boolean>;
 
-export type MatchMode = 'ai' | 'local2p' | 'cpu' | 'training';
+export type MatchMode = 'ai' | 'local2p' | 'cpu' | 'training' | 'online';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
 export type PlayerControlBindings = Record<ActionName, string[]>;

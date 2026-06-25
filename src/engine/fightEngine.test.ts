@@ -21,6 +21,20 @@ describe('character manifests', () => {
     ]);
   });
 
+  it('ships at least three strong launcher routes per starter character', () => {
+    for (const character of starterCharacters) {
+      const baseLaunchers = character.moves.filter((move) => (move.launchHeight ?? 0) > 0);
+      const overrideLaunchers = Object.values(character.moveOverrides ?? {}).filter((move) => (move.launchHeight ?? 0) > 0);
+      const launchers = [...baseLaunchers, ...overrideLaunchers];
+
+      expect(launchers.length, `${character.displayName} launcher count`).toBeGreaterThanOrEqual(3);
+      expect(
+        launchers.every((move) => (move.onHitFrames ?? 0) >= 23),
+        `${character.displayName} launcher hit advantage`
+      ).toBe(true);
+    }
+  });
+
   it('converts legacy second timing to frame timing', () => {
     const legacy = normalizeMove({
       ...starterCharacters[0].moves[0],
@@ -263,6 +277,30 @@ describe('fight engine', () => {
     expect(match.fighters[0].roundsWon).toBe(1);
     expect(match.fighters[1].roundsWon).toBe(0);
     expect(match.fighters[0].state).toBe('entry');
+  });
+
+  it('requires three round wins to win a match', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
+    match.phase = 'roundOver';
+    match.countdown = 0.01;
+    match.message = 'K.O.';
+    match.fighters[0].roundsWon = 2;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('intro');
+    expect(match.round).toBe(2);
+    expect(match.fighters[0].roundsWon).toBe(2);
+
+    match.phase = 'roundOver';
+    match.countdown = 0.01;
+    match.message = 'K.O.';
+    match.fighters[0].roundsWon = 3;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('matchOver');
+    expect(match.winnerSlot).toBe(1);
   });
 
   it('moves fighters toward each other with right input', () => {
@@ -1158,7 +1196,7 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:kick-special');
-    expect(match.fighters[0].currentMove?.label).toBe('3,4 Kick String');
+    expect(match.fighters[0].currentMove?.label).toBe('Barrage Cyclone');
     expect(match.fighters[0].currentMove?.startupFrames).toBe(16);
     expect(match.fighters[0].currentMove?.onBlockFrames).toBe(-7);
   });
@@ -1782,7 +1820,7 @@ describe('fight engine', () => {
       launcher.jab = false;
     }
 
-    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].position.y).toBeGreaterThan(0);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(0);
   });
@@ -1791,7 +1829,7 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[1].state = 'hit';
+    match.fighters[1].state = 'juggle';
     match.fighters[1].position.y = 0.72;
     match.fighters[1].velocityY = 0.05;
     match.fighters[1].stunFramesRemaining = 0;
@@ -1804,7 +1842,7 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), attemptedAirAction, 1 / 60);
 
-    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].currentMove).toBeNull();
     expect(match.fighters[1].position.x).toBe(startX);
   });
@@ -1813,7 +1851,7 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[1].state = 'hit';
+    match.fighters[1].state = 'juggle';
     match.fighters[1].position.y = 0;
     match.fighters[1].velocityY = 0;
     match.fighters[1].stunFramesRemaining = 12;
@@ -1826,9 +1864,15 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), attemptedGroundAction, 1 / 60);
 
-    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].currentMove).toBeNull();
     expect(match.fighters[1].position.x).toBe(startX);
+
+    for (let i = 0; i < 14; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].state).toBe('idle');
   });
 
   it('re-floats airborne defenders on juggle follow-up hits', () => {
@@ -1839,7 +1883,7 @@ describe('fight engine', () => {
     match.fighters[1].position.x = 0.45;
     match.fighters[1].position.y = 0.5;
     match.fighters[1].velocityY = -0.4;
-    match.fighters[1].state = 'hit';
+    match.fighters[1].state = 'juggle';
     match.fighters[1].juggleDamage = 8;
     match.fighters[0].state = 'attack';
     match.fighters[0].currentMove = {
@@ -1858,7 +1902,7 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
-    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].velocityY).toBeGreaterThan(0);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(8);
   });
@@ -1871,7 +1915,7 @@ describe('fight engine', () => {
     match.fighters[1].position.x = 0.45;
     match.fighters[1].position.y = 0.5;
     match.fighters[1].velocityY = 0.2;
-    match.fighters[1].state = 'hit';
+    match.fighters[1].state = 'juggle';
     match.fighters[1].juggleDamage = 42;
     match.fighters[0].state = 'attack';
     match.fighters[0].currentMove = {

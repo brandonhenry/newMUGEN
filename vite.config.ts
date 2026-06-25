@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { dirname, resolve } from 'node:path';
 import { defineConfig, type ViteDevServer } from 'vite';
@@ -70,10 +71,67 @@ type DevImportStagePayload = {
   stage?: Record<string, unknown>;
 };
 
+type DevOnlineRoom = {
+  roomId: string;
+  ownerToken: string;
+  hostPeerId: string;
+  hostCharacterId: string;
+  guestPeerId?: string;
+  guestCharacterId?: string;
+  stageId: string;
+  status: 'waiting' | 'matched';
+  updatedAt: number;
+};
+
+type DevOnlineMatchPayload = {
+  peerId?: string;
+  characterId?: string;
+  stageId?: string;
+  roomId?: string;
+  ownerToken?: string;
+};
+
+type DevOnlineLeavePayload = {
+  roomId?: string;
+  ownerToken?: string;
+  peerId?: string;
+};
+
+const DEV_ONLINE_ROOM_TTL_MS = 12_000;
+
 function koreDevManifestWriter() {
+  const onlineRooms = new Map<string, DevOnlineRoom>();
+
   return {
     name: 'kore-dev-manifest-writer',
     configureServer(server: ViteDevServer) {
+      server.middlewares.use('/.netlify/functions/online-matchmake', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevOnlineMatchPayload;
+          sendJson(response, 200, devOnlineMatchmake(onlineRooms, payload));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/online-leave', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevOnlineLeavePayload;
+          devOnlineLeave(onlineRooms, payload);
+          sendJson(response, 200, { ok: true });
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
       server.middlewares.use('/__kore/dev/save-character-manifest', async (request: IncomingMessage, response: ServerResponse) => {
         if (request.method !== 'POST') {
           response.statusCode = 405;
@@ -489,6 +547,87 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
       return Number.isFinite(value);
     })
   );
+}
+
+function devOnlineMatchmake(rooms: Map<string, DevOnlineRoom>, payload: DevOnlineMatchPayload) {
+  pruneDevOnlineRooms(rooms);
+  const peerId = safeOnlineString(payload.peerId);
+  const characterId = safeOnlineString(payload.characterId);
+  const stageId = safeOnlineString(payload.stageId) || 'training-area';
+  if (!peerId || !characterId) throw new Error('Missing peer or character id');
+
+  const existing = payload.roomId && payload.ownerToken ? rooms.get(payload.roomId) : undefined;
+  if (existing && existing.ownerToken === payload.ownerToken) {
+    existing.updatedAt = Date.now();
+    rooms.set(existing.roomId, existing);
+    return devOnlineRoomToResult(existing, 'host');
+  }
+
+  const waitingRoom = [...rooms.values()].find((room) => room.status === 'waiting' && room.hostPeerId !== peerId);
+  if (waitingRoom) {
+    waitingRoom.status = 'matched';
+    waitingRoom.guestPeerId = peerId;
+    waitingRoom.guestCharacterId = characterId;
+    waitingRoom.updatedAt = Date.now();
+    rooms.set(waitingRoom.roomId, waitingRoom);
+    return devOnlineRoomToResult(waitingRoom, 'guest');
+  }
+
+  const room: DevOnlineRoom = {
+    roomId: randomUUID(),
+    ownerToken: randomUUID(),
+    hostPeerId: peerId,
+    hostCharacterId: characterId,
+    stageId,
+    status: 'waiting',
+    updatedAt: Date.now()
+  };
+  rooms.set(room.roomId, room);
+  return devOnlineRoomToResult(room, 'host');
+}
+
+function devOnlineLeave(rooms: Map<string, DevOnlineRoom>, payload: DevOnlineLeavePayload) {
+  if (payload.roomId && payload.ownerToken) {
+    const room = rooms.get(payload.roomId);
+    if (room?.ownerToken === payload.ownerToken) rooms.delete(payload.roomId);
+    return;
+  }
+  const peerId = safeOnlineString(payload.peerId);
+  if (!peerId) return;
+  for (const [roomId, room] of rooms.entries()) {
+    if (room.hostPeerId === peerId || room.guestPeerId === peerId) rooms.delete(roomId);
+  }
+}
+
+function devOnlineRoomToResult(room: DevOnlineRoom, role: 'host' | 'guest') {
+  return {
+    role,
+    status: room.status,
+    roomId: room.roomId,
+    ownerToken: room.ownerToken,
+    hostPeerId: room.hostPeerId,
+    guestPeerId: room.guestPeerId,
+    hostCharacterId: room.hostCharacterId,
+    guestCharacterId: room.guestCharacterId,
+    stageId: room.stageId
+  };
+}
+
+function pruneDevOnlineRooms(rooms: Map<string, DevOnlineRoom>) {
+  const now = Date.now();
+  for (const [roomId, room] of rooms.entries()) {
+    if (now - room.updatedAt > DEV_ONLINE_ROOM_TTL_MS) rooms.delete(roomId);
+  }
+}
+
+function safeOnlineString(value: unknown) {
+  return typeof value === 'string' ? value.slice(0, 160) : '';
+}
+
+function sendJson(response: ServerResponse, statusCode: number, payload: unknown) {
+  response.statusCode = statusCode;
+  response.setHeader('Content-Type', 'application/json');
+  response.end(JSON.stringify(payload));
 }
 
 function readRequestBody(request: IncomingMessage) {
