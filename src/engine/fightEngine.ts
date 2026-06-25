@@ -777,6 +777,32 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onCounterHitFrames: 14,
     knockdown: false
   },
+  '1,1,2': {
+    label: '1,1,2 Mid Check',
+    startupFrames: 16,
+    activeFrames: 2,
+    recoveryFrames: 22,
+    damage: 18,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -9,
+    onHitFrames: 8,
+    onCounterHitFrames: 15,
+    knockdown: false
+  },
+  '1,1,4': {
+    label: '1,1,4 Ender',
+    startupFrames: 20,
+    activeFrames: 3,
+    recoveryFrames: 25,
+    damage: 20,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -12,
+    onHitFrames: 18,
+    onCounterHitFrames: 24,
+    knockdown: true
+  },
   '1,2': {
     label: '1,2 String',
     startupFrames: 12,
@@ -831,6 +857,46 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onCounterHitFrames: 4,
     knockdown: false
   },
+  '1,3,4': {
+    label: '1,3,4 Low Ender',
+    startupFrames: 18,
+    activeFrames: 3,
+    recoveryFrames: 26,
+    damage: 16,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -13,
+    onHitFrames: 15,
+    onCounterHitFrames: 22,
+    knockdown: true
+  },
+  '1,4': {
+    label: '1,4 High Kick',
+    startupFrames: 17,
+    activeFrames: 3,
+    recoveryFrames: 23,
+    damage: 15,
+    blockDamage: 2,
+    hitLevel: 'high',
+    onBlockFrames: -8,
+    onHitFrames: 7,
+    onCounterHitFrames: 16,
+    knockdown: false
+  },
+  '1,4,2': {
+    label: '1,4,2 Power Ender',
+    startupFrames: 21,
+    activeFrames: 3,
+    recoveryFrames: 29,
+    damage: 22,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -14,
+    onHitFrames: 20,
+    onCounterHitFrames: 27,
+    launchHeight: 1.55,
+    knockdown: false
+  },
   '2,1': {
     label: '2,1 String',
     startupFrames: 8,
@@ -872,6 +938,45 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     launchHeight: 1.85,
     knockdown: false
   },
+  '2,3,4': {
+    label: '2,3,4 Juggle Ender',
+    startupFrames: 19,
+    activeFrames: 3,
+    recoveryFrames: 28,
+    damage: 21,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -13,
+    onHitFrames: 18,
+    onCounterHitFrames: 25,
+    knockdown: true
+  },
+  '2,4': {
+    label: '2,4 Side Kick',
+    startupFrames: 18,
+    activeFrames: 3,
+    recoveryFrames: 24,
+    damage: 17,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -9,
+    onHitFrames: 8,
+    onCounterHitFrames: 16,
+    knockdown: false
+  },
+  '2,4,3': {
+    label: '2,4,3 Sweep Ender',
+    startupFrames: 23,
+    activeFrames: 3,
+    recoveryFrames: 30,
+    damage: 22,
+    blockDamage: 3,
+    hitLevel: 'low',
+    onBlockFrames: -18,
+    onHitFrames: 16,
+    onCounterHitFrames: 24,
+    knockdown: true
+  },
   '3,1': {
     label: '3,1 Mid String',
     startupFrames: 18,
@@ -884,6 +989,153 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onHitFrames: 8,
     onCounterHitFrames: 27,
     knockdown: false
+  },
+  '3,2': {
+    label: '3,2 Kick Punch',
+    startupFrames: 15,
+    activeFrames: 2,
+    recoveryFrames: 22,
+    damage: 15,
+    blockDamage: 1,
+    hitLevel: 'mid',
+    onBlockFrames: -8,
+    onHitFrames: 7,
+    onCounterHitFrames: 14,
+    knockdown: false
+  },
+  '3,2,4': {
+    label: '3,2,4 Launcher',
+    startupFrames: 20,
+    activeFrames: 3,
+    recoveryFrames: 28,
+    damage: 23,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -14,
+    onHitFrames: 19,
+    onCounterHitFrames: 28,
+    launchHeight: 1.95,
+    knockdown: false
+  },
+  '3,4': {
+    label: '3,4 Kick String',
+    startupFrames: 16,
+    activeFrames: 3,
+    recoveryFrames: 23,
+    damage: 16,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -7,
+    onHitFrames: 9,
+    onCounterHitFrames: 17,
+    knockdown: false
+  },
+  '3,4,2': {
+    label: '3,4,2 Launcher',
+    startupFrames: 22,
+    activeFrames: 3,
+    recoveryFrames: 31,
+    damage: 24,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -16,
+    onHitFrames: 21,
+    onCounterHitFrames: 30,
+    launchHeight: 2.05,
+    knockdown: false
+  },
+  '4,1': {
+    label: '4,1 Counter String',
+    startupFrames: 14,
+    activeFrames: 2,
+    recoveryFrames: 21,
+    damage: 14,
+    blockDamage: 1,
+    hitLevel: 'high',
+    onBlockFrames: -6,
+    onHitFrames: 8,
+    onCounterHitFrames: 18,
+    knockdown: false
+  },
+  '4,1,2': {
+    label: '4,1,2 Counter Ender',
+    startupFrames: 19,
+    activeFrames: 3,
+    recoveryFrames: 28,
+    damage: 21,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -13,
+    onHitFrames: 18,
+    onCounterHitFrames: 28,
+    launchHeight: 1.65,
+    knockdown: false
+  },
+  '4,2': {
+    label: '4,2 Power String',
+    startupFrames: 18,
+    activeFrames: 3,
+    recoveryFrames: 26,
+    damage: 20,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -11,
+    onHitFrames: 12,
+    onCounterHitFrames: 23,
+    knockdown: false
+  },
+  '4,3': {
+    label: '4,3 Low Check',
+    startupFrames: 20,
+    activeFrames: 3,
+    recoveryFrames: 25,
+    damage: 15,
+    blockDamage: 2,
+    hitLevel: 'low',
+    onBlockFrames: -16,
+    onHitFrames: 4,
+    onCounterHitFrames: 12,
+    knockdown: false
+  },
+  '1,3,2': {
+    label: '1,3,2 Low Lift',
+    startupFrames: 20,
+    activeFrames: 3,
+    recoveryFrames: 27,
+    damage: 19,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -13,
+    onHitFrames: 17,
+    onCounterHitFrames: 25,
+    launchHeight: 1.55,
+    knockdown: false
+  },
+  '2,1,4': {
+    label: '2,1,4 Check Ender',
+    startupFrames: 20,
+    activeFrames: 3,
+    recoveryFrames: 27,
+    damage: 19,
+    blockDamage: 2,
+    hitLevel: 'mid',
+    onBlockFrames: -12,
+    onHitFrames: 16,
+    onCounterHitFrames: 24,
+    knockdown: true
+  },
+  '3,1,4': {
+    label: '3,1,4 Kick Ender',
+    startupFrames: 21,
+    activeFrames: 3,
+    recoveryFrames: 29,
+    damage: 21,
+    blockDamage: 3,
+    hitLevel: 'mid',
+    onBlockFrames: -14,
+    onHitFrames: 18,
+    onCounterHitFrames: 27,
+    knockdown: true
   },
   '1+2': {
     label: '1+2 Power Mid',
@@ -900,6 +1152,10 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     knockdown: false
   }
 };
+
+export function getAuthoredNeutralStringRouteCount() {
+  return Object.keys(neutralStringFrameData).length;
+}
 
 function updateCommandHistory(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {
   fighter.commandHistory = fighter.commandHistory

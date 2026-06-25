@@ -11,7 +11,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition } from '../types';
-import { activeMoveProgress, createMatch, stepMatch } from './fightEngine';
+import { activeMoveProgress, createMatch, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
 
 describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
@@ -1115,6 +1115,52 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].comboStep).toBeGreaterThanOrEqual(4);
     expect(match.fighters[0].comboSequence.slice(0, 4)).toEqual(['jab', 'heavy', 'kick', 'special']);
+  });
+
+  it('ships thirty authored neutral string routes by default', () => {
+    expect(getAuthoredNeutralStringRouteCount()).toBe(30);
+  });
+
+  it('resolves newly authored neutral string routes with tuned frame data', () => {
+    const frameDataComboCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 3,
+        activeFrames: 3,
+        recoveryFrames: 8,
+        onHitFrames: 28,
+        onCounterHitFrames: 32,
+        range: 3,
+        pushback: 0.08,
+        launchHeight: undefined,
+        knockdown: false
+      }))
+    };
+    let match = createMatch(frameDataComboCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const kick = emptyInputFrame();
+    kick.kick = true;
+    match = stepMatch(match, kick, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 20 && !match.fighters[0].hitConfirmed; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const special = emptyInputFrame();
+    special.special = true;
+    match = stepMatch(match, special, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 20 && match.fighters[0].comboStep < 2; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:kick-special');
+    expect(match.fighters[0].currentMove?.label).toBe('3,4 Kick String');
+    expect(match.fighters[0].currentMove?.startupFrames).toBe(16);
+    expect(match.fighters[0].currentMove?.onBlockFrames).toBe(-7);
   });
 
   it('allows repeating the same exact landed attack when frame data allows direct cancel timing', () => {
