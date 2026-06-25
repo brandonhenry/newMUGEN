@@ -3357,41 +3357,121 @@ button {
 
 .health {
   display: grid;
-  gap: 8px;
+  gap: 7px;
+  --health-glow: rgba(255, 255, 255, 0.22);
 }
 
-.health.right .health-label {
+.health.right {
   text-align: right;
 }
 
-.health-label {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  font-variant-numeric: tabular-nums;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+.health.danger {
+  --health-glow: rgba(255, 45, 58, 0.7);
 }
 
-.health.right .health-label {
+.health-identity {
+  display: flex;
+  align-items: end;
+  gap: 11px;
+  min-height: 82px;
+}
+
+.health.right .health-identity {
   flex-direction: row-reverse;
 }
 
-.health-label span {
-  color: var(--text-muted);
+.hud-portrait {
+  position: relative;
+  width: clamp(76px, 8.5vw, 112px);
+  height: clamp(64px, 6.8vw, 88px);
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.58);
+  border-bottom-color: rgba(255, 126, 36, 0.94);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
+    linear-gradient(180deg, rgba(4, 9, 14, 0.94), rgba(5, 7, 12, 0.72));
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.5),
+    0 12px 28px rgba(0, 0, 0, 0.42),
+    0 0 24px var(--health-glow);
+  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+}
+
+.health.right .hud-portrait {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 14% 100%);
+}
+
+.hud-portrait img {
+  position: absolute;
+  left: 50%;
+  top: -18%;
+  width: 150%;
+  height: auto;
+  max-width: none;
+  image-rendering: pixelated;
+  transform: translateX(-50%) scale(2.35);
+  transform-origin: top center;
+  filter: saturate(1.12) contrast(1.08);
+}
+
+.hud-portrait span {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.health-label {
+  min-width: 116px;
+  padding: 7px 14px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.82), rgba(4, 7, 12, 0.54));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 12px 24px rgba(0, 0, 0, 0.28);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+
+.health.right .health-label {
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.health-label strong {
+  display: block;
+  font-size: clamp(1rem, 2.2vw, 1.7rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #fff9d7;
 }
 
 .health-track {
   overflow: hidden;
-  height: 16px;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.42);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset;
+  height: clamp(24px, 3vw, 34px);
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+    rgba(0, 0, 0, 0.52);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.24) inset,
+    0 0 0 2px rgba(0, 0, 0, 0.34),
+    0 0 22px var(--health-glow);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
 }
 
 .health-track span {
   display: block;
   height: 100%;
   border-radius: inherit;
+  background: linear-gradient(90deg, currentColor, #fff3a8);
+  box-shadow:
+    0 0 18px currentColor,
+    0 2px 0 rgba(255, 255, 255, 0.22) inset;
   transition-property: width;
   transition-duration: 140ms;
   transition-timing-function: linear;
@@ -3399,6 +3479,10 @@ button {
 
 .health.right .health-track {
   transform: scaleX(-1);
+}
+
+.health.right .health-track {
+  clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .ki-track {

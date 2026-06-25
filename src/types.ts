@@ -37,6 +37,8 @@ export type MoveInput = 'jab' | 'kick' | 'heavy' | 'special';
 export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
 export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish';
+export type ImpactSparkKind = 'hit' | 'block' | 'punish' | 'whiffPunish';
+export type ImpactSparkShape = 'burst' | 'ring' | 'shards';
 
 export type BoxSpec = {
   offset: Vec3Tuple;
@@ -89,6 +91,17 @@ export type CombatPopupEvent = {
   slot: 1 | 2;
   kind: CombatPopupKind;
   hits: number;
+  damage: number;
+  moveLabel: string;
+};
+
+export type ImpactSparkEvent = {
+  id: number;
+  kind: ImpactSparkKind;
+  position: Vec3Tuple;
+  attackerSlot: 1 | 2;
+  defenderSlot: 1 | 2;
+  hitLevel: HitLevel;
   damage: number;
   moveLabel: string;
 };
@@ -249,6 +262,14 @@ export type GameSettings = {
     touchControls: 'auto' | 'on' | 'off';
     reducedMotion: boolean;
     debugOverlay: boolean;
+    impactSparks: {
+      enabled: boolean;
+      shape: ImpactSparkShape;
+      hitColor: string;
+      blockColor: string;
+      size: number;
+      intensity: number;
+    };
   };
   audio: {
     master: number;
@@ -328,6 +349,7 @@ export type MatchSnapshot = {
   message: string;
   lastHitId: number;
   combatEvents: CombatPopupEvent[];
+  impactEvents: ImpactSparkEvent[];
   visualTimeScale: number;
   cameraShake: number;
 };

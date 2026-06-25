@@ -75,7 +75,15 @@ export const defaultGameSettings: GameSettings = {
     hudScale: 1,
     touchControls: 'auto',
     reducedMotion: false,
-    debugOverlay: true
+    debugOverlay: true,
+    impactSparks: {
+      enabled: true,
+      shape: 'burst',
+      hitColor: '#ffb33f',
+      blockColor: '#9eeeff',
+      size: 1,
+      intensity: 1
+    }
   },
   audio: {
     master: 1,
@@ -113,6 +121,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
   const game = isRecord(source.game) ? source.game : {};
   const camera = isRecord(source.camera) ? source.camera : {};
   const display = isRecord(source.display) ? source.display : {};
+  const impactSparks = isRecord(display.impactSparks) ? display.impactSparks : {};
   const audio = isRecord(source.audio) ? source.audio : {};
   const controls = isRecord(source.controls) ? source.controls : {};
   const keyboard = Array.isArray(controls.keyboard) ? controls.keyboard : [];
@@ -144,7 +153,15 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       hudScale: clampNumber(display.hudScale, 0.78, 1.25, defaults.display.hudScale),
       touchControls: display.touchControls === 'on' || display.touchControls === 'off' ? display.touchControls : defaults.display.touchControls,
       reducedMotion: booleanOr(display.reducedMotion, defaults.display.reducedMotion),
-      debugOverlay: booleanOr(display.debugOverlay, defaults.display.debugOverlay)
+      debugOverlay: booleanOr(display.debugOverlay, defaults.display.debugOverlay),
+      impactSparks: {
+        enabled: booleanOr(impactSparks.enabled, defaults.display.impactSparks.enabled),
+        shape: impactSparks.shape === 'ring' || impactSparks.shape === 'shards' ? impactSparks.shape : defaults.display.impactSparks.shape,
+        hitColor: sanitizeHexColor(impactSparks.hitColor, defaults.display.impactSparks.hitColor),
+        blockColor: sanitizeHexColor(impactSparks.blockColor, defaults.display.impactSparks.blockColor),
+        size: clampNumber(impactSparks.size, 0.5, 1.8, defaults.display.impactSparks.size),
+        intensity: clampNumber(impactSparks.intensity, 0.35, 2, defaults.display.impactSparks.intensity)
+      }
     },
     audio: {
       master: clampNumber(audio.master, 0, 1, defaults.audio.master),
@@ -170,7 +187,7 @@ export function cloneSettings(settings: GameSettings): GameSettings {
       ]
     },
     camera: { ...settings.camera },
-    display: { ...settings.display },
+    display: { ...settings.display, impactSparks: { ...settings.display.impactSparks } },
     audio: { ...settings.audio }
   };
 }
@@ -220,6 +237,12 @@ function booleanOr(value: unknown, fallback: boolean) {
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {
   return typeof value === 'number' && Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
+}
+
+function sanitizeHexColor(value: unknown, fallback: string) {
+  if (typeof value !== 'string') return fallback;
+  const trimmed = value.trim();
+  return /^#[0-9a-fA-F]{6}$/.test(trimmed) ? trimmed : fallback;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

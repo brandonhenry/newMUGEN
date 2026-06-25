@@ -84,7 +84,7 @@ describe('character manifests', () => {
     const settings = sanitizeGameSettings({
       game: { roundTimer: 75 },
       controls: { keyboard: [{ jab: ['KeyP'] }] },
-      display: { touchControls: 'on' }
+      display: { touchControls: 'on', impactSparks: { shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } }
     });
 
     expect(settings.game.roundTimer).toBe(75);
@@ -92,6 +92,11 @@ describe('character manifests', () => {
     expect(settings.controls.keyboard[0].up).toEqual(defaultGameSettings.controls.keyboard[0].up);
     expect(settings.controls.keyboard[1].right).toEqual(defaultGameSettings.controls.keyboard[1].right);
     expect(settings.display.touchControls).toBe('on');
+    expect(settings.display.impactSparks.shape).toBe('ring');
+    expect(settings.display.impactSparks.hitColor).toBe('#12ABef');
+    expect(settings.display.impactSparks.blockColor).toBe(defaultGameSettings.display.impactSparks.blockColor);
+    expect(settings.display.impactSparks.size).toBe(1.8);
+    expect(settings.display.impactSparks.intensity).toBe(0.35);
     expect(settings.camera.distance).toBe(defaultGameSettings.camera.distance);
   });
 
@@ -428,6 +433,37 @@ describe('fight engine', () => {
     expect(kore.uniqueMoves).toBeGreaterThan(easy.uniqueMoves);
   });
 
+  it('rotates CPU move routes instead of leaning on one repeated route', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 4);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    const moveCounts = new Map<string, number>();
+    let attackStarts = 0;
+    const wasAttacking: [boolean, boolean] = [false, false];
+
+    for (let i = 0; i < 720; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      match.fighters.forEach((fighter, index) => {
+        const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
+        if (!isAttacking || wasAttacking[index] || !fighter.currentMove) {
+          wasAttacking[index] = isAttacking;
+          return;
+        }
+        attackStarts += 1;
+        const key = fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`;
+        moveCounts.set(key, (moveCounts.get(key) ?? 0) + 1);
+        wasAttacking[index] = isAttacking;
+      });
+      if (match.phase !== 'fighting') break;
+    }
+
+    const topCount = Math.max(...moveCounts.values());
+    expect(moveCounts.size).toBeGreaterThanOrEqual(4);
+    expect(topCount / Math.max(1, attackStarts)).toBeLessThan(0.7);
+  });
+
   it('makes high difficulty CPU take hitstun pressure openings more often than easy CPU', () => {
     const stepOpening = (difficulty: 1 | 5) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);
@@ -435,19 +471,34 @@ describe('fight engine', () => {
       match.countdown = 0;
       match.fighters[0].hp = 999;
       match.fighters[1].hp = 999;
-      match.fighters[0].position.x = -0.45;
-      match.fighters[1].position.x = 0.45;
+      match.fighters[0].position.x = -0.78;
+      match.fighters[1].position.x = 0.78;
       match.fighters[1].state = 'hit';
       match.fighters[1].stunFramesRemaining = 180;
       match.fighters[1].actionFramesRemaining = 180;
       match.fighters[1].stunTimer = 3;
       match.fighters[1].actionTimer = 3;
 
-      return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      let attackStarts = 0;
+      const usedInputs = new Set<string>();
+      let wasAttacking = false;
+      for (let i = 0; i < 180; i += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        const move = match.fighters[0].currentMove;
+        const isAttacking = match.fighters[0].state === 'attack' && Boolean(move);
+        if (move && isAttacking && !wasAttacking) {
+          attackStarts += 1;
+          usedInputs.add(move.input);
+        }
+        wasAttacking = isAttacking;
+      }
+      return { attackStarts, usedInputs: usedInputs.size };
     };
 
-    expect(stepOpening(5).fighters[0].currentMove?.input).toBe('jab');
-    expect(stepOpening(1).fighters[0].currentMove).toBeNull();
+    const hard = stepOpening(5);
+    const easy = stepOpening(1);
+    expect(hard.attackStarts).toBeGreaterThan(easy.attackStarts);
+    expect(hard.usedInputs).toBeGreaterThanOrEqual(1);
   });
 
   it('higher CPU difficulty extends hit-confirmed routes longer than easy CPU', () => {
@@ -1384,6 +1435,9 @@ describe('fight engine', () => {
     expect(match.combatEvents).toHaveLength(1);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'combo', hits: 2 });
     expect(match.combatEvents[0].damage).toBeGreaterThan(7);
+    expect(match.impactEvents).toHaveLength(1);
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2, moveLabel: match.fighters[0].currentMove?.label });
+    expect(match.impactEvents[0].position[1]).toBeGreaterThan(0);
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'combo', hits: 2 });
@@ -1411,6 +1465,7 @@ describe('fight engine', () => {
 
     expect(match.combatEvents).toHaveLength(1);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'punish', hits: 1 });
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'punish', attackerSlot: 1, defenderSlot: 2 });
   });
 
   it('emits a whiff punish popup event when hitting whiff recovery', () => {
@@ -1446,6 +1501,47 @@ describe('fight engine', () => {
 
     expect(match.combatEvents).toHaveLength(1);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'whiffPunish', hits: 1 });
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'whiffPunish', attackerSlot: 1, defenderSlot: 2 });
+  });
+
+  it('emits a block spark for blocked overlap and no spark for whiffs', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    const blockInput = emptyInputFrame();
+    blockInput.block = true;
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, blockInput, 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.impactEvents).toHaveLength(1);
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'block', attackerSlot: 1, defenderSlot: 2 });
+    expect(match.combatEvents).toHaveLength(0);
+
+    let whiff = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    whiff.phase = 'fighting';
+    whiff.countdown = 0;
+    whiff.fighters[0].position.x = -4;
+    whiff.fighters[1].position.x = 4;
+    whiff.fighters[0].state = 'attack';
+    whiff.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      range: 2.5
+    };
+    whiff.fighters[0].actionFramesRemaining = 12;
+    whiff.fighters[0].actionTimer = 12 / 60;
+
+    whiff = stepMatch(whiff, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(whiff.impactEvents).toHaveLength(0);
   });
 
   it('keeps the fight phase active without hit-stop and accepts movement after hitstun', () => {
@@ -1461,7 +1557,7 @@ describe('fight engine', () => {
       attack.jab = false;
     }
     expect(match.cameraShake).toBe(0);
-    expect(match.lastHitId).toBe(0);
+    expect(match.impactEvents).toHaveLength(1);
     expect(match.fighters[1].hitFlash).toBe(0);
     expect(match.fighters[1].state).toBe('hit');
     expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(0);

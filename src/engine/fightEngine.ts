@@ -9,6 +9,7 @@ import type {
   MatchSnapshot,
   MoveDefinition,
   MoveInput,
+  ImpactSparkKind,
   StageDefinition
 } from '../types';
 import { emptyInputFrame } from '../types';
@@ -33,7 +34,7 @@ const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
 const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
-const AI_RECENT_MEMORY_LIMIT = 8;
+const AI_RECENT_MEMORY_LIMIT = 12;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
@@ -80,6 +81,7 @@ export function createMatch(
     message: '',
     lastHitId: 0,
     combatEvents: [],
+    impactEvents: [],
     visualTimeScale: 1,
     cameraShake: 0
   };
@@ -130,12 +132,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty) : p1Input;
+  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true) : p1Input;
   const input2 =
     next.mode === 'training'
       ? emptyInputFrame()
       : next.mode === 'ai' || next.mode === 'cpu'
-        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty)
+        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu')
         : p2Input;
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
@@ -992,6 +994,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const counterHit = isCounterHit(defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
+  const impactId = nextHitEventId(match);
+  pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
   attacker.hitConnected = true;
   const pushX = distance > 0 ? dx / distance : attacker.facing;
   const pushZ = distance > 0 ? dz / distance : 0;
@@ -1024,7 +1028,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
-  pushCombatPopupEvent(match, attacker, move, whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null);
+  pushCombatPopupEvent(match, impactId, attacker, move, whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null);
 
   const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
@@ -1068,16 +1072,16 @@ function isWhiffPunish(defender: FighterRuntime) {
 
 function pushCombatPopupEvent(
   match: MatchSnapshot,
+  id: number,
   attacker: FighterRuntime,
   move: MoveDefinition,
   kind: 'combo' | 'punish' | 'whiffPunish' | null
 ) {
   if (!kind) return;
-  match.lastHitId += 1;
   match.combatEvents = [
     ...match.combatEvents,
     {
-      id: match.lastHitId,
+      id,
       slot: attacker.slot,
       kind,
       hits: attacker.comboHits,
@@ -1085,6 +1089,34 @@ function pushCombatPopupEvent(
       moveLabel: move.label
     }
   ].slice(-8);
+}
+
+function nextHitEventId(match: MatchSnapshot) {
+  match.lastHitId += 1;
+  return match.lastHitId;
+}
+
+function pushImpactSparkEvent(
+  match: MatchSnapshot,
+  id: number,
+  attacker: FighterRuntime,
+  defender: FighterRuntime,
+  move: MoveDefinition,
+  kind: ImpactSparkKind
+) {
+  match.impactEvents = [
+    ...match.impactEvents,
+    {
+      id,
+      kind,
+      position: getImpactPosition(attacker, defender, move),
+      attackerSlot: attacker.slot,
+      defenderSlot: defender.slot,
+      hitLevel: move.hitLevel,
+      damage: kind === 'block' ? move.blockDamage : move.damage,
+      moveLabel: move.label
+    }
+  ].slice(-12);
 }
 
 function enterKnockdown(fighter: FighterRuntime, frames: number) {
@@ -1145,6 +1177,21 @@ type Aabb = {
 function hitboxIntersectsAnyHurtbox(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
   const attackBox = moveHitboxToWorldAabb(attacker, move.hitbox);
   return getCurrentHurtboxes(defender).some((hurtbox) => boxesIntersect(attackBox, hurtboxToWorldAabb(defender, hurtbox)));
+}
+
+function getImpactPosition(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition): [number, number, number] {
+  const attackBox = moveHitboxToWorldAabb(attacker, move.hitbox);
+  const hurtbox = getCurrentHurtboxes(defender)
+    .map((box) => hurtboxToWorldAabb(defender, box))
+    .find((box) => boxesIntersect(attackBox, box));
+  if (!hurtbox) return [defender.position.x, defender.position.y + 1.08, defender.position.z];
+  const minX = Math.max(attackBox.minX, hurtbox.minX);
+  const maxX = Math.min(attackBox.maxX, hurtbox.maxX);
+  const minY = Math.max(attackBox.minY, hurtbox.minY);
+  const maxY = Math.min(attackBox.maxY, hurtbox.maxY);
+  const minZ = Math.max(attackBox.minZ, hurtbox.minZ);
+  const maxZ = Math.min(attackBox.maxZ, hurtbox.maxZ);
+  return [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
 }
 
 function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb {
@@ -1298,6 +1345,8 @@ function resetRound(match: MatchSnapshot) {
   match.countdown = 0;
   match.phase = 'fighting';
   match.message = '';
+  match.combatEvents = [];
+  match.impactEvents = [];
   match.visualTimeScale = 1;
   if (match.introEnabled) beginRoundIntro(match);
 }
@@ -1364,7 +1413,7 @@ function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, 
   fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
 }
 
-function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty): InputFrame {
+function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false): InputFrame {
   const input = emptyInputFrame();
   const dx = opponent.position.x - ai.position.x;
   const dz = opponent.position.z - ai.position.z;
@@ -1373,6 +1422,8 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const profile = ai.character.aiProfile;
   const elapsed = ROUND_TIME - timer;
   const settings = getCpuDifficultySettings(difficulty);
+  const leadRatio = (ai.hp - opponent.hp) / Math.max(1, ai.character.stats.health);
+  const leaderBrake = cpuDuel && leadRatio > 0.18;
   const beat = Math.sin(timer * 2.7 + ai.hp * 0.03 + ai.slot * 0.9);
   const blockRoll = (Math.sin(elapsed * 7.2 + ai.slot * 1.7 + ai.hp * 0.02) + 1) / 2;
   const attackCycle = settings.attackCycle - profile.aggression * settings.aggressionCycleBonus;
@@ -1447,7 +1498,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
 
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
   const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
-  const pressureAccepted = (difficulty >= 5 && opening.kind === 'hitstun') || pressureRoll < settings.pressureResponse;
+  const pressureAccepted = pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - (leaderBrake ? settings.leaderPressurePenalty : 0));
   const pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
   const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
@@ -1472,7 +1523,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   }
   const missedKnownOpening = opening.kind !== 'none' && canStartAction && canAct && !pressureAccepted;
 
-  input.block = danger && (difficulty >= 3 || isIncomingSoon) && blockRoll < Math.min(0.96, Math.max(0.05, profile.guard + settings.guardBonus));
+  input.block = danger && (difficulty >= 3 || isIncomingSoon) && blockRoll < Math.min(0.96, Math.max(0.05, profile.guard + settings.guardBonus + (leaderBrake ? 0.12 : 0)));
   if (input.block) {
     input[awayKey] = true;
     input[towardKey] = false;
@@ -1480,9 +1531,9 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
   const canPressure = !missedKnownOpening && !input.block && canAct && inStrikeRange && !tooClose;
-  const attackPulse = attackPhase < settings.attackPulse || (shouldContinueCombo && comboPhase < settings.comboPulse);
+  const attackPulse = attackPhase < settings.attackPulse * (leaderBrake ? 0.72 : 1) || (shouldContinueCombo && comboPhase < settings.comboPulse * (leaderBrake ? 0.78 : 1));
   if (canPressure && attackPulse) {
-    applyAiRoute(input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
+    applyAiRoute(ai, input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
     input[selectedMoveInput] = true;
     if (difficulty >= 4 && routeRoll > 78) {
       const secondButton = routeRoll > 90 ? 'special' : routeRoll > 84 ? 'heavy' : 'kick';
@@ -1517,11 +1568,12 @@ function chooseAiMoveInput(
             : settings.maxComboSteps >= 2 && previous === 'jab'
               ? 'kick'
               : null;
-    if (preferred && availableInputs.includes(preferred) && !inputAlreadyUsedInCombo(ai, preferred)) return preferred;
+    const preferredIsStale = preferred ? inputRecentlyUsed(ai, preferred) && routeRoll < settings.staleBreakThreshold : false;
+    if (preferred && availableInputs.includes(preferred) && !inputAlreadyUsedInCombo(ai, preferred) && !preferredIsStale) return preferred;
   }
 
   const scored = availableInputs.map((input, index) => {
-    const isRecent = ai.aiRecentComboKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
+    const isRecent = inputRecentlyUsed(ai, input);
     const comboRepeat = inputAlreadyUsedInCombo(ai, input);
     const wave = positiveModulo(selector + routeRoll * (index + 2) + ai.slot * 13 + input.length * 17, 100) / 100;
     const base =
@@ -1552,7 +1604,7 @@ function chooseAiPunishMoveInput(ai: FighterRuntime, difficulty: CpuDifficulty, 
     const choiceIndex = Math.min(sorted.length - 1, Math.floor(positiveModulo(selector + routeRoll + ai.slot * 7, 100) / (difficulty === 1 ? 34 : 25)));
     return sorted[choiceIndex]?.input ?? sorted[0]?.input ?? 'jab';
   }
-  const fresh = sorted.find((move) => !inputAlreadyUsedInCombo(ai, move.input));
+  const fresh = sorted.find((move) => !inputAlreadyUsedInCombo(ai, move.input) && !inputRecentlyUsed(ai, move.input));
   return fresh?.input ?? sorted[0]?.input ?? 'jab';
 }
 
@@ -1596,8 +1648,15 @@ function chooseAiPressureMoveInput(
     .sort((a, b) => a.startupFrames - b.startupFrames);
   if (sorted.length === 0) return 'jab';
 
-  const jab = sorted.find((move) => move.input === 'jab');
-  if (opening.kind === 'hitstun' && jab && difficulty >= 3) return 'jab';
+  if (opening.kind === 'hitstun' && difficulty >= 3) {
+    const viable = sorted.filter((move) => opening.frames <= 0 || move.startupFrames <= opening.frames + (difficulty >= 4 ? 4 : 1));
+    const fresh = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input) && !inputRecentlyUsed(ai, move.input));
+    if (fresh && (difficulty >= 4 || routeRoll > 42)) return fresh.input;
+    const varied = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input));
+    if (varied && routeRoll > (difficulty >= 5 ? 28 : 54)) return varied.input;
+    const jab = sorted.find((move) => move.input === 'jab');
+    if (jab) return jab.input;
+  }
   if (opening.kind === 'whiff' && difficulty >= 4) {
     const launcher = sorted.find((move) => move.launchHeight || move.knockdown || move.damage >= 16);
     if (launcher && opening.frames >= launcher.startupFrames + 2 && routeRoll > 38) return launcher.input;
@@ -1608,11 +1667,27 @@ function chooseAiPressureMoveInput(
     return sorted[choiceIndex]?.input ?? sorted[0]?.input ?? 'jab';
   }
 
-  return sorted[0]?.input ?? 'jab';
+  const fresh = sorted.find((move) => !inputRecentlyUsed(ai, move.input));
+  return fresh?.input ?? sorted[0]?.input ?? 'jab';
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {
   return ai.comboUsedKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
+}
+
+function inputRecentlyUsed(ai: FighterRuntime, input: MoveInput) {
+  return ai.aiRecentComboKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
+}
+
+function routeRecentlyUsed(ai: FighterRuntime, route: string) {
+  return ai.aiRecentComboKeys.some((key) => key.startsWith(`${route}:`) || key.startsWith(`${route}-`) || key.includes(`cmd:${route}`));
+}
+
+function getAdjustedPressureResponse(ai: FighterRuntime, opening: AiOpening, settings: ReturnType<typeof getCpuDifficultySettings>, pressureRoll: number) {
+  const recentInputFatigue = ai.aiRecentComboKeys.length >= 3 && ai.aiRecentComboKeys.slice(-3).every((key) => key.includes(':jab') || key.endsWith('+1'));
+  const hitstunBonus = opening.kind === 'hitstun' ? settings.hitstunPressureBonus : 0;
+  const fatiguePenalty = recentInputFatigue && pressureRoll < 0.72 ? settings.stalePressurePenalty : 0;
+  return clamp(settings.pressureResponse + hitstunBonus - fatiguePenalty, 0.04, 0.92);
 }
 
 function getCpuDifficultySettings(difficulty: CpuDifficulty) {
@@ -1628,6 +1703,10 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     guardBonus: lerp(-0.2, 0.5, t),
     punishResponse: lerp(0.08, 0.98, t),
     pressureResponse: lerp(0.08, 0.96, t),
+    hitstunPressureBonus: lerp(0.02, 0.08, t),
+    stalePressurePenalty: lerp(0.08, 0.24, t),
+    leaderPressurePenalty: lerp(0.08, 0.22, t),
+    staleBreakThreshold: Math.round(lerp(24, 62, t)),
     reactionLeadFrames: Math.round(lerp(-2, 8, t)),
     spacingScale: lerp(1.08, 0.78, t),
     pressureBonus: lerp(0.28, 0.9, t),
@@ -1644,6 +1723,7 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
 }
 
 function applyAiRoute(
+  ai: FighterRuntime,
   input: InputFrame,
   towardKey: 'left' | 'right',
   awayKey: 'left' | 'right',
@@ -1653,17 +1733,20 @@ function applyAiRoute(
   routeRoll: number
 ) {
   if (difficulty <= 1) return;
+  const usedForward = routeRecentlyUsed(ai, 'forward');
+  const usedLow = routeRecentlyUsed(ai, 'down') || routeRecentlyUsed(ai, 'down-forward');
+  const usedSide = routeRecentlyUsed(ai, 'sidestep') || routeRecentlyUsed(ai, 'side');
 
-  if (difficulty >= 2 && selector > 48) {
+  if (difficulty >= 2 && selector > 48 && !(usedForward && routeRoll < 54)) {
     input[towardKey] = true;
     input[awayKey] = false;
   }
 
-  if (difficulty >= 3 && routeRoll > 52) {
+  if (difficulty >= 3 && routeRoll > 52 && !(usedLow && selector < 68)) {
     input.down = true;
   }
 
-  if (difficulty >= 4 && routeRoll > 68) {
+  if (difficulty >= 4 && routeRoll > 68 && !(usedSide && selector > 70)) {
     input.sidewalkUp = routeRoll < 82;
     input.sidewalkDown = routeRoll >= 82;
   }
@@ -1713,6 +1796,8 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
   return {
     ...match,
     stage: { ...match.stage },
+    combatEvents: [...match.combatEvents],
+    impactEvents: [...match.impactEvents],
     fighters: match.fighters.map((fighter) => ({
       ...fighter,
       character: fighter.character,

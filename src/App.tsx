@@ -2083,6 +2083,22 @@ function SettingsScreen({
               ))}
             </div>
           </SettingRow>
+          <SettingToggle label="Impact Sparks" checked={settings.display.impactSparks.enabled} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, enabled: checked } } }))} />
+          <SettingRow label="Spark Shape" value={settings.display.impactSparks.shape.toUpperCase()}>
+            <div className="mini-segmented">
+              {(['burst', 'ring', 'shards'] as const).map((value) => (
+                <button key={value} className={settings.display.impactSparks.shape === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, shape: value } } }))}>{value}</button>
+              ))}
+            </div>
+          </SettingRow>
+          <SettingRow label="Hit Spark" value={settings.display.impactSparks.hitColor.toUpperCase()}>
+            <input type="color" value={settings.display.impactSparks.hitColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, hitColor: event.target.value } } }))} />
+          </SettingRow>
+          <SettingRow label="Block Spark" value={settings.display.impactSparks.blockColor.toUpperCase()}>
+            <input type="color" value={settings.display.impactSparks.blockColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, blockColor: event.target.value } } }))} />
+          </SettingRow>
+          <SettingSlider label="Spark Size" value={settings.display.impactSparks.size} min={0.5} max={1.8} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, size: value } } }))} />
+          <SettingSlider label="Spark Intensity" value={settings.display.impactSparks.intensity} min={0.35} max={2} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, intensity: value } } }))} />
           <SettingToggle label="Reduced Motion" checked={settings.display.reducedMotion} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, reducedMotion: checked } }))} />
           <SettingToggle label="Debug Overlay" checked={settings.display.debugOverlay} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, debugOverlay: checked } }))} />
         </div>
@@ -2286,14 +2302,14 @@ function modeLabel(mode: MatchMode) {
 function previewTitle(tab: SettingsTab, settings: GameSettings) {
   if (tab === 'game') return `${settings.game.roundTimer}s rounds`;
   if (tab === 'camera') return `Camera ${Math.round(settings.camera.distance * 100)} / ${Math.round(settings.camera.height * 100)}`;
-  if (tab === 'display') return `HUD ${Math.round(settings.display.hudScale * 100)}%`;
+  if (tab === 'display') return `HUD ${Math.round(settings.display.hudScale * 100)}% / ${settings.display.impactSparks.shape}`;
   return settings.audio.muted ? 'Muted' : `Master ${Math.round(settings.audio.master * 100)}%`;
 }
 
 function previewBody(tab: SettingsTab) {
   if (tab === 'game') return 'These values are applied when a new fight or rematch starts.';
   if (tab === 'camera') return 'Camera tuning affects the live fight camera that keeps both fighters centered.';
-  if (tab === 'display') return 'Display settings affect HUD, touch controls, reduced motion, and debug overlays.';
+  if (tab === 'display') return 'Display settings affect HUD, touch controls, impact sparks, reduced motion, and debug overlays.';
   return 'Audio values are persisted now and ready for future music and SFX playback.';
 }
 
@@ -4054,7 +4070,7 @@ function FightScreen({
       onKeyDown={(event) => handleSurfaceKey(event, true)}
       onKeyUp={(event) => handleSurfaceKey(event, false)}
     >
-      <GameScene match={match} cameraSettings={settings.camera} />
+      <GameScene match={match} cameraSettings={settings.camera} sparkSettings={settings.display.impactSparks} reducedMotion={settings.display.reducedMotion} />
       <FightHud match={match} hudScale={settings.display.hudScale} />
       <CombatPopupLayer popups={combatPopups} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
@@ -4234,13 +4250,20 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
 function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right' }) {
   const percent = Math.max(0, Math.min(100, (fighter.hp / fighter.character.stats.health) * 100));
   const kiPercent = Math.max(0, Math.min(100, fighter.ki));
+  const isDanger = percent <= 25;
+  const portraitPath = getHudPortraitPath(fighter.character);
   return (
-    <div className={`health ${align}`}>
-      <div className="health-label">
-        <strong>{fighter.character.displayName}</strong>
+    <div className={`health ${align} ${isDanger ? 'danger' : ''}`}>
+      <div className="health-identity">
+        <div className="hud-portrait" aria-hidden="true">
+          {portraitPath ? <img src={portraitPath} alt="" /> : <span>{fighter.character.displayName.slice(0, 2).toUpperCase()}</span>}
+        </div>
+        <div className="health-label">
+          <strong>{fighter.character.displayName}</strong>
+        </div>
       </div>
       <div className="health-track">
-        <span style={{ width: `${percent}%`, background: fighter.character.colors.primary }} />
+        <span style={{ width: `${percent}%`, background: isDanger ? 'linear-gradient(90deg, #ff1f32, #ff5b2f 60%, #fff0a5)' : fighter.character.colors.primary }} />
       </div>
       <div className="ki-track" aria-label={`${fighter.character.displayName} ki`}>
         <span style={{ width: `${kiPercent}%` }} />
@@ -4252,6 +4275,10 @@ function HealthBar({ fighter, align }: { fighter: MatchSnapshot['fighters'][numb
       </div>
     </div>
   );
+}
+
+function getHudPortraitPath(character: MatchSnapshot['fighters'][number]['character']) {
+  return character.animationFrames?.idle?.[0] ?? character.animationFrames?.walkForward?.[0] ?? character.spriteSheetPath ?? '';
 }
 
 function FooterActions({

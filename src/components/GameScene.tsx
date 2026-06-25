@@ -4,13 +4,15 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import type { CharacterDefinition, FighterRuntime, FighterState, GameSettings, MatchSnapshot, MoveInput, StageDefinition, StageLayerDefinition, StagePropDefinition } from '../types';
+import type { CharacterDefinition, FighterRuntime, FighterState, GameSettings, ImpactSparkEvent, MatchSnapshot, MoveInput, StageDefinition, StageLayerDefinition, StagePropDefinition } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
 import { debugLogThrottled } from '../lib/debugLogger';
 
 type GameSceneProps = {
   match: MatchSnapshot;
   cameraSettings?: GameSettings['camera'];
+  sparkSettings?: GameSettings['display']['impactSparks'];
+  reducedMotion?: boolean;
 };
 
 const defaultCameraSettings: GameSettings['camera'] = {
@@ -21,10 +23,18 @@ const defaultCameraSettings: GameSettings['camera'] = {
 };
 
 const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
+const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
+  enabled: true,
+  shape: 'burst',
+  hitColor: '#ffb33f',
+  blockColor: '#9eeeff',
+  size: 1,
+  intensity: 1
+};
 
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
-export function GameScene({ match, cameraSettings = defaultCameraSettings }: GameSceneProps) {
+export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <color attach="background" args={['#8deeff']} />
@@ -41,9 +51,113 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings }: Gam
       <Arena stage={match.stage} />
       <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
       <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
+      <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
     </Canvas>
   );
+}
+
+function ImpactSparkLayer({
+  events,
+  settings,
+  reducedMotion
+}: {
+  events: ImpactSparkEvent[];
+  settings: GameSettings['display']['impactSparks'];
+  reducedMotion: boolean;
+}) {
+  if (!settings.enabled) return null;
+  return (
+    <group>
+      {events.slice(-8).map((event) => (
+        <ImpactSpark key={event.id} event={event} settings={settings} reducedMotion={reducedMotion} />
+      ))}
+    </group>
+  );
+}
+
+function ImpactSpark({
+  event,
+  settings,
+  reducedMotion
+}: {
+  event: ImpactSparkEvent;
+  settings: GameSettings['display']['impactSparks'];
+  reducedMotion: boolean;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+  const ringRef = useRef<THREE.Mesh>(null);
+  const ageRef = useRef(0);
+  const baseColor = event.kind === 'block' ? settings.blockColor : settings.hitColor;
+  const isBlock = event.kind === 'block';
+  const isPunish = event.kind === 'punish' || event.kind === 'whiffPunish';
+  const duration = reducedMotion ? 0.32 : 0.48;
+  const particleCount = reducedMotion ? (isBlock ? 4 : 7) : isBlock ? 8 : isPunish ? 18 : 14;
+  const directions = useMemo(() => makeSparkDirections(event.id, particleCount), [event.id, particleCount]);
+
+  useFrame(({ camera }, delta) => {
+    ageRef.current += delta;
+    const progress = THREE.MathUtils.clamp(ageRef.current / duration, 0, 1);
+    const root = groupRef.current;
+    if (!root) return;
+    root.visible = progress < 1;
+    root.lookAt(camera.position);
+    const expansion = reducedMotion ? 1 + progress * 0.45 : 1 + progress * (isBlock ? 0.85 : 1.65);
+    const baseScale = settings.size * (isBlock ? 0.58 : isPunish ? 1.28 : 1);
+    root.scale.setScalar(baseScale * expansion);
+    root.children.forEach((child, index) => {
+      const mesh = child as THREE.Mesh;
+      const material = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
+      if (material && 'opacity' in material) {
+        material.opacity = Math.max(0, (1 - progress) * settings.intensity * (index === 0 ? 0.9 : 1));
+      }
+    });
+    if (ringRef.current) ringRef.current.rotation.z += delta * (isBlock ? 2.2 : 5.8);
+  });
+
+  const showRing = settings.shape === 'burst' || settings.shape === 'ring' || isBlock;
+  const showShards = settings.shape === 'burst' || settings.shape === 'shards';
+
+  return (
+    <group ref={groupRef} position={event.position}>
+      {showRing && (
+        <mesh ref={ringRef} renderOrder={30}>
+          <torusGeometry args={[0.26, isBlock ? 0.022 : 0.032, 8, 36]} />
+          <meshBasicMaterial color={baseColor} transparent opacity={0.82 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        </mesh>
+      )}
+      {showShards &&
+        directions.map((direction, index) => (
+          <mesh
+            key={`${event.id}-shard-${index}`}
+            position={[direction[0] * 0.18, direction[1] * 0.18, direction[2] * 0.02]}
+            rotation={[0, 0, direction[3]]}
+            scale={[direction[4] * (isBlock ? 0.55 : 1), 0.035, 0.035]}
+            renderOrder={31}
+          >
+            <boxGeometry args={[0.34, 0.08, 0.08]} />
+            <meshBasicMaterial color={baseColor} transparent opacity={0.96 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        ))}
+      <mesh scale={isBlock ? 0.11 : isPunish ? 0.18 : 0.15} renderOrder={32}>
+        <sphereGeometry args={[1, 12, 8]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.74 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}
+
+function makeSparkDirections(seed: number, count: number) {
+  return Array.from({ length: count }, (_, index) => {
+    const angle = (index / Math.max(1, count)) * Math.PI * 2 + seededUnit(seed, index) * 0.6;
+    const radius = 0.7 + seededUnit(seed + 11, index) * 0.75;
+    return [Math.cos(angle) * radius, Math.sin(angle) * radius, 0, angle, 0.45 + seededUnit(seed + 23, index) * 0.85] as [number, number, number, number, number];
+  });
+}
+
+function seededUnit(seed: number, index: number) {
+  const value = Math.sin(seed * 12.9898 + index * 78.233) * 43758.5453;
+  return value - Math.floor(value);
 }
 
 type StagePreviewCanvasProps = {
