@@ -230,7 +230,6 @@
       "/characters/kiro/frames/frame-019.png"
     ],
     "block": [
-      "/characters/kiro/frames/frame-015.png",
       "/characters/kiro/frames/frame-016.png"
     ],
     "jab": [
@@ -330,6 +329,10 @@
     "cmd:qcf+4": 11,
     "cmd:WS+4": 9
   },
-  "moveOverrides": {},
+  "moveOverrides": {
+    "jab": {
+      "onHitFrames": 3
+    }
+  },
   "spriteFrameEdits": {}
 }

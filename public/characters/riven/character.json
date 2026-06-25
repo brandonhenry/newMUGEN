@@ -230,7 +230,6 @@
       "/characters/riven/frames/frame-018.png"
     ],
     "block": [
-      "/characters/riven/frames/frame-014.png",
       "/characters/riven/frames/frame-015.png"
     ],
     "jab": [
@@ -354,7 +353,8 @@
   },
   "moveOverrides": {
     "jab": {
-      "startupFrames": 9
+      "startupFrames": 9,
+      "onHitFrames": 3
     }
   },
   "spriteFrameEdits": {}

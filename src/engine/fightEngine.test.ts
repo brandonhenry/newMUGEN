@@ -1225,6 +1225,82 @@ describe('fight engine', () => {
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(0);
   });
 
+  it('keeps a launched defender unable to act while airborne even after hit frames expire', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].state = 'hit';
+    match.fighters[1].position.y = 0.72;
+    match.fighters[1].velocityY = 0.05;
+    match.fighters[1].stunFramesRemaining = 0;
+    match.fighters[1].actionFramesRemaining = 0;
+
+    const attemptedAirAction = emptyInputFrame();
+    attemptedAirAction.jab = true;
+    attemptedAirAction.right = true;
+    const startX = match.fighters[1].position.x;
+
+    match = stepMatch(match, emptyInputFrame(), attemptedAirAction, 1 / 60);
+
+    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].currentMove).toBeNull();
+    expect(match.fighters[1].position.x).toBe(startX);
+  });
+
+  it('keeps a landed launched defender locked until remaining recovery frames expire', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].state = 'hit';
+    match.fighters[1].position.y = 0;
+    match.fighters[1].velocityY = 0;
+    match.fighters[1].stunFramesRemaining = 12;
+    match.fighters[1].actionFramesRemaining = 12;
+
+    const attemptedGroundAction = emptyInputFrame();
+    attemptedGroundAction.jab = true;
+    attemptedGroundAction.left = true;
+    const startX = match.fighters[1].position.x;
+
+    match = stepMatch(match, emptyInputFrame(), attemptedGroundAction, 1 / 60);
+
+    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].currentMove).toBeNull();
+    expect(match.fighters[1].position.x).toBe(startX);
+  });
+
+  it('re-floats airborne defenders on juggle follow-up hits', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].position.y = 0.5;
+    match.fighters[1].velocityY = -0.4;
+    match.fighters[1].state = 'hit';
+    match.fighters[1].juggleDamage = 8;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      knockdown: false,
+      launchHeight: 2.2,
+      range: 2.5
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+    match.fighters[0].moveFrame = 0;
+    match.fighters[0].hitConnected = false;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].velocityY).toBeGreaterThan(0);
+    expect(match.fighters[1].juggleDamage).toBeGreaterThan(8);
+  });
+
   it('forces knockdown after enough juggle damage', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

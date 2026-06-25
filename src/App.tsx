@@ -2008,7 +2008,7 @@ function isMoveSlotPose(pose: PreviewPose): pose is MoveDefinition['input'] {
 
 function formatFrameSummary(move: MoveDefinition | null) {
   if (!move) return 'No move data';
-  const hitText = move.knockdown ? 'KD' : move.launchHeight ? 'Launch' : signedFrame(move.onHitFrames);
+  const hitText = move.knockdown ? 'KD' : (move.launchHeight ?? 0) > 0 ? 'Launch' : signedFrame(move.onHitFrames);
   return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitText} OH`;
 }
 
@@ -2472,6 +2472,7 @@ function CharacterViewer({
 }
 
 function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (patch: MoveOverride) => void }) {
+  const isLauncher = (move.launchHeight ?? 0) > 0;
   const updateNumber = (key: keyof MoveOverride, value: string, min = Number.NEGATIVE_INFINITY) => {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return;
@@ -2482,7 +2483,7 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
     <section className="frame-data-editor" aria-label="Frame data editor">
       <header>
         <span>Frame Data</span>
-        <strong>{`i${move.startupFrames} / ${signedFrame(move.onBlockFrames)} / ${move.knockdown ? 'KD' : move.launchHeight ? 'Launch' : signedFrame(move.onHitFrames)}`}</strong>
+        <strong>{`i${move.startupFrames} / ${signedFrame(move.onBlockFrames)} / ${move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames)}`}</strong>
         <small>{move.startupFrames + move.activeFrames + move.recoveryFrames} total frames</small>
       </header>
       <div className="frame-data-grid">
@@ -2513,7 +2514,15 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
             ))}
           </select>
         </label>
-        <FrameNumberInput label="Launch" value={move.launchHeight ?? 0} min={0} step={0.1} onChange={(value) => updateNumber('launchHeight', value, 0)} />
+        <label className="frame-toggle">
+          <span>Launcher</span>
+          <input
+            type="checkbox"
+            checked={isLauncher}
+            onChange={(event) => onChange({ launchHeight: event.target.checked ? Math.max(move.launchHeight ?? 0, 2.2) : 0 })}
+          />
+        </label>
+        <FrameNumberInput label="Launch Height" value={move.launchHeight ?? 0} min={0} step={0.1} onChange={(value) => updateNumber('launchHeight', value, 0)} />
         <label className="frame-toggle">
           <span>Knockdown</span>
           <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />

@@ -211,7 +211,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.hitConfirmed = false;
       fighter.whiffRecoveryApplied = false;
       fighter.moveFrame = 0;
-      fighter.state = 'idle';
+      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
     }
   } else if (fighter.actionTimer > 0) {
     fighter.actionTimer = Math.max(0, fighter.actionTimer - dt);
@@ -221,7 +221,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.hitConfirmed = false;
       fighter.whiffRecoveryApplied = false;
       fighter.moveFrame = 0;
-      fighter.state = 'idle';
+      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
     }
   }
 
@@ -229,10 +229,14 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.stunFramesRemaining = Math.max(0, fighter.stunFramesRemaining - frameDelta);
     fighter.blockstunFramesRemaining = Math.max(0, fighter.blockstunFramesRemaining - frameDelta);
     fighter.stunTimer = framesToSeconds(Math.max(fighter.stunFramesRemaining, fighter.blockstunFramesRemaining));
-    if (fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.state !== 'knockdown') fighter.state = 'idle';
+    if (fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.state !== 'knockdown') {
+      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
+    }
   } else if (fighter.stunTimer > 0) {
     fighter.stunTimer = Math.max(0, fighter.stunTimer - dt);
-    if (fighter.stunTimer === 0 && fighter.state !== 'knockdown') fighter.state = 'idle';
+    if (fighter.stunTimer === 0 && fighter.state !== 'knockdown') {
+      fighter.state = fighter.state === 'hit' && isAirborne(fighter) ? 'hit' : 'idle';
+    }
   }
   if (fighter.blockstunFramesRemaining === 0) {
     fighter.blockPunishWindowFrames = Math.max(0, fighter.blockPunishWindowFrames - frameDelta);
@@ -248,6 +252,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.getupInvulnerableFrames = 0;
       fighter.juggleDamage = 0;
     }
+    applyGravity(fighter, dt);
+    updateAttackInputMemory(fighter, input);
+    return;
+  }
+
+  if (fighter.state === 'hit' && isAirborne(fighter)) {
     applyGravity(fighter, dt);
     updateAttackInputMemory(fighter, input);
     return;
@@ -294,7 +304,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const sidestepTap = input.sidestepUp ? -1 : input.sidestepDown ? 1 : 0;
   const grounded = fighter.position.y === 0 && fighter.velocityY === 0;
   const crouching = input.down && grounded;
-  const jumping = fighter.position.y > 0 || fighter.velocityY !== 0;
+  const jumping = isAirborne(fighter);
   const speedScale = blocking ? 0.42 : crouching ? 0.18 : 1;
 
   if (jumpPressed && grounded && !blocking && !input.down) {
@@ -701,7 +711,7 @@ function getComboRoute(fighter: FighterRuntime, opponent: FighterRuntime, input:
   const toward = forward > 0;
   const away = forward < 0;
   const low = input.down || fighter.state === 'crouch' || fighter.wasCrouching;
-  const launcher = input.up || fighter.position.y > 0 || fighter.velocityY > 0;
+  const launcher = input.up || isAirborne(fighter);
 
   if (launcher && toward) return { key: 'up-forward', label: 'Rising Step', toward, away, low: false, launcher };
   if (launcher && away) return { key: 'up-back', label: 'Backflip', toward, away, low: false, launcher };
@@ -767,8 +777,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
-  const wasAirborne = defender.position.y > 0 || defender.velocityY !== 0;
-  const juggleDamage = (wasAirborne || move.launchHeight ? defender.juggleDamage : 0) + move.damage;
+  const wasAirborne = isAirborne(defender);
+  const launchHeight = Math.max(0, move.launchHeight ?? 0);
+  const juggleDamage = (wasAirborne || launchHeight > 0 ? defender.juggleDamage : 0) + move.damage;
   const forceKnockdown = move.knockdown || juggleDamage >= JUGGLE_DAMAGE_LIMIT;
   defender.hp = Math.max(0, defender.hp - move.damage);
   defender.blockstunFramesRemaining = 0;
@@ -787,9 +798,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.juggleDamage = juggleDamage;
   }
 
-  if (move.launchHeight) {
+  if (!forceKnockdown && launchHeight > 0) {
     defender.position.y = Math.max(defender.position.y, 0.18);
-    defender.velocityY = Math.max(defender.velocityY, move.launchHeight);
+    defender.velocityY = wasAirborne ? Math.max(defender.velocityY, Math.min(1.45, launchHeight * 0.62)) : Math.max(defender.velocityY, launchHeight);
   } else if (!forceKnockdown && wasAirborne) {
     defender.position.y = Math.max(defender.position.y, 0.28);
     defender.velocityY = Math.max(defender.velocityY, 1.15);
@@ -821,6 +832,10 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
 
 function isActiveMoveFrame(move: MoveDefinition, moveFrame: number) {
   return moveFrame >= move.startupFrames && moveFrame < move.startupFrames + move.activeFrames;
+}
+
+function isAirborne(fighter: FighterRuntime) {
+  return fighter.position.y > 0 || fighter.velocityY !== 0;
 }
 
 function applyWhiffRecoveryIfNeeded(fighter: FighterRuntime) {
