@@ -217,12 +217,7 @@
       "/characters/riven/frames/frame-013.png"
     ],
     "walkBack": [
-      "/characters/riven/frames/frame-077.png",
-      "/characters/riven/frames/frame-076.png",
-      "/characters/riven/frames/frame-075.png",
-      "/characters/riven/frames/frame-074.png",
-      "/characters/riven/frames/frame-073.png",
-      "/characters/riven/frames/frame-072.png"
+      "/characters/riven/frames/frame-014.png"
     ],
     "sidestepLeft": [
       "/characters/riven/frames/frame-065.png",
@@ -247,11 +242,8 @@
       "/characters/riven/frames/frame-044.png"
     ],
     "block": [
-      "/characters/riven/frames/frame-023.png",
-      "/characters/riven/frames/frame-024.png",
-      "/characters/riven/frames/frame-025.png",
-      "/characters/riven/frames/frame-026.png",
-      "/characters/riven/frames/frame-027.png"
+      "/characters/riven/frames/frame-014.png",
+      "/characters/riven/frames/frame-015.png"
     ],
     "jab": [
       "/characters/riven/frames/frame-078.png",
@@ -362,5 +354,7 @@
     "cmd:d/f+1": 10,
     "cmd:qcf+3": 10,
     "cmd:SS+4": 11
-  }
+  },
+  "moveOverrides": {},
+  "spriteFrameEdits": {}
 }
