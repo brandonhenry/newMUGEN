@@ -4249,6 +4249,85 @@ button {
   }
 }
 
+@media (max-width: 900px) and (orientation: landscape) {
+  .combat-popup-layer {
+    top: clamp(88px, 18vh, 118px);
+    left: 10px;
+    right: 10px;
+    grid-template-columns: minmax(0, min(34vw, 220px)) minmax(0, min(34vw, 220px));
+  }
+
+  .combat-popup-column {
+    gap: 6px;
+  }
+
+  .combat-popup-card {
+    width: min(34vw, 220px);
+    min-width: 0;
+    padding: 8px 10px 9px;
+    border-left-width: 3px;
+    box-shadow:
+      0 10px 26px rgba(0, 0, 0, 0.34),
+      0 0 18px rgba(255, 61, 82, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  }
+
+  .combat-popup-card.whiffPunish,
+  .combat-popup-card.punish {
+    box-shadow:
+      0 10px 26px rgba(0, 0, 0, 0.34),
+      0 0 18px rgba(210, 82, 255, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .combat-popup-column.right .combat-popup-card {
+    border-right-width: 3px;
+    clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px);
+  }
+
+  .combo-line,
+  .damage-line {
+    gap: 6px;
+  }
+
+  .combo-line strong,
+  .damage-line strong {
+    font-size: clamp(23px, 5vw, 34px);
+  }
+
+  .combo-line span,
+  .damage-line span {
+    font-size: clamp(11px, 2.4vw, 15px);
+  }
+
+  .damage-line {
+    margin-top: 2px;
+  }
+
+  .punish-line {
+    margin-top: 5px;
+    padding: 2px 18px 3px 0;
+    font-size: clamp(16px, 3.4vw, 23px);
+    border-bottom-width: 1px;
+  }
+
+  .combat-popup-column.right .punish-line {
+    padding-right: 0;
+    padding-left: 18px;
+  }
+
+  .combat-popup-card small {
+    margin-top: 4px;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: clamp(8px, 1.7vw, 10px);
+    letter-spacing: 0.07em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 @media (max-height: 560px) {
   .touch-controls {
     transform: scale(0.84);
