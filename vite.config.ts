@@ -113,10 +113,24 @@ type DevOnlineLeavePayload = {
   peerId?: string;
 };
 
+type DevLeaderboardEntry = {
+  playerId: string;
+  displayName: string;
+  wins: number;
+  losses: number;
+  updatedAt: number;
+};
+
+type DevLeaderboardSubmitPayload = {
+  winner?: Partial<DevLeaderboardEntry>;
+  loser?: Partial<DevLeaderboardEntry>;
+};
+
 const DEV_ONLINE_ROOM_TTL_MS = 12_000;
 
 function koreDevManifestWriter() {
   const onlineRooms = new Map<string, DevOnlineRoom>();
+  const leaderboard = new Map<string, DevLeaderboardEntry>();
 
   return {
     name: 'kore-dev-manifest-writer',
@@ -143,6 +157,27 @@ function koreDevManifestWriter() {
           const payload = JSON.parse(await readRequestBody(request)) as DevOnlineLeavePayload;
           devOnlineLeave(onlineRooms, payload);
           sendJson(response, 200, { ok: true });
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/online-leaderboard', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'GET') {
+          sendJson(response, 405, { error: 'GET required' });
+          return;
+        }
+        sendJson(response, 200, { entries: sortDevLeaderboard([...leaderboard.values()]).slice(0, 100) });
+      });
+
+      server.middlewares.use('/.netlify/functions/online-leaderboard-submit', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevLeaderboardSubmitPayload;
+          sendJson(response, 200, devSubmitLeaderboardResult(leaderboard, payload));
         } catch (error) {
           sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -770,6 +805,40 @@ function pruneDevOnlineRooms(rooms: Map<string, DevOnlineRoom>) {
 
 function safeOnlineString(value: unknown) {
   return typeof value === 'string' ? value.slice(0, 160) : '';
+}
+
+function devSubmitLeaderboardResult(entries: Map<string, DevLeaderboardEntry>, payload: DevLeaderboardSubmitPayload) {
+  const winner = sanitizeLeaderboardProfile(payload.winner);
+  const loser = sanitizeLeaderboardProfile(payload.loser);
+  if (!winner || !loser || winner.playerId === loser.playerId) throw new Error('Invalid leaderboard result');
+  const now = Date.now();
+  const winnerEntry = entries.get(winner.playerId) ?? { ...winner, wins: 0, losses: 0, updatedAt: now };
+  const loserEntry = entries.get(loser.playerId) ?? { ...loser, wins: 0, losses: 0, updatedAt: now };
+  winnerEntry.displayName = winner.displayName;
+  winnerEntry.wins += 1;
+  winnerEntry.updatedAt = now;
+  loserEntry.displayName = loser.displayName;
+  loserEntry.losses += 1;
+  loserEntry.updatedAt = now;
+  entries.set(winner.playerId, winnerEntry);
+  entries.set(loser.playerId, loserEntry);
+  return { entries: sortDevLeaderboard([...entries.values()]).slice(0, 100) };
+}
+
+function sanitizeLeaderboardProfile(value: Partial<DevLeaderboardEntry> | undefined): Pick<DevLeaderboardEntry, 'playerId' | 'displayName'> | null {
+  const playerId = typeof value?.playerId === 'string' ? value.playerId.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 96) : '';
+  const displayName = typeof value?.displayName === 'string'
+    ? value.displayName.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 12)
+    : '';
+  return playerId && displayName ? { playerId, displayName } : null;
+}
+
+function sortDevLeaderboard(entries: DevLeaderboardEntry[]) {
+  return [...entries].sort((a, b) => {
+    const scoreA = a.wins * 100 - a.losses * 25;
+    const scoreB = b.wins * 100 - b.losses * 25;
+    return scoreB - scoreA || b.wins - a.wins || a.losses - b.losses || b.updatedAt - a.updatedAt;
+  });
 }
 
 function sendJson(response: ServerResponse, statusCode: number, payload: unknown) {

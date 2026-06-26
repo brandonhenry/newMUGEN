@@ -1,4 +1,5 @@
 import type { CompactMatchSnapshot } from './codec';
+import type { OnlinePlayerProfile } from './leaderboard';
 
 export type OnlineRole = 'host' | 'guest';
 export type OnlineConnectionState = 'idle' | 'searching' | 'connecting' | 'connected' | 'disconnected' | 'error';
@@ -8,6 +9,7 @@ export type OnlineHelloMessage = {
   protocol: number;
   peerId: string;
   characterId: string;
+  profile?: OnlinePlayerProfile;
 };
 
 export type OnlineInputMessage = {

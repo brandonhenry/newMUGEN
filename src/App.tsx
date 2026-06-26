@@ -16,6 +16,7 @@ import {
   Shuffle,
   Swords,
   Target,
+  Trophy,
   Upload,
   Users,
   Wifi,
@@ -33,6 +34,7 @@ import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
+import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
@@ -58,7 +60,7 @@ import {
   type VoxelFidelitySettings
 } from './types';
 
-type Screen = 'boot' | 'title' | 'menu' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type CharacterAnimationOverride = {
@@ -1066,6 +1068,7 @@ export default function App() {
   const [mode, setMode] = useState<MatchMode>('ai');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
+  const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [musicStarted, setMusicStarted] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
@@ -1331,6 +1334,17 @@ export default function App() {
             onExit={() => setScreen('title')}
           />
         )}
+        {screen === 'leaderboard' && (
+          <LeaderboardScreen
+            profile={onlineProfile}
+            onProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
+            onFindMatch={() => {
+              setMode('online');
+              setScreen('select');
+            }}
+            onBack={() => setScreen('select')}
+          />
+        )}
         {screen === 'select' && (
           <CharacterSelect
             roster={roster}
@@ -1342,6 +1356,9 @@ export default function App() {
             setP2Id={setP2Id}
             setMode={setMode}
             setCpuDifficulty={setCpuDifficulty}
+            onlineProfile={onlineProfile}
+            onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
+            onLeaderboards={() => setScreen('leaderboard')}
             onUiNavigate={() => playMenuHoverSound(90)}
             onBack={() => setScreen('menu')}
             onNext={() => setScreen('stage')}
@@ -1401,6 +1418,7 @@ export default function App() {
             setVirtualAction={setVirtualAction}
             clearMenuInputs={clearMenuInputs}
             getLastInput={getLastInput}
+            onlineProfile={onlineProfile}
             onMenu={() => setScreen('menu')}
             onCharacterSelect={() => setScreen('select')}
           />
@@ -1557,6 +1575,140 @@ function pickAttractCharacterIds(roster: CharacterDefinition[]): [string, string
   return [first.id, second.id];
 }
 
+function LeaderboardScreen({
+  profile,
+  onProfileChange,
+  onFindMatch,
+  onBack
+}: {
+  profile: OnlinePlayerProfile | null;
+  onProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
+  onFindMatch: () => void;
+  onBack: () => void;
+}) {
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+
+  const load = useCallback(async () => {
+    setStatus('loading');
+    try {
+      const result = await fetchLeaderboard();
+      setEntries(result.entries);
+      setStatus('ready');
+    } catch (error) {
+      console.error('Failed to load leaderboard', error);
+      setStatus('error');
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  return (
+    <div className="leaderboard-screen">
+      <header className="leaderboard-header">
+        <div>
+          <p className="eyebrow">Online Records</p>
+          <h1>Leaderboards</h1>
+        </div>
+        <div className="leaderboard-actions">
+          <button className="secondary-button" onClick={load}>
+            <RotateCcw size={18} />
+            Refresh
+          </button>
+          <button className="primary-button" onClick={onFindMatch} disabled={!profile}>
+            <Wifi size={18} />
+            Find Match
+          </button>
+          <button className="secondary-button" onClick={onBack}>
+            <Home size={18} />
+            Back
+          </button>
+        </div>
+      </header>
+      <ArcadeNameCard profile={profile} onProfileChange={onProfileChange} />
+      <section className="leaderboard-board" aria-label="Online leaderboard">
+        {status === 'loading' && <div className="leaderboard-empty">Loading ranks</div>}
+        {status === 'error' && <div className="leaderboard-empty">Leaderboard unavailable</div>}
+        {status === 'ready' && entries.length === 0 && <div className="leaderboard-empty">No records yet. Be the first name on the board.</div>}
+        {status === 'ready' && entries.length > 0 && (
+          <div className="leaderboard-rows">
+            {entries.map((entry, index) => {
+              const current = profile?.playerId === entry.playerId;
+              const total = entry.wins + entry.losses;
+              const rate = total > 0 ? Math.round((entry.wins / total) * 100) : 0;
+              return (
+                <div key={entry.playerId} className={`leaderboard-row ${current ? 'is-you' : ''}`}>
+                  <span className="rank">{index + 1}</span>
+                  <strong>{entry.displayName}</strong>
+                  <span>{entry.wins} W</span>
+                  <span>{entry.losses} L</span>
+                  <span>{rate}%</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function ArcadeNameCard({
+  profile,
+  onProfileChange,
+  autoFocus = false
+}: {
+  profile: OnlinePlayerProfile | null;
+  onProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
+  autoFocus?: boolean;
+}) {
+  const [draft, setDraft] = useState(profile?.displayName ?? '');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setDraft(profile?.displayName ?? '');
+  }, [profile?.displayName]);
+
+  useEffect(() => {
+    if (autoFocus) inputRef.current?.focus();
+  }, [autoFocus]);
+
+  const save = () => {
+    const displayName = sanitizeDisplayName(draft);
+    if (!displayName) return;
+    onProfileChange({ playerId: profile?.playerId, displayName });
+  };
+
+  return (
+    <div className="arcade-name-card">
+      <div>
+        <span>Player Name</span>
+        <strong>{profile?.displayName ?? 'ENTER NAME'}</strong>
+      </div>
+      <label className="arcade-name-entry">
+        <input
+          ref={inputRef}
+          value={draft}
+          maxLength={12}
+          placeholder="AAA"
+          onChange={(event) => setDraft(sanitizeDisplayName(event.target.value))}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              save();
+            }
+          }}
+        />
+        <button type="button" onClick={save} disabled={!sanitizeDisplayName(draft)}>
+          Enter
+        </button>
+      </label>
+    </div>
+  );
+}
+
 const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode }> = [
   { mode: 'ai', label: '1P vs AI', icon: <Gamepad2 size={18} /> },
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
@@ -1575,6 +1727,9 @@ function CharacterSelect({
   setP2Id,
   setMode,
   setCpuDifficulty,
+  onlineProfile,
+  onOnlineProfileChange,
+  onLeaderboards,
   onUiNavigate,
   onBack,
   onNext
@@ -1588,6 +1743,9 @@ function CharacterSelect({
   setP2Id: (id: string) => void;
   setMode: (mode: MatchMode) => void;
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
+  onlineProfile?: OnlinePlayerProfile | null;
+  onOnlineProfileChange?: (profile: Partial<OnlinePlayerProfile>) => void;
+  onLeaderboards?: () => void;
   onUiNavigate: () => void;
   onBack: () => void;
   onNext: () => void;
@@ -1675,7 +1833,21 @@ function CharacterSelect({
           })}
         </div>
 
-        <FooterActions onBack={onBack} onNext={onNext} nextLabel="Stage" />
+        {mode === 'online' && !onlineProfile && onOnlineProfileChange && (
+          <ArcadeNameCard profile={onlineProfile ?? null} onProfileChange={onOnlineProfileChange} autoFocus />
+        )}
+
+        <FooterActions
+          onBack={onBack}
+          middleAction={mode === 'online' && onLeaderboards ? {
+            label: 'Leaderboards',
+            icon: <Trophy size={18} />,
+            onClick: onLeaderboards
+          } : undefined}
+          onNext={onNext}
+          nextLabel="Stage"
+          nextDisabled={mode === 'online' && !onlineProfile}
+        />
       </section>
 
       <button
@@ -5097,6 +5269,7 @@ function FightScreen({
   setVirtualAction,
   clearMenuInputs,
   getLastInput,
+  onlineProfile,
   onMenu,
   onCharacterSelect
 }: {
@@ -5112,6 +5285,7 @@ function FightScreen({
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
   getLastInput: () => string;
+  onlineProfile: OnlinePlayerProfile | null;
   onMenu: () => void;
   onCharacterSelect: () => void;
 }) {
@@ -5150,6 +5324,8 @@ function FightScreen({
   const onlineLatestSnapshotRef = useRef(-1);
   const onlineLastSnapshotAtRef = useRef(0);
   const onlineClosingRef = useRef(false);
+  const onlineLocalProfileRef = useRef<OnlinePlayerProfile | null>(onlineProfile);
+  const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
 
   useEffect(() => {
     matchRef.current = match;
@@ -5162,6 +5338,10 @@ function FightScreen({
   useEffect(() => {
     onlineRoleRef.current = onlineRole;
   }, [onlineRole]);
+
+  useEffect(() => {
+    onlineLocalProfileRef.current = onlineProfile;
+  }, [onlineProfile]);
 
   useEffect(() => {
     if (match.lastHitId < lastCombatEventId.current) {
@@ -5229,6 +5409,7 @@ function FightScreen({
     onlineRoomRef.current = null;
     remoteInputRef.current = emptyInputFrame();
     onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
     setOnlineState('disconnected');
     setOnlineRole(null);
@@ -5259,6 +5440,7 @@ function FightScreen({
     onlineStateRef.current = 'idle';
     remoteInputRef.current = emptyInputFrame();
     onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
     if (room || session?.peerId) {
       void leaveOnlineRoom({ roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId }).catch(() => undefined);
@@ -5273,6 +5455,17 @@ function FightScreen({
     onlineWinnerRecordedRef.current = true;
     setOnlineWins(wins);
     setOnlineStatusText('REMATCH?');
+    if (onlineRoleRef.current === 'host') {
+      const localProfile = onlineLocalProfileRef.current;
+      const remoteProfile = onlineRemoteProfileRef.current;
+      const winner = candidate.winnerSlot === 1 ? localProfile : remoteProfile;
+      const loser = candidate.winnerSlot === 1 ? remoteProfile : localProfile;
+      if (winner && loser) {
+        void submitLeaderboardResult({ winner, loser }).catch((error) => {
+          console.error('Failed to submit leaderboard result', error);
+        });
+      }
+    }
     publishOnlineSnapshot(true);
   }, [publishOnlineSnapshot]);
 
@@ -5283,6 +5476,7 @@ function FightScreen({
         markOnlineDisconnected('Version mismatch');
         return;
       }
+      if (message.profile) onlineRemoteProfileRef.current = message.profile;
       if (onlineRoleRef.current === 'host') {
         const onlineMatch = makeOnlineMatch(p1.id, message.characterId, onlineRoomRef.current?.stageId ?? stage.id);
         matchRef.current = onlineMatch;
@@ -5365,6 +5559,7 @@ function FightScreen({
       try {
         const session = await createOnlinePeerSession({
           characterId: p1.id,
+          profile: onlineLocalProfileRef.current ?? undefined,
           onConnection: () => {
             if (onlineRoleRef.current === 'guest') setOnlineStatusText('CONNECTING');
           },
@@ -5817,12 +6012,20 @@ function getHudPortraitPath(character: MatchSnapshot['fighters'][number]['charac
 
 function FooterActions({
   onBack,
+  middleAction,
   onNext,
-  nextLabel
+  nextLabel,
+  nextDisabled = false
 }: {
   onBack: () => void;
+  middleAction?: {
+    label: string;
+    icon: ReactNode;
+    onClick: () => void;
+  };
   onNext: () => void;
   nextLabel: string;
+  nextDisabled?: boolean;
 }) {
   return (
     <footer className="footer-actions">
@@ -5830,7 +6033,13 @@ function FooterActions({
         <Home size={18} />
         Back
       </button>
-      <button className="primary-button" onClick={onNext}>
+      {middleAction && (
+        <button className="secondary-button" onClick={middleAction.onClick}>
+          {middleAction.icon}
+          {middleAction.label}
+        </button>
+      )}
+      <button className="primary-button" onClick={onNext} disabled={nextDisabled}>
         <Play size={18} />
         {nextLabel}
       </button>

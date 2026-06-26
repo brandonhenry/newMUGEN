@@ -1,6 +1,7 @@
 import type Peer from 'peerjs';
 import type { DataConnection } from 'peerjs';
 import { ONLINE_PROTOCOL_VERSION } from './codec';
+import type { OnlinePlayerProfile } from './leaderboard';
 import { isOnlineMessage, type OnlineHelloMessage, type OnlineMessage } from './messages';
 
 export type OnlinePeerSession = {
@@ -14,6 +15,7 @@ export type OnlinePeerSession = {
 
 export type OnlinePeerSessionOptions = {
   characterId: string;
+  profile?: OnlinePlayerProfile;
   onOpen?: (peerId: string) => void;
   onConnection?: (connection: DataConnection) => void;
   onMessage?: (message: OnlineMessage) => void;
@@ -33,7 +35,8 @@ export async function createOnlinePeerSession(options: OnlinePeerSessionOptions)
         type: 'hello',
         protocol: ONLINE_PROTOCOL_VERSION,
         peerId: peer.id,
-        characterId: options.characterId
+        characterId: options.characterId,
+        profile: options.profile
       });
       options.onConnection?.(connection);
     });

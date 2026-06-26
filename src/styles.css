@@ -1099,6 +1099,16 @@ button {
   justify-content: center;
 }
 
+.versus-roster-panel .arcade-name-card {
+  grid-template-columns: minmax(150px, 1fr) minmax(210px, 360px);
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.versus-roster-panel .arcade-name-card strong {
+  font-size: clamp(1.35rem, 2.8vw, 2.4rem);
+}
+
 .versus-floor-glow {
   position: absolute;
   z-index: -1;
@@ -1852,6 +1862,13 @@ button {
   border-radius: 8px;
   padding: 0 18px;
   font-weight: 850;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  filter: grayscale(0.35);
 }
 
 .primary-button {
@@ -4652,5 +4669,186 @@ button {
   .match-message {
     align-items: start;
     padding-top: 92px;
+  }
+}
+
+.leaderboard-screen {
+  min-height: 100dvh;
+  width: 100%;
+  padding: clamp(22px, 4vw, 56px);
+  display: grid;
+  align-items: center;
+  background:
+    radial-gradient(circle at 22% 24%, rgba(45, 227, 255, 0.12), transparent 32%),
+    linear-gradient(135deg, rgba(17, 24, 36, 0.88), rgba(12, 8, 14, 0.94));
+}
+
+.leaderboard-header h1 {
+  margin: 0;
+  font-size: clamp(3.2rem, 9vw, 8rem);
+  line-height: 0.9;
+  color: #f6f3e8;
+  text-transform: uppercase;
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(45, 227, 255, 0.18);
+}
+
+.arcade-name-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(260px, 520px);
+  gap: clamp(14px, 2vw, 22px);
+  align-items: center;
+  padding: clamp(18px, 2.3vw, 28px);
+  border: 1px solid rgba(72, 224, 255, 0.25);
+  border-left: 5px solid #ff8a1f;
+  background:
+    linear-gradient(120deg, rgba(255, 138, 31, 0.13), transparent 36%),
+    rgba(13, 16, 24, 0.82);
+  box-shadow:
+    0 24px 58px rgba(0, 0, 0, 0.34),
+    0 0 34px rgba(45, 227, 255, 0.08) inset;
+}
+
+.arcade-name-card span {
+  display: block;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.arcade-name-card strong {
+  display: block;
+  margin-top: 5px;
+  color: #ffe071;
+  font-size: clamp(1.9rem, 4.6vw, 4.2rem);
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.6);
+}
+
+.arcade-name-entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.arcade-name-entry input {
+  min-width: 0;
+  height: clamp(58px, 7vw, 82px);
+  padding: 0 18px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(3, 8, 14, 0.82);
+  color: #fff8c7;
+  font: inherit;
+  font-size: clamp(1.5rem, 3vw, 2.7rem);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.arcade-name-entry input:focus {
+  border-color: #2de3ff;
+  box-shadow: 0 0 0 4px rgba(45, 227, 255, 0.14);
+}
+
+.arcade-name-entry button {
+  min-height: 58px;
+}
+
+.leaderboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.leaderboard-screen {
+  align-items: start;
+  gap: 20px;
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.leaderboard-board {
+  border: 1px solid rgba(72, 224, 255, 0.18);
+  background: rgba(8, 11, 18, 0.76);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
+}
+
+.leaderboard-rows {
+  display: grid;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 76px minmax(160px, 1fr) 110px 110px 100px;
+  align-items: center;
+  gap: 12px;
+  min-height: 66px;
+  padding: 0 clamp(14px, 2vw, 26px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(1rem, 1.7vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: 0;
+}
+
+.leaderboard-row strong {
+  color: #f6f3e8;
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+}
+
+.leaderboard-row .rank {
+  color: #2de3ff;
+  font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+  font-weight: 950;
+}
+
+.leaderboard-row.is-you {
+  background:
+    linear-gradient(90deg, rgba(255, 138, 31, 0.26), rgba(45, 227, 255, 0.09)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-empty {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .arcade-name-card,
+  .leaderboard-header {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .leaderboard-row {
+    grid-template-columns: 46px minmax(100px, 1fr) 62px 62px 62px;
+    gap: 8px;
+    min-height: 54px;
+    font-size: 0.82rem;
   }
 }
