@@ -73,6 +73,18 @@ const limbNames: Record<MoveInput, string> = {
   kick: 'Left Foot',
   special: 'Right Foot'
 };
+const baseInputToAnimationKey: Record<MoveInput, string> = {
+  jab: 'jableft',
+  heavy: 'jabright',
+  kick: 'kickleft',
+  special: 'kickright'
+};
+const rawButtonCommandToBaseAnimationKey: Record<string, string> = {
+  '1': 'jableft',
+  '2': 'jabright',
+  '3': 'kickleft',
+  '4': 'kickright'
+};
 
 export function createMatch(
   p1: CharacterDefinition,
@@ -621,15 +633,16 @@ function buildComboMove(
   const rangeBonus = (route.toward ? 0.26 : route.low ? 0.12 : route.launcher ? 0.18 : 0) + Math.min(0.5, Math.max(0, comboStep - 1) * 0.14);
   const pushBonus = route.toward ? 0.24 : route.away ? 0.08 : route.launcher ? 0.32 : 0;
   const commandKey = command?.animationKey;
-  const generatedComboKey = command ? `${command.notation}:${sequence.join('-')}` : `${route.key}:${sequence.join('-')}`;
+  const commandRouteNotation = command && !command.isBaseButton ? command.notation : null;
+  const generatedComboKey = commandRouteNotation ? `${commandRouteNotation}:${sequence.join('-')}` : `${route.key}:${sequence.join('-')}`;
   const stringKey = buttonSequenceKey(sequence);
 
   const generated: MoveDefinition = {
     ...baseMove,
     id: command?.animationKey ?? baseMove.id,
-    label: command ? `${command.notation} ${limbNames[moveInput]}` : comboStep > 1 ? `${stringKey} String` : `${route.label} ${limbNames[moveInput]} ${comboStep}`,
-    command: command?.notation,
-    notation: command?.notation,
+    label: commandRouteNotation ? `${commandRouteNotation} ${limbNames[moveInput]}` : comboStep > 1 ? `${stringKey} String` : `${route.label} ${limbNames[moveInput]} ${comboStep}`,
+    command: commandRouteNotation ?? undefined,
+    notation: commandRouteNotation ?? undefined,
     animationKey: command?.animationKey,
     comboKey: generatedComboKey,
     comboStep,
@@ -680,7 +693,7 @@ function countTrailingSameInputs(sequence: MoveInput[]) {
 }
 
 function isAuthoredChain(character: CharacterDefinition, move: MoveDefinition, route: ComboRoute, sequence: MoveInput[], command?: CommandCandidate | null) {
-  if (command) {
+  if (command && !command.isBaseButton) {
     return Boolean(
       character.moveOverrides?.[command.animationKey] ||
         character.moveOverrides?.[command.notation] ||
@@ -694,6 +707,7 @@ function isAuthoredChain(character: CharacterDefinition, move: MoveDefinition, r
 type CommandCandidate = {
   notation: string;
   animationKey: string;
+  isBaseButton?: boolean;
 };
 
 function applyMoveOverrides(
@@ -704,14 +718,15 @@ function applyMoveOverrides(
 ): MoveDefinition {
   const overrides = character.moveOverrides ?? {};
   const candidates = [
-    commandKey,
     generated.command,
-    generated.comboKey,
     generated.route,
     baseMove.id,
-    baseMove.input
+    baseMove.input,
+    baseInputToAnimationKey[baseMove.input],
+    commandKey,
+    generated.comboKey
   ].filter(Boolean) as string[];
-  const merged = candidates.reduce<MoveDefinition>((move, key) => {
+  const merged = [...new Set(candidates)].reduce<MoveDefinition>((move, key) => {
     const override = overrides[key];
     if (!override) return move;
     return {
@@ -1280,7 +1295,11 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
   push(buttonText);
   push(`N+${buttonText}`);
 
-  return candidates.map((notation) => ({ notation, animationKey: commandAnimationKey(notation) }));
+  return candidates.map((notation) => ({
+    notation,
+    animationKey: commandAnimationKey(notation),
+    isBaseButton: Boolean(rawButtonCommandToBaseAnimationKey[notation])
+  }));
 }
 
 function hasCommandInputIntent(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, freshMoveInput: MoveInput) {
@@ -1330,7 +1349,7 @@ function hasRecentSequence(history: FighterRuntime['commandHistory'], sequence: 
 }
 
 function commandAnimationKey(notation: string) {
-  return `cmd:${notation}`;
+  return rawButtonCommandToBaseAnimationKey[notation] ?? `cmd:${notation}`;
 }
 
 type ComboRoute = {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { starterCharacters } from '../data/characters';
 import { stages } from '../data/stages';
-import { normalizeMove, validateCharacter } from '../lib/characterLoader';
+import { normalizeCharacter, normalizeMove, validateCharacter } from '../lib/characterLoader';
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from '../lib/gameSettings';
 import {
   applyVerticalTap,
@@ -83,6 +83,36 @@ describe('character manifests', () => {
     });
 
     expect(move.tornado).toBe(true);
+  });
+
+  it('migrates legacy base button animation data to left/right limb keys', () => {
+    const normalized = normalizeCharacter({
+      ...starterCharacters[0],
+      animationFrames: {
+        ...(starterCharacters[0].animationFrames ?? {}),
+        'cmd:3': ['/legacy-command.png'],
+        kick: ['/legacy-kick.png']
+      },
+      animationFrameRates: {
+        ...(starterCharacters[0].animationFrameRates ?? {}),
+        'cmd:3': 3,
+        kick: 7
+      },
+      moveOverrides: {
+        ...(starterCharacters[0].moveOverrides ?? {}),
+        'cmd:3': { damage: 3 },
+        kick: { damage: 4 },
+        kickleft: { damage: 8 }
+      }
+    });
+
+    expect(normalized.animationFrames?.kickleft).toEqual(['/legacy-kick.png']);
+    expect(normalized.animationFrames?.kick).toBeUndefined();
+    expect(normalized.animationFrames?.['cmd:3']).toBeUndefined();
+    expect(normalized.animationFrameRates?.kickleft).toBe(7);
+    expect(normalized.moveOverrides?.kickleft?.damage).toBe(8);
+    expect(normalized.moveOverrides?.kick).toBeUndefined();
+    expect(normalized.moveOverrides?.['cmd:3']).toBeUndefined();
   });
 
   it('drives attack animation progress from startup active and recovery frames', () => {
@@ -1463,6 +1493,35 @@ describe('fight engine', () => {
     match = stepMatch(match, whileStandingKick, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('attack');
     expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:WS+4');
+  });
+
+  it('raw base button 1 uses jableft data while keeping neutral combo identity', () => {
+    const canonicalCharacter = normalizeCharacter({
+      ...starterCharacters[0],
+      animationFrames: {
+        ...(starterCharacters[0].animationFrames ?? {}),
+        jableft: starterCharacters[0].animationFrames?.jab ?? []
+      },
+      moveOverrides: {
+        ...(starterCharacters[0].moveOverrides ?? {}),
+        'cmd:1': { damage: 3 },
+        jab: { damage: 4 },
+        jableft: { damage: 8 }
+      }
+    });
+    let match = createMatch(canonicalCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.6;
+    match.fighters[1].position.x = 0.6;
+
+    const one = emptyInputFrame();
+    one.jab = true;
+    match = stepMatch(match, one, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.animationKey).toBe('jableft');
+    expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:jab');
+    expect(match.fighters[0].currentMove?.damage).toBe(8);
   });
 
   it('buffers player attack inputs and chains them after a confirmed hit', () => {

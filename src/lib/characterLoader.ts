@@ -28,10 +28,24 @@ export type CharacterLoadResult = {
 };
 
 const framesPerSecond = 60;
+const baseInputToAnimationKey = {
+  jab: 'jableft',
+  heavy: 'jabright',
+  kick: 'kickleft',
+  special: 'kickright'
+} as const;
+const rawButtonCommandToBaseAnimationKey: Record<string, string> = {
+  '1': 'jableft',
+  '2': 'jabright',
+  '3': 'kickleft',
+  '4': 'kickright'
+};
 
 export function normalizeCharacter(character: CharacterDefinition): CharacterDefinition {
   return {
     ...character,
+    animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
+    animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
     hurtboxes:
@@ -90,11 +104,25 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
 }
 
 function sanitizeMoveOverrides(overrides: CharacterDefinition['moveOverrides']) {
-  return Object.fromEntries(
+  return canonicalizeBaseButtonRecord(Object.fromEntries(
     Object.entries(overrides ?? {})
       .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
       .map(([key, value]) => [key, value])
-  );
+  ));
+}
+
+function canonicalizeBaseButtonRecord<T>(record: Record<string, T> = {}) {
+  const next = { ...record };
+  Object.entries(baseInputToAnimationKey).forEach(([legacyKey, baseKey]) => {
+    if (next[baseKey] === undefined && next[legacyKey] !== undefined) next[baseKey] = next[legacyKey];
+    delete next[legacyKey];
+  });
+  Object.entries(rawButtonCommandToBaseAnimationKey).forEach(([command, baseKey]) => {
+    const legacyCommandKey = `cmd:${command}`;
+    if (next[baseKey] === undefined && next[legacyCommandKey] !== undefined) next[baseKey] = next[legacyCommandKey];
+    delete next[legacyCommandKey];
+  });
+  return next;
 }
 
 function normalizeFrameCount(value: unknown, legacySeconds: number | undefined, fallback: number) {

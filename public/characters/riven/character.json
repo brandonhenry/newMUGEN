@@ -249,35 +249,6 @@
     "block": [
       "/characters/riven/frames/frame-015.png"
     ],
-    "jab": [
-      "/characters/riven/frames/frame-078.png",
-      "/characters/riven/frames/frame-079.png",
-      "/characters/riven/frames/frame-080.png",
-      "/characters/riven/frames/frame-081.png"
-    ],
-    "kick": [
-      "/characters/riven/frames/frame-120.png",
-      "/characters/riven/frames/frame-121.png",
-      "/characters/riven/frames/frame-122.png",
-      "/characters/riven/frames/frame-123.png",
-      "/characters/riven/frames/frame-124.png"
-    ],
-    "heavy": [
-      "/characters/riven/frames/frame-090.png",
-      "/characters/riven/frames/frame-087.png",
-      "/characters/riven/frames/frame-088.png",
-      "/characters/riven/frames/frame-089.png"
-    ],
-    "special": [
-      "/characters/riven/frames/frame-092.png",
-      "/characters/riven/frames/frame-093.png",
-      "/characters/riven/frames/frame-094.png",
-      "/characters/riven/frames/frame-095.png",
-      "/characters/riven/frames/frame-096.png",
-      "/characters/riven/frames/frame-097.png",
-      "/characters/riven/frames/frame-098.png",
-      "/characters/riven/frames/frame-099.png"
-    ],
     "hitLight": [
       "/characters/riven/frames/frame-025.png"
     ],
@@ -381,16 +352,16 @@
       "/characters/riven/frames/frame-106.png",
       "/characters/riven/frames/frame-107.png"
     ],
-    "cmd:1": [
-      "/characters/riven/frames/frame-079.png",
-      "/characters/riven/frames/frame-080.png",
-      "/characters/riven/frames/frame-081.png"
-    ],
     "juggle": [
       "/characters/riven/frames/frame-029.png",
       "/characters/riven/frames/frame-030.png"
     ],
-    "cmd:2": [
+    "jableft": [
+      "/characters/riven/frames/frame-079.png",
+      "/characters/riven/frames/frame-080.png",
+      "/characters/riven/frames/frame-081.png"
+    ],
+    "jabright": [
       "/characters/riven/frames/frame-083.png",
       "/characters/riven/frames/frame-084.png",
       "/characters/riven/frames/frame-087.png",
@@ -398,13 +369,22 @@
       "/characters/riven/frames/frame-089.png",
       "/characters/riven/frames/frame-090.png"
     ],
-    "cmd:3": [
+    "kickleft": [
+      "/characters/riven/frames/frame-126.png",
+      "/characters/riven/frames/frame-124.png",
       "/characters/riven/frames/frame-119.png"
     ],
-    "cmd:4": [
-      "/characters/riven/frames/frame-118.png",
-      "/characters/riven/frames/frame-119.png",
-      "/characters/riven/frames/frame-124.png"
+    "kickright": [
+      "/characters/riven/frames/frame-128.png",
+      "/characters/riven/frames/frame-129.png",
+      "/characters/riven/frames/frame-130.png",
+      "/characters/riven/frames/frame-131.png",
+      "/characters/riven/frames/frame-132.png",
+      "/characters/riven/frames/frame-133.png",
+      "/characters/riven/frames/frame-134.png",
+      "/characters/riven/frames/frame-135.png",
+      "/characters/riven/frames/frame-136.png",
+      "/characters/riven/frames/frame-137.png"
     ]
   },
   "animationFps": 5,
@@ -418,10 +398,6 @@
     "crouchBlock": 5,
     "jump": 8,
     "block": 5,
-    "jab": 9,
-    "kick": 10,
-    "heavy": 10,
-    "special": 11,
     "hitLight": 8,
     "hitHeavy": 10,
     "juggle": 8,
@@ -431,57 +407,61 @@
     "cmd:f+2": 11,
     "cmd:d/f+1": 10,
     "cmd:qcf+3": 10,
-    "cmd:SS+4": 11
+    "cmd:SS+4": 11,
+    "jableft": 9,
+    "jabright": 10,
+    "kickleft": 10,
+    "kickright": 11
   },
   "moveOverrides": {
     "cmd:f+2": {
-      "label": "Chidori Spear",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 29,
       "damage": 14,
-      "hitLevel": "mid",
       "onBlockFrames": -18,
       "onHitFrames": 23,
       "onCounterHitFrames": 33,
       "launchHeight": 0,
+      "label": "Chidori Spear",
+      "hitLevel": "mid",
       "knockdown": false
     },
     "cmd:d/f+1": {
-      "label": "Phoenix Flower Jutsu",
       "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 10,
-      "hitLevel": "mid",
       "onBlockFrames": -1,
       "onHitFrames": 6,
-      "onCounterHitFrames": 8
+      "onCounterHitFrames": 8,
+      "label": "Phoenix Flower Jutsu",
+      "hitLevel": "mid"
     },
     "cmd:qcf+3": {
-      "label": "Fire Style: Dragon Flame",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 27,
       "damage": 16,
-      "hitLevel": "mid",
       "onBlockFrames": -8,
       "onHitFrames": 26,
       "onCounterHitFrames": 35,
       "launchHeight": 0,
+      "label": "Fire Style: Dragon Flame",
+      "hitLevel": "mid",
       "knockdown": false
     },
     "cmd:SS+4": {
-      "label": "Sharingan Counter",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 23,
       "damage": 14,
-      "hitLevel": "mid",
       "onBlockFrames": -9,
       "onHitFrames": 25,
       "onCounterHitFrames": 34,
       "launchHeight": 0,
+      "label": "Sharingan Counter",
+      "hitLevel": "mid",
       "knockdown": false
     },
     "neutral:jab-jab": {
@@ -571,14 +551,6 @@
     "neutral:special-kick": {
       "label": "Fire Style Sweep"
     },
-    "heavy": {
-      "hitLevel": "mid"
-    },
-    "jab": {
-      "activeFrames": 3,
-      "recoveryFrames": 13,
-      "onBlockFrames": -4
-    },
     "cmd:1+3": {
       "startupFrames": 14,
       "launchHeight": 2.2,
@@ -586,11 +558,22 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52
     },
-    "cmd:3": {
-      "launchHeight": 2.2,
+    "kickleft": {
+      "startupFrames": 12,
+      "recoveryFrames": 10,
+      "launchHeight": 0,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
-      "juggleGravityScale": 0.52
+      "juggleGravityScale": 0.52,
+      "hitLevel": "high"
+    },
+    "jableft": {
+      "activeFrames": 3,
+      "recoveryFrames": 13,
+      "onBlockFrames": -4
+    },
+    "jabright": {
+      "hitLevel": "mid"
     }
   },
   "spriteFrameEdits": {

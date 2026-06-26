@@ -223,10 +223,10 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'crouch', label: 'Crouch', pose: 'crouch', notation: ['d'], category: 'stance' },
   { key: 'block', label: 'Block', pose: 'block', notation: ['b'], category: 'stance' },
   { key: 'crouchBlock', label: 'Crouch Block', pose: 'crouchBlock', notation: ['D/B'], category: 'stance' },
-  { key: 'jab', label: 'Left Punch', pose: 'jab', notation: ['1'], category: 'stance' },
-  { key: 'heavy', label: 'Right Punch', pose: 'heavy', notation: ['2'], category: 'stance' },
-  { key: 'kick', label: 'Left Kick', pose: 'kick', notation: ['3'], category: 'stance' },
-  { key: 'special', label: 'Right Kick', pose: 'special', notation: ['4'], category: 'stance' },
+  { key: 'jableft', label: 'Left Punch', pose: 'jab', notation: ['1'], category: 'stance' },
+  { key: 'jabright', label: 'Right Punch', pose: 'heavy', notation: ['2'], category: 'stance' },
+  { key: 'kickleft', label: 'Left Kick', pose: 'kick', notation: ['3'], category: 'stance' },
+  { key: 'kickright', label: 'Right Kick', pose: 'special', notation: ['4'], category: 'stance' },
   { key: 'hitLight', label: 'Hit', pose: 'hit', notation: ['HIT'], category: 'stance' },
   { key: 'juggle', label: 'Juggle', pose: 'juggle', notation: ['AIR'], category: 'stance' },
   { key: 'knockdown', label: 'Knockdown', pose: 'knockdown', notation: ['KD'], category: 'stance' },
@@ -255,6 +255,18 @@ const directionPrefixes = ['f', 'F', 'b', 'B', 'd', 'D', 'u', 'U', 'd/f', 'D/F',
 const motionPrefixes = ['f,f', 'b,b', 'f,F', 'qcf', 'qcb', 'hcf', 'hcb', 'dp', 'rdp', 'cd'];
 const statePrefixes = ['WR', 'WS', 'FC', 'SS', 'SSL', 'SSR', 'BT', 'iWS', 'iWR', 'cc'];
 const specialPrefixes = ['H.', 'R.'];
+const rawButtonCommandToBaseKey: Record<string, string> = {
+  '1': 'jableft',
+  '2': 'jabright',
+  '3': 'kickleft',
+  '4': 'kickright'
+};
+const legacyBaseInputToDataKey: Record<MoveDefinition['input'], string> = {
+  jab: 'jableft',
+  heavy: 'jabright',
+  kick: 'kickleft',
+  special: 'kickright'
+};
 const animationSlots = buildAnimationSlots();
 const slotCategoryOptions: Array<{ value: AnimationSlot['category'] | 'all'; label: string }> = [
   { value: 'stance', label: 'Stances' },
@@ -301,6 +313,37 @@ function commandAnimationKey(command: string) {
   return `cmd:${command}`;
 }
 
+function getCanonicalCommandDataKey(command?: string) {
+  return command ? rawButtonCommandToBaseKey[command] : undefined;
+}
+
+function getSlotDataKey(slot: AnimationSlot) {
+  return getCanonicalCommandDataKey(slot.command) ?? slot.key;
+}
+
+function getLegacyRawButtonDataKey(dataKey: string) {
+  const command = Object.entries(rawButtonCommandToBaseKey).find(([, baseKey]) => baseKey === dataKey)?.[0];
+  return command ? commandAnimationKey(command) : undefined;
+}
+
+function getLegacyBaseInputDataKey(dataKey: string) {
+  return Object.entries(legacyBaseInputToDataKey).find(([, baseKey]) => baseKey === dataKey)?.[0];
+}
+
+function canonicalizeRawButtonRecord<T>(record: Record<string, T> = {}) {
+  const next = { ...record };
+  Object.entries(legacyBaseInputToDataKey).forEach(([legacyKey, baseKey]) => {
+    if (next[baseKey] === undefined && next[legacyKey] !== undefined) next[baseKey] = next[legacyKey];
+    delete next[legacyKey];
+  });
+  Object.entries(rawButtonCommandToBaseKey).forEach(([command, baseKey]) => {
+    const legacyKey = commandAnimationKey(command);
+    if (next[baseKey] === undefined && next[legacyKey] !== undefined) next[baseKey] = next[legacyKey];
+    delete next[legacyKey];
+  });
+  return next;
+}
+
 function commandPose(command: string): PreviewPose {
   if (command.includes('3')) return 'kick';
   if (command.includes('4')) return 'special';
@@ -344,8 +387,8 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
   const next: AnimationOverrideMap = {};
   for (const [characterId, override] of Object.entries(overrides)) {
     next[characterId] = {
-      frames: { ...(override.frames ?? {}) },
-      speeds: { ...(override.speeds ?? {}) },
+      frames: canonicalizeRawButtonRecord({ ...(override.frames ?? {}) }),
+      speeds: canonicalizeRawButtonRecord({ ...(override.speeds ?? {}) }),
       moves: sanitizeMoveOverrideMap(override.moves ?? {}),
       sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
@@ -375,11 +418,11 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
 }
 
 function sanitizeMoveOverrideMap(overrides: Record<string, MoveOverride>) {
-  return Object.fromEntries(
+  return canonicalizeRawButtonRecord(Object.fromEntries(
     Object.entries(overrides)
       .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
       .map(([key, value]) => [key, sanitizeMoveOverride(value)])
-  );
+  ));
 }
 
 function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
@@ -487,6 +530,9 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
 }
 
 function applyCharacterAnimationOverride(character: CharacterDefinition, override: CharacterAnimationOverride): CharacterDefinition {
+  const frames = canonicalizeRawButtonRecord(override.frames ?? {});
+  const speeds = canonicalizeRawButtonRecord(override.speeds ?? {});
+  const moves = sanitizeMoveOverrideMap(override.moves ?? {});
   const spriteOverrideIndexes = Object.keys(override.sprites ?? {})
     .map((key) => Number(key))
     .filter((index) => Number.isFinite(index) && index >= 0);
@@ -499,15 +545,15 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
     spriteFrameCount,
     animationFrames: {
       ...character.animationFrames,
-      ...(override.frames ?? {})
+      ...frames
     },
     animationFrameRates: {
       ...character.animationFrameRates,
-      ...(override.speeds ?? {})
+      ...speeds
     },
     moveOverrides: {
       ...character.moveOverrides,
-      ...(override.moves ?? {})
+      ...moves
     },
     spriteFrameEdits: {
       ...character.spriteFrameEdits,
@@ -525,14 +571,17 @@ function removeCharacterOverride(overrides: AnimationOverrideMap, characterIds: 
 }
 
 async function saveCharacterManifestToDev(character: CharacterDefinition) {
+  const animationFrames = canonicalizeRawButtonRecord(character.animationFrames ?? {});
+  const animationFrameRates = canonicalizeRawButtonRecord(character.animationFrameRates ?? {});
+  const moveOverrides = sanitizeMoveOverrideMap(character.moveOverrides ?? {});
   const response = await fetch('/__kore/dev/save-character-manifest', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       characterId: character.id,
-      animationFrames: character.animationFrames ?? {},
-      animationFrameRates: character.animationFrameRates ?? {},
-      moveOverrides: character.moveOverrides ?? {},
+      animationFrames,
+      animationFrameRates,
+      moveOverrides,
       spriteFrameEdits: character.spriteFrameEdits ?? {},
       spriteSheets: getCharacterSpriteSheets(character),
       voxelProfile: character.voxelProfile ?? 'image-source',
@@ -3623,11 +3672,20 @@ function modeLabel(mode: MatchMode) {
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
   if (!isMoveSlotPose(slot.pose) && !slot.command) return null;
+  const dataKey = getSlotDataKey(slot);
   const baseInput = isMoveSlotPose(slot.pose) ? slot.pose : commandPose(slot.command ?? slot.label);
   const baseMove = character.moves.find((move) => move.input === baseInput) ?? character.moves[0] ?? null;
   if (!baseMove) return null;
-  const overrideKeys = [slot.key, slot.command, baseMove.id, baseMove.input].filter(Boolean) as string[];
-  return overrideKeys.reduce<MoveDefinition>((move, key) => {
+  const overrideKeys = [
+    getLegacyRawButtonDataKey(dataKey),
+    getLegacyBaseInputDataKey(dataKey),
+    slot.command && dataKey === slot.key ? slot.command : undefined,
+    baseMove.id,
+    baseMove.input,
+    dataKey
+  ].filter(Boolean) as string[];
+  const uniqueOverrideKeys = [...new Set(overrideKeys)];
+  return uniqueOverrideKeys.reduce<MoveDefinition>((move, key) => {
     const override = character.moveOverrides?.[key];
     return override ? mergeMoveOverride(move, override) : move;
   }, baseMove);
@@ -3733,13 +3791,14 @@ function CharacterViewer({
     [active, frameCount]
   );
   const spriteSheets = useMemo(() => getCharacterSpriteSheets(active, frameCount), [active, frameCount]);
-  const selectedFrames = active.animationFrames?.[selectedSlot.key] ?? [];
-  const defaultFrames = sourceActive.animationFrames?.[selectedSlot.key] ?? selectedFrames;
-  const selectedSpeed = active.animationFrameRates?.[selectedSlot.key] ?? active.animationFps ?? 8;
-  const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlot.key] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
+  const selectedSlotDataKey = getSlotDataKey(selectedSlot);
+  const selectedFrames = active.animationFrames?.[selectedSlotDataKey] ?? [];
+  const defaultFrames = sourceActive.animationFrames?.[selectedSlotDataKey] ?? selectedFrames;
+  const selectedSpeed = active.animationFrameRates?.[selectedSlotDataKey] ?? active.animationFps ?? 8;
+  const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlotDataKey] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
   const selectedFrameSet = new Set(selectedFrames);
   const selectedMove = resolveSlotMove(active, selectedSlot);
-  const selectedMoveOverride = active.moveOverrides?.[selectedSlot.key] ?? {};
+  const selectedMoveOverride = active.moveOverrides?.[selectedSlotDataKey] ?? {};
   const previewCharacter = previewHdVoxels
     ? {
         ...active,
@@ -3855,23 +3914,24 @@ function CharacterViewer({
     });
     debugLog(7, 'viewer effective animation selection', {
       characterId: active.id,
-      animationKey: selectedSlot.key,
+      animationKey: selectedSlotDataKey,
+      selectedSlotKey: selectedSlot.key,
       effectiveFrames: selectedFrames.map(getFrameIndex),
       defaultFrames: defaultFrames.map(getFrameIndex),
       effectiveFps: selectedSpeed,
       defaultFps: defaultSpeed
     });
-  }, [active.id, active.displayName, defaultFrames, defaultSpeed, selectedAnimationKey, selectedFrames, selectedSlot.key, selectedSlot.label, selectedSpeed]);
+  }, [active.id, active.displayName, defaultFrames, defaultSpeed, selectedAnimationKey, selectedFrames, selectedSlot.key, selectedSlot.label, selectedSlotDataKey, selectedSpeed]);
 
   const updateSelectedFrames = (frames: string[]) => {
     if (frames.length === 0) return;
-    onAnimationFramesChange(active.id, selectedSlot.key, frames);
+    onAnimationFramesChange(active.id, selectedSlotDataKey, frames);
   };
 
   const updateSelectedSpeed = (speed: number) => {
     if (!Number.isFinite(speed)) return;
     const normalized = Math.max(1, Math.min(24, Number(speed.toFixed(1))));
-    onAnimationSpeedChange(active.id, selectedSlot.key, normalized);
+    onAnimationSpeedChange(active.id, selectedSlotDataKey, normalized);
   };
 
   const resetSelectedAnimation = () => {
@@ -3881,7 +3941,7 @@ function CharacterViewer({
 
   const updateSelectedMoveOverride = (patch: MoveOverride) => {
     if (!selectedMove) return;
-    onMoveOverrideChange(active.id, selectedSlot.key, {
+    onMoveOverrideChange(active.id, selectedSlotDataKey, {
       ...selectedMoveOverride,
       ...patch
     });
@@ -4055,7 +4115,7 @@ function CharacterViewer({
         <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
             <div className="model-viewer-stage">
-              <CharacterPreviewCanvas character={previewCharacter} pose={selectedSlot.pose} animationKey={selectedSlot.key} rotationTurn={rotationTurn} zoom={zoom} />
+              <CharacterPreviewCanvas character={previewCharacter} pose={selectedSlot.pose} animationKey={selectedSlotDataKey} rotationTurn={rotationTurn} zoom={zoom} />
             </div>
           )}
           <div className="viewer-actions">
@@ -6590,7 +6650,7 @@ function ConfiguredMoveList({ characters }: { characters: [CharacterDefinition, 
   return (
     <div className="pause-movelist">
       {characters.map((character, index) => {
-        const configured = animationSlots.filter((slot) => slot.command && (character.animationFrames?.[slot.key]?.length ?? 0) > 0);
+        const configured = animationSlots.filter((slot) => slot.command && (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0);
         return (
           <section key={character.id}>
             <h3>{index === 0 ? 'P1' : 'P2'} {character.displayName}</h3>

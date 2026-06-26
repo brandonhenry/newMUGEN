@@ -389,8 +389,8 @@
       "/characters/kiro/frames/frame-094.png"
     ],
     "cmd:3": [
-      "/characters/kiro/frames/frame-083.png",
-      "/characters/kiro/frames/frame-076.png"
+      "/characters/kiro/frames/frame-082.png",
+      "/characters/kiro/frames/frame-083.png"
     ],
     "cmd:4": [
       "/characters/kiro/frames/frame-084.png",
@@ -426,7 +426,7 @@
     "cmd:WS+4": 9,
     "cmd:2": 11,
     "cmd:1+2": 7.5,
-    "cmd:3": 13
+    "cmd:3": 6.5
   },
   "moveOverrides": {
     "cmd:f+1": {
@@ -597,6 +597,7 @@
       "hitLevel": "low"
     },
     "jab": {
+      "startupFrames": 10,
       "recoveryFrames": 9
     },
     "cmd:2": {
@@ -612,7 +613,7 @@
       "juggleGravityScale": 0.52
     },
     "cmd:3": {
-      "startupFrames": 10,
+      "startupFrames": 8,
       "activeFrames": 1,
       "recoveryFrames": 13
     },
