@@ -23,6 +23,10 @@ describe('online codec', () => {
     match.fighters[0].hp = 42;
     match.fighters[0].ki = 78;
     match.fighters[0].position.x = 1.25;
+    match.fighters[0].state = 'juggle';
+    match.fighters[0].juggleDamage = 31;
+    match.fighters[0].juggleSequenceDamage = 9;
+    match.fighters[0].juggleTornadoCount = 2;
     match.fighters[1].roundsWon = 1;
     match.phase = 'roundOver';
     match.message = 'K.O.';
@@ -36,6 +40,9 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].hp).toBe(42);
     expect(hydrated.fighters[0].ki).toBe(78);
     expect(hydrated.fighters[0].position.x).toBe(1.25);
+    expect(hydrated.fighters[0].juggleDamage).toBe(31);
+    expect(hydrated.fighters[0].juggleSequenceDamage).toBe(9);
+    expect(hydrated.fighters[0].juggleTornadoCount).toBe(2);
     expect(hydrated.fighters[1].roundsWon).toBe(1);
     expect(hydrated.aiSeed).toBe(match.aiSeed);
     expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);

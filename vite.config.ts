@@ -116,8 +116,7 @@ type DevOnlineLeavePayload = {
 type DevLeaderboardEntry = {
   playerId: string;
   displayName: string;
-  wins: number;
-  losses: number;
+  points: number;
   updatedAt: number;
 };
 
@@ -127,6 +126,7 @@ type DevLeaderboardSubmitPayload = {
 };
 
 const DEV_ONLINE_ROOM_TTL_MS = 12_000;
+const DEV_LEADERBOARD_POINTS_PER_WIN = 100;
 
 function koreDevManifestWriter() {
   const onlineRooms = new Map<string, DevOnlineRoom>();
@@ -812,16 +812,11 @@ function devSubmitLeaderboardResult(entries: Map<string, DevLeaderboardEntry>, p
   const loser = sanitizeLeaderboardProfile(payload.loser);
   if (!winner || !loser || winner.playerId === loser.playerId) throw new Error('Invalid leaderboard result');
   const now = Date.now();
-  const winnerEntry = entries.get(winner.playerId) ?? { ...winner, wins: 0, losses: 0, updatedAt: now };
-  const loserEntry = entries.get(loser.playerId) ?? { ...loser, wins: 0, losses: 0, updatedAt: now };
+  const winnerEntry = entries.get(winner.playerId) ?? { ...winner, points: 0, updatedAt: now };
   winnerEntry.displayName = winner.displayName;
-  winnerEntry.wins += 1;
+  winnerEntry.points += DEV_LEADERBOARD_POINTS_PER_WIN;
   winnerEntry.updatedAt = now;
-  loserEntry.displayName = loser.displayName;
-  loserEntry.losses += 1;
-  loserEntry.updatedAt = now;
   entries.set(winner.playerId, winnerEntry);
-  entries.set(loser.playerId, loserEntry);
   return { entries: sortDevLeaderboard([...entries.values()]).slice(0, 100) };
 }
 
@@ -835,9 +830,7 @@ function sanitizeLeaderboardProfile(value: Partial<DevLeaderboardEntry> | undefi
 
 function sortDevLeaderboard(entries: DevLeaderboardEntry[]) {
   return [...entries].sort((a, b) => {
-    const scoreA = a.wins * 100 - a.losses * 25;
-    const scoreB = b.wins * 100 - b.losses * 25;
-    return scoreB - scoreA || b.wins - a.wins || a.losses - b.losses || b.updatedAt - a.updatedAt;
+    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName);
   });
 }
 

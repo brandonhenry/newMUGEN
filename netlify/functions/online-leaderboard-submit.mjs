@@ -2,6 +2,7 @@ import { getStore } from '@netlify/blobs';
 
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
+const POINTS_PER_WIN = 100;
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -16,18 +17,13 @@ export async function handler(event) {
     const entries = await readEntries(store);
     const byId = new Map(entries.map((entry) => [entry.playerId, entry]));
     const now = Date.now();
-    const winnerEntry = byId.get(winner.playerId) ?? { ...winner, wins: 0, losses: 0, updatedAt: now };
-    const loserEntry = byId.get(loser.playerId) ?? { ...loser, wins: 0, losses: 0, updatedAt: now };
+    const winnerEntry = byId.get(winner.playerId) ?? { ...winner, points: 0, updatedAt: now };
 
     winnerEntry.displayName = winner.displayName;
-    winnerEntry.wins += 1;
+    winnerEntry.points += POINTS_PER_WIN;
     winnerEntry.updatedAt = now;
-    loserEntry.displayName = loser.displayName;
-    loserEntry.losses += 1;
-    loserEntry.updatedAt = now;
 
     byId.set(winner.playerId, winnerEntry);
-    byId.set(loser.playerId, loserEntry);
 
     const sorted = sortEntries([...byId.values()]).slice(0, 100);
     await store.setJSON(SCORES_KEY, { entries: sorted, updatedAt: now });
@@ -51,19 +47,24 @@ function cleanProfile(value) {
 function cleanEntry(entry) {
   const profile = cleanProfile(entry);
   if (!profile) return null;
+  const points = normalizePoints(entry);
+  if (points <= 0) return null;
   return {
     ...profile,
-    wins: Math.max(0, Math.round(Number(entry.wins) || 0)),
-    losses: Math.max(0, Math.round(Number(entry.losses) || 0)),
+    points,
     updatedAt: Math.max(0, Math.round(Number(entry.updatedAt) || 0))
   };
 }
 
+function normalizePoints(entry) {
+  const directPoints = Math.max(0, Math.round(Number(entry?.points) || 0));
+  if (directPoints > 0) return directPoints;
+  return Math.max(0, Math.round(Number(entry?.wins) || 0)) * POINTS_PER_WIN;
+}
+
 function sortEntries(entries) {
   return [...entries].sort((a, b) => {
-    const scoreA = a.wins * 100 - a.losses * 25;
-    const scoreB = b.wins * 100 - b.losses * 25;
-    return scoreB - scoreA || b.wins - a.wins || a.losses - b.losses || b.updatedAt - a.updatedAt;
+    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName);
   });
 }
 

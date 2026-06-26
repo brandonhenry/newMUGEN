@@ -2,6 +2,7 @@ import { getStore } from '@netlify/blobs';
 
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
+const POINTS_PER_WIN = 100;
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -24,20 +25,25 @@ function normalizeEntry(entry) {
   const playerId = cleanId(entry?.playerId);
   const displayName = cleanName(entry?.displayName);
   if (!playerId || !displayName) return null;
+  const points = normalizePoints(entry);
+  if (points <= 0) return null;
   return {
     playerId,
     displayName,
-    wins: Math.max(0, Math.round(Number(entry.wins) || 0)),
-    losses: Math.max(0, Math.round(Number(entry.losses) || 0)),
+    points,
     updatedAt: Math.max(0, Math.round(Number(entry.updatedAt) || 0))
   };
 }
 
+function normalizePoints(entry) {
+  const directPoints = Math.max(0, Math.round(Number(entry?.points) || 0));
+  if (directPoints > 0) return directPoints;
+  return Math.max(0, Math.round(Number(entry?.wins) || 0)) * POINTS_PER_WIN;
+}
+
 function sortEntries(entries) {
   return [...entries].sort((a, b) => {
-    const scoreA = a.wins * 100 - a.losses * 25;
-    const scoreB = b.wins * 100 - b.losses * 25;
-    return scoreB - scoreA || b.wins - a.wins || a.losses - b.losses || b.updatedAt - a.updatedAt;
+    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName);
   });
 }
 

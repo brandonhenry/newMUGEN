@@ -81,6 +81,7 @@ export type MoveDefinition = {
   launchVelocity?: number;
   juggleRefloatVelocity?: number;
   juggleGravityScale?: number;
+  tornado?: boolean;
   tracking: MoveTracking;
   armorStartFrame?: number | null;
   armorEndFrame?: number | null;
@@ -361,6 +362,8 @@ export type FighterRuntime = {
   getupLane: -1 | 0 | 1;
   getupStarted: boolean;
   juggleDamage: number;
+  juggleSequenceDamage: number;
+  juggleTornadoCount: number;
   juggleGravityScale: number;
   blockFlash: number;
   hitFlash: number;

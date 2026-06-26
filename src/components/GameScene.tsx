@@ -527,6 +527,8 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     getupLane: 0,
     getupStarted: false,
     juggleDamage: 0,
+    juggleSequenceDamage: 0,
+    juggleTornadoCount: 0,
     juggleGravityScale: 0.52,
     blockFlash: 0,
     hitFlash: 0

@@ -35,17 +35,21 @@ const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
 const JUGGLE_INITIAL_VELOCITY = 5.95;
 const JUGGLE_REFLOAT_VELOCITY = 4.35;
+const TORNADO_REFLOAT_VELOCITY = 4.85;
 const JUGGLE_GRAVITY_SCALE = 0.52;
 const JUGGLE_MIN_START_HEIGHT = 0.72;
 const JUGGLE_REFLOAT_MIN_HEIGHT = 1.12;
+const TORNADO_REFLOAT_MIN_HEIGHT = 1.26;
+const TORNADO_REFLOAT_STUN_FRAMES = 30;
+const TORNADO_EXTENSION_LIMIT = 2;
 const JUGGLE_LANDING_RECOVERY_FRAMES = 18;
 const JUGGLE_KEEP_CLOSE_DISTANCE = 1.16;
 const JUGGLE_KEEP_CLOSE_PULL = 0.34;
 const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
-const UNIVERSAL_RANGE_BUFFER = 0.26;
-const UNIVERSAL_HITBOX_FORWARD_PADDING = 0.22;
-const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.1;
-const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.06;
+const UNIVERSAL_RANGE_BUFFER = 0.32;
+const UNIVERSAL_HITBOX_FORWARD_PADDING = 0.3;
+const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.14;
+const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.14;
 const AI_RECENT_MEMORY_LIMIT = 12;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
@@ -221,6 +225,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     getupLane: 0,
     getupStarted: false,
     juggleDamage: 0,
+    juggleSequenceDamage: 0,
+    juggleTornadoCount: 0,
     juggleGravityScale: JUGGLE_GRAVITY_SCALE,
     blockFlash: 0,
     hitFlash: 0
@@ -302,6 +308,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.getupStarted = false;
       fighter.getupInvulnerableFrames = 0;
       fighter.juggleDamage = 0;
+      fighter.juggleSequenceDamage = 0;
+      fighter.juggleTornadoCount = 0;
       fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     }
     applyGravity(fighter, dt);
@@ -317,6 +325,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     if (!isAirborne(fighter) && fighter.stunFramesRemaining === 0 && fighter.actionFramesRemaining === 0 && fighter.stunTimer === 0 && fighter.actionTimer === 0) {
       fighter.state = 'idle';
       fighter.juggleDamage = 0;
+      fighter.juggleSequenceDamage = 0;
+      fighter.juggleTornadoCount = 0;
       fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     }
     updateAttackInputMemory(fighter, input);
@@ -791,6 +801,7 @@ type StringFrameTuning = Partial<Pick<
   | 'onHitFrames'
   | 'onCounterHitFrames'
   | 'launchHeight'
+  | 'tornado'
   | 'knockdown'
 >>;
 
@@ -955,7 +966,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     knockdown: false
   },
   '2,1,2': {
-    label: '2,1,2 Tornado',
+    label: '2,1,2 Spin String',
     startupFrames: 18,
     activeFrames: 3,
     recoveryFrames: 25,
@@ -1391,6 +1402,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
     defender.juggleDamage = 0;
+    defender.juggleSequenceDamage = 0;
+    defender.juggleTornadoCount = 0;
     defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     defender.position.x += pushX * move.blockPushback * 0.14;
     defender.position.z += pushZ * move.blockPushback * 0.14;
@@ -1413,9 +1426,13 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const wasJuggled = defender.state === 'juggle';
   const wasAirborne = isAirborne(defender) || wasJuggled;
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
+  const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const entersJuggle = launchHeight > 0 || wasJuggled;
-  const juggleDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
-  const forceKnockdown = move.knockdown || juggleDamage >= JUGGLE_DAMAGE_LIMIT;
+  const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
+  const juggleSequenceDamage = tornadoExtendsJuggle
+    ? move.damage
+    : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + move.damage;
+  const forceKnockdown = move.knockdown || (!tornadoExtendsJuggle && juggleSequenceDamage >= JUGGLE_DAMAGE_LIMIT);
   defender.hp = Math.max(0, defender.hp - move.damage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
@@ -1430,15 +1447,22 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.actionFramesRemaining = stunFrames;
     defender.actionTimer = framesToSeconds(stunFrames);
     defender.state = entersJuggle ? 'juggle' : 'hit';
-    defender.juggleDamage = juggleDamage;
+    defender.juggleDamage = entersJuggle ? juggleTotalDamage : 0;
+    defender.juggleSequenceDamage = entersJuggle ? juggleSequenceDamage : 0;
+    if (tornadoExtendsJuggle) {
+      defender.juggleTornadoCount = Math.min(TORNADO_EXTENSION_LIMIT, defender.juggleTornadoCount + 1);
+    } else if (!entersJuggle) {
+      defender.juggleTornadoCount = 0;
+    }
   }
 
   if (!forceKnockdown && entersJuggle) {
-    const refloatVelocity = getJuggleVelocity(move, wasAirborne);
-    defender.position.y = Math.max(defender.position.y, wasAirborne ? JUGGLE_REFLOAT_MIN_HEIGHT : JUGGLE_MIN_START_HEIGHT);
+    const refloatVelocity = tornadoExtendsJuggle ? getTornadoRefloatVelocity(move) : getJuggleVelocity(move, wasAirborne);
+    const minHeight = tornadoExtendsJuggle ? TORNADO_REFLOAT_MIN_HEIGHT : wasAirborne ? JUGGLE_REFLOAT_MIN_HEIGHT : JUGGLE_MIN_START_HEIGHT;
+    defender.position.y = Math.max(defender.position.y, minHeight);
     defender.velocityY = Math.max(defender.velocityY, refloatVelocity);
     defender.juggleGravityScale = getMoveJuggleGravityScale(move);
-    defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, wasAirborne ? 18 : 28);
+    defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, tornadoExtendsJuggle ? TORNADO_REFLOAT_STUN_FRAMES : wasAirborne ? 18 : 28);
     defender.stunTimer = framesToSeconds(defender.stunFramesRemaining);
     defender.actionFramesRemaining = Math.max(defender.actionFramesRemaining, defender.stunFramesRemaining);
     defender.actionTimer = framesToSeconds(defender.actionFramesRemaining);
@@ -1525,6 +1549,8 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.getupLane = 0;
   fighter.getupInvulnerableFrames = 0;
   fighter.juggleDamage = 0;
+  fighter.juggleSequenceDamage = 0;
+  fighter.juggleTornadoCount = 0;
   fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
 }
 
@@ -1563,6 +1589,10 @@ function getJuggleVelocity(move: MoveDefinition, wasAirborne: boolean) {
     return Math.min(5.25, Math.max(JUGGLE_REFLOAT_VELOCITY, launchHeight > 0 ? launchHeight * 1.95 : JUGGLE_REFLOAT_VELOCITY));
   }
   return Math.min(6.65, Math.max(JUGGLE_INITIAL_VELOCITY, launchHeight > 0 ? launchHeight * 2.55 : JUGGLE_INITIAL_VELOCITY));
+}
+
+function getTornadoRefloatVelocity(move: MoveDefinition) {
+  return clamp(move.juggleRefloatVelocity ?? TORNADO_REFLOAT_VELOCITY, 3.4, 6.4);
 }
 
 function getMoveJuggleGravityScale(move: MoveDefinition) {
@@ -1999,7 +2029,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const pressureAccepted =
     !pressureDropped &&
     pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - settings.leaderPressurePenalty * leaderBrake * 0.55);
-  let pressureMoveInput = chooseAiPressureMoveInput(ai, difficulty, opening, selector, routeRoll);
+  let pressureMoveInput = chooseAiPressureMoveInput(ai, opponent, difficulty, opening, selector, routeRoll);
   if (leaderCloseout && opening.kind !== 'none') {
     pressureMoveInput = chooseAiCloseoutMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   } else if (aiDecisionRoll(ai, opponent, elapsed, 8, roundAiSeed) < settings.suboptimalPressureRate * style.imperfectionScale) {
@@ -2167,6 +2197,7 @@ function getAiOpening(ai: FighterRuntime, opponent: FighterRuntime, distance: nu
 
 function chooseAiPressureMoveInput(
   ai: FighterRuntime,
+  opponent: FighterRuntime,
   difficulty: CpuDifficulty,
   opening: AiOpening,
   selector: number,
@@ -2176,6 +2207,9 @@ function chooseAiPressureMoveInput(
     .filter((move, index, moves) => moves.findIndex((candidate) => candidate.input === move.input) === index)
     .sort((a, b) => a.startupFrames - b.startupFrames);
   if (sorted.length === 0) return 'jab';
+
+  const tornadoInput = chooseAiTornadoPressureInput(ai, opponent, difficulty, opening, selector, routeRoll);
+  if (tornadoInput) return tornadoInput;
 
   if (opening.kind === 'hitstun' && difficulty >= 3) {
     const viable = sorted.filter((move) => opening.frames <= 0 || move.startupFrames <= opening.frames + (difficulty >= 4 ? 4 : 1));
@@ -2198,6 +2232,44 @@ function chooseAiPressureMoveInput(
 
   const fresh = sorted.find((move) => !inputRecentlyUsed(ai, move.input));
   return fresh?.input ?? sorted[0]?.input ?? 'jab';
+}
+
+function chooseAiTornadoPressureInput(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  opening: AiOpening,
+  selector: number,
+  routeRoll: number
+): MoveInput | null {
+  if (opening.kind !== 'hitstun' || opponent.state !== 'juggle') return null;
+  if (opponent.juggleTornadoCount >= TORNADO_EXTENSION_LIMIT) return null;
+  const tornadoMoves = ai.character.moves
+    .filter((move, index, moves) => move.tornado && moves.findIndex((candidate) => candidate.input === move.input) === index)
+    .sort((a, b) => a.startupFrames - b.startupFrames);
+  if (tornadoMoves.length === 0) return null;
+
+  const nearDrop = opponent.juggleSequenceDamage >= JUGGLE_DAMAGE_LIMIT - (difficulty >= 4 ? 18 : 11);
+  const timingReady = opening.frames <= 0 || tornadoMoves.some((move) => move.startupFrames <= opening.frames + (difficulty >= 4 ? 7 : 2));
+  if (!nearDrop || !timingReady) return null;
+
+  const reliability =
+    difficulty <= 1
+      ? 0.12
+      : difficulty === 2
+        ? 0.34
+        : difficulty === 3
+          ? 0.58
+          : difficulty === 4
+            ? 0.74
+            : 0.84;
+  const roll = positiveModulo(selector * 5 + routeRoll * 7 + ai.slot * 23 + Math.floor(opponent.juggleSequenceDamage * 3), 100) / 100;
+  if (roll > reliability) return null;
+
+  const viable = tornadoMoves.filter((move) => opening.frames <= 0 || move.startupFrames <= opening.frames + (difficulty >= 4 ? 7 : 2));
+  if (viable.length === 0) return null;
+  const fresh = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input) && !inputRecentlyUsed(ai, move.input));
+  return (fresh ?? viable[positiveModulo(selector + routeRoll + ai.slot, viable.length)]).input;
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {

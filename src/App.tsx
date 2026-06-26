@@ -408,6 +408,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (override.hitLevel && hitLevelOptions.includes(override.hitLevel)) next.hitLevel = override.hitLevel;
   if (override.tracking && trackingOptions.includes(override.tracking)) next.tracking = override.tracking;
   if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
+  if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
   return next;
 }
@@ -1612,21 +1613,21 @@ function LeaderboardScreen({
           <p className="eyebrow">Online Records</p>
           <h1>Leaderboards</h1>
         </div>
-        <div className="leaderboard-actions">
-          <button className="secondary-button" onClick={load}>
-            <RotateCcw size={18} />
-            Refresh
-          </button>
-          <button className="primary-button" onClick={onFindMatch} disabled={!profile}>
-            <Wifi size={18} />
-            Find Match
-          </button>
-          <button className="secondary-button" onClick={onBack}>
-            <Home size={18} />
-            Back
-          </button>
-        </div>
       </header>
+      <div className="leaderboard-actions">
+        <button className="secondary-button" onClick={load}>
+          <RotateCcw size={18} />
+          Refresh
+        </button>
+        <button className="primary-button" onClick={onFindMatch} disabled={!profile}>
+          <Wifi size={18} />
+          Find Match
+        </button>
+        <button className="secondary-button" onClick={onBack}>
+          <Home size={18} />
+          Back
+        </button>
+      </div>
       <ArcadeNameCard profile={profile} onProfileChange={onProfileChange} />
       <section className="leaderboard-board" aria-label="Online leaderboard">
         {status === 'loading' && <div className="leaderboard-empty">Loading ranks</div>}
@@ -1636,15 +1637,11 @@ function LeaderboardScreen({
           <div className="leaderboard-rows">
             {entries.map((entry, index) => {
               const current = profile?.playerId === entry.playerId;
-              const total = entry.wins + entry.losses;
-              const rate = total > 0 ? Math.round((entry.wins / total) * 100) : 0;
               return (
                 <div key={entry.playerId} className={`leaderboard-row ${current ? 'is-you' : ''}`}>
                   <span className="rank">{index + 1}</span>
                   <strong>{entry.displayName}</strong>
-                  <span>{entry.wins} W</span>
-                  <span>{entry.losses} L</span>
-                  <span>{rate}%</span>
+                  <span>{entry.points.toLocaleString()} PTS</span>
                 </div>
               );
             })}
@@ -3058,8 +3055,11 @@ function isMoveSlotPose(pose: PreviewPose): pose is MoveDefinition['input'] {
 
 function formatFrameSummary(move: MoveDefinition | null) {
   if (!move) return 'No move data';
-  const hitText = move.knockdown ? 'KD' : (move.launchHeight ?? 0) > 0 ? 'Launch' : signedFrame(move.onHitFrames);
-  return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitText} OH`;
+  const hitParts = [
+    move.knockdown ? 'KD' : (move.launchHeight ?? 0) > 0 ? 'Launch' : signedFrame(move.onHitFrames),
+    move.tornado ? 'T!' : null
+  ].filter(Boolean);
+  return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitParts.join(' / ')} OH`;
 }
 
 function formatMoveSlotLabel(slot: AnimationSlot, move: MoveDefinition | null) {
@@ -3718,6 +3718,7 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const launchVelocity = move.launchVelocity ?? defaultLaunchVelocity(move.launchHeight ?? 0);
   const juggleRefloatVelocity = move.juggleRefloatVelocity ?? defaultJuggleRefloatVelocity(move.launchHeight ?? 0);
   const juggleGravityScale = move.juggleGravityScale ?? 0.52;
+  const resultLabel = [move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames), move.tornado ? 'T!' : null].filter(Boolean).join(' / ');
   const updateNumber = (key: keyof MoveOverride, value: string, min = Number.NEGATIVE_INFINITY) => {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return;
@@ -3728,7 +3729,7 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
     <section className="frame-data-editor" aria-label="Frame data editor">
       <header>
         <span>Frame Data</span>
-        <strong>{`i${move.startupFrames} / ${signedFrame(move.onBlockFrames)} / ${move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames)}`}</strong>
+        <strong>{`i${move.startupFrames} / ${signedFrame(move.onBlockFrames)} / ${resultLabel}`}</strong>
         <small>{move.startupFrames + move.activeFrames + move.recoveryFrames} total frames</small>
       </header>
       <div className="frame-data-grid">
@@ -3785,6 +3786,10 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
         <label className="frame-toggle">
           <span>Knockdown</span>
           <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />
+        </label>
+        <label className="frame-toggle">
+          <span>Tornado</span>
+          <input type="checkbox" checked={Boolean(move.tornado)} onChange={(event) => onChange({ tornado: event.target.checked })} />
         </label>
       </div>
     </section>

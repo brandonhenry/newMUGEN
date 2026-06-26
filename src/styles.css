@@ -4798,19 +4798,28 @@ button {
 .leaderboard-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(12px, 2vw, 18px);
+  margin: 0 auto clamp(18px, 3vw, 34px);
+  width: min(780px, 100%);
+}
+
+.leaderboard-actions .primary-button,
+.leaderboard-actions .secondary-button {
+  min-width: clamp(160px, 20vw, 240px);
+  min-height: 58px;
 }
 
 .leaderboard-screen {
   align-items: start;
-  gap: 20px;
+  gap: 0;
 }
 
 .leaderboard-header {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 24px;
+  display: block;
+  text-align: center;
+  margin-bottom: clamp(18px, 3vw, 34px);
 }
 
 .leaderboard-board {
@@ -4826,7 +4835,7 @@ button {
 
 .leaderboard-row {
   display: grid;
-  grid-template-columns: 76px minmax(160px, 1fr) 110px 110px 100px;
+  grid-template-columns: 76px minmax(160px, 1fr) 150px;
   align-items: center;
   gap: 12px;
   min-height: 66px;
@@ -4881,7 +4890,7 @@ button {
   }
 
   .leaderboard-row {
-    grid-template-columns: 46px minmax(100px, 1fr) 62px 62px 62px;
+    grid-template-columns: 46px minmax(100px, 1fr) 92px;
     gap: 8px;
     min-height: 54px;
     font-size: 0.82rem;

@@ -31,6 +31,15 @@ describe('character manifests', () => {
     }
   });
 
+  it('ships starter tornado moves disabled by default so Characters controls the toggle', () => {
+    for (const character of starterCharacters) {
+      const baseTornadoes = character.moves.filter((move) => move.tornado);
+      const overrideTornadoes = Object.values(character.moveOverrides ?? {}).filter((move) => move.tornado);
+
+      expect([...baseTornadoes, ...overrideTornadoes].length, `${character.displayName} default tornado count`).toBe(0);
+    }
+  });
+
   it('keeps starter and shared string damage inside the v1 balance budget', () => {
     for (const character of starterCharacters) {
       const authoredMoves = [
@@ -65,6 +74,15 @@ describe('character manifests', () => {
     expect(legacy.activeFrames).toBe(7);
     expect(legacy.recoveryFrames).toBe(14);
     expect(legacy.hitLevel).toBe('high');
+  });
+
+  it('normalizes authored tornado move data as an explicit boolean', () => {
+    const move = normalizeMove({
+      ...starterCharacters[0].moves[0],
+      tornado: true
+    });
+
+    expect(move.tornado).toBe(true);
   });
 
   it('drives attack animation progress from startup active and recovery frames', () => {
@@ -557,6 +575,46 @@ describe('fight engine', () => {
     expect(maxLeaderComboStep).toBeLessThanOrEqual(3);
     expect(maxLeaderMoveDamage).toBeLessThanOrEqual(16);
     expect(usedLauncher).toBe(false);
+  });
+
+  it('lets high difficulty CPU route into authored tornado when a juggle is near dropping', () => {
+    const tornadoCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 3,
+              activeFrames: 3,
+              recoveryFrames: 12,
+              damage: 6,
+              range: 2.4,
+              tornado: true
+            }
+          : move
+      )
+    };
+    let match = createMatch(tornadoCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 337 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 1.1;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].stunFramesRemaining = 90;
+    match.fighters[1].actionFramesRemaining = 90;
+    match.fighters[1].juggleSequenceDamage = 40;
+    match.fighters[1].juggleTornadoCount = 0;
+    let usedTornado = false;
+
+    for (let i = 0; i < 90; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      usedTornado = usedTornado || Boolean(match.fighters[0].currentMove?.tornado);
+      if (usedTornado) break;
+    }
+
+    expect(usedTornado).toBe(true);
   });
 
   it('varies CPU route choices when matches use different AI seeds', () => {
@@ -2341,6 +2399,91 @@ describe('fight engine', () => {
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(8);
   });
 
+  it('does not relaunch grounded defenders with tornado unless the move is also a launcher', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      damage: 6,
+      tornado: true,
+      knockdown: false,
+      launchHeight: undefined,
+      range: 2.5,
+      hitbox: {
+        offset: [0, 1.1, 0.75],
+        size: [1, 1.2, 1.5]
+      }
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].position.y).toBe(0);
+    expect(match.fighters[1].juggleTornadoCount).toBe(0);
+  });
+
+  it('extends a juggle with tornado twice, then stops resetting the juggle limit', () => {
+    const runTornadoHit = (tornadoCount: number) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      match.fighters[1].position.y = 0.74;
+      match.fighters[1].velocityY = -0.35;
+      match.fighters[1].state = 'juggle';
+      match.fighters[1].juggleDamage = 28;
+      match.fighters[1].juggleSequenceDamage = 40;
+      match.fighters[1].juggleTornadoCount = tornadoCount;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = {
+        ...starterCharacters[0].moves[0],
+        startupFrames: 0,
+        activeFrames: 3,
+        recoveryFrames: 12,
+        damage: 6,
+        tornado: true,
+        knockdown: false,
+        launchHeight: undefined,
+        range: 2.5,
+        hitbox: {
+          offset: [0, 1.15, 0.75],
+          size: [1.1, 1.6, 1.5]
+        }
+      };
+      match.fighters[0].actionFramesRemaining = 12;
+      match.fighters[0].actionTimer = 12 / 60;
+      match.fighters[0].moveFrame = 0;
+      match.fighters[0].hitConnected = false;
+      return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    };
+
+    const first = runTornadoHit(0);
+    expect(first.fighters[1].state).toBe('juggle');
+    expect(first.fighters[1].juggleTornadoCount).toBe(1);
+    expect(first.fighters[1].juggleSequenceDamage).toBe(6);
+    expect(first.fighters[1].position.y).toBeGreaterThanOrEqual(1.26);
+    expect(first.fighters[1].velocityY).toBeGreaterThan(4.2);
+
+    const second = runTornadoHit(1);
+    expect(second.fighters[1].state).toBe('juggle');
+    expect(second.fighters[1].juggleTornadoCount).toBe(2);
+    expect(second.fighters[1].juggleSequenceDamage).toBe(6);
+
+    const third = runTornadoHit(2);
+    expect(third.fighters[1].state).toBe('knockdown');
+    expect(third.fighters[1].juggleTornadoCount).toBe(0);
+  });
+
   it('forces knockdown after enough juggle damage', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -2351,6 +2494,7 @@ describe('fight engine', () => {
     match.fighters[1].velocityY = 0.2;
     match.fighters[1].state = 'juggle';
     match.fighters[1].juggleDamage = 42;
+    match.fighters[1].juggleSequenceDamage = 42;
     match.fighters[0].state = 'attack';
     match.fighters[0].currentMove = {
       ...starterCharacters[0].moves[0],
