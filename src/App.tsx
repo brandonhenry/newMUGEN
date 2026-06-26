@@ -1184,6 +1184,22 @@ export default function App() {
     audio.play().catch(() => undefined);
   }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
 
+  useEffect(() => {
+    if (screen !== 'menu') return;
+    const onMenuTrackKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (key !== 'o' && key !== 'p') return;
+      event.preventDefault();
+      updateBgmTrackIndex(settings.audio.bgmTrackIndex + (key === 'p' ? 1 : -1));
+      playMenuHoverSound(80);
+    };
+    window.addEventListener('keydown', onMenuTrackKeyDown);
+    return () => window.removeEventListener('keydown', onMenuTrackKeyDown);
+  }, [playMenuHoverSound, screen, settings.audio.bgmTrackIndex, updateBgmTrackIndex]);
+
   const startFromTitle = useCallback(() => {
     setMusicStarted(true);
     setScreen('menu');
