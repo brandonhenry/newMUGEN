@@ -160,6 +160,71 @@ export type CharacterSpriteSheet = {
   frameCount: number;
 };
 
+export type EffectBlendMode = 'normal' | 'additive' | 'screen';
+export type EffectAnchor = 'body' | 'head' | 'hands' | 'feet' | 'hitbox' | 'world';
+export type ProceduralEffectKind = 'lightning' | 'wind' | 'ring' | 'glow' | 'trail' | 'shards';
+
+export type EffectTransform = {
+  position: Vec3Tuple;
+  scale: Vec3Tuple;
+  rotation: Vec3Tuple;
+  opacity: number;
+  color: string;
+};
+
+export type EffectKeyframe = Partial<EffectTransform> & {
+  frame: number;
+};
+
+export type EffectSoundCue = {
+  id: string;
+  name: string;
+  path: string;
+  frame: number;
+  volume: number;
+  pitch: number;
+  pan: number;
+  retrigger?: boolean;
+};
+
+export type ProceduralEffectLayer = {
+  id: string;
+  kind: ProceduralEffectKind;
+  color: string;
+  intensity: number;
+  size: number;
+  count?: number;
+};
+
+export type CharacterEffectDefinition = {
+  id: string;
+  name: string;
+  spriteSheetPath?: string;
+  frames?: string[];
+  fps: number;
+  loop: boolean;
+  billboard: boolean;
+  blendMode: EffectBlendMode;
+  anchor: EffectAnchor;
+  defaultTransform: EffectTransform;
+  proceduralLayers?: ProceduralEffectLayer[];
+  soundCues?: EffectSoundCue[];
+};
+
+export type MoveEffectInstance = {
+  id: string;
+  effectId: string;
+  label?: string;
+  startFrame: number;
+  endFrame?: number;
+  layer: number;
+  mirrorWithFacing: boolean;
+  anchor?: EffectAnchor;
+  loop?: boolean;
+  keyframes: EffectKeyframe[];
+  soundCues?: EffectSoundCue[];
+};
+
 export type VoxelFidelitySettings = {
   resolutionScale?: number;
   maxRows?: number;
@@ -199,6 +264,8 @@ export type CharacterDefinition = {
   animations: Record<string, string>;
   moves: MoveDefinition[];
   moveOverrides?: Record<string, MoveOverride>;
+  effects?: CharacterEffectDefinition[];
+  moveEffects?: Record<string, MoveEffectInstance[]>;
   hurtboxes: BoxSpec[];
   inputMap: Record<string, string>;
   colors: {
@@ -343,6 +410,7 @@ export type FighterRuntime = {
   sidestepDirection: -1 | 0 | 1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
+  moveInstanceId: number;
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;

@@ -33,6 +33,7 @@ import { createMatch, stepMatch } from './engine/fightEngine';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
+import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects } from './lib/effects';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -47,15 +48,20 @@ import {
   emptyInputFrame,
   type ActionName,
   type CharacterDefinition,
+  type CharacterEffectDefinition,
   type CharacterSpriteSheet,
   type CombatPopupEvent,
   type CpuDifficulty,
+  type EffectAnchor,
+  type EffectBlendMode,
+  type EffectKeyframe,
   type GameSettings,
   type HitLevel,
   type InputFrame,
   type MatchMode,
   type MatchSnapshot,
   type MoveDefinition,
+  type MoveEffectInstance,
   type MoveOverride,
   type MoveTracking,
   type SpriteFrameEdit,
@@ -72,6 +78,8 @@ type CharacterAnimationOverride = {
   speeds?: Record<string, number>;
   moves?: Record<string, MoveOverride>;
   sprites?: Record<string, SpriteFrameEdit>;
+  effects?: CharacterEffectDefinition[];
+  moveEffects?: Record<string, MoveEffectInstance[]>;
 };
 type AnimationOverrideMap = Record<string, CharacterAnimationOverride>;
 type StoredAnimationOverrides = {
@@ -386,12 +394,15 @@ function readAnimationOverrides(): AnimationOverrideMap {
 function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationOverrideMap {
   const next: AnimationOverrideMap = {};
   for (const [characterId, override] of Object.entries(overrides)) {
-    next[characterId] = {
+    const sanitized: CharacterAnimationOverride = {
       frames: canonicalizeRawButtonRecord({ ...(override.frames ?? {}) }),
       speeds: canonicalizeRawButtonRecord({ ...(override.speeds ?? {}) }),
       moves: sanitizeMoveOverrideMap(override.moves ?? {}),
       sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
+    if (override.effects) sanitized.effects = sanitizeEffects(override.effects);
+    if (override.moveEffects) sanitized.moveEffects = sanitizeMoveEffects(canonicalizeRawButtonRecord(override.moveEffects));
+    next[characterId] = sanitized;
   }
 
   const obsoleteNarutoForward = next.kiro?.frames?.walkForward?.map(getFrameIndex).join(',');
@@ -407,7 +418,9 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
         Object.keys(override.frames ?? {}).length > 0 ||
         Object.keys(override.speeds ?? {}).length > 0 ||
         Object.keys(override.moves ?? {}).length > 0 ||
-        Object.keys(override.sprites ?? {}).length > 0
+        Object.keys(override.sprites ?? {}).length > 0 ||
+        override.effects !== undefined ||
+        override.moveEffects !== undefined
     )
   );
   debugLog(5, 'sanitized animation overrides', {
@@ -533,6 +546,8 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
   const frames = canonicalizeRawButtonRecord(override.frames ?? {});
   const speeds = canonicalizeRawButtonRecord(override.speeds ?? {});
   const moves = sanitizeMoveOverrideMap(override.moves ?? {});
+  const effects = override.effects ? sanitizeEffects(override.effects) : sanitizeEffects(character.effects ?? []);
+  const moveEffects = override.moveEffects ? sanitizeMoveEffects(canonicalizeRawButtonRecord(override.moveEffects)) : {};
   const spriteOverrideIndexes = Object.keys(override.sprites ?? {})
     .map((key) => Number(key))
     .filter((index) => Number.isFinite(index) && index >= 0);
@@ -555,6 +570,11 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
       ...character.moveOverrides,
       ...moves
     },
+    effects,
+    moveEffects: {
+      ...sanitizeMoveEffects(character.moveEffects ?? {}),
+      ...moveEffects
+    },
     spriteFrameEdits: {
       ...character.spriteFrameEdits,
       ...(override.sprites ?? {})
@@ -574,6 +594,8 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
   const animationFrames = canonicalizeRawButtonRecord(character.animationFrames ?? {});
   const animationFrameRates = canonicalizeRawButtonRecord(character.animationFrameRates ?? {});
   const moveOverrides = sanitizeMoveOverrideMap(character.moveOverrides ?? {});
+  const effects = sanitizeEffects(character.effects ?? []);
+  const moveEffects = sanitizeMoveEffects(character.moveEffects ?? {});
   const response = await fetch('/__kore/dev/save-character-manifest', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -582,6 +604,8 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       animationFrames,
       animationFrameRates,
       moveOverrides,
+      effects,
+      moveEffects,
       spriteFrameEdits: character.spriteFrameEdits ?? {},
       spriteSheets: getCharacterSpriteSheets(character),
       voxelProfile: character.voxelProfile ?? 'image-source',
@@ -645,6 +669,44 @@ function getSpriteSheetForFrame(character: CharacterDefinition, frameIndex: numb
 function uniqueSpriteSheetId(character: CharacterDefinition, fileName: string) {
   const base = slugifyCharacterId(fileName.replace(/\.[^.]+$/, '')) || 'sheet';
   const existing = new Set(getCharacterSpriteSheets(character).map((sheet) => sheet.id));
+  let id = base;
+  let suffix = 2;
+  while (existing.has(id)) {
+    id = `${base}-${suffix}`;
+    suffix += 1;
+  }
+  return id;
+}
+
+const effectAnchorOptions: EffectAnchor[] = ['body', 'head', 'hands', 'feet', 'hitbox', 'world'];
+
+function uniqueEffectId(character: CharacterDefinition, fileName: string) {
+  const base = slugifyCharacterId(fileName.replace(/\.[^.]+$/, '')) || 'effect';
+  const existing = new Set((character.effects ?? []).map((effect) => effect.id));
+  let id = base;
+  let suffix = 2;
+  while (existing.has(id)) {
+    id = `${base}-${suffix}`;
+    suffix += 1;
+  }
+  return id;
+}
+
+function uniqueCueId(effect: CharacterEffectDefinition) {
+  const cues = effect.soundCues ?? [];
+  const existing = new Set(cues.map((cue) => cue.id));
+  let id = `cue-${cues.length + 1}`;
+  let suffix = 2;
+  while (existing.has(id)) {
+    id = `cue-${cues.length + suffix}`;
+    suffix += 1;
+  }
+  return id;
+}
+
+function uniqueMoveEffectInstanceId(instances: MoveEffectInstance[], effectId: string) {
+  const existing = new Set(instances.map((instance) => instance.id));
+  const base = `${effectId}-fx`;
   let id = base;
   let suffix = 2;
   while (existing.has(id)) {
@@ -1320,6 +1382,22 @@ export default function App() {
     }));
   };
 
+  const setCharacterEffects = (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => {
+    debugLog(10, 'viewer effects override requested', {
+      characterId,
+      effectCount: effects.length,
+      moveEffectKeys: Object.keys(moveEffects)
+    });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        effects: sanitizeEffects(effects),
+        moveEffects: sanitizeMoveEffects(canonicalizeRawButtonRecord(moveEffects))
+      }
+    }));
+  };
+
   const reloadRoster = async (preferredCharacterId?: string) => {
     const result = await loadCharacterRoster();
     setRosterResult(result);
@@ -1512,6 +1590,7 @@ export default function App() {
             onAnimationSpeedChange={setCharacterAnimationSpeed}
             onMoveOverrideChange={setCharacterMoveOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
+            onEffectsChange={setCharacterEffects}
             onImportComplete={reloadRoster}
             onBack={() => setScreen('menu')}
           />
@@ -3747,6 +3826,7 @@ function CharacterViewer({
   onAnimationSpeedChange,
   onMoveOverrideChange,
   onSpriteFrameEditChange,
+  onEffectsChange,
   onImportComplete,
   onBack
 }: {
@@ -3756,6 +3836,7 @@ function CharacterViewer({
   onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
+  onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
@@ -3765,7 +3846,7 @@ function CharacterViewer({
   const [slotSearch, setSlotSearch] = useState('');
   const [rotationTurn, setRotationTurn] = useState(0);
   const [zoom, setZoom] = useState(0.28);
-  const [editorMode, setEditorMode] = useState<'browse' | 'animation' | 'sprite'>('browse');
+  const [editorMode, setEditorMode] = useState<'browse' | 'animation' | 'sprite' | 'effectsLibrary' | 'moveEffects'>('browse');
   const [showImporter, setShowImporter] = useState(false);
   const [showSpriteSheetPreview, setShowSpriteSheetPreview] = useState(false);
   const [selectedSpriteFrameIndex, setSelectedSpriteFrameIndex] = useState(0);
@@ -3774,6 +3855,10 @@ function CharacterViewer({
   const [manifestSaveStatus, setManifestSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [spriteSaveStatus, setSpriteSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [spriteSheetImportStatus, setSpriteSheetImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
+  const [effectSaveStatus, setEffectSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [effectImportStatus, setEffectImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
+  const [selectedEffectId, setSelectedEffectId] = useState('');
+  const [effectTimelineFrame, setEffectTimelineFrame] = useState(0);
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -3782,6 +3867,8 @@ function CharacterViewer({
   const isLocalDev = isLocalDevHost();
   const isEditingAnimation = editorMode === 'animation';
   const isEditingSpriteSheet = editorMode === 'sprite';
+  const isEditingEffectsLibrary = editorMode === 'effectsLibrary';
+  const isEditingMoveEffects = editorMode === 'moveEffects';
   const selectedSlot = animationSlots.find((slot) => slot.key === selectedAnimationKey) ?? animationSlots[0];
   const frameCount =
     active.spriteFrameCount ??
@@ -3799,6 +3886,11 @@ function CharacterViewer({
   const selectedFrameSet = new Set(selectedFrames);
   const selectedMove = resolveSlotMove(active, selectedSlot);
   const selectedMoveOverride = active.moveOverrides?.[selectedSlotDataKey] ?? {};
+  const effects = active.effects ?? [];
+  const selectedEffect = effects.find((effect) => effect.id === selectedEffectId) ?? effects[0] ?? null;
+  const moveEffects = active.moveEffects ?? {};
+  const selectedMoveEffectInstances = moveEffects[selectedSlotDataKey] ?? [];
+  const selectedMoveTotalFrames = selectedMove ? selectedMove.startupFrames + selectedMove.activeFrames + selectedMove.recoveryFrames : 30;
   const previewCharacter = previewHdVoxels
     ? {
         ...active,
@@ -3902,6 +3994,13 @@ function CharacterViewer({
   }, [editorMode, isLocalDev]);
 
   useEffect(() => {
+    if (!selectedEffectId && effects[0]) setSelectedEffectId(effects[0].id);
+    if (selectedEffectId && effects.length > 0 && !effects.some((effect) => effect.id === selectedEffectId)) {
+      setSelectedEffectId(effects[0].id);
+    }
+  }, [effects, selectedEffectId]);
+
+  useEffect(() => {
     if (editorMode !== 'animation') setShowSpriteSheetPreview(false);
   }, [editorMode, selectedAnimationKey, active.id]);
 
@@ -3945,6 +4044,164 @@ function CharacterViewer({
       ...selectedMoveOverride,
       ...patch
     });
+  };
+
+  const updateCharacterEffects = (
+    nextEffects: CharacterEffectDefinition[] = effects,
+    nextMoveEffects: Record<string, MoveEffectInstance[]> = moveEffects
+  ) => {
+    onEffectsChange(active.id, sanitizeEffects(nextEffects), sanitizeMoveEffects(canonicalizeRawButtonRecord(nextMoveEffects)));
+  };
+
+  const saveEffectsToDev = async (
+    nextEffects: CharacterEffectDefinition[] = effects,
+    nextMoveEffects: Record<string, MoveEffectInstance[]> = moveEffects
+  ) => {
+    setEffectSaveStatus('saving');
+    try {
+      const response = await fetch('/__kore/dev/save-character-effects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          effects: sanitizeEffects(nextEffects),
+          moveEffects: sanitizeMoveEffects(canonicalizeRawButtonRecord(nextMoveEffects))
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      updateCharacterEffects(nextEffects, nextMoveEffects);
+      await onImportComplete(active.id);
+      setEffectSaveStatus('saved');
+      window.setTimeout(() => setEffectSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to save character effects', error);
+      setEffectSaveStatus('error');
+    }
+  };
+
+  const importEffectSpriteSheet = async (file: File | undefined) => {
+    if (!file || !isLocalDev) return;
+    setEffectImportStatus('working');
+    try {
+      const result = await detectSpriteSheetFrames(file);
+      const effectId = uniqueEffectId(active, file.name);
+      const response = await fetch('/__kore/dev/import-effect-spritesheet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          effectId,
+          effectName: file.name.replace(/\.[^.]+$/, ''),
+          sheetDataUrl: result.sheetDataUrl,
+          frames: result.frames
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as { effect?: Partial<CharacterEffectDefinition> };
+      const imported = sanitizeEffects([{ ...defaultCharacterEffect(effectId), ...(payload.effect ?? {}) }])[0];
+      const nextEffects = sanitizeEffects([...effects.filter((effect) => effect.id !== imported.id), imported]);
+      updateCharacterEffects(nextEffects, moveEffects);
+      setSelectedEffectId(imported.id);
+      setEffectImportStatus('saved');
+      window.setTimeout(() => setEffectImportStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to import effect spritesheet', error);
+      setEffectImportStatus('error');
+    }
+  };
+
+  const importEffectSound = async (file: File | undefined, effectId: string) => {
+    if (!file || !isLocalDev || !effectId) return;
+    setEffectImportStatus('working');
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const response = await fetch('/__kore/dev/import-effect-sound', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ characterId: active.id, effectId, fileName: file.name, dataUrl })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as { path?: string };
+      const nextEffects = effects.map((effect) => (
+        effect.id === effectId
+          ? {
+              ...effect,
+              soundCues: [
+                ...(effect.soundCues ?? []),
+                {
+                  id: uniqueCueId(effect),
+                  name: file.name.replace(/\.[^.]+$/, ''),
+                  path: payload.path ?? '',
+                  frame: 0,
+                  volume: 0.7,
+                  pitch: 1,
+                  pan: 0,
+                  retrigger: false
+                }
+              ]
+            }
+          : effect
+      ));
+      updateCharacterEffects(nextEffects, moveEffects);
+      setEffectImportStatus('saved');
+      window.setTimeout(() => setEffectImportStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to import effect sound', error);
+      setEffectImportStatus('error');
+    }
+  };
+
+  const addBlankEffect = () => {
+    const effectId = uniqueEffectId(active, 'new-effect');
+    const effect = defaultCharacterEffect(effectId);
+    const nextEffects = sanitizeEffects([...effects, { ...effect, name: `Effect ${effects.length + 1}` }]);
+    updateCharacterEffects(nextEffects, moveEffects);
+    setSelectedEffectId(effectId);
+  };
+
+  const updateEffect = (effectId: string, patch: Partial<CharacterEffectDefinition>) => {
+    const nextEffects = effects.map((effect) => (effect.id === effectId ? sanitizeEffects([{ ...effect, ...patch }])[0] : effect));
+    updateCharacterEffects(nextEffects, moveEffects);
+  };
+
+  const deleteEffect = (effectId: string) => {
+    const nextEffects = effects.filter((effect) => effect.id !== effectId);
+    const nextMoveEffects = Object.fromEntries(
+      Object.entries(moveEffects)
+        .map(([key, instances]) => [key, instances.filter((instance) => instance.effectId !== effectId)])
+        .filter(([, instances]) => instances.length > 0)
+    ) as Record<string, MoveEffectInstance[]>;
+    updateCharacterEffects(nextEffects, nextMoveEffects);
+    if (selectedEffectId === effectId) setSelectedEffectId(nextEffects[0]?.id ?? '');
+  };
+
+  const attachSelectedEffectToMove = (effectId: string) => {
+    if (!effectId) return;
+    const nextInstance: MoveEffectInstance = {
+      id: uniqueMoveEffectInstanceId(selectedMoveEffectInstances, effectId),
+      effectId,
+      label: effects.find((effect) => effect.id === effectId)?.name,
+      startFrame: Math.min(selectedMove?.startupFrames ?? 0, Math.max(0, selectedMoveTotalFrames - 1)),
+      endFrame: selectedMoveTotalFrames,
+      layer: selectedMoveEffectInstances.length,
+      mirrorWithFacing: true,
+      anchor: 'hitbox',
+      keyframes: [
+        { frame: 0, position: [0, 0, 0], scale: [1, 1, 1], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' },
+        { frame: Math.max(1, selectedMoveTotalFrames), position: [0.22, 0.08, 0], scale: [1.15, 1.15, 1], rotation: [0, 0, 0.45], opacity: 0.05, color: '#ffffff' }
+      ],
+      soundCues: []
+    };
+    updateMoveEffectInstances([...selectedMoveEffectInstances, nextInstance]);
+  };
+
+  const updateMoveEffectInstances = (instances: MoveEffectInstance[]) => {
+    const nextMoveEffects = {
+      ...moveEffects,
+      [selectedSlotDataKey]: sanitizeMoveEffects({ [selectedSlotDataKey]: instances })[selectedSlotDataKey] ?? []
+    };
+    if (nextMoveEffects[selectedSlotDataKey].length === 0) delete nextMoveEffects[selectedSlotDataKey];
+    updateCharacterEffects(effects, nextMoveEffects);
   };
 
   const saveActiveManifest = async () => {
@@ -4153,6 +4410,22 @@ function CharacterViewer({
                         Edit Spritesheet
                       </button>
                       <button
+                        className={`secondary-button ${isEditingEffectsLibrary ? 'active-tool' : ''}`}
+                        onClick={() => setEditorMode((current) => (current === 'effectsLibrary' ? 'browse' : 'effectsLibrary'))}
+                        data-testid="toggle-effects-library"
+                      >
+                        <Eye size={18} />
+                        View Effects
+                      </button>
+                      <button
+                        className={`secondary-button ${isEditingMoveEffects ? 'active-tool' : ''}`}
+                        onClick={() => setEditorMode((current) => (current === 'moveEffects' ? 'browse' : 'moveEffects'))}
+                        data-testid="toggle-move-effects"
+                      >
+                        <Settings size={18} />
+                        Add Effects
+                      </button>
+                      <button
                         className={`secondary-button ${previewHdVoxels ? 'active-tool' : ''}`}
                         onClick={() => setPreviewHdVoxels((current) => !current)}
                         data-testid="toggle-hd-voxel-preview"
@@ -4208,57 +4481,65 @@ function CharacterViewer({
                 </strong>
                 <small>{isEditingSpriteSheet ? selectedSpriteFramePath : formatFrameSummary(selectedMove)}</small>
               </div>
-              {isEditingAnimation && (
+              {(isEditingAnimation || isEditingEffectsLibrary || isEditingMoveEffects) && (
                 <div className="frame-picker-actions">
-                  <label className="speed-control">
-                    <span>FPS</span>
-                    <input
-                      aria-label={`${selectedSlot.label} animation speed`}
-                      type="range"
-                      min="1"
-                      max="24"
-                      step="0.5"
-                      value={selectedSpeed}
-                      onChange={(event) => updateSelectedSpeed(Number(event.target.value))}
-                      data-testid="animation-speed-slider"
-                    />
-                    <input
-                      aria-label={`${selectedSlot.label} animation speed value`}
-                      type="number"
-                      min="1"
-                      max="24"
-                      step="0.5"
-                      value={selectedSpeed}
-                      onChange={(event) => updateSelectedSpeed(Number(event.target.value))}
-                      data-testid="animation-speed-input"
-                    />
-                  </label>
-                  <button className="secondary-button compact-button" onClick={() => updateSelectedFrames([...selectedFrames].reverse())}>
-                    Reverse
-                  </button>
-                  <button className="secondary-button compact-button" onClick={resetSelectedAnimation}>
-                    Reset
-                  </button>
-                  <label className="sprite-sheet-toggle">
-                    <input
-                      type="checkbox"
-                      checked={showSpriteSheetPreview}
-                      onChange={(event) => setShowSpriteSheetPreview(event.target.checked)}
-                    />
-                    <span>Show spritesheet</span>
-                  </label>
+                  {isEditingAnimation && (
+                    <>
+                      <label className="speed-control">
+                        <span>FPS</span>
+                        <input
+                          aria-label={`${selectedSlot.label} animation speed`}
+                          type="range"
+                          min="1"
+                          max="24"
+                          step="0.5"
+                          value={selectedSpeed}
+                          onChange={(event) => updateSelectedSpeed(Number(event.target.value))}
+                          data-testid="animation-speed-slider"
+                        />
+                        <input
+                          aria-label={`${selectedSlot.label} animation speed value`}
+                          type="number"
+                          min="1"
+                          max="24"
+                          step="0.5"
+                          value={selectedSpeed}
+                          onChange={(event) => updateSelectedSpeed(Number(event.target.value))}
+                          data-testid="animation-speed-input"
+                        />
+                      </label>
+                      <button className="secondary-button compact-button" onClick={() => updateSelectedFrames([...selectedFrames].reverse())}>
+                        Reverse
+                      </button>
+                      <button className="secondary-button compact-button" onClick={resetSelectedAnimation}>
+                        Reset
+                      </button>
+                      <label className="sprite-sheet-toggle">
+                        <input
+                          type="checkbox"
+                          checked={showSpriteSheetPreview}
+                          onChange={(event) => setShowSpriteSheetPreview(event.target.checked)}
+                        />
+                        <span>Show spritesheet</span>
+                      </label>
+                    </>
+                  )}
                   <button
                     className="secondary-button compact-button dev-save-button"
-                    onClick={saveActiveManifest}
-                    disabled={manifestSaveStatus === 'saving'}
+                    onClick={isEditingEffectsLibrary || isEditingMoveEffects ? () => saveEffectsToDev() : saveActiveManifest}
+                    disabled={manifestSaveStatus === 'saving' || effectSaveStatus === 'saving'}
                     data-testid="save-character-manifest"
                   >
                     <Save size={14} />
-                    {manifestSaveStatus === 'saving' ? 'Saving' : 'Save JSON'}
+                    {manifestSaveStatus === 'saving' || effectSaveStatus === 'saving' ? 'Saving' : 'Save JSON'}
                   </button>
-                  {manifestSaveStatus !== 'idle' && (
+                  {(manifestSaveStatus !== 'idle' || effectSaveStatus !== 'idle') && (
                     <span className={`manifest-save-status is-${manifestSaveStatus}`}>
-                      {manifestSaveStatus === 'saved' ? 'Saved to manifest' : manifestSaveStatus === 'error' ? 'Save failed' : 'Writing'}
+                      {manifestSaveStatus === 'saved' || effectSaveStatus === 'saved'
+                        ? 'Saved to manifest'
+                        : manifestSaveStatus === 'error' || effectSaveStatus === 'error'
+                          ? 'Save failed'
+                          : 'Writing'}
                     </span>
                   )}
                   {hdVoxelStatus !== 'idle' && (
@@ -4290,6 +4571,33 @@ function CharacterViewer({
               onCreateFrame={createSpriteFrame}
               onSave={saveSpriteFrame}
               onImportSpriteSheet={importAdditionalSpriteSheet}
+            />
+          ) : isEditingEffectsLibrary ? (
+            <EffectsLibraryEditor
+              effects={effects}
+              selectedEffect={selectedEffect}
+              importStatus={effectImportStatus}
+              saveStatus={effectSaveStatus}
+              onSelectEffect={setSelectedEffectId}
+              onAddBlankEffect={addBlankEffect}
+              onDeleteEffect={deleteEffect}
+              onUpdateEffect={updateEffect}
+              onImportSpriteSheet={importEffectSpriteSheet}
+              onImportSound={importEffectSound}
+              onSave={() => saveEffectsToDev()}
+            />
+          ) : isEditingMoveEffects ? (
+            <MoveEffectsEditor
+              character={previewCharacter}
+              selectedSlot={selectedSlot}
+              animationKey={selectedSlotDataKey}
+              effects={effects}
+              instances={selectedMoveEffectInstances}
+              timelineFrame={effectTimelineFrame}
+              totalFrames={selectedMoveTotalFrames}
+              onTimelineFrameChange={setEffectTimelineFrame}
+              onAttachEffect={attachSelectedEffectToMove}
+              onUpdateInstances={updateMoveEffectInstances}
             />
           ) : isEditingAnimation ? (
             <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
@@ -4366,6 +4674,315 @@ function CharacterViewer({
         <Home size={18} />
         Back
       </button>
+    </div>
+  );
+}
+
+function EffectsLibraryEditor({
+  effects,
+  selectedEffect,
+  importStatus,
+  saveStatus,
+  onSelectEffect,
+  onAddBlankEffect,
+  onDeleteEffect,
+  onUpdateEffect,
+  onImportSpriteSheet,
+  onImportSound,
+  onSave
+}: {
+  effects: CharacterEffectDefinition[];
+  selectedEffect: CharacterEffectDefinition | null;
+  importStatus: 'idle' | 'working' | 'saved' | 'error';
+  saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  onSelectEffect: (effectId: string) => void;
+  onAddBlankEffect: () => void;
+  onDeleteEffect: (effectId: string) => void;
+  onUpdateEffect: (effectId: string, patch: Partial<CharacterEffectDefinition>) => void;
+  onImportSpriteSheet: (file: File | undefined) => void;
+  onImportSound: (file: File | undefined, effectId: string) => void;
+  onSave: () => void;
+}) {
+  return (
+    <section className="effects-editor" aria-label="Character effects library">
+      <aside className="effects-rail">
+        <div className="effects-editor-toolbar">
+          <label className="secondary-button compact-button file-button">
+            <Upload size={14} />
+            Import Sheet
+            <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => onImportSpriteSheet(event.target.files?.[0])} />
+          </label>
+          <button className="secondary-button compact-button" onClick={onAddBlankEffect}>New</button>
+        </div>
+        {effects.length === 0 ? (
+          <p className="effects-empty">Import an effect sprite sheet or create a procedural effect.</p>
+        ) : effects.map((effect) => (
+          <button
+            key={effect.id}
+            className={`effect-card ${selectedEffect?.id === effect.id ? 'is-selected' : ''}`}
+            onClick={() => onSelectEffect(effect.id)}
+          >
+            {effect.frames?.[0] ? <img src={effect.frames[0]} alt="" /> : <span>{effect.proceduralLayers?.[0]?.kind ?? 'FX'}</span>}
+            <strong>{effect.name}</strong>
+            <small>{effect.frames?.length ?? 0} frames / {effect.fps} FPS</small>
+          </button>
+        ))}
+      </aside>
+      <div className="effects-detail">
+        {selectedEffect ? (
+          <>
+            <header className="effects-detail-header">
+              <div>
+                <span>Effect Library</span>
+                <strong>{selectedEffect.name}</strong>
+                <small>{selectedEffect.id}</small>
+              </div>
+              <div className="effects-editor-toolbar">
+                <label className="secondary-button compact-button file-button">
+                  <Upload size={14} />
+                  Add Sound
+                  <input type="file" accept="audio/wav,audio/mpeg,audio/mp3,audio/ogg,audio/webm" onChange={(event) => onImportSound(event.target.files?.[0], selectedEffect.id)} />
+                </label>
+                <button className="secondary-button compact-button" onClick={() => onDeleteEffect(selectedEffect.id)}>Delete</button>
+                <button className="secondary-button compact-button dev-save-button" onClick={onSave} disabled={saveStatus === 'saving'}>
+                  <Save size={14} />
+                  Save
+                </button>
+              </div>
+            </header>
+            <div className="effects-form-grid">
+              <label>
+                <span>Name</span>
+                <input value={selectedEffect.name} onChange={(event) => onUpdateEffect(selectedEffect.id, { name: event.target.value })} />
+              </label>
+              <FrameNumberInput label="FPS" value={selectedEffect.fps} min={1} max={60} onChange={(value) => onUpdateEffect(selectedEffect.id, { fps: Number(value) })} />
+              <label>
+                <span>Blend</span>
+                <select value={selectedEffect.blendMode} onChange={(event) => onUpdateEffect(selectedEffect.id, { blendMode: event.target.value as EffectBlendMode })}>
+                  <option value="normal">Normal</option>
+                  <option value="additive">Additive</option>
+                  <option value="screen">Screen</option>
+                </select>
+              </label>
+              <label>
+                <span>Anchor</span>
+                <select value={selectedEffect.anchor} onChange={(event) => onUpdateEffect(selectedEffect.id, { anchor: event.target.value as EffectAnchor })}>
+                  {effectAnchorOptions.map((anchor) => <option key={anchor} value={anchor}>{anchor}</option>)}
+                </select>
+              </label>
+              <label className="frame-toggle">
+                <span>Loop</span>
+                <input type="checkbox" checked={selectedEffect.loop} onChange={(event) => onUpdateEffect(selectedEffect.id, { loop: event.target.checked })} />
+              </label>
+              <label className="frame-toggle">
+                <span>Billboard</span>
+                <input type="checkbox" checked={selectedEffect.billboard} onChange={(event) => onUpdateEffect(selectedEffect.id, { billboard: event.target.checked })} />
+              </label>
+            </div>
+            <EffectTransformEditor
+              title="Default Transform"
+              keyframe={{ frame: 0, ...selectedEffect.defaultTransform }}
+              onChange={(keyframe) => onUpdateEffect(selectedEffect.id, { defaultTransform: keyframeToTransform(keyframe) })}
+            />
+            <div className="effect-preview-strip">
+              {(selectedEffect.frames ?? []).slice(0, 16).map((frame, index) => (
+                <img key={`${frame}-${index}`} src={frame} alt={`Effect frame ${index}`} />
+              ))}
+              {(selectedEffect.frames?.length ?? 0) === 0 && (
+                <span className="effects-empty">Procedural-only: {(selectedEffect.proceduralLayers ?? []).map((layer) => layer.kind).join(', ') || 'glow'}</span>
+              )}
+            </div>
+            <EffectSoundCueList
+              cues={selectedEffect.soundCues}
+              onChange={(soundCues) => onUpdateEffect(selectedEffect.id, { soundCues })}
+            />
+          </>
+        ) : (
+          <p className="effects-empty">Create or import an effect to edit it.</p>
+        )}
+        {importStatus !== 'idle' && <small className={`manifest-save-status is-${importStatus === 'error' ? 'error' : importStatus === 'saved' ? 'saved' : 'saving'}`}>{importStatus}</small>}
+      </div>
+    </section>
+  );
+}
+
+function MoveEffectsEditor({
+  character,
+  selectedSlot,
+  animationKey,
+  effects,
+  instances,
+  timelineFrame,
+  totalFrames,
+  onTimelineFrameChange,
+  onAttachEffect,
+  onUpdateInstances
+}: {
+  character: CharacterDefinition;
+  selectedSlot: AnimationSlot;
+  animationKey: string;
+  effects: CharacterEffectDefinition[];
+  instances: MoveEffectInstance[];
+  timelineFrame: number;
+  totalFrames: number;
+  onTimelineFrameChange: (frame: number) => void;
+  onAttachEffect: (effectId: string) => void;
+  onUpdateInstances: (instances: MoveEffectInstance[]) => void;
+}) {
+  const [effectToAttach, setEffectToAttach] = useState(effects[0]?.id ?? '');
+  useEffect(() => {
+    if (!effectToAttach && effects[0]) setEffectToAttach(effects[0].id);
+  }, [effectToAttach, effects]);
+
+  const updateInstance = (instanceId: string, patch: Partial<MoveEffectInstance>) => {
+    onUpdateInstances(instances.map((instance) => (instance.id === instanceId ? sanitizeMoveEffects({ slot: [{ ...instance, ...patch }] }).slot[0] : instance)));
+  };
+
+  const updateKeyframe = (instanceId: string, index: number, keyframe: EffectKeyframe) => {
+    updateInstance(instanceId, {
+      keyframes: instances.find((instance) => instance.id === instanceId)?.keyframes.map((entry, entryIndex) => (entryIndex === index ? keyframe : entry)) ?? []
+    });
+  };
+
+  return (
+    <section className="effects-editor move-effects-editor" aria-label="Move effects editor">
+      <aside className="effects-rail">
+        <div className="editing-title compact">
+          <span>Move Effects</span>
+          <strong><NotationGroup tokens={selectedSlot.notation} /> {selectedSlot.label}</strong>
+          <small>{animationKey}</small>
+        </div>
+        <label>
+          <span>Attach Library Effect</span>
+          <select value={effectToAttach} onChange={(event) => setEffectToAttach(event.target.value)}>
+            {effects.map((effect) => <option key={effect.id} value={effect.id}>{effect.name}</option>)}
+          </select>
+        </label>
+        <button className="secondary-button" disabled={!effectToAttach} onClick={() => onAttachEffect(effectToAttach)}>Attach Effect</button>
+        <label className="speed-control">
+          <span>Frame</span>
+          <input type="range" min="0" max={Math.max(1, totalFrames)} value={Math.min(timelineFrame, totalFrames)} onChange={(event) => onTimelineFrameChange(Number(event.target.value))} />
+          <input type="number" min="0" max={totalFrames} value={timelineFrame} onChange={(event) => onTimelineFrameChange(Number(event.target.value))} />
+        </label>
+      </aside>
+      <div className="effects-detail">
+        <div className="move-effect-preview">
+          <CharacterPreviewCanvas character={character} pose={selectedSlot.pose} animationKey={animationKey} rotationTurn={0} zoom={0.35} />
+        </div>
+        {instances.length === 0 ? (
+          <p className="effects-empty">No effects attached to this move yet.</p>
+        ) : instances.map((instance) => {
+          const effect = effects.find((candidate) => candidate.id === instance.effectId);
+          const transform = effect ? effectTransformAt(effect, instance, timelineFrame) : null;
+          return (
+            <article key={instance.id} className="move-effect-instance">
+              <header>
+                <strong>{instance.label ?? effect?.name ?? instance.effectId}</strong>
+                <small>{instance.startFrame}-{instance.endFrame ?? totalFrames}f / layer {instance.layer}</small>
+                <button className="secondary-button compact-button" onClick={() => onUpdateInstances(instances.filter((entry) => entry.id !== instance.id))}>Remove</button>
+              </header>
+              <div className="effects-form-grid">
+                <FrameNumberInput label="Start" value={instance.startFrame} min={0} onChange={(value) => updateInstance(instance.id, { startFrame: Number(value) })} />
+                <FrameNumberInput label="End" value={instance.endFrame ?? totalFrames} min={0} onChange={(value) => updateInstance(instance.id, { endFrame: Number(value) })} />
+                <FrameNumberInput label="Layer" value={instance.layer} onChange={(value) => updateInstance(instance.id, { layer: Number(value) })} />
+                <label>
+                  <span>Anchor</span>
+                  <select value={instance.anchor ?? effect?.anchor ?? 'body'} onChange={(event) => updateInstance(instance.id, { anchor: event.target.value as EffectAnchor })}>
+                    {effectAnchorOptions.map((anchor) => <option key={anchor} value={anchor}>{anchor}</option>)}
+                  </select>
+                </label>
+                <label className="frame-toggle">
+                  <span>Mirror Facing</span>
+                  <input type="checkbox" checked={instance.mirrorWithFacing} onChange={(event) => updateInstance(instance.id, { mirrorWithFacing: event.target.checked })} />
+                </label>
+              </div>
+              <div className="effects-keyframes">
+                {(instance.keyframes.length > 0 ? instance.keyframes : [{ frame: 0, position: [0, 0, 0], scale: [1, 1, 1], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' } as EffectKeyframe]).map((keyframe, index) => (
+                  <EffectTransformEditor
+                    key={`${instance.id}-${index}`}
+                    title={`Keyframe ${index + 1}`}
+                    keyframe={keyframe}
+                    onChange={(nextKeyframe) => updateKeyframe(instance.id, index, nextKeyframe)}
+                  />
+                ))}
+                <button
+                  className="secondary-button compact-button"
+                  onClick={() => updateInstance(instance.id, {
+                    keyframes: [...instance.keyframes, { frame: timelineFrame, position: transform?.position ?? [0, 0, 0], scale: transform?.scale ?? [1, 1, 1], rotation: transform?.rotation ?? [0, 0, 0], opacity: transform?.opacity ?? 1, color: transform?.color ?? '#ffffff' }]
+                  })}
+                >
+                  Add Keyframe
+                </button>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function EffectTransformEditor({ title, keyframe, onChange }: { title: string; keyframe: EffectKeyframe; onChange: (keyframe: EffectKeyframe) => void }) {
+  const updateVec = (field: 'position' | 'scale' | 'rotation', axis: 0 | 1 | 2, value: string) => {
+    const current = keyframe[field] ?? (field === 'scale' ? [1, 1, 1] : [0, 0, 0]);
+    const next = [...current] as [number, number, number];
+    next[axis] = Number(value);
+    onChange({ ...keyframe, [field]: next });
+  };
+  return (
+    <fieldset className="effect-transform-editor">
+      <legend>{title}</legend>
+      <div className="effects-form-grid">
+        <FrameNumberInput label="Frame" value={keyframe.frame} min={0} onChange={(value) => onChange({ ...keyframe, frame: Number(value) })} />
+        {(['position', 'scale', 'rotation'] as const).map((field) => (
+          <div className="effect-vector-field" key={field}>
+            <span>{capitalize(field)}</span>
+            {[0, 1, 2].map((axis) => (
+              <input
+                key={axis}
+                type="number"
+                step={field === 'rotation' ? 0.05 : 0.05}
+                value={(keyframe[field] ?? (field === 'scale' ? [1, 1, 1] : [0, 0, 0]))[axis]}
+                onChange={(event) => updateVec(field, axis as 0 | 1 | 2, event.target.value)}
+                aria-label={`${field} ${axis}`}
+              />
+            ))}
+          </div>
+        ))}
+        <FrameNumberInput label="Opacity" value={keyframe.opacity ?? 1} min={0} max={1} step={0.05} onChange={(value) => onChange({ ...keyframe, opacity: Number(value) })} />
+        <label>
+          <span>Color</span>
+          <input type="color" value={keyframe.color ?? '#ffffff'} onChange={(event) => onChange({ ...keyframe, color: event.target.value })} />
+        </label>
+      </div>
+    </fieldset>
+  );
+}
+
+function keyframeToTransform(keyframe: EffectKeyframe): CharacterEffectDefinition['defaultTransform'] {
+  return {
+    position: keyframe.position ?? [0, 1.1, 0.55],
+    scale: keyframe.scale ?? [1, 1, 1],
+    rotation: keyframe.rotation ?? [0, 0, 0],
+    opacity: keyframe.opacity ?? 1,
+    color: keyframe.color ?? '#ffffff'
+  };
+}
+
+function EffectSoundCueList({ cues, onChange }: { cues: CharacterEffectDefinition['soundCues']; onChange: (cues: NonNullable<CharacterEffectDefinition['soundCues']>) => void }) {
+  const safeCues = cues ?? [];
+  if (safeCues.length === 0) return <p className="effects-empty">No sound cues yet.</p>;
+  return (
+    <div className="effect-sound-list">
+      {safeCues.map((cue, index) => (
+        <div key={cue.id} className="effect-sound-row">
+          <strong>{cue.name}</strong>
+          <FrameNumberInput label="Frame" value={cue.frame} min={0} onChange={(value) => onChange(safeCues.map((entry, entryIndex) => entryIndex === index ? { ...entry, frame: Number(value) } : entry))} />
+          <FrameNumberInput label="Volume" value={cue.volume} min={0} max={1} step={0.05} onChange={(value) => onChange(safeCues.map((entry, entryIndex) => entryIndex === index ? { ...entry, volume: Number(value) } : entry))} />
+          <FrameNumberInput label="Pitch" value={cue.pitch} min={0.25} max={3} step={0.05} onChange={(value) => onChange(safeCues.map((entry, entryIndex) => entryIndex === index ? { ...entry, pitch: Number(value) } : entry))} />
+          <button className="secondary-button compact-button" onClick={() => onChange(safeCues.filter((_, entryIndex) => entryIndex !== index))}>Remove</button>
+        </div>
+      ))}
     </div>
   );
 }
@@ -5791,6 +6408,7 @@ function FrameNumberInput({
   label,
   value,
   min,
+  max,
   step = 1,
   disabled = false,
   onChange
@@ -5798,6 +6416,7 @@ function FrameNumberInput({
   label: string;
   value: number;
   min?: number;
+  max?: number;
   step?: number;
   disabled?: boolean;
   onChange: (value: string) => void;
@@ -5805,7 +6424,7 @@ function FrameNumberInput({
   return (
     <label>
       <span>{label}</span>
-      <input type="number" value={Number(value.toFixed(step < 1 ? 2 : 0))} min={min} step={step} disabled={disabled} onChange={(event) => onChange(event.target.value)} />
+      <input type="number" value={Number(value.toFixed(step < 1 ? 2 : 0))} min={min} max={max} step={step} disabled={disabled} onChange={(event) => onChange(event.target.value)} />
     </label>
   );
 }
@@ -6562,7 +7181,13 @@ function FightScreen({
       onKeyDown={(event) => handleSurfaceKey(event, true)}
       onKeyUp={(event) => handleSurfaceKey(event, false)}
     >
-      <GameScene match={match} cameraSettings={settings.camera} sparkSettings={settings.display.impactSparks} reducedMotion={settings.display.reducedMotion} />
+      <GameScene
+        match={match}
+        cameraSettings={settings.camera}
+        sparkSettings={settings.display.impactSparks}
+        audioSettings={settings.audio}
+        reducedMotion={settings.display.reducedMotion}
+      />
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
       <CombatPopupLayer popups={combatPopups} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}

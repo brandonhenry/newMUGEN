@@ -1,5 +1,6 @@
 import { starterCharacters } from '../data/characters';
 import type { BoxSpec, CharacterDefinition, HitLevel, MoveDefinition, MoveTracking, Vec3Tuple } from '../types';
+import { sanitizeEffects, sanitizeMoveEffects } from './effects';
 import { debugLog } from './debugLogger';
 
 const requiredClips = [
@@ -48,6 +49,8 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
+    effects: sanitizeEffects(character.effects ?? []),
+    moveEffects: sanitizeMoveEffects(canonicalizeBaseButtonRecord(character.moveEffects ?? {})),
     hurtboxes:
       Array.isArray(character.hurtboxes) && character.hurtboxes.length > 0
         ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))

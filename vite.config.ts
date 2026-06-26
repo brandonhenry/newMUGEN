@@ -14,10 +14,34 @@ type DevManifestPayload = {
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   moveOverrides?: Record<string, Record<string, unknown>>;
+  effects?: Array<Record<string, unknown>>;
+  moveEffects?: Record<string, Array<Record<string, unknown>>>;
   spriteFrameEdits?: Record<string, Record<string, unknown>>;
   spriteSheets?: Array<Record<string, unknown>>;
   voxelProfile?: string;
   voxelFidelity?: Record<string, unknown>;
+};
+
+type DevEffectSpriteSheetPayload = {
+  characterId?: string;
+  effectId?: string;
+  effectName?: string;
+  sheetDataUrl?: string;
+  frames?: Array<{
+    index?: number;
+    dataUrl?: string;
+    box?: unknown;
+    width?: number;
+    height?: number;
+    row?: number;
+  }>;
+};
+
+type DevEffectSoundPayload = {
+  characterId?: string;
+  effectId?: string;
+  fileName?: string;
+  dataUrl?: string;
 };
 
 type DevSpriteFramePayload = {
@@ -206,6 +230,8 @@ function koreDevManifestWriter() {
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
+          manifest.effects = sanitizeCharacterEffects(payload.effects ?? []);
+          manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
           manifest.spriteFrameEdits = sanitizeSpriteFrameEditMap(payload.spriteFrameEdits ?? {});
           manifest.spriteSheets = sanitizeSpriteSheets(payload.spriteSheets, manifest.spriteSheetPath, characterId, Number(manifest.spriteFrameCount) || 0);
           if (payload.voxelProfile) manifest.voxelProfile = sanitizeVoxelProfile(payload.voxelProfile);
@@ -219,6 +245,105 @@ function koreDevManifestWriter() {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-character-effects', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevManifestPayload;
+          const characterId = payload.characterId ?? '';
+          if (!/^[a-z0-9-]+$/i.test(characterId)) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character id' });
+            return;
+          }
+          const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          manifest.effects = sanitizeCharacterEffects(payload.effects ?? []);
+          manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+          sendJson(response, 200, { ok: true, characterId, manifestPath });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-effect-spritesheet', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevEffectSpriteSheetPayload;
+          const characterId = payload.characterId ?? '';
+          const effectId = sanitizeAssetId(payload.effectId || payload.effectName || `effect-${Date.now()}`);
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !effectId) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character id or effect id' });
+            return;
+          }
+          const frames = Array.isArray(payload.frames) ? payload.frames : [];
+          if (frames.length === 0 || frames.length > 1000) {
+            sendJson(response, 400, { ok: false, error: 'Expected 1-1000 effect frames' });
+            return;
+          }
+          const effectDir = resolve(server.config.root, 'public', 'characters', characterId, 'effects', effectId);
+          const framesDir = resolve(effectDir, 'frames');
+          await mkdir(framesDir, { recursive: true });
+          await writeFile(resolve(effectDir, 'source.png'), dataUrlToPngBuffer(payload.sheetDataUrl));
+          const frameEntries = frames.map((frame, fallbackIndex) => {
+            const index = Math.max(0, Math.round(finiteOr(frame.index, fallbackIndex)));
+            const box = normalizeBox(frame.box);
+            return {
+              index,
+              dataUrl: frame.dataUrl,
+              path: `/characters/${characterId}/effects/${effectId}/frames/frame-${index.toString().padStart(3, '0')}.png`,
+              box,
+              width: Math.max(1, Math.round(finiteOr(frame.width, box[2] - box[0]))),
+              height: Math.max(1, Math.round(finiteOr(frame.height, box[3] - box[1]))),
+              row: Math.max(0, Math.round(finiteOr(frame.row, 0)))
+            };
+          });
+          await Promise.all(
+            frameEntries.map((frame) =>
+              writeFile(resolve(framesDir, `frame-${frame.index.toString().padStart(3, '0')}.png`), dataUrlToPngBuffer(frame.dataUrl))
+            )
+          );
+          const metadata = {
+            id: effectId,
+            name: typeof payload.effectName === 'string' && payload.effectName.trim() ? payload.effectName.trim().slice(0, 120) : effectId,
+            spriteSheetPath: `/characters/${characterId}/effects/${effectId}/source.png`,
+            frames: frameEntries.map((frame) => frame.path)
+          };
+          await writeFile(resolve(effectDir, 'effect.json'), `${JSON.stringify({ ...metadata, frameData: frameEntries.map(({ dataUrl, ...frame }) => frame) }, null, 2)}\n`, 'utf8');
+          sendJson(response, 200, { ok: true, characterId, effect: metadata });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-effect-sound', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevEffectSoundPayload;
+          const characterId = payload.characterId ?? '';
+          const effectId = sanitizeAssetId(payload.effectId ?? '');
+          const fileName = sanitizeMediaFileName(payload.fileName ?? `sound-${Date.now()}.wav`);
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !effectId || !fileName) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character, effect, or file name' });
+            return;
+          }
+          const soundDir = resolve(server.config.root, 'public', 'characters', characterId, 'effects', effectId, 'sounds');
+          await mkdir(soundDir, { recursive: true });
+          await writeFile(resolve(soundDir, fileName), dataUrlToMediaBuffer(payload.dataUrl));
+          sendJson(response, 200, { ok: true, path: `/characters/${characterId}/effects/${effectId}/sounds/${fileName}` });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
       });
 
@@ -732,6 +857,128 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
   );
 }
 
+function sanitizeCharacterEffects(effects: Array<Record<string, unknown>>) {
+  return effects
+    .filter((effect) => effect && typeof effect === 'object')
+    .map((effect, index) => sanitizeCharacterEffect(effect, index))
+    .filter((effect) => effect.id);
+}
+
+function sanitizeCharacterEffect(effect: Record<string, unknown>, index: number) {
+  const id = sanitizeAssetId(effect.id) || `effect-${index + 1}`;
+  const frames = Array.isArray(effect.frames)
+    ? effect.frames
+        .filter((frame): frame is string => typeof frame === 'string' && frame.startsWith('/characters/') && /\.(png|webp|jpg|jpeg)$/i.test(frame))
+        .slice(0, 1000)
+    : [];
+  return {
+    id,
+    name: typeof effect.name === 'string' && effect.name.trim() ? effect.name.trim().slice(0, 120) : id,
+    spriteSheetPath: typeof effect.spriteSheetPath === 'string' && effect.spriteSheetPath.startsWith('/characters/') ? effect.spriteSheetPath : undefined,
+    frames,
+    fps: Math.max(1, Math.min(60, finiteOr(effect.fps, 12))),
+    loop: Boolean(effect.loop),
+    billboard: effect.billboard !== false,
+    blendMode: safeBlendMode(effect.blendMode),
+    anchor: safeEffectAnchor(effect.anchor),
+    defaultTransform: sanitizeEffectTransform(effect.defaultTransform),
+    proceduralLayers: sanitizeProceduralLayers(effect.proceduralLayers),
+    soundCues: sanitizeEffectSoundCues(effect.soundCues)
+  };
+}
+
+function sanitizeCharacterMoveEffects(moveEffects: Record<string, Array<Record<string, unknown>>>) {
+  return Object.fromEntries(
+    Object.entries(moveEffects)
+      .filter(([key, value]) => key.length > 0 && Array.isArray(value))
+      .map(([key, value]) => [key, value.map((instance, index) => sanitizeMoveEffectInstance(instance, index)).filter((instance) => instance.effectId)])
+      .filter(([, value]) => value.length > 0)
+  );
+}
+
+function sanitizeMoveEffectInstance(instance: Record<string, unknown>, index: number) {
+  const keyframes = Array.isArray(instance.keyframes)
+    ? instance.keyframes
+        .filter((keyframe): keyframe is Record<string, unknown> => Boolean(keyframe) && typeof keyframe === 'object')
+        .map((keyframe) => ({ frame: Math.max(0, Math.round(finiteOr(keyframe.frame, 0))), ...sanitizeEffectTransform(keyframe) }))
+        .sort((a, b) => a.frame - b.frame)
+        .slice(0, 120)
+    : [];
+  return {
+    id: sanitizeAssetId(instance.id) || `instance-${index + 1}`,
+    effectId: sanitizeAssetId(instance.effectId),
+    name: typeof instance.name === 'string' && instance.name.trim() ? instance.name.trim().slice(0, 120) : undefined,
+    startFrame: Math.max(0, Math.round(finiteOr(instance.startFrame, 0))),
+    endFrame: Math.max(0, Math.round(finiteOr(instance.endFrame, 30))),
+    layer: Math.max(-50, Math.min(50, Math.round(finiteOr(instance.layer, index)))),
+    anchor: safeEffectAnchor(instance.anchor),
+    mirrorWithFacing: instance.mirrorWithFacing !== false,
+    loop: Boolean(instance.loop),
+    keyframes,
+    soundCues: sanitizeEffectSoundCues(instance.soundCues)
+  };
+}
+
+function sanitizeEffectSoundCues(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((cue): cue is Record<string, unknown> => Boolean(cue) && typeof cue === 'object')
+    .map((cue, index) => ({
+      id: sanitizeAssetId(cue.id) || `cue-${index + 1}`,
+      name: typeof cue.name === 'string' && cue.name.trim() ? cue.name.trim().slice(0, 80) : undefined,
+      path: typeof cue.path === 'string' && cue.path.startsWith('/characters/') && /\.(wav|mp3|ogg|webm)$/i.test(cue.path) ? cue.path : '',
+      frame: Math.max(0, Math.round(finiteOr(cue.frame, 0))),
+      volume: Math.max(0, Math.min(1, finiteOr(cue.volume, 0.8))),
+      pitch: Math.max(0.25, Math.min(4, finiteOr(cue.pitch, 1))),
+      pan: Math.max(-1, Math.min(1, finiteOr(cue.pan, 0))),
+      retrigger: Boolean(cue.retrigger)
+    }))
+    .filter((cue) => cue.path)
+    .slice(0, 80);
+}
+
+function sanitizeProceduralLayers(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  const allowedKinds = new Set(['lightning', 'wind', 'ring', 'glow', 'trail', 'shards']);
+  return value
+    .filter((layer): layer is Record<string, unknown> => Boolean(layer) && typeof layer === 'object')
+    .map((layer, index) => ({
+      id: sanitizeAssetId(layer.id) || `layer-${index + 1}`,
+      kind: typeof layer.kind === 'string' && allowedKinds.has(layer.kind) ? layer.kind : 'glow',
+      color: sanitizeColor(layer.color, '#fff3a0'),
+      secondaryColor: sanitizeColor(layer.secondaryColor, '#2ee6ff'),
+      intensity: Math.max(0, Math.min(5, finiteOr(layer.intensity, 1))),
+      count: Math.max(1, Math.min(80, Math.round(finiteOr(layer.count, 10)))),
+      thickness: Math.max(0.005, Math.min(1, finiteOr(layer.thickness, 0.08))),
+      length: Math.max(0.05, Math.min(12, finiteOr(layer.length, 1.2))),
+      spin: finiteOr(layer.spin, 0)
+    }))
+    .slice(0, 24);
+}
+
+function sanitizeEffectTransform(value: unknown) {
+  const transform = value && typeof value === 'object' ? value as Record<string, unknown> : {};
+  return {
+    position: normalizeVec3(transform.position, [0, 1.2, 0]),
+    scale: normalizeVec3(transform.scale, [1, 1, 1]),
+    rotation: normalizeVec3(transform.rotation, [0, 0, 0]),
+    opacity: Math.max(0, Math.min(1, finiteOr(transform.opacity, 1))),
+    color: sanitizeColor(transform.color, '#ffffff')
+  };
+}
+
+function safeEffectAnchor(value: unknown) {
+  return typeof value === 'string' && ['root', 'body', 'head', 'hands', 'feet', 'hitbox', 'world'].includes(value) ? value : 'body';
+}
+
+function safeBlendMode(value: unknown) {
+  return typeof value === 'string' && ['normal', 'additive', 'screen', 'multiply'].includes(value) ? value : 'additive';
+}
+
+function sanitizeColor(value: unknown, fallback: string) {
+  return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value : fallback;
+}
+
 function devOnlineMatchmake(rooms: Map<string, DevOnlineRoom>, payload: DevOnlineMatchPayload) {
   pruneDevOnlineRooms(rooms);
   const peerId = safeOnlineString(payload.peerId);
@@ -856,6 +1103,21 @@ function dataUrlToPngBuffer(dataUrl: unknown) {
   const match = dataUrl.match(/^data:image\/png;base64,([a-z0-9+/=]+)$/i);
   if (!match) throw new Error('Invalid PNG data URL');
   return Buffer.from(match[1], 'base64');
+}
+
+function dataUrlToMediaBuffer(dataUrl: unknown) {
+  if (typeof dataUrl !== 'string') throw new Error('Missing media data URL');
+  const match = dataUrl.match(/^data:(audio\/(?:wav|wave|mpeg|mp3|ogg|webm)|application\/octet-stream);base64,([a-z0-9+/=]+)$/i);
+  if (!match) throw new Error('Invalid audio data URL');
+  return Buffer.from(match[2], 'base64');
+}
+
+function sanitizeMediaFileName(value: unknown) {
+  const raw = typeof value === 'string' && value.trim() ? value.trim() : 'sound.wav';
+  const extensionMatch = raw.match(/\.(wav|mp3|ogg|webm)$/i);
+  const extension = extensionMatch ? extensionMatch[1].toLowerCase() : 'wav';
+  const stem = raw.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48) || 'sound';
+  return `${stem}.${extension}`;
 }
 
 function sanitizeFrameMap(frames: Record<string, string[]>) {

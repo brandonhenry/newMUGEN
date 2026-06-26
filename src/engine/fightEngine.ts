@@ -208,6 +208,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     sidestepDirection: 0,
     jumpInputHeld: false,
     currentMove: null,
+    moveInstanceId: 0,
     actionTimer: 0,
     actionFramesRemaining: 0,
     moveFrame: 0,
@@ -543,6 +544,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   if (charged) fighter.ki = clamp(fighter.ki - KI_BURST_COST, 0, KI_MAX);
 
   fighter.currentMove = resolvedMove;
+  fighter.moveInstanceId += 1;
   fighter.state = 'attack';
   fighter.actionFramesRemaining = totalMoveFrames(resolvedMove);
   fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);

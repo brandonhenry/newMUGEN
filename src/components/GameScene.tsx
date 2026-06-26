@@ -4,14 +4,31 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import type { CharacterDefinition, FighterRuntime, FighterState, GameSettings, ImpactSparkEvent, MatchSnapshot, MoveInput, StageDefinition, StageLayerDefinition, StagePropDefinition } from '../types';
+import type {
+  CharacterDefinition,
+  CharacterEffectDefinition,
+  EffectSoundCue,
+  EffectTransform,
+  FighterRuntime,
+  FighterState,
+  GameSettings,
+  ImpactSparkEvent,
+  MatchSnapshot,
+  MoveEffectInstance,
+  MoveInput,
+  StageDefinition,
+  StageLayerDefinition,
+  StagePropDefinition
+} from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
 import { debugLogThrottled } from '../lib/debugLogger';
+import { effectIsActive, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 
 type GameSceneProps = {
   match: MatchSnapshot;
   cameraSettings?: GameSettings['camera'];
   sparkSettings?: GameSettings['display']['impactSparks'];
+  audioSettings?: GameSettings['audio'];
   reducedMotion?: boolean;
 };
 
@@ -34,7 +51,7 @@ const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
 
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
-export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
+export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <color attach="background" args={['#8deeff']} />
@@ -51,6 +68,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <Arena stage={match.stage} />
       <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
       <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
+      <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
       <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
     </Canvas>
@@ -158,6 +176,292 @@ function makeSparkDirections(seed: number, count: number) {
 function seededUnit(seed: number, index: number) {
   const value = Math.sin(seed * 12.9898 + index * 78.233) * 43758.5453;
   return value - Math.floor(value);
+}
+
+type ActiveEffectBinding = {
+  fighter: FighterRuntime;
+  effect: CharacterEffectDefinition;
+  instance: MoveEffectInstance;
+  moveFrame: number;
+  totalFrames: number;
+  moveInstanceId: number;
+};
+
+function EffectLayer({
+  match,
+  audioSettings,
+  reducedMotion
+}: {
+  match: MatchSnapshot;
+  audioSettings?: GameSettings['audio'];
+  reducedMotion: boolean;
+}) {
+  const bindings = getActiveEffectBindings(match);
+  useEffectAudioCues(bindings, audioSettings);
+  if (bindings.length === 0) return null;
+  return (
+    <group>
+      {bindings.map((binding) => (
+        <MoveEffectVisual
+          key={`${binding.fighter.slot}-${binding.moveInstanceId}-${binding.instance.id}`}
+          binding={binding}
+          reducedMotion={reducedMotion}
+        />
+      ))}
+    </group>
+  );
+}
+
+function useEffectAudioCues(bindings: ActiveEffectBinding[], audioSettings?: GameSettings['audio']) {
+  const previousFrames = useRef(new Map<string, number>());
+  useEffect(() => {
+    const liveKeys = new Set<string>();
+    bindings.forEach((binding) => {
+      const key = `${binding.fighter.slot}:${binding.moveInstanceId}:${binding.instance.id}`;
+      liveKeys.add(key);
+      const previousFrame = previousFrames.current.get(key) ?? binding.moveFrame - 1;
+      const cues = [...(binding.effect.soundCues ?? []), ...(binding.instance.soundCues ?? [])];
+      cues.forEach((cue) => {
+        if (shouldFireEffectCue(cue, previousFrame, binding.moveFrame, binding.instance)) {
+          playEffectSound(cue, audioSettings);
+        }
+      });
+      previousFrames.current.set(key, binding.moveFrame);
+    });
+    previousFrames.current.forEach((_, key) => {
+      if (!liveKeys.has(key)) previousFrames.current.delete(key);
+    });
+  }, [audioSettings, bindings]);
+}
+
+function playEffectSound(cue: EffectSoundCue, audioSettings?: GameSettings['audio']) {
+  if (typeof window === 'undefined' || !audioSettings || audioSettings.muted || !cue.path) return;
+  const audio = new Audio(cue.path);
+  audio.volume = Math.max(0, Math.min(1, audioSettings.master * audioSettings.sfx * cue.volume));
+  audio.playbackRate = cue.pitch;
+  void audio.play().catch(() => undefined);
+}
+
+function getActiveEffectBindings(match: MatchSnapshot): ActiveEffectBinding[] {
+  return match.fighters.flatMap((fighter) => {
+    if (fighter.state !== 'attack' || !fighter.currentMove) return [];
+    const effects = fighter.character.effects ?? [];
+    const library = new Map(effects.map((effect) => [effect.id, effect]));
+    const moveKey = getEffectMoveKey(fighter);
+    if (!moveKey) return [];
+    const instances = (fighter.character.moveEffects?.[moveKey] ?? [])
+      .filter((instance) => effectIsActive(instance, fighter.moveFrame, totalMoveFramesForEffect(fighter)))
+      .sort((a, b) => a.layer - b.layer);
+    return instances.flatMap((instance) => {
+      const effect = library.get(instance.effectId);
+      return effect
+        ? [{
+            fighter,
+            effect,
+            instance,
+            moveFrame: fighter.moveFrame,
+            totalFrames: totalMoveFramesForEffect(fighter),
+            moveInstanceId: fighter.moveInstanceId
+          }]
+        : [];
+    });
+  });
+}
+
+function totalMoveFramesForEffect(fighter: FighterRuntime) {
+  const move = fighter.currentMove;
+  return move ? Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames) : 1;
+}
+
+function getEffectMoveKey(fighter: FighterRuntime) {
+  const move = fighter.currentMove;
+  if (!move) return null;
+  const baseInputKeys: Record<string, string> = {
+    jab: 'jableft',
+    heavy: 'jabright',
+    kick: 'kickleft',
+    special: 'kickright',
+    '1': 'jableft',
+    '2': 'jabright',
+    '3': 'kickleft',
+    '4': 'kickright'
+  };
+  const candidates = [
+    move.animationKey,
+    move.command ? `cmd:${move.command}` : undefined,
+    move.comboKey,
+    move.id,
+    baseInputKeys[move.input],
+    move.input
+  ].filter((key): key is string => Boolean(key));
+  return candidates.find((key) => fighter.character.moveEffects?.[key]?.length) ?? null;
+}
+
+function MoveEffectVisual({ binding, reducedMotion }: { binding: ActiveEffectBinding; reducedMotion: boolean }) {
+  const transform = effectTransformAt(binding.effect, binding.instance, binding.moveFrame);
+  const anchor = binding.instance.anchor ?? binding.effect.anchor;
+  const position = resolveEffectWorldPosition(binding.fighter, transform, anchor);
+  const mirroredRotationY = binding.instance.mirrorWithFacing === false ? 0 : binding.fighter.facing === -1 ? Math.PI : 0;
+  const opacity = reducedMotion ? transform.opacity * 0.72 : transform.opacity;
+  return (
+    <group
+      position={position}
+      rotation={[transform.rotation[0], transform.rotation[1] + mirroredRotationY, transform.rotation[2]]}
+      scale={transform.scale}
+    >
+      {(binding.effect.frames?.length ?? 0) > 0 && <SpriteEffectPlane binding={binding} transform={transform} opacity={opacity} />}
+      {(binding.effect.proceduralLayers ?? []).map((layer) => (
+        <ProceduralEffectVisual
+          key={layer.id}
+          kind={layer.kind}
+          color={layer.color}
+          count={layer.count ?? 10}
+          intensity={layer.intensity}
+          size={layer.size ?? 1}
+          opacity={opacity}
+          seed={binding.moveInstanceId + binding.instance.id.length + layer.id.length}
+        />
+      ))}
+    </group>
+  );
+}
+
+function SpriteEffectPlane({
+  binding,
+  transform,
+  opacity
+}: {
+  binding: ActiveEffectBinding;
+  transform: EffectTransform;
+  opacity: number;
+}) {
+  const framePath = getEffectSpriteFrame(binding);
+  const texture = useLoader(THREE.TextureLoader, framePath);
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const { camera } = useThree();
+  useEffect(() => {
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.needsUpdate = true;
+  }, [texture]);
+  useFrame(() => {
+    if (binding.effect.billboard && meshRef.current) meshRef.current.lookAt(camera.position);
+    if (materialRef.current) materialRef.current.opacity = opacity;
+  });
+  const image = texture.image as { width?: number; height?: number } | undefined;
+  const aspect = image?.width && image?.height ? image.width / image.height : 1;
+  return (
+    <mesh ref={meshRef} scale={[aspect, 1, 1]} renderOrder={46}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial
+        ref={materialRef}
+        map={texture}
+        color={transform.color}
+        transparent
+        opacity={opacity}
+        alphaTest={0.02}
+        blending={binding.effect.blendMode === 'normal' ? THREE.NormalBlending : THREE.AdditiveBlending}
+        depthWrite={false}
+        toneMapped={false}
+      />
+    </mesh>
+  );
+}
+
+function getEffectSpriteFrame(binding: ActiveEffectBinding) {
+  const localFrame = Math.max(0, binding.moveFrame - binding.instance.startFrame);
+  const frameStep = Math.max(1, Math.round(60 / Math.max(1, binding.effect.fps)));
+  const rawIndex = Math.floor(localFrame / frameStep);
+  const frames = binding.effect.frames ?? [];
+  const maxIndex = Math.max(0, frames.length - 1);
+  const index = binding.instance.loop || binding.effect.loop ? rawIndex % (maxIndex + 1) : Math.min(maxIndex, rawIndex);
+  return frames[index] ?? frames[0];
+}
+
+function ProceduralEffectVisual({
+  kind,
+  color,
+  count,
+  intensity,
+  size,
+  opacity,
+  seed
+}: {
+  kind: string;
+  color: string;
+  count: number;
+  intensity: number;
+  size: number;
+  opacity: number;
+  seed: number;
+}) {
+  if (kind === 'ring') {
+    return (
+      <mesh scale={size} renderOrder={45}>
+        <torusGeometry args={[0.55, 0.035, 8, 44]} />
+        <meshBasicMaterial color={color} transparent opacity={opacity * intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+    );
+  }
+  if (kind === 'lightning' || kind === 'shards') {
+    return (
+      <group>
+        {makeSparkDirections(seed, Math.min(32, count)).map((direction, index) => (
+          <mesh
+            key={`${kind}-${index}`}
+            position={[direction[0] * 0.34 * size, direction[1] * 0.22 * size, direction[2]]}
+            rotation={[0, 0, direction[3]]}
+            scale={[direction[4] * size, 0.035 * size, 0.035 * size]}
+            renderOrder={47}
+          >
+            <boxGeometry args={[0.42, 0.06, 0.06]} />
+            <meshBasicMaterial color={color} transparent opacity={opacity * intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        ))}
+      </group>
+    );
+  }
+  if (kind === 'wind' || kind === 'trail') {
+    return (
+      <group>
+        {[0, 1, 2].map((index) => (
+          <mesh key={index} rotation={[0, 0, index * 0.55]} scale={[size * (1 + index * 0.18), size * 0.28, size]} renderOrder={44}>
+            <torusGeometry args={[0.45, 0.018, 8, 42, Math.PI * 1.35]} />
+            <meshBasicMaterial color={color} transparent opacity={opacity * intensity * 0.72} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        ))}
+      </group>
+    );
+  }
+  return (
+    <mesh scale={size} renderOrder={43}>
+      <sphereGeometry args={[0.42, 16, 10]} />
+      <meshBasicMaterial color={color} transparent opacity={opacity * intensity * 0.44} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+    </mesh>
+  );
+}
+
+function resolveEffectWorldPosition(fighter: FighterRuntime, transform: EffectTransform, anchor: string): [number, number, number] {
+  const facing = fighter.facing;
+  const anchorOffsets: Record<string, [number, number, number]> = {
+    root: [0, 0, 0],
+    body: [0, 1.05, 0],
+    head: [0, 1.75, 0],
+    hands: [0.52 * facing, 1.18, 0],
+    feet: [0.18 * facing, 0.28, 0],
+    hitbox: [0.78 * facing, 1.08, 0],
+    world: [0, 0, 0]
+  };
+  const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
+  if (anchor === 'world') return [...transform.position] as [number, number, number];
+  const mirroredX = transform.position[0] * (facing === -1 ? -1 : 1);
+  return [
+    fighter.position.x + offset[0] + mirroredX,
+    fighter.position.y + offset[1] + transform.position[1],
+    fighter.position.z + offset[2] + transform.position[2]
+  ];
 }
 
 type StagePreviewCanvasProps = {
@@ -497,6 +801,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     sidestepDirection: 0,
     jumpInputHeld: false,
     currentMove: null,
+    moveInstanceId: 0,
     actionTimer: 0,
     actionFramesRemaining: 0,
     moveFrame: 0,

@@ -34,6 +34,7 @@ export type CompactFighterSnapshot = {
   sidestepDirection: -1 | 0 | 1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
+  moveInstanceId: number;
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;
@@ -169,6 +170,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     sidestepDirection: fighter.sidestepDirection,
     jumpInputHeld: fighter.jumpInputHeld,
     currentMove: fighter.currentMove,
+    moveInstanceId: fighter.moveInstanceId,
     actionTimer: fighter.actionTimer,
     actionFramesRemaining: fighter.actionFramesRemaining,
     moveFrame: fighter.moveFrame,
@@ -213,6 +215,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
     sidestepDirection: snapshot.sidestepDirection,
     jumpInputHeld: snapshot.jumpInputHeld,
     currentMove: snapshot.currentMove,
+    moveInstanceId: snapshot.moveInstanceId ?? base.moveInstanceId,
     actionTimer: snapshot.actionTimer,
     actionFramesRemaining: snapshot.actionFramesRemaining,
     moveFrame: snapshot.moveFrame,
