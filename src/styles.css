@@ -1180,6 +1180,71 @@ button {
   background: #f7f7f2;
 }
 
+.mode-carousel {
+  display: grid;
+  grid-template-columns: 54px minmax(190px, 280px) 54px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 16px 38px rgba(0, 0, 0, 0.24);
+}
+
+.mode-carousel:focus-visible {
+  outline: 2px solid #2ee6ff;
+  outline-offset: 3px;
+}
+
+.mode-carousel-arrow,
+.mode-carousel-current {
+  min-height: 58px;
+  border: 0;
+  border-radius: 7px;
+}
+
+.mode-carousel-arrow {
+  display: grid;
+  place-items: center;
+  color: rgba(247, 247, 242, 0.82);
+  background: rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition-property: transform, background-color, color;
+  transition-duration: 170ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.mode-carousel-arrow:hover {
+  color: #101114;
+  background: #f7f7f2;
+}
+
+.mode-carousel-arrow:active {
+  transform: scale(0.96);
+}
+
+.mode-carousel-current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 22px;
+  color: #101114;
+  background: #f7f7f2;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+}
+
+.mode-carousel-current strong {
+  font-size: clamp(18px, 2.4vw, 28px);
+  font-weight: 900;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 .cpu-difficulty {
   display: grid;
   gap: 7px;
@@ -1192,7 +1257,12 @@ button {
 
 .cpu-difficulty.is-compact {
   min-width: min(320px, 100%);
-  padding: 9px 12px;
+  padding: 9px;
+}
+
+.cpu-difficulty.is-compact:focus-visible {
+  outline: 2px solid #2ee6ff;
+  outline-offset: 3px;
 }
 
 .cpu-difficulty > span {
@@ -1222,6 +1292,30 @@ button {
   font-weight: 950;
   text-align: right;
   text-transform: uppercase;
+}
+
+.difficulty-carousel {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 8px;
+}
+
+.difficulty-carousel strong {
+  display: grid;
+  min-height: 48px;
+  min-width: 0;
+  place-items: center;
+  border-radius: 7px;
+  padding: 0 18px;
+  color: #101114;
+  background: #f7f7f2;
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 950;
+  text-align: center;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset;
 }
 
 .settings-strip {
@@ -4112,8 +4206,13 @@ button {
     justify-items: stretch;
   }
 
+  .mode-carousel,
   .versus-select-top .segmented {
     width: 100%;
+  }
+
+  .mode-carousel {
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
   }
 
   .versus-select-top .segmented button {

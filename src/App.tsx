@@ -1,5 +1,7 @@
 import anime from 'animejs';
 import {
+  ChevronLeft,
+  ChevronRight,
   ChevronDown,
   Eye,
   EyeOff,
@@ -1164,6 +1166,14 @@ function pickAttractCharacterIds(roster: CharacterDefinition[]): [string, string
   return [first.id, second.id];
 }
 
+const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode }> = [
+  { mode: 'ai', label: '1P vs AI', icon: <Gamepad2 size={18} /> },
+  { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
+  { mode: 'training', label: 'Training', icon: <Target size={18} /> },
+  { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
+  { mode: 'cpu', label: 'CPU vs CPU', icon: <Swords size={18} /> }
+];
+
 function CharacterSelect({
   roster,
   p1Id,
@@ -1192,7 +1202,7 @@ function CharacterSelect({
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
-  const targetLabel = selectTarget === 1 ? `${getSlotLabel(mode, 1).toUpperCase()} >>` : `${getSlotLabel(mode, 2).toUpperCase()} >>`;
+  const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const assignCharacter = (id: string) => {
     if (selectTarget === 1) {
       setP1Id(id);
@@ -1237,7 +1247,7 @@ function CharacterSelect({
             <h2>{targetLabel}</h2>
           </div>
           <div className="mode-stack">
-            <SegmentedControl value={mode} setValue={setMode} />
+            <CharacterSelectModeCarousel value={mode} setValue={setMode} />
             {usesCpuDifficulty(mode) && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />}
           </div>
         </div>
@@ -1291,6 +1301,46 @@ function CharacterSelect({
   );
 }
 
+function CharacterSelectModeCarousel({ value, setValue }: { value: MatchMode; setValue: (mode: MatchMode) => void }) {
+  const activeIndex = Math.max(0, characterSelectModeOptions.findIndex((option) => option.mode === value));
+  const activeOption = characterSelectModeOptions[activeIndex] ?? characterSelectModeOptions[0];
+  const cycleMode = (direction: -1 | 1) => {
+    const nextIndex = (activeIndex + direction + characterSelectModeOptions.length) % characterSelectModeOptions.length;
+    const next = characterSelectModeOptions[nextIndex];
+    if (next) setValue(next.mode);
+  };
+
+  return (
+    <div
+      className="mode-carousel"
+      role="group"
+      aria-label="Match mode"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          cycleMode(-1);
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          cycleMode(1);
+        }
+      }}
+    >
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1)} aria-label="Previous match mode">
+        <ChevronLeft size={26} />
+      </button>
+      <div className="mode-carousel-current" aria-live="polite">
+        {activeOption.icon}
+        <strong>{activeOption.label}</strong>
+      </div>
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(1)} aria-label="Next match mode">
+        <ChevronRight size={26} />
+      </button>
+    </div>
+  );
+}
+
 function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mode: MatchMode) => void }) {
   return (
     <div className="segmented" role="tablist" aria-label="Match mode">
@@ -1331,9 +1381,44 @@ function CpuDifficultyControl({
     const next = Math.min(5, Math.max(1, Number(rawValue))) as CpuDifficulty;
     setValue(next);
   };
+  const cycleDifficulty = (direction: -1 | 1) => {
+    setValue(Math.min(5, Math.max(1, value + direction)) as CpuDifficulty);
+  };
+
+  if (compact) {
+    return (
+      <div
+        className="cpu-difficulty is-compact"
+        role="group"
+        aria-label="CPU difficulty"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            cycleDifficulty(-1);
+          }
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            cycleDifficulty(1);
+          }
+        }}
+      >
+        <span>CPU Difficulty</span>
+        <div className="difficulty-carousel">
+          <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(-1)} aria-label="Lower CPU difficulty">
+            <ChevronLeft size={24} />
+          </button>
+          <strong>{cpuDifficultyLabels[value]}</strong>
+          <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(1)} aria-label="Raise CPU difficulty">
+            <ChevronRight size={24} />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <label className={`cpu-difficulty ${compact ? 'is-compact' : ''}`}>
+    <label className="cpu-difficulty">
       <span>CPU Difficulty</span>
       <div>
         <input
