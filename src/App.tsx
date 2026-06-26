@@ -116,6 +116,7 @@ type YouTubePlayer = {
   loadPlaylist: (options: { list: string; listType: 'playlist'; index?: number; startSeconds?: number }) => void;
   mute: () => void;
   nextVideo: () => void;
+  pauseVideo: () => void;
   playVideo: () => void;
   playVideoAt: (index: number) => void;
   previousVideo: () => void;
@@ -963,7 +964,12 @@ function YouTubeBgmPlayer({
 
   useEffect(() => {
     if (!started || !source || !mountRef.current) {
-      playerRef.current?.destroy();
+      const player = playerRef.current;
+      if (player && readyRef.current) {
+        player.pauseVideo();
+        player.mute();
+      }
+      player?.destroy();
       playerRef.current = null;
       readyRef.current = false;
       if (mountRef.current) mountRef.current.innerHTML = '';
@@ -1032,7 +1038,12 @@ function YouTubeBgmPlayer({
       });
     return () => {
       disposed = true;
-      playerRef.current?.destroy();
+      const player = playerRef.current;
+      if (player && readyRef.current) {
+        player.pauseVideo();
+        player.mute();
+      }
+      player?.destroy();
       playerRef.current = null;
       readyRef.current = false;
       if (mountRef.current) mountRef.current.innerHTML = '';
@@ -1279,7 +1290,7 @@ export default function App() {
   const selectedStage = stageRoster.find((stage) => stage.id === stageId) ?? stageRoster[0] ?? stages[0];
   const activeBgmSource = useMemo(() => {
     if (!musicStarted) return null;
-    if (screen === 'fight') return stageBgmSource(selectedStage);
+    if (screen === 'fight') return null;
     return KORE_MENU_BGM_SOURCE;
   }, [musicStarted, screen, selectedStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack ? activeBgmSource.trackIndex : settings.audio.bgmTrackIndex;
