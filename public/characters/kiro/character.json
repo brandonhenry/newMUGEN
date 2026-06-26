@@ -451,17 +451,20 @@
       "knockdown": false
     },
     "cmd:3+4": {
-      "launchHeight": 0,
-      "knockdown": false,
-      "label": "Shadow Clone Rising Kick",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 23,
       "damage": 13,
-      "hitLevel": "mid",
       "onBlockFrames": -11,
       "onHitFrames": 27,
-      "onCounterHitFrames": 33
+      "onCounterHitFrames": 33,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
+      "label": "Shadow Clone Rising Kick",
+      "hitLevel": "mid",
+      "knockdown": false
     },
     "neutral:jab-jab": {
       "label": "Shadow Clone Feint"
@@ -569,6 +572,7 @@
     "0": {
       "index": 0,
       "path": "/characters/kiro/frames/frame-000.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -592,6 +596,7 @@
     "110": {
       "index": 110,
       "path": "/characters/kiro/frames/frame-110.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -615,6 +620,7 @@
     "190": {
       "index": 190,
       "path": "/characters/kiro/frames/frame-190.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -638,6 +644,7 @@
     "197": {
       "index": 197,
       "path": "/characters/kiro/frames/frame-197.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -661,6 +668,7 @@
     "198": {
       "index": 198,
       "path": "/characters/kiro/frames/frame-198.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -684,6 +692,7 @@
     "199": {
       "index": 199,
       "path": "/characters/kiro/frames/frame-199.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -707,6 +716,7 @@
     "200": {
       "index": 200,
       "path": "/characters/kiro/frames/frame-200.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -730,6 +740,7 @@
     "201": {
       "index": 201,
       "path": "/characters/kiro/frames/frame-201.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -753,6 +764,7 @@
     "202": {
       "index": 202,
       "path": "/characters/kiro/frames/frame-202.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -776,6 +788,7 @@
     "208": {
       "index": 208,
       "path": "/characters/kiro/frames/frame-208.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -799,6 +812,7 @@
     "209": {
       "index": 209,
       "path": "/characters/kiro/frames/frame-209.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -822,6 +836,7 @@
     "210": {
       "index": 210,
       "path": "/characters/kiro/frames/frame-210.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -845,6 +860,7 @@
     "213": {
       "index": 213,
       "path": "/characters/kiro/frames/frame-213.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -868,6 +884,7 @@
     "214": {
       "index": 214,
       "path": "/characters/kiro/frames/frame-214.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -891,6 +908,7 @@
     "215": {
       "index": 215,
       "path": "/characters/kiro/frames/frame-215.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -914,6 +932,7 @@
     "216": {
       "index": 216,
       "path": "/characters/kiro/frames/frame-216.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -937,6 +956,7 @@
     "217": {
       "index": 217,
       "path": "/characters/kiro/frames/frame-217.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -956,6 +976,31 @@
       ],
       "scale": 1,
       "hidden": false
+    },
+    "221": {
+      "index": 221,
+      "path": "/characters/kiro/frames/frame-221.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        22,
+        2029,
+        58,
+        2081
+      ],
+      "width": 36,
+      "height": 52,
+      "row": 25,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782480221907
     }
   },
   "spriteSheets": [
