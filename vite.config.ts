@@ -15,6 +15,7 @@ type DevManifestPayload = {
   animationFrameRates?: Record<string, number>;
   moveOverrides?: Record<string, Record<string, unknown>>;
   spriteFrameEdits?: Record<string, Record<string, unknown>>;
+  spriteSheets?: Array<Record<string, unknown>>;
   voxelProfile?: string;
   voxelFidelity?: Record<string, unknown>;
 };
@@ -24,6 +25,21 @@ type DevSpriteFramePayload = {
   frameIndex?: number;
   edit?: Record<string, unknown>;
   pngDataUrl?: string;
+};
+
+type DevImportCharacterSpriteSheetPayload = {
+  characterId?: string;
+  sheetId?: string;
+  sheetName?: string;
+  sheetDataUrl?: string;
+  frames?: Array<{
+    index?: number;
+    dataUrl?: string;
+    box?: unknown;
+    width?: number;
+    height?: number;
+    row?: number;
+  }>;
 };
 
 type DevHdVoxelPayload = {
@@ -156,6 +172,7 @@ function koreDevManifestWriter() {
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
           manifest.spriteFrameEdits = sanitizeSpriteFrameEditMap(payload.spriteFrameEdits ?? {});
+          manifest.spriteSheets = sanitizeSpriteSheets(payload.spriteSheets, manifest.spriteSheetPath, characterId, Number(manifest.spriteFrameCount) || 0);
           if (payload.voxelProfile) manifest.voxelProfile = sanitizeVoxelProfile(payload.voxelProfile);
           if (payload.voxelFidelity) manifest.voxelFidelity = sanitizeVoxelFidelity(payload.voxelFidelity);
           await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
@@ -207,6 +224,9 @@ function koreDevManifestWriter() {
           const frameEntry = {
             index: frameIndex,
             path: `/characters/${characterId}/frames/frame-${frameIndex.toString().padStart(3, '0')}.png`,
+            sheetId: typeof edit.sheetId === 'string' ? edit.sheetId : undefined,
+            sheetPath: typeof edit.sheetPath === 'string' ? edit.sheetPath : undefined,
+            sourceName: typeof edit.sourceName === 'string' ? edit.sourceName : undefined,
             box: edit.box,
             width: edit.width,
             height: edit.height,
@@ -233,6 +253,116 @@ function koreDevManifestWriter() {
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: true, characterId, frameIndex, framePath, framesJsonPath, manifestPath }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-character-spritesheet', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportCharacterSpriteSheetPayload;
+          const characterId = payload.characterId ?? '';
+          const requestedSheetId = payload.sheetId ?? '';
+          const sheetId = sanitizeAssetId(requestedSheetId || payload.sheetName || `sheet-${Date.now()}`);
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !sheetId) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid character id or sheet id' }));
+            return;
+          }
+          const frames = Array.isArray(payload.frames) ? payload.frames : [];
+          if (frames.length === 0 || frames.length > 2000) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Expected 1-2000 frames' }));
+            return;
+          }
+
+          const characterDir = resolve(server.config.root, 'public', 'characters', characterId);
+          const framesDir = resolve(characterDir, 'frames');
+          const sheetsDir = resolve(characterDir, 'sheets');
+          const framesJsonPath = resolve(framesDir, 'frames.json');
+          const manifestPath = resolve(characterDir, 'character.json');
+          await mkdir(framesDir, { recursive: true });
+          await mkdir(sheetsDir, { recursive: true });
+
+          const sheetPath = `/characters/${characterId}/sheets/${sheetId}.png`;
+          await writeFile(resolve(sheetsDir, `${sheetId}.png`), dataUrlToPngBuffer(payload.sheetDataUrl));
+
+          let frameData: { frames?: Array<Record<string, unknown>>; count?: number; sheets?: Array<Record<string, unknown>>; source?: string };
+          try {
+            frameData = JSON.parse(await readFile(framesJsonPath, 'utf8')) as typeof frameData;
+          } catch {
+            frameData = { frames: [], count: 0 };
+          }
+          const existingFrames = Array.isArray(frameData.frames) ? frameData.frames : [];
+          const startIndex = Math.max(
+            Number(frameData.count) || 0,
+            existingFrames.reduce((max, frame) => Math.max(max, Math.round(finiteOr(frame.index, -1)) + 1), 0)
+          );
+          const sheetName = typeof payload.sheetName === 'string' && payload.sheetName.trim() ? payload.sheetName.trim().slice(0, 120) : sheetId;
+          const frameEntries = frames
+            .map((frame, fallbackIndex) => {
+              const index = startIndex + fallbackIndex;
+              const box = normalizeBox(frame.box);
+              return {
+                index,
+                dataUrl: frame.dataUrl,
+                path: `/characters/${characterId}/frames/frame-${index.toString().padStart(3, '0')}.png`,
+                sheetId,
+                sheetPath,
+                sourceName: sheetName,
+                box,
+                width: Math.max(1, Math.round(finiteOr(frame.width, box[2] - box[0]))),
+                height: Math.max(1, Math.round(finiteOr(frame.height, box[3] - box[1]))),
+                row: Math.max(0, Math.round(finiteOr(frame.row, 0)))
+              };
+            });
+
+          await Promise.all(
+            frameEntries.map((frame) =>
+              writeFile(resolve(framesDir, `frame-${frame.index.toString().padStart(3, '0')}.png`), dataUrlToPngBuffer(frame.dataUrl))
+            )
+          );
+
+          const sheetEntry = {
+            id: sheetId,
+            name: sheetName,
+            path: sheetPath,
+            frameStart: startIndex,
+            frameCount: frameEntries.length
+          };
+          const existingSheets = Array.isArray(frameData.sheets) ? frameData.sheets : [];
+          const sheets = [...existingSheets.filter((sheet) => sheet && typeof sheet === 'object' && (sheet as Record<string, unknown>).id !== sheetId), sheetEntry];
+          frameData.frames = [...existingFrames, ...frameEntries.map(({ dataUrl, ...frame }) => frame)].sort((a, b) => Number(a.index) - Number(b.index));
+          frameData.count = Math.max(Number(frameData.count) || 0, startIndex + frameEntries.length);
+          frameData.sheets = sheets.sort((a, b) => Number(finiteOr(a.frameStart, 0)) - Number(finiteOr(b.frameStart, 0)));
+          await writeFile(framesJsonPath, `${JSON.stringify(frameData, null, 2)}\n`, 'utf8');
+
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          const manifestSheets = sanitizeSpriteSheets(manifest.spriteSheets, manifest.spriteSheetPath, characterId, Number(manifest.spriteFrameCount) || startIndex);
+          const nextSheets = [...manifestSheets.filter((sheet) => sheet.id !== sheetId), sheetEntry].sort((a, b) => a.frameStart - b.frameStart);
+          const edits = sanitizeSpriteFrameEditMap((manifest.spriteFrameEdits as Record<string, Record<string, unknown>> | undefined) ?? {});
+          frameEntries.forEach(({ dataUrl, ...frame }) => {
+            edits[String(frame.index)] = sanitizeSpriteFrameEdit(frame);
+          });
+          manifest.spriteSheets = nextSheets;
+          manifest.spriteFrameEdits = edits;
+          manifest.spriteFrameCount = Math.max(Number(manifest.spriteFrameCount) || 0, startIndex + frameEntries.length);
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, characterId, sheet: sheetEntry, firstFrameIndex: startIndex, frameCount: frameEntries.length }));
         } catch (error) {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
@@ -331,6 +461,9 @@ function koreDevManifestWriter() {
                 index,
                 dataUrl: frame.dataUrl,
                 path: framePath,
+                sheetId: 'main',
+                sheetPath: `/characters/${characterId}/animation-sheet.png`,
+                sourceName: payload.sourceName ?? 'Main Sheet',
                 box: normalizeBox(frame.box),
                 width: Math.max(1, Math.round(finiteOr(frame.width, 32))),
                 height: Math.max(1, Math.round(finiteOr(frame.height, 32))),
@@ -350,6 +483,13 @@ function koreDevManifestWriter() {
             `${JSON.stringify({
               source: payload.sourceName ?? 'imported sprite sheet',
               count: frameEntries.length,
+              sheets: [{
+                id: 'main',
+                name: payload.sourceName ?? 'Main Sheet',
+                path: `/characters/${characterId}/animation-sheet.png`,
+                frameStart: 0,
+                frameCount: frameEntries.length
+              }],
               frames: frameEntries.map(({ dataUrl, ...frame }) => frame)
             }, null, 2)}\n`,
             'utf8'
@@ -735,6 +875,9 @@ function sanitizeSpriteFrameEdit(edit: Record<string, unknown>) {
   return {
     index,
     path: typeof edit.path === 'string' ? edit.path : undefined,
+    sheetId: typeof edit.sheetId === 'string' ? sanitizeAssetId(edit.sheetId) : undefined,
+    sheetPath: typeof edit.sheetPath === 'string' && edit.sheetPath.startsWith('/characters/') ? edit.sheetPath : undefined,
+    sourceName: typeof edit.sourceName === 'string' ? edit.sourceName.slice(0, 120) : undefined,
     box,
     width,
     height,
@@ -744,6 +887,36 @@ function sanitizeSpriteFrameEdit(edit: Record<string, unknown>) {
     scale,
     hidden: Boolean(edit.hidden)
   };
+}
+
+function sanitizeAssetId(value: unknown) {
+  return typeof value === 'string'
+    ? value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48)
+    : '';
+}
+
+function sanitizeSpriteSheets(value: unknown, fallbackPath: unknown, characterId: string, fallbackCount: number) {
+  const fallbackSheetPath = typeof fallbackPath === 'string' ? fallbackPath : `/characters/${characterId}/animation-sheet.png`;
+  const fromManifest = Array.isArray(value)
+    ? value
+        .filter((sheet): sheet is Record<string, unknown> => Boolean(sheet) && typeof sheet === 'object')
+        .map((sheet, index) => ({
+          id: sanitizeAssetId(sheet.id) || `sheet-${index + 1}`,
+          name: typeof sheet.name === 'string' && sheet.name.trim() ? sheet.name.trim().slice(0, 120) : `Sheet ${index + 1}`,
+          path: typeof sheet.path === 'string' && sheet.path.startsWith('/characters/') ? sheet.path : fallbackSheetPath,
+          frameStart: Math.max(0, Math.round(finiteOr(sheet.frameStart, 0))),
+          frameCount: Math.max(0, Math.round(finiteOr(sheet.frameCount, fallbackCount)))
+        }))
+        .filter((sheet) => sheet.frameCount > 0)
+    : [];
+  if (fromManifest.length > 0) return fromManifest;
+  return [{
+    id: 'main',
+    name: 'Main Sheet',
+    path: fallbackSheetPath,
+    frameStart: 0,
+    frameCount: Math.max(0, Math.round(fallbackCount))
+  }];
 }
 
 function normalizeBox(value: unknown): [number, number, number, number] {
@@ -897,6 +1070,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     renderMode: 'spriteVoxel',
     modelPath: `spritevoxel://${characterId}`,
     spriteSheetPath: `/characters/${characterId}/animation-sheet.png`,
+    spriteSheets: sanitizeSpriteSheets(manifest.spriteSheets, manifest.spriteSheetPath, characterId, frameCount),
     spriteFrameCount: frameCount,
     voxelProfile: 'image-source',
     animationFrames,

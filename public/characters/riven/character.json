@@ -381,6 +381,11 @@
       "/characters/riven/frames/frame-105.png",
       "/characters/riven/frames/frame-106.png",
       "/characters/riven/frames/frame-107.png"
+    ],
+    "cmd:1": [
+      "/characters/riven/frames/frame-079.png",
+      "/characters/riven/frames/frame-080.png",
+      "/characters/riven/frames/frame-081.png"
     ]
   },
   "animationFps": 5,
@@ -547,5 +552,14 @@
       "label": "Fire Style Sweep"
     }
   },
-  "spriteFrameEdits": {}
+  "spriteFrameEdits": {},
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/riven/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 209
+    }
+  ]
 }

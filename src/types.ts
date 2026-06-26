@@ -122,6 +122,9 @@ export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox
 export type SpriteFrameEdit = {
   index: number;
   path?: string;
+  sheetId?: string;
+  sheetPath?: string;
+  sourceName?: string;
   box: [number, number, number, number];
   width: number;
   height: number;
@@ -130,6 +133,14 @@ export type SpriteFrameEdit = {
   offset?: [number, number];
   scale?: number;
   hidden?: boolean;
+};
+
+export type CharacterSpriteSheet = {
+  id: string;
+  name: string;
+  path: string;
+  frameStart: number;
+  frameCount: number;
 };
 
 export type VoxelFidelitySettings = {
@@ -151,6 +162,7 @@ export type CharacterDefinition = {
   renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
   spriteSheetPath?: string;
+  spriteSheets?: CharacterSpriteSheet[];
   spriteFrameCount?: number;
   spriteFrameEdits?: Record<string, SpriteFrameEdit>;
   voxelProfile?: 'shinobi-orange' | 'shinobi-blue' | 'image-source' | 'hd-image-source';

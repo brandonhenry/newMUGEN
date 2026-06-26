@@ -358,6 +358,21 @@
     ],
     "cmd:3+4": [
       "/characters/kiro/frames/frame-221.png"
+    ],
+    "cmd:d+1": [
+      "/characters/kiro/frames/frame-227.png",
+      "/characters/kiro/frames/frame-228.png",
+      "/characters/kiro/frames/frame-229.png"
+    ],
+    "cmd:D+3": [
+      "/characters/kiro/frames/frame-141.png",
+      "/characters/kiro/frames/frame-142.png",
+      "/characters/kiro/frames/frame-143.png"
+    ],
+    "cmd:1": [
+      "/characters/kiro/frames/frame-075.png",
+      "/characters/kiro/frames/frame-076.png",
+      "/characters/kiro/frames/frame-077.png"
     ]
   },
   "animationFps": 5,
@@ -542,6 +557,12 @@
     "kick": {
       "startupFrames": 10,
       "recoveryFrames": 11
+    },
+    "cmd:D+3": {
+      "hitLevel": "low"
+    },
+    "cmd:d+1": {
+      "hitLevel": "low"
     }
   },
   "spriteFrameEdits": {
@@ -564,6 +585,84 @@
       ],
       "scale": 1,
       "hidden": false
+    },
+    "213": {
+      "index": 213,
+      "path": "/characters/kiro/frames/frame-213.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        651,
+        1904,
+        710,
+        1947
+      ],
+      "width": 59,
+      "height": 43,
+      "row": 24,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "214": {
+      "index": 214,
+      "path": "/characters/kiro/frames/frame-214.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        232,
+        1966,
+        279,
+        2018
+      ],
+      "width": 47,
+      "height": 52,
+      "row": 24,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "215": {
+      "index": 215,
+      "path": "/characters/kiro/frames/frame-215.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        512,
+        1962,
+        546,
+        2017
+      ],
+      "width": 34,
+      "height": 55,
+      "row": 24,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
     }
-  }
+  },
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/kiro/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 231
+    }
+  ]
 }

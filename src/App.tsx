@@ -41,6 +41,7 @@ import {
   emptyInputFrame,
   type ActionName,
   type CharacterDefinition,
+  type CharacterSpriteSheet,
   type CombatPopupEvent,
   type CpuDifficulty,
   type GameSettings,
@@ -429,6 +430,9 @@ function sanitizeSpriteFrameEdit(edit: SpriteFrameEdit): SpriteFrameEdit {
   return {
     index: Math.max(0, Math.round(Number(edit.index) || 0)),
     path: edit.path,
+    sheetId: edit.sheetId,
+    sheetPath: edit.sheetPath,
+    sourceName: edit.sourceName,
     box: [x1, y1, x2, y2],
     width: Math.max(1, Math.round(Number(edit.width) || x2 - x1)),
     height: Math.max(1, Math.round(Number(edit.height) || y2 - y1)),
@@ -507,6 +511,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       animationFrameRates: character.animationFrameRates ?? {},
       moveOverrides: character.moveOverrides ?? {},
       spriteFrameEdits: character.spriteFrameEdits ?? {},
+      spriteSheets: getCharacterSpriteSheets(character),
       voxelProfile: character.voxelProfile ?? 'image-source',
       voxelFidelity: character.voxelFidelity ?? defaultVoxelFidelitySettings
     })
@@ -521,6 +526,60 @@ function getFrameIndex(path: string) {
 
 function framePath(character: CharacterDefinition, index: number) {
   return `/characters/${character.id}/frames/frame-${index.toString().padStart(3, '0')}.png`;
+}
+
+function getCharacterSpriteSheets(character: CharacterDefinition, frameCount?: number): CharacterSpriteSheet[] {
+  const fallbackCount =
+    frameCount ??
+    character.spriteFrameCount ??
+    Math.max(0, ...Object.values(character.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
+  const sheets = (character.spriteSheets ?? [])
+    .filter((sheet) => sheet.id && sheet.path)
+    .map((sheet, index) => ({
+      id: sheet.id,
+      name: sheet.name || `Sheet ${index + 1}`,
+      path: sheet.path,
+      frameStart: Math.max(0, Math.round(sheet.frameStart)),
+      frameCount: Math.max(0, Math.round(sheet.frameCount))
+    }))
+    .filter((sheet) => sheet.frameCount > 0);
+  if (sheets.length > 0) return sheets;
+  return [{
+    id: 'main',
+    name: 'Main Sheet',
+    path: character.spriteSheetPath ?? `/characters/${character.id}/animation-sheet.png`,
+    frameStart: 0,
+    frameCount: Math.max(0, fallbackCount)
+  }];
+}
+
+function getSpriteSheetForFrame(character: CharacterDefinition, frameIndex: number, edit?: SpriteFrameEdit, frameCount?: number): CharacterSpriteSheet {
+  if (edit?.sheetId || edit?.sheetPath) {
+    const sheets = getCharacterSpriteSheets(character, frameCount);
+    const match = sheets.find((sheet) => sheet.id === edit.sheetId || sheet.path === edit.sheetPath);
+    if (match) return match;
+    return {
+      id: edit.sheetId ?? 'main',
+      name: edit.sourceName ?? 'Source Sheet',
+      path: edit.sheetPath ?? character.spriteSheetPath ?? `/characters/${character.id}/animation-sheet.png`,
+      frameStart: frameIndex,
+      frameCount: 1
+    };
+  }
+  return getCharacterSpriteSheets(character, frameCount).find((sheet) => frameIndex >= sheet.frameStart && frameIndex < sheet.frameStart + sheet.frameCount)
+    ?? getCharacterSpriteSheets(character, frameCount)[0];
+}
+
+function uniqueSpriteSheetId(character: CharacterDefinition, fileName: string) {
+  const base = slugifyCharacterId(fileName.replace(/\.[^.]+$/, '')) || 'sheet';
+  const existing = new Set(getCharacterSpriteSheets(character).map((sheet) => sheet.id));
+  let id = base;
+  let suffix = 2;
+  while (existing.has(id)) {
+    id = `${base}-${suffix}`;
+    suffix += 1;
+  }
+  return id;
 }
 
 function normalizeVoxelFidelity(settings?: VoxelFidelitySettings): Required<VoxelFidelitySettings> {
@@ -2862,8 +2921,10 @@ function CharacterViewer({
   const [showSpriteSheetPreview, setShowSpriteSheetPreview] = useState(false);
   const [selectedSpriteFrameIndex, setSelectedSpriteFrameIndex] = useState(0);
   const [spriteFrameMeta, setSpriteFrameMeta] = useState<Record<string, SpriteFrameEdit>>({});
+  const [spriteFrameMetaRefresh, setSpriteFrameMetaRefresh] = useState(0);
   const [manifestSaveStatus, setManifestSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [spriteSaveStatus, setSpriteSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [spriteSheetImportStatus, setSpriteSheetImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -2880,6 +2941,7 @@ function CharacterViewer({
     () => Array.from({ length: frameCount }, (_, index) => framePath(active, index)),
     [active, frameCount]
   );
+  const spriteSheets = useMemo(() => getCharacterSpriteSheets(active, frameCount), [active, frameCount]);
   const selectedFrames = active.animationFrames?.[selectedSlot.key] ?? [];
   const defaultFrames = sourceActive.animationFrames?.[selectedSlot.key] ?? selectedFrames;
   const selectedSpeed = active.animationFrameRates?.[selectedSlot.key] ?? active.animationFps ?? 8;
@@ -2983,7 +3045,7 @@ function CharacterViewer({
     return () => {
       mounted = false;
     };
-  }, [active.id]);
+  }, [active.id, spriteFrameMetaRefresh]);
 
   useEffect(() => {
     if (!isLocalDev && editorMode !== 'browse') setEditorMode('browse');
@@ -3104,6 +3166,36 @@ function CharacterViewer({
     } catch (error) {
       console.error('Failed to save sprite frame', error);
       setSpriteSaveStatus('error');
+    }
+  };
+
+  const importAdditionalSpriteSheet = async (file: File | undefined) => {
+    if (!file || !isLocalDev) return;
+    setSpriteSheetImportStatus('working');
+    try {
+      const result = await detectSpriteSheetFrames(file);
+      const sheetId = uniqueSpriteSheetId(active, file.name);
+      const response = await fetch('/__kore/dev/import-character-spritesheet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          sheetId,
+          sheetName: file.name,
+          sheetDataUrl: result.sheetDataUrl,
+          frames: result.frames
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as { firstFrameIndex?: number };
+      await onImportComplete(active.id);
+      setSpriteFrameMetaRefresh((value) => value + 1);
+      setSelectedSpriteFrameIndex(Math.max(0, Math.round(Number(payload.firstFrameIndex) || frameCount)));
+      setSpriteSheetImportStatus('saved');
+      window.setTimeout(() => setSpriteSheetImportStatus('idle'), 2200);
+    } catch (error) {
+      console.error('Failed to append character spritesheet', error);
+      setSpriteSheetImportStatus('error');
     }
   };
 
@@ -3310,14 +3402,17 @@ function CharacterViewer({
             <SpriteSheetFrameEditor
               character={active}
               frameBank={frameBank}
+              spriteSheets={spriteSheets}
               frameMeta={spriteFrameMeta}
               selectedFrameIndex={selectedSpriteFrameIndex}
               selectedFrames={selectedFrames}
               selectedFrameSet={selectedFrameSet}
               saveStatus={spriteSaveStatus}
+              importStatus={spriteSheetImportStatus}
               onSelectFrame={setSelectedSpriteFrameIndex}
               onToggleFrame={toggleFrame}
               onSave={saveSpriteFrame}
+              onImportSpriteSheet={importAdditionalSpriteSheet}
             />
           ) : isEditingAnimation ? (
             <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
@@ -3497,6 +3592,9 @@ function createDefaultSpriteFrameEdit(character: CharacterDefinition, frameIndex
   return {
     index: frameIndex,
     path: framePath(character, frameIndex),
+    sheetId: getSpriteSheetForFrame(character, frameIndex).id,
+    sheetPath: getSpriteSheetForFrame(character, frameIndex).path,
+    sourceName: getSpriteSheetForFrame(character, frameIndex).name,
     box: [0, 0, 64, 64],
     width: 64,
     height: 64,
@@ -3622,25 +3720,31 @@ function renderSpriteFrameCanvas(sheet: HTMLImageElement | null, canvas: HTMLCan
 function SpriteSheetFrameEditor({
   character,
   frameBank,
+  spriteSheets,
   frameMeta,
   selectedFrameIndex,
   selectedFrames,
   selectedFrameSet,
   saveStatus,
+  importStatus,
   onSelectFrame,
   onToggleFrame,
-  onSave
+  onSave,
+  onImportSpriteSheet
 }: {
   character: CharacterDefinition;
   frameBank: string[];
+  spriteSheets: CharacterSpriteSheet[];
   frameMeta: Record<string, SpriteFrameEdit>;
   selectedFrameIndex: number;
   selectedFrames: string[];
   selectedFrameSet: Set<string>;
   saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  importStatus: 'idle' | 'working' | 'saved' | 'error';
   onSelectFrame: (index: number) => void;
   onToggleFrame: (path: string) => void;
   onSave: (edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
+  onImportSpriteSheet: (file: File | undefined) => Promise<void>;
 }) {
   const sheetRef = useRef<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -3652,6 +3756,9 @@ function SpriteSheetFrameEditor({
   const [sheetSize, setSheetSize] = useState({ width: 1, height: 1 });
   const [edit, setEdit] = useState<SpriteFrameEdit>(() => createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]));
   const selectedFramePath = framePath(character, selectedFrameIndex);
+  const selectedFrameMeta = frameMeta[String(selectedFrameIndex)] ?? character.spriteFrameEdits?.[String(selectedFrameIndex)];
+  const selectedSheet = getSpriteSheetForFrame(character, selectedFrameIndex, selectedFrameMeta, frameBank.length);
+  const selectedSheetPath = selectedSheet.path;
   const selectedSequenceIndex = selectedFrames.findIndex((frame) => getFrameIndex(frame) === selectedFrameIndex);
   const selectedInMove = selectedSequenceIndex >= 0;
   const cropWidth = Math.max(1, edit.box[2] - edit.box[0]);
@@ -3665,7 +3772,7 @@ function SpriteSheetFrameEditor({
     const fitted = hasSavedFrameEdit ? null : fitSpriteFrameToVisiblePixels(sheetRef.current, baseEdit);
     const nextEdit = fitted ?? baseEdit;
     setEdit(clampSpriteFrameEditToSheet(nextEdit, sheetSize));
-  }, [character, frameMeta, hasSavedFrameEdit, selectedFrameIndex, sheetSize]);
+  }, [character, frameMeta, hasSavedFrameEdit, selectedFrameIndex, selectedSheetPath, sheetSize]);
 
   useEffect(() => {
     renderSpriteFrameCanvas(sheetRef.current, canvasRef.current, edit);
@@ -3676,7 +3783,10 @@ function SpriteSheetFrameEditor({
       ...current,
       ...patch,
       index: selectedFrameIndex,
-      path: selectedFramePath
+      path: selectedFramePath,
+      sheetId: selectedSheet.id,
+      sheetPath: selectedSheet.path,
+      sourceName: selectedSheet.name
     }), sheetSize));
   };
 
@@ -3730,6 +3840,9 @@ function SpriteSheetFrameEditor({
       {
         ...sanitizeSpriteFrameEdit(edit),
         path: selectedFramePath,
+        sheetId: selectedSheet.id,
+        sheetPath: selectedSheet.path,
+        sourceName: selectedSheet.name,
         width: canvas.width,
         height: canvas.height
       },
@@ -3800,11 +3913,41 @@ function SpriteSheetFrameEditor({
     <section className="sprite-crop-editor" aria-label="Spritesheet crop editor">
       <div className="sprite-crop-stage">
         <div className="sprite-sheet-crop-map">
+          <div className="sprite-sheet-library" aria-label="Character sprite sheets">
+            {spriteSheets.map((sheet) => (
+              <button
+                key={sheet.id}
+                className={sheet.id === selectedSheet.id ? 'active' : ''}
+                onClick={() => onSelectFrame(sheet.frameStart)}
+                title={`${sheet.name}: frames ${sheet.frameStart}-${sheet.frameStart + sheet.frameCount - 1}`}
+              >
+                <span>{sheet.name}</span>
+                <small>{sheet.frameCount} frames</small>
+              </button>
+            ))}
+            <label className="secondary-button compact-button sprite-sheet-import-button">
+              <Upload size={14} />
+              {importStatus === 'working' ? 'Importing' : 'Import Spritesheet'}
+              <input
+                type="file"
+                accept="image/png,image/webp,image/jpeg"
+                onChange={(event) => {
+                  void onImportSpriteSheet(event.target.files?.[0]);
+                  event.currentTarget.value = '';
+                }}
+              />
+            </label>
+            {importStatus !== 'idle' && (
+              <span className={`manifest-save-status is-${importStatus === 'saved' ? 'saved' : importStatus === 'error' ? 'error' : 'saving'}`}>
+                {importStatus === 'saved' ? 'Spritesheet added' : importStatus === 'error' ? 'Import failed' : 'Auto-cropping'}
+              </span>
+            )}
+          </div>
           <div className="sprite-sheet-crop-content">
             <img
               ref={sheetRef}
-              src={character.spriteSheetPath}
-              alt={`${character.displayName} sprite sheet crop map`}
+              src={selectedSheetPath}
+              alt={`${character.displayName} ${selectedSheet.name} crop map`}
               onLoad={(event) => {
                 const image = event.currentTarget;
                 setSheetSize({ width: image.naturalWidth || 1, height: image.naturalHeight || 1 });
@@ -4359,6 +4502,13 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
     renderMode: 'spriteVoxel',
     modelPath: `spritevoxel://${draft.id}`,
     spriteSheetPath: `/characters/${draft.id}/animation-sheet.png`,
+    spriteSheets: [{
+      id: 'main',
+      name: 'Main Sheet',
+      path: `/characters/${draft.id}/animation-sheet.png`,
+      frameStart: 0,
+      frameCount
+    }],
     spriteFrameCount: frameCount,
     voxelProfile: 'image-source',
     animationFrames,
