@@ -566,15 +566,108 @@ button {
 
 .gamepad-stepper {
   display: grid;
-  grid-template-columns: 34px 52px 34px;
+  grid-template-columns: 40px minmax(74px, auto) 40px;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
-.gamepad-stepper span {
+.gamepad-stepper button {
+  display: grid;
+  place-items: center;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+
+.gamepad-prompt {
+  --prompt-glow: rgba(46, 230, 255, 0.2);
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  justify-self: center;
+  min-width: 58px;
+  min-height: 42px;
+  border-radius: 999px;
+  padding: 5px 12px;
   text-align: center;
   color: #f7f7f2;
-  font-weight: 900;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.36), transparent 28px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+  box-shadow:
+    0 0 0 2px rgba(247, 247, 242, 0.16) inset,
+    0 10px 24px var(--prompt-glow),
+    0 2px 0 rgba(0, 0, 0, 0.42);
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.gamepad-prompt > span {
+  position: relative;
+  z-index: 1;
+}
+
+.gamepad-prompt-south {
+  --prompt-glow: rgba(38, 196, 120, 0.26);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.42), transparent 26px),
+    linear-gradient(180deg, #39d385, #11794f);
+}
+
+.gamepad-prompt-east {
+  --prompt-glow: rgba(232, 62, 73, 0.28);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.42), transparent 26px),
+    linear-gradient(180deg, #ef6670, #9b1822);
+}
+
+.gamepad-prompt-west {
+  --prompt-glow: rgba(65, 130, 255, 0.28);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.42), transparent 26px),
+    linear-gradient(180deg, #6ca1ff, #1f55c2);
+}
+
+.gamepad-prompt-north {
+  --prompt-glow: rgba(239, 168, 50, 0.3);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.42), transparent 26px),
+    linear-gradient(180deg, #f3bd4b, #a66a12);
+}
+
+.gamepad-prompt-shoulder,
+.gamepad-prompt-trigger,
+.gamepad-prompt-system {
+  border-radius: 7px;
+}
+
+.gamepad-prompt-trigger {
+  min-height: 46px;
+  border-radius: 10px 10px 7px 7px;
+}
+
+.gamepad-prompt-stick {
+  min-width: 48px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.1) 0 12px, transparent 13px),
+    linear-gradient(180deg, #444a55, #171b22);
+}
+
+.gamepad-prompt-dpad {
+  min-width: 48px;
+  border-radius: 8px;
+  color: #08101c;
+  background:
+    linear-gradient(180deg, #f7f7f2, #c8ced5);
+}
+
+.gamepad-prompt-empty {
+  min-width: 48px;
+  color: rgba(247, 247, 242, 0.48);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .toggle-switch {

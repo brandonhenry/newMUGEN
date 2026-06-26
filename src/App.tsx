@@ -2819,12 +2819,16 @@ function SettingsScreen({
               <div className="binding-row" key={action}>
                 <div>
                   <strong>{actionLabels[action]}</strong>
-                  <small>Gamepad button {gamepad[action]?.[0] ?? 'unbound'}</small>
+                  <small>{formatGamepadButtonName(gamepad[action]?.[0])}</small>
                 </div>
                 <div className="gamepad-stepper" aria-label={`${actionLabels[action]} gamepad button`}>
-                  <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, -1))}>-</button>
-                  <span>B{gamepad[action]?.[0] ?? '-'}</span>
-                  <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, 1))}>+</button>
+                  <button aria-label="Previous gamepad button" onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, -1))}>
+                    <ChevronLeft size={18} />
+                  </button>
+                  <GamepadButtonPrompt button={gamepad[action]?.[0]} />
+                  <button aria-label="Next gamepad button" onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, 1))}>
+                    <ChevronRight size={18} />
+                  </button>
                 </div>
               </div>
             ))}
@@ -3056,6 +3060,42 @@ function SettingToggle({ label, checked, onChange }: { label: string; checked: b
   );
 }
 
+const gamepadButtonPrompts: Record<number, { label: string; shape: 'south' | 'east' | 'west' | 'north' | 'shoulder' | 'trigger' | 'system' | 'stick' | 'dpad'; caption: string }> = {
+  0: { label: 'S', shape: 'south', caption: 'Face Down' },
+  1: { label: 'E', shape: 'east', caption: 'Face Right' },
+  2: { label: 'W', shape: 'west', caption: 'Face Left' },
+  3: { label: 'N', shape: 'north', caption: 'Face Up' },
+  4: { label: 'L1', shape: 'shoulder', caption: 'Left Shoulder' },
+  5: { label: 'R1', shape: 'shoulder', caption: 'Right Shoulder' },
+  6: { label: 'L2', shape: 'trigger', caption: 'Left Trigger' },
+  7: { label: 'R2', shape: 'trigger', caption: 'Right Trigger' },
+  8: { label: 'SEL', shape: 'system', caption: 'Select' },
+  9: { label: 'STA', shape: 'system', caption: 'Start' },
+  10: { label: 'L3', shape: 'stick', caption: 'Left Stick Press' },
+  11: { label: 'R3', shape: 'stick', caption: 'Right Stick Press' },
+  12: { label: '↑', shape: 'dpad', caption: 'D-Pad Up' },
+  13: { label: '↓', shape: 'dpad', caption: 'D-Pad Down' },
+  14: { label: '←', shape: 'dpad', caption: 'D-Pad Left' },
+  15: { label: '→', shape: 'dpad', caption: 'D-Pad Right' },
+  16: { label: '⌂', shape: 'system', caption: 'Home' }
+};
+
+function GamepadButtonPrompt({ button }: { button?: number }) {
+  if (button === undefined || button === null) {
+    return (
+      <span className="gamepad-prompt gamepad-prompt-empty" aria-label="Unbound gamepad button">
+        -
+      </span>
+    );
+  }
+  const prompt = gamepadButtonPrompts[button] ?? { label: `${button}`, shape: 'system' as const, caption: `Button ${button}` };
+  return (
+    <span className={`gamepad-prompt gamepad-prompt-${prompt.shape}`} aria-label={prompt.caption} title={prompt.caption}>
+      <span>{prompt.label}</span>
+    </span>
+  );
+}
+
 function findDuplicateKeyboardBinding(settings: GameSettings, key: string, target: { player: 1 | 2; action: ActionName }) {
   for (let player = 1; player <= 2; player += 1) {
     const keyboard = settings.controls.keyboard[player - 1];
@@ -3094,6 +3134,11 @@ function formatKeyName(key: string) {
     .replace('Arrow', '')
     .replace('Space', 'Spacebar')
     .replace('Escape', 'Esc');
+}
+
+function formatGamepadButtonName(button?: number) {
+  if (button === undefined || button === null) return 'Unbound';
+  return gamepadButtonPrompts[button]?.caption ?? `Gamepad button ${button}`;
 }
 
 function modeLabel(mode: MatchMode) {
