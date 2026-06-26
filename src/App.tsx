@@ -57,6 +57,7 @@ import {
   type EffectKeyframe,
   type GameSettings,
   type HitLevel,
+  type ImpactSparkEvent,
   type InputFrame,
   type MatchMode,
   type MatchSnapshot,
@@ -183,6 +184,16 @@ const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
 const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover.mp3', import.meta.url).href;
+const HIT_SFX = {
+  punch1: '/sounds/hits/generated/hit-013.wav',
+  heavy2: '/sounds/hits/generated/hit-010.wav',
+  kick3: '/sounds/hits/generated/hit-014.wav',
+  special4: '/sounds/hits/generated/hit-018.wav',
+  blockLight: '/sounds/hits/generated/hit-027.wav',
+  blockHeavy: '/sounds/hits/generated/hit-031.wav',
+  launcher: '/sounds/hits/generated/hit-004.wav',
+  bigLauncher: '/sounds/hits/generated/hit-020.wav'
+} as const;
 type BgmSource = {
   key: string;
   playlistId: string;
@@ -3750,6 +3761,32 @@ function modeLabel(mode: MatchMode) {
   return 'CPU vs CPU';
 }
 
+function chooseHitSfx(event: ImpactSparkEvent) {
+  if (event.kind === 'block') {
+    return event.moveInput === 'heavy' || event.moveInput === 'special' || event.damage >= 2 ? HIT_SFX.blockHeavy : HIT_SFX.blockLight;
+  }
+
+  if (event.launched) {
+    return event.moveInput === 'special' || event.kiBurst ? HIT_SFX.bigLauncher : HIT_SFX.launcher;
+  }
+
+  if (event.moveInput === 'heavy') return HIT_SFX.heavy2;
+  if (event.moveInput === 'kick') return HIT_SFX.kick3;
+  if (event.moveInput === 'special') return HIT_SFX.special4;
+  return HIT_SFX.punch1;
+}
+
+function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  const audio = new Audio(chooseHitSfx(event));
+  const isBlock = event.kind === 'block';
+  const isLauncher = Boolean(event.launched);
+  const gain = isBlock ? 0.18 : isLauncher ? 0.35 : 0.28;
+  audio.volume = clamp(audioSettings.master * audioSettings.sfx * gain, 0, isBlock ? 0.32 : 0.48);
+  audio.playbackRate = isBlock ? 0.96 : event.moveInput === 'special' ? 0.94 : 1;
+  void audio.play().catch(() => undefined);
+}
+
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
   if (slot.key === 'chargeKi') {
     return buildChargeKiEditorMove(character);
@@ -6628,6 +6665,7 @@ function FightScreen({
   const screenRef = useRef<HTMLDivElement>(null);
   const seenCombatEventIds = useRef<Set<number>>(new Set());
   const seenImpactScoreEventIds = useRef<Set<number>>(new Set());
+  const seenImpactAudioEventIds = useRef<Set<number>>(new Set());
   const lastCombatEventId = useRef(0);
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
@@ -6678,6 +6716,7 @@ function FightScreen({
     if (match.lastHitId < lastCombatEventId.current) {
       seenCombatEventIds.current.clear();
       setCombatPopups([]);
+      seenImpactAudioEventIds.current.clear();
     }
     lastCombatEventId.current = match.lastHitId;
 
@@ -6696,6 +6735,10 @@ function FightScreen({
     });
 
     match.impactEvents.forEach((event) => {
+      if (!seenImpactAudioEventIds.current.has(event.id)) {
+        seenImpactAudioEventIds.current.add(event.id);
+        playHitSfx(event, settings.audio);
+      }
       if (seenImpactScoreEventIds.current.has(event.id)) return;
       seenImpactScoreEventIds.current.add(event.id);
       if (mode !== 'online' || onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
@@ -6707,7 +6750,7 @@ function FightScreen({
       const index = event.attackerSlot - 1;
       onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.attackerSlot);
     });
-  }, [match.combatEvents, match.impactEvents, match.lastHitId, mode]);
+  }, [match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -6741,6 +6784,7 @@ function FightScreen({
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     seenCombatEventIds.current.clear();
     seenImpactScoreEventIds.current.clear();
+    seenImpactAudioEventIds.current.clear();
     lastCombatEventId.current = 0;
     onlineRematchReadyRef.current = { local: false, remote: false };
     setOnlineStatusText('CONNECTED');
@@ -6765,6 +6809,7 @@ function FightScreen({
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     seenImpactScoreEventIds.current.clear();
+    seenImpactAudioEventIds.current.clear();
     setOnlineState('disconnected');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
@@ -6800,6 +6845,7 @@ function FightScreen({
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     seenImpactScoreEventIds.current.clear();
+    seenImpactAudioEventIds.current.clear();
     if (room || session?.peerId) {
       const leaveRequest = { roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId };
       void (isPrivate ? leavePrivateRoom(leaveRequest) : leaveOnlineRoom(leaveRequest)).catch(() => undefined);
@@ -6851,6 +6897,7 @@ function FightScreen({
         onlinePerformanceRef.current = emptyOnlinePerformancePair();
         seenCombatEventIds.current.clear();
         seenImpactScoreEventIds.current.clear();
+        seenImpactAudioEventIds.current.clear();
         lastCombatEventId.current = 0;
         onlineStateRef.current = 'connected';
         setOnlineState('connected');
@@ -6924,6 +6971,7 @@ function FightScreen({
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     seenCombatEventIds.current.clear();
     seenImpactScoreEventIds.current.clear();
+    seenImpactAudioEventIds.current.clear();
     lastCombatEventId.current = 0;
     setOnlineState('searching');
     setOnlineRole(null);
