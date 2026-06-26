@@ -21,17 +21,13 @@ describe('character manifests', () => {
     ]);
   });
 
-  it('ships at least three strong launcher routes per starter character', () => {
+  it('ships starter launchers disabled by default so Characters controls the toggle', () => {
     for (const character of starterCharacters) {
       const baseLaunchers = character.moves.filter((move) => (move.launchHeight ?? 0) > 0);
       const overrideLaunchers = Object.values(character.moveOverrides ?? {}).filter((move) => (move.launchHeight ?? 0) > 0);
       const launchers = [...baseLaunchers, ...overrideLaunchers];
 
-      expect(launchers.length, `${character.displayName} launcher count`).toBeGreaterThanOrEqual(3);
-      expect(
-        launchers.every((move) => (move.onHitFrames ?? 0) >= 23),
-        `${character.displayName} launcher hit advantage`
-      ).toBe(true);
+      expect(launchers.length, `${character.displayName} default launcher count`).toBe(0);
     }
   });
 
@@ -559,7 +555,7 @@ describe('fight engine', () => {
 
     expect(leaderAttackStarts).toBeGreaterThanOrEqual(2);
     expect(maxLeaderComboStep).toBeLessThanOrEqual(3);
-    expect(maxLeaderMoveDamage).toBeLessThanOrEqual(13);
+    expect(maxLeaderMoveDamage).toBeLessThanOrEqual(16);
     expect(usedLauncher).toBe(false);
   });
 

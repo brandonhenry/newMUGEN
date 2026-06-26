@@ -23,7 +23,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, type PreviewPose } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, clearImageVoxelCacheForFrame, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
 import { createMatch, stepMatch } from './engine/fightEngine';
@@ -3172,6 +3172,7 @@ function CharacterViewer({
         })
       });
       if (!response.ok) throw new Error(await response.text());
+      clearImageVoxelCacheForFrame(active.id, selectedSpriteFrameIndex);
       onSpriteFrameEditChange(active.id, selectedSpriteFrameIndex, nextEdit);
       setSpriteFrameMeta((current) => ({ ...current, [String(selectedSpriteFrameIndex)]: nextEdit }));
       setSpriteSaveStatus('saved');
@@ -3180,6 +3181,14 @@ function CharacterViewer({
       console.error('Failed to save sprite frame', error);
       setSpriteSaveStatus('error');
     }
+  };
+
+  const createSpriteFrame = (edit: SpriteFrameEdit) => {
+    const nextEdit = sanitizeSpriteFrameEdit(edit);
+    onSpriteFrameEditChange(active.id, nextEdit.index, nextEdit);
+    setSpriteFrameMeta((current) => ({ ...current, [String(nextEdit.index)]: nextEdit }));
+    setSelectedSpriteFrameIndex(nextEdit.index);
+    setSpriteSaveStatus('idle');
   };
 
   const importAdditionalSpriteSheet = async (file: File | undefined) => {
@@ -3424,6 +3433,7 @@ function CharacterViewer({
               importStatus={spriteSheetImportStatus}
               onSelectFrame={setSelectedSpriteFrameIndex}
               onToggleFrame={toggleFrame}
+              onCreateFrame={createSpriteFrame}
               onSave={saveSpriteFrame}
               onImportSpriteSheet={importAdditionalSpriteSheet}
             />
@@ -3869,6 +3879,7 @@ function SpriteSheetFrameEditor({
   importStatus,
   onSelectFrame,
   onToggleFrame,
+  onCreateFrame,
   onSave,
   onImportSpriteSheet
 }: {
@@ -3883,6 +3894,7 @@ function SpriteSheetFrameEditor({
   importStatus: 'idle' | 'working' | 'saved' | 'error';
   onSelectFrame: (index: number) => void;
   onToggleFrame: (path: string) => void;
+  onCreateFrame: (edit: SpriteFrameEdit) => void;
   onSave: (edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
   onImportSpriteSheet: (file: File | undefined) => Promise<void>;
 }) {
@@ -3906,7 +3918,7 @@ function SpriteSheetFrameEditor({
   const cropHeight = Math.max(1, edit.box[3] - edit.box[1]);
   const pngWidth = Math.max(1, Math.round(edit.width || cropWidth));
   const pngHeight = Math.max(1, Math.round(edit.height || cropHeight));
-  const hasSavedFrameEdit = Boolean(character.spriteFrameEdits?.[String(selectedFrameIndex)]);
+  const hasSavedFrameEdit = Boolean(character.spriteFrameEdits?.[String(selectedFrameIndex)] ?? frameMeta[String(selectedFrameIndex)]);
   const isReplacementFrame = edit.sourceMode === 'replacement';
 
   useEffect(() => {
@@ -3992,6 +4004,35 @@ function SpriteSheetFrameEditor({
         Math.round((edit.offset?.[1] ?? 0) + dy)
       ]
     });
+  };
+
+  const createNewFrame = () => {
+    const nextIndex = Math.max(
+      frameBank.length,
+      character.spriteFrameCount ?? 0,
+      ...Object.keys(frameMeta).map((key) => Math.round(Number(key) + 1)).filter((index) => Number.isFinite(index) && index > 0)
+    );
+    const nextBox = isReplacementFrame
+      ? [0, 0, Math.min(64, sheetSize.width), Math.min(64, sheetSize.height)] as [number, number, number, number]
+      : edit.box;
+    const nextEdit = clampSpriteFrameEditToSheet(clearReplacementFrameEdit({
+      ...edit,
+      index: nextIndex,
+      path: framePath(character, nextIndex),
+      sourceMode: 'sheet',
+      sheetId: selectedSheet.id,
+      sheetPath: selectedSheet.path,
+      sourceName: selectedSheet.name,
+      box: nextBox,
+      width: Math.max(1, nextBox[2] - nextBox[0]),
+      height: Math.max(1, nextBox[3] - nextBox[1]),
+      row: undefined,
+      rotation: 0,
+      offset: [0, 0],
+      scale: 1,
+      hidden: false
+    }), sheetSize);
+    onCreateFrame(nextEdit);
   };
 
   const replaceFramePng = async (file: File | undefined) => {
@@ -4219,6 +4260,7 @@ function SpriteSheetFrameEditor({
         <div className="sprite-crop-button-grid">
           <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.max(0, selectedFrameIndex - 1))}>Prev</button>
           <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.min(frameBank.length - 1, selectedFrameIndex + 1))}>Next</button>
+          <button className="secondary-button compact-button" onClick={createNewFrame}>New Frame</button>
           <button className="secondary-button compact-button" onClick={() => nudgeBox(-1, 0)} disabled={isReplacementFrame}>Crop Left</button>
           <button className="secondary-button compact-button" onClick={() => nudgeBox(1, 0)} disabled={isReplacementFrame}>Crop Right</button>
           <button className="secondary-button compact-button" onClick={() => nudgeBox(0, -1)} disabled={isReplacementFrame}>Crop Up</button>

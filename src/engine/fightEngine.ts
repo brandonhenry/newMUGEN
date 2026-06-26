@@ -636,7 +636,7 @@ function buildComboMove(
     onHitFrames: baseMove.onHitFrames + (comboStep <= 1 ? 0 : Math.max(-5, 3 - comboStep * 2)) + (route.launcher ? 4 : 0) - repeatFatigue * 8,
     onCounterHitFrames: baseMove.onCounterHitFrames + (comboStep <= 1 ? 0 : Math.max(-4, 5 - comboStep)) + (route.launcher ? 5 : 0) - repeatFatigue * 5,
     hitLevel: route.low ? 'low' : baseMove.hitLevel,
-    launchHeight: route.launcher ? Math.max(baseMove.launchHeight ?? 0, 2.1) : baseMove.launchHeight,
+    launchHeight: baseMove.launchHeight,
     knockdown: baseMove.knockdown || comboStep >= MAX_COMBO_STEPS,
     hitbox: {
       offset: [
@@ -871,7 +871,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -2,
     onHitFrames: 20,
     onCounterHitFrames: 29,
-    launchHeight: 2.2,
+    launchHeight: 0,
     knockdown: false
   },
   '1,2,4': {
@@ -885,7 +885,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -12,
     onHitFrames: 18,
     onCounterHitFrames: 22,
-    launchHeight: 1.45,
+    launchHeight: 0,
     knockdown: false
   },
   '1,3': {
@@ -938,7 +938,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -14,
     onHitFrames: 20,
     onCounterHitFrames: 27,
-    launchHeight: 1.55,
+    launchHeight: 0,
     knockdown: false
   },
   '2,1': {
@@ -965,7 +965,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -10,
     onHitFrames: 16,
     onCounterHitFrames: 22,
-    launchHeight: 1.75,
+    launchHeight: 0,
     knockdown: false
   },
   '2,3': {
@@ -979,7 +979,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -17,
     onHitFrames: 11,
     onCounterHitFrames: 18,
-    launchHeight: 1.85,
+    launchHeight: 0,
     knockdown: false
   },
   '2,3,4': {
@@ -1058,7 +1058,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -14,
     onHitFrames: 19,
     onCounterHitFrames: 28,
-    launchHeight: 1.95,
+    launchHeight: 0,
     knockdown: false
   },
   '3,4': {
@@ -1085,7 +1085,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -16,
     onHitFrames: 21,
     onCounterHitFrames: 30,
-    launchHeight: 2.05,
+    launchHeight: 0,
     knockdown: false
   },
   '4,1': {
@@ -1112,7 +1112,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -13,
     onHitFrames: 18,
     onCounterHitFrames: 28,
-    launchHeight: 1.65,
+    launchHeight: 0,
     knockdown: false
   },
   '4,2': {
@@ -1152,7 +1152,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -13,
     onHitFrames: 17,
     onCounterHitFrames: 25,
-    launchHeight: 1.55,
+    launchHeight: 0,
     knockdown: false
   },
   '2,1,4': {
@@ -1192,7 +1192,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     onBlockFrames: -9,
     onHitFrames: 20,
     onCounterHitFrames: 27,
-    launchHeight: 1.85,
+    launchHeight: 0,
     knockdown: false
   }
 };

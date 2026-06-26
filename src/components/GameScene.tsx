@@ -965,6 +965,17 @@ const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
 const IMAGE_VOXEL_MIN_DEPTH = 0.14;
 const IMAGE_VOXEL_MAX_DEPTH = 0.28;
 
+export function clearImageVoxelCacheForFrame(characterId: string, frameIndex?: number) {
+  const framePrefix = Number.isFinite(frameIndex)
+    ? `/characters/${characterId}/frames/frame-${Math.max(0, Math.round(frameIndex ?? 0)).toString().padStart(3, '0')}.png`
+    : `/characters/${characterId}/frames/`;
+  Array.from(imageVoxelCache.keys()).forEach((key) => {
+    if (key.includes(`:${framePrefix}`)) {
+      imageVoxelCache.delete(key);
+    }
+  });
+}
+
 function getImageVoxelLodStep(character: CharacterDefinition) {
   if (character.voxelProfile !== 'hd-image-source') return 1;
   if (typeof window === 'undefined') return 1;
@@ -1101,16 +1112,17 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
     fps,
     sequence: sequence.map((frame) => frame.match(/frame-(\d+)\.png$/)?.[1] ?? frame)
   });
+  const frameSource = sequence[frameIndex];
   debugLogThrottled(10, 'voxel frame source selected', {
     characterId: fighter.character.id,
     slot: fighter.slot,
     animationKey: key,
     frameIndex,
-    frameSource: sequence[frameIndex],
+    frameSource,
     elapsedTime: Number(elapsedTime.toFixed(2)),
     progress: Number(progress.toFixed(2))
   });
-  return sequence[frameIndex];
+  return versionEditedSpriteFrameSource(frameSource, fighter.character);
 }
 
 function getImageVoxelAnimationKey(fighter: FighterRuntime) {
@@ -1123,6 +1135,38 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'entry') return 'entry';
   return fighter.state;
+}
+
+function versionEditedSpriteFrameSource(src: string | undefined, character: CharacterDefinition) {
+  if (!src) return src;
+  const frameIndex = src.match(/frame-(\d+)\.png/)?.[1];
+  if (!frameIndex) return src;
+  const edit = character.spriteFrameEdits?.[String(Number(frameIndex))];
+  if (!edit) return src;
+  const signature = [
+    edit.sourceMode ?? 'sheet',
+    edit.box?.join(',') ?? '',
+    edit.width,
+    edit.height,
+    edit.rotation ?? 0,
+    edit.offset?.join(',') ?? '',
+    edit.scale ?? 1,
+    edit.hidden ? 'hidden' : 'visible',
+    edit.replacementName ?? '',
+    edit.replacementWidth ?? '',
+    edit.replacementHeight ?? ''
+  ].join('|');
+  const separator = src.includes('?') ? '&' : '?';
+  return `${src}${separator}spriteEdit=${hashSpriteEditSignature(signature)}`;
+}
+
+function hashSpriteEditSignature(value: string) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
 }
 
 function ImageVoxelPartGroup({
@@ -1314,7 +1358,8 @@ async function loadPrecomputedImageVoxels(src: string, character: CharacterDefin
 }
 
 function getPrecomputedVoxelPath(src: string, hd = false) {
-  const match = src.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
+  const cleanSrc = src.split('?')[0] ?? src;
+  const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
   if (!match) return null;
   return `${match[1]}/${hd ? 'voxels-hd' : 'voxels'}/${match[2]}.json`;
 }
@@ -1335,11 +1380,20 @@ function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null 
 }
 
 async function loadImageVoxels(src: string, character: CharacterDefinition) {
+  const editedSpriteFrame = hasEditedSpriteFrame(src, character);
+  if (editedSpriteFrame) {
+    return extractImageVoxels(src);
+  }
   if (character.voxelProfile === 'hd-image-source') {
     const hdVoxels = await loadPrecomputedImageVoxels(src, character);
     if (hdVoxels) return hdVoxels;
   }
   return (await loadPrecomputedImageVoxels(src, { ...character, voxelProfile: 'image-source' })) ?? extractImageVoxels(src);
+}
+
+function hasEditedSpriteFrame(src: string, character: CharacterDefinition) {
+  const frameIndex = src.match(/frame-(\d+)\.png/)?.[1];
+  return Boolean(frameIndex && character.spriteFrameEdits?.[String(Number(frameIndex))]);
 }
 
 function getForegroundBounds(imageData: ImageData, background: [number, number, number]) {
