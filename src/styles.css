@@ -2503,12 +2503,75 @@ button {
 .sprite-crop-box {
   position: absolute;
   display: block;
-  pointer-events: none;
+  min-width: 14px;
+  min-height: 14px;
+  cursor: move;
+  touch-action: none;
   border: 2px solid #2ee6ff;
   background: rgba(46, 230, 255, 0.08);
   box-shadow:
     0 0 0 9999px rgba(0, 0, 0, 0.44),
     0 0 24px rgba(46, 230, 255, 0.4);
+}
+
+.sprite-crop-handle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #2ee6ff;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.72),
+    0 0 14px rgba(46, 230, 255, 0.72);
+  touch-action: none;
+}
+
+.handle-nw {
+  top: -8px;
+  left: -8px;
+  cursor: nwse-resize;
+}
+
+.handle-n {
+  top: -8px;
+  left: calc(50% - 8px);
+  cursor: ns-resize;
+}
+
+.handle-ne {
+  top: -8px;
+  right: -8px;
+  cursor: nesw-resize;
+}
+
+.handle-e {
+  top: calc(50% - 8px);
+  right: -8px;
+  cursor: ew-resize;
+}
+
+.handle-se {
+  right: -8px;
+  bottom: -8px;
+  cursor: nwse-resize;
+}
+
+.handle-s {
+  bottom: -8px;
+  left: calc(50% - 8px);
+  cursor: ns-resize;
+}
+
+.handle-sw {
+  bottom: -8px;
+  left: -8px;
+  cursor: nesw-resize;
+}
+
+.handle-w {
+  top: calc(50% - 8px);
+  left: -8px;
+  cursor: ew-resize;
 }
 
 .sprite-crop-preview-panel {

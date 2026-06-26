@@ -20,7 +20,7 @@ import {
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { stages } from './data/stages';
@@ -2987,6 +2987,97 @@ function createDefaultSpriteFrameEdit(character: CharacterDefinition, frameIndex
   };
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function clampSpriteFrameEditToSheet(edit: SpriteFrameEdit, sheetSize: { width: number; height: number }): SpriteFrameEdit {
+  const sheetWidth = Math.max(1, Math.round(sheetSize.width || 1));
+  const sheetHeight = Math.max(1, Math.round(sheetSize.height || 1));
+  const width = Math.max(1, edit.box[2] - edit.box[0]);
+  const height = Math.max(1, edit.box[3] - edit.box[1]);
+  const x1 = clamp(Math.round(edit.box[0]), 0, Math.max(0, sheetWidth - 1));
+  const y1 = clamp(Math.round(edit.box[1]), 0, Math.max(0, sheetHeight - 1));
+  const x2 = clamp(Math.round(edit.box[2]), x1 + 1, sheetWidth);
+  const y2 = clamp(Math.round(edit.box[3]), y1 + 1, sheetHeight);
+  const clamped = sanitizeSpriteFrameEdit({
+    ...edit,
+    box: [x1, y1, x2, y2],
+    width: Math.max(1, Math.round(edit.width || width)),
+    height: Math.max(1, Math.round(edit.height || height))
+  });
+  return clamped;
+}
+
+function moveSpriteFrameBoxWithinSheet(box: [number, number, number, number], dx: number, dy: number, sheetSize: { width: number; height: number }): [number, number, number, number] {
+  const sheetWidth = Math.max(1, sheetSize.width);
+  const sheetHeight = Math.max(1, sheetSize.height);
+  const width = Math.max(1, box[2] - box[0]);
+  const height = Math.max(1, box[3] - box[1]);
+  const x1 = clamp(Math.round(box[0] + dx), 0, Math.max(0, sheetWidth - width));
+  const y1 = clamp(Math.round(box[1] + dy), 0, Math.max(0, sheetHeight - height));
+  return [x1, y1, x1 + width, y1 + height];
+}
+
+function fitSpriteFrameToVisiblePixels(sheet: HTMLImageElement | null, edit: SpriteFrameEdit): SpriteFrameEdit | null {
+  if (!sheet || !sheet.complete || sheet.naturalWidth <= 0 || sheet.naturalHeight <= 0) return null;
+  const [rawX1, rawY1, rawX2, rawY2] = edit.box;
+  const x1 = clamp(Math.round(rawX1), 0, sheet.naturalWidth - 1);
+  const y1 = clamp(Math.round(rawY1), 0, sheet.naturalHeight - 1);
+  const x2 = clamp(Math.round(rawX2), x1 + 1, sheet.naturalWidth);
+  const y2 = clamp(Math.round(rawY2), y1 + 1, sheet.naturalHeight);
+  const sourceWidth = x2 - x1;
+  const sourceHeight = y2 - y1;
+  const canvas = document.createElement('canvas');
+  canvas.width = sourceWidth;
+  canvas.height = sourceHeight;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return null;
+  context.imageSmoothingEnabled = false;
+  context.drawImage(sheet, x1, y1, sourceWidth, sourceHeight, 0, 0, sourceWidth, sourceHeight);
+  const pixels = context.getImageData(0, 0, sourceWidth, sourceHeight).data;
+  const background = [pixels[0] ?? 0, pixels[1] ?? 0, pixels[2] ?? 0, pixels[3] ?? 255];
+  let minX = sourceWidth;
+  let minY = sourceHeight;
+  let maxX = -1;
+  let maxY = -1;
+
+  for (let y = 0; y < sourceHeight; y += 1) {
+    for (let x = 0; x < sourceWidth; x += 1) {
+      const offset = (y * sourceWidth + x) * 4;
+      const alpha = pixels[offset + 3] ?? 0;
+      const colorDistance =
+        Math.abs((pixels[offset] ?? 0) - background[0]) +
+        Math.abs((pixels[offset + 1] ?? 0) - background[1]) +
+        Math.abs((pixels[offset + 2] ?? 0) - background[2]);
+      const alphaDistance = Math.abs(alpha - background[3]);
+      if (alpha > 12 && (alphaDistance > 8 || colorDistance > 34)) {
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+      }
+    }
+  }
+
+  if (maxX < minX || maxY < minY) return null;
+  const padding = 2;
+  const nextBox: [number, number, number, number] = [
+    clamp(x1 + minX - padding, 0, sheet.naturalWidth - 1),
+    clamp(y1 + minY - padding, 0, sheet.naturalHeight - 1),
+    clamp(x1 + maxX + 1 + padding, 1, sheet.naturalWidth),
+    clamp(y1 + maxY + 1 + padding, 1, sheet.naturalHeight)
+  ];
+  return clampSpriteFrameEditToSheet({
+    ...edit,
+    box: nextBox,
+    width: nextBox[2] - nextBox[0],
+    height: nextBox[3] - nextBox[1],
+    offset: [0, 0],
+    scale: edit.scale ?? 1
+  }, { width: sheet.naturalWidth, height: sheet.naturalHeight });
+}
+
 function renderSpriteFrameCanvas(sheet: HTMLImageElement | null, canvas: HTMLCanvasElement | null, edit: SpriteFrameEdit) {
   if (!sheet || !canvas || !sheet.complete || sheet.naturalWidth <= 0 || sheet.naturalHeight <= 0) return;
   const context = canvas.getContext('2d');
@@ -3033,6 +3124,11 @@ function SpriteSheetFrameEditor({
 }) {
   const sheetRef = useRef<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cropDragRef = useRef<{
+    mode: string;
+    startPointer: [number, number];
+    startBox: [number, number, number, number];
+  } | null>(null);
   const [sheetSize, setSheetSize] = useState({ width: 1, height: 1 });
   const [edit, setEdit] = useState<SpriteFrameEdit>(() => createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]));
   const selectedFramePath = framePath(character, selectedFrameIndex);
@@ -3042,22 +3138,26 @@ function SpriteSheetFrameEditor({
   const cropHeight = Math.max(1, edit.box[3] - edit.box[1]);
   const pngWidth = Math.max(1, Math.round(edit.width || cropWidth));
   const pngHeight = Math.max(1, Math.round(edit.height || cropHeight));
+  const hasSavedFrameEdit = Boolean(character.spriteFrameEdits?.[String(selectedFrameIndex)]);
 
   useEffect(() => {
-    setEdit(createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]));
-  }, [character.id, frameMeta, selectedFrameIndex]);
+    const baseEdit = createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]);
+    const fitted = hasSavedFrameEdit ? null : fitSpriteFrameToVisiblePixels(sheetRef.current, baseEdit);
+    const nextEdit = fitted ?? baseEdit;
+    setEdit(clampSpriteFrameEditToSheet(nextEdit, sheetSize));
+  }, [character, frameMeta, hasSavedFrameEdit, selectedFrameIndex, sheetSize]);
 
   useEffect(() => {
     renderSpriteFrameCanvas(sheetRef.current, canvasRef.current, edit);
   }, [edit, sheetSize]);
 
   const patchEdit = (patch: Partial<SpriteFrameEdit>) => {
-    setEdit((current) => sanitizeSpriteFrameEdit({
+    setEdit((current) => clampSpriteFrameEditToSheet(sanitizeSpriteFrameEdit({
       ...current,
       ...patch,
       index: selectedFrameIndex,
       path: selectedFramePath
-    }));
+    }), sheetSize));
   };
 
   const updateBox = (key: 'x' | 'y' | 'width' | 'height', value: string) => {
@@ -3075,14 +3175,8 @@ function SpriteSheetFrameEditor({
   };
 
   const nudgeBox = (dx: number, dy: number) => {
-    const [x1, y1, x2, y2] = edit.box;
     patchEdit({
-      box: [
-        Math.max(0, x1 + dx),
-        Math.max(0, y1 + dy),
-        Math.max(1, x2 + dx),
-        Math.max(1, y2 + dy)
-      ]
+      box: moveSpriteFrameBoxWithinSheet(edit.box, dx, dy, sheetSize)
     });
   };
 
@@ -3123,6 +3217,65 @@ function SpriteSheetFrameEditor({
     );
   };
 
+  const fitVisibleCrop = () => {
+    const fitted = fitSpriteFrameToVisiblePixels(sheetRef.current, edit);
+    if (fitted) setEdit(fitted);
+  };
+
+  const pointerToSheetPoint = (event: ReactPointerEvent): [number, number] => {
+    const image = sheetRef.current;
+    if (!image) return [0, 0];
+    const rect = image.getBoundingClientRect();
+    const x = clamp(((event.clientX - rect.left) / Math.max(1, rect.width)) * sheetSize.width, 0, sheetSize.width);
+    const y = clamp(((event.clientY - rect.top) / Math.max(1, rect.height)) * sheetSize.height, 0, sheetSize.height);
+    return [x, y];
+  };
+
+  const beginCropDrag = (event: ReactPointerEvent<HTMLElement>, mode: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    cropDragRef.current = {
+      mode,
+      startPointer: pointerToSheetPoint(event),
+      startBox: [...edit.box]
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const updateCropDrag = (event: ReactPointerEvent<HTMLElement>) => {
+    const drag = cropDragRef.current;
+    if (!drag) return;
+    event.preventDefault();
+    const [pointerX, pointerY] = pointerToSheetPoint(event);
+    const dx = Math.round(pointerX - drag.startPointer[0]);
+    const dy = Math.round(pointerY - drag.startPointer[1]);
+    const [x1, y1, x2, y2] = drag.startBox;
+    let nextBox: [number, number, number, number] = [...drag.startBox];
+
+    if (drag.mode === 'move') {
+      nextBox = moveSpriteFrameBoxWithinSheet(drag.startBox, dx, dy, sheetSize);
+    } else {
+      const movesLeft = drag.mode.includes('w');
+      const movesRight = drag.mode.includes('e');
+      const movesTop = drag.mode.includes('n');
+      const movesBottom = drag.mode.includes('s');
+      nextBox = [
+        movesLeft ? clamp(x1 + dx, 0, x2 - 1) : x1,
+        movesTop ? clamp(y1 + dy, 0, y2 - 1) : y1,
+        movesRight ? clamp(x2 + dx, x1 + 1, sheetSize.width) : x2,
+        movesBottom ? clamp(y2 + dy, y1 + 1, sheetSize.height) : y2
+      ];
+    }
+
+    patchEdit({ box: nextBox, width: nextBox[2] - nextBox[0], height: nextBox[3] - nextBox[1] });
+  };
+
+  const endCropDrag = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!cropDragRef.current) return;
+    cropDragRef.current = null;
+    event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+
   return (
     <section className="sprite-crop-editor" aria-label="Spritesheet crop editor">
       <div className="sprite-crop-stage">
@@ -3134,18 +3287,36 @@ function SpriteSheetFrameEditor({
             onLoad={(event) => {
               const image = event.currentTarget;
               setSheetSize({ width: image.naturalWidth || 1, height: image.naturalHeight || 1 });
-              renderSpriteFrameCanvas(image, canvasRef.current, edit);
+              const baseEdit = createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]);
+              const fitted = hasSavedFrameEdit ? null : fitSpriteFrameToVisiblePixels(image, baseEdit);
+              setEdit(clampSpriteFrameEditToSheet(fitted ?? baseEdit, { width: image.naturalWidth || 1, height: image.naturalHeight || 1 }));
             }}
           />
-          <span
+          <div
             className="sprite-crop-box"
+            onPointerDown={(event) => beginCropDrag(event, 'move')}
+            onPointerMove={updateCropDrag}
+            onPointerUp={endCropDrag}
+            onPointerCancel={endCropDrag}
             style={{
               left: `${(edit.box[0] / sheetSize.width) * 100}%`,
               top: `${(edit.box[1] / sheetSize.height) * 100}%`,
               width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
               height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
             }}
-          />
+            title="Drag to move crop. Drag handles to resize."
+          >
+            {['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map((handle) => (
+              <span
+                key={handle}
+                className={`sprite-crop-handle handle-${handle}`}
+                onPointerDown={(event) => beginCropDrag(event, handle)}
+                onPointerMove={updateCropDrag}
+                onPointerUp={endCropDrag}
+                onPointerCancel={endCropDrag}
+              />
+            ))}
+          </div>
         </div>
         <div className="sprite-crop-preview-panel">
           <span>Selected Crop</span>
@@ -3195,6 +3366,7 @@ function SpriteSheetFrameEditor({
           <button className="secondary-button compact-button" onClick={() => patchEdit({ rotation: normalizeRotation((edit.rotation ?? 0) + 90) })}>Rotate +90</button>
           <button className="secondary-button compact-button" onClick={() => patchEdit({ hidden: !edit.hidden })}>{edit.hidden ? 'Add / Restore' : 'Remove Frame'}</button>
           <button className="secondary-button compact-button" onClick={() => onToggleFrame(selectedFramePath)}>{selectedInMove ? 'Remove From Move' : 'Add To Move'}</button>
+          <button className="secondary-button compact-button" onClick={fitVisibleCrop}>Fit Visible</button>
           <button className="secondary-button compact-button" onClick={() => setEdit(createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]))}>Reset Crop</button>
           <button className="secondary-button compact-button dev-save-button" onClick={saveFrame} disabled={saveStatus === 'saving'}>
             <Save size={14} />
