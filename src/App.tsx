@@ -39,6 +39,7 @@ import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encode
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
+import { addCombatPopupEventToOnlineStats, addImpactEventToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import {
@@ -5909,6 +5910,7 @@ function FightScreen({
   const frameInputRef = useRef('none');
   const screenRef = useRef<HTMLDivElement>(null);
   const seenCombatEventIds = useRef<Set<number>>(new Set());
+  const seenImpactScoreEventIds = useRef<Set<number>>(new Set());
   const lastCombatEventId = useRef(0);
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
@@ -5932,6 +5934,7 @@ function FightScreen({
   const onlineClosingRef = useRef(false);
   const onlineLocalProfileRef = useRef<OnlinePlayerProfile | null>(onlineProfile);
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
+  const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
 
   useEffect(() => {
     matchRef.current = match;
@@ -5964,13 +5967,30 @@ function FightScreen({
     match.combatEvents.forEach((event) => {
       if (seenCombatEventIds.current.has(event.id)) return;
       seenCombatEventIds.current.add(event.id);
+      if (mode === 'online' && onlineRoleRef.current === 'host' && onlineStateRef.current === 'connected') {
+        const index = event.slot - 1;
+        onlinePerformanceRef.current[index] = addCombatPopupEventToOnlineStats(onlinePerformanceRef.current[index], event);
+      }
       const popup: ActiveCombatPopup = { ...event, uid: Date.now() + event.id };
       setCombatPopups((current) => [...current.filter((item) => item.slot !== event.slot).slice(-2), popup].slice(-4));
       window.setTimeout(() => {
         setCombatPopups((current) => current.filter((item) => item.uid !== popup.uid));
       }, 2600);
     });
-  }, [match.combatEvents, match.lastHitId]);
+
+    match.impactEvents.forEach((event) => {
+      if (seenImpactScoreEventIds.current.has(event.id)) return;
+      seenImpactScoreEventIds.current.add(event.id);
+      if (mode !== 'online' || onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
+      if (event.kind === 'block') {
+        const index = event.defenderSlot - 1;
+        onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.defenderSlot);
+        return;
+      }
+      const index = event.attackerSlot - 1;
+      onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.attackerSlot);
+    });
+  }, [match.combatEvents, match.impactEvents, match.lastHitId, mode]);
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -6001,6 +6021,10 @@ function FightScreen({
     matchRef.current = fresh;
     setMatch(fresh);
     onlineWinnerRecordedRef.current = false;
+    onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    seenCombatEventIds.current.clear();
+    seenImpactScoreEventIds.current.clear();
+    lastCombatEventId.current = 0;
     onlineRematchReadyRef.current = { local: false, remote: false };
     setOnlineStatusText('CONNECTED');
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
@@ -6022,6 +6046,8 @@ function FightScreen({
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
+    onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    seenImpactScoreEventIds.current.clear();
     setOnlineState('disconnected');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
@@ -6055,6 +6081,8 @@ function FightScreen({
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
+    onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    seenImpactScoreEventIds.current.clear();
     if (room || session?.peerId) {
       const leaveRequest = { roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId };
       void (isPrivate ? leavePrivateRoom(leaveRequest) : leaveOnlineRoom(leaveRequest)).catch(() => undefined);
@@ -6074,10 +6102,16 @@ function FightScreen({
     if (mode === 'online' && onlineRoleRef.current === 'host') {
       const localProfile = onlineLocalProfileRef.current;
       const remoteProfile = onlineRemoteProfileRef.current;
-      const winner = candidate.winnerSlot === 1 ? localProfile : remoteProfile;
-      const loser = candidate.winnerSlot === 1 ? remoteProfile : localProfile;
-      if (winner && loser) {
-        void submitLeaderboardResult({ winner, loser }).catch((error) => {
+      if (localProfile && remoteProfile) {
+        const [p1Stats, p2Stats] = onlinePerformanceRef.current;
+        const p1Points = calculateOnlinePerformancePoints(p1Stats, candidate.fighters[0].roundsWon, candidate.winnerSlot === 1);
+        const p2Points = calculateOnlinePerformancePoints(p2Stats, candidate.fighters[1].roundsWon, candidate.winnerSlot === 2);
+        void submitLeaderboardResult({
+          players: [
+            { profile: localProfile, points: p1Points },
+            { profile: remoteProfile, points: p2Points }
+          ]
+        }).catch((error) => {
           console.error('Failed to submit leaderboard result', error);
         });
       }
@@ -6097,6 +6131,10 @@ function FightScreen({
         const onlineMatch = makeOnlineMatch(p1.id, message.characterId, onlineRoomRef.current?.stageId ?? stage.id);
         matchRef.current = onlineMatch;
         setMatch(onlineMatch);
+        onlinePerformanceRef.current = emptyOnlinePerformancePair();
+        seenCombatEventIds.current.clear();
+        seenImpactScoreEventIds.current.clear();
+        lastCombatEventId.current = 0;
         onlineStateRef.current = 'connected';
         setOnlineState('connected');
         setOnlineStatusText('CONNECTED');
@@ -6166,6 +6204,10 @@ function FightScreen({
     onlineWinnerRecordedRef.current = false;
     onlineLatestSnapshotRef.current = -1;
     onlineSnapshotSequenceRef.current = 0;
+    onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    seenCombatEventIds.current.clear();
+    seenImpactScoreEventIds.current.clear();
+    lastCombatEventId.current = 0;
     setOnlineState('searching');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
@@ -6319,6 +6361,9 @@ function FightScreen({
       if (isTextEntryElement(event.target)) return;
       if (onlineStateRef.current === 'connected') return;
       event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      pauseLatch.current = true;
       setPaused((value) => !value);
       clearMenuInputs();
     };

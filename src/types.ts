@@ -101,6 +101,12 @@ export type CombatPopupEvent = {
   hits: number;
   damage: number;
   moveLabel: string;
+  moveInput?: MoveInput;
+  hitLevel?: HitLevel;
+  launched?: boolean;
+  juggled?: boolean;
+  tornado?: boolean;
+  kiBurst?: boolean;
 };
 
 export type ImpactSparkEvent = {
@@ -112,6 +118,11 @@ export type ImpactSparkEvent = {
   hitLevel: HitLevel;
   damage: number;
   moveLabel: string;
+  moveInput?: MoveInput;
+  launched?: boolean;
+  juggled?: boolean;
+  tornado?: boolean;
+  kiBurst?: boolean;
 };
 
 export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {

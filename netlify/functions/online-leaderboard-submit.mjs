@@ -2,28 +2,27 @@ import { getStore } from '@netlify/blobs';
 
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
-const POINTS_PER_WIN = 100;
+const LEGACY_POINTS_PER_WIN = 100;
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const winner = cleanProfile(body.winner);
-    const loser = cleanProfile(body.loser);
-    if (!winner || !loser || winner.playerId === loser.playerId) return json(400, { error: 'invalid_result' });
+    const awards = cleanAwards(body);
+    if (awards.length === 0) return json(400, { error: 'invalid_result' });
 
     const store = getStore(STORE_NAME);
     const entries = await readEntries(store);
     const byId = new Map(entries.map((entry) => [entry.playerId, entry]));
     const now = Date.now();
-    const winnerEntry = byId.get(winner.playerId) ?? { ...winner, points: 0, updatedAt: now };
-
-    winnerEntry.displayName = winner.displayName;
-    winnerEntry.points += POINTS_PER_WIN;
-    winnerEntry.updatedAt = now;
-
-    byId.set(winner.playerId, winnerEntry);
+    for (const award of awards) {
+      const entry = byId.get(award.profile.playerId) ?? { ...award.profile, points: 0, updatedAt: now };
+      entry.displayName = award.profile.displayName;
+      entry.points += award.points;
+      entry.updatedAt = now;
+      byId.set(award.profile.playerId, entry);
+    }
 
     const sorted = sortEntries([...byId.values()]).slice(0, 100);
     await store.setJSON(SCORES_KEY, { entries: sorted, updatedAt: now });
@@ -56,10 +55,36 @@ function cleanEntry(entry) {
   };
 }
 
+function cleanAwards(body) {
+  if (Array.isArray(body?.players)) {
+    const byId = new Map();
+    for (const item of body.players) {
+      const profile = cleanProfile(item?.profile);
+      const points = cleanAwardPoints(item?.points);
+      if (!profile || points <= 0) continue;
+      const current = byId.get(profile.playerId);
+      byId.set(profile.playerId, {
+        profile,
+        points: (current?.points || 0) + points
+      });
+    }
+    return [...byId.values()];
+  }
+
+  const winner = cleanProfile(body?.winner);
+  const loser = cleanProfile(body?.loser);
+  if (!winner || !loser || winner.playerId === loser.playerId) return [];
+  return [{ profile: winner, points: LEGACY_POINTS_PER_WIN }];
+}
+
+function cleanAwardPoints(value) {
+  return Math.max(0, Math.min(500, Math.round(Number(value) || 0)));
+}
+
 function normalizePoints(entry) {
   const directPoints = Math.max(0, Math.round(Number(entry?.points) || 0));
   if (directPoints > 0) return directPoints;
-  return Math.max(0, Math.round(Number(entry?.wins) || 0)) * POINTS_PER_WIN;
+  return Math.max(0, Math.round(Number(entry?.wins) || 0)) * LEGACY_POINTS_PER_WIN;
 }
 
 function sortEntries(entries) {

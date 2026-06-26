@@ -14,14 +14,21 @@ export type LeaderboardResult = {
   entries: LeaderboardEntry[];
 };
 
+export type LeaderboardPointAward = {
+  profile: OnlinePlayerProfile;
+  points: number;
+};
+
 export type LeaderboardSubmitRequest = {
+  players: LeaderboardPointAward[];
+} | {
   winner: OnlinePlayerProfile;
   loser: OnlinePlayerProfile;
 };
 
 const ONLINE_PROFILE_KEY = 'kore.online.profile';
 const LOCAL_LEADERBOARD_KEY = 'kore.online.localLeaderboard';
-const POINTS_PER_WIN = 100;
+const LEGACY_POINTS_PER_WIN = 100;
 
 export function readOnlineProfile(): OnlinePlayerProfile | null {
   if (typeof window === 'undefined') return null;
@@ -92,16 +99,17 @@ function localLeaderboard(): LeaderboardResult {
 }
 
 function localSubmitLeaderboardResult(request: LeaderboardSubmitRequest): LeaderboardResult {
-  const winner = normalizeProfile(request.winner);
-  const loser = normalizeProfile(request.loser);
-  if (!winner || !loser || winner.playerId === loser.playerId) return localLeaderboard();
+  const awards = normalizeAwards(request);
+  if (awards.length === 0) return localLeaderboard();
   const byId = new Map(readLocalLeaderboard().map((entry) => [entry.playerId, entry]));
   const now = Date.now();
-  const winnerEntry = byId.get(winner.playerId) ?? { ...winner, points: 0, updatedAt: now };
-  winnerEntry.displayName = winner.displayName;
-  winnerEntry.points += POINTS_PER_WIN;
-  winnerEntry.updatedAt = now;
-  byId.set(winner.playerId, winnerEntry);
+  awards.forEach(({ profile, points }) => {
+    const entry = byId.get(profile.playerId) ?? { ...profile, points: 0, updatedAt: now };
+    entry.displayName = profile.displayName;
+    entry.points += points;
+    entry.updatedAt = now;
+    byId.set(profile.playerId, entry);
+  });
   const entries = sortEntries([...byId.values()]).slice(0, 100);
   window.localStorage.setItem(LOCAL_LEADERBOARD_KEY, JSON.stringify(entries));
   return { entries };
@@ -122,6 +130,35 @@ function normalizeProfile(profile: OnlinePlayerProfile | undefined): OnlinePlaye
   return playerId && displayName ? { playerId, displayName } : null;
 }
 
+function normalizeAwards(request: LeaderboardSubmitRequest): LeaderboardPointAward[] {
+  if ('players' in request && Array.isArray(request.players)) {
+    const byId = new Map<string, LeaderboardPointAward>();
+    request.players.forEach((award) => {
+      const profile = normalizeProfile(award.profile);
+      const points = normalizeAwardPoints(award.points);
+      if (!profile || points <= 0) return;
+      const current = byId.get(profile.playerId);
+      byId.set(profile.playerId, {
+        profile,
+        points: (current?.points ?? 0) + points
+      });
+    });
+    return [...byId.values()];
+  }
+
+  if ('winner' in request && 'loser' in request) {
+    const winner = normalizeProfile(request.winner);
+    const loser = normalizeProfile(request.loser);
+    if (!winner || !loser || winner.playerId === loser.playerId) return [];
+    return [{ profile: winner, points: LEGACY_POINTS_PER_WIN }];
+  }
+  return [];
+}
+
+function normalizeAwardPoints(value: unknown) {
+  return Math.max(0, Math.min(500, Math.round(Number(value) || 0)));
+}
+
 function normalizeEntry(entry: Partial<LeaderboardEntry>): LeaderboardEntry | null {
   const profile = normalizeProfile(entry as OnlinePlayerProfile);
   if (!profile) return null;
@@ -137,7 +174,7 @@ function normalizeEntry(entry: Partial<LeaderboardEntry>): LeaderboardEntry | nu
 function normalizePoints(entry: Partial<LeaderboardEntry> & { wins?: unknown; losses?: unknown }) {
   const directPoints = Math.max(0, Math.round(Number(entry.points) || 0));
   if (directPoints > 0) return directPoints;
-  return Math.max(0, Math.round(Number(entry.wins) || 0)) * POINTS_PER_WIN;
+  return Math.max(0, Math.round(Number(entry.wins) || 0)) * LEGACY_POINTS_PER_WIN;
 }
 
 function sortEntries(entries: LeaderboardEntry[]) {

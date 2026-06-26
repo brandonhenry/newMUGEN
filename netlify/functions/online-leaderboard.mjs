@@ -2,7 +2,7 @@ import { getStore } from '@netlify/blobs';
 
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
-const POINTS_PER_WIN = 100;
+const LEGACY_POINTS_PER_WIN = 100;
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -38,7 +38,7 @@ function normalizeEntry(entry) {
 function normalizePoints(entry) {
   const directPoints = Math.max(0, Math.round(Number(entry?.points) || 0));
   if (directPoints > 0) return directPoints;
-  return Math.max(0, Math.round(Number(entry?.wins) || 0)) * POINTS_PER_WIN;
+  return Math.max(0, Math.round(Number(entry?.wins) || 0)) * LEGACY_POINTS_PER_WIN;
 }
 
 function sortEntries(entries) {

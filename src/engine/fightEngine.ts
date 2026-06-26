@@ -1378,12 +1378,20 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   if (distance > move.range + UNIVERSAL_RANGE_BUFFER) return;
   if (!hitboxIntersectsAnyHurtbox(attacker, defender, move)) return;
 
+  const wasJuggled = defender.state === 'juggle';
+  const wasAirborne = isAirborne(defender) || wasJuggled;
+  const launchHeight = Math.max(0, move.launchHeight ?? 0);
   const blocked = canDefenderBlockMove(defender, attacker, move);
   const counterHit = isCounterHit(defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
   const impactId = nextHitEventId(match);
-  pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
+  pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
+    launched: launchHeight > 0,
+    juggled: wasJuggled || wasAirborne,
+    tornado: Boolean(move.tornado) && wasJuggled,
+    kiBurst: Boolean(move.kiBurst)
+  });
   attacker.hitConnected = true;
   const pushX = distance > 0 ? dx / distance : attacker.facing;
   const pushZ = distance > 0 ? dz / distance : 0;
@@ -1419,13 +1427,15 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
-  pushCombatPopupEvent(match, impactId, attacker, move, whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null);
+  pushCombatPopupEvent(match, impactId, attacker, move, whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
+    launched: launchHeight > 0,
+    juggled: wasJuggled || wasAirborne,
+    tornado: Boolean(move.tornado) && wasJuggled,
+    kiBurst: Boolean(move.kiBurst)
+  });
 
   const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
-  const wasJuggled = defender.state === 'juggle';
-  const wasAirborne = isAirborne(defender) || wasJuggled;
-  const launchHeight = Math.max(0, move.launchHeight ?? 0);
   const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const entersJuggle = launchHeight > 0 || wasJuggled;
   const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
@@ -1486,7 +1496,8 @@ function pushCombatPopupEvent(
   id: number,
   attacker: FighterRuntime,
   move: MoveDefinition,
-  kind: 'combo' | 'punish' | 'whiffPunish' | null
+  kind: 'combo' | 'punish' | 'whiffPunish' | null,
+  context: { launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {}
 ) {
   if (!kind) return;
   match.combatEvents = [
@@ -1497,7 +1508,13 @@ function pushCombatPopupEvent(
       kind,
       hits: attacker.comboHits,
       damage: attacker.comboDamage,
-      moveLabel: move.label
+      moveLabel: move.label,
+      moveInput: move.input,
+      hitLevel: move.hitLevel,
+      launched: context.launched,
+      juggled: context.juggled,
+      tornado: context.tornado,
+      kiBurst: context.kiBurst
     }
   ].slice(-8);
 }
@@ -1513,7 +1530,8 @@ function pushImpactSparkEvent(
   attacker: FighterRuntime,
   defender: FighterRuntime,
   move: MoveDefinition,
-  kind: ImpactSparkKind
+  kind: ImpactSparkKind,
+  context: { launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {}
 ) {
   match.impactEvents = [
     ...match.impactEvents,
@@ -1525,7 +1543,12 @@ function pushImpactSparkEvent(
       defenderSlot: defender.slot,
       hitLevel: move.hitLevel,
       damage: kind === 'block' ? move.blockDamage : move.damage,
-      moveLabel: move.label
+      moveLabel: move.label,
+      moveInput: move.input,
+      launched: context.launched,
+      juggled: context.juggled,
+      tornado: context.tornado,
+      kiBurst: context.kiBurst
     }
   ].slice(-12);
 }
