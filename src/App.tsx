@@ -231,6 +231,7 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'crouch', label: 'Crouch', pose: 'crouch', notation: ['d'], category: 'stance' },
   { key: 'block', label: 'Block', pose: 'block', notation: ['b'], category: 'stance' },
   { key: 'crouchBlock', label: 'Crouch Block', pose: 'crouchBlock', notation: ['D/B'], category: 'stance' },
+  { key: 'chargeKi', label: 'Charge Ki', pose: 'chargeKi', notation: ['O'], category: 'stance' },
   { key: 'jableft', label: 'Left Punch', pose: 'jab', notation: ['1'], category: 'stance' },
   { key: 'jabright', label: 'Right Punch', pose: 'heavy', notation: ['2'], category: 'stance' },
   { key: 'kickleft', label: 'Left Kick', pose: 'kick', notation: ['3'], category: 'stance' },
@@ -3750,6 +3751,9 @@ function modeLabel(mode: MatchMode) {
 }
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
+  if (slot.key === 'chargeKi') {
+    return buildChargeKiEditorMove(character);
+  }
   if (!isMoveSlotPose(slot.pose) && !slot.command) return null;
   const dataKey = getSlotDataKey(slot);
   const baseInput = isMoveSlotPose(slot.pose) ? slot.pose : commandPose(slot.command ?? slot.label);
@@ -3768,6 +3772,36 @@ function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): M
     const override = character.moveOverrides?.[key];
     return override ? mergeMoveOverride(move, override) : move;
   }, baseMove);
+}
+
+function buildChargeKiEditorMove(character: CharacterDefinition): MoveDefinition {
+  const base: MoveDefinition = {
+    id: 'chargeKi',
+    label: 'Charge Ki',
+    input: 'special',
+    command: 'chargeKi',
+    notation: 'O',
+    animationKey: 'chargeKi',
+    comboKey: 'chargeKi',
+    startupFrames: 14,
+    activeFrames: 18,
+    recoveryFrames: 16,
+    damage: 0,
+    blockDamage: 0,
+    hitLevel: 'special',
+    onBlockFrames: 0,
+    onHitFrames: 0,
+    onCounterHitFrames: 0,
+    whiffRecoveryFrames: 0,
+    range: 0.1,
+    pushback: 0,
+    blockPushback: 0,
+    tracking: 'none',
+    knockdown: false,
+    hitbox: { offset: [0, 1, 0], size: [0, 0, 0] }
+  };
+  const override = character.moveOverrides?.chargeKi ?? character.moveOverrides?.['cmd:chargeKi'] ?? character.moveOverrides?.charge;
+  return override ? mergeMoveOverride(base, override) : base;
 }
 
 function mergeMoveOverride(move: MoveDefinition, override: MoveOverride): MoveDefinition {

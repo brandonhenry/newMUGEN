@@ -38,6 +38,9 @@ export type CompactFighterSnapshot = {
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;
+  chargePhase: FighterRuntime['chargePhase'];
+  chargeFrame: number;
+  chargeCommitted: boolean;
   hitConnected: boolean;
   hitConfirmed: boolean;
   whiffRecoveryApplied: boolean;
@@ -174,6 +177,9 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     actionTimer: fighter.actionTimer,
     actionFramesRemaining: fighter.actionFramesRemaining,
     moveFrame: fighter.moveFrame,
+    chargePhase: fighter.chargePhase,
+    chargeFrame: fighter.chargeFrame,
+    chargeCommitted: fighter.chargeCommitted,
     hitConnected: fighter.hitConnected,
     hitConfirmed: fighter.hitConfirmed,
     whiffRecoveryApplied: fighter.whiffRecoveryApplied,
@@ -219,6 +225,9 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
     actionTimer: snapshot.actionTimer,
     actionFramesRemaining: snapshot.actionFramesRemaining,
     moveFrame: snapshot.moveFrame,
+    chargePhase: snapshot.chargePhase ?? base.chargePhase,
+    chargeFrame: snapshot.chargeFrame ?? base.chargeFrame,
+    chargeCommitted: snapshot.chargeCommitted ?? base.chargeCommitted,
     hitConnected: snapshot.hitConnected,
     hitConfirmed: snapshot.hitConfirmed,
     whiffRecoveryApplied: snapshot.whiffRecoveryApplied,

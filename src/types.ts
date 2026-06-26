@@ -29,6 +29,7 @@ export type FighterState =
   | 'crouchBlock'
   | 'jump'
   | 'block'
+  | 'chargeKi'
   | 'attack'
   | 'hit'
   | 'juggle'
@@ -414,6 +415,9 @@ export type FighterRuntime = {
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;
+  chargePhase: 'none' | 'startup' | 'active' | 'hold' | 'recovery';
+  chargeFrame: number;
+  chargeCommitted: boolean;
   hitConnected: boolean;
   hitConfirmed: boolean;
   whiffRecoveryApplied: boolean;

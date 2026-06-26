@@ -1797,10 +1797,45 @@ describe('fight engine', () => {
     const charge = emptyInputFrame();
     charge.charge = true;
 
-    match = stepMatch(match, charge, emptyInputFrame(), 1);
+    for (let i = 0; i < 60; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
 
-    expect(match.fighters[0].ki).toBeCloseTo(28, 3);
+    expect(match.fighters[0].ki).toBeGreaterThan(15);
+    expect(match.fighters[0].ki).toBeLessThan(28);
+    expect(match.fighters[0].state).toBe('chargeKi');
+    expect(match.fighters[0].chargePhase).toBe('hold');
+  });
+
+  it('cancels charge without recovery before the commit window', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+
+    match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
     expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].actionFramesRemaining).toBe(0);
+  });
+
+  it('forces recovery when a committed ki charge is released', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+
+    for (let i = 0; i < 36; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('chargeKi');
+    expect(match.fighters[0].chargePhase).toBe('recovery');
+    expect(match.fighters[0].actionFramesRemaining).toBeGreaterThan(0);
   });
 
   it('builds ki when attacks connect during combos', () => {
@@ -1866,6 +1901,27 @@ describe('fight engine', () => {
     expect(match.fighters[0].ki).toBe(0);
     expect(match.fighters[0].currentMove?.kiBurst).toBe(true);
     expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
+  });
+
+  it('can spend ki on a powered move after charge startup has begun', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 35;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+    const burst = emptyInputFrame();
+    burst.charge = true;
+    burst.jab = true;
+
+    match = stepMatch(match, burst, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.kiBurst).toBe(true);
+    expect(match.fighters[0].chargePhase).toBe('none');
   });
 
   it('allows the same button again when it resolves to a different command move', () => {

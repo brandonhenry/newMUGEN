@@ -9,6 +9,7 @@ import type {
   MatchSnapshot,
   MoveDefinition,
   MoveInput,
+  MoveOverride,
   ImpactSparkKind,
   StageDefinition
 } from '../types';
@@ -65,6 +66,9 @@ const KI_DEFENDER_BLOCK_GAIN = 5;
 const KI_BURST_COST = 30;
 const ATTACK_BUFFER_FRAMES = 16;
 const MAX_COMBO_STEPS = 6;
+const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
+const KI_CHARGE_DEFAULT_ACTIVE_FRAMES = 18;
+const KI_CHARGE_DEFAULT_RECOVERY_FRAMES = 16;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const limbNames: Record<MoveInput, string> = {
@@ -212,6 +216,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     actionTimer: 0,
     actionFramesRemaining: 0,
     moveFrame: 0,
+    chargePhase: 'none',
+    chargeFrame: 0,
+    chargeCommitted: false,
     hitConnected: false,
     hitConfirmed: false,
     whiffRecoveryApplied: false,
@@ -269,6 +276,28 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   updateCommandHistory(fighter, opponent, input, dt);
   const freshMoveInput = getFreshMoveInput(fighter, input);
   if (freshMoveInput && canBufferFreshMoveInput(fighter)) bufferMoveInput(fighter, freshMoveInput);
+
+  if (
+    fighter.state === 'chargeKi' &&
+    freshMoveInput &&
+    input.charge &&
+    fighter.ki >= KI_BURST_COST &&
+    fighter.chargePhase !== 'startup' &&
+    fighter.chargePhase !== 'recovery'
+  ) {
+    clearKiChargeState(fighter);
+    startComboAttack(fighter, opponent, input, freshMoveInput, 'neutral');
+    applyGravity(fighter, dt);
+    updateAttackInputMemory(fighter, input);
+    return;
+  }
+
+  if (fighter.state === 'chargeKi') {
+    handleKiChargeStep(fighter, input, dt);
+    applyGravity(fighter, dt);
+    updateAttackInputMemory(fighter, input);
+    return;
+  }
 
   if (fighter.actionFramesRemaining > 0) {
     fighter.moveFrame += frameDelta;
@@ -385,8 +414,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (input.charge) {
-    fighter.ki = clamp(fighter.ki + KI_CHARGE_PER_SECOND * dt, 0, KI_MAX);
-    fighter.state = 'idle';
+    startKiCharge(fighter);
     applyGravity(fighter, dt);
     updateAttackInputMemory(fighter, input);
     return;
@@ -461,8 +489,95 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
   if (fighter.state === 'attack') return true;
-  if (fighter.state === 'juggle' || fighter.state === 'knockdown') return false;
+  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'chargeKi') return false;
   return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
+}
+
+function startKiCharge(fighter: FighterRuntime) {
+  const move = buildKiChargeMove(fighter.character);
+  fighter.currentMove = move;
+  fighter.moveInstanceId += 1;
+  fighter.state = 'chargeKi';
+  fighter.chargePhase = 'startup';
+  fighter.chargeFrame = 0;
+  fighter.chargeCommitted = false;
+  fighter.moveFrame = 0;
+  fighter.actionFramesRemaining = move.startupFrames;
+  fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
+  fighter.hitConnected = false;
+  fighter.hitConfirmed = false;
+  fighter.whiffRecoveryApplied = false;
+  fighter.bufferedMoveInput = null;
+  fighter.bufferedMoveFrames = 0;
+}
+
+function handleKiChargeStep(fighter: FighterRuntime, input: InputFrame, dt: number) {
+  const move = fighter.currentMove ?? buildKiChargeMove(fighter.character);
+  fighter.currentMove = move;
+  const frameDelta = secondsToFrames(dt);
+  const forwardFrames = move.startupFrames + move.activeFrames;
+
+  if (fighter.chargePhase === 'recovery') {
+    fighter.chargeFrame += frameDelta;
+    fighter.moveFrame = Math.max(0, forwardFrames - fighter.chargeFrame);
+    fighter.actionFramesRemaining = Math.max(0, fighter.actionFramesRemaining - frameDelta);
+    fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
+    if (fighter.actionFramesRemaining === 0) clearKiChargeState(fighter);
+    return;
+  }
+
+  if (!input.charge) {
+    if (fighter.chargeCommitted) {
+      beginKiChargeRecovery(fighter, move);
+    } else {
+      clearKiChargeState(fighter);
+    }
+    return;
+  }
+
+  fighter.chargeFrame += frameDelta;
+  fighter.moveFrame = Math.min(forwardFrames, fighter.moveFrame + frameDelta);
+
+  if (fighter.chargeFrame < move.startupFrames) {
+    fighter.chargePhase = 'startup';
+    fighter.actionFramesRemaining = Math.max(0, move.startupFrames - fighter.chargeFrame);
+    fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
+    return;
+  }
+
+  const activeElapsed = fighter.chargeFrame - move.startupFrames;
+  fighter.chargePhase = activeElapsed >= move.activeFrames ? 'hold' : 'active';
+  fighter.chargeCommitted = activeElapsed >= move.activeFrames;
+  fighter.actionFramesRemaining = 0;
+  fighter.actionTimer = 0;
+  fighter.ki = clamp(fighter.ki + KI_CHARGE_PER_SECOND * dt, 0, KI_MAX);
+}
+
+function beginKiChargeRecovery(fighter: FighterRuntime, move: MoveDefinition) {
+  fighter.chargePhase = 'recovery';
+  fighter.chargeFrame = 0;
+  fighter.actionFramesRemaining = move.recoveryFrames;
+  fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
+  fighter.bufferedMoveInput = null;
+  fighter.bufferedMoveFrames = 0;
+}
+
+function clearKiChargeState(fighter: FighterRuntime) {
+  fighter.currentMove = null;
+  fighter.state = 'idle';
+  resetKiChargeRuntime(fighter);
+  fighter.actionFramesRemaining = 0;
+  fighter.actionTimer = 0;
+  fighter.moveFrame = 0;
+  fighter.hitConnected = false;
+  fighter.hitConfirmed = false;
+  fighter.whiffRecoveryApplied = false;
+}
+
+function resetKiChargeRuntime(fighter: FighterRuntime) {
+  fighter.chargePhase = 'none';
+  fighter.chargeFrame = 0;
+  fighter.chargeCommitted = false;
 }
 
 function getFreshMoveInput(fighter: FighterRuntime, input: InputFrame): MoveInput | null {
@@ -611,6 +726,49 @@ function buildKiBurstMove(move: MoveDefinition): MoveDefinition {
     comboKey: `${move.comboKey ?? move.id}:ki`,
     kiCost: KI_BURST_COST,
     kiBurst: true
+  };
+}
+
+function buildKiChargeMove(character: CharacterDefinition): MoveDefinition {
+  const base: MoveDefinition = {
+    id: 'chargeKi',
+    label: 'Charge Ki',
+    input: 'special',
+    command: 'chargeKi',
+    notation: 'O',
+    animationKey: 'chargeKi',
+    comboKey: 'chargeKi',
+    startupFrames: KI_CHARGE_DEFAULT_STARTUP_FRAMES,
+    activeFrames: KI_CHARGE_DEFAULT_ACTIVE_FRAMES,
+    recoveryFrames: KI_CHARGE_DEFAULT_RECOVERY_FRAMES,
+    damage: 0,
+    blockDamage: 0,
+    hitLevel: 'special',
+    onBlockFrames: 0,
+    onHitFrames: 0,
+    onCounterHitFrames: 0,
+    whiffRecoveryFrames: 0,
+    range: 0.1,
+    pushback: 0,
+    blockPushback: 0,
+    tracking: 'none',
+    knockdown: false,
+    hitbox: { offset: [0, 1, 0], size: [0, 0, 0] }
+  };
+  const override = character.moveOverrides?.chargeKi ?? character.moveOverrides?.['cmd:chargeKi'] ?? character.moveOverrides?.charge;
+  return override ? mergeMoveOverride(base, override) : base;
+}
+
+function mergeMoveOverride(move: MoveDefinition, override: MoveOverride): MoveDefinition {
+  return {
+    ...move,
+    ...override,
+    hitbox: override.hitbox
+      ? {
+          offset: override.hitbox.offset ?? move.hitbox.offset,
+          size: override.hitbox.size ?? move.hitbox.size
+        }
+      : move.hitbox
   };
 }
 
@@ -1469,6 +1627,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
   defender.moveFrame = 0;
+  resetKiChargeRuntime(defender);
 
   if (forceKnockdown) {
     enterKnockdown(defender, Math.max(stunFrames, KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES));
@@ -1585,6 +1744,7 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.actionTimer = framesToSeconds(recoveryFrames);
   fighter.currentMove = null;
   fighter.moveFrame = 0;
+  resetKiChargeRuntime(fighter);
   fighter.hitConnected = false;
   fighter.hitConfirmed = false;
   fighter.whiffRecoveryApplied = false;
@@ -1854,6 +2014,7 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.actionTimer = ROUND_INTRO_TOTAL_SECONDS;
     fighter.actionFramesRemaining = secondsToFrames(ROUND_INTRO_TOTAL_SECONDS);
     fighter.moveFrame = 0;
+    resetKiChargeRuntime(fighter);
     fighter.hitConnected = false;
     fighter.hitConfirmed = false;
     fighter.whiffRecoveryApplied = false;
