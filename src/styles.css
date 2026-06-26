@@ -409,6 +409,31 @@ button {
   scroll-padding-top: 12px;
 }
 
+.options-editor .mode-carousel {
+  width: 100%;
+  max-width: 620px;
+  min-width: 0;
+  grid-template-columns: minmax(46px, 58px) minmax(0, 1fr) minmax(46px, 58px);
+  justify-self: stretch;
+}
+
+.options-editor .mode-carousel-current {
+  min-width: 0;
+  padding-inline: clamp(10px, 2vw, 22px);
+  color: #080b11;
+}
+
+.options-editor .mode-carousel-current strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #080b11;
+  font-size: clamp(16px, 2.2vw, 26px);
+  line-height: 1.05;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .settings-section-stack {
   display: grid;
   gap: 16px;
@@ -4477,6 +4502,25 @@ button {
   .setting-row,
   .binding-row {
     grid-template-columns: 1fr;
+  }
+
+  .options-editor .mode-carousel {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    max-width: none;
+  }
+
+  .options-editor .mode-carousel-arrow,
+  .options-editor .mode-carousel-current {
+    min-height: 50px;
+  }
+
+  .options-editor .mode-carousel-current {
+    gap: 8px;
+    padding-inline: 8px;
+  }
+
+  .options-editor .mode-carousel-current strong {
+    font-size: clamp(15px, 5vw, 20px);
   }
 
   .gamepad-stepper {

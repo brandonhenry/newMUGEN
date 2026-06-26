@@ -1940,33 +1940,6 @@ function CharacterSelectModeCarousel({
   );
 }
 
-function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mode: MatchMode) => void }) {
-  return (
-    <div className="segmented" role="tablist" aria-label="Match mode">
-      <button className={value === 'ai' ? 'active' : ''} onClick={() => setValue('ai')}>
-        <Gamepad2 size={16} />
-        1P vs AI
-      </button>
-      <button className={value === 'local2p' ? 'active' : ''} onClick={() => setValue('local2p')}>
-        <Users size={16} />
-        Local 2P
-      </button>
-      <button className={value === 'training' ? 'active' : ''} onClick={() => setValue('training')}>
-        <Target size={16} />
-        Training
-      </button>
-      <button className={value === 'online' ? 'active' : ''} onClick={() => setValue('online')}>
-        <Wifi size={16} />
-        Online
-      </button>
-      <button className={value === 'cpu' ? 'active' : ''} onClick={() => setValue('cpu')}>
-        <Swords size={16} />
-        CPU vs CPU
-      </button>
-    </div>
-  );
-}
-
 function CpuDifficultyControl({
   value,
   setValue,
@@ -2759,7 +2732,7 @@ function SettingsScreen({
         <div className="settings-section-stack">
           <SettingsSection index={0} title="Match Rules" active={activeSectionIndex === 0}>
             <SettingRow label="Match Mode" value={modeLabel(mode)}>
-              <SegmentedControl value={mode} setValue={setMode} />
+              <CharacterSelectModeCarousel value={mode} setValue={setMode} />
             </SettingRow>
             <SettingRow label="Round Timer" value={`${settings.game.roundTimer}s`}>
               <input type="range" min={30} max={99} step={1} value={settings.game.roundTimer} onChange={(event) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer: Number(event.target.value) } }))} />
