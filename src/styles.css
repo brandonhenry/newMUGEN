@@ -4183,6 +4183,22 @@ button {
   animation: introCalloutPulse 900ms ease-out both;
 }
 
+.match-message.online-search-message.private-search-message {
+  display: grid;
+  gap: 6px;
+}
+
+.match-message.online-search-message.private-search-message span {
+  font-size: 0.62em;
+  opacity: 0.82;
+}
+
+.match-message.online-search-message.private-search-message strong {
+  color: #ffe071;
+  font-size: 0.82em;
+  letter-spacing: 0.08em;
+}
+
 .online-status-pill {
   position: absolute;
   left: 50%;
@@ -4988,9 +5004,130 @@ button {
   text-transform: uppercase;
 }
 
+.private-room-create {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1.2fr);
+  gap: clamp(14px, 2vw, 22px);
+  align-items: center;
+  width: min(980px, 100%);
+  margin: 0 auto clamp(18px, 3vw, 30px);
+  padding: clamp(16px, 2vw, 24px);
+  border: 1px solid rgba(72, 224, 255, 0.24);
+  border-left: 5px solid #2de3ff;
+  background:
+    linear-gradient(120deg, rgba(45, 227, 255, 0.13), transparent 38%),
+    rgba(10, 14, 23, 0.82);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.32);
+}
+
+.private-room-create span,
+.private-room-password span {
+  display: block;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.75rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.private-room-create strong {
+  display: block;
+  margin-top: 4px;
+  color: #ffe071;
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.private-room-create small {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.private-room-board {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+.private-room-rows {
+  display: grid;
+}
+
+.private-room-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(180px, 280px) auto;
+  gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+  min-height: 88px;
+  padding: clamp(14px, 2vw, 22px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.72);
+  text-transform: uppercase;
+}
+
+.private-room-row:last-child {
+  border-bottom: 0;
+}
+
+.private-room-row strong {
+  display: block;
+  color: #f6f3e8;
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: 950;
+}
+
+.private-room-row div > span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.9rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+}
+
+.private-room-password {
+  display: grid;
+  gap: 7px;
+}
+
+.private-room-password input {
+  min-width: 0;
+  height: 52px;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 0 14px;
+  background: rgba(3, 8, 14, 0.82);
+  color: #fff8c7;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.private-room-password input:focus {
+  border-color: #2de3ff;
+  box-shadow: 0 0 0 4px rgba(45, 227, 255, 0.14);
+}
+
+.private-room-message {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: #ffe071;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 @media (max-width: 760px) {
   .arcade-name-card,
-  .leaderboard-header {
+  .leaderboard-header,
+  .private-room-create,
+  .private-room-row {
     grid-template-columns: 1fr;
     display: grid;
   }

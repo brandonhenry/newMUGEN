@@ -7,6 +7,7 @@ import {
   EyeOff,
   Gamepad2,
   Home,
+  KeyRound,
   Pause,
   Play,
   Rotate3D,
@@ -38,6 +39,7 @@ import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encode
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
+import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import {
   ROUNDS_TO_WIN,
@@ -61,7 +63,7 @@ import {
   type VoxelFidelitySettings
 } from './types';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type CharacterAnimationOverride = {
@@ -1082,6 +1084,7 @@ export default function App() {
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
+  const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [musicStarted, setMusicStarted] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
@@ -1356,6 +1359,7 @@ export default function App() {
             }}
             onOnline={() => {
               setMode('online');
+              setPrivateRoomIntent(null);
               setScreen('select');
             }}
             onSettings={() => setScreen('settings')}
@@ -1375,6 +1379,25 @@ export default function App() {
             onBack={() => setScreen('select')}
           />
         )}
+        {screen === 'privateRooms' && (
+          <PrivateRoomsScreen
+            p1={p1}
+            stage={selectedStage}
+            roster={roster}
+            stages={stageRoster}
+            onCreate={(intent) => {
+              setMode('private');
+              setPrivateRoomIntent(intent);
+              setScreen('fight');
+            }}
+            onJoin={(intent) => {
+              setMode('private');
+              setPrivateRoomIntent(intent);
+              setScreen('fight');
+            }}
+            onBack={() => setScreen('select')}
+          />
+        )}
         {screen === 'select' && (
           <CharacterSelect
             roster={roster}
@@ -1389,9 +1412,13 @@ export default function App() {
             onlineProfile={onlineProfile}
             onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onLeaderboards={() => setScreen('leaderboard')}
+            onPrivateRooms={() => setScreen('privateRooms')}
             onUiNavigate={() => playMenuHoverSound(90)}
             onBack={() => setScreen('menu')}
-            onNext={() => setScreen('stage')}
+            onNext={() => {
+              if (mode !== 'private') setPrivateRoomIntent(null);
+              setScreen('stage');
+            }}
           />
         )}
         {screen === 'stage' && (
@@ -1400,7 +1427,12 @@ export default function App() {
             stages={stageRoster}
             setSelected={setStageId}
             onBack={() => setScreen('select')}
-            onFight={() => setScreen('fight')}
+            onFight={() => {
+              if (mode === 'private' && !privateRoomIntent) {
+                setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
+              }
+              setScreen('fight');
+            }}
           />
         )}
         {screen === 'stageEditor' && (
@@ -1449,6 +1481,7 @@ export default function App() {
             clearMenuInputs={clearMenuInputs}
             getLastInput={getLastInput}
             onlineProfile={onlineProfile}
+            privateRoomIntent={privateRoomIntent}
             onMenu={() => setScreen('menu')}
             onCharacterSelect={() => setScreen('select')}
           />
@@ -1930,6 +1963,167 @@ function LeaderboardScreen({
   );
 }
 
+function PrivateRoomsScreen({
+  p1,
+  stage,
+  roster,
+  stages,
+  onCreate,
+  onJoin,
+  onBack
+}: {
+  p1: CharacterDefinition;
+  stage: StageDefinition;
+  roster: CharacterDefinition[];
+  stages: StageDefinition[];
+  onCreate: (intent: Extract<PrivateRoomIntent, { kind: 'host' }>) => void;
+  onJoin: (intent: Extract<PrivateRoomIntent, { kind: 'guest' }>) => void;
+  onBack: () => void;
+}) {
+  const [rooms, setRooms] = useState<PrivateRoomSummary[]>([]);
+  const [roomName, setRoomName] = useState(`${p1.displayName} Room`.slice(0, 18));
+  const [passwords, setPasswords] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [message, setMessage] = useState('');
+
+  const load = useCallback(async () => {
+    setStatus('loading');
+    setMessage('');
+    try {
+      const result = await listPrivateRooms();
+      setRooms(result);
+      setStatus('ready');
+    } catch (error) {
+      console.error('Failed to load private rooms', error);
+      setStatus('error');
+      setMessage(error instanceof Error ? error.message : 'Rooms unavailable');
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+    const timer = window.setInterval(() => void load(), 4000);
+    return () => window.clearInterval(timer);
+  }, [load]);
+
+  const createRoom = () => {
+    onCreate({
+      kind: 'host',
+      roomName: cleanPrivateRoomName(roomName || `${p1.displayName} Room`),
+      password: generatePrivateRoomPassword()
+    });
+  };
+
+  const joinRoom = (roomId: string) => {
+    const password = normalizePrivateRoomPassword(passwords[roomId] ?? '');
+    if (!password) {
+      setMessage('Enter that room password first');
+      return;
+    }
+    onJoin({ kind: 'guest', roomId, password });
+  };
+
+  const characterName = (id: string) => roster.find((character) => character.id === id)?.displayName ?? id;
+  const stageName = (id: string) => stages.find((item) => item.id === id)?.name ?? id;
+
+  return (
+    <div className="leaderboard-screen private-rooms-screen">
+      <header className="leaderboard-header">
+        <div>
+          <p className="eyebrow">Private Match</p>
+          <h1>Rooms</h1>
+        </div>
+      </header>
+
+      <div className="private-room-create">
+        <div>
+          <span>Host Room</span>
+          <strong>{p1.displayName}</strong>
+          <small>{stage.name}</small>
+        </div>
+        <label className="arcade-name-entry">
+          <input
+            value={roomName}
+            maxLength={18}
+            placeholder="ROOM NAME"
+            onChange={(event) => setRoomName(cleanPrivateRoomName(event.target.value))}
+          />
+          <button type="button" onClick={createRoom}>
+            Create
+          </button>
+        </label>
+      </div>
+
+      <div className="leaderboard-actions">
+        <button className="secondary-button" onClick={load}>
+          <RotateCcw size={18} />
+          Refresh
+        </button>
+        <button className="secondary-button" onClick={onBack}>
+          <Home size={18} />
+          Back
+        </button>
+      </div>
+
+      <section className="leaderboard-board private-room-board" aria-label="Private rooms">
+        {message && <div className="private-room-message">{message}</div>}
+        {status === 'loading' && <div className="leaderboard-empty">Loading rooms</div>}
+        {status === 'error' && <div className="leaderboard-empty">Private rooms unavailable</div>}
+        {status === 'ready' && rooms.length === 0 && <div className="leaderboard-empty">No open rooms. Create one and share the password.</div>}
+        {status === 'ready' && rooms.length > 0 && (
+          <div className="private-room-rows">
+            {rooms.map((room) => (
+              <article key={room.roomId} className="private-room-row">
+                <div>
+                  <strong>{room.roomName}</strong>
+                  <span>{characterName(room.hostCharacterId)} / {stageName(room.stageId)}</span>
+                </div>
+                <label className="private-room-password">
+                  <span>Password</span>
+                  <input
+                    value={passwords[room.roomId] ?? ''}
+                    maxLength={16}
+                    placeholder="KORE-0000"
+                    onChange={(event) => setPasswords((current) => ({ ...current, [room.roomId]: normalizePrivateRoomPassword(event.target.value) }))}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        event.preventDefault();
+                        joinRoom(room.roomId);
+                      }
+                    }}
+                  />
+                </label>
+                <button className="primary-button" onClick={() => joinRoom(room.roomId)}>
+                  <Wifi size={18} />
+                  Join
+                </button>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function cleanPrivateRoomName(value: string) {
+  return value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').slice(0, 18);
+}
+
+function privateRoomToOnlineResult(room: PrivateRoomResult): OnlineMatchResult {
+  return {
+    role: room.role,
+    status: room.status,
+    roomId: room.roomId,
+    ownerToken: room.ownerToken,
+    hostPeerId: room.hostPeerId,
+    guestPeerId: room.guestPeerId,
+    hostCharacterId: room.hostCharacterId,
+    guestCharacterId: room.guestCharacterId,
+    stageId: room.stageId
+  };
+}
+
 function ArcadeNameCard({
   profile,
   onProfileChange,
@@ -1989,6 +2183,7 @@ const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: 
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
   { mode: 'training', label: 'Training', icon: <Target size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
+  { mode: 'private', label: 'Private', icon: <KeyRound size={18} /> },
   { mode: 'cpu', label: 'CPU vs CPU', icon: <Swords size={18} /> }
 ];
 
@@ -2005,6 +2200,7 @@ function CharacterSelect({
   onlineProfile,
   onOnlineProfileChange,
   onLeaderboards,
+  onPrivateRooms,
   onUiNavigate,
   onBack,
   onNext
@@ -2021,6 +2217,7 @@ function CharacterSelect({
   onlineProfile?: OnlinePlayerProfile | null;
   onOnlineProfileChange?: (profile: Partial<OnlinePlayerProfile>) => void;
   onLeaderboards?: () => void;
+  onPrivateRooms?: () => void;
   onUiNavigate: () => void;
   onBack: () => void;
   onNext: () => void;
@@ -2114,11 +2311,21 @@ function CharacterSelect({
 
         <FooterActions
           onBack={onBack}
-          middleAction={mode === 'online' && onLeaderboards ? {
-            label: 'Leaderboards',
-            icon: <Trophy size={18} />,
-            onClick: onLeaderboards
-          } : undefined}
+          middleAction={
+            mode === 'online' && onLeaderboards
+              ? {
+                label: 'Leaderboards',
+                icon: <Trophy size={18} />,
+                onClick: onLeaderboards
+              }
+              : mode === 'private' && onPrivateRooms
+                ? {
+                  label: 'Rooms',
+                  icon: <KeyRound size={18} />,
+                  onClick: onPrivateRooms
+                }
+                : undefined
+          }
           onNext={onNext}
           nextLabel="Stage"
           nextDisabled={mode === 'online' && !onlineProfile}
@@ -2304,6 +2511,7 @@ function CpuDifficultyControl({
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
+  if (mode === 'private') return slot === 1 ? 'You' : 'Private Guest';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && mode === 'ai') return 'CPU';
   return slot === 1 ? 'Player 1' : 'Player 2';
@@ -2312,6 +2520,7 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
+  if (mode === 'private') return slot === 1 ? 'YOU' : 'GUEST';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && mode === 'ai') return 'CPU';
   return slot === 1 ? 'P1' : 'P2';
@@ -3406,6 +3615,7 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
   if (mode === 'online') return 'Online';
+  if (mode === 'private') return 'Private';
   return 'CPU vs CPU';
 }
 
@@ -5660,6 +5870,7 @@ function FightScreen({
   clearMenuInputs,
   getLastInput,
   onlineProfile,
+  privateRoomIntent,
   onMenu,
   onCharacterSelect
 }: {
@@ -5676,11 +5887,13 @@ function FightScreen({
   clearMenuInputs: () => void;
   getLastInput: () => string;
   onlineProfile: OnlinePlayerProfile | null;
+  privateRoomIntent: PrivateRoomIntent | null;
   onMenu: () => void;
   onCharacterSelect: () => void;
 }) {
   const [paused, setPaused] = useState(false);
-  const isOnline = mode === 'online';
+  const isOnline = mode === 'online' || mode === 'private';
+  const isPrivate = mode === 'private';
   const matchOptions = useMemo(
     () => ({
       roundTime: settings.game.roundTimer,
@@ -5699,7 +5912,9 @@ function FightScreen({
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
-  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? 'LOOKING FOR MATCH' : '');
+  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : 'LOOKING FOR MATCH') : '');
+  const [privateRoomPassword, setPrivateRoomPassword] = useState('');
+  const [privateRoomName, setPrivateRoomName] = useState('');
   const [onlineWins, setOnlineWins] = useState<OnlineWins>([0, 0]);
   const onlineSessionRef = useRef<OnlinePeerSession | null>(null);
   const onlineRoomRef = useRef<OnlineMatchResult | null>(null);
@@ -5805,6 +6020,8 @@ function FightScreen({
     setOnlineRole(null);
     setOnlineWins([0, 0]);
     setOnlineStatusText(message);
+    setPrivateRoomPassword('');
+    setPrivateRoomName('');
   }, []);
 
   const cleanupOnline = useCallback((notifyOpponent = true) => {
@@ -5833,9 +6050,12 @@ function FightScreen({
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
     if (room || session?.peerId) {
-      void leaveOnlineRoom({ roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId }).catch(() => undefined);
+      const leaveRequest = { roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId };
+      void (isPrivate ? leavePrivateRoom(leaveRequest) : leaveOnlineRoom(leaveRequest)).catch(() => undefined);
     }
-  }, [isOnline]);
+    setPrivateRoomPassword('');
+    setPrivateRoomName('');
+  }, [isOnline, isPrivate]);
 
   const recordOnlineMatchWin = useCallback((candidate: MatchSnapshot) => {
     if (candidate.phase !== 'matchOver' || !candidate.winnerSlot || onlineWinnerRecordedRef.current) return;
@@ -5845,7 +6065,7 @@ function FightScreen({
     onlineWinnerRecordedRef.current = true;
     setOnlineWins(wins);
     setOnlineStatusText('REMATCH?');
-    if (onlineRoleRef.current === 'host') {
+    if (mode === 'online' && onlineRoleRef.current === 'host') {
       const localProfile = onlineLocalProfileRef.current;
       const remoteProfile = onlineRemoteProfileRef.current;
       const winner = candidate.winnerSlot === 1 ? localProfile : remoteProfile;
@@ -5857,7 +6077,7 @@ function FightScreen({
       }
     }
     publishOnlineSnapshot(true);
-  }, [publishOnlineSnapshot]);
+  }, [mode, publishOnlineSnapshot]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
     if (message.type === 'hello') {
@@ -5943,7 +6163,9 @@ function FightScreen({
     setOnlineState('searching');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
-    setOnlineStatusText('LOOKING FOR MATCH');
+    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : 'LOOKING FOR MATCH');
+    setPrivateRoomPassword('');
+    setPrivateRoomName('');
 
     const start = async () => {
       try {
@@ -5976,6 +6198,47 @@ function FightScreen({
           if (cancelled || !onlineSessionRef.current) return;
           if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'disconnected') return;
           if (onlineRoleRef.current === 'guest' && onlineStateRef.current === 'connecting') return;
+          if (isPrivate) {
+            const intent = privateRoomIntent ?? { kind: 'host' as const, roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() };
+            if (intent.kind === 'host') {
+              const currentRoom = onlineRoomRef.current;
+              const privateResult = await createPrivateRoom({
+                peerId: session.peerId,
+                characterId: p1.id,
+                stageId: stage.id,
+                roomName: intent.roomName,
+                password: intent.password,
+                roomId: currentRoom?.role === 'host' ? currentRoom.roomId : undefined,
+                ownerToken: currentRoom?.role === 'host' ? currentRoom.ownerToken : undefined
+              });
+              const result = privateRoomToOnlineResult(privateResult);
+              onlineRoomRef.current = result;
+              onlineRoleRef.current = 'host';
+              setOnlineRole('host');
+              setPrivateRoomPassword(privateResult.password ?? intent.password);
+              setPrivateRoomName(privateResult.roomName);
+              onlineStateRef.current = 'searching';
+              setOnlineState('searching');
+              setOnlineStatusText(privateResult.status === 'matched' ? 'MATCH FOUND' : 'PRIVATE ROOM WAITING');
+              return;
+            }
+
+            const privateResult = await joinPrivateRoom({
+              peerId: session.peerId,
+              characterId: p1.id,
+              roomId: intent.roomId,
+              password: intent.password
+            });
+            const result = privateRoomToOnlineResult(privateResult);
+            onlineRoomRef.current = result;
+            onlineRoleRef.current = 'guest';
+            setOnlineRole('guest');
+            onlineStateRef.current = 'connecting';
+            setOnlineState('connecting');
+            setOnlineStatusText('MATCH FOUND');
+            session.connect(result.hostPeerId);
+            return;
+          }
           const currentRoom = onlineRoomRef.current;
           const result = await matchmakeOnline({
             peerId: session.peerId,
@@ -6021,7 +6284,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [cleanupOnline, handleOnlineMessage, isOnline, markOnlineDisconnected, p1.id, stage.id]);
+  }, [cleanupOnline, handleOnlineMessage, isOnline, isPrivate, markOnlineDisconnected, p1.displayName, p1.id, privateRoomIntent, stage.id]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -6163,7 +6426,12 @@ function FightScreen({
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
       {match.message && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}>{match.message}</div>}
       {isOnline && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
-        <div className="match-message online-search-message">{onlineStatusText}</div>
+        <div className={`match-message online-search-message ${isPrivate ? 'private-search-message' : ''}`}>
+          <span>{onlineStatusText}</span>
+          {isPrivate && privateRoomPassword && onlineRole !== 'guest' && (
+            <strong>{privateRoomName ? `${privateRoomName} ` : ''}{privateRoomPassword}</strong>
+          )}
+        </div>
       )}
       {isOnline && onlineState === 'connected' && (
         <div className="online-status-pill">
