@@ -1295,7 +1295,7 @@ describe('fight engine', () => {
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;
     match.fighters[1].position.x = 0.45;
-    const route: Array<keyof ReturnType<typeof emptyInputFrame>> = ['jab', 'heavy', 'kick', 'special'];
+    const route: Array<keyof ReturnType<typeof emptyInputFrame>> = ['jab', 'jab', 'kick', 'heavy'];
 
     route.forEach((button, index) => {
       const input = emptyInputFrame();
@@ -1307,7 +1307,7 @@ describe('fight engine', () => {
     });
 
     expect(match.fighters[0].comboStep).toBeGreaterThanOrEqual(4);
-    expect(match.fighters[0].comboSequence.slice(0, 4)).toEqual(['jab', 'heavy', 'kick', 'special']);
+    expect(match.fighters[0].comboSequence.slice(0, 4)).toEqual(['jab', 'jab', 'kick', 'heavy']);
   });
 
   it('ships thirty authored neutral string routes by default', () => {
@@ -1976,8 +1976,17 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[1].state).toBe('juggle');
-    expect(match.fighters[1].position.y).toBeGreaterThan(0);
+    expect(match.fighters[1].position.y).toBeGreaterThan(0.6);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(3.9);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(0);
+
+    let apex = match.fighters[1].position.y;
+    for (let i = 0; i < 28; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      apex = Math.max(apex, match.fighters[1].position.y);
+    }
+    expect(apex).toBeGreaterThan(2.1);
+    expect(match.fighters[1].state).toBe('juggle');
   });
 
   it('keeps a launched defender unable to act while airborne even after hit frames expire', () => {
@@ -2030,6 +2039,34 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('idle');
   });
 
+  it('adds landing recovery when a juggled defender falls to the floor with expired hit frames', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 0.04;
+    match.fighters[1].velocityY = -2.2;
+    match.fighters[1].stunFramesRemaining = 0;
+    match.fighters[1].actionFramesRemaining = 0;
+    match.fighters[1].stunTimer = 0;
+    match.fighters[1].actionTimer = 0;
+
+    for (let i = 0; i < 3 && match.fighters[1].position.y > 0; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].position.y).toBe(0);
+    expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].actionFramesRemaining).toBeGreaterThan(0);
+
+    const attemptedGroundAction = emptyInputFrame();
+    attemptedGroundAction.jab = true;
+    match = stepMatch(match, emptyInputFrame(), attemptedGroundAction, 1 / 60);
+
+    expect(match.fighters[1].currentMove).toBeNull();
+    expect(match.fighters[1].state).toBe('juggle');
+  });
+
   it('re-floats airborne defenders on juggle follow-up hits', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -2058,7 +2095,8 @@ describe('fight engine', () => {
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
     expect(match.fighters[1].state).toBe('juggle');
-    expect(match.fighters[1].velocityY).toBeGreaterThan(0);
+    expect(match.fighters[1].position.y).toBeGreaterThan(1);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(3.7);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(8);
   });
 

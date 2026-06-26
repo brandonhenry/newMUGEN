@@ -33,9 +33,14 @@ const GETUP_INVULNERABLE_FRAMES = 20;
 const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
 const JUGGLE_DAMAGE_LIMIT = 44;
-const JUGGLE_REFLOAT_VELOCITY = 1.28;
-const JUGGLE_KEEP_CLOSE_DISTANCE = 1.08;
-const JUGGLE_KEEP_CLOSE_PULL = 0.24;
+const JUGGLE_INITIAL_VELOCITY = 5.95;
+const JUGGLE_REFLOAT_VELOCITY = 4.35;
+const JUGGLE_GRAVITY_SCALE = 0.52;
+const JUGGLE_MIN_START_HEIGHT = 0.72;
+const JUGGLE_REFLOAT_MIN_HEIGHT = 1.12;
+const JUGGLE_LANDING_RECOVERY_FRAMES = 18;
+const JUGGLE_KEEP_CLOSE_DISTANCE = 1.16;
+const JUGGLE_KEEP_CLOSE_PULL = 0.34;
 const DEFAULT_HURTBOX: BoxSpec = { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] };
 const UNIVERSAL_RANGE_BUFFER = 0.26;
 const UNIVERSAL_HITBOX_FORWARD_PADDING = 0.22;
@@ -303,7 +308,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.state === 'juggle') {
-    applyGravity(fighter, dt);
+    const landed = applyGravity(fighter, dt, JUGGLE_GRAVITY_SCALE);
+    if (landed) {
+      applyJuggleLandingRecovery(fighter);
+    }
     if (!isAirborne(fighter) && fighter.stunFramesRemaining === 0 && fighter.actionFramesRemaining === 0 && fighter.stunTimer === 0 && fighter.actionTimer === 0) {
       fighter.state = 'idle';
       fighter.juggleDamage = 0;
@@ -1396,11 +1404,13 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
 
   if (!forceKnockdown && entersJuggle) {
-    const refloatVelocity = launchHeight > 0
-      ? (wasAirborne ? Math.min(1.55, Math.max(JUGGLE_REFLOAT_VELOCITY, launchHeight * 0.64)) : launchHeight)
-      : JUGGLE_REFLOAT_VELOCITY;
-    defender.position.y = Math.max(defender.position.y, wasAirborne ? 0.36 : 0.18);
+    const refloatVelocity = getJuggleVelocity(launchHeight, wasAirborne);
+    defender.position.y = Math.max(defender.position.y, wasAirborne ? JUGGLE_REFLOAT_MIN_HEIGHT : JUGGLE_MIN_START_HEIGHT);
     defender.velocityY = Math.max(defender.velocityY, refloatVelocity);
+    defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, wasAirborne ? 18 : 28);
+    defender.stunTimer = framesToSeconds(defender.stunFramesRemaining);
+    defender.actionFramesRemaining = Math.max(defender.actionFramesRemaining, defender.stunFramesRemaining);
+    defender.actionTimer = framesToSeconds(defender.actionFramesRemaining);
     applyJuggleFloatCorrection(attacker, defender);
   } else if (!forceKnockdown && wasAirborne) {
     defender.position.y = Math.max(defender.position.y, 0.28);
@@ -1507,6 +1517,27 @@ function getPostLockState(fighter: FighterRuntime): FighterRuntime['state'] {
 
 function isAirborne(fighter: FighterRuntime) {
   return fighter.position.y > 0 || fighter.velocityY !== 0;
+}
+
+function getJuggleVelocity(launchHeight: number, wasAirborne: boolean) {
+  if (wasAirborne) {
+    return Math.min(5.25, Math.max(JUGGLE_REFLOAT_VELOCITY, launchHeight > 0 ? launchHeight * 1.95 : JUGGLE_REFLOAT_VELOCITY));
+  }
+  return Math.min(6.65, Math.max(JUGGLE_INITIAL_VELOCITY, launchHeight > 0 ? launchHeight * 2.55 : JUGGLE_INITIAL_VELOCITY));
+}
+
+function applyJuggleLandingRecovery(fighter: FighterRuntime) {
+  const recoveryFrames = Math.max(
+    JUGGLE_LANDING_RECOVERY_FRAMES,
+    fighter.stunFramesRemaining,
+    fighter.actionFramesRemaining,
+    secondsToFrames(fighter.stunTimer),
+    secondsToFrames(fighter.actionTimer)
+  );
+  fighter.stunFramesRemaining = recoveryFrames;
+  fighter.actionFramesRemaining = recoveryFrames;
+  fighter.stunTimer = framesToSeconds(recoveryFrames);
+  fighter.actionTimer = framesToSeconds(recoveryFrames);
 }
 
 function applyJuggleFloatCorrection(attacker: FighterRuntime, defender: FighterRuntime) {
@@ -2297,16 +2328,19 @@ function framesToSeconds(frames: number) {
   return frames / FRAMES_PER_SECOND;
 }
 
-function applyGravity(fighter: FighterRuntime, dt: number) {
+function applyGravity(fighter: FighterRuntime, dt: number, gravityScale = 1) {
   if (fighter.position.y > 0 || fighter.velocityY !== 0) {
-    fighter.velocityY -= fighter.character.stats.gravity * dt;
+    const wasAirborne = fighter.position.y > 0 || fighter.velocityY !== 0;
+    fighter.velocityY -= fighter.character.stats.gravity * gravityScale * dt;
     fighter.position.y += fighter.velocityY * dt;
     if (fighter.position.y <= 0) {
       fighter.position.y = 0;
       fighter.velocityY = 0;
       if (fighter.state === 'jump') fighter.state = 'idle';
+      return wasAirborne;
     }
   }
+  return false;
 }
 
 function cloneMatch(match: MatchSnapshot): MatchSnapshot {

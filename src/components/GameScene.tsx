@@ -905,10 +905,10 @@ function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeS
     const bob = fighter.state === 'idle' ? Math.sin(scaledTime.current * 4 + fighter.slot) * 0.025 : 0;
     const hitLean = fighter.state === 'hit' ? -fighter.facing * 0.16 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
-    const juggleRoll = juggle * Math.sin(scaledTime.current * 6 + fighter.slot) * 0.26;
+    const juggleRoll = juggle * Math.sin(scaledTime.current * 3.8 + fighter.slot) * 0.34;
     const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
     group.current.position.set(fighter.position.x, fighter.position.y + bob, fighter.position.z);
-    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : juggle ? -0.48 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
+    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : juggle ? -1.16 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
   });
 
   const color = fighter.character.colors.primary;
@@ -1619,8 +1619,8 @@ function ExternalFighter({ fighter, url, timeScale = 1 }: { fighter: FighterRunt
     const crouch = fighter.state === 'crouch' ? 1 : 0;
     const knockdown = fighter.state === 'knockdown' ? 1 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
-    wrapper.current.rotation.x = THREE.MathUtils.lerp(wrapper.current.rotation.x, knockdown * -0.85 + juggle * -0.46 + block * -0.18 + crouch * -0.28 + hit * 0.18, 1 - Math.pow(0.001, delta));
-    wrapper.current.rotation.z = THREE.MathUtils.lerp(wrapper.current.rotation.z, attack * 0.22 * fighter.facing - hit * 0.12 * fighter.facing + juggle * Math.sin(Date.now() * 0.006 + fighter.slot) * 0.2, 1 - Math.pow(0.001, delta));
+    wrapper.current.rotation.x = THREE.MathUtils.lerp(wrapper.current.rotation.x, knockdown * -0.85 + juggle * -0.42 + block * -0.18 + crouch * -0.28 + hit * 0.18, 1 - Math.pow(0.001, delta));
+    wrapper.current.rotation.z = THREE.MathUtils.lerp(wrapper.current.rotation.z, attack * 0.22 * fighter.facing - hit * 0.12 * fighter.facing + juggle * Math.sin(Date.now() * 0.0038 + fighter.slot) * 0.22, 1 - Math.pow(0.001, delta));
     wrapper.current.position.y = THREE.MathUtils.lerp(wrapper.current.position.y, crouch ? -0.22 : block ? -0.06 : 0, 1 - Math.pow(0.001, delta));
   });
 
