@@ -4758,6 +4758,41 @@ button {
 
 .arcade-name-entry button {
   min-height: 58px;
+  min-width: 112px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 20px;
+  color: #071018;
+  background:
+    linear-gradient(180deg, #fff9dc 0%, #ffd863 48%, #ff8a1f 100%);
+  box-shadow:
+    0 12px 28px rgba(255, 138, 31, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+  font: inherit;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition-property: transform, filter, box-shadow;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.arcade-name-entry button:hover:not(:disabled),
+.arcade-name-entry button:focus-visible:not(:disabled) {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow:
+    0 16px 34px rgba(255, 138, 31, 0.32),
+    0 0 0 4px rgba(45, 227, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.arcade-name-entry button:active:not(:disabled) {
+  transform: scale(0.96);
 }
 
 .leaderboard-actions {

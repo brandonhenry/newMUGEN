@@ -64,6 +64,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent, pressed: boolean) => {
+      if (isTextEntryTarget(event.target)) return;
       const bindings = getKeyboardBindingsForEvent(event, modeRef.current, controlsRef.current);
       for (const binding of bindings) {
         const playerIndex = binding.player - 1;
@@ -134,6 +135,17 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   const getLastInput = useCallback(() => lastInputRef.current, []);
 
   return { readInputs, setVirtualAction, clearMenuInputs, getLastInput };
+}
+
+function isTextEntryTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tagName = target.tagName;
+  if (tagName === 'TEXTAREA' || tagName === 'SELECT') return true;
+  if (tagName !== 'INPUT') return false;
+  const input = target as HTMLInputElement;
+  const type = (input.type || 'text').toLowerCase();
+  return !['button', 'checkbox', 'color', 'file', 'image', 'radio', 'range', 'reset', 'submit'].includes(type);
 }
 
 export function getKeyboardBindingsForEvent(
