@@ -16,6 +16,7 @@ import {
   Shuffle,
   Swords,
   Target,
+  Timer,
   Trophy,
   Upload,
   Users,
@@ -1940,6 +1941,43 @@ function CharacterSelectModeCarousel({
   );
 }
 
+function RoundTimerControl({ value, setValue }: { value: number; setValue: (value: number) => void }) {
+  const cycleTimer = (direction: -1 | 1) => {
+    const next = Math.min(99, Math.max(30, value + direction * 5));
+    if (next !== value) setValue(next);
+  };
+
+  return (
+    <div
+      className="mode-carousel round-timer-carousel"
+      role="group"
+      aria-label="Round timer"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          cycleTimer(-1);
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          cycleTimer(1);
+        }
+      }}
+    >
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleTimer(-1)} aria-label="Lower round timer">
+        <ChevronLeft size={24} />
+      </button>
+      <div className="mode-carousel-current" aria-live="polite">
+        <Timer size={22} />
+        <strong>{value}s</strong>
+      </div>
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleTimer(1)} aria-label="Raise round timer">
+        <ChevronRight size={24} />
+      </button>
+    </div>
+  );
+}
+
 function CpuDifficultyControl({
   value,
   setValue,
@@ -2735,7 +2773,10 @@ function SettingsScreen({
               <CharacterSelectModeCarousel value={mode} setValue={setMode} />
             </SettingRow>
             <SettingRow label="Round Timer" value={`${settings.game.roundTimer}s`}>
-              <input type="range" min={30} max={99} step={1} value={settings.game.roundTimer} onChange={(event) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer: Number(event.target.value) } }))} />
+              <RoundTimerControl
+                value={settings.game.roundTimer}
+                setValue={(roundTimer) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer } }))}
+              />
             </SettingRow>
             {usesCpuDifficulty(mode) && (
               <SettingRow label="CPU Difficulty" value={cpuDifficultyLabels[cpuDifficulty]}>
