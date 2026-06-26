@@ -5904,6 +5904,7 @@ function FightScreen({
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
+  const pausedRef = useRef(paused);
   const pauseLatch = useRef(false);
   const frameInputRef = useRef('none');
   const screenRef = useRef<HTMLDivElement>(null);
@@ -5935,6 +5936,10 @@ function FightScreen({
   useEffect(() => {
     matchRef.current = match;
   }, [match]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
     onlineStateRef.current = onlineState;
@@ -6198,6 +6203,19 @@ function FightScreen({
         const poll = async () => {
           if (cancelled || !onlineSessionRef.current) return;
           if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'disconnected') return;
+          if (!isPrivate && pausedRef.current) {
+            const currentRoom = onlineRoomRef.current;
+            if (currentRoom) {
+              onlineRoomRef.current = null;
+              onlineRoleRef.current = null;
+              setOnlineRole(null);
+              await leaveOnlineRoom({ roomId: currentRoom.roomId, ownerToken: currentRoom.ownerToken, peerId: session.peerId }).catch(() => undefined);
+            }
+            onlineStateRef.current = 'searching';
+            setOnlineState('searching');
+            setOnlineStatusText('SEARCH PAUSED');
+            return;
+          }
           if (onlineRoleRef.current === 'guest' && onlineStateRef.current === 'connecting') return;
           if (isPrivate) {
             const intent = privateRoomIntent ?? { kind: 'host' as const, roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() };
@@ -6293,6 +6311,20 @@ function FightScreen({
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [cleanupOnline, isOnline]);
+
+  useEffect(() => {
+    if (!isOnline) return undefined;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTextEntryElement(event.target)) return;
+      if (onlineStateRef.current === 'connected') return;
+      event.preventDefault();
+      setPaused((value) => !value);
+      clearMenuInputs();
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, [clearMenuInputs, isOnline]);
 
   useEffect(() => {
     let frame = 0;
