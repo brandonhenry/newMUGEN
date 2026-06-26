@@ -1334,15 +1334,27 @@
     {
       "index": 101,
       "path": "/characters/kiro/frames/frame-101.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
       "box": [
-        115,
-        829,
-        199,
-        998
+        131,
+        914,
+        184,
+        989
       ],
-      "width": 84,
-      "height": 169,
-      "row": 10
+      "width": 53,
+      "height": 75,
+      "row": 10,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782500255479
     },
     {
       "index": 102,
@@ -1451,6 +1463,7 @@
     {
       "index": 110,
       "path": "/characters/kiro/frames/frame-110.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/kiro/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -1469,7 +1482,8 @@
         0
       ],
       "scale": 1,
-      "hidden": false
+      "hidden": false,
+      "revision": 1782500062928
     },
     {
       "index": 111,

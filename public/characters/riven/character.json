@@ -389,6 +389,22 @@
     "juggle": [
       "/characters/riven/frames/frame-029.png",
       "/characters/riven/frames/frame-030.png"
+    ],
+    "cmd:2": [
+      "/characters/riven/frames/frame-083.png",
+      "/characters/riven/frames/frame-084.png",
+      "/characters/riven/frames/frame-087.png",
+      "/characters/riven/frames/frame-088.png",
+      "/characters/riven/frames/frame-089.png",
+      "/characters/riven/frames/frame-090.png"
+    ],
+    "cmd:3": [
+      "/characters/riven/frames/frame-119.png"
+    ],
+    "cmd:4": [
+      "/characters/riven/frames/frame-118.png",
+      "/characters/riven/frames/frame-119.png",
+      "/characters/riven/frames/frame-124.png"
     ]
   },
   "animationFps": 5,
@@ -565,6 +581,12 @@
     },
     "cmd:1+3": {
       "startupFrames": 14,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52
+    },
+    "cmd:3": {
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
