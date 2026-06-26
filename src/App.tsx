@@ -2959,7 +2959,6 @@ function SettingsScreen({
     <div className="settings-screen">
       <header className="options-header">
         <div>
-          <span>Options</span>
           <h2>{tabLabels[activeTab]}</h2>
         </div>
         <nav className="options-tabs" aria-label="Options tabs">
