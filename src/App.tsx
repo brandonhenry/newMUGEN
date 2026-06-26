@@ -118,7 +118,17 @@ type HdVoxelPayload = {
     width: number;
     height: number;
     sampleStep: number;
+    foregroundWidth?: number;
+    foregroundHeight?: number;
+    baselineForegroundHeight?: number;
+    modelHeight?: number;
+    modelHeightScale?: number;
   };
+};
+
+type HdVoxelBuildSizing = {
+  modelHeightScale?: number;
+  baselineForegroundHeight?: number;
 };
 
 type YouTubePlayerStateChange = { data: number; target: YouTubePlayer };
@@ -185,13 +195,13 @@ const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover.mp3', import.meta.url).href;
 const HIT_SFX = {
-  punch1: '/sounds/hits/generated/hit-013.wav',
-  heavy2: '/sounds/hits/generated/hit-010.wav',
-  kick3: '/sounds/hits/generated/hit-014.wav',
-  special4: '/sounds/hits/generated/hit-018.wav',
-  blockLight: '/sounds/hits/generated/hit-027.wav',
-  blockHeavy: '/sounds/hits/generated/hit-031.wav',
-  launcher: '/sounds/hits/generated/hit-004.wav',
+  punch1: '/sounds/hits/generated/hit-001.wav',
+  heavy2: '/sounds/hits/generated/hit-002.wav',
+  kick3: '/sounds/hits/generated/hit-009.wav',
+  special4: '/sounds/hits/generated/hit-003.wav',
+  blockLight: '/sounds/hits/generated/hit-013.wav',
+  blockHeavy: '/sounds/hits/generated/hit-007.wav',
+  launcher: '/sounds/hits/generated/hit-012.wav',
   bigLauncher: '/sounds/hits/generated/hit-020.wav'
 } as const;
 type BgmSource = {
@@ -753,9 +763,10 @@ async function saveHdVoxelsToDev(character: CharacterDefinition, onProgress?: (c
   const fidelity = normalizeVoxelFidelity(character.voxelFidelity);
   const frames: Array<{ frameIndex: number; payload: HdVoxelPayload }> = [];
   for (let index = 0; index < frameCount; index += 1) {
+    const frameEdit = character.spriteFrameEdits?.[String(index)];
     frames.push({
       frameIndex: index,
-      payload: await buildHdVoxelPayload(framePath(character, index), fidelity)
+      payload: await buildHdVoxelPayload(framePath(character, index), fidelity, framePath(character, index), getSpriteFrameVoxelSizing(frameEdit))
     });
     onProgress?.(index + 1, frameCount);
   }
@@ -780,7 +791,27 @@ async function saveHdVoxelFramesToDev(
   if (!response.ok) throw new Error(await response.text());
 }
 
-async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelitySettings>, sourceFrame = src): Promise<HdVoxelPayload> {
+function getSpriteFrameVoxelSizing(edit?: SpriteFrameEdit): HdVoxelBuildSizing {
+  if (!edit) return {};
+  const sourceHeight = edit.sourceMode === 'replacement'
+    ? Math.max(1, Math.round(edit.replacementHeight ?? edit.height ?? 1))
+    : Math.max(1, Math.round((edit.box?.[3] ?? edit.height ?? 1) - (edit.box?.[1] ?? 0)));
+  const outputHeight = Math.max(1, Math.round(edit.height || sourceHeight));
+  const drawScale = Math.max(0.25, Number(edit.scale) || 1);
+  const canvasScale = outputHeight / sourceHeight;
+  const modelHeightScale = Math.max(1, drawScale, canvasScale);
+  return {
+    modelHeightScale: Math.min(2.35, modelHeightScale),
+    baselineForegroundHeight: sourceHeight
+  };
+}
+
+async function buildHdVoxelPayload(
+  src: string,
+  fidelity: Required<VoxelFidelitySettings>,
+  sourceFrame = src,
+  sizing: HdVoxelBuildSizing = {}
+): Promise<HdVoxelPayload> {
   const image = new Image();
   image.crossOrigin = 'anonymous';
   image.src = src;
@@ -806,7 +837,11 @@ async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelity
   const columns = Math.max(1, Math.ceil(bboxWidth / sampleStep));
   const aspect = bboxWidth / bboxHeight;
   const maxModelWidth = 2.65;
-  const modelHeight = Math.min(2.08, maxModelWidth / aspect);
+  const baseModelHeight = Math.min(2.08, maxModelWidth / aspect);
+  const baselineForegroundHeight = Math.max(1, sizing.baselineForegroundHeight ?? bboxHeight);
+  const foregroundHeightScale = bboxHeight / baselineForegroundHeight;
+  const modelHeightScale = Math.min(2.35, Math.max(1, sizing.modelHeightScale ?? 1, foregroundHeightScale));
+  const modelHeight = baseModelHeight * modelHeightScale;
   const modelWidth = modelHeight * aspect;
   const cellWidth = modelWidth / columns;
   const cellHeight = modelHeight / rows;
@@ -846,7 +881,12 @@ async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelity
       frame: sourceFrame,
       width: canvas.width,
       height: canvas.height,
-      sampleStep
+      sampleStep,
+      foregroundWidth: bboxWidth,
+      foregroundHeight: bboxHeight,
+      baselineForegroundHeight,
+      modelHeight: roundVoxelNumber(modelHeight),
+      modelHeightScale: roundVoxelNumber(modelHeightScale)
     }
   };
 }
@@ -4349,7 +4389,7 @@ function CharacterViewer({
         [
           {
             frameIndex: selectedSpriteFrameIndex,
-            payload: await buildHdVoxelPayload(pngDataUrl, fidelity, selectedSpriteFramePath)
+            payload: await buildHdVoxelPayload(pngDataUrl, fidelity, selectedSpriteFramePath, getSpriteFrameVoxelSizing(nextEdit))
           }
         ],
         fidelity

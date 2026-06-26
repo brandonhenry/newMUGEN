@@ -1184,7 +1184,23 @@ function sanitizeHdVoxelPayload(payload: Record<string, unknown>) {
     format: 'kore-hd-voxels-v1',
     palette,
     voxels,
-    source: payload.source && typeof payload.source === 'object' ? payload.source : undefined
+    source: sanitizeHdVoxelSource(payload.source)
+  };
+}
+
+function sanitizeHdVoxelSource(source: unknown) {
+  if (!source || typeof source !== 'object') return undefined;
+  const value = source as Record<string, unknown>;
+  return {
+    frame: typeof value.frame === 'string' ? value.frame.slice(0, 240) : undefined,
+    width: Math.max(1, Math.round(finiteOr(value.width, 1))),
+    height: Math.max(1, Math.round(finiteOr(value.height, 1))),
+    sampleStep: Math.max(1, Math.round(finiteOr(value.sampleStep, 1))),
+    foregroundWidth: Math.max(0, Math.round(finiteOr(value.foregroundWidth, 0))),
+    foregroundHeight: Math.max(0, Math.round(finiteOr(value.foregroundHeight, 0))),
+    baselineForegroundHeight: Math.max(0, Math.round(finiteOr(value.baselineForegroundHeight, 0))),
+    modelHeight: Number(Math.max(0, finiteOr(value.modelHeight, 0)).toFixed(5)),
+    modelHeightScale: Number(Math.max(1, finiteOr(value.modelHeightScale, 1)).toFixed(5))
   };
 }
 
