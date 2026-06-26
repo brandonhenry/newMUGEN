@@ -1311,6 +1311,7 @@ export default function App() {
     return KORE_MENU_BGM_SOURCE;
   }, [musicStarted, screen, selectedStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack ? activeBgmSource.trackIndex : settings.audio.bgmTrackIndex;
+  useMenuNavigation(screen);
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -1455,6 +1456,255 @@ export default function App() {
       </section>
     </main>
   );
+}
+
+type MenuNavigationDirection = 'up' | 'down' | 'left' | 'right';
+type MenuNavigationDevice = 'keyboard' | 'gamepad';
+
+const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
+  KeyW: 'up',
+  KeyS: 'down',
+  KeyA: 'left',
+  KeyD: 'right',
+  KeyJ: 'confirm',
+  KeyK: 'back'
+};
+
+const menuFocusableSelector = [
+  'button:not(:disabled)',
+  'a[href]',
+  'input:not(:disabled):not([type="hidden"])',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
+  '[tabindex]:not([tabindex="-1"])'
+].join(',');
+
+function useMenuNavigation(screen: Screen) {
+  const screenRef = useRef(screen);
+  const lastDeviceRef = useRef<MenuNavigationDevice>('keyboard');
+  const previousPadStateRef = useRef({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    confirm: false,
+    back: false
+  });
+
+  useEffect(() => {
+    screenRef.current = screen;
+  }, [screen]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isMenuNavigationActive(screenRef.current)) return;
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (isTextEntryElement(event.target)) return;
+      const command = keyboardMenuNavigation[event.code];
+      if (!command) return;
+      lastDeviceRef.current = 'keyboard';
+      event.preventDefault();
+      if (command === 'confirm') {
+        activateFocusedMenuElement();
+        return;
+      }
+      if (command === 'back') {
+        activateBackMenuElement();
+        return;
+      }
+      moveMenuFocus(command);
+    };
+
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    let lastMoveAt = 0;
+    const repeatDelayMs = 170;
+
+    const tick = () => {
+      if (isMenuNavigationActive(screenRef.current)) {
+        const pad = getPrimaryMenuGamepad();
+        if (pad) {
+          const now = performance.now();
+          const current = readMenuGamepadState(pad);
+          const previous = previousPadStateRef.current;
+          const edge = {
+            up: current.up && !previous.up,
+            down: current.down && !previous.down,
+            left: current.left && !previous.left,
+            right: current.right && !previous.right,
+            confirm: current.confirm && !previous.confirm,
+            back: current.back && !previous.back
+          };
+          const repeatedMove = now - lastMoveAt > repeatDelayMs;
+          const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
+
+          if (edge.confirm) {
+            lastDeviceRef.current = 'gamepad';
+            activateFocusedMenuElement();
+          } else if (edge.back) {
+            lastDeviceRef.current = 'gamepad';
+            activateBackMenuElement();
+          } else if (edge.up || edge.down || edge.left || edge.right || (heldDirection && repeatedMove)) {
+            lastDeviceRef.current = 'gamepad';
+            const direction = edge.up ? 'up' : edge.down ? 'down' : edge.left ? 'left' : edge.right ? 'right' : heldDirection;
+            if (direction) {
+              moveMenuFocus(direction);
+              lastMoveAt = now;
+            }
+          }
+          previousPadStateRef.current = current;
+        } else {
+          previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false };
+        }
+      }
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+}
+
+function isMenuNavigationActive(screen: Screen) {
+  return screen !== 'boot' && screen !== 'fight';
+}
+
+function isTextEntryElement(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tagName = target.tagName;
+  if (tagName === 'TEXTAREA' || tagName === 'SELECT') return true;
+  if (tagName !== 'INPUT') return false;
+  const input = target as HTMLInputElement;
+  const type = (input.type || 'text').toLowerCase();
+  return !['button', 'checkbox', 'color', 'file', 'image', 'radio', 'range', 'reset', 'submit'].includes(type);
+}
+
+function getPrimaryMenuGamepad() {
+  const pads = navigator.getGamepads?.() ?? [];
+  return pads.find((pad): pad is Gamepad => Boolean(pad?.connected)) ?? null;
+}
+
+function readMenuGamepadState(pad: Gamepad) {
+  const horizontal = pad.axes[0] ?? 0;
+  const vertical = pad.axes[1] ?? 0;
+  return {
+    up: Boolean(pad.buttons[12]?.pressed) || vertical < -0.45,
+    down: Boolean(pad.buttons[13]?.pressed) || vertical > 0.45,
+    left: Boolean(pad.buttons[14]?.pressed) || horizontal < -0.45,
+    right: Boolean(pad.buttons[15]?.pressed) || horizontal > 0.45,
+    confirm: Boolean(pad.buttons[0]?.pressed),
+    back: Boolean(pad.buttons[1]?.pressed) || Boolean(pad.buttons[8]?.pressed)
+  };
+}
+
+function getMenuRoot() {
+  return document.querySelector<HTMLElement>('.screen-panel');
+}
+
+function getMenuFocusableElements() {
+  const root = getMenuRoot();
+  if (!root) return [];
+  return Array.from(root.querySelectorAll<HTMLElement>(menuFocusableSelector)).filter(isVisibleMenuElement);
+}
+
+function isVisibleMenuElement(element: HTMLElement) {
+  if (element.closest('[aria-hidden="true"]')) return false;
+  const style = window.getComputedStyle(element);
+  if (style.display === 'none' || style.visibility === 'hidden' || style.pointerEvents === 'none') return false;
+  const rect = element.getBoundingClientRect();
+  return rect.width > 1 && rect.height > 1 && rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
+}
+
+function focusMenuElement(element: HTMLElement) {
+  element.focus({ preventScroll: true });
+  element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+}
+
+function getCurrentMenuElement(elements: HTMLElement[]) {
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  if (active && elements.includes(active)) return active;
+  const selected = elements.find((element) => (
+    element.matches('.is-active, .active, .is-selected, .is-picking, [aria-selected="true"], [aria-current="true"]') ||
+    element.getAttribute('aria-pressed') === 'true'
+  ));
+  return selected ?? elements[0] ?? null;
+}
+
+function moveMenuFocus(direction: MenuNavigationDirection) {
+  const elements = getMenuFocusableElements();
+  if (elements.length === 0) return;
+  const current = getCurrentMenuElement(elements);
+  if (!current) return;
+  const next = findNextMenuElement(elements, current, direction);
+  if (next) focusMenuElement(next);
+}
+
+function findNextMenuElement(elements: HTMLElement[], current: HTMLElement, direction: MenuNavigationDirection) {
+  const currentRect = current.getBoundingClientRect();
+  const currentCenter = getRectCenter(currentRect);
+  const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
+  const sign = direction === 'right' || direction === 'down' ? 1 : -1;
+  const candidates = elements
+    .filter((element) => element !== current)
+    .map((element) => {
+      const rect = element.getBoundingClientRect();
+      const center = getRectCenter(rect);
+      const primaryDelta = axis === 'x' ? center.x - currentCenter.x : center.y - currentCenter.y;
+      const crossDelta = axis === 'x' ? center.y - currentCenter.y : center.x - currentCenter.x;
+      return { element, primaryDelta, crossDelta };
+    })
+    .filter((candidate) => candidate.primaryDelta * sign > 6)
+    .sort((a, b) => {
+      const aPrimary = Math.abs(a.primaryDelta);
+      const bPrimary = Math.abs(b.primaryDelta);
+      const aScore = aPrimary * 1.5 + Math.abs(a.crossDelta);
+      const bScore = bPrimary * 1.5 + Math.abs(b.crossDelta);
+      return aScore - bScore;
+    });
+  if (candidates[0]) return candidates[0].element;
+
+  const ordered = [...elements].sort((a, b) => {
+    const aCenter = getRectCenter(a.getBoundingClientRect());
+    const bCenter = getRectCenter(b.getBoundingClientRect());
+    if (axis === 'x') return sign > 0 ? aCenter.x - bCenter.x : bCenter.x - aCenter.x;
+    return sign > 0 ? aCenter.y - bCenter.y : bCenter.y - aCenter.y;
+  });
+  return ordered.find((element) => element !== current) ?? current;
+}
+
+function getRectCenter(rect: DOMRect) {
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2
+  };
+}
+
+function activateFocusedMenuElement() {
+  const elements = getMenuFocusableElements();
+  const current = getCurrentMenuElement(elements);
+  if (!current) return;
+  if (current instanceof HTMLInputElement && (current.type === 'range' || current.type === 'color')) return;
+  current.click();
+}
+
+function activateBackMenuElement() {
+  const elements = getMenuFocusableElements();
+  const backElement = elements.find((element) => {
+    const text = (element.textContent ?? '').trim().toLowerCase();
+    const label = (element.getAttribute('aria-label') ?? '').trim().toLowerCase();
+    return text === 'back' || text.endsWith(' back') || label === 'back' || label.includes('back');
+  });
+  if (backElement) {
+    focusMenuElement(backElement);
+    backElement.click();
+    return;
+  }
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true }));
 }
 
 function TitleScreen({ onStart }: { onStart: () => void }) {
