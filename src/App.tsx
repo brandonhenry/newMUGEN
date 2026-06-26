@@ -167,6 +167,7 @@ const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
 const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
 const KORE_MENU_SELECT_SOUND_URL = new URL('../sounds/menu-button-press.wav', import.meta.url).href;
+const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover.mp3', import.meta.url).href;
 const menuAttractStage: StageDefinition = {
   id: 'kore-menu-moon',
   name: 'KORE Moon Stage',
@@ -937,6 +938,7 @@ export default function App() {
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [musicStarted, setMusicStarted] = useState(false);
   const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
+  const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
 
   useEffect(() => {
@@ -1018,6 +1020,15 @@ export default function App() {
     const audio = menuSelectAudioRef.current ?? new Audio(KORE_MENU_SELECT_SOUND_URL);
     menuSelectAudioRef.current = audio;
     audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.28, 0, 0.36);
+    audio.currentTime = 0;
+    audio.play().catch(() => undefined);
+  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
+
+  const playMenuHoverSound = useCallback(() => {
+    if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
+    const audio = menuHoverAudioRef.current ?? new Audio(KORE_MENU_HOVER_SOUND_URL);
+    menuHoverAudioRef.current = audio;
+    audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.16, 0, 0.22);
     audio.currentTime = 0;
     audio.play().catch(() => undefined);
   }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
@@ -1149,6 +1160,7 @@ export default function App() {
           <MenuScreen
             roster={roster}
             onMenuSelect={playMenuSelectSound}
+            onMenuHover={playMenuHoverSound}
             onArcade={() => {
               setMode('ai');
               setScreen('select');
@@ -1273,6 +1285,7 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
 function MenuScreen({
   roster,
   onMenuSelect,
+  onMenuHover,
   onArcade,
   onVersus,
   onTraining,
@@ -1284,6 +1297,7 @@ function MenuScreen({
 }: {
   roster: CharacterDefinition[];
   onMenuSelect: () => void;
+  onMenuHover: () => void;
   onArcade: () => void;
   onVersus: () => void;
   onTraining: () => void;
@@ -1299,6 +1313,7 @@ function MenuScreen({
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
+  const activeMenuIndexRef = useRef(0);
 
   useEffect(() => {
     if (!p1 || !p2) return;
@@ -1345,6 +1360,13 @@ function MenuScreen({
     { label: 'Exit', action: onExit }
   ];
 
+  const activateMenuItem = (index: number, withSound: boolean) => {
+    if (index === activeMenuIndexRef.current) return;
+    activeMenuIndexRef.current = index;
+    setActiveMenuIndex(index);
+    if (withSound) onMenuHover();
+  };
+
   return (
     <div className="menu-screen">
       {attractMatch && (
@@ -1360,10 +1382,9 @@ function MenuScreen({
             <button
               key={item.label}
               className={index === activeMenuIndex ? 'is-active' : ''}
-              onPointerEnter={() => setActiveMenuIndex(index)}
-              onMouseEnter={() => setActiveMenuIndex(index)}
-              onMouseMove={() => setActiveMenuIndex(index)}
-              onFocus={() => setActiveMenuIndex(index)}
+              onPointerEnter={() => activateMenuItem(index, true)}
+              onMouseMove={() => activateMenuItem(index, false)}
+              onFocus={() => activateMenuItem(index, true)}
               onClick={() => {
                 onMenuSelect();
                 item.action();
