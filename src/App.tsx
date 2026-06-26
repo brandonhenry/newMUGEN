@@ -3571,12 +3571,15 @@ function SettingsScreen({
 
     return (
       <div className="settings-section-stack">
-        <SettingsSection index={0} title="Menu Playlist" active={activeSectionIndex === 0}>
+        <SettingsSection index={0} title="Menu Music" active={activeSectionIndex === 0}>
+          <SettingToggle
+            label="Main Menu Music"
+            checked={settings.audio.menuMusic}
+            onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, menuMusic: checked } }))}
+          />
           <SettingRow label="Menu BGM Source" value="YouTube Playlist">
             <a className="mini-link-button" href={KORE_BGM_PLAYLIST_URL} target="_blank" rel="noreferrer">Open Playlist</a>
           </SettingRow>
-        </SettingsSection>
-        <SettingsSection index={1} title="Menu Song" active={activeSectionIndex === 1}>
           <SettingRow label="Menu Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
             <div className="audio-track-controls" role="group" aria-label="Current BGM song">
               <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: Math.max(0, current.audio.bgmTrackIndex - 1) } }))}>
@@ -3590,21 +3593,15 @@ function SettingsScreen({
             </div>
           </SettingRow>
         </SettingsSection>
-        <SettingsSection index={2} title="Stage Music" active={activeSectionIndex === 2}>
+        <SettingsSection index={1} title="Stage Music" active={activeSectionIndex === 1}>
           <SettingRow label="Stage Music" value="Disabled in fights for now">
             <span className="setting-readout">Off in match</span>
           </SettingRow>
         </SettingsSection>
-        <SettingsSection index={3} title="Master Mix" active={activeSectionIndex === 3}>
+        <SettingsSection index={2} title="Mix" active={activeSectionIndex === 2}>
           <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
-        </SettingsSection>
-        <SettingsSection index={4} title="Music" active={activeSectionIndex === 4}>
           <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
-        </SettingsSection>
-        <SettingsSection index={5} title="SFX" active={activeSectionIndex === 5}>
           <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
-        </SettingsSection>
-        <SettingsSection index={6} title="Mute" active={activeSectionIndex === 6}>
           <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
         </SettingsSection>
       </div>
