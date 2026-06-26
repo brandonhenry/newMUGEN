@@ -166,7 +166,6 @@ const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
 const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
 const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
-const KORE_MENU_SELECT_SOUND_URL = new URL('../sounds/menu-button-press.wav', import.meta.url).href;
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover.mp3', import.meta.url).href;
 const menuAttractStage: StageDefinition = {
   id: 'kore-menu-moon',
@@ -937,8 +936,8 @@ export default function App() {
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [musicStarted, setMusicStarted] = useState(false);
-  const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
+  const menuHoverLastPlayedAtRef = useRef(0);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
 
   useEffect(() => {
@@ -1001,6 +1000,17 @@ export default function App() {
     writeGameSettings(settings);
   }, [settings]);
 
+  useEffect(() => {
+    const audio = new Audio(KORE_MENU_HOVER_SOUND_URL);
+    audio.preload = 'auto';
+    audio.load();
+    menuHoverAudioRef.current = audio;
+    return () => {
+      audio.pause();
+      if (menuHoverAudioRef.current === audio) menuHoverAudioRef.current = null;
+    };
+  }, []);
+
   const updateBgmTrackIndex = useCallback((index: number) => {
     setSettings((current) => {
       const nextIndex = Math.max(0, Math.round(index));
@@ -1015,20 +1025,15 @@ export default function App() {
     });
   }, []);
 
-  const playMenuSelectSound = useCallback(() => {
+  const playMenuHoverSound = useCallback((minimumGapMs = 120) => {
     if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
-    const audio = menuSelectAudioRef.current ?? new Audio(KORE_MENU_SELECT_SOUND_URL);
-    menuSelectAudioRef.current = audio;
-    audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.28, 0, 0.36);
-    audio.currentTime = 0;
-    audio.play().catch(() => undefined);
-  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
-
-  const playMenuHoverSound = useCallback(() => {
-    if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
+    const now = performance.now();
+    if (now - menuHoverLastPlayedAtRef.current < minimumGapMs) return;
+    menuHoverLastPlayedAtRef.current = now;
     const audio = menuHoverAudioRef.current ?? new Audio(KORE_MENU_HOVER_SOUND_URL);
     menuHoverAudioRef.current = audio;
     audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.16, 0, 0.22);
+    audio.pause();
     audio.currentTime = 0;
     audio.play().catch(() => undefined);
   }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
@@ -1159,8 +1164,8 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
-            onMenuSelect={playMenuHoverSound}
-            onMenuHover={playMenuHoverSound}
+            onMenuSelect={() => playMenuHoverSound(80)}
+            onMenuHover={() => playMenuHoverSound(140)}
             onArcade={() => {
               setMode('ai');
               setScreen('select');
@@ -1194,7 +1199,7 @@ export default function App() {
             setP2Id={setP2Id}
             setMode={setMode}
             setCpuDifficulty={setCpuDifficulty}
-            onUiNavigate={playMenuHoverSound}
+            onUiNavigate={() => playMenuHoverSound(90)}
             onBack={() => setScreen('menu')}
             onNext={() => setScreen('stage')}
           />
@@ -1385,7 +1390,7 @@ function MenuScreen({
               className={index === activeMenuIndex ? 'is-active' : ''}
               onPointerEnter={() => activateMenuItem(index, true)}
               onMouseMove={() => activateMenuItem(index, false)}
-              onFocus={() => activateMenuItem(index, true)}
+              onFocus={() => activateMenuItem(index, false)}
               onClick={() => {
                 onMenuSelect();
                 item.action();
