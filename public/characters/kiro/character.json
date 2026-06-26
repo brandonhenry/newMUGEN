@@ -256,8 +256,11 @@
       "/characters/kiro/frames/frame-079.png"
     ],
     "kick": [
+      "/characters/kiro/frames/frame-085.png",
+      "/characters/kiro/frames/frame-086.png",
       "/characters/kiro/frames/frame-087.png",
-      "/characters/kiro/frames/frame-088.png"
+      "/characters/kiro/frames/frame-088.png",
+      "/characters/kiro/frames/frame-089.png"
     ],
     "heavy": [
       "/characters/kiro/frames/frame-091.png",
@@ -386,8 +389,8 @@
     "crouchBlock": 5,
     "jump": 8,
     "block": 5,
-    "jab": 12,
-    "kick": 9,
+    "jab": 6,
+    "kick": 6,
     "heavy": 9,
     "special": 11,
     "hitLight": 8,
@@ -558,14 +561,18 @@
       "label": "Wind Sweep Kick"
     },
     "kick": {
-      "startupFrames": 10,
-      "recoveryFrames": 11
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 14
     },
     "cmd:D+3": {
       "hitLevel": "low"
     },
     "cmd:d+1": {
       "hitLevel": "low"
+    },
+    "jab": {
+      "recoveryFrames": 9
     }
   },
   "spriteFrameEdits": {
