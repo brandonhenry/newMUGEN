@@ -1492,8 +1492,9 @@ export default function App() {
   const activeBgmSource = useMemo(() => {
     if (!musicStarted) return null;
     if (screen === 'fight') return null;
-    return KORE_MENU_BGM_SOURCE;
-  }, [musicStarted, screen, selectedStage]);
+    if ((screen === 'title' || screen === 'menu') && settings.audio.menuMusic) return KORE_MENU_BGM_SOURCE;
+    return null;
+  }, [musicStarted, screen, selectedStage, settings.audio.menuMusic]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack ? activeBgmSource.trackIndex : settings.audio.bgmTrackIndex;
   useMenuNavigation(screen);
 
@@ -3288,7 +3289,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
-  audio: ['Menu Playlist', 'Menu Song', 'Stage Music', 'Master Mix', 'Music', 'SFX', 'Mute']
+  audio: ['Menu Music', 'Stage Music', 'Mix']
 };
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
@@ -5326,12 +5327,16 @@ function renderSpriteFrameCanvas(sheet: HTMLImageElement | null, canvas: HTMLCan
   const sourceHeight = Math.max(1, y2 - y1);
   const scale = Math.max(0.25, edit.scale ?? 1);
   const rotation = normalizeRotation(edit.rotation ?? 0);
-  canvas.width = Math.max(1, Math.round(edit.width || sourceWidth));
-  canvas.height = Math.max(1, Math.round(edit.height || sourceHeight));
+  const offsetX = edit.offset?.[0] ?? 0;
+  const offsetY = edit.offset?.[1] ?? 0;
+  const grownWidth = Math.ceil(sourceWidth * scale + Math.abs(offsetX) * 2);
+  const grownHeight = Math.ceil(sourceHeight * scale + Math.abs(offsetY) * 2);
+  canvas.width = Math.max(1, Math.round(edit.width || sourceWidth), grownWidth);
+  canvas.height = Math.max(1, Math.round(edit.height || sourceHeight), grownHeight);
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.imageSmoothingEnabled = false;
   context.save();
-  context.translate(canvas.width / 2 + (edit.offset?.[0] ?? 0), canvas.height / 2 + (edit.offset?.[1] ?? 0));
+  context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
   context.rotate((rotation * Math.PI) / 180);
   context.scale(scale, scale);
   context.drawImage(sheet, x1, y1, sourceWidth, sourceHeight, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
@@ -5347,12 +5352,16 @@ function renderReplacementFrameCanvas(image: HTMLImageElement, canvas: HTMLCanva
   const imageHeight = image.naturalHeight;
   const scale = Math.max(0.25, edit.scale ?? 1);
   const rotation = normalizeRotation(edit.rotation ?? 0);
-  canvas.width = Math.max(1, Math.round(edit.width || edit.replacementWidth || imageWidth));
-  canvas.height = Math.max(1, Math.round(edit.height || edit.replacementHeight || imageHeight));
+  const offsetX = edit.offset?.[0] ?? 0;
+  const offsetY = edit.offset?.[1] ?? 0;
+  const grownWidth = Math.ceil(imageWidth * scale + Math.abs(offsetX) * 2);
+  const grownHeight = Math.ceil(imageHeight * scale + Math.abs(offsetY) * 2);
+  canvas.width = Math.max(1, Math.round(edit.width || edit.replacementWidth || imageWidth), grownWidth);
+  canvas.height = Math.max(1, Math.round(edit.height || edit.replacementHeight || imageHeight), grownHeight);
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.imageSmoothingEnabled = false;
   context.save();
-  context.translate(canvas.width / 2 + (edit.offset?.[0] ?? 0), canvas.height / 2 + (edit.offset?.[1] ?? 0));
+  context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
   context.rotate((rotation * Math.PI) / 180);
   context.scale(scale, scale);
   context.drawImage(image, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight);

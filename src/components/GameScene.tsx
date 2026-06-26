@@ -649,11 +649,12 @@ export function CharacterPreviewCanvas({
   rotationTurn: number;
   zoom: number;
 }) {
+  const frameFit = useMemo(() => getPreviewFrameFit(character, animationKey), [animationKey, character]);
   return (
     <Canvas
       shadows
       dpr={[1, 1.75]}
-      camera={{ position: [0, 1.7, 4.4], fov: 38 }}
+      camera={{ position: [0, 1.7 + frameFit.extraTargetY, 4.4 + frameFit.extraDistance], fov: 38 }}
       data-testid="character-viewer-canvas"
       aria-label="3D character model viewer"
     >
@@ -668,16 +669,16 @@ export function CharacterPreviewCanvas({
       <pointLight position={[2.2, 1.2, -2.2]} color={character.colors.accent} intensity={4} distance={5} />
       <PreviewFloor color={character.colors.primary} />
       <PreviewFighter key={character.id} character={character} pose={pose} animationKey={animationKey} rotationTurn={rotationTurn} />
-      <PreviewCamera zoom={zoom} />
+      <PreviewCamera zoom={zoom} frameFit={frameFit} />
       <OrbitControls
         makeDefault
         enablePan={false}
         enableZoom
         minDistance={2.25}
-        maxDistance={6.2}
+        maxDistance={6.2 + frameFit.extraDistance}
         minPolarAngle={Math.PI * 0.22}
         maxPolarAngle={Math.PI * 0.52}
-        target={[0, 1, 0]}
+        target={[0, 1 + frameFit.extraTargetY, 0]}
         rotateSpeed={0.75}
         zoomSpeed={0.72}
       />
@@ -686,20 +687,51 @@ export function CharacterPreviewCanvas({
   );
 }
 
-function PreviewCamera({ zoom }: { zoom: number }) {
+type PreviewFrameFit = {
+  scale: number;
+  extraDistance: number;
+  extraTargetY: number;
+};
+
+function getPreviewFrameFit(character: CharacterDefinition, animationKey?: string): PreviewFrameFit {
+  const sequence = animationKey ? character.animationFrames?.[animationKey] : undefined;
+  const scale = Math.max(1, ...(sequence ?? []).map((frame) => getSpriteFrameGrowScale(character, frame)));
+  return {
+    scale,
+    extraDistance: (scale - 1) * 3.2,
+    extraTargetY: (scale - 1) * 0.68
+  };
+}
+
+function getSpriteFrameGrowScale(character: CharacterDefinition, frameSource: string) {
+  const frameIndex = frameSource.match(/frame-(\d+)\.png/)?.[1];
+  if (!frameIndex) return 1;
+  const edit = character.spriteFrameEdits?.[String(Number(frameIndex))];
+  if (!edit) return 1;
+  const sourceHeight = edit.sourceMode === 'replacement'
+    ? Math.max(1, Math.round(edit.replacementHeight ?? edit.height ?? 1))
+    : Math.max(1, Math.round((edit.box?.[3] ?? edit.height ?? 1) - (edit.box?.[1] ?? 0)));
+  const outputHeight = Math.max(1, Math.round(edit.height || sourceHeight));
+  return Math.min(2.35, Math.max(1, Number(edit.scale) || 1, outputHeight / sourceHeight));
+}
+
+function PreviewCamera({ zoom, frameFit }: { zoom: number; frameFit: PreviewFrameFit }) {
   const { camera } = useThree();
   const lastZoom = useRef(zoom);
+  const lastScale = useRef(frameFit.scale);
   const active = useRef(true);
   useFrame((_, delta) => {
-    if (lastZoom.current !== zoom) {
+    if (lastZoom.current !== zoom || lastScale.current !== frameFit.scale) {
       lastZoom.current = zoom;
+      lastScale.current = frameFit.scale;
       active.current = true;
     }
     if (!active.current) return;
-    const distance = THREE.MathUtils.lerp(5.2, 2.35, zoom);
-    const desired = new THREE.Vector3(0, 1.45 + zoom * 0.28, distance);
+    const distance = THREE.MathUtils.lerp(5.2, 2.35, zoom) + frameFit.extraDistance;
+    const targetY = 1.05 + frameFit.extraTargetY;
+    const desired = new THREE.Vector3(0, 1.45 + zoom * 0.28 + frameFit.extraTargetY, distance);
     camera.position.lerp(desired, 1 - Math.pow(0.001, delta));
-    camera.lookAt(0, 1.05, 0);
+    camera.lookAt(0, targetY, 0);
     if (camera.position.distanceTo(desired) < 0.01) active.current = false;
   });
   return null;

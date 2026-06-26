@@ -386,6 +386,7 @@ export type GameSettings = {
     music: number;
     sfx: number;
     muted: boolean;
+    menuMusic: boolean;
     bgmTrackIndex: number;
   };
 };
