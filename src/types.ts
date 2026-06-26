@@ -137,6 +137,7 @@ export type SpriteFrameEdit = {
   offset?: [number, number];
   scale?: number;
   hidden?: boolean;
+  revision?: number;
 };
 
 export type CharacterSpriteSheet = {

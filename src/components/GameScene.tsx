@@ -1152,6 +1152,7 @@ function versionEditedSpriteFrameSource(src: string | undefined, character: Char
     edit.offset?.join(',') ?? '',
     edit.scale ?? 1,
     edit.hidden ? 'hidden' : 'visible',
+    edit.revision ?? '',
     edit.replacementName ?? '',
     edit.replacementWidth ?? '',
     edit.replacementHeight ?? ''
@@ -1361,7 +1362,9 @@ function getPrecomputedVoxelPath(src: string, hd = false) {
   const cleanSrc = src.split('?')[0] ?? src;
   const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
   if (!match) return null;
-  return `${match[1]}/${hd ? 'voxels-hd' : 'voxels'}/${match[2]}.json`;
+  const queryIndex = src.indexOf('?');
+  const cacheBust = queryIndex >= 0 ? src.slice(queryIndex) : '';
+  return `${match[1]}/${hd ? 'voxels-hd' : 'voxels'}/${match[2]}.json${cacheBust}`;
 }
 
 function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null {
@@ -1380,20 +1383,11 @@ function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null 
 }
 
 async function loadImageVoxels(src: string, character: CharacterDefinition) {
-  const editedSpriteFrame = hasEditedSpriteFrame(src, character);
-  if (editedSpriteFrame) {
-    return extractImageVoxels(src);
-  }
   if (character.voxelProfile === 'hd-image-source') {
     const hdVoxels = await loadPrecomputedImageVoxels(src, character);
     if (hdVoxels) return hdVoxels;
   }
   return (await loadPrecomputedImageVoxels(src, { ...character, voxelProfile: 'image-source' })) ?? extractImageVoxels(src);
-}
-
-function hasEditedSpriteFrame(src: string, character: CharacterDefinition) {
-  const frameIndex = src.match(/frame-(\d+)\.png/)?.[1];
-  return Boolean(frameIndex && character.spriteFrameEdits?.[String(Number(frameIndex))]);
 }
 
 function getForegroundBounds(imageData: ImageData, background: [number, number, number]) {

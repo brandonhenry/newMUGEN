@@ -553,12 +553,18 @@
     },
     "heavy": {
       "hitLevel": "mid"
+    },
+    "jab": {
+      "activeFrames": 3,
+      "recoveryFrames": 13,
+      "onBlockFrames": -4
     }
   },
   "spriteFrameEdits": {
     "171": {
       "index": 171,
       "path": "/characters/riven/frames/frame-171.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -582,6 +588,7 @@
     "176": {
       "index": 176,
       "path": "/characters/riven/frames/frame-176.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -605,6 +612,7 @@
     "177": {
       "index": 177,
       "path": "/characters/riven/frames/frame-177.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -628,6 +636,7 @@
     "178": {
       "index": 178,
       "path": "/characters/riven/frames/frame-178.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -651,6 +660,7 @@
     "191": {
       "index": 191,
       "path": "/characters/riven/frames/frame-191.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -674,6 +684,7 @@
     "192": {
       "index": 192,
       "path": "/characters/riven/frames/frame-192.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -697,6 +708,7 @@
     "201": {
       "index": 201,
       "path": "/characters/riven/frames/frame-201.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -720,6 +732,7 @@
     "202": {
       "index": 202,
       "path": "/characters/riven/frames/frame-202.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -743,6 +756,7 @@
     "203": {
       "index": 203,
       "path": "/characters/riven/frames/frame-203.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",
@@ -766,6 +780,7 @@
     "208": {
       "index": 208,
       "path": "/characters/riven/frames/frame-208.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/riven/animation-sheet.png",
       "sourceName": "Main Sheet",

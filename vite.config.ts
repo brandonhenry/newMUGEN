@@ -238,7 +238,8 @@ function koreDevManifestWriter() {
             rotation: edit.rotation ?? 0,
             offset: edit.offset ?? [0, 0],
             scale: edit.scale ?? 1,
-            hidden: edit.hidden ?? false
+            hidden: edit.hidden ?? false,
+            revision: edit.revision
           };
           const existingIndex = frames.findIndex((frame) => Number(frame.index) === frameIndex);
           if (existingIndex >= 0) frames[existingIndex] = frameEntry;
@@ -897,7 +898,8 @@ function sanitizeSpriteFrameEdit(edit: Record<string, unknown>) {
     rotation,
     offset,
     scale,
-    hidden: Boolean(edit.hidden)
+    hidden: Boolean(edit.hidden),
+    revision: Number.isFinite(edit.revision) ? Math.max(0, Math.round(Number(edit.revision))) : undefined
   };
 }
 

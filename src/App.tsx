@@ -445,7 +445,8 @@ function sanitizeSpriteFrameEdit(edit: SpriteFrameEdit): SpriteFrameEdit {
     rotation,
     offset,
     scale: Math.max(0.25, Math.min(4, Number(edit.scale) || 1)),
-    hidden: Boolean(edit.hidden)
+    hidden: Boolean(edit.hidden),
+    revision: Number.isFinite(edit.revision) ? Math.max(0, Math.round(Number(edit.revision))) : undefined
   };
 }
 
@@ -626,6 +627,14 @@ async function saveHdVoxelsToDev(character: CharacterDefinition, onProgress?: (c
     });
     onProgress?.(index + 1, frameCount);
   }
+  await saveHdVoxelFramesToDev(character, frames, fidelity);
+}
+
+async function saveHdVoxelFramesToDev(
+  character: CharacterDefinition,
+  frames: Array<{ frameIndex: number; payload: HdVoxelPayload }>,
+  fidelity = normalizeVoxelFidelity(character.voxelFidelity)
+) {
   const response = await fetch('/__kore/dev/save-hd-voxels', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -639,7 +648,7 @@ async function saveHdVoxelsToDev(character: CharacterDefinition, onProgress?: (c
   if (!response.ok) throw new Error(await response.text());
 }
 
-async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelitySettings>): Promise<HdVoxelPayload> {
+async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelitySettings>, sourceFrame = src): Promise<HdVoxelPayload> {
   const image = new Image();
   image.crossOrigin = 'anonymous';
   image.src = src;
@@ -702,7 +711,7 @@ async function buildHdVoxelPayload(src: string, fidelity: Required<VoxelFidelity
     palette,
     voxels: fidelity.mergeRuns ? mergeHdVoxelRuns(cells, cellWidth) : cells.map(({ row: _row, column: _column, ...cell }) => cell),
     source: {
-      frame: src,
+      frame: sourceFrame,
       width: canvas.width,
       height: canvas.height,
       sampleStep
@@ -3159,7 +3168,8 @@ function CharacterViewer({
       const nextEdit = sanitizeSpriteFrameEdit({
         ...edit,
         index: selectedSpriteFrameIndex,
-        path: selectedSpriteFramePath
+        path: selectedSpriteFramePath,
+        revision: Date.now()
       });
       const response = await fetch('/__kore/dev/save-sprite-frame', {
         method: 'POST',
@@ -3172,6 +3182,21 @@ function CharacterViewer({
         })
       });
       if (!response.ok) throw new Error(await response.text());
+      const fidelity = normalizeVoxelFidelity(active.voxelFidelity);
+      await saveHdVoxelFramesToDev(
+        {
+          ...active,
+          voxelProfile: 'hd-image-source',
+          voxelFidelity: fidelity
+        },
+        [
+          {
+            frameIndex: selectedSpriteFrameIndex,
+            payload: await buildHdVoxelPayload(pngDataUrl, fidelity, selectedSpriteFramePath)
+          }
+        ],
+        fidelity
+      );
       clearImageVoxelCacheForFrame(active.id, selectedSpriteFrameIndex);
       onSpriteFrameEditChange(active.id, selectedSpriteFrameIndex, nextEdit);
       setSpriteFrameMeta((current) => ({ ...current, [String(selectedSpriteFrameIndex)]: nextEdit }));
