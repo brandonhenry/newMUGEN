@@ -249,32 +249,6 @@
     "block": [
       "/characters/kiro/frames/frame-016.png"
     ],
-    "jab": [
-      "/characters/kiro/frames/frame-075.png",
-      "/characters/kiro/frames/frame-076.png",
-      "/characters/kiro/frames/frame-077.png",
-      "/characters/kiro/frames/frame-078.png",
-      "/characters/kiro/frames/frame-079.png"
-    ],
-    "kick": [
-      "/characters/kiro/frames/frame-085.png",
-      "/characters/kiro/frames/frame-086.png",
-      "/characters/kiro/frames/frame-087.png",
-      "/characters/kiro/frames/frame-088.png",
-      "/characters/kiro/frames/frame-089.png"
-    ],
-    "heavy": [
-      "/characters/kiro/frames/frame-091.png",
-      "/characters/kiro/frames/frame-092.png",
-      "/characters/kiro/frames/frame-093.png",
-      "/characters/kiro/frames/frame-094.png"
-    ],
-    "special": [
-      "/characters/kiro/frames/frame-114.png",
-      "/characters/kiro/frames/frame-115.png",
-      "/characters/kiro/frames/frame-116.png",
-      "/characters/kiro/frames/frame-117.png"
-    ],
     "hitLight": [
       "/characters/kiro/frames/frame-024.png"
     ],
@@ -370,34 +344,41 @@
       "/characters/kiro/frames/frame-142.png",
       "/characters/kiro/frames/frame-143.png"
     ],
-    "cmd:1": [
-      "/characters/kiro/frames/frame-075.png",
-      "/characters/kiro/frames/frame-076.png",
-      "/characters/kiro/frames/frame-077.png"
-    ],
     "juggle": [
       "/characters/kiro/frames/frame-031.png",
       "/characters/kiro/frames/frame-032.png"
     ],
-    "cmd:2": [
-      "/characters/kiro/frames/frame-098.png",
-      "/characters/kiro/frames/frame-099.png",
-      "/characters/kiro/frames/frame-100.png",
+    "jableft": [
+      "/characters/kiro/frames/frame-075.png",
+      "/characters/kiro/frames/frame-076.png",
+      "/characters/kiro/frames/frame-077.png",
+      "/characters/kiro/frames/frame-078.png",
+      "/characters/kiro/frames/frame-079.png"
+    ],
+    "jabright": [
       "/characters/kiro/frames/frame-091.png",
       "/characters/kiro/frames/frame-092.png",
       "/characters/kiro/frames/frame-093.png",
       "/characters/kiro/frames/frame-094.png"
     ],
-    "cmd:3": [
-      "/characters/kiro/frames/frame-082.png",
-      "/characters/kiro/frames/frame-083.png"
-    ],
-    "cmd:4": [
-      "/characters/kiro/frames/frame-084.png",
+    "kickleft": [
       "/characters/kiro/frames/frame-085.png",
       "/characters/kiro/frames/frame-086.png",
       "/characters/kiro/frames/frame-087.png",
-      "/characters/kiro/frames/frame-088.png"
+      "/characters/kiro/frames/frame-088.png",
+      "/characters/kiro/frames/frame-089.png"
+    ],
+    "kickright": [
+      "/characters/kiro/frames/frame-114.png",
+      "/characters/kiro/frames/frame-115.png",
+      "/characters/kiro/frames/frame-116.png",
+      "/characters/kiro/frames/frame-117.png"
+    ],
+    "chargeKi": [
+      "/characters/kiro/frames/frame-056.png",
+      "/characters/kiro/frames/frame-057.png",
+      "/characters/kiro/frames/frame-058.png",
+      "/characters/kiro/frames/frame-059.png"
     ]
   },
   "animationFps": 5,
@@ -411,10 +392,6 @@
     "crouchBlock": 5,
     "jump": 8,
     "block": 5,
-    "jab": 6,
-    "kick": 6,
-    "heavy": 9,
-    "special": 11,
     "hitLight": 8,
     "hitHeavy": 10,
     "knockdown": 8,
@@ -424,58 +401,60 @@
     "cmd:d/f+2": 9,
     "cmd:qcf+4": 11,
     "cmd:WS+4": 9,
-    "cmd:2": 11,
     "cmd:1+2": 7.5,
-    "cmd:3": 6.5
+    "jableft": 6,
+    "jabright": 9,
+    "kickleft": 6,
+    "kickright": 11
   },
   "moveOverrides": {
     "cmd:f+1": {
-      "label": "Naruto Uzumaki Barrage",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 4,
-      "onCounterHitFrames": 9
+      "onCounterHitFrames": 9,
+      "label": "Naruto Uzumaki Barrage"
     },
     "cmd:d/f+2": {
-      "label": "Big Ball Rasengan",
       "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
       "onBlockFrames": -13,
       "onHitFrames": 28,
       "onCounterHitFrames": 34,
       "launchHeight": 0,
+      "label": "Big Ball Rasengan",
+      "hitLevel": "mid",
       "knockdown": false
     },
     "cmd:qcf+4": {
-      "label": "Wind Release: Rasengan",
       "startupFrames": 18,
       "activeFrames": 4,
       "recoveryFrames": 25,
       "damage": 16,
-      "hitLevel": "mid",
       "onBlockFrames": -9,
       "onHitFrames": 26,
       "onCounterHitFrames": 32,
       "launchHeight": 0,
+      "label": "Wind Release: Rasengan",
+      "hitLevel": "mid",
       "knockdown": false
     },
     "cmd:WS+4": {
-      "label": "Shadow Leaf Dance",
       "startupFrames": 13,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
       "onBlockFrames": -10,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
       "launchHeight": 0,
+      "label": "Shadow Leaf Dance",
+      "hitLevel": "mid",
       "knockdown": false
     },
     "cmd:3+4": {
@@ -585,24 +564,11 @@
     "neutral:special-kick": {
       "label": "Reverse Harem Technique"
     },
-    "kick": {
-      "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 14
-    },
     "cmd:D+3": {
       "hitLevel": "low"
     },
     "cmd:d+1": {
       "hitLevel": "low"
-    },
-    "jab": {
-      "startupFrames": 10,
-      "recoveryFrames": 9
-    },
-    "cmd:2": {
-      "startupFrames": 14,
-      "activeFrames": 5
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -612,13 +578,22 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52
     },
-    "cmd:3": {
-      "startupFrames": 8,
-      "activeFrames": 1,
-      "recoveryFrames": 13
-    },
     "cmd:2+3": {
       "activeFrames": 3
+    },
+    "jableft": {
+      "startupFrames": 10,
+      "recoveryFrames": 12,
+      "onHitFrames": 3
+    },
+    "kickleft": {
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 14
+    },
+    "jabright": {
+      "startupFrames": 14,
+      "activeFrames": 5
     }
   },
   "spriteFrameEdits": {
@@ -1091,5 +1066,7 @@
       "frameStart": 0,
       "frameCount": 231
     }
-  ]
+  ],
+  "effects": [],
+  "moveEffects": {}
 }
