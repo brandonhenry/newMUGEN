@@ -202,7 +202,7 @@ const HIT_SFX = {
   blockLight: '/sounds/hits/generated/hit-013.wav',
   blockHeavy: '/sounds/hits/generated/hit-007.wav',
   launcher: '/sounds/hits/generated/hit-012.wav',
-  bigLauncher: '/sounds/hits/generated/hit-020.wav'
+  bigLauncher: '/sounds/hits/generated/hit-019.wav'
 } as const;
 type BgmSource = {
   key: string;
