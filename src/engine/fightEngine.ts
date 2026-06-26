@@ -502,7 +502,11 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const continuing = cancelingCurrentAttack || chainMode === 'link';
   const comboStep = continuing ? Math.min(MAX_COMBO_STEPS, fighter.comboStep + 1) : 1;
   const sequence = continuing ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
-  const command = findConfiguredCommand(fighter, opponent, input, moveInput);
+  const crouchCommandRequired = Boolean(getCrouchCommandNotation(fighter, opponent, input, moveInput));
+  const command = crouchCommandRequired
+    ? findConfiguredCrouchCommand(fighter, opponent, input, moveInput)
+    : findConfiguredCommand(fighter, opponent, input, moveInput);
+  if (crouchCommandRequired && !command) return false;
   if (continuing && !canChainInto(fighter, chainMode)) return false;
   if (!command && hasCommandInputIntent(fighter, opponent, input, moveInput)) return false;
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
@@ -1219,6 +1223,22 @@ function findConfiguredCommand(fighter: FighterRuntime, opponent: FighterRuntime
   return candidates.find((candidate) => (frames[candidate.animationKey]?.length ?? 0) > 0) ?? null;
 }
 
+function findConfiguredCrouchCommand(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, freshMoveInput: MoveInput): CommandCandidate | null {
+  const notation = getCrouchCommandNotation(fighter, opponent, input, freshMoveInput);
+  if (!notation) return null;
+  const candidate = { notation, animationKey: commandAnimationKey(notation) };
+  return (fighter.character.animationFrames?.[candidate.animationKey]?.length ?? 0) > 0 ? candidate : null;
+}
+
+function getCrouchCommandNotation(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, freshMoveInput: MoveInput): string | null {
+  if (fighter.wasCrouching && !input.down) return null;
+  const direction = getDirectionalNotation(fighter, opponent, input);
+  const inPlainCrouch = direction === 'd' || direction === 'd/b';
+  const heldCrouchStance = isCrouchingState(fighter) && direction !== 'd/f' && direction !== 'u' && direction !== 'u/f' && direction !== 'u/b';
+  if (!inPlainCrouch && !heldCrouchStance) return null;
+  return `FC+${getHeldButtons(input, freshMoveInput).join('+')}`;
+}
+
 function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, freshMoveInput: MoveInput): CommandCandidate[] {
   const buttons = getHeldButtons(input, freshMoveInput);
   const buttonText = buttons.join('+');
@@ -1236,7 +1256,8 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
     if (fighter.sidestepDirection < 0 || input.sidestepUp || input.sidewalkUp) push(`SSL+${buttonText}`);
     if (fighter.sidestepDirection > 0 || input.sidestepDown || input.sidewalkDown) push(`SSR+${buttonText}`);
   }
-  if (input.down || isCrouchingState(fighter)) push(`FC+${buttonText}`);
+  const crouchNotation = getCrouchCommandNotation(fighter, opponent, input, freshMoveInput);
+  if (crouchNotation) push(crouchNotation);
   if (fighter.wasCrouching && !input.down) push(`WS+${buttonText}`);
   if (direction === 'f' && hasRecentSequence(fighter.commandHistory, ['f', 'f'])) push(`f,f+${buttonText}`);
   if (direction === 'b' && hasRecentSequence(fighter.commandHistory, ['b', 'b'])) push(`b,b+${buttonText}`);

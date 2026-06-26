@@ -843,18 +843,22 @@ function loadYouTubeIframeApi() {
 }
 
 function YouTubeBgmPlayer({
-  settings,
+  audio,
   started,
+  source,
+  selectedTrackIndex,
   onTrackIndexChange
 }: {
-  settings: GameSettings['audio'];
+  audio: GameSettings['audio'];
   started: boolean;
-  onTrackIndexChange: (index: number) => void;
+  source: BgmSource | null;
+  selectedTrackIndex: number;
+  onTrackIndexChange?: (index: number) => void;
 }) {
   const mountRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YouTubePlayer | null>(null);
   const readyRef = useRef(false);
-  const requestedIndexRef = useRef(settings.bgmTrackIndex);
+  const requestedIndexRef = useRef(selectedTrackIndex);
   const onTrackIndexChangeRef = useRef(onTrackIndexChange);
 
   useEffect(() => {
@@ -864,17 +868,23 @@ function YouTubeBgmPlayer({
   const syncVolume = useCallback(() => {
     const player = playerRef.current;
     if (!player || !readyRef.current) return;
-    const volume = Math.round(clamp(settings.master * settings.music * 100, 0, 100));
+    const volume = Math.round(clamp(audio.master * audio.music * 100, 0, 100));
     player.setVolume(volume);
-    if (settings.muted || volume <= 0) {
+    if (audio.muted || volume <= 0) {
       player.mute();
     } else {
       player.unMute();
     }
-  }, [settings.master, settings.music, settings.muted]);
+  }, [audio.master, audio.music, audio.muted]);
 
   useEffect(() => {
-    if (!started || playerRef.current || !mountRef.current) return;
+    if (!started || !source || !mountRef.current) {
+      playerRef.current?.destroy();
+      playerRef.current = null;
+      readyRef.current = false;
+      if (mountRef.current) mountRef.current.innerHTML = '';
+      return;
+    }
     let disposed = false;
     loadYouTubeIframeApi()
       .then((YT) => {
@@ -882,13 +892,13 @@ function YouTubeBgmPlayer({
         const player = new YT.Player(mountRef.current, {
           width: '1',
           height: '1',
-          videoId: KORE_BGM_START_VIDEO_ID,
+          videoId: source.startVideoId,
           playerVars: {
             autoplay: 1,
             controls: 0,
             disablekb: 1,
             fs: 0,
-            list: KORE_BGM_PLAYLIST_ID,
+            list: source.playlistId,
             listType: 'playlist',
             loop: 1,
             modestbranding: 1,
@@ -903,24 +913,30 @@ function YouTubeBgmPlayer({
               readyRef.current = true;
               event.target.setLoop(true);
               syncVolume();
-              requestedIndexRef.current = settings.bgmTrackIndex;
+              requestedIndexRef.current = selectedTrackIndex;
               event.target.loadPlaylist({
-                list: KORE_BGM_PLAYLIST_ID,
+                list: source.playlistId,
                 listType: 'playlist',
-                index: settings.bgmTrackIndex,
+                index: selectedTrackIndex,
                 startSeconds: 0
               });
               event.target.playVideo();
             },
             onStateChange: (event) => {
               if (event.data === YT.PlayerState.ENDED) {
-                event.target.nextVideo();
+                if (source.lockToTrack) {
+                  requestedIndexRef.current = source.trackIndex;
+                  event.target.playVideoAt(source.trackIndex);
+                  event.target.playVideo();
+                } else {
+                  event.target.nextVideo();
+                }
                 return;
               }
               if (event.data === YT.PlayerState.PLAYING) {
                 const index = Math.max(0, Math.round(event.target.getPlaylistIndex()));
                 requestedIndexRef.current = index;
-                onTrackIndexChangeRef.current(index);
+                if (!source.lockToTrack) onTrackIndexChangeRef.current?.(index);
               }
             }
           }
@@ -932,8 +948,12 @@ function YouTubeBgmPlayer({
       });
     return () => {
       disposed = true;
+      playerRef.current?.destroy();
+      playerRef.current = null;
+      readyRef.current = false;
+      if (mountRef.current) mountRef.current.innerHTML = '';
     };
-  }, [settings.bgmTrackIndex, started, syncVolume]);
+  }, [selectedTrackIndex, source, started, syncVolume]);
 
   useEffect(() => {
     syncVolume();
@@ -941,12 +961,12 @@ function YouTubeBgmPlayer({
 
   useEffect(() => {
     const player = playerRef.current;
-    if (!started || !player || !readyRef.current) return;
-    if (settings.bgmTrackIndex === requestedIndexRef.current) return;
-    requestedIndexRef.current = settings.bgmTrackIndex;
-    player.playVideoAt(settings.bgmTrackIndex);
+    if (!started || !source || !player || !readyRef.current) return;
+    if (selectedTrackIndex === requestedIndexRef.current) return;
+    requestedIndexRef.current = selectedTrackIndex;
+    player.playVideoAt(selectedTrackIndex);
     player.playVideo();
-  }, [settings.bgmTrackIndex, started]);
+  }, [selectedTrackIndex, source, started]);
 
   return <div className="youtube-bgm-player" ref={mountRef} aria-hidden="true" />;
 }
@@ -1172,6 +1192,12 @@ export default function App() {
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
   const selectedStage = stageRoster.find((stage) => stage.id === stageId) ?? stageRoster[0] ?? stages[0];
+  const activeBgmSource = useMemo(() => {
+    if (!musicStarted) return null;
+    if (screen === 'fight') return stageBgmSource(selectedStage);
+    return KORE_MENU_BGM_SOURCE;
+  }, [musicStarted, screen, selectedStage]);
+  const activeBgmTrackIndex = activeBgmSource?.lockToTrack ? activeBgmSource.trackIndex : settings.audio.bgmTrackIndex;
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -1188,7 +1214,13 @@ export default function App() {
   return (
     <main className="app-shell">
       <div className="ambient-grid" />
-      <YouTubeBgmPlayer settings={settings.audio} started={musicStarted} onTrackIndexChange={updateBgmTrackIndex} />
+      <YouTubeBgmPlayer
+        audio={settings.audio}
+        started={musicStarted}
+        source={activeBgmSource}
+        selectedTrackIndex={activeBgmTrackIndex}
+        onTrackIndexChange={activeBgmSource?.lockToTrack ? undefined : updateBgmTrackIndex}
+      />
       <section className="screen-panel">
         {screen === 'title' && <TitleScreen onStart={startFromTitle} />}
         {screen === 'menu' && (
@@ -2327,7 +2359,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
-  audio: ['BGM Playlist', 'Current Song', 'Master Mix', 'Music', 'SFX', 'Mute']
+  audio: ['Menu Playlist', 'Menu Song', 'Stage Music', 'Master Mix', 'Music', 'SFX', 'Mute']
 };
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
@@ -2517,10 +2549,10 @@ function SettingsScreen({
 
     return (
       <div className="settings-list">
-        <SettingRow label="BGM Source" value="YouTube Playlist">
+        <SettingRow label="Menu BGM Source" value="YouTube Playlist">
           <a className="mini-link-button" href={KORE_BGM_PLAYLIST_URL} target="_blank" rel="noreferrer">Open Playlist</a>
         </SettingRow>
-        <SettingRow label="Current Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
+        <SettingRow label="Menu Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
           <div className="audio-track-controls" role="group" aria-label="Current BGM song">
             <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: Math.max(0, current.audio.bgmTrackIndex - 1) } }))}>
               <ChevronLeft size={18} />
@@ -2531,6 +2563,9 @@ function SettingsScreen({
               <ChevronRight size={18} />
             </button>
           </div>
+        </SettingRow>
+        <SettingRow label="Stage Music" value="Uses the selected stage track">
+          <span className="setting-readout">Auto</span>
         </SettingRow>
         <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
         <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
@@ -2736,7 +2771,7 @@ function previewBody(tab: SettingsTab) {
   if (tab === 'game') return 'These values are applied when a new fight or rematch starts.';
   if (tab === 'camera') return 'Camera tuning affects the live fight camera that keeps both fighters centered.';
   if (tab === 'display') return 'Display settings affect HUD, touch controls, impact sparks, reduced motion, and debug overlays.';
-  return 'Music streams from the KORE playlist after the title input. SFX uses bundled local game sounds.';
+  return 'Menu screens use the playlist. Fights switch to the selected stage track. SFX uses bundled local game sounds.';
 }
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
@@ -3765,42 +3800,44 @@ function SpriteSheetFrameEditor({
     <section className="sprite-crop-editor" aria-label="Spritesheet crop editor">
       <div className="sprite-crop-stage">
         <div className="sprite-sheet-crop-map">
-          <img
-            ref={sheetRef}
-            src={character.spriteSheetPath}
-            alt={`${character.displayName} sprite sheet crop map`}
-            onLoad={(event) => {
-              const image = event.currentTarget;
-              setSheetSize({ width: image.naturalWidth || 1, height: image.naturalHeight || 1 });
-              const baseEdit = createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]);
-              const fitted = hasSavedFrameEdit ? null : fitSpriteFrameToVisiblePixels(image, baseEdit);
-              setEdit(clampSpriteFrameEditToSheet(fitted ?? baseEdit, { width: image.naturalWidth || 1, height: image.naturalHeight || 1 }));
-            }}
-          />
-          <div
-            className="sprite-crop-box"
-            onPointerDown={(event) => beginCropDrag(event, 'move')}
-            onPointerMove={updateCropDrag}
-            onPointerUp={endCropDrag}
-            onPointerCancel={endCropDrag}
-            style={{
-              left: `${(edit.box[0] / sheetSize.width) * 100}%`,
-              top: `${(edit.box[1] / sheetSize.height) * 100}%`,
-              width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
-              height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
-            }}
-            title="Drag to move crop. Drag handles to resize."
-          >
-            {['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map((handle) => (
-              <span
-                key={handle}
-                className={`sprite-crop-handle handle-${handle}`}
-                onPointerDown={(event) => beginCropDrag(event, handle)}
-                onPointerMove={updateCropDrag}
-                onPointerUp={endCropDrag}
-                onPointerCancel={endCropDrag}
-              />
-            ))}
+          <div className="sprite-sheet-crop-content">
+            <img
+              ref={sheetRef}
+              src={character.spriteSheetPath}
+              alt={`${character.displayName} sprite sheet crop map`}
+              onLoad={(event) => {
+                const image = event.currentTarget;
+                setSheetSize({ width: image.naturalWidth || 1, height: image.naturalHeight || 1 });
+                const baseEdit = createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]);
+                const fitted = hasSavedFrameEdit ? null : fitSpriteFrameToVisiblePixels(image, baseEdit);
+                setEdit(clampSpriteFrameEditToSheet(fitted ?? baseEdit, { width: image.naturalWidth || 1, height: image.naturalHeight || 1 }));
+              }}
+            />
+            <div
+              className="sprite-crop-box"
+              onPointerDown={(event) => beginCropDrag(event, 'move')}
+              onPointerMove={updateCropDrag}
+              onPointerUp={endCropDrag}
+              onPointerCancel={endCropDrag}
+              style={{
+                left: `${(edit.box[0] / sheetSize.width) * 100}%`,
+                top: `${(edit.box[1] / sheetSize.height) * 100}%`,
+                width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
+                height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
+              }}
+              title="Drag to move crop. Drag handles to resize."
+            >
+              {['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map((handle) => (
+                <span
+                  key={handle}
+                  className={`sprite-crop-handle handle-${handle}`}
+                  onPointerDown={(event) => beginCropDrag(event, handle)}
+                  onPointerMove={updateCropDrag}
+                  onPointerUp={endCropDrag}
+                  onPointerCancel={endCropDrag}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className="sprite-crop-preview-panel">

@@ -1306,6 +1306,111 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('crouchBlock');
   });
 
+  it('does not fall back to standing attacks when crouch moves are not configured', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const crouch = emptyInputFrame();
+    crouch.down = true;
+    match = stepMatch(match, crouch, emptyInputFrame(), 1 / 60);
+
+    const crouchJab = emptyInputFrame();
+    crouchJab.down = true;
+    crouchJab.jab = true;
+    match = stepMatch(match, crouchJab, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('crouch');
+    expect(match.fighters[0].currentMove).toBeNull();
+  });
+
+  it('starts configured FC attacks while crouching and applies their overrides', () => {
+    const crouchCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:FC+1': starterCharacters[0].animationFrames?.jab ?? []
+      },
+      moveOverrides: {
+        ...starterCharacters[0].moveOverrides,
+        'cmd:FC+1': {
+          label: 'Crouch Strike',
+          startupFrames: 14,
+          activeFrames: 2,
+          recoveryFrames: 18,
+          damage: 9,
+          hitLevel: 'low',
+          onBlockFrames: -11,
+          onHitFrames: 3,
+          onCounterHitFrames: 7
+        }
+      }
+    };
+    let match = createMatch(crouchCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const crouchJab = emptyInputFrame();
+    crouchJab.down = true;
+    crouchJab.jab = true;
+    match = stepMatch(match, crouchJab, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.command).toBe('FC+1');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:FC+1');
+    expect(match.fighters[0].currentMove?.label).toBe('Crouch Strike');
+    expect(match.fighters[0].currentMove?.startupFrames).toBe(14);
+    expect(match.fighters[0].currentMove?.hitLevel).toBe('low');
+  });
+
+  it('starts configured FC attacks from crouch block', () => {
+    const crouchCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:FC+1': starterCharacters[0].animationFrames?.jab ?? []
+      }
+    };
+    let match = createMatch(crouchCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const crouchBlockJab = emptyInputFrame();
+    crouchBlockJab.down = true;
+    crouchBlockJab.block = true;
+    crouchBlockJab.jab = true;
+    match = stepMatch(match, crouchBlockJab, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:FC+1');
+  });
+
+  it('keeps standing attacks and while-standing commands working', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const standingJab = emptyInputFrame();
+    standingJab.jab = true;
+    match = stepMatch(match, standingJab, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].currentMove?.command).toBeUndefined();
+
+    match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const crouch = emptyInputFrame();
+    crouch.down = true;
+    match = stepMatch(match, crouch, emptyInputFrame(), 1 / 60);
+
+    const whileStandingKick = emptyInputFrame();
+    whileStandingKick.special = true;
+    match = stepMatch(match, whileStandingKick, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:WS+4');
+  });
+
   it('buffers player attack inputs and chains them after a confirmed hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
