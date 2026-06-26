@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getBlobStore } from './_blob-store.mjs';
 
 const STORE_NAME = 'kore-private-rooms';
 const ROOM_PREFIX = 'rooms/';
@@ -11,7 +11,7 @@ export async function handler(event) {
     const roomId = cleanId(body.roomId);
     const ownerToken = cleanToken(body.ownerToken);
     const peerId = cleanId(body.peerId);
-    const store = getStore(STORE_NAME);
+    const store = getBlobStore(STORE_NAME, event);
 
     if (roomId && ownerToken) {
       const room = await store.get(roomKey(roomId), { type: 'json' }).catch(() => null);

@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getBlobStore } from './_blob-store.mjs';
 
 const STORE_NAME = 'kore-private-rooms';
 const ROOM_PREFIX = 'rooms/';
@@ -8,7 +8,7 @@ export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
 
   try {
-    const store = getStore(STORE_NAME);
+    const store = getBlobStore(STORE_NAME, event);
     const now = Date.now();
     const rooms = await listRooms(store);
     await pruneExpiredRooms(store, rooms, now);

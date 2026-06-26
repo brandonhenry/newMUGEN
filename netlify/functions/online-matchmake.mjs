@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getBlobStore } from './_blob-store.mjs';
 
 const STORE_NAME = 'kore-online-rooms';
 const ROOM_PREFIX = 'rooms/';
@@ -16,7 +16,7 @@ export async function handler(event) {
     const ownerToken = cleanToken(body.ownerToken);
     if (!peerId || !characterId || !stageId) return json(400, { error: 'missing_fields' });
 
-    const store = getStore(STORE_NAME);
+    const store = getBlobStore(STORE_NAME, event);
     const now = Date.now();
     const rooms = await listRooms(store);
     await pruneExpiredRooms(store, rooms, now);

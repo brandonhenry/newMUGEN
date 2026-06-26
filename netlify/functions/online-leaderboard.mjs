@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getBlobStore } from './_blob-store.mjs';
 
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
@@ -8,7 +8,7 @@ export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
 
   try {
-    const store = getStore(STORE_NAME);
+    const store = getBlobStore(STORE_NAME, event);
     const entries = await readEntries(store);
     return json(200, { entries: sortEntries(entries).slice(0, 100) });
   } catch (error) {

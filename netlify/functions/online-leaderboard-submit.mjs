@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getBlobStore } from './_blob-store.mjs';
 
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
@@ -12,7 +12,7 @@ export async function handler(event) {
     const awards = cleanAwards(body);
     if (awards.length === 0) return json(400, { error: 'invalid_result' });
 
-    const store = getStore(STORE_NAME);
+    const store = getBlobStore(STORE_NAME, event);
     const entries = await readEntries(store);
     const byId = new Map(entries.map((entry) => [entry.playerId, entry]));
     const now = Date.now();
