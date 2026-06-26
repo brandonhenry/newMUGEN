@@ -424,15 +424,20 @@ function sanitizeSpriteFrameEdit(edit: SpriteFrameEdit): SpriteFrameEdit {
   const x2 = Math.max(x1 + 1, Math.round(Number(edit.box?.[2] ?? x1 + 32)));
   const y2 = Math.max(y1 + 1, Math.round(Number(edit.box?.[3] ?? y1 + 32)));
   const rotation = normalizeRotation(edit.rotation ?? 0);
+  const sourceMode = edit.sourceMode === 'replacement' ? 'replacement' : 'sheet';
   const offset: [number, number] = Array.isArray(edit.offset)
     ? [Math.round(Number(edit.offset[0]) || 0), Math.round(Number(edit.offset[1]) || 0)]
     : [0, 0];
   return {
     index: Math.max(0, Math.round(Number(edit.index) || 0)),
     path: edit.path,
+    sourceMode,
     sheetId: edit.sheetId,
     sheetPath: edit.sheetPath,
     sourceName: edit.sourceName,
+    replacementName: sourceMode === 'replacement' && edit.replacementName ? String(edit.replacementName).slice(0, 120) : undefined,
+    replacementWidth: sourceMode === 'replacement' ? Math.max(1, Math.round(Number(edit.replacementWidth) || Number(edit.width) || x2 - x1)) : undefined,
+    replacementHeight: sourceMode === 'replacement' ? Math.max(1, Math.round(Number(edit.replacementHeight) || Number(edit.height) || y2 - y1)) : undefined,
     box: [x1, y1, x2, y2],
     width: Math.max(1, Math.round(Number(edit.width) || x2 - x1)),
     height: Math.max(1, Math.round(Number(edit.height) || y2 - y1)),
@@ -472,8 +477,16 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
 }
 
 function applyCharacterAnimationOverride(character: CharacterDefinition, override: CharacterAnimationOverride): CharacterDefinition {
+  const spriteOverrideIndexes = Object.keys(override.sprites ?? {})
+    .map((key) => Number(key))
+    .filter((index) => Number.isFinite(index) && index >= 0);
+  const spriteFrameCount = Math.max(
+    character.spriteFrameCount ?? 0,
+    spriteOverrideIndexes.length > 0 ? Math.max(...spriteOverrideIndexes) + 1 : 0
+  );
   return {
     ...character,
+    spriteFrameCount,
     animationFrames: {
       ...character.animationFrames,
       ...(override.frames ?? {})
@@ -3579,6 +3592,17 @@ function defaultJuggleRefloatVelocity(launchHeight: number) {
   return Math.min(5.25, Math.max(4.35, launchHeight > 0 ? launchHeight * 1.95 : 4.35));
 }
 
+function clearReplacementFrameEdit(edit: SpriteFrameEdit): SpriteFrameEdit {
+  const sheetEdit = { ...edit };
+  delete sheetEdit.replacementName;
+  delete sheetEdit.replacementWidth;
+  delete sheetEdit.replacementHeight;
+  return {
+    ...sheetEdit,
+    sourceMode: 'sheet'
+  };
+}
+
 function createDefaultSpriteFrameEdit(character: CharacterDefinition, frameIndex: number, frameMeta?: SpriteFrameEdit): SpriteFrameEdit {
   const fromCharacter = character.spriteFrameEdits?.[String(frameIndex)];
   const source = fromCharacter ?? frameMeta;
@@ -3715,6 +3739,122 @@ function renderSpriteFrameCanvas(sheet: HTMLImageElement | null, canvas: HTMLCan
   context.scale(scale, scale);
   context.drawImage(sheet, x1, y1, sourceWidth, sourceHeight, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
   context.restore();
+  keySpriteSheetBackgroundToTransparent(sheet, canvas);
+}
+
+function renderReplacementFrameCanvas(image: HTMLImageElement, canvas: HTMLCanvasElement | null, edit: SpriteFrameEdit) {
+  if (!canvas || image.naturalWidth <= 0 || image.naturalHeight <= 0) return;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return;
+  const imageWidth = image.naturalWidth;
+  const imageHeight = image.naturalHeight;
+  const scale = Math.max(0.25, edit.scale ?? 1);
+  const rotation = normalizeRotation(edit.rotation ?? 0);
+  canvas.width = Math.max(1, Math.round(edit.width || edit.replacementWidth || imageWidth));
+  canvas.height = Math.max(1, Math.round(edit.height || edit.replacementHeight || imageHeight));
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.imageSmoothingEnabled = false;
+  context.save();
+  context.translate(canvas.width / 2 + (edit.offset?.[0] ?? 0), canvas.height / 2 + (edit.offset?.[1] ?? 0));
+  context.rotate((rotation * Math.PI) / 180);
+  context.scale(scale, scale);
+  context.drawImage(image, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight);
+  context.restore();
+  keyCanvasCornerBackgroundToTransparent(canvas);
+}
+
+function keySpriteSheetBackgroundToTransparent(sheet: HTMLImageElement, canvas: HTMLCanvasElement) {
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context || canvas.width <= 0 || canvas.height <= 0) return;
+  const background = sampleSpriteSheetBackground(sheet);
+  if (!background) return;
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+  const data = pixels.data;
+  const tolerance = 18;
+
+  for (let offset = 0; offset < data.length; offset += 4) {
+    const alpha = data[offset + 3] ?? 0;
+    if (alpha <= 0) continue;
+    const distance =
+      Math.abs((data[offset] ?? 0) - background[0]) +
+      Math.abs((data[offset + 1] ?? 0) - background[1]) +
+      Math.abs((data[offset + 2] ?? 0) - background[2]);
+    if (distance <= tolerance) {
+      data[offset + 3] = 0;
+    }
+  }
+  context.putImageData(pixels, 0, 0);
+}
+
+function keyCanvasCornerBackgroundToTransparent(canvas: HTMLCanvasElement) {
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context || canvas.width <= 0 || canvas.height <= 0) return;
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+  const data = pixels.data;
+  const samples = [
+    pixelAt(data, canvas.width, 0, 0),
+    pixelAt(data, canvas.width, canvas.width - 1, 0),
+    pixelAt(data, canvas.width, 0, canvas.height - 1),
+    pixelAt(data, canvas.width, canvas.width - 1, canvas.height - 1)
+  ].filter((sample): sample is [number, number, number, number] => Boolean(sample));
+  const opaqueSamples = samples.filter((sample) => sample[3] > 250);
+  if (opaqueSamples.length < 3) return;
+  const background = opaqueSamples.reduce((best, color) => {
+    const score = opaqueSamples.filter((candidate) => colorDistance(candidate, color) <= 18).length;
+    return score > best.score ? { color, score } : best;
+  }, { color: opaqueSamples[0], score: 0 }).color;
+  if (!background || opaqueSamples.filter((candidate) => colorDistance(candidate, background) <= 18).length < 3) return;
+
+  for (let offset = 0; offset < data.length; offset += 4) {
+    const alpha = data[offset + 3] ?? 0;
+    if (alpha <= 0) continue;
+    const distance =
+      Math.abs((data[offset] ?? 0) - background[0]) +
+      Math.abs((data[offset + 1] ?? 0) - background[1]) +
+      Math.abs((data[offset + 2] ?? 0) - background[2]);
+    if (distance <= 18) {
+      data[offset + 3] = 0;
+    }
+  }
+  context.putImageData(pixels, 0, 0);
+}
+
+function pixelAt(data: Uint8ClampedArray, width: number, x: number, y: number): [number, number, number, number] | null {
+  if (x < 0 || y < 0) return null;
+  const offset = (y * width + x) * 4;
+  if (offset < 0 || offset + 3 >= data.length) return null;
+  return [data[offset] ?? 0, data[offset + 1] ?? 0, data[offset + 2] ?? 0, data[offset + 3] ?? 0];
+}
+
+function sampleSpriteSheetBackground(sheet: HTMLImageElement): [number, number, number] | null {
+  const sampleCanvas = document.createElement('canvas');
+  sampleCanvas.width = 3;
+  sampleCanvas.height = 3;
+  const context = sampleCanvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return null;
+  context.imageSmoothingEnabled = false;
+  const points = [
+    [0, 0],
+    [Math.max(0, sheet.naturalWidth - 1), 0],
+    [0, Math.max(0, sheet.naturalHeight - 1)],
+    [Math.max(0, sheet.naturalWidth - 1), Math.max(0, sheet.naturalHeight - 1)],
+    [Math.floor(sheet.naturalWidth / 2), 0],
+    [0, Math.floor(sheet.naturalHeight / 2)]
+  ];
+  const colors = points.map(([x, y]) => {
+    context.clearRect(0, 0, 1, 1);
+    context.drawImage(sheet, x, y, 1, 1, 0, 0, 1, 1);
+    const data = context.getImageData(0, 0, 1, 1).data;
+    return [data[0] ?? 0, data[1] ?? 0, data[2] ?? 0] as [number, number, number];
+  });
+  return colors.reduce((best, color) => {
+    const score = colors.filter((candidate) => colorDistance(candidate, color) <= 18).length;
+    return score > best.score ? { color, score } : best;
+  }, { color: colors[0], score: 0 }).color;
+}
+
+function colorDistance(a: readonly number[], b: readonly number[]) {
+  return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]);
 }
 
 function SpriteSheetFrameEditor({
@@ -3755,6 +3895,7 @@ function SpriteSheetFrameEditor({
   } | null>(null);
   const [sheetSize, setSheetSize] = useState({ width: 1, height: 1 });
   const [edit, setEdit] = useState<SpriteFrameEdit>(() => createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]));
+  const [replacementPreviewUrl, setReplacementPreviewUrl] = useState<string | null>(null);
   const selectedFramePath = framePath(character, selectedFrameIndex);
   const selectedFrameMeta = frameMeta[String(selectedFrameIndex)] ?? character.spriteFrameEdits?.[String(selectedFrameIndex)];
   const selectedSheet = getSpriteSheetForFrame(character, selectedFrameIndex, selectedFrameMeta, frameBank.length);
@@ -3766,6 +3907,11 @@ function SpriteSheetFrameEditor({
   const pngWidth = Math.max(1, Math.round(edit.width || cropWidth));
   const pngHeight = Math.max(1, Math.round(edit.height || cropHeight));
   const hasSavedFrameEdit = Boolean(character.spriteFrameEdits?.[String(selectedFrameIndex)]);
+  const isReplacementFrame = edit.sourceMode === 'replacement';
+
+  useEffect(() => {
+    setReplacementPreviewUrl(null);
+  }, [character.id, selectedFrameIndex]);
 
   useEffect(() => {
     const baseEdit = createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]);
@@ -3775,8 +3921,23 @@ function SpriteSheetFrameEditor({
   }, [character, frameMeta, hasSavedFrameEdit, selectedFrameIndex, selectedSheetPath, sheetSize]);
 
   useEffect(() => {
-    renderSpriteFrameCanvas(sheetRef.current, canvasRef.current, edit);
-  }, [edit, sheetSize]);
+    if (edit.sourceMode !== 'replacement') {
+      renderSpriteFrameCanvas(sheetRef.current, canvasRef.current, edit);
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    const source = replacementPreviewUrl ?? `${selectedFramePath}?replacement=${character.id}-${selectedFrameIndex}-${edit.replacementWidth ?? edit.width}-${edit.replacementHeight ?? edit.height}`;
+    let cancelled = false;
+    loadImage(source)
+      .then((image) => {
+        if (!cancelled) renderReplacementFrameCanvas(image, canvas, edit);
+      })
+      .catch((error) => console.error('Failed to render replacement frame', error));
+    return () => {
+      cancelled = true;
+    };
+  }, [character.id, edit, replacementPreviewUrl, selectedFrameIndex, selectedFramePath, sheetSize]);
 
   const patchEdit = (patch: Partial<SpriteFrameEdit>) => {
     setEdit((current) => clampSpriteFrameEditToSheet(sanitizeSpriteFrameEdit({
@@ -3833,19 +3994,67 @@ function SpriteSheetFrameEditor({
     });
   };
 
+  const replaceFramePng = async (file: File | undefined) => {
+    if (!file) return;
+    const dataUrl = await readFileAsDataUrl(file);
+    const image = await loadImage(dataUrl);
+    setReplacementPreviewUrl(dataUrl);
+    patchEdit({
+      sourceMode: 'replacement',
+      replacementName: file.name,
+      replacementWidth: image.naturalWidth,
+      replacementHeight: image.naturalHeight,
+      width: image.naturalWidth,
+      height: image.naturalHeight,
+      scale: 1,
+      rotation: 0,
+      offset: [0, 0]
+    });
+  };
+
+  const resetFrameToSheet = () => {
+    setReplacementPreviewUrl(null);
+    const baseEdit = createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]);
+    const sheetEdit = clearReplacementFrameEdit(baseEdit);
+    const width = Math.max(1, sheetEdit.box[2] - sheetEdit.box[0]);
+    const height = Math.max(1, sheetEdit.box[3] - sheetEdit.box[1]);
+    setEdit({
+      ...sheetEdit,
+      width,
+      height,
+      rotation: 0,
+      offset: [0, 0],
+      scale: 1
+    });
+  };
+
   const saveFrame = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const sanitizedEdit = sanitizeSpriteFrameEdit(edit);
+    const frameMetadata = {
+      path: selectedFramePath,
+      sheetId: selectedSheet.id,
+      sheetPath: selectedSheet.path,
+      sourceName: selectedSheet.name,
+      width: canvas.width,
+      height: canvas.height
+    };
+    const nextEdit: SpriteFrameEdit = edit.sourceMode === 'replacement'
+      ? {
+          ...sanitizedEdit,
+          ...frameMetadata,
+          sourceMode: 'replacement',
+          replacementWidth: edit.replacementWidth ?? canvas.width,
+          replacementHeight: edit.replacementHeight ?? canvas.height,
+          replacementName: edit.replacementName
+        }
+      : clearReplacementFrameEdit({
+          ...sanitizedEdit,
+          ...frameMetadata
+        });
     await onSave(
-      {
-        ...sanitizeSpriteFrameEdit(edit),
-        path: selectedFramePath,
-        sheetId: selectedSheet.id,
-        sheetPath: selectedSheet.path,
-        sourceName: selectedSheet.name,
-        width: canvas.width,
-        height: canvas.height
-      },
+      nextEdit,
       canvas.toDataURL('image/png')
     );
   };
@@ -3956,47 +4165,50 @@ function SpriteSheetFrameEditor({
                 setEdit(clampSpriteFrameEditToSheet(fitted ?? baseEdit, { width: image.naturalWidth || 1, height: image.naturalHeight || 1 }));
               }}
             />
-            <div
-              className="sprite-crop-box"
-              onPointerDown={(event) => beginCropDrag(event, 'move')}
-              onPointerMove={updateCropDrag}
-              onPointerUp={endCropDrag}
-              onPointerCancel={endCropDrag}
-              style={{
-                left: `${(edit.box[0] / sheetSize.width) * 100}%`,
-                top: `${(edit.box[1] / sheetSize.height) * 100}%`,
-                width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
-                height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
-              }}
-              title="Drag to move crop. Drag handles to resize."
-            >
-              {['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map((handle) => (
-                <span
-                  key={handle}
-                  className={`sprite-crop-handle handle-${handle}`}
-                  onPointerDown={(event) => beginCropDrag(event, handle)}
-                  onPointerMove={updateCropDrag}
-                  onPointerUp={endCropDrag}
-                  onPointerCancel={endCropDrag}
-                />
-              ))}
-            </div>
+            {!isReplacementFrame && (
+              <div
+                className="sprite-crop-box"
+                onPointerDown={(event) => beginCropDrag(event, 'move')}
+                onPointerMove={updateCropDrag}
+                onPointerUp={endCropDrag}
+                onPointerCancel={endCropDrag}
+                style={{
+                  left: `${(edit.box[0] / sheetSize.width) * 100}%`,
+                  top: `${(edit.box[1] / sheetSize.height) * 100}%`,
+                  width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
+                  height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
+                }}
+                title="Drag to move crop. Drag handles to resize."
+              >
+                {['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map((handle) => (
+                  <span
+                    key={handle}
+                    className={`sprite-crop-handle handle-${handle}`}
+                    onPointerDown={(event) => beginCropDrag(event, handle)}
+                    onPointerMove={updateCropDrag}
+                    onPointerUp={endCropDrag}
+                    onPointerCancel={endCropDrag}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="sprite-crop-preview-panel">
           <span>Selected Crop</span>
           <canvas ref={canvasRef} className="sprite-crop-canvas" aria-label={`Rendered frame ${selectedFrameIndex}`} />
           <strong>{`Frame ${selectedFrameIndex}`}</strong>
-          <small>{`${cropWidth} x ${cropHeight} crop | ${pngWidth} x ${pngHeight} PNG`}</small>
+          <small>{isReplacementFrame ? `${pngWidth} x ${pngHeight} custom PNG` : `${cropWidth} x ${cropHeight} crop | ${pngWidth} x ${pngHeight} PNG`}</small>
+          {isReplacementFrame && <em>{edit.replacementName ? `Custom PNG: ${edit.replacementName}` : 'Custom PNG'}</em>}
           {edit.hidden && <em>Removed from generated frame list</em>}
         </div>
       </div>
       <div className="sprite-crop-controls">
         <div className="sprite-crop-fields">
-          <FrameNumberInput label="Crop X" value={edit.box[0]} min={0} onChange={(value) => updateBox('x', value)} />
-          <FrameNumberInput label="Crop Y" value={edit.box[1]} min={0} onChange={(value) => updateBox('y', value)} />
-          <FrameNumberInput label="Crop W" value={cropWidth} min={1} onChange={(value) => updateBox('width', value)} />
-          <FrameNumberInput label="Crop H" value={cropHeight} min={1} onChange={(value) => updateBox('height', value)} />
+          <FrameNumberInput label="Crop X" value={edit.box[0]} min={0} disabled={isReplacementFrame} onChange={(value) => updateBox('x', value)} />
+          <FrameNumberInput label="Crop Y" value={edit.box[1]} min={0} disabled={isReplacementFrame} onChange={(value) => updateBox('y', value)} />
+          <FrameNumberInput label="Crop W" value={cropWidth} min={1} disabled={isReplacementFrame} onChange={(value) => updateBox('width', value)} />
+          <FrameNumberInput label="Crop H" value={cropHeight} min={1} disabled={isReplacementFrame} onChange={(value) => updateBox('height', value)} />
           <FrameNumberInput label="PNG W" value={pngWidth} min={1} onChange={(value) => updatePngSize('width', value)} />
           <FrameNumberInput label="PNG H" value={pngHeight} min={1} onChange={(value) => updatePngSize('height', value)} />
           <FrameNumberInput label="Offset X" value={edit.offset?.[0] ?? 0} onChange={(value) => patchEdit({ offset: [Math.round(Number(value) || 0), edit.offset?.[1] ?? 0] })} />
@@ -4007,14 +4219,14 @@ function SpriteSheetFrameEditor({
         <div className="sprite-crop-button-grid">
           <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.max(0, selectedFrameIndex - 1))}>Prev</button>
           <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.min(frameBank.length - 1, selectedFrameIndex + 1))}>Next</button>
-          <button className="secondary-button compact-button" onClick={() => nudgeBox(-1, 0)}>Crop Left</button>
-          <button className="secondary-button compact-button" onClick={() => nudgeBox(1, 0)}>Crop Right</button>
-          <button className="secondary-button compact-button" onClick={() => nudgeBox(0, -1)}>Crop Up</button>
-          <button className="secondary-button compact-button" onClick={() => nudgeBox(0, 1)}>Crop Down</button>
-          <button className="secondary-button compact-button" onClick={() => resizeBox(1, 0)}>W +</button>
-          <button className="secondary-button compact-button" onClick={() => resizeBox(-1, 0)}>W -</button>
-          <button className="secondary-button compact-button" onClick={() => resizeBox(0, 1)}>H +</button>
-          <button className="secondary-button compact-button" onClick={() => resizeBox(0, -1)}>H -</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(-1, 0)} disabled={isReplacementFrame}>Crop Left</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(1, 0)} disabled={isReplacementFrame}>Crop Right</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(0, -1)} disabled={isReplacementFrame}>Crop Up</button>
+          <button className="secondary-button compact-button" onClick={() => nudgeBox(0, 1)} disabled={isReplacementFrame}>Crop Down</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(1, 0)} disabled={isReplacementFrame}>W +</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(-1, 0)} disabled={isReplacementFrame}>W -</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(0, 1)} disabled={isReplacementFrame}>H +</button>
+          <button className="secondary-button compact-button" onClick={() => resizeBox(0, -1)} disabled={isReplacementFrame}>H -</button>
           <button className="secondary-button compact-button" onClick={() => resizePng(-1, 0)}>PNG W -</button>
           <button className="secondary-button compact-button" onClick={() => resizePng(1, 0)}>PNG W +</button>
           <button className="secondary-button compact-button" onClick={() => resizePng(0, -1)}>PNG H -</button>
@@ -4031,8 +4243,20 @@ function SpriteSheetFrameEditor({
           <button className="secondary-button compact-button" onClick={() => patchEdit({ rotation: normalizeRotation((edit.rotation ?? 0) + 90) })}>Rotate +90</button>
           <button className="secondary-button compact-button" onClick={() => patchEdit({ hidden: !edit.hidden })}>{edit.hidden ? 'Add / Restore' : 'Remove Frame'}</button>
           <button className="secondary-button compact-button" onClick={() => onToggleFrame(selectedFramePath)}>{selectedInMove ? 'Remove From Move' : 'Add To Move'}</button>
-          <button className="secondary-button compact-button" onClick={fitVisibleCrop}>Fit Visible</button>
-          <button className="secondary-button compact-button" onClick={() => setEdit(createDefaultSpriteFrameEdit(character, selectedFrameIndex, frameMeta[String(selectedFrameIndex)]))}>Reset Crop</button>
+          <button className="secondary-button compact-button" onClick={fitVisibleCrop} disabled={isReplacementFrame}>Fit Visible</button>
+          <label className="secondary-button compact-button sprite-sheet-import-button">
+            <Upload size={14} />
+            Replace PNG
+            <input
+              type="file"
+              accept="image/png,image/webp,image/jpeg"
+              onChange={(event) => {
+                void replaceFramePng(event.target.files?.[0]).catch((error) => console.error('Failed to replace frame PNG', error));
+                event.currentTarget.value = '';
+              }}
+            />
+          </label>
+          <button className="secondary-button compact-button" onClick={resetFrameToSheet}>Reset Crop</button>
           <button className="secondary-button compact-button dev-save-button" onClick={saveFrame} disabled={saveStatus === 'saving'}>
             <Save size={14} />
             {saveStatus === 'saving' ? 'Saving' : 'Save Frame'}
@@ -4664,18 +4888,20 @@ function FrameNumberInput({
   value,
   min,
   step = 1,
+  disabled = false,
   onChange
 }: {
   label: string;
   value: number;
   min?: number;
   step?: number;
+  disabled?: boolean;
   onChange: (value: string) => void;
 }) {
   return (
     <label>
       <span>{label}</span>
-      <input type="number" value={Number(value.toFixed(step < 1 ? 2 : 0))} min={min} step={step} onChange={(event) => onChange(event.target.value)} />
+      <input type="number" value={Number(value.toFixed(step < 1 ? 2 : 0))} min={min} step={step} disabled={disabled} onChange={(event) => onChange(event.target.value)} />
     </label>
   );
 }

@@ -122,9 +122,13 @@ export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox
 export type SpriteFrameEdit = {
   index: number;
   path?: string;
+  sourceMode?: 'sheet' | 'replacement';
   sheetId?: string;
   sheetPath?: string;
   sourceName?: string;
+  replacementName?: string;
+  replacementWidth?: number;
+  replacementHeight?: number;
   box: [number, number, number, number];
   width: number;
   height: number;

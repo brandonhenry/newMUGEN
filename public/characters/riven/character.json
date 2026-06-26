@@ -550,9 +550,243 @@
     },
     "neutral:special-kick": {
       "label": "Fire Style Sweep"
+    },
+    "heavy": {
+      "hitLevel": "mid"
     }
   },
-  "spriteFrameEdits": {},
+  "spriteFrameEdits": {
+    "171": {
+      "index": 171,
+      "path": "/characters/riven/frames/frame-171.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        234,
+        1469,
+        301,
+        1533
+      ],
+      "width": 67,
+      "height": 64,
+      "row": 18,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "176": {
+      "index": 176,
+      "path": "/characters/riven/frames/frame-176.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        167,
+        1548,
+        217,
+        1590
+      ],
+      "width": 50,
+      "height": 42,
+      "row": 19,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "177": {
+      "index": 177,
+      "path": "/characters/riven/frames/frame-177.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        431,
+        1541,
+        487,
+        1590
+      ],
+      "width": 56,
+      "height": 49,
+      "row": 19,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "178": {
+      "index": 178,
+      "path": "/characters/riven/frames/frame-178.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        494,
+        1542,
+        556,
+        1590
+      ],
+      "width": 62,
+      "height": 48,
+      "row": 19,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "191": {
+      "index": 191,
+      "path": "/characters/riven/frames/frame-191.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        31,
+        1736,
+        86,
+        1787
+      ],
+      "width": 55,
+      "height": 51,
+      "row": 22,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "192": {
+      "index": 192,
+      "path": "/characters/riven/frames/frame-192.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        93,
+        1735,
+        134,
+        1787
+      ],
+      "width": 41,
+      "height": 52,
+      "row": 21,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "201": {
+      "index": 201,
+      "path": "/characters/riven/frames/frame-201.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        168,
+        1823,
+        218,
+        1865
+      ],
+      "width": 50,
+      "height": 42,
+      "row": 23,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "202": {
+      "index": 202,
+      "path": "/characters/riven/frames/frame-202.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        223,
+        1814,
+        291,
+        1869
+      ],
+      "width": 68,
+      "height": 55,
+      "row": 22,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "203": {
+      "index": 203,
+      "path": "/characters/riven/frames/frame-203.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        425,
+        1816,
+        496,
+        1865
+      ],
+      "width": 71,
+      "height": 49,
+      "row": 22,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "208": {
+      "index": 208,
+      "path": "/characters/riven/frames/frame-208.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        166,
+        1879,
+        218,
+        1928
+      ],
+      "width": 52,
+      "height": 49,
+      "row": 23,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    }
+  },
   "spriteSheets": [
     {
       "id": "main",

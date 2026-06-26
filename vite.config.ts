@@ -224,9 +224,13 @@ function koreDevManifestWriter() {
           const frameEntry = {
             index: frameIndex,
             path: `/characters/${characterId}/frames/frame-${frameIndex.toString().padStart(3, '0')}.png`,
+            sourceMode: edit.sourceMode,
             sheetId: typeof edit.sheetId === 'string' ? edit.sheetId : undefined,
             sheetPath: typeof edit.sheetPath === 'string' ? edit.sheetPath : undefined,
             sourceName: typeof edit.sourceName === 'string' ? edit.sourceName : undefined,
+            replacementName: typeof edit.replacementName === 'string' ? edit.replacementName : undefined,
+            replacementWidth: Number.isFinite(edit.replacementWidth) ? edit.replacementWidth : undefined,
+            replacementHeight: Number.isFinite(edit.replacementHeight) ? edit.replacementHeight : undefined,
             box: edit.box,
             width: edit.width,
             height: edit.height,
@@ -872,12 +876,17 @@ function sanitizeSpriteFrameEdit(edit: Record<string, unknown>) {
   const offset = normalizeOffset(edit.offset);
   const rotation = normalizeRotation(edit.rotation);
   const scale = Math.max(0.25, Math.min(4, finiteOr(edit.scale, 1)));
+  const sourceMode = edit.sourceMode === 'replacement' ? 'replacement' : 'sheet';
   return {
     index,
     path: typeof edit.path === 'string' ? edit.path : undefined,
+    sourceMode,
     sheetId: typeof edit.sheetId === 'string' ? sanitizeAssetId(edit.sheetId) : undefined,
     sheetPath: typeof edit.sheetPath === 'string' && edit.sheetPath.startsWith('/characters/') ? edit.sheetPath : undefined,
     sourceName: typeof edit.sourceName === 'string' ? edit.sourceName.slice(0, 120) : undefined,
+    replacementName: sourceMode === 'replacement' && typeof edit.replacementName === 'string' ? edit.replacementName.slice(0, 120) : undefined,
+    replacementWidth: sourceMode === 'replacement' ? Math.max(1, Math.round(finiteOr(edit.replacementWidth, width))) : undefined,
+    replacementHeight: sourceMode === 'replacement' ? Math.max(1, Math.round(finiteOr(edit.replacementHeight, height))) : undefined,
     box,
     width,
     height,
