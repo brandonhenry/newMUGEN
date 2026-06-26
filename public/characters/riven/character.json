@@ -70,7 +70,7 @@
     },
     {
       "id": "kick",
-      "label": "Leaf Gale",
+      "label": "Windmill Triple Blade",
       "input": "kick",
       "startupFrames": 14,
       "activeFrames": 3,
@@ -132,7 +132,7 @@
     },
     {
       "id": "special",
-      "label": "Fire Style: Fireball Jutsu",
+      "label": "Fire Release: Grand Fireball Skill",
       "input": "special",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -423,7 +423,7 @@
       "onHitFrames": 23,
       "onCounterHitFrames": 33,
       "launchHeight": 0,
-      "label": "Chidori Spear",
+      "label": "Chidori Sharp Spear",
       "hitLevel": "mid",
       "knockdown": false
     },
@@ -435,7 +435,7 @@
       "onBlockFrames": -1,
       "onHitFrames": 6,
       "onCounterHitFrames": 8,
-      "label": "Phoenix Flower Jutsu",
+      "label": "Fire Release: Phoenix Sage Fire Technique",
       "hitLevel": "mid"
     },
     "cmd:qcf+3": {
@@ -447,7 +447,7 @@
       "onHitFrames": 26,
       "onCounterHitFrames": 35,
       "launchHeight": 0,
-      "label": "Fire Style: Dragon Flame",
+      "label": "Fire Release: Dragon Fire Technique",
       "hitLevel": "mid",
       "knockdown": false
     },
@@ -460,96 +460,96 @@
       "onHitFrames": 25,
       "onCounterHitFrames": 34,
       "launchHeight": 0,
-      "label": "Sharingan Counter",
+      "label": "Sharingan Counter Stance",
       "hitLevel": "mid",
       "knockdown": false
     },
     "neutral:jab-jab": {
-      "label": "Lion Combo Second"
+      "label": "Lion Combo: Second Fang"
     },
     "neutral:jab-heavy": {
-      "label": "Lion Combo Chidori"
+      "label": "Chidori Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Lion Combo Launcher"
+      "label": "Chidori Current"
     },
     "neutral:jab-heavy-special": {
-      "label": "Fireball Ender"
+      "label": "Kirin"
     },
     "neutral:jab-kick": {
-      "label": "Lion Low Sweep"
+      "label": "Windmill Triple Blade: Return"
     },
     "neutral:heavy-jab": {
-      "label": "Chidori Follow-Up"
+      "label": "Chidori Senbon"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Chidori Chain"
+      "label": "Chidori Katana"
     },
     "neutral:heavy-kick": {
-      "label": "Chidori Gale"
+      "label": "Binding Snake Glare Spell"
     },
     "neutral:kick-jab": {
-      "label": "Leaf Gale Follow-Up"
+      "label": "Lion Combo: Rising Fang"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Lion Fang Chidori"
+      "label": "Sharingan Trap"
     },
     "neutral:jab-jab-kick": {
-      "label": "Lion Sweep Check"
+      "label": "Genjutsu Through Sharingan"
     },
     "neutral:jab-jab-special": {
-      "label": "Lion Flame Ender"
+      "label": "Grand Fireball Burst"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Lion Sweep Chidori"
+      "label": "Phoenix Sage Flower"
     },
     "neutral:jab-kick-special": {
-      "label": "Lion Flame Sweep"
+      "label": "Dragon Fire Link"
     },
     "neutral:jab-special": {
-      "label": "Lion Fire Feint"
+      "label": "Fire Release: Great Dragon Fire Technique"
     },
     "neutral:jab-special-heavy": {
-      "label": "Fire Feint Chidori"
+      "label": "Amaterasu"
     },
     "neutral:heavy-jab-special": {
-      "label": "Chidori Flame Ender"
+      "label": "Chidori Spear Thrust"
     },
     "neutral:heavy-kick-special": {
-      "label": "Chidori Dragon Ender"
+      "label": "Kirin Break"
     },
     "neutral:heavy-special": {
-      "label": "Chidori Fire Chain"
+      "label": "Blaze Release: Kagutsuchi"
     },
     "neutral:heavy-special-kick": {
-      "label": "Chidori Sweep"
+      "label": "Amaterasu Edge"
     },
     "neutral:kick-jab-special": {
-      "label": "Leaf Gale Fireball"
+      "label": "Hawk Summoning Technique"
     },
     "neutral:kick-heavy": {
-      "label": "Leaf Gale Chidori"
+      "label": "Snake Glare Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Leaf Gale Dragon Flame"
+      "label": "Susanoo Ribcage"
     },
     "neutral:kick-special": {
-      "label": "Leaf Gale Fire Feint"
+      "label": "Great Dragon Fire Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Rising Chidori"
+      "label": "Amenotejikara"
     },
     "neutral:special-jab": {
-      "label": "Fireball Lion Tap"
+      "label": "Scorch Style: Nimbus Tempest"
     },
     "neutral:special-jab-heavy": {
-      "label": "Fireball Chidori Smash"
+      "label": "Naraka Path Bind"
     },
     "neutral:special-heavy": {
-      "label": "Dragon Flame Chidori"
+      "label": "Human Path Draw"
     },
     "neutral:special-kick": {
-      "label": "Fire Style Sweep"
+      "label": "Snake Summoning Technique"
     },
     "cmd:1+3": {
       "startupFrames": 14,

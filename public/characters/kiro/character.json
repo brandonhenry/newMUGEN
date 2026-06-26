@@ -132,7 +132,7 @@
     },
     {
       "id": "special",
-      "label": "Wind Style: Rasenshuriken",
+      "label": "Wind Release: Rasenshuriken",
       "input": "special",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -430,7 +430,7 @@
   },
   "moveOverrides": {
     "cmd:f+1": {
-      "label": "Naruto Barrage",
+      "label": "Naruto Uzumaki Barrage",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 24,
@@ -440,7 +440,7 @@
       "onCounterHitFrames": 9
     },
     "cmd:d/f+2": {
-      "label": "Giant Rasengan",
+      "label": "Big Ball Rasengan",
       "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 24,
@@ -453,7 +453,7 @@
       "knockdown": false
     },
     "cmd:qcf+4": {
-      "label": "Wind Style: Rasengan",
+      "label": "Wind Release: Rasengan",
       "startupFrames": 18,
       "activeFrames": 4,
       "recoveryFrames": 25,
@@ -466,7 +466,7 @@
       "knockdown": false
     },
     "cmd:WS+4": {
-      "label": "Shadow Clone Uppercut",
+      "label": "Shadow Leaf Dance",
       "startupFrames": 13,
       "activeFrames": 3,
       "recoveryFrames": 22,
@@ -490,100 +490,100 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Shadow Clone Rising Kick",
+      "label": "Leaf Rising Wind",
       "hitLevel": "mid",
       "knockdown": false
     },
     "neutral:jab-jab": {
-      "label": "Shadow Clone Feint"
+      "label": "Multiple Shadow Clone Technique"
     },
     "neutral:jab-heavy": {
       "label": "Clone Rasengan"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Clone Barrage Launcher"
+      "label": "Rasengan Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Rasenshuriken Ender"
+      "label": "Massive Rasenshuriken"
     },
     "neutral:jab-kick": {
-      "label": "Clone Low Sweep"
+      "label": "Leaf Gale Kick"
     },
     "neutral:heavy-jab": {
-      "label": "Rasengan Follow-Up"
+      "label": "Spiraling Clone Strike"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Double Rasengan"
+      "label": "Giant Rasengan"
     },
     "neutral:heavy-kick": {
-      "label": "Rasengan Axe Kick"
+      "label": "Shadow Leaf Drop"
     },
     "neutral:kick-jab": {
-      "label": "Uzumaki Barrage Step"
+      "label": "Uzumaki Heel Feint"
     },
     "cmd:1+4": {
       "recoveryFrames": 12,
       "onBlockFrames": -7
     },
     "neutral:jab-jab-heavy": {
-      "label": "Clone Palm Break"
+      "label": "Shadow Clone Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Clone Low Check"
+      "label": "Body Replacement Counter"
     },
     "neutral:jab-jab-special": {
-      "label": "Shadow Clone Cyclone"
+      "label": "Clone Transformation Feint"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Clone Sweep Rasengan"
+      "label": "Uzumaki Barrage Palm"
     },
     "neutral:jab-kick-special": {
-      "label": "Sweep Rasenshuriken"
+      "label": "Naruto Uzumaki Two-Thousand Combo"
     },
     "neutral:jab-special": {
-      "label": "Clone Spiral Kick"
+      "label": "Shadow Shuriken Technique"
     },
     "neutral:jab-special-heavy": {
-      "label": "Spiral Feint Rasengan"
+      "label": "All-Direction Shuriken Firing"
     },
     "neutral:heavy-jab-special": {
-      "label": "Rasengan Clone Ender"
+      "label": "Planetary Rasengan"
     },
     "neutral:heavy-kick-special": {
-      "label": "Rasengan Barrage Ender"
+      "label": "Wind Release: Giant Rasengan"
     },
     "neutral:heavy-special": {
-      "label": "Wind Feint"
+      "label": "Nine-Tails Chakra Cloak"
     },
     "neutral:heavy-special-kick": {
-      "label": "Wind Sweep"
+      "label": "Tailed-Beast Mode"
     },
     "neutral:kick-jab-special": {
-      "label": "Barrage Clone Ender"
+      "label": "Toad Summoning Technique"
     },
     "neutral:kick-heavy": {
-      "label": "Barrage Palm"
+      "label": "Naruto Uzumaki Combo"
     },
     "neutral:kick-heavy-special": {
-      "label": "Barrage Rasengan"
+      "label": "Sage Mode"
     },
     "neutral:kick-special": {
-      "label": "Barrage Cyclone"
+      "label": "Toad Sage Mode"
     },
     "neutral:kick-special-heavy": {
-      "label": "Rising Rasengan"
+      "label": "Six Paths Sage Mode"
     },
     "neutral:special-jab": {
-      "label": "Rasenshuriken Jab"
+      "label": "Shadow Clone Gathering Assault"
     },
     "neutral:special-jab-heavy": {
-      "label": "Rasenshuriken Smash"
+      "label": "Six Paths Senjutsu"
     },
     "neutral:special-heavy": {
-      "label": "Spiral Impact"
+      "label": "Truth-Seeking Balls"
     },
     "neutral:special-kick": {
-      "label": "Wind Sweep Kick"
+      "label": "Reverse Harem Technique"
     },
     "kick": {
       "startupFrames": 9,

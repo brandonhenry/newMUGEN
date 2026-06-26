@@ -1650,7 +1650,7 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:kick-special');
-    expect(match.fighters[0].currentMove?.label).toBe('Barrage Cyclone');
+    expect(match.fighters[0].currentMove?.label).toBe('Toad Sage Mode');
     expect(match.fighters[0].currentMove?.startupFrames).toBe(16);
     expect(match.fighters[0].currentMove?.onBlockFrames).toBe(-7);
   });
