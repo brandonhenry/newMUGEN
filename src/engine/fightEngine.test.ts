@@ -997,6 +997,79 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].blockDamage);
   });
 
+  it('lets mid and low hit properties beat standing block', () => {
+    const attackWithLevel = (hitLevel: MoveDefinition['hitLevel']) => {
+      const attacker: CharacterDefinition = {
+        ...starterCharacters[0],
+        moves: starterCharacters[0].moves.map((move) =>
+          move.input === 'jab'
+            ? {
+                ...move,
+                damage: 10,
+                blockDamage: 1,
+                hitLevel
+              }
+            : move
+        )
+      };
+      let match = createMatch(attacker, starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      const attack = emptyInputFrame();
+      attack.jab = true;
+      const block = emptyInputFrame();
+      block.block = true;
+      for (let i = 0; i < 18; i += 1) {
+        match = stepMatch(match, attack, block, 1 / 60);
+        attack.jab = false;
+      }
+      return match;
+    };
+
+    expect(attackWithLevel('high').fighters[1].hp).toBe(starterCharacters[1].stats.health - 1);
+    expect(attackWithLevel('mid').fighters[1].hp).toBe(starterCharacters[1].stats.health - 10);
+    expect(attackWithLevel('low').fighters[1].hp).toBe(starterCharacters[1].stats.health - 10);
+  });
+
+  it('adds crouch block and lets high and mid hit properties beat it', () => {
+    const attackCrouchBlockWithLevel = (hitLevel: MoveDefinition['hitLevel']) => {
+      const attacker: CharacterDefinition = {
+        ...starterCharacters[0],
+        moves: starterCharacters[0].moves.map((move) =>
+          move.input === 'jab'
+            ? {
+                ...move,
+                damage: 10,
+                blockDamage: 1,
+                hitLevel
+              }
+            : move
+        )
+      };
+      let match = createMatch(attacker, starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      const attack = emptyInputFrame();
+      attack.jab = true;
+      const crouchBlock = emptyInputFrame();
+      crouchBlock.block = true;
+      crouchBlock.down = true;
+      for (let i = 0; i < 18; i += 1) {
+        match = stepMatch(match, attack, crouchBlock, 1 / 60);
+        attack.jab = false;
+      }
+      return match;
+    };
+
+    expect(attackCrouchBlockWithLevel('low').fighters[1].hp).toBe(starterCharacters[1].stats.health - 1);
+    expect(attackCrouchBlockWithLevel('high').fighters[1].hp).toBe(starterCharacters[1].stats.health - 10);
+    expect(attackCrouchBlockWithLevel('mid').fighters[1].hp).toBe(starterCharacters[1].stats.health - 10);
+  });
+
   it('only resolves a hit during active frames', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -1225,6 +1298,12 @@ describe('fight engine', () => {
     p1BackAfterSwap.right = true;
     match = stepMatch(match, p1BackAfterSwap, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('block');
+
+    const crouchBlock = emptyInputFrame();
+    crouchBlock.right = true;
+    crouchBlock.down = true;
+    match = stepMatch(match, crouchBlock, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('crouchBlock');
   });
 
   it('buffers player attack inputs and chains them after a confirmed hit', () => {

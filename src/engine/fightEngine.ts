@@ -392,7 +392,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
 
   const sidestep = fighter.sidestepTimer > 0 ? fighter.sidestepDirection : laneWalk;
 
-  if (blocking && grounded && !jumping) {
+  if (blocking && crouching && grounded && !jumping) {
+    fighter.state = 'crouchBlock';
+  } else if (blocking && grounded && !jumping) {
     fighter.state = 'block';
   } else if (crouching) {
     fighter.state = 'crouch';
@@ -1234,7 +1236,7 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
     if (fighter.sidestepDirection < 0 || input.sidestepUp || input.sidewalkUp) push(`SSL+${buttonText}`);
     if (fighter.sidestepDirection > 0 || input.sidestepDown || input.sidewalkDown) push(`SSR+${buttonText}`);
   }
-  if (input.down || fighter.state === 'crouch') push(`FC+${buttonText}`);
+  if (input.down || isCrouchingState(fighter)) push(`FC+${buttonText}`);
   if (fighter.wasCrouching && !input.down) push(`WS+${buttonText}`);
   if (direction === 'f' && hasRecentSequence(fighter.commandHistory, ['f', 'f'])) push(`f,f+${buttonText}`);
   if (direction === 'b' && hasRecentSequence(fighter.commandHistory, ['b', 'b'])) push(`b,b+${buttonText}`);
@@ -1312,7 +1314,7 @@ function getComboRoute(fighter: FighterRuntime, opponent: FighterRuntime, input:
   const forward = resolveForwardInput(fighter, opponent, input);
   const toward = forward > 0;
   const away = forward < 0;
-  const low = input.down || fighter.state === 'crouch' || fighter.wasCrouching;
+  const low = input.down || isCrouchingState(fighter) || fighter.wasCrouching;
   const launcher = input.up || isAirborne(fighter);
 
   if (launcher && toward) return { key: 'up-forward', label: 'Rising Step', toward, away, low: false, launcher };
@@ -1344,7 +1346,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   if (distance > move.range + UNIVERSAL_RANGE_BUFFER) return;
   if (!hitboxIntersectsAnyHurtbox(attacker, defender, move)) return;
 
-  const blocked = defender.state === 'block' && defender.facing === -attacker.facing;
+  const blocked = canDefenderBlockMove(defender, attacker, move);
   const counterHit = isCounterHit(defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
@@ -1366,7 +1368,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.blockPunishWindowFrames = Math.max(defender.blockPunishWindowFrames, defenderAdvantageFrames + BLOCK_PUNISH_BUFFER_FRAMES);
     defender.stunFramesRemaining = 0;
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
-    defender.state = 'block';
+    defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
     defender.juggleDamage = 0;
     defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     defender.position.x += pushX * move.blockPushback * 0.14;
@@ -1591,6 +1593,25 @@ function getEffectiveOnBlockFrames(move: MoveDefinition) {
   return Math.min(move.onBlockFrames, -BLOCKER_MIN_ADVANTAGE_FRAMES);
 }
 
+function isCrouchingState(fighter: FighterRuntime) {
+  return fighter.state === 'crouch' || fighter.state === 'crouchBlock';
+}
+
+function canDefenderBlockMove(defender: FighterRuntime, attacker: FighterRuntime, move: MoveDefinition) {
+  if (defender.facing !== -attacker.facing) return false;
+  if (defender.state === 'block') return canStandingBlockHitLevel(move.hitLevel);
+  if (defender.state === 'crouchBlock') return canCrouchBlockHitLevel(move.hitLevel);
+  return false;
+}
+
+function canStandingBlockHitLevel(hitLevel: MoveDefinition['hitLevel']) {
+  return hitLevel === 'high' || hitLevel === 'special';
+}
+
+function canCrouchBlockHitLevel(hitLevel: MoveDefinition['hitLevel']) {
+  return hitLevel === 'low' || hitLevel === 'special';
+}
+
 type Aabb = {
   minX: number;
   maxX: number;
@@ -1672,7 +1693,7 @@ function offsetHurtbox(box: BoxSpec, offset: [number, number, number]): BoxSpec 
 }
 
 function applyPoseToHurtbox(fighter: FighterRuntime, box: BoxSpec): BoxSpec {
-  if (fighter.state === 'crouch' || fighter.wasCrouching) {
+  if (fighter.state === 'crouch' || (fighter.wasCrouching && fighter.state !== 'crouchBlock')) {
     const bottom = box.offset[1] - box.size[1] / 2;
     const sizeY = Math.min(box.size[1] * 0.42, 0.82);
     return {

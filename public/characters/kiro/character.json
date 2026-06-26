@@ -22,6 +22,7 @@
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
     "jump": "jump",
     "block": "block",
     "jab": "jab",
@@ -236,6 +237,10 @@
       "/characters/kiro/frames/frame-124.png",
       "/characters/kiro/frames/frame-125.png"
     ],
+    "crouchBlock": [
+      "/characters/kiro/frames/frame-124.png",
+      "/characters/kiro/frames/frame-016.png"
+    ],
     "jump": [
       "/characters/kiro/frames/frame-018.png",
       "/characters/kiro/frames/frame-019.png"
@@ -363,6 +368,7 @@
     "sidestepLeft": 10,
     "sidestepRight": 12,
     "crouch": 4,
+    "crouchBlock": 5,
     "jump": 8,
     "block": 5,
     "jab": 12,
@@ -532,6 +538,10 @@
     },
     "neutral:special-kick": {
       "label": "Wind Sweep Kick"
+    },
+    "kick": {
+      "startupFrames": 10,
+      "recoveryFrames": 11
     }
   },
   "spriteFrameEdits": {

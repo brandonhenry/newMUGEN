@@ -1011,8 +1011,8 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
     const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
-    const block = fighter.state === 'block' ? 1 : 0;
-    const crouch = fighter.state === 'crouch' ? 1 : 0;
+    const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
+    const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
     const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
     const smooth = 1 - Math.pow(0.001, delta);
@@ -1084,13 +1084,13 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const frames = fighter.character.animationFrames;
   if (!frames) return fighter.character.spriteSheetPath;
   const key = getImageVoxelAnimationKey(fighter);
-  const sequence = frames[key] ?? (key === 'entry' ? frames.win : undefined) ?? frames.idle;
+  const sequence = frames[key] ?? (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ?? (key === 'entry' ? frames.win : undefined) ?? frames.idle;
   if (!sequence?.length) return fighter.character.spriteSheetPath;
   const fps = fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
   const frameIndex =
     fighter.state === 'attack'
       ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
-      : key === 'idle' || key === 'crouch' || key === 'block' || key === 'hitLight' || key === 'win' || key === 'lose'
+      : key === 'idle' || key === 'crouch' || key === 'block' || key === 'crouchBlock' || key === 'hitLight' || key === 'win' || key === 'lose'
         ? 0
       : Math.floor(elapsedTime * fps) % sequence.length;
   debugLogThrottled(9, 'voxel animation key resolved', {
@@ -1118,6 +1118,7 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
   if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
+  if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'entry') return 'entry';
@@ -1463,8 +1464,8 @@ function VoxelSpriteFighter({ fighter, progress, timeScale = 1 }: { fighter: Fig
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
     const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
-    const block = fighter.state === 'block' ? 1 : 0;
-    const crouch = fighter.state === 'crouch' ? 1 : 0;
+    const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
+    const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
     const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
 
@@ -1616,8 +1617,8 @@ function ExternalFighter({ fighter, url, timeScale = 1 }: { fighter: FighterRunt
     });
     const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
     const hit = 0;
-    const block = fighter.state === 'block' ? 1 : 0;
-    const crouch = fighter.state === 'crouch' ? 1 : 0;
+    const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
+    const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
     const knockdown = fighter.state === 'knockdown' ? 1 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
     wrapper.current.rotation.x = THREE.MathUtils.lerp(wrapper.current.rotation.x, knockdown * -0.85 + juggle * -0.42 + block * -0.18 + crouch * -0.28 + hit * 0.18, 1 - Math.pow(0.001, delta));
@@ -1640,6 +1641,7 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
   if (fighter.state === 'attack') return find('punch', 'attack', 'wave') ?? names[0];
   if (fighter.state === 'walk' || fighter.state === 'sidestep') return find('walk', 'run', 'animation') ?? names[0];
   if (fighter.state === 'jump') return find('jump', 'walk', 'run', 'idle') ?? names[0];
+  if (fighter.state === 'crouchBlock') return find('crouch', 'block', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'crouch') return find('crouch', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'block') return find('idle', 'standing') ?? names[0];
   if (fighter.state === 'hit' || fighter.state === 'juggle' || fighter.state === 'knockdown') return find('death', 'no', 'idle') ?? names[0];
@@ -1678,9 +1680,9 @@ function ProceduralFighter({
     const walk = moving ? Math.sin(t * 11) : 0;
     const side = fighter.state === 'sidestep' ? Math.sin(t * 13) * 0.16 : 0;
     const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
-    const block = fighter.state === 'block' ? 1 : 0;
+    const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const hit = 0;
-    const crouch = fighter.state === 'crouch' ? -0.3 : block ? -0.12 : 0;
+    const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? -0.3 : block ? -0.12 : 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
 
     if (root.current) {

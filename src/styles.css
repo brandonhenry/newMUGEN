@@ -668,6 +668,16 @@ button {
   font-size: clamp(32px, 4.8vw, 58px);
 }
 
+.viewer-shortcut-hint {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .with-actions {
   align-items: center;
 }
@@ -2155,6 +2165,12 @@ button {
   color: #101114;
   background: #2ee6ff;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+}
+
+.animation-grid:focus-visible,
+.animation-grid > button:focus-visible {
+  outline: 2px solid #2ee6ff;
+  outline-offset: 3px;
 }
 
 .animation-grid > button.active small {

@@ -167,6 +167,35 @@ const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
 const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover.mp3', import.meta.url).href;
+type BgmSource = {
+  key: string;
+  playlistId: string;
+  startVideoId: string;
+  trackIndex: number;
+  lockToTrack: boolean;
+};
+
+const KORE_MENU_BGM_SOURCE: BgmSource = {
+  key: `menu:${KORE_BGM_PLAYLIST_ID}`,
+  playlistId: KORE_BGM_PLAYLIST_ID,
+  startVideoId: KORE_BGM_START_VIDEO_ID,
+  trackIndex: 0,
+  lockToTrack: false
+};
+
+function stageBgmSource(stage: StageDefinition): BgmSource {
+  const playlistId = stage.music?.playlistId ?? KORE_BGM_PLAYLIST_ID;
+  const startVideoId = stage.music?.videoId ?? KORE_BGM_START_VIDEO_ID;
+  const trackIndex = Math.max(0, Math.round(stage.music?.trackIndex ?? 0));
+  return {
+    key: `stage:${stage.id}:${playlistId}:${trackIndex}`,
+    playlistId,
+    startVideoId,
+    trackIndex,
+    lockToTrack: true
+  };
+}
+
 const menuAttractStage: StageDefinition = {
   id: 'kore-menu-moon',
   name: 'KORE Moon Stage',
@@ -185,6 +214,7 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'jump', label: 'Jump', pose: 'jump', notation: ['u'], category: 'stance' },
   { key: 'crouch', label: 'Crouch', pose: 'crouch', notation: ['d'], category: 'stance' },
   { key: 'block', label: 'Block', pose: 'block', notation: ['b'], category: 'stance' },
+  { key: 'crouchBlock', label: 'Crouch Block', pose: 'crouchBlock', notation: ['D/B'], category: 'stance' },
   { key: 'jab', label: 'Left Punch', pose: 'jab', notation: ['1'], category: 'stance' },
   { key: 'heavy', label: 'Right Punch', pose: 'heavy', notation: ['2'], category: 'stance' },
   { key: 'kick', label: 'Left Kick', pose: 'kick', notation: ['3'], category: 'stance' },
@@ -2835,13 +2865,68 @@ function CharacterViewer({
     const searchMatches = !search || slot.label.toLowerCase().includes(search) || slot.command?.toLowerCase().includes(search);
     return categoryMatches && searchMatches;
   });
+  const moveGridColumnCount = slotCategory === 'stance' ? 4 : 1;
   const selectedSpriteFramePath = framePath(active, selectedSpriteFrameIndex);
+
+  const cycleActiveCharacter = useCallback((direction: -1 | 1) => {
+    if (roster.length <= 1) return;
+    const currentIndex = Math.max(0, roster.findIndex((character) => character.id === active.id));
+    const nextIndex = (currentIndex + direction + roster.length) % roster.length;
+    const next = roster[nextIndex];
+    if (next) setActiveId(next.id);
+  }, [active.id, roster]);
+
+  const selectVisibleSlotAt = (index: number) => {
+    const next = visibleSlots[index];
+    if (!next) return;
+    setSelectedAnimationKey(next.key);
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLButtonElement>(`[data-viewer-slot-index="${index}"]`)?.focus();
+    });
+  };
+
+  const handleMoveGridKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
+    if (visibleSlots.length === 0) return;
+    const currentIndex = Math.max(0, visibleSlots.findIndex((slot) => slot.key === selectedAnimationKey));
+    let nextIndex = currentIndex;
+
+    if (event.key === 'ArrowLeft') nextIndex = currentIndex - 1;
+    else if (event.key === 'ArrowRight') nextIndex = currentIndex + 1;
+    else if (event.key === 'ArrowUp') nextIndex = currentIndex - moveGridColumnCount;
+    else if (event.key === 'ArrowDown') nextIndex = currentIndex + moveGridColumnCount;
+    else if (event.key === 'Home') nextIndex = 0;
+    else if (event.key === 'End') nextIndex = visibleSlots.length - 1;
+    else return;
+
+    event.preventDefault();
+    selectVisibleSlotAt(Math.max(0, Math.min(visibleSlots.length - 1, nextIndex)));
+  };
 
   useEffect(() => {
     if (!active?.id) return;
     const firstSelectedIndex = getFrameIndex(selectedFrames[0] ?? '');
     if (firstSelectedIndex >= 0) setSelectedSpriteFrameIndex(firstSelectedIndex);
   }, [active.id, selectedAnimationKey]);
+
+  useEffect(() => {
+    const handleCharacterShoulderKeys = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
+      if (event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (key === 'o') {
+        event.preventDefault();
+        cycleActiveCharacter(-1);
+      } else if (key === 'p') {
+        event.preventDefault();
+        cycleActiveCharacter(1);
+      }
+    };
+    window.addEventListener('keydown', handleCharacterShoulderKeys);
+    return () => window.removeEventListener('keydown', handleCharacterShoulderKeys);
+  }, [cycleActiveCharacter]);
 
   useEffect(() => {
     let mounted = true;
@@ -3003,8 +3088,11 @@ function CharacterViewer({
   return (
     <div className="viewer-screen">
       <header className="section-header">
-        <span>Character Select</span>
-        <h2>Characters</h2>
+        <div>
+          <span>Character Select</span>
+          <h2>Characters</h2>
+          <small className="viewer-shortcut-hint">O / P to change character</small>
+        </div>
       </header>
       <div className="viewer-layout">
         <div className="roster-list compact loader-bar">
@@ -3230,7 +3318,12 @@ function CharacterViewer({
               </div>
             </section>
           ) : (
-            <div className={`animation-grid ${slotCategory === 'stance' ? 'is-stance-grid' : 'is-command-grid'}`} aria-label="Animation previews">
+            <div
+              className={`animation-grid ${slotCategory === 'stance' ? 'is-stance-grid' : 'is-command-grid'}`}
+              aria-label="Animation previews"
+              tabIndex={0}
+              onKeyDown={handleMoveGridKeyDown}
+            >
               <div className="command-toolbar">
                 <CommandCategorySelect value={slotCategory} onChange={setSlotCategory} />
                 <input
@@ -3240,7 +3333,7 @@ function CharacterViewer({
                   onChange={(event) => setSlotSearch(event.target.value)}
                 />
               </div>
-              {visibleSlots.map((option) => {
+              {visibleSlots.map((option, index) => {
                 const move = resolveSlotMove(active, option);
                 const label = formatMoveSlotLabel(option, move);
                 return (
@@ -3249,6 +3342,7 @@ function CharacterViewer({
                     className={selectedSlot.key === option.key ? 'active' : ''}
                     onClick={() => setSelectedAnimationKey(option.key)}
                     title={label}
+                    data-viewer-slot-index={index}
                     data-testid={`viewer-pose-${option.key}`}
                   >
                     <NotationGroup tokens={option.notation} />

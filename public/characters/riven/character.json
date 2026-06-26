@@ -22,6 +22,7 @@
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
     "jump": "jump",
     "block": "block",
     "jab": "jab",
@@ -236,6 +237,10 @@
     "crouch": [
       "/characters/riven/frames/frame-120.png"
     ],
+    "crouchBlock": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-015.png"
+    ],
     "jump": [
       "/characters/riven/frames/frame-017.png",
       "/characters/riven/frames/frame-018.png"
@@ -386,6 +391,7 @@
     "sidestepLeft": 10,
     "sidestepRight": 12,
     "crouch": 4,
+    "crouchBlock": 5,
     "jump": 8,
     "block": 5,
     "jab": 10.5,

@@ -26,6 +26,7 @@ export type FighterState =
   | 'walk'
   | 'sidestep'
   | 'crouch'
+  | 'crouchBlock'
   | 'jump'
   | 'block'
   | 'attack'
@@ -189,6 +190,12 @@ export type StageDefinition = {
   name: string;
   subtitle: string;
   renderMode?: 'procedural' | 'spriteCutout';
+  music?: {
+    playlistId?: string;
+    videoId?: string;
+    trackIndex?: number;
+    title?: string;
+  };
   floor: string;
   rail: string;
   light: string;
