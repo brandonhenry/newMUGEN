@@ -1735,7 +1735,7 @@ function ArcadeNameCard({
 }
 
 const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode }> = [
-  { mode: 'ai', label: '1P vs AI', icon: <Gamepad2 size={18} /> },
+  { mode: 'ai', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
   { mode: 'training', label: 'Training', icon: <Target size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
@@ -3152,7 +3152,7 @@ function formatGamepadButtonName(button?: number) {
 }
 
 function modeLabel(mode: MatchMode) {
-  if (mode === 'ai') return '1P vs AI';
+  if (mode === 'ai') return '1P vs CPU';
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
   if (mode === 'online') return 'Online';

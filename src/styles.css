@@ -304,9 +304,10 @@ button {
 }
 
 .settings-screen {
-  min-height: calc(100vh - clamp(32px, 4vw, 64px));
+  height: calc(100vh - clamp(32px, 4vw, 64px));
+  min-height: 0;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  align-content: start;
+  align-content: stretch;
 }
 
 .options-header {
@@ -360,14 +361,15 @@ button {
   display: grid;
   grid-template-columns: minmax(190px, 280px) minmax(360px, 1fr);
   gap: 14px;
-  height: min(700px, calc(100vh - 250px));
+  height: 100%;
   min-height: 0;
 }
 
 .options-sidebar,
 .options-editor {
+  height: 100%;
   min-height: 0;
-  max-height: min(700px, calc(100vh - 250px));
+  max-height: none;
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
@@ -4411,6 +4413,11 @@ button {
   .with-actions {
     align-items: start;
     flex-direction: column;
+  }
+
+  .settings-screen {
+    height: auto;
+    min-height: calc(100svh - 36px);
   }
 
   .versus-select-screen {
