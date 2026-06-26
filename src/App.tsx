@@ -1148,7 +1148,7 @@ export default function App() {
       <main className="app-shell boot-shell">
         <section className="boot-mark" aria-label="Loading KORE">
           <Swords size={34} />
-          <h1>KORE</h1>
+          <h1>K.O.R.E</h1>
           <p>Loading fighters</p>
         </section>
       </main>
