@@ -31,6 +31,7 @@
     "special": "special",
     "hitLight": "hitLight",
     "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
     "knockdown": "knockdown",
     "win": "win",
     "lose": "lose"
@@ -386,6 +387,10 @@
       "/characters/riven/frames/frame-079.png",
       "/characters/riven/frames/frame-080.png",
       "/characters/riven/frames/frame-081.png"
+    ],
+    "juggle": [
+      "/characters/riven/frames/frame-029.png",
+      "/characters/riven/frames/frame-030.png"
     ]
   },
   "animationFps": 5,
@@ -405,6 +410,7 @@
     "special": 11,
     "hitLight": 8,
     "hitHeavy": 10,
+    "juggle": 8,
     "knockdown": 8,
     "win": 5,
     "lose": 4,

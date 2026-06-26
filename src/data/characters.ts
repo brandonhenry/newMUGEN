@@ -16,6 +16,7 @@ const animationNames = {
   special: 'special',
   hitLight: 'hitLight',
   hitHeavy: 'hitHeavy',
+  juggle: 'juggle',
   knockdown: 'knockdown',
   win: 'win',
   lose: 'lose'
@@ -63,6 +64,7 @@ const kiroAnimationFrameRates = {
   special: 11,
   hitLight: 8,
   hitHeavy: 10,
+  juggle: 8,
   knockdown: 8,
   win: 5,
   lose: 4,
@@ -114,6 +116,7 @@ const rivenAnimationFrameRates = {
   special: 11,
   hitLight: 8,
   hitHeavy: 10,
+  juggle: 8,
   knockdown: 8,
   win: 5,
   lose: 4,

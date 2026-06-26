@@ -228,6 +228,7 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'kick', label: 'Left Kick', pose: 'kick', notation: ['3'], category: 'stance' },
   { key: 'special', label: 'Right Kick', pose: 'special', notation: ['4'], category: 'stance' },
   { key: 'hitLight', label: 'Hit', pose: 'hit', notation: ['HIT'], category: 'stance' },
+  { key: 'juggle', label: 'Juggle', pose: 'juggle', notation: ['AIR'], category: 'stance' },
   { key: 'knockdown', label: 'Knockdown', pose: 'knockdown', notation: ['KD'], category: 'stance' },
   { key: 'win', label: 'Win', pose: 'win', notation: ['WIN'], category: 'stance' },
   { key: 'lose', label: 'Lose', pose: 'lose', notation: ['LOSE'], category: 'stance' }
@@ -5546,6 +5547,7 @@ function inferImportedAnimationFrameMap(count: number): Record<string, number[]>
     special: pick([37, 38, 39, 40]),
     hitLight: pick([41, 42]),
     hitHeavy: pick([43, 44, 45]),
+    juggle: pick([43, 44, 45]),
     knockdown: pick([46, 47, 48, 49]),
     win: pick([50, 51, 52]),
     lose: pick([53, 54, 55])
@@ -5591,6 +5593,7 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
       special: 10,
       hitLight: 8,
       hitHeavy: 8,
+      juggle: 8,
       knockdown: 8,
       win: 5,
       lose: 4
@@ -5620,6 +5623,7 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
       special: 'special',
       hitLight: 'hitLight',
       hitHeavy: 'hitHeavy',
+      juggle: 'juggle',
       knockdown: 'knockdown',
       win: 'win',
       lose: 'lose'

@@ -31,6 +31,7 @@
     "special": "special",
     "hitLight": "hitLight",
     "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
     "knockdown": "knockdown",
     "win": "win",
     "lose": "lose"
@@ -376,6 +377,10 @@
       "/characters/kiro/frames/frame-075.png",
       "/characters/kiro/frames/frame-076.png",
       "/characters/kiro/frames/frame-077.png"
+    ],
+    "juggle": [
+      "/characters/kiro/frames/frame-031.png",
+      "/characters/kiro/frames/frame-032.png"
     ]
   },
   "animationFps": 5,

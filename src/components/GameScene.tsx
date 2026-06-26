@@ -462,7 +462,7 @@ function PreviewFighter({
     } else {
       runtime.state = pose;
       runtime.sidestepDirection = animationKey === 'sidestepLeft' ? -1 : animationKey === 'sidestepRight' ? 1 : 0;
-      runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(t * 2.4)) * 0.95 : 0;
+      runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(t * 2.4)) * 0.95 : pose === 'juggle' ? 1.35 + Math.sin(t * 2.2) * 0.18 : 0;
     }
 
     if (rotator.current) {
@@ -1097,7 +1097,12 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const frames = fighter.character.animationFrames;
   if (!frames) return fighter.character.spriteSheetPath;
   const key = getImageVoxelAnimationKey(fighter);
-  const sequence = frames[key] ?? (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ?? (key === 'entry' ? frames.win : undefined) ?? frames.idle;
+  const sequence =
+    frames[key] ??
+    (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
+    (key === 'entry' ? frames.win : undefined) ??
+    (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
+    frames.idle;
   if (!sequence?.length) return fighter.character.spriteSheetPath;
   const fps = fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
   const frameIndex =
@@ -1134,7 +1139,7 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'hit') return 'hitLight';
-  if (fighter.state === 'juggle') return fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
+  if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'entry') return 'entry';
   return fighter.state;
 }
