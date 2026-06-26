@@ -5938,6 +5938,7 @@ function FightScreen({
 
   useEffect(() => {
     onlineStateRef.current = onlineState;
+    if (onlineState === 'connected') setPaused(false);
   }, [onlineState]);
 
   useEffect(() => {
@@ -6327,7 +6328,8 @@ function FightScreen({
         p2Input.jab ? 'p2:jab' :
         'none';
       const localOnlineInput = mergeInputFrames(p1Input, p2Input);
-      if (!isOnline && (p1Input.pause || p2Input.pause)) {
+      const canOpenPauseMenu = !isOnline || onlineStateRef.current !== 'connected';
+      if (canOpenPauseMenu && (p1Input.pause || p2Input.pause)) {
         if (!pauseLatch.current) {
           setPaused((value) => !value);
           pauseLatch.current = true;
