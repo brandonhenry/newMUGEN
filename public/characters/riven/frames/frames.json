@@ -9,15 +9,27 @@
     {
       "index": 0,
       "path": "/characters/riven/frames/frame-000.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
       "box": [
-        22,
-        0,
-        81,
-        91
+        36,
+        13,
+        64,
+        76
       ],
-      "width": 59,
-      "height": 91,
-      "row": 0
+      "width": 28,
+      "height": 63,
+      "row": 0,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782496456267
     },
     {
       "index": 1,
