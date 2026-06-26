@@ -372,14 +372,16 @@ button {
 
 .options-layout {
   display: grid;
-  grid-template-columns: minmax(190px, 0.75fr) minmax(360px, 1.4fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(190px, 280px) minmax(360px, 1fr);
   gap: 14px;
-  min-height: min(620px, calc(100vh - 250px));
+  height: min(700px, calc(100vh - 250px));
+  min-height: 0;
 }
 
 .options-sidebar,
-.options-editor,
-.options-preview-card {
+.options-editor {
+  min-height: 0;
+  max-height: min(700px, calc(100vh - 250px));
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
@@ -394,6 +396,7 @@ button {
   align-content: start;
   gap: 8px;
   padding: 12px;
+  overflow: auto;
 }
 
 .options-sidebar button {
@@ -417,6 +420,28 @@ button {
   min-width: 0;
   padding: 14px;
   overflow: auto;
+  scroll-padding-top: 12px;
+}
+
+.settings-section-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.settings-section {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 4px;
+  scroll-margin-top: 12px;
+}
+
+.settings-section h3 {
+  margin: 0;
+  color: #2ee6ff;
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .settings-list {
@@ -592,62 +617,6 @@ button {
 .settings-actions-row {
   display: flex;
   justify-content: flex-end;
-}
-
-.options-preview-card {
-  display: grid;
-  align-content: start;
-  gap: 16px;
-  min-height: 100%;
-  padding: 18px;
-}
-
-.options-preview-card > span {
-  color: #2ee6ff;
-  font-size: 12px;
-  font-weight: 950;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.options-preview-card strong {
-  font-size: clamp(24px, 3vw, 38px);
-  line-height: 1;
-}
-
-.options-preview-card p,
-.options-preview-card small {
-  margin: 0;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.controller-outline {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: end;
-  gap: 10px;
-  min-height: 220px;
-  border-radius: 22px;
-  padding: 32px;
-  background:
-    radial-gradient(circle at 25% 62%, rgba(46, 230, 255, 0.18) 0 32px, transparent 33px),
-    radial-gradient(circle at 72% 62%, rgba(57, 123, 255, 0.18) 0 32px, transparent 33px),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  box-shadow: 0 0 0 2px rgba(247, 247, 242, 0.2) inset;
-}
-
-.controller-outline span,
-.controller-outline b {
-  display: grid;
-  place-items: center;
-  min-width: 38px;
-  min-height: 38px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #f7f7f2;
-  font-size: 12px;
 }
 
 .section-header {
@@ -4412,7 +4381,14 @@ button {
 
   .options-layout {
     grid-template-columns: 1fr;
-    min-height: auto;
+    height: auto;
+    min-height: 0;
+  }
+
+  .options-sidebar,
+  .options-editor,
+  .options-preview-card {
+    max-height: none;
   }
 
   .options-sidebar {

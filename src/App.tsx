@@ -2681,10 +2681,37 @@ function SettingsScreen({
   const [remapRequest, setRemapRequest] = useState<{ player: 1 | 2; action: ActionName } | null>(null);
   const [duplicateRequest, setDuplicateRequest] = useState<{ key: string; owner: string } | null>(null);
   const [inputTest, setInputTest] = useState('Press a key to test bindings');
+  const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>({ game: 0, controls: 0, camera: 0, display: 0, audio: 0 });
+  const editorRef = useRef<HTMLElement | null>(null);
+  const activeSectionIndex = Math.min(activeSections[activeTab] ?? 0, sidebars[activeTab].length - 1);
 
   const updateSettings = (recipe: (current: GameSettings) => GameSettings) => {
     setSettings((current) => sanitizeGameSettings(recipe(cloneSettings(current))));
   };
+
+  const cycleOptionsTab = useCallback((direction: -1 | 1) => {
+    setActiveTab((current) => {
+      const currentIndex = settingsTabs.indexOf(current);
+      return settingsTabs[(currentIndex + direction + settingsTabs.length) % settingsTabs.length] ?? current;
+    });
+  }, []);
+
+  const scrollOptionsSectionIntoView = useCallback((index: number) => {
+    window.requestAnimationFrame(() => {
+      editorRef.current
+        ?.querySelector<HTMLElement>(`[data-section-index="${index}"]`)
+        ?.scrollIntoView({ behavior: settings.display.reducedMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+  }, [settings.display.reducedMotion]);
+
+  const selectSidebarSection = useCallback((index: number) => {
+    setActiveSections((current) => ({ ...current, [activeTab]: index }));
+    scrollOptionsSectionIntoView(index);
+  }, [activeTab, scrollOptionsSectionIntoView]);
+
+  useEffect(() => {
+    scrollOptionsSectionIntoView(activeSectionIndex);
+  }, [activeSectionIndex, activeTab, scrollOptionsSectionIntoView]);
 
   useEffect(() => {
     if (!remapRequest) return;
@@ -2710,30 +2737,51 @@ function SettingsScreen({
   useEffect(() => {
     if (remapRequest) return;
     const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (key === 'o' || key === 'p') {
+        event.preventDefault();
+        cycleOptionsTab(key === 'p' ? 1 : -1);
+        return;
+      }
       const bindings = getKeyboardBindingsForEvent(event, mode, settings.controls);
       setInputTest(bindings.length > 0 ? bindings.map((binding) => `P${binding.player} ${actionLabels[binding.action]}`).join(' / ') : `Unbound: ${formatKeyName(event.code || event.key)}`);
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [mode, remapRequest, settings.controls]);
+  }, [cycleOptionsTab, mode, remapRequest, settings.controls]);
 
   const renderEditor = () => {
     if (activeTab === 'game') {
       return (
-        <div className="settings-list">
-          <SettingRow label="Match Mode" value={modeLabel(mode)}>
-            <SegmentedControl value={mode} setValue={setMode} />
-          </SettingRow>
-          <SettingRow label="Round Timer" value={`${settings.game.roundTimer}s`}>
-            <input type="range" min={30} max={99} step={1} value={settings.game.roundTimer} onChange={(event) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer: Number(event.target.value) } }))} />
-          </SettingRow>
-          {usesCpuDifficulty(mode) && (
-            <SettingRow label="CPU Difficulty" value={cpuDifficultyLabels[cpuDifficulty]}>
-              <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />
+        <div className="settings-section-stack">
+          <SettingsSection index={0} title="Match Rules" active={activeSectionIndex === 0}>
+            <SettingRow label="Match Mode" value={modeLabel(mode)}>
+              <SegmentedControl value={mode} setValue={setMode} />
             </SettingRow>
-          )}
-          <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
-          <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
+            <SettingRow label="Round Timer" value={`${settings.game.roundTimer}s`}>
+              <input type="range" min={30} max={99} step={1} value={settings.game.roundTimer} onChange={(event) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer: Number(event.target.value) } }))} />
+            </SettingRow>
+            {usesCpuDifficulty(mode) && (
+              <SettingRow label="CPU Difficulty" value={cpuDifficultyLabels[cpuDifficulty]}>
+                <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />
+              </SettingRow>
+            )}
+          </SettingsSection>
+          <SettingsSection index={1} title="Training" active={activeSectionIndex === 1}>
+            <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
+          </SettingsSection>
+          <SettingsSection index={2} title="Assist" active={activeSectionIndex === 2}>
+            <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
+          </SettingsSection>
+          <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
+            <button className="secondary-button" onClick={() => updateSettings((current) => ({ ...current, game: cloneSettings(defaultGameSettings).game }))}>
+              <RotateCcw size={16} />
+              Reset Game Settings
+            </button>
+          </SettingsSection>
         </div>
       );
     }
@@ -2742,112 +2790,163 @@ function SettingsScreen({
       const keyboard = settings.controls.keyboard[activePlayer - 1];
       const gamepad = settings.controls.gamepad[activePlayer - 1];
       return (
-        <div className="settings-list">
-          <SettingRow label="Player" value={`P${activePlayer}`}>
-            <div className="mini-segmented">
-              <button className={activePlayer === 1 ? 'active' : ''} onClick={() => setActivePlayer(1)}>P1</button>
-              <button className={activePlayer === 2 ? 'active' : ''} onClick={() => setActivePlayer(2)}>P2</button>
-            </div>
-          </SettingRow>
-          {controlActions.map((action) => (
-            <div className="binding-row" key={action}>
-              <div>
-                <strong>{actionLabels[action]}</strong>
-                <small>{keyboard[action].map(formatKeyName).join(' / ') || 'Unbound'}</small>
+        <div className="settings-section-stack">
+          <SettingsSection index={0} title="Keyboard Mapping" active={activeSectionIndex === 0}>
+            <SettingRow label="Player" value={`P${activePlayer}`}>
+              <div className="mini-segmented">
+                <button className={activePlayer === 1 ? 'active' : ''} onClick={() => setActivePlayer(1)}>P1</button>
+                <button className={activePlayer === 2 ? 'active' : ''} onClick={() => setActivePlayer(2)}>P2</button>
               </div>
-              <button className={remapRequest?.player === activePlayer && remapRequest.action === action ? 'capture' : ''} onClick={() => {
-                setActivePlayer(activePlayer);
-                setRemapRequest({ player: activePlayer, action });
-                setDuplicateRequest(null);
-              }}>
-                {remapRequest?.player === activePlayer && remapRequest.action === action ? 'Press key' : 'Remap'}
-              </button>
-              <div className="gamepad-stepper" aria-label={`${actionLabels[action]} gamepad button`}>
-                <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, -1))}>-</button>
-                <span>B{gamepad[action]?.[0] ?? '-'}</span>
-                <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, 1))}>+</button>
+            </SettingRow>
+            {controlActions.map((action) => (
+              <div className="binding-row" key={action}>
+                <div>
+                  <strong>{actionLabels[action]}</strong>
+                  <small>{keyboard[action].map(formatKeyName).join(' / ') || 'Unbound'}</small>
+                </div>
+                <button className={remapRequest?.player === activePlayer && remapRequest.action === action ? 'capture' : ''} onClick={() => {
+                  setActivePlayer(activePlayer);
+                  setRemapRequest({ player: activePlayer, action });
+                  setDuplicateRequest(null);
+                }}>
+                  {remapRequest?.player === activePlayer && remapRequest.action === action ? 'Press key' : 'Remap'}
+                </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </SettingsSection>
+          <SettingsSection index={1} title="Gamepad Mapping" active={activeSectionIndex === 1}>
+            {controlActions.map((action) => (
+              <div className="binding-row" key={action}>
+                <div>
+                  <strong>{actionLabels[action]}</strong>
+                  <small>Gamepad button {gamepad[action]?.[0] ?? 'unbound'}</small>
+                </div>
+                <div className="gamepad-stepper" aria-label={`${actionLabels[action]} gamepad button`}>
+                  <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, -1))}>-</button>
+                  <span>B{gamepad[action]?.[0] ?? '-'}</span>
+                  <button onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, 1))}>+</button>
+                </div>
+              </div>
+            ))}
+          </SettingsSection>
+          <SettingsSection index={2} title="Input Test" active={activeSectionIndex === 2}>
+            <SettingRow label="Last Input" value={inputTest}>
+              <span className="setting-readout">{inputTest}</span>
+            </SettingRow>
+          </SettingsSection>
+          <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
           {duplicateRequest && <p className="settings-warning">{duplicateRequest.key} is already bound to {duplicateRequest.owner}. Press it again to replace that binding.</p>}
-          <div className="settings-actions-row">
             <button className="secondary-button" onClick={() => setSettings((current) => ({ ...current, controls: cloneSettings(defaultGameSettings).controls }))}>
               <RotateCcw size={16} />
               Reset Controls
             </button>
-          </div>
+          </SettingsSection>
         </div>
       );
     }
 
     if (activeTab === 'camera') {
       return (
-        <div className="settings-list">
-          <SettingSlider label="Distance" value={settings.camera.distance} min={0.7} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, distance: value } }))} />
-          <SettingSlider label="Height" value={settings.camera.height} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, height: value } }))} />
-          <SettingSlider label="Smoothing" value={settings.camera.smoothing} min={0.35} max={1.5} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, smoothing: value } }))} />
-          <SettingSlider label="Zoom Bias" value={settings.camera.zoomBias} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, zoomBias: value } }))} />
+        <div className="settings-section-stack">
+          <SettingsSection index={0} title="Fight Camera" active={activeSectionIndex === 0}>
+            <SettingSlider label="Distance" value={settings.camera.distance} min={0.7} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, distance: value } }))} />
+            <SettingSlider label="Height" value={settings.camera.height} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, height: value } }))} />
+          </SettingsSection>
+          <SettingsSection index={1} title="Tracking" active={activeSectionIndex === 1}>
+            <SettingSlider label="Smoothing" value={settings.camera.smoothing} min={0.35} max={1.5} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, smoothing: value } }))} />
+          </SettingsSection>
+          <SettingsSection index={2} title="Zoom" active={activeSectionIndex === 2}>
+            <SettingSlider label="Zoom Bias" value={settings.camera.zoomBias} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, zoomBias: value } }))} />
+          </SettingsSection>
+          <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
+            <button className="secondary-button" onClick={() => updateSettings((current) => ({ ...current, camera: cloneSettings(defaultGameSettings).camera }))}>
+              <RotateCcw size={16} />
+              Reset Camera
+            </button>
+          </SettingsSection>
         </div>
       );
     }
 
     if (activeTab === 'display') {
       return (
-        <div className="settings-list">
-          <SettingSlider label="HUD Scale" value={settings.display.hudScale} min={0.78} max={1.25} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, hudScale: value } }))} />
-          <SettingRow label="Touch Controls" value={settings.display.touchControls.toUpperCase()}>
-            <div className="mini-segmented">
-              {(['auto', 'on', 'off'] as const).map((value) => (
-                <button key={value} className={settings.display.touchControls === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, touchControls: value } }))}>{value}</button>
-              ))}
-            </div>
-          </SettingRow>
-          <SettingToggle label="Impact Sparks" checked={settings.display.impactSparks.enabled} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, enabled: checked } } }))} />
-          <SettingRow label="Spark Shape" value={settings.display.impactSparks.shape.toUpperCase()}>
-            <div className="mini-segmented">
-              {(['burst', 'ring', 'shards'] as const).map((value) => (
-                <button key={value} className={settings.display.impactSparks.shape === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, shape: value } } }))}>{value}</button>
-              ))}
-            </div>
-          </SettingRow>
-          <SettingRow label="Hit Spark" value={settings.display.impactSparks.hitColor.toUpperCase()}>
-            <input type="color" value={settings.display.impactSparks.hitColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, hitColor: event.target.value } } }))} />
-          </SettingRow>
-          <SettingRow label="Block Spark" value={settings.display.impactSparks.blockColor.toUpperCase()}>
-            <input type="color" value={settings.display.impactSparks.blockColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, blockColor: event.target.value } } }))} />
-          </SettingRow>
-          <SettingSlider label="Spark Size" value={settings.display.impactSparks.size} min={0.5} max={1.8} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, size: value } } }))} />
-          <SettingSlider label="Spark Intensity" value={settings.display.impactSparks.intensity} min={0.35} max={2} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, intensity: value } } }))} />
-          <SettingToggle label="Reduced Motion" checked={settings.display.reducedMotion} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, reducedMotion: checked } }))} />
-          <SettingToggle label="Debug Overlay" checked={settings.display.debugOverlay} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, debugOverlay: checked } }))} />
+        <div className="settings-section-stack">
+          <SettingsSection index={0} title="HUD" active={activeSectionIndex === 0}>
+            <SettingSlider label="HUD Scale" value={settings.display.hudScale} min={0.78} max={1.25} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, hudScale: value } }))} />
+            <SettingToggle label="Impact Sparks" checked={settings.display.impactSparks.enabled} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, enabled: checked } } }))} />
+            <SettingRow label="Spark Shape" value={settings.display.impactSparks.shape.toUpperCase()}>
+              <div className="mini-segmented">
+                {(['burst', 'ring', 'shards'] as const).map((value) => (
+                  <button key={value} className={settings.display.impactSparks.shape === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, shape: value } } }))}>{value}</button>
+                ))}
+              </div>
+            </SettingRow>
+            <SettingRow label="Hit Spark" value={settings.display.impactSparks.hitColor.toUpperCase()}>
+              <input type="color" value={settings.display.impactSparks.hitColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, hitColor: event.target.value } } }))} />
+            </SettingRow>
+            <SettingRow label="Block Spark" value={settings.display.impactSparks.blockColor.toUpperCase()}>
+              <input type="color" value={settings.display.impactSparks.blockColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, blockColor: event.target.value } } }))} />
+            </SettingRow>
+            <SettingSlider label="Spark Size" value={settings.display.impactSparks.size} min={0.5} max={1.8} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, size: value } } }))} />
+            <SettingSlider label="Spark Intensity" value={settings.display.impactSparks.intensity} min={0.35} max={2} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, intensity: value } } }))} />
+          </SettingsSection>
+          <SettingsSection index={1} title="Touch Controls" active={activeSectionIndex === 1}>
+            <SettingRow label="Touch Controls" value={settings.display.touchControls.toUpperCase()}>
+              <div className="mini-segmented">
+                {(['auto', 'on', 'off'] as const).map((value) => (
+                  <button key={value} className={settings.display.touchControls === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, touchControls: value } }))}>{value}</button>
+                ))}
+              </div>
+            </SettingRow>
+          </SettingsSection>
+          <SettingsSection index={2} title="Motion" active={activeSectionIndex === 2}>
+            <SettingToggle label="Reduced Motion" checked={settings.display.reducedMotion} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, reducedMotion: checked } }))} />
+          </SettingsSection>
+          <SettingsSection index={3} title="Debug" active={activeSectionIndex === 3}>
+            <SettingToggle label="Debug Overlay" checked={settings.display.debugOverlay} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, debugOverlay: checked } }))} />
+          </SettingsSection>
         </div>
       );
     }
 
     return (
-      <div className="settings-list">
-        <SettingRow label="Menu BGM Source" value="YouTube Playlist">
-          <a className="mini-link-button" href={KORE_BGM_PLAYLIST_URL} target="_blank" rel="noreferrer">Open Playlist</a>
-        </SettingRow>
-        <SettingRow label="Menu Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
-          <div className="audio-track-controls" role="group" aria-label="Current BGM song">
-            <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: Math.max(0, current.audio.bgmTrackIndex - 1) } }))}>
-              <ChevronLeft size={18} />
-              Previous
-            </button>
-            <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: current.audio.bgmTrackIndex + 1 } }))}>
-              Next
-              <ChevronRight size={18} />
-            </button>
-          </div>
-        </SettingRow>
-        <SettingRow label="Stage Music" value="Uses the selected stage track">
-          <span className="setting-readout">Auto</span>
-        </SettingRow>
-        <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
-        <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
-        <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
-        <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
+      <div className="settings-section-stack">
+        <SettingsSection index={0} title="Menu Playlist" active={activeSectionIndex === 0}>
+          <SettingRow label="Menu BGM Source" value="YouTube Playlist">
+            <a className="mini-link-button" href={KORE_BGM_PLAYLIST_URL} target="_blank" rel="noreferrer">Open Playlist</a>
+          </SettingRow>
+        </SettingsSection>
+        <SettingsSection index={1} title="Menu Song" active={activeSectionIndex === 1}>
+          <SettingRow label="Menu Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
+            <div className="audio-track-controls" role="group" aria-label="Current BGM song">
+              <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: Math.max(0, current.audio.bgmTrackIndex - 1) } }))}>
+                <ChevronLeft size={18} />
+                Previous
+              </button>
+              <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: current.audio.bgmTrackIndex + 1 } }))}>
+                Next
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </SettingRow>
+        </SettingsSection>
+        <SettingsSection index={2} title="Stage Music" active={activeSectionIndex === 2}>
+          <SettingRow label="Stage Music" value="Disabled in fights for now">
+            <span className="setting-readout">Off in match</span>
+          </SettingRow>
+        </SettingsSection>
+        <SettingsSection index={3} title="Master Mix" active={activeSectionIndex === 3}>
+          <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
+        </SettingsSection>
+        <SettingsSection index={4} title="Music" active={activeSectionIndex === 4}>
+          <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
+        </SettingsSection>
+        <SettingsSection index={5} title="SFX" active={activeSectionIndex === 5}>
+          <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
+        </SettingsSection>
+        <SettingsSection index={6} title="Mute" active={activeSectionIndex === 6}>
+          <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
+        </SettingsSection>
       </div>
     );
   };
@@ -2860,28 +2959,25 @@ function SettingsScreen({
           <h2>{tabLabels[activeTab]}</h2>
         </div>
         <nav className="options-tabs" aria-label="Options tabs">
-          <span>L1</span>
+          <span>O</span>
           {settingsTabs.map((tab) => (
             <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
               {tabLabels[tab]}
             </button>
           ))}
-          <span>R1</span>
+          <span>P</span>
         </nav>
       </header>
       <section className="options-layout">
         <aside className="options-sidebar">
           {sidebars[activeTab].map((item, index) => (
-            <button key={item} className={index === 0 ? 'active' : ''}>{item}</button>
+            <button key={item} className={activeSectionIndex === index ? 'active' : ''} onClick={() => selectSidebarSection(index)}>{item}</button>
           ))}
           <button onClick={() => setSettings(cloneSettings(defaultGameSettings))}>Restore All Defaults</button>
         </aside>
-        <section className="options-editor" aria-label={`${tabLabels[activeTab]} settings`}>
+        <section ref={editorRef} className="options-editor" aria-label={`${tabLabels[activeTab]} settings`}>
           {renderEditor()}
         </section>
-        <aside className="options-preview">
-          <OptionsPreview tab={activeTab} settings={settings} inputTest={inputTest} activePlayer={activePlayer} />
-        </aside>
       </section>
       <footer className="settings-support-footer" aria-label="Community links">
         <button className="secondary-button" onClick={onBack}>
@@ -2912,6 +3008,16 @@ function SettingRow({ label, value, children }: { label: string; value: string; 
       </div>
       <div>{children}</div>
     </article>
+  );
+}
+
+function SettingsSection({ index, title, active = true, children }: { index: number; title: string; active?: boolean; children: ReactNode }) {
+  if (!active) return null;
+  return (
+    <section className="settings-section" data-section-index={index}>
+      <h3>{title}</h3>
+      <div className="settings-list">{children}</div>
+    </section>
   );
 }
 
@@ -2948,44 +3054,6 @@ function SettingToggle({ label, checked, onChange }: { label: string; checked: b
         <span />
       </button>
     </article>
-  );
-}
-
-function OptionsPreview({
-  tab,
-  settings,
-  inputTest,
-  activePlayer
-}: {
-  tab: SettingsTab;
-  settings: GameSettings;
-  inputTest: string;
-  activePlayer: 1 | 2;
-}) {
-  const keyboard = settings.controls.keyboard[activePlayer - 1];
-  return (
-    <div className="options-preview-card">
-      <span>{tabLabels[tab]} Preview</span>
-      {tab === 'controls' ? (
-        <>
-          <div className="controller-outline" aria-hidden="true">
-            <span>LS</span>
-            <span>RS</span>
-            <b>1</b>
-            <b>2</b>
-            <b>3</b>
-            <b>4</b>
-          </div>
-          <p>{inputTest}</p>
-          <small>P{activePlayer} primary attack keys: {['jab', 'heavy', 'kick', 'special'].map((action) => keyboard[action as ActionName][0] ? formatKeyName(keyboard[action as ActionName][0]) : '-').join(' / ')}</small>
-        </>
-      ) : (
-        <>
-          <strong>{previewTitle(tab, settings)}</strong>
-          <p>{previewBody(tab)}</p>
-        </>
-      )}
-    </div>
   );
 }
 
@@ -3035,20 +3103,6 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'training') return 'Training';
   if (mode === 'online') return 'Online';
   return 'CPU vs CPU';
-}
-
-function previewTitle(tab: SettingsTab, settings: GameSettings) {
-  if (tab === 'game') return `${settings.game.roundTimer}s rounds`;
-  if (tab === 'camera') return `Camera ${Math.round(settings.camera.distance * 100)} / ${Math.round(settings.camera.height * 100)}`;
-  if (tab === 'display') return `HUD ${Math.round(settings.display.hudScale * 100)}% / ${settings.display.impactSparks.shape}`;
-  return settings.audio.muted ? 'Muted' : `Master ${Math.round(settings.audio.master * 100)}%`;
-}
-
-function previewBody(tab: SettingsTab) {
-  if (tab === 'game') return 'These values are applied when a new fight or rematch starts.';
-  if (tab === 'camera') return 'Camera tuning affects the live fight camera that keeps both fighters centered.';
-  if (tab === 'display') return 'Display settings affect HUD, touch controls, impact sparks, reduced motion, and debug overlays.';
-  return 'Menu screens use the playlist. Fights switch to the selected stage track. SFX uses bundled local game sounds.';
 }
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
