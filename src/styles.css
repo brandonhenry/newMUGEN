@@ -460,6 +460,57 @@ button {
   width: 100%;
 }
 
+.youtube-bgm-player {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.audio-track-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.audio-track-controls button,
+.mini-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 14px;
+  color: rgba(247, 247, 242, 0.86);
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  transition-property: transform, background-color, color;
+  transition-duration: 170ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.audio-track-controls button:hover,
+.audio-track-controls button:focus-visible,
+.mini-link-button:hover,
+.mini-link-button:focus-visible {
+  color: #08101c;
+  background: #2ee6ff;
+}
+
+.audio-track-controls button:active,
+.mini-link-button:active {
+  transform: scale(0.96);
+}
+
 .mini-segmented {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1243,6 +1294,19 @@ button {
   font-weight: 900;
   letter-spacing: 0;
   white-space: nowrap;
+}
+
+.cpu-difficulty-carousel {
+  grid-template-columns: 54px minmax(160px, 240px) 54px;
+  width: fit-content;
+}
+
+.cpu-difficulty-carousel .mode-carousel-current {
+  min-width: 0;
+}
+
+.cpu-difficulty-carousel .mode-carousel-current strong {
+  font-size: clamp(17px, 2.1vw, 24px);
 }
 
 .cpu-difficulty {

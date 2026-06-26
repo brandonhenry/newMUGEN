@@ -56,6 +56,7 @@ export type CompactFighterSnapshot = {
   getupLane: -1 | 0 | 1;
   getupStarted: boolean;
   juggleDamage: number;
+  juggleGravityScale: number;
   blockFlash: number;
   hitFlash: number;
 };
@@ -188,6 +189,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     getupLane: fighter.getupLane,
     getupStarted: fighter.getupStarted,
     juggleDamage: fighter.juggleDamage,
+    juggleGravityScale: fighter.juggleGravityScale,
     blockFlash: fighter.blockFlash,
     hitFlash: fighter.hitFlash
   };
@@ -229,6 +231,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
     getupLane: snapshot.getupLane,
     getupStarted: snapshot.getupStarted,
     juggleDamage: snapshot.juggleDamage,
+    juggleGravityScale: snapshot.juggleGravityScale ?? base.juggleGravityScale,
     blockFlash: snapshot.blockFlash,
     hitFlash: snapshot.hitFlash
   };

@@ -221,6 +221,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     getupLane: 0,
     getupStarted: false,
     juggleDamage: 0,
+    juggleGravityScale: JUGGLE_GRAVITY_SCALE,
     blockFlash: 0,
     hitFlash: 0
   };
@@ -301,6 +302,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.getupStarted = false;
       fighter.getupInvulnerableFrames = 0;
       fighter.juggleDamage = 0;
+      fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     }
     applyGravity(fighter, dt);
     updateAttackInputMemory(fighter, input);
@@ -308,13 +310,14 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.state === 'juggle') {
-    const landed = applyGravity(fighter, dt, JUGGLE_GRAVITY_SCALE);
+    const landed = applyGravity(fighter, dt, getFighterJuggleGravityScale(fighter));
     if (landed) {
       applyJuggleLandingRecovery(fighter);
     }
     if (!isAirborne(fighter) && fighter.stunFramesRemaining === 0 && fighter.actionFramesRemaining === 0 && fighter.stunTimer === 0 && fighter.actionTimer === 0) {
       fighter.state = 'idle';
       fighter.juggleDamage = 0;
+      fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     }
     updateAttackInputMemory(fighter, input);
     return;
@@ -719,7 +722,10 @@ function applyMoveOverrides(
     onCounterHitFrames: Math.round(merged.onCounterHitFrames),
     range: Math.max(0.1, merged.range),
     pushback: Math.max(0, merged.pushback),
-    blockPushback: Math.max(0, merged.blockPushback)
+    blockPushback: Math.max(0, merged.blockPushback),
+    launchVelocity: merged.launchVelocity === undefined ? undefined : clamp(merged.launchVelocity, 3.2, 7.2),
+    juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
+    juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2)
   };
 }
 
@@ -1362,6 +1368,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = 'block';
     defender.juggleDamage = 0;
+    defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     defender.position.x += pushX * move.blockPushback * 0.14;
     defender.position.z += pushZ * move.blockPushback * 0.14;
     return;
@@ -1404,9 +1411,10 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
 
   if (!forceKnockdown && entersJuggle) {
-    const refloatVelocity = getJuggleVelocity(launchHeight, wasAirborne);
+    const refloatVelocity = getJuggleVelocity(move, wasAirborne);
     defender.position.y = Math.max(defender.position.y, wasAirborne ? JUGGLE_REFLOAT_MIN_HEIGHT : JUGGLE_MIN_START_HEIGHT);
     defender.velocityY = Math.max(defender.velocityY, refloatVelocity);
+    defender.juggleGravityScale = getMoveJuggleGravityScale(move);
     defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, wasAirborne ? 18 : 28);
     defender.stunTimer = framesToSeconds(defender.stunFramesRemaining);
     defender.actionFramesRemaining = Math.max(defender.actionFramesRemaining, defender.stunFramesRemaining);
@@ -1494,6 +1502,7 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.getupLane = 0;
   fighter.getupInvulnerableFrames = 0;
   fighter.juggleDamage = 0;
+  fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
 }
 
 function isActiveMoveFrame(move: MoveDefinition, moveFrame: number) {
@@ -1519,11 +1528,26 @@ function isAirborne(fighter: FighterRuntime) {
   return fighter.position.y > 0 || fighter.velocityY !== 0;
 }
 
-function getJuggleVelocity(launchHeight: number, wasAirborne: boolean) {
+function getJuggleVelocity(move: MoveDefinition, wasAirborne: boolean) {
+  const launchHeight = Math.max(0, move.launchHeight ?? 0);
+  if (wasAirborne && Number.isFinite(move.juggleRefloatVelocity)) {
+    return clamp(move.juggleRefloatVelocity ?? JUGGLE_REFLOAT_VELOCITY, 2.2, 6.4);
+  }
+  if (!wasAirborne && Number.isFinite(move.launchVelocity)) {
+    return clamp(move.launchVelocity ?? JUGGLE_INITIAL_VELOCITY, 3.2, 7.2);
+  }
   if (wasAirborne) {
     return Math.min(5.25, Math.max(JUGGLE_REFLOAT_VELOCITY, launchHeight > 0 ? launchHeight * 1.95 : JUGGLE_REFLOAT_VELOCITY));
   }
   return Math.min(6.65, Math.max(JUGGLE_INITIAL_VELOCITY, launchHeight > 0 ? launchHeight * 2.55 : JUGGLE_INITIAL_VELOCITY));
+}
+
+function getMoveJuggleGravityScale(move: MoveDefinition) {
+  return clamp(move.juggleGravityScale ?? JUGGLE_GRAVITY_SCALE, 0.28, 1.2);
+}
+
+function getFighterJuggleGravityScale(fighter: FighterRuntime) {
+  return clamp(fighter.juggleGravityScale || JUGGLE_GRAVITY_SCALE, 0.28, 1.2);
 }
 
 function applyJuggleLandingRecovery(fighter: FighterRuntime) {

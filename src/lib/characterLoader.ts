@@ -66,6 +66,9 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     pushback,
     blockPushback: finiteOr(move.blockPushback, pushback * 0.45),
     launchHeight: move.launchHeight === undefined ? undefined : Math.max(0, finiteOr(move.launchHeight, 0)),
+    launchVelocity: move.launchVelocity === undefined ? undefined : clamp(finiteOr(move.launchVelocity, 5.95), 3.2, 7.2),
+    juggleRefloatVelocity: move.juggleRefloatVelocity === undefined ? undefined : clamp(finiteOr(move.juggleRefloatVelocity, 4.35), 2.2, 6.4),
+    juggleGravityScale: move.juggleGravityScale === undefined ? undefined : clamp(finiteOr(move.juggleGravityScale, 0.52), 0.28, 1.2),
     tracking: normalizeTracking(move.tracking),
     armorStartFrame: normalizeNullableFrame(move.armorStartFrame),
     armorEndFrame: normalizeNullableFrame(move.armorEndFrame),
@@ -107,6 +110,10 @@ function normalizeNullableFrame(value: unknown) {
 
 function finiteOr(value: unknown, fallback: number) {
   return Number.isFinite(value) ? Number(value) : fallback;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
 }
 
 function normalizeHitLevel(value: unknown): HitLevel {

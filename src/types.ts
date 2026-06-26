@@ -77,6 +77,9 @@ export type MoveDefinition = {
   push?: number;
   hitstun?: number;
   launchHeight?: number;
+  launchVelocity?: number;
+  juggleRefloatVelocity?: number;
+  juggleGravityScale?: number;
   tracking: MoveTracking;
   armorStartFrame?: number | null;
   armorEndFrame?: number | null;
@@ -279,6 +282,7 @@ export type GameSettings = {
     music: number;
     sfx: number;
     muted: boolean;
+    bgmTrackIndex: number;
   };
 };
 
@@ -333,6 +337,7 @@ export type FighterRuntime = {
   getupLane: -1 | 0 | 1;
   getupStarted: boolean;
   juggleDamage: number;
+  juggleGravityScale: number;
   blockFlash: number;
   hitFlash: number;
 };

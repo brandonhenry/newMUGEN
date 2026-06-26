@@ -89,7 +89,8 @@ export const defaultGameSettings: GameSettings = {
     master: 1,
     music: 0.72,
     sfx: 0.85,
-    muted: false
+    muted: false,
+    bgmTrackIndex: 0
   }
 };
 
@@ -167,7 +168,8 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       master: clampNumber(audio.master, 0, 1, defaults.audio.master),
       music: clampNumber(audio.music, 0, 1, defaults.audio.music),
       sfx: clampNumber(audio.sfx, 0, 1, defaults.audio.sfx),
-      muted: booleanOr(audio.muted, defaults.audio.muted)
+      muted: booleanOr(audio.muted, defaults.audio.muted),
+      bgmTrackIndex: Math.round(clampNumber(audio.bgmTrackIndex, 0, 99, defaults.audio.bgmTrackIndex))
     }
   };
 }

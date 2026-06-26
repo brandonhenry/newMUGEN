@@ -115,7 +115,8 @@ describe('character manifests', () => {
     const settings = sanitizeGameSettings({
       game: { roundTimer: 75 },
       controls: { keyboard: [{ jab: ['KeyP'] }] },
-      display: { touchControls: 'on', impactSparks: { shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } }
+      display: { touchControls: 'on', impactSparks: { shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } },
+      audio: { bgmTrackIndex: 300 }
     });
 
     expect(settings.game.roundTimer).toBe(75);
@@ -129,6 +130,7 @@ describe('character manifests', () => {
     expect(settings.display.impactSparks.size).toBe(1.8);
     expect(settings.display.impactSparks.intensity).toBe(0.35);
     expect(settings.camera.distance).toBe(defaultGameSettings.camera.distance);
+    expect(settings.audio.bgmTrackIndex).toBe(99);
   });
 
   it('resolves remapped keyboard bindings', () => {
@@ -1987,6 +1989,65 @@ describe('fight engine', () => {
     }
     expect(apex).toBeGreaterThan(2.1);
     expect(match.fighters[1].state).toBe('juggle');
+  });
+
+  it('applies per-launcher pop and fall-speed tuning', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      knockdown: false,
+      launchHeight: 2.2,
+      launchVelocity: 4.05,
+      juggleRefloatVelocity: 3.25,
+      juggleGravityScale: 1.08,
+      range: 2.5,
+      hitbox: {
+        offset: [0, 1.1, 0.75],
+        size: [0.9, 0.8, 1.2]
+      }
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].velocityY).toBeCloseTo(4.05, 2);
+    expect(match.fighters[1].juggleGravityScale).toBeCloseTo(1.08, 2);
+  });
+
+  it('lets different juggle fall speeds create different airborne arcs', () => {
+    let fastFall = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    let slowFall = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    fastFall.phase = 'fighting';
+    slowFall.phase = 'fighting';
+    fastFall.countdown = 0;
+    slowFall.countdown = 0;
+
+    for (const match of [fastFall, slowFall]) {
+      match.fighters[1].state = 'juggle';
+      match.fighters[1].position.y = 1.1;
+      match.fighters[1].velocityY = 4.6;
+      match.fighters[1].stunFramesRemaining = 80;
+      match.fighters[1].actionFramesRemaining = 80;
+    }
+    fastFall.fighters[1].juggleGravityScale = 1.08;
+    slowFall.fighters[1].juggleGravityScale = 0.34;
+
+    for (let i = 0; i < 24; i += 1) {
+      fastFall = stepMatch(fastFall, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      slowFall = stepMatch(slowFall, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(slowFall.fighters[1].position.y).toBeGreaterThan(fastFall.fighters[1].position.y + 0.55);
   });
 
   it('keeps a launched defender unable to act while airborne even after hit frames expire', () => {

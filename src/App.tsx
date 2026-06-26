@@ -105,6 +105,49 @@ type HdVoxelPayload = {
   };
 };
 
+type YouTubePlayerStateChange = { data: number; target: YouTubePlayer };
+
+type YouTubePlayer = {
+  destroy: () => void;
+  getPlaylistIndex: () => number;
+  loadPlaylist: (options: { list: string; listType: 'playlist'; index?: number; startSeconds?: number }) => void;
+  mute: () => void;
+  nextVideo: () => void;
+  playVideo: () => void;
+  playVideoAt: (index: number) => void;
+  previousVideo: () => void;
+  setLoop: (loopPlaylists: boolean) => void;
+  setVolume: (volume: number) => void;
+  unMute: () => void;
+};
+
+type YouTubeNamespace = {
+  Player: new (
+    element: HTMLElement,
+    options: {
+      width: string;
+      height: string;
+      videoId: string;
+      playerVars: Record<string, string | number>;
+      events: {
+        onReady: (event: { target: YouTubePlayer }) => void;
+        onStateChange: (event: YouTubePlayerStateChange) => void;
+      };
+    }
+  ) => YouTubePlayer;
+  PlayerState: {
+    ENDED: number;
+    PLAYING: number;
+  };
+};
+
+declare global {
+  interface Window {
+    YT?: YouTubeNamespace;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
 const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
   resolutionScale: 2,
   maxRows: 64,
@@ -120,6 +163,10 @@ const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
 
 const ANIMATION_STORAGE_KEY = 'kore.animationOverrides';
 const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
+const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
+const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
+const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
+const KORE_MENU_SELECT_SOUND_URL = new URL('../sounds/menu-button-press.wav', import.meta.url).href;
 const menuAttractStage: StageDefinition = {
   id: 'kore-menu-moon',
   name: 'KORE Moon Stage',
@@ -312,6 +359,9 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     'pushback',
     'blockPushback',
     'launchHeight',
+    'launchVelocity',
+    'juggleRefloatVelocity',
+    'juggleGravityScale',
     'armorStartFrame',
     'armorEndFrame'
   ];
@@ -737,6 +787,140 @@ function withFreshAiSeed<T extends object>(options: T): T & { aiSeed: number } {
   return { ...options, aiSeed: freshAiSeed() };
 }
 
+let youtubeApiPromise: Promise<YouTubeNamespace> | null = null;
+
+function loadYouTubeIframeApi() {
+  if (typeof window === 'undefined') return Promise.reject(new Error('YouTube player requires a browser'));
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+  if (youtubeApiPromise) return youtubeApiPromise;
+  youtubeApiPromise = new Promise<YouTubeNamespace>((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>('script[src="https://www.youtube.com/iframe_api"]');
+    const previousReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      previousReady?.();
+      if (window.YT?.Player) resolve(window.YT);
+      else reject(new Error('YouTube iframe API loaded without a player'));
+    };
+    if (!existing) {
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.async = true;
+      script.onerror = () => reject(new Error('Failed to load YouTube iframe API'));
+      document.head.appendChild(script);
+    }
+  });
+  return youtubeApiPromise;
+}
+
+function YouTubeBgmPlayer({
+  settings,
+  started,
+  onTrackIndexChange
+}: {
+  settings: GameSettings['audio'];
+  started: boolean;
+  onTrackIndexChange: (index: number) => void;
+}) {
+  const mountRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<YouTubePlayer | null>(null);
+  const readyRef = useRef(false);
+  const requestedIndexRef = useRef(settings.bgmTrackIndex);
+  const onTrackIndexChangeRef = useRef(onTrackIndexChange);
+
+  useEffect(() => {
+    onTrackIndexChangeRef.current = onTrackIndexChange;
+  }, [onTrackIndexChange]);
+
+  const syncVolume = useCallback(() => {
+    const player = playerRef.current;
+    if (!player || !readyRef.current) return;
+    const volume = Math.round(clamp(settings.master * settings.music * 100, 0, 100));
+    player.setVolume(volume);
+    if (settings.muted || volume <= 0) {
+      player.mute();
+    } else {
+      player.unMute();
+    }
+  }, [settings.master, settings.music, settings.muted]);
+
+  useEffect(() => {
+    if (!started || playerRef.current || !mountRef.current) return;
+    let disposed = false;
+    loadYouTubeIframeApi()
+      .then((YT) => {
+        if (disposed || !mountRef.current) return;
+        const player = new YT.Player(mountRef.current, {
+          width: '1',
+          height: '1',
+          videoId: KORE_BGM_START_VIDEO_ID,
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            list: KORE_BGM_PLAYLIST_ID,
+            listType: 'playlist',
+            loop: 1,
+            modestbranding: 1,
+            playsinline: 1,
+            rel: 0,
+            origin: window.location.origin
+          },
+          events: {
+            onReady: (event) => {
+              if (disposed) return;
+              playerRef.current = event.target;
+              readyRef.current = true;
+              event.target.setLoop(true);
+              syncVolume();
+              requestedIndexRef.current = settings.bgmTrackIndex;
+              event.target.loadPlaylist({
+                list: KORE_BGM_PLAYLIST_ID,
+                listType: 'playlist',
+                index: settings.bgmTrackIndex,
+                startSeconds: 0
+              });
+              event.target.playVideo();
+            },
+            onStateChange: (event) => {
+              if (event.data === YT.PlayerState.ENDED) {
+                event.target.nextVideo();
+                return;
+              }
+              if (event.data === YT.PlayerState.PLAYING) {
+                const index = Math.max(0, Math.round(event.target.getPlaylistIndex()));
+                requestedIndexRef.current = index;
+                onTrackIndexChangeRef.current(index);
+              }
+            }
+          }
+        });
+        playerRef.current = player;
+      })
+      .catch((error) => {
+        console.warn('KORE BGM unavailable', error);
+      });
+    return () => {
+      disposed = true;
+    };
+  }, [settings.bgmTrackIndex, started, syncVolume]);
+
+  useEffect(() => {
+    syncVolume();
+  }, [syncVolume]);
+
+  useEffect(() => {
+    const player = playerRef.current;
+    if (!started || !player || !readyRef.current) return;
+    if (settings.bgmTrackIndex === requestedIndexRef.current) return;
+    requestedIndexRef.current = settings.bgmTrackIndex;
+    player.playVideoAt(settings.bgmTrackIndex);
+    player.playVideo();
+  }, [settings.bgmTrackIndex, started]);
+
+  return <div className="youtube-bgm-player" ref={mountRef} aria-hidden="true" />;
+}
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
@@ -751,6 +935,8 @@ export default function App() {
   const [mode, setMode] = useState<MatchMode>('ai');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
+  const [musicStarted, setMusicStarted] = useState(false);
+  const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
 
   useEffect(() => {
@@ -812,6 +998,34 @@ export default function App() {
   useEffect(() => {
     writeGameSettings(settings);
   }, [settings]);
+
+  const updateBgmTrackIndex = useCallback((index: number) => {
+    setSettings((current) => {
+      const nextIndex = Math.max(0, Math.round(index));
+      if (current.audio.bgmTrackIndex === nextIndex) return current;
+      return sanitizeGameSettings({
+        ...current,
+        audio: {
+          ...current.audio,
+          bgmTrackIndex: nextIndex
+        }
+      });
+    });
+  }, []);
+
+  const playMenuSelectSound = useCallback(() => {
+    if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
+    const audio = menuSelectAudioRef.current ?? new Audio(KORE_MENU_SELECT_SOUND_URL);
+    menuSelectAudioRef.current = audio;
+    audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.28, 0, 0.36);
+    audio.currentTime = 0;
+    audio.play().catch(() => undefined);
+  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
+
+  const startFromTitle = useCallback(() => {
+    setMusicStarted(true);
+    setScreen('menu');
+  }, []);
 
   const setCharacterAnimationFrames = (characterId: string, animationKey: string, frames: string[]) => {
     debugLog(4, 'viewer frame override requested', {
@@ -928,11 +1142,13 @@ export default function App() {
   return (
     <main className="app-shell">
       <div className="ambient-grid" />
+      <YouTubeBgmPlayer settings={settings.audio} started={musicStarted} onTrackIndexChange={updateBgmTrackIndex} />
       <section className="screen-panel">
-        {screen === 'title' && <TitleScreen onStart={() => setScreen('menu')} />}
+        {screen === 'title' && <TitleScreen onStart={startFromTitle} />}
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
+            onMenuSelect={playMenuSelectSound}
             onArcade={() => {
               setMode('ai');
               setScreen('select');
@@ -1056,6 +1272,7 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
 
 function MenuScreen({
   roster,
+  onMenuSelect,
   onArcade,
   onVersus,
   onTraining,
@@ -1066,6 +1283,7 @@ function MenuScreen({
   onExit
 }: {
   roster: CharacterDefinition[];
+  onMenuSelect: () => void;
   onArcade: () => void;
   onVersus: () => void;
   onTraining: () => void;
@@ -1146,7 +1364,10 @@ function MenuScreen({
               onMouseEnter={() => setActiveMenuIndex(index)}
               onMouseMove={() => setActiveMenuIndex(index)}
               onFocus={() => setActiveMenuIndex(index)}
-              onClick={item.action}
+              onClick={() => {
+                onMenuSelect();
+                item.action();
+              }}
             >
               {item.label}
             </button>
@@ -1388,7 +1609,7 @@ function CpuDifficultyControl({
   if (compact) {
     return (
       <div
-        className="cpu-difficulty is-compact"
+        className="mode-carousel cpu-difficulty-carousel"
         role="group"
         aria-label="CPU difficulty"
         tabIndex={0}
@@ -1403,16 +1624,16 @@ function CpuDifficultyControl({
           }
         }}
       >
-        <span>CPU Difficulty</span>
-        <div className="difficulty-carousel">
-          <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(-1)} aria-label="Lower CPU difficulty">
-            <ChevronLeft size={24} />
-          </button>
+        <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(-1)} aria-label="Lower CPU difficulty">
+          <ChevronLeft size={24} />
+        </button>
+        <div className="mode-carousel-current" aria-live="polite">
+          <Swords size={22} />
           <strong>{cpuDifficultyLabels[value]}</strong>
-          <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(1)} aria-label="Raise CPU difficulty">
-            <ChevronRight size={24} />
-          </button>
         </div>
+        <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(1)} aria-label="Raise CPU difficulty">
+          <ChevronRight size={24} />
+        </button>
       </div>
     );
   }
@@ -2032,7 +2253,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
-  audio: ['Master Mix', 'Music', 'SFX', 'Mute']
+  audio: ['BGM Playlist', 'Current Song', 'Master Mix', 'Music', 'SFX', 'Mute']
 };
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
@@ -2222,6 +2443,21 @@ function SettingsScreen({
 
     return (
       <div className="settings-list">
+        <SettingRow label="BGM Source" value="YouTube Playlist">
+          <a className="mini-link-button" href={KORE_BGM_PLAYLIST_URL} target="_blank" rel="noreferrer">Open Playlist</a>
+        </SettingRow>
+        <SettingRow label="Current Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
+          <div className="audio-track-controls" role="group" aria-label="Current BGM song">
+            <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: Math.max(0, current.audio.bgmTrackIndex - 1) } }))}>
+              <ChevronLeft size={18} />
+              Previous
+            </button>
+            <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: current.audio.bgmTrackIndex + 1 } }))}>
+              Next
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </SettingRow>
         <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
         <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
         <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
@@ -2411,6 +2647,7 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'ai') return '1P vs AI';
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
+  if (mode === 'online') return 'Online';
   return 'CPU vs CPU';
 }
 
@@ -2425,7 +2662,7 @@ function previewBody(tab: SettingsTab) {
   if (tab === 'game') return 'These values are applied when a new fight or rematch starts.';
   if (tab === 'camera') return 'Camera tuning affects the live fight camera that keeps both fighters centered.';
   if (tab === 'display') return 'Display settings affect HUD, touch controls, impact sparks, reduced motion, and debug overlays.';
-  return 'Audio values are persisted now and ready for future music and SFX playback.';
+  return 'Music streams from the KORE playlist after the title input. SFX uses bundled local game sounds.';
 }
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
@@ -2990,6 +3227,9 @@ function CharacterViewer({
 
 function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (patch: MoveOverride) => void }) {
   const isLauncher = (move.launchHeight ?? 0) > 0;
+  const launchVelocity = move.launchVelocity ?? defaultLaunchVelocity(move.launchHeight ?? 0);
+  const juggleRefloatVelocity = move.juggleRefloatVelocity ?? defaultJuggleRefloatVelocity(move.launchHeight ?? 0);
+  const juggleGravityScale = move.juggleGravityScale ?? 0.52;
   const updateNumber = (key: keyof MoveOverride, value: string, min = Number.NEGATIVE_INFINITY) => {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return;
@@ -3036,10 +3276,24 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
           <input
             type="checkbox"
             checked={isLauncher}
-            onChange={(event) => onChange({ launchHeight: event.target.checked ? Math.max(move.launchHeight ?? 0, 2.2) : 0 })}
+            onChange={(event) =>
+              onChange(
+                event.target.checked
+                  ? {
+                      launchHeight: Math.max(move.launchHeight ?? 0, 2.2),
+                      launchVelocity,
+                      juggleRefloatVelocity,
+                      juggleGravityScale
+                    }
+                  : { launchHeight: 0 }
+              )
+            }
           />
         </label>
         <FrameNumberInput label="Launch Height" value={move.launchHeight ?? 0} min={0} step={0.1} onChange={(value) => updateNumber('launchHeight', value, 0)} />
+        <FrameNumberInput label="Launch Pop" value={launchVelocity} min={3.2} step={0.05} onChange={(value) => updateNumber('launchVelocity', value, 3.2)} />
+        <FrameNumberInput label="Re-float Pop" value={juggleRefloatVelocity} min={2.2} step={0.05} onChange={(value) => updateNumber('juggleRefloatVelocity', value, 2.2)} />
+        <FrameNumberInput label="Fall Speed" value={juggleGravityScale} min={0.28} step={0.01} onChange={(value) => updateNumber('juggleGravityScale', value, 0.28)} />
         <label className="frame-toggle">
           <span>Knockdown</span>
           <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />
@@ -3047,6 +3301,14 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
       </div>
     </section>
   );
+}
+
+function defaultLaunchVelocity(launchHeight: number) {
+  return Math.min(6.65, Math.max(5.95, launchHeight > 0 ? launchHeight * 2.55 : 5.95));
+}
+
+function defaultJuggleRefloatVelocity(launchHeight: number) {
+  return Math.min(5.25, Math.max(4.35, launchHeight > 0 ? launchHeight * 1.95 : 4.35));
 }
 
 function createDefaultSpriteFrameEdit(character: CharacterDefinition, frameIndex: number, frameMeta?: SpriteFrameEdit): SpriteFrameEdit {
