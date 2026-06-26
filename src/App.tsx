@@ -1159,7 +1159,7 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
-            onMenuSelect={playMenuSelectSound}
+            onMenuSelect={playMenuHoverSound}
             onMenuHover={playMenuHoverSound}
             onArcade={() => {
               setMode('ai');
@@ -1194,6 +1194,7 @@ export default function App() {
             setP2Id={setP2Id}
             setMode={setMode}
             setCpuDifficulty={setCpuDifficulty}
+            onUiNavigate={playMenuHoverSound}
             onBack={() => setScreen('menu')}
             onNext={() => setScreen('stage')}
           />
@@ -1426,6 +1427,7 @@ function CharacterSelect({
   setP2Id,
   setMode,
   setCpuDifficulty,
+  onUiNavigate,
   onBack,
   onNext
 }: {
@@ -1438,6 +1440,7 @@ function CharacterSelect({
   setP2Id: (id: string) => void;
   setMode: (mode: MatchMode) => void;
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
+  onUiNavigate: () => void;
   onBack: () => void;
   onNext: () => void;
 }) {
@@ -1489,8 +1492,8 @@ function CharacterSelect({
             <h2>{targetLabel}</h2>
           </div>
           <div className="mode-stack">
-            <CharacterSelectModeCarousel value={mode} setValue={setMode} />
-            {usesCpuDifficulty(mode) && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} compact />}
+            <CharacterSelectModeCarousel value={mode} setValue={setMode} onNavigate={onUiNavigate} />
+            {usesCpuDifficulty(mode) && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} onNavigate={onUiNavigate} compact />}
           </div>
         </div>
 
@@ -1543,13 +1546,23 @@ function CharacterSelect({
   );
 }
 
-function CharacterSelectModeCarousel({ value, setValue }: { value: MatchMode; setValue: (mode: MatchMode) => void }) {
+function CharacterSelectModeCarousel({
+  value,
+  setValue,
+  onNavigate
+}: {
+  value: MatchMode;
+  setValue: (mode: MatchMode) => void;
+  onNavigate?: () => void;
+}) {
   const activeIndex = Math.max(0, characterSelectModeOptions.findIndex((option) => option.mode === value));
   const activeOption = characterSelectModeOptions[activeIndex] ?? characterSelectModeOptions[0];
   const cycleMode = (direction: -1 | 1) => {
     const nextIndex = (activeIndex + direction + characterSelectModeOptions.length) % characterSelectModeOptions.length;
     const next = characterSelectModeOptions[nextIndex];
-    if (next) setValue(next.mode);
+    if (!next) return;
+    onNavigate?.();
+    setValue(next.mode);
   };
 
   return (
@@ -1613,10 +1626,12 @@ function SegmentedControl({ value, setValue }: { value: MatchMode; setValue: (mo
 function CpuDifficultyControl({
   value,
   setValue,
+  onNavigate,
   compact = false
 }: {
   value: CpuDifficulty;
   setValue: (difficulty: CpuDifficulty) => void;
+  onNavigate?: () => void;
   compact?: boolean;
 }) {
   const update = (rawValue: string) => {
@@ -1624,7 +1639,10 @@ function CpuDifficultyControl({
     setValue(next);
   };
   const cycleDifficulty = (direction: -1 | 1) => {
-    setValue(Math.min(5, Math.max(1, value + direction)) as CpuDifficulty);
+    const next = Math.min(5, Math.max(1, value + direction)) as CpuDifficulty;
+    if (next === value) return;
+    onNavigate?.();
+    setValue(next);
   };
 
   if (compact) {

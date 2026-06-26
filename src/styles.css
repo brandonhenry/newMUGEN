@@ -676,6 +676,11 @@ button {
   display: grid;
   justify-items: end;
   gap: 8px;
+  width: min(100%, 410px);
+}
+
+.mode-stack .mode-carousel {
+  width: 100%;
 }
 
 .menu-grid,
@@ -1297,8 +1302,7 @@ button {
 }
 
 .cpu-difficulty-carousel {
-  grid-template-columns: 54px minmax(160px, 240px) 54px;
-  width: fit-content;
+  grid-template-columns: 54px minmax(190px, 280px) 54px;
 }
 
 .cpu-difficulty-carousel .mode-carousel-current {
