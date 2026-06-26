@@ -2973,7 +2973,6 @@ function SettingsScreen({
           {sidebars[activeTab].map((item, index) => (
             <button key={item} className={activeSectionIndex === index ? 'active' : ''} onClick={() => selectSidebarSection(index)}>{item}</button>
           ))}
-          <button onClick={() => setSettings(cloneSettings(defaultGameSettings))}>Restore All Defaults</button>
         </aside>
         <section ref={editorRef} className="options-editor" aria-label={`${tabLabels[activeTab]} settings`}>
           {renderEditor()}
