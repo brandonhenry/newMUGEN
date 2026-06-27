@@ -1133,6 +1133,38 @@ describe('fight engine', () => {
     expect(radiusAfter).toBeCloseTo(radiusBefore, 1);
   });
 
+  it('keeps continuous lane walking orbiting around the opponent without reversing at side crossover', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const laneWalk = emptyInputFrame();
+    laneWalk.sidewalkDown = true;
+    let previousAngle = Math.atan2(
+      match.fighters[0].position.z - match.fighters[1].position.z,
+      match.fighters[0].position.x - match.fighters[1].position.x
+    );
+    let unwrappedAngle = previousAngle;
+    let crossedOpponentX = false;
+
+    for (let i = 0; i < 210; i += 1) {
+      match = stepMatch(match, laneWalk, emptyInputFrame(), 1 / 60);
+      const angle = Math.atan2(
+        match.fighters[0].position.z - match.fighters[1].position.z,
+        match.fighters[0].position.x - match.fighters[1].position.x
+      );
+      let delta = angle - previousAngle;
+      if (delta > Math.PI) delta -= Math.PI * 2;
+      if (delta < -Math.PI) delta += Math.PI * 2;
+      expect(delta).toBeLessThan(0.01);
+      unwrappedAngle += delta;
+      previousAngle = angle;
+      if (match.fighters[0].position.x > match.fighters[1].position.x) crossedOpponentX = true;
+    }
+
+    expect(crossedOpponentX).toBe(true);
+    expect(unwrappedAngle).toBeLessThan(-Math.PI * 1.4);
+  });
+
   it('hits a standing defender only when the active hitbox overlaps their hurtbox', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

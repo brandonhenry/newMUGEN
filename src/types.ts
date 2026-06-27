@@ -442,6 +442,7 @@ export type FighterRuntime = {
   state: FighterState;
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
+  sidestepOrbitSign: 1 | -1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
   moveInstanceId: number;

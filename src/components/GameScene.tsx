@@ -949,6 +949,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     state: 'idle',
     sidestepTimer: 0,
     sidestepDirection: 0,
+    sidestepOrbitSign: 1,
     jumpInputHeld: false,
     currentMove: null,
     moveInstanceId: 0,

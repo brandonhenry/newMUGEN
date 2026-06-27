@@ -19,7 +19,6 @@ import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { effectIsActive, effectTransformAt } from '../lib/effects';
 
 const ARENA_LIMIT_X = 18;
-const ARENA_LIMIT_Z = 9;
 const ROUND_TIME = 60;
 const START_DISTANCE = 2.6;
 const ROUND_OVER_DELAY = 2.1;
@@ -360,6 +359,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     state: 'idle',
     sidestepTimer: 0,
     sidestepDirection: 0,
+    sidestepOrbitSign: slot === 1 ? 1 : -1,
     jumpInputHeld: false,
     currentMove: null,
     moveInstanceId: 0,
@@ -591,6 +591,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   if (sidestepTap !== 0 && fighter.sidestepTimer === 0) {
     fighter.sidestepTimer = 0.18;
     fighter.sidestepDirection = sidestepTap;
+    fighter.sidestepOrbitSign = getOpponentSideSign(fighter, opponent);
+  } else if (laneWalk !== 0 && fighter.sidestepTimer === 0 && fighter.sidestepDirection !== laneWalk) {
+    fighter.sidestepDirection = laneWalk;
+    fighter.sidestepOrbitSign = getOpponentSideSign(fighter, opponent);
+  } else if (laneWalk === 0 && fighter.sidestepTimer === 0) {
+    fighter.sidestepDirection = 0;
   }
 
   const sidestep = fighter.sidestepTimer > 0 ? fighter.sidestepDirection : laneWalk;
@@ -618,12 +624,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
   if (sidestep !== 0) {
     const sidestepScale = fighter.sidestepTimer > 0 ? 1.75 : 1.35;
-    const sideSign = getOpponentSideSign(fighter, opponent);
+    const sideSign = fighter.sidestepOrbitSign || getOpponentSideSign(fighter, opponent);
     orbitAroundOpponent(fighter, opponent, -sidestep * sideSign * fighter.character.stats.sidestepSpeed * sidestepScale * speedScale * dt);
   }
 
   fighter.position.x = clamp(fighter.position.x, -ARENA_LIMIT_X, ARENA_LIMIT_X);
-  fighter.position.z = clamp(fighter.position.z, -ARENA_LIMIT_Z, ARENA_LIMIT_Z);
   applyGravity(fighter, dt);
   fighter.wasCrouching = crouching;
   updateAttackInputMemory(fighter, input);
@@ -2554,8 +2559,6 @@ function resolveBodyCollision(match: MatchSnapshot) {
   }
   p1.position.x = clamp(p1.position.x, -ARENA_LIMIT_X, ARENA_LIMIT_X);
   p2.position.x = clamp(p2.position.x, -ARENA_LIMIT_X, ARENA_LIMIT_X);
-  p1.position.z = clamp(p1.position.z, -ARENA_LIMIT_Z, ARENA_LIMIT_Z);
-  p2.position.z = clamp(p2.position.z, -ARENA_LIMIT_Z, ARENA_LIMIT_Z);
 }
 
 function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime, amount: number) {
