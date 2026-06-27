@@ -993,9 +993,23 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
   };
 }
 
+function cameraDamp(delta: number, speed: number) {
+  return THREE.MathUtils.clamp(1 - Math.exp(-Math.max(0, delta) * speed), 0, 1);
+}
+
 function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
   const { camera, size } = useThree();
   const target = useMemo(() => new THREE.Vector3(), []);
+  const focus = useMemo(() => new THREE.Vector3(), []);
+  const lookFocus = useMemo(() => new THREE.Vector3(), []);
+  const side = useMemo(() => new THREE.Vector3(0, 0, 1), []);
+  const rawFocus = useMemo(() => new THREE.Vector3(), []);
+  const rawLookFocus = useMemo(() => new THREE.Vector3(), []);
+  const rawSide = useMemo(() => new THREE.Vector3(), []);
+  const desired = useMemo(() => new THREE.Vector3(), []);
+  const initializedRef = useRef(false);
+  const cameraDistanceRef = useRef(6.4);
+  const cameraHeightRef = useRef(2.8);
   useFrame((_, delta) => {
     const [p1, p2] = match.fighters;
     if (match.clashState?.status !== 'none') {
@@ -1029,6 +1043,8 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       cameraX *= -1;
       cameraZ *= -1;
     }
+    rawSide.set(cameraX, 0, cameraZ).normalize();
+    if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
 
     const perspective = camera as THREE.PerspectiveCamera;
     const aspect = size.width / Math.max(1, size.height);
@@ -1040,10 +1056,32 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const distanceScale = settings.distance * settings.zoomBias;
     const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2) * distanceScale, 4.8, 21);
     const cameraHeight = THREE.MathUtils.clamp((2.35 + cameraDistance * 0.13 + Math.max(p1.position.y, p2.position.y) * 0.22) * settings.height, 2.2, 6.4);
-    const desired = new THREE.Vector3(midX + cameraX * cameraDistance, cameraHeight, midZ + cameraZ * cameraDistance);
-    camera.position.lerp(desired, 1 - Math.pow(0.00001, delta * settings.smoothing));
-    target.set(midX, midY, midZ);
-    camera.lookAt(target);
+
+    rawFocus.set(midX, 0, midZ);
+    rawLookFocus.set(midX, midY, midZ);
+    if (!initializedRef.current) {
+      initializedRef.current = true;
+      focus.copy(rawFocus);
+      lookFocus.copy(rawLookFocus);
+      side.copy(rawSide);
+      cameraDistanceRef.current = cameraDistance;
+      cameraHeightRef.current = cameraHeight;
+    }
+
+    const smoothing = Math.max(0.35, settings.smoothing);
+    focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing));
+    lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing));
+    side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing)).normalize();
+    cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 2.35 * smoothing));
+    cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 2.75 * smoothing));
+
+    desired.set(
+      focus.x + side.x * cameraDistanceRef.current,
+      cameraHeightRef.current,
+      focus.z + side.z * cameraDistanceRef.current
+    );
+    camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing));
+    camera.lookAt(lookFocus);
   });
   return null;
 }
