@@ -503,7 +503,8 @@
     },
     "cmd:1+4": {
       "recoveryFrames": 12,
-      "onBlockFrames": -7
+      "onBlockFrames": -7,
+      "knockdown": true
     },
     "neutral:jab-jab-heavy": {
       "label": "Shadow Clone Body Blow"
@@ -583,7 +584,8 @@
     },
     "cmd:2+3": {
       "activeFrames": 3,
-      "recoveryFrames": 17
+      "recoveryFrames": 17,
+      "hitLevel": "low"
     },
     "jableft": {
       "startupFrames": 10,
