@@ -373,6 +373,8 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'idle', label: 'Neutral', pose: 'idle', notation: ['N'], category: 'stance' },
   { key: 'walkForward', label: 'Forward', pose: 'walk', notation: ['f'], category: 'stance' },
   { key: 'walkBack', label: 'Back', pose: 'walk', notation: ['b'], category: 'stance' },
+  { key: 'sprint', label: 'Forward Sprint', pose: 'walk', notation: ['f,f'], category: 'stance' },
+  { key: 'backflip', label: 'Backflip', pose: 'jump', notation: ['b,b'], category: 'stance' },
   { key: 'sidestepLeft', label: 'Side Up', pose: 'sidestep', notation: ['↑↑'], category: 'stance' },
   { key: 'sidestepRight', label: 'Side Down', pose: 'sidestep', notation: ['↓↓'], category: 'stance' },
   { key: 'jump', label: 'Jump', pose: 'jump', notation: ['u'], category: 'stance' },
@@ -1083,7 +1085,10 @@ function sampleHdVoxelCell(
   let foreground = 0;
   let samples = 0;
   const colorVotes = new Map<string, number>();
+  const sideColorVotes = new Map<string, number>();
   let brightness = 0;
+  const centerX = Math.round((cellMinX + cellMaxX) / 2);
+  const centerY = Math.round((cellMinY + cellMaxY) / 2);
 
   for (let y = cellMinY; y <= cellMaxY; y += 1) {
     for (let x = cellMinX; x <= cellMaxX; x += 1) {
@@ -1098,18 +1103,70 @@ function sampleHdVoxelCell(
       foreground += 1;
       brightness += (red + green + blue) / 3;
       colorVotes.set(color, (colorVotes.get(color) ?? 0) + 1);
+      if (!isHdBlackOutlinePixel(red, green, blue)) {
+        sideColorVotes.set(color, (sideColorVotes.get(color) ?? 0) + 1);
+      }
     }
   }
 
   const foregroundRatio = samples > 0 ? foreground / samples : 0;
   if (foregroundRatio < 0.12 || foreground === 0) return null;
   const color = [...colorVotes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '#ffffff';
+  const sideColor =
+    [...sideColorVotes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ??
+    findNearestHdSideBleedColor(imageData, bounds, background, fidelity, centerX, centerY) ??
+    color;
   return {
     color,
-    sideColor: color,
+    sideColor,
     brightness: brightness / foreground,
     foregroundRatio
   };
+}
+
+function findNearestHdSideBleedColor(
+  imageData: ImageData,
+  bounds: { minX: number; minY: number; maxX: number; maxY: number },
+  background: [number, number, number],
+  fidelity: Required<VoxelFidelitySettings>,
+  centerX: number,
+  centerY: number
+) {
+  const { width, data } = imageData;
+  const radii = [2, 4, 7, 11, 16, 24];
+  for (const radius of radii) {
+    const votes = new Map<string, number>();
+    const minX = Math.max(bounds.minX, centerX - radius);
+    const maxX = Math.min(bounds.maxX, centerX + radius);
+    const minY = Math.max(bounds.minY, centerY - radius);
+    const maxY = Math.min(bounds.maxY, centerY + radius);
+    for (let y = minY; y <= maxY; y += 1) {
+      for (let x = minX; x <= maxX; x += 1) {
+        const dx = x - centerX;
+        const dy = y - centerY;
+        if ((dx * dx) + (dy * dy) > radius * radius) continue;
+        const offset = (y * width + x) * 4;
+        const red = data[offset];
+        const green = data[offset + 1];
+        const blue = data[offset + 2];
+        const alpha = data[offset + 3];
+        if (!isHdForegroundPixel(red, green, blue, alpha, background, fidelity.alphaThreshold)) continue;
+        if (isHdBlackOutlinePixel(red, green, blue)) continue;
+        const color = quantizeHdColor(red, green, blue, fidelity.paletteSnap);
+        const distanceWeight = Math.max(1, radius - Math.round(Math.hypot(dx, dy)));
+        votes.set(color, (votes.get(color) ?? 0) + distanceWeight);
+      }
+    }
+    const best = [...votes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    if (best) return best;
+  }
+  return null;
+}
+
+function isHdBlackOutlinePixel(red: number, green: number, blue: number) {
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  return max <= 34 && max - min <= 18;
 }
 
 function isHdForegroundPixel(red: number, green: number, blue: number, alpha: number, background: [number, number, number], alphaThreshold: number) {
@@ -4268,7 +4325,11 @@ function CharacterViewer({
   const visibleSlots = animationSlots.filter((slot) => {
     const categoryMatches = slotCategory === 'all' || slot.category === slotCategory;
     const search = slotSearch.trim().toLowerCase();
-    const searchMatches = !search || slot.label.toLowerCase().includes(search) || slot.command?.toLowerCase().includes(search);
+    const searchMatches =
+      !search ||
+      slot.label.toLowerCase().includes(search) ||
+      slot.command?.toLowerCase().includes(search) ||
+      slot.notation.join(' ').toLowerCase().includes(search);
     return categoryMatches && searchMatches;
   });
   const moveGridColumnCount = slotCategory === 'stance' ? 4 : 1;

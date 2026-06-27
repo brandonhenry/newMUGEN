@@ -1711,6 +1711,8 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const key = getImageVoxelAnimationKey(fighter);
   const sequence =
     frames[key] ??
+    (key === 'sprint' ? frames.walkForward : undefined) ??
+    (key === 'backflip' ? frames.jump ?? frames.walkBack : undefined) ??
     (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
     (key === 'entry' ? frames.win : undefined) ??
     (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
@@ -1843,7 +1845,7 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
     const geometry = baseGeometry.clone();
     const renderVoxel = normalizeImageVoxelForRender(voxel);
     const color = new THREE.Color(renderVoxel.color);
-    const sideColor = new THREE.Color(renderVoxel.color);
+    const sideColor = new THREE.Color(renderVoxel.sideColor ?? renderVoxel.color);
     const normals = geometry.getAttribute('normal');
     const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
     for (let index = 0; index < colors.length; index += 3) {
@@ -1893,7 +1895,8 @@ function normalizeImageVoxelForRender(voxel: ImageVoxel): ImageVoxel {
       THREE.MathUtils.clamp(voxel.position[2] * 0.28, -0.018, 0.018)
     ],
     size: [voxel.size[0] * IMAGE_VOXEL_PIXEL_SCALE, voxel.size[1] * IMAGE_VOXEL_PIXEL_SCALE, depth],
-    color: voxel.source === 'hd' ? voxel.color : enhanceVoxelColor(voxel.color)
+    color: voxel.source === 'hd' ? voxel.color : enhanceVoxelColor(voxel.color),
+    sideColor: voxel.source === 'hd' ? voxel.sideColor : voxel.sideColor ? enhanceVoxelColor(voxel.sideColor) : undefined
   };
 }
 
