@@ -1135,7 +1135,15 @@ function sanitizeMoveEffectInstance(instance: Record<string, unknown>, index: nu
   const keyframes = Array.isArray(instance.keyframes)
     ? instance.keyframes
         .filter((keyframe): keyframe is Record<string, unknown> => Boolean(keyframe) && typeof keyframe === 'object')
-        .map((keyframe) => ({ frame: Math.max(0, Math.round(finiteOr(keyframe.frame, 0))), ...sanitizeEffectTransform(keyframe) }))
+        .map((keyframe) => {
+          const frame = Math.max(0, Math.round(finiteOr(keyframe.frame, 0)));
+          const endFrame = keyframe.endFrame === undefined ? undefined : Math.max(frame, Math.round(finiteOr(keyframe.endFrame, frame)));
+          return {
+            frame,
+            ...(endFrame === undefined ? {} : { endFrame }),
+            ...sanitizeEffectTransform(keyframe)
+          };
+        })
         .sort((a, b) => a.frame - b.frame)
         .slice(0, 120)
     : [];
