@@ -1231,7 +1231,7 @@ export default function App() {
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
-  const [musicStarted, setMusicStarted] = useState(false);
+  const [musicStarted, setMusicStarted] = useState(true);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
@@ -1491,7 +1491,7 @@ export default function App() {
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const activeBgmSource = useMemo(() => {
-    if (!musicStarted) return null;
+    if (!musicStarted || screen === 'boot') return null;
     if (screen === 'fight') return stageBgmSource(selectedStage);
     if (!settings.audio.menuMusic) return null;
     if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
