@@ -7,10 +7,9 @@ export const stages: StageDefinition[] = [
     subtitle: 'Infinite white simulation room',
     renderMode: 'procedural',
     music: {
-      playlistId: 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2',
-      videoId: 'yy4D-0QnvQ8',
-      trackIndex: 1,
-      title: 'The Chamber Theme'
+      path: 'sounds/0012 SEQ_BGMB_STG_01.mp3',
+      trackIndex: 0,
+      title: 'The Chamber Silver'
     },
     floor: '#f7fff6',
     floorTexturePath: '/stages/chamber/floor-silver.png',
@@ -30,10 +29,9 @@ export const stages: StageDefinition[] = [
     subtitle: 'Infinite green simulation room',
     renderMode: 'procedural',
     music: {
-      playlistId: 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2',
-      videoId: 'yy4D-0QnvQ8',
+      path: 'sounds/0013 SEQ_BGMB_STG_02.mp3',
       trackIndex: 1,
-      title: 'The Chamber Theme'
+      title: 'The Chamber Green'
     },
     floor: '#f7fff6',
     floorTexturePath: '/stages/chamber/floor-text.png',
@@ -53,9 +51,8 @@ export const stages: StageDefinition[] = [
     subtitle: 'Wide procedural arena for movement testing',
     hidden: true,
     music: {
-      playlistId: 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2',
-      videoId: 'yy4D-0QnvQ8',
-      trackIndex: 1,
+      path: 'sounds/0014 SEQ_BGMB_STG_03.mp3',
+      trackIndex: 2,
       title: 'Infinite Grid Theme'
     },
     floor: '#07182c',
@@ -68,9 +65,8 @@ export const stages: StageDefinition[] = [
     subtitle: 'Warm steel courtyard',
     hidden: true,
     music: {
-      playlistId: 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2',
-      videoId: 'yy4D-0QnvQ8',
-      trackIndex: 2,
+      path: 'sounds/0015 SEQ_BGMB_STG_04.mp3',
+      trackIndex: 3,
       title: 'Forge Yard Theme'
     },
     floor: '#2a2520',

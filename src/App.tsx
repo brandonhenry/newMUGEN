@@ -134,50 +134,6 @@ type HdVoxelBuildSizing = {
   baselineForegroundHeight?: number;
 };
 
-type YouTubePlayerStateChange = { data: number; target: YouTubePlayer };
-
-type YouTubePlayer = {
-  destroy: () => void;
-  getPlaylistIndex: () => number;
-  loadPlaylist: (options: { list: string; listType: 'playlist'; index?: number; startSeconds?: number }) => void;
-  mute: () => void;
-  nextVideo: () => void;
-  pauseVideo: () => void;
-  playVideo: () => void;
-  playVideoAt: (index: number) => void;
-  previousVideo: () => void;
-  setLoop: (loopPlaylists: boolean) => void;
-  setVolume: (volume: number) => void;
-  unMute: () => void;
-};
-
-type YouTubeNamespace = {
-  Player: new (
-    element: HTMLElement,
-    options: {
-      width: string;
-      height: string;
-      videoId: string;
-      playerVars: Record<string, string | number>;
-      events: {
-        onReady: (event: { target: YouTubePlayer }) => void;
-        onStateChange: (event: YouTubePlayerStateChange) => void;
-      };
-    }
-  ) => YouTubePlayer;
-  PlayerState: {
-    ENDED: number;
-    PLAYING: number;
-  };
-};
-
-declare global {
-  interface Window {
-    YT?: YouTubeNamespace;
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
 const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
   resolutionScale: 2,
   maxRows: 64,
@@ -193,9 +149,6 @@ const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
 
 const ANIMATION_STORAGE_KEY = 'kore.animationOverrides';
 const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
-const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
-const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
-const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover-trimmed.wav', import.meta.url).href;
 const KORE_MENU_SELECT_SOUND_URL = new URL('../sounds/menu-button-press.wav', import.meta.url).href;
 const HIT_SFX = {
@@ -210,31 +163,147 @@ const HIT_SFX = {
 } as const;
 type BgmSource = {
   key: string;
-  playlistId: string;
-  startVideoId: string;
+  tracks: LocalBgmTrack[];
   trackIndex: number;
   lockToTrack: boolean;
 };
 
+type LocalBgmTrack = {
+  id: string;
+  title: string;
+  url: string;
+  filename: string;
+};
+
+const LOCAL_BGM_FILES = [
+  { filename: '0000 SEQ_BGMM_TITLE.mp3', url: new URL('../sounds/0000 SEQ_BGMM_TITLE.mp3', import.meta.url).href },
+  { filename: '0001 SEQ_BGMM_STAFFROLL.mp3', url: new URL('../sounds/0001 SEQ_BGMM_STAFFROLL.mp3', import.meta.url).href },
+  { filename: '0002 SEQ_BGMM_MAINMENU.mp3', url: new URL('../sounds/0002 SEQ_BGMM_MAINMENU.mp3', import.meta.url).href },
+  { filename: '0003 SEQ_BGMM_OPTION.mp3', url: new URL('../sounds/0003 SEQ_BGMM_OPTION.mp3', import.meta.url).href },
+  { filename: '0004 SEQ_BGMM_DECKMAKE.mp3', url: new URL('../sounds/0004 SEQ_BGMM_DECKMAKE.mp3', import.meta.url).href },
+  { filename: '0005 SEQ_BGMM_COMM.mp3', url: new URL('../sounds/0005 SEQ_BGMM_COMM.mp3', import.meta.url).href },
+  { filename: '0006 SEQ_BGMM_GALLERY.mp3', url: new URL('../sounds/0006 SEQ_BGMM_GALLERY.mp3', import.meta.url).href },
+  { filename: '0007 SEQ_BGMM_QUIZ.mp3', url: new URL('../sounds/0007 SEQ_BGMM_QUIZ.mp3', import.meta.url).href },
+  { filename: '0008 SEQ_BGMG_MAP_A.mp3', url: new URL('../sounds/0008 SEQ_BGMG_MAP_A.mp3', import.meta.url).href },
+  { filename: '0009 SEQ_BGMG_MAP_B.mp3', url: new URL('../sounds/0009 SEQ_BGMG_MAP_B.mp3', import.meta.url).href },
+  { filename: '000A SEQ_BGMG_MAP_C.mp3', url: new URL('../sounds/000A SEQ_BGMG_MAP_C.mp3', import.meta.url).href },
+  { filename: '000B SEQ_BGMG_MAP_D.mp3', url: new URL('../sounds/000B SEQ_BGMG_MAP_D.mp3', import.meta.url).href },
+  { filename: '000C SEQ_BGMG_EVT_OP.mp3', url: new URL('../sounds/000C SEQ_BGMG_EVT_OP.mp3', import.meta.url).href },
+  { filename: '000D SEQ_BGMG_EVT_PLANET.mp3', url: new URL('../sounds/000D SEQ_BGMG_EVT_PLANET.mp3', import.meta.url).href },
+  { filename: '000E SEQ_BGMG_EVT_A.mp3', url: new URL('../sounds/000E SEQ_BGMG_EVT_A.mp3', import.meta.url).href },
+  { filename: '000F SEQ_BGMG_EVT_B.mp3', url: new URL('../sounds/000F SEQ_BGMG_EVT_B.mp3', import.meta.url).href },
+  { filename: '0011 SEQ_BGMG_EVT_D.mp3', url: new URL('../sounds/0011 SEQ_BGMG_EVT_D.mp3', import.meta.url).href },
+  { filename: '0012 SEQ_BGMB_STG_01.mp3', url: new URL('../sounds/0012 SEQ_BGMB_STG_01.mp3', import.meta.url).href },
+  { filename: '0013 SEQ_BGMB_STG_02.mp3', url: new URL('../sounds/0013 SEQ_BGMB_STG_02.mp3', import.meta.url).href },
+  { filename: '0014 SEQ_BGMB_STG_03.mp3', url: new URL('../sounds/0014 SEQ_BGMB_STG_03.mp3', import.meta.url).href },
+  { filename: '0015 SEQ_BGMB_STG_04.mp3', url: new URL('../sounds/0015 SEQ_BGMB_STG_04.mp3', import.meta.url).href },
+  { filename: '0016 SEQ_BGMB_STG_05.mp3', url: new URL('../sounds/0016 SEQ_BGMB_STG_05.mp3', import.meta.url).href },
+  { filename: '0017 SEQ_BGMB_STG_06.mp3', url: new URL('../sounds/0017 SEQ_BGMB_STG_06.mp3', import.meta.url).href },
+  { filename: '0018 SEQ_BGMB_STG_07.mp3', url: new URL('../sounds/0018 SEQ_BGMB_STG_07.mp3', import.meta.url).href },
+  { filename: '0019 SEQ_BGMB_STG_08.mp3', url: new URL('../sounds/0019 SEQ_BGMB_STG_08.mp3', import.meta.url).href },
+  { filename: '001A SEQ_BGMB_STG_09.mp3', url: new URL('../sounds/001A SEQ_BGMB_STG_09.mp3', import.meta.url).href },
+  { filename: '001B SEQ_BGMB_STG_10.mp3', url: new URL('../sounds/001B SEQ_BGMB_STG_10.mp3', import.meta.url).href },
+  { filename: '001C SEQ_BGMB_STG_11.mp3', url: new URL('../sounds/001C SEQ_BGMB_STG_11.mp3', import.meta.url).href },
+  { filename: '001D SEQ_BGMB_STG_12.mp3', url: new URL('../sounds/001D SEQ_BGMB_STG_12.mp3', import.meta.url).href },
+  { filename: '001E SEQ_BGMB_STG_13.mp3', url: new URL('../sounds/001E SEQ_BGMB_STG_13.mp3', import.meta.url).href },
+  { filename: '001F SEQ_BGMB_STG_20.mp3', url: new URL('../sounds/001F SEQ_BGMB_STG_20.mp3', import.meta.url).href },
+  { filename: '0020 SEQ_BGMB_STG_21.mp3', url: new URL('../sounds/0020 SEQ_BGMB_STG_21.mp3', import.meta.url).href },
+  { filename: '0021 SEQ_BGMB_STG_22.mp3', url: new URL('../sounds/0021 SEQ_BGMB_STG_22.mp3', import.meta.url).href },
+  { filename: '0022 SEQ_BGMB_STG_23.mp3', url: new URL('../sounds/0022 SEQ_BGMB_STG_23.mp3', import.meta.url).href },
+  { filename: '0023 SEQ_BGMB_STG_25.mp3', url: new URL('../sounds/0023 SEQ_BGMB_STG_25.mp3', import.meta.url).href },
+  { filename: '0024 SEQ_BGMB_STG_40.mp3', url: new URL('../sounds/0024 SEQ_BGMB_STG_40.mp3', import.meta.url).href },
+  { filename: '0025 SEQ_BGMB_STG_50.mp3', url: new URL('../sounds/0025 SEQ_BGMB_STG_50.mp3', import.meta.url).href },
+  { filename: '0026 SEQ_BGMB_STG_S01.mp3', url: new URL('../sounds/0026 SEQ_BGMB_STG_S01.mp3', import.meta.url).href },
+  { filename: '0027 SEQ_BGMB_STG_A.mp3', url: new URL('../sounds/0027 SEQ_BGMB_STG_A.mp3', import.meta.url).href },
+  { filename: '0028 SEQ_BGMB_STG_B.mp3', url: new URL('../sounds/0028 SEQ_BGMB_STG_B.mp3', import.meta.url).href },
+  { filename: '0029 SEQ_BGMB_STG_C.mp3', url: new URL('../sounds/0029 SEQ_BGMB_STG_C.mp3', import.meta.url).href },
+  { filename: '002A SEQ_BGMB_STG_D.mp3', url: new URL('../sounds/002A SEQ_BGMB_STG_D.mp3', import.meta.url).href },
+  { filename: '002B SEQ_BGMB_STG_E.mp3', url: new URL('../sounds/002B SEQ_BGMB_STG_E.mp3', import.meta.url).href },
+  { filename: '002C SEQ_BGMB_STG_G.mp3', url: new URL('../sounds/002C SEQ_BGMB_STG_G.mp3', import.meta.url).href },
+  { filename: '002D SEQ_BGMB_STG_H.mp3', url: new URL('../sounds/002D SEQ_BGMB_STG_H.mp3', import.meta.url).href },
+  { filename: '002E SEQ_BGMB_STG_I.mp3', url: new URL('../sounds/002E SEQ_BGMB_STG_I.mp3', import.meta.url).href },
+  { filename: '002F SEQ_BGMB_SETTING.mp3', url: new URL('../sounds/002F SEQ_BGMB_SETTING.mp3', import.meta.url).href },
+  { filename: '0030 SEQ_BGMB_RESWIN.mp3', url: new URL('../sounds/0030 SEQ_BGMB_RESWIN.mp3', import.meta.url).href },
+  { filename: '0031 SEQ_BGMB_RESLOSE.mp3', url: new URL('../sounds/0031 SEQ_BGMB_RESLOSE.mp3', import.meta.url).href },
+  { filename: '0032 SEQ_BGMB_SRESWIN.mp3', url: new URL('../sounds/0032 SEQ_BGMB_SRESWIN.mp3', import.meta.url).href },
+  { filename: '0033 SEQ_BGMB_SRESLOSE.mp3', url: new URL('../sounds/0033 SEQ_BGMB_SRESLOSE.mp3', import.meta.url).href },
+  { filename: '0034 SEQ_BGMA_MENU.mp3', url: new URL('../sounds/0034 SEQ_BGMA_MENU.mp3', import.meta.url).href },
+  { filename: '0035 SEQ_BGMA_RANK_A.mp3', url: new URL('../sounds/0035 SEQ_BGMA_RANK_A.mp3', import.meta.url).href },
+  { filename: '0036 SEQ_BGMA_RANK_B.mp3', url: new URL('../sounds/0036 SEQ_BGMA_RANK_B.mp3', import.meta.url).href }
+];
+
+const LOCAL_BGM_TRACKS: LocalBgmTrack[] = LOCAL_BGM_FILES
+  .sort((left, right) => left.filename.localeCompare(right.filename, undefined, { numeric: true }))
+  .map(({ filename, url }) => {
+    const id = filename.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const title = filename
+      .replace(/\.[^.]+$/, '')
+      .replace(/^[0-9a-f]+\s+/i, '')
+      .replace(/^SEQ_/i, '')
+      .replace(/_/g, ' ')
+      .replace(/\b(BGM[A-Z]?|STG|EVT|BGMM|BGMB|BGMG|BGMA)\b/gi, (value) => value.toUpperCase())
+      .trim();
+    return { id, title, url, filename };
+  });
+
+const STAGE_BGM_TRACKS = LOCAL_BGM_TRACKS.filter((track) => /SEQ_BGMB_STG/i.test(track.filename));
+
+function normalizeBgmIndex(index: number, length: number) {
+  if (length <= 0) return 0;
+  const rounded = Math.round(index);
+  return ((rounded % length) + length) % length;
+}
+
+function findBgmTrack(token: string) {
+  const normalized = token.toLowerCase();
+  return LOCAL_BGM_TRACKS.find((track) =>
+    track.id === normalized ||
+    track.filename.toLowerCase() === normalized ||
+    track.filename.toLowerCase().includes(normalized) ||
+    track.url.toLowerCase().includes(normalized)
+  );
+}
+
+function fixedBgmSource(key: string, track: LocalBgmTrack | undefined): BgmSource | null {
+  if (!track) return null;
+  return {
+    key,
+    tracks: [track],
+    trackIndex: 0,
+    lockToTrack: true
+  };
+}
+
+const FALLBACK_BGM_TRACK: LocalBgmTrack = LOCAL_BGM_TRACKS[0] ?? {
+  id: 'missing-bgm',
+  title: 'No BGM Track',
+  url: '',
+  filename: ''
+};
+const KORE_TITLE_BGM_TRACK = findBgmTrack('SEQ_BGMM_TITLE') ?? FALLBACK_BGM_TRACK;
+const KORE_MENU_BGM_TRACK = findBgmTrack('SEQ_BGMM_MAINMENU') ?? FALLBACK_BGM_TRACK;
+const KORE_OPTIONS_BGM_TRACK = findBgmTrack('SEQ_BGMM_OPTION') ?? KORE_MENU_BGM_TRACK;
+
 const KORE_MENU_BGM_SOURCE: BgmSource = {
-  key: `menu:${KORE_BGM_PLAYLIST_ID}`,
-  playlistId: KORE_BGM_PLAYLIST_ID,
-  startVideoId: KORE_BGM_START_VIDEO_ID,
+  key: 'menu:local-bgm-library',
+  tracks: LOCAL_BGM_TRACKS.length > 0 ? LOCAL_BGM_TRACKS : [KORE_MENU_BGM_TRACK],
   trackIndex: 0,
   lockToTrack: false
 };
 
-function stageBgmSource(stage: StageDefinition): BgmSource {
-  const playlistId = stage.music?.playlistId ?? KORE_BGM_PLAYLIST_ID;
-  const startVideoId = stage.music?.videoId ?? KORE_BGM_START_VIDEO_ID;
-  const trackIndex = Math.max(0, Math.round(stage.music?.trackIndex ?? 0));
-  return {
-    key: `stage:${stage.id}:${playlistId}:${trackIndex}`,
-    playlistId,
-    startVideoId,
-    trackIndex,
-    lockToTrack: true
-  };
+function stageBgmTrack(stage: StageDefinition) {
+  const configuredPath = stage.music?.path;
+  if (configuredPath) {
+    const track = findBgmTrack(configuredPath.split('/').pop() ?? configuredPath);
+    if (track) return track;
+  }
+  const stageTracks = STAGE_BGM_TRACKS.length > 0 ? STAGE_BGM_TRACKS : LOCAL_BGM_TRACKS;
+  return stageTracks[normalizeBgmIndex(stage.music?.trackIndex ?? 0, stageTracks.length)] ?? KORE_MENU_BGM_TRACK;
+}
+
+function stageBgmSource(stage: StageDefinition): BgmSource | null {
+  const track = stageBgmTrack(stage);
+  return fixedBgmSource(`stage:${stage.id}:${track?.id ?? 'none'}`, track);
 }
 
 const menuAttractStage: StageDefinition = {
@@ -1073,32 +1142,7 @@ function withFreshAiSeed<T extends object>(options: T): T & { aiSeed: number } {
   return { ...options, aiSeed: freshAiSeed() };
 }
 
-let youtubeApiPromise: Promise<YouTubeNamespace> | null = null;
-
-function loadYouTubeIframeApi() {
-  if (typeof window === 'undefined') return Promise.reject(new Error('YouTube player requires a browser'));
-  if (window.YT?.Player) return Promise.resolve(window.YT);
-  if (youtubeApiPromise) return youtubeApiPromise;
-  youtubeApiPromise = new Promise<YouTubeNamespace>((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>('script[src="https://www.youtube.com/iframe_api"]');
-    const previousReady = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      previousReady?.();
-      if (window.YT?.Player) resolve(window.YT);
-      else reject(new Error('YouTube iframe API loaded without a player'));
-    };
-    if (!existing) {
-      const script = document.createElement('script');
-      script.src = 'https://www.youtube.com/iframe_api';
-      script.async = true;
-      script.onerror = () => reject(new Error('Failed to load YouTube iframe API'));
-      document.head.appendChild(script);
-    }
-  });
-  return youtubeApiPromise;
-}
-
-function YouTubeBgmPlayer({
+function LocalBgmPlayer({
   audio,
   started,
   source,
@@ -1111,130 +1155,60 @@ function YouTubeBgmPlayer({
   selectedTrackIndex: number;
   onTrackIndexChange?: (index: number) => void;
 }) {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const playerRef = useRef<YouTubePlayer | null>(null);
-  const readyRef = useRef(false);
-  const requestedIndexRef = useRef(selectedTrackIndex);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const sourceKeyRef = useRef<string | null>(null);
+  const requestedIndexRef = useRef(-1);
   const onTrackIndexChangeRef = useRef(onTrackIndexChange);
 
   useEffect(() => {
     onTrackIndexChangeRef.current = onTrackIndexChange;
   }, [onTrackIndexChange]);
 
-  const syncVolume = useCallback(() => {
-    const player = playerRef.current;
-    if (!player || !readyRef.current) return;
-    const volume = Math.round(clamp(audio.master * audio.music * 100, 0, 100));
-    player.setVolume(volume);
-    if (audio.muted || volume <= 0) {
-      player.mute();
-    } else {
-      player.unMute();
-    }
-  }, [audio.master, audio.music, audio.muted]);
+  const tracks = source?.tracks ?? [];
+  const normalizedIndex = normalizeBgmIndex(selectedTrackIndex, tracks.length);
+  const track = tracks[normalizedIndex];
+  const volume = audio.muted ? 0 : clamp(audio.master * audio.music, 0, 1);
 
   useEffect(() => {
-    if (!started || !source || !mountRef.current) {
-      const player = playerRef.current;
-      if (player && readyRef.current) {
-        player.pauseVideo();
-        player.mute();
-      }
-      player?.destroy();
-      playerRef.current = null;
-      readyRef.current = false;
-      if (mountRef.current) mountRef.current.innerHTML = '';
+    const element = audioRef.current;
+    if (!element) return;
+    if (!started || !source || !track?.url || volume <= 0) {
+      element.pause();
       return;
     }
-    let disposed = false;
-    loadYouTubeIframeApi()
-      .then((YT) => {
-        if (disposed || !mountRef.current) return;
-        const player = new YT.Player(mountRef.current, {
-          width: '1',
-          height: '1',
-          videoId: source.startVideoId,
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            disablekb: 1,
-            fs: 0,
-            list: source.playlistId,
-            listType: 'playlist',
-            loop: 1,
-            modestbranding: 1,
-            playsinline: 1,
-            rel: 0,
-            origin: window.location.origin
-          },
-          events: {
-            onReady: (event) => {
-              if (disposed) return;
-              playerRef.current = event.target;
-              readyRef.current = true;
-              event.target.setLoop(true);
-              syncVolume();
-              requestedIndexRef.current = selectedTrackIndex;
-              event.target.loadPlaylist({
-                list: source.playlistId,
-                listType: 'playlist',
-                index: selectedTrackIndex,
-                startSeconds: 0
-              });
-              event.target.playVideo();
-            },
-            onStateChange: (event) => {
-              if (event.data === YT.PlayerState.ENDED) {
-                if (source.lockToTrack) {
-                  requestedIndexRef.current = source.trackIndex;
-                  event.target.playVideoAt(source.trackIndex);
-                  event.target.playVideo();
-                } else {
-                  event.target.nextVideo();
-                }
-                return;
-              }
-              if (event.data === YT.PlayerState.PLAYING) {
-                const index = Math.max(0, Math.round(event.target.getPlaylistIndex()));
-                requestedIndexRef.current = index;
-                if (!source.lockToTrack) onTrackIndexChangeRef.current?.(index);
-              }
-            }
-          }
-        });
-        playerRef.current = player;
-      })
-      .catch((error) => {
-        console.warn('KORE BGM unavailable', error);
-      });
-    return () => {
-      disposed = true;
-      const player = playerRef.current;
-      if (player && readyRef.current) {
-        player.pauseVideo();
-        player.mute();
-      }
-      player?.destroy();
-      playerRef.current = null;
-      readyRef.current = false;
-      if (mountRef.current) mountRef.current.innerHTML = '';
+    element.volume = volume;
+    element.loop = source.lockToTrack || tracks.length <= 1;
+    if (sourceKeyRef.current !== source.key || requestedIndexRef.current !== normalizedIndex || element.src !== track.url) {
+      sourceKeyRef.current = source.key;
+      requestedIndexRef.current = normalizedIndex;
+      element.src = track.url;
+      element.currentTime = 0;
+    }
+    element.play().catch((error) => {
+      console.warn('KORE local BGM unavailable', error);
+    });
+  }, [normalizedIndex, source, started, track, tracks.length, volume]);
+
+  useEffect(() => {
+    const element = audioRef.current;
+    if (!element) return undefined;
+    const onEnded = () => {
+      if (!source || source.lockToTrack || tracks.length <= 1) return;
+      const nextIndex = normalizeBgmIndex(requestedIndexRef.current + 1, tracks.length);
+      requestedIndexRef.current = nextIndex;
+      onTrackIndexChangeRef.current?.(nextIndex);
     };
-  }, [selectedTrackIndex, source, started, syncVolume]);
+    element.addEventListener('ended', onEnded);
+    return () => element.removeEventListener('ended', onEnded);
+  }, [source, tracks.length]);
 
   useEffect(() => {
-    syncVolume();
-  }, [syncVolume]);
+    const element = audioRef.current;
+    if (!element) return;
+    element.volume = volume;
+  }, [volume]);
 
-  useEffect(() => {
-    const player = playerRef.current;
-    if (!started || !source || !player || !readyRef.current) return;
-    if (selectedTrackIndex === requestedIndexRef.current) return;
-    requestedIndexRef.current = selectedTrackIndex;
-    player.playVideoAt(selectedTrackIndex);
-    player.playVideo();
-  }, [selectedTrackIndex, source, started]);
-
-  return <div className="youtube-bgm-player" ref={mountRef} aria-hidden="true" />;
+  return <audio className="local-bgm-player" ref={audioRef} preload="auto" aria-hidden="true" />;
 }
 
 export default function App() {
@@ -1343,7 +1317,7 @@ export default function App() {
 
   const updateBgmTrackIndex = useCallback((index: number) => {
     setSettings((current) => {
-      const nextIndex = Math.max(0, Math.round(index));
+      const nextIndex = normalizeBgmIndex(index, KORE_MENU_BGM_SOURCE.tracks.length);
       if (current.audio.bgmTrackIndex === nextIndex) return current;
       return sanitizeGameSettings({
         ...current,
@@ -1518,11 +1492,15 @@ export default function App() {
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const activeBgmSource = useMemo(() => {
     if (!musicStarted) return null;
-    if (screen === 'fight') return null;
-    if ((screen === 'title' || screen === 'menu') && settings.audio.menuMusic) return KORE_MENU_BGM_SOURCE;
-    return null;
+    if (screen === 'fight') return stageBgmSource(selectedStage);
+    if (!settings.audio.menuMusic) return null;
+    if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
+    if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
+    return KORE_MENU_BGM_SOURCE;
   }, [musicStarted, screen, selectedStage, settings.audio.menuMusic]);
-  const activeBgmTrackIndex = activeBgmSource?.lockToTrack ? activeBgmSource.trackIndex : settings.audio.bgmTrackIndex;
+  const activeBgmTrackIndex = activeBgmSource?.lockToTrack
+    ? activeBgmSource.trackIndex
+    : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
   useMenuNavigation(screen);
 
   if (screen === 'boot' || !p1 || !p2) {
@@ -1540,7 +1518,7 @@ export default function App() {
   return (
     <main className="app-shell">
       <div className="ambient-grid" />
-      <YouTubeBgmPlayer
+      <LocalBgmPlayer
         audio={settings.audio}
         started={musicStarted}
         source={activeBgmSource}
@@ -1659,6 +1637,11 @@ export default function App() {
             setCpuDifficulty={setCpuDifficulty}
             settings={settings}
             setSettings={setSettings}
+            selectedStageName={selectedStage.name}
+            selectedStageBgmTitle={stageBgmTrack(selectedStage)?.title ?? selectedStage.music?.title ?? 'Local Stage Track'}
+            menuBgmTrackTitle={KORE_MENU_BGM_SOURCE.tracks[normalizeBgmIndex(settings.audio.bgmTrackIndex, KORE_MENU_BGM_SOURCE.tracks.length)]?.title ?? 'No track'}
+            menuBgmTrackCount={KORE_MENU_BGM_SOURCE.tracks.length}
+            onMenuBgmTrackChange={updateBgmTrackIndex}
             onBack={() => setScreen('menu')}
           />
         )}
@@ -3356,6 +3339,11 @@ function SettingsScreen({
   setCpuDifficulty,
   settings,
   setSettings,
+  selectedStageName,
+  selectedStageBgmTitle,
+  menuBgmTrackTitle,
+  menuBgmTrackCount,
+  onMenuBgmTrackChange,
   onBack
 }: {
   mode: MatchMode;
@@ -3364,6 +3352,11 @@ function SettingsScreen({
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   settings: GameSettings;
   setSettings: Dispatch<SetStateAction<GameSettings>>;
+  selectedStageName: string;
+  selectedStageBgmTitle: string;
+  menuBgmTrackTitle: string;
+  menuBgmTrackCount: number;
+  onMenuBgmTrackChange: (index: number) => void;
   onBack: () => void;
 }) {
   const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
@@ -3614,16 +3607,16 @@ function SettingsScreen({
             checked={settings.audio.menuMusic}
             onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, menuMusic: checked } }))}
           />
-          <SettingRow label="Menu BGM Source" value="YouTube Playlist">
-            <a className="mini-link-button" href={KORE_BGM_PLAYLIST_URL} target="_blank" rel="noreferrer">Open Playlist</a>
+          <SettingRow label="BGM Source" value={`${menuBgmTrackCount} local tracks`}>
+            <span className="setting-readout">Repo MP3 Library</span>
           </SettingRow>
-          <SettingRow label="Menu Song" value={`Track ${settings.audio.bgmTrackIndex + 1}`}>
+          <SettingRow label="Menu Song" value={menuBgmTrackTitle}>
             <div className="audio-track-controls" role="group" aria-label="Current BGM song">
-              <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: Math.max(0, current.audio.bgmTrackIndex - 1) } }))}>
+              <button type="button" onClick={() => onMenuBgmTrackChange(settings.audio.bgmTrackIndex - 1)}>
                 <ChevronLeft size={18} />
                 Previous
               </button>
-              <button type="button" onClick={() => updateSettings((current) => ({ ...current, audio: { ...current.audio, bgmTrackIndex: current.audio.bgmTrackIndex + 1 } }))}>
+              <button type="button" onClick={() => onMenuBgmTrackChange(settings.audio.bgmTrackIndex + 1)}>
                 Next
                 <ChevronRight size={18} />
               </button>
@@ -3631,8 +3624,11 @@ function SettingsScreen({
           </SettingRow>
         </SettingsSection>
         <SettingsSection index={1} title="Stage Music" active={activeSectionIndex === 1}>
-          <SettingRow label="Stage Music" value="Disabled in fights for now">
-            <span className="setting-readout">Off in match</span>
+          <SettingRow label="Selected Stage" value={selectedStageName}>
+            <span className="setting-readout">{selectedStageBgmTitle}</span>
+          </SettingRow>
+          <SettingRow label="Fight Playback" value="Enabled">
+            <span className="setting-readout">Uses stage BGM</span>
           </SettingRow>
         </SettingsSection>
         <SettingsSection index={2} title="Mix" active={activeSectionIndex === 2}>

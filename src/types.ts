@@ -319,8 +319,7 @@ export type StageDefinition = {
   renderMode?: 'procedural' | 'spriteCutout';
   hidden?: boolean;
   music?: {
-    playlistId?: string;
-    videoId?: string;
+    path?: string;
     trackIndex?: number;
     title?: string;
   };
