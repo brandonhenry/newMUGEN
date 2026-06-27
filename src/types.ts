@@ -322,6 +322,8 @@ export type StageDefinition = {
     title?: string;
   };
   floor: string;
+  floorTexturePath?: string;
+  floorTextureRepeat?: [number, number];
   rail: string;
   light: string;
   skyboxPath?: string;

@@ -1,0 +1,23 @@
+{
+  "id": "the-chamber-green",
+  "name": "The Chamber (Green)",
+  "subtitle": "Infinite green simulation room",
+  "renderMode": "procedural",
+  "music": {
+    "playlistId": "PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2",
+    "videoId": "yy4D-0QnvQ8",
+    "trackIndex": 1,
+    "title": "The Chamber Theme"
+  },
+  "floor": "#f7fff6",
+  "floorTexturePath": "/stages/chamber/floor-text.png",
+  "floorTextureRepeat": [28, 28],
+  "rail": "#9cff73",
+  "light": "#ffffff",
+  "skyboxPath": "/stages/chamber/skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "backgroundColor": "#f8fbff"
+  }
+}

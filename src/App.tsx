@@ -236,12 +236,7 @@ function stageBgmSource(stage: StageDefinition): BgmSource {
 }
 
 const menuAttractStage: StageDefinition = {
-  id: 'kore-menu-moon',
-  name: 'KORE Moon Stage',
-  subtitle: 'Menu attract arena',
-  floor: '#07182c',
-  rail: '#2ee6ff',
-  light: '#dbe8ff'
+  ...stages[0]
 };
 
 const baseAnimationSlots: AnimationSlot[] = [

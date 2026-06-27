@@ -567,14 +567,17 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
 export function MenuAttractScene({ match }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
-      <color attach="background" args={['#020615']} />
-      <fog attach="fog" args={['#071337', 8, 24]} />
-      <ambientLight intensity={0.42} color="#a9c7ff" />
-      <directionalLight castShadow position={[-3, 6, 3]} intensity={1.65} color="#dbe8ff" shadow-mapSize={[1024, 1024]} />
+      <color attach="background" args={['#f8fbff']} />
+      <fog attach="fog" args={['#f8fbff', 44, 170]} />
+      <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
+      <ambientLight intensity={0.72} color="#ffffff" />
+      <directionalLight castShadow position={[-3, 6, 3]} intensity={1.75} color={match.stage.light} shadow-mapSize={[1024, 1024]} />
       <pointLight position={[-3.3, 1.6, 2.1]} color={match.fighters[0].character.colors.primary} intensity={5.2} distance={6} />
       <pointLight position={[3.3, 1.6, 2.1]} color={match.fighters[1].character.colors.primary} intensity={5.2} distance={6} />
       <MenuAttractCamera match={match} />
-      <MenuMoonStage />
+      <group position={[0, 0, 1.75]}>
+        <Arena stage={match.stage} />
+      </group>
       <group position={[0, 0, 1.75]} scale={0.82}>
         <FighterRig fighter={match.fighters[0]} />
         <FighterRig fighter={match.fighters[1]} />
@@ -1070,6 +1073,11 @@ function Arena({
     return <SpriteCutoutStage stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
   }
 
+  const floorTexturePath = stage.floorTexturePath;
+  if (floorTexturePath) {
+    return <TexturedInfiniteArena stage={stage} floorTexturePath={floorTexturePath} />;
+  }
+
   return (
     <group>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.045, 0]}>
@@ -1113,6 +1121,42 @@ function Arena({
       <mesh position={[0, 3.65, -14.42]}>
         <ringGeometry args={[1.65, 2.05, 72]} />
         <meshBasicMaterial color={stage.rail} transparent opacity={0.15} />
+      </mesh>
+    </group>
+  );
+}
+
+function TexturedInfiniteArena({ stage, floorTexturePath }: { stage: StageDefinition; floorTexturePath: string }) {
+  const texture = useLoader(THREE.TextureLoader, floorTexturePath);
+  const repeat = stage.floorTextureRepeat ?? [24, 24];
+  const [repeatX, repeatY] = repeat;
+  const width = stage.world?.width ?? 220;
+  const depth = stage.world?.depth ?? 220;
+
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(repeatX, repeatY);
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.anisotropy = 8;
+    texture.needsUpdate = true;
+  }, [repeatX, repeatY, texture]);
+
+  return (
+    <group>
+      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0]}>
+        <planeGeometry args={[width, depth, 1, 1]} />
+        <meshStandardMaterial map={texture} color="#ffffff" roughness={0.26} metalness={0.1} />
+      </mesh>
+      <mesh position={[0, -0.026, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[4.4, 4.82, 128]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.28} />
+      </mesh>
+      <mesh position={[0, -0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[4.38, 128]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
       </mesh>
     </group>
   );

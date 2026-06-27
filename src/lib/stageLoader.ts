@@ -40,6 +40,10 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     ...stage,
     renderMode: stage.renderMode ?? 'procedural',
     floor: stage.floor ?? '#07182c',
+    floorTexturePath: stage.floorTexturePath,
+    floorTextureRepeat: Array.isArray(stage.floorTextureRepeat)
+      ? [finiteOr(stage.floorTextureRepeat[0], 24), finiteOr(stage.floorTextureRepeat[1], 24)]
+      : undefined,
     rail: stage.rail ?? '#2ee6ff',
     light: stage.light ?? '#dbe8ff',
     skyboxPath: stage.skyboxPath,
