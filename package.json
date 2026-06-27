@@ -9,7 +9,10 @@
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -b",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "tag:patch": "node scripts/bump-version.mjs patch",
+    "tag:minor": "node scripts/bump-version.mjs minor",
+    "tag:major": "node scripts/bump-version.mjs major"
   },
   "dependencies": {
     "@netlify/blobs": "^10.7.9",

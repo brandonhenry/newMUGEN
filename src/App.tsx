@@ -29,6 +29,7 @@ import {
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, clearImageVoxelCacheForFrame, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
+import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
 import { createMatch, stepMatch } from './engine/fightEngine';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
@@ -2047,6 +2048,9 @@ function MenuScreen({
       <div className="menu-vignette" />
       <section className="kore-menu-overlay" aria-label="KORE main menu">
         <img className="kore-menu-logo" src="/brand/kore-logo-generated.png" alt="KORE" />
+        <div className="kore-menu-version" aria-label={`KORE version ${KORE_APP_VERSION}`}>
+          v{KORE_APP_VERSION}
+        </div>
         <nav className="arcade-menu-list" aria-label="Main menu">
           {menuItems.map((item, index) => (
             <button
