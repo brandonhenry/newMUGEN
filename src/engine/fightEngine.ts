@@ -300,7 +300,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.actionFramesRemaining > 0) {
+    const previousMoveFrame = fighter.moveFrame;
     fighter.moveFrame += frameDelta;
+    applyAttackForwardForce(fighter, opponent, previousMoveFrame, fighter.moveFrame);
     fighter.actionFramesRemaining = Math.max(0, fighter.actionFramesRemaining - frameDelta);
     applyWhiffRecoveryIfNeeded(fighter);
     fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
@@ -914,6 +916,9 @@ function applyMoveOverrides(
     range: Math.max(0.1, merged.range),
     pushback: Math.max(0, merged.pushback),
     blockPushback: Math.max(0, merged.blockPushback),
+    forwardForce: merged.forwardForce === undefined ? undefined : clamp(merged.forwardForce, -4, 4),
+    forwardForceStartFrame: merged.forwardForceStartFrame === undefined ? undefined : Math.max(1, Math.round(merged.forwardForceStartFrame)),
+    forwardForceEndFrame: merged.forwardForceEndFrame === undefined ? undefined : Math.max(1, Math.round(merged.forwardForceEndFrame)),
     launchVelocity: merged.launchVelocity === undefined ? undefined : clamp(merged.launchVelocity, 3.2, 7.2),
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
     juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2)
@@ -2098,6 +2103,19 @@ function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime
   const distance = Math.hypot(dx, dz) || 1;
   fighter.position.x += (dx / distance) * amount;
   fighter.position.z += (dz / distance) * amount;
+}
+
+function applyAttackForwardForce(fighter: FighterRuntime, opponent: FighterRuntime, previousMoveFrame: number, currentMoveFrame: number) {
+  const move = fighter.currentMove;
+  const force = move?.forwardForce ?? 0;
+  if (!move || fighter.state !== 'attack' || fighter.hitConnected || force === 0) return;
+  const totalFrames = Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames);
+  const startFrame = clamp(Math.round(move.forwardForceStartFrame ?? 1), 1, totalFrames);
+  const endFrame = clamp(Math.round(move.forwardForceEndFrame ?? totalFrames), startFrame, totalFrames);
+  const windowFrames = Math.max(1, endFrame - startFrame + 1);
+  const overlapFrames = Math.max(0, Math.min(currentMoveFrame, endFrame) - Math.max(previousMoveFrame, startFrame - 1));
+  if (overlapFrames <= 0) return;
+  moveAlongOpponentAxis(fighter, opponent, (force * overlapFrames) / windowFrames);
 }
 
 function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {

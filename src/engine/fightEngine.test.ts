@@ -79,10 +79,16 @@ describe('character manifests', () => {
   it('normalizes authored tornado move data as an explicit boolean', () => {
     const move = normalizeMove({
       ...starterCharacters[0].moves[0],
-      tornado: true
+      tornado: true,
+      forwardForce: 0.75,
+      forwardForceStartFrame: 2,
+      forwardForceEndFrame: 8
     });
 
     expect(move.tornado).toBe(true);
+    expect(move.forwardForce).toBe(0.75);
+    expect(move.forwardForceStartFrame).toBe(2);
+    expect(move.forwardForceEndFrame).toBe(8);
   });
 
   it('migrates legacy base button animation data to left/right limb keys', () => {
@@ -153,6 +159,40 @@ describe('character manifests', () => {
     expect(match.fighters[0].moveFrame).toBe(6);
     expect(activeMoveProgress(match.fighters[0])).toBeCloseTo(6 / 18, 4);
     expect(match.fighters[0].state).toBe('attack');
+  });
+
+  it('applies authored move forward force while an attack is whiffing', () => {
+    const lungeCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 2,
+              activeFrames: 2,
+              recoveryFrames: 2,
+              range: 0.1,
+              forwardForce: 0.6,
+              forwardForceStartFrame: 1,
+              forwardForceEndFrame: 6
+            }
+          : move
+      )
+    };
+    let match = createMatch(lungeCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -3;
+    match.fighters[1].position.x = 3;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+    const startX = match.fighters[0].position.x;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].position.x).toBeGreaterThan(startX);
+    expect(match.fighters[0].hitConnected).toBe(false);
   });
 
   it('sanitizes partial settings and fills defaults', () => {

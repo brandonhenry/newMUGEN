@@ -74,6 +74,9 @@ export type MoveDefinition = {
   onCounterHitFrames: number;
   whiffRecoveryFrames?: number;
   range: number;
+  forwardForce?: number;
+  forwardForceStartFrame?: number;
+  forwardForceEndFrame?: number;
   pushback: number;
   blockPushback: number;
   push?: number;

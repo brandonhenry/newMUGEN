@@ -475,6 +475,9 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     'onCounterHitFrames',
     'whiffRecoveryFrames',
     'range',
+    'forwardForce',
+    'forwardForceStartFrame',
+    'forwardForceEndFrame',
     'pushback',
     'blockPushback',
     'launchHeight',
@@ -5603,6 +5606,9 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const launchVelocity = move.launchVelocity ?? defaultLaunchVelocity(move.launchHeight ?? 0);
   const juggleRefloatVelocity = move.juggleRefloatVelocity ?? defaultJuggleRefloatVelocity(move.launchHeight ?? 0);
   const juggleGravityScale = move.juggleGravityScale ?? 0.52;
+  const totalFrames = move.startupFrames + move.activeFrames + move.recoveryFrames;
+  const forwardForceStart = move.forwardForceStartFrame ?? 1;
+  const forwardForceEnd = move.forwardForceEndFrame ?? totalFrames;
   const resultLabel = [move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames), move.tornado ? 'T!' : null].filter(Boolean).join(' / ');
   const updateNumber = (key: keyof MoveOverride, value: string, min = Number.NEGATIVE_INFINITY) => {
     const numeric = Number(value);
@@ -5635,6 +5641,9 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
           </select>
         </label>
         <FrameNumberInput label="Range" value={move.range} min={0.1} step={0.05} onChange={(value) => updateNumber('range', value, 0.1)} />
+        <FrameNumberInput label="Forward Force" value={move.forwardForce ?? 0} step={0.05} onChange={(value) => updateNumber('forwardForce', value)} />
+        <FrameNumberInput label="Force Start" value={forwardForceStart} min={1} onChange={(value) => updateNumber('forwardForceStartFrame', value, 1)} />
+        <FrameNumberInput label="Force End" value={forwardForceEnd} min={1} onChange={(value) => updateNumber('forwardForceEndFrame', value, 1)} />
         <FrameNumberInput label="Pushback" value={move.pushback} min={0} step={0.05} onChange={(value) => updateNumber('pushback', value, 0)} />
         <FrameNumberInput label="Block Push" value={move.blockPushback} min={0} step={0.05} onChange={(value) => updateNumber('blockPushback', value, 0)} />
         <label>
