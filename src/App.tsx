@@ -18,6 +18,7 @@ import {
   Swords,
   Target,
   Timer,
+  Trash2,
   Trophy,
   Upload,
   Users,
@@ -4322,6 +4323,47 @@ function CharacterViewer({
     }
   };
 
+  const deleteEffectFrame = async (effectId: string, frameIndex: number) => {
+    if (!isLocalDev || !effectId) return;
+    const effect = effects.find((item) => item.id === effectId);
+    const frames = effect?.frames ?? [];
+    if (!effect || frameIndex < 0 || frameIndex >= frames.length) return;
+    setEffectFrameSaveStatus('saving');
+    try {
+      const response = await fetch('/__kore/dev/delete-effect-frame', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          effectId,
+          frameIndex
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as {
+        frames?: string[];
+        effectFrameEdits?: Record<string, SpriteFrameEdit>;
+      };
+      const nextFrames = payload.frames ?? frames.filter((_, index) => index !== frameIndex);
+      const nextEffects = effects.map((item) => (
+        item.id === effectId
+          ? sanitizeEffects([{
+              ...item,
+              frames: nextFrames,
+              effectFrameEdits: payload.effectFrameEdits ?? {}
+            }])[0]
+          : item
+      ));
+      updateCharacterEffects(nextEffects, moveEffects);
+      setSelectedEffectFrameIndex(Math.min(Math.max(0, nextFrames.length - 1), frameIndex));
+      setEffectFrameSaveStatus('saved');
+      window.setTimeout(() => setEffectFrameSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to delete effect frame', error);
+      setEffectFrameSaveStatus('error');
+    }
+  };
+
   const deleteEffect = (effectId: string) => {
     const nextEffects = effects.filter((effect) => effect.id !== effectId);
     const nextMoveEffects = Object.fromEntries(
@@ -4747,6 +4789,7 @@ function CharacterViewer({
               onImportSpriteSheet={importEffectSpriteSheet}
               onImportSound={importEffectSound}
               onSaveFrame={saveEffectFrame}
+              onDeleteFrame={deleteEffectFrame}
               onSave={() => saveEffectsToDev()}
             />
           ) : isEditingMoveEffects ? (
@@ -4858,6 +4901,7 @@ function EffectsLibraryEditor({
   onImportSpriteSheet,
   onImportSound,
   onSaveFrame,
+  onDeleteFrame,
   onSave
 }: {
   character: CharacterDefinition;
@@ -4875,6 +4919,7 @@ function EffectsLibraryEditor({
   onImportSpriteSheet: (file: File | undefined) => void;
   onImportSound: (file: File | undefined, effectId: string) => void;
   onSaveFrame: (effectId: string, edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
+  onDeleteFrame: (effectId: string, frameIndex: number) => Promise<void>;
   onSave: () => void;
 }) {
   return (
@@ -4983,6 +5028,7 @@ function EffectsLibraryEditor({
                 onSelectFrame={onSelectFrame}
                 onUpdateEffect={onUpdateEffect}
                 onSaveFrame={onSaveFrame}
+                onDeleteFrame={onDeleteFrame}
               />
             )}
             <EffectSoundCueList
@@ -5039,7 +5085,8 @@ function EffectSpriteFrameEditor({
   saveStatus,
   onSelectFrame,
   onUpdateEffect,
-  onSaveFrame
+  onSaveFrame,
+  onDeleteFrame
 }: {
   characterId: string;
   effect: CharacterEffectDefinition;
@@ -5048,6 +5095,7 @@ function EffectSpriteFrameEditor({
   onSelectFrame: (frameIndex: number) => void;
   onUpdateEffect: (effectId: string, patch: Partial<CharacterEffectDefinition>) => void;
   onSaveFrame: (effectId: string, edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
+  onDeleteFrame: (effectId: string, frameIndex: number) => Promise<void>;
 }) {
   const sheetRef = useRef<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -5196,6 +5244,11 @@ function EffectSpriteFrameEditor({
     await onSaveFrame(effect.id, nextEdit, canvas.toDataURL('image/png'));
   };
 
+  const deleteFrame = async () => {
+    if (frames.length === 0 || selectedFrameIndex >= frames.length) return;
+    await onDeleteFrame(effect.id, selectedFrameIndex);
+  };
+
   return (
     <section className="sprite-crop-editor effect-frame-editor" aria-label="Effect spritesheet crop editor">
       <div className="sprite-crop-stage">
@@ -5204,6 +5257,14 @@ function EffectSpriteFrameEditor({
             <strong>{effect.name} Sheet</strong>
             <button className="secondary-button compact-button" onClick={createNewFrame}>New Frame</button>
             <button className="secondary-button compact-button" onClick={fitVisibleCrop}>Fit Visible</button>
+            <button
+              className="secondary-button compact-button danger-button"
+              onClick={deleteFrame}
+              disabled={saveStatus === 'saving' || frames.length === 0 || selectedFrameIndex >= frames.length}
+            >
+              <Trash2 size={14} />
+              Delete Frame
+            </button>
             <button className="secondary-button compact-button dev-save-button" onClick={saveFrame} disabled={saveStatus === 'saving'}>
               <Save size={14} />
               {saveStatus === 'saving' ? 'Saving' : 'Save Frame'}

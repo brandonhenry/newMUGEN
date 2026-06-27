@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, unlink, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { dirname, resolve } from 'node:path';
@@ -50,6 +50,12 @@ type DevEffectFramePayload = {
   frameIndex?: number;
   edit?: Record<string, unknown>;
   pngDataUrl?: string;
+};
+
+type DevDeleteEffectFramePayload = {
+  characterId?: string;
+  effectId?: string;
+  frameIndex?: number;
 };
 
 type DevSpriteFramePayload = {
@@ -414,6 +420,139 @@ function koreDevManifestWriter() {
           await writeFile(effectJsonPath, `${JSON.stringify(effectJson, null, 2)}\n`, 'utf8');
 
           sendJson(response, 200, { ok: true, characterId, effectId, frameIndex, framePath, edit });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/delete-effect-frame', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevDeleteEffectFramePayload;
+          const characterId = payload.characterId ?? '';
+          const effectId = sanitizeAssetId(payload.effectId ?? '');
+          const frameIndex = Math.max(0, Math.round(finiteOr(payload.frameIndex, 0)));
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !effectId) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character or effect id' });
+            return;
+          }
+
+          const effectDir = resolve(server.config.root, 'public', 'characters', characterId, 'effects', effectId);
+          const framesDir = resolve(effectDir, 'frames');
+          const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          const effects = sanitizeCharacterEffects((manifest.effects as Array<Record<string, unknown>> | undefined) ?? []);
+          const targetEffect = effects.find((effect) => effect.id === effectId);
+          if (!targetEffect) {
+            sendJson(response, 404, { ok: false, error: 'Effect not found' });
+            return;
+          }
+          const oldFrames = [...(targetEffect.frames ?? [])];
+          if (frameIndex >= oldFrames.length) {
+            sendJson(response, 400, { ok: false, error: 'Frame index out of range' });
+            return;
+          }
+
+          const oldFrameRecords = oldFrames.map((framePath, oldIndex) => ({
+            oldIndex,
+            framePath,
+            edit: targetEffect.effectFrameEdits?.[String(oldIndex)]
+          }));
+          const remainingRecords = oldFrameRecords.filter((record) => record.oldIndex !== frameIndex);
+          const frameBuffers = await Promise.all(
+            remainingRecords.map(async (record) => {
+              const fallbackPath = resolve(framesDir, `frame-${record.oldIndex.toString().padStart(3, '0')}.png`);
+              const manifestFramePath = typeof record.framePath === 'string' && record.framePath.startsWith(`/characters/${characterId}/effects/${effectId}/frames/`)
+                ? resolve(server.config.root, 'public', record.framePath.replace(/^\/+/, ''))
+                : fallbackPath;
+              try {
+                return await readFile(manifestFramePath);
+              } catch {
+                try {
+                  return await readFile(fallbackPath);
+                } catch {
+                  return null;
+                }
+              }
+            })
+          );
+
+          const nextFrames = remainingRecords.map((_, newIndex) => `/characters/${characterId}/effects/${effectId}/frames/frame-${newIndex.toString().padStart(3, '0')}.png`);
+          const nextEffectFrameEdits = Object.fromEntries(
+            remainingRecords.map((record, newIndex) => {
+              const nextPath = nextFrames[newIndex];
+              return [
+                String(newIndex),
+                sanitizeSpriteFrameEdit({
+                  ...(record.edit ?? {}),
+                  index: newIndex,
+                  path: nextPath,
+                  sourceMode: record.edit?.sourceMode ?? 'sheet',
+                  sheetId: record.edit?.sheetId ?? 'source',
+                  sheetPath: targetEffect.spriteSheetPath ?? record.edit?.sheetPath,
+                  sourceName: targetEffect.name
+                })
+              ];
+            })
+          );
+
+          await Promise.all(
+            frameBuffers.map((buffer, newIndex) => (
+              buffer
+                ? writeFile(resolve(framesDir, `frame-${newIndex.toString().padStart(3, '0')}.png`), buffer)
+                : Promise.resolve()
+            ))
+          );
+          await Promise.all(
+            oldFrames.slice(remainingRecords.length).map((_, staleOffset) =>
+              unlink(resolve(framesDir, `frame-${(remainingRecords.length + staleOffset).toString().padStart(3, '0')}.png`)).catch(() => undefined)
+            )
+          );
+
+          const nextEffects = effects.map((effect) => (
+            effect.id === effectId
+              ? sanitizeCharacterEffect({
+                  ...effect,
+                  frames: nextFrames,
+                  effectFrameEdits: nextEffectFrameEdits
+                }, 0)
+              : effect
+          ));
+          manifest.effects = nextEffects;
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          const effectJsonPath = resolve(effectDir, 'effect.json');
+          let effectJson: Record<string, unknown> = {};
+          try {
+            effectJson = JSON.parse(await readFile(effectJsonPath, 'utf8')) as Record<string, unknown>;
+          } catch {
+            effectJson = {};
+          }
+          effectJson.frames = nextFrames;
+          effectJson.effectFrameEdits = nextEffectFrameEdits;
+          if (Array.isArray(effectJson.frameData)) {
+            effectJson.frameData = (effectJson.frameData as Array<Record<string, unknown>>)
+              .filter((_, oldIndex) => oldIndex !== frameIndex)
+              .map((entry, newIndex) => ({
+                ...entry,
+                ...(nextEffectFrameEdits[String(newIndex)] ?? {}),
+                index: newIndex,
+                path: nextFrames[newIndex]
+              }));
+          }
+          await writeFile(effectJsonPath, `${JSON.stringify(effectJson, null, 2)}\n`, 'utf8');
+
+          sendJson(response, 200, {
+            ok: true,
+            characterId,
+            effectId,
+            deletedFrameIndex: frameIndex,
+            frames: nextFrames,
+            effectFrameEdits: nextEffectFrameEdits
+          });
         } catch (error) {
           sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
