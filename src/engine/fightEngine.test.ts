@@ -441,7 +441,7 @@ describe('character manifests', () => {
     expect(input.sidewalkDown).toBe(false);
   });
 
-  it('promotes the held second vertical tap into continuous lane walking until release', () => {
+  it('does not promote the held second vertical tap into continuous lane walking', () => {
     const input = emptyInputFrame();
     const state = createVerticalTapState();
 
@@ -453,7 +453,7 @@ describe('character manifests', () => {
 
     prepareVerticalTapForRead(input, state, 'keyboard', 360);
     expect(input.sidestepDown).toBe(false);
-    expect(input.sidewalkDown).toBe(true);
+    expect(input.sidewalkDown).toBe(false);
 
     applyVerticalTap(input, state, 'down', false, 'keyboard', 390);
     expect(input.sidewalkDown).toBe(false);
@@ -1085,20 +1085,24 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('block');
   });
 
-  it('keeps movement directions correct after fighters swap sides', () => {
+  it('keeps movement directions tied to player side even after fighters cross physical sides', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].position.x = 1.3;
     match.fighters[1].position.x = -1.3;
 
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].facing).toBe(1);
+    expect(match.fighters[1].facing).toBe(-1);
+
     const toward = emptyInputFrame();
-    toward.left = true;
+    toward.right = true;
     const towardResult = stepMatch(match, toward, emptyInputFrame(), 1 / 60);
     expect(towardResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
 
     const away = emptyInputFrame();
-    away.right = true;
+    away.left = true;
     const awayResult = stepMatch(match, away, emptyInputFrame(), 1 / 60);
     expect(awayResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
     expect(awayResult.fighters[0].state).toBe('block');
@@ -1775,7 +1779,7 @@ describe('fight engine', () => {
     expect(match.fighters[1].currentMove).toBeNull();
   });
 
-  it('blocks while holding away from the opponent on either side', () => {
+  it('blocks while holding stable player-side back even after physical side crossover', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -1788,12 +1792,12 @@ describe('fight engine', () => {
     match.fighters[0].position.x = 1.3;
     match.fighters[1].position.x = -1.3;
     const p1BackAfterSwap = emptyInputFrame();
-    p1BackAfterSwap.right = true;
+    p1BackAfterSwap.left = true;
     match = stepMatch(match, p1BackAfterSwap, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('block');
 
     const crouchBlock = emptyInputFrame();
-    crouchBlock.right = true;
+    crouchBlock.left = true;
     crouchBlock.down = true;
     match = stepMatch(match, crouchBlock, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('crouchBlock');

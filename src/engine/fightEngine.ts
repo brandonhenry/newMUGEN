@@ -2536,8 +2536,8 @@ function resetRound(match: MatchSnapshot) {
 
 function resolveFacing(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
-  p1.facing = p1.position.x <= p2.position.x ? 1 : -1;
-  p2.facing = p2.position.x <= p1.position.x ? 1 : -1;
+  p1.facing = 1;
+  p2.facing = -1;
   p1.facingYaw = Math.atan2(p2.position.x - p1.position.x, p2.position.z - p1.position.z);
   p2.facingYaw = Math.atan2(p1.position.x - p2.position.x, p1.position.z - p2.position.z);
 }
@@ -2581,12 +2581,16 @@ function applyAttackForwardForce(fighter: FighterRuntime, opponent: FighterRunti
 }
 
 function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
-  const sideSign = getOpponentSideSign(fighter, opponent);
+  const sideSign = getStableControlSideSign(fighter);
   const toward = (input.right && sideSign > 0) || (input.left && sideSign < 0);
   const away = (input.left && sideSign > 0) || (input.right && sideSign < 0);
   if (toward) return 1;
   if (away) return -1;
   return 0;
+}
+
+function getStableControlSideSign(fighter: FighterRuntime): 1 | -1 {
+  return fighter.slot === 1 ? 1 : -1;
 }
 
 function getOpponentSideSign(fighter: FighterRuntime, opponent: FighterRuntime) {

@@ -19,7 +19,7 @@ export type VerticalTapState = {
   holdStartedAt: number;
   holdActivated: boolean;
   laneDirection: -1 | 0 | 1;
-  laneMode: 'none' | 'holdCandidate' | 'walk';
+  laneMode: 'none' | 'holdCandidate';
   laneStartedAt: number;
   laneStepConsumed: boolean;
   heldAction: 'up' | 'down' | null;
@@ -27,7 +27,6 @@ export type VerticalTapState = {
 };
 
 const DOUBLE_TAP_MS = 460;
-const LANE_HOLD_MS = 90;
 const VERTICAL_HOLD_MS = 185;
 
 export function createVerticalTapState(): VerticalTapState {
@@ -262,16 +261,8 @@ export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapS
       input[laneAction] = false;
       return;
     }
-    if (state.heldAction === action && now - state.laneStartedAt >= LANE_HOLD_MS) {
-      input[sidestepAction] = false;
-      input[laneAction] = true;
-      state.laneMode = 'walk';
-    }
-  }
-
-  if (state.laneMode === 'walk') {
     input[sidestepAction] = false;
-    input[laneAction] = state.heldAction === action;
+    input[laneAction] = false;
   }
 }
 
