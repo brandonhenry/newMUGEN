@@ -389,6 +389,10 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'hitLight', label: 'Hit', pose: 'hit', notation: ['HIT'], category: 'stance' },
   { key: 'juggle', label: 'Juggle', pose: 'juggle', notation: ['AIR'], category: 'stance' },
   { key: 'knockdown', label: 'Knockdown', pose: 'knockdown', notation: ['KD'], category: 'stance' },
+  { key: 'getupStand', label: 'Stand Up', pose: 'getup', notation: ['GETUP'], category: 'stance' },
+  { key: 'getupRollUp', label: 'Roll Up Getup', pose: 'getup', notation: ['ROLL ↑'], category: 'stance' },
+  { key: 'getupRollDown', label: 'Roll Down Getup', pose: 'getup', notation: ['ROLL ↓'], category: 'stance' },
+  { key: 'getupRollBack', label: 'Roll Back Getup', pose: 'getup', notation: ['ROLL b'], category: 'stance' },
   { key: 'win', label: 'Win', pose: 'win', notation: ['WIN'], category: 'stance' },
   { key: 'lose', label: 'Lose', pose: 'lose', notation: ['LOSE'], category: 'stance' }
 ];
@@ -4882,7 +4886,16 @@ function CharacterViewer({
         <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
             <div className="model-viewer-stage">
-              <CharacterPreviewCanvas character={previewCharacter} pose={selectedSlot.pose} animationKey={selectedSlotDataKey} previewMove={selectedMove} rotationTurn={rotationTurn} zoom={zoom} />
+              <CharacterPreviewCanvas
+                character={previewCharacter}
+                pose={selectedSlot.pose}
+                animationKey={selectedSlotDataKey}
+                previewMove={selectedMove}
+                previewEffects={effects}
+                previewEffectInstances={selectedMoveEffectInstances}
+                rotationTurn={rotationTurn}
+                zoom={zoom}
+              />
             </div>
           )}
           <div className="viewer-actions">
@@ -5700,6 +5713,13 @@ function MoveEffectsEditor({
 }) {
   const [effectToAttach, setEffectToAttach] = useState(effects[0]?.id ?? '');
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
+  const [draftInstances, setDraftInstances] = useState<MoveEffectInstance[]>(instances);
+  const instanceIdentity = instances.map((instance) => `${instance.id}:${instance.effectId}`).join('|');
+
+  useEffect(() => {
+    setDraftInstances(instances);
+  }, [animationKey, instanceIdentity]);
+
   useEffect(() => {
     if (!effectToAttach && effects[0]) setEffectToAttach(effects[0].id);
   }, [effectToAttach, effects]);
@@ -5712,8 +5732,13 @@ function MoveEffectsEditor({
     return () => window.clearInterval(interval);
   }, [isPreviewPlaying, onTimelineFrameChange, timelineFrame, totalFrames]);
 
+  const updateDraftInstances = (nextInstances: MoveEffectInstance[]) => {
+    setDraftInstances(nextInstances);
+    onUpdateInstances(nextInstances);
+  };
+
   const updateInstance = (instanceId: string, patch: Partial<MoveEffectInstance>) => {
-    onUpdateInstances(instances.map((instance) => (instance.id === instanceId ? sanitizeMoveEffects({ slot: [{ ...instance, ...patch }] }).slot[0] : instance)));
+    updateDraftInstances(draftInstances.map((instance) => (instance.id === instanceId ? { ...instance, ...patch } : instance)));
   };
 
   const createMoveEffectKeyframe = (frame: number, effect?: CharacterEffectDefinition | null): EffectKeyframe => ({
@@ -5731,14 +5756,14 @@ function MoveEffectsEditor({
   );
 
   const updateKeyframe = (instanceId: string, index: number, keyframe: EffectKeyframe, effect?: CharacterEffectDefinition | null) => {
-    const instance = instances.find((entry) => entry.id === instanceId);
+    const instance = draftInstances.find((entry) => entry.id === instanceId);
     if (!instance) return;
     const keyframes = keyframesForEdit(instance, effect).map((entry, entryIndex) => (entryIndex === index ? keyframe : entry));
     updateInstance(instanceId, { keyframes });
   };
 
   const resetKeyframe = (instanceId: string, index: number, effect?: CharacterEffectDefinition | null) => {
-    const instance = instances.find((entry) => entry.id === instanceId);
+    const instance = draftInstances.find((entry) => entry.id === instanceId);
     if (!instance) return;
     const keyframes = keyframesForEdit(instance, effect).map((entry, entryIndex) => (
       entryIndex === index ? { ...createMoveEffectKeyframe(entry.frame, effect), endFrame: entry.endFrame ?? entry.frame } : entry
@@ -5747,7 +5772,7 @@ function MoveEffectsEditor({
   };
 
   const deleteKeyframe = (instanceId: string, index: number, effect?: CharacterEffectDefinition | null) => {
-    const instance = instances.find((entry) => entry.id === instanceId);
+    const instance = draftInstances.find((entry) => entry.id === instanceId);
     if (!instance) return;
     const keyframes = keyframesForEdit(instance, effect).filter((_, entryIndex) => entryIndex !== index);
     updateInstance(instanceId, { keyframes });
@@ -5786,16 +5811,16 @@ function MoveEffectsEditor({
             animationKey={animationKey}
             previewMove={previewMove}
             previewEffects={effects}
-            previewEffectInstances={instances}
+            previewEffectInstances={draftInstances}
             previewEffectFrame={timelineFrame}
             rotationTurn={0}
             zoom={0.35}
           />
         </div>
         <small className="effects-empty">Use the keyframe sliders below to move effects in 3D space. The preview updates live.</small>
-        {instances.length === 0 ? (
+        {draftInstances.length === 0 ? (
           <p className="effects-empty">No effects attached to this move yet.</p>
-        ) : instances.map((instance) => {
+        ) : draftInstances.map((instance) => {
           const effect = effects.find((candidate) => candidate.id === instance.effectId);
           const transform = effect ? effectTransformAt(effect, instance, timelineFrame) : null;
           return (
@@ -5803,7 +5828,7 @@ function MoveEffectsEditor({
               <header>
                 <strong>{instance.label ?? effect?.name ?? instance.effectId}</strong>
                 <small>{instance.startFrame}-{instance.endFrame ?? totalFrames}f / layer {instance.layer}</small>
-                <button className="secondary-button compact-button" onClick={() => onUpdateInstances(instances.filter((entry) => entry.id !== instance.id))}>Remove</button>
+                <button className="secondary-button compact-button" onClick={() => updateDraftInstances(draftInstances.filter((entry) => entry.id !== instance.id))}>Remove</button>
               </header>
               <div className="effects-form-grid">
                 <FrameNumberInput label="Start" value={instance.startFrame} min={0} onChange={(value) => updateInstance(instance.id, { startFrame: Number(value) })} />
@@ -5873,13 +5898,19 @@ function EffectTransformEditor({
     next[axis] = Number(Number(value).toFixed(2));
     onChange({ ...keyframe, position: next });
   };
-  const updateStartFrame = (value: number) => {
-    const frame = Math.max(0, Math.round(value));
+  const updateStartFrame = (value: string) => {
+    if (value.trim() === '') return;
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return;
+    const frame = Math.max(0, Math.round(numericValue));
     const endFrame = Math.max(frame, Math.round(keyframe.endFrame ?? keyframe.frame));
     onChange({ ...keyframe, frame, endFrame });
   };
-  const updateEndFrame = (value: number) => {
-    const endFrame = Math.max(keyframe.frame, Math.round(value));
+  const updateEndFrame = (value: string) => {
+    if (value.trim() === '') return;
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return;
+    const endFrame = Math.max(keyframe.frame, Math.round(numericValue));
     onChange({ ...keyframe, endFrame });
   };
   const position = keyframe.position ?? [0, 1.1, 0.55];
@@ -5900,8 +5931,8 @@ function EffectTransformEditor({
         )}
       </legend>
       <div className="effects-form-grid">
-        <FrameNumberInput label="Start" value={keyframe.frame} min={0} onChange={(value) => updateStartFrame(Number(value))} />
-        <FrameNumberInput label="End" value={keyframe.endFrame ?? keyframe.frame} min={keyframe.frame} onChange={(value) => updateEndFrame(Number(value))} />
+        <FrameNumberInput label="Start" value={keyframe.frame} min={0} commitOnBlur onChange={updateStartFrame} />
+        <FrameNumberInput label="End" value={keyframe.endFrame ?? keyframe.frame} min={0} commitOnBlur onChange={updateEndFrame} />
         <div className="effect-position-sliders">
           <span>Position</span>
           {positionRanges.map((axisConfig, axis) => (
@@ -7417,6 +7448,7 @@ function FrameNumberInput({
   max,
   step = 1,
   disabled = false,
+  commitOnBlur = false,
   onChange
 }: {
   label: string;
@@ -7425,12 +7457,51 @@ function FrameNumberInput({
   max?: number;
   step?: number;
   disabled?: boolean;
+  commitOnBlur?: boolean;
   onChange: (value: string) => void;
 }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const formatValue = (nextValue: number) => String(Number(nextValue.toFixed(step < 1 ? 2 : 0)));
+  const [draftValue, setDraftValue] = useState(formatValue(value));
+
+  useEffect(() => {
+    if (document.activeElement !== inputRef.current) setDraftValue(formatValue(value));
+  }, [step, value]);
+
+  const commitDraftValue = (rawValue: string) => {
+    setDraftValue(rawValue);
+    if (rawValue.trim() === '' || rawValue === '-' || rawValue === '.' || rawValue === '-.') return;
+    const numericValue = Number(rawValue);
+    if (!commitOnBlur && Number.isFinite(numericValue)) onChange(rawValue);
+  };
+
+  const blurDraftValue = () => {
+    const numericValue = Number(draftValue);
+    if (draftValue.trim() === '' || !Number.isFinite(numericValue)) {
+      setDraftValue(formatValue(value));
+      return;
+    }
+    onChange(draftValue);
+    setDraftValue(formatValue(numericValue));
+  };
+
   return (
     <label>
       <span>{label}</span>
-      <input type="number" value={Number(value.toFixed(step < 1 ? 2 : 0))} min={min} max={max} step={step} disabled={disabled} onChange={(event) => onChange(event.target.value)} />
+      <input
+        ref={inputRef}
+        type="number"
+        value={draftValue}
+        min={min}
+        max={max}
+        step={step}
+        disabled={disabled}
+        onChange={(event) => commitDraftValue(event.target.value)}
+        onBlur={blurDraftValue}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') event.currentTarget.blur();
+        }}
+      />
     </label>
   );
 }

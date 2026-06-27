@@ -16,7 +16,7 @@ import type {
   StageDefinition
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
-import { effectIsActive, effectTransformAt } from '../lib/effects';
+import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
 const START_DISTANCE = 2.6;
@@ -403,6 +403,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     getupForward: 0,
     getupLane: 0,
     getupStarted: false,
+    getupAction: 'none',
+    getupTotalFrames: 0,
     juggleDamage: 0,
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
@@ -469,7 +471,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.actionFramesRemaining = Math.max(0, fighter.actionFramesRemaining - frameDelta);
     applyWhiffRecoveryIfNeeded(fighter);
     fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
-    if (fighter.actionFramesRemaining === 0 && fighter.state !== 'knockdown') {
+    if (fighter.actionFramesRemaining === 0 && fighter.state !== 'knockdown' && fighter.state !== 'getup') {
       fighter.currentMove = null;
       fighter.hitConnected = false;
       fighter.hitConfirmed = false;
@@ -479,7 +481,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     }
   } else if (fighter.actionTimer > 0) {
     fighter.actionTimer = Math.max(0, fighter.actionTimer - dt);
-    if (fighter.actionTimer === 0 && fighter.state !== 'knockdown') {
+    if (fighter.actionTimer === 0 && fighter.state !== 'knockdown' && fighter.state !== 'getup') {
       fighter.currentMove = null;
       fighter.hitConnected = false;
       fighter.hitConfirmed = false;
@@ -506,13 +508,16 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.blockPunishWindowFrames = Math.max(0, fighter.blockPunishWindowFrames - frameDelta);
   }
 
-  if (fighter.state === 'knockdown') {
+  if (fighter.state === 'knockdown' || fighter.state === 'getup') {
     handleKnockdownStep(fighter, opponent, input, dt);
-    if (fighter.actionFramesRemaining === 0 && fighter.actionTimer === 0 && fighter.position.y === 0 && fighter.velocityY === 0) {
+    if (fighter.state === 'getup' && fighter.actionFramesRemaining === 0 && fighter.actionTimer === 0 && fighter.position.y === 0 && fighter.velocityY === 0) {
       fighter.state = 'idle';
       fighter.getupForward = 0;
       fighter.getupLane = 0;
       fighter.getupStarted = false;
+      fighter.getupAction = 'none';
+      fighter.getupTotalFrames = 0;
+      fighter.wasCrouching = true;
       fighter.getupInvulnerableFrames = 0;
       fighter.juggleDamage = 0;
       fighter.juggleSequenceDamage = 0;
@@ -659,7 +664,7 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
   if (fighter.state === 'attack') return true;
-  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'chargeKi') return false;
+  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi') return false;
   return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
 }
 
@@ -912,7 +917,7 @@ function updateAttackInputMemory(fighter: FighterRuntime, input: InputFrame) {
 function handleKnockdownStep(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {
   if (fighter.position.y > 0 || fighter.velocityY !== 0) return;
 
-  if (fighter.getupStarted) {
+  if (fighter.state === 'getup' || fighter.getupStarted) {
     if (fighter.getupForward !== 0) {
       moveAlongOpponentAxis(fighter, opponent, fighter.getupForward * fighter.character.stats.speed * GETUP_ROLL_SPEED * dt);
     }
@@ -923,23 +928,49 @@ function handleKnockdownStep(fighter: FighterRuntime, opponent: FighterRuntime, 
     return;
   }
 
-  if (fighter.actionFramesRemaining > KNOCKDOWN_MIN_FRAMES) return;
+  if (fighter.actionFramesRemaining > 0 || fighter.stunFramesRemaining > 0 || fighter.actionTimer > 0 || fighter.stunTimer > 0) return;
 
-  const forward = resolveForwardInput(fighter, opponent, input);
-  const lane = input.up || input.sidestepUp || input.sidewalkUp ? -1 : input.down || input.sidestepDown || input.sidewalkDown ? 1 : 0;
-  const wantsRecovery = forward !== 0 || lane !== 0 || input.block || input.confirm;
-  if (!wantsRecovery) return;
+  const getupAction = getRequestedGetupAction(fighter, opponent, input);
+  if (getupAction === 'none') return;
 
   fighter.getupStarted = true;
-  fighter.getupForward = forward === 0 ? 0 : forward > 0 ? 1 : -1;
-  fighter.getupLane = lane;
+  fighter.getupAction = getupAction;
+  fighter.getupForward = getupAction === 'rollBack' ? -1 : 0;
+  fighter.getupLane = getupAction === 'rollUp' ? -1 : getupAction === 'rollDown' ? 1 : 0;
   fighter.getupInvulnerableFrames = GETUP_INVULNERABLE_FRAMES;
-  fighter.actionFramesRemaining = GETUP_FRAMES;
-  fighter.actionTimer = framesToSeconds(GETUP_FRAMES);
+  fighter.getupTotalFrames = getGetupAnimationFrames(fighter, getupAction);
+  fighter.actionFramesRemaining = fighter.getupTotalFrames;
+  fighter.actionTimer = framesToSeconds(fighter.getupTotalFrames);
+  fighter.state = 'getup';
   fighter.stunFramesRemaining = 0;
   fighter.blockstunFramesRemaining = 0;
   fighter.blockPunishWindowFrames = 0;
   fighter.stunTimer = 0;
+}
+
+function getRequestedGetupAction(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): FighterRuntime['getupAction'] {
+  const forward = resolveForwardInput(fighter, opponent, input);
+  if (input.up || input.sidestepUp || input.sidewalkUp) return 'rollUp';
+  if (input.down || input.sidestepDown || input.sidewalkDown) return 'rollDown';
+  if (forward < 0) return 'rollBack';
+  if (forward > 0 || input.block || input.confirm || input.charge || moveInputs.some((action) => input[action])) return 'stand';
+  return 'none';
+}
+
+function getGetupAnimationFrames(fighter: FighterRuntime, action: FighterRuntime['getupAction']) {
+  const key = getGetupAnimationKey(action);
+  const frameCount = key ? fighter.character.animationFrames?.[key]?.length ?? 0 : 0;
+  const fps = key ? fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8 : fighter.character.animationFps ?? 8;
+  if (frameCount > 0) return clamp(Math.round((frameCount / Math.max(1, fps)) * FRAMES_PER_SECOND), 12, 72);
+  return GETUP_FRAMES;
+}
+
+function getGetupAnimationKey(action: FighterRuntime['getupAction']) {
+  if (action === 'stand') return 'getupStand';
+  if (action === 'rollUp') return 'getupRollUp';
+  if (action === 'rollDown') return 'getupRollDown';
+  if (action === 'rollBack') return 'getupRollBack';
+  return null;
 }
 
 function canComboCancel(fighter: FighterRuntime) {
@@ -2395,14 +2426,14 @@ function pushImpactSparkEvent(
 }
 
 function enterKnockdown(fighter: FighterRuntime, frames: number) {
-  const recoveryFrames = Math.max(KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES, frames);
+  const floorFrames = Math.max(KNOCKDOWN_MIN_FRAMES, frames - GETUP_FRAMES);
   fighter.state = 'knockdown';
-  fighter.stunFramesRemaining = recoveryFrames;
+  fighter.stunFramesRemaining = floorFrames;
   fighter.blockstunFramesRemaining = 0;
   fighter.blockPunishWindowFrames = 0;
-  fighter.stunTimer = framesToSeconds(recoveryFrames);
-  fighter.actionFramesRemaining = recoveryFrames;
-  fighter.actionTimer = framesToSeconds(recoveryFrames);
+  fighter.stunTimer = framesToSeconds(floorFrames);
+  fighter.actionFramesRemaining = floorFrames;
+  fighter.actionTimer = framesToSeconds(floorFrames);
   fighter.currentMove = null;
   fighter.moveFrame = 0;
   resetKiChargeRuntime(fighter);
@@ -2412,6 +2443,8 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.getupStarted = false;
   fighter.getupForward = 0;
   fighter.getupLane = 0;
+  fighter.getupAction = 'none';
+  fighter.getupTotalFrames = 0;
   fighter.getupInvulnerableFrames = 0;
   fighter.juggleDamage = 0;
   fighter.juggleSequenceDamage = 0;
@@ -2565,13 +2598,13 @@ function findFirstBoxOverlap(a: Aabb[], b: Aabb[]) {
 }
 
 function getActiveEffectHitboxes(attacker: FighterRuntime, move: MoveDefinition) {
-  const moveKey = getEffectMoveKey(attacker, move);
-  if (!moveKey) return [];
   const effects = attacker.character.effects ?? [];
   const library = new Map(effects.map((effect) => [effect.id, effect]));
   const totalFrames = Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames);
-  return (attacker.character.moveEffects?.[moveKey] ?? [])
-    .filter((instance) => effectIsActive(instance, attacker.moveFrame, totalFrames))
+  return getEffectMoveKeys(attacker, move)
+    .flatMap((moveKey) => attacker.character.moveEffects?.[moveKey] ?? [])
+    .filter((instance) => effectIsVisibleAt(instance, attacker.moveFrame, totalFrames))
+    .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index)
     .flatMap((instance) => {
       const effect = library.get(instance.effectId);
       if (!effect) return [];
@@ -2581,7 +2614,7 @@ function getActiveEffectHitboxes(attacker: FighterRuntime, move: MoveDefinition)
     });
 }
 
-function getEffectMoveKey(attacker: FighterRuntime, move: MoveDefinition) {
+function getEffectMoveKeys(attacker: FighterRuntime, move: MoveDefinition) {
   const baseInputKeys: Record<string, string> = {
     jab: 'jableft',
     heavy: 'jabright',
@@ -2592,15 +2625,18 @@ function getEffectMoveKey(attacker: FighterRuntime, move: MoveDefinition) {
     '3': 'kickleft',
     '4': 'kickright'
   };
+  const commandKeys = move.command
+    ? [move.command, move.command.startsWith('cmd:') ? move.command.slice(4) : `cmd:${move.command}`]
+    : [];
   const candidates = [
     move.animationKey,
-    move.command ? `cmd:${move.command}` : undefined,
+    ...commandKeys,
     move.comboKey,
     move.id,
     baseInputKeys[move.input],
     move.input
   ].filter((key): key is string => Boolean(key));
-  return candidates.find((key) => attacker.character.moveEffects?.[key]?.length) ?? null;
+  return [...new Set(candidates)].filter((key) => attacker.character.moveEffects?.[key]?.length);
 }
 
 function effectHitboxToWorldAabb(attacker: FighterRuntime, transform: { position: [number, number, number]; scale: [number, number, number] }, anchor: string, hitbox?: BoxSpec) {
@@ -2735,6 +2771,12 @@ function finishRound(match: MatchSnapshot) {
     fighter.stunFramesRemaining = 0;
     fighter.blockstunFramesRemaining = 0;
     fighter.blockPunishWindowFrames = 0;
+    fighter.getupInvulnerableFrames = 0;
+    fighter.getupForward = 0;
+    fighter.getupLane = 0;
+    fighter.getupStarted = false;
+    fighter.getupAction = 'none';
+    fighter.getupTotalFrames = 0;
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
   });
@@ -2750,6 +2792,19 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.fighters.forEach((fighter) => {
     if (fighter.hp <= 0) fighter.hp = fighter.character.stats.health;
     fighter.roundsWon = 0;
+    fighter.state = 'idle';
+    fighter.actionTimer = 0;
+    fighter.actionFramesRemaining = 0;
+    fighter.stunTimer = 0;
+    fighter.stunFramesRemaining = 0;
+    fighter.getupInvulnerableFrames = 0;
+    fighter.getupForward = 0;
+    fighter.getupLane = 0;
+    fighter.getupStarted = false;
+    fighter.getupAction = 'none';
+    fighter.getupTotalFrames = 0;
+    fighter.velocityY = 0;
+    fighter.position.y = 0;
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
   });
@@ -2777,6 +2832,11 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.blockstunFramesRemaining = 0;
     fighter.blockPunishWindowFrames = 0;
     fighter.getupInvulnerableFrames = 0;
+    fighter.getupForward = 0;
+    fighter.getupLane = 0;
+    fighter.getupStarted = false;
+    fighter.getupAction = 'none';
+    fighter.getupTotalFrames = 0;
     fighter.velocityY = 0;
     fighter.position.y = 0;
     fighter.shadowClone = null;
@@ -2921,6 +2981,16 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const comboPhase = positiveModulo(elapsed + ai.slot * 0.11 + style.comboPhaseOffset + roundStyle.comboPhaseOffset * 0.75, comboCycle);
   const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp) + style.selectorJitter + roundStyle.selectorJitter, 100);
   const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp) + style.routeJitter + roundStyle.routeJitter, 100);
+  if (ai.state === 'getup') return input;
+  if (ai.state === 'knockdown') {
+    if (ai.actionFramesRemaining > 0 || ai.stunFramesRemaining > 0 || ai.actionTimer > 0 || ai.stunTimer > 0 || isAirborne(ai)) return input;
+    const getupRoll = aiDecisionRoll(ai, opponent, elapsed, 13, roundAiSeed);
+    if (getupRoll < 0.26) input.sidewalkUp = true;
+    else if (getupRoll < 0.52) input.sidewalkDown = true;
+    else if (getupRoll < 0.72) input[opponent.position.x > ai.position.x ? 'left' : 'right'] = true;
+    else input.confirm = true;
+    return input;
+  }
   let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
   if (leaderCloseout) {
     selectedMoveInput = chooseAiCloseoutMoveInput(ai, selectedMoveInput, selector, routeRoll);
@@ -2972,7 +3042,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const isIncomingSoon = !opponent.currentMove || opponentMoveFrame >= opponent.currentMove.startupFrames - settings.reactionLeadFrames;
   const canStartAction = ai.actionFramesRemaining === 0 && ai.actionTimer === 0;
   const canAttemptCancel = shouldContinueCombo && canComboCancel(ai);
-  const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0 && ai.state !== 'knockdown';
+  const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0;
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
   const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, roundAiSeed) < settings.punishDropRate * style.imperfectionScale;
   const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;

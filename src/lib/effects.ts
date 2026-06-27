@@ -154,13 +154,19 @@ function sanitizeEffectHitbox(value: unknown) {
 }
 
 export function effectTransformAt(effect: CharacterEffectDefinition, instance: MoveEffectInstance, moveFrame: number): EffectTransform {
-  const localFrame = Math.max(0, moveFrame - instance.startFrame);
+  const timelineFrame = Math.max(0, moveFrame);
   const keyframes = instance.keyframes.length > 0 ? instance.keyframes : [{ frame: 0, ...effect.defaultTransform }];
   const sorted = [...keyframes].sort((a, b) => a.frame - b.frame);
-  const previous = [...sorted].reverse().find((keyframe) => keyframe.frame <= localFrame) ?? sorted[0];
-  const next = sorted.find((keyframe) => keyframe.frame >= localFrame) ?? previous;
+  const keyframeWindows = sorted.filter((keyframe) => keyframe.endFrame !== undefined);
+  if (keyframeWindows.length > 0) {
+    const activeWindow = [...keyframeWindows].reverse().find((keyframe) => timelineFrame >= keyframe.frame && timelineFrame <= getKeyframeEndFrame(keyframe));
+    const nearestKeyframe = activeWindow ?? [...sorted].reverse().find((keyframe) => keyframe.frame <= timelineFrame) ?? sorted[0];
+    return transformFromKeyframe(effect, nearestKeyframe);
+  }
+  const previous = [...sorted].reverse().find((keyframe) => keyframe.frame <= timelineFrame) ?? sorted[0];
+  const next = sorted.find((keyframe) => keyframe.frame >= timelineFrame) ?? previous;
   const previousEndFrame = getKeyframeEndFrame(previous);
-  const amount = previous === next || localFrame <= previousEndFrame ? 0 : (localFrame - previousEndFrame) / Math.max(1, next.frame - previousEndFrame);
+  const amount = previous === next || timelineFrame <= previousEndFrame ? 0 : (timelineFrame - previousEndFrame) / Math.max(1, next.frame - previousEndFrame);
   const base = effect.defaultTransform;
   return {
     position: lerpVec3(readVec3(previous.position, base.position), readVec3(next.position, base.position), amount),
@@ -171,8 +177,26 @@ export function effectTransformAt(effect: CharacterEffectDefinition, instance: M
   };
 }
 
+function transformFromKeyframe(effect: CharacterEffectDefinition, keyframe: EffectKeyframe): EffectTransform {
+  const base = effect.defaultTransform;
+  return {
+    position: readVec3(keyframe.position, base.position),
+    scale: readVec3(keyframe.scale, base.scale),
+    rotation: readVec3(keyframe.rotation, base.rotation),
+    opacity: numberOr(keyframe.opacity, base.opacity),
+    color: typeof keyframe.color === 'string' ? keyframe.color : base.color
+  };
+}
+
 export function effectIsActive(instance: MoveEffectInstance, moveFrame: number, fallbackEndFrame: number) {
   return moveFrame >= instance.startFrame && moveFrame <= (instance.endFrame ?? fallbackEndFrame);
+}
+
+export function effectIsVisibleAt(instance: MoveEffectInstance, moveFrame: number, fallbackEndFrame: number) {
+  if (!effectIsActive(instance, moveFrame, fallbackEndFrame)) return false;
+  const keyframeWindows = instance.keyframes.filter((keyframe) => keyframe.endFrame !== undefined);
+  if (keyframeWindows.length === 0) return true;
+  return keyframeWindows.some((keyframe) => moveFrame >= keyframe.frame && moveFrame <= (keyframe.endFrame ?? keyframe.frame));
 }
 
 export function shouldFireEffectCue(cue: EffectSoundCue, previousMoveFrame: number, moveFrame: number, instance: MoveEffectInstance) {

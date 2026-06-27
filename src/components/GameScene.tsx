@@ -23,7 +23,7 @@ import type {
 } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
 import { debugLogThrottled } from '../lib/debugLogger';
-import { effectIsActive, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
+import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 
 type GameSceneProps = {
   match: MatchSnapshot;
@@ -284,6 +284,10 @@ function EffectLayer({
   audioSettings?: GameSettings['audio'];
   reducedMotion: boolean;
 }) {
+  const [, setEffectFrameTick] = useState(0);
+  useFrame(() => {
+    setEffectFrameTick((tick) => (tick + 1) % 3600);
+  });
   const bindings = getActiveEffectBindings(match);
   useEffectAudioCues(bindings, audioSettings);
   if (bindings.length === 0) return null;
@@ -335,10 +339,10 @@ function getActiveEffectBindings(match: MatchSnapshot): ActiveEffectBinding[] {
     if ((fighter.state !== 'attack' && fighter.state !== 'chargeKi') || !fighter.currentMove) return [];
     const effects = fighter.character.effects ?? [];
     const library = new Map(effects.map((effect) => [effect.id, effect]));
-    const moveKey = getEffectMoveKey(fighter);
-    if (!moveKey) return [];
-    const instances = (fighter.character.moveEffects?.[moveKey] ?? [])
-      .filter((instance) => effectIsActive(instance, fighter.moveFrame, totalMoveFramesForEffect(fighter)))
+    const instances = getEffectMoveKeys(fighter)
+      .flatMap((moveKey) => fighter.character.moveEffects?.[moveKey] ?? [])
+      .filter((instance) => effectIsVisibleAt(instance, fighter.moveFrame, totalMoveFramesForEffect(fighter)))
+      .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index)
       .sort((a, b) => a.layer - b.layer);
     return instances.flatMap((instance) => {
       const effect = library.get(instance.effectId);
@@ -361,9 +365,9 @@ function totalMoveFramesForEffect(fighter: FighterRuntime) {
   return move ? Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames) : 1;
 }
 
-function getEffectMoveKey(fighter: FighterRuntime) {
+function getEffectMoveKeys(fighter: FighterRuntime) {
   const move = fighter.currentMove;
-  if (!move) return null;
+  if (!move) return [];
   const baseInputKeys: Record<string, string> = {
     jab: 'jableft',
     heavy: 'jabright',
@@ -374,15 +378,18 @@ function getEffectMoveKey(fighter: FighterRuntime) {
     '3': 'kickleft',
     '4': 'kickright'
   };
+  const commandKeys = move.command
+    ? [move.command, move.command.startsWith('cmd:') ? move.command.slice(4) : `cmd:${move.command}`]
+    : [];
   const candidates = [
     move.animationKey,
-    move.command ? `cmd:${move.command}` : undefined,
+    ...commandKeys,
     move.comboKey,
     move.id,
     baseInputKeys[move.input],
     move.input
   ].filter((key): key is string => Boolean(key));
-  return candidates.find((key) => fighter.character.moveEffects?.[key]?.length) ?? null;
+  return [...new Set(candidates)].filter((key) => fighter.character.moveEffects?.[key]?.length);
 }
 
 function MoveEffectVisual({
@@ -647,6 +654,7 @@ export function MenuAttractScene({ match }: GameSceneProps) {
       <group position={[0, 0, 1.75]} scale={0.82}>
         <FighterRig fighter={match.fighters[0]} />
         <FighterRig fighter={match.fighters[1]} />
+        <EffectLayer match={match} reducedMotion={false} />
       </group>
       <ContactShadows position={[0, -0.01, 1.75]} opacity={0.32} scale={10} blur={3} far={3.5} />
     </Canvas>
@@ -887,6 +895,7 @@ function PreviewFighter({
 }) {
   const fighter = useRef(createPreviewFighter(character));
   const rotator = useRef<THREE.Group>(null);
+  const [, setEffectFrameTick] = useState(0);
 
   useEffect(() => {
     fighter.current = createPreviewFighter(character);
@@ -907,6 +916,8 @@ function PreviewFighter({
     runtime.actionFramesRemaining = 0;
     runtime.moveFrame = 0;
     runtime.velocityY = 0;
+    runtime.getupAction = 'none';
+    runtime.getupTotalFrames = 0;
 
     if (isMovePose(pose)) {
       const move = previewMove ?? character.moves.find((candidate) => candidate.input === pose) ?? character.moves[0] ?? null;
@@ -922,6 +933,17 @@ function PreviewFighter({
       runtime.state = pose;
       runtime.sidestepDirection = animationKey === 'sidestepLeft' ? -1 : animationKey === 'sidestepRight' ? 1 : 0;
       runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(t * 2.4)) * 0.95 : pose === 'juggle' ? 1.35 + Math.sin(t * 2.2) * 0.18 : 0;
+      if (pose === 'getup') {
+        runtime.getupAction = animationKey === 'getupRollUp'
+          ? 'rollUp'
+          : animationKey === 'getupRollDown'
+            ? 'rollDown'
+            : animationKey === 'getupRollBack'
+              ? 'rollBack'
+              : 'stand';
+        runtime.getupTotalFrames = 40;
+        runtime.actionFramesRemaining = Math.max(0, runtime.getupTotalFrames - (Math.floor(t * 60) % runtime.getupTotalFrames));
+      }
       if (pose === 'chargeKi') {
         runtime.currentMove = buildPreviewChargeMove();
         runtime.chargePhase = Math.floor(t * 1.35) % 3 === 2 ? 'hold' : 'active';
@@ -938,6 +960,9 @@ function PreviewFighter({
       const target = rotationTurn * (Math.PI / 4);
       rotator.current.rotation.y = THREE.MathUtils.lerp(rotator.current.rotation.y, target, 1 - Math.pow(0.001, delta));
     }
+    if ((previewEffectInstances?.length ?? 0) > 0 && previewEffectFrame === undefined) {
+      setEffectFrameTick((tick) => (tick + 1) % 3600);
+    }
   });
 
   return (
@@ -945,7 +970,7 @@ function PreviewFighter({
       <FighterRig fighter={fighter.current} />
       {(previewEffectInstances ?? []).map((instance) => {
         const effect = (previewEffects ?? []).find((candidate) => candidate.id === instance.effectId);
-        if (!effect || !effectIsActive(instance, fighter.current.moveFrame, previewMove ? previewMove.startupFrames + previewMove.activeFrames + previewMove.recoveryFrames : 30)) return null;
+        if (!effect || !effectIsVisibleAt(instance, fighter.current.moveFrame, previewMove ? previewMove.startupFrames + previewMove.activeFrames + previewMove.recoveryFrames : 30)) return null;
         return (
           <MoveEffectVisual
             key={instance.id}
@@ -1045,6 +1070,8 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     getupForward: 0,
     getupLane: 0,
     getupStarted: false,
+    getupAction: 'none',
+    getupTotalFrames: 0,
     juggleDamage: 0,
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
@@ -1520,10 +1547,11 @@ function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeS
     const bob = fighter.state === 'idle' ? Math.sin(scaledTime.current * 4 + fighter.slot) * 0.025 : 0;
     const hitLean = fighter.state === 'hit' ? -fighter.facing * 0.16 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
+    const getupProgress = getGetupRenderProgress(fighter);
     const juggleRoll = juggle * Math.sin(scaledTime.current * 3.8 + fighter.slot) * 0.34;
     const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
     group.current.position.set(fighter.position.x, fighter.position.y + bob, fighter.position.z);
-    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : juggle ? -1.16 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
+    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
   });
 
   const color = fighter.character.colors.primary;
@@ -1716,6 +1744,7 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
     (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
     (key === 'entry' ? frames.win : undefined) ??
     (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
+    (key.startsWith('getup') ? frames.knockdown : undefined) ??
     frames.idle;
   if (!sequence?.length) return fighter.character.spriteSheetPath;
   const fps = fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
@@ -1724,6 +1753,8 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
       ? getChargeKiFrameIndex(fighter, sequence.length)
     : fighter.state === 'attack'
       ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
+      : fighter.state === 'getup'
+        ? Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length))
       : key === 'idle' || key === 'crouch' || key === 'block' || key === 'crouchBlock' || key === 'hitLight' || key === 'win' || key === 'lose'
         ? 0
       : Math.floor(elapsedTime * fps) % sequence.length;
@@ -1773,8 +1804,22 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'chargeKi') return 'chargeKi';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
+  if (fighter.state === 'getup') return getGetupAnimationKey(fighter);
   if (fighter.state === 'entry') return 'entry';
   return fighter.state;
+}
+
+function getGetupAnimationKey(fighter: FighterRuntime) {
+  if (fighter.getupAction === 'rollUp') return 'getupRollUp';
+  if (fighter.getupAction === 'rollDown') return 'getupRollDown';
+  if (fighter.getupAction === 'rollBack') return 'getupRollBack';
+  return 'getupStand';
+}
+
+function getGetupRenderProgress(fighter: FighterRuntime) {
+  if (fighter.state !== 'getup') return 0;
+  const total = Math.max(1, fighter.getupTotalFrames || fighter.actionFramesRemaining || 1);
+  return THREE.MathUtils.clamp(1 - fighter.actionFramesRemaining / total, 0, 1);
 }
 
 function versionEditedSpriteFrameSource(src: string | undefined, character: CharacterDefinition) {
@@ -2309,8 +2354,9 @@ function ExternalFighter({ fighter, url, timeScale = 1 }: { fighter: FighterRunt
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
     const knockdown = fighter.state === 'knockdown' ? 1 : 0;
+    const getup = fighter.state === 'getup' ? 1 - getGetupRenderProgress(fighter) : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
-    wrapper.current.rotation.x = THREE.MathUtils.lerp(wrapper.current.rotation.x, knockdown * -0.85 + juggle * -0.42 + block * -0.18 + crouch * -0.28 + hit * 0.18, 1 - Math.pow(0.001, delta));
+    wrapper.current.rotation.x = THREE.MathUtils.lerp(wrapper.current.rotation.x, knockdown * -0.85 + getup * -0.85 + juggle * -0.42 + block * -0.18 + crouch * -0.28 + hit * 0.18, 1 - Math.pow(0.001, delta));
     wrapper.current.rotation.z = THREE.MathUtils.lerp(wrapper.current.rotation.z, attack * 0.22 * fighter.facing - hit * 0.12 * fighter.facing + juggle * Math.sin(Date.now() * 0.0038 + fighter.slot) * 0.22, 1 - Math.pow(0.001, delta));
     wrapper.current.position.y = THREE.MathUtils.lerp(wrapper.current.position.y, crouch ? -0.22 : block ? -0.06 : 0, 1 - Math.pow(0.001, delta));
   });
@@ -2334,7 +2380,7 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
   if (fighter.state === 'crouch') return find('crouch', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'chargeKi') return find('charge', 'power', 'taunt', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'block') return find('idle', 'standing') ?? names[0];
-  if (fighter.state === 'hit' || fighter.state === 'juggle' || fighter.state === 'knockdown') return find('death', 'no', 'idle') ?? names[0];
+  if (fighter.state === 'hit' || fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup') return find('death', 'no', 'idle') ?? names[0];
   if (fighter.state === 'entry') return find('intro', 'entry', 'taunt', 'wave', 'yes', 'idle') ?? names[0];
   if (fighter.state === 'win') return find('dance', 'yes', 'wave') ?? names[0];
   if (fighter.state === 'lose') return find('death', 'no') ?? names[0];

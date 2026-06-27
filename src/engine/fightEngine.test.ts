@@ -1610,17 +1610,25 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(hpBefore);
   });
 
-  it('lets knocked down fighters roll during recovery as an invulnerable dodge', () => {
+  it('keeps knocked down fighters grounded until they choose a getup option', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;
     match.fighters[1].position.x = 0.45;
     match.fighters[1].state = 'knockdown';
-    match.fighters[1].actionFramesRemaining = 12;
-    match.fighters[1].actionTimer = 12 / 60;
-    match.fighters[1].stunFramesRemaining = 12;
-    match.fighters[1].stunTimer = 12 / 60;
+    match.fighters[1].actionFramesRemaining = 2;
+    match.fighters[1].actionTimer = 2 / 60;
+    match.fighters[1].stunFramesRemaining = 2;
+    match.fighters[1].stunTimer = 2 / 60;
+
+    for (let i = 0; i < 4; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].state).toBe('knockdown');
+    expect(match.fighters[1].getupStarted).toBe(false);
+
     const zBefore = match.fighters[1].position.z;
     const hpBefore = match.fighters[1].hp;
     const roll = emptyInputFrame();
@@ -1628,6 +1636,8 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), roll, 1 / 60);
     expect(match.fighters[1].getupStarted).toBe(true);
+    expect(match.fighters[1].state).toBe('getup');
+    expect(match.fighters[1].getupAction).toBe('rollUp');
     expect(match.fighters[1].getupInvulnerableFrames).toBeGreaterThan(0);
 
     const forcedHit = {

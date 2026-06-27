@@ -60,6 +60,8 @@ export type CompactFighterSnapshot = {
   getupForward: -1 | 0 | 1;
   getupLane: -1 | 0 | 1;
   getupStarted: boolean;
+  getupAction: FighterRuntime['getupAction'];
+  getupTotalFrames: number;
   juggleDamage: number;
   juggleSequenceDamage: number;
   juggleTornadoCount: number;
@@ -205,6 +207,8 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     getupForward: fighter.getupForward,
     getupLane: fighter.getupLane,
     getupStarted: fighter.getupStarted,
+    getupAction: fighter.getupAction,
+    getupTotalFrames: fighter.getupTotalFrames,
     juggleDamage: fighter.juggleDamage,
     juggleSequenceDamage: fighter.juggleSequenceDamage,
     juggleTornadoCount: fighter.juggleTornadoCount,
@@ -256,6 +260,8 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
     getupForward: snapshot.getupForward,
     getupLane: snapshot.getupLane,
     getupStarted: snapshot.getupStarted,
+    getupAction: snapshot.getupAction ?? base.getupAction,
+    getupTotalFrames: snapshot.getupTotalFrames ?? base.getupTotalFrames,
     juggleDamage: snapshot.juggleDamage,
     juggleSequenceDamage: snapshot.juggleSequenceDamage ?? base.juggleSequenceDamage,
     juggleTornadoCount: snapshot.juggleTornadoCount ?? base.juggleTornadoCount,

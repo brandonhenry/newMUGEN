@@ -2111,10 +2111,16 @@ button {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  max-height: 430px;
+  max-height: min(62vh, 620px);
+  align-content: start;
   overflow: auto;
-  padding-right: 3px;
+  overscroll-behavior: contain;
+  padding-right: 6px;
   scrollbar-color: rgba(255, 255, 255, 0.24) transparent;
+}
+
+.animation-grid.is-stance-grid {
+  grid-auto-rows: minmax(96px, auto);
 }
 
 .animation-grid.is-command-grid {
@@ -2244,6 +2250,25 @@ button {
   background: rgba(255, 255, 255, 0.1);
   font-weight: 800;
   font-size: 12px;
+}
+
+.animation-grid.is-stance-grid > button {
+  min-height: 96px;
+  gap: 9px;
+  padding: 16px 10px 13px;
+  overflow: hidden;
+  line-height: 1.15;
+}
+
+.animation-grid.is-stance-grid > button .notation-group {
+  justify-content: center;
+}
+
+.animation-grid.is-stance-grid > button small {
+  max-width: 100%;
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .animation-grid > button small,

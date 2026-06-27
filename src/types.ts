@@ -34,11 +34,13 @@ export type FighterState =
   | 'hit'
   | 'juggle'
   | 'knockdown'
+  | 'getup'
   | 'entry'
   | 'win'
   | 'lose';
 
 export type MoveInput = 'jab' | 'kick' | 'heavy' | 'special';
+export type GetupAction = 'none' | 'stand' | 'rollUp' | 'rollDown' | 'rollBack';
 export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
 export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish' | 'clashWin' | 'clashDraw' | 'clashPerfect';
@@ -496,6 +498,8 @@ export type FighterRuntime = {
   getupForward: -1 | 0 | 1;
   getupLane: -1 | 0 | 1;
   getupStarted: boolean;
+  getupAction: GetupAction;
+  getupTotalFrames: number;
   juggleDamage: number;
   juggleSequenceDamage: number;
   juggleTornadoCount: number;
