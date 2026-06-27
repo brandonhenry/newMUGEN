@@ -112,6 +112,7 @@ export type MoveDefinition = {
   juggleRefloatVelocity?: number;
   juggleGravityScale?: number;
   tornado?: boolean;
+  endsInCrouch?: boolean;
   tracking: MoveTracking;
   armorStartFrame?: number | null;
   armorEndFrame?: number | null;
@@ -494,6 +495,7 @@ export type FighterRuntime = {
   stunFramesRemaining: number;
   blockstunFramesRemaining: number;
   blockPunishWindowFrames: number;
+  forcedCrouchFrames: number;
   getupInvulnerableFrames: number;
   getupForward: -1 | 0 | 1;
   getupLane: -1 | 0 | 1;

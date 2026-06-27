@@ -54,6 +54,7 @@ const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.14;
 const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.14;
 const AI_RECENT_MEMORY_LIMIT = 12;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
+const FORCED_CROUCH_EXIT_FRAMES = 8;
 const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
 const PRESSURE_LANE_TOLERANCE = 0.82;
@@ -399,6 +400,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     stunFramesRemaining: 0,
     blockstunFramesRemaining: 0,
     blockPunishWindowFrames: 0,
+    forcedCrouchFrames: 0,
     getupInvulnerableFrames: 0,
     getupForward: 0,
     getupLane: 0,
@@ -472,22 +474,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     applyWhiffRecoveryIfNeeded(fighter);
     fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
     if (fighter.actionFramesRemaining === 0 && fighter.state !== 'knockdown' && fighter.state !== 'getup') {
-      fighter.currentMove = null;
-      fighter.hitConnected = false;
-      fighter.hitConfirmed = false;
-      fighter.whiffRecoveryApplied = false;
-      fighter.moveFrame = 0;
-      fighter.state = getPostLockState(fighter);
+      completeActionLock(fighter, input);
     }
   } else if (fighter.actionTimer > 0) {
     fighter.actionTimer = Math.max(0, fighter.actionTimer - dt);
     if (fighter.actionTimer === 0 && fighter.state !== 'knockdown' && fighter.state !== 'getup') {
-      fighter.currentMove = null;
-      fighter.hitConnected = false;
-      fighter.hitConfirmed = false;
-      fighter.whiffRecoveryApplied = false;
-      fighter.moveFrame = 0;
-      fighter.state = getPostLockState(fighter);
+      completeActionLock(fighter, input);
     }
   }
 
@@ -496,12 +488,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.blockstunFramesRemaining = Math.max(0, fighter.blockstunFramesRemaining - frameDelta);
     fighter.stunTimer = framesToSeconds(Math.max(fighter.stunFramesRemaining, fighter.blockstunFramesRemaining));
     if (fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.state !== 'knockdown') {
-      fighter.state = getPostLockState(fighter);
+      fighter.state = getPostLockState(fighter, input);
     }
   } else if (fighter.stunTimer > 0) {
     fighter.stunTimer = Math.max(0, fighter.stunTimer - dt);
     if (fighter.stunTimer === 0 && fighter.state !== 'knockdown') {
-      fighter.state = getPostLockState(fighter);
+      fighter.state = getPostLockState(fighter, input);
     }
   }
   if (fighter.blockstunFramesRemaining === 0) {
@@ -571,6 +563,16 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     updateAttackInputMemory(fighter, input);
     return;
   }
+
+  if (fighter.forcedCrouchFrames > 0 && !input.down && fighter.position.y === 0 && fighter.velocityY === 0) {
+    fighter.forcedCrouchFrames = Math.max(0, fighter.forcedCrouchFrames - frameDelta);
+    fighter.state = 'crouch';
+    fighter.wasCrouching = true;
+    applyGravity(fighter, dt);
+    updateAttackInputMemory(fighter, input);
+    return;
+  }
+  if (input.down) fighter.forcedCrouchFrames = 0;
 
   const moveInput = fighter.bufferedMoveInput ?? freshMoveInput;
   if (moveInput) {
@@ -670,6 +672,7 @@ function canBufferFreshMoveInput(fighter: FighterRuntime) {
 
 function startKiCharge(fighter: FighterRuntime) {
   const move = buildKiChargeMove(fighter.character);
+  fighter.forcedCrouchFrames = 0;
   fighter.currentMove = move;
   fighter.moveInstanceId += 1;
   fighter.state = 'chargeKi';
@@ -745,6 +748,7 @@ function clearKiChargeState(fighter: FighterRuntime) {
   fighter.actionFramesRemaining = 0;
   fighter.actionTimer = 0;
   fighter.moveFrame = 0;
+  fighter.forcedCrouchFrames = 0;
   fighter.hitConnected = false;
   fighter.hitConfirmed = false;
   fighter.whiffRecoveryApplied = false;
@@ -1011,6 +1015,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   fighter.currentMove = resolvedMove;
   fighter.moveInstanceId += 1;
   fighter.state = 'attack';
+  fighter.forcedCrouchFrames = 0;
   fighter.actionFramesRemaining = totalMoveFrames(resolvedMove);
   fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
   fighter.moveFrame = 0;
@@ -1066,7 +1071,7 @@ function buildKiBurstMove(move: MoveDefinition): MoveDefinition {
     id: `${move.id}-ki`,
     label: `Ki ${move.label}`,
     damage: Math.round(move.damage * 1.35 + 3),
-    blockDamage: Math.round(move.blockDamage * 1.5 + 1),
+    blockDamage: Math.round(move.blockDamage * 1.5),
     hitLevel: move.hitLevel === 'throw' ? move.hitLevel : 'special',
     onBlockFrames: move.onBlockFrames - 2,
     onHitFrames: move.onHitFrames + 5,
@@ -1162,7 +1167,7 @@ function buildComboMove(
     activeFrames: baseMove.activeFrames + (comboStep > 2 ? 1 : 0) + (comboStep >= 5 ? 1 : 0),
     recoveryFrames: Math.max(8, Math.round(baseMove.recoveryFrames * (route.away ? 0.92 : 1) + Math.max(0, comboStep - 1) * 2 - (route.toward ? 1 : 0) + repeatFatigue * 6)),
     damage: Math.max(3, Math.round(baseMove.damage * damageScale)),
-    blockDamage: Math.max(baseMove.blockDamage, Math.round(baseMove.blockDamage * (1 + sequenceBonus * 0.55))),
+    blockDamage: 0,
     range: baseMove.range + rangeBonus,
     pushback: baseMove.pushback + pushBonus,
     blockPushback: baseMove.blockPushback + pushBonus * 0.4,
@@ -1341,7 +1346,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 19,
     damage: 8,
-    blockDamage: 1,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -7,
     onHitFrames: 4,
@@ -1354,7 +1359,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 17,
     damage: 12,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -5,
     onHitFrames: 6,
@@ -1367,7 +1372,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 22,
     damage: 12,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -9,
     onHitFrames: 8,
@@ -1380,7 +1385,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 25,
     damage: 14,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -12,
     onHitFrames: 18,
@@ -1393,7 +1398,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 20,
     damage: 9,
-    blockDamage: 1,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -8,
     onHitFrames: 6,
@@ -1406,7 +1411,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 21,
     damage: 15,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -2,
     onHitFrames: 20,
@@ -1420,7 +1425,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 27,
     damage: 13,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -12,
     onHitFrames: 18,
@@ -1434,7 +1439,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 20,
     damage: 9,
-    blockDamage: 1,
+    blockDamage: 0,
     hitLevel: 'low',
     onBlockFrames: -11,
     onHitFrames: 0,
@@ -1447,7 +1452,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 26,
     damage: 12,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -13,
     onHitFrames: 15,
@@ -1460,7 +1465,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 23,
     damage: 11,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'high',
     onBlockFrames: -8,
     onHitFrames: 7,
@@ -1473,7 +1478,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 29,
     damage: 15,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -14,
     onHitFrames: 20,
@@ -1487,7 +1492,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 18,
     damage: 8,
-    blockDamage: 1,
+    blockDamage: 0,
     hitLevel: 'high',
     onBlockFrames: -6,
     onHitFrames: 6,
@@ -1500,7 +1505,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 25,
     damage: 12,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -10,
     onHitFrames: 16,
@@ -1514,7 +1519,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 30,
     damage: 13,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -17,
     onHitFrames: 11,
@@ -1528,7 +1533,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 28,
     damage: 15,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -13,
     onHitFrames: 18,
@@ -1541,7 +1546,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 24,
     damage: 11,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -9,
     onHitFrames: 8,
@@ -1554,7 +1559,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 30,
     damage: 15,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'low',
     onBlockFrames: -18,
     onHitFrames: 16,
@@ -1567,7 +1572,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 24,
     damage: 11,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -11,
     onHitFrames: 8,
@@ -1580,7 +1585,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 22,
     damage: 10,
-    blockDamage: 1,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -8,
     onHitFrames: 7,
@@ -1593,7 +1598,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 28,
     damage: 15,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -14,
     onHitFrames: 19,
@@ -1607,7 +1612,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 23,
     damage: 11,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -7,
     onHitFrames: 9,
@@ -1620,7 +1625,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 31,
     damage: 15,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -16,
     onHitFrames: 21,
@@ -1634,7 +1639,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 2,
     recoveryFrames: 21,
     damage: 10,
-    blockDamage: 1,
+    blockDamage: 0,
     hitLevel: 'high',
     onBlockFrames: -6,
     onHitFrames: 8,
@@ -1647,7 +1652,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 28,
     damage: 14,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -13,
     onHitFrames: 18,
@@ -1661,7 +1666,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 26,
     damage: 13,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -11,
     onHitFrames: 12,
@@ -1674,7 +1679,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 25,
     damage: 10,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'low',
     onBlockFrames: -16,
     onHitFrames: 4,
@@ -1687,7 +1692,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 27,
     damage: 13,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -13,
     onHitFrames: 17,
@@ -1701,7 +1706,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 27,
     damage: 13,
-    blockDamage: 2,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -12,
     onHitFrames: 16,
@@ -1714,7 +1719,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 29,
     damage: 14,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -14,
     onHitFrames: 18,
@@ -1727,7 +1732,7 @@ const neutralStringFrameData: Record<string, StringFrameTuning> = {
     activeFrames: 3,
     recoveryFrames: 25,
     damage: 14,
-    blockDamage: 3,
+    blockDamage: 0,
     hitLevel: 'mid',
     onBlockFrames: -9,
     onHitFrames: 20,
@@ -2140,6 +2145,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.stunFramesRemaining = 0;
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
+    defender.forcedCrouchFrames = 0;
     defender.juggleDamage = 0;
     defender.juggleSequenceDamage = 0;
     defender.juggleTornadoCount = 0;
@@ -2179,6 +2185,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
   defender.moveFrame = 0;
+  defender.forcedCrouchFrames = 0;
   resetKiChargeRuntime(defender);
   mirrorShadowCloneHit(defender, move, forceKnockdown, entersJuggle);
 
@@ -2253,6 +2260,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     defender.stunFramesRemaining = 0;
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
+    defender.forcedCrouchFrames = 0;
     defender.position.x += pushX * weakMove.blockPushback * 0.12;
     defender.position.z += pushZ * weakMove.blockPushback * 0.12;
     return;
@@ -2274,6 +2282,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
   defender.moveFrame = 0;
+  defender.forcedCrouchFrames = 0;
   resetKiChargeRuntime(defender);
   defender.stunFramesRemaining = stunFrames;
   defender.stunTimer = framesToSeconds(stunFrames);
@@ -2436,6 +2445,7 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.actionTimer = framesToSeconds(floorFrames);
   fighter.currentMove = null;
   fighter.moveFrame = 0;
+  fighter.forcedCrouchFrames = 0;
   resetKiChargeRuntime(fighter);
   fighter.hitConnected = false;
   fighter.hitConfirmed = false;
@@ -2456,7 +2466,22 @@ function isActiveMoveFrame(move: MoveDefinition, moveFrame: number) {
   return moveFrame >= move.startupFrames && moveFrame < move.startupFrames + move.activeFrames;
 }
 
-function getPostLockState(fighter: FighterRuntime): FighterRuntime['state'] {
+function completeActionLock(fighter: FighterRuntime, input: InputFrame) {
+  const completedMove = fighter.currentMove;
+  const endedAttackInCrouch = fighter.state === 'attack' && Boolean(completedMove?.endsInCrouch);
+  fighter.currentMove = null;
+  fighter.hitConnected = false;
+  fighter.hitConfirmed = false;
+  fighter.whiffRecoveryApplied = false;
+  fighter.moveFrame = 0;
+  if (endedAttackInCrouch) {
+    fighter.forcedCrouchFrames = input.down ? 0 : FORCED_CROUCH_EXIT_FRAMES;
+    fighter.wasCrouching = true;
+  }
+  fighter.state = getPostLockState(fighter, input);
+}
+
+function getPostLockState(fighter: FighterRuntime, input?: InputFrame): FighterRuntime['state'] {
   if (
     fighter.state === 'juggle' &&
     (isAirborne(fighter) ||
@@ -2468,6 +2493,7 @@ function getPostLockState(fighter: FighterRuntime): FighterRuntime['state'] {
     return 'juggle';
   }
   if (fighter.state === 'hit' && isAirborne(fighter)) return 'hit';
+  if (fighter.forcedCrouchFrames > 0 || input?.down) return 'crouch';
   return 'idle';
 }
 
@@ -2771,6 +2797,7 @@ function finishRound(match: MatchSnapshot) {
     fighter.stunFramesRemaining = 0;
     fighter.blockstunFramesRemaining = 0;
     fighter.blockPunishWindowFrames = 0;
+    fighter.forcedCrouchFrames = 0;
     fighter.getupInvulnerableFrames = 0;
     fighter.getupForward = 0;
     fighter.getupLane = 0;
@@ -2797,7 +2824,9 @@ function refillTrainingHealth(match: MatchSnapshot) {
     fighter.actionFramesRemaining = 0;
     fighter.stunTimer = 0;
     fighter.stunFramesRemaining = 0;
+    fighter.blockstunFramesRemaining = 0;
     fighter.getupInvulnerableFrames = 0;
+    fighter.forcedCrouchFrames = 0;
     fighter.getupForward = 0;
     fighter.getupLane = 0;
     fighter.getupStarted = false;
@@ -2831,6 +2860,7 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.stunFramesRemaining = 0;
     fighter.blockstunFramesRemaining = 0;
     fighter.blockPunishWindowFrames = 0;
+    fighter.forcedCrouchFrames = 0;
     fighter.getupInvulnerableFrames = 0;
     fighter.getupForward = 0;
     fighter.getupLane = 0;
@@ -2852,6 +2882,7 @@ function updateRoundIntro(match: MatchSnapshot) {
     fighter.state = inEntry ? 'entry' : 'idle';
     fighter.actionTimer = match.countdown;
     fighter.actionFramesRemaining = secondsToFrames(match.countdown);
+    fighter.forcedCrouchFrames = 0;
   });
 }
 

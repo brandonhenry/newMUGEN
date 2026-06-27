@@ -76,7 +76,7 @@
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 11,
-      "blockDamage": 2,
+      "blockDamage": 0,
       "hitLevel": "mid",
       "onBlockFrames": -7,
       "onHitFrames": 9,
@@ -107,7 +107,7 @@
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 9,
-      "blockDamage": 1,
+      "blockDamage": 0,
       "hitLevel": "high",
       "onBlockFrames": -7,
       "onHitFrames": 2,
@@ -138,7 +138,7 @@
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 13,
-      "blockDamage": 3,
+      "blockDamage": 0,
       "hitLevel": "high",
       "onBlockFrames": -9,
       "onHitFrames": 7,
@@ -408,6 +408,10 @@
       "/characters/riven/frames/frame-054.png",
       "/characters/riven/frames/frame-055.png",
       "/characters/riven/frames/frame-000.png"
+    ],
+    "sprint": [
+      "/characters/riven/frames/frame-012.png",
+      "/characters/riven/frames/frame-013.png"
     ]
   },
   "animationFps": 5,

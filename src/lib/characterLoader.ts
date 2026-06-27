@@ -90,6 +90,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     juggleRefloatVelocity: move.juggleRefloatVelocity === undefined ? undefined : clamp(finiteOr(move.juggleRefloatVelocity, 4.35), 2.2, 6.4),
     juggleGravityScale: move.juggleGravityScale === undefined ? undefined : clamp(finiteOr(move.juggleGravityScale, 0.52), 0.28, 1.2),
     tornado: Boolean(move.tornado),
+    endsInCrouch: Boolean(move.endsInCrouch),
     tracking: normalizeTracking(move.tracking),
     armorStartFrame: normalizeNullableFrame(move.armorStartFrame),
     armorEndFrame: normalizeNullableFrame(move.armorEndFrame),

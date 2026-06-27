@@ -56,6 +56,7 @@ export type CompactFighterSnapshot = {
   stunFramesRemaining: number;
   blockstunFramesRemaining: number;
   blockPunishWindowFrames: number;
+  forcedCrouchFrames: number;
   getupInvulnerableFrames: number;
   getupForward: -1 | 0 | 1;
   getupLane: -1 | 0 | 1;
@@ -203,6 +204,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     stunFramesRemaining: fighter.stunFramesRemaining,
     blockstunFramesRemaining: fighter.blockstunFramesRemaining,
     blockPunishWindowFrames: fighter.blockPunishWindowFrames,
+    forcedCrouchFrames: fighter.forcedCrouchFrames,
     getupInvulnerableFrames: fighter.getupInvulnerableFrames,
     getupForward: fighter.getupForward,
     getupLane: fighter.getupLane,
@@ -256,6 +258,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
     stunFramesRemaining: snapshot.stunFramesRemaining,
     blockstunFramesRemaining: snapshot.blockstunFramesRemaining,
     blockPunishWindowFrames: snapshot.blockPunishWindowFrames,
+    forcedCrouchFrames: snapshot.forcedCrouchFrames ?? base.forcedCrouchFrames,
     getupInvulnerableFrames: snapshot.getupInvulnerableFrames,
     getupForward: snapshot.getupForward,
     getupLane: snapshot.getupLane,

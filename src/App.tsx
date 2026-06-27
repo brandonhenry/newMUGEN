@@ -26,7 +26,7 @@ import {
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, clearImageVoxelCacheForFrame, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
@@ -630,6 +630,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (override.tracking && trackingOptions.includes(override.tracking)) next.tracking = override.tracking;
   if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
   if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
+  if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
   return next;
 }
@@ -4212,7 +4213,8 @@ function formatFrameSummary(move: MoveDefinition | null) {
   if (!move) return 'No move data';
   const hitParts = [
     move.knockdown ? 'KD' : (move.launchHeight ?? 0) > 0 ? 'Launch' : signedFrame(move.onHitFrames),
-    move.tornado ? 'T!' : null
+    move.tornado ? 'T!' : null,
+    move.endsInCrouch ? 'FC End' : null
   ].filter(Boolean);
   return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitParts.join(' / ')} OH`;
 }
@@ -4771,6 +4773,16 @@ function CharacterViewer({
     updateSelectedFrames([...selectedFrames, path]);
   };
 
+  const removeSelectedFrameAt = (index: number) => {
+    if (selectedFrames.length <= 1) return;
+    updateSelectedFrames(selectedFrames.filter((_, frameIndex) => frameIndex !== index));
+  };
+
+  const appendDuplicateFrame = (path: string, event?: ReactMouseEvent<HTMLElement>) => {
+    event?.preventDefault();
+    updateSelectedFrames([...selectedFrames, path]);
+  };
+
   const saveSpriteFrame = async (edit: SpriteFrameEdit, pngDataUrl: string) => {
     setSpriteSaveStatus('saving');
     try {
@@ -4829,7 +4841,7 @@ function CharacterViewer({
     if (!file || !isLocalDev) return;
     setSpriteSheetImportStatus('working');
     try {
-      const result = await detectSpriteSheetFrames(file);
+      const result = await detectSpriteSheetFrames(file, { preferSpriteLikeComponents: true });
       const sheetId = uniqueSpriteSheetId(active, file.name);
       const response = await fetch('/__kore/dev/import-character-spritesheet', {
         method: 'POST',
@@ -5177,7 +5189,12 @@ function CharacterViewer({
               )}
               <div className="selected-frame-strip" aria-label="Selected frames">
                 {selectedFrames.map((frame, index) => (
-                  <button key={`${frame}-${index}`} onClick={() => toggleFrame(frame)} title={`Remove frame ${getFrameIndex(frame)}`}>
+                  <button
+                    key={`${frame}-${index}`}
+                    onClick={() => removeSelectedFrameAt(index)}
+                    onContextMenu={(event) => appendDuplicateFrame(frame, event)}
+                    title={`Frame ${getFrameIndex(frame)}. Click to remove this occurrence. Right-click to duplicate it at the end.`}
+                  >
                     <img src={frame} alt={`Selected frame ${getFrameIndex(frame)}`} />
                     <span>{getFrameIndex(frame)}</span>
                   </button>
@@ -5189,7 +5206,8 @@ function CharacterViewer({
                     key={frame}
                     className={selectedFrameSet.has(frame) ? 'active' : ''}
                     onClick={() => toggleFrame(frame)}
-                    title={`Frame ${getFrameIndex(frame)}`}
+                    onContextMenu={(event) => appendDuplicateFrame(frame, event)}
+                    title={`Frame ${getFrameIndex(frame)}. Click to add/remove. Right-click to append a duplicate.`}
                   >
                     <img src={frame} alt={`Frame ${getFrameIndex(frame)}`} loading="lazy" />
                     <span>{getFrameIndex(frame)}</span>
@@ -6053,7 +6071,11 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const totalFrames = move.startupFrames + move.activeFrames + move.recoveryFrames;
   const forwardForceStart = move.forwardForceStartFrame ?? 1;
   const forwardForceEnd = move.forwardForceEndFrame ?? totalFrames;
-  const resultLabel = [move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames), move.tornado ? 'T!' : null].filter(Boolean).join(' / ');
+  const resultLabel = [
+    move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames),
+    move.tornado ? 'T!' : null,
+    move.endsInCrouch ? 'FC End' : null
+  ].filter(Boolean).join(' / ');
   const updateNumber = (key: keyof MoveOverride, value: string, min = Number.NEGATIVE_INFINITY) => {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return;
@@ -6075,7 +6097,7 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
         <FrameNumberInput label="On Hit" value={move.onHitFrames} onChange={(value) => updateNumber('onHitFrames', value)} />
         <FrameNumberInput label="Counter Hit" value={move.onCounterHitFrames} onChange={(value) => updateNumber('onCounterHitFrames', value)} />
         <FrameNumberInput label="Damage" value={move.damage} min={1} onChange={(value) => updateNumber('damage', value, 1)} />
-        <FrameNumberInput label="Block Dmg" value={move.blockDamage} min={0} onChange={(value) => updateNumber('blockDamage', value, 0)} />
+        <FrameNumberInput label="Block Damage" value={move.blockDamage} min={0} onChange={(value) => updateNumber('blockDamage', value, 0)} />
         <label>
           <span>Hit Level</span>
           <select value={move.hitLevel} onChange={(event) => onChange({ hitLevel: event.target.value as HitLevel })}>
@@ -6128,6 +6150,10 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
         <label className="frame-toggle">
           <span>Tornado</span>
           <input type="checkbox" checked={Boolean(move.tornado)} onChange={(event) => onChange({ tornado: event.target.checked })} />
+        </label>
+        <label className="frame-toggle">
+          <span>End Crouch</span>
+          <input type="checkbox" checked={Boolean(move.endsInCrouch)} onChange={(event) => onChange({ endsInCrouch: event.target.checked })} />
         </label>
       </div>
     </section>
@@ -7049,7 +7075,7 @@ function CharacterImportScreen({
     setDetectStatus('working');
     setSaveStatus('idle');
     try {
-      const result = await detectSpriteSheetFrames(file);
+      const result = await detectSpriteSheetFrames(file, { preferSpriteLikeComponents: true });
       setSheetName(file.name);
       setSheetDataUrl(result.sheetDataUrl);
       setDetectedFrames(result.frames);
@@ -7239,7 +7265,7 @@ function slugifyCharacterId(value: string) {
   return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 32) || 'imported-fighter';
 }
 
-async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: string; frames: ImportedFrame[] }> {
+async function detectSpriteSheetFrames(file: File, options: { preferSpriteLikeComponents?: boolean } = {}): Promise<{ sheetDataUrl: string; frames: ImportedFrame[] }> {
   const sheetDataUrl = await readFileAsDataUrl(file);
   const image = await loadImage(sheetDataUrl);
   const canvas = document.createElement('canvas');
@@ -7299,9 +7325,12 @@ async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: stri
     });
   });
 
-  const connectedBoxes = (usesAlphaBackground || usesMaskedBackground)
+  const rawConnectedBoxes = (usesAlphaBackground || usesMaskedBackground)
     ? detectConnectedSpriteBoxes(pixels.data, canvas.width, canvas.height, background, isInkAt)
     : [];
+  const connectedBoxes = options.preferSpriteLikeComponents
+    ? filterSpriteLikeBoxes(pixels.data, canvas.width, rawConnectedBoxes, isInkAt)
+    : rawConnectedBoxes;
   const projectionArea = boxes.reduce((sum, entry) => sum + Math.max(0, entry.box[2] - entry.box[0]) * Math.max(0, entry.box[3] - entry.box[1]), 0);
   const connectedArea = connectedBoxes.reduce((sum, entry) => sum + Math.max(0, entry.box[2] - entry.box[0]) * Math.max(0, entry.box[3] - entry.box[1]), 0);
   const boxesToUse = connectedBoxes.length > 1 && (boxes.length <= 1 || connectedBoxes.length >= boxes.length || projectionArea > connectedArea * 1.8)
@@ -7309,7 +7338,7 @@ async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: stri
     : boxes;
 
   const frames = boxesToUse
-    .sort((a, b) => (a.box[1] - b.box[1]) || (a.box[0] - b.box[0]))
+    .sort((a, b) => (a.row - b.row) || (a.box[0] - b.box[0]) || (a.box[1] - b.box[1]))
     .map((entry, index) => ({
       index,
       box: entry.box,
@@ -7321,6 +7350,35 @@ async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: stri
 
   if (frames.length === 0) throw new Error('No frames detected');
   return { sheetDataUrl: canvas.toDataURL('image/png'), frames };
+}
+
+function filterSpriteLikeBoxes(
+  data: Uint8ClampedArray,
+  width: number,
+  boxes: Array<{ box: [number, number, number, number]; row: number }>,
+  isInkAt: (offset: number) => boolean
+) {
+  return boxes.filter((entry) => {
+    let inkPixels = 0;
+    let colorfulPixels = 0;
+    for (let y = entry.box[1]; y < entry.box[3]; y += 1) {
+      for (let x = entry.box[0]; x < entry.box[2]; x += 1) {
+        const offset = (y * width + x) * 4;
+        if (!isInkAt(offset)) continue;
+        inkPixels += 1;
+        const red = data[offset] ?? 0;
+        const green = data[offset + 1] ?? 0;
+        const blue = data[offset + 2] ?? 0;
+        const max = Math.max(red, green, blue);
+        const min = Math.min(red, green, blue);
+        if (max - min >= 30 && max >= 72) colorfulPixels += 1;
+      }
+    }
+    const widthPx = entry.box[2] - entry.box[0];
+    const heightPx = entry.box[3] - entry.box[1];
+    const colorfulRatio = colorfulPixels / Math.max(1, inkPixels);
+    return colorfulPixels >= 8 || colorfulRatio >= 0.025 || (heightPx >= 24 && widthPx >= 18 && colorfulPixels >= 3);
+  });
 }
 
 function buildSpriteSheetBackgroundMask(data: Uint8ClampedArray, width: number, height: number, backgrounds: Array<[number, number, number]>) {
@@ -7714,7 +7772,7 @@ function buildImportedMoves(): MoveDefinition[] {
       activeFrames: 2,
       recoveryFrames: 12,
       damage: 7,
-      blockDamage: 1,
+      blockDamage: 0,
       hitLevel: 'high',
       onBlockFrames: 1,
       onHitFrames: 8,
@@ -7734,7 +7792,7 @@ function buildImportedMoves(): MoveDefinition[] {
       activeFrames: 3,
       recoveryFrames: 18,
       damage: 11,
-      blockDamage: 2,
+      blockDamage: 0,
       hitLevel: 'mid',
       onBlockFrames: -8,
       onHitFrames: 4,
@@ -7754,7 +7812,7 @@ function buildImportedMoves(): MoveDefinition[] {
       activeFrames: 3,
       recoveryFrames: 24,
       damage: 18,
-      blockDamage: 4,
+      blockDamage: 0,
       hitLevel: 'mid',
       onBlockFrames: -13,
       onHitFrames: 18,
@@ -7775,7 +7833,7 @@ function buildImportedMoves(): MoveDefinition[] {
       activeFrames: 4,
       recoveryFrames: 25,
       damage: 16,
-      blockDamage: 3,
+      blockDamage: 0,
       hitLevel: 'mid',
       onBlockFrames: -9,
       onHitFrames: 14,

@@ -1066,6 +1066,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     stunFramesRemaining: 0,
     blockstunFramesRemaining: 0,
     blockPunishWindowFrames: 0,
+    forcedCrouchFrames: 0,
     getupInvulnerableFrames: 0,
     getupForward: 0,
     getupLane: 0,

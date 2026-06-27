@@ -1192,6 +1192,8 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'launchVelocity',
     'juggleRefloatVelocity',
     'juggleGravityScale',
+    'tornado',
+    'endsInCrouch',
     'tracking',
     'armorStartFrame',
     'armorEndFrame',
@@ -1202,7 +1204,7 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     Object.entries(override).filter(([key, value]) => {
       if (!allowed.has(key)) return false;
       if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
-      if (key === 'knockdown') return typeof value === 'boolean';
+      if (key === 'knockdown' || key === 'tornado' || key === 'endsInCrouch') return typeof value === 'boolean';
       if (key === 'cancelWindows') return Array.isArray(value);
       return Number.isFinite(value);
     })

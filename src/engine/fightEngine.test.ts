@@ -102,6 +102,15 @@ describe('character manifests', () => {
     }
   });
 
+  it('ships starter block damage disabled by default so Characters controls chip damage', () => {
+    for (const character of starterCharacters) {
+      const baseChipMoves = character.moves.filter((move) => move.blockDamage > 0);
+      const overrideChipMoves = Object.values(character.moveOverrides ?? {}).filter((move) => (move.blockDamage ?? 0) > 0);
+
+      expect([...baseChipMoves, ...overrideChipMoves].length, `${character.displayName} default chip count`).toBe(0);
+    }
+  });
+
   it('keeps starter and shared string damage inside the v1 balance budget', () => {
     for (const character of starterCharacters) {
       const authoredMoves = [
@@ -1478,7 +1487,16 @@ describe('fight engine', () => {
   });
 
   it('applies block chip instead of full damage', () => {
-    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const chipCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moveOverrides: {
+        ...(starterCharacters[0].moveOverrides ?? {}),
+        jableft: {
+          blockDamage: 3
+        }
+      }
+    };
+    let match = createMatch(chipCharacter, starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;
@@ -1491,23 +1509,21 @@ describe('fight engine', () => {
       match = stepMatch(match, attack, block, 1 / 60);
       attack.jab = false;
     }
-    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].blockDamage);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - 3);
   });
 
   it('lets mid and low hit properties beat standing block', () => {
     const attackWithLevel = (hitLevel: MoveDefinition['hitLevel']) => {
       const attacker: CharacterDefinition = {
         ...starterCharacters[0],
-        moves: starterCharacters[0].moves.map((move) =>
-          move.input === 'jab'
-            ? {
-                ...move,
-                damage: 10,
-                blockDamage: 1,
-                hitLevel
-              }
-            : move
-        )
+        moveOverrides: {
+          ...(starterCharacters[0].moveOverrides ?? {}),
+          jableft: {
+            damage: 10,
+            blockDamage: 1,
+            hitLevel
+          }
+        }
       };
       let match = createMatch(attacker, starterCharacters[1], stages[0], 'local2p');
       match.phase = 'fighting';
@@ -1534,16 +1550,14 @@ describe('fight engine', () => {
     const attackCrouchBlockWithLevel = (hitLevel: MoveDefinition['hitLevel']) => {
       const attacker: CharacterDefinition = {
         ...starterCharacters[0],
-        moves: starterCharacters[0].moves.map((move) =>
-          move.input === 'jab'
-            ? {
-                ...move,
-                damage: 10,
-                blockDamage: 1,
-                hitLevel
-              }
-            : move
-        )
+        moveOverrides: {
+          ...(starterCharacters[0].moveOverrides ?? {}),
+          jableft: {
+            damage: 10,
+            blockDamage: 1,
+            hitLevel
+          }
+        }
       };
       let match = createMatch(attacker, starterCharacters[1], stages[0], 'local2p');
       match.phase = 'fighting';
@@ -1890,6 +1904,65 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].state).toBe('attack');
     expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:FC+1');
+  });
+
+  it('lets moves end directly in held crouch stance', () => {
+    const crouchEndCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? { ...move, startupFrames: 1, activeFrames: 1, recoveryFrames: 1, whiffRecoveryFrames: 0, endsInCrouch: true }
+          : move
+      )
+    };
+    let match = createMatch(crouchEndCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+
+    const heldCrouch = emptyInputFrame();
+    heldCrouch.down = true;
+    for (let i = 0; i < 30 && match.fighters[0].currentMove; i += 1) {
+      match = stepMatch(match, heldCrouch, emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].state).toBe('crouch');
+    expect(match.fighters[0].forcedCrouchFrames).toBe(0);
+  });
+
+  it('shows a forced crouch exit before idle when a crouch-ending move is not held down', () => {
+    const crouchEndCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? { ...move, startupFrames: 1, activeFrames: 1, recoveryFrames: 1, whiffRecoveryFrames: 0, endsInCrouch: true }
+          : move
+      )
+    };
+    let match = createMatch(crouchEndCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+
+    for (let i = 0; i < 30 && match.fighters[0].currentMove; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].state).toBe('crouch');
+    expect(match.fighters[0].forcedCrouchFrames).toBeGreaterThan(0);
+
+    for (let i = 0; i < 10; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].state).toBe('idle');
   });
 
   it('keeps standing attacks and while-standing commands working', () => {
