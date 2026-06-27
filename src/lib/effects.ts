@@ -133,6 +133,7 @@ export function sanitizeMoveEffectInstance(instance: unknown): MoveEffectInstanc
     id: safeId(source.id, `fx-${Date.now()}`),
     effectId: safeId(source.effectId, ''),
     label: typeof source.label === 'string' ? source.label : undefined,
+    hitbox: sanitizeEffectHitbox(source.hitbox),
     startFrame: Math.max(0, Math.round(numberOr(source.startFrame, 0))),
     endFrame: source.endFrame === undefined ? undefined : Math.max(0, Math.round(numberOr(source.endFrame, 0))),
     layer: Math.round(numberOr(source.layer, 0)),
@@ -142,6 +143,14 @@ export function sanitizeMoveEffectInstance(instance: unknown): MoveEffectInstanc
     keyframes: sanitizeKeyframes(source.keyframes),
     soundCues: sanitizeSoundCues(source.soundCues)
   };
+}
+
+function sanitizeEffectHitbox(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  const offset = readVec3(source.offset, [0, 0, 0]);
+  const size = readVec3(source.size, [0.8, 0.8, 0.8]).map((entry) => Math.max(0.05, Math.abs(entry))) as Vec3Tuple;
+  return { offset, size };
 }
 
 export function effectTransformAt(effect: CharacterEffectDefinition, instance: MoveEffectInstance, moveFrame: number): EffectTransform {

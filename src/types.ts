@@ -244,6 +244,7 @@ export type MoveEffectInstance = {
   id: string;
   effectId: string;
   label?: string;
+  hitbox?: BoxSpec;
   startFrame: number;
   endFrame?: number;
   layer: number;

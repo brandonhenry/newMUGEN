@@ -16,6 +16,7 @@ import type {
   StageDefinition
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
+import { effectIsActive, effectTransformAt } from '../lib/effects';
 
 const ARENA_LIMIT_X = 18;
 const ARENA_LIMIT_Z = 9;
@@ -1710,12 +1711,11 @@ function tryStartKiClash(match: MatchSnapshot, p1: FighterRuntime, p2: FighterRu
   if (!p1Move.kiBurst || !p2Move.kiBurst) return false;
   if (p1.hitConnected || p2.hitConnected) return false;
   if (!isActiveMoveFrame(p1Move, p1.moveFrame) || !isActiveMoveFrame(p2Move, p2.moveFrame)) return false;
-  const p1Hitbox = moveHitboxToWorldAabb(p1, p1Move.hitbox);
-  const p2Hitbox = moveHitboxToWorldAabb(p2, p2Move.hitbox);
-  if (!boxesIntersect(p1Hitbox, p2Hitbox)) return false;
+  const clashOverlap = findFirstBoxOverlap(getActiveAttackAabbs(p1, p1Move, true), getActiveAttackAabbs(p2, p2Move, true));
+  if (!clashOverlap) return false;
 
   const id = nextHitEventId(match);
-  const contactPoint = getAabbOverlapCenter(p1Hitbox, p2Hitbox);
+  const contactPoint = getAabbOverlapCenter(clashOverlap[0], clashOverlap[1]);
   match.clashState = {
     ...createEmptyClashState(),
     id,
@@ -1905,8 +1905,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const dx = defender.position.x - attacker.position.x;
   const dz = defender.position.z - attacker.position.z;
   const distance = Math.hypot(dx, dz);
-  if (distance > move.range + UNIVERSAL_RANGE_BUFFER) return;
-  if (!hitboxIntersectsAnyHurtbox(attacker, defender, move)) return;
+  const collision = getAttackCollision(attacker, defender, move, distance <= move.range + UNIVERSAL_RANGE_BUFFER);
+  if (!collision) return;
 
   const wasJuggled = defender.state === 'juggle';
   const wasAirborne = isAirborne(defender) || wasJuggled;
@@ -1921,7 +1921,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     juggled: wasJuggled || wasAirborne,
     tornado: Boolean(move.tornado) && wasJuggled,
     kiBurst: Boolean(move.kiBurst)
-  });
+  }, collision.position);
   attacker.hitConnected = true;
   const pushX = distance > 0 ? dx / distance : attacker.facing;
   const pushZ = distance > 0 ? dz / distance : 0;
@@ -2087,14 +2087,15 @@ function pushImpactSparkEvent(
   defender: FighterRuntime,
   move: MoveDefinition,
   kind: ImpactSparkKind,
-  context: { launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {}
+  context: { launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {},
+  position: [number, number, number] = getImpactPosition(attacker, defender, move)
 ) {
   match.impactEvents = [
     ...match.impactEvents,
     {
       id,
       kind,
-      position: getImpactPosition(attacker, defender, move),
+      position,
       attackerSlot: attacker.slot,
       defenderSlot: defender.slot,
       hitLevel: move.hitLevel,
@@ -2252,24 +2253,110 @@ type Aabb = {
   maxZ: number;
 };
 
-function hitboxIntersectsAnyHurtbox(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
-  const attackBox = moveHitboxToWorldAabb(attacker, move.hitbox);
-  return getCurrentHurtboxes(defender).some((hurtbox) => boxesIntersect(attackBox, hurtboxToWorldAabb(defender, hurtbox)));
+function getAttackCollision(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean) {
+  const attackBoxes = getActiveAttackAabbs(attacker, move, includeBaseHitbox);
+  const hurtboxes = getCurrentHurtboxes(defender).map((hurtbox) => hurtboxToWorldAabb(defender, hurtbox));
+  for (const attackBox of attackBoxes) {
+    const hurtbox = hurtboxes.find((box) => boxesIntersect(attackBox, box));
+    if (hurtbox) return { attackBox, hurtbox, position: getAabbOverlapCenter(attackBox, hurtbox) };
+  }
+  return null;
 }
 
 function getImpactPosition(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition): [number, number, number] {
-  const attackBox = moveHitboxToWorldAabb(attacker, move.hitbox);
-  const hurtbox = getCurrentHurtboxes(defender)
-    .map((box) => hurtboxToWorldAabb(defender, box))
-    .find((box) => boxesIntersect(attackBox, box));
-  if (!hurtbox) return [defender.position.x, defender.position.y + 1.08, defender.position.z];
-  const minX = Math.max(attackBox.minX, hurtbox.minX);
-  const maxX = Math.min(attackBox.maxX, hurtbox.maxX);
-  const minY = Math.max(attackBox.minY, hurtbox.minY);
-  const maxY = Math.min(attackBox.maxY, hurtbox.maxY);
-  const minZ = Math.max(attackBox.minZ, hurtbox.minZ);
-  const maxZ = Math.min(attackBox.maxZ, hurtbox.maxZ);
-  return [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
+  return getAttackCollision(attacker, defender, move, true)?.position ?? [defender.position.x, defender.position.y + 1.08, defender.position.z];
+}
+
+function getActiveAttackAabbs(attacker: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean) {
+  const boxes = includeBaseHitbox ? [moveHitboxToWorldAabb(attacker, move.hitbox)] : [];
+  return [...boxes, ...getActiveEffectHitboxes(attacker, move)];
+}
+
+function findFirstBoxOverlap(a: Aabb[], b: Aabb[]) {
+  for (const first of a) {
+    const second = b.find((box) => boxesIntersect(first, box));
+    if (second) return [first, second] as const;
+  }
+  return null;
+}
+
+function getActiveEffectHitboxes(attacker: FighterRuntime, move: MoveDefinition) {
+  const moveKey = getEffectMoveKey(attacker, move);
+  if (!moveKey) return [];
+  const effects = attacker.character.effects ?? [];
+  const library = new Map(effects.map((effect) => [effect.id, effect]));
+  const totalFrames = Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames);
+  return (attacker.character.moveEffects?.[moveKey] ?? [])
+    .filter((instance) => effectIsActive(instance, attacker.moveFrame, totalFrames))
+    .flatMap((instance) => {
+      const effect = library.get(instance.effectId);
+      if (!effect) return [];
+      const transform = effectTransformAt(effect, instance, attacker.moveFrame);
+      const anchor = instance.anchor ?? effect.anchor;
+      return [effectHitboxToWorldAabb(attacker, transform, anchor, instance.hitbox)];
+    });
+}
+
+function getEffectMoveKey(attacker: FighterRuntime, move: MoveDefinition) {
+  const baseInputKeys: Record<string, string> = {
+    jab: 'jableft',
+    heavy: 'jabright',
+    kick: 'kickleft',
+    special: 'kickright',
+    '1': 'jableft',
+    '2': 'jabright',
+    '3': 'kickleft',
+    '4': 'kickright'
+  };
+  const candidates = [
+    move.animationKey,
+    move.command ? `cmd:${move.command}` : undefined,
+    move.comboKey,
+    move.id,
+    baseInputKeys[move.input],
+    move.input
+  ].filter((key): key is string => Boolean(key));
+  return candidates.find((key) => attacker.character.moveEffects?.[key]?.length) ?? null;
+}
+
+function effectHitboxToWorldAabb(attacker: FighterRuntime, transform: { position: [number, number, number]; scale: [number, number, number] }, anchor: string, hitbox?: BoxSpec) {
+  const [baseX, baseY, baseZ] = resolveEffectWorldPosition(attacker, transform, anchor);
+  if (hitbox) {
+    const facing = attacker.facing || 1;
+    return makeAabb(
+      baseX + hitbox.offset[2] * facing,
+      baseY + hitbox.offset[1],
+      baseZ + hitbox.offset[0],
+      hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING,
+      hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+      hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING
+    );
+  }
+  const sizeX = Math.max(0.38, Math.abs(transform.scale[0]) * 0.62) + UNIVERSAL_HITBOX_FORWARD_PADDING;
+  const sizeY = Math.max(0.38, Math.abs(transform.scale[1]) * 0.62) + UNIVERSAL_HITBOX_VERTICAL_PADDING;
+  const sizeZ = Math.max(0.36, Math.abs(transform.scale[2]) * 0.62) + UNIVERSAL_HITBOX_LATERAL_PADDING;
+  return makeAabb(baseX, baseY, baseZ, sizeX, sizeY, sizeZ);
+}
+
+function resolveEffectWorldPosition(fighter: FighterRuntime, transform: { position: [number, number, number] }, anchor: string): [number, number, number] {
+  const facing = fighter.facing || 1;
+  const anchorOffsets: Record<string, [number, number, number]> = {
+    root: [0, 0, 0],
+    body: [0, 1.05, 0],
+    head: [0, 1.75, 0],
+    hands: [0.52 * facing, 1.18, 0],
+    feet: [0.18 * facing, 0.28, 0],
+    hitbox: [0.78 * facing, 1.08, 0],
+    world: [0, 0, 0]
+  };
+  const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
+  if (anchor === 'world') return [...transform.position] as [number, number, number];
+  const mirroredX = transform.position[0] * (facing === -1 ? -1 : 1);
+  return [
+    fighter.position.x + offset[0] + mirroredX,
+    fighter.position.y + offset[1] + transform.position[1],
+    fighter.position.z + offset[2] + transform.position[2]
+  ];
 }
 
 function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb {

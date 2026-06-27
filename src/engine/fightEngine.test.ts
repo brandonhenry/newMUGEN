@@ -1168,6 +1168,68 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBeLessThan(starterCharacters[1].stats.health);
   });
 
+  it('lets an active move effect hitbox connect beyond the base move range', () => {
+    const effectAttacker: CharacterDefinition = {
+      ...starterCharacters[0],
+      effects: [{
+        id: 'wide-aura',
+        name: 'Wide Aura',
+        frames: [],
+        fps: 12,
+        loop: false,
+        billboard: true,
+        blendMode: 'additive',
+        anchor: 'body',
+        defaultTransform: {
+          position: [2.25, 0.05, 0],
+          scale: [1.7, 1.7, 1.7],
+          rotation: [0, 0, 0],
+          opacity: 1,
+          color: '#ffffff'
+        }
+      }],
+      moveEffects: {
+        jableft: [{
+          id: 'wide-aura-hit',
+          effectId: 'wide-aura',
+          startFrame: 0,
+          endFrame: 30,
+          layer: 0,
+          mirrorWithFacing: true,
+          keyframes: []
+        }]
+      },
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              range: 0.25,
+              startupFrames: 1,
+              activeFrames: 18,
+              recoveryFrames: 12,
+              hitbox: { offset: [0, 1.1, 0.25], size: [0.12, 0.12, 0.12] }
+            }
+          : move
+      )
+    };
+    let match = createMatch(effectAttacker, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -1.08;
+    match.fighters[1].position.x = 1.18;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 8; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - effectAttacker.moves[0].damage);
+    expect(match.impactEvents[match.impactEvents.length - 1]?.position[0]).toBeGreaterThan(0.45);
+  });
+
   it('lets crouching defenders duck under high jabs', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
