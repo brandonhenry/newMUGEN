@@ -72,6 +72,14 @@ const SIDEWALK_SCALE = 1.15;
 const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
 const KI_CHARGE_DEFAULT_ACTIVE_FRAMES = 18;
 const KI_CHARGE_DEFAULT_RECOVERY_FRAMES = 16;
+const SHADOW_CLONE_CHARACTER_IDS = new Set(['kiro', 'naruto']);
+const SHADOW_CLONE_KI_THRESHOLD = 50;
+const SHADOW_CLONE_DAMAGE_SCALE = 0.34;
+const SHADOW_CLONE_BLOCK_DAMAGE_SCALE = 0.35;
+const SHADOW_CLONE_SPAWN_SMOKE_FRAMES = 24;
+const SHADOW_CLONE_VANISH_SMOKE_FRAMES = 24;
+const SHADOW_CLONE_OFFSET_FORWARD = -0.42;
+const SHADOW_CLONE_OFFSET_LANE = 0.52;
 const CLASH_SEQUENCE_LENGTH = 3;
 const CLASH_INTRO_FRAMES = 45;
 const CLASH_INPUT_FRAMES = 150;
@@ -400,7 +408,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
     juggleTornadoCount: 0,
     juggleGravityScale: JUGGLE_GRAVITY_SCALE,
     blockFlash: 0,
-    hitFlash: 0
+    hitFlash: 0,
+    shadowClone: null,
+    shadowCloneChargeConsumed: false
   };
 }
 
@@ -412,6 +422,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.jumpInputHeld = input.up;
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
+  updateShadowClone(fighter, dt);
   fighter.bufferedMoveFrames = Math.max(0, fighter.bufferedMoveFrames - frameDelta);
   if (fighter.bufferedMoveFrames === 0) fighter.bufferedMoveInput = null;
   fighter.comboTimer = Math.max(0, fighter.comboTimer - dt);
@@ -445,6 +456,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
 
   if (fighter.state === 'chargeKi') {
     handleKiChargeStep(fighter, input, dt);
+    maybeSpawnShadowCloneFromCharge(fighter, opponent);
     applyGravity(fighter, dt);
     updateAttackInputMemory(fighter, input);
     return;
@@ -568,6 +580,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
 
   if (input.charge) {
     startKiCharge(fighter);
+    maybeSpawnShadowCloneFromCharge(fighter, opponent);
     applyGravity(fighter, dt);
     updateAttackInputMemory(fighter, input);
     return;
@@ -666,6 +679,7 @@ function startKiCharge(fighter: FighterRuntime) {
   fighter.whiffRecoveryApplied = false;
   fighter.bufferedMoveInput = null;
   fighter.bufferedMoveFrames = 0;
+  fighter.shadowCloneChargeConsumed = false;
 }
 
 function handleKiChargeStep(fighter: FighterRuntime, input: InputFrame, dt: number) {
@@ -729,12 +743,160 @@ function clearKiChargeState(fighter: FighterRuntime) {
   fighter.hitConnected = false;
   fighter.hitConfirmed = false;
   fighter.whiffRecoveryApplied = false;
+  fighter.shadowCloneChargeConsumed = false;
 }
 
 function resetKiChargeRuntime(fighter: FighterRuntime) {
   fighter.chargePhase = 'none';
   fighter.chargeFrame = 0;
   fighter.chargeCommitted = false;
+}
+
+function isShadowCloneCharacter(fighter: FighterRuntime) {
+  return SHADOW_CLONE_CHARACTER_IDS.has(fighter.character.id.toLowerCase()) || fighter.character.displayName.toLowerCase() === 'naruto';
+}
+
+function maybeSpawnShadowCloneFromCharge(fighter: FighterRuntime, opponent: FighterRuntime) {
+  if (!isShadowCloneCharacter(fighter)) return;
+  if (fighter.shadowClone || fighter.shadowCloneChargeConsumed) return;
+  if (fighter.state !== 'chargeKi' || fighter.chargePhase === 'startup' || fighter.chargePhase === 'recovery') return;
+  if (fighter.ki < SHADOW_CLONE_KI_THRESHOLD) return;
+
+  const sideSign = fighter.slot === 1 ? -1 : 1;
+  const dx = opponent.position.x - fighter.position.x;
+  const dz = opponent.position.z - fighter.position.z;
+  const distance = Math.hypot(dx, dz) || 1;
+  const towardX = dx / distance;
+  const towardZ = dz / distance;
+  const laneX = -towardZ * sideSign;
+  const laneZ = towardX * sideSign;
+  fighter.shadowClone = {
+    phase: 'active',
+    position: {
+      x: fighter.position.x + towardX * SHADOW_CLONE_OFFSET_FORWARD + laneX * SHADOW_CLONE_OFFSET_LANE,
+      y: Math.max(0, fighter.position.y),
+      z: fighter.position.z + towardZ * SHADOW_CLONE_OFFSET_FORWARD + laneZ * SHADOW_CLONE_OFFSET_LANE
+    },
+    velocityY: 0,
+    facing: fighter.facing,
+    facingYaw: fighter.facingYaw,
+    state: 'idle',
+    currentMove: null,
+    moveInstanceId: fighter.moveInstanceId + 1,
+    moveFrame: 0,
+    actionFramesRemaining: 0,
+    hitConnected: false,
+    attackConsumed: false,
+    vanishOnLanding: false,
+    spawnSmokeFrames: SHADOW_CLONE_SPAWN_SMOKE_FRAMES,
+    vanishSmokeFrames: 0
+  };
+  fighter.shadowCloneChargeConsumed = true;
+}
+
+function startShadowCloneAttack(fighter: FighterRuntime, opponent: FighterRuntime, move: MoveDefinition) {
+  const clone = fighter.shadowClone;
+  if (!clone || clone.phase !== 'active' || clone.attackConsumed || clone.state === 'juggle' || clone.state === 'knockdown') return;
+
+  const dx = opponent.position.x - fighter.position.x;
+  const dz = opponent.position.z - fighter.position.z;
+  const distance = Math.hypot(dx, dz) || 1;
+  const towardX = dx / distance;
+  const towardZ = dz / distance;
+  const laneSign = fighter.slot === 1 ? -1 : 1;
+  clone.position.x = fighter.position.x - towardX * 0.3 + -towardZ * laneSign * SHADOW_CLONE_OFFSET_LANE;
+  clone.position.y = Math.max(0, fighter.position.y);
+  clone.position.z = fighter.position.z - towardZ * 0.3 + towardX * laneSign * SHADOW_CLONE_OFFSET_LANE;
+  clone.velocityY = 0;
+  clone.facing = fighter.facing;
+  clone.facingYaw = fighter.facingYaw;
+  clone.state = 'attack';
+  clone.currentMove = move;
+  clone.moveInstanceId += 1;
+  clone.moveFrame = 0;
+  clone.actionFramesRemaining = totalMoveFrames(move);
+  clone.hitConnected = false;
+  clone.attackConsumed = true;
+  clone.vanishOnLanding = false;
+}
+
+function updateShadowClone(fighter: FighterRuntime, dt: number) {
+  const clone = fighter.shadowClone;
+  if (!clone) return;
+  const frameDelta = secondsToFrames(dt);
+  clone.spawnSmokeFrames = Math.max(0, clone.spawnSmokeFrames - frameDelta);
+  clone.vanishSmokeFrames = Math.max(0, clone.vanishSmokeFrames - frameDelta);
+
+  if (clone.phase === 'vanishing') {
+    if (clone.vanishSmokeFrames === 0) fighter.shadowClone = null;
+    return;
+  }
+
+  if (clone.state === 'attack' && clone.currentMove) {
+    clone.moveFrame += frameDelta;
+    clone.actionFramesRemaining = Math.max(0, clone.actionFramesRemaining - frameDelta);
+    if (clone.actionFramesRemaining === 0) {
+      scheduleShadowCloneVanish(fighter);
+    }
+    return;
+  }
+
+  if (clone.state === 'juggle' || clone.state === 'hit' || clone.state === 'knockdown') {
+    const landed = applyShadowCloneGravity(clone, dt);
+    if ((landed || clone.state === 'hit') && clone.vanishOnLanding) {
+      scheduleShadowCloneVanish(fighter);
+    }
+  }
+}
+
+function applyShadowCloneGravity(clone: NonNullable<FighterRuntime['shadowClone']>, dt: number) {
+  if (clone.position.y <= 0 && clone.velocityY <= 0) {
+    clone.position.y = 0;
+    clone.velocityY = 0;
+    return false;
+  }
+  clone.velocityY -= 9.8 * dt * JUGGLE_GRAVITY_SCALE;
+  clone.position.y += clone.velocityY * dt;
+  if (clone.position.y <= 0) {
+    clone.position.y = 0;
+    clone.velocityY = 0;
+    return true;
+  }
+  return false;
+}
+
+function scheduleShadowCloneVanish(fighter: FighterRuntime) {
+  const clone = fighter.shadowClone;
+  if (!clone) return;
+  clone.phase = 'vanishing';
+  clone.state = 'idle';
+  clone.currentMove = null;
+  clone.actionFramesRemaining = 0;
+  clone.moveFrame = 0;
+  clone.vanishSmokeFrames = Math.max(clone.vanishSmokeFrames, SHADOW_CLONE_VANISH_SMOKE_FRAMES);
+}
+
+function mirrorShadowCloneHit(fighter: FighterRuntime, move: MoveDefinition, forceKnockdown: boolean, entersJuggle: boolean) {
+  const clone = fighter.shadowClone;
+  if (!clone || clone.phase !== 'active') return;
+  clone.currentMove = null;
+  clone.moveFrame = 0;
+  clone.actionFramesRemaining = 0;
+  clone.hitConnected = false;
+  clone.attackConsumed = true;
+  clone.vanishOnLanding = true;
+  if (forceKnockdown) {
+    clone.state = 'knockdown';
+    clone.position.y = Math.max(clone.position.y, 0.32);
+    clone.velocityY = Math.max(clone.velocityY, 1.55);
+  } else if (entersJuggle || (move.launchHeight ?? 0) > 0) {
+    clone.state = 'juggle';
+    clone.position.y = Math.max(clone.position.y, 0.9);
+    clone.velocityY = Math.max(clone.velocityY, Math.min(4.8, getJuggleVelocity(move, false) * 0.72));
+  } else {
+    clone.state = 'hit';
+    clone.velocityY = Math.max(clone.velocityY, 0.75);
+  }
 }
 
 function getFreshMoveInput(fighter: FighterRuntime, input: InputFrame): MoveInput | null {
@@ -834,6 +996,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   if (forwardNudge || specialNudge) {
     moveAlongOpponentAxis(fighter, opponent, forwardNudge + specialNudge);
   }
+  startShadowCloneAttack(fighter, opponent, resolvedMove);
   return true;
 }
 
@@ -1705,6 +1868,8 @@ function resolveHits(match: MatchSnapshot) {
   if (tryStartKiClash(match, a, b)) return;
   tryHit(match, a, b);
   tryHit(match, b, a);
+  tryShadowCloneHit(match, a, b);
+  tryShadowCloneHit(match, b, a);
 }
 
 function tryStartKiClash(match: MatchSnapshot, p1: FighterRuntime, p2: FighterRuntime) {
@@ -1984,6 +2149,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   defender.currentMove = null;
   defender.moveFrame = 0;
   resetKiChargeRuntime(defender);
+  mirrorShadowCloneHit(defender, move, forceKnockdown, entersJuggle);
 
   if (forceKnockdown) {
     enterKnockdown(defender, Math.max(stunFrames, KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES));
@@ -2019,6 +2185,119 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
   defender.position.x += pushX * move.pushback * 0.28;
   defender.position.z += pushZ * move.pushback * 0.28;
+}
+
+function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
+  const clone = attacker.shadowClone;
+  const sourceMove = clone?.currentMove;
+  if (!clone || clone.phase !== 'active' || clone.state !== 'attack' || !sourceMove || clone.hitConnected) return;
+  if (defender.state === 'knockdown' || defender.getupInvulnerableFrames > 0) return;
+  if (!isActiveMoveFrame(sourceMove, clone.moveFrame)) return;
+
+  const cloneFighter = makeShadowCloneFighter(attacker, clone);
+  const dx = defender.position.x - clone.position.x;
+  const dz = defender.position.z - clone.position.z;
+  const distance = Math.hypot(dx, dz);
+  const weakMove = buildShadowCloneMove(sourceMove);
+  const collision = getAttackCollision(cloneFighter, defender, weakMove, distance <= weakMove.range + UNIVERSAL_RANGE_BUFFER);
+  if (!collision) return;
+
+  clone.hitConnected = true;
+  const blocked = canDefenderBlockMove(defender, cloneFighter, weakMove);
+  const impactId = nextHitEventId(match);
+  pushImpactSparkEvent(match, impactId, attacker, defender, weakMove, blocked ? 'block' : 'hit', {
+    juggled: defender.state === 'juggle' || isAirborne(defender),
+    kiBurst: Boolean(sourceMove.kiBurst)
+  }, collision.position);
+
+  const pushX = distance > 0 ? dx / distance : clone.facing;
+  const pushZ = distance > 0 ? dz / distance : 0;
+  const attackerRemaining = Math.max(0, clone.actionFramesRemaining);
+  if (blocked) {
+    attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_BLOCK_GAIN * 0.5)), 0, KI_MAX);
+    defender.ki = clamp(defender.ki + Math.max(1, Math.round(KI_DEFENDER_BLOCK_GAIN * 0.6)), 0, KI_MAX);
+    defender.hp = Math.max(0, defender.hp - weakMove.blockDamage);
+    const effectiveOnBlockFrames = getEffectiveOnBlockFrames(weakMove);
+    defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
+    defender.stunFramesRemaining = 0;
+    defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
+    defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
+    defender.position.x += pushX * weakMove.blockPushback * 0.12;
+    defender.position.z += pushZ * weakMove.blockPushback * 0.12;
+    return;
+  }
+
+  attacker.hitConfirmed = true;
+  attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_HIT_GAIN * 0.45)), 0, KI_MAX);
+  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + weakMove.damage);
+  pushCombatPopupEvent(match, impactId, attacker, weakMove, attacker.comboHits >= 2 ? 'combo' : null, {
+    juggled: defender.state === 'juggle' || isAirborne(defender),
+    kiBurst: Boolean(sourceMove.kiBurst)
+  });
+
+  const wasJuggled = defender.state === 'juggle';
+  const stunFrames = Math.max(8, attackerRemaining + Math.round(weakMove.onHitFrames * 0.72));
+  defender.hp = Math.max(0, defender.hp - weakMove.damage);
+  defender.blockstunFramesRemaining = 0;
+  defender.blockPunishWindowFrames = 0;
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  resetKiChargeRuntime(defender);
+  defender.stunFramesRemaining = stunFrames;
+  defender.stunTimer = framesToSeconds(stunFrames);
+  defender.actionFramesRemaining = stunFrames;
+  defender.actionTimer = framesToSeconds(stunFrames);
+  defender.state = wasJuggled || isAirborne(defender) ? 'juggle' : 'hit';
+  if (defender.state === 'juggle') {
+    defender.position.y = Math.max(defender.position.y, JUGGLE_REFLOAT_MIN_HEIGHT * 0.86);
+    defender.velocityY = Math.max(defender.velocityY, Math.min(3.9, JUGGLE_REFLOAT_VELOCITY * 0.78));
+    defender.juggleDamage += weakMove.damage;
+    defender.juggleSequenceDamage += weakMove.damage;
+    applyJuggleFloatCorrection(cloneFighter, defender);
+  }
+  defender.position.x += pushX * weakMove.pushback * 0.18;
+  defender.position.z += pushZ * weakMove.pushback * 0.18;
+}
+
+function buildShadowCloneMove(move: MoveDefinition): MoveDefinition {
+  return {
+    ...move,
+    id: `${move.id}-shadow-clone`,
+    label: `Shadow Clone ${move.label}`,
+    damage: Math.max(1, Math.round(move.damage * SHADOW_CLONE_DAMAGE_SCALE)),
+    blockDamage: Math.max(0, Math.round(move.blockDamage * SHADOW_CLONE_BLOCK_DAMAGE_SCALE)),
+    onBlockFrames: Math.min(move.onBlockFrames, -1),
+    onHitFrames: Math.max(6, Math.round(move.onHitFrames * 0.72)),
+    onCounterHitFrames: Math.max(8, Math.round(move.onCounterHitFrames * 0.72)),
+    pushback: move.pushback * 0.62,
+    blockPushback: move.blockPushback * 0.58,
+    launchHeight: 0,
+    knockdown: false,
+    tornado: false
+  };
+}
+
+function makeShadowCloneFighter(source: FighterRuntime, clone: NonNullable<FighterRuntime['shadowClone']>): FighterRuntime {
+  return {
+    ...source,
+    position: { ...clone.position },
+    velocityY: clone.velocityY,
+    facing: clone.facing,
+    facingYaw: clone.facingYaw,
+    state: clone.state,
+    currentMove: clone.currentMove,
+    moveInstanceId: clone.moveInstanceId,
+    actionFramesRemaining: clone.actionFramesRemaining,
+    actionTimer: framesToSeconds(clone.actionFramesRemaining),
+    moveFrame: clone.moveFrame,
+    hitConnected: clone.hitConnected,
+    hitConfirmed: false,
+    blockFlash: 0,
+    hitFlash: 0,
+    shadowClone: null,
+    shadowCloneChargeConsumed: true
+  };
 }
 
 function isWhiffPunish(defender: FighterRuntime) {
@@ -2456,6 +2735,8 @@ function finishRound(match: MatchSnapshot) {
     fighter.stunFramesRemaining = 0;
     fighter.blockstunFramesRemaining = 0;
     fighter.blockPunishWindowFrames = 0;
+    fighter.shadowClone = null;
+    fighter.shadowCloneChargeConsumed = false;
   });
 }
 
@@ -2469,6 +2750,8 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.fighters.forEach((fighter) => {
     if (fighter.hp <= 0) fighter.hp = fighter.character.stats.health;
     fighter.roundsWon = 0;
+    fighter.shadowClone = null;
+    fighter.shadowCloneChargeConsumed = false;
   });
 }
 
@@ -2496,6 +2779,8 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.getupInvulnerableFrames = 0;
     fighter.velocityY = 0;
     fighter.position.y = 0;
+    fighter.shadowClone = null;
+    fighter.shadowCloneChargeConsumed = false;
   });
 }
 
@@ -3276,7 +3561,14 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       comboSequence: [...fighter.comboSequence],
       comboUsedKeys: [...fighter.comboUsedKeys],
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
-      previousAttackInputs: { ...fighter.previousAttackInputs }
+      previousAttackInputs: { ...fighter.previousAttackInputs },
+      shadowClone: fighter.shadowClone
+        ? {
+            ...fighter.shadowClone,
+            position: { ...fighter.shadowClone.position },
+            currentMove: fighter.shadowClone.currentMove
+          }
+        : null
     })) as [FighterRuntime, FighterRuntime]
   };
 }

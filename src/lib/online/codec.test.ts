@@ -28,6 +28,23 @@ describe('online codec', () => {
     match.fighters[0].juggleDamage = 31;
     match.fighters[0].juggleSequenceDamage = 9;
     match.fighters[0].juggleTornadoCount = 2;
+    match.fighters[0].shadowClone = {
+      phase: 'active',
+      position: { x: 0.4, y: 0.2, z: -0.5 },
+      velocityY: 1.2,
+      facing: 1,
+      facingYaw: Math.PI / 2,
+      state: 'attack',
+      currentMove: match.fighters[0].character.moves[0],
+      moveInstanceId: 99,
+      moveFrame: 6,
+      actionFramesRemaining: 14,
+      hitConnected: false,
+      attackConsumed: true,
+      vanishOnLanding: false,
+      spawnSmokeFrames: 12,
+      vanishSmokeFrames: 0
+    };
     match.fighters[1].roundsWon = 1;
     match.phase = 'roundOver';
     match.message = 'K.O.';
@@ -59,6 +76,8 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].juggleDamage).toBe(31);
     expect(hydrated.fighters[0].juggleSequenceDamage).toBe(9);
     expect(hydrated.fighters[0].juggleTornadoCount).toBe(2);
+    expect(hydrated.fighters[0].shadowClone?.position).toEqual({ x: 0.4, y: 0.2, z: -0.5 });
+    expect(hydrated.fighters[0].shadowClone?.currentMove?.input).toBe('jab');
     expect(hydrated.fighters[1].roundsWon).toBe(1);
     expect(hydrated.aiSeed).toBe(match.aiSeed);
     expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);

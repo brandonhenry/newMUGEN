@@ -2220,6 +2220,50 @@ describe('fight engine', () => {
     expect(match.fighters[0].chargePhase).toBe('hold');
   });
 
+  it('spawns Naruto shadow clone after charging past half ki', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 50;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].shadowClone?.phase).toBe('active');
+    expect(match.fighters[0].shadowClone?.state).toBe('idle');
+    expect(match.fighters[1].shadowClone).toBeNull();
+  });
+
+  it('mirrors Naruto next attack once with the spawned shadow clone', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 60;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+
+    const burst = emptyInputFrame();
+    burst.charge = true;
+    burst.jab = true;
+    match = stepMatch(match, burst, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].shadowClone?.state).toBe('attack');
+    expect(match.fighters[0].shadowClone?.currentMove?.input).toBe('jab');
+    expect(match.fighters[0].shadowClone?.attackConsumed).toBe(true);
+
+    for (let i = 0; i < 70; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].shadowClone).toBeNull();
+  });
+
   it('cancels charge without recovery before the commit window', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

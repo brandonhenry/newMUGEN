@@ -424,6 +424,24 @@ export type GameSettings = {
   };
 };
 
+export type ShadowCloneRuntime = {
+  phase: 'active' | 'vanishing';
+  position: { x: number; y: number; z: number };
+  velocityY: number;
+  facing: 1 | -1;
+  facingYaw: number;
+  state: FighterState;
+  currentMove: MoveDefinition | null;
+  moveInstanceId: number;
+  moveFrame: number;
+  actionFramesRemaining: number;
+  hitConnected: boolean;
+  attackConsumed: boolean;
+  vanishOnLanding: boolean;
+  spawnSmokeFrames: number;
+  vanishSmokeFrames: number;
+};
+
 export type MatchOptions = {
   roundTime?: number;
   trainingInfiniteHealth?: boolean;
@@ -485,6 +503,8 @@ export type FighterRuntime = {
   juggleGravityScale: number;
   blockFlash: number;
   hitFlash: number;
+  shadowClone: ShadowCloneRuntime | null;
+  shadowCloneChargeConsumed: boolean;
 };
 
 export type MatchSnapshot = {

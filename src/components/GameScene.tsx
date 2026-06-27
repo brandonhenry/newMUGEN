@@ -69,10 +69,97 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <Arena stage={match.stage} />
       <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
       <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
+      <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
+      <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
       <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
       <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
     </Canvas>
+  );
+}
+
+const SHADOW_CLONE_SMOKE_PATH = '/effects/shadow-clone-smoke.png';
+const SHADOW_CLONE_SMOKE_COLUMNS = 4;
+const SHADOW_CLONE_SMOKE_ROWS = 3;
+const SHADOW_CLONE_SMOKE_TOTAL_FRAMES = SHADOW_CLONE_SMOKE_COLUMNS * SHADOW_CLONE_SMOKE_ROWS;
+const SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES = 24;
+
+function ShadowCloneLayer({ fighter, timeScale }: { fighter: FighterRuntime; timeScale: number }) {
+  const clone = fighter.shadowClone;
+  if (!clone) return null;
+  const cloneFighter = clone.phase === 'active' ? makeShadowCloneRenderFighter(fighter) : null;
+  const showSmoke = clone.spawnSmokeFrames > 0 || clone.vanishSmokeFrames > 0;
+  return (
+    <>
+      {cloneFighter ? <FighterRig fighter={cloneFighter} timeScale={timeScale} /> : null}
+      {showSmoke ? <ShadowCloneSmoke clone={clone} /> : null}
+    </>
+  );
+}
+
+function makeShadowCloneRenderFighter(fighter: FighterRuntime): FighterRuntime | null {
+  const clone = fighter.shadowClone;
+  if (!clone || clone.phase !== 'active') return null;
+  return {
+    ...fighter,
+    hp: 1,
+    ki: 0,
+    position: { ...clone.position },
+    velocityY: clone.velocityY,
+    facing: clone.facing,
+    facingYaw: clone.facingYaw,
+    state: clone.state,
+    currentMove: clone.currentMove,
+    moveInstanceId: clone.moveInstanceId,
+    actionTimer: clone.actionFramesRemaining / 60,
+    actionFramesRemaining: clone.actionFramesRemaining,
+    moveFrame: clone.moveFrame,
+    hitConnected: clone.hitConnected,
+    hitConfirmed: false,
+    blockFlash: 0,
+    hitFlash: 0,
+    shadowClone: null,
+    shadowCloneChargeConsumed: true
+  };
+}
+
+function ShadowCloneSmoke({ clone }: { clone: NonNullable<FighterRuntime['shadowClone']> }) {
+  const sourceTexture = useLoader(THREE.TextureLoader, SHADOW_CLONE_SMOKE_PATH);
+  const texture = useMemo(() => sourceTexture.clone(), [sourceTexture]);
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const activeFrames = clone.vanishSmokeFrames > 0 ? clone.vanishSmokeFrames : clone.spawnSmokeFrames;
+  const elapsed = SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES - Math.max(0, Math.min(SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES, activeFrames));
+  const frameIndex = Math.max(0, Math.min(SHADOW_CLONE_SMOKE_TOTAL_FRAMES - 1, Math.floor((elapsed / SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES) * SHADOW_CLONE_SMOKE_TOTAL_FRAMES)));
+  const opacity = clone.vanishSmokeFrames > 0 ? Math.max(0.18, clone.vanishSmokeFrames / SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES) : Math.min(0.88, 0.28 + elapsed / SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES);
+  useEffect(() => {
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1 / SHADOW_CLONE_SMOKE_COLUMNS, 1 / SHADOW_CLONE_SMOKE_ROWS);
+  }, [texture]);
+  useEffect(() => {
+    const column = frameIndex % SHADOW_CLONE_SMOKE_COLUMNS;
+    const row = Math.floor(frameIndex / SHADOW_CLONE_SMOKE_COLUMNS);
+    texture.offset.set(column / SHADOW_CLONE_SMOKE_COLUMNS, 1 - (row + 1) / SHADOW_CLONE_SMOKE_ROWS);
+    texture.needsUpdate = true;
+    if (materialRef.current) materialRef.current.opacity = opacity;
+  }, [frameIndex, opacity, texture]);
+
+  return (
+    <mesh position={[clone.position.x, clone.position.y + 0.82, clone.position.z + 0.02]} scale={[1.25, 1.25, 1]}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial
+        ref={materialRef}
+        map={texture}
+        transparent
+        opacity={opacity}
+        depthWrite={false}
+        toneMapped={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
   );
 }
 
@@ -963,7 +1050,9 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     juggleTornadoCount: 0,
     juggleGravityScale: 0.52,
     blockFlash: 0,
-    hitFlash: 0
+    hitFlash: 0,
+    shadowClone: null,
+    shadowCloneChargeConsumed: false
   };
 }
 

@@ -66,6 +66,8 @@ export type CompactFighterSnapshot = {
   juggleGravityScale: number;
   blockFlash: number;
   hitFlash: number;
+  shadowClone: FighterRuntime['shadowClone'];
+  shadowCloneChargeConsumed: boolean;
 };
 
 export type CompactMatchSnapshot = {
@@ -208,7 +210,9 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     juggleTornadoCount: fighter.juggleTornadoCount,
     juggleGravityScale: fighter.juggleGravityScale,
     blockFlash: fighter.blockFlash,
-    hitFlash: fighter.hitFlash
+    hitFlash: fighter.hitFlash,
+    shadowClone: fighter.shadowClone,
+    shadowCloneChargeConsumed: fighter.shadowCloneChargeConsumed
   };
 }
 
@@ -257,6 +261,8 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
     juggleTornadoCount: snapshot.juggleTornadoCount ?? base.juggleTornadoCount,
     juggleGravityScale: snapshot.juggleGravityScale ?? base.juggleGravityScale,
     blockFlash: snapshot.blockFlash,
-    hitFlash: snapshot.hitFlash
+    hitFlash: snapshot.hitFlash,
+    shadowClone: snapshot.shadowClone ?? null,
+    shadowCloneChargeConsumed: snapshot.shadowCloneChargeConsumed ?? base.shadowCloneChargeConsumed
   };
 }
