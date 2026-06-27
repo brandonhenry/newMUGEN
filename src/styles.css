@@ -3232,12 +3232,19 @@ button {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.sprite-sheet-library button,
+.sprite-sheet-library-item,
+.sprite-sheet-library .sprite-sheet-select-button,
 .sprite-sheet-import-button {
   min-height: 42px;
 }
 
-.sprite-sheet-library button {
+.sprite-sheet-library-item {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.sprite-sheet-library .sprite-sheet-select-button {
   display: grid;
   gap: 2px;
   border: 0;
@@ -3249,10 +3256,15 @@ button {
   cursor: pointer;
 }
 
-.sprite-sheet-library button.active {
+.sprite-sheet-library-item.active .sprite-sheet-select-button {
   color: #061016;
   background: #2ee6ff;
   box-shadow: 0 0 18px rgba(46, 230, 255, 0.24);
+}
+
+.sprite-sheet-delete-button {
+  min-height: 42px;
+  padding-inline: 10px;
 }
 
 .sprite-sheet-library span {

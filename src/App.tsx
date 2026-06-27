@@ -4276,6 +4276,7 @@ function CharacterViewer({
   const [manifestSaveStatus, setManifestSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [spriteSaveStatus, setSpriteSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [spriteSheetImportStatus, setSpriteSheetImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
+  const [spriteSheetDeleteStatus, setSpriteSheetDeleteStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
   const [effectSaveStatus, setEffectSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [effectImportStatus, setEffectImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
   const [effectFrameSaveStatus, setEffectFrameSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
@@ -4297,8 +4298,16 @@ function CharacterViewer({
     active.spriteFrameCount ??
     Math.max(0, ...Object.values(active.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
   const frameBank = useMemo(
-    () => Array.from({ length: frameCount }, (_, index) => framePath(active, index)),
-    [active, frameCount]
+    () => {
+      const frames = Array.from({ length: frameCount }, (_, index) => framePath(active, index))
+        .filter((path) => {
+          const index = getFrameIndex(path);
+          const edit = spriteFrameMeta[String(index)] ?? active.spriteFrameEdits?.[String(index)];
+          return !edit?.hidden;
+        });
+      return frames.length > 0 ? frames : [framePath(active, 0)];
+    },
+    [active, frameCount, spriteFrameMeta]
   );
   const spriteSheets = useMemo(() => getCharacterSpriteSheets(active, frameCount), [active, frameCount]);
   const selectedSlotDataKey = getSlotDataKey(selectedSlot);
@@ -4846,6 +4855,30 @@ function CharacterViewer({
     }
   };
 
+  const deleteCharacterSpriteSheet = async (sheetId: string) => {
+    if (!isLocalDev || !sheetId) return;
+    setSpriteSheetDeleteStatus('working');
+    try {
+      const response = await fetch('/__kore/dev/delete-character-spritesheet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          sheetId
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      await onImportComplete(active.id);
+      setSpriteFrameMetaRefresh((value) => value + 1);
+      setSelectedSpriteFrameIndex(0);
+      setSpriteSheetDeleteStatus('saved');
+      window.setTimeout(() => setSpriteSheetDeleteStatus('idle'), 2200);
+    } catch (error) {
+      console.error('Failed to delete character spritesheet', error);
+      setSpriteSheetDeleteStatus('error');
+    }
+  };
+
   if (showImporter && isLocalDev) {
     return (
       <CharacterImportScreen
@@ -5089,11 +5122,13 @@ function CharacterViewer({
               selectedFrameSet={selectedFrameSet}
               saveStatus={spriteSaveStatus}
               importStatus={spriteSheetImportStatus}
+              deleteStatus={spriteSheetDeleteStatus}
               onSelectFrame={setSelectedSpriteFrameIndex}
               onToggleFrame={toggleFrame}
               onCreateFrame={createSpriteFrame}
               onSave={saveSpriteFrame}
               onImportSpriteSheet={importAdditionalSpriteSheet}
+              onDeleteSpriteSheet={deleteCharacterSpriteSheet}
             />
           ) : isEditingEffectsLibrary ? (
             <EffectsLibraryEditor
@@ -6289,24 +6324,103 @@ function renderReplacementFrameCanvas(image: HTMLImageElement, canvas: HTMLCanva
 function keySpriteSheetBackgroundToTransparent(sheet: HTMLImageElement, canvas: HTMLCanvasElement) {
   const context = canvas.getContext('2d', { willReadFrequently: true });
   if (!context || canvas.width <= 0 || canvas.height <= 0) return;
-  const background = sampleSpriteSheetBackground(sheet);
-  if (!background) return;
   const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
   const data = pixels.data;
-  const tolerance = 18;
-
-  for (let offset = 0; offset < data.length; offset += 4) {
+  const backgrounds = sampleCanvasBackgroundCandidates(data, canvas.width, canvas.height, sampleSpriteSheetBackground(sheet));
+  if (backgrounds.length === 0) return;
+  const tolerance = 72;
+  const isBackground = (x: number, y: number) => {
+    const offset = (y * canvas.width + x) * 4;
     const alpha = data[offset + 3] ?? 0;
-    if (alpha <= 0) continue;
-    const distance =
-      Math.abs((data[offset] ?? 0) - background[0]) +
-      Math.abs((data[offset + 1] ?? 0) - background[1]) +
-      Math.abs((data[offset + 2] ?? 0) - background[2]);
-    if (distance <= tolerance) {
-      data[offset + 3] = 0;
+    if (alpha <= 0) return false;
+    const color: [number, number, number] = [data[offset] ?? 0, data[offset + 1] ?? 0, data[offset + 2] ?? 0];
+    return backgrounds.some((background) => colorDistance(color, background) <= tolerance);
+  };
+
+  const seen = new Uint8Array(canvas.width * canvas.height);
+  const queue: Array<[number, number]> = [];
+  const enqueue = (x: number, y: number) => {
+    if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return;
+    const key = y * canvas.width + x;
+    if (seen[key] || !isBackground(x, y)) return;
+    seen[key] = 1;
+    queue.push([x, y]);
+  };
+
+  for (let x = 0; x < canvas.width; x += 1) {
+    enqueue(x, 0);
+    enqueue(x, canvas.height - 1);
+  }
+  for (let y = 1; y < canvas.height - 1; y += 1) {
+    enqueue(0, y);
+    enqueue(canvas.width - 1, y);
+  }
+
+  for (let index = 0; index < queue.length; index += 1) {
+    const [x, y] = queue[index];
+    enqueue(x - 1, y);
+    enqueue(x + 1, y);
+    enqueue(x, y - 1);
+    enqueue(x, y + 1);
+  }
+
+  for (let key = 0; key < seen.length; key += 1) {
+    if (seen[key]) {
+      data[key * 4 + 3] = 0;
     }
   }
   context.putImageData(pixels, 0, 0);
+}
+
+function sampleCanvasBackgroundCandidates(
+  data: Uint8ClampedArray,
+  width: number,
+  height: number,
+  sheetBackground: [number, number, number] | null
+): Array<[number, number, number]> {
+  const samples: Array<[number, number, number]> = [];
+  const pushSample = (x: number, y: number) => {
+    const sample = pixelAt(data, width, x, y);
+    if (sample && sample[3] > 16) samples.push([sample[0], sample[1], sample[2]]);
+  };
+  for (let x = 0; x < width; x += 1) {
+    pushSample(x, 0);
+    pushSample(x, height - 1);
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    pushSample(0, y);
+    pushSample(width - 1, y);
+  }
+  if (sheetBackground) samples.push(sheetBackground);
+  if (samples.length === 0) return sheetBackground ? [sheetBackground] : [];
+
+  const buckets = new Map<string, { color: [number, number, number]; count: number }>();
+  samples.forEach((sample) => {
+    const key = `${Math.floor(sample[0] / 8)},${Math.floor(sample[1] / 8)},${Math.floor(sample[2] / 8)}`;
+    const current = buckets.get(key);
+    if (current) {
+      current.color = [
+        current.color[0] + sample[0],
+        current.color[1] + sample[1],
+        current.color[2] + sample[2]
+      ];
+      current.count += 1;
+    } else {
+      buckets.set(key, { color: [...sample], count: 1 });
+    }
+  });
+  const minimum = Math.max(2, Math.round(samples.length * 0.035));
+  const candidates = [...buckets.values()]
+    .filter((entry) => entry.count >= minimum)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8)
+    .map((entry) => [
+      Math.round(entry.color[0] / entry.count),
+      Math.round(entry.color[1] / entry.count),
+      Math.round(entry.color[2] / entry.count)
+    ] as [number, number, number]);
+  if (sheetBackground) candidates.push(sheetBackground);
+  return candidates.filter((candidate, index) => candidates.findIndex((other) => colorDistance(candidate, other) <= 10) === index);
 }
 
 function keyCanvasCornerBackgroundToTransparent(canvas: HTMLCanvasElement) {
@@ -6390,11 +6504,13 @@ function SpriteSheetFrameEditor({
   selectedFrameSet,
   saveStatus,
   importStatus,
+  deleteStatus,
   onSelectFrame,
   onToggleFrame,
   onCreateFrame,
   onSave,
-  onImportSpriteSheet
+  onImportSpriteSheet,
+  onDeleteSpriteSheet
 }: {
   character: CharacterDefinition;
   frameBank: string[];
@@ -6405,11 +6521,13 @@ function SpriteSheetFrameEditor({
   selectedFrameSet: Set<string>;
   saveStatus: 'idle' | 'saving' | 'saved' | 'error';
   importStatus: 'idle' | 'working' | 'saved' | 'error';
+  deleteStatus: 'idle' | 'working' | 'saved' | 'error';
   onSelectFrame: (index: number) => void;
   onToggleFrame: (path: string) => void;
   onCreateFrame: (edit: SpriteFrameEdit) => void;
   onSave: (edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
   onImportSpriteSheet: (file: File | undefined) => Promise<void>;
+  onDeleteSpriteSheet: (sheetId: string) => Promise<void>;
 }) {
   const sheetRef = useRef<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -6433,6 +6551,14 @@ function SpriteSheetFrameEditor({
   const pngHeight = Math.max(1, Math.round(edit.height || cropHeight));
   const hasSavedFrameEdit = Boolean(character.spriteFrameEdits?.[String(selectedFrameIndex)] ?? frameMeta[String(selectedFrameIndex)]);
   const isReplacementFrame = edit.sourceMode === 'replacement';
+  const selectedVisibleFrameBankIndex = frameBank.findIndex((path) => getFrameIndex(path) === selectedFrameIndex);
+  const selectVisibleFrameBankOffset = (offset: number) => {
+    if (frameBank.length === 0) return;
+    const current = selectedVisibleFrameBankIndex >= 0 ? selectedVisibleFrameBankIndex : 0;
+    const nextPath = frameBank[clamp(current + offset, 0, frameBank.length - 1)];
+    const nextIndex = nextPath ? getFrameIndex(nextPath) : -1;
+    if (nextIndex >= 0) onSelectFrame(nextIndex);
+  };
 
   useEffect(() => {
     setReplacementPreviewUrl(null);
@@ -6678,15 +6804,31 @@ function SpriteSheetFrameEditor({
         <div className="sprite-sheet-crop-map">
           <div className="sprite-sheet-library" aria-label="Character sprite sheets">
             {spriteSheets.map((sheet) => (
-              <button
-                key={sheet.id}
-                className={sheet.id === selectedSheet.id ? 'active' : ''}
-                onClick={() => onSelectFrame(sheet.frameStart)}
-                title={`${sheet.name}: frames ${sheet.frameStart}-${sheet.frameStart + sheet.frameCount - 1}`}
-              >
-                <span>{sheet.name}</span>
-                <small>{sheet.frameCount} frames</small>
-              </button>
+              <div key={sheet.id} className={`sprite-sheet-library-item ${sheet.id === selectedSheet.id ? 'active' : ''}`}>
+                <button
+                  className="sprite-sheet-select-button"
+                  onClick={() => onSelectFrame(sheet.frameStart)}
+                  title={`${sheet.name}: frames ${sheet.frameStart}-${sheet.frameStart + sheet.frameCount - 1}`}
+                >
+                  <span>{sheet.name}</span>
+                  <small>{sheet.frameCount} frames</small>
+                </button>
+                {sheet.path.includes(`/characters/${character.id}/sheets/`) && (
+                  <button
+                    className="secondary-button compact-button danger-button sprite-sheet-delete-button"
+                    onClick={() => {
+                      if (window.confirm(`Delete ${sheet.name} and hide its ${sheet.frameCount} frames?`)) {
+                        void onDeleteSpriteSheet(sheet.id);
+                      }
+                    }}
+                    disabled={deleteStatus === 'working'}
+                    title={`Delete imported spritesheet ${sheet.name}`}
+                  >
+                    <Trash2 size={14} />
+                    Delete
+                  </button>
+                )}
+              </div>
             ))}
             <label className="secondary-button compact-button sprite-sheet-import-button">
               <Upload size={14} />
@@ -6703,6 +6845,11 @@ function SpriteSheetFrameEditor({
             {importStatus !== 'idle' && (
               <span className={`manifest-save-status is-${importStatus === 'saved' ? 'saved' : importStatus === 'error' ? 'error' : 'saving'}`}>
                 {importStatus === 'saved' ? 'Spritesheet added' : importStatus === 'error' ? 'Import failed' : 'Auto-cropping'}
+              </span>
+            )}
+            {deleteStatus !== 'idle' && (
+              <span className={`manifest-save-status is-${deleteStatus === 'saved' ? 'saved' : deleteStatus === 'error' ? 'error' : 'saving'}`}>
+                {deleteStatus === 'saved' ? 'Spritesheet deleted' : deleteStatus === 'error' ? 'Delete failed' : 'Deleting sheet'}
               </span>
             )}
           </div>
@@ -6771,8 +6918,8 @@ function SpriteSheetFrameEditor({
           <FrameNumberInput label="Rotation" value={edit.rotation ?? 0} step={90} onChange={(value) => patchEdit({ rotation: normalizeRotation(Number(value) || 0) })} />
         </div>
         <div className="sprite-crop-button-grid">
-          <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.max(0, selectedFrameIndex - 1))}>Prev</button>
-          <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.min(frameBank.length - 1, selectedFrameIndex + 1))}>Next</button>
+          <button className="secondary-button compact-button" onClick={() => selectVisibleFrameBankOffset(-1)}>Prev</button>
+          <button className="secondary-button compact-button" onClick={() => selectVisibleFrameBankOffset(1)}>Next</button>
           <button className="secondary-button compact-button" onClick={createNewFrame}>New Frame</button>
           <button className="secondary-button compact-button" onClick={() => nudgeBox(-1, 0)} disabled={isReplacementFrame}>Crop Left</button>
           <button className="secondary-button compact-button" onClick={() => nudgeBox(1, 0)} disabled={isReplacementFrame}>Crop Right</button>
@@ -7104,13 +7251,29 @@ async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: stri
   context.drawImage(image, 0, 0);
   const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
   const background = [pixels.data[0], pixels.data[1], pixels.data[2], pixels.data[3]];
+  const backgroundCandidates = sampleCanvasBackgroundCandidates(
+    pixels.data,
+    canvas.width,
+    canvas.height,
+    [background[0], background[1], background[2]]
+  );
+  const backgroundMask = buildSpriteSheetBackgroundMask(pixels.data, canvas.width, canvas.height, backgroundCandidates);
+  const maskedBackgroundPixels = backgroundMask.reduce((sum, value) => sum + value, 0);
+  const usesAlphaBackground = background[3] <= 16 || canvasHasTransparentPerimeter(pixels.data, canvas.width, canvas.height);
+  const usesMaskedBackground = maskedBackgroundPixels > canvas.width * canvas.height * 0.08;
+  const isInkAt = (offset: number) => {
+    const alpha = pixels.data[offset + 3] ?? 0;
+    if (alpha <= 16) return false;
+    if (usesMaskedBackground && backgroundMask[offset / 4]) return false;
+    return isSpritePixel(pixels.data, offset, background);
+  };
   const rowHasInk = new Array(canvas.height).fill(false);
   const columnHasInk = new Array(canvas.width).fill(false);
 
   for (let y = 0; y < canvas.height; y += 1) {
     for (let x = 0; x < canvas.width; x += 1) {
       const offset = (y * canvas.width + x) * 4;
-      if (isSpritePixel(pixels.data, offset, background)) {
+      if (isInkAt(offset)) {
         rowHasInk[y] = true;
         columnHasInk[x] = true;
       }
@@ -7124,19 +7287,28 @@ async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: stri
     for (let y = rowStart; y <= rowEnd; y += 1) {
       for (let x = 0; x < canvas.width; x += 1) {
         const offset = (y * canvas.width + x) * 4;
-        if (isSpritePixel(pixels.data, offset, background)) columns[x] = true;
+        if (isInkAt(offset)) columns[x] = true;
       }
     }
     const columnGroups = groupBooleanRuns(columns, 6, 5);
     columnGroups.forEach(([columnStart, columnEnd]) => {
-      const box = trimSpriteBox(pixels.data, canvas.width, canvas.height, columnStart, rowStart, columnEnd, rowEnd, background);
+      const box = trimSpriteBox(pixels.data, canvas.width, canvas.height, columnStart, rowStart, columnEnd, rowEnd, background, isInkAt);
       const width = box[2] - box[0];
       const height = box[3] - box[1];
       if (width >= 8 && height >= 8) boxes.push({ box, row: rowIndex });
     });
   });
 
-  const frames = boxes
+  const connectedBoxes = (usesAlphaBackground || usesMaskedBackground)
+    ? detectConnectedSpriteBoxes(pixels.data, canvas.width, canvas.height, background, isInkAt)
+    : [];
+  const projectionArea = boxes.reduce((sum, entry) => sum + Math.max(0, entry.box[2] - entry.box[0]) * Math.max(0, entry.box[3] - entry.box[1]), 0);
+  const connectedArea = connectedBoxes.reduce((sum, entry) => sum + Math.max(0, entry.box[2] - entry.box[0]) * Math.max(0, entry.box[3] - entry.box[1]), 0);
+  const boxesToUse = connectedBoxes.length > 1 && (boxes.length <= 1 || connectedBoxes.length >= boxes.length || projectionArea > connectedArea * 1.8)
+    ? connectedBoxes
+    : boxes;
+
+  const frames = boxesToUse
     .sort((a, b) => (a.box[1] - b.box[1]) || (a.box[0] - b.box[0]))
     .map((entry, index) => ({
       index,
@@ -7149,6 +7321,181 @@ async function detectSpriteSheetFrames(file: File): Promise<{ sheetDataUrl: stri
 
   if (frames.length === 0) throw new Error('No frames detected');
   return { sheetDataUrl: canvas.toDataURL('image/png'), frames };
+}
+
+function buildSpriteSheetBackgroundMask(data: Uint8ClampedArray, width: number, height: number, backgrounds: Array<[number, number, number]>) {
+  const seen = new Uint8Array(width * height);
+  if (width <= 0 || height <= 0 || backgrounds.length === 0) return seen;
+  const tolerance = 82;
+  const isBackground = (key: number) => {
+    const offset = key * 4;
+    const alpha = data[offset + 3] ?? 0;
+    if (alpha <= 16) return true;
+    const color: [number, number, number] = [data[offset] ?? 0, data[offset + 1] ?? 0, data[offset + 2] ?? 0];
+    return backgrounds.some((background) => colorDistance(color, background) <= tolerance);
+  };
+  const queue: number[] = [];
+  const enqueue = (x: number, y: number) => {
+    if (x < 0 || y < 0 || x >= width || y >= height) return;
+    const key = y * width + x;
+    if (seen[key] || !isBackground(key)) return;
+    seen[key] = 1;
+    queue.push(key);
+  };
+
+  for (let x = 0; x < width; x += 1) {
+    enqueue(x, 0);
+    enqueue(x, height - 1);
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    enqueue(0, y);
+    enqueue(width - 1, y);
+  }
+
+  for (let cursor = 0; cursor < queue.length; cursor += 1) {
+    const key = queue[cursor];
+    const x = key % width;
+    const y = Math.floor(key / width);
+    enqueue(x - 1, y);
+    enqueue(x + 1, y);
+    enqueue(x, y - 1);
+    enqueue(x, y + 1);
+  }
+
+  return seen;
+}
+
+function canvasHasTransparentPerimeter(data: Uint8ClampedArray, width: number, height: number) {
+  if (width <= 0 || height <= 0) return false;
+  let samples = 0;
+  let transparent = 0;
+  const sample = (x: number, y: number) => {
+    samples += 1;
+    const alpha = data[(y * width + x) * 4 + 3] ?? 0;
+    if (alpha <= 16) transparent += 1;
+  };
+  for (let x = 0; x < width; x += 1) {
+    sample(x, 0);
+    sample(x, height - 1);
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    sample(0, y);
+    sample(width - 1, y);
+  }
+  return samples > 0 && transparent / samples > 0.18;
+}
+
+function detectConnectedSpriteBoxes(data: Uint8ClampedArray, width: number, height: number, background: number[], isInkAt?: (offset: number) => boolean): Array<{ box: [number, number, number, number]; row: number }> {
+  const total = width * height;
+  const visited = new Uint8Array(total);
+  const rawBoxes: Array<{ box: [number, number, number, number]; area: number }> = [];
+  const minimumArea = Math.max(8, Math.round(total * 0.000006));
+  const queue: number[] = [];
+  const isInk = isInkAt ?? ((offset: number) => isSpritePixel(data, offset, background));
+
+  for (let start = 0; start < total; start += 1) {
+    if (visited[start]) continue;
+    const startOffset = start * 4;
+    if (!isInk(startOffset)) {
+      visited[start] = 1;
+      continue;
+    }
+
+    queue.length = 0;
+    queue.push(start);
+    visited[start] = 1;
+    let cursor = 0;
+    let area = 0;
+    let minX = width;
+    let minY = height;
+    let maxX = 0;
+    let maxY = 0;
+
+    while (cursor < queue.length) {
+      const key = queue[cursor];
+      cursor += 1;
+      const x = key % width;
+      const y = Math.floor(key / width);
+      area += 1;
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x);
+      maxY = Math.max(maxY, y);
+
+      for (let ny = y - 1; ny <= y + 1; ny += 1) {
+        for (let nx = x - 1; nx <= x + 1; nx += 1) {
+          if (nx === x && ny === y) continue;
+          if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+          const nextKey = ny * width + nx;
+          if (visited[nextKey]) continue;
+          visited[nextKey] = 1;
+          if (isInk(nextKey * 4)) queue.push(nextKey);
+        }
+      }
+    }
+
+    const boxWidth = maxX - minX + 1;
+    const boxHeight = maxY - minY + 1;
+    if (area >= minimumArea && boxWidth >= 3 && boxHeight >= 3) {
+      rawBoxes.push({
+        box: [
+          Math.max(0, minX - 1),
+          Math.max(0, minY - 1),
+          Math.min(width, maxX + 2),
+          Math.min(height, maxY + 2)
+        ],
+        area
+      });
+    }
+  }
+
+  const mergedBoxes = mergeNearbySpriteComponents(rawBoxes.map((entry) => entry.box), width, height);
+  const sorted = mergedBoxes
+    .filter((box) => box[2] - box[0] >= 4 && box[3] - box[1] >= 4)
+    .sort((a, b) => (a[1] - b[1]) || (a[0] - b[0]));
+  let row = -1;
+  let currentBottom = -Infinity;
+  return sorted.map((box) => {
+    if (box[1] > currentBottom + 8) {
+      row += 1;
+      currentBottom = box[3];
+    } else {
+      currentBottom = Math.max(currentBottom, box[3]);
+    }
+    return { box, row: Math.max(0, row) };
+  });
+}
+
+function mergeNearbySpriteComponents(boxes: Array<[number, number, number, number]>, width: number, height: number) {
+  const next = boxes.map((box) => [...box] as [number, number, number, number]);
+  const padding = 2;
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (let index = 0; index < next.length; index += 1) {
+      for (let otherIndex = index + 1; otherIndex < next.length; otherIndex += 1) {
+        if (!boxesOverlapWithPadding(next[index], next[otherIndex], padding)) continue;
+        next[index] = [
+          Math.max(0, Math.min(next[index][0], next[otherIndex][0])),
+          Math.max(0, Math.min(next[index][1], next[otherIndex][1])),
+          Math.min(width, Math.max(next[index][2], next[otherIndex][2])),
+          Math.min(height, Math.max(next[index][3], next[otherIndex][3]))
+        ];
+        next.splice(otherIndex, 1);
+        changed = true;
+        break;
+      }
+      if (changed) break;
+    }
+  }
+  return next;
+}
+
+function boxesOverlapWithPadding(a: [number, number, number, number], b: [number, number, number, number], padding: number) {
+  return a[0] - padding <= b[2] &&
+    a[2] + padding >= b[0] &&
+    a[1] - padding <= b[3] &&
+    a[3] + padding >= b[1];
 }
 
 function readFileAsDataUrl(file: File) {
@@ -7207,15 +7554,16 @@ function groupBooleanRuns(values: boolean[], gapTolerance: number, minLength: nu
   return groups;
 }
 
-function trimSpriteBox(data: Uint8ClampedArray, width: number, height: number, x1: number, y1: number, x2: number, y2: number, background: number[]): [number, number, number, number] {
+function trimSpriteBox(data: Uint8ClampedArray, width: number, height: number, x1: number, y1: number, x2: number, y2: number, background: number[], isInkAt?: (offset: number) => boolean): [number, number, number, number] {
   let left = x2;
   let top = y2;
   let right = x1;
   let bottom = y1;
+  const isInk = isInkAt ?? ((offset: number) => isSpritePixel(data, offset, background));
   for (let y = Math.max(0, y1); y <= Math.min(height - 1, y2); y += 1) {
     for (let x = Math.max(0, x1); x <= Math.min(width - 1, x2); x += 1) {
       const offset = (y * width + x) * 4;
-      if (isSpritePixel(data, offset, background)) {
+      if (isInk(offset)) {
         left = Math.min(left, x);
         top = Math.min(top, y);
         right = Math.max(right, x);
@@ -7232,10 +7580,11 @@ function cropFrameDataUrl(image: HTMLImageElement, box: [number, number, number,
   const height = Math.max(1, box[3] - box[1]);
   canvas.width = width;
   canvas.height = height;
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
   if (!context) return '';
   context.imageSmoothingEnabled = false;
   context.drawImage(image, box[0], box[1], width, height, 0, 0, width, height);
+  keySpriteSheetBackgroundToTransparent(image, canvas);
   return canvas.toDataURL('image/png');
 }
 

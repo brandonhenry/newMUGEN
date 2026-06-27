@@ -1,4 +1,4 @@
-import { mkdir, readFile, unlink, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, unlink, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { dirname, resolve } from 'node:path';
@@ -78,6 +78,11 @@ type DevImportCharacterSpriteSheetPayload = {
     height?: number;
     row?: number;
   }>;
+};
+
+type DevDeleteCharacterSpriteSheetPayload = {
+  characterId?: string;
+  sheetId?: string;
 };
 
 type DevHdVoxelPayload = {
@@ -762,6 +767,119 @@ function koreDevManifestWriter() {
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: true, characterId, sheet: sheetEntry, firstFrameIndex: startIndex, frameCount: frameEntries.length }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/delete-character-spritesheet', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevDeleteCharacterSpriteSheetPayload;
+          const characterId = payload.characterId ?? '';
+          const sheetId = sanitizeAssetId(payload.sheetId ?? '');
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !sheetId) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid character id or sheet id' }));
+            return;
+          }
+          if (sheetId === 'main' || sheetId === 'source') {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'The base sprite sheet cannot be deleted' }));
+            return;
+          }
+
+          const characterDir = resolve(server.config.root, 'public', 'characters', characterId);
+          const framesDir = resolve(characterDir, 'frames');
+          const voxelsHdDir = resolve(characterDir, 'voxels-hd');
+          const framesJsonPath = resolve(framesDir, 'frames.json');
+          const manifestPath = resolve(characterDir, 'character.json');
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          const manifestSheets = sanitizeSpriteSheets(manifest.spriteSheets, manifest.spriteSheetPath, characterId, Number(manifest.spriteFrameCount) || 0);
+          const sheet = manifestSheets.find((entry) => entry.id === sheetId);
+          if (!sheet) {
+            response.statusCode = 404;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Sprite sheet not found' }));
+            return;
+          }
+          if (!sheet.path.startsWith(`/characters/${characterId}/sheets/`)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Only imported sprite sheets can be deleted' }));
+            return;
+          }
+
+          let frameData: { frames?: Array<Record<string, unknown>>; count?: number; sheets?: Array<Record<string, unknown>>; source?: string };
+          try {
+            frameData = JSON.parse(await readFile(framesJsonPath, 'utf8')) as typeof frameData;
+          } catch {
+            frameData = { frames: [], count: Number(manifest.spriteFrameCount) || 0 };
+          }
+          const existingFrames = Array.isArray(frameData.frames) ? frameData.frames : [];
+          const sheetStart = Math.max(0, Math.round(sheet.frameStart));
+          const sheetEnd = sheetStart + Math.max(0, Math.round(sheet.frameCount));
+          const deletedIndexes = new Set<number>();
+          const framePathsToDelete = new Set<string>();
+          const nextFrames = existingFrames.map((frame) => {
+            const index = Math.max(0, Math.round(finiteOr(frame.index, -1)));
+            const belongsToSheet = frame.sheetId === sheetId || (index >= sheetStart && index < sheetEnd);
+            if (!belongsToSheet) return frame;
+            deletedIndexes.add(index);
+            if (typeof frame.path === 'string' && frame.path.startsWith(`/characters/${characterId}/frames/`)) {
+              framePathsToDelete.add(frame.path);
+            }
+            return sanitizeSpriteFrameEdit({
+              ...frame,
+              index,
+              hidden: true,
+              revision: Date.now()
+            });
+          });
+
+          for (const index of deletedIndexes) {
+            framePathsToDelete.add(`/characters/${characterId}/frames/frame-${index.toString().padStart(3, '0')}.png`);
+          }
+          const sheetFilePath = resolve(server.config.root, 'public', sheet.path.slice(1));
+          await rm(sheetFilePath, { force: true });
+          await Promise.all([...framePathsToDelete].map((framePath) => rm(resolve(server.config.root, 'public', framePath.slice(1)), { force: true })));
+          await Promise.all([...deletedIndexes].map((index) => rm(resolve(voxelsHdDir, `frame-${index.toString().padStart(3, '0')}.json`), { force: true })));
+
+          const deletedPathSet = new Set([...deletedIndexes].map((index) => `/characters/${characterId}/frames/frame-${index.toString().padStart(3, '0')}.png`));
+          frameData.frames = nextFrames.sort((a, b) => Number(a.index) - Number(b.index));
+          frameData.sheets = (Array.isArray(frameData.sheets) ? frameData.sheets : [])
+            .filter((entry) => entry && typeof entry === 'object' && (entry as Record<string, unknown>).id !== sheetId);
+          frameData.count = Math.max(Number(frameData.count) || 0, Number(manifest.spriteFrameCount) || 0);
+          await writeFile(framesJsonPath, `${JSON.stringify(frameData, null, 2)}\n`, 'utf8');
+
+          const edits = sanitizeSpriteFrameEditMap((manifest.spriteFrameEdits as Record<string, Record<string, unknown>> | undefined) ?? {});
+          nextFrames.forEach((frame) => {
+            const index = Math.max(0, Math.round(finiteOr(frame.index, -1)));
+            if (deletedIndexes.has(index)) edits[String(index)] = sanitizeSpriteFrameEdit(frame);
+          });
+          const animationFrames = sanitizeFrameMap((manifest.animationFrames as Record<string, string[]> | undefined) ?? {});
+          Object.entries(animationFrames).forEach(([key, frames]) => {
+            animationFrames[key] = frames.filter((framePath) => !deletedPathSet.has(framePath));
+          });
+          manifest.animationFrames = animationFrames;
+          manifest.spriteFrameEdits = edits;
+          manifest.spriteSheets = manifestSheets.filter((entry) => entry.id !== sheetId);
+          manifest.spriteFrameCount = Math.max(Number(manifest.spriteFrameCount) || 0, Number(frameData.count) || 0);
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, characterId, sheetId, deletedFrames: deletedIndexes.size }));
         } catch (error) {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
