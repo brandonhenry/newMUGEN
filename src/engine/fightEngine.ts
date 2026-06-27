@@ -1,6 +1,7 @@
 import type {
   BoxSpec,
   CharacterDefinition,
+  ClashState,
   CpuDifficulty,
   FighterRuntime,
   InputFrame,
@@ -11,6 +12,7 @@ import type {
   MoveInput,
   MoveOverride,
   ImpactSparkKind,
+  ImpactSparkEvent,
   StageDefinition
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
@@ -69,8 +71,19 @@ const MAX_COMBO_STEPS = 6;
 const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
 const KI_CHARGE_DEFAULT_ACTIVE_FRAMES = 18;
 const KI_CHARGE_DEFAULT_RECOVERY_FRAMES = 16;
+const CLASH_SEQUENCE_LENGTH = 3;
+const CLASH_INTRO_FRAMES = 45;
+const CLASH_INPUT_FRAMES = 150;
+const CLASH_RESULT_FRAMES = 54;
+const CLASH_DRAW_RECOVERY_FRAMES = 20;
+const CLASH_WINNER_RECOVERY_FRAMES = 8;
+const CLASH_LOSER_HITSTUN_FRAMES = 36;
+const CLASH_DAMAGE_MULTIPLIER = 1.65;
+const CLASH_MIN_DAMAGE = 12;
+const CLASH_PUSHBACK = 1.15;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
+const clashInputOrder: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
 const limbNames: Record<MoveInput, string> = {
   jab: 'Left Hand',
   heavy: 'Right Hand',
@@ -119,6 +132,7 @@ export function createMatch(
     lastHitId: 0,
     combatEvents: [],
     impactEvents: [],
+    clashState: createEmptyClashState(),
     visualTimeScale: 1,
     cameraShake: 0
   };
@@ -176,6 +190,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
       : next.mode === 'ai' || next.mode === 'cpu'
         ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
         : p2Input;
+  if (isClashActive(next.clashState)) {
+    const clashInput1 = next.mode === 'cpu' ? makeAiClashInput(next, 1) : input1;
+    const clashInput2 = next.mode === 'ai' || next.mode === 'cpu' ? makeAiClashInput(next, 2) : input2;
+    handleClashStep(next, clashInput1, clashInput2, dt);
+    return next;
+  }
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
   resolveFacing(next);
@@ -195,6 +215,135 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
 export function createEmptyInputs(): [InputFrame, InputFrame] {
   return [emptyInputFrame(), emptyInputFrame()];
+}
+
+function createEmptyClashParticipant(): ClashState['p1'] {
+  return {
+    progress: 0,
+    inputs: [],
+    completedFrame: null,
+    failed: false,
+    mistakes: 0,
+    lastInput: null
+  };
+}
+
+function createEmptyClashState(): ClashState {
+  return {
+    id: 0,
+    status: 'none',
+    sequence: [],
+    elapsedFrames: 0,
+    introFrames: CLASH_INTRO_FRAMES,
+    inputFrames: CLASH_INPUT_FRAMES,
+    resultFrames: CLASH_RESULT_FRAMES,
+    winnerSlot: null,
+    damage: 0,
+    contactPoint: [0, 1.1, 0],
+    p1: createEmptyClashParticipant(),
+    p2: createEmptyClashParticipant()
+  };
+}
+
+function isClashActive(clashState: ClashState | undefined) {
+  return Boolean(clashState && clashState.status !== 'none');
+}
+
+function handleClashStep(match: MatchSnapshot, p1Input: InputFrame, p2Input: InputFrame, dt: number) {
+  const clash = match.clashState;
+  if (!isClashActive(clash)) return;
+  match.visualTimeScale = 1;
+  match.cameraShake = 0;
+  const frameDelta = Math.max(1, secondsToFrames(dt));
+
+  if (clash.status === 'intro') {
+    clash.elapsedFrames += frameDelta;
+    match.message = 'CLASH';
+    if (clash.elapsedFrames >= clash.introFrames) {
+      clash.status = 'input';
+      clash.elapsedFrames = 0;
+      clash.p1.lastInput = null;
+      clash.p2.lastInput = null;
+      match.message = '';
+    }
+    return;
+  }
+
+  if (clash.status === 'input') {
+    processClashParticipant(clash, clash.p1, p1Input);
+    processClashParticipant(clash, clash.p2, p2Input);
+    clash.elapsedFrames += frameDelta;
+    const p1Resolved = clash.p1.failed || clash.p1.completedFrame !== null;
+    const p2Resolved = clash.p2.failed || clash.p2.completedFrame !== null;
+    if ((p1Resolved && p2Resolved) || clash.elapsedFrames >= clash.inputFrames) {
+      resolveClashOutcome(match);
+    }
+    return;
+  }
+
+  if (clash.status === 'result') {
+    clash.elapsedFrames += frameDelta;
+    if (clash.elapsedFrames >= clash.resultFrames) {
+      match.clashState = createEmptyClashState();
+      match.message = '';
+    }
+  }
+}
+
+function processClashParticipant(clash: ClashState, participant: ClashState['p1'], input: InputFrame) {
+  if (participant.failed || participant.completedFrame !== null) return;
+  const button = getPressedClashButton(input);
+  if (button === participant.lastInput) return;
+  participant.lastInput = button;
+  if (!button) return;
+  participant.inputs = [...participant.inputs, button].slice(-CLASH_SEQUENCE_LENGTH);
+  const expected = clash.sequence[participant.progress];
+  if (button !== expected) {
+    participant.failed = true;
+    participant.mistakes += 1;
+    return;
+  }
+  participant.progress += 1;
+  if (participant.progress >= clash.sequence.length) {
+    participant.completedFrame = clash.elapsedFrames;
+  }
+}
+
+function getPressedClashButton(input: InputFrame): MoveInput | null {
+  return clashInputOrder.find((action) => input[action]) ?? null;
+}
+
+function makeAiClashInput(match: MatchSnapshot, slot: 1 | 2): InputFrame {
+  const input = emptyInputFrame();
+  const clash = match.clashState;
+  if (clash.status !== 'input') return input;
+  const participant = slot === 1 ? clash.p1 : clash.p2;
+  if (participant.failed || participant.completedFrame !== null) return input;
+  const elapsed = clash.elapsedFrames;
+  const difficulty = match.cpuDifficulty;
+  const reactionDelay =
+    difficulty <= 1 ? 38 :
+    difficulty === 2 ? 29 :
+    difficulty === 3 ? 21 :
+    difficulty === 4 ? 15 :
+    11;
+  const perButtonDelay = difficulty <= 2 ? 18 : difficulty === 3 ? 14 : difficulty === 4 ? 10 : 8;
+  const targetFrame = reactionDelay + participant.progress * perButtonDelay;
+  if (elapsed < targetFrame) return input;
+  const mistakeChance =
+    difficulty <= 1 ? 0.42 :
+    difficulty === 2 ? 0.28 :
+    difficulty === 3 ? 0.18 :
+    difficulty === 4 ? 0.1 :
+    0.07;
+  const roll = seededUnit(match.aiSeed + match.roundAiSeed + clash.id * 17 + slot * 101, participant.progress + Math.floor(elapsed / 8));
+  const expected = clash.sequence[participant.progress] ?? 'jab';
+  const chosen =
+    roll < mistakeChance
+      ? clashInputOrder[(clashInputOrder.indexOf(expected) + 1 + positiveModulo(Math.floor(roll * 1000), clashInputOrder.length - 1)) % clashInputOrder.length]
+      : expected;
+  input[chosen] = true;
+  return input;
 }
 
 function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): FighterRuntime {
@@ -1547,8 +1696,204 @@ function getComboRoute(fighter: FighterRuntime, opponent: FighterRuntime, input:
 
 function resolveHits(match: MatchSnapshot) {
   const [a, b] = match.fighters;
+  if (tryStartKiClash(match, a, b)) return;
   tryHit(match, a, b);
   tryHit(match, b, a);
+}
+
+function tryStartKiClash(match: MatchSnapshot, p1: FighterRuntime, p2: FighterRuntime) {
+  if (isClashActive(match.clashState)) return false;
+  const p1Move = p1.currentMove;
+  const p2Move = p2.currentMove;
+  if (!p1Move || !p2Move) return false;
+  if (p1.state !== 'attack' || p2.state !== 'attack') return false;
+  if (!p1Move.kiBurst || !p2Move.kiBurst) return false;
+  if (p1.hitConnected || p2.hitConnected) return false;
+  if (!isActiveMoveFrame(p1Move, p1.moveFrame) || !isActiveMoveFrame(p2Move, p2.moveFrame)) return false;
+  const p1Hitbox = moveHitboxToWorldAabb(p1, p1Move.hitbox);
+  const p2Hitbox = moveHitboxToWorldAabb(p2, p2Move.hitbox);
+  if (!boxesIntersect(p1Hitbox, p2Hitbox)) return false;
+
+  const id = nextHitEventId(match);
+  const contactPoint = getAabbOverlapCenter(p1Hitbox, p2Hitbox);
+  match.clashState = {
+    ...createEmptyClashState(),
+    id,
+    status: 'intro',
+    sequence: makeClashSequence(match, id),
+    contactPoint
+  };
+  match.message = 'CLASH';
+  const clashSpark: ImpactSparkEvent = {
+    id,
+    kind: 'clash',
+    position: contactPoint,
+    attackerSlot: 1,
+    defenderSlot: 2,
+    hitLevel: 'special',
+    damage: 0,
+    moveLabel: 'Ki Clash',
+    kiBurst: true
+  };
+  match.impactEvents = [
+    ...match.impactEvents,
+    clashSpark
+  ].slice(-12);
+  return true;
+}
+
+function makeClashSequence(match: MatchSnapshot, clashId: number): MoveInput[] {
+  return Array.from({ length: CLASH_SEQUENCE_LENGTH }, (_, index) => {
+    const roll = seededUnit(match.aiSeed + match.roundAiSeed + clashId * 31, index + 13);
+    return clashInputOrder[Math.floor(roll * clashInputOrder.length)] ?? 'jab';
+  });
+}
+
+function getAabbOverlapCenter(a: Aabb, b: Aabb): [number, number, number] {
+  const minX = Math.max(a.minX, b.minX);
+  const maxX = Math.min(a.maxX, b.maxX);
+  const minY = Math.max(a.minY, b.minY);
+  const maxY = Math.min(a.maxY, b.maxY);
+  const minZ = Math.max(a.minZ, b.minZ);
+  const maxZ = Math.min(a.maxZ, b.maxZ);
+  return [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
+}
+
+function resolveClashOutcome(match: MatchSnapshot) {
+  const clash = match.clashState;
+  const p1Done = clash.p1.completedFrame;
+  const p2Done = clash.p2.completedFrame;
+  const p1Succeeded = p1Done !== null && !clash.p1.failed;
+  const p2Succeeded = p2Done !== null && !clash.p2.failed;
+  let winnerSlot: 1 | 2 | null = null;
+  if (p1Succeeded && !p2Succeeded) winnerSlot = 1;
+  if (p2Succeeded && !p1Succeeded) winnerSlot = 2;
+  if (p1Succeeded && p2Succeeded) {
+    winnerSlot = p1Done < p2Done ? 1 : p2Done < p1Done ? 2 : null;
+  }
+
+  clash.status = 'result';
+  clash.elapsedFrames = 0;
+  clash.winnerSlot = winnerSlot;
+  if (winnerSlot) {
+    applyClashWin(match, winnerSlot);
+  } else {
+    applyClashDraw(match);
+  }
+}
+
+function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
+  const clash = match.clashState;
+  const winner = match.fighters[winnerSlot - 1];
+  const loser = match.fighters[winnerSlot === 1 ? 1 : 0];
+  const winnerMove = winner.currentMove ?? match.fighters[0].currentMove ?? match.fighters[1].currentMove;
+  const loserMove = loser.currentMove ?? match.fighters[0].currentMove ?? match.fighters[1].currentMove;
+  const baseDamage = Math.max(winnerMove?.damage ?? 0, loserMove?.damage ?? 0);
+  const damage = Math.max(CLASH_MIN_DAMAGE, Math.round(baseDamage * CLASH_DAMAGE_MULTIPLIER));
+  clash.damage = damage;
+  match.message = clashParticipantHasPerfect(clash, winnerSlot) ? 'CLASH PERFECT' : 'CLASH WIN';
+  loser.hp = Math.max(0, loser.hp - damage);
+
+  const pushX = loser.position.x - winner.position.x;
+  const pushZ = loser.position.z - winner.position.z;
+  const pushDistance = Math.hypot(pushX, pushZ) || 1;
+  loser.position.x += (pushX / pushDistance) * CLASH_PUSHBACK;
+  loser.position.z += (pushZ / pushDistance) * CLASH_PUSHBACK;
+
+  winner.currentMove = null;
+  winner.state = 'idle';
+  winner.moveFrame = 0;
+  winner.actionFramesRemaining = CLASH_WINNER_RECOVERY_FRAMES;
+  winner.actionTimer = framesToSeconds(CLASH_WINNER_RECOVERY_FRAMES);
+  winner.hitConnected = true;
+  winner.hitConfirmed = true;
+  winner.comboHits = Math.max(1, winner.comboHits + 1);
+  winner.comboDamage = Math.max(0, winner.comboDamage + damage);
+  winner.comboTimer = COMBO_WINDOW;
+  winner.ki = clamp(winner.ki + Math.round(damage * 0.25), 0, KI_MAX);
+
+  const stunFrames = Math.max(CLASH_LOSER_HITSTUN_FRAMES, (winnerMove?.onHitFrames ?? 0) + CLASH_LOSER_HITSTUN_FRAMES);
+  loser.currentMove = null;
+  loser.moveFrame = 0;
+  loser.blockstunFramesRemaining = 0;
+  loser.blockPunishWindowFrames = 0;
+  resetKiChargeRuntime(loser);
+  if (winnerMove?.knockdown) {
+    enterKnockdown(loser, Math.max(stunFrames, KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES));
+  } else if (winnerMove && (winnerMove.launchHeight ?? 0) > 0) {
+    loser.state = 'juggle';
+    loser.position.y = Math.max(loser.position.y, JUGGLE_MIN_START_HEIGHT);
+    loser.velocityY = Math.max(loser.velocityY, getJuggleVelocity(winnerMove, false));
+    loser.juggleGravityScale = getMoveJuggleGravityScale(winnerMove);
+    loser.stunFramesRemaining = stunFrames;
+    loser.actionFramesRemaining = stunFrames;
+    loser.stunTimer = framesToSeconds(stunFrames);
+    loser.actionTimer = framesToSeconds(stunFrames);
+  } else {
+    loser.state = 'hit';
+    loser.stunFramesRemaining = stunFrames;
+    loser.actionFramesRemaining = stunFrames;
+    loser.stunTimer = framesToSeconds(stunFrames);
+    loser.actionTimer = framesToSeconds(stunFrames);
+  }
+
+  const popupId = nextHitEventId(match);
+  const perfect = clashParticipantHasPerfect(clash, winnerSlot);
+  pushClashCombatPopupEvent(match, popupId, winner, winnerMove, perfect ? 'clashPerfect' : 'clashWin', damage);
+  const clashSpark: ImpactSparkEvent = {
+    id: popupId,
+    kind: 'clash',
+    position: clash.contactPoint,
+    attackerSlot: winner.slot,
+    defenderSlot: loser.slot,
+    hitLevel: winnerMove?.hitLevel ?? 'special',
+    damage,
+    moveLabel: winnerMove?.label ?? 'Ki Clash',
+    moveInput: winnerMove?.input,
+    launched: Boolean(winnerMove?.launchHeight),
+    kiBurst: true
+  };
+  match.impactEvents = [
+    ...match.impactEvents,
+    clashSpark
+  ].slice(-12);
+}
+
+function applyClashDraw(match: MatchSnapshot) {
+  const [p1, p2] = match.fighters;
+  const p1Move = p1.currentMove;
+  const p2Move = p2.currentMove;
+  match.message = 'CLASH DRAW';
+  const dx = p2.position.x - p1.position.x;
+  const dz = p2.position.z - p1.position.z;
+  const distance = Math.hypot(dx, dz) || 1;
+  p1.position.x -= (dx / distance) * (CLASH_PUSHBACK * 0.55);
+  p1.position.z -= (dz / distance) * (CLASH_PUSHBACK * 0.55);
+  p2.position.x += (dx / distance) * (CLASH_PUSHBACK * 0.55);
+  p2.position.z += (dz / distance) * (CLASH_PUSHBACK * 0.55);
+  [p1, p2].forEach((fighter) => {
+    fighter.currentMove = null;
+    fighter.moveFrame = 0;
+    fighter.state = 'idle';
+    fighter.actionFramesRemaining = CLASH_DRAW_RECOVERY_FRAMES;
+    fighter.actionTimer = framesToSeconds(CLASH_DRAW_RECOVERY_FRAMES);
+    fighter.hitConnected = false;
+    fighter.hitConfirmed = false;
+    fighter.whiffRecoveryApplied = false;
+    fighter.blockstunFramesRemaining = 0;
+    fighter.stunFramesRemaining = 0;
+    fighter.stunTimer = 0;
+    resetKiChargeRuntime(fighter);
+  });
+  const id = nextHitEventId(match);
+  pushClashCombatPopupEvent(match, id, p1, p1Move, 'clashDraw', 0);
+  pushClashCombatPopupEvent(match, id + 1, p2, p2Move, 'clashDraw', 0);
+  match.lastHitId = id + 1;
+}
+
+function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
+  const participant = slot === 1 ? clash.p1 : clash.p2;
+  return participant.mistakes === 0 && participant.completedFrame !== null && participant.inputs.length === clash.sequence.length;
 }
 
 function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
@@ -1701,6 +2046,31 @@ function pushCombatPopupEvent(
       juggled: context.juggled,
       tornado: context.tornado,
       kiBurst: context.kiBurst
+    }
+  ].slice(-8);
+}
+
+function pushClashCombatPopupEvent(
+  match: MatchSnapshot,
+  id: number,
+  fighter: FighterRuntime,
+  move: MoveDefinition | null | undefined,
+  kind: 'clashWin' | 'clashDraw' | 'clashPerfect',
+  damage: number
+) {
+  match.combatEvents = [
+    ...match.combatEvents,
+    {
+      id,
+      slot: fighter.slot,
+      kind,
+      hits: kind === 'clashDraw' ? 0 : Math.max(1, fighter.comboHits),
+      damage,
+      moveLabel: move?.label ?? 'Ki Clash',
+      moveInput: move?.input,
+      hitLevel: move?.hitLevel ?? 'special',
+      launched: Boolean(move?.launchHeight),
+      kiBurst: true
     }
   ].slice(-8);
 }
@@ -1983,6 +2353,7 @@ function finishRound(match: MatchSnapshot) {
   match.phase = 'roundOver';
   match.countdown = ROUND_OVER_DELAY;
   match.message = 'K.O.';
+  match.clashState = createEmptyClashState();
   match.visualTimeScale = KO_SLOWMO_TIME_SCALE;
   match.fighters.forEach((fighter) => {
     fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
@@ -2000,6 +2371,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.phase = 'fighting';
   match.countdown = 0;
   match.message = '';
+  match.clashState = createEmptyClashState();
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.fighters.forEach((fighter) => {
@@ -2012,6 +2384,7 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.phase = 'intro';
   match.countdown = ROUND_INTRO_TOTAL_SECONDS;
   match.message = '';
+  match.clashState = createEmptyClashState();
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.fighters.forEach((fighter) => {
@@ -2064,6 +2437,7 @@ function resetRound(match: MatchSnapshot) {
   match.message = '';
   match.combatEvents = [];
   match.impactEvents = [];
+  match.clashState = createEmptyClashState();
   match.visualTimeScale = 1;
   if (match.introEnabled) beginRoundIntro(match);
 }
@@ -2796,6 +3170,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
     stage: { ...match.stage },
     combatEvents: [...match.combatEvents],
     impactEvents: [...match.impactEvents],
+    clashState: cloneClashState(match.clashState),
     fighters: match.fighters.map((fighter) => ({
       ...fighter,
       character: fighter.character,
@@ -2807,6 +3182,22 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
       previousAttackInputs: { ...fighter.previousAttackInputs }
     })) as [FighterRuntime, FighterRuntime]
+  };
+}
+
+function cloneClashState(clashState: ClashState): ClashState {
+  return {
+    ...clashState,
+    sequence: [...clashState.sequence],
+    contactPoint: [...clashState.contactPoint],
+    p1: {
+      ...clashState.p1,
+      inputs: [...clashState.p1.inputs]
+    },
+    p2: {
+      ...clashState.p2,
+      inputs: [...clashState.p2.inputs]
+    }
   };
 }
 

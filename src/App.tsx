@@ -64,6 +64,7 @@ import {
   type MatchSnapshot,
   type MoveDefinition,
   type MoveEffectInstance,
+  type MoveInput,
   type MoveOverride,
   type MoveTracking,
   type SpriteFrameEdit,
@@ -7247,6 +7248,7 @@ function FightScreen({
   const onlineLocalProfileRef = useRef<OnlinePlayerProfile | null>(onlineProfile);
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
+  const onlineLastClashInputRef = useRef<{ clashId: number; button: MoveInput | null }>({ clashId: 0, button: null });
 
   useEffect(() => {
     matchRef.current = match;
@@ -7465,6 +7467,12 @@ function FightScreen({
     }
     if (message.type === 'input') {
       if (onlineRoleRef.current === 'host') remoteInputRef.current = decodeInputFrame(message.frame);
+      return;
+    }
+    if (message.type === 'clashInput') {
+      const current = matchRef.current.clashState;
+      if (onlineRoleRef.current !== 'host' || current.id !== message.clashId || current.status !== 'input') return;
+      remoteInputRef.current = mergeInputFrames(remoteInputRef.current, clashButtonInputFrame(message.button));
       return;
     }
     if (message.type === 'snapshot') {
@@ -7743,6 +7751,22 @@ function FightScreen({
         while (accumulator >= fixedStep) {
           if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'guest') {
             onlineSessionRef.current?.send({ type: 'input', sequence: onlineInputSequenceRef.current += 1, frame: encodeInputFrame(localOnlineInput) });
+            const clash = matchRef.current.clashState;
+            const clashButton = clash.status === 'input' ? getClashInputButton(localOnlineInput) : null;
+            const lastClashInput = onlineLastClashInputRef.current;
+            if (clashButton && (lastClashInput.clashId !== clash.id || lastClashInput.button !== clashButton)) {
+              onlineLastClashInputRef.current = { clashId: clash.id, button: clashButton };
+              onlineSessionRef.current?.send({
+                type: 'clashInput',
+                clashId: clash.id,
+                button: clashButton,
+                elapsedFrame: clash.elapsedFrames,
+                sequence: onlineInputSequenceRef.current += 1
+              });
+            }
+            if (!clashButton && lastClashInput.clashId === clash.id) {
+              onlineLastClashInputRef.current = { clashId: clash.id, button: null };
+            }
           } else if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'host') {
             matchRef.current = stepMatch(matchRef.current, localOnlineInput, remoteInputRef.current, fixedStep);
             recordOnlineMatchWin(matchRef.current);
@@ -7829,9 +7853,10 @@ function FightScreen({
       />
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
       <CombatPopupLayer popups={combatPopups} />
+      <ClashOverlay match={match} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
-      {match.message && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}>{match.message}</div>}
+      {match.message && match.clashState.status === 'none' && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}>{match.message}</div>}
       {isOnline && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
         <div className={`match-message online-search-message ${isPrivate ? 'private-search-message' : ''}`}>
           <span>{onlineStatusText}</span>
@@ -7953,6 +7978,25 @@ function mergeInputFrames(primary: InputFrame, secondary: InputFrame): InputFram
   return merged;
 }
 
+const clashButtonLabels: Record<MoveInput, string> = {
+  jab: '1',
+  heavy: '2',
+  kick: '3',
+  special: '4'
+};
+
+const clashButtonOrder: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
+
+function getClashInputButton(input: InputFrame): MoveInput | null {
+  return clashButtonOrder.find((action) => input[action]) ?? null;
+}
+
+function clashButtonInputFrame(button: MoveInput): InputFrame {
+  const frame = emptyInputFrame();
+  frame[button] = true;
+  return frame;
+}
+
 function FightDebug({
   match,
   paused,
@@ -7982,6 +8026,55 @@ function FightDebug({
       <span data-testid="p2-ki">{p2.ki.toFixed(0)}</span>
       <span data-testid="last-input">{lastInput}</span>
       <span data-testid="frame-input">{frameInput}</span>
+    </div>
+  );
+}
+
+function ClashOverlay({ match }: { match: MatchSnapshot }) {
+  const clash = match.clashState;
+  if (!clash || clash.status === 'none') return null;
+  const p1Progress = clash.p1.completedFrame !== null ? clash.sequence.length : clash.p1.progress;
+  const p2Progress = clash.p2.completedFrame !== null ? clash.sequence.length : clash.p2.progress;
+  const resultText =
+    clash.status === 'result'
+      ? clash.winnerSlot
+        ? `${clash.winnerSlot === 1 ? match.fighters[0].character.displayName : match.fighters[1].character.displayName} Wins`
+        : 'Draw'
+      : clash.status === 'intro'
+        ? 'Ki Clash'
+        : 'Match the sequence';
+  return (
+    <div className={`clash-overlay ${clash.status}`} aria-live="assertive">
+      <div className="clash-vignette" />
+      <div className="clash-panel">
+        <span className="clash-eyebrow">{clash.status === 'result' ? 'Result' : 'Struggle'}</span>
+        <strong>{resultText}</strong>
+        {clash.status !== 'intro' && (
+          <div className="clash-sequence" aria-label="Clash quick time sequence">
+            {clash.sequence.map((button, index) => (
+              <span key={`${clash.id}-${button}-${index}`}>{clashButtonLabels[button]}</span>
+            ))}
+          </div>
+        )}
+        <div className="clash-progress">
+          <ClashProgress name={match.fighters[0].character.displayName} progress={p1Progress} total={clash.sequence.length} failed={clash.p1.failed} />
+          <ClashProgress name={match.fighters[1].character.displayName} progress={p2Progress} total={clash.sequence.length} failed={clash.p2.failed} />
+        </div>
+        {clash.status === 'result' && clash.damage > 0 && <small>{clash.damage} clash damage</small>}
+      </div>
+    </div>
+  );
+}
+
+function ClashProgress({ name, progress, total, failed }: { name: string; progress: number; total: number; failed: boolean }) {
+  return (
+    <div className={`clash-progress-row ${failed ? 'failed' : ''}`}>
+      <span>{name}</span>
+      <div>
+        {Array.from({ length: total }, (_, index) => (
+          <i key={index} className={index < progress ? 'filled' : ''} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -8020,9 +8113,24 @@ function CombatPopupLayer({ popups }: { popups: ActiveCombatPopup[] }) {
 
 function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
   const punishLabel = popup.kind === 'whiffPunish' ? 'Whiff Punish' : popup.kind === 'punish' ? 'Punish' : '';
+  const clashLabel =
+    popup.kind === 'clashPerfect' ? 'Clash Perfect' :
+    popup.kind === 'clashWin' ? 'Clash Win' :
+    popup.kind === 'clashDraw' ? 'Clash Draw' :
+    '';
   return (
     <div className={`combat-popup-card ${popup.kind}`}>
-      {popup.hits >= 2 && (
+      {clashLabel ? (
+        <>
+          <div className="punish-line">{clashLabel}</div>
+          {popup.damage > 0 && (
+            <div className="damage-line">
+              <strong>{Math.round(popup.damage)}</strong>
+              <span>Damage</span>
+            </div>
+          )}
+        </>
+      ) : popup.hits >= 2 && (
         <>
           <div className="combo-line">
             <strong>{popup.hits}</strong>
@@ -8034,7 +8142,7 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
           </div>
         </>
       )}
-      {punishLabel && <div className="punish-line">{punishLabel}</div>}
+      {punishLabel && !clashLabel && <div className="punish-line">{punishLabel}</div>}
       <small>{popup.moveLabel}</small>
     </div>
   );

@@ -4376,7 +4376,10 @@ button {
 }
 
 .combat-popup-card.whiffPunish,
-.combat-popup-card.punish {
+.combat-popup-card.punish,
+.combat-popup-card.clashWin,
+.combat-popup-card.clashDraw,
+.combat-popup-card.clashPerfect {
   border-left-color: #f18cff;
   background:
     linear-gradient(90deg, rgba(203, 74, 255, 0.48), rgba(245, 93, 255, 0.13) 66%, rgba(0, 0, 0, 0)),
@@ -4395,7 +4398,10 @@ button {
 }
 
 .combat-popup-column.right .combat-popup-card.whiffPunish,
-.combat-popup-column.right .combat-popup-card.punish {
+.combat-popup-column.right .combat-popup-card.punish,
+.combat-popup-column.right .combat-popup-card.clashWin,
+.combat-popup-column.right .combat-popup-card.clashDraw,
+.combat-popup-column.right .combat-popup-card.clashPerfect {
   border-right-color: #f18cff;
 }
 
@@ -4463,6 +4469,136 @@ button {
   font-size: 11px;
   font-weight: 850;
   letter-spacing: 0.08em;
+}
+
+.clash-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.clash-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.68)),
+    linear-gradient(90deg, rgba(35, 220, 255, 0.13), rgba(255, 145, 34, 0.13));
+}
+
+.clash-panel {
+  position: relative;
+  display: grid;
+  gap: 13px;
+  min-width: min(640px, calc(100vw - 48px));
+  padding: clamp(18px, 3vw, 30px);
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff8dc;
+  background:
+    linear-gradient(135deg, rgba(255, 131, 27, 0.24), rgba(45, 228, 255, 0.2)),
+    rgba(6, 8, 14, 0.72);
+  border: 1px solid rgba(255, 240, 148, 0.42);
+  box-shadow:
+    0 28px 100px rgba(0, 0, 0, 0.62),
+    0 0 55px rgba(255, 198, 56, 0.24);
+  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  animation: clashPanelIn 240ms ease-out both;
+}
+
+.clash-eyebrow {
+  color: #43e7ff;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.3em;
+}
+
+.clash-panel > strong {
+  font-size: clamp(32px, 7vw, 74px);
+  line-height: 0.95;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.72),
+    0 0 28px rgba(255, 224, 86, 0.48);
+}
+
+.clash-sequence {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 20px);
+}
+
+.clash-sequence span {
+  display: grid;
+  place-items: center;
+  width: clamp(50px, 8vw, 84px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  color: #10131b;
+  background: #fffcee;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 950;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.8),
+    0 10px 24px rgba(0, 0, 0, 0.34);
+}
+
+.clash-progress {
+  display: grid;
+  gap: 8px;
+}
+
+.clash-progress-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 900;
+  text-align: left;
+}
+
+.clash-progress-row > div {
+  display: flex;
+  gap: 7px;
+}
+
+.clash-progress-row i {
+  width: 18px;
+  height: 9px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.clash-progress-row i.filled {
+  background: #ffe35f;
+  box-shadow: 0 0 14px rgba(255, 227, 95, 0.72);
+}
+
+.clash-progress-row.failed {
+  color: rgba(255, 130, 130, 0.9);
+}
+
+.clash-panel small {
+  color: #ffe35f;
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+@keyframes clashPanelIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(16px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
 }
 
 @keyframes combatPopupFloat {

@@ -10,8 +10,63 @@ import {
   getKeyboardBindingsForEvent,
   prepareVerticalTapForRead
 } from '../hooks/useControls';
-import { emptyInputFrame, type CharacterDefinition, type MoveDefinition } from '../types';
+import { emptyInputFrame, type CharacterDefinition, type MoveDefinition, type MoveInput } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
+
+function makeKiClashCharacter(character: CharacterDefinition, kiBurst = true): CharacterDefinition {
+  return {
+    ...character,
+    moves: character.moves.map((move) =>
+      move.input === 'jab'
+        ? {
+            ...move,
+            kiBurst,
+            kiCost: 0,
+            startupFrames: 1,
+            activeFrames: 24,
+            recoveryFrames: 10,
+            damage: 12,
+            range: 2.4,
+            hitbox: {
+              offset: [0, 1.1, 0.72],
+              size: [1.35, 1.35, 1.65]
+            }
+          }
+        : move
+    )
+  };
+}
+
+function startKiClashMatch() {
+  let match = createPreparedClashMatch();
+  return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+}
+
+function createPreparedClashMatch(p1KiBurst = true, p2KiBurst = true) {
+  const match = createMatch(makeKiClashCharacter(starterCharacters[0], p1KiBurst), makeKiClashCharacter(starterCharacters[1], p2KiBurst), stages[0], 'local2p');
+  match.phase = 'fighting';
+  match.countdown = 0;
+  match.fighters[0].position.x = -0.7;
+  match.fighters[1].position.x = 0.7;
+  match.fighters.forEach((fighter) => {
+    const move = fighter.character.moves.find((candidate) => candidate.input === 'jab');
+    if (!move) throw new Error('missing jab');
+    fighter.state = 'attack';
+    fighter.currentMove = move;
+    fighter.moveFrame = 1;
+    fighter.actionFramesRemaining = 28;
+    fighter.actionTimer = 28 / 60;
+    fighter.hitConnected = false;
+    fighter.hitConfirmed = false;
+  });
+  return match;
+}
+
+function clashWrongButton(button: MoveInput | undefined): MoveInput {
+  const order: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
+  const index = order.indexOf(button ?? 'jab');
+  return order[(index + 1) % order.length] ?? 'heavy';
+}
 
 describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
@@ -193,6 +248,80 @@ describe('character manifests', () => {
 
     expect(match.fighters[0].position.x).toBeGreaterThan(startX);
     expect(match.fighters[0].hitConnected).toBe(false);
+  });
+
+  it('starts a clash when two active kiBurst hitboxes overlap', () => {
+    let match = createPreparedClashMatch();
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.clashState.status).toBe('intro');
+    expect(match.clashState.sequence).toHaveLength(3);
+    expect(match.fighters[0].hp).toBe(match.fighters[0].character.stats.health);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].character.stats.health);
+  });
+
+  it('does not start a clash for non-ki active hitboxes', () => {
+    let match = createPreparedClashMatch(false, true);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.clashState.status).toBe('none');
+  });
+
+  it('freezes timer and attack frames during clash input', () => {
+    let match = startKiClashMatch();
+    for (let frame = 0; frame < 45; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.clashState.status).toBe('input');
+    const timer = match.timer;
+    const p1MoveFrame = match.fighters[0].moveFrame;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.timer).toBe(timer);
+    expect(match.fighters[0].moveFrame).toBe(p1MoveFrame);
+  });
+
+  it('resolves a clash win when one player completes the sequence and the other fails', () => {
+    let match = startKiClashMatch();
+    for (let frame = 0; frame < 45; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    const sequence = match.clashState.sequence;
+    const wrong = clashWrongButton(sequence[0]);
+    const p2Wrong = emptyInputFrame();
+    p2Wrong[wrong] = true;
+    match = stepMatch(match, emptyInputFrame(), p2Wrong, 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    for (const button of sequence) {
+      const input = emptyInputFrame();
+      input[button] = true;
+      match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.clashState.status).toBe('result');
+    expect(match.clashState.winnerSlot).toBe(1);
+    expect(match.fighters[1].hp).toBeLessThan(match.fighters[1].character.stats.health);
+    expect(match.combatEvents[match.combatEvents.length - 1]?.kind).toMatch(/clash/);
+  });
+
+  it('resolves a clash draw when both players complete on the same frame', () => {
+    let match = startKiClashMatch();
+    for (let frame = 0; frame < 45; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    for (const button of match.clashState.sequence) {
+      const input = emptyInputFrame();
+      input[button] = true;
+      match = stepMatch(match, input, input, 1 / 60);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.clashState.status).toBe('result');
+    expect(match.clashState.winnerSlot).toBeNull();
+    expect(match.message).toBe('CLASH DRAW');
   });
 
   it('sanitizes partial settings and fills defaults', () => {

@@ -995,6 +995,24 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   const target = useMemo(() => new THREE.Vector3(), []);
   useFrame((_, delta) => {
     const [p1, p2] = match.fighters;
+    if (match.clashState?.status !== 'none') {
+      const [x, y, z] = match.clashState.contactPoint;
+      const dx = p2.position.x - p1.position.x;
+      const dz = p2.position.z - p1.position.z;
+      const lineLength = Math.hypot(dx, dz) || 1;
+      let cameraX = -dz / lineLength;
+      let cameraZ = dx / lineLength;
+      if (cameraZ < 0) {
+        cameraX *= -1;
+        cameraZ *= -1;
+      }
+      const cameraDistance = THREE.MathUtils.clamp(4.3 * settings.distance * settings.zoomBias, 3.8, 6.6);
+      const desired = new THREE.Vector3(x + cameraX * cameraDistance, Math.max(2.15, y + 1.15), z + cameraZ * cameraDistance);
+      camera.position.lerp(desired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
+      target.set(x, Math.max(1.12, y), z);
+      camera.lookAt(target);
+      return;
+    }
     const midX = (p1.position.x + p2.position.x) / 2;
     const midZ = (p1.position.z + p2.position.z) / 2;
     const midY = Math.max(0.92, 0.86 + (p1.position.y + p2.position.y) * 0.18);

@@ -41,9 +41,33 @@ export type FighterState =
 export type MoveInput = 'jab' | 'kick' | 'heavy' | 'special';
 export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
-export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish';
-export type ImpactSparkKind = 'hit' | 'block' | 'punish' | 'whiffPunish';
+export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish' | 'clashWin' | 'clashDraw' | 'clashPerfect';
+export type ImpactSparkKind = 'hit' | 'block' | 'punish' | 'whiffPunish' | 'clash';
 export type ImpactSparkShape = 'burst' | 'ring' | 'shards';
+
+export type ClashParticipantState = {
+  progress: number;
+  inputs: MoveInput[];
+  completedFrame: number | null;
+  failed: boolean;
+  mistakes: number;
+  lastInput: MoveInput | null;
+};
+
+export type ClashState = {
+  id: number;
+  status: 'none' | 'intro' | 'input' | 'result';
+  sequence: MoveInput[];
+  elapsedFrames: number;
+  introFrames: number;
+  inputFrames: number;
+  resultFrames: number;
+  winnerSlot: 1 | 2 | null;
+  damage: number;
+  contactPoint: Vec3Tuple;
+  p1: ClashParticipantState;
+  p2: ClashParticipantState;
+};
 
 export type BoxSpec = {
   offset: Vec3Tuple;
@@ -476,6 +500,7 @@ export type MatchSnapshot = {
   lastHitId: number;
   combatEvents: CombatPopupEvent[];
   impactEvents: ImpactSparkEvent[];
+  clashState: ClashState;
   visualTimeScale: number;
   cameraShake: number;
 };

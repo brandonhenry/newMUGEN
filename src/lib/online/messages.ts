@@ -1,5 +1,6 @@
 import type { CompactMatchSnapshot } from './codec';
 import type { OnlinePlayerProfile } from './leaderboard';
+import type { MoveInput } from '../../types';
 
 export type OnlineRole = 'host' | 'guest';
 export type OnlineConnectionState = 'idle' | 'searching' | 'connecting' | 'connected' | 'disconnected' | 'error';
@@ -15,6 +16,14 @@ export type OnlineHelloMessage = {
 export type OnlineInputMessage = {
   type: 'input';
   frame: number;
+  sequence: number;
+};
+
+export type OnlineClashInputMessage = {
+  type: 'clashInput';
+  clashId: number;
+  button: MoveInput;
+  elapsedFrame: number;
   sequence: number;
 };
 
@@ -56,6 +65,7 @@ export type OnlineErrorMessage = {
 export type OnlineMessage =
   | OnlineHelloMessage
   | OnlineInputMessage
+  | OnlineClashInputMessage
   | OnlineSnapshotMessage
   | OnlineRematchReadyMessage
   | OnlineRematchStartMessage
@@ -70,6 +80,7 @@ export function isOnlineMessage(value: unknown): value is OnlineMessage {
   return (
     type === 'hello' ||
     type === 'input' ||
+    type === 'clashInput' ||
     type === 'snapshot' ||
     type === 'rematchReady' ||
     type === 'rematchStart' ||

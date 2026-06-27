@@ -89,6 +89,7 @@ export type CompactMatchSnapshot = {
   lastHitId: number;
   combatEvents: MatchSnapshot['combatEvents'];
   impactEvents: MatchSnapshot['impactEvents'];
+  clashState: MatchSnapshot['clashState'];
   visualTimeScale: number;
   cameraShake: number;
   fighters: [CompactFighterSnapshot, CompactFighterSnapshot];
@@ -129,6 +130,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     lastHitId: match.lastHitId,
     combatEvents: match.combatEvents.slice(-8),
     impactEvents: match.impactEvents.slice(-12),
+    clashState: match.clashState,
     visualTimeScale: match.visualTimeScale,
     cameraShake: match.cameraShake,
     fighters: [compactFighter(match.fighters[0]), compactFighter(match.fighters[1])]
@@ -154,6 +156,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     lastHitId: snapshot.lastHitId,
     combatEvents: snapshot.combatEvents,
     impactEvents: snapshot.impactEvents,
+    clashState: snapshot.clashState ?? base.clashState,
     visualTimeScale: snapshot.visualTimeScale,
     cameraShake: snapshot.cameraShake,
     fighters: [hydrateFighter(base.fighters[0], snapshot.fighters[0]), hydrateFighter(base.fighters[1], snapshot.fighters[1])]

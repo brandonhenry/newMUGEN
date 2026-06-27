@@ -31,6 +31,20 @@ describe('online codec', () => {
     match.fighters[1].roundsWon = 1;
     match.phase = 'roundOver';
     match.message = 'K.O.';
+    match.clashState = {
+      id: 4,
+      status: 'input',
+      sequence: ['jab', 'heavy', 'special'],
+      elapsedFrames: 33,
+      introFrames: 45,
+      inputFrames: 150,
+      resultFrames: 54,
+      winnerSlot: null,
+      damage: 0,
+      contactPoint: [0.2, 1.4, -0.1],
+      p1: { progress: 1, inputs: ['jab'], completedFrame: null, failed: false, mistakes: 0, lastInput: 'jab' },
+      p2: { progress: 0, inputs: [], completedFrame: null, failed: false, mistakes: 0, lastInput: null }
+    };
 
     const snapshot = compactMatchSnapshot(match, 7);
     const base = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online');
@@ -48,5 +62,9 @@ describe('online codec', () => {
     expect(hydrated.fighters[1].roundsWon).toBe(1);
     expect(hydrated.aiSeed).toBe(match.aiSeed);
     expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);
+    expect(hydrated.clashState.status).toBe('input');
+    expect(hydrated.clashState.sequence).toEqual(['jab', 'heavy', 'special']);
+    expect(hydrated.clashState.p1.progress).toBe(1);
+    expect(hydrated.clashState.contactPoint).toEqual([0.2, 1.4, -0.1]);
   });
 });
