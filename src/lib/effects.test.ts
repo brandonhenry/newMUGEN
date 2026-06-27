@@ -34,6 +34,34 @@ describe('character effects', () => {
     expect(transform.opacity).toBeCloseTo(0.75);
   });
 
+  it('holds a keyframed transform through its per-keyframe end frame', () => {
+    const effect = sanitizeEffects([{
+      id: 'spark-hold',
+      name: 'Spark Hold',
+      fps: 12,
+      defaultTransform: { position: [0, 0, 0], scale: [1, 1, 1], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' }
+    }])[0];
+    const instance = sanitizeMoveEffects({
+      jableft: [{
+        id: 'spark-hold-instance',
+        effectId: 'spark-hold',
+        startFrame: 4,
+        keyframes: [
+          { frame: 0, endFrame: 6, position: [0, 0, 0], scale: [1, 1, 1], opacity: 1 },
+          { frame: 10, position: [2, 0, 0], scale: [2, 2, 2], opacity: 0.5 }
+        ]
+      }]
+    }).jableft[0];
+
+    const held = effectTransformAt(effect, instance, 9);
+    const blended = effectTransformAt(effect, instance, 12);
+
+    expect(held.position[0]).toBeCloseTo(0);
+    expect(held.scale[0]).toBeCloseTo(1);
+    expect(blended.position[0]).toBeCloseTo(1);
+    expect(blended.scale[0]).toBeCloseTo(1.5);
+  });
+
   it('fires audio cues once when move instance crosses cue frame', () => {
     const instance = sanitizeMoveEffects({
       jableft: [{ id: 'spark-a', effectId: 'spark', startFrame: 8 }]

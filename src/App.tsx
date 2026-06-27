@@ -5425,6 +5425,7 @@ function MoveEffectsEditor({
 
   const createMoveEffectKeyframe = (frame: number, effect?: CharacterEffectDefinition | null): EffectKeyframe => ({
     frame: Math.max(0, Math.round(frame)),
+    endFrame: Math.max(0, Math.round(frame)),
     position: effect?.defaultTransform.position ?? [0, 1.1, 0.55],
     scale: effect?.defaultTransform.scale ?? [1, 1, 1],
     rotation: effect?.defaultTransform.rotation ?? [0, 0, 0],
@@ -5447,7 +5448,7 @@ function MoveEffectsEditor({
     const instance = instances.find((entry) => entry.id === instanceId);
     if (!instance) return;
     const keyframes = keyframesForEdit(instance, effect).map((entry, entryIndex) => (
-      entryIndex === index ? createMoveEffectKeyframe(entry.frame, effect) : entry
+      entryIndex === index ? { ...createMoveEffectKeyframe(entry.frame, effect), endFrame: entry.endFrame ?? entry.frame } : entry
     ));
     updateInstance(instanceId, { keyframes });
   };
@@ -5540,7 +5541,7 @@ function MoveEffectsEditor({
                 <button
                   className="secondary-button compact-button"
                   onClick={() => updateInstance(instance.id, {
-                    keyframes: [...instance.keyframes, { frame: timelineFrame, position: transform?.position ?? [0, 0, 0], scale: transform?.scale ?? [1, 1, 1], rotation: transform?.rotation ?? [0, 0, 0], opacity: transform?.opacity ?? 1, color: transform?.color ?? '#ffffff' }]
+                    keyframes: [...instance.keyframes, { frame: timelineFrame, endFrame: timelineFrame, position: transform?.position ?? [0, 0, 0], scale: transform?.scale ?? [1, 1, 1], rotation: transform?.rotation ?? [0, 0, 0], opacity: transform?.opacity ?? 1, color: transform?.color ?? '#ffffff' }]
                   })}
                 >
                   Add Keyframe
@@ -5579,6 +5580,15 @@ function EffectTransformEditor({
     next[axis] = Number(Number(value).toFixed(2));
     onChange({ ...keyframe, position: next });
   };
+  const updateStartFrame = (value: number) => {
+    const frame = Math.max(0, Math.round(value));
+    const endFrame = Math.max(frame, Math.round(keyframe.endFrame ?? keyframe.frame));
+    onChange({ ...keyframe, frame, endFrame });
+  };
+  const updateEndFrame = (value: number) => {
+    const endFrame = Math.max(keyframe.frame, Math.round(value));
+    onChange({ ...keyframe, endFrame });
+  };
   const position = keyframe.position ?? [0, 1.1, 0.55];
   const positionRanges = [
     { label: 'X', min: -4, max: 4 },
@@ -5597,7 +5607,8 @@ function EffectTransformEditor({
         )}
       </legend>
       <div className="effects-form-grid">
-        <FrameNumberInput label="Frame" value={keyframe.frame} min={0} onChange={(value) => onChange({ ...keyframe, frame: Number(value) })} />
+        <FrameNumberInput label="Start" value={keyframe.frame} min={0} onChange={(value) => updateStartFrame(Number(value))} />
+        <FrameNumberInput label="End" value={keyframe.endFrame ?? keyframe.frame} min={keyframe.frame} onChange={(value) => updateEndFrame(Number(value))} />
         <div className="effect-position-sliders">
           <span>Position</span>
           {positionRanges.map((axisConfig, axis) => (

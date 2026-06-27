@@ -202,6 +202,7 @@ export type EffectTransform = {
 
 export type EffectKeyframe = Partial<EffectTransform> & {
   frame: number;
+  endFrame?: number;
 };
 
 export type EffectSoundCue = {

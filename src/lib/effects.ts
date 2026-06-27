@@ -159,7 +159,8 @@ export function effectTransformAt(effect: CharacterEffectDefinition, instance: M
   const sorted = [...keyframes].sort((a, b) => a.frame - b.frame);
   const previous = [...sorted].reverse().find((keyframe) => keyframe.frame <= localFrame) ?? sorted[0];
   const next = sorted.find((keyframe) => keyframe.frame >= localFrame) ?? previous;
-  const amount = previous === next ? 0 : (localFrame - previous.frame) / Math.max(1, next.frame - previous.frame);
+  const previousEndFrame = getKeyframeEndFrame(previous);
+  const amount = previous === next || localFrame <= previousEndFrame ? 0 : (localFrame - previousEndFrame) / Math.max(1, next.frame - previousEndFrame);
   const base = effect.defaultTransform;
   return {
     position: lerpVec3(readVec3(previous.position, base.position), readVec3(next.position, base.position), amount),
@@ -194,15 +195,24 @@ function sanitizeKeyframes(value: unknown): EffectKeyframe[] {
   if (!Array.isArray(value)) return [{ frame: 0, ...defaultTransform }];
   return value
     .filter((keyframe): keyframe is Record<string, unknown> => Boolean(keyframe) && typeof keyframe === 'object')
-    .map((keyframe) => ({
-      frame: Math.max(0, Math.round(numberOr(keyframe.frame, 0))),
-      position: Array.isArray(keyframe.position) ? readVec3(keyframe.position, defaultTransform.position) : undefined,
-      scale: Array.isArray(keyframe.scale) ? readVec3(keyframe.scale, defaultTransform.scale) : undefined,
-      rotation: Array.isArray(keyframe.rotation) ? readVec3(keyframe.rotation, defaultTransform.rotation) : undefined,
-      opacity: keyframe.opacity === undefined ? undefined : clampNumber(keyframe.opacity, 0, 1, 1),
-      color: typeof keyframe.color === 'string' ? sanitizeHex(keyframe.color, '#ffffff') : undefined
-    }))
+    .map((keyframe) => {
+      const frame = Math.max(0, Math.round(numberOr(keyframe.frame, 0)));
+      const endFrame = keyframe.endFrame === undefined ? undefined : Math.max(frame, Math.round(numberOr(keyframe.endFrame, frame)));
+      return {
+        frame,
+        endFrame,
+        position: Array.isArray(keyframe.position) ? readVec3(keyframe.position, defaultTransform.position) : undefined,
+        scale: Array.isArray(keyframe.scale) ? readVec3(keyframe.scale, defaultTransform.scale) : undefined,
+        rotation: Array.isArray(keyframe.rotation) ? readVec3(keyframe.rotation, defaultTransform.rotation) : undefined,
+        opacity: keyframe.opacity === undefined ? undefined : clampNumber(keyframe.opacity, 0, 1, 1),
+        color: typeof keyframe.color === 'string' ? sanitizeHex(keyframe.color, '#ffffff') : undefined
+      };
+    })
     .sort((a, b) => a.frame - b.frame);
+}
+
+function getKeyframeEndFrame(keyframe: EffectKeyframe) {
+  return Math.max(keyframe.frame, Math.round(keyframe.endFrame ?? keyframe.frame));
 }
 
 function sanitizeProceduralLayers(value: unknown): ProceduralEffectLayer[] {
