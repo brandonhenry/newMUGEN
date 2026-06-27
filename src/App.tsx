@@ -151,6 +151,7 @@ const ANIMATION_STORAGE_KEY = 'kore.animationOverrides';
 const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover-trimmed.wav', import.meta.url).href;
 const KORE_MENU_SELECT_SOUND_URL = new URL('../sounds/menu-button-press.wav', import.meta.url).href;
+const KORE_INNER_MENU_SELECT_SOUND_URL = new URL('../sounds/ui/generated/menu-click-004-selected.wav', import.meta.url).href;
 const HIT_SFX = {
   punch1: '/sounds/hits/generated/hit-001.wav',
   heavy2: '/sounds/hits/generated/hit-002.wav',
@@ -161,6 +162,64 @@ const HIT_SFX = {
   launcher: '/sounds/hits/generated/hit-012.wav',
   bigLauncher: '/sounds/hits/generated/hit-019.wav'
 } as const;
+const GAME_SFX_URLS = [...new Set(Object.values(HIT_SFX))];
+const SFX_POOL_SIZE = 4;
+const sfxPools = new Map<string, { audios: HTMLAudioElement[]; cursor: number }>();
+
+function getSfxPool(url: string) {
+  let pool = sfxPools.get(url);
+  if (!pool) {
+    pool = {
+      audios: Array.from({ length: SFX_POOL_SIZE }, () => {
+        const audio = new Audio(url);
+        audio.preload = 'auto';
+        audio.load();
+        return audio;
+      }),
+      cursor: 0
+    };
+    sfxPools.set(url, pool);
+  }
+  return pool;
+}
+
+function preloadSfxPool(urls: string[]) {
+  urls.forEach((url) => getSfxPool(url));
+}
+
+function unlockSfxPool(urls: string[]) {
+  urls.forEach((url) => {
+    const pool = getSfxPool(url);
+    const audio = pool.audios[0];
+    if (!audio) return;
+    audio.muted = true;
+    audio.volume = 0;
+    audio.currentTime = 0;
+    void audio.play().then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.muted = false;
+    }).catch(() => {
+      audio.muted = false;
+    });
+  });
+}
+
+function playPooledSfx(url: string, volume: number, playbackRate = 1) {
+  const pool = getSfxPool(url);
+  const availableIndex = pool.audios.findIndex((audio) => audio.paused || audio.ended || audio.currentTime > 0.08);
+  const index = availableIndex >= 0 ? availableIndex : pool.cursor;
+  const audio = pool.audios[index] ?? pool.audios[0];
+  pool.cursor = (index + 1) % pool.audios.length;
+  audio.pause();
+  audio.currentTime = 0;
+  audio.muted = false;
+  audio.volume = volume;
+  audio.playbackRate = playbackRate;
+  void audio.play().catch((error) => {
+    console.warn('KORE SFX blocked', { url, error });
+  });
+}
 type BgmSource = {
   key: string;
   tracks: LocalBgmTrack[];
@@ -1234,6 +1293,8 @@ export default function App() {
   const [musicStarted, setMusicStarted] = useState(true);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
+  const innerMenuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
+  const audioUnlockedRef = useRef(false);
   const menuHoverLastPlayedAtRef = useRef(0);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
 
@@ -1301,19 +1362,53 @@ export default function App() {
   useEffect(() => {
     const hoverAudio = new Audio(KORE_MENU_HOVER_SOUND_URL);
     const selectAudio = new Audio(KORE_MENU_SELECT_SOUND_URL);
+    const innerSelectAudio = new Audio(KORE_INNER_MENU_SELECT_SOUND_URL);
     hoverAudio.preload = 'auto';
     selectAudio.preload = 'auto';
+    innerSelectAudio.preload = 'auto';
     hoverAudio.load();
     selectAudio.load();
+    innerSelectAudio.load();
+    preloadSfxPool(GAME_SFX_URLS);
     menuHoverAudioRef.current = hoverAudio;
     menuSelectAudioRef.current = selectAudio;
+    innerMenuSelectAudioRef.current = innerSelectAudio;
     return () => {
       hoverAudio.pause();
       selectAudio.pause();
+      innerSelectAudio.pause();
       if (menuHoverAudioRef.current === hoverAudio) menuHoverAudioRef.current = null;
       if (menuSelectAudioRef.current === selectAudio) menuSelectAudioRef.current = null;
+      if (innerMenuSelectAudioRef.current === innerSelectAudio) innerMenuSelectAudioRef.current = null;
     };
   }, []);
+
+  const unlockGameAudio = useCallback(() => {
+    if (typeof window === 'undefined' || audioUnlockedRef.current) return;
+    const audio = new Audio(KORE_MENU_SELECT_SOUND_URL);
+    audio.volume = 0.001;
+    audio.currentTime = 0;
+    void audio.play().then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+      unlockSfxPool(GAME_SFX_URLS);
+      audioUnlockedRef.current = true;
+    }).catch(() => {
+      unlockSfxPool(GAME_SFX_URLS);
+    });
+  }, []);
+
+  useEffect(() => {
+    const unlock = () => unlockGameAudio();
+    window.addEventListener('pointerdown', unlock, { capture: true });
+    window.addEventListener('keydown', unlock, { capture: true });
+    window.addEventListener('touchstart', unlock, { capture: true });
+    return () => {
+      window.removeEventListener('pointerdown', unlock, { capture: true });
+      window.removeEventListener('keydown', unlock, { capture: true });
+      window.removeEventListener('touchstart', unlock, { capture: true });
+    };
+  }, [unlockGameAudio]);
 
   const updateBgmTrackIndex = useCallback((index: number) => {
     setSettings((current) => {
@@ -1330,6 +1425,7 @@ export default function App() {
   }, []);
 
   const playMenuHoverSound = useCallback((minimumGapMs = 120) => {
+    unlockGameAudio();
     if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
     const now = performance.now();
     if (now - menuHoverLastPlayedAtRef.current < minimumGapMs) return;
@@ -1340,9 +1436,10 @@ export default function App() {
     audio.pause();
     audio.currentTime = 0;
     audio.play().catch(() => undefined);
-  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
+  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx, unlockGameAudio]);
 
   const playMenuSelectSound = useCallback(() => {
+    unlockGameAudio();
     if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
     const audio = menuSelectAudioRef.current ?? new Audio(KORE_MENU_SELECT_SOUND_URL);
     menuSelectAudioRef.current = audio;
@@ -1350,7 +1447,37 @@ export default function App() {
     audio.pause();
     audio.currentTime = 0;
     audio.play().catch(() => undefined);
-  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
+  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx, unlockGameAudio]);
+
+  const playInnerMenuSelectSound = useCallback(() => {
+    unlockGameAudio();
+    if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
+    const audio = innerMenuSelectAudioRef.current ?? new Audio(KORE_INNER_MENU_SELECT_SOUND_URL);
+    innerMenuSelectAudioRef.current = audio;
+    audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.085, 0, 0.14);
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play().catch(() => undefined);
+  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx, unlockGameAudio]);
+
+  useEffect(() => {
+    const onUiClick = (event: MouseEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const interactive = target?.closest('button, a, [role="button"], summary');
+      if (!interactive || !(interactive instanceof HTMLElement)) return;
+      if (interactive.closest('[aria-hidden="true"]')) return;
+      if (interactive instanceof HTMLButtonElement && interactive.disabled) return;
+      if (interactive.getAttribute('aria-disabled') === 'true') return;
+      if (interactive.dataset.sound === 'off') return;
+      if (screen === 'menu') {
+        playMenuSelectSound();
+        return;
+      }
+      if (screen !== 'title') playInnerMenuSelectSound();
+    };
+    window.addEventListener('click', onUiClick, true);
+    return () => window.removeEventListener('click', onUiClick, true);
+  }, [playInnerMenuSelectSound, playMenuSelectSound, screen]);
 
   useEffect(() => {
     if (screen !== 'menu') return;
@@ -1369,9 +1496,11 @@ export default function App() {
   }, [playMenuHoverSound, screen, settings.audio.bgmTrackIndex, updateBgmTrackIndex]);
 
   const startFromTitle = useCallback(() => {
+    unlockGameAudio();
+    playMenuSelectSound();
     setMusicStarted(true);
     setScreen('menu');
-  }, []);
+  }, [playMenuSelectSound, unlockGameAudio]);
 
   const setCharacterAnimationFrames = (characterId: string, animationKey: string, frames: string[]) => {
     debugLog(4, 'viewer frame override requested', {
@@ -1502,6 +1631,11 @@ export default function App() {
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
   useMenuNavigation(screen);
+  const handleAppMenuKeyDown = useCallback((event: ReactKeyboardEvent<HTMLElement>) => {
+    if (handleMenuNavigationKeyEvent(event.nativeEvent, screen)) {
+      event.stopPropagation();
+    }
+  }, [screen]);
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -1516,7 +1650,7 @@ export default function App() {
   }
 
   return (
-    <main className="app-shell">
+    <main className="app-shell" onKeyDownCapture={handleAppMenuKeyDown}>
       <div className="ambient-grid" />
       <LocalBgmPlayer
         audio={settings.audio}
@@ -1600,7 +1734,7 @@ export default function App() {
             onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onLeaderboards={() => setScreen('leaderboard')}
             onPrivateRooms={() => setScreen('privateRooms')}
-            onUiNavigate={() => playMenuHoverSound(90)}
+            onUiNavigate={playInnerMenuSelectSound}
             onBack={() => setScreen('menu')}
             onNext={() => {
               if (mode !== 'private') setPrivateRoomIntent(null);
@@ -1693,15 +1827,49 @@ const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm'
   KeyA: 'left',
   KeyD: 'right',
   KeyJ: 'confirm',
-  KeyK: 'back'
+  KeyK: 'back',
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
+  Enter: 'confirm',
+  Space: 'confirm',
+  Escape: 'back'
+};
+
+const keyboardMenuNavigationByKey: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
+  w: 'up',
+  W: 'up',
+  s: 'down',
+  S: 'down',
+  a: 'left',
+  A: 'left',
+  d: 'right',
+  D: 'right',
+  j: 'confirm',
+  J: 'confirm',
+  k: 'back',
+  K: 'back',
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
+  Enter: 'confirm',
+  ' ': 'confirm',
+  Escape: 'back'
 };
 
 const menuFocusableSelector = [
   'button:not(:disabled)',
   'a[href]',
+  'summary',
   'input:not(:disabled):not([type="hidden"])',
   'select:not(:disabled)',
   'textarea:not(:disabled)',
+  '[role="button"]:not([aria-disabled="true"])',
+  '[role="tab"]:not([aria-disabled="true"])',
+  '[role="menuitem"]:not([aria-disabled="true"])',
+  '[role="option"]:not([aria-disabled="true"])',
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
@@ -1722,27 +1890,20 @@ function useMenuNavigation(screen: Screen) {
   }, [screen]);
 
   useEffect(() => {
+    if (!isMenuNavigationActive(screen)) return undefined;
+    const frame = window.requestAnimationFrame(() => focusDefaultMenuElement());
+    return () => window.cancelAnimationFrame(frame);
+  }, [screen]);
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isMenuNavigationActive(screenRef.current)) return;
-      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
-      if (isTextEntryElement(event.target)) return;
-      const command = keyboardMenuNavigation[event.code];
-      if (!command) return;
-      lastDeviceRef.current = 'keyboard';
-      event.preventDefault();
-      if (command === 'confirm') {
-        activateFocusedMenuElement();
-        return;
+      if (handleMenuNavigationKeyEvent(event, screenRef.current)) {
+        lastDeviceRef.current = 'keyboard';
       }
-      if (command === 'back') {
-        activateBackMenuElement();
-        return;
-      }
-      moveMenuFocus(command);
     };
 
-    window.addEventListener('keydown', handleKeyDown, true);
-    return () => window.removeEventListener('keydown', handleKeyDown, true);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   useEffect(() => {
@@ -1795,8 +1956,31 @@ function useMenuNavigation(screen: Screen) {
   }, []);
 }
 
+function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
+  if (!isMenuNavigationActive(screen)) return false;
+  if (document.querySelector('.capture')) return false;
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return false;
+  if (isTextEntryElement(event.target)) return false;
+  const command = keyboardMenuNavigation[event.code] ?? keyboardMenuNavigationByKey[event.key];
+  if (!command) return false;
+  event.preventDefault();
+  if (command === 'confirm') {
+    activateFocusedMenuElement();
+    return true;
+  }
+  if (command === 'back') {
+    activateBackMenuElement();
+    return true;
+  }
+  if ((command === 'left' || command === 'right') && activateFocusedDirectionalControl(command)) return true;
+  moveMenuFocus(command);
+  return true;
+}
+
 function isMenuNavigationActive(screen: Screen) {
-  return screen !== 'boot' && screen !== 'fight';
+  if (screen === 'boot') return false;
+  if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
+  return true;
 }
 
 function isTextEntryElement(target: EventTarget | null) {
@@ -1829,6 +2013,8 @@ function readMenuGamepadState(pad: Gamepad) {
 }
 
 function getMenuRoot() {
+  const overlay = document.querySelector<HTMLElement>('.pause-overlay');
+  if (overlay) return overlay;
   return document.querySelector<HTMLElement>('.screen-panel');
 }
 
@@ -1838,17 +2024,28 @@ function getMenuFocusableElements() {
   return Array.from(root.querySelectorAll<HTMLElement>(menuFocusableSelector)).filter(isVisibleMenuElement);
 }
 
+function focusDefaultMenuElement() {
+  if (isTextEntryElement(document.activeElement)) return;
+  const elements = getMenuFocusableElements();
+  if (elements.length === 0) return;
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  if (active && elements.includes(active)) return;
+  const current = getCurrentMenuElement(elements);
+  if (current) focusMenuElement(current, false);
+}
+
 function isVisibleMenuElement(element: HTMLElement) {
   if (element.closest('[aria-hidden="true"]')) return false;
+  if (element.getAttribute('aria-disabled') === 'true') return false;
   const style = window.getComputedStyle(element);
   if (style.display === 'none' || style.visibility === 'hidden' || style.pointerEvents === 'none') return false;
   const rect = element.getBoundingClientRect();
   return rect.width > 1 && rect.height > 1 && rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
 }
 
-function focusMenuElement(element: HTMLElement) {
+function focusMenuElement(element: HTMLElement, scroll = true) {
   element.focus({ preventScroll: true });
-  element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+  if (scroll) element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
 }
 
 function getCurrentMenuElement(elements: HTMLElement[]) {
@@ -1858,7 +2055,7 @@ function getCurrentMenuElement(elements: HTMLElement[]) {
     element.matches('.is-active, .active, .is-selected, .is-picking, [aria-selected="true"], [aria-current="true"]') ||
     element.getAttribute('aria-pressed') === 'true'
   ));
-  return selected ?? elements[0] ?? null;
+  return selected ?? elements.find((element) => !isTextEntryElement(element)) ?? elements[0] ?? null;
 }
 
 function moveMenuFocus(direction: MenuNavigationDirection) {
@@ -1918,8 +2115,29 @@ function activateFocusedMenuElement() {
   current.click();
 }
 
+function activateFocusedDirectionalControl(direction: Extract<MenuNavigationDirection, 'left' | 'right'>) {
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  const carousel = active?.closest<HTMLElement>('.mode-carousel');
+  if (!carousel) return false;
+  const arrows = Array.from(carousel.querySelectorAll<HTMLButtonElement>('.mode-carousel-arrow:not(:disabled)')).filter(isVisibleMenuElement);
+  const target = direction === 'left' ? arrows[0] : arrows[arrows.length - 1];
+  if (!target) return false;
+  target.click();
+  focusMenuElement(carousel, false);
+  return true;
+}
+
 function activateBackMenuElement() {
   const elements = getMenuFocusableElements();
+  const root = getMenuRoot();
+  if (root?.classList.contains('pause-overlay')) {
+    const resumeElement = elements.find((element) => (element.textContent ?? '').trim().toLowerCase().includes('resume'));
+    if (resumeElement) {
+      focusMenuElement(resumeElement);
+      resumeElement.click();
+      return;
+    }
+  }
   const backElement = elements.find((element) => {
     const text = (element.textContent ?? '').trim().toLowerCase();
     const label = (element.getAttribute('aria-label') ?? '').trim().toLowerCase();
@@ -2057,6 +2275,7 @@ function MenuScreen({
             <button
               key={item.label}
               className={index === activeMenuIndex ? 'is-active' : ''}
+              data-sound="off"
               onPointerEnter={() => activateMenuItem(index, true)}
               onMouseMove={() => activateMenuItem(index, false)}
               onFocus={() => activateMenuItem(index, false)}
@@ -2555,11 +2774,11 @@ function CharacterSelectModeCarousel({
 }) {
   const activeIndex = Math.max(0, characterSelectModeOptions.findIndex((option) => option.mode === value));
   const activeOption = characterSelectModeOptions[activeIndex] ?? characterSelectModeOptions[0];
-  const cycleMode = (direction: -1 | 1) => {
+  const cycleMode = (direction: -1 | 1, withSound = true) => {
     const nextIndex = (activeIndex + direction + characterSelectModeOptions.length) % characterSelectModeOptions.length;
     const next = characterSelectModeOptions[nextIndex];
     if (!next) return;
-    onNavigate?.();
+    if (withSound) onNavigate?.();
     setValue(next.mode);
   };
 
@@ -2580,14 +2799,14 @@ function CharacterSelectModeCarousel({
         }
       }}
     >
-      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1)} aria-label="Previous match mode">
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1, false)} aria-label="Previous match mode">
         <ChevronLeft size={26} />
       </button>
       <div className="mode-carousel-current" aria-live="polite">
         {activeOption.icon}
         <strong>{activeOption.label}</strong>
       </div>
-      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(1)} aria-label="Next match mode">
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(1, false)} aria-label="Next match mode">
         <ChevronRight size={26} />
       </button>
     </div>
@@ -2646,10 +2865,10 @@ function CpuDifficultyControl({
     const next = Math.min(5, Math.max(1, Number(rawValue))) as CpuDifficulty;
     setValue(next);
   };
-  const cycleDifficulty = (direction: -1 | 1) => {
+  const cycleDifficulty = (direction: -1 | 1, withSound = true) => {
     const next = Math.min(5, Math.max(1, value + direction)) as CpuDifficulty;
     if (next === value) return;
-    onNavigate?.();
+    if (withSound) onNavigate?.();
     setValue(next);
   };
 
@@ -2671,14 +2890,14 @@ function CpuDifficultyControl({
           }
         }}
       >
-        <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(-1)} aria-label="Lower CPU difficulty">
+        <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(-1, false)} aria-label="Lower CPU difficulty">
           <ChevronLeft size={24} />
         </button>
         <div className="mode-carousel-current" aria-live="polite">
           <Swords size={22} />
           <strong>{cpuDifficultyLabels[value]}</strong>
         </div>
-        <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(1)} aria-label="Raise CPU difficulty">
+        <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(1, false)} aria-label="Raise CPU difficulty">
           <ChevronRight size={24} />
         </button>
       </div>
@@ -3849,13 +4068,12 @@ function chooseHitSfx(event: ImpactSparkEvent) {
 
 function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
   if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
-  const audio = new Audio(chooseHitSfx(event));
   const isBlock = event.kind === 'block';
   const isLauncher = Boolean(event.launched);
   const gain = isBlock ? 0.18 : isLauncher ? 0.35 : 0.28;
-  audio.volume = clamp(audioSettings.master * audioSettings.sfx * gain, 0, isBlock ? 0.32 : 0.48);
-  audio.playbackRate = isBlock ? 0.96 : event.moveInput === 'special' ? 0.94 : 1;
-  void audio.play().catch(() => undefined);
+  const volume = clamp(audioSettings.master * audioSettings.sfx * gain, 0, isBlock ? 0.32 : 0.48);
+  const playbackRate = isBlock ? 0.96 : event.moveInput === 'special' ? 0.94 : 1;
+  playPooledSfx(chooseHitSfx(event), volume, playbackRate);
 }
 
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
@@ -7354,6 +7572,12 @@ function FightScreen({
 
   useEffect(() => {
     pausedRef.current = paused;
+  }, [paused]);
+
+  useEffect(() => {
+    if (!paused) return undefined;
+    const frame = window.requestAnimationFrame(() => focusDefaultMenuElement());
+    return () => window.cancelAnimationFrame(frame);
   }, [paused]);
 
   useEffect(() => {

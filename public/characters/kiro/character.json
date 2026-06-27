@@ -333,7 +333,14 @@
       "/characters/kiro/frames/frame-213.png"
     ],
     "cmd:3+4": [
-      "/characters/kiro/frames/frame-221.png"
+      "/characters/kiro/frames/frame-222.png",
+      "/characters/kiro/frames/frame-223.png",
+      "/characters/kiro/frames/frame-224.png",
+      "/characters/kiro/frames/frame-225.png",
+      "/characters/kiro/frames/frame-226.png",
+      "/characters/kiro/frames/frame-227.png",
+      "/characters/kiro/frames/frame-228.png",
+      "/characters/kiro/frames/frame-229.png"
     ],
     "cmd:d+1": [
       "/characters/kiro/frames/frame-227.png",
@@ -474,13 +481,13 @@
       "onBlockFrames": -11,
       "onHitFrames": 27,
       "onCounterHitFrames": 33,
-      "launchHeight": 2.2,
+      "launchHeight": 0,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Leaf Rising Wind",
       "hitLevel": "mid",
-      "knockdown": false
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "label": "Multiple Shadow Clone Technique"
@@ -622,6 +629,12 @@
       "damage": 26,
       "onBlockFrames": -17,
       "onHitFrames": 3
+    },
+    "cmd:1+3": {
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52
     }
   },
   "spriteFrameEdits": {
@@ -1343,7 +1356,7 @@
       {
         "id": "micro-rasengan-mugen-sprite-shee-fx",
         "effectId": "micro-rasengan-mugen-sprite-shee",
-        "startFrame": 33,
+        "startFrame": 9,
         "endFrame": 38,
         "layer": 1,
         "anchor": "hitbox",
@@ -1351,11 +1364,11 @@
         "loop": false,
         "keyframes": [
           {
-            "frame": 0,
+            "frame": 9,
             "position": [
-              1,
-              0.45,
-              -0.1
+              -1.4,
+              0.2,
+              0.45
             ],
             "scale": [
               1,
@@ -1371,7 +1384,7 @@
             "color": "#ffffff"
           },
           {
-            "frame": 4,
+            "frame": 9,
             "position": [
               1,
               0.45,
