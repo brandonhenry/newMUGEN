@@ -4481,7 +4481,7 @@ function CharacterViewer({
         <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
             <div className="model-viewer-stage">
-              <CharacterPreviewCanvas character={previewCharacter} pose={selectedSlot.pose} animationKey={selectedSlotDataKey} rotationTurn={rotationTurn} zoom={zoom} />
+              <CharacterPreviewCanvas character={previewCharacter} pose={selectedSlot.pose} animationKey={selectedSlotDataKey} previewMove={selectedMove} rotationTurn={rotationTurn} zoom={zoom} />
             </div>
           )}
           <div className="viewer-actions">
@@ -4700,6 +4700,7 @@ function CharacterViewer({
               character={previewCharacter}
               selectedSlot={selectedSlot}
               animationKey={selectedSlotDataKey}
+              previewMove={selectedMove}
               effects={effects}
               instances={selectedMoveEffectInstances}
               timelineFrame={effectTimelineFrame}
@@ -4919,6 +4920,7 @@ function MoveEffectsEditor({
   character,
   selectedSlot,
   animationKey,
+  previewMove,
   effects,
   instances,
   timelineFrame,
@@ -4930,6 +4932,7 @@ function MoveEffectsEditor({
   character: CharacterDefinition;
   selectedSlot: AnimationSlot;
   animationKey: string;
+  previewMove?: MoveDefinition | null;
   effects: CharacterEffectDefinition[];
   instances: MoveEffectInstance[];
   timelineFrame: number;
@@ -4976,7 +4979,7 @@ function MoveEffectsEditor({
       </aside>
       <div className="effects-detail">
         <div className="move-effect-preview">
-          <CharacterPreviewCanvas character={character} pose={selectedSlot.pose} animationKey={animationKey} rotationTurn={0} zoom={0.35} />
+          <CharacterPreviewCanvas character={character} pose={selectedSlot.pose} animationKey={animationKey} previewMove={previewMove} rotationTurn={0} zoom={0.35} />
         </div>
         {instances.length === 0 ? (
           <p className="effects-empty">No effects attached to this move yet.</p>

@@ -640,12 +640,14 @@ export function CharacterPreviewCanvas({
   character,
   pose,
   animationKey,
+  previewMove,
   rotationTurn,
   zoom
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
   animationKey?: string;
+  previewMove?: MoveDefinition | null;
   rotationTurn: number;
   zoom: number;
 }) {
@@ -668,7 +670,7 @@ export function CharacterPreviewCanvas({
       <pointLight position={[-2, 1.8, 2]} color={character.colors.primary} intensity={6} distance={5} />
       <pointLight position={[2.2, 1.2, -2.2]} color={character.colors.accent} intensity={4} distance={5} />
       <PreviewFloor color={character.colors.primary} />
-      <PreviewFighter key={character.id} character={character} pose={pose} animationKey={animationKey} rotationTurn={rotationTurn} />
+      <PreviewFighter key={character.id} character={character} pose={pose} animationKey={animationKey} previewMove={previewMove} rotationTurn={rotationTurn} />
       <PreviewCamera zoom={zoom} frameFit={frameFit} />
       <OrbitControls
         makeDefault
@@ -756,11 +758,13 @@ function PreviewFighter({
   character,
   pose,
   animationKey,
+  previewMove,
   rotationTurn
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
   animationKey?: string;
+  previewMove?: MoveDefinition | null;
   rotationTurn: number;
 }) {
   const fighter = useRef(createPreviewFighter(character));
@@ -787,7 +791,7 @@ function PreviewFighter({
     runtime.velocityY = 0;
 
     if (isMovePose(pose)) {
-      const move = character.moves.find((candidate) => candidate.input === pose) ?? character.moves[0] ?? null;
+      const move = previewMove ?? character.moves.find((candidate) => candidate.input === pose) ?? character.moves[0] ?? null;
       const total = move ? move.startupFrames + move.activeFrames + move.recoveryFrames : 1;
       const timelineFrame = Math.floor(t * 60) % Math.max(1, total);
       runtime.state = 'attack';

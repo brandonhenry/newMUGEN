@@ -1359,15 +1359,27 @@
     {
       "index": 102,
       "path": "/characters/kiro/frames/frame-102.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
       "box": [
-        215,
-        832,
-        290,
-        918
+        234,
+        840,
+        274,
+        907
       ],
-      "width": 75,
-      "height": 86,
-      "row": 10
+      "width": 40,
+      "height": 67,
+      "row": 10,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782518570766
     },
     {
       "index": 103,
