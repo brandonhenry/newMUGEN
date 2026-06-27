@@ -196,7 +196,7 @@ const ANIMATION_DEFAULTS_REVISION = 'sprite-inferred-2026-06-24-b';
 const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
 const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
-const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover.mp3', import.meta.url).href;
+const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover-trimmed.wav', import.meta.url).href;
 const HIT_SFX = {
   punch1: '/sounds/hits/generated/hit-001.wav',
   heavy2: '/sounds/hits/generated/hit-002.wav',
@@ -1535,7 +1535,7 @@ export default function App() {
           <MenuScreen
             roster={roster}
             onMenuSelect={() => playMenuHoverSound(80)}
-            onMenuHover={() => playMenuHoverSound(140)}
+            onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
               setMode('ai');
               setScreen('select');
