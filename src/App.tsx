@@ -197,6 +197,7 @@ const KORE_BGM_PLAYLIST_ID = 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2';
 const KORE_BGM_START_VIDEO_ID = 'yy4D-0QnvQ8';
 const KORE_BGM_PLAYLIST_URL = `https://www.youtube.com/watch?v=${KORE_BGM_START_VIDEO_ID}&list=${KORE_BGM_PLAYLIST_ID}`;
 const KORE_MENU_HOVER_SOUND_URL = new URL('../sounds/menu-button-hover-trimmed.wav', import.meta.url).href;
+const KORE_MENU_SELECT_SOUND_URL = new URL('../sounds/menu-button-press.wav', import.meta.url).href;
 const HIT_SFX = {
   punch1: '/sounds/hits/generated/hit-001.wav',
   heavy2: '/sounds/hits/generated/hit-002.wav',
@@ -1258,6 +1259,7 @@ export default function App() {
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [musicStarted, setMusicStarted] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
+  const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
 
@@ -1323,13 +1325,19 @@ export default function App() {
   }, [settings]);
 
   useEffect(() => {
-    const audio = new Audio(KORE_MENU_HOVER_SOUND_URL);
-    audio.preload = 'auto';
-    audio.load();
-    menuHoverAudioRef.current = audio;
+    const hoverAudio = new Audio(KORE_MENU_HOVER_SOUND_URL);
+    const selectAudio = new Audio(KORE_MENU_SELECT_SOUND_URL);
+    hoverAudio.preload = 'auto';
+    selectAudio.preload = 'auto';
+    hoverAudio.load();
+    selectAudio.load();
+    menuHoverAudioRef.current = hoverAudio;
+    menuSelectAudioRef.current = selectAudio;
     return () => {
-      audio.pause();
-      if (menuHoverAudioRef.current === audio) menuHoverAudioRef.current = null;
+      hoverAudio.pause();
+      selectAudio.pause();
+      if (menuHoverAudioRef.current === hoverAudio) menuHoverAudioRef.current = null;
+      if (menuSelectAudioRef.current === selectAudio) menuSelectAudioRef.current = null;
     };
   }, []);
 
@@ -1355,6 +1363,16 @@ export default function App() {
     const audio = menuHoverAudioRef.current ?? new Audio(KORE_MENU_HOVER_SOUND_URL);
     menuHoverAudioRef.current = audio;
     audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.16, 0, 0.22);
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play().catch(() => undefined);
+  }, [settings.audio.master, settings.audio.muted, settings.audio.sfx]);
+
+  const playMenuSelectSound = useCallback(() => {
+    if (settings.audio.muted || settings.audio.master <= 0 || settings.audio.sfx <= 0) return;
+    const audio = menuSelectAudioRef.current ?? new Audio(KORE_MENU_SELECT_SOUND_URL);
+    menuSelectAudioRef.current = audio;
+    audio.volume = clamp(settings.audio.master * settings.audio.sfx * 0.075, 0, 0.14);
     audio.pause();
     audio.currentTime = 0;
     audio.play().catch(() => undefined);
@@ -1534,7 +1552,7 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
-            onMenuSelect={() => playMenuHoverSound(80)}
+            onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
               setMode('ai');
