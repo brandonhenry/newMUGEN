@@ -44,6 +44,14 @@ type DevEffectSoundPayload = {
   dataUrl?: string;
 };
 
+type DevEffectFramePayload = {
+  characterId?: string;
+  effectId?: string;
+  frameIndex?: number;
+  edit?: Record<string, unknown>;
+  pngDataUrl?: string;
+};
+
 type DevSpriteFramePayload = {
   characterId?: string;
   frameIndex?: number;
@@ -315,10 +323,97 @@ function koreDevManifestWriter() {
             id: effectId,
             name: typeof payload.effectName === 'string' && payload.effectName.trim() ? payload.effectName.trim().slice(0, 120) : effectId,
             spriteSheetPath: `/characters/${characterId}/effects/${effectId}/source.png`,
-            frames: frameEntries.map((frame) => frame.path)
+            frames: frameEntries.map((frame) => frame.path),
+            effectFrameEdits: Object.fromEntries(
+              frameEntries.map((frame) => [
+                String(frame.index),
+                sanitizeSpriteFrameEdit({
+                  index: frame.index,
+                  path: frame.path,
+                  sourceMode: 'sheet',
+                  sheetId: 'source',
+                  sheetPath: `/characters/${characterId}/effects/${effectId}/source.png`,
+                  sourceName: typeof payload.effectName === 'string' && payload.effectName.trim() ? payload.effectName.trim().slice(0, 120) : effectId,
+                  box: frame.box,
+                  width: frame.width,
+                  height: frame.height,
+                  row: frame.row,
+                  rotation: 0,
+                  offset: [0, 0],
+                  scale: 1
+                })
+              ])
+            )
           };
           await writeFile(resolve(effectDir, 'effect.json'), `${JSON.stringify({ ...metadata, frameData: frameEntries.map(({ dataUrl, ...frame }) => frame) }, null, 2)}\n`, 'utf8');
           sendJson(response, 200, { ok: true, characterId, effect: metadata });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-effect-frame', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevEffectFramePayload;
+          const characterId = payload.characterId ?? '';
+          const effectId = sanitizeAssetId(payload.effectId ?? '');
+          const frameIndex = Math.max(0, Math.round(finiteOr(payload.frameIndex, 0)));
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !effectId) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character or effect id' });
+            return;
+          }
+
+          const effectDir = resolve(server.config.root, 'public', 'characters', characterId, 'effects', effectId);
+          const framesDir = resolve(effectDir, 'frames');
+          await mkdir(framesDir, { recursive: true });
+          const framePath = `/characters/${characterId}/effects/${effectId}/frames/frame-${frameIndex.toString().padStart(3, '0')}.png`;
+          const edit = sanitizeSpriteFrameEdit({
+            ...(payload.edit ?? {}),
+            index: frameIndex,
+            path: framePath,
+            sheetPath: `/characters/${characterId}/effects/${effectId}/source.png`
+          });
+          await writeFile(resolve(framesDir, `frame-${frameIndex.toString().padStart(3, '0')}.png`), dataUrlToPngBuffer(payload.pngDataUrl));
+
+          const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          const effects = sanitizeCharacterEffects((manifest.effects as Array<Record<string, unknown>> | undefined) ?? []);
+          const nextEffects = effects.map((effect) => {
+            if (effect.id !== effectId) return effect;
+            const frames = [...(effect.frames ?? [])];
+            frames[frameIndex] = framePath;
+            return sanitizeCharacterEffect({
+              ...effect,
+              frames,
+              effectFrameEdits: {
+                ...(effect.effectFrameEdits ?? {}),
+                [String(frameIndex)]: edit
+              }
+            }, 0);
+          });
+          manifest.effects = nextEffects;
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+
+          const effectJsonPath = resolve(effectDir, 'effect.json');
+          let effectJson: Record<string, unknown> = {};
+          try {
+            effectJson = JSON.parse(await readFile(effectJsonPath, 'utf8')) as Record<string, unknown>;
+          } catch {
+            effectJson = {};
+          }
+          effectJson.frames = Array.isArray(effectJson.frames) ? effectJson.frames : [];
+          (effectJson.frames as string[])[frameIndex] = framePath;
+          effectJson.effectFrameEdits = {
+            ...((effectJson.effectFrameEdits as Record<string, unknown> | undefined) ?? {}),
+            [String(frameIndex)]: edit
+          };
+          await writeFile(effectJsonPath, `${JSON.stringify(effectJson, null, 2)}\n`, 'utf8');
+
+          sendJson(response, 200, { ok: true, characterId, effectId, frameIndex, framePath, edit });
         } catch (error) {
           sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -876,6 +971,7 @@ function sanitizeCharacterEffect(effect: Record<string, unknown>, index: number)
     name: typeof effect.name === 'string' && effect.name.trim() ? effect.name.trim().slice(0, 120) : id,
     spriteSheetPath: typeof effect.spriteSheetPath === 'string' && effect.spriteSheetPath.startsWith('/characters/') ? effect.spriteSheetPath : undefined,
     frames,
+    effectFrameEdits: sanitizeSpriteFrameEditMap((effect.effectFrameEdits as Record<string, Record<string, unknown>> | undefined) ?? {}),
     fps: Math.max(1, Math.min(60, finiteOr(effect.fps, 12))),
     loop: Boolean(effect.loop),
     billboard: effect.billboard !== false,

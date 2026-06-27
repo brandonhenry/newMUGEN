@@ -2865,7 +2865,30 @@ button {
   background: rgba(0, 0, 0, 0.22);
 }
 
-.effect-preview-strip img {
+.effect-preview-strip button {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  min-width: 92px;
+  min-height: 108px;
+  border: 0;
+  border-radius: 7px;
+  padding: 6px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.effect-preview-strip button.active {
+  color: #061016;
+  background: #2ee6ff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.36) inset;
+}
+
+.effect-preview-strip img,
+.effect-preview-strip button img {
   width: 82px;
   height: 82px;
   flex: 0 0 auto;
@@ -2873,6 +2896,14 @@ button {
   object-fit: contain;
   image-rendering: pixelated;
   background: rgba(255, 255, 255, 0.08);
+}
+
+.effect-frame-editor {
+  margin-top: 6px;
+}
+
+.effect-frame-bank {
+  max-height: 260px;
 }
 
 .effect-transform-editor {

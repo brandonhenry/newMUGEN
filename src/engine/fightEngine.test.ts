@@ -795,6 +795,41 @@ describe('fight engine', () => {
     expect(hard.usedInputs).toBeGreaterThanOrEqual(1);
   });
 
+  it('lets CPU spend ki on charge-plus-attack routes during battle', () => {
+    const kiCharacter = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...(starterCharacters[0].animationFrames ?? {}),
+        'cmd:O+1': ['/characters/kiro/frames/frame-000.png']
+      }
+    };
+    let match = createMatch(kiCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 222 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].ki = 100;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[1].state = 'hit';
+    match.fighters[1].stunFramesRemaining = 180;
+    match.fighters[1].actionFramesRemaining = 180;
+    match.fighters[1].stunTimer = 3;
+    match.fighters[1].actionTimer = 3;
+
+    let sawKiBurst = false;
+    for (let i = 0; i < 180; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[0].currentMove?.kiBurst) {
+        sawKiBurst = true;
+        break;
+      }
+    }
+
+    expect(sawKiBurst).toBe(true);
+    expect(match.fighters[0].ki).toBeLessThan(100);
+  });
+
   it('higher CPU difficulty extends hit-confirmed routes longer than easy CPU', () => {
     const simulatePressure = (difficulty: 1 | 5) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);

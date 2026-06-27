@@ -304,7 +304,7 @@ const slotCategoryOptions: Array<{ value: AnimationSlot['category'] | 'all'; lab
   { value: 'direction', label: 'Directions' },
   { value: 'motion', label: 'Motions' },
   { value: 'state', label: 'States' },
-  { value: 'special', label: 'Heat/Rage' },
+  { value: 'special', label: 'Ki/Heat/Rage' },
   { value: 'all', label: 'All' }
 ];
 const hitLevelOptions: HitLevel[] = ['high', 'mid', 'low', 'throw', 'special'];
@@ -319,10 +319,10 @@ const cpuDifficultyLabels: Record<CpuDifficulty, string> = {
 
 function buildAnimationSlots(): AnimationSlot[] {
   const commandSlots: AnimationSlot[] = [];
-  const pushCommand = (command: string, category: AnimationSlot['category']) => {
+  const pushCommand = (command: string, category: AnimationSlot['category'], label = command) => {
     commandSlots.push({
       key: commandAnimationKey(command),
-      label: command,
+      label,
       pose: commandPose(command),
       notation: parseNotationTokens(command),
       category,
@@ -334,6 +334,7 @@ function buildAnimationSlots(): AnimationSlot[] {
   directionPrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}+${combo}`, 'direction')));
   motionPrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}+${combo}`, 'motion')));
   statePrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}+${combo}`, 'state')));
+  buttonCombos.forEach((combo) => pushCommand(`O+${combo}`, 'special', `Charge ${combo}`));
   specialPrefixes.forEach((prefix) => buttonCombos.forEach((combo) => pushCommand(`${prefix}${combo}`, 'special')));
 
   return [...baseAnimationSlots, ...commandSlots];
@@ -3966,7 +3967,9 @@ function CharacterViewer({
   const [spriteSheetImportStatus, setSpriteSheetImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
   const [effectSaveStatus, setEffectSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [effectImportStatus, setEffectImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
+  const [effectFrameSaveStatus, setEffectFrameSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [selectedEffectId, setSelectedEffectId] = useState('');
+  const [selectedEffectFrameIndex, setSelectedEffectFrameIndex] = useState(0);
   const [effectTimelineFrame, setEffectTimelineFrame] = useState(0);
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
@@ -4000,6 +4003,11 @@ function CharacterViewer({
   const moveEffects = active.moveEffects ?? {};
   const selectedMoveEffectInstances = moveEffects[selectedSlotDataKey] ?? [];
   const selectedMoveTotalFrames = selectedMove ? selectedMove.startupFrames + selectedMove.activeFrames + selectedMove.recoveryFrames : 30;
+  useEffect(() => {
+    if (!selectedEffect) return;
+    const frameCount = selectedEffect.frames?.length ?? 0;
+    if (frameCount > 0 && selectedEffectFrameIndex >= frameCount) setSelectedEffectFrameIndex(0);
+  }, [selectedEffect, selectedEffectFrameIndex]);
   const previewCharacter = previewHdVoxels
     ? {
         ...active,
@@ -4273,6 +4281,47 @@ function CharacterViewer({
     updateCharacterEffects(nextEffects, moveEffects);
   };
 
+  const saveEffectFrame = async (effectId: string, edit: SpriteFrameEdit, pngDataUrl: string) => {
+    if (!isLocalDev || !effectId) return;
+    setEffectFrameSaveStatus('saving');
+    try {
+      const frameIndex = Math.max(0, Math.round(edit.index));
+      const response = await fetch('/__kore/dev/save-effect-frame', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          effectId,
+          frameIndex,
+          edit,
+          pngDataUrl
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as { framePath?: string; edit?: SpriteFrameEdit };
+      const framePathValue = payload.framePath ?? `/characters/${active.id}/effects/${effectId}/frames/frame-${frameIndex.toString().padStart(3, '0')}.png`;
+      const nextEffects = effects.map((effect) => {
+        if (effect.id !== effectId) return effect;
+        const frames = [...(effect.frames ?? [])];
+        frames[frameIndex] = framePathValue;
+        return sanitizeEffects([{
+          ...effect,
+          frames,
+          effectFrameEdits: {
+            ...(effect.effectFrameEdits ?? {}),
+            [String(frameIndex)]: payload.edit ?? edit
+          }
+        }])[0];
+      });
+      updateCharacterEffects(nextEffects, moveEffects);
+      setEffectFrameSaveStatus('saved');
+      window.setTimeout(() => setEffectFrameSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to save effect frame', error);
+      setEffectFrameSaveStatus('error');
+    }
+  };
+
   const deleteEffect = (effectId: string) => {
     const nextEffects = effects.filter((effect) => effect.id !== effectId);
     const nextMoveEffects = Object.fromEntries(
@@ -4290,14 +4339,14 @@ function CharacterViewer({
       id: uniqueMoveEffectInstanceId(selectedMoveEffectInstances, effectId),
       effectId,
       label: effects.find((effect) => effect.id === effectId)?.name,
-      startFrame: Math.min(selectedMove?.startupFrames ?? 0, Math.max(0, selectedMoveTotalFrames - 1)),
+      startFrame: 0,
       endFrame: selectedMoveTotalFrames,
       layer: selectedMoveEffectInstances.length,
       mirrorWithFacing: true,
-      anchor: 'hitbox',
+      anchor: 'body',
       keyframes: [
-        { frame: 0, position: [0, 0, 0], scale: [1, 1, 1], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' },
-        { frame: Math.max(1, selectedMoveTotalFrames), position: [0.22, 0.08, 0], scale: [1.15, 1.15, 1], rotation: [0, 0, 0.45], opacity: 0.05, color: '#ffffff' }
+        { frame: 0, position: [0, 0.15, 0.28], scale: [2.25, 2.25, 2.25], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' },
+        { frame: Math.max(1, selectedMoveTotalFrames), position: [0, 0.15, 0.28], scale: [2.25, 2.25, 2.25], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' }
       ],
       soundCues: []
     };
@@ -4683,16 +4732,21 @@ function CharacterViewer({
             />
           ) : isEditingEffectsLibrary ? (
             <EffectsLibraryEditor
+              character={active}
               effects={effects}
               selectedEffect={selectedEffect}
+              selectedFrameIndex={selectedEffectFrameIndex}
               importStatus={effectImportStatus}
               saveStatus={effectSaveStatus}
+              frameSaveStatus={effectFrameSaveStatus}
               onSelectEffect={setSelectedEffectId}
+              onSelectFrame={setSelectedEffectFrameIndex}
               onAddBlankEffect={addBlankEffect}
               onDeleteEffect={deleteEffect}
               onUpdateEffect={updateEffect}
               onImportSpriteSheet={importEffectSpriteSheet}
               onImportSound={importEffectSound}
+              onSaveFrame={saveEffectFrame}
               onSave={() => saveEffectsToDev()}
             />
           ) : isEditingMoveEffects ? (
@@ -4789,28 +4843,38 @@ function CharacterViewer({
 }
 
 function EffectsLibraryEditor({
+  character,
   effects,
   selectedEffect,
+  selectedFrameIndex,
   importStatus,
   saveStatus,
+  frameSaveStatus,
   onSelectEffect,
+  onSelectFrame,
   onAddBlankEffect,
   onDeleteEffect,
   onUpdateEffect,
   onImportSpriteSheet,
   onImportSound,
+  onSaveFrame,
   onSave
 }: {
+  character: CharacterDefinition;
   effects: CharacterEffectDefinition[];
   selectedEffect: CharacterEffectDefinition | null;
+  selectedFrameIndex: number;
   importStatus: 'idle' | 'working' | 'saved' | 'error';
   saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  frameSaveStatus: 'idle' | 'saving' | 'saved' | 'error';
   onSelectEffect: (effectId: string) => void;
+  onSelectFrame: (frameIndex: number) => void;
   onAddBlankEffect: () => void;
   onDeleteEffect: (effectId: string) => void;
   onUpdateEffect: (effectId: string, patch: Partial<CharacterEffectDefinition>) => void;
   onImportSpriteSheet: (file: File | undefined) => void;
   onImportSound: (file: File | undefined, effectId: string) => void;
+  onSaveFrame: (effectId: string, edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
   onSave: () => void;
 }) {
   return (
@@ -4896,12 +4960,31 @@ function EffectsLibraryEditor({
             />
             <div className="effect-preview-strip">
               {(selectedEffect.frames ?? []).slice(0, 16).map((frame, index) => (
-                <img key={`${frame}-${index}`} src={frame} alt={`Effect frame ${index}`} />
+                <button
+                  key={`${frame}-${index}`}
+                  className={selectedFrameIndex === index ? 'active' : ''}
+                  onClick={() => onSelectFrame(index)}
+                  title={`Edit effect frame ${index}`}
+                >
+                  <img src={frame} alt={`Effect frame ${index}`} />
+                  <span>{index}</span>
+                </button>
               ))}
               {(selectedEffect.frames?.length ?? 0) === 0 && (
                 <span className="effects-empty">Procedural-only: {(selectedEffect.proceduralLayers ?? []).map((layer) => layer.kind).join(', ') || 'glow'}</span>
               )}
             </div>
+            {selectedEffect.spriteSheetPath && (
+              <EffectSpriteFrameEditor
+                characterId={character.id}
+                effect={selectedEffect}
+                selectedFrameIndex={selectedFrameIndex}
+                saveStatus={frameSaveStatus}
+                onSelectFrame={onSelectFrame}
+                onUpdateEffect={onUpdateEffect}
+                onSaveFrame={onSaveFrame}
+              />
+            )}
             <EffectSoundCueList
               cues={selectedEffect.soundCues}
               onChange={(soundCues) => onUpdateEffect(selectedEffect.id, { soundCues })}
@@ -4911,6 +4994,309 @@ function EffectsLibraryEditor({
           <p className="effects-empty">Create or import an effect to edit it.</p>
         )}
         {importStatus !== 'idle' && <small className={`manifest-save-status is-${importStatus === 'error' ? 'error' : importStatus === 'saved' ? 'saved' : 'saving'}`}>{importStatus}</small>}
+      </div>
+    </section>
+  );
+}
+
+function createDefaultEffectFrameEdit(characterId: string, effect: CharacterEffectDefinition, frameIndex: number): SpriteFrameEdit {
+  const existing = effect.effectFrameEdits?.[String(frameIndex)];
+  if (existing) {
+    return sanitizeSpriteFrameEdit({
+      ...existing,
+      index: frameIndex,
+      path: effectFramePath(characterId, effect.id, frameIndex),
+      sheetId: 'source',
+      sheetPath: effect.spriteSheetPath ?? existing.sheetPath,
+      sourceName: effect.name
+    });
+  }
+  return sanitizeSpriteFrameEdit({
+    index: frameIndex,
+    path: effectFramePath(characterId, effect.id, frameIndex),
+    sourceMode: 'sheet',
+    sheetId: 'source',
+    sheetPath: effect.spriteSheetPath,
+    sourceName: effect.name,
+    box: [0, 0, 64, 64],
+    width: 64,
+    height: 64,
+    row: 0,
+    rotation: 0,
+    offset: [0, 0],
+    scale: 1
+  });
+}
+
+function effectFramePath(characterId: string, effectId: string, frameIndex: number) {
+  return `/characters/${characterId}/effects/${effectId}/frames/frame-${frameIndex.toString().padStart(3, '0')}.png`;
+}
+
+function EffectSpriteFrameEditor({
+  characterId,
+  effect,
+  selectedFrameIndex,
+  saveStatus,
+  onSelectFrame,
+  onUpdateEffect,
+  onSaveFrame
+}: {
+  characterId: string;
+  effect: CharacterEffectDefinition;
+  selectedFrameIndex: number;
+  saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  onSelectFrame: (frameIndex: number) => void;
+  onUpdateEffect: (effectId: string, patch: Partial<CharacterEffectDefinition>) => void;
+  onSaveFrame: (effectId: string, edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
+}) {
+  const sheetRef = useRef<HTMLImageElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cropDragRef = useRef<{
+    mode: string;
+    startPointer: [number, number];
+    startBox: [number, number, number, number];
+  } | null>(null);
+  const [sheetSize, setSheetSize] = useState({ width: 1, height: 1 });
+  const [edit, setEdit] = useState<SpriteFrameEdit>(() => createDefaultEffectFrameEdit(characterId, effect, selectedFrameIndex));
+  const frames = effect.frames ?? [];
+  const framePathValue = frames[selectedFrameIndex] ?? effectFramePath(characterId, effect.id, selectedFrameIndex);
+  const cropWidth = Math.max(1, edit.box[2] - edit.box[0]);
+  const cropHeight = Math.max(1, edit.box[3] - edit.box[1]);
+  const pngWidth = Math.max(1, Math.round(edit.width || cropWidth));
+  const pngHeight = Math.max(1, Math.round(edit.height || cropHeight));
+
+  useEffect(() => {
+    const baseEdit = createDefaultEffectFrameEdit(characterId, effect, selectedFrameIndex);
+    setEdit(clampSpriteFrameEditToSheet(baseEdit, sheetSize));
+  }, [characterId, effect, selectedFrameIndex, sheetSize]);
+
+  useEffect(() => {
+    renderSpriteFrameCanvas(sheetRef.current, canvasRef.current, edit);
+  }, [edit, sheetSize]);
+
+  const patchEdit = (patch: Partial<SpriteFrameEdit>) => {
+    setEdit((current) => clampSpriteFrameEditToSheet(sanitizeSpriteFrameEdit({
+      ...current,
+      ...patch,
+      index: selectedFrameIndex,
+      path: effectFramePath(characterId, effect.id, selectedFrameIndex),
+      sourceMode: 'sheet',
+      sheetId: 'source',
+      sheetPath: effect.spriteSheetPath,
+      sourceName: effect.name
+    }), sheetSize));
+  };
+
+  const pointerToSheetPoint = (event: ReactPointerEvent): [number, number] => {
+    const image = sheetRef.current;
+    if (!image) return [0, 0];
+    const rect = image.getBoundingClientRect();
+    return [
+      clamp(((event.clientX - rect.left) / Math.max(1, rect.width)) * sheetSize.width, 0, sheetSize.width),
+      clamp(((event.clientY - rect.top) / Math.max(1, rect.height)) * sheetSize.height, 0, sheetSize.height)
+    ];
+  };
+
+  const beginCropDrag = (event: ReactPointerEvent<HTMLElement>, mode: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    cropDragRef.current = {
+      mode,
+      startPointer: pointerToSheetPoint(event),
+      startBox: [...edit.box]
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const updateCropDrag = (event: ReactPointerEvent<HTMLElement>) => {
+    const drag = cropDragRef.current;
+    if (!drag) return;
+    event.preventDefault();
+    const [pointerX, pointerY] = pointerToSheetPoint(event);
+    const dx = Math.round(pointerX - drag.startPointer[0]);
+    const dy = Math.round(pointerY - drag.startPointer[1]);
+    const [x1, y1, x2, y2] = drag.startBox;
+    let nextBox: [number, number, number, number];
+    if (drag.mode === 'move') {
+      nextBox = moveSpriteFrameBoxWithinSheet(drag.startBox, dx, dy, sheetSize);
+    } else {
+      const movesLeft = drag.mode.includes('w');
+      const movesRight = drag.mode.includes('e');
+      const movesTop = drag.mode.includes('n');
+      const movesBottom = drag.mode.includes('s');
+      nextBox = [
+        movesLeft ? clamp(x1 + dx, 0, x2 - 1) : x1,
+        movesTop ? clamp(y1 + dy, 0, y2 - 1) : y1,
+        movesRight ? clamp(x2 + dx, x1 + 1, sheetSize.width) : x2,
+        movesBottom ? clamp(y2 + dy, y1 + 1, sheetSize.height) : y2
+      ];
+    }
+    patchEdit({ box: nextBox, width: nextBox[2] - nextBox[0], height: nextBox[3] - nextBox[1] });
+  };
+
+  const endCropDrag = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!cropDragRef.current) return;
+    cropDragRef.current = null;
+    event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+
+  const updateBox = (key: 'x' | 'y' | 'width' | 'height', value: string) => {
+    const numeric = Math.max(0, Math.round(Number(value) || 0));
+    const [x1, y1, x2, y2] = edit.box;
+    if (key === 'x') patchEdit({ box: [numeric, y1, numeric + cropWidth, y2] });
+    if (key === 'y') patchEdit({ box: [x1, numeric, x2, numeric + cropHeight] });
+    if (key === 'width') patchEdit({ box: [x1, y1, x1 + Math.max(1, numeric), y2] });
+    if (key === 'height') patchEdit({ box: [x1, y1, x2, y1 + Math.max(1, numeric)] });
+  };
+
+  const fitVisibleCrop = () => {
+    const fitted = fitSpriteFrameToVisiblePixels(sheetRef.current, edit);
+    if (fitted) setEdit(clampSpriteFrameEditToSheet(fitted, sheetSize));
+  };
+
+  const createNewFrame = () => {
+    const nextIndex = Math.max(frames.length, ...Object.keys(effect.effectFrameEdits ?? {}).map((key) => Number(key) + 1).filter(Number.isFinite));
+    const nextPath = effectFramePath(characterId, effect.id, nextIndex);
+    const nextFrames = [...frames];
+    nextFrames[nextIndex] = nextPath;
+    const nextEdit = sanitizeSpriteFrameEdit({
+      ...edit,
+      index: nextIndex,
+      path: nextPath,
+      width: cropWidth,
+      height: cropHeight,
+      sourceMode: 'sheet',
+      sourceName: effect.name,
+      sheetId: 'source',
+      sheetPath: effect.spriteSheetPath
+    });
+    onUpdateEffect(effect.id, {
+      frames: nextFrames,
+      effectFrameEdits: {
+        ...(effect.effectFrameEdits ?? {}),
+        [String(nextIndex)]: nextEdit
+      }
+    });
+    onSelectFrame(nextIndex);
+  };
+
+  const saveFrame = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const nextEdit = clearReplacementFrameEdit({
+      ...sanitizeSpriteFrameEdit(edit),
+      path: effectFramePath(characterId, effect.id, selectedFrameIndex),
+      width: canvas.width,
+      height: canvas.height,
+      sheetId: 'source',
+      sheetPath: effect.spriteSheetPath,
+      sourceName: effect.name,
+      revision: (edit.revision ?? 0) + 1
+    });
+    await onSaveFrame(effect.id, nextEdit, canvas.toDataURL('image/png'));
+  };
+
+  return (
+    <section className="sprite-crop-editor effect-frame-editor" aria-label="Effect spritesheet crop editor">
+      <div className="sprite-crop-stage">
+        <div className="sprite-sheet-crop-map">
+          <div className="sprite-sheet-library" aria-label="Effect frames">
+            <strong>{effect.name} Sheet</strong>
+            <button className="secondary-button compact-button" onClick={createNewFrame}>New Frame</button>
+            <button className="secondary-button compact-button" onClick={fitVisibleCrop}>Fit Visible</button>
+            <button className="secondary-button compact-button dev-save-button" onClick={saveFrame} disabled={saveStatus === 'saving'}>
+              <Save size={14} />
+              {saveStatus === 'saving' ? 'Saving' : 'Save Frame'}
+            </button>
+            {saveStatus !== 'idle' && (
+              <span className={`manifest-save-status is-${saveStatus}`}>
+                {saveStatus === 'saved' ? 'Saved effect frame' : saveStatus === 'error' ? 'Save failed' : 'Writing'}
+              </span>
+            )}
+          </div>
+          <div className="sprite-sheet-crop-content">
+            <img
+              ref={sheetRef}
+              src={effect.spriteSheetPath}
+              alt={`${effect.name} effect crop map`}
+              onLoad={(event) => {
+                const image = event.currentTarget;
+                const nextSize = { width: image.naturalWidth || 1, height: image.naturalHeight || 1 };
+                setSheetSize(nextSize);
+                setEdit(clampSpriteFrameEditToSheet(createDefaultEffectFrameEdit(characterId, effect, selectedFrameIndex), nextSize));
+              }}
+            />
+            <div
+              className="sprite-crop-box"
+              onPointerDown={(event) => beginCropDrag(event, 'move')}
+              onPointerMove={updateCropDrag}
+              onPointerUp={endCropDrag}
+              onPointerCancel={endCropDrag}
+              style={{
+                left: `${(edit.box[0] / sheetSize.width) * 100}%`,
+                top: `${(edit.box[1] / sheetSize.height) * 100}%`,
+                width: `${((edit.box[2] - edit.box[0]) / sheetSize.width) * 100}%`,
+                height: `${((edit.box[3] - edit.box[1]) / sheetSize.height) * 100}%`
+              }}
+            >
+              {['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map((handle) => (
+                <span
+                  key={handle}
+                  className={`sprite-crop-handle handle-${handle}`}
+                  onPointerDown={(event) => beginCropDrag(event, handle)}
+                  onPointerMove={updateCropDrag}
+                  onPointerUp={endCropDrag}
+                  onPointerCancel={endCropDrag}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="sprite-crop-preview-panel">
+          <span>Effect Crop</span>
+          <canvas ref={canvasRef} className="sprite-crop-canvas" aria-label={`Effect frame ${selectedFrameIndex}`} />
+          <strong>{`Frame ${selectedFrameIndex}`}</strong>
+          <small>{`${cropWidth} x ${cropHeight} crop | ${pngWidth} x ${pngHeight} PNG`}</small>
+          <small>{framePathValue}</small>
+        </div>
+      </div>
+      <div className="sprite-crop-controls">
+        <div className="sprite-crop-fields">
+          <FrameNumberInput label="Crop X" value={edit.box[0]} min={0} onChange={(value) => updateBox('x', value)} />
+          <FrameNumberInput label="Crop Y" value={edit.box[1]} min={0} onChange={(value) => updateBox('y', value)} />
+          <FrameNumberInput label="Crop W" value={cropWidth} min={1} onChange={(value) => updateBox('width', value)} />
+          <FrameNumberInput label="Crop H" value={cropHeight} min={1} onChange={(value) => updateBox('height', value)} />
+          <FrameNumberInput label="PNG W" value={pngWidth} min={1} onChange={(value) => patchEdit({ width: Math.max(1, Math.round(Number(value) || 1)) })} />
+          <FrameNumberInput label="PNG H" value={pngHeight} min={1} onChange={(value) => patchEdit({ height: Math.max(1, Math.round(Number(value) || 1)) })} />
+          <FrameNumberInput label="Offset X" value={edit.offset?.[0] ?? 0} onChange={(value) => patchEdit({ offset: [Math.round(Number(value) || 0), edit.offset?.[1] ?? 0] })} />
+          <FrameNumberInput label="Offset Y" value={edit.offset?.[1] ?? 0} onChange={(value) => patchEdit({ offset: [edit.offset?.[0] ?? 0, Math.round(Number(value) || 0)] })} />
+          <FrameNumberInput label="Scale" value={edit.scale ?? 1} min={0.25} step={0.05} onChange={(value) => patchEdit({ scale: Number(value) || 1 })} />
+          <FrameNumberInput label="Rotation" value={edit.rotation ?? 0} step={90} onChange={(value) => patchEdit({ rotation: normalizeRotation(Number(value) || 0) })} />
+        </div>
+        <div className="sprite-crop-button-grid">
+          <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.max(0, selectedFrameIndex - 1))}>Prev</button>
+          <button className="secondary-button compact-button" onClick={() => onSelectFrame(Math.min(Math.max(0, frames.length - 1), selectedFrameIndex + 1))}>Next</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ box: moveSpriteFrameBoxWithinSheet(edit.box, -1, 0, sheetSize) })}>Crop Left</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ box: moveSpriteFrameBoxWithinSheet(edit.box, 1, 0, sheetSize) })}>Crop Right</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ box: moveSpriteFrameBoxWithinSheet(edit.box, 0, -1, sheetSize) })}>Crop Up</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ box: moveSpriteFrameBoxWithinSheet(edit.box, 0, 1, sheetSize) })}>Crop Down</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ scale: Math.max(0.25, Number(((edit.scale ?? 1) - 0.05).toFixed(2))) })}>Shrink Sprite</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ scale: Math.min(4, Number(((edit.scale ?? 1) + 0.05).toFixed(2))) })}>Grow Sprite</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ offset: [0, 0] })}>Center</button>
+          <button className="secondary-button compact-button" onClick={() => patchEdit({ width: cropWidth, height: cropHeight })}>Fit PNG</button>
+        </div>
+      </div>
+      <div className="sprite-frame-bank effect-frame-bank" aria-label="Effect frame bank">
+        {frames.map((frame, index) => (
+          <button
+            key={`${frame}-${index}`}
+            className={index === selectedFrameIndex ? 'active' : ''}
+            onClick={() => onSelectFrame(index)}
+          >
+            <img src={frame} alt={`Effect frame ${index}`} loading="lazy" />
+            <span>{index}</span>
+          </button>
+        ))}
       </div>
     </section>
   );
@@ -4942,9 +5328,18 @@ function MoveEffectsEditor({
   onUpdateInstances: (instances: MoveEffectInstance[]) => void;
 }) {
   const [effectToAttach, setEffectToAttach] = useState(effects[0]?.id ?? '');
+  const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   useEffect(() => {
     if (!effectToAttach && effects[0]) setEffectToAttach(effects[0].id);
   }, [effectToAttach, effects]);
+
+  useEffect(() => {
+    if (!isPreviewPlaying) return;
+    const interval = window.setInterval(() => {
+      onTimelineFrameChange((timelineFrame + 1) % Math.max(1, totalFrames + 1));
+    }, 1000 / 60);
+    return () => window.clearInterval(interval);
+  }, [isPreviewPlaying, onTimelineFrameChange, timelineFrame, totalFrames]);
 
   const updateInstance = (instanceId: string, patch: Partial<MoveEffectInstance>) => {
     onUpdateInstances(instances.map((instance) => (instance.id === instanceId ? sanitizeMoveEffects({ slot: [{ ...instance, ...patch }] }).slot[0] : instance)));
@@ -4954,6 +5349,33 @@ function MoveEffectsEditor({
     updateInstance(instanceId, {
       keyframes: instances.find((instance) => instance.id === instanceId)?.keyframes.map((entry, entryIndex) => (entryIndex === index ? keyframe : entry)) ?? []
     });
+  };
+
+  const updateInstanceDragPosition = (instanceId: string, worldPosition: [number, number, number], anchor: string) => {
+    const anchorOffsets: Record<string, [number, number, number]> = {
+      body: [0, 1.05, 0],
+      head: [0, 1.75, 0],
+      hands: [0.52, 1.18, 0],
+      feet: [0.18, 0.28, 0],
+      hitbox: [0.78, 1.08, 0],
+      world: [0, 0, 0]
+    };
+    const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
+    const localPosition: [number, number, number] = anchor === 'world'
+      ? worldPosition
+      : [
+          Number((worldPosition[0] - offset[0]).toFixed(2)),
+          Number((worldPosition[1] - offset[1]).toFixed(2)),
+          Number((worldPosition[2] - offset[2]).toFixed(2))
+        ];
+    onUpdateInstances(instances.map((instance) => {
+      if (instance.id !== instanceId) return instance;
+      const defaultKeyframe: EffectKeyframe = { frame: 0, position: localPosition, scale: [2.25, 2.25, 2.25], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' };
+      const keyframes: EffectKeyframe[] = instance.keyframes.length > 0
+        ? instance.keyframes.map((keyframe) => ({ ...keyframe, position: localPosition }))
+        : [defaultKeyframe];
+      return { ...instance, keyframes };
+    }));
   };
 
   return (
@@ -4971,6 +5393,10 @@ function MoveEffectsEditor({
           </select>
         </label>
         <button className="secondary-button" disabled={!effectToAttach} onClick={() => onAttachEffect(effectToAttach)}>Attach Effect</button>
+        <button className="secondary-button" onClick={() => setIsPreviewPlaying((current) => !current)}>
+          {isPreviewPlaying ? <Pause size={16} /> : <Play size={16} />}
+          {isPreviewPlaying ? 'Pause Preview' : 'Play Preview'}
+        </button>
         <label className="speed-control">
           <span>Frame</span>
           <input type="range" min="0" max={Math.max(1, totalFrames)} value={Math.min(timelineFrame, totalFrames)} onChange={(event) => onTimelineFrameChange(Number(event.target.value))} />
@@ -4979,8 +5405,20 @@ function MoveEffectsEditor({
       </aside>
       <div className="effects-detail">
         <div className="move-effect-preview">
-          <CharacterPreviewCanvas character={character} pose={selectedSlot.pose} animationKey={animationKey} previewMove={previewMove} rotationTurn={0} zoom={0.35} />
+          <CharacterPreviewCanvas
+            character={character}
+            pose={selectedSlot.pose}
+            animationKey={animationKey}
+            previewMove={previewMove}
+            previewEffects={effects}
+            previewEffectInstances={instances}
+            previewEffectFrame={timelineFrame}
+            onPreviewEffectDrag={updateInstanceDragPosition}
+            rotationTurn={0}
+            zoom={0.35}
+          />
         </div>
+        <small className="effects-empty">Drag an effect directly in the preview to move its keyframes in 3D space.</small>
         {instances.length === 0 ? (
           <p className="effects-empty">No effects attached to this move yet.</p>
         ) : instances.map((instance) => {

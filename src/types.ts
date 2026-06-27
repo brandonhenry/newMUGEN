@@ -202,6 +202,7 @@ export type CharacterEffectDefinition = {
   name: string;
   spriteSheetPath?: string;
   frames?: string[];
+  effectFrameEdits?: Record<string, SpriteFrameEdit>;
   fps: number;
   loop: boolean;
   billboard: boolean;

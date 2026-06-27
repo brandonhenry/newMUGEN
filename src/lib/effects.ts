@@ -8,6 +8,7 @@ import type {
   MoveEffectInstance,
   ProceduralEffectKind,
   ProceduralEffectLayer,
+  SpriteFrameEdit,
   Vec3Tuple
 } from '../types';
 
@@ -64,6 +65,7 @@ export function sanitizeEffect(effect: Record<string, unknown>): CharacterEffect
     name: typeof effect.name === 'string' && effect.name.trim() ? effect.name.trim() : id,
     spriteSheetPath: typeof effect.spriteSheetPath === 'string' ? effect.spriteSheetPath : undefined,
     frames: Array.isArray(effect.frames) ? effect.frames.filter((frame): frame is string => typeof frame === 'string') : [],
+    effectFrameEdits: sanitizeEffectFrameEdits(effect.effectFrameEdits),
     fps: clampNumber(effect.fps, 1, 60, 12),
     loop: effect.loop === true,
     billboard: effect.billboard !== false,
@@ -73,6 +75,56 @@ export function sanitizeEffect(effect: Record<string, unknown>): CharacterEffect
     proceduralLayers: sanitizeProceduralLayers(effect.proceduralLayers),
     soundCues: sanitizeSoundCues(effect.soundCues)
   };
+}
+
+function sanitizeEffectFrameEdits(value: unknown): Record<string, SpriteFrameEdit> {
+  if (!value || typeof value !== 'object') return {};
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>)
+      .filter(([key, edit]) => /^\d+$/.test(key) && Boolean(edit) && typeof edit === 'object')
+      .map(([key, edit]) => [key, sanitizeEffectFrameEdit({ ...(edit as Record<string, unknown>), index: Number(key) })])
+  );
+}
+
+function sanitizeEffectFrameEdit(edit: Record<string, unknown>): SpriteFrameEdit {
+  const box = readBox(edit.box);
+  const width = Math.max(1, Math.round(numberOr(edit.width, Math.max(1, box[2] - box[0]))));
+  const height = Math.max(1, Math.round(numberOr(edit.height, Math.max(1, box[3] - box[1]))));
+  const sourceMode = edit.sourceMode === 'replacement' ? 'replacement' : 'sheet';
+  return {
+    index: Math.max(0, Math.round(numberOr(edit.index, 0))),
+    path: typeof edit.path === 'string' ? edit.path : undefined,
+    sourceMode,
+    sheetId: typeof edit.sheetId === 'string' ? safeId(edit.sheetId, 'source') : undefined,
+    sheetPath: typeof edit.sheetPath === 'string' ? edit.sheetPath : undefined,
+    sourceName: typeof edit.sourceName === 'string' ? edit.sourceName : undefined,
+    replacementName: sourceMode === 'replacement' && typeof edit.replacementName === 'string' ? edit.replacementName : undefined,
+    replacementWidth: sourceMode === 'replacement' ? Math.max(1, Math.round(numberOr(edit.replacementWidth, width))) : undefined,
+    replacementHeight: sourceMode === 'replacement' ? Math.max(1, Math.round(numberOr(edit.replacementHeight, height))) : undefined,
+    box,
+    width,
+    height,
+    row: edit.row === undefined ? undefined : Math.round(numberOr(edit.row, 0)),
+    rotation: numberOr(edit.rotation, 0),
+    offset: readVec2(edit.offset),
+    scale: clampNumber(edit.scale, 0.25, 4, 1),
+    hidden: edit.hidden === true,
+    revision: edit.revision === undefined ? undefined : Math.max(0, Math.round(numberOr(edit.revision, 0)))
+  };
+}
+
+function readBox(value: unknown): [number, number, number, number] {
+  if (!Array.isArray(value) || value.length < 4) return [0, 0, 32, 32];
+  const x1 = Math.max(0, Math.round(numberOr(value[0], 0)));
+  const y1 = Math.max(0, Math.round(numberOr(value[1], 0)));
+  const x2 = Math.max(x1 + 1, Math.round(numberOr(value[2], x1 + 1)));
+  const y2 = Math.max(y1 + 1, Math.round(numberOr(value[3], y1 + 1)));
+  return [x1, y1, x2, y2];
+}
+
+function readVec2(value: unknown): [number, number] {
+  if (!Array.isArray(value) || value.length < 2) return [0, 0];
+  return [numberOr(value[0], 0), numberOr(value[1], 0)];
 }
 
 export function sanitizeMoveEffectInstance(instance: unknown): MoveEffectInstance {

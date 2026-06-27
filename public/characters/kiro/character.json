@@ -380,6 +380,14 @@
       "/characters/kiro/frames/frame-057.png",
       "/characters/kiro/frames/frame-058.png",
       "/characters/kiro/frames/frame-059.png"
+    ],
+    "cmd:O+2": [
+      "/characters/kiro/frames/frame-197.png",
+      "/characters/kiro/frames/frame-198.png",
+      "/characters/kiro/frames/frame-199.png",
+      "/characters/kiro/frames/frame-200.png",
+      "/characters/kiro/frames/frame-201.png",
+      "/characters/kiro/frames/frame-202.png"
     ]
   },
   "animationFps": 5,
@@ -607,6 +615,13 @@
       "startupFrames": 14,
       "recoveryFrames": 14,
       "hitLevel": "mid"
+    },
+    "cmd:O+2": {
+      "startupFrames": 15,
+      "activeFrames": 6,
+      "damage": 26,
+      "onBlockFrames": -17,
+      "onHitFrames": 3
     }
   },
   "spriteFrameEdits": {
@@ -1231,6 +1246,162 @@
       "frameCount": 231
     }
   ],
-  "effects": [],
-  "moveEffects": {}
+  "effects": [
+    {
+      "id": "micro-rasengan-mugen-sprite-shee",
+      "name": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "spriteSheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "frames": [
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-000.png",
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-001.png",
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-002.png",
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-003.png",
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-004.png",
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-005.png",
+        "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-006.png"
+      ],
+      "effectFrameEdits": {
+        "0": {
+          "index": 0,
+          "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-000.png",
+          "sourceMode": "sheet",
+          "sheetId": "source",
+          "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+          "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+          "box": [
+            4,
+            33,
+            25,
+            54
+          ],
+          "width": 21,
+          "height": 21,
+          "row": 0,
+          "rotation": 0,
+          "offset": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "hidden": false,
+          "revision": 1
+        }
+      },
+      "fps": 12,
+      "loop": false,
+      "billboard": true,
+      "blendMode": "additive",
+      "anchor": "body",
+      "defaultTransform": {
+        "position": [
+          0,
+          1.1,
+          0.55
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "opacity": 1,
+        "color": "#ffffff"
+      },
+      "proceduralLayers": [
+        {
+          "id": "glow",
+          "kind": "glow",
+          "color": "#7de7ff",
+          "secondaryColor": "#2ee6ff",
+          "intensity": 1,
+          "count": 10,
+          "thickness": 0.08,
+          "length": 1.2,
+          "spin": 0
+        }
+      ],
+      "soundCues": []
+    }
+  ],
+  "moveEffects": {
+    "cmd:O+2": [
+      {
+        "id": "micro-rasengan-mugen-sprite-shee-fx",
+        "effectId": "micro-rasengan-mugen-sprite-shee",
+        "startFrame": 15,
+        "endFrame": 38,
+        "layer": 0,
+        "anchor": "hitbox",
+        "mirrorWithFacing": true,
+        "loop": false,
+        "keyframes": [
+          {
+            "frame": 0,
+            "position": [
+              1.14,
+              0.12,
+              1.08
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#db0000"
+          },
+          {
+            "frame": 0,
+            "position": [
+              1.14,
+              0.12,
+              1.08
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#ffffff"
+          },
+          {
+            "frame": 38,
+            "position": [
+              1.14,
+              0.12,
+              1.08
+            ],
+            "scale": [
+              1.15,
+              1.15,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0.45
+            ],
+            "opacity": 0.05,
+            "color": "#ffffff"
+          }
+        ],
+        "soundCues": []
+      }
+    ]
+  }
 }

@@ -1435,6 +1435,7 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
     if (!candidates.includes(notation)) candidates.push(notation);
   };
 
+  if (input.charge) push(`O+${buttonText}`);
   for (const motion of getMotionCandidates(fighter.commandHistory)) push(`${motion}+${buttonText}`);
 
   if (fighter.state === 'sidestep' || input.sidestepUp || input.sidestepDown || input.sidewalkUp || input.sidewalkDown) {
@@ -2203,11 +2204,13 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, roundAiSeed) < settings.punishDropRate * style.imperfectionScale;
   const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;
   let punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
+  punishMoveInput = chooseAiKiBurstMoveInput(ai, punishMoveInput, difficulty, selector + 5, routeRoll + 3);
   if (aiDecisionRoll(ai, opponent, elapsed, 7, roundAiSeed) < settings.suboptimalPunishRate * style.imperfectionScale) {
     punishMoveInput = chooseAiImperfectMoveInput(ai, punishMoveInput, selector + 13, routeRoll + 7);
   }
   const punishMove = ai.character.moves.find((move) => move.input === punishMoveInput) ?? selectedMove;
-  const punishReach = (punishMove?.range ?? 1.28) + settings.rangeBuffer;
+  const punishKiBurst = shouldAiUseKiBurst(ai, opponent, punishMoveInput, difficulty, 'punish', selector, routeRoll, leaderCloseout);
+  const punishReach = (punishMove?.range ?? 1.28) + settings.rangeBuffer + (punishKiBurst ? 0.18 : 0);
   const punishReady = punishAccepted && ai.blockPunishWindowFrames > 0 && canStartAction && canAct && opponent.state === 'attack' && opponent.actionFramesRemaining > 0;
   const punishInRange = distance <= punishReach && Math.abs(laneDiff) <= punishReach * 0.86;
   if (punishReady && punishInRange) {
@@ -2218,6 +2221,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     input.sidestepDown = false;
     input.sidewalkUp = false;
     input.sidewalkDown = false;
+    input.charge = punishKiBurst;
     input[punishMoveInput] = true;
     return input;
   }
@@ -2235,13 +2239,15 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     !pressureDropped &&
     pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - settings.leaderPressurePenalty * leaderBrake * 0.55);
   let pressureMoveInput = chooseAiPressureMoveInput(ai, opponent, difficulty, opening, selector, routeRoll);
+  pressureMoveInput = chooseAiKiBurstMoveInput(ai, pressureMoveInput, difficulty, selector + 17, routeRoll + 9);
   if (leaderCloseout && opening.kind !== 'none') {
     pressureMoveInput = chooseAiCloseoutMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   } else if (aiDecisionRoll(ai, opponent, elapsed, 8, roundAiSeed) < settings.suboptimalPressureRate * style.imperfectionScale) {
     pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   }
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
-  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
+  const pressureKiBurst = shouldAiUseKiBurst(ai, opponent, pressureMoveInput, difficulty, opening.kind === 'whiff' ? 'whiff' : 'pressure', selector + 11, routeRoll + 19, leaderCloseout);
+  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (pressureKiBurst ? 0.18 : 0) + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
@@ -2252,6 +2258,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     input.sidestepDown = false;
     input.sidewalkUp = false;
     input.sidewalkDown = false;
+    input.charge = pressureKiBurst;
     input[pressureMoveInput] = true;
     return input;
   }
@@ -2277,6 +2284,8 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const attackPulse = attackPhase < settings.attackPulse * style.attackPulseScale * leaderAttackScale || (shouldContinueCombo && comboPhase < settings.comboPulse * style.comboPulseScale * leaderComboScale);
   if (canPressure && attackPulse) {
     applyAiRoute(ai, input, towardKey, awayKey, leaderCloseout ? Math.min(difficulty, 2) as CpuDifficulty : difficulty, ai.comboStep, selector, routeRoll);
+    selectedMoveInput = chooseAiKiBurstMoveInput(ai, selectedMoveInput, difficulty, selector + 31, routeRoll + 37);
+    input.charge = shouldAiUseKiBurst(ai, opponent, selectedMoveInput, difficulty, shouldContinueCombo ? 'pressure' : 'neutral', selector + 29, routeRoll + 41, leaderCloseout);
     input[selectedMoveInput] = true;
     if (!leaderCloseout && difficulty >= 4 && routeRoll > 78) {
       const secondButton = routeRoll > 90 ? 'special' : routeRoll > 84 ? 'heavy' : 'kick';
@@ -2475,6 +2484,83 @@ function chooseAiTornadoPressureInput(
   if (viable.length === 0) return null;
   const fresh = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input) && !inputRecentlyUsed(ai, move.input));
   return (fresh ?? viable[positiveModulo(selector + routeRoll + ai.slot, viable.length)]).input;
+}
+
+type AiKiBurstContext = 'neutral' | 'pressure' | 'punish' | 'whiff';
+
+function chooseAiKiBurstMoveInput(ai: FighterRuntime, preferred: MoveInput, difficulty: CpuDifficulty, selector: number, routeRoll: number): MoveInput {
+  if (ai.ki < KI_BURST_COST) return preferred;
+  const availableInputs = moveInputs.filter((input) => ai.character.moves.some((move) => move.input === input));
+  if (availableInputs.length === 0) return preferred;
+  const authoredKiInputs = availableInputs.filter((input) => hasConfiguredKiCommand(ai, input));
+  const candidates = authoredKiInputs.length > 0 ? authoredKiInputs : availableInputs;
+  const preferredMove = ai.character.moves.find((move) => move.input === preferred);
+  if (authoredKiInputs.includes(preferred) && !inputAlreadyUsedInCombo(ai, preferred)) return preferred;
+  const scored = candidates.map((input, index) => {
+    const move = ai.character.moves.find((candidate) => candidate.input === input);
+    const authoredBonus = hasConfiguredKiCommand(ai, input) ? 0.42 : 0;
+    const powerBonus = move ? clamp((move.damage - 8) / 22, 0, 0.5) + (move.launchHeight ? 0.16 : 0) + (move.tornado ? 0.12 : 0) : 0;
+    const freshness = inputRecentlyUsed(ai, input) ? -0.22 : 0;
+    const repeatPenalty = inputAlreadyUsedInCombo(ai, input) ? -0.5 : 0;
+    const preferredBonus = input === preferred ? 0.18 : 0;
+    const lowDifficultyCaution = difficulty <= 2 && (move?.input === 'special' || (move?.damage ?? 0) >= 16) ? -0.18 : 0;
+    const wave = positiveModulo(selector + routeRoll * (index + 3) + input.length * 23 + ai.slot * 31, 100) / 100;
+    return {
+      input,
+      score: authoredBonus + powerBonus + freshness + repeatPenalty + preferredBonus + lowDifficultyCaution + wave * 0.28
+    };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored[0]?.input ?? preferredMove?.input ?? preferred;
+}
+
+function shouldAiUseKiBurst(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  moveInput: MoveInput,
+  difficulty: CpuDifficulty,
+  context: AiKiBurstContext,
+  selector: number,
+  routeRoll: number,
+  leaderCloseout: boolean
+) {
+  if (ai.ki < KI_BURST_COST) return false;
+  if (inputAlreadyUsedInCombo(ai, moveInput)) return false;
+  const move = ai.character.moves.find((candidate) => candidate.input === moveInput);
+  const hasAuthoredKiRoute = hasConfiguredKiCommand(ai, moveInput);
+  const isPowerMove = moveInput === 'special' || moveInput === 'heavy' || Boolean(move?.launchHeight) || Boolean(move?.tornado) || (move?.damage ?? 0) >= 14;
+  const contextBonus =
+    context === 'punish'
+      ? 0.24
+      : context === 'whiff'
+        ? 0.2
+        : context === 'pressure'
+          ? 0.14
+          : 0;
+  const difficultyChance =
+    difficulty <= 1
+      ? 0.07
+      : difficulty === 2
+        ? 0.14
+        : difficulty === 3
+          ? 0.26
+          : difficulty === 4
+            ? 0.4
+            : 0.52;
+  const kiOverflowBonus = clamp((ai.ki - 55) / 70, 0, 0.22);
+  const behindBonus = ai.hp < opponent.hp ? 0.1 : 0;
+  const closeoutPenalty = leaderCloseout ? 0.16 : 0;
+  const authoredBonus = hasAuthoredKiRoute ? 0.18 : 0;
+  const powerBonus = isPowerMove ? 0.08 : 0;
+  const chance = clamp(difficultyChance + contextBonus + kiOverflowBonus + behindBonus + authoredBonus + powerBonus - closeoutPenalty, 0.02, 0.88);
+  const roll = positiveModulo(selector * 7 + routeRoll * 11 + ai.slot * 43 + Math.floor(ai.ki * 3), 100) / 100;
+  return roll < chance;
+}
+
+function hasConfiguredKiCommand(ai: FighterRuntime, input: MoveInput) {
+  const button = inputToButton[input];
+  const key = commandAnimationKey(`O+${button}`);
+  return (ai.character.animationFrames?.[key]?.length ?? 0) > 0;
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {

@@ -298,17 +298,44 @@ function getEffectMoveKey(fighter: FighterRuntime) {
   return candidates.find((key) => fighter.character.moveEffects?.[key]?.length) ?? null;
 }
 
-function MoveEffectVisual({ binding, reducedMotion }: { binding: ActiveEffectBinding; reducedMotion: boolean }) {
+function MoveEffectVisual({
+  binding,
+  reducedMotion,
+  onDragPosition
+}: {
+  binding: ActiveEffectBinding;
+  reducedMotion: boolean;
+  onDragPosition?: (instanceId: string, position: [number, number, number], anchor: string) => void;
+}) {
   const transform = effectTransformAt(binding.effect, binding.instance, binding.moveFrame);
   const anchor = binding.instance.anchor ?? binding.effect.anchor;
   const position = resolveEffectWorldPosition(binding.fighter, transform, anchor);
   const mirroredRotationY = binding.instance.mirrorWithFacing === false ? 0 : binding.fighter.facing === -1 ? Math.PI : 0;
   const opacity = reducedMotion ? transform.opacity * 0.72 : transform.opacity;
+  const dragActive = useRef(false);
+  const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
+    if (!onDragPosition) return;
+    event.stopPropagation();
+    dragActive.current = true;
+  };
+  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
+    if (!onDragPosition || !dragActive.current) return;
+    event.stopPropagation();
+    onDragPosition(binding.instance.id, [event.point.x, event.point.y, event.point.z], anchor);
+  };
+  const handlePointerUp = (event: ThreeEvent<PointerEvent>) => {
+    if (!dragActive.current) return;
+    dragActive.current = false;
+  };
   return (
     <group
       position={position}
       rotation={[transform.rotation[0], transform.rotation[1] + mirroredRotationY, transform.rotation[2]]}
       scale={transform.scale}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
     >
       {(binding.effect.frames?.length ?? 0) > 0 && <SpriteEffectPlane binding={binding} transform={transform} opacity={opacity} />}
       {(binding.effect.proceduralLayers ?? []).map((layer) => (
@@ -641,6 +668,10 @@ export function CharacterPreviewCanvas({
   pose,
   animationKey,
   previewMove,
+  previewEffects,
+  previewEffectInstances,
+  previewEffectFrame,
+  onPreviewEffectDrag,
   rotationTurn,
   zoom
 }: {
@@ -648,6 +679,10 @@ export function CharacterPreviewCanvas({
   pose: PreviewPose;
   animationKey?: string;
   previewMove?: MoveDefinition | null;
+  previewEffects?: CharacterEffectDefinition[];
+  previewEffectInstances?: MoveEffectInstance[];
+  previewEffectFrame?: number;
+  onPreviewEffectDrag?: (instanceId: string, position: [number, number, number], anchor: string) => void;
   rotationTurn: number;
   zoom: number;
 }) {
@@ -670,7 +705,18 @@ export function CharacterPreviewCanvas({
       <pointLight position={[-2, 1.8, 2]} color={character.colors.primary} intensity={6} distance={5} />
       <pointLight position={[2.2, 1.2, -2.2]} color={character.colors.accent} intensity={4} distance={5} />
       <PreviewFloor color={character.colors.primary} />
-      <PreviewFighter key={character.id} character={character} pose={pose} animationKey={animationKey} previewMove={previewMove} rotationTurn={rotationTurn} />
+      <PreviewFighter
+        key={character.id}
+        character={character}
+        pose={pose}
+        animationKey={animationKey}
+        previewMove={previewMove}
+        previewEffects={previewEffects}
+        previewEffectInstances={previewEffectInstances}
+        previewEffectFrame={previewEffectFrame}
+        onPreviewEffectDrag={onPreviewEffectDrag}
+        rotationTurn={rotationTurn}
+      />
       <PreviewCamera zoom={zoom} frameFit={frameFit} />
       <OrbitControls
         makeDefault
@@ -759,12 +805,20 @@ function PreviewFighter({
   pose,
   animationKey,
   previewMove,
+  previewEffects,
+  previewEffectInstances,
+  previewEffectFrame,
+  onPreviewEffectDrag,
   rotationTurn
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
   animationKey?: string;
   previewMove?: MoveDefinition | null;
+  previewEffects?: CharacterEffectDefinition[];
+  previewEffectInstances?: MoveEffectInstance[];
+  previewEffectFrame?: number;
+  onPreviewEffectDrag?: (instanceId: string, position: [number, number, number], anchor: string) => void;
   rotationTurn: number;
 }) {
   const fighter = useRef(createPreviewFighter(character));
@@ -793,7 +847,7 @@ function PreviewFighter({
     if (isMovePose(pose)) {
       const move = previewMove ?? character.moves.find((candidate) => candidate.input === pose) ?? character.moves[0] ?? null;
       const total = move ? move.startupFrames + move.activeFrames + move.recoveryFrames : 1;
-      const timelineFrame = Math.floor(t * 60) % Math.max(1, total);
+      const timelineFrame = previewEffectFrame ?? Math.floor(t * 60) % Math.max(1, total);
       runtime.state = 'attack';
       runtime.currentMove = move;
       runtime.moveFrame = timelineFrame;
@@ -825,6 +879,25 @@ function PreviewFighter({
   return (
     <group ref={rotator} position={[0, 0, 0]}>
       <FighterRig fighter={fighter.current} />
+      {(previewEffectInstances ?? []).map((instance) => {
+        const effect = (previewEffects ?? []).find((candidate) => candidate.id === instance.effectId);
+        if (!effect || !effectIsActive(instance, fighter.current.moveFrame, previewMove ? previewMove.startupFrames + previewMove.activeFrames + previewMove.recoveryFrames : 30)) return null;
+        return (
+          <MoveEffectVisual
+            key={instance.id}
+            binding={{
+              fighter: fighter.current,
+              effect,
+              instance,
+              moveFrame: fighter.current.moveFrame,
+              totalFrames: previewMove ? previewMove.startupFrames + previewMove.activeFrames + previewMove.recoveryFrames : 30,
+              moveInstanceId: 1,
+            }}
+            reducedMotion={false}
+            onDragPosition={onPreviewEffectDrag}
+          />
+        );
+      })}
     </group>
   );
 }
