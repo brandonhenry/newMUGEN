@@ -1243,6 +1243,10 @@ export default function App() {
   const sourceRoster = rosterResult?.characters ?? [];
   const roster = useMemo(() => applyAnimationOverrides(sourceRoster, animationOverrides), [sourceRoster, animationOverrides]);
   const stageRoster = stageResult?.stages ?? stages;
+  const playableStageRoster = useMemo(() => {
+    const visible = stageRoster.filter((stage) => !stage.hidden);
+    return visible.length > 0 ? visible : stageRoster;
+  }, [stageRoster]);
   const [p1Id, setP1Id] = useState('astra');
   const [p2Id, setP2Id] = useState('dax');
   const [stageId, setStageId] = useState(stages[0].id);
@@ -1273,7 +1277,8 @@ export default function App() {
       setStageResult(loadedStages);
       setP1Id(result.characters[0]?.id ?? 'astra');
       setP2Id(result.characters[1]?.id ?? result.characters[0]?.id ?? 'dax');
-      setStageId(loadedStages.stages[0]?.id ?? stages[0].id);
+      const firstPlayableStage = loadedStages.stages.find((stage) => !stage.hidden) ?? loadedStages.stages[0];
+      setStageId(firstPlayableStage?.id ?? stages[0].id);
       window.setTimeout(() => setScreen('title'), 650);
     });
     return () => {
@@ -1467,10 +1472,12 @@ export default function App() {
   const reloadStages = async (preferredStageId?: string) => {
     const result = await loadStageRoster();
     setStageResult(result);
-    if (preferredStageId && result.stages.some((stage) => stage.id === preferredStageId)) {
+    const visibleStages = result.stages.filter((stage) => !stage.hidden);
+    const playableStages = visibleStages.length > 0 ? visibleStages : result.stages;
+    if (preferredStageId && playableStages.some((stage) => stage.id === preferredStageId)) {
       setStageId(preferredStageId);
-    } else if (!result.stages.some((stage) => stage.id === stageId)) {
-      setStageId(result.stages[0]?.id ?? stages[0].id);
+    } else if (!playableStages.some((stage) => stage.id === stageId)) {
+      setStageId(playableStages[0]?.id ?? stages[0].id);
     }
   };
 
@@ -1489,7 +1496,7 @@ export default function App() {
 
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
-  const selectedStage = stageRoster.find((stage) => stage.id === stageId) ?? stageRoster[0] ?? stages[0];
+  const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const activeBgmSource = useMemo(() => {
     if (!musicStarted) return null;
     if (screen === 'fight') return null;
@@ -1567,7 +1574,7 @@ export default function App() {
             p1={p1}
             stage={selectedStage}
             roster={roster}
-            stages={stageRoster}
+            stages={playableStageRoster}
             onCreate={(intent) => {
               setMode('private');
               setPrivateRoomIntent(intent);
@@ -1607,7 +1614,7 @@ export default function App() {
         {screen === 'stage' && (
           <StageSelect
             selected={stageId}
-            stages={stageRoster}
+            stages={playableStageRoster}
             setSelected={setStageId}
             onBack={() => setScreen('select')}
             onFight={() => {
@@ -1656,7 +1663,7 @@ export default function App() {
             p2={p2}
             stage={selectedStage}
             roster={roster}
-            stages={stageRoster}
+            stages={playableStageRoster}
             mode={mode}
             cpuDifficulty={cpuDifficulty}
             settings={settings}
@@ -2961,10 +2968,17 @@ function StageEditor({
               <label>
                 <span>Stage</span>
                 <select value={selectedStageId} onChange={(event) => setSelectedStageId(event.target.value)}>
-                  {stages.map((stage) => <option key={stage.id} value={stage.id}>{stage.name}</option>)}
+                  {stages.map((stage) => <option key={stage.id} value={stage.id}>{stage.hidden ? `${stage.name} (Hidden)` : stage.name}</option>)}
                 </select>
               </label>
               <div className="stage-viewport-actions">
+                <button
+                  className="secondary-button compact-button"
+                  onClick={() => setEditableStage((current) => ({ ...current, hidden: !current.hidden }))}
+                >
+                  {editableStage.hidden ? <Eye size={14} /> : <EyeOff size={14} />}
+                  {editableStage.hidden ? 'Show Stage' : 'Hide Stage'}
+                </button>
                 <button className="secondary-button compact-button" onClick={() => setShowStageControls((current) => !current)}>
                   {showStageControls ? <EyeOff size={14} /> : <Eye size={14} />}
                   {showStageControls ? 'Hide Controls' : 'Show Controls'}

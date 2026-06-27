@@ -51,6 +51,7 @@ export const stages: StageDefinition[] = [
     id: 'metro-ring',
     name: 'Infinite Grid',
     subtitle: 'Wide procedural arena for movement testing',
+    hidden: true,
     music: {
       playlistId: 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2',
       videoId: 'yy4D-0QnvQ8',
@@ -65,6 +66,7 @@ export const stages: StageDefinition[] = [
     id: 'forge-yard',
     name: 'Forge Yard',
     subtitle: 'Warm steel courtyard',
+    hidden: true,
     music: {
       playlistId: 'PLpaYu1T8cvjatSQ8InN0shnKO44xoHfN2',
       videoId: 'yy4D-0QnvQ8',

@@ -315,6 +315,7 @@ export type StageDefinition = {
   name: string;
   subtitle: string;
   renderMode?: 'procedural' | 'spriteCutout';
+  hidden?: boolean;
   music?: {
     playlistId?: string;
     videoId?: string;

@@ -39,6 +39,7 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
   return {
     ...stage,
     renderMode: stage.renderMode ?? 'procedural',
+    hidden: stage.hidden === true,
     floor: stage.floor ?? '#07182c',
     floorTexturePath: stage.floorTexturePath,
     floorTextureRepeat: Array.isArray(stage.floorTextureRepeat)

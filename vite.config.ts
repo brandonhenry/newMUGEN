@@ -1569,7 +1569,12 @@ function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) 
     name: typeof stage.name === 'string' && stage.name.trim() ? stage.name.trim() : stageId,
     subtitle: typeof stage.subtitle === 'string' ? stage.subtitle : 'Sprite-cutout arena',
     renderMode: stage.renderMode === 'spriteCutout' ? 'spriteCutout' : 'procedural',
+    hidden: Boolean(stage.hidden),
     floor: colors.floor,
+    floorTexturePath: typeof stage.floorTexturePath === 'string' ? stage.floorTexturePath : undefined,
+    floorTextureRepeat: Array.isArray(stage.floorTextureRepeat)
+      ? [finiteOr(stage.floorTextureRepeat[0], 24), finiteOr(stage.floorTextureRepeat[1], 24)]
+      : undefined,
     rail: colors.rail,
     light: colors.light,
     skyboxPath: typeof stage.skyboxPath === 'string' ? stage.skyboxPath : undefined,
