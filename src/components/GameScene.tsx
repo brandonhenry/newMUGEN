@@ -300,42 +300,21 @@ function getEffectMoveKey(fighter: FighterRuntime) {
 
 function MoveEffectVisual({
   binding,
-  reducedMotion,
-  onDragPosition
+  reducedMotion
 }: {
   binding: ActiveEffectBinding;
   reducedMotion: boolean;
-  onDragPosition?: (instanceId: string, position: [number, number, number], anchor: string) => void;
 }) {
   const transform = effectTransformAt(binding.effect, binding.instance, binding.moveFrame);
   const anchor = binding.instance.anchor ?? binding.effect.anchor;
   const position = resolveEffectWorldPosition(binding.fighter, transform, anchor);
   const mirroredRotationY = binding.instance.mirrorWithFacing === false ? 0 : binding.fighter.facing === -1 ? Math.PI : 0;
   const opacity = reducedMotion ? transform.opacity * 0.72 : transform.opacity;
-  const dragActive = useRef(false);
-  const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
-    if (!onDragPosition) return;
-    event.stopPropagation();
-    dragActive.current = true;
-  };
-  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
-    if (!onDragPosition || !dragActive.current) return;
-    event.stopPropagation();
-    onDragPosition(binding.instance.id, [event.point.x, event.point.y, event.point.z], anchor);
-  };
-  const handlePointerUp = (event: ThreeEvent<PointerEvent>) => {
-    if (!dragActive.current) return;
-    dragActive.current = false;
-  };
   return (
     <group
       position={position}
       rotation={[transform.rotation[0], transform.rotation[1] + mirroredRotationY, transform.rotation[2]]}
       scale={transform.scale}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
     >
       {(binding.effect.frames?.length ?? 0) > 0 && <SpriteEffectPlane binding={binding} transform={transform} opacity={opacity} />}
       {(binding.effect.proceduralLayers ?? []).map((layer) => (
@@ -674,7 +653,6 @@ export function CharacterPreviewCanvas({
   previewEffects,
   previewEffectInstances,
   previewEffectFrame,
-  onPreviewEffectDrag,
   rotationTurn,
   zoom
 }: {
@@ -685,7 +663,6 @@ export function CharacterPreviewCanvas({
   previewEffects?: CharacterEffectDefinition[];
   previewEffectInstances?: MoveEffectInstance[];
   previewEffectFrame?: number;
-  onPreviewEffectDrag?: (instanceId: string, position: [number, number, number], anchor: string) => void;
   rotationTurn: number;
   zoom: number;
 }) {
@@ -717,7 +694,6 @@ export function CharacterPreviewCanvas({
         previewEffects={previewEffects}
         previewEffectInstances={previewEffectInstances}
         previewEffectFrame={previewEffectFrame}
-        onPreviewEffectDrag={onPreviewEffectDrag}
         rotationTurn={rotationTurn}
       />
       <PreviewCamera zoom={zoom} frameFit={frameFit} />
@@ -811,7 +787,6 @@ function PreviewFighter({
   previewEffects,
   previewEffectInstances,
   previewEffectFrame,
-  onPreviewEffectDrag,
   rotationTurn
 }: {
   character: CharacterDefinition;
@@ -821,7 +796,6 @@ function PreviewFighter({
   previewEffects?: CharacterEffectDefinition[];
   previewEffectInstances?: MoveEffectInstance[];
   previewEffectFrame?: number;
-  onPreviewEffectDrag?: (instanceId: string, position: [number, number, number], anchor: string) => void;
   rotationTurn: number;
 }) {
   const fighter = useRef(createPreviewFighter(character));
@@ -897,7 +871,6 @@ function PreviewFighter({
               moveInstanceId: 1,
             }}
             reducedMotion={false}
-            onDragPosition={onPreviewEffectDrag}
           />
         );
       })}
@@ -998,6 +971,11 @@ function cameraDamp(delta: number, speed: number) {
   return THREE.MathUtils.clamp(1 - Math.exp(-Math.max(0, delta) * speed), 0, 1);
 }
 
+function stableFightCameraSide(dx: number, dz: number) {
+  const lineLength = Math.hypot(dx, dz) || 1;
+  return [-dz / lineLength, dx / lineLength] as const;
+}
+
 function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
   const { camera, size } = useThree();
   const target = useMemo(() => new THREE.Vector3(), []);
@@ -1017,13 +995,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       const [x, y, z] = match.clashState.contactPoint;
       const dx = p2.position.x - p1.position.x;
       const dz = p2.position.z - p1.position.z;
-      const lineLength = Math.hypot(dx, dz) || 1;
-      let cameraX = -dz / lineLength;
-      let cameraZ = dx / lineLength;
-      if (cameraZ < 0) {
-        cameraX *= -1;
-        cameraZ *= -1;
-      }
+      const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
       const cameraDistance = THREE.MathUtils.clamp(4.3 * settings.distance * settings.zoomBias, 3.8, 6.6);
       const desired = new THREE.Vector3(x + cameraX * cameraDistance, Math.max(2.15, y + 1.15), z + cameraZ * cameraDistance);
       camera.position.lerp(desired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
@@ -1037,13 +1009,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const dx = p2.position.x - p1.position.x;
     const dz = p2.position.z - p1.position.z;
     const distance = Math.hypot(dx, dz);
-    const lineLength = distance || 1;
-    let cameraX = -dz / lineLength;
-    let cameraZ = dx / lineLength;
-    if (cameraZ < 0) {
-      cameraX *= -1;
-      cameraZ *= -1;
-    }
+    const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
 
@@ -1070,9 +1036,10 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     }
 
     const smoothing = Math.max(0.35, settings.smoothing);
-    focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing));
-    lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing));
-    side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing)).normalize();
+    const sidestepCameraBoost = p1.state === 'sidestep' || p2.state === 'sidestep' || p1.sidestepTimer > 0 || p2.sidestepTimer > 0 ? 1.55 : 1;
+    focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));
+    lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing * sidestepCameraBoost));
+    side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sidestepCameraBoost)).normalize();
     cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 2.35 * smoothing));
     cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 2.75 * smoothing));
 
@@ -1081,7 +1048,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       cameraHeightRef.current,
       focus.z + side.z * cameraDistanceRef.current
     );
-    camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing));
+    camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
     camera.lookAt(lookFocus);
   });
   return null;

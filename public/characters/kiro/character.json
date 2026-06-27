@@ -1324,7 +1324,18 @@
           "spin": 0
         }
       ],
-      "soundCues": []
+      "soundCues": [
+        {
+          "id": "cue-1",
+          "name": "Rasengan",
+          "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/sounds/rasengan.wav",
+          "frame": 0,
+          "volume": 0.6,
+          "pitch": 1,
+          "pan": 0,
+          "retrigger": false
+        }
+      ]
     }
   ],
   "moveEffects": {
@@ -1332,9 +1343,9 @@
       {
         "id": "micro-rasengan-mugen-sprite-shee-fx",
         "effectId": "micro-rasengan-mugen-sprite-shee",
-        "startFrame": 15,
+        "startFrame": 33,
         "endFrame": 38,
-        "layer": 0,
+        "layer": 1,
         "anchor": "hitbox",
         "mirrorWithFacing": true,
         "loop": false,
@@ -1342,29 +1353,9 @@
           {
             "frame": 0,
             "position": [
-              1.14,
-              0.12,
-              1.08
-            ],
-            "scale": [
               1,
-              1,
-              1
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "opacity": 1,
-            "color": "#db0000"
-          },
-          {
-            "frame": 0,
-            "position": [
-              1.14,
-              0.12,
-              1.08
+              0.45,
+              -0.1
             ],
             "scale": [
               1,
@@ -1380,23 +1371,23 @@
             "color": "#ffffff"
           },
           {
-            "frame": 38,
+            "frame": 4,
             "position": [
-              1.14,
-              0.12,
-              1.08
+              1,
+              0.45,
+              -0.1
             ],
             "scale": [
-              1.15,
-              1.15,
+              1,
+              1,
               1
             ],
             "rotation": [
               0,
               0,
-              0.45
+              0
             ],
-            "opacity": 0.05,
+            "opacity": 1,
             "color": "#ffffff"
           }
         ],

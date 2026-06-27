@@ -2936,12 +2936,29 @@ button {
 }
 
 .effect-transform-editor legend {
-  padding: 0 8px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 8px 8px;
   color: #2ee6ff;
   font-size: 11px;
   font-weight: 950;
   letter-spacing: 0.11em;
   text-transform: uppercase;
+}
+
+.effect-transform-editor legend > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.keyframe-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  letter-spacing: 0;
 }
 
 .effect-vector-field {
@@ -2950,6 +2967,53 @@ button {
 
 .effect-vector-field > span {
   grid-column: 1 / -1;
+}
+
+.effect-position-sliders {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 10px;
+  min-height: 66px;
+  border-radius: 6px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.effect-position-sliders > span {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.effect-axis-slider {
+  display: grid;
+  grid-template-columns: 28px minmax(120px, 1fr) 92px;
+  gap: 10px;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.effect-axis-slider strong {
+  color: #f7f7f2;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.effect-axis-slider input[type='range'] {
+  min-height: 28px;
+  padding: 0;
+  accent-color: #2ee6ff;
+  background: transparent;
+  box-shadow: none;
+}
+
+.effect-axis-slider input[type='number'] {
+  min-height: 32px;
 }
 
 .effect-sound-list {

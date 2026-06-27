@@ -26,9 +26,9 @@ export type VerticalTapState = {
   source: VerticalInputSource | null;
 };
 
-const DOUBLE_TAP_MS = 280;
-const LANE_HOLD_MS = 135;
-const VERTICAL_HOLD_MS = 150;
+const DOUBLE_TAP_MS = 460;
+const LANE_HOLD_MS = 90;
+const VERTICAL_HOLD_MS = 185;
 
 export function createVerticalTapState(): VerticalTapState {
   return {
@@ -232,7 +232,7 @@ export function applyVerticalTap(
       state.holdStartedAt = Number.NEGATIVE_INFINITY;
       state.holdActivated = false;
     }
-    if (completedHold) state[lastTapKey] = Number.NEGATIVE_INFINITY;
+    state[lastTapKey] = completedHold ? Number.NEGATIVE_INFINITY : now;
     state.heldAction = null;
     if (state.laneDirection === direction) resetLaneState(input, state, source);
     if (state.laneDirection === 0) state.source = null;

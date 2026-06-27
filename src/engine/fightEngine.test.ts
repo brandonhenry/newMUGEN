@@ -13,6 +13,13 @@ import {
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition, type MoveInput } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
 
+function unwrappedAngleDelta(next: number, previous: number) {
+  let delta = next - previous;
+  if (delta > Math.PI) delta -= Math.PI * 2;
+  if (delta < -Math.PI) delta += Math.PI * 2;
+  return delta;
+}
+
 function makeKiClashCharacter(character: CharacterDefinition, kiBurst = true): CharacterDefinition {
   return {
     ...character,
@@ -363,18 +370,32 @@ describe('character manifests', () => {
     expect(input.up).toBe(false);
     expect(input.sidestepUp).toBe(false);
     expect(input.sidewalkUp).toBe(false);
-    prepareVerticalTapForRead(input, state, 'keyboard', 260);
+    prepareVerticalTapForRead(input, state, 'keyboard', 295);
     expect(input.up).toBe(true);
-    applyVerticalTap(input, state, 'up', false, 'keyboard', 280);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 315);
     expect(input.up).toBe(false);
 
     applyVerticalTap(input, state, 'down', true, 'keyboard', 520);
     prepareVerticalTapForRead(input, state, 'keyboard', 600);
     expect(input.down).toBe(false);
-    prepareVerticalTapForRead(input, state, 'keyboard', 680);
+    prepareVerticalTapForRead(input, state, 'keyboard', 710);
     expect(input.down).toBe(true);
     expect(input.sidestepDown).toBe(false);
     expect(input.sidewalkDown).toBe(false);
+  });
+
+  it('uses release timing and a forgiving window for vertical double taps', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 165);
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 570);
+    prepareVerticalTapForRead(input, state, 'keyboard', 571);
+
+    expect(input.up).toBe(false);
+    expect(input.sidestepUp).toBe(true);
+    expect(input.sidewalkUp).toBe(false);
   });
 
   it('does not turn a completed jump hold into the first tap of a lane step', () => {
@@ -382,9 +403,9 @@ describe('character manifests', () => {
     const state = createVerticalTapState();
 
     applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
-    prepareVerticalTapForRead(input, state, 'keyboard', 270);
+    prepareVerticalTapForRead(input, state, 'keyboard', 300);
     expect(input.up).toBe(true);
-    applyVerticalTap(input, state, 'up', false, 'keyboard', 285);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 315);
 
     applyVerticalTap(input, state, 'up', true, 'keyboard', 330);
     prepareVerticalTapForRead(input, state, 'keyboard', 331);
@@ -437,10 +458,10 @@ describe('character manifests', () => {
     applyVerticalTap(input, state, 'down', false, 'keyboard', 390);
     expect(input.sidewalkDown).toBe(false);
 
-    applyVerticalTap(input, state, 'down', true, 'keyboard', 700);
-    prepareVerticalTapForRead(input, state, 'keyboard', 780);
+    applyVerticalTap(input, state, 'down', true, 'keyboard', 930);
+    prepareVerticalTapForRead(input, state, 'keyboard', 1010);
     expect(input.down).toBe(false);
-    prepareVerticalTapForRead(input, state, 'keyboard', 860);
+    prepareVerticalTapForRead(input, state, 'keyboard', 1120);
     expect(input.down).toBe(true);
     expect(input.sidestepDown).toBe(false);
     expect(input.sidewalkDown).toBe(false);
@@ -1084,13 +1105,25 @@ describe('fight engine', () => {
 
     const laneUp = emptyInputFrame();
     laneUp.sidewalkUp = true;
+    const laneAngleBefore = Math.atan2(
+      match.fighters[0].position.z - match.fighters[1].position.z,
+      match.fighters[0].position.x - match.fighters[1].position.x
+    );
     const laneUpResult = stepMatch(match, laneUp, emptyInputFrame(), 10 / 60);
-    expect(laneUpResult.fighters[0].position.z).toBeLessThan(match.fighters[0].position.z - 0.35);
+    const laneUpAngle = Math.atan2(
+      laneUpResult.fighters[0].position.z - laneUpResult.fighters[1].position.z,
+      laneUpResult.fighters[0].position.x - laneUpResult.fighters[1].position.x
+    );
+    expect(unwrappedAngleDelta(laneUpAngle, laneAngleBefore)).toBeGreaterThan(0);
 
     const laneDown = emptyInputFrame();
     laneDown.sidewalkDown = true;
     const laneDownResult = stepMatch(match, laneDown, emptyInputFrame(), 10 / 60);
-    expect(laneDownResult.fighters[0].position.z).toBeGreaterThan(match.fighters[0].position.z + 0.35);
+    const laneDownAngle = Math.atan2(
+      laneDownResult.fighters[0].position.z - laneDownResult.fighters[1].position.z,
+      laneDownResult.fighters[0].position.x - laneDownResult.fighters[1].position.x
+    );
+    expect(unwrappedAngleDelta(laneDownAngle, laneAngleBefore)).toBeLessThan(0);
   });
 
   it('uses up for jump, down for crouch, and lane inputs for 3D movement', () => {
@@ -1162,7 +1195,85 @@ describe('fight engine', () => {
     }
 
     expect(crossedOpponentX).toBe(true);
-    expect(unwrappedAngle).toBeLessThan(-Math.PI * 1.4);
+    expect(unwrappedAngle).toBeLessThan(-Math.PI);
+  });
+
+  it('does not invert up/down orbit direction at the old arena edge', () => {
+    let downMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    downMatch.phase = 'fighting';
+    downMatch.countdown = 0;
+    downMatch.fighters[0].position.x = 18;
+    downMatch.fighters[0].position.z = -2;
+    downMatch.fighters[1].position.x = 16;
+    downMatch.fighters[1].position.z = 0;
+    const down = emptyInputFrame();
+    down.sidewalkDown = true;
+    const downAngleBefore = Math.atan2(
+      downMatch.fighters[0].position.z - downMatch.fighters[1].position.z,
+      downMatch.fighters[0].position.x - downMatch.fighters[1].position.x
+    );
+    downMatch = stepMatch(downMatch, down, emptyInputFrame(), 12 / 60);
+    const downAngleAfter = Math.atan2(
+      downMatch.fighters[0].position.z - downMatch.fighters[1].position.z,
+      downMatch.fighters[0].position.x - downMatch.fighters[1].position.x
+    );
+    expect(unwrappedAngleDelta(downAngleAfter, downAngleBefore)).toBeLessThan(0);
+
+    let upMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    upMatch.phase = 'fighting';
+    upMatch.countdown = 0;
+    upMatch.fighters[0].position.x = 18;
+    upMatch.fighters[0].position.z = 2;
+    upMatch.fighters[1].position.x = 16;
+    upMatch.fighters[1].position.z = 0;
+    const up = emptyInputFrame();
+    up.sidewalkUp = true;
+    const upAngleBefore = Math.atan2(
+      upMatch.fighters[0].position.z - upMatch.fighters[1].position.z,
+      upMatch.fighters[0].position.x - upMatch.fighters[1].position.x
+    );
+    upMatch = stepMatch(upMatch, up, emptyInputFrame(), 12 / 60);
+    const upAngleAfter = Math.atan2(
+      upMatch.fighters[0].position.z - upMatch.fighters[1].position.z,
+      upMatch.fighters[0].position.x - upMatch.fighters[1].position.x
+    );
+    expect(unwrappedAngleDelta(upAngleAfter, upAngleBefore)).toBeGreaterThan(0);
+  });
+
+  it('keeps repeated down-down taps rotating the same way around the opponent', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    let previousAngle = Math.atan2(
+      match.fighters[0].position.z - match.fighters[1].position.z,
+      match.fighters[0].position.x - match.fighters[1].position.x
+    );
+    let totalAngle = previousAngle;
+    let crossedRightSide = false;
+    let crossedBottom = false;
+
+    for (let tap = 0; tap < 46; tap += 1) {
+      const input = emptyInputFrame();
+      input.sidestepDown = true;
+      match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      for (let frame = 0; frame < 12; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        const angle = Math.atan2(
+          match.fighters[0].position.z - match.fighters[1].position.z,
+          match.fighters[0].position.x - match.fighters[1].position.x
+        );
+        const delta = unwrappedAngleDelta(angle, previousAngle);
+        expect(delta).toBeLessThan(0.01);
+        totalAngle += delta;
+        previousAngle = angle;
+        if (match.fighters[0].position.x > match.fighters[1].position.x) crossedRightSide = true;
+        if (match.fighters[0].position.z > match.fighters[1].position.z) crossedBottom = true;
+      }
+    }
+
+    expect(crossedRightSide).toBe(true);
+    expect(crossedBottom).toBe(true);
+    expect(totalAngle).toBeLessThan(-Math.PI * 2);
   });
 
   it('hits a standing defender only when the active hitbox overlaps their hurtbox', () => {

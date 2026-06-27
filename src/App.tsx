@@ -5423,37 +5423,40 @@ function MoveEffectsEditor({
     onUpdateInstances(instances.map((instance) => (instance.id === instanceId ? sanitizeMoveEffects({ slot: [{ ...instance, ...patch }] }).slot[0] : instance)));
   };
 
-  const updateKeyframe = (instanceId: string, index: number, keyframe: EffectKeyframe) => {
-    updateInstance(instanceId, {
-      keyframes: instances.find((instance) => instance.id === instanceId)?.keyframes.map((entry, entryIndex) => (entryIndex === index ? keyframe : entry)) ?? []
-    });
+  const createMoveEffectKeyframe = (frame: number, effect?: CharacterEffectDefinition | null): EffectKeyframe => ({
+    frame: Math.max(0, Math.round(frame)),
+    position: effect?.defaultTransform.position ?? [0, 1.1, 0.55],
+    scale: effect?.defaultTransform.scale ?? [1, 1, 1],
+    rotation: effect?.defaultTransform.rotation ?? [0, 0, 0],
+    opacity: effect?.defaultTransform.opacity ?? 1,
+    color: effect?.defaultTransform.color ?? '#ffffff'
+  });
+
+  const keyframesForEdit = (instance: MoveEffectInstance, effect?: CharacterEffectDefinition | null) => (
+    instance.keyframes.length > 0 ? instance.keyframes : [createMoveEffectKeyframe(0, effect)]
+  );
+
+  const updateKeyframe = (instanceId: string, index: number, keyframe: EffectKeyframe, effect?: CharacterEffectDefinition | null) => {
+    const instance = instances.find((entry) => entry.id === instanceId);
+    if (!instance) return;
+    const keyframes = keyframesForEdit(instance, effect).map((entry, entryIndex) => (entryIndex === index ? keyframe : entry));
+    updateInstance(instanceId, { keyframes });
   };
 
-  const updateInstanceDragPosition = (instanceId: string, worldPosition: [number, number, number], anchor: string) => {
-    const anchorOffsets: Record<string, [number, number, number]> = {
-      body: [0, 1.05, 0],
-      head: [0, 1.75, 0],
-      hands: [0.52, 1.18, 0],
-      feet: [0.18, 0.28, 0],
-      hitbox: [0.78, 1.08, 0],
-      world: [0, 0, 0]
-    };
-    const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
-    const localPosition: [number, number, number] = anchor === 'world'
-      ? worldPosition
-      : [
-          Number((worldPosition[0] - offset[0]).toFixed(2)),
-          Number((worldPosition[1] - offset[1]).toFixed(2)),
-          Number((worldPosition[2] - offset[2]).toFixed(2))
-        ];
-    onUpdateInstances(instances.map((instance) => {
-      if (instance.id !== instanceId) return instance;
-      const defaultKeyframe: EffectKeyframe = { frame: 0, position: localPosition, scale: [2.25, 2.25, 2.25], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' };
-      const keyframes: EffectKeyframe[] = instance.keyframes.length > 0
-        ? instance.keyframes.map((keyframe) => ({ ...keyframe, position: localPosition }))
-        : [defaultKeyframe];
-      return { ...instance, keyframes };
-    }));
+  const resetKeyframe = (instanceId: string, index: number, effect?: CharacterEffectDefinition | null) => {
+    const instance = instances.find((entry) => entry.id === instanceId);
+    if (!instance) return;
+    const keyframes = keyframesForEdit(instance, effect).map((entry, entryIndex) => (
+      entryIndex === index ? createMoveEffectKeyframe(entry.frame, effect) : entry
+    ));
+    updateInstance(instanceId, { keyframes });
+  };
+
+  const deleteKeyframe = (instanceId: string, index: number, effect?: CharacterEffectDefinition | null) => {
+    const instance = instances.find((entry) => entry.id === instanceId);
+    if (!instance) return;
+    const keyframes = keyframesForEdit(instance, effect).filter((_, entryIndex) => entryIndex !== index);
+    updateInstance(instanceId, { keyframes });
   };
 
   return (
@@ -5491,12 +5494,11 @@ function MoveEffectsEditor({
             previewEffects={effects}
             previewEffectInstances={instances}
             previewEffectFrame={timelineFrame}
-            onPreviewEffectDrag={updateInstanceDragPosition}
             rotationTurn={0}
             zoom={0.35}
           />
         </div>
-        <small className="effects-empty">Drag an effect directly in the preview to move its keyframes in 3D space.</small>
+        <small className="effects-empty">Use the keyframe sliders below to move effects in 3D space. The preview updates live.</small>
         {instances.length === 0 ? (
           <p className="effects-empty">No effects attached to this move yet.</p>
         ) : instances.map((instance) => {
@@ -5525,12 +5527,14 @@ function MoveEffectsEditor({
                 </label>
               </div>
               <div className="effects-keyframes">
-                {(instance.keyframes.length > 0 ? instance.keyframes : [{ frame: 0, position: [0, 0, 0], scale: [1, 1, 1], rotation: [0, 0, 0], opacity: 1, color: '#ffffff' } as EffectKeyframe]).map((keyframe, index) => (
+                {keyframesForEdit(instance, effect).map((keyframe, index) => (
                   <EffectTransformEditor
                     key={`${instance.id}-${index}`}
                     title={`Keyframe ${index + 1}`}
                     keyframe={keyframe}
-                    onChange={(nextKeyframe) => updateKeyframe(instance.id, index, nextKeyframe)}
+                    onChange={(nextKeyframe) => updateKeyframe(instance.id, index, nextKeyframe, effect)}
+                    onReset={() => resetKeyframe(instance.id, index, effect)}
+                    onDelete={() => deleteKeyframe(instance.id, index, effect)}
                   />
                 ))}
                 <button
@@ -5550,26 +5554,82 @@ function MoveEffectsEditor({
   );
 }
 
-function EffectTransformEditor({ title, keyframe, onChange }: { title: string; keyframe: EffectKeyframe; onChange: (keyframe: EffectKeyframe) => void }) {
+function EffectTransformEditor({
+  title,
+  keyframe,
+  onChange,
+  onReset,
+  onDelete
+}: {
+  title: string;
+  keyframe: EffectKeyframe;
+  onChange: (keyframe: EffectKeyframe) => void;
+  onReset?: () => void;
+  onDelete?: () => void;
+}) {
   const updateVec = (field: 'position' | 'scale' | 'rotation', axis: 0 | 1 | 2, value: string) => {
     const current = keyframe[field] ?? (field === 'scale' ? [1, 1, 1] : [0, 0, 0]);
     const next = [...current] as [number, number, number];
     next[axis] = Number(value);
     onChange({ ...keyframe, [field]: next });
   };
+  const updatePositionAxis = (axis: 0 | 1 | 2, value: string) => {
+    const position = keyframe.position ?? [0, 1.1, 0.55];
+    const next = [...position] as [number, number, number];
+    next[axis] = Number(Number(value).toFixed(2));
+    onChange({ ...keyframe, position: next });
+  };
+  const position = keyframe.position ?? [0, 1.1, 0.55];
+  const positionRanges = [
+    { label: 'X', min: -4, max: 4 },
+    { label: 'Y', min: -1, max: 5 },
+    { label: 'Z', min: -4, max: 4 }
+  ] as const;
   return (
     <fieldset className="effect-transform-editor">
-      <legend>{title}</legend>
+      <legend>
+        <span>{title}</span>
+        {(onReset || onDelete) && (
+          <span className="keyframe-actions">
+            {onReset && <button type="button" className="secondary-button compact-button" onClick={onReset}>Reset</button>}
+            {onDelete && <button type="button" className="secondary-button compact-button danger-button" onClick={onDelete}>Delete</button>}
+          </span>
+        )}
+      </legend>
       <div className="effects-form-grid">
         <FrameNumberInput label="Frame" value={keyframe.frame} min={0} onChange={(value) => onChange({ ...keyframe, frame: Number(value) })} />
-        {(['position', 'scale', 'rotation'] as const).map((field) => (
+        <div className="effect-position-sliders">
+          <span>Position</span>
+          {positionRanges.map((axisConfig, axis) => (
+            <label key={axisConfig.label} className="effect-axis-slider">
+              <strong>{axisConfig.label}</strong>
+              <input
+                type="range"
+                min={axisConfig.min}
+                max={axisConfig.max}
+                step="0.05"
+                value={position[axis]}
+                onChange={(event) => updatePositionAxis(axis as 0 | 1 | 2, event.target.value)}
+                aria-label={`position ${axisConfig.label}`}
+              />
+              <input
+                type="number"
+                step="0.05"
+                value={position[axis]}
+                onChange={(event) => updatePositionAxis(axis as 0 | 1 | 2, event.target.value)}
+                aria-label={`position ${axisConfig.label} value`}
+              />
+            </label>
+          ))}
+        </div>
+        {(['scale', 'rotation'] as const).map((field) => (
           <div className="effect-vector-field" key={field}>
             <span>{capitalize(field)}</span>
             {[0, 1, 2].map((axis) => (
               <input
                 key={axis}
                 type="number"
-                step={field === 'rotation' ? 0.05 : 0.05}
+                step="0.05"
                 value={(keyframe[field] ?? (field === 'scale' ? [1, 1, 1] : [0, 0, 0]))[axis]}
                 onChange={(event) => updateVec(field, axis as 0 | 1 | 2, event.target.value)}
                 aria-label={`${field} ${axis}`}
