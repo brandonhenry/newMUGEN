@@ -1958,6 +1958,59 @@ button {
   transform: scale(0.96);
 }
 
+.arcade-footer-actions,
+.stage-screen .arcade-footer-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  justify-content: center;
+  gap: 0;
+  width: min(100%, 560px);
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 8px 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(10, 22, 70, 0.74), rgba(7, 11, 38, 0.82));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 70px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(7px);
+}
+
+.arcade-footer-actions .primary-button,
+.arcade-footer-actions .secondary-button,
+.stage-screen .arcade-footer-actions .primary-button,
+.stage-screen .arcade-footer-actions .secondary-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
+  border-radius: 0;
+  padding: 0 22px;
+  color: rgba(247, 247, 242, 0.84);
+  background: transparent;
+  box-shadow: none;
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.34);
+}
+
+.arcade-footer-actions .primary-button {
+  order: -1;
+}
+
+.arcade-footer-actions .primary-button:hover,
+.arcade-footer-actions .primary-button:focus-visible,
+.arcade-footer-actions .secondary-button:hover,
+.arcade-footer-actions .secondary-button:focus-visible {
+  color: #ffffff;
+  background: linear-gradient(90deg, rgba(76, 112, 255, 0.58), rgba(108, 174, 255, 0.36));
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.48),
+    0 3px 0 rgba(0, 0, 0, 0.42);
+  outline: 0;
+}
+
 .fight-versus-screen {
   position: relative;
   display: grid;
@@ -5238,6 +5291,7 @@ button {
 .pause-overlay {
   position: absolute;
   inset: 0;
+  z-index: 40;
   display: grid;
   place-items: center;
   align-content: center;
@@ -5247,10 +5301,51 @@ button {
   backdrop-filter: blur(12px);
 }
 
+.pause-movelist-overlay {
+  place-items: stretch;
+  align-content: stretch;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: clamp(16px, 2vw, 32px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(46, 230, 255, 0.12), transparent 27%),
+    radial-gradient(circle at 86% 72%, rgba(255, 176, 31, 0.12), transparent 25%),
+    linear-gradient(135deg, #101114 0%, #161316 47%, #111818 100%);
+}
+
+.pause-movelist-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+  pointer-events: none;
+}
+
+.pause-movelist-overlay > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pause-movelist-overlay > svg {
+  justify-self: center;
+  margin-top: 2px;
+}
+
 .pause-overlay h2 {
   margin: 0;
   font-size: clamp(36px, 7vw, 84px);
   text-wrap: balance;
+}
+
+.pause-movelist-overlay h2 {
+  justify-self: center;
+  font-size: clamp(28px, 4vw, 54px);
 }
 
 .pause-menu-actions {
@@ -5294,10 +5389,31 @@ button {
 
 .pause-movelist-panel {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 12px;
-  width: min(860px, 94vw);
-  max-height: min(560px, 58vh);
+  width: 100%;
+  height: 100%;
+  max-height: none;
   min-height: 0;
+}
+
+.pause-movelist-overlay .pause-movelist-panel {
+  align-self: stretch;
+  justify-self: stretch;
+}
+
+.pause-movelist-overlay .pause-menu-actions {
+  justify-self: center;
+}
+
+.pause-movelist-overlay .pause-movelist-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(560px, 92vw);
+}
+
+.pause-movelist-overlay .pause-movelist-actions .primary-button,
+.pause-movelist-overlay .pause-movelist-actions .secondary-button {
+  min-width: 0;
 }
 
 .pause-movelist-tabs {
@@ -5310,8 +5426,16 @@ button {
   gap: 12px;
   min-height: 0;
   overflow: auto;
-  margin: 4px 0 8px;
+  margin: 0;
+  padding: 14px;
   text-align: left;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(6, 10, 20, 0.78);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 60px rgba(0, 0, 0, 0.3);
 }
 
 .pause-movelist section {
@@ -5354,10 +5478,6 @@ button {
 }
 
 @media (max-width: 760px) {
-  .pause-movelist-panel {
-    max-height: min(620px, 62vh);
-  }
-
   .pause-movelist-tabs {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
@@ -5369,6 +5489,10 @@ button {
   .pause-movelist-tabs button {
     min-height: 40px;
     font-size: 11px;
+  }
+
+  .pause-movelist-overlay .pause-movelist-actions {
+    width: min(460px, 92vw);
   }
 
 }

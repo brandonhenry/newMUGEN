@@ -9357,17 +9357,17 @@ function FightScreen({
         </div>
       )}
       {paused && (
-        <div className="pause-overlay">
+        <div className={`pause-overlay ${pauseMenuView === 'movelist' ? 'pause-movelist-overlay' : ''}`}>
           {pauseMenuView === 'movelist' ? (
             <>
               <List size={32} />
               <h2>Move List</h2>
               <ConfiguredMoveList
-                characters={[p1, p2]}
+                character={p1}
                 activeTab={activeMoveListTab}
                 onTabChange={setActiveMoveListTab}
               />
-              <div className="overlay-actions pause-menu-actions">
+              <div className="overlay-actions pause-menu-actions pause-movelist-actions">
                 <button className="secondary-button" onClick={() => setPauseMenuView('menu')}>
                   <ChevronLeft size={18} />
                   Back
@@ -9451,14 +9451,20 @@ function FightScreen({
 }
 
 function ConfiguredMoveList({
-  characters,
+  character,
   activeTab,
   onTabChange
 }: {
-  characters: [CharacterDefinition, CharacterDefinition];
+  character: CharacterDefinition;
   activeTab: MoveListTab;
   onTabChange: (tab: MoveListTab) => void;
 }) {
+  const configured = animationSlots.filter((slot) => (
+    slot.command &&
+    slot.category === activeTab &&
+    (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0
+  ));
+
   return (
     <div className="pause-movelist-panel">
       <nav className="options-tabs pause-movelist-tabs" aria-label="Move list tabs">
@@ -9475,34 +9481,25 @@ function ConfiguredMoveList({
         <span>P</span>
       </nav>
       <div className="pause-movelist">
-        {characters.map((character, index) => {
-          const configured = animationSlots.filter((slot) => (
-            slot.command &&
-            slot.category === activeTab &&
-            (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0
-          ));
-          return (
-            <section key={character.id}>
-              <h3>{index === 0 ? 'P1' : 'P2'} {character.displayName}</h3>
-              {configured.length === 0 ? (
-                <p>No {moveListTabLabels[activeTab].toLowerCase()} commands configured.</p>
-              ) : (
-                <div>
-                  {configured.slice(0, 36).map((slot) => {
-                    const move = resolveSlotMove(character, slot);
-                    return (
-                      <span key={slot.key}>
-                        <NotationGroup tokens={slot.notation} />
-                        {formatMoveSlotLabel(slot, move)}
-                        <small>{formatFrameSummary(move)}</small>
-                      </span>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
-          );
-        })}
+        <section>
+          <h3>{character.displayName}</h3>
+          {configured.length === 0 ? (
+            <p>No {moveListTabLabels[activeTab].toLowerCase()} commands configured.</p>
+          ) : (
+            <div>
+              {configured.slice(0, 36).map((slot) => {
+                const move = resolveSlotMove(character, slot);
+                return (
+                  <span key={slot.key}>
+                    <NotationGroup tokens={slot.notation} />
+                    {formatMoveSlotLabel(slot, move)}
+                    <small>{formatFrameSummary(move)}</small>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
@@ -9743,7 +9740,7 @@ function FooterActions({
   nextDisabled?: boolean;
 }) {
   return (
-    <footer className="footer-actions">
+    <footer className="footer-actions arcade-footer-actions">
       <button className="secondary-button" onClick={onBack}>
         <Home size={18} />
         Back
