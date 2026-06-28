@@ -12,6 +12,9 @@ export default defineConfig({
 type DevManifestPayload = {
   characterId?: string;
   locked?: boolean;
+  variant?: boolean;
+  variantOf?: string;
+  faceCardPath?: string;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   animationScales?: Record<string, Record<string, unknown>>;
@@ -102,6 +105,8 @@ type DevImportCharacterPayload = {
   characterId?: string;
   sheetDataUrl?: string;
   sourceName?: string;
+  faceCardDataUrl?: string;
+  faceCardFileName?: string;
   frames?: Array<{
     index?: number;
     dataUrl?: string;
@@ -111,6 +116,12 @@ type DevImportCharacterPayload = {
     row?: number;
   }>;
   manifest?: Record<string, unknown>;
+};
+
+type DevFaceCardPayload = {
+  characterId?: string;
+  fileName?: string;
+  dataUrl?: string;
 };
 
 type DevStagePayload = {
@@ -250,6 +261,13 @@ function koreDevManifestWriter() {
           const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
           const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
           manifest.locked = Boolean(payload.locked);
+          manifest.variant = Boolean(payload.variant);
+          const variantOf = sanitizeCharacterReference(payload.variantOf, characterId);
+          if (manifest.variant && variantOf) manifest.variantOf = variantOf;
+          else delete manifest.variantOf;
+          const faceCardPath = sanitizeCharacterAssetPath(payload.faceCardPath, characterId);
+          if (faceCardPath) manifest.faceCardPath = faceCardPath;
+          else delete manifest.faceCardPath;
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.animationScales = sanitizeAnimationScaleMap(payload.animationScales ?? {});
@@ -293,6 +311,34 @@ function koreDevManifestWriter() {
           manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
           await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
           sendJson(response, 200, { ok: true, characterId, manifestPath });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-character-face-card', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevFaceCardPayload;
+          const characterId = payload.characterId ?? '';
+          if (!/^[a-z0-9-]+$/i.test(characterId)) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character id' });
+            return;
+          }
+          const image = dataUrlToImageBuffer(payload.dataUrl);
+          const characterDir = resolve(server.config.root, 'public', 'characters', characterId);
+          await mkdir(characterDir, { recursive: true });
+          const fileName = `face-card.${image.extension}`;
+          const faceCardPath = `/characters/${characterId}/${fileName}`;
+          await writeFile(resolve(characterDir, fileName), image.buffer);
+          const manifestPath = resolve(characterDir, 'character.json');
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          manifest.faceCardPath = faceCardPath;
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+          sendJson(response, 200, { ok: true, characterId, path: faceCardPath });
         } catch (error) {
           sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -1019,6 +1065,12 @@ function koreDevManifestWriter() {
             }, null, 2)}\n`,
             'utf8'
           );
+          if (payload.faceCardDataUrl) {
+            const faceCard = dataUrlToImageBuffer(payload.faceCardDataUrl);
+            const fileName = `face-card.${faceCard.extension}`;
+            await writeFile(resolve(characterDir, fileName), faceCard.buffer);
+            manifest.faceCardPath = `/characters/${characterId}/${fileName}`;
+          }
           await writeFile(resolve(characterDir, 'character.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 
           const indexPath = resolve(server.config.root, 'public', 'characters', 'index.json');
@@ -1483,6 +1535,17 @@ function dataUrlToPngBuffer(dataUrl: unknown) {
   return Buffer.from(match[1], 'base64');
 }
 
+function dataUrlToImageBuffer(dataUrl: unknown) {
+  if (typeof dataUrl !== 'string') throw new Error('Missing image data URL');
+  const match = dataUrl.match(/^data:image\/(png|webp|jpe?g);base64,([a-z0-9+/=]+)$/i);
+  if (!match) throw new Error('Invalid image data URL');
+  const kind = match[1].toLowerCase();
+  return {
+    buffer: Buffer.from(match[2], 'base64'),
+    extension: kind === 'jpeg' || kind === 'jpg' ? 'jpg' : kind
+  };
+}
+
 function dataUrlToMediaBuffer(dataUrl: unknown) {
   if (typeof dataUrl !== 'string') throw new Error('Missing media data URL');
   const match = dataUrl.match(/^data:(audio\/(?:wav|wave|mpeg|mp3|ogg|webm)|application\/octet-stream);base64,([a-z0-9+/=]+)$/i);
@@ -1671,6 +1734,19 @@ function sanitizeAssetId(value: unknown) {
     : '';
 }
 
+function sanitizeCharacterReference(value: unknown, characterId: string) {
+  const next = sanitizeAssetId(value);
+  return next && next !== characterId ? next : '';
+}
+
+function sanitizeCharacterAssetPath(value: unknown, characterId: string) {
+  if (typeof value !== 'string') return '';
+  const allowedPrefix = `/characters/${characterId}/`;
+  if (!value.startsWith(allowedPrefix)) return '';
+  const fileName = value.slice(allowedPrefix.length);
+  return /^[a-z0-9][a-z0-9._/-]*\.(png|webp|jpe?g)$/i.test(fileName) && !fileName.includes('..') ? value : '';
+}
+
 function sanitizeSpriteSheets(value: unknown, fallbackPath: unknown, characterId: string, fallbackCount: number) {
   const fallbackSheetPath = typeof fallbackPath === 'string' ? fallbackPath : `/characters/${characterId}/animation-sheet.png`;
   const fromManifest = Array.isArray(value)
@@ -1850,6 +1926,10 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     ...manifest,
     id: characterId,
     displayName,
+    locked: Boolean(manifest.locked),
+    variant: Boolean(manifest.variant),
+    variantOf: Boolean(manifest.variant) ? sanitizeCharacterReference(manifest.variantOf, characterId) || undefined : undefined,
+    faceCardPath: sanitizeCharacterAssetPath(manifest.faceCardPath, characterId) || undefined,
     renderMode: 'spriteVoxel',
     modelPath: `spritevoxel://${characterId}`,
     spriteSheetPath: `/characters/${characterId}/animation-sheet.png`,

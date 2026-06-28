@@ -285,6 +285,9 @@ export type CharacterDefinition = {
   id: string;
   displayName: string;
   locked?: boolean;
+  variant?: boolean;
+  variantOf?: string;
+  faceCardPath?: string;
   renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
   spriteSheetPath?: string;

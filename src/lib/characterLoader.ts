@@ -46,6 +46,9 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
   return {
     ...character,
     locked: Boolean(character.locked),
+    variant: Boolean(character.variant),
+    variantOf: typeof character.variantOf === 'string' ? character.variantOf : undefined,
+    faceCardPath: typeof character.faceCardPath === 'string' ? character.faceCardPath : undefined,
     animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),

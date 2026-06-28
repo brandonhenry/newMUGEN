@@ -967,6 +967,9 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
     body: JSON.stringify({
       characterId: character.id,
       locked: Boolean(character.locked),
+      variant: Boolean(character.variant),
+      variantOf: character.variantOf ?? '',
+      faceCardPath: character.faceCardPath ?? '',
       animationFrames,
       animationFrameRates,
       animationScales,
@@ -1459,6 +1462,150 @@ function characterPortraitPath(character: CharacterDefinition) {
   return character.animationFrames?.idle?.[0] ?? framePath(character, 0);
 }
 
+function getCharacterPreviewFrames(character: CharacterDefinition) {
+  const idleFrames = character.animationFrames?.idle;
+  if (idleFrames?.length) return idleFrames;
+  const walkFrames = character.animationFrames?.walkForward;
+  if (walkFrames?.length) return walkFrames;
+  return [characterPortraitPath(character)];
+}
+
+type PreviewFrameMetrics = {
+  image: HTMLImageElement;
+  bounds: {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  };
+};
+
+function getOpaqueImageBounds(image: HTMLImageElement) {
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, image.naturalWidth);
+  canvas.height = Math.max(1, image.naturalHeight);
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return { left: 0, top: 0, width: canvas.width, height: canvas.height };
+  context.drawImage(image, 0, 0);
+  const { data, width, height } = context.getImageData(0, 0, canvas.width, canvas.height);
+  let left = width;
+  let right = -1;
+  let top = height;
+  let bottom = -1;
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      if (data[(y * width + x) * 4 + 3] <= 8) continue;
+      left = Math.min(left, x);
+      right = Math.max(right, x);
+      top = Math.min(top, y);
+      bottom = Math.max(bottom, y);
+    }
+  }
+  if (right < left || bottom < top) return { left: 0, top: 0, width, height };
+  return { left, top, width: right - left + 1, height: bottom - top + 1 };
+}
+
+function AnimatedCharacterSprite({
+  character,
+  alt = ''
+}: {
+  character: CharacterDefinition;
+  alt?: string;
+}) {
+  const frames = useMemo(() => getCharacterPreviewFrames(character), [character]);
+  const fps = character.animationFrameRates?.idle ?? character.animationFps ?? 8;
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const frameMetricsRef = useRef<Record<string, PreviewFrameMetrics>>({});
+  const [frameBounds, setFrameBounds] = useState({ width: 1, height: 1, ready: false });
+  const [frameIndex, setFrameIndex] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    frameMetricsRef.current = {};
+    setFrameBounds({ width: 1, height: 1, ready: false });
+    setFrameIndex(0);
+
+    void Promise.all(frames.map((src) => new Promise<{ src: string; image: HTMLImageElement | null }>((resolve) => {
+      const image = new Image();
+      image.onload = () => resolve({ src, image });
+      image.onerror = () => resolve({ src, image: null });
+      image.src = src;
+    }))).then((loadedFrames) => {
+      if (cancelled) return;
+      const loadedImages = loadedFrames.filter((frame): frame is { src: string; image: HTMLImageElement } => (
+        Boolean(frame.image?.naturalWidth && frame.image.naturalHeight)
+      ));
+      const metrics = loadedImages.map((frame) => ({
+        src: frame.src,
+        image: frame.image,
+        bounds: getOpaqueImageBounds(frame.image)
+      }));
+      frameMetricsRef.current = Object.fromEntries(metrics.map((frame) => [frame.src, { image: frame.image, bounds: frame.bounds }]));
+      setFrameBounds({
+        width: Math.max(1, ...metrics.map((frame) => frame.bounds.width)),
+        height: Math.max(1, ...metrics.map((frame) => frame.bounds.height)),
+        ready: metrics.length > 0
+      });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [frames]);
+
+  useEffect(() => {
+    setFrameIndex(0);
+    if (frames.length <= 1) return;
+    const interval = window.setInterval(() => {
+      setFrameIndex((value) => (value + 1) % frames.length);
+    }, 1000 / Math.max(1, fps));
+    return () => window.clearInterval(interval);
+  }, [fps, frames]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const src = frames[frameIndex % frames.length] ?? characterPortraitPath(character);
+    const frame = frameMetricsRef.current[src];
+    if (!canvas || !frame || !frameBounds.ready) return;
+    const context = canvas.getContext('2d');
+    if (!context) return;
+    context.clearRect(0, 0, frameBounds.width, frameBounds.height);
+    context.imageSmoothingEnabled = false;
+    const { image, bounds } = frame;
+    context.drawImage(
+      image,
+      bounds.left,
+      bounds.top,
+      bounds.width,
+      bounds.height,
+      Math.round((frameBounds.width - bounds.width) / 2),
+      frameBounds.height - bounds.height,
+      bounds.width,
+      bounds.height
+    );
+  }, [character, frameBounds, frameIndex, frames]);
+
+  return (
+    <span className="versus-hero-sprite" aria-hidden={alt ? undefined : true} aria-label={alt || undefined}>
+      <canvas ref={canvasRef} width={frameBounds.width} height={frameBounds.height} />
+    </span>
+  );
+}
+
+function isCharacterVariant(character: CharacterDefinition) {
+  return Boolean(character.variant && character.variantOf && character.variantOf !== character.id);
+}
+
+function getCharacterBaseId(character: CharacterDefinition) {
+  return isCharacterVariant(character) ? character.variantOf! : character.id;
+}
+
+function getVariantFamily(roster: CharacterDefinition[], baseId: string, unlockedCharacterIds?: Set<string>) {
+  const family = roster.filter((character) => character.id === baseId || (character.variant && character.variantOf === baseId));
+  const ordered = family.sort((a, b) => (a.id === baseId ? -1 : b.id === baseId ? 1 : a.displayName.localeCompare(b.displayName)));
+  return unlockedCharacterIds ? ordered.filter((character) => isCharacterUnlocked(character, unlockedCharacterIds)) : ordered;
+}
+
 function isLocalDevHost() {
   return ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
 }
@@ -1903,13 +2050,13 @@ export default function App() {
     }));
   };
 
-  const setCharacterLocked = (characterId: string, locked: boolean) => {
+  const setCharacterMetadata = (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'variant' | 'variantOf' | 'faceCardPath'>>) => {
     setRosterResult((current) => {
       if (!current) return current;
       return {
         ...current,
         characters: current.characters.map((character) => (
-          character.id === characterId ? { ...character, locked } : character
+          character.id === characterId ? { ...character, ...patch } : character
         ))
       };
     });
@@ -2157,7 +2304,7 @@ export default function App() {
             onMoveOverrideChange={setCharacterMoveOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
             onEffectsChange={setCharacterEffects}
-            onCharacterLockedChange={setCharacterLocked}
+            onCharacterMetadataChange={setCharacterMetadata}
             onImportComplete={reloadRoster}
             onBack={() => setScreen('menu')}
           />
@@ -3023,8 +3170,10 @@ function CharacterSelect({
   onNext: () => void;
 }) {
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
+  const [hoveredBaseId, setHoveredBaseId] = useState('');
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
+  const baseRoster = roster.filter((character) => !isCharacterVariant(character));
   const isArcadeMode = mode === 'ai';
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const assignCharacter = (id: string) => {
@@ -3037,10 +3186,37 @@ function CharacterSelect({
     if (isArcadeMode) return;
     setP2Id(id);
   };
+  const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
+    const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+    if (family.length <= 1) return;
+    const currentId = selectTarget === 1 ? p1Id : p2Id;
+    const currentIndex = Math.max(0, family.findIndex((character) => character.id === currentId));
+    const next = family[(currentIndex + direction + family.length) % family.length];
+    if (!next) return;
+    assignCharacter(next.id);
+    onUiNavigate();
+  }, [p1Id, p2Id, roster, selectTarget, unlockedCharacterIds, onUiNavigate]);
 
   useEffect(() => {
     if (isArcadeMode && selectTarget === 2) setSelectTarget(1);
   }, [isArcadeMode, selectTarget]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
+      if (event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (key !== 'o' && key !== 'p') return;
+      const selected = selectTarget === 1 ? p1Character : p2Character;
+      const baseId = hoveredBaseId || getCharacterBaseId(selected);
+      if (!baseId) return;
+      event.preventDefault();
+      cycleVariantForBase(baseId, key === 'o' ? -1 : 1);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [cycleVariantForBase, hoveredBaseId, p1Character, p2Character, selectTarget]);
 
   if (!p1Character || !p2Character) {
     return (
@@ -3066,7 +3242,7 @@ function CharacterSelect({
         onClick={() => setSelectTarget(1)}
       >
         <span className="versus-player-kicker">{getSlotLabel(mode, 1)}</span>
-        <img src={characterPortraitPath(p1Character)} alt="" />
+        <AnimatedCharacterSprite character={p1Character} />
         <span className="versus-hero-name">{p1Character.displayName}</span>
         <span className="versus-hero-meta">{p1Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
       </button>
@@ -3095,23 +3271,33 @@ function CharacterSelect({
         </div>
 
         <div className="versus-roster-grid">
-          {roster.map((character) => {
-            const isP1 = p1Id === character.id;
-            const isP2 = p2Id === character.id;
-            const isLocked = !isCharacterUnlocked(character, unlockedCharacterIds);
+          {baseRoster.map((character) => {
+            const baseId = character.id;
+            const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+            const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
+            const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
+            const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
+            const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
+            const isP1 = getCharacterBaseId(p1Character) === baseId;
+            const isP2 = getCharacterBaseId(p2Character) === baseId;
+            const isLocked = family.length === 0;
+            const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
             return (
               <button
                 key={character.id}
                 type="button"
-                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''}`}
-                style={{ '--fighter-color': character.colors.primary } as CSSProperties}
-                onClick={() => assignCharacter(character.id)}
-                aria-label={isLocked ? `${character.displayName} locked` : `Select ${character.displayName}`}
+                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
+                onClick={() => assignCharacter(assignId)}
+                onMouseEnter={() => setHoveredBaseId(baseId)}
+                onFocus={() => setHoveredBaseId(baseId)}
+                aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
                 aria-disabled={isLocked}
               >
-                <img src={characterPortraitPath(character)} alt="" />
+                <img src={characterPortraitPath(displayedCharacter)} alt="" />
                 {isLocked && <em className="character-lock-badge">Locked</em>}
-                <span>{character.displayName}</span>
+                {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
+                <span>{displayedCharacter.displayName}</span>
                 <small>{isP1 ? getSlotShortLabel(mode, 1) : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? getSlotShortLabel(mode, 2) : ''}</small>
               </button>
             );
@@ -3156,7 +3342,7 @@ function CharacterSelect({
         aria-label={isArcadeMode ? 'Random CPU opponent' : `Select ${p2Character.displayName}`}
       >
         <span className="versus-player-kicker">{getSlotLabel(mode, 2)}</span>
-        <img src={characterPortraitPath(p2Character)} alt="" />
+        <AnimatedCharacterSprite character={p2Character} />
         <span className="versus-hero-name">{isArcadeMode ? 'Random CPU' : p2Character.displayName}</span>
         <span className="versus-hero-meta">
           {isArcadeMode ? 'Opponent is rolled after you enter the fight' : p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}
@@ -4797,7 +4983,7 @@ function CharacterViewer({
   onMoveOverrideChange,
   onSpriteFrameEditChange,
   onEffectsChange,
-  onCharacterLockedChange,
+  onCharacterMetadataChange,
   onImportComplete,
   onBack
 }: {
@@ -4810,7 +4996,7 @@ function CharacterViewer({
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
-  onCharacterLockedChange: (characterId: string, locked: boolean) => void;
+  onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'variant' | 'variantOf' | 'faceCardPath'>>) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
@@ -4882,6 +5068,8 @@ function CharacterViewer({
   const moveEffects = active.moveEffects ?? {};
   const selectedMoveEffectInstances = moveEffects[selectedSlotDataKey] ?? [];
   const selectedMoveTotalFrames = selectedMove ? selectedMove.startupFrames + selectedMove.activeFrames + selectedMove.recoveryFrames : 30;
+  const variantBaseOptions = roster.filter((character) => character.id !== active.id && !isCharacterVariant(character));
+  const activeVariantBase = variantBaseOptions.find((character) => character.id === active.variantOf) ?? variantBaseOptions[0] ?? null;
   useEffect(() => {
     if (!selectedEffect) return;
     const frameCount = selectedEffect.frames?.length ?? 0;
@@ -5322,18 +5510,64 @@ function CharacterViewer({
     }
   };
 
-  const toggleActiveLocked = async () => {
-    const nextLocked = !active.locked;
-    onCharacterLockedChange(active.id, nextLocked);
+  const saveActiveMetadata = async (
+    patch: Partial<Pick<CharacterDefinition, 'locked' | 'variant' | 'variantOf' | 'faceCardPath'>>,
+    failureLabel: string
+  ) => {
+    onCharacterMetadataChange(active.id, patch);
     if (!isLocalDev) return;
     setManifestSaveStatus('saving');
     try {
-      await saveCharacterManifestToDev({ ...active, locked: nextLocked });
+      await saveCharacterManifestToDev({ ...active, ...patch });
       await onImportComplete(active.id);
       setManifestSaveStatus('saved');
       window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
     } catch (error) {
-      console.error('Failed to save character lock state', error);
+      console.error(failureLabel, error);
+      setManifestSaveStatus('error');
+    }
+  };
+
+  const toggleActiveLocked = async () => {
+    await saveActiveMetadata({ locked: !active.locked }, 'Failed to save character lock state');
+  };
+
+  const toggleActiveVariant = async () => {
+    if (active.variant) {
+      await saveActiveMetadata({ variant: false, variantOf: '' }, 'Failed to save character variant state');
+      return;
+    }
+    if (!activeVariantBase) return;
+    await saveActiveMetadata({ variant: true, variantOf: activeVariantBase.id }, 'Failed to save character variant state');
+  };
+
+  const updateActiveVariantBase = async (variantOf: string) => {
+    if (!variantOf || variantOf === active.id) return;
+    await saveActiveMetadata({ variant: true, variantOf }, 'Failed to save character variant base');
+  };
+
+  const importFaceCard = async (file: File | undefined) => {
+    if (!file || !isLocalDev) return;
+    setManifestSaveStatus('saving');
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const response = await fetch('/__kore/dev/save-character-face-card', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: active.id,
+          fileName: file.name,
+          dataUrl
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as { path?: string };
+      if (payload.path) onCharacterMetadataChange(active.id, { faceCardPath: payload.path });
+      await onImportComplete(active.id);
+      setManifestSaveStatus('saved');
+      window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to save character face card', error);
       setManifestSaveStatus('error');
     }
   };
@@ -5490,6 +5724,7 @@ function CharacterViewer({
   if (showImporter && isLocalDev) {
     return (
       <CharacterImportScreen
+        roster={roster}
         onBack={() => setShowImporter(false)}
         onImportComplete={async (characterId) => {
           await onImportComplete(characterId);
@@ -5566,6 +5801,41 @@ function CharacterViewer({
                         <KeyRound size={18} />
                         {active.locked ? 'Locked' : 'Unlocked'}
                       </button>
+                      <button
+                        className={`secondary-button ${active.variant ? 'active-tool' : ''}`}
+                        onClick={toggleActiveVariant}
+                        disabled={manifestSaveStatus === 'saving' || (!active.variant && !activeVariantBase)}
+                        data-testid="toggle-character-variant"
+                      >
+                        <Users size={18} />
+                        {active.variant ? 'Variant' : 'Base'}
+                      </button>
+                      {active.variant && activeVariantBase && (
+                        <label className="variant-base-control">
+                          <span>Base</span>
+                          <select
+                            value={active.variantOf ?? activeVariantBase.id}
+                            onChange={(event) => void updateActiveVariantBase(event.target.value)}
+                            disabled={manifestSaveStatus === 'saving'}
+                          >
+                            {variantBaseOptions.map((character) => (
+                              <option key={character.id} value={character.id}>{character.displayName}</option>
+                            ))}
+                          </select>
+                        </label>
+                      )}
+                      <label className="secondary-button sprite-sheet-import-button">
+                        <Upload size={18} />
+                        Face Card
+                        <input
+                          type="file"
+                          accept="image/png,image/webp,image/jpeg"
+                          onChange={(event) => {
+                            void importFaceCard(event.target.files?.[0]);
+                            event.currentTarget.value = '';
+                          }}
+                        />
+                      </label>
                       <button
                         className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
                         onClick={() => setEditorMode((current) => (current === 'animation' ? 'browse' : 'animation'))}
@@ -7749,6 +8019,11 @@ type ImportedFrame = {
 type ImportDraft = {
   displayName: string;
   id: string;
+  locked: boolean;
+  variant: boolean;
+  variantOf: string;
+  faceCardDataUrl: string;
+  faceCardName: string;
   health: number;
   speed: number;
   sidestepSpeed: number;
@@ -7759,9 +8034,11 @@ type ImportDraft = {
 };
 
 function CharacterImportScreen({
+  roster,
   onBack,
   onImportComplete
 }: {
+  roster: CharacterDefinition[];
   onBack: () => void;
   onImportComplete: (characterId: string) => Promise<void>;
 }) {
@@ -7773,6 +8050,7 @@ function CharacterImportScreen({
   const [selectedAnimationKey, setSelectedAnimationKey] = useState('idle');
   const [detectStatus, setDetectStatus] = useState<'idle' | 'working' | 'ready' | 'error'>('idle');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const variantBaseOptions = roster.filter((character) => character.id !== draft.id && !isCharacterVariant(character));
   const selectedSlot = animationSlots.find((slot) => slot.key === selectedAnimationKey) ?? animationSlots[0];
   const selectedFrameIndexes = animationFrames[selectedAnimationKey] ?? [];
   const selectedIndexSet = new Set(selectedFrameIndexes);
@@ -7782,6 +8060,8 @@ function CharacterImportScreen({
       const next = { ...current, ...patch };
       if (patch.displayName && !patch.id) next.id = slugifyCharacterId(patch.displayName);
       if (patch.id) next.id = slugifyCharacterId(patch.id);
+      if (patch.variant && !next.variantOf && variantBaseOptions[0]) next.variantOf = variantBaseOptions[0].id;
+      if (!next.variant) next.variantOf = '';
       return next;
     });
   };
@@ -7829,7 +8109,9 @@ function CharacterImportScreen({
           sheetDataUrl,
           frames: detectedFrames,
           manifest,
-          sourceName: sheetName
+          sourceName: sheetName,
+          faceCardDataUrl: draft.faceCardDataUrl,
+          faceCardFileName: draft.faceCardName
         })
       });
       if (!response.ok) throw new Error(await response.text());
@@ -7854,6 +8136,21 @@ function CharacterImportScreen({
             <strong>{sheetName || 'Choose spritesheet PNG'}</strong>
             <small>{detectStatus === 'working' ? 'Detecting frames...' : 'Auto-crop and infer move slots'}</small>
             <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => importSheet(event.target.files?.[0])} />
+          </label>
+          <label className="file-drop compact-face-drop">
+            <Upload size={22} />
+            <strong>{draft.faceCardName || 'Choose face card'}</strong>
+            <small>Used in fight HUD</small>
+            <input
+              type="file"
+              accept="image/png,image/webp,image/jpeg"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (!file) return;
+                void readFileAsDataUrl(file).then((dataUrl) => updateDraft({ faceCardDataUrl: dataUrl, faceCardName: file.name }));
+                event.currentTarget.value = '';
+              }}
+            />
           </label>
           <div className="import-field-grid">
             <label>
@@ -7880,6 +8177,24 @@ function CharacterImportScreen({
               <span>Jump</span>
               <input type="number" step="0.05" value={draft.jumpForce} onChange={(event) => updateDraft({ jumpForce: Number(event.target.value) || 8 })} />
             </label>
+            <label className="frame-toggle import-toggle">
+              <span>Locked</span>
+              <input type="checkbox" checked={draft.locked} onChange={(event) => updateDraft({ locked: event.target.checked })} />
+            </label>
+            <label className="frame-toggle import-toggle">
+              <span>Variant</span>
+              <input type="checkbox" checked={draft.variant} onChange={(event) => updateDraft({ variant: event.target.checked })} disabled={variantBaseOptions.length === 0} />
+            </label>
+            {draft.variant && (
+              <label>
+                <span>Base</span>
+                <select value={draft.variantOf || (variantBaseOptions[0]?.id ?? '')} onChange={(event) => updateDraft({ variantOf: event.target.value })}>
+                  {variantBaseOptions.map((character) => (
+                    <option key={character.id} value={character.id}>{character.displayName}</option>
+                  ))}
+                </select>
+              </label>
+            )}
             <label>
               <span>Primary</span>
               <input type="color" value={draft.primary} onChange={(event) => updateDraft({ primary: event.target.value })} />
@@ -7967,6 +8282,11 @@ function randomImportDraft(): ImportDraft {
   return {
     displayName,
     id: slugifyCharacterId(displayName),
+    locked: false,
+    variant: false,
+    variantOf: '',
+    faceCardDataUrl: '',
+    faceCardName: '',
     health: Math.round(92 + Math.random() * 22),
     speed: Number((4.7 + Math.random() * 0.9).toFixed(2)),
     sidestepSpeed: Number((4.05 + Math.random() * 0.75).toFixed(2)),
@@ -8406,6 +8726,9 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
   return {
     id: draft.id,
     displayName: draft.displayName,
+    locked: draft.locked,
+    variant: draft.variant,
+    variantOf: draft.variant ? draft.variantOf : undefined,
     renderMode: 'spriteVoxel',
     modelPath: `spritevoxel://${draft.id}`,
     spriteSheetPath: `/characters/${draft.id}/animation-sheet.png`,
@@ -9882,7 +10205,7 @@ function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fig
 }
 
 function getHudPortraitPath(character: MatchSnapshot['fighters'][number]['character']) {
-  return character.animationFrames?.idle?.[0] ?? character.animationFrames?.walkForward?.[0] ?? character.spriteSheetPath ?? '';
+  return character.animationFrames?.idle?.[0] || character.animationFrames?.walkForward?.[0] || character.spriteSheetPath || '';
 }
 
 function FooterActions({
