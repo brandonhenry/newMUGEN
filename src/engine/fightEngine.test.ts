@@ -610,6 +610,29 @@ describe('fight engine', () => {
     expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
   });
 
+  it('does not clear player attacks every frame in training mode', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.72;
+    match.fighters[1].position.x = 0.72;
+
+    const p1Attack = emptyInputFrame();
+    p1Attack.jab = true;
+    match = stepMatch(match, p1Attack, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove).not.toBeNull();
+
+    p1Attack.jab = false;
+    for (let i = 0; i < 3; i += 1) {
+      match = stepMatch(match, p1Attack, emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].moveFrame).toBeGreaterThan(0);
+  });
+
   it('keeps training mode infinite by refilling zero health without ending the round', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
     match.phase = 'fighting';

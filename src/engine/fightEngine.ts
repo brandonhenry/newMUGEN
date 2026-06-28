@@ -2817,14 +2817,21 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.fighters.forEach((fighter) => {
-    if (fighter.hp <= 0) fighter.hp = fighter.character.stats.health;
     fighter.roundsWon = 0;
+    if (fighter.hp > 0) return;
+    fighter.hp = fighter.character.stats.health;
     fighter.state = 'idle';
+    fighter.currentMove = null;
     fighter.actionTimer = 0;
     fighter.actionFramesRemaining = 0;
+    fighter.moveFrame = 0;
+    fighter.hitConnected = false;
+    fighter.hitConfirmed = false;
+    fighter.whiffRecoveryApplied = false;
     fighter.stunTimer = 0;
     fighter.stunFramesRemaining = 0;
     fighter.blockstunFramesRemaining = 0;
+    fighter.blockPunishWindowFrames = 0;
     fighter.getupInvulnerableFrames = 0;
     fighter.forcedCrouchFrames = 0;
     fighter.getupForward = 0;
