@@ -195,6 +195,13 @@ const characterWinVoiceSfx: Partial<Record<keyof typeof CHARACTER_ATTACK_VOICE_S
 const CHARACTER_SPECIAL_ABILITY_VOICE_SFX = {
   narutoShadowClone: '/characters/kiro/sounds/voices/S2.wav'
 } as const;
+const ROUND_ANNOUNCER_SFX = [
+  '/sounds/announcer/rounds/round-1.wav',
+  '/sounds/announcer/rounds/round-2.wav',
+  '/sounds/announcer/rounds/round-3.wav',
+  '/sounds/announcer/rounds/round-4.wav',
+  '/sounds/announcer/rounds/round-5.wav'
+] as const;
 const KI_CHARGE_SFX = '/sounds/ki/charge.wav';
 const KI_MAX_CHARGE_SFX = '/sounds/ki/max-charge.wav';
 const KI_MAX_VALUE = 100;
@@ -204,6 +211,7 @@ const GAME_SFX_URLS = [...new Set([
   ...Object.values(CHARACTER_HURT_VOICE_SFX),
   ...Object.values(CHARACTER_WIN_VOICE_SFX),
   ...Object.values(CHARACTER_SPECIAL_ABILITY_VOICE_SFX),
+  ...ROUND_ANNOUNCER_SFX,
   KI_CHARGE_SFX,
   KI_MAX_CHARGE_SFX
 ])];
@@ -4963,6 +4971,15 @@ function playNarutoShadowCloneVoiceSfx(character: CharacterDefinition, audioSett
   playPooledSfx(CHARACTER_SPECIAL_ABILITY_VOICE_SFX.narutoShadowClone, volume, 1);
 }
 
+function playRoundAnnouncerSfx(round: number, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return false;
+  const url = ROUND_ANNOUNCER_SFX[round - 1];
+  if (!url) return false;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.92, 0, 1);
+  playPooledSfx(url, volume, 1);
+  return true;
+}
+
 function getKiChargeSfxVolume(audioSettings: GameSettings['audio']) {
   if (audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return 0;
   return clamp(audioSettings.master * audioSettings.sfx * 0.16, 0, 0.24);
@@ -9435,6 +9452,7 @@ function FightScreen({
   const seenImpactScoreEventIds = useRef<Set<number>>(new Set());
   const seenImpactAudioEventIds = useRef<Set<number>>(new Set());
   const lastCombatEventId = useRef(0);
+  const playedRoundAnnouncerKeyRef = useRef<string | null>(null);
   const playedWinVoiceKeyRef = useRef<string | null>(null);
   const kiChargeAudioRef = useRef<HTMLAudioElement | null>(null);
   const kiMaxChargeAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -9571,6 +9589,19 @@ function FightScreen({
       onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.attackerSlot);
     });
   }, [match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
+
+  useEffect(() => {
+    const expectedRoundMessage = `ROUND ${match.round}`;
+    if (match.phase !== 'intro' || match.message !== expectedRoundMessage) {
+      if (match.phase !== 'intro') playedRoundAnnouncerKeyRef.current = null;
+      return;
+    }
+    const announcerKey = `${match.round}:${expectedRoundMessage}`;
+    if (playedRoundAnnouncerKeyRef.current === announcerKey) return;
+    if (playRoundAnnouncerSfx(match.round, settings.audio)) {
+      playedRoundAnnouncerKeyRef.current = announcerKey;
+    }
+  }, [match.message, match.phase, match.round, settings.audio]);
 
   useEffect(() => {
     if (match.phase !== 'matchOver' || !match.winnerSlot) {
