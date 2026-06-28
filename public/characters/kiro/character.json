@@ -716,12 +716,14 @@
     },
     "cmd:FC+4": {
       "recoveryFrames": 10,
+      "forwardForce": 3,
       "hitLevel": "low",
       "tracking": "homing",
       "endsInCrouch": true
     },
     "cmd:FC+3": {
       "startupFrames": 10,
+      "forwardForce": 3,
       "hitLevel": "low",
       "tracking": "homing",
       "endsInCrouch": true
