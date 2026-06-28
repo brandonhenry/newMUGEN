@@ -694,6 +694,9 @@
       "damage": 20,
       "onBlockFrames": -17,
       "onHitFrames": 3,
+      "forwardForce": 5,
+      "hitLevel": "mid",
+      "tracking": "weakLeft",
       "knockdown": true
     },
     "cmd:1+3": {

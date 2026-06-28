@@ -3383,36 +3383,56 @@ button {
 .effect-preview-strip {
   display: flex;
   gap: 8px;
+  align-items: stretch;
   overflow-x: auto;
   padding: 8px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.22);
 }
 
-.effect-preview-strip button {
+.effect-frame-card,
+.effect-bank-card {
   display: grid;
-  gap: 4px;
+  gap: 6px;
   justify-items: center;
-  min-width: 92px;
-  min-height: 108px;
   border: 0;
   border-radius: 7px;
   padding: 6px;
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.07);
+  font-weight: 900;
+}
+
+.effect-frame-card {
+  min-width: 104px;
+}
+
+.effect-frame-thumb {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  align-content: center;
+  width: 100%;
+  min-height: 104px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
   font-size: 12px;
   font-weight: 900;
   cursor: pointer;
+  transition: transform 160ms cubic-bezier(0.2, 0, 0, 1), background-color 160ms, box-shadow 160ms;
 }
 
-.effect-preview-strip button.active {
+.effect-frame-card.active,
+.effect-bank-card.active {
   color: #061016;
   background: #2ee6ff;
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.36) inset;
 }
 
-.effect-preview-strip img,
-.effect-preview-strip button img {
+.effect-frame-thumb img {
   width: 82px;
   height: 82px;
   flex: 0 0 auto;
@@ -3422,12 +3442,67 @@ button {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.effect-frame-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
+}
+
+.effect-frame-actions button {
+  min-height: 30px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 6px;
+  color: #f7f7f2;
+  background: rgba(0, 0, 0, 0.26);
+  font-size: 10px;
+  font-weight: 950;
+  cursor: pointer;
+  transition: transform 140ms cubic-bezier(0.2, 0, 0, 1), background-color 140ms;
+}
+
+.effect-frame-card.active .effect-frame-actions button,
+.effect-bank-card.active .effect-frame-actions button {
+  color: #061016;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.effect-frame-thumb:active,
+.effect-frame-actions button:active {
+  transform: scale(0.96);
+}
+
 .effect-frame-editor {
   margin-top: 6px;
 }
 
 .effect-frame-bank {
-  max-height: 260px;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  max-height: 340px;
+}
+
+.effect-frame-bank .effect-bank-card {
+  min-width: 0;
+}
+
+.effect-frame-bank .effect-frame-thumb {
+  min-height: 96px;
+  padding: 0;
+  background: transparent;
+}
+
+.effect-frame-bank .effect-frame-thumb img {
+  width: 82px;
+  height: 70px;
+}
+
+.effect-frame-bank .effect-frame-actions button {
+  position: static;
+  display: block;
+  min-height: 30px;
+  padding: 0 6px;
+  box-shadow: none;
 }
 
 .effect-transform-editor {
@@ -3463,15 +3538,7 @@ button {
   letter-spacing: 0;
 }
 
-.effect-vector-field {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.effect-vector-field > span {
-  grid-column: 1 / -1;
-}
-
-.effect-position-sliders {
+.effect-slider-group {
   display: grid;
   grid-column: 1 / -1;
   gap: 10px;
@@ -3482,7 +3549,7 @@ button {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
 
-.effect-position-sliders > span {
+.effect-slider-group > span {
   color: var(--text-muted);
   font-size: 11px;
   font-weight: 900;
@@ -3516,6 +3583,7 @@ button {
 
 .effect-axis-slider input[type='number'] {
   min-height: 32px;
+  font-variant-numeric: tabular-nums;
 }
 
 .effect-sound-list {
@@ -3533,12 +3601,31 @@ button {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.move-effect-preview-dock {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: grid;
+  gap: 8px;
+  margin: -14px -14px 0;
+  padding: 14px;
+  border-radius: 8px 8px 0 0;
+  background:
+    linear-gradient(180deg, rgba(12, 16, 24, 0.96), rgba(12, 16, 24, 0.86)),
+    rgba(12, 16, 24, 0.92);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 18px 34px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
 .move-effect-preview {
   height: min(34vh, 360px);
   min-height: 260px;
   border-radius: 8px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
 
 .move-effect-preview canvas {
@@ -3934,6 +4021,36 @@ button {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
+.effect-frame-editor .sprite-crop-stage {
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  min-height: min(72vh, 640px);
+}
+
+.effect-frame-editor .sprite-sheet-crop-map {
+  min-height: clamp(520px, 62vh, 720px);
+}
+
+.effect-frame-editor .sprite-sheet-library {
+  min-height: 70px;
+  align-content: center;
+}
+
+.effect-frame-editor .sprite-sheet-library strong {
+  min-width: min(100%, 260px);
+  overflow-wrap: anywhere;
+}
+
+.effect-frame-editor .sprite-sheet-crop-content {
+  min-height: 430px;
+}
+
+.effect-frame-editor .sprite-crop-preview-panel {
+  position: sticky;
+  top: 14px;
+  align-self: start;
+  min-height: 420px;
+}
+
 .sprite-crop-controls {
   display: grid;
   gap: 12px;
@@ -4046,6 +4163,71 @@ button {
   font-size: 12px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
+}
+
+.effect-frame-bank .effect-bank-card {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  min-width: 0;
+  border-radius: 7px;
+  padding: 6px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.effect-frame-bank .effect-bank-card.active {
+  color: #061016;
+  background: #2ee6ff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.36) inset;
+}
+
+.effect-frame-bank .effect-frame-thumb {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  align-content: center;
+  width: 100%;
+  min-height: 96px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+}
+
+.effect-frame-bank .effect-frame-thumb img {
+  width: 82px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.effect-frame-bank .effect-frame-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
+}
+
+.effect-frame-bank .effect-frame-actions button {
+  position: static;
+  display: block;
+  min-height: 30px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 6px;
+  color: #f7f7f2;
+  background: rgba(0, 0, 0, 0.26);
+  font-size: 10px;
+  font-weight: 950;
+  box-shadow: none;
+}
+
+.effect-frame-bank .effect-bank-card.active .effect-frame-actions button {
+  color: #061016;
+  background: rgba(0, 0, 0, 0.14);
 }
 
 .character-import-screen {

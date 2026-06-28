@@ -1099,9 +1099,29 @@ function cameraDamp(delta: number, speed: number) {
   return THREE.MathUtils.clamp(1 - Math.exp(-Math.max(0, delta) * speed), 0, 1);
 }
 
+const MIN_FIGHT_CAMERA_DISTANCE = 4.85;
+const MIN_CLASH_CAMERA_DISTANCE = 4.85;
+
+function finiteOr(value: number, fallback: number) {
+  return Number.isFinite(value) ? value : fallback;
+}
+
 function stableFightCameraSide(dx: number, dz: number) {
   const lineLength = Math.hypot(dx, dz) || 1;
   return [-dz / lineLength, dx / lineLength] as const;
+}
+
+function enforceCameraHorizontalDistance(camera: THREE.Camera, focus: THREE.Vector3, fallbackSide: THREE.Vector3, minDistance: number) {
+  const dx = camera.position.x - focus.x;
+  const dz = camera.position.z - focus.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance >= minDistance) return;
+
+  const fallbackLength = Math.hypot(fallbackSide.x, fallbackSide.z);
+  const directionX = distance > 0.001 ? dx / distance : fallbackLength > 0.001 ? fallbackSide.x / fallbackLength : 0;
+  const directionZ = distance > 0.001 ? dz / distance : fallbackLength > 0.001 ? fallbackSide.z / fallbackLength : 1;
+  camera.position.x = focus.x + directionX * minDistance;
+  camera.position.z = focus.z + directionZ * minDistance;
 }
 
 function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
@@ -1121,24 +1141,43 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const [p1, p2] = match.fighters;
     if (match.clashState?.status !== 'none') {
       const [x, y, z] = match.clashState.contactPoint;
-      const dx = p2.position.x - p1.position.x;
-      const dz = p2.position.z - p1.position.z;
-      const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
-      const cameraDistance = THREE.MathUtils.clamp(4.3 * settings.distance * settings.zoomBias, 3.8, 6.6);
-      const desired = new THREE.Vector3(x + cameraX * cameraDistance, Math.max(2.15, y + 1.15), z + cameraZ * cameraDistance);
+      const contactX = finiteOr(x, focus.x);
+      const contactY = finiteOr(y, lookFocus.y);
+      const contactZ = finiteOr(z, focus.z);
+      const p1x = finiteOr(p1.position.x, contactX - 0.5);
+      const p1z = finiteOr(p1.position.z, contactZ);
+      const p2x = finiteOr(p2.position.x, contactX + 0.5);
+      const p2z = finiteOr(p2.position.z, contactZ);
+      const dx = p2x - p1x;
+      const dz = p2z - p1z;
+      const [computedCameraX, computedCameraZ] = stableFightCameraSide(dx, dz);
+      rawSide.set(computedCameraX, 0, computedCameraZ).normalize();
+      if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
+      const cameraX = rawSide.x;
+      const cameraZ = rawSide.z;
+      const cameraDistance = THREE.MathUtils.clamp(4.3 * settings.distance * settings.zoomBias, MIN_CLASH_CAMERA_DISTANCE, 6.6);
+      desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
       camera.position.lerp(desired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
-      target.set(x, Math.max(1.12, y), z);
+      target.set(contactX, Math.max(1.12, contactY), contactZ);
+      enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
       return;
     }
-    const midX = (p1.position.x + p2.position.x) / 2;
-    const midZ = (p1.position.z + p2.position.z) / 2;
-    const midY = Math.max(0.92, 0.86 + (p1.position.y + p2.position.y) * 0.18);
-    const dx = p2.position.x - p1.position.x;
-    const dz = p2.position.z - p1.position.z;
+    const p1x = finiteOr(p1.position.x, focus.x - 0.65);
+    const p1y = finiteOr(p1.position.y, 0);
+    const p1z = finiteOr(p1.position.z, focus.z);
+    const p2x = finiteOr(p2.position.x, focus.x + 0.65);
+    const p2y = finiteOr(p2.position.y, 0);
+    const p2z = finiteOr(p2.position.z, focus.z);
+    const midX = (p1x + p2x) / 2;
+    const midZ = (p1z + p2z) / 2;
+    const midY = Math.max(0.92, 0.86 + (p1y + p2y) * 0.18);
+    const dx = p2x - p1x;
+    const dz = p2z - p1z;
     const distance = Math.hypot(dx, dz);
     const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
     rawSide.set(cameraX, 0, cameraZ).normalize();
+    if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
     if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
 
     const perspective = camera as THREE.PerspectiveCamera;
@@ -1146,11 +1185,11 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const verticalFov = THREE.MathUtils.degToRad(perspective.fov);
     const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * aspect);
     const horizontalFit = (distance * 0.5 + 1.55) / Math.tan(horizontalFov / 2);
-    const verticalSpan = 2.65 + Math.max(p1.position.y, p2.position.y) * 0.55;
+    const verticalSpan = 2.65 + Math.max(p1y, p2y) * 0.55;
     const verticalFit = verticalSpan / Math.tan(verticalFov / 2);
     const distanceScale = settings.distance * settings.zoomBias;
-    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2) * distanceScale, 4.8, 21);
-    const cameraHeight = THREE.MathUtils.clamp((2.35 + cameraDistance * 0.13 + Math.max(p1.position.y, p2.position.y) * 0.22) * settings.height, 2.2, 6.4);
+    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2) * distanceScale, MIN_FIGHT_CAMERA_DISTANCE, 21);
+    const cameraHeight = THREE.MathUtils.clamp((2.35 + cameraDistance * 0.13 + Math.max(p1y, p2y) * 0.22) * settings.height, 2.2, 6.4);
 
     rawFocus.set(midX, 0, midZ);
     rawLookFocus.set(midX, midY, midZ);
@@ -1179,6 +1218,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       focus.z + side.z * cameraDistanceRef.current
     );
     camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
+    enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
   });
   return null;

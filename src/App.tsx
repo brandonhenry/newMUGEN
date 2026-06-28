@@ -6247,6 +6247,53 @@ function EffectsLibraryEditor({
   onDeleteFrame: (effectId: string, frameIndex: number) => Promise<void>;
   onSave: () => void;
 }) {
+  const cloneAnimationFrame = (effect: CharacterEffectDefinition, frameIndex: number) => {
+    const frames = effect.frames ?? [];
+    if (frameIndex < 0 || frameIndex >= frames.length) return;
+    const insertIndex = frameIndex + 1;
+    const nextFrames = [
+      ...frames.slice(0, insertIndex),
+      frames[frameIndex],
+      ...frames.slice(insertIndex)
+    ];
+    const sourceEdits = effect.effectFrameEdits ?? {};
+    const nextEdits: Record<string, SpriteFrameEdit> = {};
+    nextFrames.forEach((frame, index) => {
+      const sourceIndex = index < insertIndex ? index : index === insertIndex ? frameIndex : index - 1;
+      const sourceEdit = sourceEdits[String(sourceIndex)];
+      if (sourceEdit) {
+        nextEdits[String(index)] = {
+          ...sourceEdit,
+          index,
+          path: frame
+        };
+      }
+    });
+    onUpdateEffect(effect.id, { frames: nextFrames, effectFrameEdits: nextEdits });
+    onSelectFrame(insertIndex);
+  };
+
+  const removeAnimationFrame = (effect: CharacterEffectDefinition, frameIndex: number) => {
+    const frames = effect.frames ?? [];
+    if (frameIndex < 0 || frameIndex >= frames.length) return;
+    const nextFrames = frames.filter((_, index) => index !== frameIndex);
+    const sourceEdits = effect.effectFrameEdits ?? {};
+    const nextEdits: Record<string, SpriteFrameEdit> = {};
+    nextFrames.forEach((frame, index) => {
+      const sourceIndex = index >= frameIndex ? index + 1 : index;
+      const sourceEdit = sourceEdits[String(sourceIndex)];
+      if (sourceEdit) {
+        nextEdits[String(index)] = {
+          ...sourceEdit,
+          index,
+          path: frame
+        };
+      }
+    });
+    onUpdateEffect(effect.id, { frames: nextFrames, effectFrameEdits: nextEdits });
+    onSelectFrame(Math.min(Math.max(0, nextFrames.length - 1), frameIndex));
+  };
+
   return (
     <section className="effects-editor" aria-label="Character effects library">
       <aside className="effects-rail">
@@ -6329,16 +6376,21 @@ function EffectsLibraryEditor({
               onChange={(keyframe) => onUpdateEffect(selectedEffect.id, { defaultTransform: keyframeToTransform(keyframe) })}
             />
             <div className="effect-preview-strip">
-              {(selectedEffect.frames ?? []).slice(0, 16).map((frame, index) => (
-                <button
+              {(selectedEffect.frames ?? []).map((frame, index) => (
+                <div
                   key={`${frame}-${index}`}
-                  className={selectedFrameIndex === index ? 'active' : ''}
-                  onClick={() => onSelectFrame(index)}
+                  className={`effect-frame-card ${selectedFrameIndex === index ? 'active' : ''}`}
                   title={`Edit effect frame ${index}`}
                 >
-                  <img src={frame} alt={`Effect frame ${index}`} />
-                  <span>{index}</span>
-                </button>
+                  <button type="button" className="effect-frame-thumb" onClick={() => onSelectFrame(index)}>
+                    <img src={frame} alt={`Effect frame ${index}`} />
+                    <span>{index}</span>
+                  </button>
+                  <span className="effect-frame-actions">
+                    <button type="button" onClick={() => cloneAnimationFrame(selectedEffect, index)}>Clone</button>
+                    <button type="button" onClick={() => removeAnimationFrame(selectedEffect, index)}>Delete</button>
+                  </span>
+                </div>
               ))}
               {(selectedEffect.frames?.length ?? 0) === 0 && (
                 <span className="effects-empty">Procedural-only: {(selectedEffect.proceduralLayers ?? []).map((layer) => layer.kind).join(', ') || 'glow'}</span>
@@ -6352,6 +6404,8 @@ function EffectsLibraryEditor({
                 saveStatus={frameSaveStatus}
                 onSelectFrame={onSelectFrame}
                 onUpdateEffect={onUpdateEffect}
+                onCloneFrame={(frameIndex) => cloneAnimationFrame(selectedEffect, frameIndex)}
+                onRemoveFrame={(frameIndex) => removeAnimationFrame(selectedEffect, frameIndex)}
                 onSaveFrame={onSaveFrame}
                 onDeleteFrame={onDeleteFrame}
               />
@@ -6410,6 +6464,8 @@ function EffectSpriteFrameEditor({
   saveStatus,
   onSelectFrame,
   onUpdateEffect,
+  onCloneFrame,
+  onRemoveFrame,
   onSaveFrame,
   onDeleteFrame
 }: {
@@ -6419,6 +6475,8 @@ function EffectSpriteFrameEditor({
   saveStatus: 'idle' | 'saving' | 'saved' | 'error';
   onSelectFrame: (frameIndex: number) => void;
   onUpdateEffect: (effectId: string, patch: Partial<CharacterEffectDefinition>) => void;
+  onCloneFrame: (frameIndex: number) => void;
+  onRemoveFrame: (frameIndex: number) => void;
   onSaveFrame: (effectId: string, edit: SpriteFrameEdit, pngDataUrl: string) => Promise<void>;
   onDeleteFrame: (effectId: string, frameIndex: number) => Promise<void>;
 }) {
@@ -6581,6 +6639,8 @@ function EffectSpriteFrameEditor({
           <div className="sprite-sheet-library" aria-label="Effect frames">
             <strong>{effect.name} Sheet</strong>
             <button className="secondary-button compact-button" onClick={createNewFrame}>New Frame</button>
+            <button className="secondary-button compact-button" onClick={() => onCloneFrame(selectedFrameIndex)} disabled={frames.length === 0}>Clone Frame</button>
+            <button className="secondary-button compact-button" onClick={() => onRemoveFrame(selectedFrameIndex)} disabled={frames.length === 0}>Delete Frame</button>
             <button className="secondary-button compact-button" onClick={fitVisibleCrop}>Fit Visible</button>
             <button
               className="secondary-button compact-button danger-button"
@@ -6588,7 +6648,7 @@ function EffectSpriteFrameEditor({
               disabled={saveStatus === 'saving' || frames.length === 0 || selectedFrameIndex >= frames.length}
             >
               <Trash2 size={14} />
-              Delete Frame
+              Delete Saved
             </button>
             <button className="secondary-button compact-button dev-save-button" onClick={saveFrame} disabled={saveStatus === 'saving'}>
               <Save size={14} />
@@ -6674,14 +6734,19 @@ function EffectSpriteFrameEditor({
       </div>
       <div className="sprite-frame-bank effect-frame-bank" aria-label="Effect frame bank">
         {frames.map((frame, index) => (
-          <button
+          <div
             key={`${frame}-${index}`}
-            className={index === selectedFrameIndex ? 'active' : ''}
-            onClick={() => onSelectFrame(index)}
+            className={`effect-bank-card ${index === selectedFrameIndex ? 'active' : ''}`}
           >
-            <img src={frame} alt={`Effect frame ${index}`} loading="lazy" />
-            <span>{index}</span>
-          </button>
+            <button type="button" className="effect-frame-thumb" onClick={() => onSelectFrame(index)}>
+              <img src={frame} alt={`Effect frame ${index}`} loading="lazy" />
+              <span>{index}</span>
+            </button>
+            <span className="effect-frame-actions">
+              <button type="button" onClick={() => onCloneFrame(index)}>Clone</button>
+              <button type="button" onClick={() => onRemoveFrame(index)}>Delete</button>
+            </span>
+          </div>
         ))}
       </div>
     </section>
@@ -6806,20 +6871,22 @@ function MoveEffectsEditor({
         </label>
       </aside>
       <div className="effects-detail">
-        <div className="move-effect-preview">
-          <CharacterPreviewCanvas
-            character={character}
-            pose={selectedSlot.pose}
-            animationKey={animationKey}
-            previewMove={previewMove}
-            previewEffects={effects}
-            previewEffectInstances={draftInstances}
-            previewEffectFrame={timelineFrame}
-            rotationTurn={0}
-            zoom={0.35}
-          />
+        <div className="move-effect-preview-dock">
+          <div className="move-effect-preview">
+            <CharacterPreviewCanvas
+              character={character}
+              pose={selectedSlot.pose}
+              animationKey={animationKey}
+              previewMove={previewMove}
+              previewEffects={effects}
+              previewEffectInstances={draftInstances}
+              previewEffectFrame={timelineFrame}
+              rotationTurn={0}
+              zoom={0.35}
+            />
+          </div>
+          <small className="effects-empty">Use the keyframe sliders below to move effects in 3D space. The preview updates live.</small>
         </div>
-        <small className="effects-empty">Use the keyframe sliders below to move effects in 3D space. The preview updates live.</small>
         {draftInstances.length === 0 ? (
           <p className="effects-empty">No effects attached to this move yet.</p>
         ) : draftInstances.map((instance) => {
@@ -6875,6 +6942,49 @@ function MoveEffectsEditor({
   );
 }
 
+function EffectAxisSlider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  ariaLabel
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: string) => void;
+  ariaLabel: string;
+}) {
+  const safeValue = Number.isFinite(value) ? value : 0;
+  return (
+    <label className="effect-axis-slider">
+      <strong>{label}</strong>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={clamp(safeValue, min, max)}
+        onChange={(event) => onChange(event.target.value)}
+        aria-label={ariaLabel}
+      />
+      <input
+        type="number"
+        min={min}
+        max={max}
+        step={step}
+        value={Number(safeValue.toFixed(step < 0.05 ? 2 : 3))}
+        onChange={(event) => onChange(event.target.value)}
+        aria-label={`${ariaLabel} value`}
+      />
+    </label>
+  );
+}
+
 function EffectTransformEditor({
   title,
   keyframe,
@@ -6889,16 +6999,28 @@ function EffectTransformEditor({
   onDelete?: () => void;
 }) {
   const updateVec = (field: 'position' | 'scale' | 'rotation', axis: 0 | 1 | 2, value: string) => {
+    if (value.trim() === '') return;
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return;
     const current = keyframe[field] ?? (field === 'scale' ? [1, 1, 1] : [0, 0, 0]);
     const next = [...current] as [number, number, number];
-    next[axis] = Number(value);
+    next[axis] = Number(numericValue.toFixed(3));
     onChange({ ...keyframe, [field]: next });
   };
   const updatePositionAxis = (axis: 0 | 1 | 2, value: string) => {
+    if (value.trim() === '') return;
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return;
     const position = keyframe.position ?? [0, 1.1, 0.55];
     const next = [...position] as [number, number, number];
-    next[axis] = Number(Number(value).toFixed(2));
+    next[axis] = Number(numericValue.toFixed(2));
     onChange({ ...keyframe, position: next });
+  };
+  const updateOpacity = (value: string) => {
+    if (value.trim() === '') return;
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return;
+    onChange({ ...keyframe, opacity: Number(clamp(numericValue, 0, 1).toFixed(2)) });
   };
   const updateStartFrame = (value: string) => {
     if (value.trim() === '') return;
@@ -6916,6 +7038,8 @@ function EffectTransformEditor({
     onChange({ ...keyframe, endFrame });
   };
   const position = keyframe.position ?? [0, 1.1, 0.55];
+  const scale = keyframe.scale ?? [1, 1, 1];
+  const rotation = keyframe.rotation ?? [0, 0, 0];
   const positionRanges = [
     { label: 'X', min: -4, max: 4 },
     { label: 'Y', min: -1, max: 5 },
@@ -6935,46 +7059,63 @@ function EffectTransformEditor({
       <div className="effects-form-grid">
         <FrameNumberInput label="Start" value={keyframe.frame} min={0} commitOnBlur onChange={updateStartFrame} />
         <FrameNumberInput label="End" value={keyframe.endFrame ?? keyframe.frame} min={0} commitOnBlur onChange={updateEndFrame} />
-        <div className="effect-position-sliders">
+        <div className="effect-slider-group">
           <span>Position</span>
           {positionRanges.map((axisConfig, axis) => (
-            <label key={axisConfig.label} className="effect-axis-slider">
-              <strong>{axisConfig.label}</strong>
-              <input
-                type="range"
-                min={axisConfig.min}
-                max={axisConfig.max}
-                step="0.05"
-                value={position[axis]}
-                onChange={(event) => updatePositionAxis(axis as 0 | 1 | 2, event.target.value)}
-                aria-label={`position ${axisConfig.label}`}
-              />
-              <input
-                type="number"
-                step="0.05"
-                value={position[axis]}
-                onChange={(event) => updatePositionAxis(axis as 0 | 1 | 2, event.target.value)}
-                aria-label={`position ${axisConfig.label} value`}
-              />
-            </label>
+            <EffectAxisSlider
+              key={axisConfig.label}
+              label={axisConfig.label}
+              value={position[axis]}
+              min={axisConfig.min}
+              max={axisConfig.max}
+              step={0.05}
+              onChange={(value) => updatePositionAxis(axis as 0 | 1 | 2, value)}
+              ariaLabel={`position ${axisConfig.label}`}
+            />
           ))}
         </div>
-        {(['scale', 'rotation'] as const).map((field) => (
-          <div className="effect-vector-field" key={field}>
-            <span>{capitalize(field)}</span>
-            {[0, 1, 2].map((axis) => (
-              <input
-                key={axis}
-                type="number"
-                step="0.05"
-                value={(keyframe[field] ?? (field === 'scale' ? [1, 1, 1] : [0, 0, 0]))[axis]}
-                onChange={(event) => updateVec(field, axis as 0 | 1 | 2, event.target.value)}
-                aria-label={`${field} ${axis}`}
-              />
-            ))}
-          </div>
-        ))}
-        <FrameNumberInput label="Opacity" value={keyframe.opacity ?? 1} min={0} max={1} step={0.05} onChange={(value) => onChange({ ...keyframe, opacity: Number(value) })} />
+        <div className="effect-slider-group">
+          <span>Scale</span>
+          {(['X', 'Y', 'Z'] as const).map((axisLabel, axis) => (
+            <EffectAxisSlider
+              key={axisLabel}
+              label={axisLabel}
+              value={scale[axis]}
+              min={0.01}
+              max={6}
+              step={0.01}
+              onChange={(value) => updateVec('scale', axis as 0 | 1 | 2, value)}
+              ariaLabel={`scale ${axisLabel}`}
+            />
+          ))}
+        </div>
+        <div className="effect-slider-group">
+          <span>Rotation</span>
+          {(['X', 'Y', 'Z'] as const).map((axisLabel, axis) => (
+            <EffectAxisSlider
+              key={axisLabel}
+              label={axisLabel}
+              value={rotation[axis]}
+              min={-6.28}
+              max={6.28}
+              step={0.01}
+              onChange={(value) => updateVec('rotation', axis as 0 | 1 | 2, value)}
+              ariaLabel={`rotation ${axisLabel}`}
+            />
+          ))}
+        </div>
+        <div className="effect-slider-group effect-opacity-slider">
+          <span>Opacity</span>
+          <EffectAxisSlider
+            label="A"
+            value={keyframe.opacity ?? 1}
+            min={0}
+            max={1}
+            step={0.01}
+            onChange={updateOpacity}
+            ariaLabel="opacity"
+          />
+        </div>
         <label>
           <span>Color</span>
           <input type="color" value={keyframe.color ?? '#ffffff'} onChange={(event) => onChange({ ...keyframe, color: event.target.value })} />
