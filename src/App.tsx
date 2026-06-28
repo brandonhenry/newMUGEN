@@ -4908,8 +4908,8 @@ function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio'
   if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0 || audioSettings.hitSfx <= 0) return;
   const isBlock = event.kind === 'block';
   const isLauncher = Boolean(event.launched);
-  const gain = isBlock ? 0.36 : isLauncher ? 0.68 : 0.48;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * audioSettings.hitSfx * gain, 0, isBlock ? 0.72 : 0.9);
+  const gain = isBlock ? 0.82 : isLauncher ? 1 : 0.95;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * audioSettings.hitSfx * gain, 0, 1);
   const playbackRate = isBlock ? 0.96 : event.moveInput === 'special' ? 0.94 : 1;
   playPooledSfx(chooseHitSfx(event), volume, playbackRate);
 }
@@ -10252,6 +10252,8 @@ function FightScreen({
     event.preventDefault();
   };
 
+  const winnerFighter = match.winnerSlot ? match.fighters[match.winnerSlot - 1] : null;
+
   return (
     <div
       className="fight-screen"
@@ -10357,11 +10359,35 @@ function FightScreen({
           </div>
         </div>
       )}
-      {match.phase === 'matchOver' && mode !== 'ai' && (!isOnline || onlineState === 'connected') && (
-        <div className="pause-overlay results-overlay">
-          <Swords size={34} />
-          <h2>{match.message}</h2>
-          <div className="overlay-actions">
+      {match.phase === 'matchOver' && mode !== 'ai' && (!isOnline || onlineState === 'connected') && winnerFighter && (
+        <div
+          className="pause-overlay results-overlay"
+          style={{
+            '--winner-primary': winnerFighter.character.colors.primary,
+            '--winner-accent': winnerFighter.character.colors.accent
+          } as CSSProperties}
+        >
+          <section className="results-panel" aria-label="Match result">
+            <div className="results-winner-stage" aria-hidden="true">
+              <CharacterPreviewCanvas
+                key={`${match.round}-${winnerFighter.character.id}`}
+                character={winnerFighter.character}
+                pose="win"
+                animationKey="win"
+                rotationTurn={0}
+                zoom={1.08}
+              />
+            </div>
+            <div className="results-copy">
+              <span className="results-eyebrow">
+                <Trophy size={18} />
+                Winner
+              </span>
+              <h2>{match.message}</h2>
+              <p>{winnerFighter.character.displayName}</p>
+            </div>
+          </section>
+          <div className="overlay-actions pause-menu-actions results-actions">
             <button className="primary-button" onClick={reset}>
               <RotateCcw size={18} />
               {isOnline && onlineRematchReadyRef.current.local ? 'Waiting' : 'Rematch'}

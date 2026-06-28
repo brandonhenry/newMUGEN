@@ -548,11 +548,23 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Leaf Rising Wind",
+      "label": "Great Rasengan",
       "hitLevel": "low",
       "tracking": "homing",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "soundCues": [
+        {
+          "id": "cue-1",
+          "name": "R5",
+          "path": "/characters/kiro/moves/cmd-3-4/sounds/r5.wav",
+          "frame": 0,
+          "volume": 0.72,
+          "pitch": 1,
+          "pan": 0,
+          "retrigger": false
+        }
+      ]
     },
     "neutral:jab-jab": {
       "label": "Multiple Shadow Clone Technique"
