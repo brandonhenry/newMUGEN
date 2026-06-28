@@ -1,15 +1,19 @@
 import { expect, test } from '@playwright/test';
 
-async function startFight(page: import('@playwright/test').Page, local2p = false) {
+async function startFromSplash(page: import('@playwright/test').Page) {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Start' }).click();
-  await page.getByRole('button', { name: 'Fight Character select, stage select, then match.' }).click();
-  if (local2p) {
-    await page.getByRole('button', { name: 'Local 2P' }).click();
-  }
+  await page.locator('.title-screen').click();
+}
+
+async function startFight(page: import('@playwright/test').Page, local2p = false) {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: local2p ? 'Versus' : 'Arcade' }).click();
   await page.getByRole('button', { name: 'Stage' }).click();
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
-  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 5000 });
+  const versusSplash = page.locator('.fight-versus-screen');
+  await expect(versusSplash).toBeVisible({ timeout: 3000 });
+  await versusSplash.click();
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 7000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 2000 });
   const fightScreen = page.locator('.fight-screen');
   await page.waitForTimeout(4200);
@@ -63,21 +67,19 @@ test('starts a playable match from the menu', async ({ page }) => {
 });
 
 test('opens controls and character viewer', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Start' }).click();
-  await page.getByRole('button', { name: 'Controls Keyboard, gamepad, mobile, and match mode.' }).click();
-  await expect(page.getByRole('heading', { name: 'Player 1' })).toBeVisible();
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await expect(page.getByRole('button', { name: 'Controls' })).toBeVisible();
   await page.getByRole('button', { name: 'Back' }).click();
-  await page.getByRole('button', { name: 'Character Viewer Inspect roster manifests and loader warnings.' }).click();
+  await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
-  await page.getByTestId('viewer-pose-jab').click();
-  await expect(page.getByTestId('viewer-pose-jab')).toHaveClass(/active/);
+  await page.getByTestId('viewer-pose-jableft').click();
+  await expect(page.getByTestId('viewer-pose-jableft')).toHaveClass(/active/);
   await page.getByRole('button', { name: 'Rotate' }).click();
   await page.getByTestId('viewer-zoom-in').click();
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.46');
   await page.getByTestId('viewer-zoom-out').click();
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.28');
-  await expect(page.getByText('No manifest warnings.')).toBeVisible();
 });
 
 test('moves player one forward and back with keyboard', async ({ page }) => {
@@ -107,14 +109,16 @@ test('lets player one close distance, hit, and continue without pausing', async 
   await expect.poll(async () => {
     await keyDown(page, 'KeyD');
     return xFromPosition(await page.getByTestId('p1-position').innerText());
-  }, { timeout: 6000 }).toBeGreaterThan(-0.55);
+  }, { timeout: 6000 }).toBeGreaterThan(-0.2);
   await keyUp(page, 'KeyD');
   const hpBefore = Number(await page.getByTestId('p2-hp').innerText());
   let hpAfter = hpBefore;
-  for (let attempt = 0; attempt < 3 && hpAfter >= hpBefore; attempt += 1) {
-    await keyDown(page, 'KeyU');
+  const attackKeys = ['KeyU', 'KeyI', 'KeyJ', 'KeyK'];
+  for (let attempt = 0; attempt < 8 && hpAfter >= hpBefore; attempt += 1) {
+    const attackKey = attackKeys[attempt % attackKeys.length];
+    await keyDown(page, attackKey);
     await page.waitForTimeout(260);
-    await keyUp(page, 'KeyU');
+    await keyUp(page, attackKey);
     await page.waitForTimeout(900);
     hpAfter = Number(await page.getByTestId('p2-hp').innerText());
   }

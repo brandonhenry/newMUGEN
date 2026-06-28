@@ -74,7 +74,7 @@ import {
   type VoxelFidelitySettings
 } from './types';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type CharacterAnimationOverride = {
@@ -1334,6 +1334,7 @@ function LocalBgmPlayer({
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
+  const [versusReturnScreen, setVersusReturnScreen] = useState<'stage' | 'privateRooms'>('stage');
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
   const [stageResult, setStageResult] = useState<StageLoadResult | null>(null);
   const [animationOverrides, setAnimationOverrides] = useState<AnimationOverrideMap>({});
@@ -1771,12 +1772,14 @@ export default function App() {
             onCreate={(intent) => {
               setMode('private');
               setPrivateRoomIntent(intent);
-              setScreen('fight');
+              setVersusReturnScreen('privateRooms');
+              setScreen('versus');
             }}
             onJoin={(intent) => {
               setMode('private');
               setPrivateRoomIntent(intent);
-              setScreen('fight');
+              setVersusReturnScreen('privateRooms');
+              setScreen('versus');
             }}
             onBack={() => setScreen('select')}
           />
@@ -1814,8 +1817,20 @@ export default function App() {
               if (mode === 'private' && !privateRoomIntent) {
                 setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
               }
-              setScreen('fight');
+              setVersusReturnScreen('stage');
+              setScreen('versus');
             }}
+          />
+        )}
+        {screen === 'versus' && (
+          <VersusSplashScreen
+            p1={p1}
+            p2={p2}
+            stage={selectedStage}
+            mode={mode}
+            privateRoomIntent={privateRoomIntent}
+            onBack={() => setScreen(versusReturnScreen)}
+            onReady={() => setScreen('fight')}
           />
         )}
         {screen === 'stageEditor' && (
@@ -3005,6 +3020,136 @@ function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
 
 function usesCpuDifficulty(mode: MatchMode) {
   return mode === 'ai' || mode === 'cpu';
+}
+
+const VERSUS_SPLASH_DURATION_MS = 2600;
+
+function VersusSplashScreen({
+  p1,
+  p2,
+  stage,
+  mode,
+  privateRoomIntent,
+  onBack,
+  onReady
+}: {
+  p1: CharacterDefinition;
+  p2: CharacterDefinition;
+  stage: StageDefinition;
+  mode: MatchMode;
+  privateRoomIntent?: PrivateRoomIntent | null;
+  onBack: () => void;
+  onReady: () => void;
+}) {
+  const advancedRef = useRef(false);
+  const screenRef = useRef<HTMLDivElement | null>(null);
+  const advance = useCallback(() => {
+    if (advancedRef.current) return;
+    advancedRef.current = true;
+    onReady();
+  }, [onReady]);
+
+  useEffect(() => {
+    screenRef.current?.focus();
+    const timeout = window.setTimeout(advance, VERSUS_SPLASH_DURATION_MS);
+    return () => window.clearTimeout(timeout);
+  }, [advance]);
+
+  const p1Label = getSlotLabel(mode, 1);
+  const p2Label = mode === 'online'
+    ? 'Matchmaking Opponent'
+    : mode === 'private' && privateRoomIntent?.kind === 'host'
+      ? 'Private Guest'
+      : mode === 'private' && privateRoomIntent?.kind === 'guest'
+        ? 'Private Host'
+        : getSlotLabel(mode, 2);
+  const p1Short = getSlotShortLabel(mode, 1);
+  const p2Short = mode === 'online'
+    ? 'ONLINE'
+    : mode === 'private' && privateRoomIntent?.kind === 'guest'
+      ? 'HOST'
+      : getSlotShortLabel(mode, 2);
+  const battleKicker = mode === 'online'
+    ? 'Online Search'
+    : mode === 'private'
+      ? 'Private Match'
+      : 'Next Battle';
+  const battleHint = mode === 'online'
+    ? 'Looking for match after splash'
+    : mode === 'private' && privateRoomIntent?.kind === 'host'
+      ? `Room password ${privateRoomIntent.password}`
+      : mode === 'private' && privateRoomIntent?.kind === 'guest'
+        ? `Joining room ${privateRoomIntent.roomId.slice(0, 8).toUpperCase()}`
+        : stage.subtitle;
+
+  return (
+    <div
+      ref={screenRef}
+      className="fight-versus-screen"
+      tabIndex={-1}
+      onClick={advance}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          event.stopPropagation();
+          onBack();
+          return;
+        }
+        if (event.key !== 'Tab') {
+          event.preventDefault();
+          advance();
+        }
+      }}
+      aria-label={`${p1.displayName} versus ${p2.displayName}`}
+    >
+      <div className="fight-versus-stage">
+        <span>{battleKicker}</span>
+        <strong>{stage.name}</strong>
+        <small>{battleHint}</small>
+      </div>
+
+      <section className="fight-versus-roster" aria-label="Matchup">
+        <article
+          className="fight-versus-card fight-versus-card-left"
+          style={{ '--fighter-color': p1.colors.primary } as CSSProperties}
+        >
+          <div className="fight-versus-role">
+            <span>{p1Short}</span>
+            <small>{p1Label}</small>
+          </div>
+          <div className="fight-versus-portrait">
+            <img src={characterPortraitPath(p1)} alt="" draggable={false} />
+          </div>
+          <div className="fight-versus-name">
+            <small>Health {p1.stats.health} / Speed {p1.stats.speed}</small>
+            <strong>{p1.displayName}</strong>
+          </div>
+        </article>
+
+        <div className="fight-versus-mark" aria-hidden="true">
+          <span>VS</span>
+        </div>
+
+        <article
+          className="fight-versus-card fight-versus-card-right"
+          style={{ '--fighter-color': p2.colors.primary } as CSSProperties}
+        >
+          <div className="fight-versus-role">
+            <span>{p2Short}</span>
+            <small>{p2Label}</small>
+          </div>
+          <div className="fight-versus-portrait">
+            <img src={characterPortraitPath(p2)} alt="" draggable={false} />
+          </div>
+          <div className="fight-versus-name">
+            <small>Health {p2.stats.health} / Speed {p2.stats.speed}</small>
+            <strong>{p2.displayName}</strong>
+          </div>
+        </article>
+      </section>
+
+      <div className="fight-versus-hint">Press any key to skip</div>
+    </div>
+  );
 }
 
 function StageSelect({
