@@ -11,6 +11,7 @@ export default defineConfig({
 
 type DevManifestPayload = {
   characterId?: string;
+  locked?: boolean;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   moveOverrides?: Record<string, Record<string, unknown>>;
@@ -246,6 +247,7 @@ function koreDevManifestWriter() {
 
           const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
           const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          manifest.locked = Boolean(payload.locked);
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});

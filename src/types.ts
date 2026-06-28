@@ -275,6 +275,7 @@ export type VoxelFidelitySettings = {
 export type CharacterDefinition = {
   id: string;
   displayName: string;
+  locked?: boolean;
   renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
   spriteSheetPath?: string;

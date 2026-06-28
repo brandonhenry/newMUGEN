@@ -45,6 +45,7 @@ const rawButtonCommandToBaseAnimationKey: Record<string, string> = {
 export function normalizeCharacter(character: CharacterDefinition): CharacterDefinition {
   return {
     ...character,
+    locked: Boolean(character.locked),
     animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     moves: (character.moves ?? []).map(normalizeMove),

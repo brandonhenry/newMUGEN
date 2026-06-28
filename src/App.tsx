@@ -90,6 +90,7 @@ type StoredAnimationOverrides = {
   revision: string;
   overrides: AnimationOverrideMap;
 };
+const UNLOCKED_CHARACTERS_KEY = 'kore.unlockedCharacters.v1';
 type NotationToken = string;
 type AnimationSlot = {
   key: string;
@@ -742,6 +743,56 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
   };
 }
 
+function readUnlockedCharacterIds() {
+  if (typeof window === 'undefined') return new Set<string>();
+  try {
+    const raw = window.localStorage.getItem(UNLOCKED_CHARACTERS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return new Set<string>();
+    return new Set(parsed.filter((id): id is string => typeof id === 'string' && id.length > 0));
+  } catch {
+    return new Set<string>();
+  }
+}
+
+function writeUnlockedCharacterIds(ids: Set<string>) {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(UNLOCKED_CHARACTERS_KEY, JSON.stringify([...ids].sort()));
+}
+
+function isCharacterUnlocked(character: CharacterDefinition, unlockedIds: Set<string>) {
+  return !character.locked || unlockedIds.has(character.id);
+}
+
+function pickArcadeOpponent(
+  roster: CharacterDefinition[],
+  playerId: string,
+  unlockedIds: Set<string>,
+  difficulty: CpuDifficulty
+) {
+  const candidates = roster.filter((character) => character.id !== playerId);
+  if (candidates.length === 0) return roster.find((character) => character.id !== playerId) ?? roster[0];
+  const lockedBiasByDifficulty: Record<CpuDifficulty, number> = {
+    1: 0.2,
+    2: 0.45,
+    3: 0.85,
+    4: 1.35,
+    5: 2
+  };
+  const weights = candidates.map((character) => {
+    const locked = !isCharacterUnlocked(character, unlockedIds);
+    const base = locked ? lockedBiasByDifficulty[difficulty] : 1;
+    return Math.max(0.05, base + Math.random() * 0.25);
+  });
+  const total = weights.reduce((sum, weight) => sum + weight, 0);
+  let cursor = Math.random() * total;
+  for (let index = 0; index < candidates.length; index += 1) {
+    cursor -= weights[index];
+    if (cursor <= 0) return candidates[index];
+  }
+  return candidates[candidates.length - 1];
+}
+
 function removeCharacterOverride(overrides: AnimationOverrideMap, characterIds: string[]) {
   const next = { ...overrides };
   characterIds.forEach((characterId) => {
@@ -761,6 +812,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       characterId: character.id,
+      locked: Boolean(character.locked),
       animationFrames,
       animationFrameRates,
       moveOverrides,
@@ -1352,6 +1404,7 @@ export default function App() {
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
+  const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [musicStarted, setMusicStarted] = useState(true);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -1421,6 +1474,14 @@ export default function App() {
   useEffect(() => {
     writeGameSettings(settings);
   }, [settings]);
+
+  useEffect(() => {
+    if (roster.length === 0) return;
+    const selected = roster.find((character) => character.id === p1Id);
+    if (selected && isCharacterUnlocked(selected, unlockedCharacterIds)) return;
+    const firstUnlocked = roster.find((character) => isCharacterUnlocked(character, unlockedCharacterIds));
+    if (firstUnlocked) setP1Id(firstUnlocked.id);
+  }, [p1Id, roster, unlockedCharacterIds]);
 
   useEffect(() => {
     const hoverAudio = new Audio(KORE_MENU_HOVER_SOUND_URL);
@@ -1641,6 +1702,28 @@ export default function App() {
     }));
   };
 
+  const setCharacterLocked = (characterId: string, locked: boolean) => {
+    setRosterResult((current) => {
+      if (!current) return current;
+      return {
+        ...current,
+        characters: current.characters.map((character) => (
+          character.id === characterId ? { ...character, locked } : character
+        ))
+      };
+    });
+  };
+
+  const unlockCharacter = useCallback((characterId: string) => {
+    setUnlockedCharacterIds((current) => {
+      if (current.has(characterId)) return current;
+      const next = new Set(current);
+      next.add(characterId);
+      writeUnlockedCharacterIds(next);
+      return next;
+    });
+  }, []);
+
   const reloadRoster = async (preferredCharacterId?: string) => {
     const result = await loadCharacterRoster();
     setRosterResult(result);
@@ -1789,6 +1872,7 @@ export default function App() {
             roster={roster}
             p1Id={p1Id}
             p2Id={p2Id}
+            unlockedCharacterIds={unlockedCharacterIds}
             mode={mode}
             cpuDifficulty={cpuDifficulty}
             setP1Id={setP1Id}
@@ -1816,6 +1900,10 @@ export default function App() {
             onFight={() => {
               if (mode === 'private' && !privateRoomIntent) {
                 setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
+              }
+              if (mode === 'ai') {
+                const opponent = pickArcadeOpponent(roster, p1.id, unlockedCharacterIds, cpuDifficulty);
+                if (opponent) setP2Id(opponent.id);
               }
               setVersusReturnScreen('stage');
               setScreen('versus');
@@ -1865,6 +1953,7 @@ export default function App() {
             onMoveOverrideChange={setCharacterMoveOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
             onEffectsChange={setCharacterEffects}
+            onCharacterLockedChange={setCharacterLocked}
             onImportComplete={reloadRoster}
             onBack={() => setScreen('menu')}
           />
@@ -1888,6 +1977,17 @@ export default function App() {
             privateRoomIntent={privateRoomIntent}
             onMenu={() => setScreen('menu')}
             onCharacterSelect={() => setScreen('select')}
+            onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
+              const effectiveUnlocks = new Set(unlockedCharacterIds);
+              if (winnerSlot === 1) {
+                effectiveUnlocks.add(defeatedCharacterId);
+                unlockCharacter(defeatedCharacterId);
+              }
+              const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlocks, cpuDifficulty);
+              if (nextOpponent) setP2Id(nextOpponent.id);
+              setVersusReturnScreen('stage');
+              setScreen('versus');
+            }}
           />
         )}
       </section>
@@ -2683,6 +2783,7 @@ function CharacterSelect({
   roster,
   p1Id,
   p2Id,
+  unlockedCharacterIds,
   mode,
   cpuDifficulty,
   setP1Id,
@@ -2700,6 +2801,7 @@ function CharacterSelect({
   roster: CharacterDefinition[];
   p1Id: string;
   p2Id: string;
+  unlockedCharacterIds: Set<string>;
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   setP1Id: (id: string) => void;
@@ -2717,14 +2819,22 @@ function CharacterSelect({
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
+  const isArcadeMode = mode === 'ai';
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const assignCharacter = (id: string) => {
+    const character = roster.find((item) => item.id === id);
+    if (character && !isCharacterUnlocked(character, unlockedCharacterIds)) return;
     if (selectTarget === 1) {
       setP1Id(id);
       return;
     }
+    if (isArcadeMode) return;
     setP2Id(id);
   };
+
+  useEffect(() => {
+    if (isArcadeMode && selectTarget === 2) setSelectTarget(1);
+  }, [isArcadeMode, selectTarget]);
 
   if (!p1Character || !p2Character) {
     return (
@@ -2767,29 +2877,34 @@ function CharacterSelect({
           </div>
         </div>
 
-        <div className="versus-target-tabs" aria-label="Choose selection target">
+        <div className={`versus-target-tabs ${isArcadeMode ? 'is-arcade-targets' : ''}`} aria-label="Choose selection target">
           <button className={selectTarget === 1 ? 'active' : ''} onClick={() => setSelectTarget(1)}>
             {getSlotShortLabel(mode, 1)}
           </button>
-          <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
-            {getSlotShortLabel(mode, 2)}
-          </button>
+          {!isArcadeMode && (
+            <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
+              {getSlotShortLabel(mode, 2)}
+            </button>
+          )}
         </div>
 
         <div className="versus-roster-grid">
           {roster.map((character) => {
             const isP1 = p1Id === character.id;
             const isP2 = p2Id === character.id;
+            const isLocked = !isCharacterUnlocked(character, unlockedCharacterIds);
             return (
               <button
                 key={character.id}
                 type="button"
-                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''}`}
+                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''}`}
                 style={{ '--fighter-color': character.colors.primary } as CSSProperties}
                 onClick={() => assignCharacter(character.id)}
-                aria-label={`Select ${character.displayName}`}
+                aria-label={isLocked ? `${character.displayName} locked` : `Select ${character.displayName}`}
+                aria-disabled={isLocked}
               >
                 <img src={characterPortraitPath(character)} alt="" />
+                {isLocked && <em className="character-lock-badge">Locked</em>}
                 <span>{character.displayName}</span>
                 <small>{isP1 ? getSlotShortLabel(mode, 1) : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? getSlotShortLabel(mode, 2) : ''}</small>
               </button>
@@ -2826,14 +2941,20 @@ function CharacterSelect({
 
       <button
         type="button"
-        className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''}`}
+        className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''} ${isArcadeMode ? 'is-random-opponent' : ''}`}
         style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
-        onClick={() => setSelectTarget(2)}
+        onClick={() => {
+          if (!isArcadeMode) setSelectTarget(2);
+        }}
+        aria-disabled={isArcadeMode}
+        aria-label={isArcadeMode ? 'Random CPU opponent' : `Select ${p2Character.displayName}`}
       >
         <span className="versus-player-kicker">{getSlotLabel(mode, 2)}</span>
         <img src={characterPortraitPath(p2Character)} alt="" />
-        <span className="versus-hero-name">{p2Character.displayName}</span>
-        <span className="versus-hero-meta">{p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
+        <span className="versus-hero-name">{isArcadeMode ? 'Random CPU' : p2Character.displayName}</span>
+        <span className="versus-hero-meta">
+          {isArcadeMode ? 'Opponent is rolled after you enter the fight' : p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}
+        </span>
       </button>
       <div className="versus-floor-glow" aria-hidden="true" />
     </div>
@@ -4395,6 +4516,7 @@ function CharacterViewer({
   onMoveOverrideChange,
   onSpriteFrameEditChange,
   onEffectsChange,
+  onCharacterLockedChange,
   onImportComplete,
   onBack
 }: {
@@ -4405,6 +4527,7 @@ function CharacterViewer({
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
+  onCharacterLockedChange: (characterId: string, locked: boolean) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
@@ -4887,6 +5010,22 @@ function CharacterViewer({
     }
   };
 
+  const toggleActiveLocked = async () => {
+    const nextLocked = !active.locked;
+    onCharacterLockedChange(active.id, nextLocked);
+    if (!isLocalDev) return;
+    setManifestSaveStatus('saving');
+    try {
+      await saveCharacterManifestToDev({ ...active, locked: nextLocked });
+      await onImportComplete(active.id);
+      setManifestSaveStatus('saved');
+      window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to save character lock state', error);
+      setManifestSaveStatus('error');
+    }
+  };
+
   const rebuildHdVoxels = async () => {
     setHdVoxelStatus('building');
     setHdVoxelProgress({ completed: 0, total: frameCount });
@@ -5105,6 +5244,15 @@ function CharacterViewer({
                       >
                         <Upload size={18} />
                         Import Character
+                      </button>
+                      <button
+                        className={`secondary-button ${active.locked ? 'active-tool' : ''}`}
+                        onClick={toggleActiveLocked}
+                        disabled={manifestSaveStatus === 'saving'}
+                        data-testid="toggle-character-lock"
+                      >
+                        <KeyRound size={18} />
+                        {active.locked ? 'Locked' : 'Unlocked'}
                       </button>
                       <button
                         className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
@@ -8212,7 +8360,8 @@ function FightScreen({
   onlineProfile,
   privateRoomIntent,
   onMenu,
-  onCharacterSelect
+  onCharacterSelect,
+  onArcadeAdvance
 }: {
   p1: CharacterDefinition;
   p2: CharacterDefinition;
@@ -8230,6 +8379,7 @@ function FightScreen({
   privateRoomIntent: PrivateRoomIntent | null;
   onMenu: () => void;
   onCharacterSelect: () => void;
+  onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string }) => void;
 }) {
   const [paused, setPaused] = useState(false);
   const isOnline = mode === 'online' || mode === 'private';
@@ -8276,6 +8426,7 @@ function FightScreen({
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
   const onlineLastClashInputRef = useRef<{ clashId: number; button: MoveInput | null }>({ clashId: 0, button: null });
+  const arcadeAdvanceRef = useRef(false);
 
   useEffect(() => {
     matchRef.current = match;
@@ -8839,6 +8990,19 @@ function FightScreen({
     if (onlineRoleRef.current === 'host' && onlineRematchReadyRef.current.remote) startOnlineRematch();
   };
 
+  const arcadeMatchPhase = match.phase;
+  const arcadeWinnerSlot = match.winnerSlot;
+  const arcadeDefeatedCharacterId = match.fighters[1].character.id;
+
+  useEffect(() => {
+    if (mode !== 'ai' || arcadeMatchPhase !== 'matchOver' || !arcadeWinnerSlot || arcadeAdvanceRef.current) return undefined;
+    arcadeAdvanceRef.current = true;
+    const timeout = window.setTimeout(() => {
+      onArcadeAdvance?.({ winnerSlot: arcadeWinnerSlot, defeatedCharacterId: arcadeDefeatedCharacterId });
+    }, 1650);
+    return () => window.clearTimeout(timeout);
+  }, [arcadeDefeatedCharacterId, arcadeMatchPhase, arcadeWinnerSlot, mode, onArcadeAdvance]);
+
   const reset = () => {
     if (isOnline) {
       requestOnlineRematch();
@@ -8913,10 +9077,12 @@ function FightScreen({
               <Play size={18} />
               Resume
             </button>
-            <button className="secondary-button" onClick={reset}>
-              <RotateCcw size={18} />
-              Restart
-            </button>
+            {mode !== 'ai' && (
+              <button className="secondary-button" onClick={reset}>
+                <RotateCcw size={18} />
+                Restart
+              </button>
+            )}
             <button className="secondary-button" onClick={leaveToCharacterSelect}>
               <Users size={18} />
               Select
@@ -8944,7 +9110,7 @@ function FightScreen({
           </div>
         </div>
       )}
-      {match.phase === 'matchOver' && (!isOnline || onlineState === 'connected') && (
+      {match.phase === 'matchOver' && mode !== 'ai' && (!isOnline || onlineState === 'connected') && (
         <div className="pause-overlay results-overlay">
           <Swords size={34} />
           <h2>{match.message}</h2>

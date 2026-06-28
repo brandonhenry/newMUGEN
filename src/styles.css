@@ -1003,6 +1003,18 @@ button {
   transform: scale(2.25) scaleX(-1);
 }
 
+.versus-hero.is-random-opponent {
+  cursor: default;
+}
+
+.versus-hero.is-random-opponent img {
+  opacity: 0.34;
+  filter:
+    grayscale(1)
+    drop-shadow(0 32px 24px rgba(0, 0, 0, 0.54))
+    drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+}
+
 .versus-hero-name {
   position: relative;
   z-index: 1;
@@ -1071,6 +1083,10 @@ button {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.versus-target-tabs.is-arcade-targets {
+  grid-template-columns: 1fr;
+}
+
 .versus-target-tabs button {
   min-height: 42px;
   border: 0;
@@ -1125,6 +1141,43 @@ button {
     0 0 0 2px var(--fighter-color),
     0 14px 32px rgba(0, 0, 0, 0.38),
     0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+.versus-roster-tile.is-locked {
+  color: rgba(247, 247, 242, 0.58);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    rgba(11, 12, 16, 0.9);
+  filter: grayscale(0.72);
+}
+
+.versus-roster-tile.is-locked img {
+  opacity: 0.42;
+}
+
+.versus-roster-tile.is-locked:hover,
+.versus-roster-tile.is-locked:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(247, 212, 90, 0.62),
+    0 14px 32px rgba(0, 0, 0, 0.38),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+.character-lock-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  border-radius: 4px;
+  padding: 4px 6px;
+  color: #101114;
+  background: #f7d45a;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .versus-roster-tile.is-p1 {
