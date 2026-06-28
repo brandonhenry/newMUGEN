@@ -1,6 +1,6 @@
 import { starterCharacters } from '../data/characters';
 import type { BoxSpec, CharacterDefinition, HitLevel, MoveDefinition, MoveTracking, Vec3Tuple } from '../types';
-import { sanitizeEffects, sanitizeMoveEffects } from './effects';
+import { sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './effects';
 import { debugLog } from './debugLogger';
 
 const requiredClips = [
@@ -151,7 +151,8 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     knockdown: Boolean(move.knockdown),
     hitbox: normalizeBoxSpec(move.hitbox, { offset: [0, 1, 0.65], size: [0.72, 0.5, 0.62] }),
     hurtboxes: Array.isArray(move.hurtboxes) ? move.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] })) : undefined,
-    hurtboxOffset: normalizeVec3(move.hurtboxOffset)
+    hurtboxOffset: normalizeVec3(move.hurtboxOffset),
+    soundCues: sanitizeSoundCues(move.soundCues)
   };
 }
 
@@ -159,7 +160,10 @@ function sanitizeMoveOverrides(overrides: CharacterDefinition['moveOverrides']) 
   return canonicalizeBaseButtonRecord(Object.fromEntries(
     Object.entries(overrides ?? {})
       .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
-      .map(([key, value]) => [key, value])
+      .map(([key, value]) => {
+        const soundCues = sanitizeSoundCues(value.soundCues);
+        return [key, soundCues.length > 0 ? { ...value, soundCues } : value];
+      })
   ));
 }
 

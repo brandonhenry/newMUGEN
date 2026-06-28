@@ -36,7 +36,7 @@ import { createMatch, stepMatch } from './engine/fightEngine';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
-import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects } from './lib/effects';
+import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -59,6 +59,7 @@ import {
   type EffectAnchor,
   type EffectBlendMode,
   type EffectKeyframe,
+  type EffectSoundCue,
   type GameSettings,
   type HitLevel,
   type ImpactSparkEvent,
@@ -168,11 +169,50 @@ const HIT_SFX = {
   launcher: '/sounds/hits/generated/hit-012.wav',
   bigLauncher: '/sounds/hits/generated/hit-019.wav'
 } as const;
-const GAME_SFX_URLS = [...new Set(Object.values(HIT_SFX))];
+const NARUTO_VOICE_SFX = [
+  '/characters/kiro/sounds/voices/C1.wav',
+  '/characters/kiro/sounds/voices/C2.wav',
+  '/characters/kiro/sounds/voices/C3.wav'
+] as const;
+const SASUKE_VOICE_SFX = [
+  '/characters/riven/sounds/voices/C1.wav',
+  '/characters/riven/sounds/voices/C2.wav',
+  '/characters/riven/sounds/voices/C3.wav'
+] as const;
+const CHARACTER_ATTACK_VOICE_SFX = {
+  naruto: NARUTO_VOICE_SFX,
+  sasuke: SASUKE_VOICE_SFX
+} satisfies Record<string, readonly string[]>;
+const CHARACTER_HURT_VOICE_SFX = {
+  naruto: '/characters/kiro/sounds/voices/C4.wav',
+  sasuke: '/characters/riven/sounds/voices/C4.wav'
+} satisfies Record<keyof typeof CHARACTER_ATTACK_VOICE_SFX, string>;
+const CHARACTER_WIN_VOICE_SFX = {
+  naruto: '/characters/kiro/sounds/voices/Win.wav',
+  sasuke: '/characters/riven/sounds/voices/Win.wav'
+} satisfies Partial<Record<keyof typeof CHARACTER_ATTACK_VOICE_SFX, string>>;
+const characterWinVoiceSfx: Partial<Record<keyof typeof CHARACTER_ATTACK_VOICE_SFX, string>> = CHARACTER_WIN_VOICE_SFX;
+const CHARACTER_SPECIAL_ABILITY_VOICE_SFX = {
+  narutoShadowClone: '/characters/kiro/sounds/voices/S2.wav'
+} as const;
+const KI_CHARGE_SFX = '/sounds/ki/charge.wav';
+const KI_MAX_CHARGE_SFX = '/sounds/ki/max-charge.wav';
+const KI_MAX_VALUE = 100;
+const GAME_SFX_URLS = [...new Set([
+  ...Object.values(HIT_SFX),
+  ...Object.values(CHARACTER_ATTACK_VOICE_SFX).flat(),
+  ...Object.values(CHARACTER_HURT_VOICE_SFX),
+  ...Object.values(CHARACTER_WIN_VOICE_SFX),
+  ...Object.values(CHARACTER_SPECIAL_ABILITY_VOICE_SFX),
+  KI_CHARGE_SFX,
+  KI_MAX_CHARGE_SFX
+])];
 const SFX_POOL_SIZE = 4;
 const sfxPools = new Map<string, { audios: HTMLAudioElement[]; cursor: number }>();
 const sfxBuffers = new Map<string, { buffer: AudioBuffer | null; promise: Promise<AudioBuffer | null> | null }>();
 let sfxAudioContext: AudioContext | null = null;
+type AttackVoiceCharacterKey = keyof typeof CHARACTER_ATTACK_VOICE_SFX;
+const lastCharacterAttackVoiceSfxIndices: Partial<Record<AttackVoiceCharacterKey, number>> = {};
 
 type WebAudioWindow = Window & typeof globalThis & {
   webkitAudioContext?: typeof AudioContext;
@@ -775,6 +815,8 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
   if (typeof override.jumpBeforeMove === 'boolean') next.jumpBeforeMove = override.jumpBeforeMove;
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
+  const soundCues = sanitizeSoundCues(override.soundCues);
+  if (soundCues.length > 0) next.soundCues = soundCues;
   return next;
 }
 
@@ -1064,7 +1106,10 @@ function uniqueEffectId(character: CharacterDefinition, fileName: string) {
 }
 
 function uniqueCueId(effect: CharacterEffectDefinition) {
-  const cues = effect.soundCues ?? [];
+  return uniqueSoundCueId(effect.soundCues ?? []);
+}
+
+function uniqueSoundCueId(cues: EffectSoundCue[]) {
   const existing = new Set(cues.map((cue) => cue.id));
   let id = `cue-${cues.length + 1}`;
   let suffix = 2;
@@ -4869,6 +4914,65 @@ function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio'
   playPooledSfx(chooseHitSfx(event), volume, playbackRate);
 }
 
+function getAttackVoiceCharacterKey(character: CharacterDefinition): AttackVoiceCharacterKey | null {
+  const id = character.id.toLowerCase();
+  const name = character.displayName.toLowerCase();
+  if (id === 'kiro' || id === 'naruto' || name === 'naruto') return 'naruto';
+  if (id === 'riven' || id === 'sasuke' || name === 'sasuke') return 'sasuke';
+  return null;
+}
+
+function chooseCharacterAttackVoiceSfx(characterKey: AttackVoiceCharacterKey) {
+  const voiceSfx = CHARACTER_ATTACK_VOICE_SFX[characterKey];
+  let index = Math.floor(Math.random() * voiceSfx.length);
+  if (index === lastCharacterAttackVoiceSfxIndices[characterKey]) index = (index + 1 + Math.floor(Math.random() * (voiceSfx.length - 1))) % voiceSfx.length;
+  lastCharacterAttackVoiceSfxIndices[characterKey] = index;
+  return voiceSfx[index];
+}
+
+function playCharacterAttackVoiceSfx(attacker: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  const characterKey = getAttackVoiceCharacterKey(attacker);
+  if (!characterKey || event.kind === 'clash') return;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.54, 0, 0.76);
+  playPooledSfx(chooseCharacterAttackVoiceSfx(characterKey), volume, 1);
+}
+
+function playCharacterHurtVoiceSfx(defender: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  const characterKey = getAttackVoiceCharacterKey(defender);
+  if (!characterKey || event.kind === 'block' || event.kind === 'clash' || event.comboHits !== 1) return;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.58, 0, 0.78);
+  playPooledSfx(CHARACTER_HURT_VOICE_SFX[characterKey], volume, 1);
+}
+
+function playCharacterWinVoiceSfx(winner: CharacterDefinition, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return false;
+  const characterKey = getAttackVoiceCharacterKey(winner);
+  const voiceSfx = characterKey ? characterWinVoiceSfx[characterKey] : undefined;
+  if (!voiceSfx) return false;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.68, 0, 0.86);
+  playPooledSfx(voiceSfx, volume, 1);
+  return true;
+}
+
+function playNarutoShadowCloneVoiceSfx(character: CharacterDefinition, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (getAttackVoiceCharacterKey(character) !== 'naruto') return;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.62, 0, 0.82);
+  playPooledSfx(CHARACTER_SPECIAL_ABILITY_VOICE_SFX.narutoShadowClone, volume, 1);
+}
+
+function getKiChargeSfxVolume(audioSettings: GameSettings['audio']) {
+  if (audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return 0;
+  return clamp(audioSettings.master * audioSettings.sfx * 0.16, 0, 0.24);
+}
+
+function getKiMaxChargeSfxVolume(audioSettings: GameSettings['audio']) {
+  if (audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return 0;
+  return clamp(audioSettings.master * audioSettings.sfx * 0.36, 0, 0.46);
+}
+
 function resolveSlotMove(character: CharacterDefinition, slot: AnimationSlot): MoveDefinition | null {
   if (slot.key === 'chargeKi') {
     return buildChargeKiEditorMove(character);
@@ -5020,6 +5124,7 @@ function CharacterViewer({
   const [effectSaveStatus, setEffectSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [effectImportStatus, setEffectImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
   const [effectFrameSaveStatus, setEffectFrameSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [moveSoundImportStatus, setMoveSoundImportStatus] = useState<'idle' | 'working' | 'saved' | 'error'>('idle');
   const [selectedEffectId, setSelectedEffectId] = useState('');
   const [selectedEffectFrameIndex, setSelectedEffectFrameIndex] = useState(0);
   const [effectTimelineFrame, setEffectTimelineFrame] = useState(0);
@@ -5359,6 +5464,41 @@ function CharacterViewer({
     } catch (error) {
       console.error('Failed to import effect sound', error);
       setEffectImportStatus('error');
+    }
+  };
+
+  const importMoveSound = async (file: File | undefined) => {
+    if (!file || !isLocalDev || !selectedMove) return;
+    setMoveSoundImportStatus('working');
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const response = await fetch('/__kore/dev/import-move-sound', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ characterId: active.id, moveKey: selectedSlotDataKey, fileName: file.name, dataUrl })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const payload = await response.json() as { path?: string };
+      const currentCues = selectedMove.soundCues ?? [];
+      const soundCues: EffectSoundCue[] = [
+        ...currentCues,
+        {
+          id: uniqueSoundCueId(currentCues),
+          name: file.name.replace(/\.[^.]+$/, ''),
+          path: payload.path ?? '',
+          frame: 0,
+          volume: 0.72,
+          pitch: 1,
+          pan: 0,
+          retrigger: false
+        }
+      ];
+      updateSelectedMoveOverride({ soundCues });
+      setMoveSoundImportStatus('saved');
+      window.setTimeout(() => setMoveSoundImportStatus('idle'), 1800);
+    } catch (error) {
+      console.error('Failed to import move sound', error);
+      setMoveSoundImportStatus('error');
     }
   };
 
@@ -6111,7 +6251,30 @@ function CharacterViewer({
           ) : isEditingAnimation ? (
             <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
               {selectedMove && (
-                <FrameDataEditor move={selectedMove} onChange={updateSelectedMoveOverride} />
+                <>
+                  <FrameDataEditor move={selectedMove} onChange={updateSelectedMoveOverride} />
+                  <section className="frame-data-editor" aria-label="Move sound editor">
+                    <header>
+                      <span>Move Sounds</span>
+                      <strong>{selectedMove.soundCues?.length ?? 0} cues</strong>
+                      <small>{selectedSlotDataKey}</small>
+                    </header>
+                    <div className="effects-editor-toolbar">
+                      {isLocalDev && (
+                        <label className="secondary-button compact-button file-button">
+                          <Upload size={14} />
+                          Add Sound
+                          <input type="file" accept="audio/wav,audio/mpeg,audio/mp3,audio/ogg,audio/webm" onChange={(event) => importMoveSound(event.target.files?.[0])} />
+                        </label>
+                      )}
+                      {moveSoundImportStatus !== 'idle' && <small className={`manifest-save-status is-${moveSoundImportStatus === 'error' ? 'error' : moveSoundImportStatus === 'saved' ? 'saved' : 'saving'}`}>{moveSoundImportStatus}</small>}
+                    </div>
+                    <EffectSoundCueList
+                      cues={selectedMove.soundCues}
+                      onChange={(soundCues) => updateSelectedMoveOverride({ soundCues })}
+                    />
+                  </section>
+                </>
               )}
               {showSpriteSheetPreview && active.spriteSheetPath && (
                 <div className="sprite-sheet-stage">
@@ -9272,6 +9435,13 @@ function FightScreen({
   const seenImpactScoreEventIds = useRef<Set<number>>(new Set());
   const seenImpactAudioEventIds = useRef<Set<number>>(new Set());
   const lastCombatEventId = useRef(0);
+  const playedWinVoiceKeyRef = useRef<string | null>(null);
+  const kiChargeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const kiMaxChargeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const kiChargeCutawayPlayingRef = useRef(false);
+  const previousKiBySlotRef = useRef<[number, number]>([match.fighters[0].ki, match.fighters[1].ki]);
+  const previousShadowCloneActiveBySlotRef = useRef<[boolean, boolean]>([Boolean(match.fighters[0].shadowClone), Boolean(match.fighters[1].shadowClone)]);
+  const latestAudioSettingsRef = useRef(settings.audio);
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
@@ -9306,6 +9476,10 @@ function FightScreen({
     pausedRef.current = paused;
     onPausedChange(paused);
   }, [onPausedChange, paused]);
+
+  useEffect(() => {
+    latestAudioSettingsRef.current = settings.audio;
+  }, [settings.audio]);
 
   useEffect(() => {
     return () => onPausedChange(false);
@@ -9382,6 +9556,8 @@ function FightScreen({
       if (!seenImpactAudioEventIds.current.has(event.id)) {
         seenImpactAudioEventIds.current.add(event.id);
         playHitSfx(event, settings.audio);
+        playCharacterAttackVoiceSfx(match.fighters[event.attackerSlot - 1].character, event, settings.audio);
+        playCharacterHurtVoiceSfx(match.fighters[event.defenderSlot - 1].character, event, settings.audio);
       }
       if (seenImpactScoreEventIds.current.has(event.id)) return;
       seenImpactScoreEventIds.current.add(event.id);
@@ -9395,6 +9571,135 @@ function FightScreen({
       onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.attackerSlot);
     });
   }, [match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
+
+  useEffect(() => {
+    if (match.phase !== 'matchOver' || !match.winnerSlot) {
+      playedWinVoiceKeyRef.current = null;
+      return;
+    }
+    const winner = match.fighters[match.winnerSlot - 1].character;
+    const voiceKey = `${match.round}:${match.winnerSlot}:${winner.id}`;
+    if (playedWinVoiceKeyRef.current === voiceKey) return;
+    if (playCharacterWinVoiceSfx(winner, settings.audio)) {
+      playedWinVoiceKeyRef.current = voiceKey;
+    }
+  }, [match.fighters, match.phase, match.round, match.winnerSlot, settings.audio]);
+
+  useEffect(() => {
+    const previousActiveBySlot = previousShadowCloneActiveBySlotRef.current;
+    const currentActiveBySlot: [boolean, boolean] = [Boolean(match.fighters[0].shadowClone), Boolean(match.fighters[1].shadowClone)];
+    match.fighters.forEach((fighter, index) => {
+      if (!previousActiveBySlot[index] && currentActiveBySlot[index]) {
+        playNarutoShadowCloneVoiceSfx(fighter.character, settings.audio);
+      }
+    });
+    previousShadowCloneActiveBySlotRef.current = currentActiveBySlot;
+  }, [match.fighters, settings.audio]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const previousKiBySlot = previousKiBySlotRef.current;
+    const currentKiBySlot: [number, number] = [match.fighters[0].ki, match.fighters[1].ki];
+    const reachedMaxCharge = match.phase === 'fighting' && !paused && match.fighters.some((fighter, index) => (
+      fighter.state === 'chargeKi' &&
+      previousKiBySlot[index] < KI_MAX_VALUE &&
+      currentKiBySlot[index] >= KI_MAX_VALUE
+    ));
+    previousKiBySlotRef.current = currentKiBySlot;
+    if (!reachedMaxCharge || kiChargeCutawayPlayingRef.current) return;
+
+    const volume = getKiMaxChargeSfxVolume(settings.audio);
+    if (volume <= 0) return;
+    const chargeAudio = kiChargeAudioRef.current;
+    if (chargeAudio) {
+      chargeAudio.pause();
+      chargeAudio.currentTime = 0;
+    }
+
+    let maxChargeAudio = kiMaxChargeAudioRef.current;
+    if (!maxChargeAudio) {
+      maxChargeAudio = new Audio(KI_MAX_CHARGE_SFX);
+      maxChargeAudio.preload = 'auto';
+      maxChargeAudio.load();
+      kiMaxChargeAudioRef.current = maxChargeAudio;
+    }
+
+    const resumeChargeLoop = () => {
+      kiChargeCutawayPlayingRef.current = false;
+      const currentMatch = matchRef.current;
+      const chargeVolume = getKiChargeSfxVolume(latestAudioSettingsRef.current);
+      if (pausedRef.current || currentMatch.phase !== 'fighting' || chargeVolume <= 0 || !currentMatch.fighters.some((fighter) => fighter.state === 'chargeKi')) return;
+      const loopAudio = kiChargeAudioRef.current;
+      if (!loopAudio) return;
+      loopAudio.volume = chargeVolume;
+      loopAudio.currentTime = 0;
+      void loopAudio.play().catch(() => undefined);
+    };
+
+    kiChargeCutawayPlayingRef.current = true;
+    maxChargeAudio.pause();
+    maxChargeAudio.currentTime = 0;
+    maxChargeAudio.volume = volume;
+    maxChargeAudio.onended = resumeChargeLoop;
+    void maxChargeAudio.play().catch(() => {
+      resumeChargeLoop();
+    });
+  }, [match.fighters, match.phase, paused, settings.audio]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const charging = !paused && match.phase === 'fighting' && match.fighters.some((fighter) => fighter.state === 'chargeKi');
+    const volume = getKiChargeSfxVolume(settings.audio);
+    let audio = kiChargeAudioRef.current;
+    if (!audio) {
+      audio = new Audio(KI_CHARGE_SFX);
+      audio.preload = 'auto';
+      audio.loop = true;
+      audio.load();
+      kiChargeAudioRef.current = audio;
+    }
+    const maxChargeAudio = kiMaxChargeAudioRef.current;
+    if ((paused || match.phase !== 'fighting' || volume <= 0) && maxChargeAudio && !maxChargeAudio.paused) {
+      maxChargeAudio.pause();
+      maxChargeAudio.currentTime = 0;
+      kiChargeCutawayPlayingRef.current = false;
+    } else if (maxChargeAudio) {
+      maxChargeAudio.volume = getKiMaxChargeSfxVolume(settings.audio);
+    }
+    audio.volume = volume;
+    if (kiChargeCutawayPlayingRef.current) {
+      if (!audio.paused) audio.pause();
+      return;
+    }
+    if (charging && volume > 0) {
+      if (audio.paused) {
+        audio.currentTime = 0;
+        void audio.play().catch(() => undefined);
+      }
+      return;
+    }
+    if (!audio.paused) audio.pause();
+    audio.currentTime = 0;
+  }, [match.fighters, match.phase, paused, settings.audio]);
+
+  useEffect(() => {
+    return () => {
+      const chargeAudio = kiChargeAudioRef.current;
+      if (chargeAudio) {
+        chargeAudio.pause();
+        chargeAudio.currentTime = 0;
+      }
+      const maxChargeAudio = kiMaxChargeAudioRef.current;
+      if (maxChargeAudio) {
+        maxChargeAudio.pause();
+        maxChargeAudio.currentTime = 0;
+        maxChargeAudio.onended = null;
+      }
+      kiChargeAudioRef.current = null;
+      kiMaxChargeAudioRef.current = null;
+      kiChargeCutawayPlayingRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     screenRef.current?.focus();

@@ -50,6 +50,13 @@ type DevEffectSoundPayload = {
   dataUrl?: string;
 };
 
+type DevMoveSoundPayload = {
+  characterId?: string;
+  moveKey?: string;
+  fileName?: string;
+  dataUrl?: string;
+};
+
 type DevEffectFramePayload = {
   characterId?: string;
   effectId?: string;
@@ -635,6 +642,29 @@ function koreDevManifestWriter() {
           await mkdir(soundDir, { recursive: true });
           await writeFile(resolve(soundDir, fileName), dataUrlToMediaBuffer(payload.dataUrl));
           sendJson(response, 200, { ok: true, path: `/characters/${characterId}/effects/${effectId}/sounds/${fileName}` });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-move-sound', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevMoveSoundPayload;
+          const characterId = payload.characterId ?? '';
+          const moveKey = sanitizeAssetId(payload.moveKey ?? '');
+          const fileName = sanitizeMediaFileName(payload.fileName ?? `sound-${Date.now()}.wav`);
+          if (!/^[a-z0-9-]+$/i.test(characterId) || !moveKey || !fileName) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character, move, or file name' });
+            return;
+          }
+          const soundDir = resolve(server.config.root, 'public', 'characters', characterId, 'moves', moveKey, 'sounds');
+          await mkdir(soundDir, { recursive: true });
+          await writeFile(resolve(soundDir, fileName), dataUrlToMediaBuffer(payload.dataUrl));
+          sendJson(response, 200, { ok: true, path: `/characters/${characterId}/moves/${moveKey}/sounds/${fileName}` });
         } catch (error) {
           sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -1265,7 +1295,8 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'armorStartFrame',
     'armorEndFrame',
     'knockdown',
-    'cancelWindows'
+    'cancelWindows',
+    'soundCues'
   ]);
   return Object.fromEntries(
     Object.entries(override).filter(([key, value]) => {
@@ -1273,8 +1304,11 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
       if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
       if (key === 'knockdown' || key === 'tornado' || key === 'endsInCrouch' || key === 'jumpBeforeMove') return typeof value === 'boolean';
       if (key === 'cancelWindows') return Array.isArray(value);
+      if (key === 'soundCues') return Array.isArray(value);
       return Number.isFinite(value);
     })
+    .map(([key, value]) => [key, key === 'soundCues' ? sanitizeEffectSoundCues(value) : value])
+    .filter(([key, value]) => key !== 'soundCues' || (Array.isArray(value) && value.length > 0))
   );
 }
 

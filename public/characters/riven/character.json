@@ -689,7 +689,19 @@
       "forwardForce": 3,
       "forwardForceStartFrame": 30,
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "soundCues": [
+        {
+          "id": "cue-1",
+          "name": "T6",
+          "path": "/characters/riven/moves/cmd-o-1/sounds/t6.wav",
+          "frame": 0,
+          "volume": 0.72,
+          "pitch": 1,
+          "pan": 0,
+          "retrigger": false
+        }
+      ]
     }
   },
   "spriteFrameEdits": {

@@ -253,7 +253,7 @@ function sanitizeProceduralLayers(value: unknown): ProceduralEffectLayer[] {
     }));
 }
 
-function sanitizeSoundCues(value: unknown): EffectSoundCue[] {
+export function sanitizeSoundCues(value: unknown): EffectSoundCue[] {
   if (!Array.isArray(value)) return [];
   return value
     .filter((cue): cue is Record<string, unknown> => Boolean(cue) && typeof cue === 'object')

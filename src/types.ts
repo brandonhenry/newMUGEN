@@ -127,6 +127,7 @@ export type MoveDefinition = {
   hurtboxOffset?: Vec3Tuple;
   kiCost?: number;
   kiBurst?: boolean;
+  soundCues?: EffectSoundCue[];
 };
 
 export type CombatPopupEvent = {
@@ -154,6 +155,7 @@ export type ImpactSparkEvent = {
   damage: number;
   moveLabel: string;
   moveInput?: MoveInput;
+  comboHits?: number;
   launched?: boolean;
   juggled?: boolean;
   tornado?: boolean;

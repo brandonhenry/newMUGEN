@@ -2190,7 +2190,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
   const impactId = nextHitEventId(match);
+  const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
   pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
+    comboHits,
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
     tornado: Boolean(move.tornado) && wasJuggled,
@@ -2312,6 +2314,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const blocked = canDefenderBlockMove(defender, cloneFighter, weakMove);
   const impactId = nextHitEventId(match);
   pushImpactSparkEvent(match, impactId, attacker, defender, weakMove, blocked ? 'block' : 'hit', {
+    comboHits: blocked ? 0 : Math.max(1, attacker.comboHits + 1),
     juggled: defender.state === 'juggle' || isAirborne(defender),
     kiBurst: Boolean(sourceMove.kiBurst)
   }, collision.position);
@@ -2479,7 +2482,7 @@ function pushImpactSparkEvent(
   defender: FighterRuntime,
   move: MoveDefinition,
   kind: ImpactSparkKind,
-  context: { launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {},
+  context: { comboHits?: number; launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {},
   position: [number, number, number] = getImpactPosition(attacker, defender, move)
 ) {
   match.impactEvents = [
@@ -2494,6 +2497,7 @@ function pushImpactSparkEvent(
       damage: kind === 'block' ? move.blockDamage : move.damage,
       moveLabel: move.label,
       moveInput: move.input,
+      comboHits: context.comboHits,
       launched: context.launched,
       juggled: context.juggled,
       tornado: context.tornado,

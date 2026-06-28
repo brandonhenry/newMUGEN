@@ -691,13 +691,26 @@
     "cmd:O+2": {
       "startupFrames": 15,
       "activeFrames": 6,
+      "recoveryFrames": 18,
       "damage": 20,
       "onBlockFrames": -17,
-      "onHitFrames": 3,
+      "onHitFrames": -5,
       "forwardForce": 5,
       "hitLevel": "mid",
       "tracking": "weakLeft",
-      "knockdown": true
+      "knockdown": true,
+      "soundCues": [
+        {
+          "id": "cue-1",
+          "name": "R5",
+          "path": "/characters/kiro/moves/cmd-o-2/sounds/r5.wav",
+          "frame": 0,
+          "volume": 0.72,
+          "pitch": 1,
+          "pan": 0,
+          "retrigger": false
+        }
+      ]
     },
     "cmd:1+3": {
       "launchHeight": 2.2,

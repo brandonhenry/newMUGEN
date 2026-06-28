@@ -275,6 +275,13 @@ type ActiveEffectBinding = {
   moveInstanceId: number;
 };
 
+type ActiveMoveSoundBinding = {
+  fighter: FighterRuntime;
+  move: MoveDefinition;
+  moveFrame: number;
+  moveInstanceId: number;
+};
+
 function EffectLayer({
   match,
   audioSettings,
@@ -290,6 +297,7 @@ function EffectLayer({
   });
   const bindings = getActiveEffectBindings(match);
   useEffectAudioCues(bindings, audioSettings);
+  useMoveAudioCues(getActiveMoveSoundBindings(match), audioSettings);
   if (bindings.length === 0) return null;
   return (
     <group>
@@ -326,12 +334,44 @@ function useEffectAudioCues(bindings: ActiveEffectBinding[], audioSettings?: Gam
   }, [audioSettings, bindings]);
 }
 
+function useMoveAudioCues(bindings: ActiveMoveSoundBinding[], audioSettings?: GameSettings['audio']) {
+  const previousFrames = useRef(new Map<string, number>());
+  useEffect(() => {
+    const liveKeys = new Set<string>();
+    bindings.forEach((binding) => {
+      const key = `${binding.fighter.slot}:${binding.moveInstanceId}:${binding.move.id}`;
+      liveKeys.add(key);
+      const previousFrame = previousFrames.current.get(key) ?? -1;
+      (binding.move.soundCues ?? []).forEach((cue) => {
+        if (previousFrame < cue.frame && binding.moveFrame >= cue.frame) {
+          playEffectSound(cue, audioSettings);
+        }
+      });
+      previousFrames.current.set(key, binding.moveFrame);
+    });
+    previousFrames.current.forEach((_, key) => {
+      if (!liveKeys.has(key)) previousFrames.current.delete(key);
+    });
+  }, [audioSettings, bindings]);
+}
+
 function playEffectSound(cue: EffectSoundCue, audioSettings?: GameSettings['audio']) {
   if (typeof window === 'undefined' || !audioSettings || audioSettings.muted || !cue.path) return;
   const audio = new Audio(cue.path);
   audio.volume = Math.max(0, Math.min(1, audioSettings.master * audioSettings.sfx * cue.volume));
   audio.playbackRate = cue.pitch;
   void audio.play().catch(() => undefined);
+}
+
+function getActiveMoveSoundBindings(match: MatchSnapshot): ActiveMoveSoundBinding[] {
+  return match.fighters
+    .filter((fighter) => fighter.state === 'attack' && fighter.currentMove && (fighter.currentMove.soundCues?.length ?? 0) > 0)
+    .map((fighter) => ({
+      fighter,
+      move: fighter.currentMove as MoveDefinition,
+      moveFrame: fighter.moveFrame,
+      moveInstanceId: fighter.moveInstanceId
+    }));
 }
 
 function getActiveEffectBindings(match: MatchSnapshot): ActiveEffectBinding[] {

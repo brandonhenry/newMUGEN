@@ -3129,7 +3129,7 @@ describe('fight engine', () => {
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'combo', hits: 2 });
     expect(match.combatEvents[0].damage).toBeGreaterThan(7);
     expect(match.impactEvents).toHaveLength(1);
-    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2, moveLabel: match.fighters[0].currentMove?.label });
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2, comboHits: 2, moveLabel: match.fighters[0].currentMove?.label });
     expect(match.impactEvents[0].position[1]).toBeGreaterThan(0);
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -3158,7 +3158,7 @@ describe('fight engine', () => {
 
     expect(match.combatEvents).toHaveLength(1);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'punish', hits: 1 });
-    expect(match.impactEvents[0]).toMatchObject({ kind: 'punish', attackerSlot: 1, defenderSlot: 2 });
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'punish', attackerSlot: 1, defenderSlot: 2, comboHits: 1 });
   });
 
   it('emits a whiff punish popup event when hitting whiff recovery', () => {
@@ -3194,7 +3194,7 @@ describe('fight engine', () => {
 
     expect(match.combatEvents).toHaveLength(1);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'whiffPunish', hits: 1 });
-    expect(match.impactEvents[0]).toMatchObject({ kind: 'whiffPunish', attackerSlot: 1, defenderSlot: 2 });
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'whiffPunish', attackerSlot: 1, defenderSlot: 2, comboHits: 1 });
   });
 
   it('emits a block spark for blocked overlap and no spark for whiffs', () => {
@@ -3213,7 +3213,7 @@ describe('fight engine', () => {
     }
 
     expect(match.impactEvents).toHaveLength(1);
-    expect(match.impactEvents[0]).toMatchObject({ kind: 'block', attackerSlot: 1, defenderSlot: 2 });
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'block', attackerSlot: 1, defenderSlot: 2, comboHits: 0 });
     expect(match.combatEvents).toHaveLength(0);
 
     let whiff = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
