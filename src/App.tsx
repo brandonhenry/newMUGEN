@@ -2038,6 +2038,7 @@ export default function App() {
             menuBgmTrackTitle={KORE_MENU_BGM_SOURCE.tracks[normalizeBgmIndex(settings.audio.bgmTrackIndex, KORE_MENU_BGM_SOURCE.tracks.length)]?.title ?? 'No track'}
             menuBgmTrackCount={KORE_MENU_BGM_SOURCE.tracks.length}
             onMenuBgmTrackChange={updateBgmTrackIndex}
+            onOptionsShortcut={playInnerMenuSelectSound}
             onBack={() => setScreen('menu')}
           />
         )}
@@ -3997,6 +3998,7 @@ function SettingsScreen({
   menuBgmTrackTitle,
   menuBgmTrackCount,
   onMenuBgmTrackChange,
+  onOptionsShortcut,
   onBack
 }: {
   mode: MatchMode;
@@ -4010,6 +4012,7 @@ function SettingsScreen({
   menuBgmTrackTitle: string;
   menuBgmTrackCount: number;
   onMenuBgmTrackChange: (index: number) => void;
+  onOptionsShortcut: () => void;
   onBack: () => void;
 }) {
   const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
@@ -4080,6 +4083,7 @@ function SettingsScreen({
       if (key === 'o' || key === 'p') {
         event.preventDefault();
         cycleOptionsTab(key === 'p' ? 1 : -1);
+        onOptionsShortcut();
         return;
       }
       const bindings = getKeyboardBindingsForEvent(event, mode, settings.controls);
@@ -4087,7 +4091,7 @@ function SettingsScreen({
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [cycleOptionsTab, mode, remapRequest, settings.controls]);
+  }, [cycleOptionsTab, mode, onOptionsShortcut, remapRequest, settings.controls]);
 
   const renderEditor = () => {
     if (activeTab === 'game') {
