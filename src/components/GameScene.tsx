@@ -820,10 +820,12 @@ type PreviewFrameFit = {
 function getPreviewFrameFit(character: CharacterDefinition, animationKey?: string): PreviewFrameFit {
   const sequence = animationKey ? character.animationFrames?.[animationKey] : undefined;
   const animationScale = getCharacterAnimationScale(character, animationKey);
+  const frameScales = (sequence ?? []).map((frame) => getCharacterAnimationScale(character, animationKey, frame));
   const scale = Math.max(
     animationScale.width,
     animationScale.height,
     1,
+    ...frameScales.flatMap((frameScale) => [frameScale.width, frameScale.height]),
     ...(sequence ?? []).map((frame) => getSpriteFrameGrowScale(character, frame))
   );
   return {
@@ -1667,7 +1669,7 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
     const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const nextFrameSrc = getImageVoxelFramePath(fighter, liveProgress, t);
-    const animationScale = getCharacterAnimationScale(fighter.character, getImageVoxelAnimationKey(fighter));
+    const animationScale = getCharacterAnimationScale(fighter.character, getImageVoxelAnimationKey(fighter), nextFrameSrc);
     if (nextFrameSrc !== activeFrameSrc.current) {
       activeFrameSrc.current = nextFrameSrc;
       setFrameSrc(nextFrameSrc);
@@ -1737,8 +1739,10 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
   );
 }
 
-function getCharacterAnimationScale(character: CharacterDefinition, animationKey?: string) {
-  const size = animationKey ? character.animationScales?.[animationKey] : undefined;
+function getCharacterAnimationScale(character: CharacterDefinition, animationKey?: string, frameSource?: string) {
+  const frameIndex = frameSource?.match(/frame-(\d+)\.png/)?.[1];
+  const frameSize = animationKey && frameIndex ? character.animationFrameScales?.[animationKey]?.[String(Number(frameIndex))] : undefined;
+  const size = frameSize ?? (animationKey ? character.animationScales?.[animationKey] : undefined);
   return {
     width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.25, 2.5),
     height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.25, 2.5)

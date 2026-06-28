@@ -3559,6 +3559,7 @@ button {
   padding: 14px;
 }
 
+.selected-frame-card,
 .selected-frame-strip button,
 .frame-bank button {
   display: grid;
@@ -3574,6 +3575,7 @@ button {
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
+.inline-frame-editor .selected-frame-card,
 .inline-frame-editor .selected-frame-strip button,
 .inline-frame-editor .frame-bank button {
   min-height: 142px;
@@ -3581,15 +3583,33 @@ button {
   padding: 12px;
 }
 
+.selected-frame-thumb {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+
 .selected-frame-strip button:active,
 .frame-bank button:active {
   transform: scale(0.96);
 }
 
+.selected-frame-card.active,
 .selected-frame-strip button.active,
 .frame-bank button.active {
   background: rgba(46, 230, 255, 0.18);
   box-shadow: 0 0 0 2px #2ee6ff inset;
+}
+
+.selected-frame-strip .remove-frame-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  color: #f7f7f2;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .selected-frame-strip img,

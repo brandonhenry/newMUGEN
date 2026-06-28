@@ -49,6 +49,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
+    animationFrameScales: sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {}),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
     effects: sanitizeEffects(character.effects ?? []),
@@ -70,6 +71,27 @@ function sanitizeAnimationScaleMap(scales: CharacterDefinition['animationScales'
           width: clamp(finiteOr(value.width, 1), 0.25, 2.5),
           height: clamp(finiteOr(value.height, 1), 0.25, 2.5)
         }
+      ])
+  ));
+}
+
+function sanitizeAnimationFrameScaleMap(scales: CharacterDefinition['animationFrameScales']) {
+  return canonicalizeBaseButtonRecord(Object.fromEntries(
+    Object.entries(scales ?? {})
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [
+        key,
+        Object.fromEntries(
+          Object.entries(value)
+            .filter(([frameIndex, frameScale]) => /^\d+$/.test(frameIndex) && frameScale && typeof frameScale === 'object')
+            .map(([frameIndex, frameScale]) => [
+              frameIndex,
+              {
+                width: clamp(finiteOr(frameScale.width, 1), 0.25, 2.5),
+                height: clamp(finiteOr(frameScale.height, 1), 0.25, 2.5)
+              }
+            ])
+        )
       ])
   ));
 }

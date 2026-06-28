@@ -407,7 +407,7 @@
       "/characters/riven/frames/frame-053.png",
       "/characters/riven/frames/frame-054.png",
       "/characters/riven/frames/frame-055.png",
-      "/characters/riven/frames/frame-000.png"
+      "/characters/riven/frames/frame-056.png"
     ],
     "sprint": [
       "/characters/riven/frames/frame-012.png",
@@ -1211,6 +1211,14 @@
     "cmd:FC+3": {
       "width": 0.7,
       "height": 0.87
+    }
+  },
+  "animationFrameScales": {
+    "getupStand": {
+      "54": {
+        "width": 0.77,
+        "height": 0.87
+      }
     }
   }
 }

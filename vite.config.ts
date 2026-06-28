@@ -15,6 +15,7 @@ type DevManifestPayload = {
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   animationScales?: Record<string, Record<string, unknown>>;
+  animationFrameScales?: Record<string, Record<string, Record<string, unknown>>>;
   moveOverrides?: Record<string, Record<string, unknown>>;
   effects?: Array<Record<string, unknown>>;
   moveEffects?: Record<string, Array<Record<string, unknown>>>;
@@ -252,6 +253,9 @@ function koreDevManifestWriter() {
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.animationScales = sanitizeAnimationScaleMap(payload.animationScales ?? {});
+          const animationFrameScales = sanitizeAnimationFrameScaleMap(payload.animationFrameScales ?? {});
+          if (Object.keys(animationFrameScales).length > 0) manifest.animationFrameScales = animationFrameScales;
+          else delete manifest.animationFrameScales;
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
           manifest.effects = sanitizeCharacterEffects(payload.effects ?? []);
           manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
@@ -1521,6 +1525,32 @@ function sanitizeAnimationScaleMap(scales: Record<string, Record<string, unknown
   );
 }
 
+function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, Record<string, unknown>>>) {
+  return Object.fromEntries(
+    Object.entries(scales)
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [
+        key,
+        Object.fromEntries(
+          Object.entries(value)
+            .filter(([frameIndex, frameScale]) => /^\d+$/.test(frameIndex) && frameScale && typeof frameScale === 'object')
+            .map(([frameIndex, frameScale]) => [
+              frameIndex,
+              {
+                width: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.width, 1))).toFixed(2)),
+                height: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.height, 1))).toFixed(2))
+              }
+            ])
+            .filter(([, value]) => {
+              const size = value as { width: number; height: number };
+              return size.width !== 1 || size.height !== 1;
+            })
+        )
+      ])
+      .filter(([, value]) => Object.keys(value as Record<string, unknown>).length > 0)
+  );
+}
+
 function sanitizeVoxelProfile(value: string) {
   return value === 'hd-image-source' ? 'hd-image-source' : value === 'image-source' ? 'image-source' : 'image-source';
 }
@@ -1807,6 +1837,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
   const animationFrames = sanitizeFrameMap((manifest.animationFrames as Record<string, string[]> | undefined) ?? {});
   const animationFrameRates = sanitizeRateMap((manifest.animationFrameRates as Record<string, number> | undefined) ?? {});
   const animationScales = sanitizeAnimationScaleMap((manifest.animationScales as Record<string, Record<string, unknown>> | undefined) ?? {});
+  const animationFrameScales = sanitizeAnimationFrameScaleMap((manifest.animationFrameScales as Record<string, Record<string, Record<string, unknown>>> | undefined) ?? {});
   const moves = Array.isArray(manifest.moves) ? manifest.moves : [];
   return {
     ...manifest,
@@ -1821,6 +1852,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     animationFrames,
     animationFrameRates,
     animationScales,
+    animationFrameScales,
     animationFps: Math.max(1, finiteOr(manifest.animationFps, 6)),
     scale: Math.max(0.25, finiteOr(manifest.scale, 1.08)),
     cameraOffset: Array.isArray(manifest.cameraOffset) && manifest.cameraOffset.length >= 3 ? manifest.cameraOffset : [0, 1.22, 0],

@@ -8,100 +8,148 @@
     "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-002.png",
     "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-003.png",
     "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-004.png",
-    "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-005.png",
-    "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-006.png"
+    "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-005.png"
   ],
   "frameData": [
     {
       "index": 0,
       "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-000.png",
       "box": [
-        210,
-        16,
-        406,
-        66
+        4,
+        33,
+        25,
+        54
       ],
-      "width": 196,
-      "height": 50,
-      "row": 0
+      "width": 21,
+      "height": 21,
+      "row": 0,
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1
     },
     {
       "index": 1,
       "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-001.png",
       "box": [
-        128,
-        28,
-        152,
-        54
+        0,
+        0,
+        32,
+        32
       ],
-      "width": 24,
-      "height": 26,
-      "row": 0
+      "width": 32,
+      "height": 32,
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
     },
     {
       "index": 2,
       "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-002.png",
       "box": [
-        85,
-        29,
-        109,
-        53
+        0,
+        0,
+        32,
+        32
       ],
-      "width": 24,
-      "height": 24,
-      "row": 0
+      "width": 32,
+      "height": 32,
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
     },
     {
       "index": 3,
       "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-003.png",
       "box": [
-        170,
-        29,
-        194,
-        53
+        0,
+        0,
+        32,
+        32
       ],
-      "width": 24,
-      "height": 24,
-      "row": 0
+      "width": 32,
+      "height": 32,
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
     },
     {
       "index": 4,
       "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-004.png",
       "box": [
-        6,
-        34,
-        22,
-        50
+        0,
+        0,
+        32,
+        32
       ],
-      "width": 16,
-      "height": 16,
-      "row": 0
+      "width": 32,
+      "height": 32,
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
     },
     {
       "index": 5,
       "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-005.png",
       "box": [
-        48,
-        34,
-        64,
-        50
+        0,
+        0,
+        32,
+        32
       ],
-      "width": 16,
-      "height": 16,
-      "row": 0
-    },
-    {
-      "index": 6,
-      "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-006.png",
-      "box": [
-        18,
-        93,
-        313,
-        131
+      "width": 32,
+      "height": 32,
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "rotation": 0,
+      "offset": [
+        0,
+        0
       ],
-      "width": 295,
-      "height": 38,
-      "row": 1
+      "scale": 1,
+      "hidden": false
     }
   ],
   "effectFrameEdits": {
@@ -129,6 +177,121 @@
       "scale": 1,
       "hidden": false,
       "revision": 1
+    },
+    "1": {
+      "index": 1,
+      "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-001.png",
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "width": 32,
+      "height": 32,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "2": {
+      "index": 2,
+      "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-002.png",
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "width": 32,
+      "height": 32,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "3": {
+      "index": 3,
+      "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-003.png",
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "width": 32,
+      "height": 32,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "4": {
+      "index": 4,
+      "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-004.png",
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "width": 32,
+      "height": 32,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
+    },
+    "5": {
+      "index": 5,
+      "path": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/frames/frame-005.png",
+      "sourceMode": "sheet",
+      "sheetId": "source",
+      "sheetPath": "/characters/kiro/effects/micro-rasengan-mugen-sprite-shee/source.png",
+      "sourceName": "micro_rasengan_mugen_sprite_sheet_nzc_effect_by_boltanim_dhyg637-fullview",
+      "box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "width": 32,
+      "height": 32,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false
     }
   }
 }

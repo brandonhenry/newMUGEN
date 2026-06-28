@@ -83,6 +83,7 @@ type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
   sizes?: Record<string, AnimationScale>;
+  frameSizes?: Record<string, Record<string, AnimationScale>>;
   moves?: Record<string, MoveOverride>;
   sprites?: Record<string, SpriteFrameEdit>;
   effects?: CharacterEffectDefinition[];
@@ -655,6 +656,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
       frames: canonicalizeRawButtonRecord({ ...(override.frames ?? {}) }),
       speeds: canonicalizeRawButtonRecord({ ...(override.speeds ?? {}) }),
       sizes: sanitizeAnimationScaleMap(override.sizes ?? {}),
+      frameSizes: sanitizeAnimationFrameScaleMap(override.frameSizes ?? {}),
       moves: sanitizeMoveOverrideMap(override.moves ?? {}),
       sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
@@ -676,6 +678,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
         Object.keys(override.frames ?? {}).length > 0 ||
         Object.keys(override.speeds ?? {}).length > 0 ||
         Object.keys(override.sizes ?? {}).length > 0 ||
+        Object.keys(override.frameSizes ?? {}).length > 0 ||
         Object.keys(override.moves ?? {}).length > 0 ||
         Object.keys(override.sprites ?? {}).length > 0 ||
         override.effects !== undefined ||
@@ -696,6 +699,21 @@ function sanitizeAnimationScaleMap(scales: Record<string, AnimationScale>) {
       .map(([key, value]) => [
         key,
         normalizeAnimationScale(value)
+      ])
+  ));
+}
+
+function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, AnimationScale>>) {
+  return canonicalizeRawButtonRecord(Object.fromEntries(
+    Object.entries(scales)
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [
+        key,
+        Object.fromEntries(
+          Object.entries(value)
+            .filter(([frameIndex, frameScale]) => /^\d+$/.test(frameIndex) && frameScale && typeof frameScale === 'object')
+            .map(([frameIndex, frameScale]) => [frameIndex, normalizeAnimationScale(frameScale)])
+        )
       ])
   ));
 }
@@ -827,6 +845,7 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
   const frames = canonicalizeRawButtonRecord(override.frames ?? {});
   const speeds = canonicalizeRawButtonRecord(override.speeds ?? {});
   const sizes = sanitizeAnimationScaleMap(override.sizes ?? {});
+  const frameSizes = sanitizeAnimationFrameScaleMap(override.frameSizes ?? {});
   const moves = sanitizeMoveOverrideMap(override.moves ?? {});
   const effects = override.effects ? sanitizeEffects(override.effects) : sanitizeEffects(character.effects ?? []);
   const moveEffects = override.moveEffects ? sanitizeMoveEffects(canonicalizeRawButtonRecord(override.moveEffects)) : {};
@@ -851,6 +870,10 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
     animationScales: {
       ...character.animationScales,
       ...sizes
+    },
+    animationFrameScales: {
+      ...character.animationFrameScales,
+      ...frameSizes
     },
     moveOverrides: {
       ...character.moveOverrides,
@@ -930,6 +953,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
   const animationFrames = canonicalizeRawButtonRecord(character.animationFrames ?? {});
   const animationFrameRates = canonicalizeRawButtonRecord(character.animationFrameRates ?? {});
   const animationScales = sanitizeAnimationScaleMap(character.animationScales ?? {});
+  const animationFrameScales = sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {});
   const moveOverrides = sanitizeMoveOverrideMap(character.moveOverrides ?? {});
   const effects = sanitizeEffects(character.effects ?? []);
   const moveEffects = sanitizeMoveEffects(character.moveEffects ?? {});
@@ -942,6 +966,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       animationFrames,
       animationFrameRates,
       animationScales,
+      animationFrameScales,
       moveOverrides,
       effects,
       moveEffects,
@@ -1811,6 +1836,25 @@ export default function App() {
     }));
   };
 
+  const setCharacterAnimationFrameScale = (characterId: string, animationKey: string, frameIndex: number, size: AnimationScale) => {
+    const normalized = sanitizeAnimationScaleMap({ [animationKey]: size })[animationKey] ?? { width: 1, height: 1 };
+    const frameKey = String(Math.max(0, Math.round(frameIndex)));
+    debugLog(8, 'viewer frame size override requested', { characterId, animationKey, frameIndex: frameKey, size: normalized });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        frameSizes: {
+          ...(current[characterId]?.frameSizes ?? {}),
+          [animationKey]: {
+            ...(current[characterId]?.frameSizes?.[animationKey] ?? {}),
+            [frameKey]: normalized
+          }
+        }
+      }
+    }));
+  };
+
   const setCharacterMoveOverride = (characterId: string, moveKey: string, override: MoveOverride) => {
     debugLog(9, 'viewer frame data override requested', { characterId, moveKey, override });
     setAnimationOverrides((current) => ({
@@ -2105,6 +2149,7 @@ export default function App() {
             onAnimationFramesChange={setCharacterAnimationFrames}
             onAnimationSpeedChange={setCharacterAnimationSpeed}
             onAnimationScaleChange={setCharacterAnimationScale}
+            onAnimationFrameScaleChange={setCharacterAnimationFrameScale}
             onMoveOverrideChange={setCharacterMoveOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
             onEffectsChange={setCharacterEffects}
@@ -4744,6 +4789,7 @@ function CharacterViewer({
   onAnimationFramesChange,
   onAnimationSpeedChange,
   onAnimationScaleChange,
+  onAnimationFrameScaleChange,
   onMoveOverrideChange,
   onSpriteFrameEditChange,
   onEffectsChange,
@@ -4756,6 +4802,7 @@ function CharacterViewer({
   onAnimationFramesChange: (characterId: string, animationKey: string, frames: string[]) => void;
   onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
   onAnimationScaleChange: (characterId: string, animationKey: string, size: AnimationScale) => void;
+  onAnimationFrameScaleChange: (characterId: string, animationKey: string, frameIndex: number, size: AnimationScale) => void;
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
@@ -4772,6 +4819,7 @@ function CharacterViewer({
   const [editorMode, setEditorMode] = useState<'browse' | 'animation' | 'sprite' | 'effectsLibrary' | 'moveEffects'>('browse');
   const [showImporter, setShowImporter] = useState(false);
   const [showSpriteSheetPreview, setShowSpriteSheetPreview] = useState(false);
+  const [frameScaleMode, setFrameScaleMode] = useState(false);
   const [selectedSpriteFrameIndex, setSelectedSpriteFrameIndex] = useState(0);
   const [spriteFrameMeta, setSpriteFrameMeta] = useState<Record<string, SpriteFrameEdit>>({});
   const [spriteFrameMetaRefresh, setSpriteFrameMetaRefresh] = useState(0);
@@ -4818,6 +4866,10 @@ function CharacterViewer({
   const selectedSpeed = active.animationFrameRates?.[selectedSlotDataKey] ?? active.animationFps ?? 8;
   const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlotDataKey] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
   const selectedAnimationScale = normalizeAnimationScale(active.animationScales?.[selectedSlotDataKey]);
+  const selectedAnimationFrameScale = normalizeAnimationScale(
+    active.animationFrameScales?.[selectedSlotDataKey]?.[String(selectedSpriteFrameIndex)] ?? selectedAnimationScale
+  );
+  const selectedSizeScale = frameScaleMode ? selectedAnimationFrameScale : selectedAnimationScale;
   const selectedFrameSet = new Set(selectedFrames);
   const selectedMove = resolveSlotMove(active, selectedSlot);
   const selectedMoveOverride = active.moveOverrides?.[selectedSlotDataKey] ?? {};
@@ -4978,6 +5030,13 @@ function CharacterViewer({
   };
 
   const updateSelectedAnimationScale = (patch: AnimationScale) => {
+    if (frameScaleMode) {
+      onAnimationFrameScaleChange(active.id, selectedSlotDataKey, selectedSpriteFrameIndex, normalizeAnimationScale({
+        ...selectedAnimationFrameScale,
+        ...patch
+      }));
+      return;
+    }
     onAnimationScaleChange(active.id, selectedSlotDataKey, normalizeAnimationScale({
       ...selectedAnimationScale,
       ...patch
@@ -4985,6 +5044,10 @@ function CharacterViewer({
   };
 
   const resetSelectedAnimationScale = () => {
+    if (frameScaleMode) {
+      onAnimationFrameScaleChange(active.id, selectedSlotDataKey, selectedSpriteFrameIndex, selectedAnimationScale);
+      return;
+    }
     onAnimationScaleChange(active.id, selectedSlotDataKey, { width: 1, height: 1 });
   };
 
@@ -5622,7 +5685,7 @@ function CharacterViewer({
                           min="0.25"
                           max="2.5"
                           step="0.01"
-                          value={selectedAnimationScale.width}
+                          value={selectedSizeScale.width}
                           onChange={(event) => updateSelectedAnimationScale({ width: Number(event.target.value) })}
                           data-testid="animation-width-slider"
                         />
@@ -5632,7 +5695,7 @@ function CharacterViewer({
                           min="0.25"
                           max="2.5"
                           step="0.01"
-                          value={selectedAnimationScale.width}
+                          value={selectedSizeScale.width}
                           onChange={(event) => updateSelectedAnimationScale({ width: Number(event.target.value) })}
                           data-testid="animation-width-input"
                         />
@@ -5645,7 +5708,7 @@ function CharacterViewer({
                           min="0.25"
                           max="2.5"
                           step="0.01"
-                          value={selectedAnimationScale.height}
+                          value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
                           data-testid="animation-height-slider"
                         />
@@ -5655,7 +5718,7 @@ function CharacterViewer({
                           min="0.25"
                           max="2.5"
                           step="0.01"
-                          value={selectedAnimationScale.height}
+                          value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
                           data-testid="animation-height-input"
                         />
@@ -5664,8 +5727,16 @@ function CharacterViewer({
                         Reverse
                       </button>
                       <button className="secondary-button compact-button" onClick={resetSelectedAnimationScale}>
-                        Reset Size
+                        {frameScaleMode ? 'Reset Frame Size' : 'Reset Size'}
                       </button>
+                      <label className="sprite-sheet-toggle frame-mode-toggle">
+                        <input
+                          type="checkbox"
+                          checked={frameScaleMode}
+                          onChange={(event) => setFrameScaleMode(event.target.checked)}
+                        />
+                        <span>Frame mode</span>
+                      </label>
                       <button className="secondary-button compact-button" onClick={resetSelectedAnimation}>
                         Reset
                       </button>
@@ -5776,15 +5847,29 @@ function CharacterViewer({
               )}
               <div className="selected-frame-strip" aria-label="Selected frames">
                 {selectedFrames.map((frame, index) => (
-                  <button
+                  <div
                     key={`${frame}-${index}`}
-                    onClick={() => removeSelectedFrameAt(index)}
-                    onContextMenu={(event) => appendDuplicateFrame(frame, event)}
-                    title={`Frame ${getFrameIndex(frame)}. Click to remove this occurrence. Right-click to duplicate it at the end.`}
+                    className={`selected-frame-card ${frameScaleMode && getFrameIndex(frame) === selectedSpriteFrameIndex ? 'active' : ''}`}
+                    title={frameScaleMode
+                      ? `Frame ${getFrameIndex(frame)}. Click to select for frame sizing. Right-click to duplicate it at the end.`
+                      : `Frame ${getFrameIndex(frame)}. Click to remove this occurrence. Right-click to duplicate it at the end.`}
                   >
-                    <img src={frame} alt={`Selected frame ${getFrameIndex(frame)}`} />
-                    <span>{getFrameIndex(frame)}</span>
-                  </button>
+                    <button
+                      type="button"
+                      className="selected-frame-thumb"
+                      onClick={() => {
+                        if (frameScaleMode) setSelectedSpriteFrameIndex(getFrameIndex(frame));
+                        else removeSelectedFrameAt(index);
+                      }}
+                      onContextMenu={(event) => appendDuplicateFrame(frame, event)}
+                    >
+                      <img src={frame} alt={`Selected frame ${getFrameIndex(frame)}`} />
+                      <span>{getFrameIndex(frame)}</span>
+                    </button>
+                    <button type="button" className="remove-frame-button" title="Remove this occurrence" onClick={() => removeSelectedFrameAt(index)}>
+                      Remove
+                    </button>
+                  </div>
                 ))}
               </div>
               <div className="frame-bank" aria-label="All extracted frames">
@@ -5792,7 +5877,10 @@ function CharacterViewer({
                   <button
                     key={frame}
                     className={selectedFrameSet.has(frame) ? 'active' : ''}
-                    onClick={() => toggleFrame(frame)}
+                    onClick={() => {
+                      setSelectedSpriteFrameIndex(getFrameIndex(frame));
+                      toggleFrame(frame);
+                    }}
                     onContextMenu={(event) => appendDuplicateFrame(frame, event)}
                     title={`Frame ${getFrameIndex(frame)}. Click to add/remove. Right-click to append a duplicate.`}
                   >

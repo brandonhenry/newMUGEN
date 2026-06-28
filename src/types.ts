@@ -292,6 +292,7 @@ export type CharacterDefinition = {
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   animationScales?: Record<string, AnimationScale>;
+  animationFrameScales?: Record<string, Record<string, AnimationScale>>;
   animationFps?: number;
   scale: number;
   cameraOffset: Vec3Tuple;
