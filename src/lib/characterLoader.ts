@@ -48,6 +48,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     locked: Boolean(character.locked),
     animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
+    animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
     effects: sanitizeEffects(character.effects ?? []),
@@ -57,6 +58,20 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
         ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))
         : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }]
   };
+}
+
+function sanitizeAnimationScaleMap(scales: CharacterDefinition['animationScales']) {
+  return canonicalizeBaseButtonRecord(Object.fromEntries(
+    Object.entries(scales ?? {})
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [
+        key,
+        {
+          width: clamp(finiteOr(value.width, 1), 0.25, 2.5),
+          height: clamp(finiteOr(value.height, 1), 0.25, 2.5)
+        }
+      ])
+  ));
 }
 
 export function normalizeMove(move: MoveDefinition): MoveDefinition {

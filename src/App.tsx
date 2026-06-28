@@ -49,6 +49,7 @@ import {
   ROUNDS_TO_WIN,
   emptyInputFrame,
   type ActionName,
+  type AnimationScale,
   type CharacterDefinition,
   type CharacterEffectDefinition,
   type CharacterSpriteSheet,
@@ -80,6 +81,7 @@ type OnlineWins = [number, number];
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
+  sizes?: Record<string, AnimationScale>;
   moves?: Record<string, MoveOverride>;
   sprites?: Record<string, SpriteFrameEdit>;
   effects?: CharacterEffectDefinition[];
@@ -641,6 +643,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
     const sanitized: CharacterAnimationOverride = {
       frames: canonicalizeRawButtonRecord({ ...(override.frames ?? {}) }),
       speeds: canonicalizeRawButtonRecord({ ...(override.speeds ?? {}) }),
+      sizes: sanitizeAnimationScaleMap(override.sizes ?? {}),
       moves: sanitizeMoveOverrideMap(override.moves ?? {}),
       sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
@@ -661,6 +664,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
       ([, override]) =>
         Object.keys(override.frames ?? {}).length > 0 ||
         Object.keys(override.speeds ?? {}).length > 0 ||
+        Object.keys(override.sizes ?? {}).length > 0 ||
         Object.keys(override.moves ?? {}).length > 0 ||
         Object.keys(override.sprites ?? {}).length > 0 ||
         override.effects !== undefined ||
@@ -672,6 +676,24 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
     afterCharacterIds: Object.keys(sanitized)
   });
   return sanitized;
+}
+
+function sanitizeAnimationScaleMap(scales: Record<string, AnimationScale>) {
+  return canonicalizeRawButtonRecord(Object.fromEntries(
+    Object.entries(scales)
+      .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
+      .map(([key, value]) => [
+        key,
+        normalizeAnimationScale(value)
+      ])
+  ));
+}
+
+function normalizeAnimationScale(size?: AnimationScale): Required<AnimationScale> {
+  return {
+    width: Number(clamp(Number(size?.width) || 1, 0.25, 2.5).toFixed(2)),
+    height: Number(clamp(Number(size?.height) || 1, 0.25, 2.5).toFixed(2))
+  };
 }
 
 function sanitizeMoveOverrideMap(overrides: Record<string, MoveOverride>) {
@@ -793,6 +815,7 @@ function applyAnimationOverrides(characters: CharacterDefinition[], overrides: A
 function applyCharacterAnimationOverride(character: CharacterDefinition, override: CharacterAnimationOverride): CharacterDefinition {
   const frames = canonicalizeRawButtonRecord(override.frames ?? {});
   const speeds = canonicalizeRawButtonRecord(override.speeds ?? {});
+  const sizes = sanitizeAnimationScaleMap(override.sizes ?? {});
   const moves = sanitizeMoveOverrideMap(override.moves ?? {});
   const effects = override.effects ? sanitizeEffects(override.effects) : sanitizeEffects(character.effects ?? []);
   const moveEffects = override.moveEffects ? sanitizeMoveEffects(canonicalizeRawButtonRecord(override.moveEffects)) : {};
@@ -813,6 +836,10 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
     animationFrameRates: {
       ...character.animationFrameRates,
       ...speeds
+    },
+    animationScales: {
+      ...character.animationScales,
+      ...sizes
     },
     moveOverrides: {
       ...character.moveOverrides,
@@ -891,6 +918,7 @@ function removeCharacterOverride(overrides: AnimationOverrideMap, characterIds: 
 async function saveCharacterManifestToDev(character: CharacterDefinition) {
   const animationFrames = canonicalizeRawButtonRecord(character.animationFrames ?? {});
   const animationFrameRates = canonicalizeRawButtonRecord(character.animationFrameRates ?? {});
+  const animationScales = sanitizeAnimationScaleMap(character.animationScales ?? {});
   const moveOverrides = sanitizeMoveOverrideMap(character.moveOverrides ?? {});
   const effects = sanitizeEffects(character.effects ?? []);
   const moveEffects = sanitizeMoveEffects(character.moveEffects ?? {});
@@ -902,6 +930,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       locked: Boolean(character.locked),
       animationFrames,
       animationFrameRates,
+      animationScales,
       moveOverrides,
       effects,
       moveEffects,
@@ -1755,6 +1784,21 @@ export default function App() {
     }));
   };
 
+  const setCharacterAnimationScale = (characterId: string, animationKey: string, size: AnimationScale) => {
+    const normalized = sanitizeAnimationScaleMap({ [animationKey]: size })[animationKey] ?? { width: 1, height: 1 };
+    debugLog(8, 'viewer size override requested', { characterId, animationKey, size: normalized });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        sizes: {
+          ...(current[characterId]?.sizes ?? {}),
+          [animationKey]: normalized
+        }
+      }
+    }));
+  };
+
   const setCharacterMoveOverride = (characterId: string, moveKey: string, override: MoveOverride) => {
     debugLog(9, 'viewer frame data override requested', { characterId, moveKey, override });
     setAnimationOverrides((current) => ({
@@ -2048,6 +2092,7 @@ export default function App() {
             sourceRoster={sourceRoster}
             onAnimationFramesChange={setCharacterAnimationFrames}
             onAnimationSpeedChange={setCharacterAnimationSpeed}
+            onAnimationScaleChange={setCharacterAnimationScale}
             onMoveOverrideChange={setCharacterMoveOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
             onEffectsChange={setCharacterEffects}
@@ -4630,6 +4675,7 @@ function CharacterViewer({
   sourceRoster,
   onAnimationFramesChange,
   onAnimationSpeedChange,
+  onAnimationScaleChange,
   onMoveOverrideChange,
   onSpriteFrameEditChange,
   onEffectsChange,
@@ -4641,6 +4687,7 @@ function CharacterViewer({
   sourceRoster: CharacterDefinition[];
   onAnimationFramesChange: (characterId: string, animationKey: string, frames: string[]) => void;
   onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
+  onAnimationScaleChange: (characterId: string, animationKey: string, size: AnimationScale) => void;
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
@@ -4702,6 +4749,7 @@ function CharacterViewer({
   const defaultFrames = sourceActive.animationFrames?.[selectedSlotDataKey] ?? selectedFrames;
   const selectedSpeed = active.animationFrameRates?.[selectedSlotDataKey] ?? active.animationFps ?? 8;
   const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlotDataKey] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
+  const selectedAnimationScale = normalizeAnimationScale(active.animationScales?.[selectedSlotDataKey]);
   const selectedFrameSet = new Set(selectedFrames);
   const selectedMove = resolveSlotMove(active, selectedSlot);
   const selectedMoveOverride = active.moveOverrides?.[selectedSlotDataKey] ?? {};
@@ -4861,9 +4909,21 @@ function CharacterViewer({
     onAnimationSpeedChange(active.id, selectedSlotDataKey, normalized);
   };
 
+  const updateSelectedAnimationScale = (patch: AnimationScale) => {
+    onAnimationScaleChange(active.id, selectedSlotDataKey, normalizeAnimationScale({
+      ...selectedAnimationScale,
+      ...patch
+    }));
+  };
+
+  const resetSelectedAnimationScale = () => {
+    onAnimationScaleChange(active.id, selectedSlotDataKey, { width: 1, height: 1 });
+  };
+
   const resetSelectedAnimation = () => {
     updateSelectedFrames(defaultFrames);
     updateSelectedSpeed(defaultSpeed);
+    resetSelectedAnimationScale();
   };
 
   const updateSelectedMoveOverride = (patch: MoveOverride) => {
@@ -5486,8 +5546,57 @@ function CharacterViewer({
                           data-testid="animation-speed-input"
                         />
                       </label>
+                      <label className="speed-control">
+                        <span>Width</span>
+                        <input
+                          aria-label={`${selectedSlot.label} animation width scale`}
+                          type="range"
+                          min="0.25"
+                          max="2.5"
+                          step="0.01"
+                          value={selectedAnimationScale.width}
+                          onChange={(event) => updateSelectedAnimationScale({ width: Number(event.target.value) })}
+                          data-testid="animation-width-slider"
+                        />
+                        <input
+                          aria-label={`${selectedSlot.label} animation width scale value`}
+                          type="number"
+                          min="0.25"
+                          max="2.5"
+                          step="0.01"
+                          value={selectedAnimationScale.width}
+                          onChange={(event) => updateSelectedAnimationScale({ width: Number(event.target.value) })}
+                          data-testid="animation-width-input"
+                        />
+                      </label>
+                      <label className="speed-control">
+                        <span>Height</span>
+                        <input
+                          aria-label={`${selectedSlot.label} animation height scale`}
+                          type="range"
+                          min="0.25"
+                          max="2.5"
+                          step="0.01"
+                          value={selectedAnimationScale.height}
+                          onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
+                          data-testid="animation-height-slider"
+                        />
+                        <input
+                          aria-label={`${selectedSlot.label} animation height scale value`}
+                          type="number"
+                          min="0.25"
+                          max="2.5"
+                          step="0.01"
+                          value={selectedAnimationScale.height}
+                          onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
+                          data-testid="animation-height-input"
+                        />
+                      </label>
                       <button className="secondary-button compact-button" onClick={() => updateSelectedFrames([...selectedFrames].reverse())}>
                         Reverse
+                      </button>
+                      <button className="secondary-button compact-button" onClick={resetSelectedAnimationScale}>
+                        Reset Size
                       </button>
                       <button className="secondary-button compact-button" onClick={resetSelectedAnimation}>
                         Reset

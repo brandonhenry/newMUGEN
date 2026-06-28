@@ -272,6 +272,11 @@ export type VoxelFidelitySettings = {
   };
 };
 
+export type AnimationScale = {
+  width?: number;
+  height?: number;
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -286,6 +291,7 @@ export type CharacterDefinition = {
   voxelFidelity?: VoxelFidelitySettings;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
+  animationScales?: Record<string, AnimationScale>;
   animationFps?: number;
   scale: number;
   cameraOffset: Vec3Tuple;

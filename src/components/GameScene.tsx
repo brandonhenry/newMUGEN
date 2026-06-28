@@ -819,7 +819,13 @@ type PreviewFrameFit = {
 
 function getPreviewFrameFit(character: CharacterDefinition, animationKey?: string): PreviewFrameFit {
   const sequence = animationKey ? character.animationFrames?.[animationKey] : undefined;
-  const scale = Math.max(1, ...(sequence ?? []).map((frame) => getSpriteFrameGrowScale(character, frame)));
+  const animationScale = getCharacterAnimationScale(character, animationKey);
+  const scale = Math.max(
+    animationScale.width,
+    animationScale.height,
+    1,
+    ...(sequence ?? []).map((frame) => getSpriteFrameGrowScale(character, frame))
+  );
   return {
     scale,
     extraDistance: (scale - 1) * 3.2,
@@ -1660,6 +1666,7 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
     const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const nextFrameSrc = getImageVoxelFramePath(fighter, liveProgress, t);
+    const animationScale = getCharacterAnimationScale(fighter.character, getImageVoxelAnimationKey(fighter));
     if (nextFrameSrc !== activeFrameSrc.current) {
       activeFrameSrc.current = nextFrameSrc;
       setFrameSrc(nextFrameSrc);
@@ -1675,7 +1682,9 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
 
     if (root.current) {
       root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, crouch ? -0.28 : 0, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, crouch ? 0.84 : jump ? 1.04 : 1, smooth);
+      root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, animationScale.width, smooth);
+      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, animationScale.height * (crouch ? 0.84 : jump ? 1.04 : 1), smooth);
+      root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width, smooth);
     }
     if (torso.current) {
       torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.26 - crouch * 0.18 + hit * 0.2, smooth);
@@ -1725,6 +1734,14 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
       </mesh>
     </group>
   );
+}
+
+function getCharacterAnimationScale(character: CharacterDefinition, animationKey?: string) {
+  const size = animationKey ? character.animationScales?.[animationKey] : undefined;
+  return {
+    width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.25, 2.5),
+    height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.25, 2.5)
+  };
 }
 
 function getCachedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[]> {
