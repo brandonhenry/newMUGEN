@@ -479,7 +479,7 @@ function SpriteEffectPlane({
   const framePath = getEffectSpriteFrame(binding);
   const texture = useLoader(THREE.TextureLoader, framePath);
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
-  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
   useEffect(() => {
     texture.magFilter = THREE.NearestFilter;
@@ -488,26 +488,44 @@ function SpriteEffectPlane({
     texture.needsUpdate = true;
   }, [texture]);
   useFrame(() => {
-    if (binding.effect.billboard && meshRef.current) meshRef.current.lookAt(camera.position);
+    if (binding.effect.billboard && groupRef.current) groupRef.current.lookAt(camera.position);
     if (materialRef.current) materialRef.current.opacity = opacity;
   });
   const image = texture.image as { width?: number; height?: number } | undefined;
   const aspect = image?.width && image?.height ? image.width / image.height : 1;
+  const needsContrastHalo = /rasengan/i.test(`${binding.effect.id} ${binding.effect.name}`);
   return (
-    <mesh ref={meshRef} scale={[aspect, 1, 1]} renderOrder={46}>
-      <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial
-        ref={materialRef}
-        map={texture}
-        color={transform.color}
-        transparent
-        opacity={opacity}
-        alphaTest={0.02}
-        blending={binding.effect.blendMode === 'normal' ? THREE.NormalBlending : THREE.AdditiveBlending}
-        depthWrite={false}
-        toneMapped={false}
-      />
-    </mesh>
+    <group ref={groupRef}>
+      {needsContrastHalo && (
+        <mesh scale={[aspect * 1.18, 1.18, 1]} renderOrder={45}>
+          <planeGeometry args={[1, 1]} />
+          <meshBasicMaterial
+            map={texture}
+            color="#0648c8"
+            transparent
+            opacity={opacity * 0.52}
+            alphaTest={0.02}
+            blending={THREE.NormalBlending}
+            depthWrite={false}
+            toneMapped={false}
+          />
+        </mesh>
+      )}
+      <mesh scale={[aspect, 1, 1]} renderOrder={46}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial
+          ref={materialRef}
+          map={texture}
+          color={transform.color}
+          transparent
+          opacity={opacity}
+          alphaTest={0.02}
+          blending={binding.effect.blendMode === 'normal' ? THREE.NormalBlending : THREE.AdditiveBlending}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
+    </group>
   );
 }
 

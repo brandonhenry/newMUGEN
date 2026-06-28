@@ -8837,7 +8837,7 @@
       "fps": 12,
       "loop": false,
       "billboard": true,
-      "blendMode": "additive",
+      "blendMode": "normal",
       "anchor": "body",
       "defaultTransform": {
         "position": [
@@ -8856,19 +8856,32 @@
           0
         ],
         "opacity": 1,
-        "color": "#ffffff"
+        "color": "#bffcff"
       },
       "proceduralLayers": [
         {
-          "id": "glow",
+          "id": "core-glow",
           "kind": "glow",
-          "color": "#7de7ff",
-          "secondaryColor": "#2ee6ff",
-          "intensity": 1,
-          "count": 10,
-          "thickness": 0.08,
-          "length": 1.2,
-          "spin": 0
+          "color": "#22dfff",
+          "intensity": 1.65,
+          "size": 1.05,
+          "count": 14
+        },
+        {
+          "id": "outer-rim",
+          "kind": "ring",
+          "color": "#075dff",
+          "intensity": 0.92,
+          "size": 1.08,
+          "count": 1
+        },
+        {
+          "id": "chakra-sparks",
+          "kind": "lightning",
+          "color": "#35e8ff",
+          "intensity": 0.78,
+          "size": 1.05,
+          "count": 14
         }
       ],
       "soundCues": [
@@ -8916,7 +8929,7 @@
               0
             ],
             "opacity": 1,
-            "color": "#ffffff"
+            "color": "#a6f7ff"
           },
           {
             "frame": 32,
@@ -8937,7 +8950,7 @@
               0
             ],
             "opacity": 1,
-            "color": "#ffffff"
+            "color": "#5eeeff"
           }
         ],
         "soundCues": []
@@ -8973,7 +8986,7 @@
               0
             ],
             "opacity": 1,
-            "color": "#ffffff"
+            "color": "#c9fdff"
           },
           {
             "frame": 16,
@@ -8994,7 +9007,7 @@
               0
             ],
             "opacity": 1,
-            "color": "#ffffff"
+            "color": "#8cf4ff"
           },
           {
             "frame": 33,
@@ -9015,7 +9028,7 @@
               0
             ],
             "opacity": 1,
-            "color": "#ffffff"
+            "color": "#37dcff"
           }
         ],
         "soundCues": []
