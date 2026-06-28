@@ -156,7 +156,7 @@ export function getKeyboardBindingsForEvent(
   const keyIds = [event.code, event.key].filter(Boolean);
   const p1Action = findActionForKey(controls.keyboard[0], keyIds);
   const p2Action = findActionForKey(controls.keyboard[1], keyIds);
-  const aiAction = mode === 'ai' ? findActionForKey(aiModeArrowKeys, keyIds) : undefined;
+  const aiAction = mode === 'ai' || mode === 'versusCpu' ? findActionForKey(aiModeArrowKeys, keyIds) : undefined;
   if (p1Action) matches.push({ player: 1, action: p1Action });
   if (aiAction && !matches.some((match) => match.player === 1 && match.action === aiAction)) matches.push({ player: 1, action: aiAction });
   if (p2Action) matches.push({ player: 2, action: p2Action });
