@@ -4004,16 +4004,21 @@ function SettingsScreen({
 
   const renderEditor = () => {
     if (activeTab === 'game') {
+      const visibleRoundTimer = mode === 'online' ? 60 : settings.game.roundTimer;
       return (
         <div className="settings-section-stack">
           <SettingsSection index={0} title="Match Rules" active={activeSectionIndex === 0}>
             <SettingRow label="Match Mode" value={modeLabel(mode)}>
               <CharacterSelectModeCarousel value={mode} setValue={setMode} />
             </SettingRow>
-            <SettingRow label="Round Timer" value={formatRoundTimer(settings.game.roundTimer)}>
+            <SettingRow label="Round Timer" value={formatRoundTimer(visibleRoundTimer)}>
               <RoundTimerControl
-                value={settings.game.roundTimer}
-                setValue={(roundTimer) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer } }))}
+                value={visibleRoundTimer}
+                setValue={(roundTimer) => {
+                  if (mode !== 'online') {
+                    updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer } }));
+                  }
+                }}
               />
             </SettingRow>
             {usesCpuDifficulty(mode) && (
