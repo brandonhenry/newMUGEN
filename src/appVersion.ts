@@ -1,1 +1,1 @@
-export const KORE_APP_VERSION = '1.0.1';
+export const KORE_APP_VERSION = '1.0.2';
