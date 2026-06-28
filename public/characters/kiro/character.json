@@ -442,6 +442,15 @@
       "/characters/kiro/frames/frame-044.png",
       "/characters/kiro/frames/frame-043.png",
       "/characters/kiro/frames/frame-000.png"
+    ],
+    "cmd:FC+3+4": [
+      "/characters/kiro/frames/frame-180.png",
+      "/characters/kiro/frames/frame-181.png",
+      "/characters/kiro/frames/frame-183.png",
+      "/characters/kiro/frames/frame-184.png",
+      "/characters/kiro/frames/frame-185.png",
+      "/characters/kiro/frames/frame-186.png",
+      "/characters/kiro/frames/frame-023.png"
     ]
   },
   "animationFps": 5,
@@ -694,7 +703,12 @@
       "juggleGravityScale": 0.52
     },
     "cmd:FC+4": {
-      "recoveryFrames": 14
+      "recoveryFrames": 10,
+      "hitLevel": "low"
+    },
+    "cmd:FC+3": {
+      "startupFrames": 10,
+      "hitLevel": "low"
     }
   },
   "spriteFrameEdits": {

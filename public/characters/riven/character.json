@@ -417,6 +417,43 @@
       "/characters/riven/frames/frame-046.png",
       "/characters/riven/frames/frame-045.png",
       "/characters/riven/frames/frame-044.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-022.png",
+      "/characters/riven/frames/frame-079.png",
+      "/characters/riven/frames/frame-080.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-128.png",
+      "/characters/riven/frames/frame-129.png",
+      "/characters/riven/frames/frame-130.png",
+      "/characters/riven/frames/frame-131.png",
+      "/characters/riven/frames/frame-132.png"
+    ],
+    "cmd:FC+3": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-121.png",
+      "/characters/riven/frames/frame-122.png"
+    ],
+    "cmd:FC+4": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-022.png",
+      "/characters/riven/frames/frame-093.png",
+      "/characters/riven/frames/frame-094.png"
+    ],
+    "cmd:FC+3+4": [
+      "/characters/riven/frames/frame-120.png",
+      "/characters/riven/frames/frame-022.png",
+      "/characters/riven/frames/frame-148.png",
+      "/characters/riven/frames/frame-149.png",
+      "/characters/riven/frames/frame-150.png",
+      "/characters/riven/frames/frame-151.png",
+      "/characters/riven/frames/frame-152.png",
+      "/characters/riven/frames/frame-153.png",
+      "/characters/riven/frames/frame-154.png",
+      "/characters/riven/frames/frame-022.png"
     ]
   },
   "animationFps": 5,
@@ -444,7 +481,8 @@
     "jabright": 10,
     "kickleft": 10,
     "kickright": 11,
-    "cmd:1+2": 13
+    "cmd:1+2": 13,
+    "cmd:FC+1": 5
   },
   "moveOverrides": {
     "cmd:f+2": {
@@ -624,7 +662,16 @@
       "hitLevel": "low",
       "knockdown": true
     },
-    "cmd:3+4": {}
+    "cmd:3+4": {},
+    "cmd:FC+2": {
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52
+    },
+    "cmd:FC+4": {
+      "hitLevel": "mid"
+    }
   },
   "spriteFrameEdits": {
     "0": {
