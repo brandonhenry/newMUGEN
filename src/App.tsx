@@ -1484,6 +1484,16 @@ export default function App() {
   }, [p1Id, roster, unlockedCharacterIds]);
 
   useEffect(() => {
+    if (roster.length === 0 || mode === 'ai') return;
+    const selected = roster.find((character) => character.id === p2Id);
+    if (selected && isCharacterUnlocked(selected, unlockedCharacterIds)) return;
+    const firstUnlockedOpponent =
+      roster.find((character) => character.id !== p1Id && isCharacterUnlocked(character, unlockedCharacterIds)) ??
+      roster.find((character) => isCharacterUnlocked(character, unlockedCharacterIds));
+    if (firstUnlockedOpponent) setP2Id(firstUnlockedOpponent.id);
+  }, [mode, p1Id, p2Id, roster, unlockedCharacterIds]);
+
+  useEffect(() => {
     const hoverAudio = new Audio(KORE_MENU_HOVER_SOUND_URL);
     const selectAudio = new Audio(KORE_MENU_SELECT_SOUND_URL);
     const innerSelectAudio = new Audio(KORE_INNER_MENU_SELECT_SOUND_URL);
@@ -2771,8 +2781,9 @@ function ArcadeNameCard({
 }
 
 const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode }> = [
-  { mode: 'ai', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
+  { mode: 'ai', label: 'Arcade', icon: <Gamepad2 size={18} /> },
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
+  { mode: 'versusCpu', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
   { mode: 'training', label: 'Training', icon: <Target size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
   { mode: 'private', label: 'Private', icon: <KeyRound size={18} /> },
@@ -3126,7 +3137,7 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
   if (mode === 'private') return slot === 1 ? 'You' : 'Private Guest';
   if (slot === 2 && mode === 'training') return 'Dummy';
-  if (slot === 2 && mode === 'ai') return 'CPU';
+  if (slot === 2 && (mode === 'ai' || mode === 'versusCpu')) return 'CPU';
   return slot === 1 ? 'Player 1' : 'Player 2';
 }
 
@@ -3135,12 +3146,12 @@ function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
   if (mode === 'private') return slot === 1 ? 'YOU' : 'GUEST';
   if (slot === 2 && mode === 'training') return 'Dummy';
-  if (slot === 2 && mode === 'ai') return 'CPU';
+  if (slot === 2 && (mode === 'ai' || mode === 'versusCpu')) return 'CPU';
   return slot === 1 ? 'P1' : 'P2';
 }
 
 function usesCpuDifficulty(mode: MatchMode) {
-  return mode === 'ai' || mode === 'cpu';
+  return mode === 'ai' || mode === 'versusCpu' || mode === 'cpu';
 }
 
 const VERSUS_SPLASH_DURATION_MS = 2600;
@@ -4371,7 +4382,8 @@ function formatGamepadButtonName(button?: number) {
 }
 
 function modeLabel(mode: MatchMode) {
-  if (mode === 'ai') return '1P vs CPU';
+  if (mode === 'ai') return 'Arcade';
+  if (mode === 'versusCpu') return '1P vs CPU';
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
   if (mode === 'online') return 'Online';

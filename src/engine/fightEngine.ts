@@ -197,12 +197,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   const input2 =
     next.mode === 'training'
       ? makeTrainingDummyInput(next.fighters[1])
-      : next.mode === 'ai' || next.mode === 'cpu'
+      : next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu'
         ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
         : p2Input;
   if (isClashActive(next.clashState)) {
     const clashInput1 = next.mode === 'cpu' ? makeAiClashInput(next, 1) : input1;
-    const clashInput2 = next.mode === 'ai' || next.mode === 'cpu' ? makeAiClashInput(next, 2) : input2;
+    const clashInput2 = next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu' ? makeAiClashInput(next, 2) : input2;
     handleClashStep(next, clashInput1, clashInput2, dt);
     return next;
   }
