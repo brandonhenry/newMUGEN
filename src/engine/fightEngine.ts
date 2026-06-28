@@ -196,7 +196,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
-      ? emptyInputFrame()
+      ? makeTrainingDummyInput(next.fighters[1])
       : next.mode === 'ai' || next.mode === 'cpu'
         ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
         : p2Input;
@@ -225,6 +225,14 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
 export function createEmptyInputs(): [InputFrame, InputFrame] {
   return [emptyInputFrame(), emptyInputFrame()];
+}
+
+function makeTrainingDummyInput(dummy: FighterRuntime): InputFrame {
+  const input = emptyInputFrame();
+  if (dummy.state === 'knockdown' && !dummy.getupStarted) {
+    input.confirm = true;
+  }
+  return input;
 }
 
 function createEmptyClashParticipant(): ClashState['p1'] {

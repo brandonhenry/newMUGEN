@@ -633,6 +633,28 @@ describe('fight engine', () => {
     expect(match.fighters[0].moveFrame).toBeGreaterThan(0);
   });
 
+  it('makes the training dummy get up after knockdown while staying passive', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'knockdown';
+    match.fighters[1].actionFramesRemaining = 2;
+    match.fighters[1].actionTimer = 2 / 60;
+    match.fighters[1].stunFramesRemaining = 2;
+    match.fighters[1].stunTimer = 2 / 60;
+
+    for (let i = 0; i < 8; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].state).toBe('getup');
+    expect(match.fighters[1].getupStarted).toBe(true);
+    expect(match.fighters[1].getupAction).toBe('stand');
+    expect(match.fighters[1].currentMove).toBeNull();
+  });
+
   it('keeps training mode infinite by refilling zero health without ending the round', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
     match.phase = 'fighting';
