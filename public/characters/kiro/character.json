@@ -436,6 +436,12 @@
     "cmd:FC+4": [
       "/characters/kiro/frames/frame-141.png",
       "/characters/kiro/frames/frame-142.png"
+    ],
+    "backflip": [
+      "/characters/kiro/frames/frame-045.png",
+      "/characters/kiro/frames/frame-044.png",
+      "/characters/kiro/frames/frame-043.png",
+      "/characters/kiro/frames/frame-000.png"
     ]
   },
   "animationFps": 5,
@@ -716,6 +722,56 @@
       "scale": 1,
       "hidden": false,
       "revision": 1782496402303
+    },
+    "46": {
+      "index": 46,
+      "path": "/characters/kiro/frames/frame-046.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        610,
+        348,
+        681,
+        412
+      ],
+      "width": 71,
+      "height": 64,
+      "row": 4,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782607486096
+    },
+    "47": {
+      "index": 47,
+      "path": "/characters/kiro/frames/frame-047.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/kiro/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        719,
+        348,
+        783,
+        419
+      ],
+      "width": 64,
+      "height": 71,
+      "row": 4,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782607483926
     },
     "101": {
       "index": 101,

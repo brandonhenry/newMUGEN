@@ -412,6 +412,11 @@
     "sprint": [
       "/characters/riven/frames/frame-012.png",
       "/characters/riven/frames/frame-013.png"
+    ],
+    "backflip": [
+      "/characters/riven/frames/frame-046.png",
+      "/characters/riven/frames/frame-045.png",
+      "/characters/riven/frames/frame-044.png"
     ]
   },
   "animationFps": 5,
@@ -646,6 +651,31 @@
       "scale": 1,
       "hidden": false,
       "revision": 1782496456267
+    },
+    "46": {
+      "index": 46,
+      "path": "/characters/riven/frames/frame-046.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        663,
+        337,
+        738,
+        409
+      ],
+      "width": 75,
+      "height": 72,
+      "row": 4,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782607354828
     },
     "171": {
       "index": 171,

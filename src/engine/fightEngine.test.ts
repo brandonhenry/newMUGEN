@@ -1052,6 +1052,63 @@ describe('fight engine', () => {
     expect(match.fighters[0].ki).toBeLessThan(100);
   });
 
+  it('lets high difficulty CPU route into configured full-crouch stance attacks', () => {
+    const crouchCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...(starterCharacters[0].animationFrames ?? {}),
+        'cmd:FC+1': starterCharacters[0].animationFrames?.jableft ?? starterCharacters[0].animationFrames?.jab ?? []
+      },
+      moveOverrides: {
+        ...(starterCharacters[0].moveOverrides ?? {}),
+        'cmd:FC+1': {
+          label: 'CPU Crouch Check',
+          startupFrames: 10,
+          activeFrames: 3,
+          recoveryFrames: 16,
+          damage: 8,
+          blockDamage: 0,
+          hitLevel: 'low',
+          onBlockFrames: -9,
+          onHitFrames: 5,
+          onCounterHitFrames: 8,
+          range: 1.45,
+          pushback: 0.25,
+          blockPushback: 0.15,
+          tracking: 'medium',
+          knockdown: false,
+          hitbox: { offset: [0.58, 0.56, 0], size: [1, 0.46, 0.56] }
+        }
+      }
+    };
+    let match = createMatch(crouchCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 440 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.5;
+    match.fighters[1].position.x = 0.5;
+    match.fighters[1].state = 'hit';
+    match.fighters[1].stunFramesRemaining = 240;
+    match.fighters[1].actionFramesRemaining = 240;
+    match.fighters[1].stunTimer = 4;
+    match.fighters[1].actionTimer = 4;
+
+    let sawFullCrouch = false;
+    for (let i = 0; i < 240; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const move = match.fighters[0].currentMove;
+      if (match.fighters[0].state === 'attack' && move?.command === 'FC+1') {
+        sawFullCrouch = true;
+        expect(move.animationKey).toBe('cmd:FC+1');
+        expect(move.label).toBe('CPU Crouch Check');
+        break;
+      }
+    }
+
+    expect(sawFullCrouch).toBe(true);
+  });
+
   it('higher CPU difficulty extends hit-confirmed routes longer than easy CPU', () => {
     const simulatePressure = (difficulty: 1 | 5) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);

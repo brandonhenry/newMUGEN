@@ -3126,8 +3126,15 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   } else if (aiDecisionRoll(ai, opponent, elapsed, 8, roundAiSeed) < settings.suboptimalPressureRate * style.imperfectionScale) {
     pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   }
+  const pressureCrouchInput =
+    opening.kind === 'hitstun' || opening.kind === 'whiff'
+      ? chooseAiFullCrouchMoveInput(ai, pressureMoveInput, difficulty, selector + 37, routeRoll + 21, 'pressure')
+      : null;
+  if (pressureCrouchInput) pressureMoveInput = pressureCrouchInput;
   const pressureMove = ai.character.moves.find((move) => move.input === pressureMoveInput) ?? selectedMove;
-  const pressureKiBurst = shouldAiUseKiBurst(ai, opponent, pressureMoveInput, difficulty, opening.kind === 'whiff' ? 'whiff' : 'pressure', selector + 11, routeRoll + 19, leaderCloseout);
+  const pressureKiBurst =
+    !pressureCrouchInput &&
+    shouldAiUseKiBurst(ai, opponent, pressureMoveInput, difficulty, opening.kind === 'whiff' ? 'whiff' : 'pressure', selector + 11, routeRoll + 19, leaderCloseout);
   const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (pressureKiBurst ? 0.18 : 0) + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
@@ -3139,8 +3146,12 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     input.sidestepDown = false;
     input.sidewalkUp = false;
     input.sidewalkDown = false;
-    input.charge = pressureKiBurst;
-    input[pressureMoveInput] = true;
+    if (pressureCrouchInput) {
+      applyAiFullCrouchAttack(input, pressureCrouchInput, towardKey, awayKey);
+    } else {
+      input.charge = pressureKiBurst;
+      input[pressureMoveInput] = true;
+    }
     return input;
   }
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && distance < pressureReach + 0.88) {
@@ -3166,12 +3177,26 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   if (canPressure && attackPulse) {
     applyAiRoute(ai, input, towardKey, awayKey, leaderCloseout ? Math.min(difficulty, 2) as CpuDifficulty : difficulty, ai.comboStep, selector, routeRoll);
     selectedMoveInput = chooseAiKiBurstMoveInput(ai, selectedMoveInput, difficulty, selector + 31, routeRoll + 37);
-    input.charge = shouldAiUseKiBurst(ai, opponent, selectedMoveInput, difficulty, shouldContinueCombo ? 'pressure' : 'neutral', selector + 29, routeRoll + 41, leaderCloseout);
-    input[selectedMoveInput] = true;
-    if (!leaderCloseout && difficulty >= 4 && routeRoll > 78) {
+    const crouchInput = chooseAiFullCrouchMoveInput(ai, selectedMoveInput, difficulty, selector + 47, routeRoll + 53, shouldContinueCombo ? 'pressure' : 'neutral');
+    if (crouchInput) {
+      selectedMoveInput = crouchInput;
+      applyAiFullCrouchAttack(input, selectedMoveInput, towardKey, awayKey);
+    } else {
+      input.charge = shouldAiUseKiBurst(ai, opponent, selectedMoveInput, difficulty, shouldContinueCombo ? 'pressure' : 'neutral', selector + 29, routeRoll + 41, leaderCloseout);
+      input[selectedMoveInput] = true;
+    }
+    if (!crouchInput && !leaderCloseout && difficulty >= 4 && routeRoll > 78) {
       const secondButton = routeRoll > 90 ? 'special' : routeRoll > 84 ? 'heavy' : 'kick';
       input[secondButton] = true;
     }
+  } else if (!input.block && canAct && inStrikeRange && shouldAiHoldFullCrouchStance(ai, difficulty, selector + 61, routeRoll + 17)) {
+    input.down = true;
+    input[towardKey] = false;
+    input[awayKey] = false;
+    input.sidestepUp = false;
+    input.sidestepDown = false;
+    input.sidewalkUp = false;
+    input.sidewalkDown = false;
   }
 
   input.up = false;
@@ -3442,6 +3467,90 @@ function hasConfiguredKiCommand(ai: FighterRuntime, input: MoveInput) {
   const button = inputToButton[input];
   const key = commandAnimationKey(`O+${button}`);
   return (ai.character.animationFrames?.[key]?.length ?? 0) > 0;
+}
+
+type AiFullCrouchContext = 'neutral' | 'pressure';
+
+function hasConfiguredFullCrouchCommand(ai: FighterRuntime, input: MoveInput) {
+  const button = inputToButton[input];
+  return (ai.character.animationFrames?.[commandAnimationKey(`FC+${button}`)]?.length ?? 0) > 0;
+}
+
+function getConfiguredFullCrouchInputs(ai: FighterRuntime): MoveInput[] {
+  return moveInputs.filter((input) => ai.character.moves.some((move) => move.input === input) && hasConfiguredFullCrouchCommand(ai, input));
+}
+
+function chooseAiFullCrouchMoveInput(
+  ai: FighterRuntime,
+  preferred: MoveInput,
+  difficulty: CpuDifficulty,
+  selector: number,
+  routeRoll: number,
+  context: AiFullCrouchContext
+): MoveInput | null {
+  const candidates = getConfiguredFullCrouchInputs(ai);
+  if (candidates.length === 0) return null;
+
+  const chance =
+    context === 'pressure'
+      ? difficulty <= 1
+        ? 0.05
+        : difficulty === 2
+          ? 0.12
+          : difficulty === 3
+            ? 0.24
+            : difficulty === 4
+              ? 0.36
+              : 0.48
+      : difficulty <= 1
+        ? 0.02
+        : difficulty === 2
+          ? 0.08
+          : difficulty === 3
+            ? 0.16
+            : difficulty === 4
+              ? 0.27
+              : 0.38;
+  const roll = positiveModulo(selector * 5 + routeRoll * 9 + ai.slot * 31 + ai.comboStep * 17, 100) / 100;
+  if (roll > chance) return null;
+
+  const scored = candidates.map((input, index) => {
+    const move = ai.character.moves.find((candidate) => candidate.input === input);
+    const preferredBonus = input === preferred ? 0.16 : 0;
+    const stalePenalty = inputRecentlyUsed(ai, input) ? 0.32 : 0;
+    const comboPenalty = inputAlreadyUsedInCombo(ai, input) ? 0.58 : 0;
+    const lowPressureBonus = context === 'pressure' && (move?.hitLevel === 'low' || move?.hitLevel === 'mid') ? 0.18 : 0;
+    const speedBonus = move ? clamp((18 - move.startupFrames) / 24, -0.16, 0.22) : 0;
+    const wave = positiveModulo(selector + routeRoll * (index + 4) + input.length * 19 + ai.slot * 7, 100) / 100;
+    return {
+      input,
+      score: preferredBonus + lowPressureBonus + speedBonus + wave * 0.36 - stalePenalty - comboPenalty
+    };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored[0]?.input ?? null;
+}
+
+function shouldAiHoldFullCrouchStance(ai: FighterRuntime, difficulty: CpuDifficulty, selector: number, routeRoll: number) {
+  if (difficulty <= 1) return false;
+  if (getConfiguredFullCrouchInputs(ai).length === 0) return false;
+  const chance = difficulty === 2 ? 0.03 : difficulty === 3 ? 0.06 : difficulty === 4 ? 0.09 : 0.12;
+  const roll = positiveModulo(selector * 7 + routeRoll * 3 + ai.slot * 43 + Math.floor(ai.hp), 100) / 100;
+  return roll < chance;
+}
+
+function applyAiFullCrouchAttack(input: InputFrame, moveInput: MoveInput, towardKey: 'left' | 'right', awayKey: 'left' | 'right') {
+  input.block = false;
+  input.charge = false;
+  input.up = false;
+  input.down = true;
+  input[towardKey] = false;
+  input[awayKey] = false;
+  input.sidestepUp = false;
+  input.sidestepDown = false;
+  input.sidewalkUp = false;
+  input.sidewalkDown = false;
+  input[moveInput] = true;
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {
