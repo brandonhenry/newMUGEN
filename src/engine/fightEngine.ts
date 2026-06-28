@@ -429,6 +429,11 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): 
 function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: InputFrame, dt: number) {
   const fighter = match.fighters[fighterIndex];
   const opponent = match.fighters[fighterIndex === 0 ? 1 : 0];
+  const previousPosition = { ...fighter.position };
+  const finishFighterStep = () => {
+    applyShadowCloneMovementDelta(fighter, previousPosition);
+    updateAttackInputMemory(fighter, input);
+  };
   const jumpPressed = input.up && !fighter.jumpInputHeld;
   const frameDelta = secondsToFrames(dt);
   fighter.jumpInputHeld = input.up;
@@ -462,7 +467,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     clearKiChargeState(fighter);
     startComboAttack(fighter, opponent, input, freshMoveInput, 'neutral');
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -470,7 +475,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     handleKiChargeStep(fighter, input, dt);
     maybeSpawnShadowCloneFromCharge(fighter, opponent);
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -525,7 +530,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     }
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -541,13 +546,13 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.juggleTornadoCount = 0;
       fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     }
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
   if (fighter.state === 'hit' && isAirborne(fighter)) {
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -558,17 +563,17 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     } else if (bufferedMove && canComboCancel(fighter) && startComboAttack(fighter, opponent, input, bufferedMove, 'cancel')) {
       clearBufferedMoveInput(fighter);
       applyGravity(fighter, dt);
-      updateAttackInputMemory(fighter, input);
+      finishFighterStep();
       return;
     }
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
   if (fighter.stunFramesRemaining > 0 || fighter.blockstunFramesRemaining > 0) {
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -577,7 +582,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.state = 'crouch';
     fighter.wasCrouching = true;
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
   if (input.down) fighter.forcedCrouchFrames = 0;
@@ -589,7 +594,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       clearBufferedMoveInput(fighter);
     }
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -597,7 +602,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     startKiCharge(fighter);
     maybeSpawnShadowCloneFromCharge(fighter, opponent);
     applyGravity(fighter, dt);
-    updateAttackInputMemory(fighter, input);
+    finishFighterStep();
     return;
   }
 
@@ -659,7 +664,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
 
   applyGravity(fighter, dt);
   fighter.wasCrouching = crouching;
-  updateAttackInputMemory(fighter, input);
+  finishFighterStep();
 }
 
 function bufferMoveInput(fighter: FighterRuntime, moveInput: MoveInput) {
@@ -811,19 +816,10 @@ function maybeSpawnShadowCloneFromCharge(fighter: FighterRuntime, opponent: Figh
   fighter.shadowCloneChargeConsumed = true;
 }
 
-function startShadowCloneAttack(fighter: FighterRuntime, opponent: FighterRuntime, move: MoveDefinition) {
+function startShadowCloneAttack(fighter: FighterRuntime, _opponent: FighterRuntime, move: MoveDefinition) {
   const clone = fighter.shadowClone;
   if (!clone || clone.phase !== 'active' || clone.attackConsumed || clone.state === 'juggle' || clone.state === 'knockdown') return;
 
-  const dx = opponent.position.x - fighter.position.x;
-  const dz = opponent.position.z - fighter.position.z;
-  const distance = Math.hypot(dx, dz) || 1;
-  const towardX = dx / distance;
-  const towardZ = dz / distance;
-  const laneSign = fighter.slot === 1 ? -1 : 1;
-  clone.position.x = fighter.position.x - towardX * 0.3 + -towardZ * laneSign * SHADOW_CLONE_OFFSET_LANE;
-  clone.position.y = Math.max(0, fighter.position.y);
-  clone.position.z = fighter.position.z - towardZ * 0.3 + towardX * laneSign * SHADOW_CLONE_OFFSET_LANE;
   clone.velocityY = 0;
   clone.facing = fighter.facing;
   clone.facingYaw = fighter.facingYaw;
@@ -835,6 +831,25 @@ function startShadowCloneAttack(fighter: FighterRuntime, opponent: FighterRuntim
   clone.hitConnected = false;
   clone.attackConsumed = true;
   clone.vanishOnLanding = false;
+}
+
+function applyShadowCloneMovementDelta(fighter: FighterRuntime, previousPosition: FighterRuntime['position']) {
+  const clone = fighter.shadowClone;
+  if (!clone || clone.phase !== 'active') return;
+  if (clone.state !== 'idle' && clone.state !== 'attack') return;
+  const dx = fighter.position.x - previousPosition.x;
+  const dy = fighter.position.y - previousPosition.y;
+  const dz = fighter.position.z - previousPosition.z;
+  if (dx === 0 && dy === 0 && dz === 0) {
+    clone.facing = fighter.facing;
+    clone.facingYaw = fighter.facingYaw;
+    return;
+  }
+  clone.position.x += dx;
+  clone.position.y = Math.max(0, clone.position.y + dy);
+  clone.position.z += dz;
+  clone.facing = fighter.facing;
+  clone.facingYaw = fighter.facingYaw;
 }
 
 function updateShadowClone(fighter: FighterRuntime, dt: number) {
@@ -3037,6 +3052,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     else input.confirm = true;
     return input;
   }
+  if (ai.state === 'chargeKi') {
+    input.charge = shouldAiContinueCharacterAbilityCharge(ai);
+    return input;
+  }
   let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
   if (leaderCloseout) {
     selectedMoveInput = chooseAiCloseoutMoveInput(ai, selectedMoveInput, selector, routeRoll);
@@ -3135,7 +3154,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   }
   const pressureCrouchInput =
-    opening.kind === 'hitstun' || opening.kind === 'whiff'
+    !leaderCloseout && (opening.kind === 'hitstun' || opening.kind === 'whiff')
       ? chooseAiFullCrouchMoveInput(ai, pressureMoveInput, difficulty, selector + 37, routeRoll + 21, 'pressure')
       : null;
   if (pressureCrouchInput) pressureMoveInput = pressureCrouchInput;
@@ -3179,13 +3198,32 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
   const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5, roundAiSeed) < settings.attackHesitationRate * style.imperfectionScale;
   const canPressure = !missedKnownOpening && !attackHesitation && !input.block && canAct && inStrikeRange && !tooClose;
+  if (
+    !input.block &&
+    canStartAction &&
+    canAct &&
+    shouldAiStartCharacterAbilityCharge(ai, opponent, difficulty, distance, tooClose, danger, leaderCloseout, opening, selector + 71, routeRoll + 43)
+  ) {
+    input.charge = true;
+    input[towardKey] = false;
+    input[awayKey] = false;
+    input.sidestepUp = false;
+    input.sidestepDown = false;
+    input.sidewalkUp = false;
+    input.sidewalkDown = false;
+    input.down = false;
+    input.up = false;
+    return input;
+  }
   const leaderAttackScale = leaderCloseout ? 1.12 - leaderBrake * 0.08 : 1;
   const leaderComboScale = leaderCloseout ? 0.74 - leaderBrake * 0.14 : 1;
   const attackPulse = attackPhase < settings.attackPulse * style.attackPulseScale * leaderAttackScale || (shouldContinueCombo && comboPhase < settings.comboPulse * style.comboPulseScale * leaderComboScale);
   if (canPressure && attackPulse) {
-    applyAiRoute(ai, input, towardKey, awayKey, leaderCloseout ? Math.min(difficulty, 2) as CpuDifficulty : difficulty, ai.comboStep, selector, routeRoll);
+    if (!leaderCloseout) {
+      applyAiRoute(ai, input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
+    }
     selectedMoveInput = chooseAiKiBurstMoveInput(ai, selectedMoveInput, difficulty, selector + 31, routeRoll + 37);
-    const crouchInput = chooseAiFullCrouchMoveInput(ai, selectedMoveInput, difficulty, selector + 47, routeRoll + 53, shouldContinueCombo ? 'pressure' : 'neutral');
+    const crouchInput = leaderCloseout ? null : chooseAiFullCrouchMoveInput(ai, selectedMoveInput, difficulty, selector + 47, routeRoll + 53, shouldContinueCombo ? 'pressure' : 'neutral');
     if (crouchInput) {
       selectedMoveInput = crouchInput;
       applyAiFullCrouchAttack(input, selectedMoveInput, towardKey, awayKey);
@@ -3197,7 +3235,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
       const secondButton = routeRoll > 90 ? 'special' : routeRoll > 84 ? 'heavy' : 'kick';
       input[secondButton] = true;
     }
-  } else if (!input.block && canAct && inStrikeRange && shouldAiHoldFullCrouchStance(ai, difficulty, selector + 61, routeRoll + 17)) {
+  } else if (!leaderCloseout && !input.block && canAct && inStrikeRange && shouldAiHoldFullCrouchStance(ai, difficulty, selector + 61, routeRoll + 17)) {
     input.down = true;
     input[towardKey] = false;
     input[awayKey] = false;
@@ -3475,6 +3513,56 @@ function hasConfiguredKiCommand(ai: FighterRuntime, input: MoveInput) {
   const button = inputToButton[input];
   const key = commandAnimationKey(`O+${button}`);
   return (ai.character.animationFrames?.[key]?.length ?? 0) > 0;
+}
+
+function shouldAiContinueCharacterAbilityCharge(ai: FighterRuntime) {
+  if (ai.chargePhase === 'startup') return true;
+  if (isShadowCloneCharacter(ai)) {
+    return !ai.shadowClone && !ai.shadowCloneChargeConsumed;
+  }
+  return ai.ki < KI_BURST_COST;
+}
+
+function shouldAiStartCharacterAbilityCharge(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  distance: number,
+  tooClose: boolean,
+  danger: boolean,
+  leaderCloseout: boolean,
+  opening: AiOpening,
+  selector: number,
+  routeRoll: number
+) {
+  if (!isShadowCloneCharacter(ai)) return false;
+  if (ai.shadowClone || ai.shadowCloneChargeConsumed) return false;
+  if (leaderCloseout) return false;
+  if (tooClose || danger) return false;
+  if (opening.kind !== 'none') return false;
+  if (ai.comboTimer > 0 || ai.comboHits > 0) return false;
+  if (opponent.state === 'attack' && opponent.currentMove && distance < opponent.currentMove.range + 0.55) return false;
+
+  const alreadyReady = ai.ki >= SHADOW_CLONE_KI_THRESHOLD;
+  const safeWindow = distance > 1.35 || opponent.state === 'knockdown' || opponent.state === 'getup';
+  if (!alreadyReady && !safeWindow) return false;
+
+  const difficultyChance =
+    difficulty <= 1
+      ? 0.05
+      : difficulty === 2
+        ? 0.1
+        : difficulty === 3
+          ? 0.17
+          : difficulty === 4
+            ? 0.23
+            : 0.28;
+  const kiReadinessBonus = alreadyReady ? 0.18 : clamp(ai.ki / SHADOW_CLONE_KI_THRESHOLD, 0, 1) * 0.1;
+  const openingBonus = opponent.state === 'knockdown' || opponent.state === 'getup' ? 0.1 : 0;
+  const distanceBonus = clamp((distance - 1.2) / 2.4, 0, 0.08);
+  const chance = clamp(difficultyChance + kiReadinessBonus + openingBonus + distanceBonus, 0.02, 0.58);
+  const roll = positiveModulo(selector * 11 + routeRoll * 5 + ai.slot * 37 + Math.floor(ai.ki * 7) + Math.floor(opponent.hp), 100) / 100;
+  return roll < chance;
 }
 
 type AiFullCrouchContext = 'neutral' | 'pressure';

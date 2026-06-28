@@ -1074,6 +1074,31 @@ describe('fight engine', () => {
     expect(match.fighters[0].ki).toBeLessThan(100);
   });
 
+  it('lets CPU Naruto charge for shadow clone ability instead of only using ki bursts', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 118 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].ki = 50;
+    match.fighters[0].position.x = -1.25;
+    match.fighters[1].position.x = 1.25;
+
+    let sawCharge = false;
+    let sawClone = false;
+    for (let i = 0; i < 180; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[0].state === 'chargeKi') sawCharge = true;
+      if (match.fighters[0].shadowClone?.phase === 'active') {
+        sawClone = true;
+        break;
+      }
+    }
+
+    expect(sawCharge).toBe(true);
+    expect(sawClone).toBe(true);
+  });
+
   it('lets high difficulty CPU route into configured full-crouch stance attacks', () => {
     const crouchCharacter: CharacterDefinition = {
       ...starterCharacters[0],
@@ -2447,6 +2472,48 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[0].shadowClone).toBeNull();
+  });
+
+  it('keeps a spawned shadow clone offset instead of teleporting it onto Naruto before attack', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 60;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+
+    for (let i = 0; i < 48 && match.fighters[0].state !== 'idle'; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const clone = match.fighters[0].shadowClone;
+    expect(clone?.phase).toBe('active');
+    const initialOffset = {
+      x: (clone?.position.x ?? 0) - match.fighters[0].position.x,
+      z: (clone?.position.z ?? 0) - match.fighters[0].position.z
+    };
+
+    const walk = emptyInputFrame();
+    walk.right = true;
+    for (let i = 0; i < 10; i += 1) {
+      match = stepMatch(match, walk, emptyInputFrame(), 1 / 60);
+    }
+
+    const movedClone = match.fighters[0].shadowClone;
+    expect((movedClone?.position.x ?? 0) - match.fighters[0].position.x).toBeCloseTo(initialOffset.x, 4);
+    expect((movedClone?.position.z ?? 0) - match.fighters[0].position.z).toBeCloseTo(initialOffset.z, 4);
+
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+
+    const attackingClone = match.fighters[0].shadowClone;
+    expect(attackingClone?.state).toBe('attack');
+    expect((attackingClone?.position.x ?? 0) - match.fighters[0].position.x).toBeCloseTo(initialOffset.x, 4);
+    expect((attackingClone?.position.z ?? 0) - match.fighters[0].position.z).toBeCloseTo(initialOffset.z, 4);
   });
 
   it('cancels charge without recovery before the commit window', () => {
