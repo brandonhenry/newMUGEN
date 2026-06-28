@@ -5253,12 +5253,62 @@ button {
   text-wrap: balance;
 }
 
+.pause-menu-actions {
+  display: grid;
+  width: min(460px, 88vw);
+  gap: 0;
+  padding: 8px 0;
+  background: linear-gradient(180deg, rgba(10, 22, 70, 0.74), rgba(7, 11, 38, 0.82));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 70px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(7px);
+}
+
+.pause-overlay .pause-menu-actions .primary-button,
+.pause-overlay .pause-menu-actions .secondary-button {
+  width: 100%;
+  min-height: 54px;
+  border-radius: 0;
+  padding: 0 22px;
+  color: rgba(247, 247, 242, 0.84);
+  background: transparent;
+  box-shadow: none;
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 950;
+  text-transform: uppercase;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.34);
+}
+
+.pause-overlay .pause-menu-actions .primary-button:hover,
+.pause-overlay .pause-menu-actions .primary-button:focus-visible,
+.pause-overlay .pause-menu-actions .secondary-button:hover,
+.pause-overlay .pause-menu-actions .secondary-button:focus-visible {
+  color: #ffffff;
+  background: linear-gradient(90deg, rgba(76, 112, 255, 0.58), rgba(108, 174, 255, 0.36));
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.48),
+    0 3px 0 rgba(0, 0, 0, 0.42);
+  outline: 0;
+}
+
+.pause-movelist-panel {
+  display: grid;
+  gap: 12px;
+  width: min(860px, 94vw);
+  max-height: min(560px, 58vh);
+  min-height: 0;
+}
+
+.pause-movelist-tabs {
+  grid-template-columns: auto repeat(5, minmax(0, 1fr)) auto;
+}
+
 .pause-movelist {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
-  width: min(760px, 92vw);
-  max-height: 280px;
+  min-height: 0;
   overflow: auto;
   margin: 4px 0 8px;
   text-align: left;
@@ -5282,25 +5332,45 @@ button {
 }
 
 .pause-movelist section > div {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 7px;
 }
 
 .pause-movelist section > div > span {
-  display: inline-grid;
-  grid-template-columns: auto 1fr;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 6px;
   border-radius: 6px;
   padding: 5px 8px;
   background: rgba(0, 0, 0, 0.2);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 850;
 }
 
 .pause-movelist section > div > span small {
   grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+  .pause-movelist-panel {
+    max-height: min(620px, 62vh);
+  }
+
+  .pause-movelist-tabs {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .pause-movelist-tabs > span {
+    display: none;
+  }
+
+  .pause-movelist-tabs button {
+    min-height: 40px;
+    font-size: 11px;
+  }
+
 }
 
 .touch-controls {

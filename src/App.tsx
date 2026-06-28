@@ -8,6 +8,7 @@ import {
   Gamepad2,
   Home,
   KeyRound,
+  List,
   Pause,
   Play,
   Rotate3D,
@@ -102,6 +103,7 @@ type AnimationSlot = {
   category: 'stance' | 'raw' | 'direction' | 'motion' | 'state' | 'special';
   command?: string;
 };
+type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special';
 
 type HdVoxelRun = {
   part: 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
@@ -432,6 +434,7 @@ const FALLBACK_BGM_TRACK: LocalBgmTrack = LOCAL_BGM_TRACKS[0] ?? {
 const KORE_TITLE_BGM_TRACK = findBgmTrack('SEQ_BGMM_TITLE') ?? FALLBACK_BGM_TRACK;
 const KORE_MENU_BGM_TRACK = findBgmTrack('SEQ_BGMM_MAINMENU') ?? FALLBACK_BGM_TRACK;
 const KORE_OPTIONS_BGM_TRACK = findBgmTrack('SEQ_BGMM_OPTION') ?? KORE_MENU_BGM_TRACK;
+const KORE_PAUSE_BGM_TRACK = findBgmTrack('SEQ_BGMB_SETTING') ?? KORE_OPTIONS_BGM_TRACK;
 
 const KORE_MENU_BGM_SOURCE: BgmSource = {
   key: 'menu:local-bgm-library',
@@ -530,6 +533,14 @@ const slotCategoryOptions: Array<{ value: AnimationSlot['category'] | 'all'; lab
   { value: 'special', label: 'Ki/Heat/Rage' },
   { value: 'all', label: 'All' }
 ];
+const moveListTabs: MoveListTab[] = ['raw', 'direction', 'motion', 'state', 'special'];
+const moveListTabLabels: Record<MoveListTab, string> = {
+  raw: 'Basics',
+  direction: 'Directions',
+  motion: 'Motions',
+  state: 'States',
+  special: 'Ki/Heat/Rage'
+};
 const hitLevelOptions: HitLevel[] = ['high', 'mid', 'low', 'throw', 'special'];
 const trackingOptions: MoveTracking[] = ['none', 'weakLeft', 'weakRight', 'medium', 'strong', 'homing'];
 const cpuDifficultyLabels: Record<CpuDifficulty, string> = {
@@ -1523,6 +1534,7 @@ export default function App() {
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [musicStarted, setMusicStarted] = useState(true);
+  const [fightPaused, setFightPaused] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const innerMenuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -1908,12 +1920,12 @@ export default function App() {
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const activeBgmSource = useMemo(() => {
     if (!musicStarted || screen === 'boot') return null;
-    if (screen === 'fight') return stageBgmSource(selectedStage);
+    if (screen === 'fight') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
     if (!settings.audio.menuMusic) return null;
     if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
     if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
     return KORE_MENU_BGM_SOURCE;
-  }, [musicStarted, screen, selectedStage, settings.audio.menuMusic]);
+  }, [fightPaused, musicStarted, screen, selectedStage, settings.audio.menuMusic]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -2118,6 +2130,7 @@ export default function App() {
             getLastInput={getLastInput}
             onlineProfile={onlineProfile}
             privateRoomIntent={privateRoomIntent}
+            onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
             onCharacterSelect={() => setScreen('select')}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
@@ -8585,6 +8598,7 @@ function FightScreen({
   getLastInput,
   onlineProfile,
   privateRoomIntent,
+  onPausedChange,
   onMenu,
   onCharacterSelect,
   onArcadeAdvance
@@ -8603,11 +8617,14 @@ function FightScreen({
   getLastInput: () => string;
   onlineProfile: OnlinePlayerProfile | null;
   privateRoomIntent: PrivateRoomIntent | null;
+  onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onCharacterSelect: () => void;
   onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string }) => void;
 }) {
   const [paused, setPaused] = useState(false);
+  const [pauseMenuView, setPauseMenuView] = useState<'menu' | 'movelist'>('menu');
+  const [activeMoveListTab, setActiveMoveListTab] = useState<MoveListTab>('raw');
   const isOnline = mode === 'online' || mode === 'private';
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
@@ -8622,6 +8639,7 @@ function FightScreen({
   const matchRef = useRef(match);
   const pausedRef = useRef(paused);
   const pauseLatch = useRef(false);
+  const moveListTabLatch = useRef(false);
   const frameInputRef = useRef('none');
   const screenRef = useRef<HTMLDivElement>(null);
   const seenCombatEventIds = useRef<Set<number>>(new Set());
@@ -8660,13 +8678,44 @@ function FightScreen({
 
   useEffect(() => {
     pausedRef.current = paused;
-  }, [paused]);
+    onPausedChange(paused);
+  }, [onPausedChange, paused]);
+
+  useEffect(() => {
+    return () => onPausedChange(false);
+  }, [onPausedChange]);
 
   useEffect(() => {
     if (!paused) return undefined;
     const frame = window.requestAnimationFrame(() => focusDefaultMenuElement());
     return () => window.cancelAnimationFrame(frame);
+  }, [pauseMenuView, paused]);
+
+  useEffect(() => {
+    if (!paused) setPauseMenuView('menu');
   }, [paused]);
+
+  const cycleMoveListTab = useCallback((direction: -1 | 1) => {
+    setActiveMoveListTab((current) => {
+      const currentIndex = moveListTabs.indexOf(current);
+      return moveListTabs[(currentIndex + direction + moveListTabs.length) % moveListTabs.length] ?? current;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!paused || pauseMenuView !== 'movelist') return undefined;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (isTextEntryElement(event.target)) return;
+      const key = event.key.toLowerCase();
+      if (key !== 'o' && key !== 'p') return;
+      event.preventDefault();
+      event.stopPropagation();
+      cycleMoveListTab(key === 'p' ? 1 : -1);
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, [cycleMoveListTab, pauseMenuView, paused]);
 
   useEffect(() => {
     onlineStateRef.current = onlineState;
@@ -9156,6 +9205,20 @@ function FightScreen({
         pauseLatch.current = false;
       }
 
+      if (paused && pauseMenuView === 'movelist') {
+        const tabDirection = (p1Input.right || p2Input.right) ? 1 : (p1Input.left || p2Input.left) ? -1 : 0;
+        if (tabDirection) {
+          if (!moveListTabLatch.current) {
+            cycleMoveListTab(tabDirection);
+            moveListTabLatch.current = true;
+          }
+        } else {
+          moveListTabLatch.current = false;
+        }
+      } else {
+        moveListTabLatch.current = false;
+      }
+
       if (!paused) {
         accumulator += delta;
         while (accumulator >= fixedStep) {
@@ -9200,7 +9263,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [clearMenuInputs, cpuDifficulty, isOnline, matchOptions, p1, p2, paused, publishOnlineSnapshot, readInputs, recordOnlineMatchWin, stage]);
+  }, [clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, p1, p2, pauseMenuView, paused, publishOnlineSnapshot, readInputs, recordOnlineMatchWin, stage]);
 
   const requestOnlineRematch = () => {
     if (!isOnline || onlineStateRef.current !== 'connected') {
@@ -9295,29 +9358,56 @@ function FightScreen({
       )}
       {paused && (
         <div className="pause-overlay">
-          <Pause size={32} />
-          <h2>Paused</h2>
-          <ConfiguredMoveList characters={[p1, p2]} />
-          <div className="overlay-actions">
-            <button className="primary-button" onClick={() => setPaused(false)}>
-              <Play size={18} />
-              Resume
-            </button>
-            {mode !== 'ai' && (
-              <button className="secondary-button" onClick={reset}>
-                <RotateCcw size={18} />
-                Restart
-              </button>
-            )}
-            <button className="secondary-button" onClick={leaveToCharacterSelect}>
-              <Users size={18} />
-              Select
-            </button>
-            <button className="secondary-button" onClick={leaveToMenu}>
-              <Home size={18} />
-              Menu
-            </button>
-          </div>
+          {pauseMenuView === 'movelist' ? (
+            <>
+              <List size={32} />
+              <h2>Move List</h2>
+              <ConfiguredMoveList
+                characters={[p1, p2]}
+                activeTab={activeMoveListTab}
+                onTabChange={setActiveMoveListTab}
+              />
+              <div className="overlay-actions pause-menu-actions">
+                <button className="secondary-button" onClick={() => setPauseMenuView('menu')}>
+                  <ChevronLeft size={18} />
+                  Back
+                </button>
+                <button className="primary-button" onClick={() => setPaused(false)}>
+                  <Play size={18} />
+                  Resume
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Pause size={32} />
+              <h2>Paused</h2>
+              <div className="overlay-actions pause-menu-actions">
+                <button className="primary-button" onClick={() => setPaused(false)}>
+                  <Play size={18} />
+                  Resume
+                </button>
+                <button className="secondary-button" onClick={() => setPauseMenuView('movelist')}>
+                  <List size={18} />
+                  Move List
+                </button>
+                {mode !== 'ai' && (
+                  <button className="secondary-button" onClick={reset}>
+                    <RotateCcw size={18} />
+                    Restart
+                  </button>
+                )}
+                <button className="secondary-button" onClick={leaveToCharacterSelect}>
+                  <Users size={18} />
+                  Select
+                </button>
+                <button className="secondary-button" onClick={leaveToMenu}>
+                  <Home size={18} />
+                  Menu
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
       {isOnline && (onlineState === 'disconnected' || onlineState === 'error') && (
@@ -9360,33 +9450,60 @@ function FightScreen({
   );
 }
 
-function ConfiguredMoveList({ characters }: { characters: [CharacterDefinition, CharacterDefinition] }) {
+function ConfiguredMoveList({
+  characters,
+  activeTab,
+  onTabChange
+}: {
+  characters: [CharacterDefinition, CharacterDefinition];
+  activeTab: MoveListTab;
+  onTabChange: (tab: MoveListTab) => void;
+}) {
   return (
-    <div className="pause-movelist">
-      {characters.map((character, index) => {
-        const configured = animationSlots.filter((slot) => slot.command && (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0);
-        return (
-          <section key={character.id}>
-            <h3>{index === 0 ? 'P1' : 'P2'} {character.displayName}</h3>
-            {configured.length === 0 ? (
-              <p>No custom commands configured.</p>
-            ) : (
-              <div>
-                {configured.slice(0, 36).map((slot) => {
-                  const move = resolveSlotMove(character, slot);
-                  return (
-                    <span key={slot.key}>
-                      <NotationGroup tokens={slot.notation} />
-                      {formatMoveSlotLabel(slot, move)}
-                      <small>{formatFrameSummary(move)}</small>
-                    </span>
-                  );
-                })}
-              </div>
-            )}
-          </section>
-        );
-      })}
+    <div className="pause-movelist-panel">
+      <nav className="options-tabs pause-movelist-tabs" aria-label="Move list tabs">
+        <span>O</span>
+        {moveListTabs.map((tab) => (
+          <button
+            key={tab}
+            className={activeTab === tab ? 'active' : ''}
+            onClick={() => onTabChange(tab)}
+          >
+            {moveListTabLabels[tab]}
+          </button>
+        ))}
+        <span>P</span>
+      </nav>
+      <div className="pause-movelist">
+        {characters.map((character, index) => {
+          const configured = animationSlots.filter((slot) => (
+            slot.command &&
+            slot.category === activeTab &&
+            (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0
+          ));
+          return (
+            <section key={character.id}>
+              <h3>{index === 0 ? 'P1' : 'P2'} {character.displayName}</h3>
+              {configured.length === 0 ? (
+                <p>No {moveListTabLabels[activeTab].toLowerCase()} commands configured.</p>
+              ) : (
+                <div>
+                  {configured.slice(0, 36).map((slot) => {
+                    const move = resolveSlotMove(character, slot);
+                    return (
+                      <span key={slot.key}>
+                        <NotationGroup tokens={slot.notation} />
+                        {formatMoveSlotLabel(slot, move)}
+                        <small>{formatFrameSummary(move)}</small>
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }
