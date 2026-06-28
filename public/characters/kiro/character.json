@@ -704,11 +704,13 @@
     },
     "cmd:FC+4": {
       "recoveryFrames": 10,
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "tracking": "homing"
     },
     "cmd:FC+3": {
       "startupFrames": 10,
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "tracking": "homing"
     }
   },
   "spriteFrameEdits": {
@@ -8758,9 +8760,9 @@
             "frame": 32,
             "endFrame": 38,
             "position": [
-              0.75,
-              0.4,
-              0.55
+              1.15,
+              0.45,
+              0.05
             ],
             "scale": [
               1,
@@ -8779,5 +8781,6 @@
         "soundCues": []
       }
     ]
-  }
+  },
+  "locked": false
 }

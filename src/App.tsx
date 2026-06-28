@@ -166,6 +166,87 @@ const HIT_SFX = {
 const GAME_SFX_URLS = [...new Set(Object.values(HIT_SFX))];
 const SFX_POOL_SIZE = 4;
 const sfxPools = new Map<string, { audios: HTMLAudioElement[]; cursor: number }>();
+const sfxBuffers = new Map<string, { buffer: AudioBuffer | null; promise: Promise<AudioBuffer | null> | null }>();
+let sfxAudioContext: AudioContext | null = null;
+
+type WebAudioWindow = Window & typeof globalThis & {
+  webkitAudioContext?: typeof AudioContext;
+};
+
+function getSfxAudioContext() {
+  if (typeof window === 'undefined') return null;
+  if (!sfxAudioContext) {
+    const audioWindow = window as WebAudioWindow;
+    const AudioContextCtor = audioWindow.AudioContext ?? audioWindow.webkitAudioContext;
+    if (!AudioContextCtor) return null;
+    sfxAudioContext = new AudioContextCtor();
+  }
+  return sfxAudioContext;
+}
+
+function preloadSfxBuffer(url: string) {
+  const context = getSfxAudioContext();
+  if (!context) return;
+  const existing = sfxBuffers.get(url);
+  if (existing?.buffer || existing?.promise) return;
+  const entry: { buffer: AudioBuffer | null; promise: Promise<AudioBuffer | null> | null } = { buffer: null, promise: null };
+  entry.promise = fetch(url)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.arrayBuffer();
+    })
+    .then((data) => context.decodeAudioData(data.slice(0)))
+    .then((buffer) => {
+      entry.buffer = buffer;
+      entry.promise = null;
+      return buffer;
+    })
+    .catch((error) => {
+      entry.promise = null;
+      console.warn('KORE SFX buffer unavailable', { url, error });
+      return null;
+    });
+  sfxBuffers.set(url, entry);
+}
+
+function playBufferedSfx(url: string, volume: number, playbackRate = 1) {
+  const context = getSfxAudioContext();
+  if (!context) return false;
+  if (context.state === 'suspended') void context.resume().catch(() => undefined);
+  const entry = sfxBuffers.get(url);
+  if (!entry?.buffer) {
+    preloadSfxBuffer(url);
+    return false;
+  }
+  const source = context.createBufferSource();
+  const gain = context.createGain();
+  source.buffer = entry.buffer;
+  source.playbackRate.value = playbackRate;
+  gain.gain.value = volume;
+  source.connect(gain);
+  gain.connect(context.destination);
+  source.start();
+  return true;
+}
+
+function unlockBufferedSfx(urls: string[]) {
+  const context = getSfxAudioContext();
+  urls.forEach((url) => preloadSfxBuffer(url));
+  if (!context) return Promise.resolve(false);
+  const resume = context.state === 'suspended' ? context.resume() : Promise.resolve();
+  return resume
+    .then(() => {
+      const source = context.createBufferSource();
+      const gain = context.createGain();
+      source.buffer = context.createBuffer(1, 1, context.sampleRate);
+      gain.gain.value = 0;
+      source.connect(gain);
+      gain.connect(context.destination);
+      source.start();
+      return context.state === 'running';
+    })
+    .catch(() => false);
+}
 
 function getSfxPool(url: string) {
   let pool = sfxPools.get(url);
@@ -185,10 +266,14 @@ function getSfxPool(url: string) {
 }
 
 function preloadSfxPool(urls: string[]) {
-  urls.forEach((url) => getSfxPool(url));
+  urls.forEach((url) => {
+    getSfxPool(url);
+    preloadSfxBuffer(url);
+  });
 }
 
 function unlockSfxPool(urls: string[]) {
+  const bufferedUnlock = unlockBufferedSfx(urls);
   urls.forEach((url) => {
     const pool = getSfxPool(url);
     const audio = pool.audios[0];
@@ -204,9 +289,11 @@ function unlockSfxPool(urls: string[]) {
       audio.muted = false;
     });
   });
+  return bufferedUnlock;
 }
 
 function playPooledSfx(url: string, volume: number, playbackRate = 1) {
+  if (playBufferedSfx(url, volume, playbackRate)) return;
   const pool = getSfxPool(url);
   const availableIndex = pool.audios.findIndex((audio) => audio.paused || audio.ended || audio.currentTime > 0.08);
   const index = availableIndex >= 0 ? availableIndex : pool.cursor;
@@ -1519,17 +1606,17 @@ export default function App() {
 
   const unlockGameAudio = useCallback(() => {
     if (typeof window === 'undefined' || audioUnlockedRef.current) return;
+    void unlockSfxPool(GAME_SFX_URLS).then((unlocked) => {
+      if (unlocked) audioUnlockedRef.current = true;
+    });
     const audio = new Audio(KORE_MENU_SELECT_SOUND_URL);
     audio.volume = 0.001;
     audio.currentTime = 0;
     void audio.play().then(() => {
       audio.pause();
       audio.currentTime = 0;
-      unlockSfxPool(GAME_SFX_URLS);
       audioUnlockedRef.current = true;
-    }).catch(() => {
-      unlockSfxPool(GAME_SFX_URLS);
-    });
+    }).catch(() => undefined);
   }, []);
 
   useEffect(() => {
@@ -4206,6 +4293,7 @@ function SettingsScreen({
           <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
           <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
           <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
+          <SettingSlider label="Hit Effects" value={settings.audio.hitSfx} min={0} max={2} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, hitSfx: value } }))} />
           <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
         </SettingsSection>
       </div>
@@ -4420,11 +4508,11 @@ function chooseHitSfx(event: ImpactSparkEvent) {
 }
 
 function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0 || audioSettings.hitSfx <= 0) return;
   const isBlock = event.kind === 'block';
   const isLauncher = Boolean(event.launched);
-  const gain = isBlock ? 0.18 : isLauncher ? 0.35 : 0.28;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * gain, 0, isBlock ? 0.32 : 0.48);
+  const gain = isBlock ? 0.36 : isLauncher ? 0.68 : 0.48;
+  const volume = clamp(audioSettings.master * audioSettings.sfx * audioSettings.hitSfx * gain, 0, isBlock ? 0.72 : 0.9);
   const playbackRate = isBlock ? 0.96 : event.moveInput === 'special' ? 0.94 : 1;
   playPooledSfx(chooseHitSfx(event), volume, playbackRate);
 }

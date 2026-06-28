@@ -421,6 +421,7 @@ export type GameSettings = {
     master: number;
     music: number;
     sfx: number;
+    hitSfx: number;
     muted: boolean;
     menuMusic: boolean;
     bgmTrackIndex: number;

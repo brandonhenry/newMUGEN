@@ -52,6 +52,9 @@ const UNIVERSAL_RANGE_BUFFER = 0.32;
 const UNIVERSAL_HITBOX_FORWARD_PADDING = 0.3;
 const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.14;
 const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.14;
+const LOW_HURTBOX_FORWARD_EXTENSION = 0.34;
+const LOW_HURTBOX_MAX_HEIGHT = 0.62;
+const LOW_HURTBOX_MIN_HEIGHT = 0.34;
 const AI_RECENT_MEMORY_LIMIT = 12;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const FORCED_CROUCH_EXIT_FRAMES = 8;
@@ -1028,9 +1031,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const comboStep = continuing ? Math.min(MAX_COMBO_STEPS, fighter.comboStep + 1) : 1;
   const sequence = continuing ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
   const crouchCommandRequired = Boolean(getCrouchCommandNotation(fighter, opponent, input, moveInput));
-  const command = crouchCommandRequired
-    ? findConfiguredCrouchCommand(fighter, opponent, input, moveInput)
-    : findConfiguredCommand(fighter, opponent, input, moveInput);
+  const command = findConfiguredCommand(fighter, opponent, input, moveInput);
   if (crouchCommandRequired && !command) return false;
   if (continuing && !canChainInto(fighter, chainMode)) return false;
   if (!command && hasCommandInputIntent(fighter, opponent, input, moveInput)) return false;
@@ -1836,12 +1837,17 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
     if (fighter.sidestepDirection > 0 || input.sidestepDown || input.sidewalkDown) push(`SSR+${buttonText}`);
   }
   const crouchNotation = getCrouchCommandNotation(fighter, opponent, input, freshMoveInput);
+  const preferDirectCrouchCommand = Boolean(crouchNotation) && !isCrouchingState(fighter) && (direction === 'd' || direction === 'd/b');
+  if (direction !== 'N' && preferDirectCrouchCommand) {
+    push(`${direction}+${buttonText}`);
+    push(`${direction.toUpperCase()}+${buttonText}`);
+  }
   if (crouchNotation) push(crouchNotation);
   if (fighter.wasCrouching && !input.down) push(`WS+${buttonText}`);
   if (direction === 'f' && hasRecentSequence(fighter.commandHistory, ['f', 'f'])) push(`f,f+${buttonText}`);
   if (direction === 'b' && hasRecentSequence(fighter.commandHistory, ['b', 'b'])) push(`b,b+${buttonText}`);
 
-  if (direction !== 'N') {
+  if (direction !== 'N' && !preferDirectCrouchCommand) {
     push(`${direction}+${buttonText}`);
     push(`${direction.toUpperCase()}+${buttonText}`);
   }
@@ -2631,7 +2637,9 @@ type Aabb = {
 
 function getAttackCollision(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean) {
   const attackBoxes = getActiveAttackAabbs(attacker, move, includeBaseHitbox);
-  const hurtboxes = getCurrentHurtboxes(defender).map((hurtbox) => hurtboxToWorldAabb(defender, hurtbox));
+  const hurtboxes = getCurrentHurtboxes(defender)
+    .flatMap((hurtbox) => getHurtboxesForHitLevel(hurtbox, move.hitLevel))
+    .map((hurtbox) => hurtboxToWorldAabb(defender, hurtbox));
   for (const attackBox of attackBoxes) {
     const hurtbox = hurtboxes.find((box) => boxesIntersect(attackBox, box));
     if (hurtbox) return { attackBox, hurtbox, position: getAabbOverlapCenter(attackBox, hurtbox) };
@@ -2780,6 +2788,19 @@ function getCurrentHurtboxes(fighter: FighterRuntime): BoxSpec[] {
   const source = base.length > 0 ? base : [DEFAULT_HURTBOX];
   const offset = fighter.state === 'attack' ? fighter.currentMove?.hurtboxOffset : undefined;
   return source.map((box) => applyPoseToHurtbox(fighter, offset ? offsetHurtbox(box, offset) : box));
+}
+
+function getHurtboxesForHitLevel(hurtbox: BoxSpec, hitLevel: MoveDefinition['hitLevel']): BoxSpec[] {
+  if (hitLevel !== 'low') return [hurtbox];
+  const bottom = hurtbox.offset[1] - hurtbox.size[1] / 2;
+  const lowHeight = clamp(Math.min(LOW_HURTBOX_MAX_HEIGHT, hurtbox.size[1] * 0.34), LOW_HURTBOX_MIN_HEIGHT, LOW_HURTBOX_MAX_HEIGHT);
+  return [
+    hurtbox,
+    {
+      offset: [hurtbox.offset[0], bottom + lowHeight / 2, hurtbox.offset[2]],
+      size: [hurtbox.size[0], lowHeight, hurtbox.size[2] + LOW_HURTBOX_FORWARD_EXTENSION]
+    }
+  ];
 }
 
 function offsetHurtbox(box: BoxSpec, offset: [number, number, number]): BoxSpec {

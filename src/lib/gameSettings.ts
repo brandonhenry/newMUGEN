@@ -89,6 +89,7 @@ export const defaultGameSettings: GameSettings = {
     master: 1,
     music: 0.72,
     sfx: 0.85,
+    hitSfx: 1.35,
     muted: false,
     menuMusic: true,
     bgmTrackIndex: 0
@@ -169,6 +170,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       master: clampNumber(audio.master, 0, 1, defaults.audio.master),
       music: clampNumber(audio.music, 0, 1, defaults.audio.music),
       sfx: clampNumber(audio.sfx, 0, 1, defaults.audio.sfx),
+      hitSfx: clampNumber(audio.hitSfx, 0, 2, defaults.audio.hitSfx),
       muted: booleanOr(audio.muted, defaults.audio.muted),
       menuMusic: booleanOr(audio.menuMusic, defaults.audio.menuMusic),
       bgmTrackIndex: Math.round(clampNumber(audio.bgmTrackIndex, 0, 99, defaults.audio.bgmTrackIndex))

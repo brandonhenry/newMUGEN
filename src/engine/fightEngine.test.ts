@@ -266,6 +266,71 @@ describe('character manifests', () => {
     expect(match.fighters[0].hitConnected).toBe(false);
   });
 
+  it('routes immediate down attacks to authored d-button commands before full-crouch commands', () => {
+    const commandCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...(starterCharacters[0].animationFrames ?? {}),
+        'cmd:d+3': ['/down-kick.png'],
+        'cmd:FC+3': ['/full-crouch-kick.png']
+      },
+      moveOverrides: {
+        ...(starterCharacters[0].moveOverrides ?? {}),
+        'cmd:d+3': { label: 'Immediate Low Kick', hitLevel: 'low' },
+        'cmd:FC+3': { label: 'Full Crouch Low Kick', hitLevel: 'low' }
+      }
+    };
+    let match = createMatch(commandCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const input = emptyInputFrame();
+    input.down = true;
+    input.kick = true;
+    match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.command).toBe('d+3');
+    expect(match.fighters[0].currentMove?.label).toBe('Immediate Low Kick');
+    expect(match.fighters[0].currentMove?.hitLevel).toBe('low');
+  });
+
+  it('lets low attacks catch foot-space that the same high attack box would miss', () => {
+    const makeFootCheckMove = (hitLevel: MoveDefinition['hitLevel']): MoveDefinition => ({
+      ...starterCharacters[0].moves.find((move) => move.input === 'kick')!,
+      id: `foot-check-${hitLevel}`,
+      label: `${hitLevel} foot check`,
+      startupFrames: 1,
+      activeFrames: 3,
+      recoveryFrames: 8,
+      damage: 7,
+      hitLevel,
+      range: 1.7,
+      hitbox: {
+        offset: [0, 0.58, 0.72],
+        size: [0.76, 0.42, 0.68]
+      }
+    });
+    const runActiveMove = (move: MoveDefinition) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.79;
+      match.fighters[1].position.x = 0.79;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = move;
+      match.fighters[0].moveFrame = move.startupFrames;
+      match.fighters[0].actionFramesRemaining = move.activeFrames + move.recoveryFrames;
+      match.fighters[0].actionTimer = match.fighters[0].actionFramesRemaining / 60;
+      return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0);
+    };
+
+    const highResult = runActiveMove(makeFootCheckMove('high'));
+    const lowResult = runActiveMove(makeFootCheckMove('low'));
+
+    expect(highResult.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+    expect(lowResult.fighters[1].hp).toBe(starterCharacters[1].stats.health - 7);
+  });
+
   it('starts a clash when two active kiBurst hitboxes overlap', () => {
     let match = createPreparedClashMatch();
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -345,7 +410,7 @@ describe('character manifests', () => {
       game: { roundTimer: 75 },
       controls: { keyboard: [{ jab: ['KeyP'] }] },
       display: { touchControls: 'on', impactSparks: { shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } },
-      audio: { bgmTrackIndex: 300 }
+      audio: { bgmTrackIndex: 300, hitSfx: 5 }
     });
 
     expect(settings.game.roundTimer).toBe(75);
@@ -360,6 +425,7 @@ describe('character manifests', () => {
     expect(settings.display.impactSparks.intensity).toBe(0.35);
     expect(settings.camera.distance).toBe(defaultGameSettings.camera.distance);
     expect(settings.audio.bgmTrackIndex).toBe(99);
+    expect(settings.audio.hitSfx).toBe(2);
   });
 
   it('keeps infinite round timer settings as a real option', () => {
