@@ -1062,6 +1062,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const identity = getMoveIdentity(move);
   fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
   if (charged) fighter.ki = clamp(fighter.ki - KI_BURST_COST, 0, KI_MAX);
+  applyMoveJumpStart(fighter, resolvedMove);
 
   fighter.currentMove = resolvedMove;
   fighter.moveInstanceId += 1;
@@ -1085,6 +1086,13 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   }
   startShadowCloneAttack(fighter, opponent, resolvedMove);
   return true;
+}
+
+function applyMoveJumpStart(fighter: FighterRuntime, move: MoveDefinition) {
+  if (!move.jumpBeforeMove) return;
+  if (fighter.position.y > 0 || fighter.velocityY !== 0) return;
+  fighter.velocityY = move.moveJumpForce ?? fighter.character.stats.jumpForce;
+  fighter.position.y = Math.max(fighter.position.y, 0.18);
 }
 
 function canChainInto(fighter: FighterRuntime, chainMode: 'neutral' | 'cancel' | 'link') {
@@ -1324,6 +1332,10 @@ function applyMoveOverrides(
     forwardForce: merged.forwardForce === undefined ? undefined : clamp(merged.forwardForce, -4, 4),
     forwardForceStartFrame: merged.forwardForceStartFrame === undefined ? undefined : Math.max(1, Math.round(merged.forwardForceStartFrame)),
     forwardForceEndFrame: merged.forwardForceEndFrame === undefined ? undefined : Math.max(1, Math.round(merged.forwardForceEndFrame)),
+    jumpBeforeMove: Boolean(merged.jumpBeforeMove),
+    moveJumpForce: merged.moveJumpForce === undefined ? undefined : clamp(merged.moveJumpForce, 1, 18),
+    moveJumpGravity: merged.moveJumpGravity === undefined ? undefined : clamp(merged.moveJumpGravity, 1, 48),
+    homingSpeed: merged.homingSpeed === undefined ? undefined : clamp(merged.homingSpeed, 0, 24),
     launchVelocity: merged.launchVelocity === undefined ? undefined : clamp(merged.launchVelocity, 3.2, 7.2),
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
     juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2)
@@ -3024,14 +3036,34 @@ function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime
 function applyAttackForwardForce(fighter: FighterRuntime, opponent: FighterRuntime, previousMoveFrame: number, currentMoveFrame: number) {
   const move = fighter.currentMove;
   const force = move?.forwardForce ?? 0;
-  if (!move || fighter.state !== 'attack' || fighter.hitConnected || force === 0) return;
+  if (!move || fighter.state !== 'attack' || fighter.hitConnected) return;
   const totalFrames = Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames);
   const startFrame = clamp(Math.round(move.forwardForceStartFrame ?? 1), 1, totalFrames);
   const endFrame = clamp(Math.round(move.forwardForceEndFrame ?? totalFrames), startFrame, totalFrames);
   const windowFrames = Math.max(1, endFrame - startFrame + 1);
   const overlapFrames = Math.max(0, Math.min(currentMoveFrame, endFrame) - Math.max(previousMoveFrame, startFrame - 1));
   if (overlapFrames <= 0) return;
-  moveAlongOpponentAxis(fighter, opponent, (force * overlapFrames) / windowFrames);
+  if (force !== 0) moveAlongOpponentAxis(fighter, opponent, (force * overlapFrames) / windowFrames);
+  applyAirHomingForce(fighter, opponent, move, overlapFrames);
+}
+
+function applyAirHomingForce(fighter: FighterRuntime, opponent: FighterRuntime, move: MoveDefinition, overlapFrames: number) {
+  const homingSpeed = move.tracking === 'homing' ? move.homingSpeed ?? 8 : 0;
+  if (homingSpeed <= 0 || !isAirborne(fighter)) return;
+  const target = {
+    x: opponent.position.x,
+    y: Math.max(0, opponent.position.y + 0.12),
+    z: opponent.position.z
+  };
+  const dx = target.x - fighter.position.x;
+  const dy = target.y - fighter.position.y;
+  const dz = target.z - fighter.position.z;
+  const distance = Math.hypot(dx, dy, dz);
+  if (distance <= 0.001) return;
+  const amount = Math.min(distance, homingSpeed * (overlapFrames / FRAMES_PER_SECOND));
+  fighter.position.x += (dx / distance) * amount;
+  fighter.position.y = Math.max(0, fighter.position.y + (dy / distance) * amount);
+  fighter.position.z += (dz / distance) * amount;
 }
 
 function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
@@ -3904,7 +3936,8 @@ function framesToSeconds(frames: number) {
 function applyGravity(fighter: FighterRuntime, dt: number, gravityScale = 1) {
   if (fighter.position.y > 0 || fighter.velocityY !== 0) {
     const wasAirborne = fighter.position.y > 0 || fighter.velocityY !== 0;
-    fighter.velocityY -= fighter.character.stats.gravity * gravityScale * dt;
+    const moveGravity = fighter.state === 'attack' ? fighter.currentMove?.moveJumpGravity : undefined;
+    fighter.velocityY -= (moveGravity ?? fighter.character.stats.gravity) * gravityScale * dt;
     fighter.position.y += fighter.velocityY * dt;
     if (fighter.position.y <= 0) {
       fighter.position.y = 0;

@@ -749,6 +749,9 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     'forwardForce',
     'forwardForceStartFrame',
     'forwardForceEndFrame',
+    'moveJumpForce',
+    'moveJumpGravity',
+    'homingSpeed',
     'pushback',
     'blockPushback',
     'launchHeight',
@@ -770,6 +773,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
   if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
+  if (typeof override.jumpBeforeMove === 'boolean') next.jumpBeforeMove = override.jumpBeforeMove;
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
   return next;
 }
@@ -6746,6 +6750,9 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const totalFrames = move.startupFrames + move.activeFrames + move.recoveryFrames;
   const forwardForceStart = move.forwardForceStartFrame ?? 1;
   const forwardForceEnd = move.forwardForceEndFrame ?? totalFrames;
+  const moveJumpForce = move.moveJumpForce ?? 8;
+  const moveJumpGravity = move.moveJumpGravity ?? 18;
+  const homingSpeed = move.homingSpeed ?? 8;
   const resultLabel = [
     move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames),
     move.tornado ? 'T!' : null,
@@ -6785,6 +6792,16 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
         <FrameNumberInput label="Forward Force" value={move.forwardForce ?? 0} step={0.05} onChange={(value) => updateNumber('forwardForce', value)} />
         <FrameNumberInput label="Force Start" value={forwardForceStart} min={1} onChange={(value) => updateNumber('forwardForceStartFrame', value, 1)} />
         <FrameNumberInput label="Force End" value={forwardForceEnd} min={1} onChange={(value) => updateNumber('forwardForceEndFrame', value, 1)} />
+        <label className="frame-toggle">
+          <span>Jump Start</span>
+          <input
+            type="checkbox"
+            checked={Boolean(move.jumpBeforeMove)}
+            onChange={(event) => onChange({ jumpBeforeMove: event.target.checked })}
+          />
+        </label>
+        <FrameNumberInput label="Jump Height" value={moveJumpForce} min={1} step={0.1} onChange={(value) => updateNumber('moveJumpForce', value, 1)} />
+        <FrameNumberInput label="Jump Gravity" value={moveJumpGravity} min={1} step={0.1} onChange={(value) => updateNumber('moveJumpGravity', value, 1)} />
         <FrameNumberInput label="Pushback" value={move.pushback} min={0} step={0.05} onChange={(value) => updateNumber('pushback', value, 0)} />
         <FrameNumberInput label="Block Push" value={move.blockPushback} min={0} step={0.05} onChange={(value) => updateNumber('blockPushback', value, 0)} />
         <label>
@@ -6795,6 +6812,7 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
             ))}
           </select>
         </label>
+        <FrameNumberInput label="Homing Speed" value={homingSpeed} min={0} step={0.1} onChange={(value) => updateNumber('homingSpeed', value, 0)} />
         <label className="frame-toggle">
           <span>Launcher</span>
           <input

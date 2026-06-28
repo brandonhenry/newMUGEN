@@ -103,6 +103,10 @@ export type MoveDefinition = {
   forwardForce?: number;
   forwardForceStartFrame?: number;
   forwardForceEndFrame?: number;
+  jumpBeforeMove?: boolean;
+  moveJumpForce?: number;
+  moveJumpGravity?: number;
+  homingSpeed?: number;
   pushback: number;
   blockPushback: number;
   push?: number;

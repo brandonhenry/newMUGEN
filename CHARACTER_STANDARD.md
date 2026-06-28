@@ -91,6 +91,11 @@ Move timing is in seconds. Total animation lock is `startup + active + recovery`
 - `blockDamage`: Chip damage when blocked.
 - `range`: Distance helper used by AI.
 - `push`: Knockback distance.
+- `jumpBeforeMove`: Optional boolean. When true, starting the move from the ground launches the fighter into a move-specific hop before the attack resolves.
+- `moveJumpForce`: Optional jump-start height/velocity for `jumpBeforeMove` attacks.
+- `moveJumpGravity`: Optional gravity value for airborne attack arcs.
+- `tracking`: Use `homing` for moves that can air-dash toward the opponent.
+- `homingSpeed`: Optional speed for airborne `tracking: "homing"` attacks.
 - `hitstun`: How long the opponent is locked after impact.
 - `knockdown`: Whether the opponent enters the knockdown state.
 

@@ -682,6 +682,12 @@
       "hitLevel": "mid"
     },
     "cmd:O+1": {
+      "startupFrames": 24,
+      "recoveryFrames": 16,
+      "damage": 32,
+      "forwardForce": 3,
+      "forwardForceStartFrame": 30,
+      "hitLevel": "mid",
       "knockdown": true
     }
   },

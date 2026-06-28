@@ -153,13 +153,21 @@ describe('character manifests', () => {
       tornado: true,
       forwardForce: 0.75,
       forwardForceStartFrame: 2,
-      forwardForceEndFrame: 8
+      forwardForceEndFrame: 8,
+      jumpBeforeMove: true,
+      moveJumpForce: 9.25,
+      moveJumpGravity: 24,
+      homingSpeed: 10
     });
 
     expect(move.tornado).toBe(true);
     expect(move.forwardForce).toBe(0.75);
     expect(move.forwardForceStartFrame).toBe(2);
     expect(move.forwardForceEndFrame).toBe(8);
+    expect(move.jumpBeforeMove).toBe(true);
+    expect(move.moveJumpForce).toBe(9.25);
+    expect(move.moveJumpGravity).toBe(24);
+    expect(move.homingSpeed).toBe(10);
   });
 
   it('migrates legacy base button animation data to left/right limb keys', () => {
@@ -264,6 +272,88 @@ describe('character manifests', () => {
 
     expect(match.fighters[0].position.x).toBeGreaterThan(startX);
     expect(match.fighters[0].hitConnected).toBe(false);
+  });
+
+  it('starts jump-enabled moves with the authored hop arc', () => {
+    const jumpAttackCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              jumpBeforeMove: true,
+              moveJumpForce: 10.5,
+              moveJumpGravity: 30,
+              startupFrames: 4,
+              activeFrames: 4,
+              recoveryFrames: 12
+            }
+          : move
+      )
+    };
+    let match = createMatch(jumpAttackCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].position.y).toBeGreaterThan(0);
+    expect(match.fighters[0].velocityY).toBeGreaterThan(9.5);
+    expect(match.fighters[0].currentMove?.jumpBeforeMove).toBe(true);
+    expect(match.fighters[0].currentMove?.moveJumpGravity).toBe(30);
+  });
+
+  it('propels airborne homing moves toward the opponent', () => {
+    const homingCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'special'
+          ? {
+              ...move,
+              startupFrames: 2,
+              activeFrames: 8,
+              recoveryFrames: 12,
+              range: 0.2,
+              tracking: 'homing',
+              homingSpeed: 12,
+              forwardForce: 0,
+              forwardForceStartFrame: 1,
+              forwardForceEndFrame: 10
+            }
+          : move
+      )
+    };
+    let match = createMatch(homingCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -4;
+    match.fighters[0].position.y = 1.4;
+    match.fighters[0].velocityY = 0.1;
+    match.fighters[0].state = 'jump';
+    match.fighters[1].position.x = 0;
+    match.fighters[1].position.z = 0.9;
+
+    const special = emptyInputFrame();
+    special.special = true;
+    match = stepMatch(match, special, emptyInputFrame(), 1 / 60);
+    const startDistance = Math.hypot(
+      match.fighters[1].position.x - match.fighters[0].position.x,
+      match.fighters[1].position.y + 0.12 - match.fighters[0].position.y,
+      match.fighters[1].position.z - match.fighters[0].position.z
+    );
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const nextDistance = Math.hypot(
+      match.fighters[1].position.x - match.fighters[0].position.x,
+      match.fighters[1].position.y + 0.12 - match.fighters[0].position.y,
+      match.fighters[1].position.z - match.fighters[0].position.z
+    );
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.tracking).toBe('homing');
+    expect(nextDistance).toBeLessThan(startDistance);
   });
 
   it('routes immediate down attacks to authored d-button commands before full-crouch commands', () => {
