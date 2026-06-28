@@ -121,7 +121,7 @@ export function createMatch(
   cpuDifficulty: CpuDifficulty = 3,
   options: MatchOptions = {}
 ): MatchSnapshot {
-  const roundTime = clamp(Math.round(options.roundTime ?? ROUND_TIME), 30, 99);
+  const roundTime = normalizeRoundTime(options.roundTime);
   const aiSeed = normalizeAiSeed(options.aiSeed);
   const match: MatchSnapshot = {
     fighters: [createFighter(1, p1, -START_DISTANCE / 2), createFighter(2, p2, START_DISTANCE / 2)],
@@ -212,15 +212,25 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   resolveBodyCollision(next);
   resolveHits(next);
 
-  next.timer = next.mode === 'training' && next.trainingInfiniteHealth ? next.roundTime : Math.max(0, next.timer - dt);
+  const infiniteTimer = isInfiniteRoundTime(next.roundTime);
+  next.timer = infiniteTimer || (next.mode === 'training' && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
   const ko = next.fighters.find((fighter) => fighter.hp <= 0);
   if (next.mode === 'training' && next.trainingInfiniteHealth) {
     refillTrainingHealth(next);
-  } else if (ko || next.timer <= 0) {
+  } else if (ko || (!infiniteTimer && next.timer <= 0)) {
     finishRound(next);
   }
 
   return next;
+}
+
+function normalizeRoundTime(roundTime: number | undefined) {
+  if (roundTime !== undefined && roundTime <= 0) return 0;
+  return clamp(Math.round(roundTime ?? ROUND_TIME), 30, 99);
+}
+
+function isInfiniteRoundTime(roundTime: number) {
+  return roundTime <= 0;
 }
 
 export function createEmptyInputs(): [InputFrame, InputFrame] {

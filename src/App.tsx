@@ -3022,9 +3022,13 @@ function CharacterSelectModeCarousel({
   );
 }
 
+const roundTimerOptions = [0, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99];
+
 function RoundTimerControl({ value, setValue }: { value: number; setValue: (value: number) => void }) {
   const cycleTimer = (direction: -1 | 1) => {
-    const next = Math.min(99, Math.max(30, value + direction * 5));
+    const activeIndex = Math.max(0, roundTimerOptions.findIndex((option) => option === value));
+    const nextIndex = (activeIndex + direction + roundTimerOptions.length) % roundTimerOptions.length;
+    const next = roundTimerOptions[nextIndex] ?? 60;
     if (next !== value) setValue(next);
   };
 
@@ -3050,13 +3054,17 @@ function RoundTimerControl({ value, setValue }: { value: number; setValue: (valu
       </button>
       <div className="mode-carousel-current" aria-live="polite">
         <Timer size={22} />
-        <strong>{value}s</strong>
+        <strong>{formatRoundTimer(value)}</strong>
       </div>
       <button type="button" className="mode-carousel-arrow" onClick={() => cycleTimer(1)} aria-label="Raise round timer">
         <ChevronRight size={24} />
       </button>
     </div>
   );
+}
+
+function formatRoundTimer(value: number) {
+  return value <= 0 ? '∞' : `${value}s`;
 }
 
 function CpuDifficultyControl({
@@ -4002,7 +4010,7 @@ function SettingsScreen({
             <SettingRow label="Match Mode" value={modeLabel(mode)}>
               <CharacterSelectModeCarousel value={mode} setValue={setMode} />
             </SettingRow>
-            <SettingRow label="Round Timer" value={`${settings.game.roundTimer}s`}>
+            <SettingRow label="Round Timer" value={formatRoundTimer(settings.game.roundTimer)}>
               <RoundTimerControl
                 value={settings.game.roundTimer}
                 setValue={(roundTimer) => updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer } }))}
@@ -8398,11 +8406,11 @@ function FightScreen({
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
     () => ({
-      roundTime: settings.game.roundTimer,
+      roundTime: mode === 'online' ? 60 : settings.game.roundTimer,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       playIntro: true
     }),
-    [settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [mode, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
@@ -9296,7 +9304,7 @@ function FightHud({ match, hudScale, onlineWins }: { match: MatchSnapshot; hudSc
     <div className="fight-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
       <HealthBar fighter={p1} align="left" onlineWins={onlineWins?.[0]} />
       <div className="round-box">
-        <strong>{Math.ceil(match.timer)}</strong>
+        <strong>{match.roundTime <= 0 ? '∞' : Math.ceil(match.timer)}</strong>
       </div>
       <HealthBar fighter={p2} align="right" onlineWins={onlineWins?.[1]} />
     </div>

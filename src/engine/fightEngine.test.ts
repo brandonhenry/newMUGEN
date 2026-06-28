@@ -362,12 +362,33 @@ describe('character manifests', () => {
     expect(settings.audio.bgmTrackIndex).toBe(99);
   });
 
+  it('keeps infinite round timer settings as a real option', () => {
+    const settings = sanitizeGameSettings({
+      game: { roundTimer: 0 }
+    });
+
+    expect(settings.game.roundTimer).toBe(0);
+  });
+
   it('resolves remapped keyboard bindings', () => {
     const settings = cloneSettings(defaultGameSettings);
     settings.controls.keyboard[0].jab = ['KeyP'];
     const event = new KeyboardEvent('keydown', { code: 'KeyP', key: 'p' });
 
     expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([{ player: 1, action: 'jab' }]);
+  });
+
+  it('routes arrow movement to player one in one-player CPU modes', () => {
+    const event = new KeyboardEvent('keydown', { code: 'ArrowRight', key: 'ArrowRight' });
+
+    expect(getKeyboardBindingsForEvent(event, 'ai', defaultGameSettings.controls)).toEqual([
+      { player: 1, action: 'right' },
+      { player: 2, action: 'right' }
+    ]);
+    expect(getKeyboardBindingsForEvent(event, 'versusCpu', defaultGameSettings.controls)).toEqual([
+      { player: 1, action: 'right' },
+      { player: 2, action: 'right' }
+    ]);
   });
 
   it('turns single up and down holds into jump and crouch without firing on tap', () => {
@@ -590,6 +611,25 @@ describe('fight engine', () => {
     expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
   });
 
+  it('drives only the selected opponent from AI in 1P vs CPU mode', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'versusCpu');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const p1StartX = match.fighters[0].position.x;
+    const p2StartX = match.fighters[1].position.x;
+    const p1Input = emptyInputFrame();
+    p1Input.right = true;
+    const ignoredP2Input = emptyInputFrame();
+    ignoredP2Input.right = true;
+
+    for (let i = 0; i < 6; i += 1) {
+      match = stepMatch(match, p1Input, ignoredP2Input, 1 / 60);
+    }
+
+    expect(match.fighters[0].position.x).toBeGreaterThan(p1StartX);
+    expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
+  });
+
   it('keeps the opponent dummy passive in training mode', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
     match.phase = 'fighting';
@@ -694,6 +734,20 @@ describe('fight engine', () => {
 
     expect(match.roundTime).toBe(45);
     expect(match.timer).toBe(45);
+  });
+
+  it('supports infinite round timers without timing out', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { roundTime: 0 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    for (let i = 0; i < 240; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.roundTime).toBe(0);
+    expect(match.timer).toBe(0);
+    expect(match.phase).toBe('fighting');
   });
 
   it('keeps CPU fighters attacking during an extended exchange', () => {

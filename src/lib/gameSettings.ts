@@ -131,7 +131,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
 
   return {
     game: {
-      roundTimer: clampNumber(game.roundTimer, 30, 99, defaults.game.roundTimer),
+      roundTimer: sanitizeRoundTimer(game.roundTimer, defaults.game.roundTimer),
       trainingInfiniteHealth: booleanOr(game.trainingInfiniteHealth, defaults.game.trainingInfiniteHealth),
       inputAssist: booleanOr(game.inputAssist, defaults.game.inputAssist)
     },
@@ -237,6 +237,13 @@ function cloneGamepadBindings(bindings: PlayerGamepadBindings): PlayerGamepadBin
 
 function booleanOr(value: unknown, fallback: boolean) {
   return typeof value === 'boolean' ? value : fallback;
+}
+
+function sanitizeRoundTimer(value: unknown, fallback: number) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  if (numeric <= 0) return 0;
+  return Math.round(clampNumber(numeric, 30, 99, fallback));
 }
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {
