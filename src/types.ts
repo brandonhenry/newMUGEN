@@ -399,6 +399,7 @@ export type ControlBindingMap = {
 export type GameSettings = {
   game: {
     roundTimer: number;
+    maxHealth: number;
     trainingInfiniteHealth: boolean;
     inputAssist: boolean;
   };
@@ -454,6 +455,7 @@ export type ShadowCloneRuntime = {
 
 export type MatchOptions = {
   roundTime?: number;
+  maxHealth?: number;
   trainingInfiniteHealth?: boolean;
   playIntro?: boolean;
   aiSeed?: number;
@@ -463,6 +465,7 @@ export type FighterRuntime = {
   slot: 1 | 2;
   character: CharacterDefinition;
   hp: number;
+  maxHp: number;
   ki: number;
   position: { x: number; y: number; z: number };
   velocityY: number;
@@ -528,6 +531,7 @@ export type MatchSnapshot = {
   aiSeed: number;
   roundAiSeed: number;
   roundTime: number;
+  maxHealth?: number;
   trainingInfiniteHealth: boolean;
   introEnabled: boolean;
   timer: number;

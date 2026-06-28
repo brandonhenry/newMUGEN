@@ -19,6 +19,7 @@ import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
+const INFINITE_HEALTH_VALUE = 999_999;
 const START_DISTANCE = 2.6;
 const ROUND_OVER_DELAY = 2.1;
 const KO_SLOWMO_SECONDS = 0.8;
@@ -125,15 +126,17 @@ export function createMatch(
   options: MatchOptions = {}
 ): MatchSnapshot {
   const roundTime = normalizeRoundTime(options.roundTime);
+  const maxHealth = normalizeMaxHealth(options.maxHealth);
   const aiSeed = normalizeAiSeed(options.aiSeed);
   const match: MatchSnapshot = {
-    fighters: [createFighter(1, p1, -START_DISTANCE / 2), createFighter(2, p2, START_DISTANCE / 2)],
+    fighters: [createFighter(1, p1, -START_DISTANCE / 2, maxHealth), createFighter(2, p2, START_DISTANCE / 2, maxHealth)],
     stage,
     mode,
     cpuDifficulty,
     aiSeed,
     roundAiSeed: makeRoundAiSeed(aiSeed, 1),
     roundTime,
+    maxHealth,
     trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
     introEnabled: options.playIntro ?? false,
     timer: roundTime,
@@ -230,6 +233,18 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 function normalizeRoundTime(roundTime: number | undefined) {
   if (roundTime !== undefined && roundTime <= 0) return 0;
   return clamp(Math.round(roundTime ?? ROUND_TIME), 30, 99);
+}
+
+function normalizeMaxHealth(maxHealth: number | undefined) {
+  if (maxHealth === undefined) return undefined;
+  if (maxHealth <= 0) return 0;
+  return clamp(Math.round(maxHealth), 1, 999);
+}
+
+function resolveFighterMaxHealth(character: CharacterDefinition, matchMaxHealth: number | undefined) {
+  if (matchMaxHealth === undefined) return character.stats.health;
+  if (matchMaxHealth <= 0) return INFINITE_HEALTH_VALUE;
+  return matchMaxHealth;
 }
 
 function isInfiniteRoundTime(roundTime: number) {
@@ -377,11 +392,13 @@ function makeAiClashInput(match: MatchSnapshot, slot: 1 | 2): InputFrame {
   return input;
 }
 
-function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number): FighterRuntime {
+function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, matchMaxHealth?: number): FighterRuntime {
+  const maxHp = resolveFighterMaxHealth(character, matchMaxHealth);
   return {
     slot,
     character,
-    hp: character.stats.health,
+    hp: maxHp,
+    maxHp,
     ki: 0,
     position: { x, y: 0, z: 0 },
     velocityY: 0,
@@ -2873,7 +2890,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.fighters.forEach((fighter) => {
     fighter.roundsWon = 0;
     if (fighter.hp > 0) return;
-    fighter.hp = fighter.character.stats.health;
+    fighter.hp = fighter.maxHp;
     fighter.state = 'idle';
     fighter.currentMove = null;
     fighter.actionTimer = 0;
@@ -2955,7 +2972,7 @@ function updateRoundOverVisuals(match: MatchSnapshot) {
 function resetRound(match: MatchSnapshot) {
   const rounds: [number, number] = [match.fighters[0].roundsWon, match.fighters[1].roundsWon];
   const [p1Character, p2Character] = [match.fighters[0].character, match.fighters[1].character];
-  match.fighters = [createFighter(1, p1Character, -START_DISTANCE / 2), createFighter(2, p2Character, START_DISTANCE / 2)];
+  match.fighters = [createFighter(1, p1Character, -START_DISTANCE / 2, match.maxHealth), createFighter(2, p2Character, START_DISTANCE / 2, match.maxHealth)];
   match.fighters[0].roundsWon = rounds[0];
   match.fighters[1].roundsWon = rounds[1];
   match.round += 1;
@@ -3059,7 +3076,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const profile = ai.character.aiProfile;
   const elapsed = ROUND_TIME - timer;
   const settings = getCpuDifficultySettings(difficulty);
-  const leadRatio = (ai.hp - opponent.hp) / Math.max(1, ai.character.stats.health);
+  const leadRatio = (ai.hp - opponent.hp) / Math.max(1, ai.maxHp);
   const leaderBrake = cpuDuel ? clamp((leadRatio - 0.14) / 0.34, 0, 1) : 0;
   const leaderCloseout = leaderBrake > 0.18;
   const style = getAiSeedStyle(aiSeed, ai.slot);

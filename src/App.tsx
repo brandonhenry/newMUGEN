@@ -3169,6 +3169,7 @@ function CharacterSelectModeCarousel({
 }
 
 const roundTimerOptions = [0, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99];
+const maxHealthOptions = [0, 50, 75, 90, 100, 110, 125, 150, 175, 200, 250, 300, 500, 750, 999];
 
 function RoundTimerControl({ value, setValue }: { value: number; setValue: (value: number) => void }) {
   const cycleTimer = (direction: -1 | 1) => {
@@ -3211,6 +3212,49 @@ function RoundTimerControl({ value, setValue }: { value: number; setValue: (valu
 
 function formatRoundTimer(value: number) {
   return value <= 0 ? '∞' : `${value}s`;
+}
+
+function MaxHealthControl({ value, setValue }: { value: number; setValue: (value: number) => void }) {
+  const cycleHealth = (direction: -1 | 1) => {
+    const activeIndex = Math.max(0, maxHealthOptions.findIndex((option) => option === value));
+    const nextIndex = (activeIndex + direction + maxHealthOptions.length) % maxHealthOptions.length;
+    const next = maxHealthOptions[nextIndex] ?? 100;
+    if (next !== value) setValue(next);
+  };
+
+  return (
+    <div
+      className="mode-carousel max-health-carousel"
+      role="group"
+      aria-label="Max health"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          cycleHealth(-1);
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          cycleHealth(1);
+        }
+      }}
+    >
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleHealth(-1)} aria-label="Lower max health">
+        <ChevronLeft size={24} />
+      </button>
+      <div className="mode-carousel-current" aria-live="polite">
+        <Swords size={22} />
+        <strong>{formatMaxHealth(value)}</strong>
+      </div>
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleHealth(1)} aria-label="Raise max health">
+        <ChevronRight size={24} />
+      </button>
+    </div>
+  );
+}
+
+function formatMaxHealth(value: number) {
+  return value <= 0 ? '∞' : `${value} HP`;
 }
 
 function CpuDifficultyControl({
@@ -4154,6 +4198,7 @@ function SettingsScreen({
   const renderEditor = () => {
     if (activeTab === 'game') {
       const visibleRoundTimer = mode === 'online' ? 60 : settings.game.roundTimer;
+      const visibleMaxHealth = mode === 'online' ? defaultGameSettings.game.maxHealth : settings.game.maxHealth;
       return (
         <div className="settings-section-stack">
           <SettingsSection index={0} title="Match Rules" active={activeSectionIndex === 0}>
@@ -4166,6 +4211,16 @@ function SettingsScreen({
                 setValue={(roundTimer) => {
                   if (mode !== 'online') {
                     updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer } }));
+                  }
+                }}
+              />
+            </SettingRow>
+            <SettingRow label="Max HP" value={mode === 'online' ? 'Online Standard' : formatMaxHealth(visibleMaxHealth)}>
+              <MaxHealthControl
+                value={visibleMaxHealth}
+                setValue={(maxHealth) => {
+                  if (mode !== 'online') {
+                    updateSettings((current) => ({ ...current, game: { ...current.game, maxHealth } }));
                   }
                 }}
               />
@@ -8630,10 +8685,11 @@ function FightScreen({
   const matchOptions = useMemo(
     () => ({
       roundTime: mode === 'online' ? 60 : settings.game.roundTimer,
+      maxHealth: mode === 'online' ? undefined : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       playIntro: true
     }),
-    [mode, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [mode, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
@@ -9247,7 +9303,7 @@ function FightScreen({
           } else if (isOnline) {
             const shouldRefreshWarmup =
               matchRef.current.phase === 'matchOver' ||
-              matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.character.stats.health * 0.2);
+              matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.maxHp * 0.2);
             matchRef.current = shouldRefreshWarmup
               ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, withFreshAiSeed(matchOptions))
               : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
@@ -9688,7 +9744,8 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
 }
 
 function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; onlineWins?: number }) {
-  const percent = Math.max(0, Math.min(100, (fighter.hp / fighter.character.stats.health) * 100));
+  const isInfiniteHealth = fighter.maxHp >= 999_999;
+  const percent = isInfiniteHealth ? 100 : Math.max(0, Math.min(100, (fighter.hp / Math.max(1, fighter.maxHp)) * 100));
   const kiPercent = Math.max(0, Math.min(100, fighter.ki));
   const isDanger = percent <= 25;
   const portraitPath = getHudPortraitPath(fighter.character);

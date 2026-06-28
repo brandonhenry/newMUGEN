@@ -802,6 +802,25 @@ describe('fight engine', () => {
     expect(match.timer).toBe(45);
   });
 
+  it('uses custom max health settings for new matches', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { maxHealth: 250 });
+
+    expect(match.maxHealth).toBe(250);
+    expect(match.fighters[0].maxHp).toBe(250);
+    expect(match.fighters[1].maxHp).toBe(250);
+    expect(match.fighters[0].hp).toBe(250);
+    expect(match.fighters[1].hp).toBe(250);
+  });
+
+  it('supports infinite max health as a non-KO health pool', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { maxHealth: 0 });
+
+    expect(match.maxHealth).toBe(0);
+    expect(match.fighters[1].maxHp).toBeGreaterThan(999);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+    expect(match.phase).toBe('fighting');
+  });
+
   it('supports infinite round timers without timing out', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { roundTime: 0 });
     match.phase = 'fighting';

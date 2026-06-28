@@ -58,6 +58,7 @@ const defaultGamepad: PlayerGamepadBindings = {
 export const defaultGameSettings: GameSettings = {
   game: {
     roundTimer: 60,
+    maxHealth: 100,
     trainingInfiniteHealth: true,
     inputAssist: true
   },
@@ -133,6 +134,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
   return {
     game: {
       roundTimer: sanitizeRoundTimer(game.roundTimer, defaults.game.roundTimer),
+      maxHealth: sanitizeMaxHealth(game.maxHealth, defaults.game.maxHealth),
       trainingInfiniteHealth: booleanOr(game.trainingInfiniteHealth, defaults.game.trainingInfiniteHealth),
       inputAssist: booleanOr(game.inputAssist, defaults.game.inputAssist)
     },
@@ -246,6 +248,13 @@ function sanitizeRoundTimer(value: unknown, fallback: number) {
   if (!Number.isFinite(numeric)) return fallback;
   if (numeric <= 0) return 0;
   return Math.round(clampNumber(numeric, 30, 99, fallback));
+}
+
+function sanitizeMaxHealth(value: unknown, fallback: number) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  if (numeric <= 0) return 0;
+  return Math.round(clampNumber(numeric, 1, 999, fallback));
 }
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {

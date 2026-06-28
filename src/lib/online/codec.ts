@@ -24,6 +24,7 @@ export const inputActions: ActionName[] = [
 
 export type CompactFighterSnapshot = {
   hp: number;
+  maxHp: number;
   ki: number;
   position: FighterRuntime['position'];
   velocityY: number;
@@ -84,6 +85,7 @@ export type CompactMatchSnapshot = {
   aiSeed: number;
   roundAiSeed: number;
   roundTime: number;
+  maxHealth?: number;
   trainingInfiniteHealth: boolean;
   introEnabled: boolean;
   timer: number;
@@ -125,6 +127,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     aiSeed: match.aiSeed,
     roundAiSeed: match.roundAiSeed,
     roundTime: match.roundTime,
+    maxHealth: match.maxHealth,
     trainingInfiniteHealth: match.trainingInfiniteHealth,
     introEnabled: match.introEnabled,
     timer: match.timer,
@@ -151,6 +154,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     aiSeed: snapshot.aiSeed ?? base.aiSeed,
     roundAiSeed: snapshot.roundAiSeed ?? base.roundAiSeed,
     roundTime: snapshot.roundTime,
+    maxHealth: snapshot.maxHealth ?? base.maxHealth,
     trainingInfiniteHealth: snapshot.trainingInfiniteHealth,
     introEnabled: snapshot.introEnabled,
     timer: snapshot.timer,
@@ -172,6 +176,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
 function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
   return {
     hp: fighter.hp,
+    maxHp: fighter.maxHp,
     ki: fighter.ki,
     position: { ...fighter.position },
     velocityY: fighter.velocityY,
@@ -226,6 +231,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot):
   return {
     ...base,
     hp: snapshot.hp,
+    maxHp: snapshot.maxHp ?? base.maxHp,
     ki: snapshot.ki,
     position: { ...snapshot.position },
     velocityY: snapshot.velocityY,
