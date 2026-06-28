@@ -2047,6 +2047,10 @@ button {
   order: -1;
 }
 
+.stage-screen .arcade-footer-actions .primary-button {
+  order: 0;
+}
+
 .arcade-footer-actions .primary-button:hover,
 .arcade-footer-actions .primary-button:focus-visible,
 .arcade-footer-actions .secondary-button:hover,

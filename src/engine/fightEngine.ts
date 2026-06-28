@@ -2893,39 +2893,20 @@ function finishRound(match: MatchSnapshot) {
 }
 
 function refillTrainingHealth(match: MatchSnapshot) {
+  const defeated = match.fighters.filter((fighter) => fighter.hp <= 0);
+  match.fighters.forEach((fighter) => {
+    fighter.roundsWon = 0;
+  });
+  if (defeated.length === 0) return;
+
   match.phase = 'fighting';
   match.countdown = 0;
   match.message = '';
   match.clashState = createEmptyClashState();
   match.visualTimeScale = 1;
   match.winnerSlot = null;
-  match.fighters.forEach((fighter) => {
-    fighter.roundsWon = 0;
-    if (fighter.hp > 0) return;
+  defeated.forEach((fighter) => {
     fighter.hp = fighter.maxHp;
-    fighter.state = 'idle';
-    fighter.currentMove = null;
-    fighter.actionTimer = 0;
-    fighter.actionFramesRemaining = 0;
-    fighter.moveFrame = 0;
-    fighter.hitConnected = false;
-    fighter.hitConfirmed = false;
-    fighter.whiffRecoveryApplied = false;
-    fighter.stunTimer = 0;
-    fighter.stunFramesRemaining = 0;
-    fighter.blockstunFramesRemaining = 0;
-    fighter.blockPunishWindowFrames = 0;
-    fighter.getupInvulnerableFrames = 0;
-    fighter.forcedCrouchFrames = 0;
-    fighter.getupForward = 0;
-    fighter.getupLane = 0;
-    fighter.getupStarted = false;
-    fighter.getupAction = 'none';
-    fighter.getupTotalFrames = 0;
-    fighter.velocityY = 0;
-    fighter.position.y = 0;
-    fighter.shadowClone = null;
-    fighter.shadowCloneChargeConsumed = false;
   });
 }
 

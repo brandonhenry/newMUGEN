@@ -1164,12 +1164,14 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     }
 
     const smoothing = Math.max(0.35, settings.smoothing);
-    const sidestepCameraBoost = p1.state === 'sidestep' || p2.state === 'sidestep' || p1.sidestepTimer > 0 || p2.sidestepTimer > 0 ? 1.55 : 1;
+    const sidestepping = p1.state === 'sidestep' || p2.state === 'sidestep' || p1.sidestepTimer > 0 || p2.sidestepTimer > 0;
+    const sidestepCameraBoost = sidestepping ? 2.75 : 1;
+    const sidestepRigBoost = sidestepping ? 1.55 : 1;
     focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));
     lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing * sidestepCameraBoost));
     side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sidestepCameraBoost)).normalize();
-    cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 2.35 * smoothing));
-    cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 2.75 * smoothing));
+    cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 2.35 * smoothing * sidestepRigBoost));
+    cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 2.75 * smoothing * sidestepRigBoost));
 
     desired.set(
       focus.x + side.x * cameraDistanceRef.current,

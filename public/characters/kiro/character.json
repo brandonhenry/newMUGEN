@@ -550,6 +550,7 @@
       "juggleGravityScale": 0.52,
       "label": "Leaf Rising Wind",
       "hitLevel": "low",
+      "tracking": "homing",
       "knockdown": true,
       "endsInCrouch": true
     },
@@ -9057,5 +9058,6 @@
         "height": 0.55
       }
     }
-  }
+  },
+  "variant": false
 }
