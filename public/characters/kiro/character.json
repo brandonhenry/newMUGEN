@@ -418,11 +418,24 @@
     ],
     "cmd:FC+1": [
       "/characters/kiro/frames/frame-124.png",
-      "/characters/kiro/frames/frame-127.png",
-      "/characters/kiro/frames/frame-128.png"
+      "/characters/kiro/frames/frame-125.png",
+      "/characters/kiro/frames/frame-126.png",
+      "/characters/kiro/frames/frame-127.png"
     ],
     "cmd:FC+2": [
-      "/characters/kiro/frames/frame-124.png"
+      "/characters/kiro/frames/frame-124.png",
+      "/characters/kiro/frames/frame-101.png"
+    ],
+    "cmd:WR+4": [
+      "/characters/kiro/frames/frame-106.png"
+    ],
+    "cmd:FC+3": [
+      "/characters/kiro/frames/frame-141.png",
+      "/characters/kiro/frames/frame-142.png"
+    ],
+    "cmd:FC+4": [
+      "/characters/kiro/frames/frame-141.png",
+      "/characters/kiro/frames/frame-142.png"
     ]
   },
   "animationFps": 5,
@@ -664,6 +677,18 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52
+    },
+    "cmd:FC+1": {
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52
+    },
+    "cmd:FC+4": {
+      "recoveryFrames": 14
     }
   },
   "spriteFrameEdits": {
@@ -863,9 +888,9 @@
         0,
         0
       ],
-      "scale": 0.9,
+      "scale": 0.8,
       "hidden": false,
-      "revision": 1782604772900
+      "revision": 1782606347381
     },
     "125": {
       "index": 125,
@@ -890,7 +915,7 @@
       ],
       "scale": 0.9,
       "hidden": false,
-      "revision": 1782604775544
+      "revision": 1782605906218
     },
     "126": {
       "index": 126,
@@ -915,7 +940,7 @@
       ],
       "scale": 0.9,
       "hidden": false,
-      "revision": 1782604778431
+      "revision": 1782605908677
     },
     "127": {
       "index": 127,
@@ -940,7 +965,7 @@
       ],
       "scale": 0.9,
       "hidden": false,
-      "revision": 1782604781464
+      "revision": 1782605910865
     },
     "190": {
       "index": 190,

@@ -6395,7 +6395,34 @@ function keySpriteSheetBackgroundToTransparent(sheet: HTMLImageElement, canvas: 
       data[key * 4 + 3] = 0;
     }
   }
+
+  const keyedMatteColors = backgrounds.filter(isLikelySpriteSheetMatteColor);
+  if (keyedMatteColors.length > 0) {
+    for (let offset = 0; offset < data.length; offset += 4) {
+      const alpha = data[offset + 3] ?? 0;
+      if (alpha <= 0) continue;
+      const color: [number, number, number] = [data[offset] ?? 0, data[offset + 1] ?? 0, data[offset + 2] ?? 0];
+      if (keyedMatteColors.some((background) => colorDistance(color, background) <= tolerance)) {
+        data[offset + 3] = 0;
+      }
+    }
+  }
+
   context.putImageData(pixels, 0, 0);
+}
+
+function isLikelySpriteSheetMatteColor(color: readonly number[]) {
+  const red = color[0] ?? 0;
+  const green = color[1] ?? 0;
+  const blue = color[2] ?? 0;
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  if (max < 72 || max - min < 36) return false;
+  const isPurpleBlueMatte = blue >= 150 && red >= 80 && green >= 70;
+  const isMagentaMatte = red >= 190 && blue >= 150 && green <= 130;
+  const isGreenMatte = green >= 120 && red <= 150 && blue <= 170;
+  const isCyanMatte = green >= 130 && blue >= 130 && red <= 150;
+  return isPurpleBlueMatte || isMagentaMatte || isGreenMatte || isCyanMatte;
 }
 
 function sampleCanvasBackgroundCandidates(
