@@ -1490,7 +1490,18 @@
           "spin": 0
         }
       ],
-      "soundCues": []
+      "soundCues": [
+        {
+          "id": "cue-1",
+          "name": "Chidori",
+          "path": "/characters/riven/effects/screenshot-2026-06-28-at-3-24-41/sounds/chidori.wav",
+          "frame": 0,
+          "volume": 0.7,
+          "pitch": 1,
+          "pan": 0,
+          "retrigger": false
+        }
+      ]
     }
   ],
   "moveEffects": {
