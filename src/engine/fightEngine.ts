@@ -25,9 +25,13 @@ const ROUND_OVER_DELAY = 2.1;
 const KO_SLOWMO_SECONDS = 0.8;
 const KO_SLOWMO_TIME_SCALE = 0.24;
 const ROUND_INTRO_ENTRY_SECONDS = 1.2;
-const ROUND_INTRO_ROUND_SECONDS = 0.95;
-const ROUND_INTRO_FIGHT_SECONDS = 0.65;
-const ROUND_INTRO_TOTAL_SECONDS = ROUND_INTRO_ENTRY_SECONDS + ROUND_INTRO_ROUND_SECONDS + ROUND_INTRO_FIGHT_SECONDS;
+const ROUND_ANNOUNCER_TIMINGS = [
+  { duration: 4.05, fightAt: 2.49 },
+  { duration: 3.98, fightAt: 2.4 },
+  { duration: 4.04, fightAt: 2.47 },
+  { duration: 4.16, fightAt: 2.6 },
+  { duration: 4.28, fightAt: 2.72 }
+] as const;
 const COMBO_WINDOW = 0.58;
 const FRAMES_PER_SECOND = 60;
 const KNOCKDOWN_MIN_FRAMES = 34;
@@ -2915,8 +2919,9 @@ function refillTrainingHealth(match: MatchSnapshot) {
 }
 
 function beginRoundIntro(match: MatchSnapshot) {
+  const totalIntroSeconds = getRoundIntroTotalSeconds(match.round);
   match.phase = 'intro';
-  match.countdown = ROUND_INTRO_TOTAL_SECONDS;
+  match.countdown = totalIntroSeconds;
   match.message = '';
   match.clashState = createEmptyClashState();
   match.visualTimeScale = 1;
@@ -2924,8 +2929,8 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.fighters.forEach((fighter) => {
     fighter.state = 'entry';
     fighter.currentMove = null;
-    fighter.actionTimer = ROUND_INTRO_TOTAL_SECONDS;
-    fighter.actionFramesRemaining = secondsToFrames(ROUND_INTRO_TOTAL_SECONDS);
+    fighter.actionTimer = totalIntroSeconds;
+    fighter.actionFramesRemaining = secondsToFrames(totalIntroSeconds);
     fighter.moveFrame = 0;
     resetKiChargeRuntime(fighter);
     fighter.hitConnected = false;
@@ -2950,8 +2955,10 @@ function beginRoundIntro(match: MatchSnapshot) {
 }
 
 function updateRoundIntro(match: MatchSnapshot) {
-  const inEntry = match.countdown > ROUND_INTRO_ROUND_SECONDS + ROUND_INTRO_FIGHT_SECONDS;
-  const inRoundCall = match.countdown > ROUND_INTRO_FIGHT_SECONDS;
+  const timing = getRoundAnnouncerTiming(match.round);
+  const clipElapsed = getRoundIntroTotalSeconds(match.round) - match.countdown - ROUND_INTRO_ENTRY_SECONDS;
+  const inEntry = clipElapsed < 0;
+  const inRoundCall = clipElapsed < timing.fightAt;
   match.message = inEntry ? '' : inRoundCall ? `ROUND ${match.round}` : 'FIGHT';
   match.fighters.forEach((fighter) => {
     fighter.state = inEntry ? 'entry' : 'idle';
@@ -2959,6 +2966,15 @@ function updateRoundIntro(match: MatchSnapshot) {
     fighter.actionFramesRemaining = secondsToFrames(match.countdown);
     fighter.forcedCrouchFrames = 0;
   });
+}
+
+function getRoundIntroTotalSeconds(round: number) {
+  return ROUND_INTRO_ENTRY_SECONDS + getRoundAnnouncerTiming(round).duration;
+}
+
+function getRoundAnnouncerTiming(round: number) {
+  const index = Math.min(Math.max(1, Math.round(round)), ROUND_ANNOUNCER_TIMINGS.length) - 1;
+  return ROUND_ANNOUNCER_TIMINGS[index] ?? ROUND_ANNOUNCER_TIMINGS[0];
 }
 
 function updateRoundOverVisuals(match: MatchSnapshot) {

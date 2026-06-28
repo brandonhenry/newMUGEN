@@ -5456,6 +5456,23 @@ button {
   animation: introCalloutPulse 620ms ease-out both;
 }
 
+.match-message.round-message {
+  color: #f7f7f2;
+  font-size: clamp(42px, 10vw, 126px);
+}
+
+.match-message.fight-message {
+  color: #fff7d7;
+  font-size: clamp(82px, 19vw, 226px);
+  letter-spacing: 0.14em;
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.78),
+    0 0 18px rgba(255, 245, 154, 0.92),
+    0 0 52px rgba(255, 74, 36, 0.72),
+    0 28px 100px rgba(0, 0, 0, 0.9);
+  animation: fightCalloutImpact 760ms cubic-bezier(0.16, 1.08, 0.24, 1) both;
+}
+
 .match-message.ko-message {
   color: #fff7d7;
   letter-spacing: 0.16em;
@@ -5554,6 +5571,34 @@ button {
     opacity: 1;
     transform: scale(1.08);
     filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes fightCalloutImpact {
+  0% {
+    opacity: 0;
+    transform: scale(2.15);
+    filter: blur(14px);
+  }
+
+  16% {
+    opacity: 1;
+    transform: scale(0.88);
+    filter: blur(0);
+  }
+
+  34% {
+    transform: scale(1.08);
+  }
+
+  58% {
+    transform: scale(0.99);
   }
 
   100% {
@@ -5940,6 +5985,11 @@ button {
 }
 
 @media (max-width: 760px) {
+  .match-message.fight-message {
+    font-size: clamp(68px, 20vw, 118px);
+    letter-spacing: 0.09em;
+  }
+
   .results-overlay {
     place-items: start center;
     align-content: start;
@@ -6500,6 +6550,12 @@ button {
 }
 
 @media (max-height: 560px) {
+  .match-message.fight-message {
+    align-items: center;
+    padding-top: 0;
+    font-size: clamp(62px, 24vh, 124px);
+  }
+
   .results-overlay {
     place-items: center;
     align-content: start;

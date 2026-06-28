@@ -10306,7 +10306,13 @@ function FightScreen({
       <ClashOverlay match={match} />
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
-      {match.message && match.clashState.status === 'none' && <div className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}>{match.message}</div>}
+      {match.message && match.clashState.status === 'none' && (
+        <div
+          className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
+        >
+          {match.message}
+        </div>
+      )}
       {isOnline && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
         <div className={`match-message online-search-message ${isPrivate ? 'private-search-message' : ''}`}>
           <span>{onlineStatusText}</span>

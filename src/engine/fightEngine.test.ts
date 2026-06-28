@@ -681,9 +681,13 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1);
     expect(match.phase).toBe('intro');
+    expect(match.message).toBe('ROUND 1');
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1.5);
+    expect(match.phase).toBe('intro');
     expect(match.message).toBe('FIGHT');
 
-    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.7);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1.55);
     expect(match.phase).toBe('fighting');
     expect(match.message).toBe('');
   });
