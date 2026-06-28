@@ -3515,11 +3515,16 @@ function hasConfiguredKiCommand(ai: FighterRuntime, input: MoveInput) {
   return (ai.character.animationFrames?.[key]?.length ?? 0) > 0;
 }
 
+function hasAnyConfiguredKiCommand(ai: FighterRuntime) {
+  return moveInputs.some((input) => hasConfiguredKiCommand(ai, input));
+}
+
 function shouldAiContinueCharacterAbilityCharge(ai: FighterRuntime) {
   if (ai.chargePhase === 'startup') return true;
   if (isShadowCloneCharacter(ai)) {
     return !ai.shadowClone && !ai.shadowCloneChargeConsumed;
   }
+  if (!hasAnyConfiguredKiCommand(ai)) return false;
   return ai.ki < KI_BURST_COST;
 }
 
@@ -3535,15 +3540,19 @@ function shouldAiStartCharacterAbilityCharge(
   selector: number,
   routeRoll: number
 ) {
-  if (!isShadowCloneCharacter(ai)) return false;
-  if (ai.shadowClone || ai.shadowCloneChargeConsumed) return false;
+  const isShadowCloneAbility = isShadowCloneCharacter(ai);
+  const hasAuthoredKiAbility = hasAnyConfiguredKiCommand(ai);
+  if (!isShadowCloneAbility && !hasAuthoredKiAbility) return false;
+  if (isShadowCloneAbility && (ai.shadowClone || ai.shadowCloneChargeConsumed)) return false;
   if (leaderCloseout) return false;
   if (tooClose || danger) return false;
   if (opening.kind !== 'none') return false;
   if (ai.comboTimer > 0 || ai.comboHits > 0) return false;
   if (opponent.state === 'attack' && opponent.currentMove && distance < opponent.currentMove.range + 0.55) return false;
 
-  const alreadyReady = ai.ki >= SHADOW_CLONE_KI_THRESHOLD;
+  const targetKi = isShadowCloneAbility ? SHADOW_CLONE_KI_THRESHOLD : KI_BURST_COST;
+  const alreadyReady = ai.ki >= targetKi;
+  if (!isShadowCloneAbility && alreadyReady) return false;
   const safeWindow = distance > 1.35 || opponent.state === 'knockdown' || opponent.state === 'getup';
   if (!alreadyReady && !safeWindow) return false;
 
@@ -3557,10 +3566,11 @@ function shouldAiStartCharacterAbilityCharge(
           : difficulty === 4
             ? 0.23
             : 0.28;
-  const kiReadinessBonus = alreadyReady ? 0.18 : clamp(ai.ki / SHADOW_CLONE_KI_THRESHOLD, 0, 1) * 0.1;
+  const authoredKiBonus = hasAuthoredKiAbility ? 0.08 : 0;
+  const kiReadinessBonus = alreadyReady ? 0.18 : clamp(ai.ki / targetKi, 0, 1) * 0.1;
   const openingBonus = opponent.state === 'knockdown' || opponent.state === 'getup' ? 0.1 : 0;
   const distanceBonus = clamp((distance - 1.2) / 2.4, 0, 0.08);
-  const chance = clamp(difficultyChance + kiReadinessBonus + openingBonus + distanceBonus, 0.02, 0.58);
+  const chance = clamp(difficultyChance + authoredKiBonus + kiReadinessBonus + openingBonus + distanceBonus, 0.02, 0.58);
   const roll = positiveModulo(selector * 11 + routeRoll * 5 + ai.slot * 37 + Math.floor(ai.ki * 7) + Math.floor(opponent.hp), 100) / 100;
   return roll < chance;
 }

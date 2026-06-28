@@ -1099,6 +1099,40 @@ describe('fight engine', () => {
     expect(sawClone).toBe(true);
   });
 
+  it('lets non-Naruto CPU characters charge for authored ki abilities before using them', () => {
+    const kiCharacter: CharacterDefinition = {
+      ...starterCharacters[1],
+      id: 'charged-riven',
+      displayName: 'Charged Riven',
+      animationFrames: {
+        ...(starterCharacters[1].animationFrames ?? {}),
+        'cmd:O+2': starterCharacters[1].animationFrames?.jabright ?? starterCharacters[1].animationFrames?.jab ?? []
+      }
+    };
+    let match = createMatch(kiCharacter, starterCharacters[0], stages[0], 'cpu', 5, { aiSeed: 118 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].ki = 18;
+    match.fighters[0].position.x = -1.35;
+    match.fighters[1].position.x = 1.35;
+
+    let sawCharge = false;
+    let sawKiBurst = false;
+    for (let i = 0; i < 360; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[0].state === 'chargeKi') sawCharge = true;
+      if (match.fighters[0].currentMove?.kiBurst) {
+        sawKiBurst = true;
+        break;
+      }
+    }
+
+    expect(sawCharge).toBe(true);
+    expect(sawKiBurst).toBe(true);
+  });
+
   it('lets high difficulty CPU route into configured full-crouch stance attacks', () => {
     const crouchCharacter: CharacterDefinition = {
       ...starterCharacters[0],
