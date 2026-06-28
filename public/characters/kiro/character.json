@@ -423,7 +423,6 @@
       "/characters/kiro/frames/frame-127.png"
     ],
     "cmd:FC+2": [
-      "/characters/kiro/frames/frame-124.png",
       "/characters/kiro/frames/frame-101.png"
     ],
     "cmd:WR+4": [
@@ -705,12 +704,14 @@
     "cmd:FC+4": {
       "recoveryFrames": 10,
       "hitLevel": "low",
-      "tracking": "homing"
+      "tracking": "homing",
+      "endsInCrouch": true
     },
     "cmd:FC+3": {
       "startupFrames": 10,
       "hitLevel": "low",
-      "tracking": "homing"
+      "tracking": "homing",
+      "endsInCrouch": true
     }
   },
   "spriteFrameEdits": {
@@ -8782,5 +8783,27 @@
       }
     ]
   },
-  "locked": false
+  "locked": false,
+  "animationScales": {
+    "crouch": {
+      "width": 0.9,
+      "height": 0.87
+    },
+    "cmd:FC+1": {
+      "width": 0.9,
+      "height": 0.87
+    },
+    "cmd:FC+2": {
+      "width": 1.5,
+      "height": 1.17
+    },
+    "cmd:FC+3": {
+      "width": 0.9,
+      "height": 0.87
+    },
+    "cmd:FC+4": {
+      "width": 0.9,
+      "height": 0.87
+    }
+  }
 }

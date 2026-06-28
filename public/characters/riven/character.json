@@ -1201,5 +1201,16 @@
     }
   ],
   "effects": [],
-  "moveEffects": {}
+  "moveEffects": {},
+  "locked": false,
+  "animationScales": {
+    "crouch": {
+      "width": 0.78,
+      "height": 0.94
+    },
+    "cmd:FC+3": {
+      "width": 0.7,
+      "height": 0.87
+    }
+  }
 }
