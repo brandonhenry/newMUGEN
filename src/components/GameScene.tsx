@@ -654,6 +654,8 @@ export function MenuAttractScene({ match }: GameSceneProps) {
       <group position={[0, 0, 1.75]} scale={0.82}>
         <FighterRig fighter={match.fighters[0]} />
         <FighterRig fighter={match.fighters[1]} />
+        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
+        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
         <EffectLayer match={match} reducedMotion={false} />
       </group>
       <ContactShadows position={[0, -0.01, 1.75]} opacity={0.32} scale={10} blur={3} far={3.5} />
