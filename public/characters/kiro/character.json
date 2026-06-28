@@ -8863,25 +8863,34 @@
           "id": "core-glow",
           "kind": "glow",
           "color": "#22dfff",
+          "secondaryColor": "#2ee6ff",
           "intensity": 1.65,
-          "size": 1.05,
-          "count": 14
+          "count": 14,
+          "thickness": 0.08,
+          "length": 1.2,
+          "spin": 0
         },
         {
           "id": "outer-rim",
           "kind": "ring",
           "color": "#075dff",
+          "secondaryColor": "#2ee6ff",
           "intensity": 0.92,
-          "size": 1.08,
-          "count": 1
+          "count": 1,
+          "thickness": 0.08,
+          "length": 1.2,
+          "spin": 0
         },
         {
           "id": "chakra-sparks",
           "kind": "lightning",
           "color": "#35e8ff",
+          "secondaryColor": "#2ee6ff",
           "intensity": 0.78,
-          "size": 1.05,
-          "count": 14
+          "count": 14,
+          "thickness": 0.08,
+          "length": 1.2,
+          "spin": 0
         }
       ],
       "soundCues": [
@@ -8904,7 +8913,7 @@
         "id": "micro-rasengan-mugen-sprite-shee-fx",
         "effectId": "micro-rasengan-mugen-sprite-shee",
         "startFrame": 9,
-        "endFrame": 38,
+        "endFrame": 46,
         "layer": 1,
         "anchor": "hitbox",
         "mirrorWithFacing": true,
@@ -8912,7 +8921,7 @@
         "keyframes": [
           {
             "frame": 9,
-            "endFrame": 16,
+            "endFrame": 22,
             "position": [
               -1.4,
               0.15,
@@ -8932,10 +8941,10 @@
             "color": "#a6f7ff"
           },
           {
-            "frame": 32,
-            "endFrame": 38,
+            "frame": 39,
+            "endFrame": 46,
             "position": [
-              1.15,
+              0.95,
               0.45,
               0.05
             ],
