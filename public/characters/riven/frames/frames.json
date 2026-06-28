@@ -2305,15 +2305,27 @@
     {
       "index": 174,
       "path": "/characters/riven/frames/frame-174.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
       "box": [
         23,
-        1517,
+        1529,
         86,
         1606
       ],
       "width": 63,
-      "height": 89,
-      "row": 19
+      "height": 77,
+      "row": 19,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782674656710
     },
     {
       "index": 175,

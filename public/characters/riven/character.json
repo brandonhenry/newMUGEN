@@ -454,6 +454,15 @@
       "/characters/riven/frames/frame-153.png",
       "/characters/riven/frames/frame-154.png",
       "/characters/riven/frames/frame-022.png"
+    ],
+    "cmd:O+1": [
+      "/characters/riven/frames/frame-174.png",
+      "/characters/riven/frames/frame-175.png",
+      "/characters/riven/frames/frame-176.png",
+      "/characters/riven/frames/frame-175.png",
+      "/characters/riven/frames/frame-176.png",
+      "/characters/riven/frames/frame-177.png",
+      "/characters/riven/frames/frame-178.png"
     ]
   },
   "animationFps": 5,
@@ -671,6 +680,9 @@
     },
     "cmd:FC+4": {
       "hitLevel": "mid"
+    },
+    "cmd:O+1": {
+      "knockdown": true
     }
   },
   "spriteFrameEdits": {
@@ -747,6 +759,31 @@
       ],
       "scale": 1,
       "hidden": false
+    },
+    "174": {
+      "index": 174,
+      "path": "/characters/riven/frames/frame-174.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/riven/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        23,
+        1529,
+        86,
+        1606
+      ],
+      "width": 63,
+      "height": 77,
+      "row": 19,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782674656710
     },
     "176": {
       "index": 176,
