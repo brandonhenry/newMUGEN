@@ -493,17 +493,17 @@ function SpriteEffectPlane({
   });
   const image = texture.image as { width?: number; height?: number } | undefined;
   const aspect = image?.width && image?.height ? image.width / image.height : 1;
-  const needsContrastHalo = /rasengan/i.test(`${binding.effect.id} ${binding.effect.name}`);
+  const contrastHalo = getSpriteEffectContrastHalo(binding.effect.blendMode, transform.color);
   return (
     <group ref={groupRef}>
-      {needsContrastHalo && (
-        <mesh scale={[aspect * 1.18, 1.18, 1]} renderOrder={45}>
+      {contrastHalo && (
+        <mesh scale={[aspect * contrastHalo.scale, contrastHalo.scale, 1]} renderOrder={45}>
           <planeGeometry args={[1, 1]} />
           <meshBasicMaterial
             map={texture}
-            color="#0648c8"
+            color={contrastHalo.color}
             transparent
-            opacity={opacity * 0.52}
+            opacity={opacity * contrastHalo.opacity}
             alphaTest={0.02}
             blending={THREE.NormalBlending}
             depthWrite={false}
@@ -527,6 +527,53 @@ function SpriteEffectPlane({
       </mesh>
     </group>
   );
+}
+
+function getSpriteEffectContrastHalo(blendMode: string, color: string) {
+  const rgb = readHexRgb(color);
+  if (!rgb) return null;
+  const luminance = getRelativeLuminance(rgb);
+  const brightEnoughForHalo = luminance >= (blendMode === 'normal' ? 0.72 : 0.62);
+  if (!brightEnoughForHalo) return null;
+  return {
+    color: makeContrastHaloColor(rgb),
+    opacity: THREE.MathUtils.clamp(0.36 + (luminance - 0.62) * 0.68 + (blendMode === 'normal' ? 0 : 0.08), 0.38, 0.64),
+    scale: 1.18
+  };
+}
+
+function readHexRgb(color: string) {
+  const match = /^#?([0-9a-f]{6})$/i.exec(color);
+  if (!match) return null;
+  const value = Number.parseInt(match[1], 16);
+  return {
+    red: (value >> 16) & 255,
+    green: (value >> 8) & 255,
+    blue: value & 255
+  };
+}
+
+function getRelativeLuminance({ red, green, blue }: { red: number; green: number; blue: number }) {
+  const convert = (channel: number) => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  };
+  return 0.2126 * convert(red) + 0.7152 * convert(green) + 0.0722 * convert(blue);
+}
+
+function makeContrastHaloColor({ red, green, blue }: { red: number; green: number; blue: number }) {
+  const source = new THREE.Color(red / 255, green / 255, blue / 255);
+  const hsl = { h: 0, s: 0, l: 0 };
+  source.getHSL(hsl);
+  if (hsl.s < 0.18) {
+    hsl.h = 0.61;
+    hsl.s = 0.96;
+  } else {
+    hsl.s = THREE.MathUtils.clamp(hsl.s + 0.22, 0.72, 1);
+  }
+  hsl.l = THREE.MathUtils.clamp(hsl.l * 0.34, 0.16, 0.3);
+  source.setHSL(hsl.h, hsl.s, hsl.l);
+  return `#${source.getHexString()}`;
 }
 
 function getEffectSpriteFrame(binding: ActiveEffectBinding) {
