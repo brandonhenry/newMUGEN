@@ -1,0 +1,31 @@
+{
+  "source": "Phoenix Ikki.png",
+  "count": 1,
+  "sheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/phoenix-ikki/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 1
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/phoenix-ikki/frames/frame-000.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/phoenix-ikki/animation-sheet.png",
+      "sourceName": "Phoenix Ikki.png",
+      "box": [
+        4,
+        5,
+        488,
+        286
+      ],
+      "width": 484,
+      "height": 281,
+      "row": 0
+    }
+  ]
+}

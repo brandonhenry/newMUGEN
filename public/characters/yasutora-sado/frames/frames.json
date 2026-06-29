@@ -1,0 +1,47 @@
+{
+  "source": "Yasutora Sado.png",
+  "count": 2,
+  "sheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/yasutora-sado/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 2
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/yasutora-sado/frames/frame-000.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yasutora-sado/animation-sheet.png",
+      "sourceName": "Yasutora Sado.png",
+      "box": [
+        5,
+        3,
+        416,
+        83
+      ],
+      "width": 411,
+      "height": 80,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/yasutora-sado/frames/frame-001.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yasutora-sado/animation-sheet.png",
+      "sourceName": "Yasutora Sado.png",
+      "box": [
+        5,
+        88,
+        484,
+        321
+      ],
+      "width": 479,
+      "height": 233,
+      "row": 1
+    }
+  ]
+}

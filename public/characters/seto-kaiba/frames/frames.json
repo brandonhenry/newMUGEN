@@ -1,0 +1,63 @@
+{
+  "source": "Seto Kaiba.png",
+  "count": 3,
+  "sheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/seto-kaiba/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 3
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/seto-kaiba/frames/frame-000.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/seto-kaiba/animation-sheet.png",
+      "sourceName": "Seto Kaiba.png",
+      "box": [
+        5,
+        5,
+        487,
+        131
+      ],
+      "width": 482,
+      "height": 126,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/seto-kaiba/frames/frame-001.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/seto-kaiba/animation-sheet.png",
+      "sourceName": "Seto Kaiba.png",
+      "box": [
+        5,
+        145,
+        431,
+        311
+      ],
+      "width": 426,
+      "height": 166,
+      "row": 1
+    },
+    {
+      "index": 2,
+      "path": "/characters/seto-kaiba/frames/frame-002.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/seto-kaiba/animation-sheet.png",
+      "sourceName": "Seto Kaiba.png",
+      "box": [
+        13,
+        321,
+        229,
+        369
+      ],
+      "width": 216,
+      "height": 48,
+      "row": 2
+    }
+  ]
+}

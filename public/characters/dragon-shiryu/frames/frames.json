@@ -1,0 +1,31 @@
+{
+  "source": "Dragon Shiryū.png",
+  "count": 1,
+  "sheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/dragon-shiryu/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 1
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/dragon-shiryu/frames/frame-000.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        4,
+        1,
+        459,
+        387
+      ],
+      "width": 455,
+      "height": 386,
+      "row": 0
+    }
+  ]
+}

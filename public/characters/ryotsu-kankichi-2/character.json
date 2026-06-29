@@ -1,0 +1,1083 @@
+{
+  "id": "ryotsu-kankichi-2",
+  "displayName": "Ryotsu Kankichi (2)",
+  "locked": true,
+  "variant": true,
+  "variantOf": "ryotsu-kankichi",
+  "faceCardPath": "/characters/ryotsu-kankichi-2/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://ryotsu-kankichi-2",
+  "spriteSheetPath": "/characters/ryotsu-kankichi-2/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/ryotsu-kankichi-2/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 27
+    }
+  ],
+  "spriteFrameCount": 27,
+  "voxelProfile": "image-source",
+  "animationFrames": {
+    "idle": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "walkForward": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "walkBack": [
+      "/characters/ryotsu-kankichi-2/frames/frame-025.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-023.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-021.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-015.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-013.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-011.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png"
+    ],
+    "sprint": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "backflip": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "sidestepLeft": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "sidestepRight": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "jump": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "crouch": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "crouchBlock": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "block": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "chargeKi": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "jableft": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "jabright": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "kickleft": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "kickright": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "hitLight": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "hitHeavy": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "juggle": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "knockdown": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "getupStand": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "getupRollUp": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "win": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "lose": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "cmd:f+1": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "cmd:1+2": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "cmd:1+3": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "cmd:2+3": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ],
+    "cmd:2+4": [
+      "/characters/ryotsu-kankichi-2/frames/frame-000.png"
+    ],
+    "cmd:3+4": [
+      "/characters/ryotsu-kankichi-2/frames/frame-001.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-002.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-003.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-004.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-005.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-006.png"
+    ],
+    "cmd:O+2": [
+      "/characters/ryotsu-kankichi-2/frames/frame-007.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-009.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-012.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-014.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-017.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-019.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-022.png",
+      "/characters/ryotsu-kankichi-2/frames/frame-024.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backflip": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 100,
+    "speed": 5.0,
+    "sidestepSpeed": 4.38,
+    "jumpForce": 8.26,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backflip": "backflip",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Ryotsu Kankichi (2) Left Check",
+      "input": "jab",
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -8,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Ryotsu Kankichi (2) Left Kick",
+      "input": "kick",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -14,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Ryotsu Kankichi (2) Right Check",
+      "input": "heavy",
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Ryotsu Kankichi (2) Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#4327e1",
+    "secondary": "#89da35",
+    "accent": "#8529d3"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "label": "Ryotsu Kankichi (2) Left Check",
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
+      "damage": 6,
+      "hitLevel": "high",
+      "onBlockFrames": -8,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "range": 1.42,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "jabright": {
+      "label": "Ryotsu Kankichi (2) Right Check",
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
+      "damage": 8,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "range": 1.5,
+      "whiffRecoveryFrames": 5,
+      "blockDamage": 1
+    },
+    "kickleft": {
+      "label": "Ryotsu Kankichi (2) Left Kick",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "range": 1.62,
+      "whiffRecoveryFrames": 7,
+      "blockDamage": 1
+    },
+    "kickright": {
+      "label": "Ryotsu Kankichi (2) Right Kick",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "range": 1.7,
+      "whiffRecoveryFrames": 7,
+      "blockDamage": 1
+    },
+    "cmd:f+1": {
+      "label": "Ryotsu Kankichi (2) Rush",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 11,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "whiffRecoveryFrames": 8,
+      "blockDamage": 1
+    },
+    "cmd:d/f+2": {
+      "label": "Ryotsu Kankichi (2) Launcher",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
+      "damage": 15,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "range": 1.68,
+      "whiffRecoveryFrames": 12,
+      "blockDamage": 1
+    },
+    "cmd:qcf+4": {
+      "label": "Ryotsu Kankichi (2) Burst",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
+      "damage": 17,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "knockdown": true,
+      "range": 2.05,
+      "whiffRecoveryFrames": 13,
+      "blockDamage": 1
+    },
+    "cmd:WS+4": {
+      "label": "Ryotsu Kankichi (2) Rising Strike",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "range": 1.62,
+      "whiffRecoveryFrames": 8,
+      "blockDamage": 1
+    },
+    "cmd:FC+1": {
+      "label": "Ryotsu Kankichi (2) Crouch Jab",
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
+      "damage": 7,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "range": 1.34,
+      "whiffRecoveryFrames": 5,
+      "blockDamage": 1
+    },
+    "cmd:FC+2": {
+      "label": "Ryotsu Kankichi (2) Crouch Launcher",
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
+      "damage": 13,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "launchHeight": 2,
+      "range": 1.48,
+      "whiffRecoveryFrames": 12,
+      "blockDamage": 1
+    },
+    "cmd:1+2": {
+      "label": "Ryotsu Kankichi (2) Twin Assault",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "range": 1.72,
+      "whiffRecoveryFrames": 9,
+      "blockDamage": 1
+    },
+    "cmd:1+3": {
+      "label": "Ryotsu Kankichi (2) Cross Launcher",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 15,
+      "hitLevel": "mid",
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "launchHeight": 2.2,
+      "range": 1.65,
+      "whiffRecoveryFrames": 13,
+      "blockDamage": 1
+    },
+    "cmd:2+3": {
+      "label": "Ryotsu Kankichi (2) Low Feint",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "range": 1.58,
+      "whiffRecoveryFrames": 8,
+      "blockDamage": 1
+    },
+    "cmd:2+4": {
+      "label": "Ryotsu Kankichi (2) Driving Kick",
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "hitLevel": "low",
+      "onBlockFrames": -16,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 14,
+      "knockdown": true,
+      "range": 1.74,
+      "whiffRecoveryFrames": 12,
+      "blockDamage": 1
+    },
+    "cmd:3+4": {
+      "label": "Ryotsu Kankichi (2) Power Crush",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 18,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "knockdown": true,
+      "range": 1.9,
+      "whiffRecoveryFrames": 14,
+      "blockDamage": 1
+    },
+    "cmd:O+2": {
+      "label": "Ryotsu Kankichi (2) Aura Drive",
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 32,
+      "damage": 22,
+      "hitLevel": "special",
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "knockdown": true,
+      "usesKi": true,
+      "kiCost": 35,
+      "range": 2.1,
+      "whiffRecoveryFrames": 15,
+      "blockDamage": 1
+    },
+    "neutral:jab-jab": {
+      "label": "Ryotsu Kankichi (2) Second Beat",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Ryotsu Kankichi (2) Body Blow",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Ryotsu Kankichi (2) Low Changeup",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-jab-special": {
+      "label": "Ryotsu Kankichi (2) Pressure Feint",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-heavy": {
+      "label": "Ryotsu Kankichi (2) Drive",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Ryotsu Kankichi (2) Barrage",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Ryotsu Kankichi (2) Finisher",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-kick": {
+      "label": "Ryotsu Kankichi (2) Step Kick",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Ryotsu Kankichi (2) Palm String",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-kick-special": {
+      "label": "Ryotsu Kankichi (2) Rising Chain",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-special": {
+      "label": "Ryotsu Kankichi (2) Special Setup",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Ryotsu Kankichi (2) Break Art",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-jab": {
+      "label": "Ryotsu Kankichi (2) Check Hook",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Ryotsu Kankichi (2) Heavy Break",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Ryotsu Kankichi (2) Charged Follow",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-kick": {
+      "label": "Ryotsu Kankichi (2) Drop Kick",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Ryotsu Kankichi (2) Arc Finisher",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-special": {
+      "label": "Ryotsu Kankichi (2) Focus Stance",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Ryotsu Kankichi (2) Mode Shift",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:kick-jab": {
+      "label": "Ryotsu Kankichi (2) Heel Feint",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:kick-jab-special": {
+      "label": "Ryotsu Kankichi (2) Summon Strike",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:kick-heavy": {
+      "label": "Ryotsu Kankichi (2) Guard Snare",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Ryotsu Kankichi (2) Armor Break",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:kick-special": {
+      "label": "Ryotsu Kankichi (2) Power Setup",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Ryotsu Kankichi (2) Switch Strike",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:special-jab": {
+      "label": "Ryotsu Kankichi (2) Spark Jab",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Ryotsu Kankichi (2) Binding Blow",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:special-heavy": {
+      "label": "Ryotsu Kankichi (2) Heavy Draw",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    },
+    "neutral:special-kick": {
+      "label": "Ryotsu Kankichi (2) Kick Ender",
+      "activeFrames": 3,
+      "startupFrames": 16,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "range": 1.55,
+      "onBlockFrames": -8,
+      "whiffRecoveryFrames": 4,
+      "blockDamage": 1
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.72,
+    "guard": 0.37,
+    "spacing": 1.45,
+    "specialChance": 0.23
+  }
+}

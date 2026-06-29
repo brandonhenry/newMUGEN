@@ -1,0 +1,31 @@
+{
+  "source": "Sven Vollfied.png",
+  "count": 1,
+  "sheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/sven-vollfied/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 1
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/sven-vollfied/frames/frame-000.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        5,
+        4,
+        480,
+        293
+      ],
+      "width": 475,
+      "height": 289,
+      "row": 0
+    }
+  ]
+}
