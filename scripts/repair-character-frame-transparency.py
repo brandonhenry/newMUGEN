@@ -85,9 +85,18 @@ def background_candidates(image: Image.Image) -> list[tuple[int, int, int]]:
 
 def clean_frame(frame_path: Path, backgrounds: list[tuple[int, int, int]], tolerance: int) -> bool:
     image = Image.open(frame_path).convert("RGBA")
+    cleaned = clean_border_connected_background(image, backgrounds, tolerance)
+    if list(cleaned.getdata()) == list(image.getdata()):
+        return False
+    cleaned.save(frame_path)
+    return True
+
+
+def clean_border_connected_background(image: Image.Image, backgrounds: list[tuple[int, int, int]], tolerance: int) -> Image.Image:
+    image = image.convert("RGBA")
     width, height = image.size
     if width <= 0 or height <= 0 or not backgrounds:
-        return False
+        return image
 
     pixels = image.load()
     remove: set[tuple[int, int]] = set()
@@ -118,17 +127,48 @@ def clean_frame(frame_path: Path, backgrounds: list[tuple[int, int, int]], toler
                 queue.append((nx, ny))
 
     if not remove:
-        return False
+        return image
 
-    changed = False
     for x, y in remove:
         r, g, b, a = pixels[x, y]
         if a:
             pixels[x, y] = (r, g, b, 0)
-            changed = True
-    if not changed:
+    return image
+
+
+def clean_exact_background_pixels(image: Image.Image, backgrounds: list[tuple[int, int, int]], tolerance: int) -> Image.Image:
+    image = image.convert("RGBA")
+    if tolerance < 0 or not backgrounds:
+        return image
+    pixels = image.load()
+    width, height = image.size
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = pixels[x, y]
+            if a > 0 and any(color_distance((r, g, b), background) <= tolerance for background in backgrounds):
+                pixels[x, y] = (r, g, b, 0)
+    return image
+
+
+def restore_frame_from_sheet(
+    frame_path: Path,
+    sheet_path: Path,
+    box: list[int],
+    backgrounds: list[tuple[int, int, int]],
+    tolerance: int,
+    interior_tolerance: int,
+) -> bool:
+    if len(box) != 4:
         return False
-    image.save(frame_path)
+    source = Image.open(sheet_path).convert("RGBA")
+    crop_box = tuple(int(value) for value in box)
+    restored = source.crop(crop_box)
+    cleaned = clean_border_connected_background(restored, backgrounds[:1], tolerance)
+    cleaned = clean_exact_background_pixels(cleaned, backgrounds[:1], interior_tolerance)
+    existing = Image.open(frame_path).convert("RGBA") if frame_path.exists() else None
+    if existing is not None and existing.size == cleaned.size and list(existing.getdata()) == list(cleaned.getdata()):
+        return False
+    cleaned.save(frame_path)
     return True
 
 
@@ -154,6 +194,17 @@ def main() -> None:
     parser.add_argument("--start", type=int)
     parser.add_argument("--end", type=int)
     parser.add_argument("--tolerance", type=int, default=70)
+    parser.add_argument(
+        "--interior-tolerance",
+        type=int,
+        default=12,
+        help="When restoring from sheet, clear only exact/near-exact source background pixels inside the sprite crop. Use -1 to disable.",
+    )
+    parser.add_argument(
+        "--restore-from-sheet",
+        action="store_true",
+        help="Rebuild frame PNGs from the source sheet crop before clearing border-connected background pixels.",
+    )
     args = parser.parse_args()
 
     character_dir = args.repo / "public" / "characters" / args.character
@@ -180,7 +231,14 @@ def main() -> None:
                 continue
             sheet_cache[sheet_path] = backgrounds
         frame_path = character_dir.parent.parent / path.lstrip("/")
-        if clean_frame(frame_path, sheet_cache[sheet_path], args.tolerance):
+        if args.restore_from_sheet:
+            box = frame.get("box")
+            if not isinstance(box, list):
+                skipped += 1
+                continue
+            if restore_frame_from_sheet(frame_path, source, box, sheet_cache[sheet_path], args.tolerance, args.interior_tolerance):
+                repaired += 1
+        elif clean_frame(frame_path, sheet_cache[sheet_path], args.tolerance):
             repaired += 1
 
     print(f"checked={len(frames)} repaired={repaired} skipped={skipped}")
