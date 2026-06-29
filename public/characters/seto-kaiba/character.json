@@ -44,16 +44,7 @@
       "/characters/seto-kaiba/frames/frame-018.png"
     ],
     "walkForward": [
-      "/characters/seto-kaiba/frames/frame-020.png",
-      "/characters/seto-kaiba/frames/frame-021.png",
-      "/characters/seto-kaiba/frames/frame-023.png",
-      "/characters/seto-kaiba/frames/frame-025.png",
-      "/characters/seto-kaiba/frames/frame-026.png",
-      "/characters/seto-kaiba/frames/frame-028.png",
-      "/characters/seto-kaiba/frames/frame-030.png",
-      "/characters/seto-kaiba/frames/frame-031.png",
-      "/characters/seto-kaiba/frames/frame-033.png",
-      "/characters/seto-kaiba/frames/frame-035.png"
+      "/characters/seto-kaiba/frames/frame-000.png"
     ],
     "walkBack": [
       "/characters/seto-kaiba/frames/frame-042.png",
@@ -614,534 +605,532 @@
   },
   "moveOverrides": {
     "jableft": {
-      "label": "Seto Kaiba Left Check",
       "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
-      "hitLevel": "high",
+      "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
-      "range": 1.42,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.42,
+      "label": "Seto Kaiba Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
-      "label": "Seto Kaiba Right Check",
       "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -5,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.5,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.5,
+      "label": "Seto Kaiba Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
-      "label": "Seto Kaiba Left Kick",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.62,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Seto Kaiba Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
-      "label": "Seto Kaiba Right Kick",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 8,
       "onCounterHitFrames": 13,
-      "range": 1.7,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.7,
+      "label": "Seto Kaiba Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "label": "Seto Kaiba Rush",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -6,
       "onHitFrames": 7,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "label": "Seto Kaiba Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "label": "Seto Kaiba Launcher",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "range": 1.68,
-      "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "label": "Seto Kaiba Launcher",
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "label": "Seto Kaiba Burst",
       "startupFrames": 20,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 2.05,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 2.05,
+      "label": "Seto Kaiba Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
-      "label": "Seto Kaiba Rising Strike",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "range": 1.62,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Seto Kaiba Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "label": "Seto Kaiba Crouch Jab",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
       "damage": 7,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -4,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.34,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.34,
+      "label": "Seto Kaiba Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "label": "Seto Kaiba Crouch Launcher",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 13,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "launchHeight": 2,
-      "range": 1.48,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Seto Kaiba Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "label": "Seto Kaiba Twin Assault",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "range": 1.72,
       "whiffRecoveryFrames": 9,
-      "blockDamage": 1
+      "range": 1.72,
+      "label": "Seto Kaiba Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "label": "Seto Kaiba Cross Launcher",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 28,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "launchHeight": 2.2,
-      "range": 1.65,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Seto Kaiba Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "label": "Seto Kaiba Low Feint",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.58,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.58,
+      "label": "Seto Kaiba Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
-      "label": "Seto Kaiba Driving Kick",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "knockdown": true,
-      "range": 1.74,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.74,
+      "label": "Seto Kaiba Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
-      "label": "Seto Kaiba Power Crush",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 18,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 1.9,
       "whiffRecoveryFrames": 14,
-      "blockDamage": 1
+      "range": 1.9,
+      "label": "Seto Kaiba Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
-      "label": "Seto Kaiba Aura Drive",
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 32,
       "damage": 22,
-      "hitLevel": "special",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "knockdown": true,
-      "usesKi": true,
-      "kiCost": 35,
-      "range": 2.1,
       "whiffRecoveryFrames": 15,
-      "blockDamage": 1
+      "range": 2.1,
+      "label": "Seto Kaiba Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
-      "label": "Seto Kaiba Second Beat",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Seto Kaiba Body Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Seto Kaiba Low Changeup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Seto Kaiba Pressure Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Seto Kaiba Drive",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Seto Kaiba Barrage",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Seto Kaiba Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Seto Kaiba Step Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Seto Kaiba Palm String",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Seto Kaiba Rising Chain",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Seto Kaiba Special Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Seto Kaiba Break Art",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Seto Kaiba Check Hook",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Seto Kaiba Heavy Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Seto Kaiba Charged Follow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Seto Kaiba Drop Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Seto Kaiba Arc Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Seto Kaiba Focus Stance",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Seto Kaiba Mode Shift",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Seto Kaiba Heel Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Seto Kaiba Summon Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Seto Kaiba Guard Snare",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Seto Kaiba Armor Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Seto Kaiba Power Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Seto Kaiba Switch Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Seto Kaiba Spark Jab",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Seto Kaiba Binding Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Seto Kaiba Heavy Draw",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Seto Kaiba Kick Ender",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Seto Kaiba Kick Ender"
     }
   },
   "effects": [],
@@ -1152,5 +1141,7 @@
     "guard": 0.36,
     "spacing": 1.58,
     "specialChance": 0.26
-  }
+  },
+  "animationScales": {},
+  "unplayable": true
 }

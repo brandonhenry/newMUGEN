@@ -1066,6 +1066,10 @@ function isCharacterUnlocked(character: CharacterDefinition, unlockedIds: Set<st
   return !character.locked || unlockedIds.has(character.id);
 }
 
+function isCharacterPlayable(character: CharacterDefinition) {
+  return !character.unplayable;
+}
+
 function findFirstUnlockedCharacter(roster: CharacterDefinition[], unlockedIds: Set<string>, excludeId?: string) {
   return (
     roster.find((character) => character.id !== excludeId && isCharacterUnlocked(character, unlockedIds)) ??
@@ -1143,6 +1147,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
     body: JSON.stringify({
       characterId: character.id,
       locked: Boolean(character.locked),
+      unplayable: Boolean(character.unplayable),
       variant: Boolean(character.variant),
       variantOf: character.variantOf ?? '',
       faceCardPath: character.faceCardPath ?? '',
@@ -1873,7 +1878,8 @@ export default function App() {
   const [stageResult, setStageResult] = useState<StageLoadResult | null>(null);
   const [animationOverrides, setAnimationOverrides] = useState<AnimationOverrideMap>({});
   const sourceRoster = rosterResult?.characters ?? [];
-  const roster = useMemo(() => applyAnimationOverrides(sourceRoster, animationOverrides), [sourceRoster, animationOverrides]);
+  const editedRoster = useMemo(() => applyAnimationOverrides(sourceRoster, animationOverrides), [sourceRoster, animationOverrides]);
+  const roster = useMemo(() => editedRoster.filter(isCharacterPlayable), [editedRoster]);
   const stageRoster = stageResult?.stages ?? stages;
   const playableStageRoster = useMemo(() => {
     const visible = stageRoster.filter((stage) => !stage.hidden);
@@ -2233,7 +2239,7 @@ export default function App() {
     }));
   };
 
-  const setCharacterMetadata = (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'variant' | 'variantOf' | 'faceCardPath'>>) => {
+  const setCharacterMetadata = (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>) => {
     setRosterResult((current) => {
       if (!current) return current;
       return {
@@ -2528,7 +2534,7 @@ export default function App() {
         )}
         {screen === 'viewer' && (
           <CharacterViewer
-            roster={roster}
+            roster={editedRoster}
             sourceRoster={sourceRoster}
             onAnimationFramesChange={setCharacterAnimationFrames}
             onAnimationSpeedChange={setCharacterAnimationSpeed}
@@ -5658,7 +5664,7 @@ function CharacterViewer({
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
-  onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'variant' | 'variantOf' | 'faceCardPath'>>) => void;
+  onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
@@ -6209,7 +6215,7 @@ function CharacterViewer({
   };
 
   const saveActiveMetadata = async (
-    patch: Partial<Pick<CharacterDefinition, 'locked' | 'variant' | 'variantOf' | 'faceCardPath'>>,
+    patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>,
     failureLabel: string
   ) => {
     onCharacterMetadataChange(active.id, patch);
@@ -6228,6 +6234,10 @@ function CharacterViewer({
 
   const toggleActiveLocked = async () => {
     await saveActiveMetadata({ locked: !active.locked }, 'Failed to save character lock state');
+  };
+
+  const toggleActiveUnplayable = async (unplayable: boolean) => {
+    await saveActiveMetadata({ unplayable }, 'Failed to save character playable state');
   };
 
   const toggleActiveVariant = async () => {
@@ -6499,6 +6509,17 @@ function CharacterViewer({
                         <KeyRound size={18} />
                         {active.locked ? 'Locked' : 'Unlocked'}
                       </button>
+                      <label className={`viewer-flag-toggle ${active.unplayable ? 'is-on' : ''}`}>
+                        <input
+                          type="checkbox"
+                          checked={Boolean(active.unplayable)}
+                          onChange={(event) => void toggleActiveUnplayable(event.target.checked)}
+                          disabled={manifestSaveStatus === 'saving'}
+                          data-testid="toggle-character-unplayable"
+                        />
+                        <EyeOff size={18} />
+                        <span>Unplayable</span>
+                      </label>
                       <button
                         className={`secondary-button ${active.variant ? 'active-tool' : ''}`}
                         onClick={toggleActiveVariant}

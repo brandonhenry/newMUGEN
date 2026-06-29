@@ -43,14 +43,7 @@
       "/characters/yasutora-sado/frames/frame-008.png"
     ],
     "walkForward": [
-      "/characters/yasutora-sado/frames/frame-009.png",
-      "/characters/yasutora-sado/frames/frame-010.png",
-      "/characters/yasutora-sado/frames/frame-011.png",
-      "/characters/yasutora-sado/frames/frame-012.png",
-      "/characters/yasutora-sado/frames/frame-013.png",
-      "/characters/yasutora-sado/frames/frame-014.png",
-      "/characters/yasutora-sado/frames/frame-015.png",
-      "/characters/yasutora-sado/frames/frame-016.png"
+      "/characters/yasutora-sado/frames/frame-000.png"
     ],
     "walkBack": [
       "/characters/yasutora-sado/frames/frame-020.png",
@@ -570,534 +563,532 @@
   },
   "moveOverrides": {
     "jableft": {
-      "label": "Yasutora Sado Left Check",
       "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
-      "hitLevel": "high",
+      "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
-      "range": 1.42,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.42,
+      "label": "Yasutora Sado Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
-      "label": "Yasutora Sado Right Check",
       "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -5,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.5,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.5,
+      "label": "Yasutora Sado Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
-      "label": "Yasutora Sado Left Kick",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.62,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Yasutora Sado Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
-      "label": "Yasutora Sado Right Kick",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 8,
       "onCounterHitFrames": 13,
-      "range": 1.7,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.7,
+      "label": "Yasutora Sado Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "label": "Yasutora Sado Rush",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -6,
       "onHitFrames": 7,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "label": "Yasutora Sado Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "label": "Yasutora Sado Launcher",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "range": 1.68,
-      "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "label": "Yasutora Sado Launcher",
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "label": "Yasutora Sado Burst",
       "startupFrames": 19,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 2.05,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 2.05,
+      "label": "Yasutora Sado Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
-      "label": "Yasutora Sado Rising Strike",
       "startupFrames": 14,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "range": 1.62,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Yasutora Sado Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "label": "Yasutora Sado Crouch Jab",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
       "damage": 7,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -4,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.34,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.34,
+      "label": "Yasutora Sado Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "label": "Yasutora Sado Crouch Launcher",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 13,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "launchHeight": 2,
-      "range": 1.48,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Yasutora Sado Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "label": "Yasutora Sado Twin Assault",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "range": 1.72,
       "whiffRecoveryFrames": 9,
-      "blockDamage": 1
+      "range": 1.72,
+      "label": "Yasutora Sado Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "label": "Yasutora Sado Cross Launcher",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 28,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "launchHeight": 2.2,
-      "range": 1.65,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Yasutora Sado Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "label": "Yasutora Sado Low Feint",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.58,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.58,
+      "label": "Yasutora Sado Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
-      "label": "Yasutora Sado Driving Kick",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "knockdown": true,
-      "range": 1.74,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.74,
+      "label": "Yasutora Sado Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
-      "label": "Yasutora Sado Power Crush",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 18,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 1.9,
       "whiffRecoveryFrames": 14,
-      "blockDamage": 1
+      "range": 1.9,
+      "label": "Yasutora Sado Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
-      "label": "Yasutora Sado Aura Drive",
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 32,
       "damage": 22,
-      "hitLevel": "special",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "knockdown": true,
-      "usesKi": true,
-      "kiCost": 35,
-      "range": 2.1,
       "whiffRecoveryFrames": 15,
-      "blockDamage": 1
+      "range": 2.1,
+      "label": "Yasutora Sado Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
-      "label": "Yasutora Sado Second Beat",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Yasutora Sado Body Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Yasutora Sado Low Changeup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Yasutora Sado Pressure Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Yasutora Sado Drive",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Yasutora Sado Barrage",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Yasutora Sado Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Yasutora Sado Step Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Yasutora Sado Palm String",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Yasutora Sado Rising Chain",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Yasutora Sado Special Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Yasutora Sado Break Art",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Yasutora Sado Check Hook",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Yasutora Sado Heavy Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Yasutora Sado Charged Follow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Yasutora Sado Drop Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Yasutora Sado Arc Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Yasutora Sado Focus Stance",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Yasutora Sado Mode Shift",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Yasutora Sado Heel Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Yasutora Sado Summon Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Yasutora Sado Guard Snare",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Yasutora Sado Armor Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Yasutora Sado Power Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Yasutora Sado Switch Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Yasutora Sado Spark Jab",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Yasutora Sado Binding Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Yasutora Sado Heavy Draw",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Yasutora Sado Kick Ender",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Yasutora Sado Kick Ender"
     }
   },
   "effects": [],
@@ -1108,5 +1099,7 @@
     "guard": 0.4,
     "spacing": 1.46,
     "specialChance": 0.26
-  }
+  },
+  "animationScales": {},
+  "unplayable": true
 }

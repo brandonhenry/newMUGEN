@@ -2769,9 +2769,56 @@ button {
   background: #2ee6ff;
 }
 
+.viewer-flag-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  border-radius: 6px;
+  padding: 0 12px;
+  color: #f7f7f2;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  transition-property: transform, background-color, color;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.viewer-flag-toggle:active {
+  transform: scale(0.96);
+}
+
+.viewer-flag-toggle.is-on {
+  color: #101114;
+  background: #ffb44d;
+}
+
+.viewer-flag-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #2ee6ff;
+}
+
+.viewer-flag-toggle input:disabled {
+  cursor: wait;
+}
+
+.viewer-flag-toggle span {
+  color: currentColor;
+  font-weight: 950;
+}
+
 .viewer-actions span {
   color: var(--text-muted);
   font-size: 13px;
+}
+
+.viewer-actions .viewer-flag-toggle span {
+  color: currentColor;
+  font-weight: 950;
 }
 
 .editing-title {

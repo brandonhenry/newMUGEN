@@ -46,6 +46,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
   return {
     ...character,
     locked: Boolean(character.locked),
+    unplayable: Boolean(character.unplayable),
     variant: Boolean(character.variant),
     variantOf: typeof character.variantOf === 'string' ? character.variantOf : undefined,
     faceCardPath: typeof character.faceCardPath === 'string' ? character.faceCardPath : undefined,

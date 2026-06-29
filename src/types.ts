@@ -288,6 +288,7 @@ export type CharacterDefinition = {
   id: string;
   displayName: string;
   locked?: boolean;
+  unplayable?: boolean;
   variant?: boolean;
   variantOf?: string;
   faceCardPath?: string;

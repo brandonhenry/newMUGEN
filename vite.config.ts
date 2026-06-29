@@ -12,6 +12,7 @@ export default defineConfig({
 type DevManifestPayload = {
   characterId?: string;
   locked?: boolean;
+  unplayable?: boolean;
   variant?: boolean;
   variantOf?: string;
   faceCardPath?: string;
@@ -268,6 +269,7 @@ function koreDevManifestWriter() {
           const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
           const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
           manifest.locked = Boolean(payload.locked);
+          manifest.unplayable = Boolean(payload.unplayable);
           manifest.variant = Boolean(payload.variant);
           const variantOf = sanitizeCharacterReference(payload.variantOf, characterId);
           if (manifest.variant && variantOf) manifest.variantOf = variantOf;
@@ -1961,6 +1963,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     id: characterId,
     displayName,
     locked: Boolean(manifest.locked),
+    unplayable: Boolean(manifest.unplayable),
     variant: Boolean(manifest.variant),
     variantOf: Boolean(manifest.variant) ? sanitizeCharacterReference(manifest.variantOf, characterId) || undefined : undefined,
     faceCardPath: sanitizeCharacterAssetPath(manifest.faceCardPath, characterId) || undefined,
