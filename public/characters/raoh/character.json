@@ -134,7 +134,12 @@
       "/characters/raoh/frames/frame-027.png",
       "/characters/raoh/frames/frame-028.png"
     ],
-    "knockdown": [],
+    "knockdown": [
+      "/characters/raoh/frames/frame-030.png",
+      "/characters/raoh/frames/frame-031.png",
+      "/characters/raoh/frames/frame-032.png",
+      "/characters/raoh/frames/frame-033.png"
+    ],
     "getupStand": [],
     "getupRollUp": [],
     "win": [],
@@ -1030,7 +1035,108 @@
   },
   "effects": [],
   "moveEffects": {},
-  "spriteFrameEdits": {},
+  "spriteFrameEdits": {
+    "30": {
+      "index": 30,
+      "path": "/characters/raoh/frames/frame-030.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/raoh/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        36,
+        327,
+        102,
+        375
+      ],
+      "width": 66,
+      "height": 48,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782758333719
+    },
+    "31": {
+      "index": 31,
+      "path": "/characters/raoh/frames/frame-031.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/raoh/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        153,
+        322,
+        217,
+        369
+      ],
+      "width": 64,
+      "height": 47,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782758338248
+    },
+    "32": {
+      "index": 32,
+      "path": "/characters/raoh/frames/frame-032.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/raoh/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        268,
+        334,
+        333,
+        365
+      ],
+      "width": 65,
+      "height": 31,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782758343388
+    },
+    "33": {
+      "index": 33,
+      "path": "/characters/raoh/frames/frame-033.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/raoh/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        380,
+        328,
+        449,
+        374
+      ],
+      "width": 69,
+      "height": 46,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782758351844
+    }
+  },
   "aiProfile": {
     "aggression": 0.62,
     "guard": 0.38,
