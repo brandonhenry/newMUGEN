@@ -916,6 +916,195 @@ export function CharacterPreviewCanvas({
   );
 }
 
+export const UNLOCK_REVEAL_SEQUENCE_SECONDS = 6.6;
+
+export function UnlockRevealCanvas({
+  character,
+  stage,
+  frozen
+}: {
+  character: CharacterDefinition;
+  stage: StageDefinition;
+  frozen: boolean;
+}) {
+  const seed = useMemo(() => hashString(character.id), [character.id]);
+  return (
+    <Canvas
+      shadows
+      dpr={[1, 1.75]}
+      camera={{ position: [0, 2.45, 6.2], fov: 40 }}
+      data-testid="unlock-reveal-canvas"
+      aria-label={`${character.displayName} unlock reveal`}
+    >
+      <color attach="background" args={[stage.world?.backgroundColor ?? '#f8fbff']} />
+      <fog attach="fog" args={[stage.world?.backgroundColor ?? '#f8fbff', 32, 130]} />
+      <Suspense fallback={null}>
+        <Environment preset="city" />
+      </Suspense>
+      <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
+      <ambientLight intensity={0.72} />
+      <directionalLight castShadow position={[3.8, 7.2, 4.6]} intensity={2.1} color={stage.light} shadow-mapSize={[1024, 1024]} />
+      <pointLight position={[-3.2, 2.5, 2.6]} color={character.colors.primary} intensity={9} distance={8} />
+      <pointLight position={[2.6, 1.4, -2.2]} color={character.colors.accent} intensity={7} distance={7} />
+      <Arena stage={stage} />
+      <UnlockRevealFighter character={character} frozen={frozen} />
+      <UnlockRevealCamera characterId={character.id} frozen={frozen} seed={seed} />
+      <ContactShadows position={[0, -0.01, 0]} opacity={0.38} scale={7} blur={2.8} far={3.2} />
+    </Canvas>
+  );
+}
+
+function UnlockRevealFighter({ character, frozen }: { character: CharacterDefinition; frozen: boolean }) {
+  const fighter = useRef(createPreviewFighter(character));
+  const revealMoves = useMemo(() => selectUnlockRevealMoves(character), [character]);
+  const startTime = useRef<number | null>(null);
+
+  useEffect(() => {
+    fighter.current = createPreviewFighter(character);
+    startTime.current = null;
+  }, [character]);
+
+  useFrame((state) => {
+    if (startTime.current === null) startTime.current = state.clock.elapsedTime;
+    const elapsed = frozen ? UNLOCK_REVEAL_SEQUENCE_SECONDS : Math.min(UNLOCK_REVEAL_SEQUENCE_SECONDS, state.clock.elapsedTime - startTime.current);
+    const runtime = fighter.current;
+    const step = unlockRevealStep(elapsed, revealMoves);
+    runtime.character = character;
+    runtime.facing = 1;
+    runtime.facingYaw = Math.PI / 2;
+    runtime.position.x = step.x;
+    runtime.position.y = 0;
+    runtime.position.z = step.z;
+    runtime.velocityY = 0;
+    runtime.blockFlash = 0;
+    runtime.hitFlash = 0;
+    runtime.chargePhase = 'none';
+    runtime.chargeFrame = 0;
+    runtime.chargeCommitted = false;
+    runtime.getupAction = 'none';
+    runtime.getupTotalFrames = 0;
+    runtime.previewAnimationKey = step.animationKey;
+    runtime.currentMove = step.move;
+    runtime.state = step.state;
+    runtime.moveFrame = step.moveFrame;
+    runtime.actionFramesRemaining = step.remainingFrames;
+    runtime.actionTimer = step.remainingFrames / 60;
+    runtime.hitConnected = step.state === 'attack';
+    runtime.hitConfirmed = step.state === 'attack';
+  });
+
+  return <FighterRig fighter={fighter.current} timeScale={frozen ? 0 : 1} />;
+}
+
+function selectUnlockRevealMoves(character: CharacterDefinition) {
+  const moves = character.moves.filter((move) => move.damage > 0);
+  const byCommand = moves.filter((move) => move.command?.startsWith('cmd:'));
+  const preferred = [
+    byCommand.find((move) => Boolean(move.launchHeight) || move.knockdown),
+    byCommand.find((move) => move.hitLevel === 'special' || move.kiCost),
+    byCommand.find((move) => move.input === 'kick' || move.input === 'heavy'),
+    moves.find((move) => move.input === 'jab'),
+    moves.find((move) => move.input === 'heavy'),
+    moves.find((move) => move.input === 'kick'),
+    moves.find((move) => move.input === 'special')
+  ].filter((move): move is MoveDefinition => Boolean(move));
+  const unique: MoveDefinition[] = [];
+  for (const move of [...preferred, ...moves]) {
+    if (!unique.some((candidate) => candidate.id === move.id || candidate.animationKey === move.animationKey)) unique.push(move);
+    if (unique.length >= 3) break;
+  }
+  return unique.length > 0 ? unique : character.moves.slice(0, 3);
+}
+
+function unlockRevealStep(elapsed: number, moves: MoveDefinition[]) {
+  if (elapsed < 0.72) return revealState('idle', -2.35, 0.1);
+  if (elapsed < 1.86) {
+    const progress = THREE.MathUtils.smoothstep((elapsed - 0.72) / 1.14, 0, 1);
+    return revealState('walk', THREE.MathUtils.lerp(-2.35, -0.46, progress), 0.1, 'sprint');
+  }
+  const attackWindows = [
+    { start: 1.86, end: 2.62, move: moves[0] },
+    { start: 2.62, end: 3.42, move: moves[1] ?? moves[0] },
+    { start: 3.42, end: 4.36, move: moves[2] ?? moves[1] ?? moves[0] }
+  ];
+  for (const window of attackWindows) {
+    if (elapsed >= window.start && elapsed < window.end && window.move) {
+      const total = Math.max(1, window.move.startupFrames + window.move.activeFrames + window.move.recoveryFrames);
+      const progress = THREE.MathUtils.clamp((elapsed - window.start) / (window.end - window.start), 0, 1);
+      const moveFrame = Math.min(total - 1, Math.floor(progress * total));
+      return {
+        state: 'attack' as const,
+        x: -0.32 + Math.sin(progress * Math.PI) * 0.1,
+        z: 0.1,
+        animationKey: window.move.animationKey,
+        move: window.move,
+        moveFrame,
+        remainingFrames: Math.max(0, total - moveFrame)
+      };
+    }
+  }
+  if (elapsed < 4.92) return revealState('idle', -0.26, 0.1);
+  return revealState('win', -0.18, 0.1, 'win');
+}
+
+function revealState(state: Exclude<FighterState, 'attack'>, x: number, z: number, animationKey: string = state) {
+  return {
+    state,
+    x,
+    z,
+    animationKey,
+    move: null,
+    moveFrame: 0,
+    remainingFrames: 0
+  };
+}
+
+function UnlockRevealCamera({ characterId, frozen, seed }: { characterId: string; frozen: boolean; seed: number }) {
+  const { camera } = useThree();
+  const focus = useRef(new THREE.Vector3(-0.6, 1.05, 0.1));
+  const startTime = useRef<number | null>(null);
+  const angle = useMemo(() => {
+    const side = seed % 2 === 0 ? 1 : -1;
+    return side * THREE.MathUtils.degToRad(24 + (seed % 19));
+  }, [seed]);
+  const heightBias = useMemo(() => ((seed >> 4) % 9) * 0.035, [seed]);
+
+  useFrame((state, delta) => {
+    if (startTime.current === null) startTime.current = state.clock.elapsedTime;
+    const elapsed = frozen
+      ? UNLOCK_REVEAL_SEQUENCE_SECONDS
+      : Math.min(UNLOCK_REVEAL_SEQUENCE_SECONDS, state.clock.elapsedTime - startTime.current);
+    const progress = THREE.MathUtils.clamp(elapsed / UNLOCK_REVEAL_SEQUENCE_SECONDS, 0, 1);
+    const focusX = THREE.MathUtils.lerp(-1.6, -0.15, THREE.MathUtils.smoothstep(progress, 0.08, 0.74));
+    const focusY = THREE.MathUtils.lerp(0.95, 1.28 + heightBias, THREE.MathUtils.smoothstep(progress, 0.58, 1));
+    focus.current.lerp(new THREE.Vector3(focusX, focusY, 0.08), cameraDamp(delta, 5.2));
+    const distance = THREE.MathUtils.lerp(6.5, 3.85 + (seed % 5) * 0.16, THREE.MathUtils.smoothstep(progress, 0.42, 1));
+    const orbit = angle + Math.sin((seed % 17) * 0.25) * 0.1;
+    const desired = new THREE.Vector3(
+      focus.current.x + Math.sin(orbit) * distance,
+      THREE.MathUtils.lerp(2.8, 1.85 + heightBias, THREE.MathUtils.smoothstep(progress, 0.48, 1)),
+      focus.current.z + Math.cos(orbit) * distance
+    );
+    camera.position.lerp(desired, cameraDamp(delta, frozen ? 8 : 3.2));
+    camera.lookAt(focus.current);
+  });
+
+  useEffect(() => {
+    debugLogThrottled(5, 'unlock reveal camera angle', { characterId, angle: Number(angle.toFixed(3)) });
+  }, [angle, characterId]);
+
+  return null;
+}
+
+function hashString(value: string) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
 type PreviewFrameFit = {
   scale: number;
   extraDistance: number;

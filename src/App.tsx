@@ -28,7 +28,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, clearImageVoxelCacheForFrame, type PreviewPose } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -77,7 +77,7 @@ import {
   type VoxelFidelitySettings
 } from './types';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type CharacterAnimationOverride = {
@@ -1793,6 +1793,7 @@ export default function App() {
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
+  const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
   const [musicStarted, setMusicStarted] = useState(true);
   const [fightPaused, setFightPaused] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -2200,14 +2201,21 @@ export default function App() {
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
+  const unlockRevealCharacter = roster.find((character) => character.id === pendingUnlockCharacterId) ?? null;
+  const unlockRevealStage =
+    stageRoster.find((stage) => stage.id === 'the-chamber') ??
+    playableStageRoster.find((stage) => stage.id === 'the-chamber') ??
+    stages.find((stage) => stage.id === 'the-chamber') ??
+    selectedStage;
   const activeBgmSource = useMemo(() => {
     if (!musicStarted || screen === 'boot') return null;
     if (screen === 'fight') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
+    if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
     if (!settings.audio.menuMusic) return null;
     if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
     if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
     return KORE_MENU_BGM_SOURCE;
-  }, [fightPaused, musicStarted, screen, selectedStage, settings.audio.menuMusic]);
+  }, [fightPaused, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -2381,6 +2389,17 @@ export default function App() {
             onReady={() => setScreen('fight')}
           />
         )}
+        {screen === 'unlockReveal' && unlockRevealCharacter && (
+          <UnlockRevealScreen
+            character={unlockRevealCharacter}
+            stage={unlockRevealStage}
+            onContinue={() => {
+              setPendingUnlockCharacterId('');
+              setVersusReturnScreen('stage');
+              setScreen('versus');
+            }}
+          />
+        )}
         {screen === 'stageEditor' && (
           <StageEditor
             stages={stageRoster}
@@ -2443,6 +2462,10 @@ export default function App() {
             onCharacterSelect={() => setScreen('select')}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
+              const defeatedCharacter = roster.find((character) => character.id === defeatedCharacterId);
+              const shouldRevealUnlock = winnerSlot === 1 && !isDevHost && defeatedCharacter
+                ? !isCharacterUnlocked(defeatedCharacter, unlockedCharacterIds)
+                : false;
               if (winnerSlot === 1 && !isDevHost) {
                 effectiveUnlocks.add(defeatedCharacterId);
                 unlockCharacter(defeatedCharacterId);
@@ -2450,6 +2473,11 @@ export default function App() {
               const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlocks, cpuDifficulty);
               if (nextOpponent) setP2Id(nextOpponent.id);
               setVersusReturnScreen('stage');
+              if (shouldRevealUnlock) {
+                setPendingUnlockCharacterId(defeatedCharacterId);
+                setScreen('unlockReveal');
+                return;
+              }
               setScreen('versus');
             }}
           />
@@ -2809,6 +2837,87 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
     <div ref={titleRef} className="title-screen" tabIndex={0} onClick={onStart} onKeyDown={handleKeyDown} aria-label="KORE title screen. Press any key.">
       <img className="title-logo" src="/brand/kore-logo-generated.png" alt="KORE" />
       <span className="press-any-key">PRESS ANY KEY</span>
+    </div>
+  );
+}
+
+function UnlockRevealScreen({
+  character,
+  stage,
+  onContinue
+}: {
+  character: CharacterDefinition;
+  stage: StageDefinition;
+  onContinue: () => void;
+}) {
+  const [ready, setReady] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const continuedRef = useRef(false);
+  const gamepadPressedRef = useRef(false);
+
+  const continueIfReady = useCallback(() => {
+    if (!ready || continuedRef.current) return;
+    continuedRef.current = true;
+    onContinue();
+  }, [onContinue, ready]);
+
+  useEffect(() => {
+    setReady(false);
+    continuedRef.current = false;
+    gamepadPressedRef.current = false;
+    const timeout = window.setTimeout(() => setReady(true), UNLOCK_REVEAL_SEQUENCE_SECONDS * 1000);
+    const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
+    return () => {
+      window.clearTimeout(timeout);
+      window.cancelAnimationFrame(focusFrame);
+    };
+  }, [character.id]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (!ready) return;
+      event.preventDefault();
+      continueIfReady();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [continueIfReady, ready]);
+
+  useEffect(() => {
+    let frame = 0;
+    const tick = () => {
+      const pads = typeof navigator !== 'undefined' && navigator.getGamepads ? Array.from(navigator.getGamepads()) : [];
+      const pressed = pads.some((pad) => pad?.buttons.some((button) => button.pressed));
+      if (ready && pressed && !gamepadPressedRef.current) continueIfReady();
+      gamepadPressedRef.current = pressed;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [continueIfReady, ready]);
+
+  return (
+    <div
+      ref={screenRef}
+      className={`unlock-reveal-screen ${ready ? 'is-ready' : ''}`}
+      tabIndex={0}
+      onPointerDown={continueIfReady}
+      aria-label={`${character.displayName} unlocked`}
+      style={{
+        '--unlock-primary': character.colors.primary,
+        '--unlock-accent': character.colors.accent
+      } as CSSProperties}
+    >
+      <div className="unlock-reveal-stage" aria-hidden="true">
+        <UnlockRevealCanvas character={character} stage={stage} frozen={ready} />
+      </div>
+      <div className="unlock-reveal-vignette" />
+      <section className="unlock-reveal-copy" aria-live="polite">
+        <span className="unlock-reveal-kicker">New Fighter</span>
+        <h1>{character.displayName}</h1>
+        <p>Unlocked</p>
+        {ready && <small>Press any key to continue</small>}
+      </section>
     </div>
   );
 }
