@@ -42,6 +42,7 @@ import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
+import { buttonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
@@ -54,6 +55,7 @@ import {
   emptyInputFrame,
   type ActionName,
   type AnimationScale,
+  type ButtonComboId,
   type CharacterDefinition,
   type CharacterEffectDefinition,
   type CharacterSpriteSheet,
@@ -951,10 +953,7 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
       ...character.animationScales,
       ...sizes
     },
-    animationFrameScales: {
-      ...character.animationFrameScales,
-      ...frameSizes
-    },
+    animationFrameScales: mergeAnimationFrameScaleMaps(character.animationFrameScales, frameSizes),
     moveOverrides: {
       ...character.moveOverrides,
       ...moves
@@ -969,6 +968,20 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
       ...(override.sprites ?? {})
     }
   };
+}
+
+function mergeAnimationFrameScaleMaps(
+  base: CharacterDefinition['animationFrameScales'] = {},
+  patch: CharacterDefinition['animationFrameScales'] = {}
+) {
+  const merged: NonNullable<CharacterDefinition['animationFrameScales']> = { ...base };
+  Object.entries(patch).forEach(([animationKey, frameScales]) => {
+    merged[animationKey] = {
+      ...(merged[animationKey] ?? {}),
+      ...frameScales
+    };
+  });
+  return merged;
 }
 
 function readUnlockedCharacterIds() {
@@ -2748,7 +2761,7 @@ function useMenuNavigation(screen: Screen) {
 function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
   if (!isMenuNavigationActive(screen)) return false;
   if (document.querySelector('.capture')) return false;
-  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return false;
+  if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return false;
   if (isTextEntryElement(event.target)) return false;
   const command = keyboardMenuNavigation[event.code] ?? keyboardMenuNavigationByKey[event.key];
   if (!command) return false;
@@ -4731,7 +4744,7 @@ const tabLabels: Record<SettingsTab, string> = {
 };
 const sidebars: Record<SettingsTab, string[]> = {
   game: ['Match Rules', 'Training', 'Assist', 'Defaults'],
-  controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
+  controls: ['Keyboard Mapping', 'Keyboard Combos', 'Gamepad Mapping', 'Gamepad Combos', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
   audio: ['Menu Music', 'Stage Music', 'Mix'],
@@ -4792,6 +4805,7 @@ function SettingsScreen({
   const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
   const [activePlayer, setActivePlayer] = useState<1 | 2>(1);
   const [remapRequest, setRemapRequest] = useState<{ player: 1 | 2; action: ActionName } | null>(null);
+  const [comboRemapRequest, setComboRemapRequest] = useState<{ player: 1 | 2; comboId: ButtonComboId } | null>(null);
   const [duplicateRequest, setDuplicateRequest] = useState<{ key: string; owner: string } | null>(null);
   const [inputTest, setInputTest] = useState('Press a key to test bindings');
   const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>({ game: 0, controls: 0, camera: 0, display: 0, audio: 0, console: 0 });
@@ -4846,28 +4860,36 @@ function SettingsScreen({
   }, [activeSectionIndex, activeTab, scrollOptionsSectionIntoView]);
 
   useEffect(() => {
-    if (!remapRequest) return;
+    if (!remapRequest && !comboRemapRequest) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       event.preventDefault();
       event.stopPropagation();
       const nextKey = event.code || event.key;
-      const duplicate = findDuplicateKeyboardBinding(settings, nextKey, remapRequest);
+      const target = remapRequest ?? comboRemapRequest;
+      if (!target) return;
+      const duplicate = findDuplicateKeyboardBinding(settings, nextKey, target);
       if (duplicate && (duplicateRequest?.key !== nextKey || duplicateRequest.owner !== duplicate.owner)) {
         setDuplicateRequest({ key: nextKey, owner: duplicate.owner });
         return;
       }
-      updateSettings((current) => setKeyboardBinding(current, remapRequest.player, remapRequest.action, nextKey));
-      setInputTest(`P${remapRequest.player} ${actionLabels[remapRequest.action]} = ${formatKeyName(nextKey)}`);
+      if ('comboId' in target) {
+        updateSettings((current) => setKeyboardComboBinding(current, target.player, target.comboId, nextKey));
+        setInputTest(`P${target.player} ${formatButtonComboLabel(target.comboId)} = ${formatKeyName(nextKey)}`);
+      } else {
+        updateSettings((current) => setKeyboardBinding(current, target.player, target.action, nextKey));
+        setInputTest(`P${target.player} ${actionLabels[target.action]} = ${formatKeyName(nextKey)}`);
+      }
       setRemapRequest(null);
+      setComboRemapRequest(null);
       setDuplicateRequest(null);
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [duplicateRequest, remapRequest, settings]);
+  }, [comboRemapRequest, duplicateRequest, remapRequest, settings]);
 
   useEffect(() => {
-    if (remapRequest) return;
+    if (remapRequest || comboRemapRequest) return;
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
@@ -4884,7 +4906,7 @@ function SettingsScreen({
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [cycleOptionsTab, mode, onOptionsShortcut, remapRequest, settings.controls]);
+  }, [comboRemapRequest, cycleOptionsTab, mode, onOptionsShortcut, remapRequest, settings.controls]);
 
   const renderEditor = () => {
     if (activeTab === 'game') {
@@ -4942,8 +4964,11 @@ function SettingsScreen({
     if (activeTab === 'controls') {
       const keyboard = settings.controls.keyboard[activePlayer - 1];
       const gamepad = settings.controls.gamepad[activePlayer - 1];
+      const keyboardCombos = settings.controls.keyboardCombos[activePlayer - 1];
+      const gamepadCombos = settings.controls.gamepadCombos[activePlayer - 1];
       return (
         <div className="settings-section-stack">
+          {duplicateRequest && <p className="settings-warning">{duplicateRequest.key} is already bound to {duplicateRequest.owner}. Press it again to replace that binding.</p>}
           <SettingsSection index={0} title="Keyboard Mapping" active={activeSectionIndex === 0}>
             <SettingRow label="Player" value={`P${activePlayer}`}>
               <div className="mini-segmented">
@@ -4960,6 +4985,7 @@ function SettingsScreen({
                 <button className={remapRequest?.player === activePlayer && remapRequest.action === action ? 'capture' : ''} onClick={() => {
                   setActivePlayer(activePlayer);
                   setRemapRequest({ player: activePlayer, action });
+                  setComboRemapRequest(null);
                   setDuplicateRequest(null);
                 }}>
                   {remapRequest?.player === activePlayer && remapRequest.action === action ? 'Press key' : 'Remap'}
@@ -4967,7 +4993,25 @@ function SettingsScreen({
               </div>
             ))}
           </SettingsSection>
-          <SettingsSection index={1} title="Gamepad Mapping" active={activeSectionIndex === 1}>
+          <SettingsSection index={1} title="Keyboard Combos" active={activeSectionIndex === 1}>
+            {buttonComboHotkeys.map((combo) => (
+              <div className="binding-row" key={combo.id}>
+                <div>
+                  <strong>{combo.label}</strong>
+                  <small>{(keyboardCombos[combo.id] ?? []).map(formatKeyName).join(' / ') || 'Unbound'}</small>
+                </div>
+                <button className={comboRemapRequest?.player === activePlayer && comboRemapRequest.comboId === combo.id ? 'capture' : ''} onClick={() => {
+                  setActivePlayer(activePlayer);
+                  setComboRemapRequest({ player: activePlayer, comboId: combo.id });
+                  setRemapRequest(null);
+                  setDuplicateRequest(null);
+                }}>
+                  {comboRemapRequest?.player === activePlayer && comboRemapRequest.comboId === combo.id ? 'Press key' : 'Remap'}
+                </button>
+              </div>
+            ))}
+          </SettingsSection>
+          <SettingsSection index={2} title="Gamepad Mapping" active={activeSectionIndex === 2}>
             {controlActions.map((action) => (
               <div className="binding-row" key={action}>
                 <div>
@@ -4986,13 +5030,31 @@ function SettingsScreen({
               </div>
             ))}
           </SettingsSection>
-          <SettingsSection index={2} title="Input Test" active={activeSectionIndex === 2}>
+          <SettingsSection index={3} title="Gamepad Combos" active={activeSectionIndex === 3}>
+            {buttonComboHotkeys.map((combo) => (
+              <div className="binding-row" key={combo.id}>
+                <div>
+                  <strong>{combo.label}</strong>
+                  <small>{formatGamepadButtonName(gamepadCombos[combo.id]?.[0])}</small>
+                </div>
+                <div className="gamepad-stepper" aria-label={`${combo.label} gamepad button`}>
+                  <button aria-label="Previous gamepad button" onClick={() => updateSettings((current) => adjustGamepadComboButton(current, activePlayer, combo.id, -1))}>
+                    <ChevronLeft size={18} />
+                  </button>
+                  <GamepadButtonPrompt button={gamepadCombos[combo.id]?.[0]} />
+                  <button aria-label="Next gamepad button" onClick={() => updateSettings((current) => adjustGamepadComboButton(current, activePlayer, combo.id, 1))}>
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </SettingsSection>
+          <SettingsSection index={4} title="Input Test" active={activeSectionIndex === 4}>
             <SettingRow label="Last Input" value={inputTest}>
               <span className="setting-readout">{inputTest}</span>
             </SettingRow>
           </SettingsSection>
-          <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
-          {duplicateRequest && <p className="settings-warning">{duplicateRequest.key} is already bound to {duplicateRequest.owner}. Press it again to replace that binding.</p>}
+          <SettingsSection index={5} title="Defaults" active={activeSectionIndex === 5}>
             <button className="secondary-button" onClick={() => setSettings((current) => ({ ...current, controls: cloneSettings(defaultGameSettings).controls }))}>
               <RotateCcw size={16} />
               Reset Controls
@@ -5496,6 +5558,9 @@ const gamepadButtonPrompts: Record<number, { label: string; shape: 'south' | 'ea
   15: { label: '→', shape: 'dpad', caption: 'D-Pad Right' },
   16: { label: '⌂', shape: 'system', caption: 'Home' }
 };
+const menuReservedGamepadButtons = new Set([11]);
+const minConfigurableGamepadButton = 0;
+const maxConfigurableGamepadButton = 16;
 
 function GamepadButtonPrompt({ button }: { button?: number }) {
   if (button === undefined || button === null) {
@@ -5513,12 +5578,19 @@ function GamepadButtonPrompt({ button }: { button?: number }) {
   );
 }
 
-function findDuplicateKeyboardBinding(settings: GameSettings, key: string, target: { player: 1 | 2; action: ActionName }) {
+type KeyboardBindingTarget = { player: 1 | 2; action: ActionName } | { player: 1 | 2; comboId: ButtonComboId };
+
+function findDuplicateKeyboardBinding(settings: GameSettings, key: string, target: KeyboardBindingTarget) {
   for (let player = 1; player <= 2; player += 1) {
     const keyboard = settings.controls.keyboard[player - 1];
     for (const action of Object.keys(keyboard) as ActionName[]) {
-      if (player === target.player && action === target.action) continue;
+      if (!('comboId' in target) && player === target.player && action === target.action) continue;
       if (keyboard[action].includes(key)) return { owner: `P${player} ${actionLabels[action]}` };
+    }
+    const keyboardCombos = settings.controls.keyboardCombos[player - 1];
+    for (const comboId of Object.keys(keyboardCombos) as ButtonComboId[]) {
+      if ('comboId' in target && player === target.player && comboId === target.comboId) continue;
+      if (keyboardCombos[comboId]?.includes(key)) return { owner: `P${player} ${formatButtonComboLabel(comboId)}` };
     }
   }
   return null;
@@ -5531,16 +5603,60 @@ function setKeyboardBinding(settings: GameSettings, player: 1 | 2, action: Actio
       keyboard[candidate] = keyboard[candidate].filter((value) => value !== key);
     }
   });
+  next.controls.keyboardCombos.forEach((keyboardCombos) => {
+    for (const comboId of Object.keys(keyboardCombos) as ButtonComboId[]) {
+      keyboardCombos[comboId] = keyboardCombos[comboId]?.filter((value) => value !== key);
+    }
+  });
   const bindings = next.controls.keyboard[player - 1][action];
   next.controls.keyboard[player - 1][action] = [key, ...bindings.filter((value) => value !== key)].slice(0, 3);
+  return next;
+}
+
+function setKeyboardComboBinding(settings: GameSettings, player: 1 | 2, comboId: ButtonComboId, key: string): GameSettings {
+  const next = cloneSettings(settings);
+  next.controls.keyboard.forEach((keyboard) => {
+    for (const action of Object.keys(keyboard) as ActionName[]) {
+      keyboard[action] = keyboard[action].filter((value) => value !== key);
+    }
+  });
+  next.controls.keyboardCombos.forEach((keyboardCombos) => {
+    for (const candidate of Object.keys(keyboardCombos) as ButtonComboId[]) {
+      keyboardCombos[candidate] = keyboardCombos[candidate]?.filter((value) => value !== key);
+    }
+  });
+  const bindings = next.controls.keyboardCombos[player - 1][comboId] ?? [];
+  next.controls.keyboardCombos[player - 1][comboId] = [key, ...bindings.filter((value) => value !== key)].slice(0, 3);
   return next;
 }
 
 function adjustGamepadButton(settings: GameSettings, player: 1 | 2, action: ActionName, delta: number): GameSettings {
   const next = cloneSettings(settings);
   const current = next.controls.gamepad[player - 1][action]?.[0] ?? 0;
-  next.controls.gamepad[player - 1][action] = [Math.min(16, Math.max(0, current + delta))];
+  next.controls.gamepad[player - 1][action] = [nextMenuConfigurableGamepadButton(current, delta)];
   return next;
+}
+
+function adjustGamepadComboButton(settings: GameSettings, player: 1 | 2, comboId: ButtonComboId, delta: number): GameSettings {
+  const next = cloneSettings(settings);
+  const fallback = delta < 0 ? maxConfigurableGamepadButton + 1 : minConfigurableGamepadButton - 1;
+  const current = next.controls.gamepadCombos[player - 1][comboId]?.[0] ?? fallback;
+  next.controls.gamepadCombos[player - 1][comboId] = [nextMenuConfigurableGamepadButton(current, delta)];
+  return next;
+}
+
+function formatButtonComboLabel(comboId: ButtonComboId) {
+  return getButtonComboDefinition(comboId)?.label ?? comboId;
+}
+
+function nextMenuConfigurableGamepadButton(current: number, delta: number) {
+  const direction = delta < 0 ? -1 : 1;
+  let candidate = Math.min(maxConfigurableGamepadButton, Math.max(minConfigurableGamepadButton, current + direction));
+  while (menuReservedGamepadButtons.has(candidate) && candidate > minConfigurableGamepadButton && candidate < maxConfigurableGamepadButton) {
+    candidate += direction;
+  }
+  if (menuReservedGamepadButtons.has(candidate)) return current;
+  return candidate;
 }
 
 function formatKeyName(key: string) {

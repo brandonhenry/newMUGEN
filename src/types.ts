@@ -403,9 +403,25 @@ export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
 export type PlayerControlBindings = Record<ActionName, string[]>;
 export type PlayerGamepadBindings = Partial<Record<ActionName, number[]>>;
+export type ButtonComboId =
+  | '1+2'
+  | '1+3'
+  | '1+4'
+  | '2+3'
+  | '2+4'
+  | '3+4'
+  | '1+2+3'
+  | '1+2+4'
+  | '1+3+4'
+  | '2+3+4'
+  | '1+2+3+4';
+export type PlayerKeyboardComboBindings = Partial<Record<ButtonComboId, string[]>>;
+export type PlayerGamepadComboBindings = Partial<Record<ButtonComboId, number[]>>;
 export type ControlBindingMap = {
   keyboard: [PlayerControlBindings, PlayerControlBindings];
   gamepad: [PlayerGamepadBindings, PlayerGamepadBindings];
+  keyboardCombos: [PlayerKeyboardComboBindings, PlayerKeyboardComboBindings];
+  gamepadCombos: [PlayerGamepadComboBindings, PlayerGamepadComboBindings];
 };
 
 export type GameSettings = {

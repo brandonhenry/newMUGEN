@@ -502,7 +502,11 @@ describe('character manifests', () => {
   it('sanitizes partial settings and fills defaults', () => {
     const settings = sanitizeGameSettings({
       game: { roundTimer: 75 },
-      controls: { keyboard: [{ jab: ['KeyP'] }] },
+      controls: {
+        keyboard: [{ jab: ['KeyP'] }],
+        keyboardCombos: [{ '1+2': ['KeyL'], 'f+1': ['KeyBad'] }],
+        gamepadCombos: [{ '1+2': [7, 11, 17] }]
+      },
       display: { touchControls: 'on', impactSparks: { shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } },
       audio: { bgmTrackIndex: 300, hitSfx: 5 }
     });
@@ -511,6 +515,9 @@ describe('character manifests', () => {
     expect(settings.controls.keyboard[0].jab).toEqual(['KeyP']);
     expect(settings.controls.keyboard[0].up).toEqual(defaultGameSettings.controls.keyboard[0].up);
     expect(settings.controls.keyboard[1].right).toEqual(defaultGameSettings.controls.keyboard[1].right);
+    expect(settings.controls.keyboardCombos[0]['1+2']).toEqual(['KeyL']);
+    expect(settings.controls.keyboardCombos[0]['1+3']).toBeUndefined();
+    expect(settings.controls.gamepadCombos[0]['1+2']).toEqual([7, 11]);
     expect(settings.display.touchControls).toBe('on');
     expect(settings.display.impactSparks.shape).toBe('ring');
     expect(settings.display.impactSparks.hitColor).toBe('#12ABef');
@@ -536,6 +543,17 @@ describe('character manifests', () => {
     const event = new KeyboardEvent('keydown', { code: 'KeyP', key: 'p' });
 
     expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([{ player: 1, action: 'jab' }]);
+  });
+
+  it('resolves keyboard button combo hotkeys without direction macros', () => {
+    const settings = cloneSettings(defaultGameSettings);
+    settings.controls.keyboardCombos[0]['1+2'] = ['KeyL'];
+    const event = new KeyboardEvent('keydown', { code: 'KeyL', key: 'l' });
+
+    expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([
+      { player: 1, action: 'jab' },
+      { player: 1, action: 'heavy' }
+    ]);
   });
 
   it('routes arrow movement to player one in one-player CPU modes', () => {

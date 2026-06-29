@@ -1,5 +1,6 @@
-import type { ActionName, GameSettings, PlayerControlBindings, PlayerGamepadBindings } from '../types';
+import type { ActionName, GameSettings, PlayerControlBindings, PlayerGamepadBindings, PlayerGamepadComboBindings, PlayerKeyboardComboBindings } from '../types';
 import { KORE_DEFAULT_CURSOR_ID, isKoreCursorId } from '../data/cursors';
+import { buttonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
@@ -66,7 +67,9 @@ export const defaultGameSettings: GameSettings = {
   },
   controls: {
     keyboard: [p1Keyboard, p2Keyboard],
-    gamepad: [defaultGamepad, defaultGamepad]
+    gamepad: [defaultGamepad, defaultGamepad],
+    keyboardCombos: [{}, {}],
+    gamepadCombos: [{}, {}]
   },
   camera: {
     distance: 1,
@@ -133,6 +136,8 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
   const controls = isRecord(source.controls) ? source.controls : {};
   const keyboard = Array.isArray(controls.keyboard) ? controls.keyboard : [];
   const gamepad = Array.isArray(controls.gamepad) ? controls.gamepad : [];
+  const keyboardCombos = Array.isArray(controls.keyboardCombos) ? controls.keyboardCombos : [];
+  const gamepadCombos = Array.isArray(controls.gamepadCombos) ? controls.gamepadCombos : [];
 
   return {
     game: {
@@ -149,6 +154,14 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       gamepad: [
         sanitizeGamepadBindings(gamepad[0], defaults.controls.gamepad[0]),
         sanitizeGamepadBindings(gamepad[1], defaults.controls.gamepad[1])
+      ],
+      keyboardCombos: [
+        sanitizeKeyboardComboBindings(keyboardCombos[0], defaults.controls.keyboardCombos[0]),
+        sanitizeKeyboardComboBindings(keyboardCombos[1], defaults.controls.keyboardCombos[1])
+      ],
+      gamepadCombos: [
+        sanitizeGamepadComboBindings(gamepadCombos[0], defaults.controls.gamepadCombos[0]),
+        sanitizeGamepadComboBindings(gamepadCombos[1], defaults.controls.gamepadCombos[1])
       ]
     },
     camera: {
@@ -196,6 +209,14 @@ export function cloneSettings(settings: GameSettings): GameSettings {
       gamepad: [
         cloneGamepadBindings(settings.controls.gamepad[0]),
         cloneGamepadBindings(settings.controls.gamepad[1])
+      ],
+      keyboardCombos: [
+        cloneKeyboardComboBindings(settings.controls.keyboardCombos?.[0] ?? {}),
+        cloneKeyboardComboBindings(settings.controls.keyboardCombos?.[1] ?? {})
+      ],
+      gamepadCombos: [
+        cloneGamepadComboBindings(settings.controls.gamepadCombos?.[0] ?? {}),
+        cloneGamepadComboBindings(settings.controls.gamepadCombos?.[1] ?? {})
       ]
     },
     camera: { ...settings.camera },
@@ -252,6 +273,26 @@ function sanitizeGamepadBindings(raw: unknown, fallback: PlayerGamepadBindings):
   }, {} as PlayerGamepadBindings);
 }
 
+function sanitizeKeyboardComboBindings(raw: unknown, fallback: PlayerKeyboardComboBindings): PlayerKeyboardComboBindings {
+  const source = isRecord(raw) ? raw : {};
+  return buttonComboIds.reduce((bindings, comboId) => {
+    const values = Array.isArray(source[comboId]) ? source[comboId] : fallback[comboId] ?? [];
+    const keys = values.filter((value): value is string => typeof value === 'string' && value.length > 0);
+    if (keys.length > 0) bindings[comboId] = keys;
+    return bindings;
+  }, {} as PlayerKeyboardComboBindings);
+}
+
+function sanitizeGamepadComboBindings(raw: unknown, fallback: PlayerGamepadComboBindings): PlayerGamepadComboBindings {
+  const source = isRecord(raw) ? raw : {};
+  return buttonComboIds.reduce((bindings, comboId) => {
+    const values = Array.isArray(source[comboId]) ? source[comboId] : fallback[comboId] ?? [];
+    const buttons = values.filter((value): value is number => Number.isInteger(value) && value >= 0 && value <= 16);
+    if (buttons.length > 0) bindings[comboId] = buttons;
+    return bindings;
+  }, {} as PlayerGamepadComboBindings);
+}
+
 function cloneKeyboardBindings(bindings: PlayerControlBindings): PlayerControlBindings {
   return actions.reduce((copy, action) => {
     copy[action] = [...bindings[action]];
@@ -265,6 +306,22 @@ function cloneGamepadBindings(bindings: PlayerGamepadBindings): PlayerGamepadBin
     if (values) copy[action] = [...values];
     return copy;
   }, {} as PlayerGamepadBindings);
+}
+
+function cloneKeyboardComboBindings(bindings: PlayerKeyboardComboBindings): PlayerKeyboardComboBindings {
+  return buttonComboIds.reduce((copy, comboId) => {
+    const values = bindings[comboId];
+    if (values) copy[comboId] = [...values];
+    return copy;
+  }, {} as PlayerKeyboardComboBindings);
+}
+
+function cloneGamepadComboBindings(bindings: PlayerGamepadComboBindings): PlayerGamepadComboBindings {
+  return buttonComboIds.reduce((copy, comboId) => {
+    const values = bindings[comboId];
+    if (values) copy[comboId] = [...values];
+    return copy;
+  }, {} as PlayerGamepadComboBindings);
 }
 
 function booleanOr(value: unknown, fallback: boolean) {

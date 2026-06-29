@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import type { ActionName, ControlBindingMap, InputFrame, MatchMode, PlayerControlBindings } from '../types';
 import { emptyInputFrame } from '../types';
+import { buttonComboDefinitions } from '../lib/buttonCombos';
 import { defaultGameSettings } from '../lib/gameSettings';
 
 const aiModeArrowKeys: Record<string, ActionName> = {
@@ -113,6 +114,13 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
         for (const action of Object.keys(gamepadBindings) as ActionName[]) {
           if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) merged[player][action] = true;
         }
+        const comboBindings = controlsRef.current.gamepadCombos[player];
+        for (const combo of buttonComboDefinitions) {
+          if (!comboBindings[combo.id]?.some((index) => pad.buttons[index]?.pressed)) continue;
+          combo.actions.forEach((action) => {
+            merged[player][action] = true;
+          });
+        }
       }
     }
     return merged;
@@ -157,11 +165,24 @@ export function getKeyboardBindingsForEvent(
   const keyIds = [event.code, event.key].filter(Boolean);
   const p1Action = findActionForKey(controls.keyboard[0], keyIds);
   const p2Action = findActionForKey(controls.keyboard[1], keyIds);
+  const p1ComboActions = findComboActionsForKey(controls.keyboardCombos[0], keyIds);
+  const p2ComboActions = findComboActionsForKey(controls.keyboardCombos[1], keyIds);
   const aiAction = mode === 'ai' || mode === 'versusCpu' ? findActionForKey(aiModeArrowKeys, keyIds) : undefined;
-  if (p1Action) matches.push({ player: 1, action: p1Action });
-  if (aiAction && !matches.some((match) => match.player === 1 && match.action === aiAction)) matches.push({ player: 1, action: aiAction });
-  if (p2Action) matches.push({ player: 2, action: p2Action });
+  if (p1Action) pushUniqueBinding(matches, 1, p1Action);
+  p1ComboActions.forEach((action) => pushUniqueBinding(matches, 1, action));
+  if (aiAction) pushUniqueBinding(matches, 1, aiAction);
+  if (p2Action) pushUniqueBinding(matches, 2, p2Action);
+  p2ComboActions.forEach((action) => pushUniqueBinding(matches, 2, action));
   return matches;
+}
+
+function findComboActionsForKey(bindings: ControlBindingMap['keyboardCombos'][number], keyIds: string[]) {
+  const combo = buttonComboDefinitions.find((definition) => bindings[definition.id]?.some((value) => keyIds.includes(value)));
+  return combo?.actions ?? [];
+}
+
+function pushUniqueBinding(matches: Array<{ player: 1 | 2; action: ActionName }>, player: 1 | 2, action: ActionName) {
+  if (!matches.some((match) => match.player === player && match.action === action)) matches.push({ player, action });
 }
 
 function findActionForKey(bindings: PlayerControlBindings | Record<string, ActionName>, keyIds: string[]) {
