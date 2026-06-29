@@ -1,8 +1,9 @@
 import type { ActionName, GameSettings, PlayerControlBindings, PlayerGamepadBindings } from '../types';
+import { KORE_DEFAULT_CURSOR_ID, isKoreCursorId } from '../data/cursors';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 2;
+const settingsVersion = 3;
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
 const p1Keyboard: PlayerControlBindings = {
@@ -74,6 +75,7 @@ export const defaultGameSettings: GameSettings = {
   },
   display: {
     hudScale: 1,
+    cursorId: KORE_DEFAULT_CURSOR_ID,
     touchControls: 'auto',
     reducedMotion: false,
     debugOverlay: true,
@@ -156,6 +158,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
     },
     display: {
       hudScale: clampNumber(display.hudScale, 0.78, 1.25, defaults.display.hudScale),
+      cursorId: isKoreCursorId(display.cursorId) ? display.cursorId : defaults.display.cursorId,
       touchControls: display.touchControls === 'on' || display.touchControls === 'off' ? display.touchControls : defaults.display.touchControls,
       reducedMotion: booleanOr(display.reducedMotion, defaults.display.reducedMotion),
       debugOverlay: booleanOr(display.debugOverlay, defaults.display.debugOverlay),

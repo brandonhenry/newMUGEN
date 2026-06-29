@@ -473,7 +473,19 @@ button {
 }
 
 .options-console-stack {
+  height: 100%;
   min-height: 100%;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.options-console-stack .settings-section {
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.options-console-stack .settings-list {
+  min-height: 0;
 }
 
 .options-console,
@@ -491,7 +503,8 @@ button {
 .options-console {
   display: grid;
   grid-template-rows: auto minmax(260px, 1fr) auto;
-  min-height: min(58vh, 560px);
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 }
@@ -629,7 +642,9 @@ button {
 
 .memory-card-panel {
   display: grid;
+  grid-template-rows: auto minmax(260px, 1fr) auto;
   gap: 14px;
+  min-height: 0;
   padding: 14px;
 }
 
@@ -649,9 +664,101 @@ button {
 }
 
 .memory-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(128px, 190px));
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 34px);
+  min-height: 0;
+  padding: clamp(12px, 3vh, 34px) 0;
+}
+
+.memory-card-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 0.82;
+  border: 0;
+  padding: 0;
+  color: #ffffff;
+  background: transparent;
+  isolation: isolate;
+  cursor: pointer;
+  filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.36));
+  transition-property: transform, filter;
+  transition-duration: 170ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.memory-card-button::before {
+  content: '';
+  position: absolute;
+  inset: 12% 5% 8%;
+  z-index: -1;
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 42%, rgba(46, 230, 255, 0.22), transparent 58%);
+  opacity: 0;
+  filter: blur(16px);
+  transition: opacity 170ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.memory-card-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transition: filter 170ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.memory-card-button span {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  width: 58%;
+  transform: translate(-50%, -50%);
+  color: #f7f7f2;
+  font-size: clamp(13px, 1.1vw, 17px);
+  font-weight: 950;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.72),
+    0 0 18px rgba(46, 230, 255, 0.62);
+  pointer-events: none;
+}
+
+.memory-card-button-copy img {
+  filter: hue-rotate(18deg) saturate(1.08);
+}
+
+.memory-card-button-load img {
+  filter: hue-rotate(178deg) saturate(1.16) brightness(1.04);
+}
+
+.memory-card-button:hover,
+.memory-card-button:focus-visible {
+  transform: translateY(-5px) scale(1.035);
+  filter:
+    drop-shadow(0 26px 30px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 18px rgba(46, 230, 255, 0.24));
+}
+
+.memory-card-button:hover::before,
+.memory-card-button:focus-visible::before {
+  opacity: 1;
+}
+
+.memory-card-button:active {
+  transform: translateY(1px) scale(0.97);
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.34));
+}
+
+.memory-card-button:focus-visible {
+  outline: 2px solid #2ee6ff;
+  outline-offset: 5px;
 }
 
 .memory-card-file-input {
@@ -723,6 +830,129 @@ button {
 
 .setting-row input[type='range'] {
   width: 100%;
+}
+
+.cursor-setting-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.cursor-setting-current {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+}
+
+.cursor-setting-current strong {
+  display: block;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.cursor-setting-current small {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.cursor-preview-tile {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(46, 230, 255, 0.18), rgba(255, 180, 77, 0.08)),
+    rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.cursor-preview-tile img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.cursor-picker-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cursor-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 8px;
+  max-height: min(46vh, 520px);
+  padding: 4px;
+  overflow: auto;
+  scrollbar-color: rgba(46, 230, 255, 0.42) transparent;
+}
+
+.cursor-picker-grid button {
+  display: grid;
+  grid-template-rows: 44px minmax(28px, auto);
+  place-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 88px;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px;
+  color: rgba(247, 247, 242, 0.74);
+  background: rgba(255, 255, 255, 0.07);
+  font-weight: 850;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  transition-property: transform, background-color, color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.cursor-picker-grid button:hover,
+.cursor-picker-grid button:focus-visible {
+  color: #ffffff;
+  background: rgba(46, 230, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(46, 230, 255, 0.45) inset,
+    0 0 24px rgba(46, 230, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.cursor-picker-grid button.active {
+  color: #08101c;
+  background: #2ee6ff;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.55) inset,
+    0 0 26px rgba(46, 230, 255, 0.24);
+}
+
+.cursor-picker-grid img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.cursor-picker-grid span {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.15;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .local-bgm-player {
@@ -6709,8 +6939,39 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .cursor-setting-current {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .cursor-picker-controls {
+    justify-content: stretch;
+  }
+
+  .cursor-picker-controls .mini-segmented {
+    width: 100%;
+  }
+
+  .cursor-picker-controls .mini-segmented button {
+    flex: 1;
+  }
+
+  .cursor-picker-grid {
+    grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+    max-height: 440px;
+  }
+
   .options-console {
     min-height: 480px;
+  }
+
+  .memory-card-panel {
+    grid-template-rows: auto minmax(320px, 1fr) auto;
+  }
+
+  .memory-card-actions {
+    grid-template-columns: minmax(132px, 180px);
+    gap: 12px;
   }
 
   .options-console-input,
@@ -7402,4 +7663,21 @@ button {
     min-height: 54px;
     font-size: 0.82rem;
   }
+}
+
+.app-shell {
+  cursor: var(--kore-cursor-default, auto);
+}
+
+.app-shell button:not(:disabled),
+.app-shell a,
+.app-shell [role='button'],
+.app-shell summary,
+.app-shell .title-screen {
+  cursor: var(--kore-cursor-default, pointer);
+}
+
+.app-shell button:disabled,
+.app-shell [aria-disabled='true'] {
+  cursor: not-allowed;
 }

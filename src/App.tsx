@@ -34,6 +34,7 @@ import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
+import { KORE_CURSOR_OPTIONS, getKoreCursorOption, type KoreCursorOption, type KoreCursorScale, type KoreCursorStyle } from './data/cursors';
 import { createMatch, stepMatch } from './engine/fightEngine';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
@@ -109,6 +110,7 @@ const MEMORY_CARD_SAVE_KEYS = [
   { key: ONLINE_PROFILE_STORAGE_KEY, label: 'Online profile' },
   { key: LOCAL_LEADERBOARD_STORAGE_KEY, label: 'Local leaderboard' }
 ] as const;
+type CursorStyleVars = CSSProperties & { '--kore-cursor-default': string };
 type NotationToken = string;
 type AnimationSlot = {
   key: string;
@@ -151,6 +153,12 @@ type HdVoxelPayload = {
     modelHeightScale?: number;
   };
 };
+
+function createCursorStyle(cursor: KoreCursorOption): CursorStyleVars {
+  return {
+    '--kore-cursor-default': `url("${cursor.url}") ${cursor.hotspotX} ${cursor.hotspotY}, auto`
+  };
+}
 
 type HdVoxelBuildSizing = {
   modelHeightScale?: number;
@@ -2332,10 +2340,14 @@ export default function App() {
       event.stopPropagation();
     }
   }, [screen]);
+  const appCursorStyle = useMemo(
+    () => createCursorStyle(getKoreCursorOption(settings.display.cursorId)),
+    [settings.display.cursorId]
+  );
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
-      <main className="app-shell boot-shell">
+      <main className="app-shell boot-shell" style={appCursorStyle}>
         <section className="boot-mark" aria-label="Loading KORE">
           <Swords size={34} />
           <h1>K.O.R.E</h1>
@@ -2346,7 +2358,7 @@ export default function App() {
   }
 
   return (
-    <main className="app-shell" onKeyDownCapture={handleAppMenuKeyDown}>
+    <main className="app-shell" style={appCursorStyle} onKeyDownCapture={handleAppMenuKeyDown}>
       <div className="ambient-grid" />
       <LocalBgmPlayer
         audio={settings.audio}
@@ -4717,7 +4729,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   game: ['Match Rules', 'Training', 'Assist', 'Defaults'],
   controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
-  display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
+  display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
   audio: ['Menu Music', 'Stage Music', 'Mix'],
   console: ['Terminal', 'Memory Card']
 };
@@ -4779,12 +4791,24 @@ function SettingsScreen({
   const [duplicateRequest, setDuplicateRequest] = useState<{ key: string; owner: string } | null>(null);
   const [inputTest, setInputTest] = useState('Press a key to test bindings');
   const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>({ game: 0, controls: 0, camera: 0, display: 0, audio: 0, console: 0 });
+  const selectedCursor = getKoreCursorOption(settings.display.cursorId);
+  const [cursorStyleFilter, setCursorStyleFilter] = useState<KoreCursorStyle>(selectedCursor.style);
+  const [cursorScaleFilter, setCursorScaleFilter] = useState<KoreCursorScale>(selectedCursor.scale);
   const editorRef = useRef<HTMLElement | null>(null);
   const activeSectionIndex = Math.min(activeSections[activeTab] ?? 0, sidebars[activeTab].length - 1);
+  const visibleCursorOptions = useMemo(
+    () => KORE_CURSOR_OPTIONS.filter((cursor) => cursor.style === cursorStyleFilter && cursor.scale === cursorScaleFilter),
+    [cursorScaleFilter, cursorStyleFilter]
+  );
 
   const updateSettings = (recipe: (current: GameSettings) => GameSettings) => {
     setSettings((current) => sanitizeGameSettings(recipe(cloneSettings(current))));
   };
+
+  useEffect(() => {
+    setCursorStyleFilter(selectedCursor.style);
+    setCursorScaleFilter(selectedCursor.scale);
+  }, [selectedCursor.id, selectedCursor.scale, selectedCursor.style]);
 
   const cycleOptionsTab = useCallback((direction: -1 | 1) => {
     setActiveTab((current) => {
@@ -5021,10 +5045,21 @@ function SettingsScreen({
               </div>
             </SettingRow>
           </SettingsSection>
-          <SettingsSection index={2} title="Motion" active={activeSectionIndex === 2}>
+          <SettingsSection index={2} title="Cursor" active={activeSectionIndex === 2}>
+            <CursorPicker
+              selectedCursor={selectedCursor}
+              visibleOptions={visibleCursorOptions}
+              styleFilter={cursorStyleFilter}
+              scaleFilter={cursorScaleFilter}
+              onStyleFilterChange={setCursorStyleFilter}
+              onScaleFilterChange={setCursorScaleFilter}
+              onChange={(cursorId) => updateSettings((current) => ({ ...current, display: { ...current.display, cursorId } }))}
+            />
+          </SettingsSection>
+          <SettingsSection index={3} title="Motion" active={activeSectionIndex === 3}>
             <SettingToggle label="Reduced Motion" checked={settings.display.reducedMotion} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, reducedMotion: checked } }))} />
           </SettingsSection>
-          <SettingsSection index={3} title="Debug" active={activeSectionIndex === 3}>
+          <SettingsSection index={4} title="Debug" active={activeSectionIndex === 4}>
             <SettingToggle label="Debug Overlay" checked={settings.display.debugOverlay} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, debugOverlay: checked } }))} />
           </SettingsSection>
         </div>
@@ -5231,7 +5266,7 @@ function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCa
 
   return (
     <div className="settings-section-stack options-console-stack">
-      <SettingsSection index={0} title="Terminal" active={activeSectionIndex === 0}>
+      <SettingsSection index={0} title="Terminal" active={activeSectionIndex === 0} showTitle={false}>
         <section className="options-console" aria-label="KORE console terminal">
           <div className="options-console-topline">
             <span><Terminal size={16} /> LOCAL SHELL</span>
@@ -5262,24 +5297,24 @@ function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCa
           </form>
         </section>
       </SettingsSection>
-      <SettingsSection index={1} title="Memory Card" active={activeSectionIndex === 1}>
+      <SettingsSection index={1} title="Memory Card" active={activeSectionIndex === 1} showTitle={false}>
         <article className="memory-card-panel">
           <div>
             <strong>Portable Save Card</strong>
             <small>{formatMemoryCardSummary(createMemoryCardPayload())}</small>
           </div>
           <div className="memory-card-actions">
-            <button type="button" className="secondary-button" onClick={exportMemoryCard}>
-              <Download size={16} />
-              Export Card
+            <button type="button" className="memory-card-button memory-card-button-save" onClick={exportMemoryCard}>
+              <img src="/ui/memory-card-button.png" alt="" aria-hidden="true" />
+              <span>Save Data</span>
             </button>
-            <button type="button" className="secondary-button" onClick={() => void copyMemoryCard()}>
-              <Save size={16} />
-              Copy Card
+            <button type="button" className="memory-card-button memory-card-button-copy" onClick={() => void copyMemoryCard()}>
+              <img src="/ui/memory-card-button.png" alt="" aria-hidden="true" />
+              <span>Copy Data</span>
             </button>
-            <button type="button" className="secondary-button" onClick={() => fileInputRef.current?.click()}>
-              <Upload size={16} />
-              Load Card
+            <button type="button" className="memory-card-button memory-card-button-load" onClick={() => fileInputRef.current?.click()}>
+              <img src="/ui/memory-card-button.png" alt="" aria-hidden="true" />
+              <span>Load Data</span>
             </button>
           </div>
           <input
@@ -5307,11 +5342,86 @@ function formatMemoryCardSummary(payload: MemoryCardPayload) {
   return `${present.length}/${MEMORY_CARD_SAVE_KEYS.length} save slots captured: ${present.map(({ label }) => label).join(', ')}`;
 }
 
-function SettingsSection({ index, title, active = true, children }: { index: number; title: string; active?: boolean; children: ReactNode }) {
+function CursorPicker({
+  selectedCursor,
+  visibleOptions,
+  styleFilter,
+  scaleFilter,
+  onStyleFilterChange,
+  onScaleFilterChange,
+  onChange
+}: {
+  selectedCursor: KoreCursorOption;
+  visibleOptions: KoreCursorOption[];
+  styleFilter: KoreCursorStyle;
+  scaleFilter: KoreCursorScale;
+  onStyleFilterChange: (style: KoreCursorStyle) => void;
+  onScaleFilterChange: (scale: KoreCursorScale) => void;
+  onChange: (cursorId: string) => void;
+}) {
+  return (
+    <article className="cursor-setting-panel">
+      <div className="cursor-setting-current">
+        <div>
+          <strong>Default Cursor</strong>
+          <small>{selectedCursor.label} / {selectedCursor.style} {selectedCursor.scale}</small>
+        </div>
+        <div className="cursor-preview-tile" aria-hidden="true">
+          <img src={selectedCursor.url} alt="" />
+        </div>
+      </div>
+      <div className="cursor-picker-controls">
+        <div className="mini-segmented">
+          {(['Basic', 'Outline'] as const).map((style) => (
+            <button key={style} type="button" className={styleFilter === style ? 'active' : ''} onClick={() => onStyleFilterChange(style)}>
+              {style}
+            </button>
+          ))}
+        </div>
+        <div className="mini-segmented">
+          {(['Default', 'Double'] as const).map((scale) => (
+            <button key={scale} type="button" className={scaleFilter === scale ? 'active' : ''} onClick={() => onScaleFilterChange(scale)}>
+              {scale}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="cursor-picker-grid" role="listbox" aria-label="Default cursor">
+        {visibleOptions.map((cursor) => (
+          <button
+            key={cursor.id}
+            type="button"
+            className={selectedCursor.id === cursor.id ? 'active' : ''}
+            title={`${cursor.label} / ${cursor.style} ${cursor.scale}`}
+            aria-selected={selectedCursor.id === cursor.id}
+            onClick={() => onChange(cursor.id)}
+          >
+            <img src={cursor.url} alt="" aria-hidden="true" />
+            <span>{cursor.label}</span>
+          </button>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function SettingsSection({
+  index,
+  title,
+  active = true,
+  showTitle = true,
+  children
+}: {
+  index: number;
+  title: string;
+  active?: boolean;
+  showTitle?: boolean;
+  children: ReactNode;
+}) {
   if (!active) return null;
   return (
     <section className="settings-section" data-section-index={index}>
-      <h3>{title}</h3>
+      {showTitle && <h3>{title}</h3>}
       <div className="settings-list">{children}</div>
     </section>
   );

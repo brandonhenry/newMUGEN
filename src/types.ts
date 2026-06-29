@@ -424,6 +424,7 @@ export type GameSettings = {
   };
   display: {
     hudScale: number;
+    cursorId: string;
     touchControls: 'auto' | 'on' | 'off';
     reducedMotion: boolean;
     debugOverlay: boolean;
