@@ -32,6 +32,7 @@ SKIP_EXACT = {
     "Near",
     "Phoenix Ikki",
     "Ryotsu Kankichi (2)",
+    "Yukime",
 }
 SKIP_CONTAINS = ("Intro", "Komas", "Protagonists")
 SKIP_NAMES = {"Help Komas", "Info Screen"}
