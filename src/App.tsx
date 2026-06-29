@@ -1003,25 +1003,27 @@ function pickArcadeOpponent(
 ) {
   const candidates = roster.filter((character) => character.id !== playerId);
   if (candidates.length === 0) return roster.find((character) => character.id !== playerId) ?? roster[0];
-  const lockedBiasByDifficulty: Record<CpuDifficulty, number> = {
-    1: 0.2,
-    2: 0.45,
-    3: 0.85,
-    4: 1.35,
-    5: 2
+  const lockedEncounterChanceByDifficulty: Record<CpuDifficulty, number> = {
+    1: 0.08,
+    2: 0.11,
+    3: 0.15,
+    4: 0.2,
+    5: 0.25
   };
-  const weights = candidates.map((character) => {
-    const locked = !isCharacterUnlocked(character, unlockedIds);
-    const base = locked ? lockedBiasByDifficulty[difficulty] : 1;
-    return Math.max(0.05, base + Math.random() * 0.25);
-  });
+  const unlockedCandidates = candidates.filter((character) => isCharacterUnlocked(character, unlockedIds));
+  const lockedCandidates = candidates.filter((character) => !isCharacterUnlocked(character, unlockedIds));
+  const shouldOfferLockedEncounter =
+    lockedCandidates.length > 0 &&
+    (unlockedCandidates.length === 0 || Math.random() < lockedEncounterChanceByDifficulty[difficulty]);
+  const pool = shouldOfferLockedEncounter ? lockedCandidates : unlockedCandidates.length > 0 ? unlockedCandidates : lockedCandidates;
+  const weights = pool.map(() => 1 + Math.random() * 0.25);
   const total = weights.reduce((sum, weight) => sum + weight, 0);
   let cursor = Math.random() * total;
-  for (let index = 0; index < candidates.length; index += 1) {
+  for (let index = 0; index < pool.length; index += 1) {
     cursor -= weights[index];
-    if (cursor <= 0) return candidates[index];
+    if (cursor <= 0) return pool[index];
   }
-  return candidates[candidates.length - 1];
+  return pool[pool.length - 1];
 }
 
 function removeCharacterOverride(overrides: AnimationOverrideMap, characterIds: string[]) {
