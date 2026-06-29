@@ -14,7 +14,7 @@ export type KoreCursorOption = {
   hotspotY: number;
 };
 
-export const KORE_DEFAULT_CURSOR_ID = "Basic/Default/pointer_a.png";
+export const KORE_DEFAULT_CURSOR_ID = "Basic/Double/pointer_a.png";
 
 export const KORE_CURSOR_OPTIONS: KoreCursorOption[] = [
   {

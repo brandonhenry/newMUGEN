@@ -3,7 +3,8 @@ import { KORE_DEFAULT_CURSOR_ID, isKoreCursorId } from '../data/cursors';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 3;
+const settingsVersion = 4;
+const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
 const p1Keyboard: PlayerControlBindings = {
@@ -214,13 +215,21 @@ function migrateStoredSettings(settings: unknown, version: number) {
   if (!isRecord(settings)) return settings;
   if (version >= settingsVersion) return settings;
   const game = isRecord(settings.game) ? settings.game : {};
-  if (game.maxHealth !== 100) return settings;
+  const display = isRecord(settings.display) ? settings.display : {};
   return {
     ...settings,
-    game: {
-      ...game,
-      maxHealth: defaultGameSettings.game.maxHealth
-    }
+    game: game.maxHealth === 100
+      ? {
+          ...game,
+          maxHealth: defaultGameSettings.game.maxHealth
+        }
+      : game,
+    display: display.cursorId === legacySmallDefaultCursorId
+      ? {
+          ...display,
+          cursorId: defaultGameSettings.display.cursorId
+        }
+      : display
   };
 }
 
