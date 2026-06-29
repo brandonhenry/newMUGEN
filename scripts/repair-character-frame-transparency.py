@@ -86,7 +86,7 @@ def background_candidates(image: Image.Image) -> list[tuple[int, int, int]]:
 def clean_frame(frame_path: Path, backgrounds: list[tuple[int, int, int]], tolerance: int) -> bool:
     image = Image.open(frame_path).convert("RGBA")
     cleaned = clean_border_connected_background(image, backgrounds, tolerance)
-    if list(cleaned.getdata()) == list(image.getdata()):
+    if cleaned.size == image.size and cleaned.tobytes() == image.tobytes():
         return False
     cleaned.save(frame_path)
     return True
@@ -166,7 +166,7 @@ def restore_frame_from_sheet(
     cleaned = clean_border_connected_background(restored, backgrounds[:1], tolerance)
     cleaned = clean_exact_background_pixels(cleaned, backgrounds[:1], interior_tolerance)
     existing = Image.open(frame_path).convert("RGBA") if frame_path.exists() else None
-    if existing is not None and existing.size == cleaned.size and list(existing.getdata()) == list(cleaned.getdata()):
+    if existing is not None and existing.size == cleaned.size and existing.tobytes() == cleaned.tobytes():
         return False
     cleaned.save(frame_path)
     return True
