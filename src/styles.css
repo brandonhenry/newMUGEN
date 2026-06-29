@@ -28,6 +28,9 @@ body {
 
 button {
   font: inherit;
+  transition-property: translate;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .app-shell {
@@ -887,6 +890,19 @@ button {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 10px;
+}
+
+.cursor-picker-control-group {
+  display: grid;
+  gap: 6px;
+}
+
+.cursor-picker-control-group > span {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .cursor-picker-grid {
@@ -6948,6 +6964,10 @@ button {
     justify-content: stretch;
   }
 
+  .cursor-picker-control-group {
+    width: 100%;
+  }
+
   .cursor-picker-controls .mini-segmented {
     width: 100%;
   }
@@ -7680,4 +7700,8 @@ button {
 .app-shell button:disabled,
 .app-shell [aria-disabled='true'] {
   cursor: not-allowed;
+}
+
+.app-shell button:not(:disabled):not([aria-disabled='true']):active {
+  translate: 0 1px;
 }

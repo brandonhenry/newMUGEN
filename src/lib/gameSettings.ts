@@ -224,7 +224,7 @@ function migrateStoredSettings(settings: unknown, version: number) {
           maxHealth: defaultGameSettings.game.maxHealth
         }
       : game,
-    display: display.cursorId === legacySmallDefaultCursorId
+    display: version === 3 && display.cursorId === legacySmallDefaultCursorId
       ? {
           ...display,
           cursorId: defaultGameSettings.display.cursorId

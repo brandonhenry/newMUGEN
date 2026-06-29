@@ -34,7 +34,7 @@ import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
-import { KORE_CURSOR_OPTIONS, getKoreCursorOption, type KoreCursorOption, type KoreCursorScale, type KoreCursorStyle } from './data/cursors';
+import { KORE_CURSOR_OPTIONS, getKoreCursorOption, isKoreCursorId, type KoreCursorOption, type KoreCursorScale, type KoreCursorStyle } from './data/cursors';
 import { createMatch, stepMatch } from './engine/fightEngine';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
@@ -4717,6 +4717,10 @@ function buildImportedStageDraft(draft: StageImportDraft, pieces: StagePieceDraf
 type SettingsTab = 'game' | 'controls' | 'camera' | 'display' | 'audio' | 'console';
 
 const settingsTabs: SettingsTab[] = ['game', 'controls', 'camera', 'display', 'audio', 'console'];
+const cursorScaleLabels: Record<KoreCursorScale, string> = {
+  Default: 'Small',
+  Double: 'Large'
+};
 const tabLabels: Record<SettingsTab, string> = {
   game: 'Game',
   controls: 'Controls',
@@ -4803,6 +4807,13 @@ function SettingsScreen({
 
   const updateSettings = (recipe: (current: GameSettings) => GameSettings) => {
     setSettings((current) => sanitizeGameSettings(recipe(cloneSettings(current))));
+  };
+
+  const selectCursorScale = (scale: KoreCursorScale) => {
+    setCursorScaleFilter(scale);
+    const nextCursorId = `${selectedCursor.style}/${scale}/${selectedCursor.name}.png`;
+    if (nextCursorId === selectedCursor.id || !isKoreCursorId(nextCursorId)) return;
+    updateSettings((current) => ({ ...current, display: { ...current.display, cursorId: nextCursorId } }));
   };
 
   useEffect(() => {
@@ -5050,9 +5061,8 @@ function SettingsScreen({
               selectedCursor={selectedCursor}
               visibleOptions={visibleCursorOptions}
               styleFilter={cursorStyleFilter}
-              scaleFilter={cursorScaleFilter}
               onStyleFilterChange={setCursorStyleFilter}
-              onScaleFilterChange={setCursorScaleFilter}
+              onScaleFilterChange={selectCursorScale}
               onChange={(cursorId) => updateSettings((current) => ({ ...current, display: { ...current.display, cursorId } }))}
             />
           </SettingsSection>
@@ -5346,7 +5356,6 @@ function CursorPicker({
   selectedCursor,
   visibleOptions,
   styleFilter,
-  scaleFilter,
   onStyleFilterChange,
   onScaleFilterChange,
   onChange
@@ -5354,7 +5363,6 @@ function CursorPicker({
   selectedCursor: KoreCursorOption;
   visibleOptions: KoreCursorOption[];
   styleFilter: KoreCursorStyle;
-  scaleFilter: KoreCursorScale;
   onStyleFilterChange: (style: KoreCursorStyle) => void;
   onScaleFilterChange: (scale: KoreCursorScale) => void;
   onChange: (cursorId: string) => void;
@@ -5364,26 +5372,32 @@ function CursorPicker({
       <div className="cursor-setting-current">
         <div>
           <strong>Default Cursor</strong>
-          <small>{selectedCursor.label} / {selectedCursor.style} {selectedCursor.scale}</small>
+          <small>{selectedCursor.label} / {selectedCursor.style} {cursorScaleLabels[selectedCursor.scale]} / {selectedCursor.width}px</small>
         </div>
         <div className="cursor-preview-tile" aria-hidden="true">
           <img src={selectedCursor.url} alt="" />
         </div>
       </div>
       <div className="cursor-picker-controls">
-        <div className="mini-segmented">
-          {(['Basic', 'Outline'] as const).map((style) => (
-            <button key={style} type="button" className={styleFilter === style ? 'active' : ''} onClick={() => onStyleFilterChange(style)}>
-              {style}
-            </button>
-          ))}
+        <div className="cursor-picker-control-group">
+          <span>Style</span>
+          <div className="mini-segmented">
+            {(['Basic', 'Outline'] as const).map((style) => (
+              <button key={style} type="button" className={styleFilter === style ? 'active' : ''} onClick={() => onStyleFilterChange(style)}>
+                {style}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="mini-segmented">
-          {(['Default', 'Double'] as const).map((scale) => (
-            <button key={scale} type="button" className={scaleFilter === scale ? 'active' : ''} onClick={() => onScaleFilterChange(scale)}>
-              {scale}
-            </button>
-          ))}
+        <div className="cursor-picker-control-group">
+          <span>Size</span>
+          <div className="mini-segmented">
+            {(['Default', 'Double'] as const).map((scale) => (
+              <button key={scale} type="button" className={selectedCursor.scale === scale ? 'active' : ''} onClick={() => onScaleFilterChange(scale)}>
+                {cursorScaleLabels[scale]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <div className="cursor-picker-grid" role="listbox" aria-label="Default cursor">
