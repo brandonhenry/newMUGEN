@@ -154,7 +154,9 @@
     ],
     "getupRollUp": [],
     "win": [],
-    "lose": [],
+    "lose": [
+      "/characters/don-patch-poppa-rocks/frames/frame-034.png"
+    ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
@@ -968,7 +970,8 @@
   "animationScales": {
     "idle": {
       "width": 0.84,
-      "height": 0.8
+      "height": 0.8,
+      "offsetX": 0
     }
   },
   "unplayable": false

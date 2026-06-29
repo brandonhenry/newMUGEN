@@ -276,10 +276,7 @@
       "/characters/riven/frames/frame-160.png"
     ],
     "lose": [
-      "/characters/riven/frames/frame-170.png",
-      "/characters/riven/frames/frame-171.png",
-      "/characters/riven/frames/frame-172.png",
-      "/characters/riven/frames/frame-173.png"
+      "/characters/riven/frames/frame-031.png"
     ],
     "cmd:f+2": [
       "/characters/riven/frames/frame-078.png",
@@ -1579,20 +1576,24 @@
   "animationScales": {
     "crouch": {
       "width": 0.78,
-      "height": 0.94
+      "height": 0.94,
+      "offsetX": 0
     },
     "cmd:FC+3": {
       "width": 0.7,
-      "height": 0.87
+      "height": 0.87,
+      "offsetX": 0
     }
   },
   "animationFrameScales": {
     "getupStand": {
       "54": {
         "width": 0.77,
-        "height": 0.87
+        "height": 0.87,
+        "offsetX": 0
       }
     }
   },
-  "variant": false
+  "variant": false,
+  "unplayable": false
 }
