@@ -56,6 +56,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     animationFrameScales: sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {}),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
+    getupFrameOverrides: sanitizeGetupFrameOverrides(character.getupFrameOverrides ?? {}),
     effects: sanitizeEffects(character.effects ?? []),
     moveEffects: sanitizeMoveEffects(canonicalizeBaseButtonRecord(character.moveEffects ?? {})),
     hurtboxes:
@@ -73,7 +74,8 @@ function sanitizeAnimationScaleMap(scales: CharacterDefinition['animationScales'
         key,
         {
           width: clamp(finiteOr(value.width, 1), 0.25, 2.5),
-          height: clamp(finiteOr(value.height, 1), 0.25, 2.5)
+          height: clamp(finiteOr(value.height, 1), 0.25, 2.5),
+          offsetX: clamp(finiteOr(value.offsetX, 0), -1.5, 1.5)
         }
       ])
   ));
@@ -92,7 +94,8 @@ function sanitizeAnimationFrameScaleMap(scales: CharacterDefinition['animationFr
               frameIndex,
               {
                 width: clamp(finiteOr(frameScale.width, 1), 0.25, 2.5),
-                height: clamp(finiteOr(frameScale.height, 1), 0.25, 2.5)
+                height: clamp(finiteOr(frameScale.height, 1), 0.25, 2.5),
+                offsetX: clamp(finiteOr(frameScale.offsetX, 0), -1.5, 1.5)
               }
             ])
         )
@@ -168,6 +171,15 @@ function sanitizeMoveOverrides(overrides: CharacterDefinition['moveOverrides']) 
         return [key, soundCues.length > 0 ? { ...value, soundCues } : value];
       })
   ));
+}
+
+function sanitizeGetupFrameOverrides(overrides: CharacterDefinition['getupFrameOverrides']) {
+  const next: NonNullable<CharacterDefinition['getupFrameOverrides']> = {};
+  (['stand', 'rollUp', 'rollDown', 'rollBack'] as const).forEach((action) => {
+    const frames = Math.round(finiteOr(overrides?.[action], 0));
+    if (frames > 0) next[action] = clamp(frames, 12, 96);
+  });
+  return next;
 }
 
 function canonicalizeBaseButtonRecord<T>(record: Record<string, T> = {}) {

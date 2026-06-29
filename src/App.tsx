@@ -65,6 +65,8 @@ import {
   type EffectBlendMode,
   type EffectKeyframe,
   type EffectSoundCue,
+  type GetupAction,
+  type GetupFrameOverrides,
   type GameSettings,
   type HitLevel,
   type ImpactSparkEvent,
@@ -91,6 +93,7 @@ type CharacterAnimationOverride = {
   sizes?: Record<string, AnimationScale>;
   frameSizes?: Record<string, Record<string, AnimationScale>>;
   moves?: Record<string, MoveOverride>;
+  getupFrames?: GetupFrameOverrides;
   sprites?: Record<string, SpriteFrameEdit>;
   effects?: CharacterEffectDefinition[];
   moveEffects?: Record<string, MoveEffectInstance[]>;
@@ -754,6 +757,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
         Object.keys(override.sizes ?? {}).length > 0 ||
         Object.keys(override.frameSizes ?? {}).length > 0 ||
         Object.keys(override.moves ?? {}).length > 0 ||
+        Object.keys(override.getupFrames ?? {}).length > 0 ||
         Object.keys(override.sprites ?? {}).length > 0 ||
         override.effects !== undefined ||
         override.moveEffects !== undefined
@@ -795,7 +799,8 @@ function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, An
 function normalizeAnimationScale(size?: AnimationScale): Required<AnimationScale> {
   return {
     width: Number(clamp(Number(size?.width) || 1, 0.25, 2.5).toFixed(2)),
-    height: Number(clamp(Number(size?.height) || 1, 0.25, 2.5).toFixed(2))
+    height: Number(clamp(Number(size?.height) || 1, 0.25, 2.5).toFixed(2)),
+    offsetX: Number(clamp(Number(size?.offsetX) || 0, -1.5, 1.5).toFixed(2))
   };
 }
 
@@ -805,6 +810,15 @@ function sanitizeMoveOverrideMap(overrides: Record<string, MoveOverride>) {
       .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
       .map(([key, value]) => [key, sanitizeMoveOverride(value)])
   ));
+}
+
+function sanitizeGetupFrameOverrides(overrides: GetupFrameOverrides = {}) {
+  const next: GetupFrameOverrides = {};
+  (['stand', 'rollUp', 'rollDown', 'rollBack'] as const).forEach((action) => {
+    const frames = Math.round(Number(overrides[action]));
+    if (Number.isFinite(frames) && frames > 0) next[action] = clamp(frames, 12, 96);
+  });
+  return next;
 }
 
 function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
@@ -929,6 +943,7 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
   const sizes = sanitizeAnimationScaleMap(override.sizes ?? {});
   const frameSizes = sanitizeAnimationFrameScaleMap(override.frameSizes ?? {});
   const moves = sanitizeMoveOverrideMap(override.moves ?? {});
+  const getupFrames = sanitizeGetupFrameOverrides(override.getupFrames ?? {});
   const effects = override.effects ? sanitizeEffects(override.effects) : sanitizeEffects(character.effects ?? []);
   const moveEffects = override.moveEffects ? sanitizeMoveEffects(canonicalizeRawButtonRecord(override.moveEffects)) : {};
   const spriteOverrideIndexes = Object.keys(override.sprites ?? {})
@@ -957,6 +972,10 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
     moveOverrides: {
       ...character.moveOverrides,
       ...moves
+    },
+    getupFrameOverrides: {
+      ...character.getupFrameOverrides,
+      ...getupFrames
     },
     effects,
     moveEffects: {
@@ -1160,6 +1179,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
   const animationScales = sanitizeAnimationScaleMap(character.animationScales ?? {});
   const animationFrameScales = sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {});
   const moveOverrides = sanitizeMoveOverrideMap(character.moveOverrides ?? {});
+  const getupFrameOverrides = sanitizeGetupFrameOverrides(character.getupFrameOverrides ?? {});
   const effects = sanitizeEffects(character.effects ?? []);
   const moveEffects = sanitizeMoveEffects(character.moveEffects ?? {});
   const response = await fetch('/__kore/dev/save-character-manifest', {
@@ -1177,6 +1197,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       animationScales,
       animationFrameScales,
       moveOverrides,
+      getupFrameOverrides,
       effects,
       moveEffects,
       spriteFrameEdits: character.spriteFrameEdits ?? {},
@@ -2230,6 +2251,22 @@ export default function App() {
     }));
   };
 
+  const setCharacterGetupFrameOverride = (characterId: string, action: Exclude<GetupAction, 'none'>, frames: number) => {
+    const normalized = sanitizeGetupFrameOverrides({ [action]: frames })[action];
+    if (!normalized) return;
+    debugLog(9, 'viewer getup frame override requested', { characterId, action, frames: normalized });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        getupFrames: {
+          ...(current[characterId]?.getupFrames ?? {}),
+          [action]: normalized
+        }
+      }
+    }));
+  };
+
   const setCharacterSpriteFrameEdit = (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => {
     debugLog(10, 'viewer sprite frame edit requested', { characterId, frameIndex, edit });
     setAnimationOverrides((current) => ({
@@ -2566,6 +2603,7 @@ export default function App() {
             onAnimationScaleChange={setCharacterAnimationScale}
             onAnimationFrameScaleChange={setCharacterAnimationFrameScale}
             onMoveOverrideChange={setCharacterMoveOverride}
+            onGetupFrameOverrideChange={setCharacterGetupFrameOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
             onEffectsChange={setCharacterEffects}
             onCharacterMetadataChange={setCharacterMetadata}
@@ -5848,6 +5886,36 @@ function isMoveSlotPose(pose: PreviewPose): pose is MoveDefinition['input'] {
   return pose === 'jab' || pose === 'kick' || pose === 'heavy' || pose === 'special';
 }
 
+function getAnimationPreviewTotalFrames(slot: AnimationSlot, move: MoveDefinition | null, sequenceFrameCount: number) {
+  if (move) return Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames);
+  if (slot.pose === 'chargeKi') return 48;
+  return Math.max(1, sequenceFrameCount);
+}
+
+function getAnimationPreviewStepRate(slot: AnimationSlot, move: MoveDefinition | null, animationFps: number) {
+  if (move || slot.pose === 'getup' || slot.pose === 'chargeKi') return 60;
+  return Math.max(1, animationFps);
+}
+
+function getGetupActionForSlot(slot: AnimationSlot): Exclude<GetupAction, 'none'> | null {
+  if (slot.pose !== 'getup') return null;
+  if (slot.key === 'getupRollUp') return 'rollUp';
+  if (slot.key === 'getupRollDown') return 'rollDown';
+  if (slot.key === 'getupRollBack') return 'rollBack';
+  return 'stand';
+}
+
+function getCharacterGetupFrames(character: CharacterDefinition, slot: AnimationSlot) {
+  const action = getGetupActionForSlot(slot);
+  if (!action) return 24;
+  const override = character.getupFrameOverrides?.[action];
+  if (Number.isFinite(override) && Number(override) > 0) return clamp(Math.round(Number(override)), 12, 96);
+  const frameCount = character.animationFrames?.[slot.key]?.length ?? 0;
+  const fps = character.animationFrameRates?.[slot.key] ?? character.animationFps ?? 8;
+  if (frameCount > 0) return clamp(Math.round((frameCount / Math.max(1, fps)) * 60), 12, 72);
+  return 24;
+}
+
 function formatFrameSummary(move: MoveDefinition | null) {
   if (!move) return 'No move data';
   const hitParts = [
@@ -5897,6 +5965,7 @@ function CharacterViewer({
   onAnimationScaleChange,
   onAnimationFrameScaleChange,
   onMoveOverrideChange,
+  onGetupFrameOverrideChange,
   onSpriteFrameEditChange,
   onEffectsChange,
   onCharacterMetadataChange,
@@ -5910,6 +5979,7 @@ function CharacterViewer({
   onAnimationScaleChange: (characterId: string, animationKey: string, size: AnimationScale) => void;
   onAnimationFrameScaleChange: (characterId: string, animationKey: string, frameIndex: number, size: AnimationScale) => void;
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
+  onGetupFrameOverrideChange: (characterId: string, action: Exclude<GetupAction, 'none'>, frames: number) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
   onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>) => void;
@@ -5940,6 +6010,8 @@ function CharacterViewer({
   const [selectedEffectId, setSelectedEffectId] = useState('');
   const [selectedEffectFrameIndex, setSelectedEffectFrameIndex] = useState(0);
   const [effectTimelineFrame, setEffectTimelineFrame] = useState(0);
+  const [animationPreviewPlaying, setAnimationPreviewPlaying] = useState(false);
+  const [animationPreviewFrame, setAnimationPreviewFrame] = useState(0);
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -5986,8 +6058,34 @@ function CharacterViewer({
   const moveEffects = active.moveEffects ?? {};
   const selectedMoveEffectInstances = moveEffects[selectedSlotDataKey] ?? [];
   const selectedMoveTotalFrames = selectedMove ? selectedMove.startupFrames + selectedMove.activeFrames + selectedMove.recoveryFrames : 30;
+  const selectedGetupAction = getGetupActionForSlot(selectedSlot);
+  const selectedGetupFrames = selectedGetupAction ? getCharacterGetupFrames(active, selectedSlot) : 24;
+  const defaultGetupFrames = selectedGetupAction ? getCharacterGetupFrames(sourceActive, selectedSlot) : 24;
+  const selectedAnimationPreviewTotalFrames = selectedGetupAction
+    ? selectedGetupFrames
+    : getAnimationPreviewTotalFrames(selectedSlot, selectedMove, selectedFrames.length);
+  const selectedAnimationPreviewStepRate = getAnimationPreviewStepRate(selectedSlot, selectedMove, selectedSpeed);
+  const maxAnimationPreviewFrame = Math.max(0, selectedAnimationPreviewTotalFrames - 1);
+  const clampedAnimationPreviewFrame = Math.min(maxAnimationPreviewFrame, Math.max(0, animationPreviewFrame));
+  const activeAnimationSequenceIndex = selectedFrames.length > 0
+    ? Math.min(selectedFrames.length - 1, Math.floor((clampedAnimationPreviewFrame / Math.max(1, selectedAnimationPreviewTotalFrames)) * selectedFrames.length))
+    : -1;
   const variantBaseOptions = roster.filter((character) => character.id !== active.id && !isCharacterVariant(character));
   const activeVariantBase = variantBaseOptions.find((character) => character.id === active.variantOf) ?? variantBaseOptions[0] ?? null;
+  useEffect(() => {
+    setAnimationPreviewPlaying(false);
+    setAnimationPreviewFrame(0);
+  }, [active.id, selectedSlotDataKey]);
+  useEffect(() => {
+    setAnimationPreviewFrame((frame) => Math.min(maxAnimationPreviewFrame, Math.max(0, frame)));
+  }, [maxAnimationPreviewFrame]);
+  useEffect(() => {
+    if (!isEditingAnimation || !animationPreviewPlaying) return undefined;
+    const timer = window.setInterval(() => {
+      setAnimationPreviewFrame((frame) => (frame + 1) % Math.max(1, selectedAnimationPreviewTotalFrames));
+    }, 1000 / selectedAnimationPreviewStepRate);
+    return () => window.clearInterval(timer);
+  }, [animationPreviewPlaying, isEditingAnimation, selectedAnimationPreviewStepRate, selectedAnimationPreviewTotalFrames]);
   useEffect(() => {
     if (!selectedEffect) return;
     const frameCount = selectedEffect.frames?.length ?? 0;
@@ -6012,6 +6110,22 @@ function CharacterViewer({
   });
   const moveGridColumnCount = slotCategory === 'stance' ? 4 : 1;
   const selectedSpriteFramePath = framePath(active, selectedSpriteFrameIndex);
+  const selectedEditorSummary = isEditingSpriteSheet
+    ? selectedSpriteFramePath
+    : selectedGetupAction
+      ? `${selectedGetupFrames} recovery frames`
+      : formatFrameSummary(selectedMove);
+  const updateAnimationPreviewFrame = (value: number) => {
+    setAnimationPreviewPlaying(false);
+    setAnimationPreviewFrame(Math.min(maxAnimationPreviewFrame, Math.max(0, Math.round(value))));
+  };
+  const jumpToAnimationSequenceFrame = (frame: string, sequenceIndex: number) => {
+    const totalSequenceFrames = Math.max(1, selectedFrames.length);
+    const nextFrame = Math.min(maxAnimationPreviewFrame, Math.floor((sequenceIndex / totalSequenceFrames) * selectedAnimationPreviewTotalFrames));
+    setAnimationPreviewPlaying(false);
+    setAnimationPreviewFrame(nextFrame);
+    setSelectedSpriteFrameIndex(getFrameIndex(frame));
+  };
 
   const cycleActiveCharacter = useCallback((direction: -1 | 1) => {
     if (roster.length <= 1) return;
@@ -6163,6 +6277,7 @@ function CharacterViewer({
   const resetSelectedAnimation = () => {
     updateSelectedFrames(defaultFrames);
     updateSelectedSpeed(defaultSpeed);
+    if (selectedGetupAction) onGetupFrameOverrideChange(active.id, selectedGetupAction, defaultGetupFrames);
     resetSelectedAnimationScale();
   };
 
@@ -6172,6 +6287,13 @@ function CharacterViewer({
       ...selectedMoveOverride,
       ...patch
     });
+  };
+
+  const updateSelectedGetupFrames = (value: string) => {
+    if (!selectedGetupAction) return;
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return;
+    onGetupFrameOverrideChange(active.id, selectedGetupAction, numeric);
   };
 
   const updateCharacterEffects = (
@@ -6724,6 +6846,7 @@ function CharacterViewer({
                   previewMove={selectedMove}
                   previewEffects={effects}
                   previewEffectInstances={selectedMoveEffectInstances}
+                  previewEffectFrame={isEditingAnimation ? clampedAnimationPreviewFrame : undefined}
                   rotationTurn={rotationTurn}
                   zoom={zoom}
                 />
@@ -6891,12 +7014,44 @@ function CharacterViewer({
                   <NotationGroup tokens={selectedSlot.notation} />
                   {isEditingSpriteSheet ? `Frame ${selectedSpriteFrameIndex}` : formatMoveSlotLabel(selectedSlot, selectedMove)}
                 </strong>
-                <small>{isEditingSpriteSheet ? selectedSpriteFramePath : formatFrameSummary(selectedMove)}</small>
+                <small>{selectedEditorSummary}</small>
               </div>
               {(isEditingAnimation || isEditingEffectsLibrary || isEditingMoveEffects) && (
                 <div className="frame-picker-actions">
                   {isEditingAnimation && (
                     <>
+                      <button
+                        type="button"
+                        className="secondary-button compact-button animation-preview-toggle"
+                        onClick={() => setAnimationPreviewPlaying((current) => !current)}
+                        data-testid="animation-preview-toggle"
+                      >
+                        {animationPreviewPlaying ? <Pause size={14} /> : <Play size={14} />}
+                        {animationPreviewPlaying ? 'Pause Preview' : 'Play Preview'}
+                      </button>
+                      <label className="speed-control animation-frame-control">
+                        <span>Frame</span>
+                        <input
+                          aria-label={`${selectedSlot.label} preview frame`}
+                          type="range"
+                          min="0"
+                          max={maxAnimationPreviewFrame}
+                          step="1"
+                          value={clampedAnimationPreviewFrame}
+                          onChange={(event) => updateAnimationPreviewFrame(Number(event.target.value))}
+                          data-testid="animation-preview-frame-slider"
+                        />
+                        <input
+                          aria-label={`${selectedSlot.label} preview frame value`}
+                          type="number"
+                          min="0"
+                          max={maxAnimationPreviewFrame}
+                          step="1"
+                          value={clampedAnimationPreviewFrame}
+                          onChange={(event) => updateAnimationPreviewFrame(Number(event.target.value))}
+                          data-testid="animation-preview-frame-input"
+                        />
+                      </label>
                       <label className="speed-control">
                         <span>FPS</span>
                         <input
@@ -6964,6 +7119,29 @@ function CharacterViewer({
                           value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
                           data-testid="animation-height-input"
+                        />
+                      </label>
+                      <label className="speed-control">
+                        <span>Position</span>
+                        <input
+                          aria-label={`${selectedSlot.label} animation horizontal position`}
+                          type="range"
+                          min="-1.5"
+                          max="1.5"
+                          step="0.01"
+                          value={selectedSizeScale.offsetX}
+                          onChange={(event) => updateSelectedAnimationScale({ offsetX: Number(event.target.value) })}
+                          data-testid="animation-position-slider"
+                        />
+                        <input
+                          aria-label={`${selectedSlot.label} animation horizontal position value`}
+                          type="number"
+                          min="-1.5"
+                          max="1.5"
+                          step="0.01"
+                          value={selectedSizeScale.offsetX}
+                          onChange={(event) => updateSelectedAnimationScale({ offsetX: Number(event.target.value) })}
+                          data-testid="animation-position-input"
                         />
                       </label>
                       <button className="secondary-button compact-button" onClick={() => updateSelectedFrames([...selectedFrames].reverse())}>
@@ -7080,6 +7258,13 @@ function CharacterViewer({
             />
           ) : isEditingAnimation ? (
             <section className="frame-picker inline-frame-editor" aria-label="Animation frame picker">
+              {selectedGetupAction && (
+                <GetupTimingEditor
+                  action={selectedGetupAction}
+                  frames={selectedGetupFrames}
+                  onChange={updateSelectedGetupFrames}
+                />
+              )}
               {selectedMove && (
                 <>
                   <FrameDataEditor move={selectedMove} onChange={updateSelectedMoveOverride} />
@@ -7112,6 +7297,13 @@ function CharacterViewer({
                   <img className="sprite-sheet-preview" src={active.spriteSheetPath} alt={`${active.displayName} sprite sheet`} />
                 </div>
               )}
+              <AnimationFrameColorStrip
+                frames={selectedFrames}
+                activeSequenceIndex={activeAnimationSequenceIndex}
+                previewFrame={clampedAnimationPreviewFrame}
+                totalFrames={selectedAnimationPreviewTotalFrames}
+                onSelectFrame={jumpToAnimationSequenceFrame}
+              />
               <div className="selected-frame-strip" aria-label="Selected frames">
                 {selectedFrames.map((frame, index) => (
                   <div
@@ -7200,6 +7392,68 @@ function CharacterViewer({
         Back
       </button>
     </div>
+  );
+}
+
+function AnimationFrameColorStrip({
+  frames,
+  activeSequenceIndex,
+  previewFrame,
+  totalFrames,
+  onSelectFrame
+}: {
+  frames: string[];
+  activeSequenceIndex: number;
+  previewFrame: number;
+  totalFrames: number;
+  onSelectFrame: (frame: string, sequenceIndex: number) => void;
+}) {
+  const [frameColors, setFrameColors] = useState<Record<string, string>>({});
+  const framesKey = useMemo(() => frames.join('\n'), [frames]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setFrameColors({});
+    void Promise.all(
+      frames.map(async (frame) => {
+        try {
+          return [frame, await averageFrameColor(frame)] as const;
+        } catch {
+          return [frame, '#2ee6ff'] as const;
+        }
+      })
+    ).then((entries) => {
+      if (cancelled) return;
+      setFrameColors(Object.fromEntries(entries));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [framesKey, frames]);
+
+  if (frames.length === 0) return null;
+
+  return (
+    <section className="animation-frame-overview" aria-label="Animation frame colors">
+      <header>
+        <span>Frame Colors</span>
+        <strong>{Math.min(totalFrames, previewFrame + 1)} / {Math.max(1, totalFrames)}</strong>
+      </header>
+      <div className="animation-frame-color-strip">
+        {frames.map((frame, index) => (
+          <button
+            key={`${frame}-${index}`}
+            type="button"
+            className={index === activeSequenceIndex ? 'active' : ''}
+            style={{ '--frame-color': frameColors[frame] ?? '#2ee6ff' } as CSSProperties}
+            onClick={() => onSelectFrame(frame, index)}
+            title={`Jump to frame ${getFrameIndex(frame)}`}
+          >
+            <span>{getFrameIndex(frame)}</span>
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -8269,6 +8523,36 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
           <span>End Crouch</span>
           <input type="checkbox" checked={Boolean(move.endsInCrouch)} onChange={(event) => onChange({ endsInCrouch: event.target.checked })} />
         </label>
+      </div>
+    </section>
+  );
+}
+
+function GetupTimingEditor({
+  action,
+  frames,
+  onChange
+}: {
+  action: Exclude<GetupAction, 'none'>;
+  frames: number;
+  onChange: (value: string) => void;
+}) {
+  const label = action === 'stand'
+    ? 'Stand Up'
+    : action === 'rollUp'
+      ? 'Roll Up'
+      : action === 'rollDown'
+        ? 'Roll Down'
+        : 'Roll Back';
+  return (
+    <section className="frame-data-editor" aria-label="Getup timing editor">
+      <header>
+        <span>Getup Timing</span>
+        <strong>{label}</strong>
+        <small>{frames} recovery frames</small>
+      </header>
+      <div className="frame-data-grid getup-frame-grid">
+        <FrameNumberInput label="Recovery" value={frames} min={12} max={96} onChange={onChange} />
       </div>
     </section>
   );
@@ -9763,6 +10047,41 @@ function loadImage(src: string) {
     image.onerror = () => reject(new Error('Image load failed'));
     image.src = src;
   });
+}
+
+async function averageFrameColor(src: string) {
+  const image = await loadImage(src);
+  const sourceWidth = image.naturalWidth || image.width || 1;
+  const sourceHeight = image.naturalHeight || image.height || 1;
+  const scale = Math.min(1, 48 / Math.max(sourceWidth, sourceHeight));
+  const width = Math.max(1, Math.round(sourceWidth * scale));
+  const height = Math.max(1, Math.round(sourceHeight * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return '#2ee6ff';
+  context.clearRect(0, 0, width, height);
+  context.drawImage(image, 0, 0, width, height);
+  const pixels = context.getImageData(0, 0, width, height).data;
+  let red = 0;
+  let green = 0;
+  let blue = 0;
+  let samples = 0;
+  for (let offset = 0; offset < pixels.length; offset += 4) {
+    const alpha = pixels[offset + 3];
+    if (alpha < 24) continue;
+    red += pixels[offset];
+    green += pixels[offset + 1];
+    blue += pixels[offset + 2];
+    samples += 1;
+  }
+  if (samples === 0) return '#2ee6ff';
+  return rgbToHex(Math.round(red / samples), Math.round(green / samples), Math.round(blue / samples));
+}
+
+function rgbToHex(red: number, green: number, blue: number) {
+  return `#${[red, green, blue].map((value) => Math.max(0, Math.min(255, value)).toString(16).padStart(2, '0')).join('')}`;
 }
 
 function isSpritePixel(data: Uint8ClampedArray, offset: number, background: number[]) {

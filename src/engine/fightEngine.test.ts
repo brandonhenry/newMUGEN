@@ -879,6 +879,34 @@ describe('fight engine', () => {
     expect(match.fighters[1].currentMove).toBeNull();
   });
 
+  it('uses configured recovery frames for getup options', () => {
+    const customGetupCharacter: CharacterDefinition = {
+      ...starterCharacters[1],
+      getupFrameOverrides: {
+        rollBack: 47
+      }
+    };
+    let match = createMatch(starterCharacters[0], customGetupCharacter, stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'knockdown';
+    match.fighters[1].actionFramesRemaining = 0;
+    match.fighters[1].actionTimer = 0;
+    match.fighters[1].stunFramesRemaining = 0;
+    match.fighters[1].stunTimer = 0;
+
+    const rollBack = emptyInputFrame();
+    rollBack.right = true;
+    match = stepMatch(match, emptyInputFrame(), rollBack, 1 / 60);
+
+    expect(match.fighters[1].state).toBe('getup');
+    expect(match.fighters[1].getupAction).toBe('rollBack');
+    expect(match.fighters[1].getupTotalFrames).toBe(47);
+    expect(match.fighters[1].actionFramesRemaining).toBe(47);
+  });
+
   it('keeps training mode infinite by refilling zero health without ending the round', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
     match.phase = 'fighting';

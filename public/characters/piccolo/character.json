@@ -124,7 +124,16 @@
       "/characters/piccolo/frames/frame-032.png",
       "/characters/piccolo/frames/frame-033.png"
     ],
-    "getupStand": [],
+    "getupStand": [
+      "/characters/piccolo/frames/frame-030.png",
+      "/characters/piccolo/frames/frame-031.png",
+      "/characters/piccolo/frames/frame-032.png",
+      "/characters/piccolo/frames/frame-033.png",
+      "/characters/piccolo/frames/frame-037.png",
+      "/characters/piccolo/frames/frame-038.png",
+      "/characters/piccolo/frames/frame-039.png",
+      "/characters/piccolo/frames/frame-040.png"
+    ],
     "getupRollUp": [],
     "win": [],
     "lose": [],
@@ -1015,6 +1024,131 @@
       "scale": 1,
       "hidden": false,
       "revision": 1782758297540
+    },
+    "35": {
+      "index": 35,
+      "path": "/characters/piccolo/frames/frame-035.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/piccolo/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        1014,
+        429,
+        1053,
+        469
+      ],
+      "width": 39,
+      "height": 40,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782768052837
+    },
+    "36": {
+      "index": 36,
+      "path": "/characters/piccolo/frames/frame-036.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/piccolo/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        1209,
+        429,
+        1250,
+        467
+      ],
+      "width": 41,
+      "height": 38,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782768060616
+    },
+    "37": {
+      "index": 37,
+      "path": "/characters/piccolo/frames/frame-037.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/piccolo/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        1378,
+        430,
+        1437,
+        473
+      ],
+      "width": 59,
+      "height": 43,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782768067631
+    },
+    "38": {
+      "index": 38,
+      "path": "/characters/piccolo/frames/frame-038.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/piccolo/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        1567,
+        414,
+        1640,
+        452
+      ],
+      "width": 73,
+      "height": 38,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782768083266
+    },
+    "39": {
+      "index": 39,
+      "path": "/characters/piccolo/frames/frame-039.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/piccolo/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        1777,
+        400,
+        1832,
+        467
+      ],
+      "width": 55,
+      "height": 67,
+      "row": 3,
+      "rotation": 0,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1782768095172
     }
   },
   "aiProfile": {
@@ -1038,11 +1172,13 @@
   "animationScales": {
     "hitLight": {
       "width": 0.7,
-      "height": 0.97
+      "height": 0.97,
+      "offsetX": 0
     },
     "idle": {
       "width": 0.85,
-      "height": 1
+      "height": 1,
+      "offsetX": 0
     }
   },
   "unplayable": false

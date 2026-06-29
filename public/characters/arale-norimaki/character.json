@@ -125,7 +125,12 @@
       "/characters/arale-norimaki/frames/frame-041.png",
       "/characters/arale-norimaki/frames/frame-042.png"
     ],
-    "getupStand": [],
+    "getupStand": [
+      "/characters/arale-norimaki/frames/frame-031.png",
+      "/characters/arale-norimaki/frames/frame-057.png",
+      "/characters/arale-norimaki/frames/frame-059.png",
+      "/characters/arale-norimaki/frames/frame-060.png"
+    ],
     "getupRollUp": [],
     "win": [],
     "lose": [],
@@ -964,7 +969,8 @@
   "animationScales": {
     "idle": {
       "width": 0.87,
-      "height": 0.81
+      "height": 0.81,
+      "offsetX": 0
     }
   },
   "unplayable": false

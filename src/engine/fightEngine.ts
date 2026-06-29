@@ -1045,6 +1045,10 @@ function getRequestedGetupAction(fighter: FighterRuntime, opponent: FighterRunti
 }
 
 function getGetupAnimationFrames(fighter: FighterRuntime, action: FighterRuntime['getupAction']) {
+  if (action !== 'none') {
+    const override = fighter.character.getupFrameOverrides?.[action];
+    if (Number.isFinite(override) && Number(override) > 0) return clamp(Math.round(Number(override)), 12, 96);
+  }
   const key = getGetupAnimationKey(action);
   const frameCount = key ? fighter.character.animationFrames?.[key]?.length ?? 0 : 0;
   const fps = key ? fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8 : fighter.character.animationFps ?? 8;
@@ -2235,8 +2239,10 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   if (defender.state === 'knockdown' || defender.getupInvulnerableFrames > 0) return;
   const moveFrame = attacker.moveFrame || secondsToFrames(totalMoveSeconds(move) - attacker.actionTimer);
   if (!isActiveMoveFrame(move, moveFrame)) return;
-  const dx = defender.position.x - attacker.position.x;
-  const dz = defender.position.z - attacker.position.z;
+  const attackerPosition = getFighterCombatPosition(attacker);
+  const defenderPosition = getFighterCombatPosition(defender);
+  const dx = defenderPosition.x - attackerPosition.x;
+  const dz = defenderPosition.z - attackerPosition.z;
   const distance = Math.hypot(dx, dz);
   const collision = getAttackCollision(attacker, defender, move, distance <= move.range + UNIVERSAL_RANGE_BUFFER);
   if (!collision) return;
@@ -2366,8 +2372,10 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   if (!isActiveMoveFrame(sourceMove, clone.moveFrame)) return;
 
   const cloneFighter = makeShadowCloneFighter(attacker, clone);
-  const dx = defender.position.x - clone.position.x;
-  const dz = defender.position.z - clone.position.z;
+  const clonePosition = getFighterCombatPosition(cloneFighter);
+  const defenderPosition = getFighterCombatPosition(defender);
+  const dx = defenderPosition.x - clonePosition.x;
+  const dz = defenderPosition.z - clonePosition.z;
   const distance = Math.hypot(dx, dz);
   const weakMove = buildShadowCloneMove(sourceMove);
   const collision = getAttackCollision(cloneFighter, defender, weakMove, distance <= weakMove.range + UNIVERSAL_RANGE_BUFFER);
@@ -2748,7 +2756,8 @@ function getAttackCollision(attacker: FighterRuntime, defender: FighterRuntime, 
 }
 
 function getImpactPosition(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition): [number, number, number] {
-  return getAttackCollision(attacker, defender, move, true)?.position ?? [defender.position.x, defender.position.y + 1.08, defender.position.z];
+  const defenderPosition = getFighterCombatPosition(defender);
+  return getAttackCollision(attacker, defender, move, true)?.position ?? [defenderPosition.x, defenderPosition.y + 1.08, defenderPosition.z];
 }
 
 function getActiveAttackAabbs(attacker: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean) {
@@ -2827,6 +2836,7 @@ function effectHitboxToWorldAabb(attacker: FighterRuntime, transform: { position
 
 function resolveEffectWorldPosition(fighter: FighterRuntime, transform: { position: [number, number, number] }, anchor: string): [number, number, number] {
   const facing = fighter.facing || 1;
+  const fighterPosition = getFighterCombatPosition(fighter);
   const anchorOffsets: Record<string, [number, number, number]> = {
     root: [0, 0, 0],
     body: [0, 1.05, 0],
@@ -2840,17 +2850,18 @@ function resolveEffectWorldPosition(fighter: FighterRuntime, transform: { positi
   if (anchor === 'world') return [...transform.position] as [number, number, number];
   const mirroredX = transform.position[0] * (facing === -1 ? -1 : 1);
   return [
-    fighter.position.x + offset[0] + mirroredX,
-    fighter.position.y + offset[1] + transform.position[1],
-    fighter.position.z + offset[2] + transform.position[2]
+    fighterPosition.x + offset[0] + mirroredX,
+    fighterPosition.y + offset[1] + transform.position[1],
+    fighterPosition.z + offset[2] + transform.position[2]
   ];
 }
 
 function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb {
   const facing = attacker.facing || 1;
-  const centerX = attacker.position.x + facing * hitbox.offset[2];
-  const centerY = attacker.position.y + hitbox.offset[1];
-  const centerZ = attacker.position.z + hitbox.offset[0];
+  const attackerPosition = getFighterCombatPosition(attacker);
+  const centerX = attackerPosition.x + facing * hitbox.offset[2];
+  const centerY = attackerPosition.y + hitbox.offset[1];
+  const centerZ = attackerPosition.z + hitbox.offset[0];
   return makeAabb(
     centerX,
     centerY,
@@ -2862,10 +2873,88 @@ function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb 
 }
 
 function hurtboxToWorldAabb(defender: FighterRuntime, hurtbox: BoxSpec): Aabb {
-  const centerX = defender.position.x + hurtbox.offset[2] * (defender.facing || 1);
-  const centerY = defender.position.y + hurtbox.offset[1];
-  const centerZ = defender.position.z + hurtbox.offset[0];
+  const defenderPosition = getFighterCombatPosition(defender);
+  const centerX = defenderPosition.x + hurtbox.offset[2] * (defender.facing || 1);
+  const centerY = defenderPosition.y + hurtbox.offset[1];
+  const centerZ = defenderPosition.z + hurtbox.offset[0];
   return makeAabb(centerX, centerY, centerZ, hurtbox.size[2], hurtbox.size[1], hurtbox.size[0]);
+}
+
+function getFighterCombatPosition(fighter: FighterRuntime) {
+  return {
+    x: fighter.position.x + getFighterAnimationOffsetX(fighter),
+    y: fighter.position.y,
+    z: fighter.position.z
+  };
+}
+
+function getFighterAnimationOffsetX(fighter: FighterRuntime) {
+  const animation = getFighterAnimationFrameSource(fighter);
+  if (!animation?.key) return 0;
+  const frameIndex = animation.frameSource?.match(/frame-(\d+)\.png/)?.[1];
+  const frameSize = frameIndex ? fighter.character.animationFrameScales?.[animation.key]?.[String(Number(frameIndex))] : undefined;
+  const size = frameSize ?? fighter.character.animationScales?.[animation.key];
+  return clamp(Number(size?.offsetX) || 0, -1.5, 1.5);
+}
+
+function getFighterAnimationFrameSource(fighter: FighterRuntime) {
+  const frames = fighter.character.animationFrames;
+  if (!frames) return null;
+  const key = getFighterAnimationKey(fighter);
+  const sequence =
+    frames[key] ??
+    (key === 'sprint' ? frames.walkForward : undefined) ??
+    (key === 'backflip' ? frames.jump ?? frames.walkBack : undefined) ??
+    (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
+    (key === 'entry' ? frames.win : undefined) ??
+    (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
+    (key.startsWith('getup') ? frames.knockdown : undefined) ??
+    frames.idle;
+  if (!sequence?.length) return { key, frameSource: undefined };
+  return { key, frameSource: sequence[getFighterAnimationFrameIndex(fighter, key, sequence.length)] };
+}
+
+function getFighterAnimationFrameIndex(fighter: FighterRuntime, key: string, sequenceLength: number) {
+  if (sequenceLength <= 1) return 0;
+  if (fighter.state === 'chargeKi') return getChargeKiAnimationFrameIndex(fighter, sequenceLength);
+  if (fighter.state === 'attack') return Math.min(sequenceLength - 1, Math.floor(activeMoveProgress(fighter) * sequenceLength));
+  if (fighter.state === 'getup') return Math.min(sequenceLength - 1, Math.floor(getFighterGetupProgress(fighter) * sequenceLength));
+  if (key === 'idle' || key === 'crouch' || key === 'block' || key === 'crouchBlock' || key === 'hitLight' || key === 'win' || key === 'lose') return 0;
+  return 0;
+}
+
+function getChargeKiAnimationFrameIndex(fighter: FighterRuntime, sequenceLength: number) {
+  if (sequenceLength <= 1) return 0;
+  const move = fighter.currentMove;
+  const forwardFrames = Math.max(1, (move?.startupFrames ?? 14) + (move?.activeFrames ?? 18));
+  if (fighter.chargePhase === 'hold') return sequenceLength - 2 + (Math.floor(fighter.chargeFrame / 10) % 2);
+  if (fighter.chargePhase === 'recovery') {
+    const recoveryFrames = Math.max(1, move?.recoveryFrames ?? 16);
+    const reverseProgress = Math.min(1, Math.max(0, fighter.chargeFrame / recoveryFrames));
+    return Math.max(0, Math.min(sequenceLength - 1, sequenceLength - 1 - Math.floor(reverseProgress * sequenceLength)));
+  }
+  const forwardProgress = Math.min(1, Math.max(0, fighter.moveFrame / forwardFrames));
+  return Math.max(0, Math.min(sequenceLength - 1, Math.floor(forwardProgress * sequenceLength)));
+}
+
+function getFighterGetupProgress(fighter: FighterRuntime) {
+  const total = Math.max(1, fighter.getupTotalFrames || GETUP_FRAMES);
+  const remaining = Math.max(0, fighter.actionFramesRemaining || secondsToFrames(fighter.actionTimer));
+  return clamp(1 - remaining / total, 0, 1);
+}
+
+function getFighterAnimationKey(fighter: FighterRuntime) {
+  if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
+  if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
+  if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
+  if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
+  if (fighter.state === 'chargeKi') return 'chargeKi';
+  if (fighter.state === 'hit') return 'hitLight';
+  if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
+  if (fighter.state === 'getup') return getGetupAnimationKey(fighter.getupAction) ?? 'knockdown';
+  if (fighter.state === 'entry') return 'entry';
+  return fighter.state;
 }
 
 function makeAabb(centerX: number, centerY: number, centerZ: number, sizeX: number, sizeY: number, sizeZ: number): Aabb {

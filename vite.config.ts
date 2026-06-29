@@ -21,6 +21,7 @@ type DevManifestPayload = {
   animationScales?: Record<string, Record<string, unknown>>;
   animationFrameScales?: Record<string, Record<string, Record<string, unknown>>>;
   moveOverrides?: Record<string, Record<string, unknown>>;
+  getupFrameOverrides?: Record<string, unknown>;
   effects?: Array<Record<string, unknown>>;
   moveEffects?: Record<string, Array<Record<string, unknown>>>;
   spriteFrameEdits?: Record<string, Record<string, unknown>>;
@@ -284,6 +285,9 @@ function koreDevManifestWriter() {
           if (Object.keys(animationFrameScales).length > 0) manifest.animationFrameScales = animationFrameScales;
           else delete manifest.animationFrameScales;
           manifest.moveOverrides = sanitizeMoveOverrideMap(payload.moveOverrides ?? {});
+          const getupFrameOverrides = sanitizeGetupFrameOverrides(payload.getupFrameOverrides ?? {});
+          if (Object.keys(getupFrameOverrides).length > 0) manifest.getupFrameOverrides = getupFrameOverrides;
+          else delete manifest.getupFrameOverrides;
           manifest.effects = sanitizeCharacterEffects(payload.effects ?? []);
           manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
           manifest.spriteFrameEdits = sanitizeSpriteFrameEditMap(payload.spriteFrameEdits ?? {});
@@ -1264,6 +1268,15 @@ function sanitizeMoveOverrideMap(overrides: Record<string, Record<string, unknow
   );
 }
 
+function sanitizeGetupFrameOverrides(overrides: Record<string, unknown>) {
+  const next: Record<string, number> = {};
+  ['stand', 'rollUp', 'rollDown', 'rollBack'].forEach((action) => {
+    const frames = Math.round(finiteOr(overrides[action], 0));
+    if (frames > 0) next[action] = Math.max(12, Math.min(96, frames));
+  });
+  return next;
+}
+
 function sanitizeMoveOverride(override: Record<string, unknown>) {
   const allowed = new Set([
     'label',
@@ -1621,12 +1634,13 @@ function sanitizeAnimationScaleMap(scales: Record<string, Record<string, unknown
         key,
         {
           width: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.width, 1))).toFixed(2)),
-          height: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.height, 1))).toFixed(2))
+          height: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.height, 1))).toFixed(2)),
+          offsetX: Number(Math.max(-1.5, Math.min(1.5, finiteOr(value.offsetX, 0))).toFixed(2))
         }
       ])
       .filter(([, value]) => {
-        const size = value as { width: number; height: number };
-        return size.width !== 1 || size.height !== 1;
+        const size = value as { width: number; height: number; offsetX: number };
+        return size.width !== 1 || size.height !== 1 || size.offsetX !== 0;
       })
   );
 }
@@ -1644,12 +1658,13 @@ function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, Re
               frameIndex,
               {
                 width: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.width, 1))).toFixed(2)),
-                height: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.height, 1))).toFixed(2))
+                height: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.height, 1))).toFixed(2)),
+                offsetX: Number(Math.max(-1.5, Math.min(1.5, finiteOr(frameScale.offsetX, 0))).toFixed(2))
               }
             ])
             .filter(([, value]) => {
-              const size = value as { width: number; height: number };
-              return size.width !== 1 || size.height !== 1;
+              const size = value as { width: number; height: number; offsetX: number };
+              return size.width !== 1 || size.height !== 1 || size.offsetX !== 0;
             })
         )
       ])
@@ -1989,6 +2004,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     },
     moves,
     moveOverrides: sanitizeMoveOverrideMap((manifest.moveOverrides as Record<string, Record<string, unknown>> | undefined) ?? {}),
+    getupFrameOverrides: sanitizeGetupFrameOverrides((manifest.getupFrameOverrides as Record<string, unknown> | undefined) ?? {}),
     spriteFrameEdits: sanitizeSpriteFrameEditMap((manifest.spriteFrameEdits as Record<string, Record<string, unknown>> | undefined) ?? {}),
     hurtboxes: Array.isArray(manifest.hurtboxes) && manifest.hurtboxes.length > 0 ? manifest.hurtboxes : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }],
     inputMap: manifest.inputMap && typeof manifest.inputMap === 'object' ? manifest.inputMap : { jab: 'J', kick: 'K', heavy: 'L', special: 'U', block: 'I' },

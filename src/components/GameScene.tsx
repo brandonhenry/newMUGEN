@@ -12,6 +12,7 @@ import type {
   FighterRuntime,
   FighterState,
   GameSettings,
+  GetupAction,
   ImpactSparkEvent,
   MatchSnapshot,
   MoveEffectInstance,
@@ -651,6 +652,7 @@ function ProceduralEffectVisual({
 
 function resolveEffectWorldPosition(fighter: FighterRuntime, transform: EffectTransform, anchor: string): [number, number, number] {
   const facing = fighter.facing;
+  const offsetX = getFighterRenderOffsetX(fighter, activeMoveProgress(fighter), 0);
   const anchorOffsets: Record<string, [number, number, number]> = {
     root: [0, 0, 0],
     body: [0, 1.05, 0],
@@ -664,7 +666,7 @@ function resolveEffectWorldPosition(fighter: FighterRuntime, transform: EffectTr
   if (anchor === 'world') return [...transform.position] as [number, number, number];
   const mirroredX = transform.position[0] * (facing === -1 ? -1 : 1);
   return [
-    fighter.position.x + offset[0] + mirroredX,
+    fighter.position.x + offsetX + offset[0] + mirroredX,
     fighter.position.y + offset[1] + transform.position[1],
     fighter.position.z + offset[2] + transform.position[2]
   ];
@@ -1200,6 +1202,9 @@ function PreviewFighter({
   const fighter = useRef(createPreviewFighter(character));
   const rotator = useRef<THREE.Group>(null);
   const [, setEffectFrameTick] = useState(0);
+  const previewFrameTime = previewEffectFrame === undefined
+    ? undefined
+    : previewEffectFrame / Math.max(1, character.animationFrameRates?.[animationKey ?? ''] ?? character.animationFps ?? 8);
 
   useEffect(() => {
     fighter.current = createPreviewFighter(character);
@@ -1236,7 +1241,8 @@ function PreviewFighter({
     } else {
       runtime.state = pose;
       runtime.sidestepDirection = animationKey === 'sidestepLeft' ? -1 : animationKey === 'sidestepRight' ? 1 : 0;
-      runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(t * 2.4)) * 0.95 : pose === 'juggle' ? 1.35 + Math.sin(t * 2.2) * 0.18 : 0;
+      const previewTime = previewFrameTime ?? t;
+      runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(previewTime * 2.4)) * 0.95 : pose === 'juggle' ? 1.35 + Math.sin(previewTime * 2.2) * 0.18 : 0;
       if (pose === 'getup') {
         runtime.getupAction = animationKey === 'getupRollUp'
           ? 'rollUp'
@@ -1245,13 +1251,14 @@ function PreviewFighter({
             : animationKey === 'getupRollBack'
               ? 'rollBack'
               : 'stand';
-        runtime.getupTotalFrames = 40;
-        runtime.actionFramesRemaining = Math.max(0, runtime.getupTotalFrames - (Math.floor(t * 60) % runtime.getupTotalFrames));
+        runtime.getupTotalFrames = getCharacterGetupFrames(character, runtime.getupAction);
+        const getupFrame = previewEffectFrame ?? Math.floor(t * 60);
+        runtime.actionFramesRemaining = Math.max(0, runtime.getupTotalFrames - (getupFrame % runtime.getupTotalFrames));
       }
       if (pose === 'chargeKi') {
-        runtime.currentMove = buildPreviewChargeMove();
-        runtime.chargePhase = Math.floor(t * 1.35) % 3 === 2 ? 'hold' : 'active';
-        runtime.chargeFrame = Math.floor(t * 60);
+        runtime.currentMove = previewMove ?? buildPreviewChargeMove();
+        runtime.chargePhase = Math.floor(previewTime * 1.35) % 3 === 2 ? 'hold' : 'active';
+        runtime.chargeFrame = previewEffectFrame ?? Math.floor(t * 60);
         runtime.moveFrame = Math.min(32, runtime.chargeFrame % 48);
       } else {
         runtime.chargePhase = 'none';
@@ -1271,7 +1278,7 @@ function PreviewFighter({
 
   return (
     <group ref={rotator} position={[0, 0, 0]}>
-      <FighterRig fighter={fighter.current} />
+      <FighterRig fighter={fighter.current} frameTimeOverride={previewFrameTime} />
       {(previewEffectInstances ?? []).map((instance) => {
         const effect = (previewEffects ?? []).find((candidate) => candidate.id === instance.effectId);
         if (!effect || !effectIsVisibleAt(instance, fighter.current.moveFrame, previewMove ? previewMove.startupFrames + previewMove.activeFrames + previewMove.recoveryFrames : 30)) return null;
@@ -1884,21 +1891,24 @@ function sampleStageVoxelColor(imageData: ImageData, originX: number, originY: n
   };
 }
 
-function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeScale?: number }) {
+function FighterRig({ fighter, timeScale = 1, frameTimeOverride }: { fighter: FighterRuntime; timeScale?: number; frameTimeOverride?: number }) {
   const group = useRef<THREE.Group>(null);
   const scaledTime = useRef(0);
   const progress = activeMoveProgress(fighter);
   useFrame((_, delta) => {
     if (!group.current) return;
-    scaledTime.current += delta * timeScale;
+    if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
+    else scaledTime.current = frameTimeOverride;
+    const renderTime = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
-    const bob = fighter.state === 'idle' ? Math.sin(scaledTime.current * 4 + fighter.slot) * 0.025 : 0;
+    const bob = fighter.state === 'idle' ? Math.sin(renderTime * 4 + fighter.slot) * 0.025 : 0;
     const hitLean = fighter.state === 'hit' ? -fighter.facing * 0.16 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
     const getupProgress = getGetupRenderProgress(fighter);
-    const juggleRoll = juggle * Math.sin(scaledTime.current * 3.8 + fighter.slot) * 0.34;
+    const juggleRoll = juggle * Math.sin(renderTime * 3.8 + fighter.slot) * 0.34;
     const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
-    group.current.position.set(fighter.position.x, fighter.position.y + bob, fighter.position.z);
+    const offsetX = getFighterRenderOffsetX(fighter, liveProgress, renderTime);
+    group.current.position.set(fighter.position.x + offsetX, fighter.position.y + bob, fighter.position.z);
     group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
   });
 
@@ -1908,12 +1918,12 @@ function FighterRig({ fighter, timeScale = 1 }: { fighter: FighterRuntime; timeS
       <Bounds fit={false}>
         {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
           fighter.character.voxelProfile === 'image-source' || fighter.character.voxelProfile === 'hd-image-source' ? (
-            <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} />
+            <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} />
           ) : (
-            <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} />
+            <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} />
           )
         ) : fighter.character.modelPath.startsWith('builtin://') ? (
-          <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} />
+          <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} frameTimeOverride={frameTimeOverride} />
         ) : (
           <ExternalFighter fighter={fighter} url={fighter.character.modelPath} timeScale={timeScale} />
         )}
@@ -1973,7 +1983,7 @@ function getImageVoxelLodStep(character: CharacterDefinition) {
   return window.innerWidth < 760 ? Math.max(1, Math.round(mobileStep)) : 1;
 }
 
-function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: FighterRuntime; progress: number; timeScale?: number }) {
+function ImageVoxelFighter({ fighter, progress, timeScale = 1, frameTimeOverride }: { fighter: FighterRuntime; progress: number; timeScale?: number; frameTimeOverride?: number }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
   const head = useRef<THREE.Group>(null);
@@ -2001,7 +2011,8 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
   const parts = useMemo(() => buildVoxelParts(voxels, lodStep), [lodStep, voxels]);
 
   useFrame((_, delta) => {
-    scaledTime.current += delta * timeScale;
+    if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
+    else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const nextFrameSrc = getImageVoxelFramePath(fighter, liveProgress, t);
@@ -2020,6 +2031,7 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
     const smooth = 1 - Math.pow(0.001, delta);
 
     if (root.current) {
+      root.current.position.x = THREE.MathUtils.lerp(root.current.position.x, 0, smooth);
       root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, crouch ? -0.28 : 0, smooth);
       root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, animationScale.width, smooth);
       root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, animationScale.height * (crouch ? 0.84 : jump ? 1.04 : 1), smooth);
@@ -2056,7 +2068,7 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1 }: { fighter: Figh
   });
 
   if (voxels.length === 0) {
-    return <VoxelSpriteFighter fighter={fighter} progress={progress} />;
+    return <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} />;
   }
 
   return (
@@ -2081,8 +2093,15 @@ function getCharacterAnimationScale(character: CharacterDefinition, animationKey
   const size = frameSize ?? (animationKey ? character.animationScales?.[animationKey] : undefined);
   return {
     width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.25, 2.5),
-    height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.25, 2.5)
+    height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.25, 2.5),
+    offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -1.5, 1.5)
   };
+}
+
+function getFighterRenderOffsetX(fighter: FighterRuntime, progress: number, elapsedTime: number) {
+  const animationKey = getImageVoxelAnimationKey(fighter);
+  const frameSource = getImageVoxelFramePath(fighter, progress, elapsedTime);
+  return getCharacterAnimationScale(fighter.character, animationKey, frameSource).offsetX;
 }
 
 function getCachedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[]> {
@@ -2175,6 +2194,22 @@ function getGetupAnimationKey(fighter: FighterRuntime) {
   if (fighter.getupAction === 'rollDown') return 'getupRollDown';
   if (fighter.getupAction === 'rollBack') return 'getupRollBack';
   return 'getupStand';
+}
+
+function getCharacterGetupFrames(character: CharacterDefinition, action: Exclude<GetupAction, 'none'>) {
+  const override = character.getupFrameOverrides?.[action];
+  if (Number.isFinite(override) && Number(override) > 0) return THREE.MathUtils.clamp(Math.round(Number(override)), 12, 96);
+  const key = action === 'rollUp'
+    ? 'getupRollUp'
+    : action === 'rollDown'
+      ? 'getupRollDown'
+      : action === 'rollBack'
+        ? 'getupRollBack'
+        : 'getupStand';
+  const frameCount = character.animationFrames?.[key]?.length ?? 0;
+  const fps = character.animationFrameRates?.[key] ?? character.animationFps ?? 8;
+  if (frameCount > 0) return THREE.MathUtils.clamp(Math.round((frameCount / Math.max(1, fps)) * 60), 12, 72);
+  return 24;
 }
 
 function getGetupRenderProgress(fighter: FighterRuntime) {
@@ -2541,7 +2576,7 @@ function classifyImageVoxel(topRatio: number, xRatio: number): ImageVoxelPart {
   return 'torso';
 }
 
-function VoxelSpriteFighter({ fighter, progress, timeScale = 1 }: { fighter: FighterRuntime; progress: number; timeScale?: number }) {
+function VoxelSpriteFighter({ fighter, progress, timeScale = 1, frameTimeOverride }: { fighter: FighterRuntime; progress: number; timeScale?: number; frameTimeOverride?: number }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
   const head = useRef<THREE.Group>(null);
@@ -2553,7 +2588,8 @@ function VoxelSpriteFighter({ fighter, progress, timeScale = 1 }: { fighter: Fig
   const scaledTime = useRef(0);
 
   useFrame((_, delta) => {
-    scaledTime.current += delta * timeScale;
+    if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
+    else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
@@ -2751,11 +2787,13 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
 function ProceduralFighter({
   fighter,
   color,
-  timeScale = 1
+  timeScale = 1,
+  frameTimeOverride
 }: {
   fighter: FighterRuntime;
   color: string;
   timeScale?: number;
+  frameTimeOverride?: number;
 }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Mesh>(null);
@@ -2770,7 +2808,8 @@ function ProceduralFighter({
   const scaledTime = useRef(0);
 
   useFrame((_, delta) => {
-    scaledTime.current += delta * timeScale;
+    if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
+    else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';

@@ -133,7 +133,16 @@
       "/characters/kakashi-hatake/frames/frame-036.png",
       "/characters/kakashi-hatake/frames/frame-037.png"
     ],
-    "getupStand": [],
+    "getupStand": [
+      "/characters/kakashi-hatake/frames/frame-034.png",
+      "/characters/kakashi-hatake/frames/frame-035.png",
+      "/characters/kakashi-hatake/frames/frame-036.png",
+      "/characters/kakashi-hatake/frames/frame-037.png",
+      "/characters/kakashi-hatake/frames/frame-052.png",
+      "/characters/kakashi-hatake/frames/frame-053.png",
+      "/characters/kakashi-hatake/frames/frame-054.png",
+      "/characters/kakashi-hatake/frames/frame-055.png"
+    ],
     "getupRollUp": [],
     "win": [],
     "lose": [],
@@ -948,7 +957,8 @@
   "animationScales": {
     "idle": {
       "width": 0.85,
-      "height": 0.74
+      "height": 0.74,
+      "offsetX": 0
     }
   },
   "unplayable": false

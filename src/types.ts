@@ -41,6 +41,7 @@ export type FighterState =
 
 export type MoveInput = 'jab' | 'kick' | 'heavy' | 'special';
 export type GetupAction = 'none' | 'stand' | 'rollUp' | 'rollDown' | 'rollBack';
+export type GetupFrameOverrides = Partial<Record<Exclude<GetupAction, 'none'>, number>>;
 export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
 export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish' | 'clashWin' | 'clashDraw' | 'clashPerfect';
@@ -282,6 +283,7 @@ export type VoxelFidelitySettings = {
 export type AnimationScale = {
   width?: number;
   height?: number;
+  offsetX?: number;
 };
 
 export type CharacterDefinition = {
@@ -317,6 +319,7 @@ export type CharacterDefinition = {
   animations: Record<string, string>;
   moves: MoveDefinition[];
   moveOverrides?: Record<string, MoveOverride>;
+  getupFrameOverrides?: GetupFrameOverrides;
   effects?: CharacterEffectDefinition[];
   moveEffects?: Record<string, MoveEffectInstance[]>;
   hurtboxes: BoxSpec[];
