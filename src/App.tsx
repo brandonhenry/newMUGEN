@@ -3,6 +3,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  Download,
   Eye,
   EyeOff,
   Gamepad2,
@@ -18,6 +19,7 @@ import {
   Shuffle,
   Swords,
   Target,
+  Terminal,
   Timer,
   Trash2,
   Trophy,
@@ -96,6 +98,17 @@ type StoredAnimationOverrides = {
   overrides: AnimationOverrideMap;
 };
 const UNLOCKED_CHARACTERS_KEY = 'kore.unlockedCharacters.v1';
+const GAME_SETTINGS_STORAGE_KEY = 'kore.gameSettings';
+const ONLINE_PROFILE_STORAGE_KEY = 'kore.online.profile';
+const LOCAL_LEADERBOARD_STORAGE_KEY = 'kore.online.localLeaderboard';
+const MEMORY_CARD_FORMAT = 'kore.memorycard';
+const MEMORY_CARD_VERSION = 1;
+const MEMORY_CARD_SAVE_KEYS = [
+  { key: UNLOCKED_CHARACTERS_KEY, label: 'Unlocked fighters' },
+  { key: GAME_SETTINGS_STORAGE_KEY, label: 'Options settings' },
+  { key: ONLINE_PROFILE_STORAGE_KEY, label: 'Online profile' },
+  { key: LOCAL_LEADERBOARD_STORAGE_KEY, label: 'Local leaderboard' }
+] as const;
 type NotationToken = string;
 type AnimationSlot = {
   key: string;
@@ -965,6 +978,88 @@ function readUnlockedCharacterIds() {
 function writeUnlockedCharacterIds(ids: Set<string>) {
   if (typeof window === 'undefined') return;
   window.localStorage.setItem(UNLOCKED_CHARACTERS_KEY, JSON.stringify([...ids].sort()));
+}
+
+type MemoryCardPayload = {
+  format: typeof MEMORY_CARD_FORMAT;
+  version: typeof MEMORY_CARD_VERSION;
+  appVersion: string;
+  exportedAt: string;
+  slots: Record<string, string | null>;
+};
+
+function createMemoryCardPayload(): MemoryCardPayload {
+  const slots: Record<string, string | null> = {};
+  if (typeof window !== 'undefined') {
+    MEMORY_CARD_SAVE_KEYS.forEach(({ key }) => {
+      slots[key] = window.localStorage.getItem(key);
+    });
+  }
+  return {
+    format: MEMORY_CARD_FORMAT,
+    version: MEMORY_CARD_VERSION,
+    appVersion: KORE_APP_VERSION,
+    exportedAt: new Date().toISOString(),
+    slots
+  };
+}
+
+function serializeMemoryCard(payload = createMemoryCardPayload()) {
+  return JSON.stringify(payload, null, 2);
+}
+
+function downloadMemoryCard() {
+  if (typeof window === 'undefined') return;
+  const payload = createMemoryCardPayload();
+  const stamp = payload.exportedAt.replace(/[:.]/g, '-');
+  const blob = new Blob([serializeMemoryCard(payload)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = `kore-memory-card-${stamp}.korecard.json`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+function parseMemoryCard(source: string): MemoryCardPayload {
+  const trimmed = source.trim();
+  if (!trimmed) throw new Error('Memory card is empty.');
+  const parsed = JSON.parse(trimmed) as unknown;
+  if (!isMemoryCardRecord(parsed)) throw new Error('Memory card format was not recognized.');
+  const slots: Record<string, string | null> = {};
+  for (const { key } of MEMORY_CARD_SAVE_KEYS) {
+    const value = parsed.slots[key];
+    slots[key] = typeof value === 'string' ? value : null;
+  }
+  return {
+    format: MEMORY_CARD_FORMAT,
+    version: MEMORY_CARD_VERSION,
+    appVersion: typeof parsed.appVersion === 'string' ? parsed.appVersion : 'unknown',
+    exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : new Date().toISOString(),
+    slots
+  };
+}
+
+function importMemoryCard(source: string) {
+  if (typeof window === 'undefined') return parseMemoryCard(source);
+  const payload = parseMemoryCard(source);
+  for (const { key } of MEMORY_CARD_SAVE_KEYS) {
+    const value = payload.slots[key];
+    if (typeof value === 'string') {
+      window.localStorage.setItem(key, value);
+    } else {
+      window.localStorage.removeItem(key);
+    }
+  }
+  return payload;
+}
+
+function isMemoryCardRecord(value: unknown): value is MemoryCardPayload {
+  if (!value || typeof value !== 'object') return false;
+  const record = value as Record<string, unknown>;
+  return record.format === MEMORY_CARD_FORMAT && record.version === MEMORY_CARD_VERSION && Boolean(record.slots) && typeof record.slots === 'object';
 }
 
 function isCharacterUnlocked(character: CharacterDefinition, unlockedIds: Set<string>) {
@@ -2160,6 +2255,12 @@ export default function App() {
     });
   }, []);
 
+  const refreshMemoryCardState = useCallback(() => {
+    setSettings(readGameSettings());
+    setUnlockedCharacterIds(readUnlockedCharacterIds());
+    setOnlineProfile(readOnlineProfile());
+  }, []);
+
   const reloadRoster = async (preferredCharacterId?: string) => {
     const result = await loadCharacterRoster();
     setRosterResult(result);
@@ -2421,6 +2522,7 @@ export default function App() {
             menuBgmTrackCount={KORE_MENU_BGM_SOURCE.tracks.length}
             onMenuBgmTrackChange={updateBgmTrackIndex}
             onOptionsShortcut={playInnerMenuSelectSound}
+            onMemoryCardLoaded={refreshMemoryCardState}
             onBack={() => setScreen('menu')}
           />
         )}
@@ -4594,22 +4696,24 @@ function buildImportedStageDraft(draft: StageImportDraft, pieces: StagePieceDraf
   };
 }
 
-type SettingsTab = 'game' | 'controls' | 'camera' | 'display' | 'audio';
+type SettingsTab = 'game' | 'controls' | 'camera' | 'display' | 'audio' | 'console';
 
-const settingsTabs: SettingsTab[] = ['game', 'controls', 'camera', 'display', 'audio'];
+const settingsTabs: SettingsTab[] = ['game', 'controls', 'camera', 'display', 'audio', 'console'];
 const tabLabels: Record<SettingsTab, string> = {
   game: 'Game',
   controls: 'Controls',
   camera: 'Camera',
   display: 'Display',
-  audio: 'Audio'
+  audio: 'Audio',
+  console: 'Console'
 };
 const sidebars: Record<SettingsTab, string[]> = {
   game: ['Match Rules', 'Training', 'Assist', 'Defaults'],
   controls: ['Keyboard Mapping', 'Gamepad Mapping', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Motion', 'Debug'],
-  audio: ['Menu Music', 'Stage Music', 'Mix']
+  audio: ['Menu Music', 'Stage Music', 'Mix'],
+  console: ['Terminal', 'Memory Card']
 };
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
@@ -4645,6 +4749,7 @@ function SettingsScreen({
   menuBgmTrackCount,
   onMenuBgmTrackChange,
   onOptionsShortcut,
+  onMemoryCardLoaded,
   onBack
 }: {
   mode: MatchMode;
@@ -4659,6 +4764,7 @@ function SettingsScreen({
   menuBgmTrackCount: number;
   onMenuBgmTrackChange: (index: number) => void;
   onOptionsShortcut: () => void;
+  onMemoryCardLoaded: () => void;
   onBack: () => void;
 }) {
   const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
@@ -4666,7 +4772,7 @@ function SettingsScreen({
   const [remapRequest, setRemapRequest] = useState<{ player: 1 | 2; action: ActionName } | null>(null);
   const [duplicateRequest, setDuplicateRequest] = useState<{ key: string; owner: string } | null>(null);
   const [inputTest, setInputTest] = useState('Press a key to test bindings');
-  const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>({ game: 0, controls: 0, camera: 0, display: 0, audio: 0 });
+  const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>({ game: 0, controls: 0, camera: 0, display: 0, audio: 0, console: 0 });
   const editorRef = useRef<HTMLElement | null>(null);
   const activeSectionIndex = Math.min(activeSections[activeTab] ?? 0, sidebars[activeTab].length - 1);
 
@@ -4919,6 +5025,10 @@ function SettingsScreen({
       );
     }
 
+    if (activeTab === 'console') {
+      return <OptionsConsole onMemoryCardLoaded={onMemoryCardLoaded} activeSectionIndex={activeSectionIndex} />;
+    }
+
     return (
       <div className="settings-section-stack">
         <SettingsSection index={0} title="Menu Music" active={activeSectionIndex === 0}>
@@ -5015,6 +5125,180 @@ function SettingRow({ label, value, children }: { label: string; value: string; 
       <div>{children}</div>
     </article>
   );
+}
+
+type ConsoleLine = {
+  id: number;
+  kind: 'system' | 'command' | 'success' | 'error';
+  text: string;
+};
+
+let consoleLineId = 0;
+
+function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCardLoaded: () => void; activeSectionIndex: number }) {
+  const [command, setCommand] = useState('');
+  const [lines, setLines] = useState<ConsoleLine[]>(() => [
+    { id: ++consoleLineId, kind: 'system', text: 'KORE local console online.' },
+    { id: ++consoleLineId, kind: 'system', text: 'Type /help for commands. Starter access is limited to memory-card save export and import.' }
+  ]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const appendLine = useCallback((kind: ConsoleLine['kind'], text: string) => {
+    setLines((current) => [...current.slice(-26), { id: ++consoleLineId, kind, text }]);
+  }, []);
+
+  const importCardText = useCallback((source: string) => {
+    const payload = importMemoryCard(source);
+    onMemoryCardLoaded();
+    appendLine('success', `Loaded memory card from KORE ${payload.appVersion}. ${formatMemoryCardSummary(payload)}`);
+  }, [appendLine, onMemoryCardLoaded]);
+
+  const copyMemoryCard = useCallback(async () => {
+    const serialized = serializeMemoryCard();
+    if (!navigator.clipboard?.writeText) {
+      appendLine('error', 'Clipboard is unavailable. Use /memorycard export to download a card file.');
+      return;
+    }
+    await navigator.clipboard.writeText(serialized);
+    appendLine('success', `Copied memory card to clipboard. ${formatMemoryCardSummary(createMemoryCardPayload())}`);
+  }, [appendLine]);
+
+  const exportMemoryCard = useCallback(() => {
+    const payload = createMemoryCardPayload();
+    downloadMemoryCard();
+    appendLine('success', `Exported memory card file. ${formatMemoryCardSummary(payload)}`);
+  }, [appendLine]);
+
+  const runCommand = useCallback(async (rawCommand: string) => {
+    const trimmed = rawCommand.trim();
+    if (!trimmed) return;
+    appendLine('command', `> ${trimmed}`);
+    const [head, subcommand, ...rest] = trimmed.split(/\s+/);
+    try {
+      if (head === '/help') {
+        appendLine('system', '/memorycard - show save-card status.');
+        appendLine('system', '/memorycard export - download your save card.');
+        appendLine('system', '/memorycard copy - copy your save card JSON.');
+        appendLine('system', '/memorycard load <card-json> - import pasted card JSON.');
+        appendLine('system', 'More local mod, cheat, and sprite commands will unlock here later.');
+        return;
+      }
+      if (head === '/memorycard') {
+        if (!subcommand) {
+          appendLine('system', `Current card status: ${formatMemoryCardSummary(createMemoryCardPayload())}`);
+          appendLine('system', 'Use /memorycard export, /memorycard copy, or the Load Card button.');
+          return;
+        }
+        if (subcommand === 'export') {
+          exportMemoryCard();
+          return;
+        }
+        if (subcommand === 'copy') {
+          await copyMemoryCard();
+          return;
+        }
+        if (subcommand === 'load') {
+          const pastedCard = rest.join(' ');
+          if (!pastedCard) {
+            appendLine('error', 'Paste memory-card JSON after /memorycard load, or use the Load Card button.');
+            return;
+          }
+          importCardText(pastedCard);
+          return;
+        }
+      }
+      appendLine('error', `Unknown command: ${head}. Type /help.`);
+    } catch (error) {
+      appendLine('error', error instanceof Error ? error.message : 'Console command failed.');
+    }
+  }, [appendLine, copyMemoryCard, exportMemoryCard, importCardText]);
+
+  const handleFile = async (file?: File | null) => {
+    if (!file) return;
+    try {
+      importCardText(await file.text());
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    } catch (error) {
+      appendLine('error', error instanceof Error ? error.message : 'Memory card import failed.');
+    }
+  };
+
+  return (
+    <div className="settings-section-stack options-console-stack">
+      <SettingsSection index={0} title="Terminal" active={activeSectionIndex === 0}>
+        <section className="options-console" aria-label="KORE console terminal">
+          <div className="options-console-topline">
+            <span><Terminal size={16} /> LOCAL SHELL</span>
+            <strong>READY</strong>
+          </div>
+          <div className="options-console-output" aria-live="polite">
+            {lines.map((line) => (
+              <p key={line.id} className={`console-line console-line-${line.kind}`}>{line.text}</p>
+            ))}
+          </div>
+          <form
+            className="options-console-input"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void runCommand(command);
+              setCommand('');
+            }}
+          >
+            <span aria-hidden="true">$</span>
+            <input
+              value={command}
+              onChange={(event) => setCommand(event.target.value)}
+              placeholder="Type /help for commands"
+              spellCheck={false}
+              autoComplete="off"
+            />
+            <button type="submit">Run</button>
+          </form>
+        </section>
+      </SettingsSection>
+      <SettingsSection index={1} title="Memory Card" active={activeSectionIndex === 1}>
+        <article className="memory-card-panel">
+          <div>
+            <strong>Portable Save Card</strong>
+            <small>{formatMemoryCardSummary(createMemoryCardPayload())}</small>
+          </div>
+          <div className="memory-card-actions">
+            <button type="button" className="secondary-button" onClick={exportMemoryCard}>
+              <Download size={16} />
+              Export Card
+            </button>
+            <button type="button" className="secondary-button" onClick={() => void copyMemoryCard()}>
+              <Save size={16} />
+              Copy Card
+            </button>
+            <button type="button" className="secondary-button" onClick={() => fileInputRef.current?.click()}>
+              <Upload size={16} />
+              Load Card
+            </button>
+          </div>
+          <input
+            ref={fileInputRef}
+            className="memory-card-file-input"
+            type="file"
+            accept=".json,.korecard,application/json"
+            onChange={(event) => void handleFile(event.target.files?.[0])}
+          />
+          <dl className="memory-card-command-list">
+            <div><dt>/help</dt><dd>Show commands</dd></div>
+            <div><dt>/memorycard export</dt><dd>Download save card</dd></div>
+            <div><dt>/memorycard copy</dt><dd>Copy card JSON</dd></div>
+            <div><dt>/memorycard load</dt><dd>Import pasted JSON</dd></div>
+          </dl>
+        </article>
+      </SettingsSection>
+    </div>
+  );
+}
+
+function formatMemoryCardSummary(payload: MemoryCardPayload) {
+  const present = MEMORY_CARD_SAVE_KEYS.filter(({ key }) => typeof payload.slots[key] === 'string');
+  if (present.length === 0) return '0 save slots captured';
+  return `${present.length}/${MEMORY_CARD_SAVE_KEYS.length} save slots captured: ${present.map(({ label }) => label).join(', ')}`;
 }
 
 function SettingsSection({ index, title, active = true, children }: { index: number; title: string; active?: boolean; children: ReactNode }) {

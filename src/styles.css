@@ -327,7 +327,7 @@ button {
 
 .options-tabs {
   display: grid;
-  grid-template-columns: auto repeat(5, minmax(0, 1fr)) auto;
+  grid-template-columns: auto repeat(6, minmax(0, 1fr)) auto;
   align-items: center;
   min-height: 46px;
   border-radius: 8px;
@@ -470,6 +470,223 @@ button {
 .settings-list {
   display: grid;
   gap: 10px;
+}
+
+.options-console-stack {
+  min-height: 100%;
+}
+
+.options-console,
+.memory-card-panel {
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(46, 230, 255, 0.16), transparent 34%),
+    linear-gradient(315deg, rgba(255, 180, 77, 0.12), transparent 38%),
+    rgba(1, 5, 12, 0.88);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.09) inset,
+    0 22px 54px rgba(0, 0, 0, 0.34);
+}
+
+.options-console {
+  display: grid;
+  grid-template-rows: auto minmax(260px, 1fr) auto;
+  min-height: min(58vh, 560px);
+  overflow: hidden;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+.options-console-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+  padding: 0 14px;
+  color: rgba(247, 247, 242, 0.82);
+  background:
+    linear-gradient(90deg, rgba(46, 230, 255, 0.18), rgba(0, 0, 0, 0.22)),
+    rgba(255, 255, 255, 0.04);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+.options-console-topline span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.options-console-topline strong {
+  color: #2ee6ff;
+  font-size: 12px;
+  font-weight: 950;
+  text-shadow: 0 0 18px rgba(46, 230, 255, 0.5);
+}
+
+.options-console-output {
+  display: grid;
+  align-content: end;
+  gap: 7px;
+  min-height: 0;
+  padding: 16px;
+  overflow: auto;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    rgba(0, 0, 0, 0.26);
+  background-size: 100% 24px;
+  scrollbar-color: rgba(46, 230, 255, 0.42) transparent;
+}
+
+.console-line {
+  margin: 0;
+  color: rgba(247, 247, 242, 0.82);
+  font-size: 13px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 12px rgba(46, 230, 255, 0.12);
+}
+
+.console-line-command {
+  color: #ffffff;
+}
+
+.console-line-system {
+  color: #9eeeff;
+}
+
+.console-line-success {
+  color: #b8ff9e;
+}
+
+.console-line-error {
+  color: #ff8d8d;
+}
+
+.options-console-input {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 58px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.44);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+.options-console-input > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 5px;
+  color: #08101c;
+  background: #2ee6ff;
+  font-weight: 950;
+}
+
+.options-console-input input {
+  width: 100%;
+  min-height: 40px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 12px;
+  color: #f7f7f2;
+  background: rgba(255, 255, 255, 0.08);
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.09) inset;
+  outline: 0;
+}
+
+.options-console-input input::placeholder {
+  color: rgba(247, 247, 242, 0.48);
+}
+
+.options-console-input input:focus {
+  box-shadow:
+    0 0 0 1px #2ee6ff inset,
+    0 0 28px rgba(46, 230, 255, 0.18);
+}
+
+.options-console-input button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 18px;
+  color: #08101c;
+  background: #f7f7f2;
+  font-weight: 950;
+  cursor: pointer;
+  transition-property: transform, filter;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.options-console-input button:active {
+  transform: scale(0.96);
+}
+
+.memory-card-panel {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+}
+
+.memory-card-panel > div:first-child strong {
+  display: block;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.memory-card-panel > div:first-child small {
+  display: block;
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.memory-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.memory-card-file-input {
+  display: none;
+}
+
+.memory-card-command-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.memory-card-command-list div {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.8fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 38px;
+  border-radius: 5px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.26);
+}
+
+.memory-card-command-list dt {
+  color: #9eeeff;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.memory-card-command-list dd {
+  margin: 0;
+  color: rgba(247, 247, 242, 0.76);
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .setting-row,
@@ -6373,7 +6590,7 @@ button {
   }
 
   .options-tabs {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .options-tabs > span {
@@ -6382,7 +6599,7 @@ button {
 
   .options-tabs button {
     min-height: 40px;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .options-layout {
@@ -6404,6 +6621,19 @@ button {
   .setting-row,
   .binding-row {
     grid-template-columns: 1fr;
+  }
+
+  .options-console {
+    min-height: 480px;
+  }
+
+  .options-console-input,
+  .memory-card-command-list div {
+    grid-template-columns: 1fr;
+  }
+
+  .options-console-input > span {
+    display: none;
   }
 
   .options-editor .mode-carousel {
