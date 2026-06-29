@@ -32,16 +32,14 @@
       "/characters/kenshin-himura/frames/frame-009.png"
     ],
     "walkForward": [
+      "/characters/kenshin-himura/frames/frame-004.png",
+      "/characters/kenshin-himura/frames/frame-005.png",
+      "/characters/kenshin-himura/frames/frame-006.png",
+      "/characters/kenshin-himura/frames/frame-007.png",
+      "/characters/kenshin-himura/frames/frame-008.png",
+      "/characters/kenshin-himura/frames/frame-009.png",
       "/characters/kenshin-himura/frames/frame-010.png",
-      "/characters/kenshin-himura/frames/frame-011.png",
-      "/characters/kenshin-himura/frames/frame-012.png",
-      "/characters/kenshin-himura/frames/frame-013.png",
-      "/characters/kenshin-himura/frames/frame-014.png",
-      "/characters/kenshin-himura/frames/frame-015.png",
-      "/characters/kenshin-himura/frames/frame-016.png",
-      "/characters/kenshin-himura/frames/frame-017.png",
-      "/characters/kenshin-himura/frames/frame-018.png",
-      "/characters/kenshin-himura/frames/frame-019.png"
+      "/characters/kenshin-himura/frames/frame-011.png"
     ],
     "walkBack": [
       "/characters/kenshin-himura/frames/frame-029.png",
@@ -624,534 +622,532 @@
   },
   "moveOverrides": {
     "jableft": {
-      "label": "Kenshin Himura Left Check",
       "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
-      "hitLevel": "high",
+      "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
-      "range": 1.42,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.42,
+      "label": "Kenshin Himura Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
-      "label": "Kenshin Himura Right Check",
       "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -5,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.5,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.5,
+      "label": "Kenshin Himura Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
-      "label": "Kenshin Himura Left Kick",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.62,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Kenshin Himura Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
-      "label": "Kenshin Himura Right Kick",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 8,
       "onCounterHitFrames": 13,
-      "range": 1.7,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.7,
+      "label": "Kenshin Himura Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "label": "Kenshin Himura Rush",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -6,
       "onHitFrames": 7,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "label": "Kenshin Himura Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "label": "Kenshin Himura Launcher",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "range": 1.68,
-      "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "label": "Kenshin Himura Launcher",
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "label": "Kenshin Himura Burst",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 2.05,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 2.05,
+      "label": "Kenshin Himura Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
-      "label": "Kenshin Himura Rising Strike",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "range": 1.62,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Kenshin Himura Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "label": "Kenshin Himura Crouch Jab",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
       "damage": 7,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -4,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.34,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.34,
+      "label": "Kenshin Himura Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "label": "Kenshin Himura Crouch Launcher",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 13,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "launchHeight": 2,
-      "range": 1.48,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Kenshin Himura Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "label": "Kenshin Himura Twin Assault",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "range": 1.72,
       "whiffRecoveryFrames": 9,
-      "blockDamage": 1
+      "range": 1.72,
+      "label": "Kenshin Himura Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "label": "Kenshin Himura Cross Launcher",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 28,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "launchHeight": 2.2,
-      "range": 1.65,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Kenshin Himura Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "label": "Kenshin Himura Low Feint",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.58,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.58,
+      "label": "Kenshin Himura Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
-      "label": "Kenshin Himura Driving Kick",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "knockdown": true,
-      "range": 1.74,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.74,
+      "label": "Kenshin Himura Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
-      "label": "Kenshin Himura Power Crush",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 18,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 1.9,
       "whiffRecoveryFrames": 14,
-      "blockDamage": 1
+      "range": 1.9,
+      "label": "Kenshin Himura Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
-      "label": "Kenshin Himura Aura Drive",
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 32,
       "damage": 22,
-      "hitLevel": "special",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "knockdown": true,
-      "usesKi": true,
-      "kiCost": 35,
-      "range": 2.1,
       "whiffRecoveryFrames": 15,
-      "blockDamage": 1
+      "range": 2.1,
+      "label": "Kenshin Himura Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
-      "label": "Kenshin Himura Second Beat",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Kenshin Himura Body Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Kenshin Himura Low Changeup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Kenshin Himura Pressure Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Kenshin Himura Drive",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Kenshin Himura Barrage",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Kenshin Himura Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Kenshin Himura Step Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Kenshin Himura Palm String",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Kenshin Himura Rising Chain",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Kenshin Himura Special Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Kenshin Himura Break Art",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Kenshin Himura Check Hook",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Kenshin Himura Heavy Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Kenshin Himura Charged Follow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Kenshin Himura Drop Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Kenshin Himura Arc Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Kenshin Himura Focus Stance",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Kenshin Himura Mode Shift",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Kenshin Himura Heel Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Kenshin Himura Summon Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Kenshin Himura Guard Snare",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Kenshin Himura Armor Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Kenshin Himura Power Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Kenshin Himura Switch Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Kenshin Himura Spark Jab",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Kenshin Himura Binding Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Kenshin Himura Heavy Draw",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Kenshin Himura Kick Ender",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kenshin Himura Kick Ender"
     }
   },
   "effects": [],
@@ -1174,5 +1170,6 @@
       "mobileStep": 2,
       "farStep": 2
     }
-  }
+  },
+  "animationScales": {}
 }

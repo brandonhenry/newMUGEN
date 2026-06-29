@@ -32,16 +32,14 @@
       "/characters/kagura/frames/frame-009.png"
     ],
     "walkForward": [
+      "/characters/kagura/frames/frame-004.png",
+      "/characters/kagura/frames/frame-005.png",
+      "/characters/kagura/frames/frame-006.png",
+      "/characters/kagura/frames/frame-007.png",
+      "/characters/kagura/frames/frame-008.png",
+      "/characters/kagura/frames/frame-009.png",
       "/characters/kagura/frames/frame-010.png",
-      "/characters/kagura/frames/frame-011.png",
-      "/characters/kagura/frames/frame-012.png",
-      "/characters/kagura/frames/frame-013.png",
-      "/characters/kagura/frames/frame-014.png",
-      "/characters/kagura/frames/frame-015.png",
-      "/characters/kagura/frames/frame-016.png",
-      "/characters/kagura/frames/frame-017.png",
-      "/characters/kagura/frames/frame-018.png",
-      "/characters/kagura/frames/frame-019.png"
+      "/characters/kagura/frames/frame-011.png"
     ],
     "walkBack": [
       "/characters/kagura/frames/frame-029.png",
@@ -620,534 +618,532 @@
   },
   "moveOverrides": {
     "jableft": {
-      "label": "Kagura Left Check",
       "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
-      "hitLevel": "high",
+      "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
-      "range": 1.42,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.42,
+      "label": "Kagura Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
-      "label": "Kagura Right Check",
       "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -5,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.5,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.5,
+      "label": "Kagura Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
-      "label": "Kagura Left Kick",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.62,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Kagura Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
-      "label": "Kagura Right Kick",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 8,
       "onCounterHitFrames": 13,
-      "range": 1.7,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.7,
+      "label": "Kagura Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "label": "Kagura Rush",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -6,
       "onHitFrames": 7,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "label": "Kagura Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "label": "Kagura Launcher",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "range": 1.68,
-      "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "label": "Kagura Launcher",
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "label": "Kagura Burst",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 2.05,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 2.05,
+      "label": "Kagura Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
-      "label": "Kagura Rising Strike",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "range": 1.62,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Kagura Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "label": "Kagura Crouch Jab",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
       "damage": 7,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -4,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.34,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.34,
+      "label": "Kagura Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "label": "Kagura Crouch Launcher",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 13,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "launchHeight": 2,
-      "range": 1.48,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Kagura Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "label": "Kagura Twin Assault",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "range": 1.72,
       "whiffRecoveryFrames": 9,
-      "blockDamage": 1
+      "range": 1.72,
+      "label": "Kagura Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "label": "Kagura Cross Launcher",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 28,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "launchHeight": 2.2,
-      "range": 1.65,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Kagura Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "label": "Kagura Low Feint",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.58,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.58,
+      "label": "Kagura Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
-      "label": "Kagura Driving Kick",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "knockdown": true,
-      "range": 1.74,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.74,
+      "label": "Kagura Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
-      "label": "Kagura Power Crush",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 18,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 1.9,
       "whiffRecoveryFrames": 14,
-      "blockDamage": 1
+      "range": 1.9,
+      "label": "Kagura Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
-      "label": "Kagura Aura Drive",
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 32,
       "damage": 22,
-      "hitLevel": "special",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "knockdown": true,
-      "usesKi": true,
-      "kiCost": 35,
-      "range": 2.1,
       "whiffRecoveryFrames": 15,
-      "blockDamage": 1
+      "range": 2.1,
+      "label": "Kagura Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
-      "label": "Kagura Second Beat",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Kagura Body Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Kagura Low Changeup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Kagura Pressure Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Kagura Drive",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Kagura Barrage",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Kagura Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Kagura Step Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Kagura Palm String",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Kagura Rising Chain",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Kagura Special Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Kagura Break Art",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Kagura Check Hook",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Kagura Heavy Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Kagura Charged Follow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Kagura Drop Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Kagura Arc Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Kagura Focus Stance",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Kagura Mode Shift",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Kagura Heel Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Kagura Summon Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Kagura Guard Snare",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Kagura Armor Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Kagura Power Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Kagura Switch Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Kagura Spark Jab",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Kagura Binding Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Kagura Heavy Draw",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Kagura Kick Ender",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Kagura Kick Ender"
     }
   },
   "effects": [],
@@ -1170,5 +1166,6 @@
       "mobileStep": 2,
       "farStep": 2
     }
-  }
+  },
+  "animationScales": {}
 }

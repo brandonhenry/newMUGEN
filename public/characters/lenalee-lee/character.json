@@ -32,16 +32,14 @@
       "/characters/lenalee-lee/frames/frame-009.png"
     ],
     "walkForward": [
+      "/characters/lenalee-lee/frames/frame-004.png",
+      "/characters/lenalee-lee/frames/frame-005.png",
+      "/characters/lenalee-lee/frames/frame-006.png",
+      "/characters/lenalee-lee/frames/frame-007.png",
+      "/characters/lenalee-lee/frames/frame-008.png",
+      "/characters/lenalee-lee/frames/frame-009.png",
       "/characters/lenalee-lee/frames/frame-010.png",
-      "/characters/lenalee-lee/frames/frame-011.png",
-      "/characters/lenalee-lee/frames/frame-012.png",
-      "/characters/lenalee-lee/frames/frame-013.png",
-      "/characters/lenalee-lee/frames/frame-014.png",
-      "/characters/lenalee-lee/frames/frame-015.png",
-      "/characters/lenalee-lee/frames/frame-016.png",
-      "/characters/lenalee-lee/frames/frame-017.png",
-      "/characters/lenalee-lee/frames/frame-018.png",
-      "/characters/lenalee-lee/frames/frame-019.png"
+      "/characters/lenalee-lee/frames/frame-011.png"
     ],
     "walkBack": [
       "/characters/lenalee-lee/frames/frame-029.png",
@@ -619,534 +617,532 @@
   },
   "moveOverrides": {
     "jableft": {
-      "label": "Lenalee Lee Left Check",
       "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
-      "hitLevel": "high",
+      "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
-      "range": 1.42,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.42,
+      "label": "Lenalee Lee Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
-      "label": "Lenalee Lee Right Check",
       "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -5,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.5,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.5,
+      "label": "Lenalee Lee Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
-      "label": "Lenalee Lee Left Kick",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.62,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Lenalee Lee Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
-      "label": "Lenalee Lee Right Kick",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 8,
       "onCounterHitFrames": 13,
-      "range": 1.7,
       "whiffRecoveryFrames": 7,
-      "blockDamage": 1
+      "range": 1.7,
+      "label": "Lenalee Lee Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "label": "Lenalee Lee Rush",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -6,
       "onHitFrames": 7,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "label": "Lenalee Lee Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "label": "Lenalee Lee Launcher",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "range": 1.68,
-      "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "label": "Lenalee Lee Launcher",
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "label": "Lenalee Lee Burst",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 2.05,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 2.05,
+      "label": "Lenalee Lee Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
-      "label": "Lenalee Lee Rising Strike",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "range": 1.62,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.62,
+      "label": "Lenalee Lee Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "label": "Lenalee Lee Crouch Jab",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
       "damage": 7,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -4,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
-      "range": 1.34,
       "whiffRecoveryFrames": 5,
-      "blockDamage": 1
+      "range": 1.34,
+      "label": "Lenalee Lee Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "label": "Lenalee Lee Crouch Launcher",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 13,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "launchHeight": 2,
-      "range": 1.48,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Lenalee Lee Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "label": "Lenalee Lee Twin Assault",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "range": 1.72,
       "whiffRecoveryFrames": 9,
-      "blockDamage": 1
+      "range": 1.72,
+      "label": "Lenalee Lee Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "label": "Lenalee Lee Cross Launcher",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 28,
       "damage": 15,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "launchHeight": 2.2,
-      "range": 1.65,
       "whiffRecoveryFrames": 13,
-      "blockDamage": 1
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Lenalee Lee Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "label": "Lenalee Lee Low Feint",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "range": 1.58,
       "whiffRecoveryFrames": 8,
-      "blockDamage": 1
+      "range": 1.58,
+      "label": "Lenalee Lee Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
-      "label": "Lenalee Lee Driving Kick",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "low",
+      "blockDamage": 1,
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "knockdown": true,
-      "range": 1.74,
       "whiffRecoveryFrames": 12,
-      "blockDamage": 1
+      "range": 1.74,
+      "label": "Lenalee Lee Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
-      "label": "Lenalee Lee Power Crush",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 18,
-      "hitLevel": "mid",
+      "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
-      "range": 1.9,
       "whiffRecoveryFrames": 14,
-      "blockDamage": 1
+      "range": 1.9,
+      "label": "Lenalee Lee Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
-      "label": "Lenalee Lee Aura Drive",
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 32,
       "damage": 22,
-      "hitLevel": "special",
+      "blockDamage": 1,
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "knockdown": true,
-      "usesKi": true,
-      "kiCost": 35,
-      "range": 2.1,
       "whiffRecoveryFrames": 15,
-      "blockDamage": 1
+      "range": 2.1,
+      "label": "Lenalee Lee Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
-      "label": "Lenalee Lee Second Beat",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Lenalee Lee Body Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Lenalee Lee Low Changeup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Lenalee Lee Pressure Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Lenalee Lee Drive",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Lenalee Lee Barrage",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Lenalee Lee Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Lenalee Lee Step Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Lenalee Lee Palm String",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Lenalee Lee Rising Chain",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Lenalee Lee Special Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Lenalee Lee Break Art",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Lenalee Lee Check Hook",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Lenalee Lee Heavy Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Lenalee Lee Charged Follow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Lenalee Lee Drop Kick",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Lenalee Lee Arc Finisher",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Lenalee Lee Focus Stance",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Lenalee Lee Mode Shift",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Lenalee Lee Heel Feint",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Lenalee Lee Summon Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Lenalee Lee Guard Snare",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Lenalee Lee Armor Break",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Lenalee Lee Power Setup",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Lenalee Lee Switch Strike",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Lenalee Lee Spark Jab",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Lenalee Lee Binding Blow",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Lenalee Lee Heavy Draw",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Lenalee Lee Kick Ender",
-      "activeFrames": 3,
       "startupFrames": 16,
+      "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
-      "range": 1.55,
+      "blockDamage": 1,
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
-      "blockDamage": 1
+      "range": 1.55,
+      "label": "Lenalee Lee Kick Ender"
     }
   },
   "effects": [],
@@ -1169,5 +1165,6 @@
       "mobileStep": 2,
       "farStep": 2
     }
-  }
+  },
+  "animationScales": {}
 }
