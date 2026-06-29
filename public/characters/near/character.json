@@ -50,16 +50,8 @@
       "/characters/near/frames/frame-032.png"
     ],
     "walkBack": [
-      "/characters/near/frames/frame-026.png",
-      "/characters/near/frames/frame-023.png",
-      "/characters/near/frames/frame-020.png",
-      "/characters/near/frames/frame-017.png",
-      "/characters/near/frames/frame-014.png",
-      "/characters/near/frames/frame-011.png",
-      "/characters/near/frames/frame-008.png",
-      "/characters/near/frames/frame-005.png",
-      "/characters/near/frames/frame-002.png",
-      "/characters/near/frames/frame-000.png"
+      "/characters/near/frames/frame-000.png",
+      "/characters/near/frames/frame-001.png"
     ],
     "sprint": [
       "/characters/near/frames/frame-029.png",
@@ -564,225 +556,223 @@
   },
   "moveOverrides": {
     "jableft": {
-      "label": "Near Left Check",
       "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
-      "hitLevel": "high",
       "onBlockFrames": -2,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "whiffRecoveryFrames": 4
+      "label": "Near Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
-      "label": "Near Right Check",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
-      "hitLevel": "mid",
       "onBlockFrames": -5,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "whiffRecoveryFrames": 5
+      "label": "Near Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
-      "label": "Near Left Kick",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
-      "hitLevel": "low",
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "whiffRecoveryFrames": 7
+      "label": "Near Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
-      "label": "Near Right Kick",
       "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 21,
       "damage": 12,
-      "hitLevel": "mid",
       "onBlockFrames": -7,
       "onHitFrames": 8,
       "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "whiffRecoveryFrames": 7
+      "label": "Near Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "label": "Near Rush",
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
-      "hitLevel": "mid",
       "onBlockFrames": -6,
       "onHitFrames": 7,
       "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "whiffRecoveryFrames": 8
+      "label": "Near Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "label": "Near Launcher",
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "mid",
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "range": 1.68,
-      "whiffRecoveryFrames": 12
+      "label": "Near Launcher",
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "label": "Near Burst",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 27,
       "damage": 17,
-      "hitLevel": "mid",
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
+      "whiffRecoveryFrames": 13,
       "range": 2.05,
-      "whiffRecoveryFrames": 13
+      "label": "Near Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
-      "label": "Near Rising Strike",
       "startupFrames": 13,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
-      "hitLevel": "mid",
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "whiffRecoveryFrames": 8
+      "label": "Near Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "label": "Near Crouch Jab",
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
       "damage": 7,
-      "hitLevel": "mid",
       "onBlockFrames": -4,
       "onHitFrames": 6,
       "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "whiffRecoveryFrames": 5
+      "label": "Near Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "label": "Near Crouch Launcher",
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 13,
-      "hitLevel": "mid",
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "launchHeight": 2,
+      "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "whiffRecoveryFrames": 12
+      "launchHeight": 2,
+      "label": "Near Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "label": "Near Twin Assault",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 14,
-      "hitLevel": "mid",
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "whiffRecoveryFrames": 9
+      "label": "Near Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "label": "Near Cross Launcher",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 26,
       "damage": 15,
-      "hitLevel": "mid",
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "launchHeight": 2.2,
+      "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "whiffRecoveryFrames": 13
+      "launchHeight": 2.2,
+      "label": "Near Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "label": "Near Low Feint",
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
-      "hitLevel": "low",
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "whiffRecoveryFrames": 8
+      "label": "Near Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
-      "label": "Near Driving Kick",
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
-      "hitLevel": "low",
       "onBlockFrames": -16,
       "onHitFrames": 8,
       "onCounterHitFrames": 14,
-      "knockdown": true,
+      "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "whiffRecoveryFrames": 12
+      "label": "Near Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
-      "label": "Near Power Crush",
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 28,
       "damage": 18,
-      "hitLevel": "mid",
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "knockdown": true,
+      "whiffRecoveryFrames": 13,
       "range": 1.9,
-      "whiffRecoveryFrames": 13
+      "label": "Near Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
-      "label": "Near Aura Drive",
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 22,
-      "hitLevel": "special",
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "knockdown": true,
-      "usesKi": true,
-      "kiCost": 35,
+      "whiffRecoveryFrames": 15,
       "range": 2.1,
-      "whiffRecoveryFrames": 15
+      "label": "Near Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "label": "Near Second Beat"
@@ -881,5 +871,6 @@
     "spacing": 1.34,
     "specialChance": 0.19
   },
-  "unplayable": true
+  "unplayable": true,
+  "animationScales": {}
 }
