@@ -13,119 +13,352 @@
       "name": "Main Sheet",
       "path": "/characters/dragon-shiryu/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 1
+      "frameCount": 24
     }
   ],
-  "spriteFrameCount": 1,
+  "spriteFrameCount": 24,
   "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
   "animationFrames": {
     "idle": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-004.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png",
+      "/characters/dragon-shiryu/frames/frame-009.png"
     ],
     "walkForward": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png",
+      "/characters/dragon-shiryu/frames/frame-018.png"
     ],
     "walkBack": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-023.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-019.png"
     ],
     "sprint": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-004.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png",
+      "/characters/dragon-shiryu/frames/frame-009.png"
     ],
     "backflip": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "sidestepLeft": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "sidestepRight": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "jump": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "crouch": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "crouchBlock": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "block": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "chargeKi": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "jableft": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "jabright": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "kickleft": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "kickright": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "hitLight": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "hitHeavy": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "juggle": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "knockdown": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "getupStand": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "getupRollUp": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "win": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "lose": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "cmd:f+1": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "cmd:d/f+2": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "cmd:qcf+4": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "cmd:WS+4": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "cmd:FC+1": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "cmd:FC+2": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "cmd:1+2": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "cmd:1+3": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "cmd:2+3": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ],
     "cmd:2+4": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-000.png",
+      "/characters/dragon-shiryu/frames/frame-001.png",
+      "/characters/dragon-shiryu/frames/frame-002.png",
+      "/characters/dragon-shiryu/frames/frame-003.png",
+      "/characters/dragon-shiryu/frames/frame-005.png",
+      "/characters/dragon-shiryu/frames/frame-006.png",
+      "/characters/dragon-shiryu/frames/frame-007.png",
+      "/characters/dragon-shiryu/frames/frame-008.png"
     ],
     "cmd:3+4": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-010.png",
+      "/characters/dragon-shiryu/frames/frame-011.png",
+      "/characters/dragon-shiryu/frames/frame-012.png",
+      "/characters/dragon-shiryu/frames/frame-013.png",
+      "/characters/dragon-shiryu/frames/frame-014.png",
+      "/characters/dragon-shiryu/frames/frame-015.png",
+      "/characters/dragon-shiryu/frames/frame-016.png",
+      "/characters/dragon-shiryu/frames/frame-017.png"
     ],
     "cmd:O+2": [
-      "/characters/dragon-shiryu/frames/frame-000.png"
+      "/characters/dragon-shiryu/frames/frame-019.png",
+      "/characters/dragon-shiryu/frames/frame-020.png",
+      "/characters/dragon-shiryu/frames/frame-021.png",
+      "/characters/dragon-shiryu/frames/frame-022.png",
+      "/characters/dragon-shiryu/frames/frame-023.png"
     ]
   },
   "animationFrameRates": {
@@ -369,7 +602,7 @@
   "moveOverrides": {
     "jableft": {
       "label": "Dragon Shiryū Left Check",
-      "startupFrames": 9,
+      "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
@@ -383,7 +616,7 @@
     },
     "jabright": {
       "label": "Dragon Shiryū Right Check",
-      "startupFrames": 11,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
@@ -411,7 +644,7 @@
     },
     "kickright": {
       "label": "Dragon Shiryū Right Kick",
-      "startupFrames": 16,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -425,7 +658,7 @@
     },
     "cmd:f+1": {
       "label": "Dragon Shiryū Rush",
-      "startupFrames": 14,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
@@ -440,7 +673,7 @@
     },
     "cmd:d/f+2": {
       "label": "Dragon Shiryū Launcher",
-      "startupFrames": 16,
+      "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
@@ -473,7 +706,7 @@
     },
     "cmd:WS+4": {
       "label": "Dragon Shiryū Rising Strike",
-      "startupFrames": 13,
+      "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
@@ -906,17 +1139,5 @@
     "guard": 0.48,
     "spacing": 1.46,
     "specialChance": 0.22
-  },
-  "voxelFidelity": {
-    "resolutionScale": 2,
-    "maxRows": 64,
-    "depth": 0.24,
-    "alphaThreshold": 24,
-    "paletteSnap": 1,
-    "mergeRuns": true,
-    "lod": {
-      "mobileStep": 2,
-      "farStep": 2
-    }
   }
 }

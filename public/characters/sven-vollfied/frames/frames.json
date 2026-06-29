@@ -1,13 +1,13 @@
 {
   "source": "Sven Vollfied.png",
-  "count": 1,
+  "count": 35,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/sven-vollfied/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 1
+      "frameCount": 35
     }
   ],
   "frames": [
@@ -19,13 +19,557 @@
       "sourceName": "Sven Vollfied.png",
       "box": [
         5,
+        5,
+        35,
+        62
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/sven-vollfied/frames/frame-001.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        43,
+        5,
+        75,
+        62
+      ],
+      "width": 32,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 2,
+      "path": "/characters/sven-vollfied/frames/frame-002.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        84,
+        5,
+        111,
+        62
+      ],
+      "width": 27,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/sven-vollfied/frames/frame-003.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        117,
+        5,
+        147,
+        62
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/sven-vollfied/frames/frame-004.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        153,
+        5,
+        182,
+        62
+      ],
+      "width": 29,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/sven-vollfied/frames/frame-005.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        188,
+        6,
+        217,
+        61
+      ],
+      "width": 29,
+      "height": 55,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/sven-vollfied/frames/frame-006.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        226,
+        6,
+        256,
+        61
+      ],
+      "width": 30,
+      "height": 55,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/sven-vollfied/frames/frame-007.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        265,
+        7,
+        295,
+        61
+      ],
+      "width": 30,
+      "height": 54,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/sven-vollfied/frames/frame-008.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        304,
         4,
-        480,
+        334,
+        61
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/sven-vollfied/frames/frame-009.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        340,
+        4,
+        370,
+        61
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/sven-vollfied/frames/frame-010.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        375,
+        4,
+        403,
+        61
+      ],
+      "width": 28,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 11,
+      "path": "/characters/sven-vollfied/frames/frame-011.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        408,
+        4,
+        436,
+        61
+      ],
+      "width": 28,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 12,
+      "path": "/characters/sven-vollfied/frames/frame-012.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        5,
+        66,
+        35,
+        123
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/sven-vollfied/frames/frame-013.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        43,
+        66,
+        77,
+        123
+      ],
+      "width": 34,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/sven-vollfied/frames/frame-014.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        81,
+        66,
+        110,
+        123
+      ],
+      "width": 29,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/sven-vollfied/frames/frame-015.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        115,
+        66,
+        142,
+        123
+      ],
+      "width": 27,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/sven-vollfied/frames/frame-016.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        148,
+        66,
+        175,
+        123
+      ],
+      "width": 27,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/sven-vollfied/frames/frame-017.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        181,
+        66,
+        215,
+        123
+      ],
+      "width": 34,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/sven-vollfied/frames/frame-018.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        221,
+        66,
+        252,
+        123
+      ],
+      "width": 31,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/sven-vollfied/frames/frame-019.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        256,
+        66,
+        287,
+        123
+      ],
+      "width": 31,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 20,
+      "path": "/characters/sven-vollfied/frames/frame-020.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        291,
+        66,
+        321,
+        123
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 21,
+      "path": "/characters/sven-vollfied/frames/frame-021.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        329,
+        68,
+        363,
+        123
+      ],
+      "width": 34,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 22,
+      "path": "/characters/sven-vollfied/frames/frame-022.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        371,
+        68,
+        405,
+        123
+      ],
+      "width": 34,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 23,
+      "path": "/characters/sven-vollfied/frames/frame-023.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        415,
+        68,
+        450,
+        123
+      ],
+      "width": 35,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 24,
+      "path": "/characters/sven-vollfied/frames/frame-024.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        6,
+        127,
+        53,
+        181
+      ],
+      "width": 47,
+      "height": 54,
+      "row": 2
+    },
+    {
+      "index": 25,
+      "path": "/characters/sven-vollfied/frames/frame-025.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        60,
+        127,
+        107,
+        181
+      ],
+      "width": 47,
+      "height": 54,
+      "row": 2
+    },
+    {
+      "index": 26,
+      "path": "/characters/sven-vollfied/frames/frame-026.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        112,
+        127,
+        145,
+        181
+      ],
+      "width": 33,
+      "height": 54,
+      "row": 2
+    },
+    {
+      "index": 27,
+      "path": "/characters/sven-vollfied/frames/frame-027.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        352,
+        150,
+        378,
+        181
+      ],
+      "width": 26,
+      "height": 31,
+      "row": 2
+    },
+    {
+      "index": 28,
+      "path": "/characters/sven-vollfied/frames/frame-028.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        380,
+        150,
+        408,
+        181
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 2
+    },
+    {
+      "index": 29,
+      "path": "/characters/sven-vollfied/frames/frame-029.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        416,
+        150,
+        439,
+        179
+      ],
+      "width": 23,
+      "height": 29,
+      "row": 2
+    },
+    {
+      "index": 30,
+      "path": "/characters/sven-vollfied/frames/frame-030.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        5,
+        199,
+        101,
         293
       ],
-      "width": 475,
-      "height": 289,
-      "row": 0
+      "width": 96,
+      "height": 94,
+      "row": 3
+    },
+    {
+      "index": 31,
+      "path": "/characters/sven-vollfied/frames/frame-031.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        105,
+        199,
+        201,
+        293
+      ],
+      "width": 96,
+      "height": 94,
+      "row": 3
+    },
+    {
+      "index": 32,
+      "path": "/characters/sven-vollfied/frames/frame-032.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        205,
+        197,
+        301,
+        293
+      ],
+      "width": 96,
+      "height": 96,
+      "row": 3
+    },
+    {
+      "index": 33,
+      "path": "/characters/sven-vollfied/frames/frame-033.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        305,
+        247,
+        353,
+        293
+      ],
+      "width": 48,
+      "height": 46,
+      "row": 3
+    },
+    {
+      "index": 34,
+      "path": "/characters/sven-vollfied/frames/frame-034.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/sven-vollfied/animation-sheet.png",
+      "sourceName": "Sven Vollfied.png",
+      "box": [
+        390,
+        186,
+        399,
+        218
+      ],
+      "width": 9,
+      "height": 32,
+      "row": 3
     }
   ]
 }

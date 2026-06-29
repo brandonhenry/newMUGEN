@@ -1,13 +1,13 @@
 {
   "source": "Cygnus Hyōga.png",
-  "count": 2,
+  "count": 35,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/cygnus-hyoga/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 2
+      "frameCount": 35
     }
   ],
   "frames": [
@@ -18,13 +18,13 @@
       "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
       "sourceName": "Cygnus Hyōga.png",
       "box": [
-        5,
         6,
-        469,
+        7,
+        39,
         63
       ],
-      "width": 464,
-      "height": 57,
+      "width": 33,
+      "height": 56,
       "row": 0
     },
     {
@@ -34,14 +34,542 @@
       "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
       "sourceName": "Cygnus Hyōga.png",
       "box": [
-        5,
-        68,
+        45,
+        7,
+        84,
+        63
+      ],
+      "width": 39,
+      "height": 56,
+      "row": 0
+    },
+    {
+      "index": 2,
+      "path": "/characters/cygnus-hyoga/frames/frame-002.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        93,
+        7,
+        133,
+        63
+      ],
+      "width": 40,
+      "height": 56,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/cygnus-hyoga/frames/frame-003.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        141,
+        7,
+        186,
+        63
+      ],
+      "width": 45,
+      "height": 56,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/cygnus-hyoga/frames/frame-004.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        195,
+        7,
+        241,
+        63
+      ],
+      "width": 46,
+      "height": 56,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/cygnus-hyoga/frames/frame-005.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        250,
+        9,
+        287,
+        63
+      ],
+      "width": 37,
+      "height": 54,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/cygnus-hyoga/frames/frame-006.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        294,
+        10,
+        326,
+        63
+      ],
+      "width": 32,
+      "height": 53,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/cygnus-hyoga/frames/frame-007.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        333,
+        9,
+        364,
+        63
+      ],
+      "width": 31,
+      "height": 54,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/cygnus-hyoga/frames/frame-008.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        370,
+        8,
+        413,
+        63
+      ],
+      "width": 43,
+      "height": 55,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/cygnus-hyoga/frames/frame-009.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        422,
+        7,
+        467,
+        63
+      ],
+      "width": 45,
+      "height": 56,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/cygnus-hyoga/frames/frame-010.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        6,
+        69,
+        40,
+        124
+      ],
+      "width": 34,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 11,
+      "path": "/characters/cygnus-hyoga/frames/frame-011.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        47,
+        69,
+        73,
+        124
+      ],
+      "width": 26,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 12,
+      "path": "/characters/cygnus-hyoga/frames/frame-012.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        83,
+        72,
+        115,
+        124
+      ],
+      "width": 32,
+      "height": 52,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/cygnus-hyoga/frames/frame-013.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        125,
+        73,
+        158,
+        124
+      ],
+      "width": 33,
+      "height": 51,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/cygnus-hyoga/frames/frame-014.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        167,
+        72,
+        201,
+        124
+      ],
+      "width": 34,
+      "height": 52,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/cygnus-hyoga/frames/frame-015.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        210,
+        73,
+        261,
+        124
+      ],
+      "width": 51,
+      "height": 51,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/cygnus-hyoga/frames/frame-016.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        267,
+        72,
+        318,
+        124
+      ],
+      "width": 51,
+      "height": 52,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/cygnus-hyoga/frames/frame-017.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        323,
+        69,
+        359,
+        124
+      ],
+      "width": 36,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/cygnus-hyoga/frames/frame-018.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        365,
+        69,
+        398,
+        124
+      ],
+      "width": 33,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/cygnus-hyoga/frames/frame-019.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        6,
+        130,
+        39,
+        186
+      ],
+      "width": 33,
+      "height": 56,
+      "row": 2
+    },
+    {
+      "index": 20,
+      "path": "/characters/cygnus-hyoga/frames/frame-020.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        45,
+        130,
+        73,
+        186
+      ],
+      "width": 28,
+      "height": 56,
+      "row": 2
+    },
+    {
+      "index": 21,
+      "path": "/characters/cygnus-hyoga/frames/frame-021.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        81,
+        127,
+        111,
+        188
+      ],
+      "width": 30,
+      "height": 61,
+      "row": 2
+    },
+    {
+      "index": 22,
+      "path": "/characters/cygnus-hyoga/frames/frame-022.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        118,
+        127,
+        148,
+        188
+      ],
+      "width": 30,
+      "height": 61,
+      "row": 2
+    },
+    {
+      "index": 23,
+      "path": "/characters/cygnus-hyoga/frames/frame-023.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        155,
+        131,
+        190,
+        186
+      ],
+      "width": 35,
+      "height": 55,
+      "row": 2
+    },
+    {
+      "index": 24,
+      "path": "/characters/cygnus-hyoga/frames/frame-024.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        194,
+        136,
+        233,
+        188
+      ],
+      "width": 39,
+      "height": 52,
+      "row": 2
+    },
+    {
+      "index": 25,
+      "path": "/characters/cygnus-hyoga/frames/frame-025.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        240,
+        137,
+        279,
+        188
+      ],
+      "width": 39,
+      "height": 51,
+      "row": 2
+    },
+    {
+      "index": 26,
+      "path": "/characters/cygnus-hyoga/frames/frame-026.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        284,
+        130,
+        314,
+        186
+      ],
+      "width": 30,
+      "height": 56,
+      "row": 2
+    },
+    {
+      "index": 27,
+      "path": "/characters/cygnus-hyoga/frames/frame-027.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        321,
+        130,
+        354,
+        186
+      ],
+      "width": 33,
+      "height": 56,
+      "row": 2
+    },
+    {
+      "index": 28,
+      "path": "/characters/cygnus-hyoga/frames/frame-028.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        56,
+        191,
+        65,
+        292
+      ],
+      "width": 9,
+      "height": 101,
+      "row": 3
+    },
+    {
+      "index": 29,
+      "path": "/characters/cygnus-hyoga/frames/frame-029.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        67,
+        192,
+        77,
+        292
+      ],
+      "width": 10,
+      "height": 100,
+      "row": 3
+    },
+    {
+      "index": 30,
+      "path": "/characters/cygnus-hyoga/frames/frame-030.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        123,
+        192,
+        141,
+        292
+      ],
+      "width": 18,
+      "height": 100,
+      "row": 3
+    },
+    {
+      "index": 31,
+      "path": "/characters/cygnus-hyoga/frames/frame-031.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        248,
+        191,
+        296,
+        333
+      ],
+      "width": 48,
+      "height": 142,
+      "row": 3
+    },
+    {
+      "index": 32,
+      "path": "/characters/cygnus-hyoga/frames/frame-032.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        300,
+        191,
+        348,
+        333
+      ],
+      "width": 48,
+      "height": 142,
+      "row": 3
+    },
+    {
+      "index": 33,
+      "path": "/characters/cygnus-hyoga/frames/frame-033.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        352,
+        237,
+        448,
+        333
+      ],
+      "width": 96,
+      "height": 96,
+      "row": 3
+    },
+    {
+      "index": 34,
+      "path": "/characters/cygnus-hyoga/frames/frame-034.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/cygnus-hyoga/animation-sheet.png",
+      "sourceName": "Cygnus Hyōga.png",
+      "box": [
+        452,
+        287,
         500,
         333
       ],
-      "width": 495,
-      "height": 265,
-      "row": 1
+      "width": 48,
+      "height": 46,
+      "row": 3
     }
   ]
 }

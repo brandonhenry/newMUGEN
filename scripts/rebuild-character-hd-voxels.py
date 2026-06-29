@@ -16,13 +16,13 @@ def round_voxel(value: float) -> float:
 
 
 def classify_part(row_ratio: float, x_ratio: float) -> str:
-    if row_ratio < 0.24:
+    if row_ratio < 0.29:
         return "head"
-    if row_ratio < 0.58:
-        return "torso"
-    if abs(x_ratio) > 0.24:
-        return "arm"
-    return "leg"
+    if row_ratio > 0.58:
+        return "leadLeg" if x_ratio >= 0 else "rearLeg"
+    if abs(x_ratio) > 0.26:
+        return "leadArm" if x_ratio >= 0 else "rearArm"
+    return "torso"
 
 
 def foreground_bounds(image: Image.Image, alpha_threshold: int) -> tuple[int, int, int, int] | None:

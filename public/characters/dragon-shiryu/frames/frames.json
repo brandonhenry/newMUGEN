@@ -1,13 +1,13 @@
 {
   "source": "Dragon Shiryū.png",
-  "count": 1,
+  "count": 24,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/dragon-shiryu/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 1
+      "frameCount": 24
     }
   ],
   "frames": [
@@ -18,14 +18,382 @@
       "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
       "sourceName": "Dragon Shiryū.png",
       "box": [
-        4,
-        1,
-        459,
+        7,
+        9,
+        42,
+        67
+      ],
+      "width": 35,
+      "height": 58,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/dragon-shiryu/frames/frame-001.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        47,
+        11,
+        82,
+        67
+      ],
+      "width": 35,
+      "height": 56,
+      "row": 0
+    },
+    {
+      "index": 2,
+      "path": "/characters/dragon-shiryu/frames/frame-002.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        86,
+        14,
+        121,
+        67
+      ],
+      "width": 35,
+      "height": 53,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/dragon-shiryu/frames/frame-003.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        126,
+        12,
+        157,
+        67
+      ],
+      "width": 31,
+      "height": 55,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/dragon-shiryu/frames/frame-004.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        162,
+        2,
+        195,
+        69
+      ],
+      "width": 33,
+      "height": 67,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/dragon-shiryu/frames/frame-005.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        203,
+        2,
+        236,
+        69
+      ],
+      "width": 33,
+      "height": 67,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/dragon-shiryu/frames/frame-006.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        244,
+        2,
+        277,
+        69
+      ],
+      "width": 33,
+      "height": 67,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/dragon-shiryu/frames/frame-007.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        285,
+        2,
+        318,
+        69
+      ],
+      "width": 33,
+      "height": 67,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/dragon-shiryu/frames/frame-008.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        326,
+        10,
+        358,
+        67
+      ],
+      "width": 32,
+      "height": 57,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/dragon-shiryu/frames/frame-009.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        362,
+        9,
+        397,
+        67
+      ],
+      "width": 35,
+      "height": 58,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/dragon-shiryu/frames/frame-010.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        7,
+        97,
+        42,
+        155
+      ],
+      "width": 35,
+      "height": 58,
+      "row": 1
+    },
+    {
+      "index": 11,
+      "path": "/characters/dragon-shiryu/frames/frame-011.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        45,
+        97,
+        83,
+        155
+      ],
+      "width": 38,
+      "height": 58,
+      "row": 1
+    },
+    {
+      "index": 12,
+      "path": "/characters/dragon-shiryu/frames/frame-012.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        85,
+        101,
+        122,
+        157
+      ],
+      "width": 37,
+      "height": 56,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/dragon-shiryu/frames/frame-013.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        125,
+        102,
+        162,
+        157
+      ],
+      "width": 37,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/dragon-shiryu/frames/frame-014.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        166,
+        97,
+        204,
+        155
+      ],
+      "width": 38,
+      "height": 58,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/dragon-shiryu/frames/frame-015.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        206,
+        97,
+        259,
+        155
+      ],
+      "width": 53,
+      "height": 58,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/dragon-shiryu/frames/frame-016.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        268,
+        97,
+        327,
+        155
+      ],
+      "width": 59,
+      "height": 58,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/dragon-shiryu/frames/frame-017.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        339,
+        126,
+        350,
+        137
+      ],
+      "width": 11,
+      "height": 11,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/dragon-shiryu/frames/frame-018.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        354,
+        98,
+        413,
+        155
+      ],
+      "width": 59,
+      "height": 57,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/dragon-shiryu/frames/frame-019.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        6,
+        159,
+        261,
         387
       ],
-      "width": 455,
-      "height": 386,
-      "row": 0
+      "width": 255,
+      "height": 228,
+      "row": 2
+    },
+    {
+      "index": 20,
+      "path": "/characters/dragon-shiryu/frames/frame-020.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        268,
+        169,
+        315,
+        386
+      ],
+      "width": 47,
+      "height": 217,
+      "row": 2
+    },
+    {
+      "index": 21,
+      "path": "/characters/dragon-shiryu/frames/frame-021.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        317,
+        167,
+        358,
+        386
+      ],
+      "width": 41,
+      "height": 219,
+      "row": 2
+    },
+    {
+      "index": 22,
+      "path": "/characters/dragon-shiryu/frames/frame-022.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        373,
+        171,
+        412,
+        326
+      ],
+      "width": 39,
+      "height": 155,
+      "row": 2
+    },
+    {
+      "index": 23,
+      "path": "/characters/dragon-shiryu/frames/frame-023.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/dragon-shiryu/animation-sheet.png",
+      "sourceName": "Dragon Shiryū.png",
+      "box": [
+        426,
+        165,
+        450,
+        232
+      ],
+      "width": 24,
+      "height": 67,
+      "row": 2
     }
   ]
 }

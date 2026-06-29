@@ -13,119 +13,378 @@
       "name": "Main Sheet",
       "path": "/characters/cygnus-hyoga/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 2
+      "frameCount": 35
     }
   ],
-  "spriteFrameCount": 2,
+  "spriteFrameCount": 35,
   "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
   "animationFrames": {
     "idle": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-004.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png",
+      "/characters/cygnus-hyoga/frames/frame-009.png"
     ],
     "walkForward": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png",
+      "/characters/cygnus-hyoga/frames/frame-018.png"
     ],
     "walkBack": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-027.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-019.png"
     ],
     "sprint": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "backflip": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "sidestepLeft": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "sidestepRight": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "jump": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "crouch": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "crouchBlock": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "block": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "chargeKi": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "jableft": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "jabright": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "kickleft": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "kickright": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "hitLight": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "hitHeavy": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "juggle": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "knockdown": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "getupStand": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "getupRollUp": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "win": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "lose": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "cmd:f+1": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "cmd:d/f+2": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "cmd:qcf+4": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "cmd:WS+4": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "cmd:FC+1": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "cmd:FC+2": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "cmd:1+2": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "cmd:1+3": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
     "cmd:2+3": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-000.png",
+      "/characters/cygnus-hyoga/frames/frame-001.png",
+      "/characters/cygnus-hyoga/frames/frame-002.png",
+      "/characters/cygnus-hyoga/frames/frame-003.png",
+      "/characters/cygnus-hyoga/frames/frame-005.png",
+      "/characters/cygnus-hyoga/frames/frame-006.png",
+      "/characters/cygnus-hyoga/frames/frame-007.png",
+      "/characters/cygnus-hyoga/frames/frame-008.png"
     ],
     "cmd:2+4": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-010.png",
+      "/characters/cygnus-hyoga/frames/frame-011.png",
+      "/characters/cygnus-hyoga/frames/frame-012.png",
+      "/characters/cygnus-hyoga/frames/frame-013.png",
+      "/characters/cygnus-hyoga/frames/frame-014.png",
+      "/characters/cygnus-hyoga/frames/frame-015.png",
+      "/characters/cygnus-hyoga/frames/frame-016.png",
+      "/characters/cygnus-hyoga/frames/frame-017.png"
     ],
     "cmd:3+4": [
-      "/characters/cygnus-hyoga/frames/frame-000.png"
+      "/characters/cygnus-hyoga/frames/frame-019.png",
+      "/characters/cygnus-hyoga/frames/frame-020.png",
+      "/characters/cygnus-hyoga/frames/frame-021.png",
+      "/characters/cygnus-hyoga/frames/frame-022.png",
+      "/characters/cygnus-hyoga/frames/frame-023.png",
+      "/characters/cygnus-hyoga/frames/frame-024.png",
+      "/characters/cygnus-hyoga/frames/frame-025.png",
+      "/characters/cygnus-hyoga/frames/frame-026.png"
     ],
     "cmd:O+2": [
-      "/characters/cygnus-hyoga/frames/frame-001.png"
+      "/characters/cygnus-hyoga/frames/frame-028.png",
+      "/characters/cygnus-hyoga/frames/frame-029.png",
+      "/characters/cygnus-hyoga/frames/frame-030.png",
+      "/characters/cygnus-hyoga/frames/frame-031.png",
+      "/characters/cygnus-hyoga/frames/frame-032.png",
+      "/characters/cygnus-hyoga/frames/frame-033.png",
+      "/characters/cygnus-hyoga/frames/frame-034.png"
     ]
   },
   "animationFrameRates": {
@@ -369,7 +628,7 @@
   "moveOverrides": {
     "jableft": {
       "label": "Cygnus Hyōga Left Check",
-      "startupFrames": 9,
+      "startupFrames": 11,
       "activeFrames": 2,
       "recoveryFrames": 13,
       "damage": 6,
@@ -383,7 +642,7 @@
     },
     "jabright": {
       "label": "Cygnus Hyōga Right Check",
-      "startupFrames": 11,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
@@ -397,7 +656,7 @@
     },
     "kickleft": {
       "label": "Cygnus Hyōga Left Kick",
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -411,7 +670,7 @@
     },
     "kickright": {
       "label": "Cygnus Hyōga Right Kick",
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -425,7 +684,7 @@
     },
     "cmd:f+1": {
       "label": "Cygnus Hyōga Rush",
-      "startupFrames": 14,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 11,
@@ -440,7 +699,7 @@
     },
     "cmd:d/f+2": {
       "label": "Cygnus Hyōga Launcher",
-      "startupFrames": 16,
+      "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
@@ -458,7 +717,7 @@
     },
     "cmd:qcf+4": {
       "label": "Cygnus Hyōga Burst",
-      "startupFrames": 19,
+      "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
@@ -473,7 +732,7 @@
     },
     "cmd:WS+4": {
       "label": "Cygnus Hyōga Rising Strike",
-      "startupFrames": 13,
+      "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 12,
@@ -906,17 +1165,5 @@
     "guard": 0.45,
     "spacing": 1.44,
     "specialChance": 0.18
-  },
-  "voxelFidelity": {
-    "resolutionScale": 2,
-    "maxRows": 64,
-    "depth": 0.24,
-    "alphaThreshold": 24,
-    "paletteSnap": 1,
-    "mergeRuns": true,
-    "lod": {
-      "mobileStep": 2,
-      "farStep": 2
-    }
   }
 }

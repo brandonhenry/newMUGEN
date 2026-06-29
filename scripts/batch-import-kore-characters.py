@@ -367,6 +367,122 @@ def trim_box(ink: bytearray, width: int, height: int, left: int, top: int, right
     return max(0, min_x - 1), max(0, min_y - 1), min(width, max_x + 2), min(height, max_y + 2)
 
 
+def boxes_overlap_with_padding(a: Box, b: Box, padding: int) -> bool:
+    return a[0] - padding <= b[2] and a[2] + padding >= b[0] and a[1] - padding <= b[3] and a[3] + padding >= b[1]
+
+
+def merge_nearby_boxes(boxes: list[Box], width: int, height: int, padding: int) -> list[Box]:
+    merged = list(boxes)
+    changed = True
+    while changed:
+        changed = False
+        for index in range(len(merged)):
+            for other in range(index + 1, len(merged)):
+                if not boxes_overlap_with_padding(merged[index], merged[other], padding):
+                    continue
+                merged[index] = (
+                    max(0, min(merged[index][0], merged[other][0])),
+                    max(0, min(merged[index][1], merged[other][1])),
+                    min(width, max(merged[index][2], merged[other][2])),
+                    min(height, max(merged[index][3], merged[other][3])),
+                )
+                merged.pop(other)
+                changed = True
+                break
+            if changed:
+                break
+    return merged
+
+
+def detect_connected_boxes(ink: bytearray, width: int, height: int) -> list[dict[str, Any]]:
+    visited = bytearray(width * height)
+    raw: list[Box] = []
+    minimum_area = max(8, round(width * height * 0.000006))
+    for start in range(width * height):
+        if visited[start]:
+            continue
+        visited[start] = 1
+        if not ink[start]:
+            continue
+        queue: deque[int] = deque([start])
+        area = 0
+        min_x = width
+        min_y = height
+        max_x = -1
+        max_y = -1
+        while queue:
+            key = queue.popleft()
+            x = key % width
+            y = key // width
+            area += 1
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x)
+            max_y = max(max_y, y)
+            for ny in range(y - 1, y + 2):
+                for nx in range(x - 1, x + 2):
+                    if nx == x and ny == y:
+                        continue
+                    if nx < 0 or ny < 0 or nx >= width or ny >= height:
+                        continue
+                    next_key = ny * width + nx
+                    if visited[next_key]:
+                        continue
+                    visited[next_key] = 1
+                    if ink[next_key]:
+                        queue.append(next_key)
+        box_width = max_x - min_x + 1
+        box_height = max_y - min_y + 1
+        if area >= minimum_area and box_width >= 3 and box_height >= 3:
+            raw.append((max(0, min_x - 1), max(0, min_y - 1), min(width, max_x + 2), min(height, max_y + 2)))
+
+    # A small padding glues limbs/weapons that are separated by antialias gaps while
+    # still keeping adjacent sprites split on compact sprite sheets.
+    merged = merge_nearby_boxes(raw, width, height, padding=2)
+    merged = [box for box in merged if box[2] - box[0] >= 4 and box[3] - box[1] >= 4]
+    merged.sort(key=lambda box: (box[1], box[0]))
+    row = -1
+    current_bottom = -10_000
+    entries: list[dict[str, Any]] = []
+    for box in merged:
+        if box[1] > current_bottom + 8:
+            row += 1
+            current_bottom = box[3]
+        else:
+            current_bottom = max(current_bottom, box[3])
+        entries.append({"box": box, "row": max(0, row)})
+    return entries
+
+
+def detect_dense_projection_boxes(ink: bytearray, width: int, height: int) -> list[dict[str, Any]]:
+    row_counts = [0] * height
+    for y in range(height):
+        offset = y * width
+        row_counts[y] = sum(1 for x in range(width) if ink[offset + x])
+    row_threshold = max(4, min(32, int(width * 0.035)))
+    row_groups = group_boolean_runs([count >= row_threshold for count in row_counts], gap_tolerance=3, min_length=6)
+    boxes: list[dict[str, Any]] = []
+    for row_index, (row_start, row_end) in enumerate(row_groups):
+        row_height = row_end - row_start + 1
+        column_counts = [0] * width
+        for y in range(row_start, row_end + 1):
+            offset = y * width
+            for x in range(width):
+                if ink[offset + x]:
+                    column_counts[x] += 1
+        column_threshold = max(3, min(24, int(row_height * 0.1)))
+        column_groups = group_boolean_runs([count >= column_threshold for count in column_counts], gap_tolerance=3, min_length=4)
+        for column_start, column_end in column_groups:
+            box = trim_box(ink, width, height, column_start, row_start, column_end, row_end)
+            if not box:
+                continue
+            box_width = box[2] - box[0]
+            box_height = box[3] - box[1]
+            if box_width >= 8 and box_height >= 8:
+                boxes.append({"box": box, "row": row_index})
+    return boxes
+
+
 def detect_projection_boxes(image: Image.Image) -> list[dict[str, Any]]:
     rgba = image.convert("RGBA")
     width, height = rgba.size
@@ -406,6 +522,38 @@ def detect_projection_boxes(image: Image.Image) -> list[dict[str, Any]]:
             box_height = box[3] - box[1]
             if box_width >= 8 and box_height >= 8:
                 boxes.append({"box": box, "row": row_index})
+
+    dense_boxes = detect_dense_projection_boxes(ink, width, height)
+    connected_boxes = detect_connected_boxes(ink, width, height)
+    projection_area = sum((entry["box"][2] - entry["box"][0]) * (entry["box"][3] - entry["box"][1]) for entry in boxes)
+    dense_area = sum((entry["box"][2] - entry["box"][0]) * (entry["box"][3] - entry["box"][1]) for entry in dense_boxes)
+    connected_area = sum((entry["box"][2] - entry["box"][0]) * (entry["box"][3] - entry["box"][1]) for entry in connected_boxes)
+    projection_aspects = [
+        (entry["box"][2] - entry["box"][0]) / max(1, entry["box"][3] - entry["box"][1])
+        for entry in boxes
+    ]
+    max_projection_aspect = max(projection_aspects) if projection_aspects else 0
+    if dense_boxes and (
+        len(boxes) <= 1
+        or (len(boxes) < 32 and len(dense_boxes) > len(boxes))
+        or projection_area > dense_area * 1.8
+        or max_projection_aspect > 4.5
+    ):
+        boxes = dense_boxes
+        projection_area = dense_area
+        projection_aspects = [
+            (entry["box"][2] - entry["box"][0]) / max(1, entry["box"][3] - entry["box"][1])
+            for entry in boxes
+        ]
+        max_projection_aspect = max(projection_aspects) if projection_aspects else 0
+
+    if connected_boxes and (
+        len(boxes) <= 1
+        or (len(boxes) < 32 and len(connected_boxes) > len(boxes))
+        or projection_area > connected_area * 1.8
+        or max_projection_aspect > 4.5
+    ):
+        boxes = connected_boxes
 
     if len(boxes) <= 1:
         fallback = trim_box(ink, width, height, 0, 0, width - 1, height - 1)

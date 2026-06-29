@@ -13,11 +13,23 @@
       "name": "Main Sheet",
       "path": "/characters/taizo-momote/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 12
+      "frameCount": 24
     }
   ],
-  "spriteFrameCount": 12,
+  "spriteFrameCount": 24,
   "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
   "animationFrames": {
     "idle": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -32,10 +44,22 @@
     ],
     "walkForward": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "walkBack": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-023.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-017.png"
     ],
     "sprint": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -50,10 +74,22 @@
     ],
     "backflip": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "sidestepLeft": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "sidestepRight": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -67,10 +103,22 @@
     ],
     "jump": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "crouch": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "crouchBlock": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -84,10 +132,22 @@
     ],
     "block": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "chargeKi": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "jableft": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -101,10 +161,22 @@
     ],
     "jabright": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "kickleft": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "kickright": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -118,10 +190,22 @@
     ],
     "hitLight": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "hitHeavy": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "juggle": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -135,10 +219,22 @@
     ],
     "knockdown": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "getupStand": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "getupRollUp": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -152,10 +248,22 @@
     ],
     "win": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "lose": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "cmd:f+1": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -169,10 +277,22 @@
     ],
     "cmd:d/f+2": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "cmd:qcf+4": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "cmd:WS+4": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -186,10 +306,22 @@
     ],
     "cmd:FC+1": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "cmd:FC+2": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "cmd:1+2": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -203,10 +335,22 @@
     ],
     "cmd:1+3": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "cmd:2+3": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ],
     "cmd:2+4": [
       "/characters/taizo-momote/frames/frame-000.png",
@@ -220,10 +364,22 @@
     ],
     "cmd:3+4": [
       "/characters/taizo-momote/frames/frame-009.png",
-      "/characters/taizo-momote/frames/frame-010.png"
+      "/characters/taizo-momote/frames/frame-010.png",
+      "/characters/taizo-momote/frames/frame-011.png",
+      "/characters/taizo-momote/frames/frame-012.png",
+      "/characters/taizo-momote/frames/frame-013.png",
+      "/characters/taizo-momote/frames/frame-014.png",
+      "/characters/taizo-momote/frames/frame-015.png",
+      "/characters/taizo-momote/frames/frame-016.png"
     ],
     "cmd:O+2": [
-      "/characters/taizo-momote/frames/frame-011.png"
+      "/characters/taizo-momote/frames/frame-017.png",
+      "/characters/taizo-momote/frames/frame-018.png",
+      "/characters/taizo-momote/frames/frame-019.png",
+      "/characters/taizo-momote/frames/frame-020.png",
+      "/characters/taizo-momote/frames/frame-021.png",
+      "/characters/taizo-momote/frames/frame-022.png",
+      "/characters/taizo-momote/frames/frame-023.png"
     ]
   },
   "animationFrameRates": {
@@ -481,7 +637,7 @@
     },
     "jabright": {
       "label": "Taizo Momote Right Check",
-      "startupFrames": 11,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 8,
@@ -495,7 +651,7 @@
     },
     "kickleft": {
       "label": "Taizo Momote Left Kick",
-      "startupFrames": 16,
+      "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -538,7 +694,7 @@
     },
     "cmd:d/f+2": {
       "label": "Taizo Momote Launcher",
-      "startupFrames": 16,
+      "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
@@ -556,7 +712,7 @@
     },
     "cmd:qcf+4": {
       "label": "Taizo Momote Burst",
-      "startupFrames": 19,
+      "startupFrames": 21,
       "activeFrames": 4,
       "recoveryFrames": 29,
       "damage": 17,
@@ -1004,17 +1160,5 @@
     "guard": 0.44,
     "spacing": 1.51,
     "specialChance": 0.22
-  },
-  "voxelFidelity": {
-    "resolutionScale": 2,
-    "maxRows": 64,
-    "depth": 0.24,
-    "alphaThreshold": 24,
-    "paletteSnap": 1,
-    "mergeRuns": true,
-    "lod": {
-      "mobileStep": 2,
-      "farStep": 2
-    }
   }
 }

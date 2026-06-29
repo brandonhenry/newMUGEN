@@ -1,13 +1,13 @@
 {
   "source": "Taizo Momote.png",
-  "count": 12,
+  "count": 24,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/taizo-momote/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 12
+      "frameCount": 24
     }
   ],
   "frames": [
@@ -18,12 +18,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        7,
+        8,
         1,
-        39,
+        38,
         49
       ],
-      "width": 32,
+      "width": 30,
       "height": 48,
       "row": 0
     },
@@ -34,12 +34,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        47,
+        48,
         2,
-        79,
+        78,
         49
       ],
-      "width": 32,
+      "width": 30,
       "height": 47,
       "row": 0
     },
@@ -50,12 +50,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        87,
+        88,
         2,
-        119,
+        118,
         49
       ],
-      "width": 32,
+      "width": 30,
       "height": 47,
       "row": 0
     },
@@ -66,12 +66,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        127,
+        129,
         2,
         159,
         48
       ],
-      "width": 32,
+      "width": 30,
       "height": 46,
       "row": 0
     },
@@ -82,12 +82,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        167,
+        169,
         2,
         199,
         48
       ],
-      "width": 32,
+      "width": 30,
       "height": 46,
       "row": 0
     },
@@ -98,12 +98,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        205,
+        206,
         6,
         239,
         49
       ],
-      "width": 34,
+      "width": 33,
       "height": 43,
       "row": 0
     },
@@ -114,12 +114,12 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        249,
+        250,
         4,
-        320,
+        316,
         49
       ],
-      "width": 71,
+      "width": 66,
       "height": 45,
       "row": 0
     },
@@ -130,13 +130,13 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        327,
-        0,
-        359,
+        328,
+        1,
+        358,
         49
       ],
-      "width": 32,
-      "height": 49,
+      "width": 30,
+      "height": 48,
       "row": 0
     },
     {
@@ -146,13 +146,13 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        372,
+        373,
         1,
-        524,
-        55
+        523,
+        53
       ],
-      "width": 152,
-      "height": 54,
+      "width": 150,
+      "height": 52,
       "row": 0
     },
     {
@@ -163,12 +163,12 @@
       "sourceName": "Taizo Momote.png",
       "box": [
         7,
-        63,
-        285,
+        64,
+        73,
         110
       ],
-      "width": 278,
-      "height": 47,
+      "width": 66,
+      "height": 46,
       "row": 1
     },
     {
@@ -178,13 +178,13 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
-        292,
-        63,
-        366,
+        77,
+        65,
+        107,
         110
       ],
-      "width": 74,
-      "height": 47,
+      "width": 30,
+      "height": 45,
       "row": 1
     },
     {
@@ -194,13 +194,205 @@
       "sheetPath": "/characters/taizo-momote/animation-sheet.png",
       "sourceName": "Taizo Momote.png",
       "box": [
+        116,
+        68,
+        143,
+        110
+      ],
+      "width": 27,
+      "height": 42,
+      "row": 1
+    },
+    {
+      "index": 12,
+      "path": "/characters/taizo-momote/frames/frame-012.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        145,
+        71,
+        177,
+        110
+      ],
+      "width": 32,
+      "height": 39,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/taizo-momote/frames/frame-013.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        180,
+        77,
+        222,
+        110
+      ],
+      "width": 42,
+      "height": 33,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/taizo-momote/frames/frame-014.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        224,
+        68,
+        284,
+        110
+      ],
+      "width": 60,
+      "height": 42,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/taizo-momote/frames/frame-015.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        295,
+        65,
+        325,
+        110
+      ],
+      "width": 30,
+      "height": 45,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/taizo-momote/frames/frame-016.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        334,
+        64,
+        366,
+        110
+      ],
+      "width": 32,
+      "height": 46,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/taizo-momote/frames/frame-017.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
         7,
-        125,
-        315,
+        126,
+        73,
         172
       ],
-      "width": 308,
-      "height": 47,
+      "width": 66,
+      "height": 46,
+      "row": 2
+    },
+    {
+      "index": 18,
+      "path": "/characters/taizo-momote/frames/frame-018.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        76,
+        127,
+        105,
+        172
+      ],
+      "width": 29,
+      "height": 45,
+      "row": 2
+    },
+    {
+      "index": 19,
+      "path": "/characters/taizo-momote/frames/frame-019.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        110,
+        130,
+        137,
+        172
+      ],
+      "width": 27,
+      "height": 42,
+      "row": 2
+    },
+    {
+      "index": 20,
+      "path": "/characters/taizo-momote/frames/frame-020.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        139,
+        133,
+        171,
+        172
+      ],
+      "width": 32,
+      "height": 39,
+      "row": 2
+    },
+    {
+      "index": 21,
+      "path": "/characters/taizo-momote/frames/frame-021.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        174,
+        139,
+        216,
+        172
+      ],
+      "width": 42,
+      "height": 33,
+      "row": 2
+    },
+    {
+      "index": 22,
+      "path": "/characters/taizo-momote/frames/frame-022.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        219,
+        136,
+        264,
+        172
+      ],
+      "width": 45,
+      "height": 36,
+      "row": 2
+    },
+    {
+      "index": 23,
+      "path": "/characters/taizo-momote/frames/frame-023.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/taizo-momote/animation-sheet.png",
+      "sourceName": "Taizo Momote.png",
+      "box": [
+        270,
+        136,
+        314,
+        168
+      ],
+      "width": 44,
+      "height": 32,
       "row": 2
     }
   ]

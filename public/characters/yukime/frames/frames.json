@@ -1,13 +1,13 @@
 {
   "source": "Yukime.png",
-  "count": 21,
+  "count": 42,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/yukime/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 21
+      "frameCount": 42
     }
   ],
   "frames": [
@@ -19,17 +19,145 @@
       "sourceName": "Yukime.png",
       "box": [
         5,
-        8,
-        462,
+        10,
+        45,
         79
       ],
-      "width": 457,
-      "height": 71,
+      "width": 40,
+      "height": 69,
       "row": 0
     },
     {
       "index": 1,
       "path": "/characters/yukime/frames/frame-001.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        53,
+        28,
+        91,
+        79
+      ],
+      "width": 38,
+      "height": 51,
+      "row": 0
+    },
+    {
+      "index": 2,
+      "path": "/characters/yukime/frames/frame-002.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        100,
+        25,
+        142,
+        79
+      ],
+      "width": 42,
+      "height": 54,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/yukime/frames/frame-003.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        150,
+        28,
+        192,
+        79
+      ],
+      "width": 42,
+      "height": 51,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/yukime/frames/frame-004.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        205,
+        28,
+        248,
+        79
+      ],
+      "width": 43,
+      "height": 51,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/yukime/frames/frame-005.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        264,
+        28,
+        306,
+        79
+      ],
+      "width": 42,
+      "height": 51,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/yukime/frames/frame-006.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        317,
+        26,
+        359,
+        79
+      ],
+      "width": 42,
+      "height": 53,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/yukime/frames/frame-007.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        365,
+        26,
+        410,
+        79
+      ],
+      "width": 45,
+      "height": 53,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/yukime/frames/frame-008.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        416,
+        26,
+        461,
+        79
+      ],
+      "width": 45,
+      "height": 53,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/yukime/frames/frame-009.png",
       "sheetId": "main",
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
@@ -44,148 +172,20 @@
       "row": 0
     },
     {
-      "index": 2,
-      "path": "/characters/yukime/frames/frame-002.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        5,
-        99,
-        36,
-        120
-      ],
-      "width": 31,
-      "height": 21,
-      "row": 1
-    },
-    {
-      "index": 3,
-      "path": "/characters/yukime/frames/frame-003.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        42,
-        97,
-        87,
-        124
-      ],
-      "width": 45,
-      "height": 27,
-      "row": 1
-    },
-    {
-      "index": 4,
-      "path": "/characters/yukime/frames/frame-004.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        92,
-        87,
-        101,
-        96
-      ],
-      "width": 9,
-      "height": 9,
-      "row": 1
-    },
-    {
-      "index": 5,
-      "path": "/characters/yukime/frames/frame-005.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        108,
-        93,
-        163,
-        128
-      ],
-      "width": 55,
-      "height": 35,
-      "row": 1
-    },
-    {
-      "index": 6,
-      "path": "/characters/yukime/frames/frame-006.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        182,
-        91,
-        245,
-        128
-      ],
-      "width": 63,
-      "height": 37,
-      "row": 1
-    },
-    {
-      "index": 7,
-      "path": "/characters/yukime/frames/frame-007.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        252,
-        91,
-        309,
-        128
-      ],
-      "width": 57,
-      "height": 37,
-      "row": 1
-    },
-    {
-      "index": 8,
-      "path": "/characters/yukime/frames/frame-008.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        317,
-        87,
-        376,
-        124
-      ],
-      "width": 59,
-      "height": 37,
-      "row": 1
-    },
-    {
-      "index": 9,
-      "path": "/characters/yukime/frames/frame-009.png",
-      "sheetId": "main",
-      "sheetPath": "/characters/yukime/animation-sheet.png",
-      "sourceName": "Yukime.png",
-      "box": [
-        386,
-        86,
-        458,
-        122
-      ],
-      "width": 72,
-      "height": 36,
-      "row": 1
-    },
-    {
       "index": 10,
       "path": "/characters/yukime/frames/frame-010.png",
       "sheetId": "main",
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        5,
-        142,
-        44,
-        154
+        11,
+        102,
+        20,
+        115
       ],
-      "width": 39,
-      "height": 12,
-      "row": 2
+      "width": 9,
+      "height": 13,
+      "row": 1
     },
     {
       "index": 11,
@@ -194,14 +194,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        5,
-        169,
-        414,
-        230
+        22,
+        99,
+        35,
+        120
       ],
-      "width": 409,
-      "height": 61,
-      "row": 3
+      "width": 13,
+      "height": 21,
+      "row": 1
     },
     {
       "index": 12,
@@ -210,14 +210,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        5,
-        266,
-        58,
-        323
+        45,
+        97,
+        84,
+        122
       ],
-      "width": 53,
-      "height": 57,
-      "row": 4
+      "width": 39,
+      "height": 25,
+      "row": 1
     },
     {
       "index": 13,
@@ -226,14 +226,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        70,
-        258,
-        138,
-        320
+        111,
+        93,
+        160,
+        122
       ],
-      "width": 68,
-      "height": 62,
-      "row": 4
+      "width": 49,
+      "height": 29,
+      "row": 1
     },
     {
       "index": 14,
@@ -242,14 +242,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        146,
+        185,
+        91,
         244,
-        236,
-        334
+        122
       ],
-      "width": 90,
-      "height": 90,
-      "row": 4
+      "width": 59,
+      "height": 31,
+      "row": 1
     },
     {
       "index": 15,
@@ -258,14 +258,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        244,
-        241,
-        342,
-        338
+        258,
+        91,
+        308,
+        122
       ],
-      "width": 98,
-      "height": 97,
-      "row": 4
+      "width": 50,
+      "height": 31,
+      "row": 1
     },
     {
       "index": 16,
@@ -274,14 +274,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        353,
-        241,
-        449,
-        337
+        320,
+        95,
+        366,
+        122
       ],
-      "width": 96,
-      "height": 96,
-      "row": 4
+      "width": 46,
+      "height": 27,
+      "row": 1
     },
     {
       "index": 17,
@@ -290,14 +290,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        459,
-        241,
-        557,
-        339
+        386,
+        86,
+        438,
+        115
       ],
-      "width": 98,
-      "height": 98,
-      "row": 4
+      "width": 52,
+      "height": 29,
+      "row": 1
     },
     {
       "index": 18,
@@ -306,14 +306,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        570,
-        256,
-        607,
-        324
+        443,
+        90,
+        457,
+        122
       ],
-      "width": 37,
-      "height": 68,
-      "row": 4
+      "width": 14,
+      "height": 32,
+      "row": 1
     },
     {
       "index": 19,
@@ -322,14 +322,14 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
-        612,
-        263,
-        659,
-        293
+        5,
+        144,
+        44,
+        154
       ],
-      "width": 47,
-      "height": 30,
-      "row": 4
+      "width": 39,
+      "height": 10,
+      "row": 2
     },
     {
       "index": 20,
@@ -338,13 +338,349 @@
       "sheetPath": "/characters/yukime/animation-sheet.png",
       "sourceName": "Yukime.png",
       "box": [
+        6,
+        177,
+        45,
+        230
+      ],
+      "width": 39,
+      "height": 53,
+      "row": 3
+    },
+    {
+      "index": 21,
+      "path": "/characters/yukime/frames/frame-021.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        56,
+        179,
+        93,
+        230
+      ],
+      "width": 37,
+      "height": 51,
+      "row": 3
+    },
+    {
+      "index": 22,
+      "path": "/characters/yukime/frames/frame-022.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        101,
+        170,
+        147,
+        230
+      ],
+      "width": 46,
+      "height": 60,
+      "row": 3
+    },
+    {
+      "index": 23,
+      "path": "/characters/yukime/frames/frame-023.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        152,
+        170,
+        198,
+        230
+      ],
+      "width": 46,
+      "height": 60,
+      "row": 3
+    },
+    {
+      "index": 24,
+      "path": "/characters/yukime/frames/frame-024.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        204,
+        170,
+        258,
+        230
+      ],
+      "width": 54,
+      "height": 60,
+      "row": 3
+    },
+    {
+      "index": 25,
+      "path": "/characters/yukime/frames/frame-025.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        265,
+        170,
+        315,
+        230
+      ],
+      "width": 50,
+      "height": 60,
+      "row": 3
+    },
+    {
+      "index": 26,
+      "path": "/characters/yukime/frames/frame-026.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        327,
+        177,
+        363,
+        230
+      ],
+      "width": 36,
+      "height": 53,
+      "row": 3
+    },
+    {
+      "index": 27,
+      "path": "/characters/yukime/frames/frame-027.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        372,
+        177,
+        411,
+        230
+      ],
+      "width": 39,
+      "height": 53,
+      "row": 3
+    },
+    {
+      "index": 28,
+      "path": "/characters/yukime/frames/frame-028.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        38,
+        272,
+        51,
+        323
+      ],
+      "width": 13,
+      "height": 51,
+      "row": 4
+    },
+    {
+      "index": 29,
+      "path": "/characters/yukime/frames/frame-029.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        79,
+        258,
+        130,
+        320
+      ],
+      "width": 51,
+      "height": 62,
+      "row": 4
+    },
+    {
+      "index": 30,
+      "path": "/characters/yukime/frames/frame-030.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        151,
+        244,
+        231,
+        334
+      ],
+      "width": 80,
+      "height": 90,
+      "row": 4
+    },
+    {
+      "index": 31,
+      "path": "/characters/yukime/frames/frame-031.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        247,
+        244,
+        339,
+        336
+      ],
+      "width": 92,
+      "height": 92,
+      "row": 4
+    },
+    {
+      "index": 32,
+      "path": "/characters/yukime/frames/frame-032.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        355,
+        244,
+        447,
+        336
+      ],
+      "width": 92,
+      "height": 92,
+      "row": 4
+    },
+    {
+      "index": 33,
+      "path": "/characters/yukime/frames/frame-033.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        460,
+        244,
+        499,
+        336
+      ],
+      "width": 39,
+      "height": 92,
+      "row": 4
+    },
+    {
+      "index": 34,
+      "path": "/characters/yukime/frames/frame-034.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        511,
+        244,
+        556,
+        336
+      ],
+      "width": 45,
+      "height": 92,
+      "row": 4
+    },
+    {
+      "index": 35,
+      "path": "/characters/yukime/frames/frame-035.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        571,
+        256,
+        606,
+        324
+      ],
+      "width": 35,
+      "height": 68,
+      "row": 4
+    },
+    {
+      "index": 36,
+      "path": "/characters/yukime/frames/frame-036.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        612,
+        263,
+        638,
+        293
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 4
+    },
+    {
+      "index": 37,
+      "path": "/characters/yukime/frames/frame-037.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        641,
+        264,
+        656,
+        284
+      ],
+      "width": 15,
+      "height": 20,
+      "row": 4
+    },
+    {
+      "index": 38,
+      "path": "/characters/yukime/frames/frame-038.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
         5,
         369,
-        353,
+        101,
         464
       ],
-      "width": 348,
+      "width": 96,
       "height": 95,
+      "row": 5
+    },
+    {
+      "index": 39,
+      "path": "/characters/yukime/frames/frame-039.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        105,
+        369,
+        201,
+        463
+      ],
+      "width": 96,
+      "height": 94,
+      "row": 5
+    },
+    {
+      "index": 40,
+      "path": "/characters/yukime/frames/frame-040.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        205,
+        369,
+        301,
+        463
+      ],
+      "width": 96,
+      "height": 94,
+      "row": 5
+    },
+    {
+      "index": 41,
+      "path": "/characters/yukime/frames/frame-041.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/yukime/animation-sheet.png",
+      "sourceName": "Yukime.png",
+      "box": [
+        305,
+        369,
+        353,
+        415
+      ],
+      "width": 48,
+      "height": 46,
       "row": 5
     }
   ]

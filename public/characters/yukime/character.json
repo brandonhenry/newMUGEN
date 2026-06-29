@@ -13,17 +13,27 @@
       "name": "Main Sheet",
       "path": "/characters/yukime/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 21
+      "frameCount": 42
     }
   ],
-  "spriteFrameCount": 21,
+  "spriteFrameCount": 42,
   "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
   "animationFrames": {
     "idle": [
       "/characters/yukime/frames/frame-000.png",
-      "/characters/yukime/frames/frame-001.png"
-    ],
-    "walkForward": [
+      "/characters/yukime/frames/frame-001.png",
       "/characters/yukime/frames/frame-002.png",
       "/characters/yukime/frames/frame-003.png",
       "/characters/yukime/frames/frame-004.png",
@@ -33,189 +43,290 @@
       "/characters/yukime/frames/frame-008.png",
       "/characters/yukime/frames/frame-009.png"
     ],
-    "walkBack": [
-      "/characters/yukime/frames/frame-010.png"
-    ],
-    "sprint": [
-      "/characters/yukime/frames/frame-011.png"
-    ],
-    "backflip": [
+    "walkForward": [
+      "/characters/yukime/frames/frame-010.png",
+      "/characters/yukime/frames/frame-011.png",
       "/characters/yukime/frames/frame-012.png",
       "/characters/yukime/frames/frame-013.png",
       "/characters/yukime/frames/frame-014.png",
       "/characters/yukime/frames/frame-015.png",
       "/characters/yukime/frames/frame-016.png",
       "/characters/yukime/frames/frame-017.png",
-      "/characters/yukime/frames/frame-018.png",
+      "/characters/yukime/frames/frame-018.png"
+    ],
+    "walkBack": [
       "/characters/yukime/frames/frame-019.png"
     ],
+    "sprint": [
+      "/characters/yukime/frames/frame-020.png",
+      "/characters/yukime/frames/frame-021.png",
+      "/characters/yukime/frames/frame-022.png",
+      "/characters/yukime/frames/frame-023.png",
+      "/characters/yukime/frames/frame-024.png",
+      "/characters/yukime/frames/frame-025.png",
+      "/characters/yukime/frames/frame-026.png",
+      "/characters/yukime/frames/frame-027.png"
+    ],
+    "backflip": [
+      "/characters/yukime/frames/frame-028.png",
+      "/characters/yukime/frames/frame-029.png",
+      "/characters/yukime/frames/frame-030.png",
+      "/characters/yukime/frames/frame-031.png",
+      "/characters/yukime/frames/frame-033.png",
+      "/characters/yukime/frames/frame-034.png",
+      "/characters/yukime/frames/frame-035.png",
+      "/characters/yukime/frames/frame-036.png"
+    ],
     "sidestepLeft": [
-      "/characters/yukime/frames/frame-020.png"
+      "/characters/yukime/frames/frame-038.png",
+      "/characters/yukime/frames/frame-039.png",
+      "/characters/yukime/frames/frame-040.png",
+      "/characters/yukime/frames/frame-041.png"
     ],
     "sidestepRight": [
       "/characters/yukime/frames/frame-000.png",
-      "/characters/yukime/frames/frame-001.png"
-    ],
-    "jump": [
+      "/characters/yukime/frames/frame-001.png",
       "/characters/yukime/frames/frame-002.png",
       "/characters/yukime/frames/frame-003.png",
-      "/characters/yukime/frames/frame-004.png",
       "/characters/yukime/frames/frame-005.png",
       "/characters/yukime/frames/frame-006.png",
       "/characters/yukime/frames/frame-007.png",
-      "/characters/yukime/frames/frame-008.png",
-      "/characters/yukime/frames/frame-009.png"
+      "/characters/yukime/frames/frame-008.png"
     ],
-    "crouch": [
-      "/characters/yukime/frames/frame-010.png"
-    ],
-    "crouchBlock": [
-      "/characters/yukime/frames/frame-011.png"
-    ],
-    "block": [
+    "jump": [
+      "/characters/yukime/frames/frame-010.png",
+      "/characters/yukime/frames/frame-011.png",
       "/characters/yukime/frames/frame-012.png",
       "/characters/yukime/frames/frame-013.png",
       "/characters/yukime/frames/frame-014.png",
       "/characters/yukime/frames/frame-015.png",
       "/characters/yukime/frames/frame-016.png",
-      "/characters/yukime/frames/frame-017.png",
-      "/characters/yukime/frames/frame-018.png",
+      "/characters/yukime/frames/frame-017.png"
+    ],
+    "crouch": [
       "/characters/yukime/frames/frame-019.png"
     ],
+    "crouchBlock": [
+      "/characters/yukime/frames/frame-020.png",
+      "/characters/yukime/frames/frame-021.png",
+      "/characters/yukime/frames/frame-022.png",
+      "/characters/yukime/frames/frame-023.png",
+      "/characters/yukime/frames/frame-024.png",
+      "/characters/yukime/frames/frame-025.png",
+      "/characters/yukime/frames/frame-026.png",
+      "/characters/yukime/frames/frame-027.png"
+    ],
+    "block": [
+      "/characters/yukime/frames/frame-028.png",
+      "/characters/yukime/frames/frame-029.png",
+      "/characters/yukime/frames/frame-030.png",
+      "/characters/yukime/frames/frame-031.png",
+      "/characters/yukime/frames/frame-033.png",
+      "/characters/yukime/frames/frame-034.png",
+      "/characters/yukime/frames/frame-035.png",
+      "/characters/yukime/frames/frame-036.png"
+    ],
     "chargeKi": [
-      "/characters/yukime/frames/frame-020.png"
+      "/characters/yukime/frames/frame-038.png",
+      "/characters/yukime/frames/frame-039.png",
+      "/characters/yukime/frames/frame-040.png",
+      "/characters/yukime/frames/frame-041.png"
     ],
     "jableft": [
       "/characters/yukime/frames/frame-000.png",
-      "/characters/yukime/frames/frame-001.png"
-    ],
-    "jabright": [
+      "/characters/yukime/frames/frame-001.png",
       "/characters/yukime/frames/frame-002.png",
       "/characters/yukime/frames/frame-003.png",
-      "/characters/yukime/frames/frame-004.png",
       "/characters/yukime/frames/frame-005.png",
       "/characters/yukime/frames/frame-006.png",
       "/characters/yukime/frames/frame-007.png",
-      "/characters/yukime/frames/frame-008.png",
-      "/characters/yukime/frames/frame-009.png"
+      "/characters/yukime/frames/frame-008.png"
     ],
-    "kickleft": [
-      "/characters/yukime/frames/frame-010.png"
-    ],
-    "kickright": [
-      "/characters/yukime/frames/frame-011.png"
-    ],
-    "hitLight": [
+    "jabright": [
+      "/characters/yukime/frames/frame-010.png",
+      "/characters/yukime/frames/frame-011.png",
       "/characters/yukime/frames/frame-012.png",
       "/characters/yukime/frames/frame-013.png",
       "/characters/yukime/frames/frame-014.png",
       "/characters/yukime/frames/frame-015.png",
       "/characters/yukime/frames/frame-016.png",
-      "/characters/yukime/frames/frame-017.png",
-      "/characters/yukime/frames/frame-018.png",
+      "/characters/yukime/frames/frame-017.png"
+    ],
+    "kickleft": [
       "/characters/yukime/frames/frame-019.png"
     ],
+    "kickright": [
+      "/characters/yukime/frames/frame-020.png",
+      "/characters/yukime/frames/frame-021.png",
+      "/characters/yukime/frames/frame-022.png",
+      "/characters/yukime/frames/frame-023.png",
+      "/characters/yukime/frames/frame-024.png",
+      "/characters/yukime/frames/frame-025.png",
+      "/characters/yukime/frames/frame-026.png",
+      "/characters/yukime/frames/frame-027.png"
+    ],
+    "hitLight": [
+      "/characters/yukime/frames/frame-028.png",
+      "/characters/yukime/frames/frame-029.png",
+      "/characters/yukime/frames/frame-030.png",
+      "/characters/yukime/frames/frame-031.png",
+      "/characters/yukime/frames/frame-033.png",
+      "/characters/yukime/frames/frame-034.png",
+      "/characters/yukime/frames/frame-035.png",
+      "/characters/yukime/frames/frame-036.png"
+    ],
     "hitHeavy": [
-      "/characters/yukime/frames/frame-020.png"
+      "/characters/yukime/frames/frame-038.png",
+      "/characters/yukime/frames/frame-039.png",
+      "/characters/yukime/frames/frame-040.png",
+      "/characters/yukime/frames/frame-041.png"
     ],
     "juggle": [
       "/characters/yukime/frames/frame-000.png",
-      "/characters/yukime/frames/frame-001.png"
-    ],
-    "knockdown": [
+      "/characters/yukime/frames/frame-001.png",
       "/characters/yukime/frames/frame-002.png",
       "/characters/yukime/frames/frame-003.png",
-      "/characters/yukime/frames/frame-004.png",
       "/characters/yukime/frames/frame-005.png",
       "/characters/yukime/frames/frame-006.png",
       "/characters/yukime/frames/frame-007.png",
-      "/characters/yukime/frames/frame-008.png",
-      "/characters/yukime/frames/frame-009.png"
+      "/characters/yukime/frames/frame-008.png"
     ],
-    "getupStand": [
-      "/characters/yukime/frames/frame-010.png"
-    ],
-    "getupRollUp": [
-      "/characters/yukime/frames/frame-011.png"
-    ],
-    "win": [
+    "knockdown": [
+      "/characters/yukime/frames/frame-010.png",
+      "/characters/yukime/frames/frame-011.png",
       "/characters/yukime/frames/frame-012.png",
       "/characters/yukime/frames/frame-013.png",
       "/characters/yukime/frames/frame-014.png",
       "/characters/yukime/frames/frame-015.png",
       "/characters/yukime/frames/frame-016.png",
-      "/characters/yukime/frames/frame-017.png",
-      "/characters/yukime/frames/frame-018.png",
+      "/characters/yukime/frames/frame-017.png"
+    ],
+    "getupStand": [
       "/characters/yukime/frames/frame-019.png"
     ],
+    "getupRollUp": [
+      "/characters/yukime/frames/frame-020.png",
+      "/characters/yukime/frames/frame-021.png",
+      "/characters/yukime/frames/frame-022.png",
+      "/characters/yukime/frames/frame-023.png",
+      "/characters/yukime/frames/frame-024.png",
+      "/characters/yukime/frames/frame-025.png",
+      "/characters/yukime/frames/frame-026.png",
+      "/characters/yukime/frames/frame-027.png"
+    ],
+    "win": [
+      "/characters/yukime/frames/frame-028.png",
+      "/characters/yukime/frames/frame-029.png",
+      "/characters/yukime/frames/frame-030.png",
+      "/characters/yukime/frames/frame-031.png",
+      "/characters/yukime/frames/frame-033.png",
+      "/characters/yukime/frames/frame-034.png",
+      "/characters/yukime/frames/frame-035.png",
+      "/characters/yukime/frames/frame-036.png"
+    ],
     "lose": [
-      "/characters/yukime/frames/frame-020.png"
+      "/characters/yukime/frames/frame-038.png",
+      "/characters/yukime/frames/frame-039.png",
+      "/characters/yukime/frames/frame-040.png",
+      "/characters/yukime/frames/frame-041.png"
     ],
     "cmd:f+1": [
       "/characters/yukime/frames/frame-000.png",
-      "/characters/yukime/frames/frame-001.png"
-    ],
-    "cmd:d/f+2": [
+      "/characters/yukime/frames/frame-001.png",
       "/characters/yukime/frames/frame-002.png",
       "/characters/yukime/frames/frame-003.png",
-      "/characters/yukime/frames/frame-004.png",
       "/characters/yukime/frames/frame-005.png",
       "/characters/yukime/frames/frame-006.png",
       "/characters/yukime/frames/frame-007.png",
-      "/characters/yukime/frames/frame-008.png",
-      "/characters/yukime/frames/frame-009.png"
+      "/characters/yukime/frames/frame-008.png"
     ],
-    "cmd:qcf+4": [
-      "/characters/yukime/frames/frame-010.png"
-    ],
-    "cmd:WS+4": [
-      "/characters/yukime/frames/frame-011.png"
-    ],
-    "cmd:FC+1": [
+    "cmd:d/f+2": [
+      "/characters/yukime/frames/frame-010.png",
+      "/characters/yukime/frames/frame-011.png",
       "/characters/yukime/frames/frame-012.png",
       "/characters/yukime/frames/frame-013.png",
       "/characters/yukime/frames/frame-014.png",
       "/characters/yukime/frames/frame-015.png",
       "/characters/yukime/frames/frame-016.png",
-      "/characters/yukime/frames/frame-017.png",
-      "/characters/yukime/frames/frame-018.png",
+      "/characters/yukime/frames/frame-017.png"
+    ],
+    "cmd:qcf+4": [
       "/characters/yukime/frames/frame-019.png"
     ],
+    "cmd:WS+4": [
+      "/characters/yukime/frames/frame-020.png",
+      "/characters/yukime/frames/frame-021.png",
+      "/characters/yukime/frames/frame-022.png",
+      "/characters/yukime/frames/frame-023.png",
+      "/characters/yukime/frames/frame-024.png",
+      "/characters/yukime/frames/frame-025.png",
+      "/characters/yukime/frames/frame-026.png",
+      "/characters/yukime/frames/frame-027.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/yukime/frames/frame-028.png",
+      "/characters/yukime/frames/frame-029.png",
+      "/characters/yukime/frames/frame-030.png",
+      "/characters/yukime/frames/frame-031.png",
+      "/characters/yukime/frames/frame-033.png",
+      "/characters/yukime/frames/frame-034.png",
+      "/characters/yukime/frames/frame-035.png",
+      "/characters/yukime/frames/frame-036.png"
+    ],
     "cmd:FC+2": [
-      "/characters/yukime/frames/frame-020.png"
+      "/characters/yukime/frames/frame-038.png",
+      "/characters/yukime/frames/frame-039.png",
+      "/characters/yukime/frames/frame-040.png",
+      "/characters/yukime/frames/frame-041.png"
     ],
     "cmd:1+2": [
       "/characters/yukime/frames/frame-000.png",
-      "/characters/yukime/frames/frame-001.png"
-    ],
-    "cmd:1+3": [
+      "/characters/yukime/frames/frame-001.png",
       "/characters/yukime/frames/frame-002.png",
       "/characters/yukime/frames/frame-003.png",
-      "/characters/yukime/frames/frame-004.png",
       "/characters/yukime/frames/frame-005.png",
       "/characters/yukime/frames/frame-006.png",
       "/characters/yukime/frames/frame-007.png",
-      "/characters/yukime/frames/frame-008.png",
-      "/characters/yukime/frames/frame-009.png"
+      "/characters/yukime/frames/frame-008.png"
     ],
-    "cmd:2+3": [
-      "/characters/yukime/frames/frame-010.png"
-    ],
-    "cmd:2+4": [
-      "/characters/yukime/frames/frame-011.png"
-    ],
-    "cmd:3+4": [
+    "cmd:1+3": [
+      "/characters/yukime/frames/frame-010.png",
+      "/characters/yukime/frames/frame-011.png",
       "/characters/yukime/frames/frame-012.png",
       "/characters/yukime/frames/frame-013.png",
       "/characters/yukime/frames/frame-014.png",
       "/characters/yukime/frames/frame-015.png",
       "/characters/yukime/frames/frame-016.png",
-      "/characters/yukime/frames/frame-017.png",
-      "/characters/yukime/frames/frame-018.png",
+      "/characters/yukime/frames/frame-017.png"
+    ],
+    "cmd:2+3": [
       "/characters/yukime/frames/frame-019.png"
     ],
+    "cmd:2+4": [
+      "/characters/yukime/frames/frame-020.png",
+      "/characters/yukime/frames/frame-021.png",
+      "/characters/yukime/frames/frame-022.png",
+      "/characters/yukime/frames/frame-023.png",
+      "/characters/yukime/frames/frame-024.png",
+      "/characters/yukime/frames/frame-025.png",
+      "/characters/yukime/frames/frame-026.png",
+      "/characters/yukime/frames/frame-027.png"
+    ],
+    "cmd:3+4": [
+      "/characters/yukime/frames/frame-028.png",
+      "/characters/yukime/frames/frame-029.png",
+      "/characters/yukime/frames/frame-030.png",
+      "/characters/yukime/frames/frame-031.png",
+      "/characters/yukime/frames/frame-033.png",
+      "/characters/yukime/frames/frame-034.png",
+      "/characters/yukime/frames/frame-035.png",
+      "/characters/yukime/frames/frame-036.png"
+    ],
     "cmd:O+2": [
-      "/characters/yukime/frames/frame-020.png"
+      "/characters/yukime/frames/frame-038.png",
+      "/characters/yukime/frames/frame-039.png",
+      "/characters/yukime/frames/frame-040.png",
+      "/characters/yukime/frames/frame-041.png"
     ]
   },
   "animationFrameRates": {
@@ -501,7 +612,7 @@
     },
     "kickright": {
       "label": "Yukime Right Kick",
-      "startupFrames": 16,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -515,7 +626,7 @@
     },
     "cmd:f+1": {
       "label": "Yukime Rush",
-      "startupFrames": 16,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 11,
@@ -563,7 +674,7 @@
     },
     "cmd:WS+4": {
       "label": "Yukime Rising Strike",
-      "startupFrames": 16,
+      "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -1022,17 +1133,5 @@
     "guard": 0.38,
     "spacing": 1.35,
     "specialChance": 0.21
-  },
-  "voxelFidelity": {
-    "resolutionScale": 2,
-    "maxRows": 64,
-    "depth": 0.24,
-    "alphaThreshold": 24,
-    "paletteSnap": 1,
-    "mergeRuns": true,
-    "lod": {
-      "mobileStep": 2,
-      "farStep": 2
-    }
   }
 }
