@@ -122,6 +122,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
     if (!applyVerticalTap(virtualRefs.current[player - 1], verticalTapRefs.current[player - 1], action, pressed, 'virtual')) {
       virtualRefs.current[player - 1][action] = pressed;
     }
+    if (pressed) lastInputRef.current = `p${player}:${action}`;
   }, []);
 
   const clearMenuInputs = useCallback(() => {

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 async function startFromSplash(page: import('@playwright/test').Page) {
   await page.goto('/');
@@ -34,6 +35,26 @@ async function virtualPress(page: import('@playwright/test').Page, label: string
   await target.dispatchEvent('pointerdown', { pointerId: 1, pointerType: 'touch', isPrimary: true, bubbles: true });
   await page.waitForTimeout(duration);
   await target.dispatchEvent('pointerup', { pointerId: 1, pointerType: 'touch', isPrimary: true, bubbles: true });
+}
+
+async function touchHold(page: Page, testId: string, duration: number) {
+  const target = page.getByTestId(testId);
+  await expect(target).toBeVisible();
+  const box = await target.boundingBox();
+  if (!box) throw new Error(`Missing touch target box for ${testId}`);
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  const client = await page.context().newCDPSession(page);
+  await client.send('Input.dispatchTouchEvent', {
+    type: 'touchStart',
+    touchPoints: [{ x, y, id: 1, radiusX: 8, radiusY: 8, force: 1 }]
+  });
+  await page.waitForTimeout(duration);
+  await client.send('Input.dispatchTouchEvent', {
+    type: 'touchEnd',
+    touchPoints: []
+  });
+  await client.detach();
 }
 
 function keyValue(code: string) {
@@ -168,4 +189,18 @@ test('uses single tap for jump/crouch and double tap for lane movement', async (
   const p2After = zFromPosition(await page.getByTestId('p2-position').innerText());
   expect(Math.abs(p2After - p2Before)).toBeGreaterThan(0.45);
   expect(p2After).toBeGreaterThanOrEqual(-3.6);
+});
+
+test('mobile touch controls drive movement and attacks', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
+  await startFight(page, true);
+  await expect(page.locator('.touch-controls')).toBeVisible();
+  const before = xFromPosition(await page.getByTestId('p1-position').innerText());
+
+  await touchHold(page, 'touch-right', 900);
+
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3000 }).toBeGreaterThan(before + 0.18);
+
+  await touchHold(page, 'touch-jab', 220);
+  await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
 });

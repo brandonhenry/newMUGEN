@@ -5181,11 +5181,17 @@ button {
   inset: 0;
   background: #101114;
   outline: none;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
 }
 
 .fight-screen canvas {
   width: 100% !important;
   height: 100% !important;
+  touch-action: none;
 }
 
 .fight-debug {
@@ -6462,12 +6468,17 @@ button {
   position: absolute;
   left: 14px;
   right: 14px;
-  bottom: 14px;
+  bottom: max(14px, env(safe-area-inset-bottom));
   display: none;
   justify-content: space-between;
   align-items: end;
   gap: 16px;
   pointer-events: none;
+  z-index: 20;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .touch-controls.force-visible {
@@ -6498,6 +6509,7 @@ button {
   pointer-events: auto;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
   touch-action: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .touch-pad .touch-button {

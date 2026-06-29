@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
+import { useCallback, useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 import type { ActionName } from '../types';
 
 type TouchControlsProps = {
@@ -21,26 +22,79 @@ const movementIcons = {
   right: <ChevronRight size={20} />
 };
 
+function activeActionKey(player: 1 | 2, action: ActionName) {
+  return `${player}:${action}` as const;
+}
+
 export function TouchControls({ onAction, forceVisible = false }: TouchControlsProps) {
+  const activeActionsRef = useRef(new Map<string, { player: 1 | 2; action: ActionName }>());
+
+  const releaseAction = useCallback((player: 1 | 2, action: ActionName) => {
+    const key = activeActionKey(player, action);
+    if (!activeActionsRef.current.has(key)) return;
+    activeActionsRef.current.delete(key);
+    onAction(player, action, false);
+  }, [onAction]);
+
+  const releaseAll = useCallback(() => {
+    for (const { player, action } of activeActionsRef.current.values()) {
+      onAction(player, action, false);
+    }
+    activeActionsRef.current.clear();
+  }, [onAction]);
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== 'visible') releaseAll();
+    };
+    window.addEventListener('blur', releaseAll);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      window.removeEventListener('blur', releaseAll);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      releaseAll();
+    };
+  }, [releaseAll]);
+
   const bind = (player: 1 | 2, action: ActionName) => ({
-    onPointerDown: () => onAction(player, action, true),
-    onPointerUp: () => onAction(player, action, false),
-    onPointerCancel: () => onAction(player, action, false),
-    onPointerLeave: () => onAction(player, action, false)
+    onPointerDown: (event: ReactPointerEvent<HTMLButtonElement>) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.currentTarget.setPointerCapture?.(event.pointerId);
+      const key = activeActionKey(player, action);
+      if (!activeActionsRef.current.has(key)) {
+        activeActionsRef.current.set(key, { player, action });
+        onAction(player, action, true);
+      }
+    },
+    onPointerUp: (event: ReactPointerEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.currentTarget.releasePointerCapture?.(event.pointerId);
+      releaseAction(player, action);
+    },
+    onPointerCancel: (event: ReactPointerEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      releaseAction(player, action);
+    },
+    onLostPointerCapture: () => releaseAction(player, action),
+    onContextMenu: (event: ReactPointerEvent<HTMLButtonElement>) => event.preventDefault()
   });
 
   return (
     <div className={`touch-controls ${forceVisible ? 'force-visible' : ''}`} aria-label="Touch controls">
       <div className="touch-pad">
         {movement.map((action) => (
-          <button key={action} className={`touch-button touch-${action}`} {...bind(1, action)} aria-label={action}>
+          <button key={action} type="button" className={`touch-button touch-${action}`} {...bind(1, action)} aria-label={action} data-testid={`touch-${action}`}>
             {movementIcons[action as keyof typeof movementIcons]}
           </button>
         ))}
       </div>
       <div className="touch-actions">
         {attacks.map(({ action, label }) => (
-          <button key={action} className="touch-button action-button" {...bind(1, action)}>
+          <button key={action} type="button" className={`touch-button action-button touch-${action}`} {...bind(1, action)} data-testid={`touch-${action}`}>
             {label}
           </button>
         ))}
