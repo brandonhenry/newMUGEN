@@ -2216,6 +2216,7 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
+            unlockedCharacterIds={unlockedCharacterIds}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
@@ -2761,6 +2762,7 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
 
 function MenuScreen({
   roster,
+  unlockedCharacterIds,
   onMenuSelect,
   onMenuHover,
   onArcade,
@@ -2773,6 +2775,7 @@ function MenuScreen({
   onExit
 }: {
   roster: CharacterDefinition[];
+  unlockedCharacterIds: Set<string>;
   onMenuSelect: () => void;
   onMenuHover: () => void;
   onArcade: () => void;
@@ -2784,7 +2787,7 @@ function MenuScreen({
   onStages: () => void;
   onExit: () => void;
 }) {
-  const [attractIds] = useState(() => pickAttractCharacterIds(roster));
+  const [attractIds] = useState(() => pickAttractCharacterIds(roster, unlockedCharacterIds));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() }) : null));
@@ -2880,11 +2883,13 @@ function MenuScreen({
   );
 }
 
-function pickAttractCharacterIds(roster: CharacterDefinition[]): [string, string] {
-  if (roster.length === 0) return ['', ''];
-  const firstIndex = Math.floor(Math.random() * roster.length);
-  const first = roster[firstIndex];
-  const opponents = roster.filter((character) => character.id !== first.id);
+function pickAttractCharacterIds(roster: CharacterDefinition[], unlockedCharacterIds: Set<string>): [string, string] {
+  const unlockedRoster = roster.filter((character) => isCharacterUnlocked(character, unlockedCharacterIds));
+  const pool = unlockedRoster.length > 0 ? unlockedRoster : roster;
+  if (pool.length === 0) return ['', ''];
+  const firstIndex = Math.floor(Math.random() * pool.length);
+  const first = pool[firstIndex];
+  const opponents = pool.filter((character) => character.id !== first.id);
   const second = opponents.length > 0 ? opponents[Math.floor(Math.random() * opponents.length)] : first;
   return [first.id, second.id];
 }
