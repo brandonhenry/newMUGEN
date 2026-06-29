@@ -17,7 +17,7 @@
     }
   ],
   "spriteFrameCount": 211,
-  "voxelProfile": "image-source",
+  "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
       "/characters/fuusuke/frames/frame-000.png",
@@ -1161,5 +1161,17 @@
     "guard": 0.32,
     "spacing": 1.45,
     "specialChance": 0.27
+  },
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
   }
 }

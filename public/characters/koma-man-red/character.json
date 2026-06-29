@@ -17,7 +17,7 @@
     }
   ],
   "spriteFrameCount": 136,
-  "voxelProfile": "image-source",
+  "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
       "/characters/koma-man-red/frames/frame-000.png",
@@ -1152,5 +1152,17 @@
     "guard": 0.4,
     "spacing": 1.58,
     "specialChance": 0.2
+  },
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
   }
 }

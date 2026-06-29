@@ -17,7 +17,7 @@
     }
   ],
   "spriteFrameCount": 188,
-  "voxelProfile": "image-source",
+  "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
       "/characters/heihachi-edajima/frames/frame-000.png",
@@ -1165,5 +1165,17 @@
     "guard": 0.45,
     "spacing": 1.55,
     "specialChance": 0.28
+  },
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
   }
 }

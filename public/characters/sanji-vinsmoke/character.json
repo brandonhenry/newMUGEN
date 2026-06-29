@@ -17,7 +17,7 @@
     }
   ],
   "spriteFrameCount": 593,
-  "voxelProfile": "image-source",
+  "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
       "/characters/sanji-vinsmoke/frames/frame-000.png",
@@ -1160,5 +1160,17 @@
     "guard": 0.48,
     "spacing": 1.53,
     "specialChance": 0.2
+  },
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
   }
 }

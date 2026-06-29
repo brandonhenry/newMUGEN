@@ -17,7 +17,7 @@
     }
   ],
   "spriteFrameCount": 150,
-  "voxelProfile": "image-source",
+  "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
       "/characters/yugi-mutou/frames/frame-000.png",
@@ -1154,5 +1154,17 @@
     "guard": 0.49,
     "spacing": 1.53,
     "specialChance": 0.26
+  },
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
   }
 }

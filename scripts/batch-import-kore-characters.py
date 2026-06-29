@@ -791,7 +791,16 @@ def manifest_for(character_id: str, display_name: str, frame_count: int, animati
             }
         ],
         "spriteFrameCount": frame_count,
-        "voxelProfile": "image-source",
+        "voxelProfile": "hd-image-source",
+        "voxelFidelity": {
+            "resolutionScale": 2,
+            "maxRows": 64,
+            "depth": 0.24,
+            "alphaThreshold": 24,
+            "paletteSnap": 1,
+            "mergeRuns": True,
+            "lod": {"mobileStep": 2, "farStep": 2},
+        },
         "animationFrames": animation_frames,
         "animationFrameRates": animation_rates,
         "animationFps": 6,
