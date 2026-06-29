@@ -125,6 +125,7 @@ export type MoveDefinition = {
   hitbox: BoxSpec;
   hurtboxes?: BoxSpec[];
   hurtboxOffset?: Vec3Tuple;
+  usesKi?: boolean;
   kiCost?: number;
   kiBurst?: boolean;
   soundCues?: EffectSoundCue[];

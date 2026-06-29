@@ -553,6 +553,8 @@
       "tracking": "homing",
       "knockdown": true,
       "endsInCrouch": true,
+      "usesKi": true,
+      "kiCost": 35,
       "soundCues": [
         {
           "id": "cue-1",

@@ -139,6 +139,8 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     tracking: normalizeTracking(move.tracking),
     armorStartFrame: normalizeNullableFrame(move.armorStartFrame),
     armorEndFrame: normalizeNullableFrame(move.armorEndFrame),
+    usesKi: Boolean(move.usesKi),
+    kiCost: move.kiCost === undefined ? undefined : clamp(Math.round(finiteOr(move.kiCost, 35)), 0, 100),
     cancelWindows: Array.isArray(move.cancelWindows)
       ? move.cancelWindows
           .map((window) => ({

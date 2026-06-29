@@ -806,6 +806,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     'launchVelocity',
     'juggleRefloatVelocity',
     'juggleGravityScale',
+    'kiCost',
     'armorStartFrame',
     'armorEndFrame'
   ];
@@ -822,6 +823,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
   if (typeof override.jumpBeforeMove === 'boolean') next.jumpBeforeMove = override.jumpBeforeMove;
+  if (typeof override.usesKi === 'boolean') next.usesKi = override.usesKi;
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
   const soundCues = sanitizeSoundCues(override.soundCues);
   if (soundCues.length > 0) next.soundCues = soundCues;
@@ -3506,7 +3508,7 @@ function MaxHealthControl({ value, setValue }: { value: number; setValue: (value
   const cycleHealth = (direction: -1 | 1) => {
     const activeIndex = Math.max(0, maxHealthOptions.findIndex((option) => option === value));
     const nextIndex = (activeIndex + direction + maxHealthOptions.length) % maxHealthOptions.length;
-    const next = maxHealthOptions[nextIndex] ?? 100;
+    const next = maxHealthOptions[nextIndex] ?? defaultGameSettings.game.maxHealth;
     if (next !== value) setValue(next);
   };
 
@@ -4485,8 +4487,9 @@ function SettingsScreen({
 
   const renderEditor = () => {
     if (activeTab === 'game') {
-      const visibleRoundTimer = mode === 'online' ? 60 : settings.game.roundTimer;
-      const visibleMaxHealth = mode === 'online' ? defaultGameSettings.game.maxHealth : settings.game.maxHealth;
+      const usesOnlineStandardRules = mode === 'online' || mode === 'private';
+      const visibleRoundTimer = usesOnlineStandardRules ? 60 : settings.game.roundTimer;
+      const visibleMaxHealth = usesOnlineStandardRules ? defaultGameSettings.game.maxHealth : settings.game.maxHealth;
       return (
         <div className="settings-section-stack">
           <SettingsSection index={0} title="Match Rules" active={activeSectionIndex === 0}>
@@ -4497,17 +4500,17 @@ function SettingsScreen({
               <RoundTimerControl
                 value={visibleRoundTimer}
                 setValue={(roundTimer) => {
-                  if (mode !== 'online') {
+                  if (!usesOnlineStandardRules) {
                     updateSettings((current) => ({ ...current, game: { ...current.game, roundTimer } }));
                   }
                 }}
               />
             </SettingRow>
-            <SettingRow label="Max HP" value={mode === 'online' ? 'Online Standard' : formatMaxHealth(visibleMaxHealth)}>
+            <SettingRow label="Max HP" value={usesOnlineStandardRules ? 'Online Standard' : formatMaxHealth(visibleMaxHealth)}>
               <MaxHealthControl
                 value={visibleMaxHealth}
                 setValue={(maxHealth) => {
-                  if (mode !== 'online') {
+                  if (!usesOnlineStandardRules) {
                     updateSettings((current) => ({ ...current, game: { ...current.game, maxHealth } }));
                   }
                 }}
@@ -7344,6 +7347,8 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const moveJumpForce = move.moveJumpForce ?? 8;
   const moveJumpGravity = move.moveJumpGravity ?? 18;
   const homingSpeed = move.homingSpeed ?? 8;
+  const usesKi = Boolean(move.usesKi || move.kiBurst);
+  const kiCost = move.kiCost ?? 35;
   const resultLabel = [
     move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames),
     move.tornado ? 'T!' : null,
@@ -7404,6 +7409,15 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
           </select>
         </label>
         <FrameNumberInput label="Homing Speed" value={homingSpeed} min={0} step={0.1} onChange={(value) => updateNumber('homingSpeed', value, 0)} />
+        <label className="frame-toggle">
+          <span>Uses Ki</span>
+          <input
+            type="checkbox"
+            checked={usesKi}
+            onChange={(event) => onChange({ usesKi: event.target.checked, kiCost })}
+          />
+        </label>
+        <FrameNumberInput label="Ki Cost" value={kiCost} min={0} max={100} disabled={!usesKi} onChange={(value) => updateNumber('kiCost', value, 0)} />
         <label className="frame-toggle">
           <span>Launcher</span>
           <input
@@ -9434,12 +9448,12 @@ function FightScreen({
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
     () => ({
-      roundTime: mode === 'online' ? 60 : settings.game.roundTimer,
-      maxHealth: mode === 'online' ? undefined : settings.game.maxHealth,
+      roundTime: isOnline ? 60 : settings.game.roundTimer,
+      maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       playIntro: true
     }),
-    [mode, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [isOnline, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);

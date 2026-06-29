@@ -73,7 +73,7 @@ const KI_CHARGE_PER_SECOND = 28;
 const KI_HIT_GAIN = 9;
 const KI_BLOCK_GAIN = 4;
 const KI_DEFENDER_BLOCK_GAIN = 5;
-const KI_BURST_COST = 30;
+const KI_BURST_COST = 35;
 const ATTACK_BUFFER_FRAMES = 16;
 const MAX_COMBO_STEPS = 6;
 const SIDESTEP_TAP_SCALE = 1.45;
@@ -466,6 +466,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const previousPosition = { ...fighter.position };
   const finishFighterStep = () => {
     applyShadowCloneMovementDelta(fighter, previousPosition);
+    syncShadowClonePassiveState(fighter);
     updateAttackInputMemory(fighter, input);
   };
   const jumpPressed = input.up && !fighter.jumpInputHeld;
@@ -494,7 +495,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.state === 'chargeKi' &&
     freshMoveInput &&
     input.charge &&
-    fighter.ki >= KI_BURST_COST &&
+    fighter.ki >= getChargedMoveKiCost(fighter, opponent, input, freshMoveInput) &&
     fighter.chargePhase !== 'startup' &&
     fighter.chargePhase !== 'recovery'
   ) {
@@ -870,7 +871,7 @@ function startShadowCloneAttack(fighter: FighterRuntime, _opponent: FighterRunti
 function applyShadowCloneMovementDelta(fighter: FighterRuntime, previousPosition: FighterRuntime['position']) {
   const clone = fighter.shadowClone;
   if (!clone || clone.phase !== 'active') return;
-  if (clone.state !== 'idle' && clone.state !== 'attack') return;
+  if (isShadowCloneAutonomousState(clone)) return;
   const dx = fighter.position.x - previousPosition.x;
   const dy = fighter.position.y - previousPosition.y;
   const dz = fighter.position.z - previousPosition.z;
@@ -884,6 +885,31 @@ function applyShadowCloneMovementDelta(fighter: FighterRuntime, previousPosition
   clone.position.z += dz;
   clone.facing = fighter.facing;
   clone.facingYaw = fighter.facingYaw;
+}
+
+function syncShadowClonePassiveState(fighter: FighterRuntime) {
+  const clone = fighter.shadowClone;
+  if (!clone || clone.phase !== 'active' || isShadowCloneAutonomousState(clone)) return;
+  if (!isShadowClonePassiveMirrorState(fighter.state)) return;
+
+  const previousState = clone.state;
+  clone.state = fighter.state;
+  clone.velocityY = fighter.velocityY;
+  clone.facing = fighter.facing;
+  clone.facingYaw = fighter.facingYaw;
+  clone.currentMove = fighter.state === 'chargeKi' ? fighter.currentMove : null;
+  clone.moveFrame = fighter.state === 'chargeKi' ? fighter.moveFrame : 0;
+  clone.actionFramesRemaining = fighter.state === 'chargeKi' ? fighter.actionFramesRemaining : 0;
+  clone.hitConnected = false;
+  if (clone.state !== previousState) clone.moveInstanceId += 1;
+}
+
+function isShadowCloneAutonomousState(clone: NonNullable<FighterRuntime['shadowClone']>) {
+  return clone.state === 'attack' || clone.state === 'hit' || clone.state === 'juggle' || clone.state === 'knockdown' || clone.state === 'getup';
+}
+
+function isShadowClonePassiveMirrorState(state: FighterRuntime['state']) {
+  return state === 'idle' || state === 'walk' || state === 'sidestep' || state === 'crouch' || state === 'crouchBlock' || state === 'jump' || state === 'block' || state === 'chargeKi';
 }
 
 function updateShadowClone(fighter: FighterRuntime, dt: number) {
@@ -1061,11 +1087,18 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
     if (fighter.bufferedMoveInput === moveInput) clearBufferedMoveInput(fighter);
     return false;
   }
-  const charged = input.charge && fighter.ki >= KI_BURST_COST;
-  const resolvedMove = charged ? buildKiBurstMove(move) : move;
+  const chargedIntent = input.charge;
+  const kiCost = getMoveKiCost(move);
+  const spendsKi = chargedIntent || moveUsesKi(move);
+  if (spendsKi && fighter.ki < kiCost) {
+    if (fighter.bufferedMoveInput === moveInput) clearBufferedMoveInput(fighter);
+    return false;
+  }
+  const charged = chargedIntent;
+  const resolvedMove = charged ? buildKiBurstMove(move, kiCost) : move;
   const identity = getMoveIdentity(move);
   fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
-  if (charged) fighter.ki = clamp(fighter.ki - KI_BURST_COST, 0, KI_MAX);
+  if (spendsKi) fighter.ki = clamp(fighter.ki - kiCost, 0, KI_MAX);
   applyMoveJumpStart(fighter, resolvedMove);
 
   fighter.currentMove = resolvedMove;
@@ -1090,6 +1123,17 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   }
   startShadowCloneAttack(fighter, opponent, resolvedMove);
   return true;
+}
+
+function getChargedMoveKiCost(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput) {
+  const baseMove = fighter.character.moves.find((candidate) => candidate.input === moveInput);
+  if (!baseMove) return Number.POSITIVE_INFINITY;
+  const route = getComboRoute(fighter, opponent, input);
+  const comboStep = fighter.comboTimer > 0 ? Math.min(MAX_COMBO_STEPS, fighter.comboStep + 1) : 1;
+  const sequence = fighter.comboTimer > 0 ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
+  const command = findConfiguredCommand(fighter, opponent, input, moveInput);
+  const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
+  return getMoveKiCost(move);
 }
 
 function applyMoveJumpStart(fighter: FighterRuntime, move: MoveDefinition) {
@@ -1128,7 +1172,15 @@ function shouldDropSameMoveRecoveryBuffer(fighter: FighterRuntime, opponent: Fig
   return !isAuthoredChain(fighter.character, move, route, sequence, command);
 }
 
-function buildKiBurstMove(move: MoveDefinition): MoveDefinition {
+function getMoveKiCost(move: MoveDefinition) {
+  return clamp(Math.round(move.kiCost ?? KI_BURST_COST), 0, KI_MAX);
+}
+
+function moveUsesKi(move?: MoveDefinition | null) {
+  return Boolean(move?.usesKi || move?.kiBurst);
+}
+
+function buildKiBurstMove(move: MoveDefinition, kiCost = getMoveKiCost(move)): MoveDefinition {
   return {
     ...move,
     id: `${move.id}-ki`,
@@ -1143,7 +1195,8 @@ function buildKiBurstMove(move: MoveDefinition): MoveDefinition {
     pushback: move.pushback + 0.32,
     blockPushback: move.blockPushback + 0.24,
     comboKey: `${move.comboKey ?? move.id}:ki`,
-    kiCost: KI_BURST_COST,
+    usesKi: true,
+    kiCost,
     kiBurst: true
   };
 }
@@ -2088,7 +2141,9 @@ function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
   winner.comboHits = Math.max(1, winner.comboHits + 1);
   winner.comboDamage = Math.max(0, winner.comboDamage + damage);
   winner.comboTimer = COMBO_WINDOW;
-  winner.ki = clamp(winner.ki + Math.round(damage * 0.25), 0, KI_MAX);
+  if (!moveUsesKi(winnerMove)) {
+    winner.ki = clamp(winner.ki + Math.round(damage * 0.25), 0, KI_MAX);
+  }
 
   const stunFrames = Math.max(CLASH_LOSER_HITSTUN_FRAMES, (winnerMove?.onHitFrames ?? 0) + CLASH_LOSER_HITSTUN_FRAMES);
   loser.currentMove = null;
@@ -2209,7 +2264,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   if (blocked) {
     attacker.hitConfirmed = false;
-    attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
+    if (!moveUsesKi(move)) {
+      attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
+    }
     defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
     defender.hp = Math.max(0, defender.hp - move.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(move);
@@ -2230,7 +2287,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
 
   attacker.hitConfirmed = true;
-  attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
+  if (!moveUsesKi(move)) {
+    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
+  }
   attacker.comboHits = Math.max(1, attacker.comboHits + 1);
   attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
   const identity = getMoveIdentity(move);
@@ -2327,7 +2386,9 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const pushZ = distance > 0 ? dz / distance : 0;
   const attackerRemaining = Math.max(0, clone.actionFramesRemaining);
   if (blocked) {
-    attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_BLOCK_GAIN * 0.5)), 0, KI_MAX);
+    if (!moveUsesKi(sourceMove)) {
+      attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_BLOCK_GAIN * 0.5)), 0, KI_MAX);
+    }
     defender.ki = clamp(defender.ki + Math.max(1, Math.round(KI_DEFENDER_BLOCK_GAIN * 0.6)), 0, KI_MAX);
     defender.hp = Math.max(0, defender.hp - weakMove.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(weakMove);
@@ -2342,7 +2403,9 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   }
 
   attacker.hitConfirmed = true;
-  attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_HIT_GAIN * 0.45)), 0, KI_MAX);
+  if (!moveUsesKi(sourceMove)) {
+    attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_HIT_GAIN * 0.45)), 0, KI_MAX);
+  }
   attacker.comboHits = Math.max(1, attacker.comboHits + 1);
   attacker.comboDamage = Math.max(0, attacker.comboDamage + weakMove.damage);
   pushCombatPopupEvent(match, impactId, attacker, weakMove, attacker.comboHits >= 2 ? 'combo' : null, {
@@ -2922,7 +2985,7 @@ function beginRoundIntro(match: MatchSnapshot) {
   const totalIntroSeconds = getRoundIntroTotalSeconds(match.round);
   match.phase = 'intro';
   match.countdown = totalIntroSeconds;
-  match.message = '';
+  match.message = `ROUND ${match.round}`;
   match.clashState = createEmptyClashState();
   match.visualTimeScale = 1;
   match.winnerSlot = null;
@@ -2956,10 +3019,10 @@ function beginRoundIntro(match: MatchSnapshot) {
 
 function updateRoundIntro(match: MatchSnapshot) {
   const timing = getRoundAnnouncerTiming(match.round);
-  const clipElapsed = getRoundIntroTotalSeconds(match.round) - match.countdown - ROUND_INTRO_ENTRY_SECONDS;
-  const inEntry = clipElapsed < 0;
+  const clipElapsed = getRoundIntroTotalSeconds(match.round) - match.countdown;
+  const inEntry = clipElapsed < ROUND_INTRO_ENTRY_SECONDS;
   const inRoundCall = clipElapsed < timing.fightAt;
-  match.message = inEntry ? '' : inRoundCall ? `ROUND ${match.round}` : 'FIGHT';
+  match.message = inRoundCall ? `ROUND ${match.round}` : 'FIGHT';
   match.fighters.forEach((fighter) => {
     fighter.state = inEntry ? 'entry' : 'idle';
     fighter.actionTimer = match.countdown;
@@ -2969,7 +3032,7 @@ function updateRoundIntro(match: MatchSnapshot) {
 }
 
 function getRoundIntroTotalSeconds(round: number) {
-  return ROUND_INTRO_ENTRY_SECONDS + getRoundAnnouncerTiming(round).duration;
+  return Math.max(ROUND_INTRO_ENTRY_SECONDS, getRoundAnnouncerTiming(round).duration);
 }
 
 function getRoundAnnouncerTiming(round: number) {
@@ -3192,6 +3255,31 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
   const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, roundAiSeed) < settings.punishDropRate * style.imperfectionScale;
   const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;
+  if (
+    isShadowCloneCharacter(ai) &&
+    !ai.shadowClone &&
+    !ai.shadowCloneChargeConsumed &&
+    ai.ki >= SHADOW_CLONE_KI_THRESHOLD &&
+    !leaderCloseout &&
+    !tooClose &&
+    !danger &&
+    distance > 1.35 &&
+    ai.comboTimer === 0 &&
+    ai.comboHits === 0 &&
+    canStartAction &&
+    canAct
+  ) {
+    input.charge = true;
+    input[towardKey] = false;
+    input[awayKey] = false;
+    input.sidestepUp = false;
+    input.sidestepDown = false;
+    input.sidewalkUp = false;
+    input.sidewalkDown = false;
+    input.down = false;
+    input.up = false;
+    return input;
+  }
   let punishMoveInput = chooseAiPunishMoveInput(ai, difficulty, selector, routeRoll);
   punishMoveInput = chooseAiKiBurstMoveInput(ai, punishMoveInput, difficulty, selector + 5, routeRoll + 3);
   if (aiDecisionRoll(ai, opponent, elapsed, 7, roundAiSeed) < settings.suboptimalPunishRate * style.imperfectionScale) {
@@ -3558,6 +3646,7 @@ function shouldAiUseKiBurst(
   leaderCloseout: boolean
 ) {
   if (ai.ki < KI_BURST_COST) return false;
+  if (isShadowCloneCharacter(ai) && !ai.shadowClone && !ai.shadowCloneChargeConsumed && ai.ki <= SHADOW_CLONE_KI_THRESHOLD) return false;
   if (inputAlreadyUsedInCombo(ai, moveInput)) return false;
   const move = ai.character.moves.find((candidate) => candidate.input === moveInput);
   const hasAuthoredKiRoute = hasConfiguredKiCommand(ai, moveInput);

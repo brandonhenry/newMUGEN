@@ -151,6 +151,8 @@ describe('character manifests', () => {
     const move = normalizeMove({
       ...starterCharacters[0].moves[0],
       tornado: true,
+      usesKi: true,
+      kiCost: 35,
       forwardForce: 0.75,
       forwardForceStartFrame: 2,
       forwardForceEndFrame: 8,
@@ -161,6 +163,8 @@ describe('character manifests', () => {
     });
 
     expect(move.tornado).toBe(true);
+    expect(move.usesKi).toBe(true);
+    expect(move.kiCost).toBe(35);
     expect(move.forwardForce).toBe(0.75);
     expect(move.forwardForceStartFrame).toBe(2);
     expect(move.forwardForceEndFrame).toBe(8);
@@ -659,7 +663,7 @@ describe('fight engine', () => {
     const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
 
     expect(match.phase).toBe('intro');
-    expect(match.message).toBe('');
+    expect(match.message).toBe('ROUND 1');
     expect(match.fighters[0].state).toBe('entry');
     expect(match.fighters[1].state).toBe('entry');
   });
@@ -671,8 +675,10 @@ describe('fight engine', () => {
     expect(match.introEnabled).toBe(false);
   });
 
-  it('shows round and fight callouts after the entry intro', () => {
+  it('starts round callouts with the entry intro', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
+
+    expect(match.message).toBe('ROUND 1');
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1.25);
     expect(match.phase).toBe('intro');
@@ -687,7 +693,7 @@ describe('fight engine', () => {
     expect(match.phase).toBe('intro');
     expect(match.message).toBe('FIGHT');
 
-    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1.55);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.35);
     expect(match.phase).toBe('fighting');
     expect(match.message).toBe('');
   });
@@ -2710,8 +2716,38 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[0].shadowClone?.phase).toBe('active');
-    expect(match.fighters[0].shadowClone?.state).toBe('idle');
+    expect(match.fighters[0].shadowClone?.state).toBe('chargeKi');
     expect(match.fighters[1].shadowClone).toBeNull();
+  });
+
+  it('mirrors Naruto passive movement states with the spawned shadow clone', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 60;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+
+    for (let i = 0; i < 48 && match.fighters[0].state !== 'idle'; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].shadowClone?.state).toBe('idle');
+
+    const walkForward = emptyInputFrame();
+    walkForward.right = true;
+    match = stepMatch(match, walkForward, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('walk');
+    expect(match.fighters[0].shadowClone?.state).toBe('walk');
+
+    const blockBack = emptyInputFrame();
+    blockBack.left = true;
+    match = stepMatch(match, blockBack, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('block');
+    expect(match.fighters[0].shadowClone?.state).toBe('block');
   });
 
   it('mirrors Naruto next attack once with the spawned shadow clone', () => {
@@ -2867,7 +2903,7 @@ describe('fight engine', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
-    match.fighters[0].ki = 30;
+    match.fighters[0].ki = 35;
     const chargedAttack = emptyInputFrame();
     chargedAttack.charge = true;
     chargedAttack.jab = true;
@@ -2879,11 +2915,154 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.damage).toBeGreaterThan(starterCharacters[0].moves[0].damage);
   });
 
-  it('can spend ki on a powered move after charge startup has begun', () => {
+  it('does not start a charged command attack without enough ki', () => {
+    const commandNaruto: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:O+2': ['/characters/kiro/frames/frame-197.png']
+      }
+    };
+    let match = createMatch(commandNaruto, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 34;
+    const chargedAttack = emptyInputFrame();
+    chargedAttack.charge = true;
+    chargedAttack.heavy = true;
+
+    for (let i = 0; i < 6; i += 1) {
+      match = stepMatch(match, chargedAttack, emptyInputFrame(), 1 / 60);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].ki).toBe(34);
+  });
+
+  it('uses per-move ki cost for charged command attacks', () => {
+    const customCostNaruto: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:O+2': ['/characters/kiro/frames/frame-197.png']
+      },
+      moveOverrides: {
+        ...starterCharacters[0].moveOverrides,
+        'cmd:O+2': {
+          ...starterCharacters[0].moveOverrides?.['cmd:O+2'],
+          kiCost: 12
+        }
+      }
+    };
+    let match = createMatch(customCostNaruto, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 12;
+    const chargedAttack = emptyInputFrame();
+    chargedAttack.charge = true;
+    chargedAttack.heavy = true;
+
+    match = stepMatch(match, chargedAttack, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.kiBurst).toBe(true);
+    expect(match.fighters[0].currentMove?.kiCost).toBe(12);
+    expect(match.fighters[0].ki).toBe(0);
+  });
+
+  it('spends ki for authored moves marked as using ki', () => {
+    const kiMoveNaruto: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:3+4': ['/characters/kiro/frames/frame-197.png']
+      },
+      moveOverrides: {
+        ...starterCharacters[0].moveOverrides,
+        'cmd:3+4': {
+          ...starterCharacters[0].moveOverrides?.['cmd:3+4'],
+          usesKi: true,
+          kiCost: 35
+        }
+      }
+    };
+    let match = createMatch(kiMoveNaruto, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 35;
+    const greatRasengan = emptyInputFrame();
+    greatRasengan.kick = true;
+    greatRasengan.special = true;
+
+    match = stepMatch(match, greatRasengan, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:3+4');
+    expect(match.fighters[0].currentMove?.usesKi).toBe(true);
+    expect(match.fighters[0].currentMove?.kiCost).toBe(35);
+    expect(match.fighters[0].currentMove?.kiBurst).toBeFalsy();
+    expect(match.fighters[0].ki).toBe(0);
+  });
+
+  it('does not start authored ki moves without enough ki', () => {
+    const kiMoveNaruto: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:3+4': ['/characters/kiro/frames/frame-197.png']
+      },
+      moveOverrides: {
+        ...starterCharacters[0].moveOverrides,
+        'cmd:3+4': {
+          ...starterCharacters[0].moveOverrides?.['cmd:3+4'],
+          usesKi: true,
+          kiCost: 35
+        }
+      }
+    };
+    let match = createMatch(kiMoveNaruto, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 34;
+    const greatRasengan = emptyInputFrame();
+    greatRasengan.kick = true;
+    greatRasengan.special = true;
+
+    match = stepMatch(match, greatRasengan, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].ki).toBe(34);
+  });
+
+  it('does not regenerate ki when a powered move hits', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].ki = 35;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const chargedAttack = emptyInputFrame();
+    chargedAttack.charge = true;
+    chargedAttack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, chargedAttack, emptyInputFrame(), 1 / 60);
+      chargedAttack.jab = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[0].ki).toBe(0);
+    expect(match.fighters[1].hp).toBeLessThan(starterCharacters[1].stats.health);
+  });
+
+  it('can spend ki on a powered move after charge startup has begun', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].ki = 34;
     const charge = emptyInputFrame();
     charge.charge = true;
     for (let i = 0; i < 18; i += 1) {

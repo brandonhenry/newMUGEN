@@ -5020,6 +5020,7 @@ button {
 }
 
 .health-track {
+  display: flex;
   overflow: hidden;
   height: clamp(24px, 3vw, 34px);
   border-radius: 4px;
@@ -5031,7 +5032,7 @@ button {
     0 1px 0 rgba(255, 255, 255, 0.24) inset,
     0 0 0 2px rgba(0, 0, 0, 0.34),
     0 0 22px var(--health-glow);
-  clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 100%, 0 100%);
 }
 
 .health-track span {
@@ -5048,10 +5049,7 @@ button {
 }
 
 .health.right .health-track {
-  transform: scaleX(-1);
-}
-
-.health.right .health-track {
+  justify-content: flex-end;
   clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%);
 }
 
@@ -5129,7 +5127,7 @@ button {
   justify-self: center;
   min-height: 78px;
   min-width: clamp(126px, 13vw, 178px);
-  margin-top: clamp(58px, 6.4vw, 72px);
+  margin-top: clamp(28px, 3.4vw, 44px);
   background: transparent;
   box-shadow: none;
   font-variant-numeric: tabular-nums;
@@ -5138,8 +5136,9 @@ button {
 
 .round-box strong {
   color: #4a1714;
-  font-size: clamp(68px, 8.2vw, 112px);
-  font-weight: 950;
+  font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
+  font-size: clamp(82px, 9.4vw, 138px);
+  font-weight: 900;
   line-height: 1;
   letter-spacing: 0;
   -webkit-text-stroke: 3px rgba(244, 244, 238, 0.9);

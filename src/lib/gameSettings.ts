@@ -2,7 +2,7 @@ import type { ActionName, GameSettings, PlayerControlBindings, PlayerGamepadBind
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 1;
+const settingsVersion = 2;
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
 const p1Keyboard: PlayerControlBindings = {
@@ -58,7 +58,7 @@ const defaultGamepad: PlayerGamepadBindings = {
 export const defaultGameSettings: GameSettings = {
   game: {
     roundTimer: 60,
-    maxHealth: 100,
+    maxHealth: 200,
     trainingInfiniteHealth: true,
     inputAssist: true
   },
@@ -201,8 +201,24 @@ export function cloneSettings(settings: GameSettings): GameSettings {
 }
 
 function unwrapStoredSettings(raw: unknown) {
-  if (isRecord(raw) && isRecord(raw.settings)) return raw.settings;
-  return raw;
+  if (isRecord(raw) && isRecord(raw.settings)) {
+    return migrateStoredSettings(raw.settings, Number.isFinite(raw.version) ? Number(raw.version) : 1);
+  }
+  return migrateStoredSettings(raw, 1);
+}
+
+function migrateStoredSettings(settings: unknown, version: number) {
+  if (!isRecord(settings)) return settings;
+  if (version >= settingsVersion) return settings;
+  const game = isRecord(settings.game) ? settings.game : {};
+  if (game.maxHealth !== 100) return settings;
+  return {
+    ...settings,
+    game: {
+      ...game,
+      maxHealth: defaultGameSettings.game.maxHealth
+    }
+  };
 }
 
 function sanitizeKeyboardBindings(raw: unknown, fallback: PlayerControlBindings): PlayerControlBindings {
