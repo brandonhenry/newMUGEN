@@ -1035,6 +1035,15 @@
       "farStep": 2
     }
   },
-  "animationScales": {},
+  "animationScales": {
+    "hitLight": {
+      "width": 0.7,
+      "height": 0.97
+    },
+    "idle": {
+      "width": 0.85,
+      "height": 1
+    }
+  },
   "unplayable": false
 }
