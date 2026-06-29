@@ -331,6 +331,10 @@ def build_border_background_mask(image: Image.Image, backgrounds: list[tuple[int
     return mask
 
 
+def dominant_border_backgrounds(image: Image.Image, backgrounds: list[tuple[int, int, int]], max_colors: int = 16) -> list[tuple[int, int, int]]:
+    return backgrounds[:1] or [(255, 255, 255)]
+
+
 def group_boolean_runs(values: list[bool], gap_tolerance: int, min_length: int) -> list[tuple[int, int]]:
     groups: list[tuple[int, int]] = []
     start = -1
@@ -581,7 +585,8 @@ def transparent_crop(image: Image.Image, box: Box, backgrounds: list[tuple[int, 
     for y in range(height):
         row = y * width
         for x in range(width):
-            if background_mask[row + x]:
+            pixel = pixels[x, y]
+            if background_mask[row + x] or is_background_pixel(pixel, backgrounds, tolerance=34):
                 red, green, blue, _ = pixels[x, y]
                 pixels[x, y] = (red, green, blue, 0)
     return crop
@@ -1008,7 +1013,7 @@ def import_character(repo: Path, source_dir: Path, character_id: str) -> dict[st
     source_png = pngs[0]
     image = Image.open(source_png).convert("RGBA")
     boxes = detect_projection_boxes(image)
-    backgrounds = sample_backgrounds(image)
+    backgrounds = dominant_border_backgrounds(image, sample_backgrounds(image))
     character_dir = repo / "public" / "characters" / character_id
     if character_id in PROTECTED_IDS:
         raise RuntimeError(f"Refusing to overwrite protected character id {character_id}")
