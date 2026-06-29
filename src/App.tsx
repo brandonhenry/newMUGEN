@@ -971,6 +971,30 @@ function isCharacterUnlocked(character: CharacterDefinition, unlockedIds: Set<st
   return !character.locked || unlockedIds.has(character.id);
 }
 
+function findFirstUnlockedCharacter(roster: CharacterDefinition[], unlockedIds: Set<string>, excludeId?: string) {
+  return (
+    roster.find((character) => character.id !== excludeId && isCharacterUnlocked(character, unlockedIds)) ??
+    roster.find((character) => isCharacterUnlocked(character, unlockedIds))
+  );
+}
+
+function resolveUnlockedTrainingCharacters(
+  roster: CharacterDefinition[],
+  unlockedIds: Set<string>,
+  p1Id: string,
+  p2Id: string
+) {
+  const currentP1 = roster.find((character) => character.id === p1Id);
+  const currentP2 = roster.find((character) => character.id === p2Id);
+  const p1 = currentP1 && isCharacterUnlocked(currentP1, unlockedIds)
+    ? currentP1
+    : findFirstUnlockedCharacter(roster, unlockedIds);
+  const p2 = currentP2 && isCharacterUnlocked(currentP2, unlockedIds)
+    ? currentP2
+    : findFirstUnlockedCharacter(roster, unlockedIds, p1?.id);
+  return { p1, p2 };
+}
+
 function pickArcadeOpponent(
   roster: CharacterDefinition[],
   playerId: string,
@@ -1841,7 +1865,7 @@ export default function App() {
     if (roster.length === 0) return;
     const selected = roster.find((character) => character.id === p1Id);
     if (selected && isCharacterUnlocked(selected, unlockedCharacterIds)) return;
-    const firstUnlocked = roster.find((character) => isCharacterUnlocked(character, unlockedCharacterIds));
+    const firstUnlocked = findFirstUnlockedCharacter(roster, unlockedCharacterIds);
     if (firstUnlocked) setP1Id(firstUnlocked.id);
   }, [p1Id, roster, unlockedCharacterIds]);
 
@@ -1849,9 +1873,7 @@ export default function App() {
     if (roster.length === 0 || mode === 'ai') return;
     const selected = roster.find((character) => character.id === p2Id);
     if (selected && isCharacterUnlocked(selected, unlockedCharacterIds)) return;
-    const firstUnlockedOpponent =
-      roster.find((character) => character.id !== p1Id && isCharacterUnlocked(character, unlockedCharacterIds)) ??
-      roster.find((character) => isCharacterUnlocked(character, unlockedCharacterIds));
+    const firstUnlockedOpponent = findFirstUnlockedCharacter(roster, unlockedCharacterIds, p1Id);
     if (firstUnlockedOpponent) setP2Id(firstUnlockedOpponent.id);
   }, [mode, p1Id, p2Id, roster, unlockedCharacterIds]);
 
@@ -2229,6 +2251,9 @@ export default function App() {
             }}
             onTraining={() => {
               setMode('training');
+              const trainingCharacters = resolveUnlockedTrainingCharacters(roster, unlockedCharacterIds, p1Id, p2Id);
+              if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+              if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
               setScreen('select');
             }}
             onOnline={() => {
@@ -2293,6 +2318,19 @@ export default function App() {
             onUiNavigate={playInnerMenuSelectSound}
             onBack={() => setScreen('menu')}
             onNext={() => {
+              if (mode === 'training') {
+                const p1Selected = roster.find((character) => character.id === p1Id);
+                const p2Selected = roster.find((character) => character.id === p2Id);
+                if (
+                  (p1Selected && !isCharacterUnlocked(p1Selected, unlockedCharacterIds)) ||
+                  (p2Selected && !isCharacterUnlocked(p2Selected, unlockedCharacterIds))
+                ) {
+                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, unlockedCharacterIds, p1Id, p2Id);
+                  if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+                  if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+                  return;
+                }
+              }
               if (mode !== 'private') setPrivateRoomIntent(null);
               setScreen('stage');
             }}
@@ -2307,6 +2345,14 @@ export default function App() {
             onFight={() => {
               if (mode === 'private' && !privateRoomIntent) {
                 setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
+              }
+              if (mode === 'training') {
+                if (!isCharacterUnlocked(p1, unlockedCharacterIds) || !isCharacterUnlocked(p2, unlockedCharacterIds)) {
+                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, unlockedCharacterIds, p1Id, p2Id);
+                  if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+                  if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+                  return;
+                }
               }
               if (mode === 'ai') {
                 const opponent = pickArcadeOpponent(roster, p1.id, unlockedCharacterIds, cpuDifficulty);
@@ -3352,6 +3398,10 @@ function CharacterSelect({
     );
   }
 
+  const trainingSelectionLocked =
+    mode === 'training' &&
+    (!isCharacterUnlocked(p1Character, unlockedCharacterIds) || !isCharacterUnlocked(p2Character, unlockedCharacterIds));
+
   return (
     <div className="select-screen versus-select-screen">
       <button
@@ -3470,7 +3520,7 @@ function CharacterSelect({
           }
           onNext={onNext}
           nextLabel="Stage"
-          nextDisabled={mode === 'online' && !onlineProfile}
+          nextDisabled={(mode === 'online' && !onlineProfile) || trainingSelectionLocked}
         />
       </section>
 
