@@ -1801,6 +1801,11 @@ export default function App() {
   const audioUnlockedRef = useRef(false);
   const menuHoverLastPlayedAtRef = useRef(0);
   const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
+  const isDevHost = isLocalDevHost();
+  const effectiveUnlockedCharacterIds = useMemo(
+    () => (isDevHost ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
+    [isDevHost, roster, unlockedCharacterIds]
+  );
 
   useEffect(() => {
     debugHypotheses();
@@ -1866,18 +1871,18 @@ export default function App() {
   useEffect(() => {
     if (roster.length === 0) return;
     const selected = roster.find((character) => character.id === p1Id);
-    if (selected && isCharacterUnlocked(selected, unlockedCharacterIds)) return;
-    const firstUnlocked = findFirstUnlockedCharacter(roster, unlockedCharacterIds);
+    if (selected && isCharacterUnlocked(selected, effectiveUnlockedCharacterIds)) return;
+    const firstUnlocked = findFirstUnlockedCharacter(roster, effectiveUnlockedCharacterIds);
     if (firstUnlocked) setP1Id(firstUnlocked.id);
-  }, [p1Id, roster, unlockedCharacterIds]);
+  }, [effectiveUnlockedCharacterIds, p1Id, roster]);
 
   useEffect(() => {
     if (roster.length === 0 || mode === 'ai') return;
     const selected = roster.find((character) => character.id === p2Id);
-    if (selected && isCharacterUnlocked(selected, unlockedCharacterIds)) return;
-    const firstUnlockedOpponent = findFirstUnlockedCharacter(roster, unlockedCharacterIds, p1Id);
+    if (selected && isCharacterUnlocked(selected, effectiveUnlockedCharacterIds)) return;
+    const firstUnlockedOpponent = findFirstUnlockedCharacter(roster, effectiveUnlockedCharacterIds, p1Id);
     if (firstUnlockedOpponent) setP2Id(firstUnlockedOpponent.id);
-  }, [mode, p1Id, p2Id, roster, unlockedCharacterIds]);
+  }, [effectiveUnlockedCharacterIds, mode, p1Id, p2Id, roster]);
 
   useEffect(() => {
     const hoverAudio = new Audio(KORE_MENU_HOVER_SOUND_URL);
@@ -2240,7 +2245,7 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
-            unlockedCharacterIds={unlockedCharacterIds}
+            unlockedCharacterIds={effectiveUnlockedCharacterIds}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
@@ -2253,7 +2258,7 @@ export default function App() {
             }}
             onTraining={() => {
               setMode('training');
-              const trainingCharacters = resolveUnlockedTrainingCharacters(roster, unlockedCharacterIds, p1Id, p2Id);
+              const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
               if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
               setScreen('select');
@@ -2306,7 +2311,7 @@ export default function App() {
             roster={roster}
             p1Id={p1Id}
             p2Id={p2Id}
-            unlockedCharacterIds={unlockedCharacterIds}
+            unlockedCharacterIds={effectiveUnlockedCharacterIds}
             mode={mode}
             cpuDifficulty={cpuDifficulty}
             setP1Id={setP1Id}
@@ -2324,10 +2329,10 @@ export default function App() {
                 const p1Selected = roster.find((character) => character.id === p1Id);
                 const p2Selected = roster.find((character) => character.id === p2Id);
                 if (
-                  (p1Selected && !isCharacterUnlocked(p1Selected, unlockedCharacterIds)) ||
-                  (p2Selected && !isCharacterUnlocked(p2Selected, unlockedCharacterIds))
+                  (p1Selected && !isCharacterUnlocked(p1Selected, effectiveUnlockedCharacterIds)) ||
+                  (p2Selected && !isCharacterUnlocked(p2Selected, effectiveUnlockedCharacterIds))
                 ) {
-                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, unlockedCharacterIds, p1Id, p2Id);
+                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
                   if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                   if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
                   return;
@@ -2349,15 +2354,15 @@ export default function App() {
                 setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
               }
               if (mode === 'training') {
-                if (!isCharacterUnlocked(p1, unlockedCharacterIds) || !isCharacterUnlocked(p2, unlockedCharacterIds)) {
-                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, unlockedCharacterIds, p1Id, p2Id);
+                if (!isCharacterUnlocked(p1, effectiveUnlockedCharacterIds) || !isCharacterUnlocked(p2, effectiveUnlockedCharacterIds)) {
+                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
                   if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                   if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
                   return;
                 }
               }
               if (mode === 'ai') {
-                const opponent = pickArcadeOpponent(roster, p1.id, unlockedCharacterIds, cpuDifficulty);
+                const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
                 if (opponent) setP2Id(opponent.id);
               }
               setVersusReturnScreen('stage');
@@ -2437,8 +2442,8 @@ export default function App() {
             onMenu={() => setScreen('menu')}
             onCharacterSelect={() => setScreen('select')}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
-              const effectiveUnlocks = new Set(unlockedCharacterIds);
-              if (winnerSlot === 1) {
+              const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
+              if (winnerSlot === 1 && !isDevHost) {
                 effectiveUnlocks.add(defeatedCharacterId);
                 unlockCharacter(defeatedCharacterId);
               }
