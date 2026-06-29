@@ -2734,14 +2734,41 @@ button {
   touch-action: pan-y pinch-zoom;
 }
 
+.model-viewer-stage.is-empty-preview {
+  cursor: default;
+}
+
 .model-viewer-stage:active {
   cursor: grabbing;
+}
+
+.model-viewer-stage.is-empty-preview:active {
+  cursor: default;
 }
 
 .model-viewer-stage canvas {
   width: 100% !important;
   height: 100% !important;
   min-height: inherit;
+}
+
+.no-frame-data-preview {
+  display: grid;
+  min-height: inherit;
+  height: 100%;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    #111418;
+  color: rgba(255, 255, 255, 0.66);
+  text-align: center;
+}
+
+.no-frame-data-preview span {
+  letter-spacing: 0;
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .viewer-actions {

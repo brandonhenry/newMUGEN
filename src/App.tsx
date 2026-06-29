@@ -5622,6 +5622,14 @@ function formatMoveSlotLabel(slot: AnimationSlot, move: MoveDefinition | null) {
   return move?.label ?? slot.label;
 }
 
+function NoFrameDataPreview() {
+  return (
+    <div className="no-frame-data-preview" role="status" aria-label="No frame data">
+      <span>NO FRAME DATA</span>
+    </div>
+  );
+}
+
 function signedFrame(value: number) {
   return value > 0 ? `+${value}` : `${value}`;
 }
@@ -5721,6 +5729,7 @@ function CharacterViewer({
   const spriteSheets = useMemo(() => getCharacterSpriteSheets(active, frameCount), [active, frameCount]);
   const selectedSlotDataKey = getSlotDataKey(selectedSlot);
   const selectedFrames = active.animationFrames?.[selectedSlotDataKey] ?? [];
+  const hasSelectedFrameData = selectedFrames.length > 0;
   const defaultFrames = sourceActive.animationFrames?.[selectedSlotDataKey] ?? selectedFrames;
   const selectedSpeed = active.animationFrameRates?.[selectedSlotDataKey] ?? active.animationFps ?? 8;
   const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlotDataKey] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
@@ -6466,17 +6475,21 @@ function CharacterViewer({
         </div>
         <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
-            <div className="model-viewer-stage">
-              <CharacterPreviewCanvas
-                character={previewCharacter}
-                pose={selectedSlot.pose}
-                animationKey={selectedSlotDataKey}
-                previewMove={selectedMove}
-                previewEffects={effects}
-                previewEffectInstances={selectedMoveEffectInstances}
-                rotationTurn={rotationTurn}
-                zoom={zoom}
-              />
+            <div className={`model-viewer-stage ${hasSelectedFrameData ? '' : 'is-empty-preview'}`}>
+              {hasSelectedFrameData ? (
+                <CharacterPreviewCanvas
+                  character={previewCharacter}
+                  pose={selectedSlot.pose}
+                  animationKey={selectedSlotDataKey}
+                  previewMove={selectedMove}
+                  previewEffects={effects}
+                  previewEffectInstances={selectedMoveEffectInstances}
+                  rotationTurn={rotationTurn}
+                  zoom={zoom}
+                />
+              ) : (
+                <NoFrameDataPreview />
+              )}
             </div>
           )}
           <div className="viewer-actions">
@@ -6815,6 +6828,7 @@ function CharacterViewer({
               character={previewCharacter}
               selectedSlot={selectedSlot}
               animationKey={selectedSlotDataKey}
+              hasFrameData={hasSelectedFrameData}
               previewMove={selectedMove}
               effects={effects}
               instances={selectedMoveEffectInstances}
@@ -7496,6 +7510,7 @@ function MoveEffectsEditor({
   character,
   selectedSlot,
   animationKey,
+  hasFrameData,
   previewMove,
   effects,
   instances,
@@ -7508,6 +7523,7 @@ function MoveEffectsEditor({
   character: CharacterDefinition;
   selectedSlot: AnimationSlot;
   animationKey: string;
+  hasFrameData: boolean;
   previewMove?: MoveDefinition | null;
   effects: CharacterEffectDefinition[];
   instances: MoveEffectInstance[];
@@ -7611,18 +7627,22 @@ function MoveEffectsEditor({
       </aside>
       <div className="effects-detail">
         <div className="move-effect-preview-dock">
-          <div className="move-effect-preview">
-            <CharacterPreviewCanvas
-              character={character}
-              pose={selectedSlot.pose}
-              animationKey={animationKey}
-              previewMove={previewMove}
-              previewEffects={effects}
-              previewEffectInstances={draftInstances}
-              previewEffectFrame={timelineFrame}
-              rotationTurn={0}
-              zoom={0.35}
-            />
+          <div className={`move-effect-preview ${hasFrameData ? '' : 'is-empty-preview'}`}>
+            {hasFrameData ? (
+              <CharacterPreviewCanvas
+                character={character}
+                pose={selectedSlot.pose}
+                animationKey={animationKey}
+                previewMove={previewMove}
+                previewEffects={effects}
+                previewEffectInstances={draftInstances}
+                previewEffectFrame={timelineFrame}
+                rotationTurn={0}
+                zoom={0.35}
+              />
+            ) : (
+              <NoFrameDataPreview />
+            )}
           </div>
           <small className="effects-empty">Use the keyframe sliders below to move effects in 3D space. The preview updates live.</small>
         </div>
