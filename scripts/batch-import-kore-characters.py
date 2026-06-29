@@ -29,7 +29,6 @@ SKIP_EXACT = {
     "Koma Man (Green)",
     "Koma Man (Red)",
     "Koma Man (Yellow)",
-    "Near",
     "Phoenix Ikki",
     "Ryotsu Kankichi (2)",
     "Yukime",
