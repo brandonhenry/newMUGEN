@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 from pathlib import Path
+from collections import Counter
 
 from PIL import Image
 
@@ -52,6 +53,47 @@ def palette_index(color: str, palette: list[str], indexes: dict[str, int]) -> in
     return index
 
 
+def color_hex(red: int, green: int, blue: int) -> str:
+    return f"#{red:02x}{green:02x}{blue:02x}"
+
+
+def is_black_outline_pixel(red: int, green: int, blue: int) -> bool:
+    maximum = max(red, green, blue)
+    minimum = min(red, green, blue)
+    return maximum <= 34 and maximum - minimum <= 18
+
+
+def nearest_side_bleed_color(
+    image: Image.Image,
+    bounds: tuple[int, int, int, int],
+    center_x: int,
+    center_y: int,
+    alpha_threshold: int,
+) -> str | None:
+    min_x, min_y, max_x, max_y = bounds
+    pixels = image.load()
+    for radius in [2, 4, 7, 11, 16, 24]:
+        votes: Counter[str] = Counter()
+        left = max(min_x, center_x - radius)
+        right = min(max_x, center_x + radius)
+        top = max(min_y, center_y - radius)
+        bottom = min(max_y, center_y + radius)
+        for y in range(top, bottom + 1):
+            for x in range(left, right + 1):
+                dx = x - center_x
+                dy = y - center_y
+                if dx * dx + dy * dy > radius * radius:
+                    continue
+                red, green, blue, alpha = pixels[x, y]
+                if alpha <= alpha_threshold or is_black_outline_pixel(red, green, blue):
+                    continue
+                distance_weight = max(1, radius - round(math.hypot(dx, dy)))
+                votes[color_hex(red, green, blue)] += distance_weight
+        if votes:
+            return votes.most_common(1)[0][0]
+    return None
+
+
 def build_payload(frame_path: Path, public_frame_path: str, alpha_threshold: int, depth: float, max_rows: int, baseline_height: int | None) -> dict:
     image = Image.open(frame_path).convert("RGBA")
     width, height = image.size
@@ -91,11 +133,14 @@ def build_payload(frame_path: Path, public_frame_path: str, alpha_threshold: int
             source_x1 = min_x + column * sample_step
             source_x2 = min(max_x + 1, source_x1 + sample_step)
             colors: list[tuple[int, int, int, int]] = []
+            side_color_votes: Counter[str] = Counter()
             for sy in range(source_y1, source_y2):
                 for sx in range(source_x1, source_x2):
                     r, g, b, a = image.getpixel((sx, sy))
                     if a > alpha_threshold:
                         colors.append((r, g, b, a))
+                        if not is_black_outline_pixel(r, g, b):
+                            side_color_votes[color_hex(r, g, b)] += 1
             if not colors:
                 continue
             total_alpha = sum(c[3] for c in colors)
@@ -104,6 +149,14 @@ def build_payload(frame_path: Path, public_frame_path: str, alpha_threshold: int
             blue = round(sum(c[2] * c[3] for c in colors) / total_alpha)
             color = f"#{red:02x}{green:02x}{blue:02x}"
             c = palette_index(color, palette, indexes)
+            center_x = round((source_x1 + source_x2 - 1) / 2)
+            center_y = round((source_y1 + source_y2 - 1) / 2)
+            side_color = (
+                side_color_votes.most_common(1)[0][0]
+                if side_color_votes
+                else nearest_side_bleed_color(image, bounds, center_x, center_y, alpha_threshold)
+            ) or color
+            s = palette_index(side_color, palette, indexes)
             foreground_ratio = min(1, len(colors) / max(1, (source_x2 - source_x1) * (source_y2 - source_y1)))
             x = ((column + 0.5) / columns) * model_width - model_width / 2
             y = model_height - (row + 0.5) * cell_height + 0.02
@@ -117,7 +170,7 @@ def build_payload(frame_path: Path, public_frame_path: str, alpha_threshold: int
                 "h": round_voxel(cell_height * 0.98),
                 "d": round_voxel(depth * (0.78 + foreground_ratio * 0.22)),
                 "c": c,
-                "s": c,
+                "s": s,
             })
 
     return {
