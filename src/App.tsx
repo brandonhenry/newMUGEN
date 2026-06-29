@@ -106,6 +106,9 @@ type AnimationSlot = {
   command?: string;
 };
 type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special';
+const CHARACTER_SELECT_PAGE_SIZE = 12;
+const CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON = 6;
+const CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON = 7;
 
 type HdVoxelRun = {
   part: 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
@@ -3226,9 +3229,15 @@ function CharacterSelect({
 }) {
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const [hoveredBaseId, setHoveredBaseId] = useState('');
+  const [rosterPage, setRosterPage] = useState(0);
+  const pageGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
-  const baseRoster = roster.filter((character) => !isCharacterVariant(character));
+  const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
+  const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
+  const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
+  const rosterPageStart = visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE;
+  const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + CHARACTER_SELECT_PAGE_SIZE);
   const isArcadeMode = mode === 'ai';
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const assignCharacter = (id: string) => {
@@ -3252,6 +3261,23 @@ function CharacterSelect({
     onUiNavigate();
   }, [p1Id, p2Id, roster, selectTarget, unlockedCharacterIds, onUiNavigate]);
 
+  const cycleRosterPage = useCallback((direction: -1 | 1) => {
+    if (totalRosterPages <= 1) return;
+    setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
+    onUiNavigate();
+  }, [onUiNavigate, totalRosterPages]);
+
+  useEffect(() => {
+    setRosterPage((page) => Math.min(page, totalRosterPages - 1));
+  }, [totalRosterPages]);
+
+  useEffect(() => {
+    const selected = selectTarget === 1 ? p1Character : p2Character;
+    const selectedBaseId = getCharacterBaseId(selected);
+    const selectedIndex = Math.max(0, baseRoster.findIndex((character) => character.id === selectedBaseId));
+    setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / CHARACTER_SELECT_PAGE_SIZE)));
+  }, [baseRoster, p1Character, p2Character, selectTarget, totalRosterPages]);
+
   useEffect(() => {
     if (isArcadeMode && selectTarget === 2) setSelectTarget(1);
   }, [isArcadeMode, selectTarget]);
@@ -3262,6 +3288,16 @@ function CharacterSelect({
       if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
       if (event.repeat) return;
       const key = event.key.toLowerCase();
+      if (event.code === 'KeyL' || key === 'l') {
+        event.preventDefault();
+        cycleRosterPage(-1);
+        return;
+      }
+      if (event.code === 'Semicolon' || key === ';') {
+        event.preventDefault();
+        cycleRosterPage(1);
+        return;
+      }
       if (key !== 'o' && key !== 'p') return;
       const selected = selectTarget === 1 ? p1Character : p2Character;
       const baseId = hoveredBaseId || getCharacterBaseId(selected);
@@ -3271,7 +3307,30 @@ function CharacterSelect({
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [cycleVariantForBase, hoveredBaseId, p1Character, p2Character, selectTarget]);
+  }, [cycleRosterPage, cycleVariantForBase, hoveredBaseId, p1Character, p2Character, selectTarget]);
+
+  useEffect(() => {
+    let frame = 0;
+    const tick = () => {
+      const pad = getPrimaryMenuGamepad();
+      if (!pad || isTextEntryElement(document.activeElement)) {
+        pageGamepadStateRef.current = { previous: false, next: false };
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const current = {
+        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
+        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
+      };
+      const previous = pageGamepadStateRef.current;
+      if (current.previous && !previous.previous) cycleRosterPage(-1);
+      if (current.next && !previous.next) cycleRosterPage(1);
+      pageGamepadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleRosterPage]);
 
   if (!p1Character || !p2Character) {
     return (
@@ -3325,8 +3384,32 @@ function CharacterSelect({
           )}
         </div>
 
+        <div className="versus-roster-pager" aria-label="Character roster pages">
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => cycleRosterPage(-1)}
+            disabled={totalRosterPages <= 1}
+          >
+            <ChevronLeft size={18} />
+            Prev
+          </button>
+          <span className="versus-page-indicator">
+            Page {visibleRosterPage + 1} / {totalRosterPages}
+          </span>
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => cycleRosterPage(1)}
+            disabled={totalRosterPages <= 1}
+          >
+            Next
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
         <div className="versus-roster-grid">
-          {baseRoster.map((character) => {
+          {pagedBaseRoster.map((character) => {
             const baseId = character.id;
             const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
             const targetCharacter = selectTarget === 1 ? p1Character : p2Character;

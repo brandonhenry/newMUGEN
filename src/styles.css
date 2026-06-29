@@ -1048,7 +1048,7 @@ button {
 
 .versus-roster-panel {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto auto auto 1fr auto;
   align-content: start;
   gap: 14px;
   min-height: 100%;
@@ -1111,6 +1111,28 @@ button {
 .versus-target-tabs button.active {
   color: #101114;
   background: #f7f7f2;
+}
+
+.versus-roster-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.versus-roster-pager .secondary-button {
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.versus-page-indicator {
+  min-width: 104px;
+  color: rgba(247, 247, 242, 0.72);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .versus-roster-grid {
@@ -6209,6 +6231,19 @@ button {
 
   .versus-select-top .segmented button {
     flex: 1;
+  }
+
+  .versus-roster-pager {
+    align-items: stretch;
+  }
+
+  .versus-roster-pager .secondary-button {
+    flex: 1 1 0;
+  }
+
+  .versus-page-indicator {
+    align-self: center;
+    min-width: 82px;
   }
 
   .versus-roster-grid {
