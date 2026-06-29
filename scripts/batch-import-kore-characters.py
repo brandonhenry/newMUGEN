@@ -23,7 +23,16 @@ from PIL import Image
 
 SOURCE_ROOT = Path("/Users/brandonhenry/Documents/Kore/Characters/sprite-sheets")
 PROTECTED_IDS = {"kiro", "riven"}
-SKIP_EXACT = {"Naruto Uzumaki", "Sasuke Uchiha"}
+SKIP_EXACT = {
+    "Naruto Uzumaki",
+    "Sasuke Uchiha",
+    "Koma Man (Green)",
+    "Koma Man (Red)",
+    "Koma Man (Yellow)",
+    "Near",
+    "Phoenix Ikki",
+    "Ryotsu Kankichi (2)",
+}
 SKIP_CONTAINS = ("Intro", "Komas", "Protagonists")
 SKIP_NAMES = {"Help Komas", "Info Screen"}
 VARIANT_OF = {
@@ -35,7 +44,6 @@ VARIANT_OF = {
     "yoh-asakura-power-sword": "yoh-asakura",
     "naruto-uzumaki-nine-tails-kyubi": "kiro",
     "gohan-super-saiyan-2": "gohan-super-saiyan",
-    "ryotsu-kankichi-2": "ryotsu-kankichi",
 }
 
 BASE_ANIMATION_KEYS = [
