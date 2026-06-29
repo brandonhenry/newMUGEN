@@ -5880,7 +5880,6 @@ function CharacterViewer({
   }, [active.id, active.displayName, defaultFrames, defaultSpeed, selectedAnimationKey, selectedFrames, selectedSlot.key, selectedSlot.label, selectedSlotDataKey, selectedSpeed]);
 
   const updateSelectedFrames = (frames: string[]) => {
-    if (frames.length === 0) return;
     onAnimationFramesChange(active.id, selectedSlotDataKey, frames);
   };
 
@@ -6304,7 +6303,6 @@ function CharacterViewer({
 
   const toggleFrame = (path: string) => {
     if (selectedFrameSet.has(path)) {
-      if (selectedFrames.length <= 1) return;
       updateSelectedFrames(selectedFrames.filter((frame) => frame !== path));
       return;
     }
@@ -6312,7 +6310,6 @@ function CharacterViewer({
   };
 
   const removeSelectedFrameAt = (index: number) => {
-    if (selectedFrames.length <= 1) return;
     updateSelectedFrames(selectedFrames.filter((_, frameIndex) => frameIndex !== index));
   };
 
