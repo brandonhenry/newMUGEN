@@ -3183,6 +3183,33 @@ function MenuScreen({
   const [menuChromeHidden, setMenuChromeHidden] = useState(false);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
   const activeMenuIndexRef = useRef(0);
+  const menuChromeHiddenRef = useRef(false);
+  const hiddenMenuGamepadPressedRef = useRef(false);
+
+  useEffect(() => {
+    menuChromeHiddenRef.current = menuChromeHidden;
+  }, [menuChromeHidden]);
+
+  const hideMenuChrome = useCallback(() => {
+    menuChromeHiddenRef.current = true;
+    setMenuChromeHidden(true);
+  }, []);
+
+  const revealMenuChrome = useCallback((withSound = true) => {
+    if (!menuChromeHiddenRef.current) return;
+    menuChromeHiddenRef.current = false;
+    setMenuChromeHidden(false);
+    if (withSound) onMenuHover();
+  }, [onMenuHover]);
+
+  const toggleMenuChrome = useCallback(() => {
+    if (menuChromeHiddenRef.current) {
+      revealMenuChrome();
+      return;
+    }
+    hideMenuChrome();
+    onMenuHover();
+  }, [hideMenuChrome, onMenuHover, revealMenuChrome]);
 
   useEffect(() => {
     if (!p1 || !p2) return;
@@ -3219,10 +3246,6 @@ function MenuScreen({
   }, [p1, p2, roster]);
 
   useEffect(() => {
-    const toggleMenuChrome = () => {
-      setMenuChromeHidden((hidden) => !hidden);
-      onMenuHover();
-    };
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
       if (isTextEntryElement(event.target)) return;
@@ -3238,7 +3261,41 @@ function MenuScreen({
       window.removeEventListener('keydown', onKeyDown, true);
       window.removeEventListener(MAIN_MENU_CHROME_TOGGLE_EVENT, onControllerToggle);
     };
-  }, [onMenuHover]);
+  }, [toggleMenuChrome]);
+
+  useEffect(() => {
+    if (!menuChromeHidden) {
+      hiddenMenuGamepadPressedRef.current = false;
+      return undefined;
+    }
+
+    const revealFromPointer = () => revealMenuChrome();
+    const revealFromKey = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (isTextEntryElement(event.target)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      revealMenuChrome();
+    };
+
+    let frame = 0;
+    const tick = () => {
+      const pads = navigator.getGamepads?.() ?? [];
+      const pressed = Array.from(pads).some((pad) => Boolean(pad?.buttons.some((button) => button.pressed)));
+      if (pressed && !hiddenMenuGamepadPressedRef.current) revealMenuChrome();
+      hiddenMenuGamepadPressedRef.current = pressed;
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('pointerdown', revealFromPointer, true);
+    window.addEventListener('keydown', revealFromKey, true);
+    frame = window.requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener('pointerdown', revealFromPointer, true);
+      window.removeEventListener('keydown', revealFromKey, true);
+      window.cancelAnimationFrame(frame);
+    };
+  }, [menuChromeHidden, revealMenuChrome]);
 
   const menuItems = [
     { label: 'Arcade', action: onArcade },
@@ -3275,7 +3332,7 @@ function MenuScreen({
           data-sound="off"
           onClick={() => {
             onMenuSelect();
-            setMenuChromeHidden(true);
+            hideMenuChrome();
           }}
         >
           <EyeOff size={20} />
