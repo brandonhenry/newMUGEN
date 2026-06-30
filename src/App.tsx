@@ -10,6 +10,8 @@ import {
   Home,
   KeyRound,
   List,
+  Maximize2,
+  Minimize2,
   Pause,
   Play,
   Rotate3D,
@@ -85,6 +87,8 @@ import {
   type VoxelFidelitySettings
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
+import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
+import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
@@ -1981,8 +1985,36 @@ export default function App() {
     () => (isDevHost ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
     [isDevHost, roster, unlockedCharacterIds]
   );
+  const captureAppAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
+    captureAnalyticsEvent(name, {
+      app_version: KORE_APP_VERSION,
+      mode,
+      stage_id: stageId,
+      p1_character_id: p1Id,
+      p2_character_id: p2Id,
+      cpu_difficulty: cpuDifficulty,
+      screen,
+      ...properties
+    });
+  }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
 
   useEffect(() => {
+    const onError = (event: ErrorEvent) => {
+      captureAnalyticsError(event.error ?? event.message, { source: 'window.error', app_version: KORE_APP_VERSION });
+    };
+    const onUnhandledRejection = (event: PromiseRejectionEvent) => {
+      captureAnalyticsError(event.reason, { source: 'window.unhandledrejection', app_version: KORE_APP_VERSION });
+    };
+    window.addEventListener('error', onError);
+    window.addEventListener('unhandledrejection', onUnhandledRejection);
+    return () => {
+      window.removeEventListener('error', onError);
+      window.removeEventListener('unhandledrejection', onUnhandledRejection);
+    };
+  }, []);
+
+  useEffect(() => {
+    captureAnalyticsEvent('game_load_started', { app_version: KORE_APP_VERSION });
     debugHypotheses();
     let mounted = true;
     Promise.all([loadCharacterRoster(), loadStageRoster()]).then(([result, loadedStages]) => {
@@ -2001,7 +2033,16 @@ export default function App() {
       setP2Id(result.characters[1]?.id ?? result.characters[0]?.id ?? 'dax');
       const firstPlayableStage = loadedStages.stages.find((stage) => !stage.hidden) ?? loadedStages.stages[0];
       setStageId(firstPlayableStage?.id ?? stages[0].id);
+      captureAnalyticsEvent('game_loaded', {
+        app_version: KORE_APP_VERSION,
+        roster_count: result.characters.length,
+        stage_count: loadedStages.stages.length,
+        warning_count: Object.values(result.warnings).flat().length + Object.values(loadedStages.warnings).flat().length
+      });
       window.setTimeout(() => setScreen('title'), 650);
+    }).catch((error) => {
+      console.error('Failed to load KORE roster or stages', error);
+      captureAnalyticsError(error, { source: 'app_load', app_version: KORE_APP_VERSION });
     });
     return () => {
       mounted = false;
@@ -2196,11 +2237,12 @@ export default function App() {
   }, [playMenuHoverSound, screen, settings.audio.bgmTrackIndex, updateBgmTrackIndex]);
 
   const startFromTitle = useCallback(() => {
+    captureAppAnalytics('game_start_clicked', { source: 'title' });
     unlockGameAudio();
     playMenuSelectSound();
     setMusicStarted(true);
     setScreen('menu');
-  }, [playMenuSelectSound, unlockGameAudio]);
+  }, [captureAppAnalytics, playMenuSelectSound, unlockGameAudio]);
 
   const setCharacterAnimationFrames = (characterId: string, animationKey: string, frames: string[]) => {
     debugLog(4, 'viewer frame override requested', {
@@ -2470,14 +2512,17 @@ export default function App() {
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
+              captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'ai' });
               setMode('ai');
               setScreen('select');
             }}
             onVersus={() => {
+              captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'local2p' });
               setMode('local2p');
               setScreen('select');
             }}
             onTraining={() => {
+              captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'training' });
               setMode('training');
               const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
@@ -2485,6 +2530,7 @@ export default function App() {
               setScreen('select');
             }}
             onOnline={() => {
+              captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'online' });
               setMode('online');
               setPrivateRoomIntent(null);
               setScreen('select');
@@ -2500,6 +2546,7 @@ export default function App() {
             profile={onlineProfile}
             onProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onFindMatch={() => {
+              captureAppAnalytics('game_start_clicked', { source: 'leaderboard_find_match', selected_mode: 'online' });
               setMode('online');
               setScreen('select');
             }}
@@ -2513,12 +2560,14 @@ export default function App() {
             roster={roster}
             stages={playableStageRoster}
             onCreate={(intent) => {
+              captureAppAnalytics('game_start_clicked', { source: 'private_room_create', selected_mode: 'private' });
               setMode('private');
               setPrivateRoomIntent(intent);
               setVersusReturnScreen('privateRooms');
               setScreen('versus');
             }}
             onJoin={(intent) => {
+              captureAppAnalytics('game_start_clicked', { source: 'private_room_join', selected_mode: 'private' });
               setMode('private');
               setPrivateRoomIntent(intent);
               setVersusReturnScreen('privateRooms');
@@ -2559,6 +2608,10 @@ export default function App() {
                   return;
                 }
               }
+              captureAppAnalytics('character_selected', {
+                p1_character_id: p1Id,
+                p2_character_id: p2Id
+              });
               if (mode !== 'private') setPrivateRoomIntent(null);
               setScreen('stage');
             }}
@@ -2582,6 +2635,7 @@ export default function App() {
                   return;
                 }
               }
+              captureAppAnalytics('stage_selected', { stage_id: stageId });
               if (mode === 'ai') {
                 const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
                 if (opponent) setP2Id(opponent.id);
@@ -2708,6 +2762,8 @@ type MenuNavigationDevice = 'keyboard' | 'gamepad';
 
 const MAIN_MENU_CHROME_TOGGLE_EVENT = 'kore:main-menu-chrome-toggle';
 const MENU_GAMEPAD_SELECT_BUTTON = 8;
+const MAIN_MENU_SCREENSAVER_IDLE_MS = 15000;
+const MAIN_MENU_GAMEPAD_IDLE_DEADZONE = 0.45;
 
 const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
   KeyW: 'up',
@@ -3186,22 +3242,40 @@ function MenuScreen({
   const menuChromeHiddenRef = useRef(false);
   const hiddenMenuGamepadPressedRef = useRef(false);
   const menuScreenRef = useRef<HTMLDivElement>(null);
+  const menuIdleTimerRef = useRef<number | null>(null);
+  const menuIdleGamepadActiveRef = useRef(false);
 
   useEffect(() => {
     menuChromeHiddenRef.current = menuChromeHidden;
   }, [menuChromeHidden]);
 
+  const clearMenuIdleTimer = useCallback(() => {
+    if (menuIdleTimerRef.current === null) return;
+    window.clearTimeout(menuIdleTimerRef.current);
+    menuIdleTimerRef.current = null;
+  }, []);
+
   const hideMenuChrome = useCallback(() => {
+    clearMenuIdleTimer();
     menuChromeHiddenRef.current = true;
     setMenuChromeHidden(true);
-  }, []);
+  }, [clearMenuIdleTimer]);
+
+  const scheduleMenuScreensaver = useCallback(() => {
+    clearMenuIdleTimer();
+    if (menuChromeHiddenRef.current) return;
+    menuIdleTimerRef.current = window.setTimeout(() => {
+      hideMenuChrome();
+    }, MAIN_MENU_SCREENSAVER_IDLE_MS);
+  }, [clearMenuIdleTimer, hideMenuChrome]);
 
   const revealMenuChrome = useCallback((withSound = true) => {
     if (!menuChromeHiddenRef.current) return;
     menuChromeHiddenRef.current = false;
     setMenuChromeHidden(false);
     if (withSound) onMenuHover();
-  }, [onMenuHover]);
+    scheduleMenuScreensaver();
+  }, [onMenuHover, scheduleMenuScreensaver]);
 
   const toggleMenuChrome = useCallback(() => {
     if (menuChromeHiddenRef.current) {
@@ -3299,6 +3373,50 @@ function MenuScreen({
       window.cancelAnimationFrame(frame);
     };
   }, [menuChromeHidden, revealMenuChrome]);
+
+  useEffect(() => {
+    if (menuChromeHidden) {
+      clearMenuIdleTimer();
+      menuIdleGamepadActiveRef.current = false;
+      return undefined;
+    }
+
+    const noteMenuActivity = () => scheduleMenuScreensaver();
+    const noteKeyboardActivity = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (isTextEntryElement(event.target)) return;
+      noteMenuActivity();
+    };
+
+    let frame = 0;
+    const tick = () => {
+      const pads = navigator.getGamepads?.() ?? [];
+      const active = Array.from(pads).some((pad) => {
+        if (!pad) return false;
+        const axisActive = Array.from(pad.axes).some((axis) => Math.abs(axis) > MAIN_MENU_GAMEPAD_IDLE_DEADZONE);
+        const buttonActive = pad.buttons.some((button) => button.pressed);
+        return axisActive || buttonActive;
+      });
+      if (active && !menuIdleGamepadActiveRef.current) noteMenuActivity();
+      menuIdleGamepadActiveRef.current = active;
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    scheduleMenuScreensaver();
+    window.addEventListener('pointerdown', noteMenuActivity, true);
+    window.addEventListener('pointermove', noteMenuActivity, true);
+    window.addEventListener('touchstart', noteMenuActivity, true);
+    window.addEventListener('keydown', noteKeyboardActivity, true);
+    frame = window.requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener('pointerdown', noteMenuActivity, true);
+      window.removeEventListener('pointermove', noteMenuActivity, true);
+      window.removeEventListener('touchstart', noteMenuActivity, true);
+      window.removeEventListener('keydown', noteKeyboardActivity, true);
+      window.cancelAnimationFrame(frame);
+      clearMenuIdleTimer();
+    };
+  }, [clearMenuIdleTimer, menuChromeHidden, scheduleMenuScreensaver]);
 
   const menuItems = [
     { label: 'Arcade', action: onArcade },
@@ -7033,6 +7151,188 @@ function CharacterViewer({
     }
   };
 
+  const variantActionControls = isLocalDev ? (
+    <>
+      <button
+        className="secondary-button"
+        onClick={() => setShowImporter(true)}
+        data-testid="open-character-importer"
+      >
+        <Upload size={18} />
+        Import Character
+      </button>
+      <button
+        className={`secondary-button ${active.locked ? 'active-tool' : ''}`}
+        onClick={toggleActiveLocked}
+        disabled={manifestSaveStatus === 'saving'}
+        data-testid="toggle-character-lock"
+      >
+        <KeyRound size={18} />
+        {active.locked ? 'Locked' : 'Unlocked'}
+      </button>
+      <label className={`viewer-flag-toggle ${active.unplayable ? 'is-on' : ''}`}>
+        <input
+          type="checkbox"
+          checked={Boolean(active.unplayable)}
+          onChange={(event) => void toggleActiveUnplayable(event.target.checked)}
+          disabled={manifestSaveStatus === 'saving'}
+          data-testid="toggle-character-unplayable"
+        />
+        <EyeOff size={18} />
+        <span>Unplayable</span>
+      </label>
+      <button
+        className={`secondary-button ${active.variant ? 'active-tool' : ''}`}
+        onClick={toggleActiveVariant}
+        disabled={manifestSaveStatus === 'saving' || (!active.variant && !activeVariantBase)}
+        data-testid="toggle-character-variant"
+      >
+        <Users size={18} />
+        {active.variant ? 'Variant' : 'Base'}
+      </button>
+      {active.variant && activeVariantBase && (
+        <label className="variant-base-control">
+          <span>Base</span>
+          <select
+            value={active.variantOf ?? activeVariantBase.id}
+            onChange={(event) => void updateActiveVariantBase(event.target.value)}
+            disabled={manifestSaveStatus === 'saving'}
+          >
+            {variantBaseOptions.map((character) => (
+              <option key={character.id} value={character.id}>{character.displayName}</option>
+            ))}
+          </select>
+        </label>
+      )}
+    </>
+  ) : null;
+
+  const devPreviewActionControls = isLocalDev ? (
+    <>
+      <button
+        className={`secondary-button ${active.hasTransform ? 'active-tool' : ''}`}
+        onClick={toggleActiveTransform}
+        disabled={manifestSaveStatus === 'saving' || (!active.hasTransform && !activeTransformTarget)}
+        data-testid="toggle-character-transform"
+      >
+        <Shuffle size={18} />
+        {active.hasTransform ? 'Has Transform' : 'No Transform'}
+      </button>
+      {active.hasTransform && activeTransformTarget && (
+        <label className="variant-base-control">
+          <span>Transform</span>
+          <select
+            value={active.transformCharacterId ?? activeTransformTarget.id}
+            onChange={(event) => void updateActiveTransformTarget(event.target.value)}
+            disabled={manifestSaveStatus === 'saving'}
+          >
+            {transformTargetOptions.map((character) => (
+              <option key={character.id} value={character.id}>{character.displayName}</option>
+            ))}
+          </select>
+        </label>
+      )}
+      <label className="variant-base-control">
+        <span>Dash Step</span>
+        <input
+          type="number"
+          min="0"
+          max="2.4"
+          step="0.05"
+          value={active.stats.dashDistance ?? 0.78}
+          onChange={(event) => void updateActiveDashDistance(Number(event.target.value))}
+          disabled={manifestSaveStatus === 'saving'}
+          data-testid="character-dash-distance"
+        />
+      </label>
+      <label className="secondary-button sprite-sheet-import-button">
+        <Upload size={18} />
+        Face Card
+        <input
+          type="file"
+          accept="image/png,image/webp,image/jpeg"
+          onChange={(event) => {
+            void importFaceCard(event.target.files?.[0]);
+            event.currentTarget.value = '';
+          }}
+        />
+      </label>
+      <button
+        className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
+        onClick={() => setEditorMode((current) => (current === 'animation' ? 'browse' : 'animation'))}
+        data-testid="toggle-animation-editor"
+      >
+        <Settings size={18} />
+        {isEditingAnimation ? 'Browse Moves' : 'Edit Selected'}
+      </button>
+      <button
+        className="secondary-button"
+        onClick={() => setEditorMode('sprite')}
+        data-testid="toggle-sprite-editor"
+      >
+        <Target size={18} />
+        Edit Spritesheet
+      </button>
+      <button
+        className={`secondary-button ${isEditingEffectsLibrary ? 'active-tool' : ''}`}
+        onClick={() => setEditorMode((current) => (current === 'effectsLibrary' ? 'browse' : 'effectsLibrary'))}
+        data-testid="toggle-effects-library"
+      >
+        <Eye size={18} />
+        View Effects
+      </button>
+      <button
+        className={`secondary-button ${isEditingMoveEffects ? 'active-tool' : ''}`}
+        onClick={() => setEditorMode((current) => (current === 'moveEffects' ? 'browse' : 'moveEffects'))}
+        data-testid="toggle-move-effects"
+      >
+        <Settings size={18} />
+        Add Effects
+      </button>
+      <button
+        className={`secondary-button ${previewHdVoxels ? 'active-tool' : ''}`}
+        onClick={() => setPreviewHdVoxels((current) => !current)}
+        data-testid="toggle-hd-voxel-preview"
+      >
+        <Eye size={18} />
+        {previewHdVoxels ? 'HD Preview On' : 'HD Preview'}
+      </button>
+      <button
+        className="secondary-button"
+        onClick={rebuildHdVoxels}
+        disabled={hdVoxelStatus === 'building'}
+        data-testid="rebuild-hd-voxels"
+      >
+        <Target size={18} />
+        {hdVoxelStatus === 'building' ? 'Building HD' : 'Rebuild HD Voxels'}
+      </button>
+    </>
+  ) : null;
+
+  const zoomActionControls = (
+    <>
+      <div className="zoom-controls" aria-label="Model zoom controls">
+        <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
+          <ZoomOut size={18} />
+        </button>
+        <input
+          aria-label="Zoom level"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={zoom}
+          onChange={(event) => setZoom(Number(event.target.value))}
+          data-testid="viewer-zoom-slider"
+        />
+        <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
+          <ZoomIn size={18} />
+        </button>
+      </div>
+      <span>Drag to rotate. Scroll or pinch to zoom.</span>
+    </>
+  );
+
   if (showImporter && isLocalDev) {
     return (
       <CharacterImportScreen
@@ -7071,205 +7371,47 @@ function CharacterViewer({
             </button>
           ))}
         </div>
-        <article className={`model-viewer-panel ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
+        <article className={`model-viewer-panel ${isLocalDev && !isEditingSpriteSheet ? 'is-dev-sticky' : ''} ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
-            <div className={`model-viewer-stage ${hasSelectedFrameData ? '' : 'is-empty-preview'}`}>
-              {hasSelectedFrameData ? (
-                <CharacterPreviewCanvas
-                  character={previewCharacter}
-                  pose={selectedSlot.pose}
-                  animationKey={selectedPreviewAnimationKey}
-                  previewMove={selectedMove}
-                  previewEffects={effects}
-                  previewEffectInstances={selectedMoveEffectInstances}
-                  previewEffectFrame={isEditingAnimation ? clampedAnimationPreviewFrame : undefined}
-                  rotationTurn={rotationTurn}
-                  zoom={zoom}
-                />
-              ) : (
-                <NoFrameDataPreview />
+            <div className="model-viewer-preview-column">
+              <div className={`model-viewer-stage ${hasSelectedFrameData ? '' : 'is-empty-preview'}`}>
+                {hasSelectedFrameData ? (
+                  <CharacterPreviewCanvas
+                    character={previewCharacter}
+                    pose={selectedSlot.pose}
+                    animationKey={selectedPreviewAnimationKey}
+                    previewMove={selectedMove}
+                    previewEffects={effects}
+                    previewEffectInstances={selectedMoveEffectInstances}
+                    previewEffectFrame={isEditingAnimation ? clampedAnimationPreviewFrame : undefined}
+                    rotationTurn={rotationTurn}
+                    zoom={zoom}
+                  />
+                ) : (
+                  <NoFrameDataPreview />
+                )}
+              </div>
+              {isLocalDev && (
+                <div className="viewer-actions model-viewer-preview-actions">
+                  <div className="viewer-action-row">
+                    {devPreviewActionControls}
+                    {zoomActionControls}
+                  </div>
+                </div>
               )}
             </div>
           )}
-          <div className="viewer-actions">
-            <div className="viewer-action-row">
-              {!isEditingSpriteSheet && (
-                <>
+          <div className="model-viewer-controls-column">
+            <div className="viewer-actions">
+              <div className="viewer-action-row">
+                {!isEditingSpriteSheet && (
+                  <>
                   <button className="secondary-button" onClick={() => setRotationTurn((value) => value + 1)}>
                     <Rotate3D size={18} />
                     Rotate
                   </button>
-                  {isLocalDev && (
-                    <>
-                      <button
-                        className="secondary-button"
-                        onClick={() => setShowImporter(true)}
-                        data-testid="open-character-importer"
-                      >
-                        <Upload size={18} />
-                        Import Character
-                      </button>
-                      <button
-                        className={`secondary-button ${active.locked ? 'active-tool' : ''}`}
-                        onClick={toggleActiveLocked}
-                        disabled={manifestSaveStatus === 'saving'}
-                        data-testid="toggle-character-lock"
-                      >
-                        <KeyRound size={18} />
-                        {active.locked ? 'Locked' : 'Unlocked'}
-                      </button>
-                      <label className={`viewer-flag-toggle ${active.unplayable ? 'is-on' : ''}`}>
-                        <input
-                          type="checkbox"
-                          checked={Boolean(active.unplayable)}
-                          onChange={(event) => void toggleActiveUnplayable(event.target.checked)}
-                          disabled={manifestSaveStatus === 'saving'}
-                          data-testid="toggle-character-unplayable"
-                        />
-                        <EyeOff size={18} />
-                        <span>Unplayable</span>
-                      </label>
-                      <button
-                        className={`secondary-button ${active.variant ? 'active-tool' : ''}`}
-                        onClick={toggleActiveVariant}
-                        disabled={manifestSaveStatus === 'saving' || (!active.variant && !activeVariantBase)}
-                        data-testid="toggle-character-variant"
-                      >
-                        <Users size={18} />
-                        {active.variant ? 'Variant' : 'Base'}
-                      </button>
-                      {active.variant && activeVariantBase && (
-                        <label className="variant-base-control">
-                          <span>Base</span>
-                          <select
-                            value={active.variantOf ?? activeVariantBase.id}
-                            onChange={(event) => void updateActiveVariantBase(event.target.value)}
-                            disabled={manifestSaveStatus === 'saving'}
-                          >
-                            {variantBaseOptions.map((character) => (
-                              <option key={character.id} value={character.id}>{character.displayName}</option>
-                            ))}
-                          </select>
-                        </label>
-                      )}
-                      <button
-                        className={`secondary-button ${active.hasTransform ? 'active-tool' : ''}`}
-                        onClick={toggleActiveTransform}
-                        disabled={manifestSaveStatus === 'saving' || (!active.hasTransform && !activeTransformTarget)}
-                        data-testid="toggle-character-transform"
-                      >
-                        <Shuffle size={18} />
-                        {active.hasTransform ? 'Has Transform' : 'No Transform'}
-                      </button>
-                      {active.hasTransform && activeTransformTarget && (
-                        <label className="variant-base-control">
-                          <span>Transform</span>
-                          <select
-                            value={active.transformCharacterId ?? activeTransformTarget.id}
-                            onChange={(event) => void updateActiveTransformTarget(event.target.value)}
-                            disabled={manifestSaveStatus === 'saving'}
-                          >
-                            {transformTargetOptions.map((character) => (
-                              <option key={character.id} value={character.id}>{character.displayName}</option>
-                            ))}
-                          </select>
-                        </label>
-                      )}
-                      <label className="variant-base-control">
-                        <span>Dash Step</span>
-                        <input
-                          type="number"
-                          min="0"
-                          max="2.4"
-                          step="0.05"
-                          value={active.stats.dashDistance ?? 0.78}
-                          onChange={(event) => void updateActiveDashDistance(Number(event.target.value))}
-                          disabled={manifestSaveStatus === 'saving'}
-                          data-testid="character-dash-distance"
-                        />
-                      </label>
-                      <label className="secondary-button sprite-sheet-import-button">
-                        <Upload size={18} />
-                        Face Card
-                        <input
-                          type="file"
-                          accept="image/png,image/webp,image/jpeg"
-                          onChange={(event) => {
-                            void importFaceCard(event.target.files?.[0]);
-                            event.currentTarget.value = '';
-                          }}
-                        />
-                      </label>
-                      <button
-                        className={`secondary-button ${isEditingAnimation ? 'active-tool' : ''}`}
-                        onClick={() => setEditorMode((current) => (current === 'animation' ? 'browse' : 'animation'))}
-                        data-testid="toggle-animation-editor"
-                      >
-                        <Settings size={18} />
-                        {isEditingAnimation ? 'Browse Moves' : 'Edit Selected'}
-                      </button>
-                      <button
-                        className="secondary-button"
-                        onClick={() => setEditorMode('sprite')}
-                        data-testid="toggle-sprite-editor"
-                      >
-                        <Target size={18} />
-                        Edit Spritesheet
-                      </button>
-                      <button
-                        className={`secondary-button ${isEditingEffectsLibrary ? 'active-tool' : ''}`}
-                        onClick={() => setEditorMode((current) => (current === 'effectsLibrary' ? 'browse' : 'effectsLibrary'))}
-                        data-testid="toggle-effects-library"
-                      >
-                        <Eye size={18} />
-                        View Effects
-                      </button>
-                      <button
-                        className={`secondary-button ${isEditingMoveEffects ? 'active-tool' : ''}`}
-                        onClick={() => setEditorMode((current) => (current === 'moveEffects' ? 'browse' : 'moveEffects'))}
-                        data-testid="toggle-move-effects"
-                      >
-                        <Settings size={18} />
-                        Add Effects
-                      </button>
-                      <button
-                        className={`secondary-button ${previewHdVoxels ? 'active-tool' : ''}`}
-                        onClick={() => setPreviewHdVoxels((current) => !current)}
-                        data-testid="toggle-hd-voxel-preview"
-                      >
-                        <Eye size={18} />
-                        {previewHdVoxels ? 'HD Preview On' : 'HD Preview'}
-                      </button>
-                      <button
-                        className="secondary-button"
-                        onClick={rebuildHdVoxels}
-                        disabled={hdVoxelStatus === 'building'}
-                        data-testid="rebuild-hd-voxels"
-                      >
-                        <Target size={18} />
-                        {hdVoxelStatus === 'building' ? 'Building HD' : 'Rebuild HD Voxels'}
-                      </button>
-                    </>
-                  )}
-                  <div className="zoom-controls" aria-label="Model zoom controls">
-                    <button aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0, value - 0.18))} data-testid="viewer-zoom-out">
-                      <ZoomOut size={18} />
-                    </button>
-                    <input
-                      aria-label="Zoom level"
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.01"
-                      value={zoom}
-                      onChange={(event) => setZoom(Number(event.target.value))}
-                      data-testid="viewer-zoom-slider"
-                    />
-                    <button aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1, value + 0.18))} data-testid="viewer-zoom-in">
-                      <ZoomIn size={18} />
-                    </button>
-                  </div>
-                  <span>Drag to rotate. Scroll or pinch to zoom.</span>
+                  {variantActionControls}
+                  {!isLocalDev && zoomActionControls}
                 </>
               )}
               {isEditingSpriteSheet && (
@@ -7723,6 +7865,7 @@ function CharacterViewer({
               })}
             </div>
           )}
+          </div>
         </article>
       </div>
       <button className="secondary-button" onClick={onBack}>
@@ -11056,10 +11199,44 @@ function FightScreen({
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
   const onlineLastClashInputRef = useRef<{ clashId: number; button: MoveInput | null }>({ clashId: 0, button: null });
   const arcadeAdvanceRef = useRef(false);
+  const fightAnalyticsStateRef = useRef(createFightAnalyticsState());
+  const matchStartedTrackedRef = useRef(false);
+  const mobileControlsTrackedRef = useRef(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const captureFightAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
+    captureAnalyticsEvent(name, {
+      app_version: KORE_APP_VERSION,
+      mode,
+      stage_id: stage.id,
+      p1_character_id: p1.id,
+      p2_character_id: p2.id,
+      cpu_difficulty: cpuDifficulty,
+      ...properties
+    });
+  }, [cpuDifficulty, mode, p1.id, p2.id, stage.id]);
+
+  const resetTrackedMatchAnalytics = useCallback((freshMatch?: MatchSnapshot) => {
+    resetFightAnalyticsState(fightAnalyticsStateRef.current);
+    if (freshMatch) {
+      fightAnalyticsStateRef.current.previousRoundsWon = [
+        freshMatch.fighters[0].roundsWon,
+        freshMatch.fighters[1].roundsWon
+      ];
+    }
+    matchStartedTrackedRef.current = false;
+  }, []);
 
   useEffect(() => {
     matchRef.current = match;
   }, [match]);
+
+  useEffect(() => {
+    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    onFullscreenChange();
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
 
   useEffect(() => {
     pausedRef.current = paused;
@@ -11110,6 +11287,30 @@ function FightScreen({
     onlineStateRef.current = onlineState;
     if (onlineState === 'connected') setPaused(false);
   }, [onlineState]);
+
+  useEffect(() => {
+    const matchIsTrackable = !isOnline || onlineState === 'connected';
+    if (!matchIsTrackable) return;
+    if (!matchStartedTrackedRef.current) {
+      fightAnalyticsStateRef.current.matchStartedAt = performance.now();
+      fightAnalyticsStateRef.current.roundStartedAt = performance.now();
+      captureFightAnalytics('match_started', { source: 'fight_screen' });
+      matchStartedTrackedRef.current = true;
+    }
+    recordFightAnalyticsSnapshot(
+      fightAnalyticsStateRef.current,
+      match,
+      {
+        app_version: KORE_APP_VERSION,
+        mode,
+        stage_id: match.stage.id,
+        p1_character_id: match.fighters[0].baseCharacter.id,
+        p2_character_id: match.fighters[1].baseCharacter.id,
+        cpu_difficulty: match.cpuDifficulty
+      },
+      captureFightAnalytics
+    );
+  }, [captureFightAnalytics, isOnline, match, mode, onlineState]);
 
   useEffect(() => {
     onlineRoleRef.current = onlineRole;
@@ -11329,6 +11530,7 @@ function FightScreen({
   const startOnlineRematch = useCallback(() => {
     const current = matchRef.current;
     const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
+    resetTrackedMatchAnalytics(fresh);
     matchRef.current = fresh;
     setMatch(fresh);
     onlineWinnerRecordedRef.current = false;
@@ -11341,7 +11543,7 @@ function FightScreen({
     setOnlineStatusText('CONNECTED');
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
     publishOnlineSnapshot(true);
-  }, [makeOnlineMatch, publishOnlineSnapshot]);
+  }, [makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics]);
 
   const markOnlineDisconnected = useCallback((message = 'Opponent disconnected') => {
     onlineClosingRef.current = true;
@@ -11443,6 +11645,7 @@ function FightScreen({
       if (message.profile) onlineRemoteProfileRef.current = message.profile;
       if (onlineRoleRef.current === 'host') {
         const onlineMatch = makeOnlineMatch(p1.id, message.characterId, onlineRoomRef.current?.stageId ?? stage.id);
+        resetTrackedMatchAnalytics(onlineMatch);
         matchRef.current = onlineMatch;
         setMatch(onlineMatch);
         onlinePerformanceRef.current = emptyOnlinePerformancePair();
@@ -11484,6 +11687,7 @@ function FightScreen({
           )
         : current;
       const hydrated = hydrateMatchSnapshot(base, message.snapshot);
+      if (needsBase) resetTrackedMatchAnalytics(hydrated);
       matchRef.current = hydrated;
       onlineWinsRef.current = message.wins;
       setMatch(hydrated);
@@ -11501,6 +11705,7 @@ function FightScreen({
     if (message.type === 'rematchStart') {
       onlineRematchReadyRef.current = { local: false, remote: false };
       onlineWinnerRecordedRef.current = false;
+      resetTrackedMatchAnalytics();
       onlineWinsRef.current = message.wins;
       setOnlineWins(message.wins);
       setOnlineStatusText('REMATCH STARTING');
@@ -11513,7 +11718,7 @@ function FightScreen({
     if (message.type === 'error') {
       markOnlineDisconnected(message.message);
     }
-  }, [makeOnlineMatch, markOnlineDisconnected, p1.id, publishOnlineSnapshot, stage.id, startOnlineRematch]);
+  }, [makeOnlineMatch, markOnlineDisconnected, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -11830,11 +12035,16 @@ function FightScreen({
   }, [arcadeDefeatedCharacterId, arcadeMatchPhase, arcadeWinnerSlot, mode, onArcadeAdvance]);
 
   const reset = () => {
+    captureFightAnalytics('rematch_clicked', {
+      phase: match.phase,
+      winner_slot: match.winnerSlot
+    });
     if (isOnline) {
       requestOnlineRematch();
       return;
     }
     const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty, withFreshAiSeed(matchOptions));
+    resetTrackedMatchAnalytics(fresh);
     matchRef.current = fresh;
     setMatch(fresh);
     setPaused(false);
@@ -11849,6 +12059,31 @@ function FightScreen({
     cleanupOnline(true);
     onCharacterSelect();
   };
+
+  const toggleFullscreen = () => {
+    captureFightAnalytics('fullscreen_clicked', { entering_fullscreen: !document.fullscreenElement });
+    const target = screenRef.current;
+    const request = document.fullscreenElement
+      ? document.exitFullscreen()
+      : target?.requestFullscreen();
+    void request?.catch((error) => {
+      captureAnalyticsError(error, {
+        source: 'fullscreen',
+        app_version: KORE_APP_VERSION,
+        mode,
+        stage_id: stage.id,
+        p1_character_id: p1.id,
+        p2_character_id: p2.id,
+        cpu_difficulty: cpuDifficulty
+      });
+    });
+  };
+
+  const trackMobileControlsUsed = useCallback((action: ActionName) => {
+    if (mobileControlsTrackedRef.current) return;
+    mobileControlsTrackedRef.current = true;
+    captureFightAnalytics('mobile_controls_used', { action });
+  }, [captureFightAnalytics]);
 
   const handleSurfaceKey = (event: ReactKeyboardEvent<HTMLDivElement>, pressed: boolean) => {
     if (event.defaultPrevented) return;
@@ -11879,8 +12114,17 @@ function FightScreen({
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
       <CombatPopupLayer popups={combatPopups} />
       <ClashOverlay match={match} />
+      <button
+        type="button"
+        className="fight-fullscreen-button"
+        onClick={toggleFullscreen}
+        aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+        title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+      >
+        {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+      </button>
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
-      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} forceVisible={settings.display.touchControls === 'on'} />}
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} />}
       {match.message && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}

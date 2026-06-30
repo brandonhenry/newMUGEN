@@ -3051,6 +3051,37 @@ button {
   gap: 12px;
 }
 
+.model-viewer-preview-column {
+  display: contents;
+}
+
+.model-viewer-controls-column {
+  display: contents;
+}
+
+.model-viewer-panel.is-dev-sticky {
+  grid-template-columns: minmax(360px, 0.78fr) minmax(420px, 1fr);
+  align-items: start;
+}
+
+.model-viewer-panel.is-dev-sticky .model-viewer-preview-column {
+  display: block;
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  z-index: 2;
+}
+
+.model-viewer-panel.is-dev-sticky .model-viewer-controls-column {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.model-viewer-panel.is-dev-sticky .model-viewer-preview-actions {
+  margin-top: 14px;
+}
+
 .model-viewer-stage {
   overflow: hidden;
   min-height: clamp(430px, 58vh, 760px);
@@ -5680,6 +5711,28 @@ button {
   touch-action: none;
 }
 
+.fight-fullscreen-button {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 18;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(5, 10, 16, 0.54);
+  color: #f7fbff;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.fight-fullscreen-button:hover {
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(18, 28, 40, 0.72);
+}
+
 .fight-debug {
   position: absolute;
   width: 1px;
@@ -7050,6 +7103,14 @@ button {
 }
 
 @media (max-width: 1120px) {
+  .model-viewer-panel.is-dev-sticky {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .model-viewer-panel.is-dev-sticky .model-viewer-preview-column {
+    position: static;
+  }
+
   .viewer-layout {
     grid-template-columns: minmax(0, 1fr);
   }

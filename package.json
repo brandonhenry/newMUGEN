@@ -16,11 +16,13 @@
   },
   "dependencies": {
     "@netlify/blobs": "^10.7.9",
+    "@posthog/react": "^1.10.3",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.17.12",
     "animejs": "^3.2.2",
     "lucide-react": "^0.468.0",
     "peerjs": "^1.5.5",
+    "posthog-js": "^1.396.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.171.0",

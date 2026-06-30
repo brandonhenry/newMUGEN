@@ -398,17 +398,17 @@ function makeAiClashInput(match: MatchSnapshot, slot: 1 | 2): InputFrame {
     difficulty <= 1 ? 38 :
     difficulty === 2 ? 29 :
     difficulty === 3 ? 21 :
-    difficulty === 4 ? 15 :
-    11;
-  const perButtonDelay = difficulty <= 2 ? 18 : difficulty === 3 ? 14 : difficulty === 4 ? 10 : 8;
+    difficulty === 4 ? 11 :
+    7;
+  const perButtonDelay = difficulty <= 2 ? 18 : difficulty === 3 ? 14 : difficulty === 4 ? 8 : 6;
   const targetFrame = reactionDelay + participant.progress * perButtonDelay;
   if (elapsed < targetFrame) return input;
   const mistakeChance =
     difficulty <= 1 ? 0.42 :
     difficulty === 2 ? 0.28 :
     difficulty === 3 ? 0.18 :
-    difficulty === 4 ? 0.1 :
-    0.07;
+    difficulty === 4 ? 0.07 :
+    0.035;
   const roll = seededUnit(match.aiSeed + match.roundAiSeed + clash.id * 17 + slot * 101, participant.progress + Math.floor(elapsed / 8));
   const expected = clash.sequence[participant.progress] ?? 'jab';
   const chosen =
@@ -3966,7 +3966,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const pressureKiBurst =
     !pressureCrouchInput &&
     shouldAiUseKiBurst(ai, opponent, pressureMoveInput, difficulty, opening.kind === 'whiff' ? 'whiff' : 'pressure', selector + 11, routeRoll + 19, leaderCloseout);
-  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (pressureKiBurst ? 0.18 : 0) + (opening.kind === 'hitstun' ? 0.36 + difficulty * 0.035 : 0);
+  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (pressureKiBurst ? 0.18 : 0) + (opening.kind === 'hitstun' ? 0.36 + settings.hitstunReachBonus : 0);
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
@@ -4229,7 +4229,7 @@ function chooseAiPressureMoveInput(
     const fresh = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input) && !inputRecentlyUsed(ai, move.input));
     if (fresh && (difficulty >= 4 || routeRoll > 42)) return fresh.input;
     const varied = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input));
-    if (varied && routeRoll > (difficulty >= 5 ? 28 : 54)) return varied.input;
+    if (varied && routeRoll > (difficulty >= 5 ? 18 : difficulty >= 4 ? 28 : 54)) return varied.input;
     const jab = sorted.find((move) => move.input === 'jab');
     if (jab) return jab.input;
   }
@@ -4274,8 +4274,8 @@ function chooseAiTornadoPressureInput(
         : difficulty === 3
           ? 0.58
           : difficulty === 4
-            ? 0.74
-            : 0.84;
+            ? 0.84
+            : 0.93;
   const roll = positiveModulo(selector * 5 + routeRoll * 7 + ai.slot * 23 + Math.floor(opponent.juggleSequenceDamage * 3), 100) / 100;
   if (roll > reliability) return null;
 
@@ -4345,8 +4345,8 @@ function shouldAiUseKiBurst(
         : difficulty === 3
           ? 0.26
           : difficulty === 4
-            ? 0.4
-            : 0.52;
+            ? 0.52
+            : 0.64;
   const kiOverflowBonus = clamp((ai.ki - 55) / 70, 0, 0.22);
   const behindBonus = ai.hp < opponent.hp ? 0.1 : 0;
   const closeoutPenalty = leaderCloseout ? 0.16 : 0;
@@ -4417,8 +4417,8 @@ function shouldAiStartCharacterAbilityCharge(
         : difficulty === 3
           ? 0.17
           : difficulty === 4
-            ? 0.23
-            : 0.28;
+            ? 0.28
+            : 0.34;
   const authoredKiBonus = hasAuthoredKiAbility ? 0.08 : 0;
   const kiReadinessBonus = alreadyReady ? 0.18 : clamp(ai.ki / targetKi, 0, 1) * 0.1;
   const openingBonus = opponent.state === 'knockdown' || opponent.state === 'getup' ? 0.1 : 0;
@@ -4486,8 +4486,8 @@ function chooseAiFullCrouchMoveInput(
           : difficulty === 3
             ? 0.24
             : difficulty === 4
-              ? 0.36
-              : 0.48
+              ? 0.48
+              : 0.58
       : difficulty <= 1
         ? 0.02
         : difficulty === 2
@@ -4495,8 +4495,8 @@ function chooseAiFullCrouchMoveInput(
           : difficulty === 3
             ? 0.16
             : difficulty === 4
-              ? 0.27
-              : 0.38;
+              ? 0.38
+              : 0.48;
   const roll = positiveModulo(selector * 5 + routeRoll * 9 + ai.slot * 31 + ai.comboStep * 17, 100) / 100;
   if (roll > chance) return null;
 
@@ -4520,7 +4520,7 @@ function chooseAiFullCrouchMoveInput(
 function shouldAiHoldFullCrouchStance(ai: FighterRuntime, difficulty: CpuDifficulty, selector: number, routeRoll: number) {
   if (difficulty <= 1) return false;
   if (getConfiguredFullCrouchInputs(ai).length === 0) return false;
-  const chance = difficulty === 2 ? 0.03 : difficulty === 3 ? 0.06 : difficulty === 4 ? 0.09 : 0.12;
+  const chance = difficulty === 2 ? 0.03 : difficulty === 3 ? 0.06 : difficulty === 4 ? 0.12 : 0.17;
   const roll = positiveModulo(selector * 7 + routeRoll * 3 + ai.slot * 43 + Math.floor(ai.hp), 100) / 100;
   return roll < chance;
 }
@@ -4638,24 +4638,24 @@ function makeRoundAiSeed(aiSeed: number, round: number) {
 
 function getCpuDifficultySettings(difficulty: CpuDifficulty) {
   const level = clamp(difficulty, 1, 5);
-  const t = (level - 1) / 4;
+  const t = cpuDifficultyCurve(level);
   return {
     attackCycle: lerp(1.3, 0.42, t),
     aggressionCycleBonus: lerp(0.07, 0.18, t),
     attackPulse: lerp(0.045, 0.12, t),
     comboCycle: lerp(0.58, 0.16, t),
     comboPulse: lerp(0.04, 0.22, t),
-    maxComboSteps: Math.round(lerp(2, MAX_COMBO_STEPS, t)),
+    maxComboSteps: clamp(Math.round(lerp(2, MAX_COMBO_STEPS, t)), 2, MAX_COMBO_STEPS),
     guardBonus: lerp(-0.2, 0.5, t),
     punishResponse: lerp(0.08, 0.98, t),
     pressureResponse: lerp(0.08, 0.96, t),
-    punishDropRate: lerp(0.6, 0.1, t),
-    pressureDropRate: lerp(0.52, 0.12, t),
-    attackHesitationRate: lerp(0.36, 0.08, t),
-    spacingMistakeRate: lerp(0.28, 0.06, t),
-    suboptimalMoveRate: lerp(0.5, 0.14, t),
-    suboptimalPunishRate: lerp(0.5, 0.12, t),
-    suboptimalPressureRate: lerp(0.46, 0.12, t),
+    punishDropRate: level >= 5 ? 0.08 : lerp(0.6, 0.1, t),
+    pressureDropRate: level >= 5 ? 0.08 : lerp(0.52, 0.12, t),
+    attackHesitationRate: level >= 5 ? 0.05 : lerp(0.36, 0.08, t),
+    spacingMistakeRate: level >= 5 ? 0.04 : lerp(0.28, 0.06, t),
+    suboptimalMoveRate: level >= 5 ? 0.08 : lerp(0.5, 0.14, t),
+    suboptimalPunishRate: level >= 5 ? 0.07 : lerp(0.5, 0.12, t),
+    suboptimalPressureRate: level >= 5 ? 0.07 : lerp(0.46, 0.12, t),
     hitstunPressureBonus: lerp(0.02, 0.08, t),
     stalePressurePenalty: lerp(0.08, 0.24, t),
     leaderPressurePenalty: lerp(0.08, 0.22, t),
@@ -4663,6 +4663,7 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     reactionLeadFrames: Math.round(lerp(-2, 8, t)),
     spacingScale: lerp(1.08, 0.78, t),
     pressureBonus: lerp(0.28, 0.9, t),
+    hitstunReachBonus: lerp(0.035, 0.175, t),
     rangeBuffer: lerp(0.08, 0.28, t),
     runInBuffer: lerp(0.92, 0.36, t),
     specialScale: lerp(0.35, 1.55, t),
@@ -4673,6 +4674,11 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     heavyThreshold: Math.round(lerp(88, 58, t)),
     kickThreshold: Math.round(lerp(66, 36, t))
   };
+}
+
+function cpuDifficultyCurve(level: number) {
+  const curve = [0, 0.25, 0.5, 1, 1.18] as const;
+  return curve[clamp(Math.round(level), 1, 5) - 1] ?? 0.5;
 }
 
 function applyAiRoute(
@@ -4699,13 +4705,21 @@ function applyAiRoute(
     input.down = true;
   }
 
-  if (difficulty >= 4 && routeRoll > 68 && !(usedSide && selector > 70)) {
+  if (difficulty >= 5 && routeRoll > 58 && !(usedSide && selector > 82)) {
+    input.sidewalkUp = routeRoll < 79;
+    input.sidewalkDown = routeRoll >= 79;
+  } else if (difficulty >= 4 && routeRoll > 68 && !(usedSide && selector > 70)) {
     input.sidewalkUp = routeRoll < 82;
     input.sidewalkDown = routeRoll >= 82;
   }
 
-  if (difficulty >= 5) {
+  if (difficulty >= 4) {
     if (comboStep >= 2 && selector > 34) input[towardKey] = true;
+  }
+
+  if (difficulty >= 5) {
+    if (comboStep >= 1 && selector > 24) input[towardKey] = true;
+    if (!usedLow && routeRoll > 44) input.down = true;
   }
 }
 

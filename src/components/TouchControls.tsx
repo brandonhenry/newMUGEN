@@ -4,6 +4,7 @@ import type { ActionName } from '../types';
 
 type TouchControlsProps = {
   onAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
+  onUse?: (action: ActionName) => void;
   forceVisible?: boolean;
 };
 
@@ -26,7 +27,7 @@ function activeActionKey(player: 1 | 2, action: ActionName) {
   return `${player}:${action}` as const;
 }
 
-export function TouchControls({ onAction, forceVisible = false }: TouchControlsProps) {
+export function TouchControls({ onAction, onUse, forceVisible = false }: TouchControlsProps) {
   const activeActionsRef = useRef(new Map<string, { player: 1 | 2; action: ActionName }>());
 
   const releaseAction = useCallback((player: 1 | 2, action: ActionName) => {
@@ -66,6 +67,7 @@ export function TouchControls({ onAction, forceVisible = false }: TouchControlsP
       if (!activeActionsRef.current.has(key)) {
         activeActionsRef.current.set(key, { player, action });
         onAction(player, action, true);
+        onUse?.(action);
       }
     },
     onPointerUp: (event: ReactPointerEvent<HTMLButtonElement>) => {
