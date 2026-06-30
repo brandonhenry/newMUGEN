@@ -149,12 +149,39 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
+    "cmd:1+2": [
+      "/characters/gotenks/frames/frame-068.png",
+      "/characters/gotenks/frames/frame-070.png",
+      "/characters/gotenks/frames/frame-071.png",
+      "/characters/gotenks/frames/frame-070.png",
+      "/characters/gotenks/frames/frame-071.png"
+    ],
+    "cmd:1+3": [
+      "/characters/gotenks/frames/frame-110.png",
+      "/characters/gotenks/frames/frame-111.png",
+      "/characters/gotenks/frames/frame-112.png",
+      "/characters/gotenks/frames/frame-113.png",
+      "/characters/gotenks/frames/frame-114.png",
+      "/characters/gotenks/frames/frame-115.png",
+      "/characters/gotenks/frames/frame-116.png"
+    ],
+    "cmd:2+3": [
+      "/characters/gotenks/frames/frame-201.png",
+      "/characters/gotenks/frames/frame-202.png",
+      "/characters/gotenks/frames/frame-203.png",
+      "/characters/gotenks/frames/frame-204.png"
+    ],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/gotenks/frames/frame-123.png",
+      "/characters/gotenks/frames/frame-124.png",
+      "/characters/gotenks/frames/frame-125.png",
+      "/characters/gotenks/frames/frame-126.png",
+      "/characters/gotenks/frames/frame-127.png",
+      "/characters/gotenks/frames/frame-128.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -549,9 +576,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
+      "startupFrames": 12,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 12,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -578,9 +605,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
+      "startupFrames": 10,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -588,6 +615,10 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Gotenks Low Feint",
       "hitLevel": "low"
     },
