@@ -659,6 +659,9 @@
       "onHitFrames": 8
     },
     "jabright": {
+      "startupFrames": 11,
+      "activeFrames": 4,
+      "recoveryFrames": 16,
       "onHitFrames": 3,
       "forwardForce": 2,
       "hitLevel": "mid"
@@ -1600,6 +1603,11 @@
       }
     },
     "jabright": {
+      "84": {
+        "width": 1,
+        "height": 1,
+        "offsetX": -0.39
+      },
       "87": {
         "width": 0.82,
         "height": 0.86,
