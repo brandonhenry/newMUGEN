@@ -160,10 +160,10 @@
       "/characters/gotenks/frames/frame-116.png"
     ],
     "cmd:2+3": [
-      "/characters/gotenks/frames/frame-201.png",
-      "/characters/gotenks/frames/frame-202.png",
-      "/characters/gotenks/frames/frame-203.png",
-      "/characters/gotenks/frames/frame-204.png"
+      "/characters/gotenks/frames/frame-133.png",
+      "/characters/gotenks/frames/frame-134.png",
+      "/characters/gotenks/frames/frame-135.png",
+      "/characters/gotenks/frames/frame-136.png"
     ],
     "cmd:2+4": [],
     "cmd:3+4": [],
@@ -614,7 +614,8 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Gotenks Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "jumpBeforeMove": true
     },
     "cmd:2+4": {
       "startupFrames": 20,
