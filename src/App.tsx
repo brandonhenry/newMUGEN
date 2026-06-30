@@ -869,6 +869,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
   const soundCues = sanitizeSoundCues(override.soundCues);
   if (soundCues.length > 0) next.soundCues = soundCues;
+  if (next.healsHp) next.usesKi = true;
   return next;
 }
 
@@ -8458,18 +8459,70 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
             ))}
           </select>
         </label>
+        <div className="frame-toggle-group" aria-label="Move options">
+          <span>Options</span>
+          <div>
+            <label className="frame-toggle">
+              <span>Jump Start</span>
+              <input
+                type="checkbox"
+                checked={Boolean(move.jumpBeforeMove)}
+                onChange={(event) => onChange({ jumpBeforeMove: event.target.checked })}
+              />
+            </label>
+            <label className="frame-toggle">
+              <span>Uses Ki</span>
+              <input
+                type="checkbox"
+                checked={usesKi}
+                onChange={(event) => onChange({ usesKi: event.target.checked, kiCost })}
+              />
+            </label>
+            <label className="frame-toggle">
+              <span>Healing</span>
+              <input
+                type="checkbox"
+                checked={healsHp}
+                onChange={(event) => onChange(event.target.checked ? { healsHp: true, healAmount, usesKi: true, kiCost } : { healsHp: false })}
+              />
+            </label>
+            <label className="frame-toggle">
+              <span>Launcher</span>
+              <input
+                type="checkbox"
+                checked={isLauncher}
+                onChange={(event) =>
+                  onChange(
+                    event.target.checked
+                      ? {
+                          launchHeight: Math.max(move.launchHeight ?? 0, 2.2),
+                          launchVelocity,
+                          juggleRefloatVelocity,
+                          juggleGravityScale
+                        }
+                      : { launchHeight: 0 }
+                  )
+                }
+              />
+            </label>
+            <label className="frame-toggle">
+              <span>Knockdown</span>
+              <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />
+            </label>
+            <label className="frame-toggle">
+              <span>Tornado</span>
+              <input type="checkbox" checked={Boolean(move.tornado)} onChange={(event) => onChange({ tornado: event.target.checked })} />
+            </label>
+            <label className="frame-toggle">
+              <span>End Crouch</span>
+              <input type="checkbox" checked={Boolean(move.endsInCrouch)} onChange={(event) => onChange({ endsInCrouch: event.target.checked })} />
+            </label>
+          </div>
+        </div>
         <FrameNumberInput label="Range" value={move.range} min={0.1} step={0.05} onChange={(value) => updateNumber('range', value, 0.1)} />
         <FrameNumberInput label="Forward Force" value={move.forwardForce ?? 0} step={0.05} onChange={(value) => updateNumber('forwardForce', value)} />
         <FrameNumberInput label="Force Start" value={forwardForceStart} min={1} onChange={(value) => updateNumber('forwardForceStartFrame', value, 1)} />
         <FrameNumberInput label="Force End" value={forwardForceEnd} min={1} onChange={(value) => updateNumber('forwardForceEndFrame', value, 1)} />
-        <label className="frame-toggle">
-          <span>Jump Start</span>
-          <input
-            type="checkbox"
-            checked={Boolean(move.jumpBeforeMove)}
-            onChange={(event) => onChange({ jumpBeforeMove: event.target.checked })}
-          />
-        </label>
         <FrameNumberInput label="Jump Height" value={moveJumpForce} min={1} step={0.1} onChange={(value) => updateNumber('moveJumpForce', value, 1)} />
         <FrameNumberInput label="Jump Gravity" value={moveJumpGravity} min={1} step={0.1} onChange={(value) => updateNumber('moveJumpGravity', value, 1)} />
         <FrameNumberInput label="Pushback" value={move.pushback} min={0} step={0.05} onChange={(value) => updateNumber('pushback', value, 0)} />
@@ -8483,59 +8536,12 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
           </select>
         </label>
         <FrameNumberInput label="Homing Speed" value={homingSpeed} min={0} step={0.1} onChange={(value) => updateNumber('homingSpeed', value, 0)} />
-        <label className="frame-toggle">
-          <span>Uses Ki</span>
-          <input
-            type="checkbox"
-            checked={usesKi}
-            onChange={(event) => onChange({ usesKi: event.target.checked, kiCost })}
-          />
-        </label>
         <FrameNumberInput label="Ki Cost" value={kiCost} min={0} max={100} disabled={!usesKi} onChange={(value) => updateNumber('kiCost', value, 0)} />
-        <label className="frame-toggle">
-          <span>Healing</span>
-          <input
-            type="checkbox"
-            checked={healsHp}
-            onChange={(event) => onChange(event.target.checked ? { healsHp: true, healAmount, usesKi: true, kiCost } : { healsHp: false })}
-          />
-        </label>
         <FrameNumberInput label="HP Healed" value={healAmount} min={0} max={100} disabled={!healsHp} onChange={(value) => updateNumber('healAmount', value, 0)} />
-        <label className="frame-toggle">
-          <span>Launcher</span>
-          <input
-            type="checkbox"
-            checked={isLauncher}
-            onChange={(event) =>
-              onChange(
-                event.target.checked
-                  ? {
-                      launchHeight: Math.max(move.launchHeight ?? 0, 2.2),
-                      launchVelocity,
-                      juggleRefloatVelocity,
-                      juggleGravityScale
-                    }
-                  : { launchHeight: 0 }
-              )
-            }
-          />
-        </label>
         <FrameNumberInput label="Launch Height" value={move.launchHeight ?? 0} min={0} step={0.1} onChange={(value) => updateNumber('launchHeight', value, 0)} />
         <FrameNumberInput label="Launch Pop" value={launchVelocity} min={3.2} step={0.05} onChange={(value) => updateNumber('launchVelocity', value, 3.2)} />
         <FrameNumberInput label="Re-float Pop" value={juggleRefloatVelocity} min={2.2} step={0.05} onChange={(value) => updateNumber('juggleRefloatVelocity', value, 2.2)} />
         <FrameNumberInput label="Fall Speed" value={juggleGravityScale} min={0.28} step={0.01} onChange={(value) => updateNumber('juggleGravityScale', value, 0.28)} />
-        <label className="frame-toggle">
-          <span>Knockdown</span>
-          <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />
-        </label>
-        <label className="frame-toggle">
-          <span>Tornado</span>
-          <input type="checkbox" checked={Boolean(move.tornado)} onChange={(event) => onChange({ tornado: event.target.checked })} />
-        </label>
-        <label className="frame-toggle">
-          <span>End Crouch</span>
-          <input type="checkbox" checked={Boolean(move.endsInCrouch)} onChange={(event) => onChange({ endsInCrouch: event.target.checked })} />
-        </label>
       </div>
     </section>
   );

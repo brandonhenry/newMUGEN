@@ -1309,15 +1309,21 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'tracking',
     'armorStartFrame',
     'armorEndFrame',
+    'usesKi',
+    'kiCost',
+    'healsHp',
+    'healAmount',
     'knockdown',
     'cancelWindows',
     'soundCues'
   ]);
-  return Object.fromEntries(
+  const next = Object.fromEntries(
     Object.entries(override).filter(([key, value]) => {
       if (!allowed.has(key)) return false;
       if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
-      if (key === 'knockdown' || key === 'tornado' || key === 'endsInCrouch' || key === 'jumpBeforeMove') return typeof value === 'boolean';
+      if (key === 'knockdown' || key === 'tornado' || key === 'endsInCrouch' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
+        return typeof value === 'boolean';
+      }
       if (key === 'cancelWindows') return Array.isArray(value);
       if (key === 'soundCues') return Array.isArray(value);
       return Number.isFinite(value);
@@ -1325,6 +1331,8 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     .map(([key, value]) => [key, key === 'soundCues' ? sanitizeEffectSoundCues(value) : value])
     .filter(([key, value]) => key !== 'soundCues' || (Array.isArray(value) && value.length > 0))
   );
+  if (next.healsHp === true) next.usesKi = true;
+  return next;
 }
 
 function sanitizeCharacterEffects(effects: Array<Record<string, unknown>>) {
