@@ -3185,6 +3185,7 @@ function MenuScreen({
   const activeMenuIndexRef = useRef(0);
   const menuChromeHiddenRef = useRef(false);
   const hiddenMenuGamepadPressedRef = useRef(false);
+  const menuScreenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     menuChromeHiddenRef.current = menuChromeHidden;
@@ -3268,10 +3269,11 @@ function MenuScreen({
       hiddenMenuGamepadPressedRef.current = false;
       return undefined;
     }
+    const focusFrame = window.requestAnimationFrame(() => menuScreenRef.current?.focus({ preventScroll: true }));
 
     const revealFromPointer = () => revealMenuChrome();
     const revealFromKey = (event: KeyboardEvent) => {
-      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
       if (isTextEntryElement(event.target)) return;
       event.preventDefault();
       event.stopPropagation();
@@ -3293,6 +3295,7 @@ function MenuScreen({
     return () => {
       window.removeEventListener('pointerdown', revealFromPointer, true);
       window.removeEventListener('keydown', revealFromKey, true);
+      window.cancelAnimationFrame(focusFrame);
       window.cancelAnimationFrame(frame);
     };
   }, [menuChromeHidden, revealMenuChrome]);
@@ -3315,8 +3318,21 @@ function MenuScreen({
     if (withSound) onMenuHover();
   };
 
+  const handleHiddenMenuSurfaceKey = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (!menuChromeHidden || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+    if (isTextEntryElement(event.target)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    revealMenuChrome();
+  };
+
   return (
-    <div className={`menu-screen ${menuChromeHidden ? 'is-chrome-hidden' : ''}`}>
+    <div
+      ref={menuScreenRef}
+      className={`menu-screen ${menuChromeHidden ? 'is-chrome-hidden' : ''}`}
+      tabIndex={-1}
+      onKeyDown={handleHiddenMenuSurfaceKey}
+    >
       {attractMatch && (
         <div className="menu-attract-background" aria-hidden="true">
           <MenuAttractScene match={attractMatch} />
