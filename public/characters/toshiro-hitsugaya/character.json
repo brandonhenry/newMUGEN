@@ -165,11 +165,62 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
+    "cmd:1+2": [
+      "/characters/toshiro-hitsugaya/frames/frame-081.png",
+      "/characters/toshiro-hitsugaya/frames/frame-082.png",
+      "/characters/toshiro-hitsugaya/frames/frame-083.png",
+      "/characters/toshiro-hitsugaya/frames/frame-084.png",
+      "/characters/toshiro-hitsugaya/frames/frame-085.png"
+    ],
+    "cmd:1+3": [
+      "/characters/toshiro-hitsugaya/frames/frame-213.png",
+      "/characters/toshiro-hitsugaya/frames/frame-214.png",
+      "/characters/toshiro-hitsugaya/frames/frame-215.png",
+      "/characters/toshiro-hitsugaya/frames/frame-216.png",
+      "/characters/toshiro-hitsugaya/frames/frame-217.png",
+      "/characters/toshiro-hitsugaya/frames/frame-218.png",
+      "/characters/toshiro-hitsugaya/frames/frame-219.png",
+      "/characters/toshiro-hitsugaya/frames/frame-220.png",
+      "/characters/toshiro-hitsugaya/frames/frame-221.png",
+      "/characters/toshiro-hitsugaya/frames/frame-222.png",
+      "/characters/toshiro-hitsugaya/frames/frame-223.png",
+      "/characters/toshiro-hitsugaya/frames/frame-224.png"
+    ],
+    "cmd:2+3": [
+      "/characters/toshiro-hitsugaya/frames/frame-188.png",
+      "/characters/toshiro-hitsugaya/frames/frame-189.png",
+      "/characters/toshiro-hitsugaya/frames/frame-190.png",
+      "/characters/toshiro-hitsugaya/frames/frame-191.png",
+      "/characters/toshiro-hitsugaya/frames/frame-193.png",
+      "/characters/toshiro-hitsugaya/frames/frame-194.png"
+    ],
+    "cmd:2+4": [
+      "/characters/toshiro-hitsugaya/frames/frame-120.png",
+      "/characters/toshiro-hitsugaya/frames/frame-121.png",
+      "/characters/toshiro-hitsugaya/frames/frame-122.png",
+      "/characters/toshiro-hitsugaya/frames/frame-123.png",
+      "/characters/toshiro-hitsugaya/frames/frame-124.png",
+      "/characters/toshiro-hitsugaya/frames/frame-125.png",
+      "/characters/toshiro-hitsugaya/frames/frame-126.png",
+      "/characters/toshiro-hitsugaya/frames/frame-127.png",
+      "/characters/toshiro-hitsugaya/frames/frame-128.png",
+      "/characters/toshiro-hitsugaya/frames/frame-129.png",
+      "/characters/toshiro-hitsugaya/frames/frame-130.png",
+      "/characters/toshiro-hitsugaya/frames/frame-131.png"
+    ],
+    "cmd:3+4": [
+      "/characters/toshiro-hitsugaya/frames/frame-102.png",
+      "/characters/toshiro-hitsugaya/frames/frame-103.png",
+      "/characters/toshiro-hitsugaya/frames/frame-104.png",
+      "/characters/toshiro-hitsugaya/frames/frame-105.png",
+      "/characters/toshiro-hitsugaya/frames/frame-106.png",
+      "/characters/toshiro-hitsugaya/frames/frame-107.png",
+      "/characters/toshiro-hitsugaya/frames/frame-108.png",
+      "/characters/toshiro-hitsugaya/frames/frame-109.png",
+      "/characters/toshiro-hitsugaya/frames/frame-110.png",
+      "/characters/toshiro-hitsugaya/frames/frame-105.png",
+      "/characters/toshiro-hitsugaya/frames/frame-102.png"
+    ],
     "cmd:O+2": []
   },
   "animationFrameRates": {
@@ -587,14 +638,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
+      "forwardForce": 2,
       "launchHeight": 2.2,
       "label": "Tōshirō Hitsugaya Cross Launcher",
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 5,
+      "recoveryFrames": 12,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -603,7 +655,9 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Tōshirō Hitsugaya Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "tracking": "homing",
+      "knockdown": true
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -621,9 +675,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 11,
+      "activeFrames": 5,
+      "recoveryFrames": 18,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -631,6 +685,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 14,
       "range": 1.9,
+      "forwardForce": 2,
       "label": "Tōshirō Hitsugaya Power Crush",
       "hitLevel": "mid",
       "knockdown": true
@@ -966,5 +1021,6 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false
 }
