@@ -847,6 +847,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     'juggleRefloatVelocity',
     'juggleGravityScale',
     'kiCost',
+    'healAmount',
     'armorStartFrame',
     'armorEndFrame'
   ];
@@ -864,6 +865,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
   if (typeof override.jumpBeforeMove === 'boolean') next.jumpBeforeMove = override.jumpBeforeMove;
   if (typeof override.usesKi === 'boolean') next.usesKi = override.usesKi;
+  if (typeof override.healsHp === 'boolean') next.healsHp = override.healsHp;
   if (Array.isArray(override.cancelWindows)) next.cancelWindows = override.cancelWindows;
   const soundCues = sanitizeSoundCues(override.soundCues);
   if (soundCues.length > 0) next.soundCues = soundCues;
@@ -8417,7 +8419,9 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const moveJumpForce = move.moveJumpForce ?? 8;
   const moveJumpGravity = move.moveJumpGravity ?? 18;
   const homingSpeed = move.homingSpeed ?? 8;
-  const usesKi = Boolean(move.usesKi || move.kiBurst);
+  const healsHp = Boolean(move.healsHp);
+  const healAmount = move.healAmount ?? 8;
+  const usesKi = Boolean(move.usesKi || move.kiBurst || healsHp);
   const kiCost = move.kiCost ?? 35;
   const resultLabel = [
     move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames),
@@ -8488,6 +8492,15 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
           />
         </label>
         <FrameNumberInput label="Ki Cost" value={kiCost} min={0} max={100} disabled={!usesKi} onChange={(value) => updateNumber('kiCost', value, 0)} />
+        <label className="frame-toggle">
+          <span>Healing</span>
+          <input
+            type="checkbox"
+            checked={healsHp}
+            onChange={(event) => onChange(event.target.checked ? { healsHp: true, healAmount, usesKi: true, kiCost } : { healsHp: false })}
+          />
+        </label>
+        <FrameNumberInput label="HP Healed" value={healAmount} min={0} max={100} disabled={!healsHp} onChange={(value) => updateNumber('healAmount', value, 0)} />
         <label className="frame-toggle">
           <span>Launcher</span>
           <input

@@ -129,6 +129,8 @@ export type MoveDefinition = {
   usesKi?: boolean;
   kiCost?: number;
   kiBurst?: boolean;
+  healsHp?: boolean;
+  healAmount?: number;
   soundCues?: EffectSoundCue[];
 };
 

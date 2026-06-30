@@ -159,7 +159,9 @@ describe('character manifests', () => {
       jumpBeforeMove: true,
       moveJumpForce: 9.25,
       moveJumpGravity: 24,
-      homingSpeed: 10
+      homingSpeed: 10,
+      healsHp: true,
+      healAmount: 9
     });
 
     expect(move.tornado).toBe(true);
@@ -172,6 +174,17 @@ describe('character manifests', () => {
     expect(move.moveJumpForce).toBe(9.25);
     expect(move.moveJumpGravity).toBe(24);
     expect(move.homingSpeed).toBe(10);
+    expect(move.healsHp).toBe(true);
+    expect(move.healAmount).toBe(9);
+  });
+
+  it('keeps starter characters from shipping with healing moves enabled by default', () => {
+    for (const character of starterCharacters) {
+      const healingBaseMoves = character.moves.filter((move) => move.healsHp);
+      const healingOverrides = Object.values(character.moveOverrides ?? {}).filter((move) => move.healsHp);
+
+      expect([...healingBaseMoves, ...healingOverrides].length, `${character.displayName} healing move count`).toBe(0);
+    }
   });
 
   it('migrates legacy base button animation data to left/right limb keys', () => {
@@ -1506,7 +1519,7 @@ describe('fight engine', () => {
     expect(simulatePressure(5)).toBeGreaterThan(simulatePressure(1));
   });
 
-  it('prevents CPU jump decisions even at high difficulty', () => {
+  it('keeps CPU from jumping in neutral without a homing move or air juggle chase', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
     match.phase = 'fighting';
     match.countdown = 0;
@@ -1523,6 +1536,86 @@ describe('fight engine', () => {
     }
 
     expect(jumpFrames).toBe(0);
+  });
+
+  it('lets CPU jump before committing to a homing move', () => {
+    const homingCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 1 },
+      moves: starterCharacters[0].moves
+        .filter((move) => move.input === 'special')
+        .map((move) => ({
+          ...move,
+          startupFrames: 3,
+          activeFrames: 8,
+          recoveryFrames: 10,
+          range: 2.6,
+          tracking: 'homing' as const,
+          homingSpeed: 12
+        }))
+    };
+    let match = createMatch(homingCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 77 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.85;
+    match.fighters[1].position.x = 0.85;
+    let jumped = false;
+    let usedHoming = false;
+
+    for (let i = 0; i < 180; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      jumped = jumped || match.fighters[0].state === 'jump';
+      usedHoming = usedHoming || match.fighters[0].currentMove?.tracking === 'homing';
+      if (jumped && usedHoming) break;
+    }
+
+    expect(jumped).toBe(true);
+    expect(usedHoming).toBe(true);
+  });
+
+  it('lets CPU jump to chase an opponent after launch', () => {
+    const airChaseCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 0 },
+      moves: starterCharacters[0].moves
+        .filter((move) => move.input === 'jab')
+        .map((move) => ({
+          ...move,
+          startupFrames: 3,
+          activeFrames: 5,
+          recoveryFrames: 10,
+          range: 2.4,
+          tracking: 'none' as const
+        }))
+    };
+    let match = createMatch(airChaseCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 19 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 1.25;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].stunFramesRemaining = 160;
+    match.fighters[1].actionFramesRemaining = 160;
+    match.fighters[1].stunTimer = 160 / 60;
+    match.fighters[1].actionTimer = 160 / 60;
+    let jumped = false;
+    let attackedAirborne = false;
+
+    for (let i = 0; i < 180; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      jumped = jumped || match.fighters[0].state === 'jump';
+      attackedAirborne = attackedAirborne || (match.fighters[0].state === 'attack' && match.fighters[0].position.y > 0);
+      if (jumped && attackedAirborne) break;
+    }
+
+    expect(jumped).toBe(true);
+    expect(attackedAirborne).toBe(true);
   });
 
   it('makes CPU fighters block incoming close attacks', () => {
@@ -3050,6 +3143,75 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.kiCost).toBe(35);
     expect(match.fighters[0].currentMove?.kiBurst).toBeFalsy();
     expect(match.fighters[0].ki).toBe(0);
+  });
+
+  it('spends ki and heals the attacker for authored healing moves', () => {
+    const healingNaruto: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:3+4': ['/characters/kiro/frames/frame-197.png']
+      },
+      moveOverrides: {
+        ...starterCharacters[0].moveOverrides,
+        'cmd:3+4': {
+          ...starterCharacters[0].moveOverrides?.['cmd:3+4'],
+          usesKi: true,
+          kiCost: 20,
+          healsHp: true,
+          healAmount: 7
+        }
+      }
+    };
+    let match = createMatch(healingNaruto, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 60;
+    match.fighters[0].ki = 20;
+    const healingMove = emptyInputFrame();
+    healingMove.kick = true;
+    healingMove.special = true;
+
+    match = stepMatch(match, healingMove, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.healsHp).toBe(true);
+    expect(match.fighters[0].ki).toBe(0);
+    expect(match.fighters[0].hp).toBe(67);
+  });
+
+  it('does not start or heal from authored healing moves without enough ki', () => {
+    const healingNaruto: CharacterDefinition = {
+      ...starterCharacters[0],
+      animationFrames: {
+        ...starterCharacters[0].animationFrames,
+        'cmd:3+4': ['/characters/kiro/frames/frame-197.png']
+      },
+      moveOverrides: {
+        ...starterCharacters[0].moveOverrides,
+        'cmd:3+4': {
+          ...starterCharacters[0].moveOverrides?.['cmd:3+4'],
+          kiCost: 20,
+          healsHp: true,
+          healAmount: 7
+        }
+      }
+    };
+    let match = createMatch(healingNaruto, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 60;
+    match.fighters[0].ki = 19;
+    const healingMove = emptyInputFrame();
+    healingMove.kick = true;
+    healingMove.special = true;
+
+    match = stepMatch(match, healingMove, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].ki).toBe(19);
+    expect(match.fighters[0].hp).toBe(60);
   });
 
   it('does not start authored ki moves without enough ki', () => {

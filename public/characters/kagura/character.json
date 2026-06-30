@@ -167,12 +167,71 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:1+2": [
+      "/characters/kagura/frames/frame-103.png",
+      "/characters/kagura/frames/frame-104.png",
+      "/characters/kagura/frames/frame-105.png",
+      "/characters/kagura/frames/frame-106.png",
+      "/characters/kagura/frames/frame-107.png",
+      "/characters/kagura/frames/frame-108.png",
+      "/characters/kagura/frames/frame-109.png",
+      "/characters/kagura/frames/frame-110.png"
+    ],
+    "cmd:1+3": [
+      "/characters/kagura/frames/frame-111.png",
+      "/characters/kagura/frames/frame-112.png",
+      "/characters/kagura/frames/frame-113.png",
+      "/characters/kagura/frames/frame-114.png",
+      "/characters/kagura/frames/frame-115.png",
+      "/characters/kagura/frames/frame-116.png"
+    ],
+    "cmd:2+3": [
+      "/characters/kagura/frames/frame-200.png",
+      "/characters/kagura/frames/frame-201.png",
+      "/characters/kagura/frames/frame-202.png",
+      "/characters/kagura/frames/frame-203.png",
+      "/characters/kagura/frames/frame-204.png",
+      "/characters/kagura/frames/frame-205.png",
+      "/characters/kagura/frames/frame-206.png",
+      "/characters/kagura/frames/frame-207.png"
+    ],
+    "cmd:2+4": [
+      "/characters/kagura/frames/frame-168.png",
+      "/characters/kagura/frames/frame-169.png",
+      "/characters/kagura/frames/frame-170.png",
+      "/characters/kagura/frames/frame-171.png",
+      "/characters/kagura/frames/frame-172.png",
+      "/characters/kagura/frames/frame-173.png",
+      "/characters/kagura/frames/frame-174.png",
+      "/characters/kagura/frames/frame-175.png",
+      "/characters/kagura/frames/frame-176.png"
+    ],
+    "cmd:3+4": [
+      "/characters/kagura/frames/frame-146.png",
+      "/characters/kagura/frames/frame-147.png",
+      "/characters/kagura/frames/frame-148.png",
+      "/characters/kagura/frames/frame-149.png",
+      "/characters/kagura/frames/frame-150.png"
+    ],
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/kagura/frames/frame-140.png",
+      "/characters/kagura/frames/frame-141.png",
+      "/characters/kagura/frames/frame-142.png",
+      "/characters/kagura/frames/frame-143.png",
+      "/characters/kagura/frames/frame-144.png",
+      "/characters/kagura/frames/frame-145.png"
+    ],
+    "cmd:1+2+3": [
+      "/characters/kagura/frames/frame-182.png",
+      "/characters/kagura/frames/frame-183.png",
+      "/characters/kagura/frames/frame-184.png",
+      "/characters/kagura/frames/frame-185.png",
+      "/characters/kagura/frames/frame-186.png",
+      "/characters/kagura/frames/frame-187.png",
+      "/characters/kagura/frames/frame-188.png",
+      "/characters/kagura/frames/frame-189.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -637,6 +696,7 @@
       "range": 1.9,
       "label": "Kagura Power Crush",
       "hitLevel": "mid",
+      "tracking": "homing",
       "knockdown": true
     },
     "cmd:O+2": {

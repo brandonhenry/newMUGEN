@@ -145,6 +145,8 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     armorEndFrame: normalizeNullableFrame(move.armorEndFrame),
     usesKi: Boolean(move.usesKi),
     kiCost: move.kiCost === undefined ? undefined : clamp(Math.round(finiteOr(move.kiCost, 35)), 0, 100),
+    healsHp: Boolean(move.healsHp),
+    healAmount: move.healAmount === undefined ? undefined : clamp(Math.round(finiteOr(move.healAmount, 8)), 0, 100),
     cancelWindows: Array.isArray(move.cancelWindows)
       ? move.cancelWindows
           .map((window) => ({

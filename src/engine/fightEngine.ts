@@ -1103,6 +1103,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const identity = getMoveIdentity(move);
   fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
   if (spendsKi) fighter.ki = clamp(fighter.ki - kiCost, 0, KI_MAX);
+  applyMoveHealing(fighter, resolvedMove);
   applyMoveJumpStart(fighter, resolvedMove);
 
   fighter.currentMove = resolvedMove;
@@ -1181,7 +1182,14 @@ function getMoveKiCost(move: MoveDefinition) {
 }
 
 function moveUsesKi(move?: MoveDefinition | null) {
-  return Boolean(move?.usesKi || move?.kiBurst);
+  return Boolean(move?.usesKi || move?.kiBurst || move?.healsHp);
+}
+
+function applyMoveHealing(fighter: FighterRuntime, move: MoveDefinition) {
+  if (!move.healsHp) return;
+  const healAmount = Math.max(0, Math.round(move.healAmount ?? 8));
+  if (healAmount <= 0) return;
+  fighter.hp = Math.min(fighter.maxHp, fighter.hp + healAmount);
 }
 
 function buildKiBurstMove(move: MoveDefinition, kiCost = getMoveKiCost(move)): MoveDefinition {
@@ -1399,7 +1407,9 @@ function applyMoveOverrides(
     homingSpeed: merged.homingSpeed === undefined ? undefined : clamp(merged.homingSpeed, 0, 24),
     launchVelocity: merged.launchVelocity === undefined ? undefined : clamp(merged.launchVelocity, 3.2, 7.2),
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
-    juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2)
+    juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2),
+    healsHp: Boolean(merged.healsHp),
+    healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100)
   };
 }
 
@@ -3380,6 +3390,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const punishReady = punishAccepted && ai.blockPunishWindowFrames > 0 && canStartAction && canAct && opponent.state === 'attack' && opponent.actionFramesRemaining > 0;
   const punishInRange = distance <= punishReach && Math.abs(laneDiff) <= punishReach * 0.86;
   if (punishReady && punishInRange) {
+    if (shouldAiJumpBeforeAttack(ai, opponent, punishMove, false)) {
+      applyAiJumpTakeoff(input, towardKey, awayKey);
+      return input;
+    }
     input.block = false;
     input[awayKey] = false;
     input[towardKey] = distance > punishReach * 0.72;
@@ -3412,7 +3426,7 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     pressureMoveInput = chooseAiImperfectMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
   }
   const pressureCrouchInput =
-    !leaderCloseout && (opening.kind === 'hitstun' || opening.kind === 'whiff')
+    !leaderCloseout && opponent.state !== 'juggle' && (opening.kind === 'hitstun' || opening.kind === 'whiff')
       ? chooseAiFullCrouchMoveInput(ai, pressureMoveInput, difficulty, selector + 37, routeRoll + 21, 'pressure')
       : null;
   if (pressureCrouchInput) pressureMoveInput = pressureCrouchInput;
@@ -3424,6 +3438,10 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
+    if (!pressureCrouchInput && shouldAiJumpBeforeAttack(ai, opponent, pressureMove, opening.kind === 'hitstun' && opponent.state === 'juggle')) {
+      applyAiJumpTakeoff(input, towardKey, awayKey);
+      return input;
+    }
     input.block = false;
     input[awayKey] = false;
     input[towardKey] = distance > pressureReach * 0.78;
@@ -3486,6 +3504,11 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
       selectedMoveInput = crouchInput;
       applyAiFullCrouchAttack(input, selectedMoveInput, towardKey, awayKey);
     } else {
+      const attackMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? selectedMove;
+      if (shouldAiJumpBeforeAttack(ai, opponent, attackMove, shouldContinueCombo && opponent.state === 'juggle')) {
+        applyAiJumpTakeoff(input, towardKey, awayKey);
+        return input;
+      }
       input.charge = shouldAiUseKiBurst(ai, opponent, selectedMoveInput, difficulty, shouldContinueCombo ? 'pressure' : 'neutral', selector + 29, routeRoll + 41, leaderCloseout);
       input[selectedMoveInput] = true;
     }
@@ -3505,6 +3528,31 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
 
   input.up = false;
   return input;
+}
+
+function shouldAiJumpBeforeAttack(ai: FighterRuntime, opponent: FighterRuntime, move: MoveDefinition | null | undefined, chaseLaunchedOpponent: boolean) {
+  if (!move) return false;
+  if (ai.position.y > 0 || ai.velocityY !== 0) return false;
+  if (ai.actionFramesRemaining > 0 || ai.actionTimer > 0 || ai.stunFramesRemaining > 0 || ai.blockstunFramesRemaining > 0) return false;
+  if (ai.state === 'knockdown' || ai.state === 'getup' || ai.state === 'chargeKi' || ai.state === 'juggle') return false;
+  if (move.tracking === 'homing') return true;
+  return chaseLaunchedOpponent && opponent.state === 'juggle' && isAirborne(opponent);
+}
+
+function applyAiJumpTakeoff(input: InputFrame, towardKey: 'left' | 'right', awayKey: 'left' | 'right') {
+  input.block = false;
+  input.charge = false;
+  input.down = false;
+  input.up = true;
+  input[towardKey] = false;
+  input[awayKey] = false;
+  input.sidestepUp = false;
+  input.sidestepDown = false;
+  input.sidewalkUp = false;
+  input.sidewalkDown = false;
+  for (const moveInput of moveInputs) {
+    input[moveInput] = false;
+  }
 }
 
 function chooseAiMoveInput(
