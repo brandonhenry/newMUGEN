@@ -178,9 +178,50 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
+    "cmd:1+2": [
+      "/characters/kurama/frames/frame-082.png",
+      "/characters/kurama/frames/frame-083.png",
+      "/characters/kurama/frames/frame-084.png",
+      "/characters/kurama/frames/frame-085.png",
+      "/characters/kurama/frames/frame-086.png",
+      "/characters/kurama/frames/frame-087.png",
+      "/characters/kurama/frames/frame-088.png",
+      "/characters/kurama/frames/frame-089.png"
+    ],
+    "cmd:1+3": [
+      "/characters/kurama/frames/frame-108.png",
+      "/characters/kurama/frames/frame-109.png",
+      "/characters/kurama/frames/frame-110.png",
+      "/characters/kurama/frames/frame-111.png",
+      "/characters/kurama/frames/frame-112.png",
+      "/characters/kurama/frames/frame-113.png",
+      "/characters/kurama/frames/frame-114.png",
+      "/characters/kurama/frames/frame-115.png",
+      "/characters/kurama/frames/frame-116.png",
+      "/characters/kurama/frames/frame-117.png",
+      "/characters/kurama/frames/frame-118.png"
+    ],
+    "cmd:2+3": [
+      "/characters/kurama/frames/frame-162.png",
+      "/characters/kurama/frames/frame-163.png",
+      "/characters/kurama/frames/frame-164.png",
+      "/characters/kurama/frames/frame-165.png",
+      "/characters/kurama/frames/frame-166.png",
+      "/characters/kurama/frames/frame-167.png",
+      "/characters/kurama/frames/frame-168.png",
+      "/characters/kurama/frames/frame-169.png",
+      "/characters/kurama/frames/frame-170.png",
+      "/characters/kurama/frames/frame-171.png",
+      "/characters/kurama/frames/frame-172.png",
+      "/characters/kurama/frames/frame-173.png",
+      "/characters/kurama/frames/frame-174.png",
+      "/characters/kurama/frames/frame-175.png",
+      "/characters/kurama/frames/frame-176.png",
+      "/characters/kurama/frames/frame-177.png",
+      "/characters/kurama/frames/frame-178.png",
+      "/characters/kurama/frames/frame-179.png",
+      "/characters/kurama/frames/frame-180.png"
+    ],
     "cmd:2+4": [],
     "cmd:3+4": [],
     "cmd:O+2": []
@@ -605,9 +646,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 15,
+      "activeFrames": 7,
+      "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -979,5 +1020,6 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false
 }
