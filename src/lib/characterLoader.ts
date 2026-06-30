@@ -1,5 +1,6 @@
 import { starterCharacters } from '../data/characters';
 import type { BoxSpec, CharacterDefinition, HitLevel, MoveDefinition, MoveTracking, Vec3Tuple } from '../types';
+import { normalizeCharacterModelScale } from './characterScale';
 import { sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './effects';
 import { debugLog } from './debugLogger';
 
@@ -57,6 +58,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
     animationFrameScales: sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {}),
+    modelScale: normalizeCharacterModelScale(character.modelScale, character.scale),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
     getupFrameOverrides: sanitizeGetupFrameOverrides(character.getupFrameOverrides ?? {}),

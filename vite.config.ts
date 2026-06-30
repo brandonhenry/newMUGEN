@@ -18,6 +18,7 @@ type DevManifestPayload = {
   hasTransform?: boolean;
   transformCharacterId?: string;
   faceCardPath?: string;
+  modelScale?: Record<string, unknown>;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
   animationScales?: Record<string, Record<string, unknown>>;
@@ -284,6 +285,7 @@ function koreDevManifestWriter() {
           const faceCardPath = sanitizeCharacterAssetPath(payload.faceCardPath, characterId);
           if (faceCardPath) manifest.faceCardPath = faceCardPath;
           else delete manifest.faceCardPath;
+          manifest.modelScale = sanitizeCharacterModelScale(payload.modelScale, Number(manifest.scale) || 1);
           manifest.animationFrames = sanitizeFrameMap(payload.animationFrames ?? {});
           manifest.animationFrameRates = sanitizeRateMap(payload.animationFrameRates ?? {});
           manifest.animationScales = sanitizeAnimationScaleMap(payload.animationScales ?? {});
@@ -1660,6 +1662,14 @@ function sanitizeAnimationScaleMap(scales: Record<string, Record<string, unknown
   );
 }
 
+function sanitizeCharacterModelScale(scale: Record<string, unknown> | undefined, legacyScale = 1) {
+  const fallback = Number(Math.max(0.25, Math.min(2.5, finiteOr(legacyScale, 1))).toFixed(2));
+  return {
+    width: Number(Math.max(0.25, Math.min(2.5, finiteOr(scale?.width, fallback))).toFixed(2)),
+    height: Number(Math.max(0.25, Math.min(2.5, finiteOr(scale?.height, fallback))).toFixed(2))
+  };
+}
+
 function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, Record<string, unknown>>>) {
   return Object.fromEntries(
     Object.entries(scales)
@@ -2011,6 +2021,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     animationFrameScales,
     animationFps: Math.max(1, finiteOr(manifest.animationFps, 6)),
     scale: Math.max(0.25, finiteOr(manifest.scale, 1.08)),
+    modelScale: sanitizeCharacterModelScale(manifest.modelScale as Record<string, unknown> | undefined, Math.max(0.25, finiteOr(manifest.scale, 1.08))),
     cameraOffset: Array.isArray(manifest.cameraOffset) && manifest.cameraOffset.length >= 3 ? manifest.cameraOffset : [0, 1.22, 0],
     stats: {
       health: Math.max(1, Math.round(finiteOr(stats.health, 100))),

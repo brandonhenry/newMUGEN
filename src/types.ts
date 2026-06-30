@@ -293,6 +293,11 @@ export type AnimationScale = {
   offsetX?: number;
 };
 
+export type CharacterModelScale = {
+  width?: number;
+  height?: number;
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -317,6 +322,7 @@ export type CharacterDefinition = {
   animationFrameScales?: Record<string, Record<string, AnimationScale>>;
   animationFps?: number;
   scale: number;
+  modelScale?: CharacterModelScale;
   cameraOffset: Vec3Tuple;
   stats: {
     health: number;

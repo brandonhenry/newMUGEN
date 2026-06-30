@@ -23,6 +23,7 @@ import type {
   StagePropDefinition
 } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
+import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 
@@ -1181,9 +1182,12 @@ type PreviewFrameFit = {
 
 function getPreviewFrameFit(character: CharacterDefinition, animationKey?: string): PreviewFrameFit {
   const sequence = animationKey ? character.animationFrames?.[animationKey] : undefined;
+  const globalScale = getCharacterGlobalScale(character);
   const animationScale = getCharacterAnimationScale(character, animationKey);
   const frameScales = (sequence ?? []).map((frame) => getCharacterAnimationScale(character, animationKey, frame));
   const scale = Math.max(
+    globalScale.width,
+    globalScale.height,
     animationScale.width,
     animationScale.height,
     1,
@@ -2002,8 +2006,9 @@ function FighterRig({ fighter, timeScale = 1, frameTimeOverride }: { fighter: Fi
   });
 
   const color = fighter.character.colors.primary;
+  const globalScale = getCharacterGlobalScale(fighter.character);
   return (
-    <group ref={group} scale={fighter.character.scale}>
+    <group ref={group} scale={[globalScale.width, globalScale.height, globalScale.width]}>
       <Bounds fit={false}>
         {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
           fighter.character.voxelProfile === 'image-source' || fighter.character.voxelProfile === 'hd-image-source' ? (

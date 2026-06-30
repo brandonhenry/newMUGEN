@@ -58,6 +58,7 @@ import {
   type ButtonComboId,
   type CharacterDefinition,
   type CharacterEffectDefinition,
+  type CharacterModelScale,
   type CharacterSpriteSheet,
   type CombatPopupEvent,
   type CpuDifficulty,
@@ -83,6 +84,7 @@ import {
   type StagePropDefinition,
   type VoxelFidelitySettings
 } from './types';
+import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
@@ -94,6 +96,7 @@ type CharacterAnimationOverride = {
   speeds?: Record<string, number>;
   sizes?: Record<string, AnimationScale>;
   frameSizes?: Record<string, Record<string, AnimationScale>>;
+  modelScale?: CharacterModelScale;
   moves?: Record<string, MoveOverride>;
   getupFrames?: GetupFrameOverrides;
   sprites?: Record<string, SpriteFrameEdit>;
@@ -736,6 +739,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
       speeds: canonicalizeRawButtonRecord({ ...(override.speeds ?? {}) }),
       sizes: sanitizeAnimationScaleMap(override.sizes ?? {}),
       frameSizes: sanitizeAnimationFrameScaleMap(override.frameSizes ?? {}),
+      modelScale: override.modelScale ? normalizeCharacterModelScale(override.modelScale) : undefined,
       moves: sanitizeMoveOverrideMap(override.moves ?? {}),
       sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
@@ -758,6 +762,7 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
         Object.keys(override.speeds ?? {}).length > 0 ||
         Object.keys(override.sizes ?? {}).length > 0 ||
         Object.keys(override.frameSizes ?? {}).length > 0 ||
+        override.modelScale !== undefined ||
         Object.keys(override.moves ?? {}).length > 0 ||
         Object.keys(override.getupFrames ?? {}).length > 0 ||
         Object.keys(override.sprites ?? {}).length > 0 ||
@@ -948,6 +953,7 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
   const speeds = canonicalizeRawButtonRecord(override.speeds ?? {});
   const sizes = sanitizeAnimationScaleMap(override.sizes ?? {});
   const frameSizes = sanitizeAnimationFrameScaleMap(override.frameSizes ?? {});
+  const modelScale = override.modelScale ? normalizeCharacterModelScale(override.modelScale, character.scale) : character.modelScale;
   const moves = sanitizeMoveOverrideMap(override.moves ?? {});
   const getupFrames = sanitizeGetupFrameOverrides(override.getupFrames ?? {});
   const effects = override.effects ? sanitizeEffects(override.effects) : sanitizeEffects(character.effects ?? []);
@@ -975,6 +981,7 @@ function applyCharacterAnimationOverride(character: CharacterDefinition, overrid
       ...sizes
     },
     animationFrameScales: mergeAnimationFrameScaleMaps(character.animationFrameScales, frameSizes),
+    modelScale,
     moveOverrides: {
       ...character.moveOverrides,
       ...moves
@@ -1188,6 +1195,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
   const getupFrameOverrides = sanitizeGetupFrameOverrides(character.getupFrameOverrides ?? {});
   const effects = sanitizeEffects(character.effects ?? []);
   const moveEffects = sanitizeMoveEffects(character.moveEffects ?? {});
+  const modelScale = normalizeCharacterModelScale(character.modelScale, character.scale);
   const response = await fetch('/__kore/dev/save-character-manifest', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -1200,6 +1208,7 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       hasTransform: Boolean(character.hasTransform),
       transformCharacterId: character.transformCharacterId ?? '',
       faceCardPath: character.faceCardPath ?? '',
+      modelScale,
       animationFrames,
       animationFrameRates,
       animationScales,
@@ -2245,6 +2254,19 @@ export default function App() {
     }));
   };
 
+  const setCharacterModelScale = (characterId: string, size: CharacterModelScale) => {
+    const sourceCharacter = sourceRoster.find((character) => character.id === characterId);
+    const normalized = normalizeCharacterModelScale(size, sourceCharacter?.scale ?? 1);
+    debugLog(8, 'viewer character size override requested', { characterId, size: normalized });
+    setAnimationOverrides((current) => ({
+      ...current,
+      [characterId]: {
+        ...(current[characterId] ?? {}),
+        modelScale: normalized
+      }
+    }));
+  };
+
   const setCharacterMoveOverride = (characterId: string, moveKey: string, override: MoveOverride) => {
     debugLog(9, 'viewer frame data override requested', { characterId, moveKey, override });
     setAnimationOverrides((current) => ({
@@ -2610,6 +2632,7 @@ export default function App() {
             onAnimationSpeedChange={setCharacterAnimationSpeed}
             onAnimationScaleChange={setCharacterAnimationScale}
             onAnimationFrameScaleChange={setCharacterAnimationFrameScale}
+            onCharacterModelScaleChange={setCharacterModelScale}
             onMoveOverrideChange={setCharacterMoveOverride}
             onGetupFrameOverrideChange={setCharacterGetupFrameOverride}
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
@@ -5973,6 +5996,7 @@ function CharacterViewer({
   onAnimationSpeedChange,
   onAnimationScaleChange,
   onAnimationFrameScaleChange,
+  onCharacterModelScaleChange,
   onMoveOverrideChange,
   onGetupFrameOverrideChange,
   onSpriteFrameEditChange,
@@ -5987,6 +6011,7 @@ function CharacterViewer({
   onAnimationSpeedChange: (characterId: string, animationKey: string, speed: number) => void;
   onAnimationScaleChange: (characterId: string, animationKey: string, size: AnimationScale) => void;
   onAnimationFrameScaleChange: (characterId: string, animationKey: string, frameIndex: number, size: AnimationScale) => void;
+  onCharacterModelScaleChange: (characterId: string, size: CharacterModelScale) => void;
   onMoveOverrideChange: (characterId: string, moveKey: string, override: MoveOverride) => void;
   onGetupFrameOverrideChange: (characterId: string, action: Exclude<GetupAction, 'none'>, frames: number) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
@@ -6059,6 +6084,8 @@ function CharacterViewer({
     active.animationFrameScales?.[selectedSlotDataKey]?.[String(selectedSpriteFrameIndex)] ?? selectedAnimationScale
   );
   const selectedSizeScale = frameScaleMode ? selectedAnimationFrameScale : selectedAnimationScale;
+  const selectedCharacterScale = getCharacterGlobalScale(active);
+  const defaultCharacterScale = normalizeCharacterModelScale(undefined, sourceActive.scale ?? active.scale);
   const selectedFrameSet = new Set(selectedFrames);
   const selectedMove = resolveSlotMove(active, selectedSlot);
   const selectedMoveOverride = active.moveOverrides?.[selectedSlotDataKey] ?? {};
@@ -6283,6 +6310,17 @@ function CharacterViewer({
       return;
     }
     onAnimationScaleChange(active.id, selectedSlotDataKey, { width: 1, height: 1 });
+  };
+
+  const updateSelectedCharacterScale = (patch: CharacterModelScale) => {
+    onCharacterModelScaleChange(active.id, normalizeCharacterModelScale({
+      ...selectedCharacterScale,
+      ...patch
+    }, active.scale));
+  };
+
+  const resetSelectedCharacterScale = () => {
+    onCharacterModelScaleChange(active.id, defaultCharacterScale);
   };
 
   const resetSelectedAnimation = () => {
@@ -7082,6 +7120,59 @@ function CharacterViewer({
                 </strong>
                 <small>{selectedEditorSummary}</small>
               </div>
+              {!isEditingAnimation && !isEditingSpriteSheet && !isEditingEffectsLibrary && !isEditingMoveEffects && (
+                <div className="frame-picker-actions character-size-controls">
+                  <label className="speed-control">
+                    <span>Character Width</span>
+                    <input
+                      aria-label={`${active.displayName} character width scale`}
+                      type="range"
+                      min="0.25"
+                      max="2.5"
+                      step="0.01"
+                      value={selectedCharacterScale.width}
+                      onChange={(event) => updateSelectedCharacterScale({ width: Number(event.target.value) })}
+                      data-testid="character-width-slider"
+                    />
+                    <input
+                      aria-label={`${active.displayName} character width scale value`}
+                      type="number"
+                      min="0.25"
+                      max="2.5"
+                      step="0.01"
+                      value={selectedCharacterScale.width}
+                      onChange={(event) => updateSelectedCharacterScale({ width: Number(event.target.value) })}
+                      data-testid="character-width-input"
+                    />
+                  </label>
+                  <label className="speed-control">
+                    <span>Character Height</span>
+                    <input
+                      aria-label={`${active.displayName} character height scale`}
+                      type="range"
+                      min="0.25"
+                      max="2.5"
+                      step="0.01"
+                      value={selectedCharacterScale.height}
+                      onChange={(event) => updateSelectedCharacterScale({ height: Number(event.target.value) })}
+                      data-testid="character-height-slider"
+                    />
+                    <input
+                      aria-label={`${active.displayName} character height scale value`}
+                      type="number"
+                      min="0.25"
+                      max="2.5"
+                      step="0.01"
+                      value={selectedCharacterScale.height}
+                      onChange={(event) => updateSelectedCharacterScale({ height: Number(event.target.value) })}
+                      data-testid="character-height-input"
+                    />
+                  </label>
+                  <button className="secondary-button compact-button" onClick={resetSelectedCharacterScale} data-testid="character-size-reset">
+                    Reset Character Size
+                  </button>
+                </div>
+              )}
               {(isEditingAnimation || isEditingEffectsLibrary || isEditingMoveEffects) && (
                 <div className="frame-picker-actions">
                   {isEditingAnimation && (

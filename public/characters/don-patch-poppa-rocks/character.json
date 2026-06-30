@@ -988,12 +988,11 @@
       "farStep": 2
     }
   },
-  "animationScales": {
-    "idle": {
-      "width": 0.84,
-      "height": 0.8,
-      "offsetX": 0
-    }
-  },
-  "unplayable": false
+  "animationScales": {},
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 0.92,
+    "height": 0.94
+  }
 }

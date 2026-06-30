@@ -2114,6 +2114,94 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBeLessThan(starterCharacters[1].stats.health);
   });
 
+  it('lets a globally wider attacker connect from farther away', () => {
+    const wideAttacker: CharacterDefinition = {
+      ...starterCharacters[0],
+      modelScale: { width: 1.8, height: starterCharacters[0].scale }
+    };
+    let match = createMatch(wideAttacker, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.9;
+    match.fighters[1].position.x = 0.9;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - wideAttacker.moves[0].damage);
+  });
+
+  it('makes a globally narrower attacker miss where the default size connects', () => {
+    const narrowAttacker: CharacterDefinition = {
+      ...starterCharacters[0],
+      modelScale: { width: 0.45, height: starterCharacters[0].scale }
+    };
+    let match = createMatch(narrowAttacker, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(false);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+  });
+
+  it('uses global defender height when checking vertical hurtbox overlap', () => {
+    const highJabAttacker: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 1,
+              activeFrames: 12,
+              recoveryFrames: 8,
+              range: 2,
+              hitbox: { offset: [0, 1.25, 0.62], size: [0.62, 0.2, 0.58] }
+            }
+          : move
+      )
+    };
+    const shortDefender: CharacterDefinition = {
+      ...starterCharacters[1],
+      modelScale: { width: starterCharacters[1].scale, height: 0.45 }
+    };
+    const tallDefender: CharacterDefinition = {
+      ...starterCharacters[1],
+      modelScale: { width: starterCharacters[1].scale, height: 1.08 }
+    };
+
+    const runHighJab = (defender: CharacterDefinition) => {
+      let match = createMatch(highJabAttacker, defender, stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      const attack = emptyInputFrame();
+      attack.jab = true;
+      for (let i = 0; i < 8; i += 1) {
+        match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+        attack.jab = false;
+      }
+      return match;
+    };
+
+    expect(runHighJab(shortDefender).fighters[0].hitConnected).toBe(false);
+    expect(runHighJab(tallDefender).fighters[0].hitConnected).toBe(true);
+  });
+
   it('lets an active move effect hitbox connect beyond the base move range', () => {
     const effectAttacker: CharacterDefinition = {
       ...starterCharacters[0],

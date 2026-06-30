@@ -16,6 +16,7 @@ import type {
   StageDefinition
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
+import { getCharacterCombatScale } from '../lib/characterScale';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
@@ -2734,7 +2735,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const dx = defenderPosition.x - attackerPosition.x;
   const dz = defenderPosition.z - attackerPosition.z;
   const distance = Math.hypot(dx, dz);
-  const collision = getAttackCollision(attacker, defender, move, distance <= move.range + UNIVERSAL_RANGE_BUFFER);
+  const attackerScale = getCharacterCombatScale(attacker.character);
+  const collision = getAttackCollision(attacker, defender, move, distance <= move.range * attackerScale.width + UNIVERSAL_RANGE_BUFFER);
   if (!collision) return;
 
   const wasJuggled = defender.state === 'juggle';
@@ -3312,26 +3314,28 @@ function getEffectMoveKeys(attacker: FighterRuntime, move: MoveDefinition) {
 
 function effectHitboxToWorldAabb(attacker: FighterRuntime, transform: { position: [number, number, number]; scale: [number, number, number] }, anchor: string, hitbox?: BoxSpec) {
   const [baseX, baseY, baseZ] = resolveEffectWorldPosition(attacker, transform, anchor);
+  const globalScale = getCharacterCombatScale(attacker.character);
   if (hitbox) {
     const facing = attacker.facing || 1;
     return makeAabb(
-      baseX + hitbox.offset[2] * facing,
-      baseY + hitbox.offset[1],
-      baseZ + hitbox.offset[0],
-      hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING,
-      hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
-      hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING
+      baseX + hitbox.offset[2] * globalScale.width * facing,
+      baseY + hitbox.offset[1] * globalScale.height,
+      baseZ + hitbox.offset[0] * globalScale.width,
+      hitbox.size[2] * globalScale.width + UNIVERSAL_HITBOX_FORWARD_PADDING,
+      hitbox.size[1] * globalScale.height + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+      hitbox.size[0] * globalScale.width + UNIVERSAL_HITBOX_LATERAL_PADDING
     );
   }
-  const sizeX = Math.max(0.38, Math.abs(transform.scale[0]) * 0.62) + UNIVERSAL_HITBOX_FORWARD_PADDING;
-  const sizeY = Math.max(0.38, Math.abs(transform.scale[1]) * 0.62) + UNIVERSAL_HITBOX_VERTICAL_PADDING;
-  const sizeZ = Math.max(0.36, Math.abs(transform.scale[2]) * 0.62) + UNIVERSAL_HITBOX_LATERAL_PADDING;
+  const sizeX = Math.max(0.38, Math.abs(transform.scale[0]) * 0.62 * globalScale.width) + UNIVERSAL_HITBOX_FORWARD_PADDING;
+  const sizeY = Math.max(0.38, Math.abs(transform.scale[1]) * 0.62 * globalScale.height) + UNIVERSAL_HITBOX_VERTICAL_PADDING;
+  const sizeZ = Math.max(0.36, Math.abs(transform.scale[2]) * 0.62 * globalScale.width) + UNIVERSAL_HITBOX_LATERAL_PADDING;
   return makeAabb(baseX, baseY, baseZ, sizeX, sizeY, sizeZ);
 }
 
 function resolveEffectWorldPosition(fighter: FighterRuntime, transform: { position: [number, number, number] }, anchor: string): [number, number, number] {
   const facing = fighter.facing || 1;
   const fighterPosition = getFighterCombatPosition(fighter);
+  const globalScale = getCharacterCombatScale(fighter.character);
   const anchorOffsets: Record<string, [number, number, number]> = {
     root: [0, 0, 0],
     body: [0, 1.05, 0],
@@ -3343,36 +3347,38 @@ function resolveEffectWorldPosition(fighter: FighterRuntime, transform: { positi
   };
   const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
   if (anchor === 'world') return [...transform.position] as [number, number, number];
-  const mirroredX = transform.position[0] * (facing === -1 ? -1 : 1);
+  const mirroredX = transform.position[0] * globalScale.width * (facing === -1 ? -1 : 1);
   return [
-    fighterPosition.x + offset[0] + mirroredX,
-    fighterPosition.y + offset[1] + transform.position[1],
-    fighterPosition.z + offset[2] + transform.position[2]
+    fighterPosition.x + offset[0] * globalScale.width + mirroredX,
+    fighterPosition.y + offset[1] * globalScale.height + transform.position[1] * globalScale.height,
+    fighterPosition.z + offset[2] * globalScale.width + transform.position[2] * globalScale.width
   ];
 }
 
 function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb {
   const facing = attacker.facing || 1;
   const attackerPosition = getFighterCombatPosition(attacker);
-  const centerX = attackerPosition.x + facing * hitbox.offset[2];
-  const centerY = attackerPosition.y + hitbox.offset[1];
-  const centerZ = attackerPosition.z + hitbox.offset[0];
+  const globalScale = getCharacterCombatScale(attacker.character);
+  const centerX = attackerPosition.x + facing * hitbox.offset[2] * globalScale.width;
+  const centerY = attackerPosition.y + hitbox.offset[1] * globalScale.height;
+  const centerZ = attackerPosition.z + hitbox.offset[0] * globalScale.width;
   return makeAabb(
     centerX,
     centerY,
     centerZ,
-    hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING,
-    hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
-    hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING
+    hitbox.size[2] * globalScale.width + UNIVERSAL_HITBOX_FORWARD_PADDING,
+    hitbox.size[1] * globalScale.height + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+    hitbox.size[0] * globalScale.width + UNIVERSAL_HITBOX_LATERAL_PADDING
   );
 }
 
 function hurtboxToWorldAabb(defender: FighterRuntime, hurtbox: BoxSpec): Aabb {
   const defenderPosition = getFighterCombatPosition(defender);
-  const centerX = defenderPosition.x + hurtbox.offset[2] * (defender.facing || 1);
-  const centerY = defenderPosition.y + hurtbox.offset[1];
-  const centerZ = defenderPosition.z + hurtbox.offset[0];
-  return makeAabb(centerX, centerY, centerZ, hurtbox.size[2], hurtbox.size[1], hurtbox.size[0]);
+  const globalScale = getCharacterCombatScale(defender.character);
+  const centerX = defenderPosition.x + hurtbox.offset[2] * globalScale.width * (defender.facing || 1);
+  const centerY = defenderPosition.y + hurtbox.offset[1] * globalScale.height;
+  const centerZ = defenderPosition.z + hurtbox.offset[0] * globalScale.width;
+  return makeAabb(centerX, centerY, centerZ, hurtbox.size[2] * globalScale.width, hurtbox.size[1] * globalScale.height, hurtbox.size[0] * globalScale.width);
 }
 
 function getFighterCombatPosition(fighter: FighterRuntime) {

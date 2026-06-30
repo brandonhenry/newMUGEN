@@ -94,8 +94,25 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByRole('button', { name: 'Back' }).click();
   await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  await page.route('**/__kore/dev/save-character-manifest', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ ok: true, characterId: 'kiro', manifestPath: 'playwright-stub' })
+    });
+  });
+  await expect(page.getByTestId('character-width-slider')).toBeVisible();
+  await expect(page.getByTestId('character-height-slider')).toBeVisible();
+  await expect(page.getByTestId('animation-width-slider')).toBeHidden();
+  await page.getByTestId('character-width-input').fill('1.25');
+  await expect(page.getByTestId('character-width-slider')).toHaveValue('1.25');
   await page.getByTestId('viewer-pose-jableft').click();
   await expect(page.getByTestId('viewer-pose-jableft')).toHaveClass(/active/);
+  await page.getByTestId('toggle-animation-editor').click();
+  await expect(page.getByTestId('character-width-slider')).toBeHidden();
+  await expect(page.getByTestId('animation-width-slider')).toBeVisible();
+  await expect(page.getByTestId('animation-height-slider')).toBeVisible();
+  await page.getByTestId('toggle-animation-editor').click();
   await page.getByRole('button', { name: 'Rotate' }).click();
   await page.getByTestId('viewer-zoom-in').click();
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.46');
