@@ -23,7 +23,9 @@
       "/characters/kazuki-muto/frames/frame-000.png",
       "/characters/kazuki-muto/frames/frame-001.png",
       "/characters/kazuki-muto/frames/frame-002.png",
-      "/characters/kazuki-muto/frames/frame-003.png"
+      "/characters/kazuki-muto/frames/frame-003.png",
+      "/characters/kazuki-muto/frames/frame-002.png",
+      "/characters/kazuki-muto/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/kazuki-muto/frames/frame-006.png",
@@ -184,7 +186,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 9.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

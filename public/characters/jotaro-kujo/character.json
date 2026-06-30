@@ -23,7 +23,9 @@
       "/characters/jotaro-kujo/frames/frame-000.png",
       "/characters/jotaro-kujo/frames/frame-001.png",
       "/characters/jotaro-kujo/frames/frame-002.png",
-      "/characters/jotaro-kujo/frames/frame-003.png"
+      "/characters/jotaro-kujo/frames/frame-003.png",
+      "/characters/jotaro-kujo/frames/frame-004.png",
+      "/characters/jotaro-kujo/frames/frame-005.png"
     ],
     "walkForward": [
       "/characters/jotaro-kujo/frames/frame-006.png",
@@ -198,7 +200,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 13,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
@@ -998,7 +1000,7 @@
   "unplayable": false,
   "hasTransform": false,
   "modelScale": {
-    "width": 0.95,
+    "width": 1.11,
     "height": 1.33
   }
 }
