@@ -70,6 +70,9 @@ const AI_DECISION_BUCKETS_PER_SECOND = 4;
 const AI_SEED_MODULUS = 1_000_000;
 const KI_MAX = 100;
 const KI_CHARGE_PER_SECOND = 28;
+const TRANSFORM_READY_SECONDS = 3;
+const TRANSFORM_STARTUP_FRAMES = 90;
+const TRANSFORM_SMOKE_FRAMES = 54;
 const KI_HIT_GAIN = 9;
 const KI_BLOCK_GAIN = 4;
 const KI_DEFENDER_BLOCK_GAIN = 5;
@@ -132,8 +135,10 @@ export function createMatch(
   const roundTime = normalizeRoundTime(options.roundTime);
   const maxHealth = normalizeMaxHealth(options.maxHealth);
   const aiSeed = normalizeAiSeed(options.aiSeed);
+  const roster = normalizeTransformRoster(options.roster, p1, p2);
   const match: MatchSnapshot = {
     fighters: [createFighter(1, p1, -START_DISTANCE / 2, maxHealth), createFighter(2, p2, START_DISTANCE / 2, maxHealth)],
+    roster,
     stage,
     mode,
     cpuDifficulty,
@@ -203,12 +208,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const input1 = next.mode === 'cpu' ? makeAiInput(next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
+  const input1 = next.mode === 'cpu' ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
       ? makeTrainingDummyInput(next.fighters[1])
       : next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu'
-        ? makeAiInput(next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
+        ? makeAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
         : p2Input;
   if (isClashActive(next.clashState)) {
     const clashInput1 = next.mode === 'cpu' ? makeAiClashInput(next, 1) : input1;
@@ -249,6 +254,16 @@ function resolveFighterMaxHealth(character: CharacterDefinition, matchMaxHealth:
   if (matchMaxHealth === undefined) return character.stats.health;
   if (matchMaxHealth <= 0) return INFINITE_HEALTH_VALUE;
   return matchMaxHealth;
+}
+
+function normalizeTransformRoster(roster: CharacterDefinition[] | undefined, p1: CharacterDefinition, p2: CharacterDefinition) {
+  const byId = new Map<string, CharacterDefinition>();
+  for (const character of roster ?? []) {
+    if (character?.id) byId.set(character.id, character);
+  }
+  byId.set(p1.id, p1);
+  byId.set(p2.id, p2);
+  return [...byId.values()];
 }
 
 function isInfiniteRoundTime(roundTime: number) {
@@ -396,14 +411,20 @@ function makeAiClashInput(match: MatchSnapshot, slot: 1 | 2): InputFrame {
   return input;
 }
 
-function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, matchMaxHealth?: number): FighterRuntime {
+function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, matchMaxHealth?: number, baseCharacter = character): FighterRuntime {
   const maxHp = resolveFighterMaxHealth(character, matchMaxHealth);
   return {
     slot,
     character,
+    baseCharacter,
     hp: maxHp,
     maxHp,
     ki: 0,
+    transformOvercharge: 0,
+    transformReadyTimer: 0,
+    transformStartupFrames: 0,
+    transformTargetId: null,
+    transformSmokeFrames: 0,
     position: { x, y: 0, z: 0 },
     velocityY: 0,
     facing: slot === 1 ? 1 : -1,
@@ -475,6 +496,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
   updateShadowClone(fighter, dt);
+  updateTransformRuntime(fighter, dt);
   fighter.bufferedMoveFrames = Math.max(0, fighter.bufferedMoveFrames - frameDelta);
   if (fighter.bufferedMoveFrames === 0) fighter.bufferedMoveInput = null;
   fighter.comboTimer = Math.max(0, fighter.comboTimer - dt);
@@ -488,7 +510,24 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
-  const freshMoveInput = getFreshMoveInput(fighter, input);
+  if (fighter.state === 'transform') {
+    handleTransformStep(match, fighter, dt);
+    applyGravity(fighter, dt);
+    finishFighterStep();
+    return;
+  }
+
+  const allLimbInput = isAllLimbInput(input);
+  const transformDestination = allLimbInput ? resolveTransformDestination(match, fighter) : null;
+  const transformRequested = allLimbInput && !isAllPreviousLimbInput(fighter);
+  if (transformRequested && transformDestination && canStartTransform(fighter)) {
+    startTransform(fighter, transformDestination);
+    applyGravity(fighter, dt);
+    finishFighterStep();
+    return;
+  }
+
+  const freshMoveInput = transformDestination ? null : getFreshMoveInput(fighter, input);
   if (freshMoveInput && canBufferFreshMoveInput(fighter)) bufferMoveInput(fighter, freshMoveInput);
 
   if (
@@ -507,7 +546,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.state === 'chargeKi') {
-    handleKiChargeStep(fighter, input, dt);
+    handleKiChargeStep(fighter, input, dt, hasForwardTransform(match, fighter));
     maybeSpawnShadowCloneFromCharge(fighter, opponent);
     applyGravity(fighter, dt);
     finishFighterStep();
@@ -714,8 +753,133 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
   if (fighter.state === 'attack') return true;
-  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi') return false;
+  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi' || fighter.state === 'transform') return false;
   return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
+}
+
+function isAllLimbInput(input: InputFrame) {
+  return input.jab && input.heavy && input.kick && input.special;
+}
+
+function isAllPreviousLimbInput(fighter: FighterRuntime) {
+  return fighter.previousAttackInputs.jab && fighter.previousAttackInputs.heavy && fighter.previousAttackInputs.kick && fighter.previousAttackInputs.special;
+}
+
+function getTransformTarget(match: MatchSnapshot, character: CharacterDefinition) {
+  if (!character.hasTransform || !character.transformCharacterId || character.transformCharacterId === character.id) return null;
+  return match.roster.find((candidate) => candidate.id === character.transformCharacterId) ?? null;
+}
+
+function hasForwardTransform(match: MatchSnapshot, fighter: FighterRuntime) {
+  return Boolean(getTransformTarget(match, fighter.character));
+}
+
+function isTransformed(fighter: FighterRuntime) {
+  return fighter.character.id !== fighter.baseCharacter.id;
+}
+
+function isTransformReady(fighter: FighterRuntime) {
+  return fighter.ki >= KI_MAX && fighter.transformOvercharge > 0 && fighter.transformReadyTimer > 0;
+}
+
+function resolveTransformDestination(match: MatchSnapshot, fighter: FighterRuntime): CharacterDefinition | null {
+  const forwardTarget = getTransformTarget(match, fighter.character);
+  if (forwardTarget && isTransformReady(fighter)) return forwardTarget;
+  if (isTransformed(fighter)) return fighter.baseCharacter;
+  return null;
+}
+
+function canStartTransform(fighter: FighterRuntime) {
+  if (fighter.state === 'transform') return false;
+  if (fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'juggle' || fighter.state === 'hit') return false;
+  if (fighter.stunFramesRemaining > 0 || fighter.blockstunFramesRemaining > 0) return false;
+  if (fighter.state === 'chargeKi') return fighter.chargePhase !== 'startup' && fighter.chargePhase !== 'recovery';
+  return fighter.actionFramesRemaining === 0 && fighter.actionTimer === 0;
+}
+
+function startTransform(fighter: FighterRuntime, target: CharacterDefinition) {
+  clearKiChargeState(fighter);
+  fighter.state = 'transform';
+  fighter.currentMove = null;
+  fighter.moveInstanceId += 1;
+  fighter.actionFramesRemaining = TRANSFORM_STARTUP_FRAMES;
+  fighter.actionTimer = framesToSeconds(TRANSFORM_STARTUP_FRAMES);
+  fighter.transformStartupFrames = TRANSFORM_STARTUP_FRAMES;
+  fighter.transformTargetId = target.id;
+  fighter.transformSmokeFrames = TRANSFORM_SMOKE_FRAMES;
+  fighter.moveFrame = 0;
+  fighter.velocityY = 0;
+  fighter.position.y = 0;
+  fighter.stunFramesRemaining = 0;
+  fighter.blockstunFramesRemaining = 0;
+  fighter.blockPunishWindowFrames = 0;
+  fighter.stunTimer = 0;
+  fighter.forcedCrouchFrames = 0;
+  fighter.bufferedMoveInput = null;
+  fighter.bufferedMoveFrames = 0;
+  fighter.shadowClone = null;
+  resetTransformCharge(fighter);
+}
+
+function handleTransformStep(match: MatchSnapshot, fighter: FighterRuntime, dt: number) {
+  const frameDelta = secondsToFrames(dt);
+  fighter.moveFrame += frameDelta;
+  fighter.transformStartupFrames = Math.max(0, fighter.transformStartupFrames - frameDelta);
+  fighter.actionFramesRemaining = fighter.transformStartupFrames;
+  fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
+  if (fighter.transformStartupFrames > 0) return;
+
+  const target = fighter.transformTargetId
+    ? match.roster.find((character) => character.id === fighter.transformTargetId)
+    : null;
+  completeTransform(fighter, target ?? fighter.character, match.maxHealth);
+}
+
+function completeTransform(fighter: FighterRuntime, target: CharacterDefinition, matchMaxHealth: number | undefined) {
+  const hpPercent = clamp(fighter.hp / Math.max(1, fighter.maxHp), 0, 1);
+  fighter.character = target;
+  fighter.maxHp = resolveFighterMaxHealth(target, matchMaxHealth);
+  fighter.hp = Math.max(1, Math.min(fighter.maxHp, Math.round(fighter.maxHp * hpPercent)));
+  fighter.state = 'idle';
+  fighter.currentMove = null;
+  fighter.actionFramesRemaining = 0;
+  fighter.actionTimer = 0;
+  fighter.moveFrame = 0;
+  fighter.transformStartupFrames = 0;
+  fighter.transformTargetId = null;
+  fighter.comboTimer = 0;
+  fighter.comboStep = 0;
+  fighter.comboSequence = [];
+  fighter.comboUsedKeys = [];
+  fighter.comboHits = 0;
+  fighter.comboDamage = 0;
+  fighter.aiRecentComboKeys = [];
+  resetTransformCharge(fighter);
+}
+
+function updateTransformRuntime(fighter: FighterRuntime, dt: number) {
+  const frameDelta = secondsToFrames(dt);
+  fighter.transformSmokeFrames = Math.max(0, fighter.transformSmokeFrames - frameDelta);
+  if (fighter.state === 'transform') return;
+  if (fighter.transformReadyTimer <= 0) return;
+  fighter.transformReadyTimer = Math.max(0, fighter.transformReadyTimer - dt);
+  fighter.transformOvercharge = Math.max(0, fighter.transformOvercharge - (KI_MAX / TRANSFORM_READY_SECONDS) * dt);
+  if (fighter.transformReadyTimer === 0 || fighter.transformOvercharge <= 0) {
+    fighter.transformReadyTimer = 0;
+    fighter.transformOvercharge = 0;
+  }
+}
+
+function resetTransformCharge(fighter: FighterRuntime) {
+  fighter.ki = 0;
+  fighter.transformOvercharge = 0;
+  fighter.transformReadyTimer = 0;
+}
+
+function clearTransformOverchargeIfKiBelowFull(fighter: FighterRuntime) {
+  if (fighter.ki >= KI_MAX) return;
+  fighter.transformOvercharge = 0;
+  fighter.transformReadyTimer = 0;
 }
 
 function startKiCharge(fighter: FighterRuntime) {
@@ -738,7 +902,7 @@ function startKiCharge(fighter: FighterRuntime) {
   fighter.shadowCloneChargeConsumed = false;
 }
 
-function handleKiChargeStep(fighter: FighterRuntime, input: InputFrame, dt: number) {
+function handleKiChargeStep(fighter: FighterRuntime, input: InputFrame, dt: number, canOverchargeTransform: boolean) {
   const move = fighter.currentMove ?? buildKiChargeMove(fighter.character);
   fighter.currentMove = move;
   const frameDelta = secondsToFrames(dt);
@@ -777,7 +941,21 @@ function handleKiChargeStep(fighter: FighterRuntime, input: InputFrame, dt: numb
   fighter.chargeCommitted = activeElapsed >= move.activeFrames;
   fighter.actionFramesRemaining = 0;
   fighter.actionTimer = 0;
-  fighter.ki = clamp(fighter.ki + KI_CHARGE_PER_SECOND * dt, 0, KI_MAX);
+  addKiCharge(fighter, KI_CHARGE_PER_SECOND * dt, canOverchargeTransform);
+}
+
+function addKiCharge(fighter: FighterRuntime, amount: number, canOverchargeTransform: boolean) {
+  if (amount <= 0) return;
+  const missingKi = Math.max(0, KI_MAX - fighter.ki);
+  const kiGain = Math.min(missingKi, amount);
+  fighter.ki = clamp(fighter.ki + kiGain, 0, KI_MAX);
+  const overflow = amount - kiGain;
+  if (fighter.ki < KI_MAX || !canOverchargeTransform) return;
+  fighter.transformOvercharge = clamp(fighter.transformOvercharge + overflow, 0, KI_MAX);
+  if (fighter.transformOvercharge >= KI_MAX) {
+    fighter.transformOvercharge = KI_MAX;
+    fighter.transformReadyTimer = TRANSFORM_READY_SECONDS;
+  }
 }
 
 function beginKiChargeRecovery(fighter: FighterRuntime, move: MoveDefinition) {
@@ -1102,7 +1280,10 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const resolvedMove = charged ? buildKiBurstMove(move, kiCost) : move;
   const identity = getMoveIdentity(move);
   fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
-  if (spendsKi) fighter.ki = clamp(fighter.ki - kiCost, 0, KI_MAX);
+  if (spendsKi) {
+    fighter.ki = clamp(fighter.ki - kiCost, 0, KI_MAX);
+    clearTransformOverchargeIfKiBelowFull(fighter);
+  }
   applyMoveHealing(fighter, resolvedMove);
   applyMoveJumpStart(fighter, resolvedMove);
 
@@ -2246,7 +2427,7 @@ function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
 function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack' || attacker.hitConnected) return;
-  if (defender.state === 'knockdown' || defender.getupInvulnerableFrames > 0) return;
+  if (defender.state === 'knockdown' || defender.state === 'transform' || defender.getupInvulnerableFrames > 0) return;
   const moveFrame = attacker.moveFrame || secondsToFrames(totalMoveSeconds(move) - attacker.actionTimer);
   if (!isActiveMoveFrame(move, moveFrame)) return;
   const attackerPosition = getFighterCombatPosition(attacker);
@@ -2378,7 +2559,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const clone = attacker.shadowClone;
   const sourceMove = clone?.currentMove;
   if (!clone || clone.phase !== 'active' || clone.state !== 'attack' || !sourceMove || clone.hitConnected) return;
-  if (defender.state === 'knockdown' || defender.getupInvulnerableFrames > 0) return;
+  if (defender.state === 'knockdown' || defender.state === 'transform' || defender.getupInvulnerableFrames > 0) return;
   if (!isActiveMoveFrame(sourceMove, clone.moveFrame)) return;
 
   const cloneFighter = makeShadowCloneFighter(attacker, clone);
@@ -2960,6 +3141,7 @@ function getFighterAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'chargeKi') return 'chargeKi';
+  if (fighter.state === 'transform') return fighter.character.animationFrames?.transform?.length ? 'transform' : fighter.character.animationFrames?.chargeKi?.length ? 'chargeKi' : 'idle';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter.getupAction) ?? 'knockdown';
@@ -3147,7 +3329,11 @@ function updateRoundOverVisuals(match: MatchSnapshot) {
 function resetRound(match: MatchSnapshot) {
   const rounds: [number, number] = [match.fighters[0].roundsWon, match.fighters[1].roundsWon];
   const [p1Character, p2Character] = [match.fighters[0].character, match.fighters[1].character];
-  match.fighters = [createFighter(1, p1Character, -START_DISTANCE / 2, match.maxHealth), createFighter(2, p2Character, START_DISTANCE / 2, match.maxHealth)];
+  const [p1BaseCharacter, p2BaseCharacter] = [match.fighters[0].baseCharacter, match.fighters[1].baseCharacter];
+  match.fighters = [
+    createFighter(1, p1Character, -START_DISTANCE / 2, match.maxHealth, p1BaseCharacter),
+    createFighter(2, p2Character, START_DISTANCE / 2, match.maxHealth, p2BaseCharacter)
+  ];
   match.fighters[0].roundsWon = rounds[0];
   match.fighters[1].roundsWon = rounds[1];
   match.round += 1;
@@ -3262,12 +3448,13 @@ function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, 
   fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
 }
 
-function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {
+function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {
   const input = emptyInputFrame();
   const dx = opponent.position.x - ai.position.x;
   const dz = opponent.position.z - ai.position.z;
   const distance = Math.hypot(dx, dz);
   const laneDiff = opponent.position.z - ai.position.z;
+  const hasTransformAbility = hasForwardTransform(match, ai);
   const profile = ai.character.aiProfile;
   const elapsed = ROUND_TIME - timer;
   const settings = getCpuDifficultySettings(difficulty);
@@ -3296,7 +3483,11 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     return input;
   }
   if (ai.state === 'chargeKi') {
-    input.charge = shouldAiContinueCharacterAbilityCharge(ai);
+    if (shouldAiTriggerTransform(ai, opponent, difficulty, distance, Math.abs(laneDiff), hasTransformAbility)) {
+      applyAiTransformInput(input);
+      return input;
+    }
+    input.charge = shouldAiContinueCharacterAbilityCharge(ai, hasTransformAbility);
     return input;
   }
   let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
@@ -3478,7 +3669,16 @@ function makeAiInput(ai: FighterRuntime, opponent: FighterRuntime, timer: number
     !input.block &&
     canStartAction &&
     canAct &&
-    shouldAiStartCharacterAbilityCharge(ai, opponent, difficulty, distance, tooClose, danger, leaderCloseout, opening, selector + 71, routeRoll + 43)
+    shouldAiTriggerTransform(ai, opponent, difficulty, distance, Math.abs(laneDiff), hasTransformAbility)
+  ) {
+    applyAiTransformInput(input);
+    return input;
+  }
+  if (
+    !input.block &&
+    canStartAction &&
+    canAct &&
+    shouldAiStartCharacterAbilityCharge(ai, opponent, difficulty, distance, tooClose, danger, leaderCloseout, opening, selector + 71, routeRoll + 43, hasTransformAbility)
   ) {
     input.charge = true;
     input[towardKey] = false;
@@ -3826,8 +4026,11 @@ function hasAnyConfiguredKiCommand(ai: FighterRuntime) {
   return moveInputs.some((input) => hasConfiguredKiCommand(ai, input));
 }
 
-function shouldAiContinueCharacterAbilityCharge(ai: FighterRuntime) {
+function shouldAiContinueCharacterAbilityCharge(ai: FighterRuntime, hasTransformAbility: boolean) {
   if (ai.chargePhase === 'startup') return true;
+  if (hasTransformAbility) {
+    return ai.ki < KI_MAX || ai.transformOvercharge < KI_MAX;
+  }
   if (isShadowCloneCharacter(ai)) {
     return !ai.shadowClone && !ai.shadowCloneChargeConsumed;
   }
@@ -3845,11 +4048,12 @@ function shouldAiStartCharacterAbilityCharge(
   leaderCloseout: boolean,
   opening: AiOpening,
   selector: number,
-  routeRoll: number
+  routeRoll: number,
+  hasTransformAbility: boolean
 ) {
   const isShadowCloneAbility = isShadowCloneCharacter(ai);
   const hasAuthoredKiAbility = hasAnyConfiguredKiCommand(ai);
-  if (!isShadowCloneAbility && !hasAuthoredKiAbility) return false;
+  if (!isShadowCloneAbility && !hasAuthoredKiAbility && !hasTransformAbility) return false;
   if (isShadowCloneAbility && (ai.shadowClone || ai.shadowCloneChargeConsumed)) return false;
   if (leaderCloseout) return false;
   if (tooClose || danger) return false;
@@ -3857,9 +4061,10 @@ function shouldAiStartCharacterAbilityCharge(
   if (ai.comboTimer > 0 || ai.comboHits > 0) return false;
   if (opponent.state === 'attack' && opponent.currentMove && distance < opponent.currentMove.range + 0.55) return false;
 
-  const targetKi = isShadowCloneAbility ? SHADOW_CLONE_KI_THRESHOLD : KI_BURST_COST;
-  const alreadyReady = ai.ki >= targetKi;
-  if (!isShadowCloneAbility && alreadyReady) return false;
+  const targetKi = isShadowCloneAbility ? SHADOW_CLONE_KI_THRESHOLD : hasTransformAbility ? KI_MAX : KI_BURST_COST;
+  const alreadyReady = hasTransformAbility ? isTransformReady(ai) : ai.ki >= targetKi;
+  if (!isShadowCloneAbility && !hasTransformAbility && alreadyReady) return false;
+  if (hasTransformAbility && alreadyReady) return false;
   const safeWindow = distance > 1.35 || opponent.state === 'knockdown' || opponent.state === 'getup';
   if (!alreadyReady && !safeWindow) return false;
 
@@ -3880,6 +4085,33 @@ function shouldAiStartCharacterAbilityCharge(
   const chance = clamp(difficultyChance + authoredKiBonus + kiReadinessBonus + openingBonus + distanceBonus, 0.02, 0.58);
   const roll = positiveModulo(selector * 11 + routeRoll * 5 + ai.slot * 37 + Math.floor(ai.ki * 7) + Math.floor(opponent.hp), 100) / 100;
   return roll < chance;
+}
+
+function shouldAiTriggerTransform(ai: FighterRuntime, opponent: FighterRuntime, difficulty: CpuDifficulty, distance: number, laneDiff: number, hasTransformAbility: boolean) {
+  if (!hasTransformAbility || !isTransformReady(ai)) return false;
+  if (difficulty <= 1) return false;
+  if (ai.state === 'knockdown' || ai.state === 'getup' || ai.state === 'juggle' || ai.state === 'hit' || ai.state === 'attack') return false;
+  if (ai.stunFramesRemaining > 0 || ai.blockstunFramesRemaining > 0 || ai.actionFramesRemaining > 0 || ai.actionTimer > 0) return false;
+  const opponentThreat = opponent.state === 'attack' && distance < (opponent.currentMove?.range ?? 1.35) + 0.5 && laneDiff < 0.85;
+  if (opponentThreat) return false;
+  return distance > 1.1 || opponent.state === 'knockdown' || opponent.state === 'getup';
+}
+
+function applyAiTransformInput(input: InputFrame) {
+  input.block = false;
+  input.charge = false;
+  input.down = false;
+  input.up = false;
+  input.left = false;
+  input.right = false;
+  input.sidestepUp = false;
+  input.sidestepDown = false;
+  input.sidewalkUp = false;
+  input.sidewalkDown = false;
+  input.jab = true;
+  input.heavy = true;
+  input.kick = true;
+  input.special = true;
 }
 
 type AiFullCrouchContext = 'neutral' | 'pressure';
@@ -4179,6 +4411,7 @@ function applyGravity(fighter: FighterRuntime, dt: number, gravityScale = 1) {
 function cloneMatch(match: MatchSnapshot): MatchSnapshot {
   return {
     ...match,
+    roster: [...match.roster],
     stage: { ...match.stage },
     combatEvents: [...match.combatEvents],
     impactEvents: [...match.impactEvents],
@@ -4186,6 +4419,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
     fighters: match.fighters.map((fighter) => ({
       ...fighter,
       character: fighter.character,
+      baseCharacter: fighter.baseCharacter,
       position: { ...fighter.position },
       currentMove: fighter.currentMove,
       commandHistory: fighter.commandHistory.map((entry) => ({ ...entry })),

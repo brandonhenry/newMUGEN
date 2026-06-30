@@ -1,6 +1,6 @@
-import { emptyInputFrame, type ActionName, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
+import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 1;
+export const ONLINE_PROTOCOL_VERSION = 2;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -23,9 +23,16 @@ export const inputActions: ActionName[] = [
 ];
 
 export type CompactFighterSnapshot = {
+  characterId: string;
+  baseCharacterId: string;
   hp: number;
   maxHp: number;
   ki: number;
+  transformOvercharge: number;
+  transformReadyTimer: number;
+  transformStartupFrames: number;
+  transformTargetId: string | null;
+  transformSmokeFrames: number;
   position: FighterRuntime['position'];
   velocityY: number;
   facing: 1 | -1;
@@ -79,6 +86,8 @@ export type CompactMatchSnapshot = {
   sequence: number;
   p1CharacterId: string;
   p2CharacterId: string;
+  p1BaseCharacterId: string;
+  p2BaseCharacterId: string;
   stageId: string;
   mode: 'online';
   cpuDifficulty: MatchSnapshot['cpuDifficulty'];
@@ -121,6 +130,8 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     sequence,
     p1CharacterId: match.fighters[0].character.id,
     p2CharacterId: match.fighters[1].character.id,
+    p1BaseCharacterId: match.fighters[0].baseCharacter.id,
+    p2BaseCharacterId: match.fighters[1].baseCharacter.id,
     stageId: match.stage.id,
     mode: 'online',
     cpuDifficulty: match.cpuDifficulty,
@@ -169,15 +180,22 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     clashState: snapshot.clashState ?? base.clashState,
     visualTimeScale: snapshot.visualTimeScale,
     cameraShake: snapshot.cameraShake,
-    fighters: [hydrateFighter(base.fighters[0], snapshot.fighters[0]), hydrateFighter(base.fighters[1], snapshot.fighters[1])]
+    fighters: [hydrateFighter(base.fighters[0], snapshot.fighters[0], base.roster), hydrateFighter(base.fighters[1], snapshot.fighters[1], base.roster)]
   };
 }
 
 function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
   return {
+    characterId: fighter.character.id,
+    baseCharacterId: fighter.baseCharacter.id,
     hp: fighter.hp,
     maxHp: fighter.maxHp,
     ki: fighter.ki,
+    transformOvercharge: fighter.transformOvercharge,
+    transformReadyTimer: fighter.transformReadyTimer,
+    transformStartupFrames: fighter.transformStartupFrames,
+    transformTargetId: fighter.transformTargetId,
+    transformSmokeFrames: fighter.transformSmokeFrames,
     position: { ...fighter.position },
     velocityY: fighter.velocityY,
     facing: fighter.facing,
@@ -227,12 +245,21 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
   };
 }
 
-function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot): FighterRuntime {
+function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, roster: CharacterDefinition[]): FighterRuntime {
+  const character = roster.find((candidate) => candidate.id === snapshot.characterId) ?? base.character;
+  const baseCharacter = roster.find((candidate) => candidate.id === snapshot.baseCharacterId) ?? base.baseCharacter ?? character;
   return {
     ...base,
+    character,
+    baseCharacter,
     hp: snapshot.hp,
     maxHp: snapshot.maxHp ?? base.maxHp,
     ki: snapshot.ki,
+    transformOvercharge: snapshot.transformOvercharge ?? base.transformOvercharge,
+    transformReadyTimer: snapshot.transformReadyTimer ?? base.transformReadyTimer,
+    transformStartupFrames: snapshot.transformStartupFrames ?? base.transformStartupFrames,
+    transformTargetId: snapshot.transformTargetId ?? null,
+    transformSmokeFrames: snapshot.transformSmokeFrames ?? base.transformSmokeFrames,
     position: { ...snapshot.position },
     velocityY: snapshot.velocityY,
     facing: snapshot.facing,

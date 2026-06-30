@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import type { ActionName, ControlBindingMap, InputFrame, MatchMode, PlayerControlBindings } from '../types';
 import { emptyInputFrame } from '../types';
-import { buttonComboDefinitions } from '../lib/buttonCombos';
+import { keybindableButtonComboDefinitions } from '../lib/buttonCombos';
 import { defaultGameSettings } from '../lib/gameSettings';
 
 const aiModeArrowKeys: Record<string, ActionName> = {
@@ -115,7 +115,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
           if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) merged[player][action] = true;
         }
         const comboBindings = controlsRef.current.gamepadCombos[player];
-        for (const combo of buttonComboDefinitions) {
+        for (const combo of keybindableButtonComboDefinitions) {
           if (!comboBindings[combo.id]?.some((index) => pad.buttons[index]?.pressed)) continue;
           combo.actions.forEach((action) => {
             merged[player][action] = true;
@@ -177,7 +177,7 @@ export function getKeyboardBindingsForEvent(
 }
 
 function findComboActionsForKey(bindings: ControlBindingMap['keyboardCombos'][number], keyIds: string[]) {
-  const combo = buttonComboDefinitions.find((definition) => bindings[definition.id]?.some((value) => keyIds.includes(value)));
+  const combo = keybindableButtonComboDefinitions.find((definition) => bindings[definition.id]?.some((value) => keyIds.includes(value)));
   return combo?.actions ?? [];
 }
 

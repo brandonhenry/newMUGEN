@@ -1,6 +1,6 @@
 import type { ActionName, GameSettings, PlayerControlBindings, PlayerGamepadBindings, PlayerGamepadComboBindings, PlayerKeyboardComboBindings } from '../types';
 import { KORE_DEFAULT_CURSOR_ID, isKoreCursorId } from '../data/cursors';
-import { buttonComboIds } from './buttonCombos';
+import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
@@ -275,7 +275,7 @@ function sanitizeGamepadBindings(raw: unknown, fallback: PlayerGamepadBindings):
 
 function sanitizeKeyboardComboBindings(raw: unknown, fallback: PlayerKeyboardComboBindings): PlayerKeyboardComboBindings {
   const source = isRecord(raw) ? raw : {};
-  return buttonComboIds.reduce((bindings, comboId) => {
+  return keybindableButtonComboIds.reduce((bindings, comboId) => {
     const values = Array.isArray(source[comboId]) ? source[comboId] : fallback[comboId] ?? [];
     const keys = values.filter((value): value is string => typeof value === 'string' && value.length > 0);
     if (keys.length > 0) bindings[comboId] = keys;
@@ -285,7 +285,7 @@ function sanitizeKeyboardComboBindings(raw: unknown, fallback: PlayerKeyboardCom
 
 function sanitizeGamepadComboBindings(raw: unknown, fallback: PlayerGamepadComboBindings): PlayerGamepadComboBindings {
   const source = isRecord(raw) ? raw : {};
-  return buttonComboIds.reduce((bindings, comboId) => {
+  return keybindableButtonComboIds.reduce((bindings, comboId) => {
     const values = Array.isArray(source[comboId]) ? source[comboId] : fallback[comboId] ?? [];
     const buttons = values.filter((value): value is number => Number.isInteger(value) && value >= 0 && value <= 16);
     if (buttons.length > 0) bindings[comboId] = buttons;
@@ -309,7 +309,7 @@ function cloneGamepadBindings(bindings: PlayerGamepadBindings): PlayerGamepadBin
 }
 
 function cloneKeyboardComboBindings(bindings: PlayerKeyboardComboBindings): PlayerKeyboardComboBindings {
-  return buttonComboIds.reduce((copy, comboId) => {
+  return keybindableButtonComboIds.reduce((copy, comboId) => {
     const values = bindings[comboId];
     if (values) copy[comboId] = [...values];
     return copy;
@@ -317,7 +317,7 @@ function cloneKeyboardComboBindings(bindings: PlayerKeyboardComboBindings): Play
 }
 
 function cloneGamepadComboBindings(bindings: PlayerGamepadComboBindings): PlayerGamepadComboBindings {
-  return buttonComboIds.reduce((copy, comboId) => {
+  return keybindableButtonComboIds.reduce((copy, comboId) => {
     const values = bindings[comboId];
     if (values) copy[comboId] = [...values];
     return copy;

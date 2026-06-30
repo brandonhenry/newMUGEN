@@ -10,6 +10,7 @@ import {
   getKeyboardBindingsForEvent,
   prepareVerticalTapForRead
 } from '../hooks/useControls';
+import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
 import { emptyInputFrame, type CharacterDefinition, type MoveDefinition, type MoveInput } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
 
@@ -73,6 +74,60 @@ function clashWrongButton(button: MoveInput | undefined): MoveInput {
   const order: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
   const index = order.indexOf(button ?? 'jab');
   return order[(index + 1) % order.length] ?? 'heavy';
+}
+
+function makeTransformRoster() {
+  const base: CharacterDefinition = {
+    ...starterCharacters[0],
+    id: 'transform-base',
+    displayName: 'Transform Base',
+    hasTransform: true,
+    transformCharacterId: 'transform-form',
+    stats: { ...starterCharacters[0].stats, health: 120 }
+  };
+  const form: CharacterDefinition = {
+    ...starterCharacters[1],
+    id: 'transform-form',
+    displayName: 'Transform Form',
+    hasTransform: true,
+    transformCharacterId: 'transform-final',
+    stats: { ...starterCharacters[1].stats, health: 240 }
+  };
+  const final: CharacterDefinition = {
+    ...starterCharacters[0],
+    id: 'transform-final',
+    displayName: 'Transform Final',
+    hasTransform: false,
+    transformCharacterId: undefined,
+    stats: { ...starterCharacters[0].stats, health: 180 }
+  };
+  const opponent: CharacterDefinition = {
+    ...starterCharacters[1],
+    id: 'transform-opponent',
+    displayName: 'Transform Opponent'
+  };
+  return { base, form, final, opponent, roster: [base, form, final, opponent] };
+}
+
+function allLimbsInput() {
+  return {
+    ...emptyInputFrame(),
+    jab: true,
+    heavy: true,
+    kick: true,
+    special: true
+  };
+}
+
+function chargeUntilTransformReady(match: ReturnType<typeof createMatch>, slot: 0 | 1 = 0) {
+  let next = match;
+  for (let frame = 0; frame < 560 && next.fighters[slot].transformReadyTimer <= 0; frame += 1) {
+    const charge = { ...emptyInputFrame(), charge: true };
+    next = slot === 0
+      ? stepMatch(next, charge, emptyInputFrame(), 1 / 60)
+      : stepMatch(next, emptyInputFrame(), charge, 1 / 60);
+  }
+  return next;
 }
 
 describe('character manifests', () => {
@@ -185,6 +240,18 @@ describe('character manifests', () => {
 
       expect([...healingBaseMoves, ...healingOverrides].length, `${character.displayName} healing move count`).toBe(0);
     }
+  });
+
+  it('normalizes transform metadata without enabling it by default', () => {
+    const normalized = normalizeCharacter({
+      ...starterCharacters[0],
+      hasTransform: true,
+      transformCharacterId: starterCharacters[1].id
+    });
+
+    expect(normalized.hasTransform).toBe(true);
+    expect(normalized.transformCharacterId).toBe(starterCharacters[1].id);
+    expect(normalizeCharacter(starterCharacters[0]).hasTransform).toBe(false);
   });
 
   it('migrates legacy base button animation data to left/right limb keys', () => {
@@ -3991,5 +4058,208 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].state).toBe('knockdown');
     expect(match.fighters[1].juggleDamage).toBe(0);
+  });
+
+  it('fills a second transform bar and drains it back to one full ki bar after the ready window', () => {
+    const { base, opponent, roster } = makeTransformRoster();
+    let match = createMatch(base, opponent, stages[0], 'local2p', 3, { roster });
+
+    match = chargeUntilTransformReady(match);
+
+    expect(match.fighters[0].ki).toBe(100);
+    expect(match.fighters[0].transformOvercharge).toBe(100);
+    expect(match.fighters[0].transformReadyTimer).toBeGreaterThan(0);
+
+    for (let frame = 0; frame < 181; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].ki).toBe(100);
+    expect(match.fighters[0].transformOvercharge).toBe(0);
+    expect(match.fighters[0].transformReadyTimer).toBe(0);
+  });
+
+  it('does not fill a second bar when transform metadata has no valid roster target', () => {
+    const { base, opponent } = makeTransformRoster();
+    const invalidTransform = {
+      ...base,
+      transformCharacterId: 'missing-form'
+    };
+    let match = createMatch(invalidTransform, opponent, stages[0], 'local2p', 3, { roster: [invalidTransform, opponent] });
+
+    for (let frame = 0; frame < 560; frame += 1) {
+      match = stepMatch(match, { ...emptyInputFrame(), charge: true }, emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].ki).toBe(100);
+    expect(match.fighters[0].transformOvercharge).toBe(0);
+    expect(match.fighters[0].transformReadyTimer).toBe(0);
+  });
+
+  it('transforms with invincible startup, keeps hp percent, and resets ki', () => {
+    const { base, form, opponent, roster } = makeTransformRoster();
+    let match = createMatch(base, opponent, stages[0], 'local2p', 3, { roster });
+    match.fighters[0].hp = 60;
+    match = chargeUntilTransformReady(match);
+
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('transform');
+    expect(match.fighters[0].ki).toBe(0);
+    expect(match.fighters[0].transformOvercharge).toBe(0);
+
+    match.fighters[1].position.x = match.fighters[0].position.x + 0.7;
+    match.fighters[1].state = 'attack';
+    match.fighters[1].currentMove = {
+      ...opponent.moves[0],
+      startupFrames: 0,
+      activeFrames: 8,
+      recoveryFrames: 8,
+      damage: 30,
+      range: 2.4,
+      hitbox: { offset: [0, 1.1, 0.72], size: [1.3, 1.2, 1.5] }
+    };
+    match.fighters[1].actionFramesRemaining = 8;
+    match.fighters[1].actionTimer = 8 / 60;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].hp).toBe(60);
+
+    for (let frame = 0; frame < 90; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].character.id).toBe(form.id);
+    expect(match.fighters[0].baseCharacter.id).toBe(base.id);
+    expect(match.fighters[0].maxHp).toBe(form.stats.health);
+    expect(match.fighters[0].hp).toBe(120);
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].ki).toBe(0);
+  });
+
+  it('chains transforms when ready and reverts to base when not ready', () => {
+    const { base, form, final, opponent, roster } = makeTransformRoster();
+    let match = createMatch(base, opponent, stages[0], 'local2p', 3, { roster });
+    match = chargeUntilTransformReady(match);
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 91; frame += 1) match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].character.id).toBe(form.id);
+
+    match = chargeUntilTransformReady(match);
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 91; frame += 1) match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].character.id).toBe(final.id);
+    expect(match.fighters[0].baseCharacter.id).toBe(base.id);
+
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('transform');
+    for (let frame = 0; frame < 91; frame += 1) match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].character.id).toBe(base.id);
+    expect(match.fighters[0].ki).toBe(0);
+  });
+
+  it('lets training mode repeatedly charge, transform, chain, revert, and charge again', () => {
+    const { base, form, final, opponent, roster } = makeTransformRoster();
+    let match = createMatch(base, opponent, stages[0], 'training', 3, { roster, trainingInfiniteHealth: true });
+
+    match = chargeUntilTransformReady(match);
+    expect(match.mode).toBe('training');
+    expect(match.timer).toBe(match.roundTime);
+    expect(match.fighters[0].transformReadyTimer).toBeGreaterThan(0);
+
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 91; frame += 1) match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].character.id).toBe(form.id);
+    expect(match.fighters[0].ki).toBe(0);
+
+    match = chargeUntilTransformReady(match);
+    expect(match.fighters[0].transformReadyTimer).toBeGreaterThan(0);
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 91; frame += 1) match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].character.id).toBe(final.id);
+    expect(match.fighters[0].ki).toBe(0);
+
+    match = stepMatch(match, allLimbsInput(), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 91; frame += 1) match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].character.id).toBe(base.id);
+    expect(match.fighters[0].ki).toBe(0);
+
+    match = chargeUntilTransformReady(match);
+    expect(match.fighters[0].character.id).toBe(base.id);
+    expect(match.fighters[0].ki).toBe(100);
+    expect(match.fighters[0].transformReadyTimer).toBeGreaterThan(0);
+  });
+
+  it('lets cpu fighters trigger a smart transform during the ready window', () => {
+    const { base, opponent, roster } = makeTransformRoster();
+    let match = createMatch(base, opponent, stages[0], 'cpu', 4, { roster, aiSeed: 4 });
+    match.fighters[0].ki = 100;
+    match.fighters[0].transformOvercharge = 100;
+    match.fighters[0].transformReadyTimer = 3;
+    match.fighters[0].position.x = -2.5;
+    match.fighters[1].position.x = 2.5;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('transform');
+  });
+
+  it('keeps cpu from chasing transform charge when the target is missing', () => {
+    const { base, opponent } = makeTransformRoster();
+    const invalidTransform = {
+      ...base,
+      transformCharacterId: 'missing-form'
+    };
+    let match = createMatch(invalidTransform, opponent, stages[0], 'cpu', 4, { roster: [invalidTransform, opponent], aiSeed: 4 });
+    match.fighters[0].ki = 100;
+    match.fighters[0].transformOvercharge = 100;
+    match.fighters[0].transformReadyTimer = 3;
+    match.fighters[0].position.x = -2.5;
+    match.fighters[1].position.x = 2.5;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).not.toBe('transform');
+  });
+
+  it('drops user bindings for all four limbs because transform owns that chord', () => {
+    const settings = sanitizeGameSettings({
+      controls: {
+        keyboardCombos: [{ '1+2+3+4': ['KeyP'], '1+2': ['KeyL'] }, {}],
+        gamepadCombos: [{ '1+2+3+4': [8], '1+2': [7] }, {}]
+      }
+    });
+    const event = new KeyboardEvent('keydown', { code: 'KeyP', key: 'p' });
+    const keptEvent = new KeyboardEvent('keydown', { code: 'KeyL', key: 'l' });
+
+    expect(settings.controls.keyboardCombos[0]['1+2+3+4']).toBeUndefined();
+    expect(settings.controls.gamepadCombos[0]['1+2+3+4']).toBeUndefined();
+    expect(getKeyboardBindingsForEvent(event, 'local2p', settings.controls)).toEqual([]);
+    expect(getKeyboardBindingsForEvent(keptEvent, 'local2p', settings.controls).map((binding) => binding.action)).toEqual(['jab', 'heavy']);
+  });
+
+  it('hydrates online snapshots with active and base transform characters', () => {
+    const { base, form, opponent, roster } = makeTransformRoster();
+    const host = createMatch(base, opponent, stages[0], 'online', 3, { roster });
+    host.fighters[0].character = form;
+    host.fighters[0].baseCharacter = base;
+    host.fighters[0].maxHp = form.stats.health;
+    host.fighters[0].hp = 144;
+    host.fighters[0].ki = 100;
+    host.fighters[0].transformOvercharge = 72;
+    host.fighters[0].transformReadyTimer = 1.4;
+    host.fighters[0].transformStartupFrames = 33;
+    host.fighters[0].transformTargetId = base.id;
+    host.fighters[0].transformSmokeFrames = 18;
+
+    const guestBase = createMatch(base, opponent, stages[0], 'online', 3, { roster });
+    const hydrated = hydrateMatchSnapshot(guestBase, compactMatchSnapshot(host, 7));
+
+    expect(hydrated.fighters[0].character.id).toBe(form.id);
+    expect(hydrated.fighters[0].baseCharacter.id).toBe(base.id);
+    expect(hydrated.fighters[0].transformOvercharge).toBe(72);
+    expect(hydrated.fighters[0].transformReadyTimer).toBe(1.4);
+    expect(hydrated.fighters[0].transformStartupFrames).toBe(33);
+    expect(hydrated.fighters[0].transformTargetId).toBe(base.id);
+    expect(hydrated.fighters[0].transformSmokeFrames).toBe(18);
   });
 });

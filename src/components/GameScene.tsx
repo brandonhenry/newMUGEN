@@ -70,6 +70,8 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <Arena stage={match.stage} />
       <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
       <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
+      <TransformEffectLayer fighter={match.fighters[0]} />
+      <TransformEffectLayer fighter={match.fighters[1]} />
       <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
       <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
       <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
@@ -84,6 +86,68 @@ const SHADOW_CLONE_SMOKE_COLUMNS = 4;
 const SHADOW_CLONE_SMOKE_ROWS = 3;
 const SHADOW_CLONE_SMOKE_TOTAL_FRAMES = SHADOW_CLONE_SMOKE_COLUMNS * SHADOW_CLONE_SMOKE_ROWS;
 const SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES = 24;
+
+function TransformEffectLayer({ fighter }: { fighter: FighterRuntime }) {
+  const active = fighter.state === 'transform' || fighter.transformSmokeFrames > 0;
+  if (!active) return null;
+  const startupProgress = fighter.state === 'transform'
+    ? 1 - Math.max(0, Math.min(90, fighter.transformStartupFrames)) / 90
+    : 1;
+  const smokeFrames = fighter.state === 'transform' ? Math.max(fighter.transformSmokeFrames, 12) : fighter.transformSmokeFrames;
+  return (
+    <group position={[fighter.position.x, fighter.position.y, fighter.position.z]}>
+      <pointLight color={fighter.character.colors.accent} intensity={4 + startupProgress * 8} distance={4.8} position={[0, 1.12, 0]} />
+      <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[1.1 + startupProgress * 0.9, 1.1 + startupProgress * 0.9, 1]}>
+        <ringGeometry args={[0.55, 0.7, 64]} />
+        <meshBasicMaterial color={fighter.character.colors.accent} transparent opacity={0.26 + startupProgress * 0.28} depthWrite={false} toneMapped={false} />
+      </mesh>
+      <mesh position={[0, 1.05, 0]} scale={[0.75 + startupProgress * 0.35, 1.55, 0.75 + startupProgress * 0.35]}>
+        <sphereGeometry args={[1, 32, 16]} />
+        <meshBasicMaterial color={fighter.character.colors.primary} transparent opacity={0.12 + startupProgress * 0.16} depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
+      </mesh>
+      {smokeFrames > 0 && <TransformSmoke framesRemaining={smokeFrames} />}
+    </group>
+  );
+}
+
+function TransformSmoke({ framesRemaining }: { framesRemaining: number }) {
+  const sourceTexture = useLoader(THREE.TextureLoader, SHADOW_CLONE_SMOKE_PATH);
+  const texture = useMemo(() => sourceTexture.clone(), [sourceTexture]);
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const elapsed = SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES - Math.max(0, Math.min(SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES, framesRemaining));
+  const frameIndex = Math.max(0, Math.min(SHADOW_CLONE_SMOKE_TOTAL_FRAMES - 1, Math.floor((elapsed / SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES) * SHADOW_CLONE_SMOKE_TOTAL_FRAMES)));
+  const opacity = Math.max(0.18, Math.min(0.82, framesRemaining / Math.max(1, SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES)));
+  useEffect(() => {
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1 / SHADOW_CLONE_SMOKE_COLUMNS, 1 / SHADOW_CLONE_SMOKE_ROWS);
+  }, [texture]);
+  useEffect(() => {
+    const column = frameIndex % SHADOW_CLONE_SMOKE_COLUMNS;
+    const row = Math.floor(frameIndex / SHADOW_CLONE_SMOKE_COLUMNS);
+    texture.offset.set(column / SHADOW_CLONE_SMOKE_COLUMNS, 1 - (row + 1) / SHADOW_CLONE_SMOKE_ROWS);
+    texture.needsUpdate = true;
+    if (materialRef.current) materialRef.current.opacity = opacity;
+  }, [frameIndex, opacity, texture]);
+
+  return (
+    <mesh position={[0, 0.9, 0.02]} scale={[1.45, 1.45, 1]}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial
+        ref={materialRef}
+        map={texture}
+        transparent
+        opacity={opacity}
+        depthWrite={false}
+        toneMapped={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
 
 function ShadowCloneLayer({ fighter, timeScale }: { fighter: FighterRuntime; timeScale: number }) {
   const clone = fighter.shadowClone;
@@ -761,6 +825,8 @@ export function MenuAttractScene({ match }: GameSceneProps) {
       <group position={[0, 0, 1.75]} scale={0.82}>
         <FighterRig fighter={match.fighters[0]} />
         <FighterRig fighter={match.fighters[1]} />
+        <TransformEffectLayer fighter={match.fighters[0]} />
+        <TransformEffectLayer fighter={match.fighters[1]} />
         <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
         <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
         <EffectLayer match={match} reducedMotion={false} />
@@ -1336,9 +1402,15 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
   return {
     slot: 1,
     character,
+    baseCharacter: character,
     hp: character.stats.health,
     maxHp: character.stats.health,
     ki: 0,
+    transformOvercharge: 0,
+    transformReadyTimer: 0,
+    transformStartupFrames: 0,
+    transformTargetId: null,
+    transformSmokeFrames: 0,
     position: { x: 0, y: 0, z: 0 },
     velocityY: 0,
     facing: 1,
@@ -2182,6 +2254,7 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'chargeKi') return 'chargeKi';
+  if (fighter.state === 'transform') return fighter.character.animationFrames?.transform?.length ? 'transform' : fighter.character.animationFrames?.chargeKi?.length ? 'chargeKi' : 'idle';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter);
@@ -2775,7 +2848,7 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
   if (fighter.state === 'jump') return find('jump', 'walk', 'run', 'idle') ?? names[0];
   if (fighter.state === 'crouchBlock') return find('crouch', 'block', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'crouch') return find('crouch', 'idle', 'standing') ?? names[0];
-  if (fighter.state === 'chargeKi') return find('charge', 'power', 'taunt', 'idle', 'standing') ?? names[0];
+  if (fighter.state === 'chargeKi' || fighter.state === 'transform') return find('charge', 'power', 'taunt', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'block') return find('idle', 'standing') ?? names[0];
   if (fighter.state === 'hit' || fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup') return find('death', 'no', 'idle') ?? names[0];
   if (fighter.state === 'entry') return find('intro', 'entry', 'taunt', 'wave', 'yes', 'idle') ?? names[0];

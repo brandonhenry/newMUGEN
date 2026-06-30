@@ -15,6 +15,8 @@ type DevManifestPayload = {
   unplayable?: boolean;
   variant?: boolean;
   variantOf?: string;
+  hasTransform?: boolean;
+  transformCharacterId?: string;
   faceCardPath?: string;
   animationFrames?: Record<string, string[]>;
   animationFrameRates?: Record<string, number>;
@@ -275,6 +277,10 @@ function koreDevManifestWriter() {
           const variantOf = sanitizeCharacterReference(payload.variantOf, characterId);
           if (manifest.variant && variantOf) manifest.variantOf = variantOf;
           else delete manifest.variantOf;
+          manifest.hasTransform = Boolean(payload.hasTransform);
+          const transformCharacterId = sanitizeCharacterReference(payload.transformCharacterId, characterId);
+          if (manifest.hasTransform && transformCharacterId) manifest.transformCharacterId = transformCharacterId;
+          else delete manifest.transformCharacterId;
           const faceCardPath = sanitizeCharacterAssetPath(payload.faceCardPath, characterId);
           if (faceCardPath) manifest.faceCardPath = faceCardPath;
           else delete manifest.faceCardPath;
@@ -1989,6 +1995,8 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
     unplayable: Boolean(manifest.unplayable),
     variant: Boolean(manifest.variant),
     variantOf: Boolean(manifest.variant) ? sanitizeCharacterReference(manifest.variantOf, characterId) || undefined : undefined,
+    hasTransform: Boolean(manifest.hasTransform),
+    transformCharacterId: Boolean(manifest.hasTransform) ? sanitizeCharacterReference(manifest.transformCharacterId, characterId) || undefined : undefined,
     faceCardPath: sanitizeCharacterAssetPath(manifest.faceCardPath, characterId) || undefined,
     renderMode: 'spriteVoxel',
     modelPath: `spritevoxel://${characterId}`,

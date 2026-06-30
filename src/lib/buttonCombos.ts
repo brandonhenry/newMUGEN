@@ -21,6 +21,8 @@ export const buttonComboDefinitions: ButtonComboDefinition[] = [
 ];
 
 export const buttonComboIds = buttonComboDefinitions.map((combo) => combo.id);
+export const keybindableButtonComboDefinitions = buttonComboDefinitions.filter((combo) => combo.id !== '1+2+3+4');
+export const keybindableButtonComboIds = keybindableButtonComboDefinitions.map((combo) => combo.id);
 
 export function getButtonComboDefinition(comboId: string) {
   return buttonComboDefinitions.find((combo) => combo.id === comboId);

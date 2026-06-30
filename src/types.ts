@@ -30,6 +30,7 @@ export type FighterState =
   | 'jump'
   | 'block'
   | 'chargeKi'
+  | 'transform'
   | 'attack'
   | 'hit'
   | 'juggle'
@@ -295,6 +296,8 @@ export type CharacterDefinition = {
   unplayable?: boolean;
   variant?: boolean;
   variantOf?: string;
+  hasTransform?: boolean;
+  transformCharacterId?: string;
   faceCardPath?: string;
   renderMode?: 'glb' | 'spriteVoxel' | 'procedural';
   modelPath: string;
@@ -493,14 +496,21 @@ export type MatchOptions = {
   trainingInfiniteHealth?: boolean;
   playIntro?: boolean;
   aiSeed?: number;
+  roster?: CharacterDefinition[];
 };
 
 export type FighterRuntime = {
   slot: 1 | 2;
   character: CharacterDefinition;
+  baseCharacter: CharacterDefinition;
   hp: number;
   maxHp: number;
   ki: number;
+  transformOvercharge: number;
+  transformReadyTimer: number;
+  transformStartupFrames: number;
+  transformTargetId: string | null;
+  transformSmokeFrames: number;
   position: { x: number; y: number; z: number };
   velocityY: number;
   facing: 1 | -1;
@@ -559,6 +569,7 @@ export type FighterRuntime = {
 
 export type MatchSnapshot = {
   fighters: [FighterRuntime, FighterRuntime];
+  roster: CharacterDefinition[];
   stage: StageDefinition;
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;

@@ -5749,6 +5749,7 @@ button {
 }
 
 .ki-track {
+  position: relative;
   overflow: hidden;
   height: 7px;
   border-radius: 999px;
@@ -5758,12 +5759,38 @@ button {
 }
 
 .ki-track span {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: block;
   height: 100%;
   border-radius: inherit;
+  transition-property: width, opacity;
+  transition-duration: 140ms;
+  transition-timing-function: linear;
+}
+
+.ki-track .ki-fill {
   background: linear-gradient(90deg, #2de3ff, #7af7ff 55%, #fff7b3);
   box-shadow: 0 0 14px rgba(45, 227, 255, 0.72);
-  transition: width 140ms linear;
+}
+
+.ki-track .ki-transform-fill {
+  top: 1px;
+  height: 3px;
+  background: linear-gradient(90deg, #fff0ad, #ff8a2f 58%, #ff4dda);
+  box-shadow: 0 0 16px rgba(255, 132, 47, 0.86);
+  opacity: 0;
+}
+
+.ki-track.has-transform-charge .ki-transform-fill {
+  opacity: 1;
+}
+
+.ki-track.transform-ready {
+  box-shadow:
+    0 0 12px rgba(42, 211, 255, 0.18) inset,
+    0 0 18px rgba(255, 132, 47, 0.6);
 }
 
 .health.right .ki-track {

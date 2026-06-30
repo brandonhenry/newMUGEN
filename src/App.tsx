@@ -42,7 +42,7 @@ import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
-import { buttonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
+import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
@@ -1194,6 +1194,8 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       unplayable: Boolean(character.unplayable),
       variant: Boolean(character.variant),
       variantOf: character.variantOf ?? '',
+      hasTransform: Boolean(character.hasTransform),
+      transformCharacterId: character.transformCharacterId ?? '',
       faceCardPath: character.faceCardPath ?? '',
       animationFrames,
       animationFrameRates,
@@ -2300,7 +2302,7 @@ export default function App() {
     }));
   };
 
-  const setCharacterMetadata = (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>) => {
+  const setCharacterMetadata = (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath'>>) => {
     setRosterResult((current) => {
       if (!current) return current;
       return {
@@ -3126,17 +3128,17 @@ function MenuScreen({
   const [attractIds] = useState(() => pickAttractCharacterIds(roster, unlockedCharacterIds));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() }) : null));
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
   const activeMenuIndexRef = useRef(0);
 
   useEffect(() => {
     if (!p1 || !p2) return;
-    const fresh = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() });
+    const fresh = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster });
     matchRef.current = fresh;
     setAttractMatch(fresh);
-  }, [p1, p2]);
+  }, [p1, p2, roster]);
 
   useEffect(() => {
     if (!p1 || !p2) return;
@@ -3149,9 +3151,9 @@ function MenuScreen({
       accumulator += Math.min(0.05, (now - last) / 1000);
       last = now;
       while (accumulator >= fixedStep) {
-        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() });
+        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster });
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed() });
+          matchRef.current = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster });
         } else {
           matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
         }
@@ -3163,7 +3165,7 @@ function MenuScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [p1, p2]);
+  }, [p1, p2, roster]);
 
   const menuItems = [
     { label: 'Arcade', action: onArcade },
@@ -5985,7 +5987,7 @@ function CharacterViewer({
   onGetupFrameOverrideChange: (characterId: string, action: Exclude<GetupAction, 'none'>, frames: number) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
-  onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>) => void;
+  onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath'>>) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
@@ -6075,6 +6077,8 @@ function CharacterViewer({
     : -1;
   const variantBaseOptions = roster.filter((character) => character.id !== active.id && !isCharacterVariant(character));
   const activeVariantBase = variantBaseOptions.find((character) => character.id === active.variantOf) ?? variantBaseOptions[0] ?? null;
+  const transformTargetOptions = roster.filter((character) => character.id !== active.id);
+  const activeTransformTarget = transformTargetOptions.find((character) => character.id === active.transformCharacterId) ?? transformTargetOptions[0] ?? null;
   useEffect(() => {
     setAnimationPreviewPlaying(false);
     setAnimationPreviewFrame(0);
@@ -6588,7 +6592,7 @@ function CharacterViewer({
   };
 
   const saveActiveMetadata = async (
-    patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'faceCardPath'>>,
+    patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath'>>,
     failureLabel: string
   ) => {
     onCharacterMetadataChange(active.id, patch);
@@ -6625,6 +6629,20 @@ function CharacterViewer({
   const updateActiveVariantBase = async (variantOf: string) => {
     if (!variantOf || variantOf === active.id) return;
     await saveActiveMetadata({ variant: true, variantOf }, 'Failed to save character variant base');
+  };
+
+  const toggleActiveTransform = async () => {
+    if (active.hasTransform) {
+      await saveActiveMetadata({ hasTransform: false, transformCharacterId: '' }, 'Failed to save character transform state');
+      return;
+    }
+    if (!activeTransformTarget) return;
+    await saveActiveMetadata({ hasTransform: true, transformCharacterId: activeTransformTarget.id }, 'Failed to save character transform state');
+  };
+
+  const updateActiveTransformTarget = async (transformCharacterId: string) => {
+    if (!transformCharacterId || transformCharacterId === active.id) return;
+    await saveActiveMetadata({ hasTransform: true, transformCharacterId }, 'Failed to save character transform target');
   };
 
   const importFaceCard = async (file: File | undefined) => {
@@ -6914,6 +6932,29 @@ function CharacterViewer({
                             disabled={manifestSaveStatus === 'saving'}
                           >
                             {variantBaseOptions.map((character) => (
+                              <option key={character.id} value={character.id}>{character.displayName}</option>
+                            ))}
+                          </select>
+                        </label>
+                      )}
+                      <button
+                        className={`secondary-button ${active.hasTransform ? 'active-tool' : ''}`}
+                        onClick={toggleActiveTransform}
+                        disabled={manifestSaveStatus === 'saving' || (!active.hasTransform && !activeTransformTarget)}
+                        data-testid="toggle-character-transform"
+                      >
+                        <Shuffle size={18} />
+                        {active.hasTransform ? 'Has Transform' : 'No Transform'}
+                      </button>
+                      {active.hasTransform && activeTransformTarget && (
+                        <label className="variant-base-control">
+                          <span>Transform</span>
+                          <select
+                            value={active.transformCharacterId ?? activeTransformTarget.id}
+                            onChange={(event) => void updateActiveTransformTarget(event.target.value)}
+                            disabled={manifestSaveStatus === 'saving'}
+                          >
+                            {transformTargetOptions.map((character) => (
                               <option key={character.id} value={character.id}>{character.displayName}</option>
                             ))}
                           </select>
@@ -10605,9 +10646,10 @@ function FightScreen({
       roundTime: isOnline ? 60 : settings.game.roundTimer,
       maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
-      playIntro: true
+      playIntro: true,
+      roster
     }),
-    [isOnline, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [isOnline, roster, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
@@ -10925,7 +10967,7 @@ function FightScreen({
 
   const startOnlineRematch = useCallback(() => {
     const current = matchRef.current;
-    const fresh = makeOnlineMatch(current.fighters[0].character.id, current.fighters[1].character.id, current.stage.id);
+    const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
     matchRef.current = fresh;
     setMatch(fresh);
     onlineWinnerRecordedRef.current = false;
@@ -11069,12 +11111,16 @@ function FightScreen({
       onlineLatestSnapshotRef.current = message.snapshot.sequence;
       const current = matchRef.current;
       const needsBase =
-        current.fighters[0].character.id !== message.snapshot.p1CharacterId ||
-        current.fighters[1].character.id !== message.snapshot.p2CharacterId ||
+        current.fighters[0].baseCharacter.id !== (message.snapshot.p1BaseCharacterId ?? message.snapshot.p1CharacterId) ||
+        current.fighters[1].baseCharacter.id !== (message.snapshot.p2BaseCharacterId ?? message.snapshot.p2CharacterId) ||
         current.stage.id !== message.snapshot.stageId ||
         current.mode !== 'online';
       const base = needsBase
-        ? makeOnlineMatch(message.snapshot.p1CharacterId, message.snapshot.p2CharacterId, message.snapshot.stageId)
+        ? makeOnlineMatch(
+            message.snapshot.p1BaseCharacterId ?? message.snapshot.p1CharacterId,
+            message.snapshot.p2BaseCharacterId ?? message.snapshot.p2CharacterId,
+            message.snapshot.stageId
+          )
         : current;
       const hydrated = hydrateMatchSnapshot(base, message.snapshot);
       matchRef.current = hydrated;
@@ -11725,6 +11771,8 @@ function FightDebug({
       <span data-testid="p2-hp">{p2.hp.toFixed(0)}</span>
       <span data-testid="p1-ki">{p1.ki.toFixed(0)}</span>
       <span data-testid="p2-ki">{p2.ki.toFixed(0)}</span>
+      <span data-testid="p1-transform-overcharge">{p1.transformOvercharge.toFixed(0)}</span>
+      <span data-testid="p2-transform-overcharge">{p2.transformOvercharge.toFixed(0)}</span>
       <span data-testid="last-input">{lastInput}</span>
       <span data-testid="frame-input">{frameInput}</span>
     </div>
@@ -11853,6 +11901,8 @@ function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fig
   const isInfiniteHealth = fighter.maxHp >= 999_999;
   const percent = isInfiniteHealth ? 100 : Math.max(0, Math.min(100, (fighter.hp / Math.max(1, fighter.maxHp)) * 100));
   const kiPercent = Math.max(0, Math.min(100, fighter.ki));
+  const transformPercent = Math.max(0, Math.min(100, fighter.transformOvercharge));
+  const transformReady = fighter.transformReadyTimer > 0 && transformPercent > 0;
   const isDanger = percent <= 25;
   const portraitPath = getHudPortraitPath(fighter.character);
   return (
@@ -11868,8 +11918,9 @@ function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fig
       <div className="health-track">
         <span style={{ width: `${percent}%`, background: isDanger ? 'linear-gradient(90deg, #ff1f32, #ff5b2f 60%, #fff0a5)' : fighter.character.colors.primary }} />
       </div>
-      <div className="ki-track" aria-label={`${fighter.character.displayName} ki`}>
-        <span style={{ width: `${kiPercent}%` }} />
+      <div className={`ki-track ${transformPercent > 0 ? 'has-transform-charge' : ''} ${transformReady ? 'transform-ready' : ''}`} aria-label={`${fighter.character.displayName} ki`}>
+        <span className="ki-fill" style={{ width: `${kiPercent}%` }} />
+        <span className="ki-transform-fill" style={{ width: `${transformPercent}%` }} />
       </div>
       <div className="round-pips" aria-label={`${fighter.character.displayName} rounds won`}>
         {Array.from({ length: ROUNDS_TO_WIN }, (_, pip) => (
