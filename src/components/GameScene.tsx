@@ -2178,10 +2178,6 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1, frameTimeOverride
       <ImageVoxelPartGroup part={parts.rearArm} groupRef={rearArm} />
       <ImageVoxelPartGroup part={parts.leadLeg} groupRef={leadLeg} />
       <ImageVoxelPartGroup part={parts.rearLeg} groupRef={rearLeg} />
-      <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.32, 0.38, 32]} />
-        <meshBasicMaterial color={fighter.character.colors.accent} transparent opacity={0.3} />
-      </mesh>
     </group>
   );
 }
@@ -2795,10 +2791,6 @@ function VoxelSpriteFighter({ fighter, progress, timeScale = 1, frameTimeOverrid
         <VoxelBox position={[0, -0.24, 0]} size={[0.18, 0.5, 0.18]} color={palette.pants} />
         <VoxelBox position={[-0.02, -0.56, 0.06]} size={[0.22, 0.12, 0.28]} color={palette.boot} />
       </group>
-      <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.32, 0.38, 32]} />
-        <meshBasicMaterial color={palette.energy} transparent opacity={0.32} />
-      </mesh>
     </group>
   );
 }
@@ -3019,10 +3011,6 @@ function ProceduralFighter({
           <meshStandardMaterial color={accent} roughness={0.54} />
         </mesh>
       </group>
-      <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.32, 0.38, 32]} />
-        <meshBasicMaterial color={color} transparent opacity={0.35} />
-      </mesh>
     </group>
   );
 }

@@ -2706,6 +2706,9 @@ export default function App() {
 type MenuNavigationDirection = 'up' | 'down' | 'left' | 'right';
 type MenuNavigationDevice = 'keyboard' | 'gamepad';
 
+const MAIN_MENU_CHROME_TOGGLE_EVENT = 'kore:main-menu-chrome-toggle';
+const MENU_GAMEPAD_SELECT_BUTTON = 8;
+
 const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
   KeyW: 'up',
   KeyS: 'down',
@@ -2767,7 +2770,8 @@ function useMenuNavigation(screen: Screen) {
     left: false,
     right: false,
     confirm: false,
-    back: false
+    back: false,
+    select: false
   });
 
   useEffect(() => {
@@ -2801,7 +2805,7 @@ function useMenuNavigation(screen: Screen) {
         const pad = getPrimaryMenuGamepad();
         if (pad) {
           const now = performance.now();
-          const current = readMenuGamepadState(pad);
+          const current = readMenuGamepadState(pad, screenRef.current);
           const previous = previousPadStateRef.current;
           const edge = {
             up: current.up && !previous.up,
@@ -2809,12 +2813,16 @@ function useMenuNavigation(screen: Screen) {
             left: current.left && !previous.left,
             right: current.right && !previous.right,
             confirm: current.confirm && !previous.confirm,
-            back: current.back && !previous.back
+            back: current.back && !previous.back,
+            select: current.select && !previous.select
           };
           const repeatedMove = now - lastMoveAt > repeatDelayMs;
           const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
 
-          if (edge.confirm) {
+          if (screenRef.current === 'menu' && edge.select) {
+            lastDeviceRef.current = 'gamepad';
+            window.dispatchEvent(new CustomEvent(MAIN_MENU_CHROME_TOGGLE_EVENT));
+          } else if (edge.confirm) {
             lastDeviceRef.current = 'gamepad';
             activateFocusedMenuElement();
           } else if (edge.back) {
@@ -2830,7 +2838,7 @@ function useMenuNavigation(screen: Screen) {
           }
           previousPadStateRef.current = current;
         } else {
-          previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false };
+          previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false };
         }
       }
       frame = window.requestAnimationFrame(tick);
@@ -2884,16 +2892,18 @@ function getPrimaryMenuGamepad() {
   return pads.find((pad): pad is Gamepad => Boolean(pad?.connected)) ?? null;
 }
 
-function readMenuGamepadState(pad: Gamepad) {
+function readMenuGamepadState(pad: Gamepad, screen: Screen) {
   const horizontal = pad.axes[0] ?? 0;
   const vertical = pad.axes[1] ?? 0;
+  const selectPressed = Boolean(pad.buttons[MENU_GAMEPAD_SELECT_BUTTON]?.pressed);
   return {
     up: Boolean(pad.buttons[12]?.pressed) || vertical < -0.45,
     down: Boolean(pad.buttons[13]?.pressed) || vertical > 0.45,
     left: Boolean(pad.buttons[14]?.pressed) || horizontal < -0.45,
     right: Boolean(pad.buttons[15]?.pressed) || horizontal > 0.45,
     confirm: Boolean(pad.buttons[0]?.pressed),
-    back: Boolean(pad.buttons[1]?.pressed) || Boolean(pad.buttons[8]?.pressed)
+    back: Boolean(pad.buttons[1]?.pressed) || (screen !== 'menu' && selectPressed),
+    select: selectPressed
   };
 }
 
@@ -3170,6 +3180,7 @@ function MenuScreen({
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
+  const [menuChromeHidden, setMenuChromeHidden] = useState(false);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
   const activeMenuIndexRef = useRef(0);
 
@@ -3207,6 +3218,28 @@ function MenuScreen({
     return () => cancelAnimationFrame(frame);
   }, [p1, p2, roster]);
 
+  useEffect(() => {
+    const toggleMenuChrome = () => {
+      setMenuChromeHidden((hidden) => !hidden);
+      onMenuHover();
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (isTextEntryElement(event.target)) return;
+      if (event.code !== 'Slash' && event.key !== '/') return;
+      event.preventDefault();
+      event.stopPropagation();
+      toggleMenuChrome();
+    };
+    const onControllerToggle = () => toggleMenuChrome();
+    window.addEventListener('keydown', onKeyDown, true);
+    window.addEventListener(MAIN_MENU_CHROME_TOGGLE_EVENT, onControllerToggle);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown, true);
+      window.removeEventListener(MAIN_MENU_CHROME_TOGGLE_EVENT, onControllerToggle);
+    };
+  }, [onMenuHover]);
+
   const menuItems = [
     { label: 'Arcade', action: onArcade },
     { label: 'Versus', action: onVersus },
@@ -3226,14 +3259,27 @@ function MenuScreen({
   };
 
   return (
-    <div className="menu-screen">
+    <div className={`menu-screen ${menuChromeHidden ? 'is-chrome-hidden' : ''}`}>
       {attractMatch && (
         <div className="menu-attract-background" aria-hidden="true">
           <MenuAttractScene match={attractMatch} />
         </div>
       )}
       <div className="menu-vignette" />
-      <section className="kore-menu-overlay" aria-label="KORE main menu">
+      {!menuChromeHidden && <section className="kore-menu-overlay" aria-label="KORE main menu">
+        <button
+          className="menu-chrome-toggle"
+          type="button"
+          aria-label="Hide main menu buttons"
+          title="Hide menu buttons (/ or Select)"
+          data-sound="off"
+          onClick={() => {
+            onMenuSelect();
+            setMenuChromeHidden(true);
+          }}
+        >
+          <EyeOff size={20} />
+        </button>
         <img className="kore-menu-logo" src="/brand/kore-logo-generated.png" alt="KORE" />
         <div className="kore-menu-version" aria-label={`KORE version ${KORE_APP_VERSION}`}>
           v{KORE_APP_VERSION}
@@ -3256,7 +3302,11 @@ function MenuScreen({
             </button>
           ))}
         </nav>
-      </section>
+        <div className="menu-cinematic-hint" aria-hidden="true">
+          <span>/</span>
+          <span>Select</span>
+        </div>
+      </section>}
     </div>
   );
 }
