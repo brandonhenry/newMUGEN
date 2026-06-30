@@ -243,8 +243,7 @@
       "/characters/kiro/frames/frame-124.png"
     ],
     "crouchBlock": [
-      "/characters/kiro/frames/frame-124.png",
-      "/characters/kiro/frames/frame-016.png"
+      "/characters/kiro/frames/frame-124.png"
     ],
     "jump": [
       "/characters/kiro/frames/frame-018.png",
@@ -462,7 +461,7 @@
   },
   "animationFps": 5,
   "animationFrameRates": {
-    "idle": 6.5,
+    "idle": 9,
     "walkForward": 11.5,
     "walkBack": 7,
     "sidestepLeft": 10,
@@ -683,20 +682,21 @@
       "hitLevel": "low"
     },
     "jableft": {
-      "startupFrames": 10,
-      "recoveryFrames": 12,
+      "startupFrames": 4,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onHitFrames": 4
     },
     "kickleft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 10,
+      "activeFrames": 4,
+      "recoveryFrames": 5,
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 9,
       "activeFrames": 5,
-      "recoveryFrames": 14
+      "recoveryFrames": 9
     },
     "kickright": {
       "startupFrames": 14,
