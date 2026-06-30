@@ -1527,8 +1527,13 @@ function getGetupAnimationFrames(fighter: FighterRuntime, action: FighterRuntime
     if (Number.isFinite(override) && Number(override) > 0) return clamp(Math.round(Number(override)), 12, 96);
   }
   const key = getGetupAnimationKey(action);
-  const frameCount = key ? fighter.character.animationFrames?.[key]?.length ?? 0 : 0;
-  const fps = key ? fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8 : fighter.character.animationFps ?? 8;
+  const animationKey = key && (fighter.character.animationFrames?.[key]?.length ?? 0) > 0
+    ? key
+    : key && (fighter.character.animationFrames?.knockdown?.length ?? 0) > 0
+      ? 'knockdown'
+      : key;
+  const frameCount = animationKey ? fighter.character.animationFrames?.[animationKey]?.length ?? 0 : 0;
+  const fps = animationKey ? fighter.character.animationFrameRates?.[animationKey] ?? (key ? fighter.character.animationFrameRates?.[key] : undefined) ?? fighter.character.animationFps ?? 8 : fighter.character.animationFps ?? 8;
   if (frameCount > 0) return clamp(Math.round((frameCount / Math.max(1, fps)) * FRAMES_PER_SECOND), 12, 72);
   return GETUP_FRAMES;
 }
@@ -3402,17 +3407,31 @@ function getFighterAnimationFrameSource(fighter: FighterRuntime) {
   const frames = fighter.character.animationFrames;
   if (!frames) return null;
   const key = getFighterAnimationKey(fighter);
-  const sequence =
-    frames[key] ??
-    (key === 'sprint' ? frames.walkForward : undefined) ??
-    (key === 'backflip' ? frames.jump ?? frames.walkBack : undefined) ??
-    (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
-    (key === 'entry' ? frames.win : undefined) ??
-    (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
-    (key.startsWith('getup') ? frames.knockdown : undefined) ??
-    frames.idle;
-  if (!sequence?.length) return { key, frameSource: undefined };
-  return { key, frameSource: sequence[getFighterAnimationFrameIndex(fighter, key, sequence.length)] };
+  const resolved = resolveAnimationFrameSequence(frames, key);
+  if (!resolved) return { key, frameSource: undefined };
+  return { key: resolved.key, frameSource: resolved.sequence[getFighterAnimationFrameIndex(fighter, key, resolved.sequence.length)] };
+}
+
+function resolveAnimationFrameSequence(frames: NonNullable<CharacterDefinition['animationFrames']>, key: string) {
+  const fallbackKeys = [
+    key,
+    key === 'sprint' ? 'walkForward' : undefined,
+    key === 'backflip' ? 'jump' : undefined,
+    key === 'backflip' ? 'walkBack' : undefined,
+    key === 'crouchBlock' ? 'block' : undefined,
+    key === 'crouchBlock' ? 'crouch' : undefined,
+    key === 'entry' ? 'win' : undefined,
+    key === 'juggle' ? 'hitHeavy' : undefined,
+    key === 'juggle' ? 'hitLight' : undefined,
+    key.startsWith('getup') ? 'knockdown' : undefined,
+    'idle'
+  ];
+  for (const fallbackKey of fallbackKeys) {
+    if (!fallbackKey) continue;
+    const sequence = frames[fallbackKey];
+    if (sequence?.length) return { key: fallbackKey, sequence };
+  }
+  return null;
 }
 
 function getFighterAnimationFrameIndex(fighter: FighterRuntime, key: string, sequenceLength: number) {

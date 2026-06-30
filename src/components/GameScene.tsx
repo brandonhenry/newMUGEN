@@ -1181,10 +1181,12 @@ type PreviewFrameFit = {
 };
 
 function getPreviewFrameFit(character: CharacterDefinition, animationKey?: string): PreviewFrameFit {
-  const sequence = animationKey ? character.animationFrames?.[animationKey] : undefined;
+  const resolved = character.animationFrames && animationKey ? resolveAnimationFrameSequence(character.animationFrames, animationKey) : null;
+  const sequence = resolved?.sequence;
+  const resolvedAnimationKey = resolved?.key ?? animationKey;
   const globalScale = getCharacterGlobalScale(character);
-  const animationScale = getCharacterAnimationScale(character, animationKey);
-  const frameScales = (sequence ?? []).map((frame) => getCharacterAnimationScale(character, animationKey, frame));
+  const animationScale = getCharacterAnimationScale(character, resolvedAnimationKey);
+  const frameScales = (sequence ?? []).map((frame) => getCharacterAnimationScale(character, resolvedAnimationKey, frame));
   const scale = Math.max(
     globalScale.width,
     globalScale.height,
@@ -2214,18 +2216,10 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const frames = fighter.character.animationFrames;
   if (!frames) return fighter.character.spriteSheetPath;
   const key = getImageVoxelAnimationKey(fighter);
-  const sequence =
-    frames[key] ??
-    (key === 'sprint' ? frames.walkForward : undefined) ??
-    (key === 'backflip' ? frames.jump ?? frames.walkBack : undefined) ??
-    (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
-    (key === 'entry' ? frames.win : undefined) ??
-    (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
-    (key === 'throwHeld' ? frames.hitLight ?? frames.hitHeavy : undefined) ??
-    (key.startsWith('getup') ? frames.knockdown : undefined) ??
-    frames.idle;
-  if (!sequence?.length) return fighter.character.spriteSheetPath;
-  const fps = fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
+  const resolved = resolveAnimationFrameSequence(frames, key);
+  if (!resolved) return fighter.character.spriteSheetPath;
+  const { key: resolvedKey, sequence } = resolved;
+  const fps = fighter.character.animationFrameRates?.[resolvedKey] ?? fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
   const frameIndex =
     fighter.state === 'chargeKi'
       ? getChargeKiFrameIndex(fighter, sequence.length)
@@ -2238,7 +2232,8 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
     characterId: fighter.character.id,
     slot: fighter.slot,
     state: fighter.state,
-    animationKey: key,
+    animationKey: resolvedKey,
+    requestedAnimationKey: key,
     fps,
     sequence: sequence.map((frame) => frame.match(/frame-(\d+)\.png$/)?.[1] ?? frame)
   });
@@ -2246,13 +2241,38 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   debugLogThrottled(10, 'voxel frame source selected', {
     characterId: fighter.character.id,
     slot: fighter.slot,
-    animationKey: key,
+    animationKey: resolvedKey,
+    requestedAnimationKey: key,
     frameIndex,
     frameSource,
     elapsedTime: Number(elapsedTime.toFixed(2)),
     progress: Number(progress.toFixed(2))
   });
   return versionEditedSpriteFrameSource(frameSource, fighter.character);
+}
+
+function resolveAnimationFrameSequence(frames: NonNullable<CharacterDefinition['animationFrames']>, key: string) {
+  const fallbackKeys = [
+    key,
+    key === 'sprint' ? 'walkForward' : undefined,
+    key === 'backflip' ? 'jump' : undefined,
+    key === 'backflip' ? 'walkBack' : undefined,
+    key === 'crouchBlock' ? 'block' : undefined,
+    key === 'crouchBlock' ? 'crouch' : undefined,
+    key === 'entry' ? 'win' : undefined,
+    key === 'juggle' ? 'hitHeavy' : undefined,
+    key === 'juggle' ? 'hitLight' : undefined,
+    key === 'throwHeld' ? 'hitLight' : undefined,
+    key === 'throwHeld' ? 'hitHeavy' : undefined,
+    key.startsWith('getup') ? 'knockdown' : undefined,
+    'idle'
+  ];
+  for (const fallbackKey of fallbackKeys) {
+    if (!fallbackKey) continue;
+    const sequence = frames[fallbackKey];
+    if (sequence?.length) return { key: fallbackKey, sequence };
+  }
+  return null;
 }
 
 function getChargeKiFrameIndex(fighter: FighterRuntime, sequenceLength: number) {
@@ -2310,8 +2330,13 @@ function getCharacterGetupFrames(character: CharacterDefinition, action: Exclude
       : action === 'rollBack'
         ? 'getupRollBack'
         : 'getupStand';
-  const frameCount = character.animationFrames?.[key]?.length ?? 0;
-  const fps = character.animationFrameRates?.[key] ?? character.animationFps ?? 8;
+  const animationKey = (character.animationFrames?.[key]?.length ?? 0) > 0
+    ? key
+    : (character.animationFrames?.knockdown?.length ?? 0) > 0
+      ? 'knockdown'
+      : key;
+  const frameCount = character.animationFrames?.[animationKey]?.length ?? 0;
+  const fps = character.animationFrameRates?.[animationKey] ?? character.animationFrameRates?.[key] ?? character.animationFps ?? 8;
   if (frameCount > 0) return THREE.MathUtils.clamp(Math.round((frameCount / Math.max(1, fps)) * 60), 12, 72);
   return 24;
 }

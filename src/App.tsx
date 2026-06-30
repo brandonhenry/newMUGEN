@@ -669,6 +669,18 @@ function getSlotDataKey(slot: AnimationSlot) {
   return getCanonicalCommandDataKey(slot.command) ?? slot.key;
 }
 
+function getViewerSlotFrameData(character: CharacterDefinition, slot: AnimationSlot) {
+  const dataKey = getSlotDataKey(slot);
+  const frames = character.animationFrames ?? {};
+  const slotFrames = frames[dataKey] ?? [];
+  if (slotFrames.length > 0) return { key: dataKey, frames: slotFrames, usesFallback: false };
+  const knockdownFrames = frames.knockdown ?? [];
+  if (slot.pose === 'getup' && knockdownFrames.length > 0) {
+    return { key: 'knockdown', frames: knockdownFrames, usesFallback: true };
+  }
+  return { key: dataKey, frames: slotFrames, usesFallback: false };
+}
+
 function getLegacyRawButtonDataKey(dataKey: string) {
   const command = Object.entries(rawButtonCommandToBaseKey).find(([, baseKey]) => baseKey === dataKey)?.[0];
   return command ? commandAnimationKey(command) : undefined;
@@ -5948,8 +5960,13 @@ function getCharacterGetupFrames(character: CharacterDefinition, slot: Animation
   if (!action) return 24;
   const override = character.getupFrameOverrides?.[action];
   if (Number.isFinite(override) && Number(override) > 0) return clamp(Math.round(Number(override)), 12, 96);
-  const frameCount = character.animationFrames?.[slot.key]?.length ?? 0;
-  const fps = character.animationFrameRates?.[slot.key] ?? character.animationFps ?? 8;
+  const animationKey = (character.animationFrames?.[slot.key]?.length ?? 0) > 0
+    ? slot.key
+    : (character.animationFrames?.knockdown?.length ?? 0) > 0
+      ? 'knockdown'
+      : slot.key;
+  const frameCount = character.animationFrames?.[animationKey]?.length ?? 0;
+  const fps = character.animationFrameRates?.[animationKey] ?? character.animationFrameRates?.[slot.key] ?? character.animationFps ?? 8;
   if (frameCount > 0) return clamp(Math.round((frameCount / Math.max(1, fps)) * 60), 12, 72);
   return 24;
 }
@@ -6086,7 +6103,10 @@ function CharacterViewer({
   const spriteSheets = useMemo(() => getCharacterSpriteSheets(active, frameCount), [active, frameCount]);
   const selectedSlotDataKey = getSlotDataKey(selectedSlot);
   const selectedFrames = active.animationFrames?.[selectedSlotDataKey] ?? [];
-  const hasSelectedFrameData = selectedFrames.length > 0;
+  const selectedPreviewFrameData = getViewerSlotFrameData(active, selectedSlot);
+  const selectedPreviewAnimationKey = selectedPreviewFrameData.key;
+  const selectedPreviewFrames = selectedPreviewFrameData.frames;
+  const hasSelectedFrameData = selectedPreviewFrames.length > 0;
   const defaultFrames = sourceActive.animationFrames?.[selectedSlotDataKey] ?? selectedFrames;
   const selectedSpeed = active.animationFrameRates?.[selectedSlotDataKey] ?? active.animationFps ?? 8;
   const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlotDataKey] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
@@ -6110,13 +6130,13 @@ function CharacterViewer({
   const defaultGetupFrames = selectedGetupAction ? getCharacterGetupFrames(sourceActive, selectedSlot) : 24;
   const selectedAnimationPreviewTotalFrames = selectedGetupAction
     ? selectedGetupFrames
-    : getAnimationPreviewTotalFrames(selectedSlot, selectedMove, selectedFrames.length);
+    : getAnimationPreviewTotalFrames(selectedSlot, selectedMove, selectedPreviewFrames.length);
   const selectedAnimationDurationFrames = getAnimationDurationFrames(selectedFrames.length, selectedSpeed);
   const selectedAnimationPreviewStepRate = getAnimationPreviewStepRate(selectedSlot, selectedMove, selectedSpeed);
   const maxAnimationPreviewFrame = Math.max(0, selectedAnimationPreviewTotalFrames - 1);
   const clampedAnimationPreviewFrame = Math.min(maxAnimationPreviewFrame, Math.max(0, animationPreviewFrame));
-  const activeAnimationSequenceIndex = selectedFrames.length > 0
-    ? Math.min(selectedFrames.length - 1, Math.floor((clampedAnimationPreviewFrame / Math.max(1, selectedAnimationPreviewTotalFrames)) * selectedFrames.length))
+  const activeAnimationSequenceIndex = selectedPreviewFrames.length > 0
+    ? Math.min(selectedPreviewFrames.length - 1, Math.floor((clampedAnimationPreviewFrame / Math.max(1, selectedAnimationPreviewTotalFrames)) * selectedPreviewFrames.length))
     : -1;
   const variantBaseOptions = roster.filter((character) => character.id !== active.id && !isCharacterVariant(character));
   const activeVariantBase = variantBaseOptions.find((character) => character.id === active.variantOf) ?? variantBaseOptions[0] ?? null;
@@ -6172,7 +6192,7 @@ function CharacterViewer({
     setAnimationPreviewFrame(Math.min(maxAnimationPreviewFrame, Math.max(0, Math.round(value))));
   };
   const jumpToAnimationSequenceFrame = (frame: string, sequenceIndex: number) => {
-    const totalSequenceFrames = Math.max(1, selectedFrames.length);
+    const totalSequenceFrames = Math.max(1, selectedPreviewFrames.length);
     const nextFrame = Math.min(maxAnimationPreviewFrame, Math.floor((sequenceIndex / totalSequenceFrames) * selectedAnimationPreviewTotalFrames));
     setAnimationPreviewPlaying(false);
     setAnimationPreviewFrame(nextFrame);
@@ -6286,13 +6306,16 @@ function CharacterViewer({
     debugLog(7, 'viewer effective animation selection', {
       characterId: active.id,
       animationKey: selectedSlotDataKey,
+      previewAnimationKey: selectedPreviewAnimationKey,
+      previewUsesFallback: selectedPreviewFrameData.usesFallback,
       selectedSlotKey: selectedSlot.key,
       effectiveFrames: selectedFrames.map(getFrameIndex),
+      previewFrames: selectedPreviewFrames.map(getFrameIndex),
       defaultFrames: defaultFrames.map(getFrameIndex),
       effectiveFps: selectedSpeed,
       defaultFps: defaultSpeed
     });
-  }, [active.id, active.displayName, defaultFrames, defaultSpeed, selectedAnimationKey, selectedFrames, selectedSlot.key, selectedSlot.label, selectedSlotDataKey, selectedSpeed]);
+  }, [active.id, active.displayName, defaultFrames, defaultSpeed, selectedAnimationKey, selectedFrames, selectedPreviewAnimationKey, selectedPreviewFrameData.usesFallback, selectedPreviewFrames, selectedSlot.key, selectedSlot.label, selectedSlotDataKey, selectedSpeed]);
 
   const updateSelectedFrames = (frames: string[]) => {
     onAnimationFramesChange(active.id, selectedSlotDataKey, frames);
@@ -6931,7 +6954,7 @@ function CharacterViewer({
                 <CharacterPreviewCanvas
                   character={previewCharacter}
                   pose={selectedSlot.pose}
-                  animationKey={selectedSlotDataKey}
+                  animationKey={selectedPreviewAnimationKey}
                   previewMove={selectedMove}
                   previewEffects={effects}
                   previewEffectInstances={selectedMoveEffectInstances}
@@ -7423,7 +7446,7 @@ function CharacterViewer({
             <MoveEffectsEditor
               character={previewCharacter}
               selectedSlot={selectedSlot}
-              animationKey={selectedSlotDataKey}
+              animationKey={selectedPreviewAnimationKey}
               hasFrameData={hasSelectedFrameData}
               previewMove={selectedMove}
               effects={effects}
@@ -7486,7 +7509,7 @@ function CharacterViewer({
                 </div>
               )}
               <AnimationFrameColorStrip
-                frames={selectedFrames}
+                frames={selectedPreviewFrames}
                 activeSequenceIndex={activeAnimationSequenceIndex}
                 previewFrame={clampedAnimationPreviewFrame}
                 totalFrames={selectedAnimationPreviewTotalFrames}
