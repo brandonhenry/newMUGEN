@@ -21,9 +21,7 @@
   "animationFrames": {
     "idle": [
       "/characters/hiei/frames/frame-000.png",
-      "/characters/hiei/frames/frame-001.png",
-      "/characters/hiei/frames/frame-002.png",
-      "/characters/hiei/frames/frame-003.png"
+      "/characters/hiei/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/hiei/frames/frame-004.png",
@@ -197,7 +195,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 6.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

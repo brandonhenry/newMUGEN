@@ -21,8 +21,16 @@
   "animationFrames": {
     "idle": [
       "/characters/ichigo-kurosaki/frames/frame-000.png",
+      "/characters/ichigo-kurosaki/frames/frame-000.png",
+      "/characters/ichigo-kurosaki/frames/frame-003.png",
+      "/characters/ichigo-kurosaki/frames/frame-003.png",
+      "/characters/ichigo-kurosaki/frames/frame-002.png",
+      "/characters/ichigo-kurosaki/frames/frame-002.png",
+      "/characters/ichigo-kurosaki/frames/frame-001.png",
       "/characters/ichigo-kurosaki/frames/frame-001.png",
       "/characters/ichigo-kurosaki/frames/frame-002.png",
+      "/characters/ichigo-kurosaki/frames/frame-002.png",
+      "/characters/ichigo-kurosaki/frames/frame-003.png",
       "/characters/ichigo-kurosaki/frames/frame-003.png"
     ],
     "walkForward": [
@@ -196,7 +204,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 19.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
