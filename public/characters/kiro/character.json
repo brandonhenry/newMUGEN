@@ -319,7 +319,8 @@
       "/characters/kiro/frames/frame-119.png",
       "/characters/kiro/frames/frame-120.png",
       "/characters/kiro/frames/frame-121.png",
-      "/characters/kiro/frames/frame-122.png"
+      "/characters/kiro/frames/frame-122.png",
+      "/characters/kiro/frames/frame-117.png"
     ],
     "cmd:2+3": [
       "/characters/kiro/frames/frame-180.png",
@@ -332,7 +333,8 @@
     "cmd:2+4": [
       "/characters/kiro/frames/frame-211.png",
       "/characters/kiro/frames/frame-212.png",
-      "/characters/kiro/frames/frame-213.png"
+      "/characters/kiro/frames/frame-213.png",
+      "/characters/kiro/frames/frame-212.png"
     ],
     "cmd:3+4": [
       "/characters/kiro/frames/frame-222.png",
@@ -342,6 +344,7 @@
       "/characters/kiro/frames/frame-226.png",
       "/characters/kiro/frames/frame-227.png",
       "/characters/kiro/frames/frame-228.png",
+      "/characters/kiro/frames/frame-229.png",
       "/characters/kiro/frames/frame-229.png"
     ],
     "cmd:d+1": [
@@ -539,9 +542,9 @@
       "knockdown": false
     },
     "cmd:3+4": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 10,
+      "activeFrames": 6,
+      "recoveryFrames": 10,
       "damage": 13,
       "onBlockFrames": -11,
       "onHitFrames": 27,
@@ -596,7 +599,8 @@
       "label": "Uzumaki Heel Feint"
     },
     "cmd:1+4": {
-      "recoveryFrames": 12,
+      "activeFrames": 5,
+      "recoveryFrames": 7,
       "onBlockFrames": -7,
       "knockdown": true
     },
@@ -667,9 +671,9 @@
       "hitLevel": "low"
     },
     "cmd:1+2": {
-      "startupFrames": 17,
-      "activeFrames": 5,
-      "recoveryFrames": 12,
+      "startupFrames": 9,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 12,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
@@ -677,9 +681,11 @@
       "juggleGravityScale": 0.52
     },
     "cmd:2+3": {
-      "activeFrames": 3,
-      "recoveryFrames": 17,
-      "hitLevel": "low"
+      "startupFrames": 13,
+      "activeFrames": 5,
+      "recoveryFrames": 6,
+      "hitLevel": "low",
+      "jumpBeforeMove": true
     },
     "jableft": {
       "startupFrames": 4,
@@ -691,6 +697,7 @@
       "startupFrames": 10,
       "activeFrames": 4,
       "recoveryFrames": 5,
+      "forwardForce": 0.5,
       "hitLevel": "high"
     },
     "jabright": {
@@ -699,8 +706,9 @@
       "recoveryFrames": 9
     },
     "kickright": {
-      "startupFrames": 14,
-      "recoveryFrames": 14,
+      "startupFrames": 12,
+      "activeFrames": 6,
+      "recoveryFrames": 7,
       "hitLevel": "mid"
     },
     "cmd:O+2": {
@@ -728,6 +736,9 @@
       ]
     },
     "cmd:1+3": {
+      "startupFrames": 6,
+      "activeFrames": 7,
+      "recoveryFrames": 13,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
@@ -762,6 +773,11 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52
+    },
+    "cmd:2+4": {
+      "startupFrames": 13,
+      "activeFrames": 7,
+      "recoveryFrames": 3
     }
   },
   "spriteFrameEdits": {
@@ -8980,10 +8996,10 @@
         "loop": false,
         "keyframes": [
           {
-            "frame": 7,
-            "endFrame": 15,
+            "frame": 3,
+            "endFrame": 13,
             "position": [
-              -1.1,
+              -0.75,
               1.1,
               0.3
             ],
@@ -9001,12 +9017,12 @@
             "color": "#c9fdff"
           },
           {
-            "frame": 16,
+            "frame": 19,
             "endFrame": 25,
             "position": [
-              -0.7,
-              1.15,
-              0.4
+              0.25,
+              -0.95,
+              0.2
             ],
             "scale": [
               1,
@@ -9117,12 +9133,49 @@
         "width": 1.05,
         "height": 1.02,
         "offsetX": 0
+      },
+      "182": {
+        "width": 0.8,
+        "height": 0.81,
+        "offsetX": 0
+      },
+      "183": {
+        "width": 1.04,
+        "height": 1.19,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 1.42,
+        "height": 1.12,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 1.61,
+        "height": 1.12,
+        "offsetX": 0
       }
     },
     "cmd:WR+4": {
       "22": {
         "width": 0.47,
         "height": 0.55,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+4": {
+      "118": {
+        "width": 0.64,
+        "height": 0.85,
+        "offsetX": -0.03
+      },
+      "121": {
+        "width": 0.62,
+        "height": 0.54,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.79,
+        "height": 0.63,
         "offsetX": 0
       }
     }
