@@ -224,7 +224,11 @@
       "/characters/kiro/frames/frame-006.png",
       "/characters/kiro/frames/frame-007.png",
       "/characters/kiro/frames/frame-008.png",
-      "/characters/kiro/frames/frame-009.png"
+      "/characters/kiro/frames/frame-009.png",
+      "/characters/kiro/frames/frame-008.png",
+      "/characters/kiro/frames/frame-007.png",
+      "/characters/kiro/frames/frame-006.png",
+      "/characters/kiro/frames/frame-005.png"
     ],
     "walkBack": [
       "/characters/kiro/frames/frame-015.png"
@@ -459,7 +463,7 @@
   "animationFps": 5,
   "animationFrameRates": {
     "idle": 6.5,
-    "walkForward": 10,
+    "walkForward": 11.5,
     "walkBack": 7,
     "sidestepLeft": 10,
     "sidestepRight": 12,

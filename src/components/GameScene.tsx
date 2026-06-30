@@ -1991,7 +1991,8 @@ function FighterRig({ fighter, timeScale = 1, frameTimeOverride }: { fighter: Fi
     else scaledTime.current = frameTimeOverride;
     const renderTime = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
-    const bob = fighter.state === 'idle' ? Math.sin(renderTime * 4 + fighter.slot) * 0.025 : 0;
+    const blockBreath = fighter.state === 'block' || fighter.state === 'crouchBlock' ? Math.sin(renderTime * 3.2 + fighter.slot * 0.7) : 0;
+    const bob = fighter.state === 'idle' ? Math.sin(renderTime * 4 + fighter.slot) * 0.025 : blockBreath * 0.018;
     const hitLean = fighter.state === 'hit' || fighter.state === 'throwHeld' ? -fighter.facing * 0.16 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
     const getupProgress = getGetupRenderProgress(fighter);
@@ -2120,38 +2121,40 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1, frameTimeOverride
     const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
+    const blockBreath = block ? Math.sin(t * 3.2 + fighter.slot * 0.7) : 0;
+    const blockBreathUp = block ? (blockBreath + 1) * 0.5 : 0;
     const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
     const smooth = 1 - Math.pow(0.001, delta);
 
     if (root.current) {
       root.current.position.x = THREE.MathUtils.lerp(root.current.position.x, 0, smooth);
-      root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, crouch ? -0.28 : 0, smooth);
+      root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, (crouch ? -0.28 : 0) + blockBreath * 0.014, smooth);
       root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, animationScale.width, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, animationScale.height * (crouch ? 0.84 : jump ? 1.04 : 1), smooth);
+      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, animationScale.height * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
       root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width, smooth);
     }
     if (torso.current) {
-      torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.26 - crouch * 0.18 + hit * 0.2, smooth);
-      torso.current.rotation.z = THREE.MathUtils.lerp(torso.current.rotation.z, attack * 0.11 * fighter.facing, smooth);
+      torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.26 - crouch * 0.18 + hit * 0.2 - blockBreathUp * 0.025, smooth);
+      torso.current.rotation.z = THREE.MathUtils.lerp(torso.current.rotation.z, attack * 0.11 * fighter.facing + blockBreath * 0.018 * fighter.facing, smooth);
     }
     if (head.current) {
       head.current.position.y = THREE.MathUtils.lerp(
         head.current.position.y,
-        parts.head.anchor[1] - crouch * 0.12 + Math.sin(t * 4) * 0.012,
+        parts.head.anchor[1] - crouch * 0.12 + Math.sin(t * 4) * 0.012 + blockBreath * 0.018,
         smooth
       );
       head.current.rotation.x = THREE.MathUtils.lerp(head.current.rotation.x, hit * 0.2, smooth);
     }
     if (leadArm.current) {
-      leadArm.current.rotation.x = THREE.MathUtils.lerp(leadArm.current.rotation.x, -attack * 0.95 - block * 0.62 + walk * 0.2, smooth);
-      leadArm.current.rotation.z = THREE.MathUtils.lerp(leadArm.current.rotation.z, block * 0.32 + attack * 0.18, smooth);
-      leadArm.current.position.z = THREE.MathUtils.lerp(leadArm.current.position.z, attack * 0.42 + block * 0.12, smooth);
+      leadArm.current.rotation.x = THREE.MathUtils.lerp(leadArm.current.rotation.x, -attack * 0.95 - block * 0.62 + walk * 0.2 - blockBreathUp * 0.035, smooth);
+      leadArm.current.rotation.z = THREE.MathUtils.lerp(leadArm.current.rotation.z, block * 0.32 + attack * 0.18 + blockBreath * 0.012, smooth);
+      leadArm.current.position.z = THREE.MathUtils.lerp(leadArm.current.position.z, attack * 0.42 + block * (0.12 + blockBreathUp * 0.025), smooth);
     }
     if (rearArm.current) {
-      rearArm.current.rotation.x = THREE.MathUtils.lerp(rearArm.current.rotation.x, attack * 0.26 - block * 0.5 - walk * 0.2, smooth);
-      rearArm.current.rotation.z = THREE.MathUtils.lerp(rearArm.current.rotation.z, -block * 0.24, smooth);
-      rearArm.current.position.z = THREE.MathUtils.lerp(rearArm.current.position.z, block * 0.1, smooth);
+      rearArm.current.rotation.x = THREE.MathUtils.lerp(rearArm.current.rotation.x, attack * 0.26 - block * 0.5 - walk * 0.2 - blockBreathUp * 0.03, smooth);
+      rearArm.current.rotation.z = THREE.MathUtils.lerp(rearArm.current.rotation.z, -block * 0.24 - blockBreath * 0.01, smooth);
+      rearArm.current.position.z = THREE.MathUtils.lerp(rearArm.current.position.z, block * (0.1 + blockBreathUp * 0.02), smooth);
     }
     if (leadLeg.current) {
       leadLeg.current.rotation.x = THREE.MathUtils.lerp(leadLeg.current.rotation.x, walk * 0.34 + jump * 0.22 - crouch * 0.26, smooth);
@@ -2698,31 +2701,33 @@ function VoxelSpriteFighter({ fighter, progress, timeScale = 1, frameTimeOverrid
     const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
+    const blockBreath = block ? Math.sin(t * 3.2 + fighter.slot * 0.7) : 0;
+    const blockBreathUp = block ? (blockBreath + 1) * 0.5 : 0;
     const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
 
     const smooth = 1 - Math.pow(0.001, delta);
     if (root.current) {
-      root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, crouch ? -0.28 : 0, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, crouch ? 0.84 : jump ? 1.04 : 1, smooth);
+      root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, (crouch ? -0.28 : 0) + blockBreath * 0.014, smooth);
+      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
     }
     if (torso.current) {
-      torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.28 - crouch * 0.18 + hit * 0.2, smooth);
-      torso.current.rotation.z = THREE.MathUtils.lerp(torso.current.rotation.z, attack * 0.12 * fighter.facing, smooth);
+      torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.28 - crouch * 0.18 + hit * 0.2 - blockBreathUp * 0.025, smooth);
+      torso.current.rotation.z = THREE.MathUtils.lerp(torso.current.rotation.z, attack * 0.12 * fighter.facing + blockBreath * 0.018 * fighter.facing, smooth);
     }
     if (head.current) {
-      head.current.position.y = THREE.MathUtils.lerp(head.current.position.y, 1.63 - crouch * 0.12 + Math.sin(t * 4) * 0.012, smooth);
+      head.current.position.y = THREE.MathUtils.lerp(head.current.position.y, 1.63 - crouch * 0.12 + Math.sin(t * 4) * 0.012 + blockBreath * 0.018, smooth);
       head.current.rotation.x = THREE.MathUtils.lerp(head.current.rotation.x, hit * 0.2, smooth);
     }
     if (leadArm.current) {
-      leadArm.current.position.z = THREE.MathUtils.lerp(leadArm.current.position.z, 0.08 + attack * 0.52 + block * 0.18, smooth);
-      leadArm.current.rotation.x = THREE.MathUtils.lerp(leadArm.current.rotation.x, -0.2 - attack * 1.25 - block * 0.78 + walk * 0.22, smooth);
-      leadArm.current.rotation.z = THREE.MathUtils.lerp(leadArm.current.rotation.z, 0.18 + block * 0.32, smooth);
+      leadArm.current.position.z = THREE.MathUtils.lerp(leadArm.current.position.z, 0.08 + attack * 0.52 + block * (0.18 + blockBreathUp * 0.025), smooth);
+      leadArm.current.rotation.x = THREE.MathUtils.lerp(leadArm.current.rotation.x, -0.2 - attack * 1.25 - block * 0.78 + walk * 0.22 - blockBreathUp * 0.035, smooth);
+      leadArm.current.rotation.z = THREE.MathUtils.lerp(leadArm.current.rotation.z, 0.18 + block * 0.32 + blockBreath * 0.012, smooth);
     }
     if (rearArm.current) {
-      rearArm.current.position.z = THREE.MathUtils.lerp(rearArm.current.position.z, -0.06 + block * 0.16, smooth);
-      rearArm.current.rotation.x = THREE.MathUtils.lerp(rearArm.current.rotation.x, 0.1 + attack * 0.35 - walk * 0.2 - block * 0.62, smooth);
-      rearArm.current.rotation.z = THREE.MathUtils.lerp(rearArm.current.rotation.z, -0.12 - block * 0.24, smooth);
+      rearArm.current.position.z = THREE.MathUtils.lerp(rearArm.current.position.z, -0.06 + block * (0.16 + blockBreathUp * 0.02), smooth);
+      rearArm.current.rotation.x = THREE.MathUtils.lerp(rearArm.current.rotation.x, 0.1 + attack * 0.35 - walk * 0.2 - block * 0.62 - blockBreathUp * 0.03, smooth);
+      rearArm.current.rotation.z = THREE.MathUtils.lerp(rearArm.current.rotation.z, -0.12 - block * 0.24 - blockBreath * 0.01, smooth);
     }
     if (leadLeg.current) {
       leadLeg.current.rotation.x = THREE.MathUtils.lerp(leadLeg.current.rotation.x, walk * 0.42 + jump * 0.28 - crouch * 0.3, smooth);
