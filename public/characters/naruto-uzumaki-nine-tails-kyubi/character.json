@@ -192,12 +192,59 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
+    "cmd:1+2": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-075.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-076.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-077.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-078.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-079.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-080.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-081.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-082.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-083.png"
+    ],
+    "cmd:1+3": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-101.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-102.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-103.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-104.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-105.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-106.png"
+    ],
+    "cmd:2+3": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-089.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-090.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-091.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-092.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-093.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-094.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-095.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-096.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-097.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-098.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-099.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-100.png"
+    ],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-106.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-107.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-108.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-109.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-110.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-111.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-112.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-113.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-114.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-115.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-116.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-117.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-118.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-119.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-120.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -999,6 +1046,11 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Kick Ender"
+    },
+    "cmd:1+4": {
+      "startupFrames": 12,
+      "activeFrames": 8,
+      "recoveryFrames": 13
     }
   },
   "effects": [],
@@ -1052,5 +1104,6 @@
         "offsetX": 0
       }
     }
-  }
+  },
+  "hasTransform": false
 }
