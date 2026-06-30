@@ -147,12 +147,46 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
+    "cmd:1+2": [
+      "/characters/piccolo/frames/frame-110.png",
+      "/characters/piccolo/frames/frame-111.png",
+      "/characters/piccolo/frames/frame-112.png",
+      "/characters/piccolo/frames/frame-113.png",
+      "/characters/piccolo/frames/frame-114.png",
+      "/characters/piccolo/frames/frame-115.png"
+    ],
+    "cmd:1+3": [
+      "/characters/piccolo/frames/frame-138.png",
+      "/characters/piccolo/frames/frame-139.png",
+      "/characters/piccolo/frames/frame-140.png",
+      "/characters/piccolo/frames/frame-141.png",
+      "/characters/piccolo/frames/frame-142.png",
+      "/characters/piccolo/frames/frame-143.png",
+      "/characters/piccolo/frames/frame-144.png",
+      "/characters/piccolo/frames/frame-145.png",
+      "/characters/piccolo/frames/frame-146.png",
+      "/characters/piccolo/frames/frame-147.png",
+      "/characters/piccolo/frames/frame-148.png",
+      "/characters/piccolo/frames/frame-149.png",
+      "/characters/piccolo/frames/frame-150.png"
+    ],
+    "cmd:2+3": [
+      "/characters/piccolo/frames/frame-085.png",
+      "/characters/piccolo/frames/frame-086.png",
+      "/characters/piccolo/frames/frame-087.png",
+      "/characters/piccolo/frames/frame-088.png",
+      "/characters/piccolo/frames/frame-089.png",
+      "/characters/piccolo/frames/frame-090.png"
+    ],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/piccolo/frames/frame-120.png",
+      "/characters/piccolo/frames/frame-121.png",
+      "/characters/piccolo/frames/frame-122.png",
+      "/characters/piccolo/frames/frame-123.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -545,9 +579,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
+      "startupFrames": 9,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 13,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -559,9 +593,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 28,
+      "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -569,9 +603,13 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
+      "launchHeight": 0,
+      "kiCost": 35,
+      "healAmount": 8,
       "label": "Piccolo Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "usesKi": true,
+      "healsHp": true
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -584,6 +622,10 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Piccolo Low Feint",
       "hitLevel": "low"
     },
@@ -924,6 +966,10 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Piccolo Kick Ender"
+    },
+    "cmd:1+4": {
+      "startupFrames": 9,
+      "recoveryFrames": 9
     }
   },
   "effects": [],
@@ -1185,5 +1231,6 @@
       "offsetX": 0
     }
   },
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false
 }
