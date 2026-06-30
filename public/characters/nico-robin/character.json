@@ -23,7 +23,9 @@
       "/characters/nico-robin/frames/frame-000.png",
       "/characters/nico-robin/frames/frame-001.png",
       "/characters/nico-robin/frames/frame-002.png",
-      "/characters/nico-robin/frames/frame-003.png"
+      "/characters/nico-robin/frames/frame-003.png",
+      "/characters/nico-robin/frames/frame-002.png",
+      "/characters/nico-robin/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/nico-robin/frames/frame-004.png",
@@ -245,7 +247,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 9.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

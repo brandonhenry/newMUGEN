@@ -23,7 +23,9 @@
       "/characters/raoh/frames/frame-000.png",
       "/characters/raoh/frames/frame-001.png",
       "/characters/raoh/frames/frame-002.png",
-      "/characters/raoh/frames/frame-003.png"
+      "/characters/raoh/frames/frame-003.png",
+      "/characters/raoh/frames/frame-002.png",
+      "/characters/raoh/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/raoh/frames/frame-004.png",
@@ -214,7 +216,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 10,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

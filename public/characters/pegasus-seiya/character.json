@@ -23,7 +23,9 @@
       "/characters/pegasus-seiya/frames/frame-000.png",
       "/characters/pegasus-seiya/frames/frame-001.png",
       "/characters/pegasus-seiya/frames/frame-002.png",
-      "/characters/pegasus-seiya/frames/frame-003.png"
+      "/characters/pegasus-seiya/frames/frame-003.png",
+      "/characters/pegasus-seiya/frames/frame-002.png",
+      "/characters/pegasus-seiya/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/pegasus-seiya/frames/frame-004.png",
@@ -194,7 +196,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 10,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
