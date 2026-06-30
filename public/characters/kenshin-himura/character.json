@@ -155,12 +155,84 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:1+2": [
+      "/characters/kenshin-himura/frames/frame-078.png",
+      "/characters/kenshin-himura/frames/frame-079.png",
+      "/characters/kenshin-himura/frames/frame-080.png",
+      "/characters/kenshin-himura/frames/frame-081.png",
+      "/characters/kenshin-himura/frames/frame-082.png",
+      "/characters/kenshin-himura/frames/frame-083.png",
+      "/characters/kenshin-himura/frames/frame-084.png",
+      "/characters/kenshin-himura/frames/frame-085.png",
+      "/characters/kenshin-himura/frames/frame-086.png",
+      "/characters/kenshin-himura/frames/frame-087.png"
+    ],
+    "cmd:1+3": [
+      "/characters/kenshin-himura/frames/frame-100.png",
+      "/characters/kenshin-himura/frames/frame-101.png",
+      "/characters/kenshin-himura/frames/frame-102.png",
+      "/characters/kenshin-himura/frames/frame-103.png"
+    ],
+    "cmd:2+3": [
+      "/characters/kenshin-himura/frames/frame-092.png",
+      "/characters/kenshin-himura/frames/frame-093.png",
+      "/characters/kenshin-himura/frames/frame-094.png",
+      "/characters/kenshin-himura/frames/frame-095.png",
+      "/characters/kenshin-himura/frames/frame-096.png",
+      "/characters/kenshin-himura/frames/frame-097.png",
+      "/characters/kenshin-himura/frames/frame-098.png",
+      "/characters/kenshin-himura/frames/frame-099.png",
+      "/characters/kenshin-himura/frames/frame-100.png",
+      "/characters/kenshin-himura/frames/frame-101.png",
+      "/characters/kenshin-himura/frames/frame-102.png",
+      "/characters/kenshin-himura/frames/frame-103.png"
+    ],
+    "cmd:2+4": [
+      "/characters/kenshin-himura/frames/frame-103.png",
+      "/characters/kenshin-himura/frames/frame-104.png",
+      "/characters/kenshin-himura/frames/frame-105.png",
+      "/characters/kenshin-himura/frames/frame-106.png",
+      "/characters/kenshin-himura/frames/frame-107.png",
+      "/characters/kenshin-himura/frames/frame-108.png",
+      "/characters/kenshin-himura/frames/frame-109.png",
+      "/characters/kenshin-himura/frames/frame-110.png",
+      "/characters/kenshin-himura/frames/frame-111.png"
+    ],
+    "cmd:3+4": [
+      "/characters/kenshin-himura/frames/frame-111.png",
+      "/characters/kenshin-himura/frames/frame-112.png",
+      "/characters/kenshin-himura/frames/frame-113.png",
+      "/characters/kenshin-himura/frames/frame-114.png",
+      "/characters/kenshin-himura/frames/frame-115.png",
+      "/characters/kenshin-himura/frames/frame-116.png",
+      "/characters/kenshin-himura/frames/frame-117.png",
+      "/characters/kenshin-himura/frames/frame-118.png",
+      "/characters/kenshin-himura/frames/frame-119.png",
+      "/characters/kenshin-himura/frames/frame-120.png",
+      "/characters/kenshin-himura/frames/frame-121.png",
+      "/characters/kenshin-himura/frames/frame-122.png",
+      "/characters/kenshin-himura/frames/frame-122.png"
+    ],
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/kenshin-himura/frames/frame-124.png",
+      "/characters/kenshin-himura/frames/frame-125.png",
+      "/characters/kenshin-himura/frames/frame-126.png",
+      "/characters/kenshin-himura/frames/frame-127.png",
+      "/characters/kenshin-himura/frames/frame-128.png",
+      "/characters/kenshin-himura/frames/frame-129.png",
+      "/characters/kenshin-himura/frames/frame-130.png",
+      "/characters/kenshin-himura/frames/frame-131.png"
+    ],
+    "cmd:1+2+3": [
+      "/characters/kenshin-himura/frames/frame-140.png",
+      "/characters/kenshin-himura/frames/frame-141.png",
+      "/characters/kenshin-himura/frames/frame-142.png",
+      "/characters/kenshin-himura/frames/frame-143.png",
+      "/characters/kenshin-himura/frames/frame-144.png",
+      "/characters/kenshin-himura/frames/frame-145.png",
+      "/characters/kenshin-himura/frames/frame-146.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -553,9 +625,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 9,
+      "activeFrames": 7,
+      "recoveryFrames": 13,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -567,9 +639,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
+      "startupFrames": 7,
       "activeFrames": 3,
-      "recoveryFrames": 28,
+      "recoveryFrames": 9,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -611,9 +683,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
+      "startupFrames": 10,
       "activeFrames": 4,
-      "recoveryFrames": 30,
+      "recoveryFrames": 15,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -623,7 +695,9 @@
       "range": 1.9,
       "label": "Kenshin Himura Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "endsInCrouch": true,
+      "jumpBeforeMove": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -932,6 +1006,16 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Kenshin Himura Kick Ender"
+    },
+    "cmd:1+4": {
+      "startupFrames": 9,
+      "activeFrames": 8,
+      "recoveryFrames": 20
+    },
+    "cmd:1+2+3": {
+      "startupFrames": 9,
+      "activeFrames": 7,
+      "recoveryFrames": 10
     }
   },
   "effects": [],
@@ -956,5 +1040,6 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false
 }
