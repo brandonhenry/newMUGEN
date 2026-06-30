@@ -23,7 +23,9 @@
       "/characters/monkey-d-luffy/frames/frame-000.png",
       "/characters/monkey-d-luffy/frames/frame-001.png",
       "/characters/monkey-d-luffy/frames/frame-002.png",
-      "/characters/monkey-d-luffy/frames/frame-003.png"
+      "/characters/monkey-d-luffy/frames/frame-003.png",
+      "/characters/monkey-d-luffy/frames/frame-002.png",
+      "/characters/monkey-d-luffy/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/monkey-d-luffy/frames/frame-004.png",
@@ -204,7 +206,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 13,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
@@ -1003,7 +1005,7 @@
   "unplayable": false,
   "hasTransform": false,
   "modelScale": {
-    "width": 1.08,
+    "width": 0.85,
     "height": 1.08
   }
 }

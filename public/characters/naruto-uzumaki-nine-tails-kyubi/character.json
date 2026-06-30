@@ -21,10 +21,12 @@
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-000.png",
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-001.png",
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-002.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-003.png"
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-003.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-003.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-002.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-006.png",
@@ -241,7 +243,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 8.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

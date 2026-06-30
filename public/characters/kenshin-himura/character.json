@@ -21,9 +21,7 @@
   "animationFrames": {
     "idle": [
       "/characters/kenshin-himura/frames/frame-000.png",
-      "/characters/kenshin-himura/frames/frame-001.png",
-      "/characters/kenshin-himura/frames/frame-002.png",
-      "/characters/kenshin-himura/frames/frame-003.png"
+      "/characters/kenshin-himura/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/kenshin-himura/frames/frame-004.png",
@@ -229,7 +227,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 9.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

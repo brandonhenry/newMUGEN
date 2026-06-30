@@ -23,7 +23,9 @@
       "/characters/lenalee-lee/frames/frame-000.png",
       "/characters/lenalee-lee/frames/frame-001.png",
       "/characters/lenalee-lee/frames/frame-002.png",
-      "/characters/lenalee-lee/frames/frame-003.png"
+      "/characters/lenalee-lee/frames/frame-003.png",
+      "/characters/lenalee-lee/frames/frame-002.png",
+      "/characters/lenalee-lee/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/lenalee-lee/frames/frame-004.png",
@@ -218,7 +220,7 @@
     ]
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 10.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
