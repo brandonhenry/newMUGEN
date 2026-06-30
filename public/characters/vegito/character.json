@@ -166,9 +166,31 @@
     "cmd:FC+2": [],
     "cmd:1+2": [],
     "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
+    "cmd:2+3": [
+      "/characters/vegito/frames/frame-124.png",
+      "/characters/vegito/frames/frame-125.png",
+      "/characters/vegito/frames/frame-126.png",
+      "/characters/vegito/frames/frame-127.png",
+      "/characters/vegito/frames/frame-128.png",
+      "/characters/vegito/frames/frame-129.png"
+    ],
+    "cmd:2+4": [
+      "/characters/vegito/frames/frame-107.png",
+      "/characters/vegito/frames/frame-108.png",
+      "/characters/vegito/frames/frame-109.png",
+      "/characters/vegito/frames/frame-110.png",
+      "/characters/vegito/frames/frame-111.png"
+    ],
+    "cmd:3+4": [
+      "/characters/vegito/frames/frame-096.png",
+      "/characters/vegito/frames/frame-097.png",
+      "/characters/vegito/frames/frame-098.png",
+      "/characters/vegito/frames/frame-099.png",
+      "/characters/vegito/frames/frame-100.png",
+      "/characters/vegito/frames/frame-101.png",
+      "/characters/vegito/frames/frame-102.png",
+      "/characters/vegito/frames/frame-103.png"
+    ],
     "cmd:O+2": []
   },
   "animationFrameRates": {
@@ -967,5 +989,6 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false
 }
