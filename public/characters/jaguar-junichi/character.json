@@ -156,12 +156,77 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:1+2": [
+      "/characters/jaguar-junichi/frames/frame-068.png",
+      "/characters/jaguar-junichi/frames/frame-069.png",
+      "/characters/jaguar-junichi/frames/frame-070.png",
+      "/characters/jaguar-junichi/frames/frame-071.png",
+      "/characters/jaguar-junichi/frames/frame-072.png",
+      "/characters/jaguar-junichi/frames/frame-073.png"
+    ],
+    "cmd:1+3": [
+      "/characters/jaguar-junichi/frames/frame-101.png",
+      "/characters/jaguar-junichi/frames/frame-102.png",
+      "/characters/jaguar-junichi/frames/frame-103.png",
+      "/characters/jaguar-junichi/frames/frame-104.png",
+      "/characters/jaguar-junichi/frames/frame-105.png",
+      "/characters/jaguar-junichi/frames/frame-106.png",
+      "/characters/jaguar-junichi/frames/frame-107.png",
+      "/characters/jaguar-junichi/frames/frame-108.png",
+      "/characters/jaguar-junichi/frames/frame-109.png",
+      "/characters/jaguar-junichi/frames/frame-110.png",
+      "/characters/jaguar-junichi/frames/frame-111.png",
+      "/characters/jaguar-junichi/frames/frame-112.png",
+      "/characters/jaguar-junichi/frames/frame-113.png",
+      "/characters/jaguar-junichi/frames/frame-114.png",
+      "/characters/jaguar-junichi/frames/frame-115.png",
+      "/characters/jaguar-junichi/frames/frame-116.png"
+    ],
+    "cmd:2+3": [
+      "/characters/jaguar-junichi/frames/frame-116.png",
+      "/characters/jaguar-junichi/frames/frame-117.png",
+      "/characters/jaguar-junichi/frames/frame-118.png",
+      "/characters/jaguar-junichi/frames/frame-119.png",
+      "/characters/jaguar-junichi/frames/frame-120.png",
+      "/characters/jaguar-junichi/frames/frame-121.png",
+      "/characters/jaguar-junichi/frames/frame-122.png",
+      "/characters/jaguar-junichi/frames/frame-123.png",
+      "/characters/jaguar-junichi/frames/frame-124.png"
+    ],
+    "cmd:2+4": [
+      "/characters/jaguar-junichi/frames/frame-055.png",
+      "/characters/jaguar-junichi/frames/frame-056.png",
+      "/characters/jaguar-junichi/frames/frame-057.png",
+      "/characters/jaguar-junichi/frames/frame-058.png",
+      "/characters/jaguar-junichi/frames/frame-059.png",
+      "/characters/jaguar-junichi/frames/frame-060.png",
+      "/characters/jaguar-junichi/frames/frame-061.png",
+      "/characters/jaguar-junichi/frames/frame-062.png"
+    ],
+    "cmd:3+4": [
+      "/characters/jaguar-junichi/frames/frame-204.png",
+      "/characters/jaguar-junichi/frames/frame-205.png",
+      "/characters/jaguar-junichi/frames/frame-206.png",
+      "/characters/jaguar-junichi/frames/frame-207.png"
+    ],
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/jaguar-junichi/frames/frame-078.png",
+      "/characters/jaguar-junichi/frames/frame-079.png",
+      "/characters/jaguar-junichi/frames/frame-080.png",
+      "/characters/jaguar-junichi/frames/frame-081.png",
+      "/characters/jaguar-junichi/frames/frame-082.png",
+      "/characters/jaguar-junichi/frames/frame-083.png",
+      "/characters/jaguar-junichi/frames/frame-084.png",
+      "/characters/jaguar-junichi/frames/frame-085.png",
+      "/characters/jaguar-junichi/frames/frame-086.png",
+      "/characters/jaguar-junichi/frames/frame-087.png",
+      "/characters/jaguar-junichi/frames/frame-088.png",
+      "/characters/jaguar-junichi/frames/frame-089.png",
+      "/characters/jaguar-junichi/frames/frame-090.png",
+      "/characters/jaguar-junichi/frames/frame-091.png",
+      "/characters/jaguar-junichi/frames/frame-092.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -568,9 +633,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 28,
+      "startupFrames": 26,
+      "activeFrames": 6,
+      "recoveryFrames": 30,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -578,9 +643,10 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
+      "launchHeight": 0,
       "label": "Jaguar Junichi Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "knockdown": false
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -609,12 +675,13 @@
       "range": 1.74,
       "label": "Jaguar Junichi Driving Kick",
       "hitLevel": "low",
+      "tracking": "homing",
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
+      "startupFrames": 14,
       "activeFrames": 4,
-      "recoveryFrames": 30,
+      "recoveryFrames": 12,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -933,6 +1000,11 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Jaguar Junichi Kick Ender"
+    },
+    "cmd:1+4": {
+      "startupFrames": 22,
+      "activeFrames": 6,
+      "recoveryFrames": 26
     }
   },
   "effects": [],
