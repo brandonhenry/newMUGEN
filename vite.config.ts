@@ -1311,6 +1311,7 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'juggleRefloatVelocity',
     'juggleGravityScale',
     'tornado',
+    'throwCapture',
     'endsInCrouch',
     'tracking',
     'armorStartFrame',
@@ -1327,7 +1328,7 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     Object.entries(override).filter(([key, value]) => {
       if (!allowed.has(key)) return false;
       if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
-      if (key === 'knockdown' || key === 'tornado' || key === 'endsInCrouch' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
+      if (key === 'knockdown' || key === 'tornado' || key === 'throwCapture' || key === 'endsInCrouch' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
         return typeof value === 'boolean';
       }
       if (key === 'cancelWindows') return Array.isArray(value);
@@ -2015,6 +2016,7 @@ function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId
       health: Math.max(1, Math.round(finiteOr(stats.health, 100))),
       speed: Math.max(1, finiteOr(stats.speed, 5)),
       sidestepSpeed: Math.max(1, finiteOr(stats.sidestepSpeed, 4.35)),
+      dashDistance: Math.min(2.4, Math.max(0, finiteOr(stats.dashDistance, 0.78))),
       jumpForce: Math.max(1, finiteOr(stats.jumpForce, 8)),
       gravity: Math.max(1, finiteOr(stats.gravity, 18))
     },

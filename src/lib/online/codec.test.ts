@@ -9,6 +9,7 @@ describe('online codec', () => {
   it('round-trips compact input bitmasks', () => {
     const input = emptyInputFrame();
     input.right = true;
+    input.dashForward = true;
     input.jab = true;
     input.block = true;
     input.charge = true;
@@ -25,9 +26,24 @@ describe('online codec', () => {
     match.fighters[0].position.x = 1.25;
     match.fighters[0].state = 'juggle';
     match.fighters[0].moveInstanceId = 12;
+    match.fighters[0].dashForwardFrames = 11;
+    match.fighters[0].dashForwardCooldownFrames = 7;
+    match.fighters[0].walkDirection = 1;
     match.fighters[0].juggleDamage = 31;
     match.fighters[0].juggleSequenceDamage = 9;
     match.fighters[0].juggleTornadoCount = 2;
+    match.fighters[0].throwOpponentSlot = 2;
+    match.fighters[0].throwAnchorMove = match.fighters[0].character.moves[0];
+    match.fighters[0].throwHoldFrames = 45;
+    match.fighters[0].throwMaxHoldFrames = 240;
+    match.fighters[0].throwJabActive = true;
+    match.fighters[0].throwJabCooldownFrames = 9;
+    match.fighters[0].throwJabHitConnected = true;
+    match.fighters[1].state = 'throwHeld';
+    match.fighters[1].throwCaptorSlot = 1;
+    match.fighters[1].throwEscapeProgress = 3;
+    match.fighters[1].throwEscapeGoal = 12;
+    match.fighters[1].throwShakeFrames = 8;
     match.fighters[0].shadowClone = {
       phase: 'active',
       position: { x: 0.4, y: 0.2, z: -0.5 },
@@ -73,9 +89,23 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].ki).toBe(78);
     expect(hydrated.fighters[0].position.x).toBe(1.25);
     expect(hydrated.fighters[0].moveInstanceId).toBe(12);
+    expect(hydrated.fighters[0].dashForwardFrames).toBe(11);
+    expect(hydrated.fighters[0].dashForwardCooldownFrames).toBe(7);
+    expect(hydrated.fighters[0].walkDirection).toBe(1);
     expect(hydrated.fighters[0].juggleDamage).toBe(31);
     expect(hydrated.fighters[0].juggleSequenceDamage).toBe(9);
     expect(hydrated.fighters[0].juggleTornadoCount).toBe(2);
+    expect(hydrated.fighters[0].throwOpponentSlot).toBe(2);
+    expect(hydrated.fighters[0].throwAnchorMove?.input).toBe('jab');
+    expect(hydrated.fighters[0].throwHoldFrames).toBe(45);
+    expect(hydrated.fighters[0].throwJabActive).toBe(true);
+    expect(hydrated.fighters[0].throwJabCooldownFrames).toBe(9);
+    expect(hydrated.fighters[0].throwJabHitConnected).toBe(true);
+    expect(hydrated.fighters[1].state).toBe('throwHeld');
+    expect(hydrated.fighters[1].throwCaptorSlot).toBe(1);
+    expect(hydrated.fighters[1].throwEscapeProgress).toBe(3);
+    expect(hydrated.fighters[1].throwEscapeGoal).toBe(12);
+    expect(hydrated.fighters[1].throwShakeFrames).toBe(8);
     expect(hydrated.fighters[0].shadowClone?.position).toEqual({ x: 0.4, y: 0.2, z: -0.5 });
     expect(hydrated.fighters[0].shadowClone?.currentMove?.input).toBe('jab');
     expect(hydrated.fighters[1].roundsWon).toBe(1);

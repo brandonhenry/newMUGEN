@@ -87,6 +87,8 @@ import {
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
+type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
+
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
   speeds?: Record<string, number>;
@@ -862,6 +864,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (override.tracking && trackingOptions.includes(override.tracking)) next.tracking = override.tracking;
   if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
   if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
+  if (typeof override.throwCapture === 'boolean') next.throwCapture = override.throwCapture;
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
   if (typeof override.jumpBeforeMove === 'boolean') next.jumpBeforeMove = override.jumpBeforeMove;
   if (typeof override.usesKi === 'boolean') next.usesKi = override.usesKi;
@@ -2302,7 +2305,7 @@ export default function App() {
     }));
   };
 
-  const setCharacterMetadata = (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath'>>) => {
+  const setCharacterMetadata = (characterId: string, patch: CharacterMetadataPatch) => {
     setRosterResult((current) => {
       if (!current) return current;
       return {
@@ -4799,6 +4802,7 @@ const actionLabels: Record<ActionName, string> = {
   down: 'Down / Crouch',
   left: 'Left',
   right: 'Right',
+  dashForward: 'Dash Forward',
   sidestepUp: 'Sidestep Up',
   sidestepDown: 'Sidestep Down',
   sidewalkUp: 'Sidewalk Up',
@@ -5987,7 +5991,7 @@ function CharacterViewer({
   onGetupFrameOverrideChange: (characterId: string, action: Exclude<GetupAction, 'none'>, frames: number) => void;
   onSpriteFrameEditChange: (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => void;
   onEffectsChange: (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => void;
-  onCharacterMetadataChange: (characterId: string, patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath'>>) => void;
+  onCharacterMetadataChange: (characterId: string, patch: CharacterMetadataPatch) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
 }) {
@@ -6592,7 +6596,7 @@ function CharacterViewer({
   };
 
   const saveActiveMetadata = async (
-    patch: Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath'>>,
+    patch: CharacterMetadataPatch,
     failureLabel: string
   ) => {
     onCharacterMetadataChange(active.id, patch);
@@ -6643,6 +6647,11 @@ function CharacterViewer({
   const updateActiveTransformTarget = async (transformCharacterId: string) => {
     if (!transformCharacterId || transformCharacterId === active.id) return;
     await saveActiveMetadata({ hasTransform: true, transformCharacterId }, 'Failed to save character transform target');
+  };
+
+  const updateActiveDashDistance = async (dashDistance: number) => {
+    const normalized = Number(clamp(Number(dashDistance) || 0.78, 0, 2.4).toFixed(2));
+    await saveActiveMetadata({ stats: { ...active.stats, dashDistance: normalized } }, 'Failed to save character dash distance');
   };
 
   const importFaceCard = async (file: File | undefined) => {
@@ -6960,6 +6969,19 @@ function CharacterViewer({
                           </select>
                         </label>
                       )}
+                      <label className="variant-base-control">
+                        <span>Dash Step</span>
+                        <input
+                          type="number"
+                          min="0"
+                          max="2.4"
+                          step="0.05"
+                          value={active.stats.dashDistance ?? 0.78}
+                          onChange={(event) => void updateActiveDashDistance(Number(event.target.value))}
+                          disabled={manifestSaveStatus === 'saving'}
+                          data-testid="character-dash-distance"
+                        />
+                      </label>
                       <label className="secondary-button sprite-sheet-import-button">
                         <Upload size={18} />
                         Face Card
@@ -8466,6 +8488,7 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
   const usesKi = Boolean(move.usesKi || move.kiBurst || healsHp);
   const kiCost = move.kiCost ?? 35;
   const resultLabel = [
+    move.throwCapture ? 'Throw' : null,
     move.knockdown ? 'KD' : isLauncher ? 'Launch' : signedFrame(move.onHitFrames),
     move.tornado ? 'T!' : null,
     move.endsInCrouch ? 'FC End' : null
@@ -8549,6 +8572,14 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
             <label className="frame-toggle">
               <span>Knockdown</span>
               <input type="checkbox" checked={move.knockdown} onChange={(event) => onChange({ knockdown: event.target.checked })} />
+            </label>
+            <label className="frame-toggle">
+              <span>Throw</span>
+              <input
+                type="checkbox"
+                checked={Boolean(move.throwCapture)}
+                onChange={(event) => onChange(event.target.checked ? { throwCapture: true, hitLevel: 'throw' } : { throwCapture: false })}
+              />
             </label>
             <label className="frame-toggle">
               <span>Tornado</span>
@@ -9522,6 +9553,7 @@ type ImportDraft = {
   health: number;
   speed: number;
   sidestepSpeed: number;
+  dashDistance: number;
   jumpForce: number;
   primary: string;
   secondary: string;
@@ -9669,6 +9701,10 @@ function CharacterImportScreen({
               <input type="number" step="0.05" value={draft.sidestepSpeed} onChange={(event) => updateDraft({ sidestepSpeed: Number(event.target.value) || 4.3 })} />
             </label>
             <label>
+              <span>Dash Step</span>
+              <input type="number" min="0" max="2.4" step="0.05" value={draft.dashDistance} onChange={(event) => updateDraft({ dashDistance: Number(event.target.value) || 0.78 })} />
+            </label>
+            <label>
               <span>Jump</span>
               <input type="number" step="0.05" value={draft.jumpForce} onChange={(event) => updateDraft({ jumpForce: Number(event.target.value) || 8 })} />
             </label>
@@ -9785,6 +9821,7 @@ function randomImportDraft(): ImportDraft {
     health: Math.round(92 + Math.random() * 22),
     speed: Number((4.7 + Math.random() * 0.9).toFixed(2)),
     sidestepSpeed: Number((4.05 + Math.random() * 0.75).toFixed(2)),
+    dashDistance: 0.78,
     jumpForce: Number((7.6 + Math.random() * 0.9).toFixed(2)),
     primary,
     secondary: '#111224',
@@ -10299,6 +10336,7 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
       health: Math.max(1, Math.round(draft.health)),
       speed: Math.max(1, draft.speed),
       sidestepSpeed: Math.max(1, draft.sidestepSpeed),
+      dashDistance: clamp(draft.dashDistance, 0, 2.4),
       jumpForce: Math.max(1, draft.jumpForce),
       gravity: 18
     },

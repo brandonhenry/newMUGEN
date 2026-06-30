@@ -52,6 +52,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     hasTransform: Boolean(character.hasTransform),
     transformCharacterId: character.hasTransform && typeof character.transformCharacterId === 'string' ? character.transformCharacterId : undefined,
     faceCardPath: typeof character.faceCardPath === 'string' ? character.faceCardPath : undefined,
+    stats: normalizeCharacterStats(character.stats),
     animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
@@ -65,6 +66,18 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
       Array.isArray(character.hurtboxes) && character.hurtboxes.length > 0
         ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))
         : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }]
+  };
+}
+
+function normalizeCharacterStats(stats: CharacterDefinition['stats']): CharacterDefinition['stats'] {
+  return {
+    ...stats,
+    health: Math.max(1, Math.round(finiteOr(stats.health, 100))),
+    speed: Math.max(1, finiteOr(stats.speed, 5)),
+    sidestepSpeed: Math.max(1, finiteOr(stats.sidestepSpeed, 4.35)),
+    dashDistance: clamp(finiteOr(stats.dashDistance, 0.78), 0, 2.4),
+    jumpForce: Math.max(1, finiteOr(stats.jumpForce, 8)),
+    gravity: Math.max(1, finiteOr(stats.gravity, 18))
   };
 }
 
@@ -141,6 +154,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     juggleRefloatVelocity: move.juggleRefloatVelocity === undefined ? undefined : clamp(finiteOr(move.juggleRefloatVelocity, 4.35), 2.2, 6.4),
     juggleGravityScale: move.juggleGravityScale === undefined ? undefined : clamp(finiteOr(move.juggleGravityScale, 0.52), 0.28, 1.2),
     tornado: Boolean(move.tornado),
+    throwCapture: Boolean(move.throwCapture),
     endsInCrouch: Boolean(move.endsInCrouch),
     tracking: normalizeTracking(move.tracking),
     armorStartFrame: normalizeNullableFrame(move.armorStartFrame),

@@ -11,14 +11,17 @@ const aiModeArrowKeys: Record<string, ActionName> = {
   ArrowRight: 'right'
 };
 
-type VerticalInputSource = 'keyboard' | 'virtual';
+type VerticalInputSource = 'keyboard' | 'virtual' | 'gamepad';
 
 export type VerticalTapState = {
   lastUpTap: number;
   lastDownTap: number;
+  lastLeftTap: number;
+  lastRightTap: number;
   holdAction: 'up' | 'down' | null;
   holdStartedAt: number;
   holdActivated: boolean;
+  heldHorizontalAction: 'left' | 'right' | null;
   laneDirection: -1 | 0 | 1;
   laneMode: 'none' | 'holdCandidate';
   laneStartedAt: number;
@@ -34,9 +37,12 @@ export function createVerticalTapState(): VerticalTapState {
   return {
     lastUpTap: Number.NEGATIVE_INFINITY,
     lastDownTap: Number.NEGATIVE_INFINITY,
+    lastLeftTap: Number.NEGATIVE_INFINITY,
+    lastRightTap: Number.NEGATIVE_INFINITY,
     holdAction: null,
     holdStartedAt: Number.NEGATIVE_INFINITY,
     holdActivated: false,
+    heldHorizontalAction: null,
     laneDirection: 0,
     laneMode: 'none',
     laneStartedAt: Number.NEGATIVE_INFINITY,
@@ -50,6 +56,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const virtualRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const verticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
+  const gamepadTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
   const lastInputRef = useRef('none');
   const modeRef = useRef(mode);
   const controlsRef = useRef(controls);
@@ -68,7 +75,10 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       const bindings = getKeyboardBindingsForEvent(event, modeRef.current, controlsRef.current);
       for (const binding of bindings) {
         const playerIndex = binding.player - 1;
-        if (!applyVerticalTap(inputRefs.current[playerIndex], verticalTapRefs.current[playerIndex], binding.action, pressed, 'keyboard')) {
+        if (
+          !applyHorizontalTap(inputRefs.current[playerIndex], verticalTapRefs.current[playerIndex], binding.action, pressed, 'keyboard') &&
+          !applyVerticalTap(inputRefs.current[playerIndex], verticalTapRefs.current[playerIndex], binding.action, pressed, 'keyboard')
+        ) {
           inputRefs.current[playerIndex][binding.action] = pressed;
         }
         if (pressed) lastInputRef.current = `p${binding.player}:${binding.action}`;
@@ -102,32 +112,42 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       }
       consumeVerticalTapAfterRead(inputRefs.current[player], verticalTapRefs.current[player], 'keyboard');
       consumeVerticalTapAfterRead(virtualRefs.current[player], verticalTapRefs.current[player], 'virtual');
+      consumeHorizontalTapAfterRead(inputRefs.current[player], verticalTapRefs.current[player], 'keyboard');
+      consumeHorizontalTapAfterRead(virtualRefs.current[player], verticalTapRefs.current[player], 'virtual');
       const pad = pads[player];
       if (pad) {
         const horizontal = pad.axes[0] ?? 0;
         const vertical = pad.axes[1] ?? 0;
-        merged[player].left ||= horizontal < -0.35;
-        merged[player].right ||= horizontal > 0.35;
-        merged[player].up ||= vertical < -0.35;
-        merged[player].down ||= vertical > 0.35;
+        const gamepadInput = emptyInputFrame();
+        applyHorizontalTap(gamepadInput, gamepadTapRefs.current[player], 'left', horizontal < -0.35, 'gamepad', now);
+        applyHorizontalTap(gamepadInput, gamepadTapRefs.current[player], 'right', horizontal > 0.35, 'gamepad', now);
+        gamepadInput.up = vertical < -0.35;
+        gamepadInput.down = vertical > 0.35;
         const gamepadBindings = controlsRef.current.gamepad[player];
         for (const action of Object.keys(gamepadBindings) as ActionName[]) {
-          if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) merged[player][action] = true;
+          if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) gamepadInput[action] = true;
         }
         const comboBindings = controlsRef.current.gamepadCombos[player];
         for (const combo of keybindableButtonComboDefinitions) {
           if (!comboBindings[combo.id]?.some((index) => pad.buttons[index]?.pressed)) continue;
           combo.actions.forEach((action) => {
-            merged[player][action] = true;
+            gamepadInput[action] = true;
           });
         }
+        for (const action of Object.keys(merged[player]) as ActionName[]) {
+          merged[player][action] ||= gamepadInput[action];
+        }
+        consumeHorizontalTapAfterRead(gamepadInput, gamepadTapRefs.current[player], 'gamepad');
       }
     }
     return merged;
   }, []);
 
   const setVirtualAction = useCallback((player: 1 | 2, action: ActionName, pressed: boolean) => {
-    if (!applyVerticalTap(virtualRefs.current[player - 1], verticalTapRefs.current[player - 1], action, pressed, 'virtual')) {
+    if (
+      !applyHorizontalTap(virtualRefs.current[player - 1], verticalTapRefs.current[player - 1], action, pressed, 'virtual') &&
+      !applyVerticalTap(virtualRefs.current[player - 1], verticalTapRefs.current[player - 1], action, pressed, 'virtual')
+    ) {
       virtualRefs.current[player - 1][action] = pressed;
     }
     if (pressed) lastInputRef.current = `p${player}:${action}`;
@@ -259,6 +279,44 @@ export function applyVerticalTap(
     if (state.laneDirection === 0) state.source = null;
   }
   return true;
+}
+
+export function applyHorizontalTap(
+  input: InputFrame,
+  state: VerticalTapState,
+  action: ActionName,
+  pressed: boolean,
+  source: VerticalInputSource = 'keyboard',
+  now = performance.now()
+) {
+  if (action !== 'left' && action !== 'right') return false;
+  const lastTapKey = action === 'left' ? 'lastLeftTap' : 'lastRightTap';
+  const oppositeAction = action === 'left' ? 'right' : 'left';
+
+  if (pressed) {
+    if (state.heldHorizontalAction === action && state.source === source) return true;
+    input[action] = true;
+    input[oppositeAction] = false;
+    if (now - state[lastTapKey] <= DOUBLE_TAP_MS) {
+      input.dashForward = true;
+      state[lastTapKey] = Number.NEGATIVE_INFINITY;
+    }
+    state.heldHorizontalAction = action;
+    state.source = source;
+  } else {
+    input[action] = false;
+    if (state.heldHorizontalAction === action && state.source === source) {
+      state[lastTapKey] = now;
+      state.heldHorizontalAction = null;
+    }
+    if (!state.heldAction && state.laneDirection === 0 && !state.heldHorizontalAction) state.source = null;
+  }
+  return true;
+}
+
+export function consumeHorizontalTapAfterRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource) {
+  if (state.source !== source && state.source !== null) return;
+  input.dashForward = false;
 }
 
 export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource, now = performance.now()) {

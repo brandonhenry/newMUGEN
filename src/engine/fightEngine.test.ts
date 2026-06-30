@@ -4,8 +4,10 @@ import { stages } from '../data/stages';
 import { normalizeCharacter, normalizeMove, validateCharacter } from '../lib/characterLoader';
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from '../lib/gameSettings';
 import {
+  applyHorizontalTap,
   applyVerticalTap,
   consumeVerticalTapAfterRead,
+  consumeHorizontalTapAfterRead,
   createVerticalTapState,
   getKeyboardBindingsForEvent,
   prepareVerticalTapForRead
@@ -130,6 +132,96 @@ function chargeUntilTransformReady(match: ReturnType<typeof createMatch>, slot: 
   return next;
 }
 
+function makeThrowCaptureMove(overrides: Partial<MoveDefinition> = {}): MoveDefinition {
+  return {
+    ...starterCharacters[0].moves[0],
+    id: 'test-throw-capture',
+    label: 'Test Throw Capture',
+    input: 'jab',
+    animationKey: 'jableft',
+    startupFrames: 1,
+    activeFrames: 6,
+    recoveryFrames: 12,
+    damage: 10,
+    blockDamage: 0,
+    hitLevel: 'throw',
+    onBlockFrames: -4,
+    onHitFrames: 12,
+    onCounterHitFrames: 16,
+    range: 2.4,
+    pushback: 0.4,
+    blockPushback: 0.2,
+    launchHeight: undefined,
+    tornado: false,
+    knockdown: false,
+    throwCapture: true,
+    hitbox: {
+      offset: [0, 1.1, 0.74],
+      size: [1.2, 1.2, 1.4]
+    },
+    ...overrides
+  };
+}
+
+function makeHeldJabCharacter(): CharacterDefinition {
+  return {
+    ...starterCharacters[0],
+    moves: starterCharacters[0].moves.map((move) =>
+      move.input === 'jab'
+        ? {
+            ...move,
+            id: 'held-left-jab',
+            label: 'Held Left Jab',
+            input: 'jab',
+            animationKey: 'jableft',
+            startupFrames: 1,
+            activeFrames: 2,
+            recoveryFrames: 5,
+            damage: 7,
+            blockDamage: 0,
+            hitLevel: 'high',
+            onHitFrames: -3,
+            onCounterHitFrames: 0,
+            range: 1.2,
+            pushback: 0,
+            blockPushback: 0,
+            launchHeight: 0,
+            tornado: false,
+            knockdown: false,
+            throwCapture: false
+          }
+        : move
+    )
+  };
+}
+
+function startActiveThrowHit(match: ReturnType<typeof createMatch>, attackerIndex: 0 | 1 = 0, move: MoveDefinition = makeThrowCaptureMove()) {
+  const attacker = match.fighters[attackerIndex];
+  const defender = match.fighters[attackerIndex === 0 ? 1 : 0];
+  attacker.position.x = attackerIndex === 0 ? -0.45 : 0.45;
+  defender.position.x = attackerIndex === 0 ? 0.45 : -0.45;
+  attacker.position.z = 0;
+  defender.position.z = 0;
+  attacker.facing = attackerIndex === 0 ? 1 : -1;
+  defender.facing = attackerIndex === 0 ? -1 : 1;
+  attacker.facingYaw = attacker.facing === 1 ? Math.PI / 2 : -Math.PI / 2;
+  defender.facingYaw = defender.facing === 1 ? Math.PI / 2 : -Math.PI / 2;
+  attacker.state = 'attack';
+  attacker.currentMove = move;
+  attacker.actionFramesRemaining = 18;
+  attacker.actionTimer = 18 / 60;
+  attacker.moveFrame = Math.max(1, move.startupFrames);
+  attacker.hitConnected = false;
+  attacker.hitConfirmed = false;
+}
+
+function stepWithMash(match: ReturnType<typeof createMatch>, defenderSlot: 1 | 2, button: MoveInput = 'jab') {
+  const press = { ...emptyInputFrame(), [button]: true };
+  const release = emptyInputFrame();
+  const pressed = stepMatch(match, defenderSlot === 1 ? press : release, defenderSlot === 2 ? press : release, 1 / 60);
+  return stepMatch(pressed, release, release, 1 / 60);
+}
+
 describe('character manifests', () => {
   it('ships starter characters without loader warnings', () => {
     expect(starterCharacters.map((character) => [character.id, validateCharacter(character)])).toEqual([
@@ -206,6 +298,7 @@ describe('character manifests', () => {
     const move = normalizeMove({
       ...starterCharacters[0].moves[0],
       tornado: true,
+      throwCapture: true,
       usesKi: true,
       kiCost: 35,
       forwardForce: 0.75,
@@ -220,6 +313,7 @@ describe('character manifests', () => {
     });
 
     expect(move.tornado).toBe(true);
+    expect(move.throwCapture).toBe(true);
     expect(move.usesKi).toBe(true);
     expect(move.kiCost).toBe(35);
     expect(move.forwardForce).toBe(0.75);
@@ -231,6 +325,20 @@ describe('character manifests', () => {
     expect(move.homingSpeed).toBe(10);
     expect(move.healsHp).toBe(true);
     expect(move.healAmount).toBe(9);
+  });
+
+  it('normalizes character dash distance with a default for older manifests', () => {
+    const normalizedDefault = normalizeCharacter({
+      ...starterCharacters[0],
+      stats: { ...starterCharacters[0].stats, dashDistance: undefined }
+    });
+    const normalizedCustom = normalizeCharacter({
+      ...starterCharacters[0],
+      stats: { ...starterCharacters[0].stats, dashDistance: 1.15 }
+    });
+
+    expect(normalizedDefault.stats.dashDistance).toBe(0.78);
+    expect(normalizedCustom.stats.dashDistance).toBe(1.15);
   });
 
   it('keeps starter characters from shipping with healing moves enabled by default', () => {
@@ -727,6 +835,31 @@ describe('character manifests', () => {
     expect(input.down).toBe(false);
     expect(input.sidestepDown).toBe(true);
     expect(input.sidewalkDown).toBe(false);
+  });
+
+  it('turns double tap left or right into a one-frame dash-forward flag while preserving hold movement', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyHorizontalTap(input, state, 'right', true, 'keyboard', 100);
+    expect(input.right).toBe(true);
+    expect(input.dashForward).toBe(false);
+    applyHorizontalTap(input, state, 'right', false, 'keyboard', 130);
+
+    applyHorizontalTap(input, state, 'right', true, 'keyboard', 210);
+    expect(input.right).toBe(true);
+    expect(input.dashForward).toBe(true);
+    consumeHorizontalTapAfterRead(input, state, 'keyboard');
+    expect(input.right).toBe(true);
+    expect(input.dashForward).toBe(false);
+
+    applyHorizontalTap(input, state, 'right', false, 'keyboard', 240);
+    applyHorizontalTap(input, state, 'left', true, 'keyboard', 330);
+    applyHorizontalTap(input, state, 'left', false, 'keyboard', 350);
+    applyHorizontalTap(input, state, 'left', true, 'keyboard', 410);
+    expect(input.left).toBe(true);
+    expect(input.right).toBe(false);
+    expect(input.dashForward).toBe(true);
   });
 
   it('does not promote the held second vertical tap into continuous lane walking', () => {
@@ -1783,6 +1916,57 @@ describe('fight engine', () => {
     expect(match.fighters[0].position.z).toBeGreaterThan(beforeWalk + 0.35);
     expect(match.fighters[0].position.x).not.toBeCloseTo(xBeforeWalk, 3);
     expect(radiusAfter).toBeCloseTo(radiusBefore, 1);
+  });
+
+  it('boosts forward movement on double-tap forward and keeps normal forward movement afterward', () => {
+    const dashCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      stats: { ...starterCharacters[0].stats, speed: 4, dashDistance: 1.05 }
+    };
+    let dashMatch = createMatch(dashCharacter, starterCharacters[1], stages[0], 'local2p');
+    dashMatch.phase = 'fighting';
+    dashMatch.countdown = 0;
+    const holdForward = { ...emptyInputFrame(), right: true };
+    const dashForward = { ...holdForward, dashForward: true };
+
+    const walkStartX = dashMatch.fighters[0].position.x;
+    const walkMatch = stepMatch(dashMatch, holdForward, emptyInputFrame(), 1 / 60);
+    const walkDelta = walkMatch.fighters[0].position.x - walkStartX;
+
+    dashMatch = stepMatch(dashMatch, dashForward, emptyInputFrame(), 1 / 60);
+    const dashDelta = dashMatch.fighters[0].position.x - walkStartX;
+
+    expect(dashDelta).toBeGreaterThan(walkDelta + 0.8);
+    expect(dashMatch.fighters[0].state).toBe('walk');
+    expect(dashMatch.fighters[0].dashForwardFrames).toBeGreaterThan(0);
+    expect(dashMatch.fighters[0].walkDirection).toBe(1);
+
+    const afterDashX = dashMatch.fighters[0].position.x;
+    dashMatch = stepMatch(dashMatch, holdForward, emptyInputFrame(), 1 / 60);
+    expect(dashMatch.fighters[0].position.x).toBeGreaterThan(afterDashX);
+  });
+
+  it('only applies dash-forward when the double-tapped direction is toward the opponent', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const backDashAttempt = { ...emptyInputFrame(), left: true, dashForward: true };
+    const before = match.fighters[0].position.x;
+
+    match = stepMatch(match, backDashAttempt, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].dashForwardFrames).toBe(0);
+    expect(match.fighters[0].position.x).toBeLessThan(before);
+
+    let p2Match = createMatch(starterCharacters[0], { ...starterCharacters[1], stats: { ...starterCharacters[1].stats, dashDistance: 0.95 } }, stages[0], 'local2p');
+    p2Match.phase = 'fighting';
+    p2Match.countdown = 0;
+    const p2Before = p2Match.fighters[1].position.x;
+    p2Match = stepMatch(p2Match, emptyInputFrame(), { ...emptyInputFrame(), left: true, dashForward: true }, 1 / 60);
+
+    expect(p2Match.fighters[1].position.x).toBeLessThan(p2Before - 0.8);
+    expect(p2Match.fighters[1].dashForwardFrames).toBeGreaterThan(0);
+    expect(p2Match.fighters[1].walkDirection).toBe(1);
   });
 
   it('keeps continuous lane walking orbiting around the opponent without reversing at side crossover', () => {
@@ -4058,6 +4242,180 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].state).toBe('knockdown');
     expect(match.fighters[1].juggleDamage).toBe(0);
+  });
+
+  it('starts throw capture on an unblocked hit and freezes both fighters', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(match);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('throwHold');
+    expect(match.fighters[1].state).toBe('throwHeld');
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - 10);
+    expect(match.fighters[0].moveFrame).toBe(match.fighters[0].currentMove!.startupFrames + match.fighters[0].currentMove!.activeFrames + match.fighters[0].currentMove!.recoveryFrames);
+    expect(match.fighters[1].throwEscapeGoal).toBe(9);
+  });
+
+  it('does not capture on blocked or whiffed throw-capture moves', () => {
+    let blocked = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(blocked, 0, makeThrowCaptureMove({ hitLevel: 'high', blockDamage: 1 }));
+    const blockInput = { ...emptyInputFrame(), block: true };
+
+    blocked = stepMatch(blocked, emptyInputFrame(), blockInput, 1 / 60);
+
+    expect(blocked.fighters[0].state).not.toBe('throwHold');
+    expect(blocked.fighters[1].state).toBe('block');
+    expect(blocked.fighters[1].hp).toBe(starterCharacters[1].stats.health - 1);
+
+    let whiffed = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(whiffed);
+    whiffed.fighters[1].position.x = 8;
+
+    whiffed = stepMatch(whiffed, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(whiffed.fighters[0].state).toBe('attack');
+    expect(whiffed.fighters[1].state).not.toBe('throwHeld');
+    expect(whiffed.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+  });
+
+  it('lets throw capture override launcher, tornado, and knockdown reactions', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(match, 0, makeThrowCaptureMove({ launchHeight: 2.8, tornado: true, knockdown: true }));
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 0.9;
+    match.fighters[1].juggleTornadoCount = 1;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('throwHeld');
+    expect(match.fighters[1].position.y).toBe(0);
+    expect(match.fighters[1].velocityY).toBe(0);
+    expect(match.fighters[1].juggleTornadoCount).toBe(0);
+  });
+
+  it('keeps the defender attached until mash escape or timeout release', () => {
+    let mashMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(mashMatch);
+    mashMatch = stepMatch(mashMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const heldOffset = mashMatch.fighters[1].position.x - mashMatch.fighters[0].position.x;
+
+    mashMatch.fighters[0].position.x -= 0.2;
+    mashMatch = stepMatch(mashMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(mashMatch.fighters[1].position.x - mashMatch.fighters[0].position.x).toBeCloseTo(heldOffset, 4);
+
+    const escapeGoal = mashMatch.fighters[1].throwEscapeGoal;
+    for (let i = 0; i < escapeGoal; i += 1) {
+      mashMatch = stepWithMash(mashMatch, 2, i % 2 === 0 ? 'jab' : 'heavy');
+    }
+
+    expect(mashMatch.fighters[0].state).toBe('idle');
+    expect(mashMatch.fighters[1].state).toBe('idle');
+    expect(mashMatch.fighters[1].throwCaptorSlot).toBeNull();
+
+    let timeoutMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(timeoutMatch);
+    timeoutMatch = stepMatch(timeoutMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 241; frame += 1) {
+      timeoutMatch = stepMatch(timeoutMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(timeoutMatch.fighters[0].state).toBe('idle');
+    expect(timeoutMatch.fighters[1].state).toBe('idle');
+  });
+
+  it('lets the grabber left-jab a held defender and then returns to the throw pose', () => {
+    let match = createMatch(makeHeldJabCharacter(), starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(match);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const throwMove = match.fighters[0].currentMove;
+    const defenderHp = match.fighters[1].hp;
+
+    match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('throwHold');
+    expect(match.fighters[0].throwJabActive).toBe(true);
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+
+    for (let frame = 0; frame < 2; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[1].hp).toBe(defenderHp - 7);
+
+    for (let frame = 0; frame < 8; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].throwJabActive).toBe(false);
+    expect(match.fighters[0].currentMove?.id).toBe(throwMove?.id);
+    expect(match.fighters[0].moveFrame).toBe(match.fighters[0].currentMove!.startupFrames + match.fighters[0].currentMove!.activeFrames + match.fighters[0].currentMove!.recoveryFrames);
+    expect(match.fighters[1].state).toBe('throwHeld');
+  });
+
+  it('ignores non-jab grabber attacks and gates repeated held jabs by recovery timing', () => {
+    let match = createMatch(makeHeldJabCharacter(), starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(match);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const capturedHp = match.fighters[1].hp;
+
+    match = stepMatch(match, { ...emptyInputFrame(), heavy: true }, emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, { ...emptyInputFrame(), kick: true }, emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, { ...emptyInputFrame(), special: true }, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].throwJabActive).toBe(false);
+    expect(match.fighters[1].hp).toBe(capturedHp);
+
+    match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 2; frame += 1) {
+      match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[1].hp).toBe(capturedHp - 7);
+
+    for (let frame = 0; frame < 3; frame += 1) {
+      match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[1].hp).toBe(capturedHp - 7);
+
+    for (let frame = 0; frame < 8; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 2; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[1].hp).toBe(capturedHp - 14);
+  });
+
+  it('scales throw mash escape by defender health and shows shake on fresh presses', () => {
+    let highHp = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(highHp);
+    highHp = stepMatch(highHp, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    let lowHp = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    lowHp.fighters[1].hp = Math.max(20, Math.round(lowHp.fighters[1].maxHp * 0.5));
+    startActiveThrowHit(lowHp);
+    lowHp = stepMatch(lowHp, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(highHp.fighters[1].throwEscapeGoal).toBeLessThan(lowHp.fighters[1].throwEscapeGoal);
+
+    highHp = stepWithMash(highHp, 2, 'special');
+    expect(highHp.fighters[1].throwEscapeProgress).toBe(1);
+    expect(highHp.fighters[1].throwShakeFrames).toBeGreaterThan(0);
+  });
+
+  it('supports throw capture and escape in training mode without ending the round', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training');
+    startActiveThrowHit(match, 1);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('throwHeld');
+
+    const escapeGoal = match.fighters[0].throwEscapeGoal;
+    for (let i = 0; i < escapeGoal; i += 1) {
+      match = stepWithMash(match, 1, i % 2 === 0 ? 'kick' : 'special');
+    }
+
+    expect(match.phase).toBe('fighting');
+    expect(match.round).toBe(1);
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].state).toBe('idle');
   });
 
   it('fills a second transform bar and drains it back to one full ki bar after the ready window', () => {

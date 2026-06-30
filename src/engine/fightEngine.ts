@@ -73,6 +73,11 @@ const KI_CHARGE_PER_SECOND = 28;
 const TRANSFORM_READY_SECONDS = 3;
 const TRANSFORM_STARTUP_FRAMES = 90;
 const TRANSFORM_SMOKE_FRAMES = 54;
+const THROW_MAX_HOLD_FRAMES = 240;
+const THROW_RELEASE_RECOVERY_FRAMES = 12;
+const THROW_HAND_FORWARD_OFFSET = 0.68;
+const THROW_RELEASE_SPACING = 0.98;
+const THROW_SHAKE_FRAMES = 10;
 const KI_HIT_GAIN = 9;
 const KI_BLOCK_GAIN = 4;
 const KI_DEFENDER_BLOCK_GAIN = 5;
@@ -81,6 +86,9 @@ const ATTACK_BUFFER_FRAMES = 16;
 const MAX_COMBO_STEPS = 6;
 const SIDESTEP_TAP_SCALE = 1.45;
 const SIDEWALK_SCALE = 1.15;
+const DEFAULT_DASH_FORWARD_DISTANCE = 0.78;
+const DASH_FORWARD_ANIMATION_FRAMES = 18;
+const DASH_FORWARD_COOLDOWN_FRAMES = 14;
 const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
 const KI_CHARGE_DEFAULT_ACTIVE_FRAMES = 18;
 const KI_CHARGE_DEFAULT_RECOVERY_FRAMES = 16;
@@ -433,6 +441,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     sidestepTimer: 0,
     sidestepDirection: 0,
     sidestepOrbitSign: slot === 1 ? 1 : -1,
+    dashForwardFrames: 0,
+    dashForwardCooldownFrames: 0,
+    walkDirection: 0,
     jumpInputHeld: false,
     currentMove: null,
     moveInstanceId: 0,
@@ -474,6 +485,17 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
     juggleGravityScale: JUGGLE_GRAVITY_SCALE,
+    throwOpponentSlot: null,
+    throwCaptorSlot: null,
+    throwAnchorMove: null,
+    throwHoldFrames: 0,
+    throwMaxHoldFrames: THROW_MAX_HOLD_FRAMES,
+    throwJabActive: false,
+    throwJabCooldownFrames: 0,
+    throwJabHitConnected: false,
+    throwEscapeProgress: 0,
+    throwEscapeGoal: 0,
+    throwShakeFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
     shadowClone: null,
@@ -508,8 +530,15 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.comboDamage = 0;
   }
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
+  fighter.dashForwardFrames = Math.max(0, fighter.dashForwardFrames - frameDelta);
+  fighter.dashForwardCooldownFrames = Math.max(0, fighter.dashForwardCooldownFrames - frameDelta);
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
+  if (fighter.state === 'throwHold' || fighter.state === 'throwHeld') {
+    handleThrowCaptureStep(match, fighter, opponent, input, dt);
+    finishFighterStep();
+    return;
+  }
   if (fighter.state === 'transform') {
     handleTransformStep(match, fighter, dt);
     applyGravity(fighter, dt);
@@ -681,6 +710,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   const forward = resolveForwardInput(fighter, opponent, input);
+  fighter.walkDirection = 0;
   const holdingBack = forward < 0;
   const blocking = input.block || holdingBack;
   const laneWalk = input.sidewalkUp ? -1 : input.sidewalkDown ? 1 : 0;
@@ -689,11 +719,18 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const crouching = input.down && grounded;
   const jumping = isAirborne(fighter);
   const speedScale = blocking ? 0.42 : crouching ? 0.18 : 1;
+  const dashForwardRequested = input.dashForward && forward > 0 && grounded && !blocking && !crouching && !jumping && fighter.dashForwardCooldownFrames === 0;
 
   if (jumpPressed && grounded && !blocking && !input.down) {
     fighter.velocityY = fighter.character.stats.jumpForce;
     fighter.position.y = Math.max(fighter.position.y, 0.18);
     fighter.state = 'jump';
+  }
+
+  if (dashForwardRequested) {
+    moveAlongOpponentAxis(fighter, opponent, getDashForwardDistance(fighter));
+    fighter.dashForwardFrames = DASH_FORWARD_ANIMATION_FRAMES;
+    fighter.dashForwardCooldownFrames = DASH_FORWARD_COOLDOWN_FRAMES;
   }
 
   if (sidestepTap !== 0 && fighter.sidestepTimer === 0) {
@@ -728,6 +765,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (forward !== 0) {
+    fighter.walkDirection = forward > 0 ? 1 : -1;
     moveAlongOpponentAxis(fighter, opponent, forward * fighter.character.stats.speed * speedScale * dt);
   }
   if (sidestep !== 0) {
@@ -739,6 +777,266 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   applyGravity(fighter, dt);
   fighter.wasCrouching = crouching;
   finishFighterStep();
+}
+
+function handleThrowCaptureStep(match: MatchSnapshot, fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {
+  const frameDelta = secondsToFrames(dt);
+  fighter.velocityY = 0;
+  fighter.position.y = 0;
+  fighter.blockFlash = 0;
+  fighter.hitFlash = 0;
+  resetKiChargeRuntime(fighter);
+  fighter.throwShakeFrames = Math.max(0, fighter.throwShakeFrames - frameDelta);
+
+  if (fighter.state === 'throwHeld') {
+    const captor = match.fighters.find((candidate) => candidate.slot === fighter.throwCaptorSlot);
+    if (!captor || captor.state !== 'throwHold') {
+      clearThrowRuntime(fighter);
+      fighter.state = 'idle';
+      return;
+    }
+    applyThrowHoldPosition(captor, fighter);
+    const freshMashes = countFreshAttackPresses(fighter, input);
+    if (freshMashes > 0) {
+      fighter.throwEscapeProgress += freshMashes;
+      fighter.throwShakeFrames = THROW_SHAKE_FRAMES;
+    }
+    if (fighter.throwEscapeProgress >= fighter.throwEscapeGoal && fighter.throwEscapeGoal > 0) {
+      releaseThrowCapture(captor, fighter);
+    }
+    return;
+  }
+
+  const defender = match.fighters.find((candidate) => candidate.slot === fighter.throwOpponentSlot);
+  if (!defender || defender.state !== 'throwHeld') {
+    clearThrowRuntime(fighter);
+    fighter.state = 'idle';
+    fighter.currentMove = null;
+    return;
+  }
+  fighter.throwHoldFrames += frameDelta;
+  fighter.throwJabCooldownFrames = Math.max(0, fighter.throwJabCooldownFrames - frameDelta);
+  applyThrowHoldPosition(fighter, defender);
+  if (fighter.throwJabActive) {
+    handleThrowHoldJabStep(match, fighter, defender, frameDelta);
+  } else {
+    restoreThrowAnchorPose(fighter);
+    if (fighter.throwJabCooldownFrames === 0 && input.jab && !fighter.previousAttackInputs.jab) {
+      startThrowHoldJab(fighter);
+    }
+  }
+  if (fighter.throwHoldFrames >= fighter.throwMaxHoldFrames) {
+    releaseThrowCapture(fighter, defender);
+  }
+}
+
+function countFreshAttackPresses(fighter: FighterRuntime, input: InputFrame) {
+  return moveInputs.reduce((count, action) => count + (input[action] && !fighter.previousAttackInputs[action] ? 1 : 0), 0);
+}
+
+function startThrowHoldJab(attacker: FighterRuntime) {
+  const move = getThrowHoldJabMove(attacker);
+  if (!move) return;
+  attacker.currentMove = move;
+  attacker.moveInstanceId += 1;
+  attacker.moveFrame = 0;
+  attacker.actionFramesRemaining = totalMoveFrames(move);
+  attacker.actionTimer = framesToSeconds(attacker.actionFramesRemaining);
+  attacker.hitConnected = false;
+  attacker.hitConfirmed = false;
+  attacker.whiffRecoveryApplied = false;
+  attacker.throwJabActive = true;
+  attacker.throwJabHitConnected = false;
+  attacker.throwJabCooldownFrames = totalMoveFrames(move) + Math.max(0, -move.onHitFrames);
+}
+
+function handleThrowHoldJabStep(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
+  const move = attacker.currentMove;
+  if (!move) {
+    restoreThrowAnchorPose(attacker);
+    return;
+  }
+  const previousMoveFrame = attacker.moveFrame;
+  attacker.moveFrame += frameDelta;
+  attacker.actionFramesRemaining = Math.max(0, attacker.actionFramesRemaining - frameDelta);
+  attacker.actionTimer = framesToSeconds(attacker.actionFramesRemaining);
+  if (!attacker.throwJabHitConnected && didMoveBecomeActive(move, previousMoveFrame, attacker.moveFrame)) {
+    applyThrowHoldJabHit(match, attacker, defender, move);
+    if (attacker.state !== 'throwHold') return;
+  }
+  if (attacker.actionFramesRemaining === 0 || attacker.moveFrame >= totalMoveFrames(move)) {
+    restoreThrowAnchorPose(attacker);
+  }
+}
+
+function didMoveBecomeActive(move: MoveDefinition, previousMoveFrame: number, currentMoveFrame: number) {
+  return previousMoveFrame < move.startupFrames + move.activeFrames && currentMoveFrame >= move.startupFrames;
+}
+
+function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
+  attacker.throwJabHitConnected = true;
+  attacker.hitConnected = true;
+  attacker.hitConfirmed = true;
+  if (!moveUsesKi(move)) {
+    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)), 0, KI_MAX);
+  }
+  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
+  const identity = getMoveIdentity(move);
+  if (!attacker.comboUsedKeys.includes(identity)) {
+    attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
+  }
+  attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
+  defender.hp = Math.max(0, defender.hp - move.damage);
+  defender.hitFlash = Math.max(defender.hitFlash, 0.12);
+  defender.throwShakeFrames = Math.max(defender.throwShakeFrames, THROW_SHAKE_FRAMES);
+  const impactId = nextHitEventId(match);
+  const impactPosition: [number, number, number] = [defender.position.x, defender.position.y + 1.12, defender.position.z];
+  pushImpactSparkEvent(match, impactId, attacker, defender, move, 'hit', {
+    comboHits: attacker.comboHits,
+    launched: false,
+    juggled: false,
+    tornado: false,
+    kiBurst: Boolean(move.kiBurst)
+  }, impactPosition);
+  pushCombatPopupEvent(match, impactId, attacker, move, attacker.comboHits >= 2 ? 'combo' : null, {
+    launched: false,
+    juggled: false,
+    tornado: false,
+    kiBurst: Boolean(move.kiBurst)
+  });
+  if (defender.hp <= 0) {
+    releaseThrowCapture(attacker, defender);
+  }
+}
+
+function restoreThrowAnchorPose(attacker: FighterRuntime) {
+  const anchor = attacker.throwAnchorMove;
+  attacker.throwJabActive = false;
+  attacker.throwJabHitConnected = false;
+  attacker.currentMove = anchor;
+  attacker.actionFramesRemaining = 0;
+  attacker.actionTimer = 0;
+  attacker.moveFrame = anchor ? totalMoveFrames(anchor) : attacker.moveFrame;
+  attacker.hitConnected = true;
+  attacker.hitConfirmed = true;
+}
+
+function getThrowHoldJabMove(attacker: FighterRuntime): MoveDefinition | null {
+  const baseMove = attacker.character.moves.find((candidate) => candidate.input === 'jab');
+  if (!baseMove) return null;
+  const move = applyMoveOverrides(attacker.character, baseMove, baseMove, baseInputToAnimationKey.jab);
+  return {
+    ...move,
+    input: 'jab',
+    animationKey: move.animationKey ?? baseInputToAnimationKey.jab,
+    jumpBeforeMove: false,
+    forwardForce: 0,
+    launchHeight: 0,
+    tornado: false,
+    knockdown: false,
+    throwCapture: false
+  };
+}
+
+function startThrowCapture(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
+  attacker.state = 'throwHold';
+  attacker.currentMove = move;
+  attacker.moveFrame = totalMoveFrames(move);
+  attacker.actionFramesRemaining = 0;
+  attacker.actionTimer = 0;
+  attacker.velocityY = 0;
+  attacker.position.y = 0;
+  attacker.hitConfirmed = true;
+  attacker.throwOpponentSlot = defender.slot;
+  attacker.throwCaptorSlot = null;
+  attacker.throwAnchorMove = move;
+  attacker.throwHoldFrames = 0;
+  attacker.throwMaxHoldFrames = THROW_MAX_HOLD_FRAMES;
+  attacker.throwJabActive = false;
+  attacker.throwJabCooldownFrames = 0;
+  attacker.throwJabHitConnected = false;
+  attacker.throwEscapeProgress = 0;
+  attacker.throwEscapeGoal = 0;
+  attacker.throwShakeFrames = 0;
+
+  defender.state = 'throwHeld';
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  defender.actionFramesRemaining = 0;
+  defender.actionTimer = 0;
+  defender.stunFramesRemaining = 0;
+  defender.blockstunFramesRemaining = 0;
+  defender.stunTimer = 0;
+  defender.velocityY = 0;
+  defender.position.y = 0;
+  defender.throwOpponentSlot = null;
+  defender.throwCaptorSlot = attacker.slot;
+  defender.throwAnchorMove = null;
+  defender.throwHoldFrames = 0;
+  defender.throwMaxHoldFrames = THROW_MAX_HOLD_FRAMES;
+  defender.throwJabActive = false;
+  defender.throwJabCooldownFrames = 0;
+  defender.throwJabHitConnected = false;
+  defender.throwEscapeProgress = 0;
+  defender.throwEscapeGoal = getThrowEscapeGoal(defender);
+  defender.throwShakeFrames = 0;
+  defender.juggleDamage = 0;
+  defender.juggleSequenceDamage = 0;
+  defender.juggleTornadoCount = 0;
+  defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+  applyThrowHoldPosition(attacker, defender);
+}
+
+function getThrowEscapeGoal(defender: FighterRuntime) {
+  const hpPercent = clamp(defender.hp / Math.max(1, defender.maxHp), 0, 1);
+  return Math.round(18 - hpPercent * 10);
+}
+
+function applyThrowHoldPosition(attacker: FighterRuntime, defender: FighterRuntime) {
+  defender.position.x = attacker.position.x + attacker.facing * THROW_HAND_FORWARD_OFFSET;
+  defender.position.y = 0;
+  defender.position.z = attacker.position.z;
+  defender.facing = attacker.facing === 1 ? -1 : 1;
+  defender.facingYaw = defender.facing === 1 ? Math.PI / 2 : -Math.PI / 2;
+  defender.velocityY = 0;
+}
+
+function releaseThrowCapture(attacker: FighterRuntime, defender: FighterRuntime) {
+  const releaseX = attacker.position.x + attacker.facing * THROW_RELEASE_SPACING;
+  const releaseZ = attacker.position.z;
+  clearThrowRuntime(attacker);
+  clearThrowRuntime(defender);
+  attacker.state = 'idle';
+  defender.state = 'idle';
+  attacker.currentMove = null;
+  defender.currentMove = null;
+  attacker.moveFrame = 0;
+  defender.moveFrame = 0;
+  attacker.velocityY = 0;
+  defender.velocityY = 0;
+  attacker.position.y = 0;
+  defender.position = { x: releaseX, y: 0, z: releaseZ };
+  attacker.actionFramesRemaining = THROW_RELEASE_RECOVERY_FRAMES;
+  defender.actionFramesRemaining = THROW_RELEASE_RECOVERY_FRAMES;
+  attacker.actionTimer = framesToSeconds(THROW_RELEASE_RECOVERY_FRAMES);
+  defender.actionTimer = framesToSeconds(THROW_RELEASE_RECOVERY_FRAMES);
+  defender.facing = attacker.facing === 1 ? -1 : 1;
+  defender.facingYaw = defender.facing === 1 ? Math.PI / 2 : -Math.PI / 2;
+}
+
+function clearThrowRuntime(fighter: FighterRuntime) {
+  fighter.throwOpponentSlot = null;
+  fighter.throwCaptorSlot = null;
+  fighter.throwAnchorMove = null;
+  fighter.throwHoldFrames = 0;
+  fighter.throwMaxHoldFrames = THROW_MAX_HOLD_FRAMES;
+  fighter.throwJabActive = false;
+  fighter.throwJabCooldownFrames = 0;
+  fighter.throwJabHitConnected = false;
+  fighter.throwEscapeProgress = 0;
+  fighter.throwEscapeGoal = 0;
+  fighter.throwShakeFrames = 0;
 }
 
 function bufferMoveInput(fighter: FighterRuntime, moveInput: MoveInput) {
@@ -753,7 +1051,7 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
   if (fighter.state === 'attack') return true;
-  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi' || fighter.state === 'transform') return false;
+  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
   return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
 }
 
@@ -791,7 +1089,7 @@ function resolveTransformDestination(match: MatchSnapshot, fighter: FighterRunti
 
 function canStartTransform(fighter: FighterRuntime) {
   if (fighter.state === 'transform') return false;
-  if (fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'juggle' || fighter.state === 'hit') return false;
+  if (fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'juggle' || fighter.state === 'hit' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
   if (fighter.stunFramesRemaining > 0 || fighter.blockstunFramesRemaining > 0) return false;
   if (fighter.state === 'chargeKi') return fighter.chargePhase !== 'startup' && fighter.chargePhase !== 'recovery';
   return fighter.actionFramesRemaining === 0 && fighter.actionTimer === 0;
@@ -1589,6 +1887,7 @@ function applyMoveOverrides(
     launchVelocity: merged.launchVelocity === undefined ? undefined : clamp(merged.launchVelocity, 3.2, 7.2),
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
     juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2),
+    throwCapture: Boolean(merged.throwCapture),
     healsHp: Boolean(merged.healsHp),
     healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100)
   };
@@ -2427,7 +2726,7 @@ function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
 function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack' || attacker.hitConnected) return;
-  if (defender.state === 'knockdown' || defender.state === 'transform' || defender.getupInvulnerableFrames > 0) return;
+  if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
   const moveFrame = attacker.moveFrame || secondsToFrames(totalMoveSeconds(move) - attacker.actionTimer);
   if (!isActiveMoveFrame(move, moveFrame)) return;
   const attackerPosition = getFighterCombatPosition(attacker);
@@ -2519,6 +2818,11 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   resetKiChargeRuntime(defender);
   mirrorShadowCloneHit(defender, move, forceKnockdown, entersJuggle);
 
+  if (move.throwCapture && defender.hp > 0) {
+    startThrowCapture(attacker, defender, move);
+    return;
+  }
+
   if (forceKnockdown) {
     enterKnockdown(defender, Math.max(stunFrames, KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES));
   } else {
@@ -2559,7 +2863,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const clone = attacker.shadowClone;
   const sourceMove = clone?.currentMove;
   if (!clone || clone.phase !== 'active' || clone.state !== 'attack' || !sourceMove || clone.hitConnected) return;
-  if (defender.state === 'knockdown' || defender.state === 'transform' || defender.getupInvulnerableFrames > 0) return;
+  if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
   if (!isActiveMoveFrame(sourceMove, clone.moveFrame)) return;
 
   const cloneFighter = makeShadowCloneFighter(attacker, clone);
@@ -3137,11 +3441,18 @@ function getFighterGetupProgress(fighter: FighterRuntime) {
 function getFighterAnimationKey(fighter: FighterRuntime) {
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
   if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
-  if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
+  if (fighter.state === 'walk') {
+    if (fighter.dashForwardFrames > 0 && fighter.character.animationFrames?.sprint?.length) return 'sprint';
+    if (fighter.walkDirection > 0) return 'walkForward';
+    if (fighter.walkDirection < 0) return 'walkBack';
+    return fighter.facing === 1 ? 'walkForward' : 'walkBack';
+  }
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'chargeKi') return 'chargeKi';
   if (fighter.state === 'transform') return fighter.character.animationFrames?.transform?.length ? 'transform' : fighter.character.animationFrames?.chargeKi?.length ? 'chargeKi' : 'idle';
+  if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'throwHeld') return 'hitLight';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter.getupAction) ?? 'knockdown';
@@ -3241,6 +3552,7 @@ function finishRound(match: MatchSnapshot) {
     fighter.getupTotalFrames = 0;
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
+    clearThrowRuntime(fighter);
   });
 }
 
@@ -3359,6 +3671,7 @@ function resolveFacing(match: MatchSnapshot) {
 
 function resolveBodyCollision(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
+  if (p1.state === 'throwHold' || p1.state === 'throwHeld' || p2.state === 'throwHold' || p2.state === 'throwHeld') return;
   const minDistance = 0.72;
   const dx = p2.position.x - p1.position.x;
   const dz = p2.position.z - p1.position.z;
@@ -3372,6 +3685,10 @@ function resolveBodyCollision(match: MatchSnapshot) {
     p2.position.x += correction * directionX;
     p2.position.z += correction * directionZ;
   }
+}
+
+function getDashForwardDistance(fighter: FighterRuntime) {
+  return clamp(fighter.character.stats.dashDistance ?? DEFAULT_DASH_FORWARD_DISTANCE, 0, 2.4);
 }
 
 function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime, amount: number) {

@@ -1,12 +1,13 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 2;
+export const ONLINE_PROTOCOL_VERSION = 4;
 
 export const inputActions: ActionName[] = [
   'up',
   'down',
   'left',
   'right',
+  'dashForward',
   'sidestepUp',
   'sidestepDown',
   'sidewalkUp',
@@ -41,6 +42,9 @@ export type CompactFighterSnapshot = {
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
   sidestepOrbitSign: 1 | -1;
+  dashForwardFrames: number;
+  dashForwardCooldownFrames: number;
+  walkDirection: -1 | 0 | 1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
   moveInstanceId: number;
@@ -75,6 +79,17 @@ export type CompactFighterSnapshot = {
   juggleSequenceDamage: number;
   juggleTornadoCount: number;
   juggleGravityScale: number;
+  throwOpponentSlot: 1 | 2 | null;
+  throwCaptorSlot: 1 | 2 | null;
+  throwAnchorMove: MoveDefinition | null;
+  throwHoldFrames: number;
+  throwMaxHoldFrames: number;
+  throwJabActive: boolean;
+  throwJabCooldownFrames: number;
+  throwJabHitConnected: boolean;
+  throwEscapeProgress: number;
+  throwEscapeGoal: number;
+  throwShakeFrames: number;
   blockFlash: number;
   hitFlash: number;
   shadowClone: FighterRuntime['shadowClone'];
@@ -204,6 +219,9 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     sidestepTimer: fighter.sidestepTimer,
     sidestepDirection: fighter.sidestepDirection,
     sidestepOrbitSign: fighter.sidestepOrbitSign,
+    dashForwardFrames: fighter.dashForwardFrames,
+    dashForwardCooldownFrames: fighter.dashForwardCooldownFrames,
+    walkDirection: fighter.walkDirection,
     jumpInputHeld: fighter.jumpInputHeld,
     currentMove: fighter.currentMove,
     moveInstanceId: fighter.moveInstanceId,
@@ -238,6 +256,17 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     juggleSequenceDamage: fighter.juggleSequenceDamage,
     juggleTornadoCount: fighter.juggleTornadoCount,
     juggleGravityScale: fighter.juggleGravityScale,
+    throwOpponentSlot: fighter.throwOpponentSlot,
+    throwCaptorSlot: fighter.throwCaptorSlot,
+    throwAnchorMove: fighter.throwAnchorMove,
+    throwHoldFrames: fighter.throwHoldFrames,
+    throwMaxHoldFrames: fighter.throwMaxHoldFrames,
+    throwJabActive: fighter.throwJabActive,
+    throwJabCooldownFrames: fighter.throwJabCooldownFrames,
+    throwJabHitConnected: fighter.throwJabHitConnected,
+    throwEscapeProgress: fighter.throwEscapeProgress,
+    throwEscapeGoal: fighter.throwEscapeGoal,
+    throwShakeFrames: fighter.throwShakeFrames,
     blockFlash: fighter.blockFlash,
     hitFlash: fighter.hitFlash,
     shadowClone: fighter.shadowClone,
@@ -268,6 +297,9 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     sidestepTimer: snapshot.sidestepTimer,
     sidestepDirection: snapshot.sidestepDirection,
     sidestepOrbitSign: snapshot.sidestepOrbitSign ?? base.sidestepOrbitSign,
+    dashForwardFrames: snapshot.dashForwardFrames ?? base.dashForwardFrames,
+    dashForwardCooldownFrames: snapshot.dashForwardCooldownFrames ?? base.dashForwardCooldownFrames,
+    walkDirection: snapshot.walkDirection ?? base.walkDirection,
     jumpInputHeld: snapshot.jumpInputHeld,
     currentMove: snapshot.currentMove,
     moveInstanceId: snapshot.moveInstanceId ?? base.moveInstanceId,
@@ -302,6 +334,17 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     juggleSequenceDamage: snapshot.juggleSequenceDamage ?? base.juggleSequenceDamage,
     juggleTornadoCount: snapshot.juggleTornadoCount ?? base.juggleTornadoCount,
     juggleGravityScale: snapshot.juggleGravityScale ?? base.juggleGravityScale,
+    throwOpponentSlot: snapshot.throwOpponentSlot ?? null,
+    throwCaptorSlot: snapshot.throwCaptorSlot ?? null,
+    throwAnchorMove: snapshot.throwAnchorMove ?? null,
+    throwHoldFrames: snapshot.throwHoldFrames ?? base.throwHoldFrames,
+    throwMaxHoldFrames: snapshot.throwMaxHoldFrames ?? base.throwMaxHoldFrames,
+    throwJabActive: snapshot.throwJabActive ?? base.throwJabActive,
+    throwJabCooldownFrames: snapshot.throwJabCooldownFrames ?? base.throwJabCooldownFrames,
+    throwJabHitConnected: snapshot.throwJabHitConnected ?? base.throwJabHitConnected,
+    throwEscapeProgress: snapshot.throwEscapeProgress ?? base.throwEscapeProgress,
+    throwEscapeGoal: snapshot.throwEscapeGoal ?? base.throwEscapeGoal,
+    throwShakeFrames: snapshot.throwShakeFrames ?? base.throwShakeFrames,
     blockFlash: snapshot.blockFlash,
     hitFlash: snapshot.hitFlash,
     shadowClone: snapshot.shadowClone ?? null,

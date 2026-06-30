@@ -7,6 +7,7 @@ export type ActionName =
   | 'down'
   | 'left'
   | 'right'
+  | 'dashForward'
   | 'sidestepUp'
   | 'sidestepDown'
   | 'sidewalkUp'
@@ -32,6 +33,8 @@ export type FighterState =
   | 'chargeKi'
   | 'transform'
   | 'attack'
+  | 'throwHold'
+  | 'throwHeld'
   | 'hit'
   | 'juggle'
   | 'knockdown'
@@ -118,6 +121,7 @@ export type MoveDefinition = {
   juggleRefloatVelocity?: number;
   juggleGravityScale?: number;
   tornado?: boolean;
+  throwCapture?: boolean;
   endsInCrouch?: boolean;
   tracking: MoveTracking;
   armorStartFrame?: number | null;
@@ -318,6 +322,7 @@ export type CharacterDefinition = {
     health: number;
     speed: number;
     sidestepSpeed: number;
+    dashDistance?: number;
     jumpForce: number;
     gravity: number;
   };
@@ -519,6 +524,9 @@ export type FighterRuntime = {
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
   sidestepOrbitSign: 1 | -1;
+  dashForwardFrames: number;
+  dashForwardCooldownFrames: number;
+  walkDirection: -1 | 0 | 1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
   moveInstanceId: number;
@@ -561,6 +569,17 @@ export type FighterRuntime = {
   juggleSequenceDamage: number;
   juggleTornadoCount: number;
   juggleGravityScale: number;
+  throwOpponentSlot: 1 | 2 | null;
+  throwCaptorSlot: 1 | 2 | null;
+  throwAnchorMove: MoveDefinition | null;
+  throwHoldFrames: number;
+  throwMaxHoldFrames: number;
+  throwJabActive: boolean;
+  throwJabCooldownFrames: number;
+  throwJabHitConnected: boolean;
+  throwEscapeProgress: number;
+  throwEscapeGoal: number;
+  throwShakeFrames: number;
   blockFlash: number;
   hitFlash: number;
   shadowClone: ShadowCloneRuntime | null;
@@ -598,6 +617,7 @@ export const emptyInputFrame = (): InputFrame => ({
   down: false,
   left: false,
   right: false,
+  dashForward: false,
   sidestepUp: false,
   sidestepDown: false,
   sidewalkUp: false,

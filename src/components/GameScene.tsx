@@ -1419,6 +1419,9 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     sidestepTimer: 0,
     sidestepDirection: 0,
     sidestepOrbitSign: 1,
+    dashForwardFrames: 0,
+    dashForwardCooldownFrames: 0,
+    walkDirection: 0,
     jumpInputHeld: false,
     currentMove: null,
     moveInstanceId: 0,
@@ -1461,6 +1464,17 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
     juggleGravityScale: 0.52,
+    throwOpponentSlot: null,
+    throwCaptorSlot: null,
+    throwAnchorMove: null,
+    throwHoldFrames: 0,
+    throwMaxHoldFrames: 240,
+    throwJabActive: false,
+    throwJabCooldownFrames: 0,
+    throwJabHitConnected: false,
+    throwEscapeProgress: 0,
+    throwEscapeGoal: 0,
+    throwShakeFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
     shadowClone: null,
@@ -1974,13 +1988,16 @@ function FighterRig({ fighter, timeScale = 1, frameTimeOverride }: { fighter: Fi
     const renderTime = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
     const bob = fighter.state === 'idle' ? Math.sin(renderTime * 4 + fighter.slot) * 0.025 : 0;
-    const hitLean = fighter.state === 'hit' ? -fighter.facing * 0.16 : 0;
+    const hitLean = fighter.state === 'hit' || fighter.state === 'throwHeld' ? -fighter.facing * 0.16 : 0;
     const juggle = fighter.state === 'juggle' ? 1 : 0;
     const getupProgress = getGetupRenderProgress(fighter);
     const juggleRoll = juggle * Math.sin(renderTime * 3.8 + fighter.slot) * 0.34;
-    const attackLean = fighter.state === 'attack' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
+    const attackLean = fighter.state === 'attack' || fighter.state === 'throwHold' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
     const offsetX = getFighterRenderOffsetX(fighter, liveProgress, renderTime);
-    group.current.position.set(fighter.position.x + offsetX, fighter.position.y + bob, fighter.position.z);
+    const shake = fighter.state === 'throwHeld' && fighter.throwShakeFrames > 0 ? Math.min(0.12, 0.024 + fighter.throwShakeFrames * 0.006) : 0;
+    const shakeX = shake ? Math.sin(renderTime * 88 + fighter.slot * 1.7) * shake : 0;
+    const shakeZ = shake ? Math.cos(renderTime * 76 + fighter.slot * 2.1) * shake * 0.45 : 0;
+    group.current.position.set(fighter.position.x + offsetX + shakeX, fighter.position.y + bob, fighter.position.z + shakeZ);
     group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
   });
 
@@ -2095,7 +2112,7 @@ function ImageVoxelFighter({ fighter, progress, timeScale = 1, frameTimeOverride
     }
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
-    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
     const hit = 0;
@@ -2196,6 +2213,7 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
     (key === 'crouchBlock' ? frames.block ?? frames.crouch : undefined) ??
     (key === 'entry' ? frames.win : undefined) ??
     (key === 'juggle' ? frames.hitHeavy ?? frames.hitLight : undefined) ??
+    (key === 'throwHeld' ? frames.hitLight ?? frames.hitHeavy : undefined) ??
     (key.startsWith('getup') ? frames.knockdown : undefined) ??
     frames.idle;
   if (!sequence?.length) return fighter.character.spriteSheetPath;
@@ -2203,7 +2221,7 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
   const frameIndex =
     fighter.state === 'chargeKi'
       ? getChargeKiFrameIndex(fighter, sequence.length)
-    : fighter.state === 'attack'
+    : fighter.state === 'attack' || fighter.state === 'throwHold'
       ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
       : fighter.state === 'getup'
         ? Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length))
@@ -2250,11 +2268,18 @@ function getChargeKiFrameIndex(fighter: FighterRuntime, sequenceLength: number) 
 function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
   if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
-  if (fighter.state === 'walk') return fighter.facing === 1 ? 'walkForward' : 'walkBack';
+  if (fighter.state === 'walk') {
+    if (fighter.dashForwardFrames > 0 && fighter.character.animationFrames?.sprint?.length) return 'sprint';
+    if (fighter.walkDirection > 0) return 'walkForward';
+    if (fighter.walkDirection < 0) return 'walkBack';
+    return fighter.facing === 1 ? 'walkForward' : 'walkBack';
+  }
   if (fighter.state === 'sidestep') return fighter.sidestepDirection < 0 ? 'sidestepLeft' : 'sidestepRight';
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'chargeKi') return 'chargeKi';
   if (fighter.state === 'transform') return fighter.character.animationFrames?.transform?.length ? 'transform' : fighter.character.animationFrames?.chargeKi?.length ? 'chargeKi' : 'idle';
+  if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'throwHeld') return 'throwHeld';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter);
@@ -2667,7 +2692,7 @@ function VoxelSpriteFighter({ fighter, progress, timeScale = 1, frameTimeOverrid
     const liveProgress = activeMoveProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
-    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
     const hit = 0;
@@ -2819,7 +2844,7 @@ function ExternalFighter({ fighter, url, timeScale = 1 }: { fighter: FighterRunt
         action.timeScale = timeScale;
       }
     });
-    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
     const hit = 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
@@ -2843,14 +2868,14 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
   const normalized = names.map((name) => ({ name, key: name.toLowerCase() }));
   const find = (...needles: string[]) =>
     normalized.find((clip) => needles.some((needle) => clip.key.includes(needle)))?.name;
-  if (fighter.state === 'attack') return find('punch', 'attack', 'wave') ?? names[0];
+  if (fighter.state === 'attack' || fighter.state === 'throwHold') return find('punch', 'attack', 'wave') ?? names[0];
   if (fighter.state === 'walk' || fighter.state === 'sidestep') return find('walk', 'run', 'animation') ?? names[0];
   if (fighter.state === 'jump') return find('jump', 'walk', 'run', 'idle') ?? names[0];
   if (fighter.state === 'crouchBlock') return find('crouch', 'block', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'crouch') return find('crouch', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'chargeKi' || fighter.state === 'transform') return find('charge', 'power', 'taunt', 'idle', 'standing') ?? names[0];
   if (fighter.state === 'block') return find('idle', 'standing') ?? names[0];
-  if (fighter.state === 'hit' || fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup') return find('death', 'no', 'idle') ?? names[0];
+  if (fighter.state === 'hit' || fighter.state === 'throwHeld' || fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup') return find('death', 'no', 'idle') ?? names[0];
   if (fighter.state === 'entry') return find('intro', 'entry', 'taunt', 'wave', 'yes', 'idle') ?? names[0];
   if (fighter.state === 'win') return find('dance', 'yes', 'wave') ?? names[0];
   if (fighter.state === 'lose') return find('death', 'no') ?? names[0];
@@ -2888,7 +2913,7 @@ function ProceduralFighter({
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 11) : 0;
     const side = fighter.state === 'sidestep' ? Math.sin(t * 13) * 0.16 : 0;
-    const attack = fighter.state === 'attack' ? Math.sin(liveProgress * Math.PI) : 0;
+    const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const hit = 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? -0.3 : block ? -0.12 : 0;
