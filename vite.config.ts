@@ -1635,7 +1635,7 @@ function sanitizeAnimationScaleMap(scales: Record<string, Record<string, unknown
         {
           width: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.width, 1))).toFixed(2)),
           height: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.height, 1))).toFixed(2)),
-          offsetX: Number(Math.max(-1.5, Math.min(1.5, finiteOr(value.offsetX, 0))).toFixed(2))
+          offsetX: Number(Math.max(-6, Math.min(6, finiteOr(value.offsetX, 0))).toFixed(2))
         }
       ])
       .filter(([, value]) => {
@@ -1659,7 +1659,7 @@ function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, Re
               {
                 width: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.width, 1))).toFixed(2)),
                 height: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.height, 1))).toFixed(2)),
-                offsetX: Number(Math.max(-1.5, Math.min(1.5, finiteOr(frameScale.offsetX, 0))).toFixed(2))
+                offsetX: Number(Math.max(-6, Math.min(6, finiteOr(frameScale.offsetX, 0))).toFixed(2))
               }
             ])
             .filter(([, value]) => {

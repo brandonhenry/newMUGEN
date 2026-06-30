@@ -2094,7 +2094,7 @@ function getCharacterAnimationScale(character: CharacterDefinition, animationKey
   return {
     width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.25, 2.5),
     height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.25, 2.5),
-    offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -1.5, 1.5)
+    offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -6, 6)
   };
 }
 

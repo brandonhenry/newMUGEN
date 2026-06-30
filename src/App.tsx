@@ -800,7 +800,7 @@ function normalizeAnimationScale(size?: AnimationScale): Required<AnimationScale
   return {
     width: Number(clamp(Number(size?.width) || 1, 0.25, 2.5).toFixed(2)),
     height: Number(clamp(Number(size?.height) || 1, 0.25, 2.5).toFixed(2)),
-    offsetX: Number(clamp(Number(size?.offsetX) || 0, -1.5, 1.5).toFixed(2))
+    offsetX: Number(clamp(Number(size?.offsetX) || 0, -6, 6).toFixed(2))
   };
 }
 
@@ -7126,8 +7126,8 @@ function CharacterViewer({
                         <input
                           aria-label={`${selectedSlot.label} animation horizontal position`}
                           type="range"
-                          min="-1.5"
-                          max="1.5"
+                          min="-6"
+                          max="6"
                           step="0.01"
                           value={selectedSizeScale.offsetX}
                           onChange={(event) => updateSelectedAnimationScale({ offsetX: Number(event.target.value) })}
@@ -7136,8 +7136,8 @@ function CharacterViewer({
                         <input
                           aria-label={`${selectedSlot.label} animation horizontal position value`}
                           type="number"
-                          min="-1.5"
-                          max="1.5"
+                          min="-6"
+                          max="6"
                           step="0.01"
                           value={selectedSizeScale.offsetX}
                           onChange={(event) => updateSelectedAnimationScale({ offsetX: Number(event.target.value) })}

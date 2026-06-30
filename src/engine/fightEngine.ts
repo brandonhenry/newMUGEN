@@ -2894,7 +2894,7 @@ function getFighterAnimationOffsetX(fighter: FighterRuntime) {
   const frameIndex = animation.frameSource?.match(/frame-(\d+)\.png/)?.[1];
   const frameSize = frameIndex ? fighter.character.animationFrameScales?.[animation.key]?.[String(Number(frameIndex))] : undefined;
   const size = frameSize ?? fighter.character.animationScales?.[animation.key];
-  return clamp(Number(size?.offsetX) || 0, -1.5, 1.5);
+  return clamp(Number(size?.offsetX) || 0, -6, 6);
 }
 
 function getFighterAnimationFrameSource(fighter: FighterRuntime) {

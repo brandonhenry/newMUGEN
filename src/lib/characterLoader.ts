@@ -75,7 +75,7 @@ function sanitizeAnimationScaleMap(scales: CharacterDefinition['animationScales'
         {
           width: clamp(finiteOr(value.width, 1), 0.25, 2.5),
           height: clamp(finiteOr(value.height, 1), 0.25, 2.5),
-          offsetX: clamp(finiteOr(value.offsetX, 0), -1.5, 1.5)
+          offsetX: clamp(finiteOr(value.offsetX, 0), -6, 6)
         }
       ])
   ));
@@ -95,7 +95,7 @@ function sanitizeAnimationFrameScaleMap(scales: CharacterDefinition['animationFr
               {
                 width: clamp(finiteOr(frameScale.width, 1), 0.25, 2.5),
                 height: clamp(finiteOr(frameScale.height, 1), 0.25, 2.5),
-                offsetX: clamp(finiteOr(frameScale.offsetX, 0), -1.5, 1.5)
+                offsetX: clamp(finiteOr(frameScale.offsetX, 0), -6, 6)
               }
             ])
         )
