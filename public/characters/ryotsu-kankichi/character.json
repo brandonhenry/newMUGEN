@@ -162,12 +162,54 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:1+2": [
+      "/characters/ryotsu-kankichi/frames/frame-084.png",
+      "/characters/ryotsu-kankichi/frames/frame-085.png",
+      "/characters/ryotsu-kankichi/frames/frame-086.png",
+      "/characters/ryotsu-kankichi/frames/frame-087.png",
+      "/characters/ryotsu-kankichi/frames/frame-088.png",
+      "/characters/ryotsu-kankichi/frames/frame-089.png"
+    ],
+    "cmd:1+3": [
+      "/characters/ryotsu-kankichi/frames/frame-137.png",
+      "/characters/ryotsu-kankichi/frames/frame-138.png",
+      "/characters/ryotsu-kankichi/frames/frame-139.png",
+      "/characters/ryotsu-kankichi/frames/frame-140.png",
+      "/characters/ryotsu-kankichi/frames/frame-141.png",
+      "/characters/ryotsu-kankichi/frames/frame-142.png",
+      "/characters/ryotsu-kankichi/frames/frame-143.png"
+    ],
+    "cmd:2+3": [
+      "/characters/ryotsu-kankichi/frames/frame-110.png",
+      "/characters/ryotsu-kankichi/frames/frame-111.png",
+      "/characters/ryotsu-kankichi/frames/frame-112.png",
+      "/characters/ryotsu-kankichi/frames/frame-113.png",
+      "/characters/ryotsu-kankichi/frames/frame-114.png"
+    ],
+    "cmd:2+4": [
+      "/characters/ryotsu-kankichi/frames/frame-127.png",
+      "/characters/ryotsu-kankichi/frames/frame-128.png",
+      "/characters/ryotsu-kankichi/frames/frame-129.png"
+    ],
+    "cmd:3+4": [
+      "/characters/ryotsu-kankichi/frames/frame-122.png",
+      "/characters/ryotsu-kankichi/frames/frame-123.png",
+      "/characters/ryotsu-kankichi/frames/frame-124.png",
+      "/characters/ryotsu-kankichi/frames/frame-125.png",
+      "/characters/ryotsu-kankichi/frames/frame-126.png",
+      "/characters/ryotsu-kankichi/frames/frame-127.png"
+    ],
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/ryotsu-kankichi/frames/frame-115.png",
+      "/characters/ryotsu-kankichi/frames/frame-116.png",
+      "/characters/ryotsu-kankichi/frames/frame-117.png",
+      "/characters/ryotsu-kankichi/frames/frame-118.png",
+      "/characters/ryotsu-kankichi/frames/frame-119.png",
+      "/characters/ryotsu-kankichi/frames/frame-120.png",
+      "/characters/ryotsu-kankichi/frames/frame-121.png",
+      "/characters/ryotsu-kankichi/frames/frame-122.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -562,9 +604,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 11,
+      "activeFrames": 5,
+      "recoveryFrames": 14,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -586,9 +628,13 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
+      "launchHeight": 0,
+      "kiCost": 35,
+      "healAmount": 8,
       "label": "Ryotsu Kankichi Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "usesKi": true,
+      "healsHp": true
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -615,14 +661,18 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Ryotsu Kankichi Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": false
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 13,
+      "activeFrames": 6,
+      "recoveryFrames": 16,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -991,5 +1041,6 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false
 }
