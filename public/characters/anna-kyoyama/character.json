@@ -21,9 +21,7 @@
   "animationFrames": {
     "idle": [
       "/characters/anna-kyoyama/frames/frame-000.png",
-      "/characters/anna-kyoyama/frames/frame-001.png",
-      "/characters/anna-kyoyama/frames/frame-002.png",
-      "/characters/anna-kyoyama/frames/frame-003.png"
+      "/characters/anna-kyoyama/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/anna-kyoyama/frames/frame-004.png",
@@ -153,7 +151,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 7,
+    "idle": 5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
