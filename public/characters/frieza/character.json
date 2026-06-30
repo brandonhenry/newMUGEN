@@ -23,13 +23,7 @@
       "/characters/frieza/frames/frame-000.png",
       "/characters/frieza/frames/frame-001.png",
       "/characters/frieza/frames/frame-002.png",
-      "/characters/frieza/frames/frame-003.png",
-      "/characters/frieza/frames/frame-004.png",
-      "/characters/frieza/frames/frame-005.png",
-      "/characters/frieza/frames/frame-006.png",
-      "/characters/frieza/frames/frame-007.png",
-      "/characters/frieza/frames/frame-008.png",
-      "/characters/frieza/frames/frame-009.png"
+      "/characters/frieza/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/frieza/frames/frame-006.png",
@@ -1091,5 +1085,10 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

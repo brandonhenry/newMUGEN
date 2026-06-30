@@ -24,13 +24,7 @@
       "/characters/vegeta-super-saiyan/frames/frame-000.png",
       "/characters/vegeta-super-saiyan/frames/frame-001.png",
       "/characters/vegeta-super-saiyan/frames/frame-002.png",
-      "/characters/vegeta-super-saiyan/frames/frame-003.png",
-      "/characters/vegeta-super-saiyan/frames/frame-004.png",
-      "/characters/vegeta-super-saiyan/frames/frame-005.png",
-      "/characters/vegeta-super-saiyan/frames/frame-006.png",
-      "/characters/vegeta-super-saiyan/frames/frame-007.png",
-      "/characters/vegeta-super-saiyan/frames/frame-008.png",
-      "/characters/vegeta-super-saiyan/frames/frame-009.png"
+      "/characters/vegeta-super-saiyan/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/vegeta-super-saiyan/frames/frame-004.png",
@@ -973,5 +967,9 @@
   },
   "animationScales": {},
   "unplayable": false,
-  "hasTransform": false
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

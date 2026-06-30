@@ -23,13 +23,7 @@
       "/characters/gintoki-sakata/frames/frame-000.png",
       "/characters/gintoki-sakata/frames/frame-001.png",
       "/characters/gintoki-sakata/frames/frame-002.png",
-      "/characters/gintoki-sakata/frames/frame-003.png",
-      "/characters/gintoki-sakata/frames/frame-004.png",
-      "/characters/gintoki-sakata/frames/frame-005.png",
-      "/characters/gintoki-sakata/frames/frame-006.png",
-      "/characters/gintoki-sakata/frames/frame-007.png",
-      "/characters/gintoki-sakata/frames/frame-008.png",
-      "/characters/gintoki-sakata/frames/frame-009.png"
+      "/characters/gintoki-sakata/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/gintoki-sakata/frames/frame-004.png",
@@ -1018,5 +1012,10 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

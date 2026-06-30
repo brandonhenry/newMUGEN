@@ -24,12 +24,8 @@
       "/characters/allen-walker/frames/frame-001.png",
       "/characters/allen-walker/frames/frame-002.png",
       "/characters/allen-walker/frames/frame-003.png",
-      "/characters/allen-walker/frames/frame-004.png",
-      "/characters/allen-walker/frames/frame-005.png",
-      "/characters/allen-walker/frames/frame-006.png",
-      "/characters/allen-walker/frames/frame-007.png",
-      "/characters/allen-walker/frames/frame-008.png",
-      "/characters/allen-walker/frames/frame-009.png"
+      "/characters/allen-walker/frames/frame-002.png",
+      "/characters/allen-walker/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/allen-walker/frames/frame-004.png",
@@ -177,7 +173,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 6.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

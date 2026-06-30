@@ -35,13 +35,7 @@
       "/characters/cygnus-hyoga/frames/frame-000.png",
       "/characters/cygnus-hyoga/frames/frame-001.png",
       "/characters/cygnus-hyoga/frames/frame-002.png",
-      "/characters/cygnus-hyoga/frames/frame-003.png",
-      "/characters/cygnus-hyoga/frames/frame-004.png",
-      "/characters/cygnus-hyoga/frames/frame-005.png",
-      "/characters/cygnus-hyoga/frames/frame-006.png",
-      "/characters/cygnus-hyoga/frames/frame-007.png",
-      "/characters/cygnus-hyoga/frames/frame-008.png",
-      "/characters/cygnus-hyoga/frames/frame-009.png"
+      "/characters/cygnus-hyoga/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/cygnus-hyoga/frames/frame-018.png"
@@ -977,5 +971,10 @@
     "specialChance": 0.18
   },
   "animationScales": {},
-  "unplayable": true
+  "unplayable": true,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

@@ -23,13 +23,7 @@
       "/characters/goku/frames/frame-000.png",
       "/characters/goku/frames/frame-001.png",
       "/characters/goku/frames/frame-002.png",
-      "/characters/goku/frames/frame-003.png",
-      "/characters/goku/frames/frame-004.png",
-      "/characters/goku/frames/frame-005.png",
-      "/characters/goku/frames/frame-006.png",
-      "/characters/goku/frames/frame-007.png",
-      "/characters/goku/frames/frame-008.png",
-      "/characters/goku/frames/frame-009.png"
+      "/characters/goku/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/goku/frames/frame-004.png",
@@ -990,5 +984,10 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

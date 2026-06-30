@@ -23,13 +23,7 @@
       "/characters/caramelman-j/frames/frame-000.png",
       "/characters/caramelman-j/frames/frame-001.png",
       "/characters/caramelman-j/frames/frame-002.png",
-      "/characters/caramelman-j/frames/frame-003.png",
-      "/characters/caramelman-j/frames/frame-004.png",
-      "/characters/caramelman-j/frames/frame-005.png",
-      "/characters/caramelman-j/frames/frame-006.png",
-      "/characters/caramelman-j/frames/frame-007.png",
-      "/characters/caramelman-j/frames/frame-008.png",
-      "/characters/caramelman-j/frames/frame-009.png"
+      "/characters/caramelman-j/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/caramelman-j/frames/frame-019.png",
@@ -982,5 +976,10 @@
     }
   },
   "animationScales": {},
-  "unplayable": true
+  "unplayable": true,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

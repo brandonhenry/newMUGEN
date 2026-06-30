@@ -465,7 +465,7 @@
   },
   "animationFps": 5,
   "animationFrameRates": {
-    "idle": 4,
+    "idle": 6.5,
     "walkForward": 12,
     "walkBack": 7,
     "sidestepLeft": 10,
@@ -1595,5 +1595,10 @@
     }
   },
   "variant": false,
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

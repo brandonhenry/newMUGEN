@@ -1850,7 +1850,8 @@ function getVariantFamily(roster: CharacterDefinition[], baseId: string, unlocke
 }
 
 function isLocalDevHost() {
-  return ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+  const isViteDev = Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
+  return isViteDev && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
 }
 
 function freshAiSeed() {
@@ -5929,6 +5930,11 @@ function getAnimationPreviewStepRate(slot: AnimationSlot, move: MoveDefinition |
   return Math.max(1, animationFps);
 }
 
+function getAnimationDurationFrames(sequenceFrameCount: number, animationFps: number) {
+  if (sequenceFrameCount <= 0) return 1;
+  return Math.max(1, Math.round((sequenceFrameCount / Math.max(1, animationFps)) * 60));
+}
+
 function getGetupActionForSlot(slot: AnimationSlot): Exclude<GetupAction, 'none'> | null {
   if (slot.pose !== 'getup') return null;
   if (slot.key === 'getupRollUp') return 'rollUp';
@@ -5956,6 +5962,11 @@ function formatFrameSummary(move: MoveDefinition | null) {
     move.endsInCrouch ? 'FC End' : null
   ].filter(Boolean);
   return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitParts.join(' / ')} OH`;
+}
+
+function formatAnimationTimingSummary(frameCount: number, fps: number) {
+  if (frameCount <= 0) return 'No frame data';
+  return `${frameCount} sprite frames / ${Number(fps.toFixed(1))} FPS / ${getAnimationDurationFrames(frameCount, fps)}f loop`;
 }
 
 function formatMoveSlotLabel(slot: AnimationSlot, move: MoveDefinition | null) {
@@ -6100,6 +6111,7 @@ function CharacterViewer({
   const selectedAnimationPreviewTotalFrames = selectedGetupAction
     ? selectedGetupFrames
     : getAnimationPreviewTotalFrames(selectedSlot, selectedMove, selectedFrames.length);
+  const selectedAnimationDurationFrames = getAnimationDurationFrames(selectedFrames.length, selectedSpeed);
   const selectedAnimationPreviewStepRate = getAnimationPreviewStepRate(selectedSlot, selectedMove, selectedSpeed);
   const maxAnimationPreviewFrame = Math.max(0, selectedAnimationPreviewTotalFrames - 1);
   const clampedAnimationPreviewFrame = Math.min(maxAnimationPreviewFrame, Math.max(0, animationPreviewFrame));
@@ -6152,7 +6164,9 @@ function CharacterViewer({
     ? selectedSpriteFramePath
     : selectedGetupAction
       ? `${selectedGetupFrames} recovery frames`
-      : formatFrameSummary(selectedMove);
+      : selectedMove
+        ? formatFrameSummary(selectedMove)
+        : formatAnimationTimingSummary(selectedFrames.length, selectedSpeed);
   const updateAnimationPreviewFrame = (value: number) => {
     setAnimationPreviewPlaying(false);
     setAnimationPreviewFrame(Math.min(maxAnimationPreviewFrame, Math.max(0, Math.round(value))));
@@ -6343,6 +6357,13 @@ function CharacterViewer({
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return;
     onGetupFrameOverrideChange(active.id, selectedGetupAction, numeric);
+  };
+
+  const updateSelectedAnimationDurationFrames = (value: string) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric) || selectedFrames.length <= 0) return;
+    const durationFrames = Math.max(1, Math.round(numeric));
+    updateSelectedSpeed((selectedFrames.length / durationFrames) * 60);
   };
 
   const updateCharacterEffects = (
@@ -7120,7 +7141,7 @@ function CharacterViewer({
                 </strong>
                 <small>{selectedEditorSummary}</small>
               </div>
-              {!isEditingAnimation && !isEditingSpriteSheet && !isEditingEffectsLibrary && !isEditingMoveEffects && (
+              {isLocalDev && !isEditingAnimation && !isEditingSpriteSheet && !isEditingEffectsLibrary && !isEditingMoveEffects && (
                 <div className="frame-picker-actions character-size-controls">
                   <label className="speed-control">
                     <span>Character Width</span>
@@ -7422,6 +7443,16 @@ function CharacterViewer({
                   onChange={updateSelectedGetupFrames}
                 />
               )}
+              {!selectedMove && !selectedGetupAction && (
+                <AnimationTimingEditor
+                  label={selectedSlot.label}
+                  frameCount={selectedFrames.length}
+                  fps={selectedSpeed}
+                  durationFrames={selectedAnimationDurationFrames}
+                  onDurationChange={updateSelectedAnimationDurationFrames}
+                  onFpsChange={(value) => updateSelectedSpeed(Number(value))}
+                />
+              )}
               {selectedMove && (
                 <>
                   <FrameDataEditor move={selectedMove} onChange={updateSelectedMoveOverride} />
@@ -7525,6 +7556,9 @@ function CharacterViewer({
               {visibleSlots.map((option, index) => {
                 const move = resolveSlotMove(active, option);
                 const label = formatMoveSlotLabel(option, move);
+                const optionDataKey = getSlotDataKey(option);
+                const optionFrameCount = active.animationFrames?.[optionDataKey]?.length ?? 0;
+                const optionSpeed = active.animationFrameRates?.[optionDataKey] ?? active.animationFps ?? 8;
                 return (
                   <button
                     key={option.key}
@@ -7536,7 +7570,7 @@ function CharacterViewer({
                   >
                     <NotationGroup tokens={option.notation} />
                     {label}
-                    <small>{formatFrameSummary(move)}</small>
+                    <small>{move ? formatFrameSummary(move) : formatAnimationTimingSummary(optionFrameCount, optionSpeed)}</small>
                   </button>
                 );
               })}
@@ -8735,6 +8769,53 @@ function GetupTimingEditor({
       </header>
       <div className="frame-data-grid getup-frame-grid">
         <FrameNumberInput label="Recovery" value={frames} min={12} max={96} onChange={onChange} />
+      </div>
+    </section>
+  );
+}
+
+function AnimationTimingEditor({
+  label,
+  frameCount,
+  fps,
+  durationFrames,
+  onDurationChange,
+  onFpsChange
+}: {
+  label: string;
+  frameCount: number;
+  fps: number;
+  durationFrames: number;
+  onDurationChange: (value: string) => void;
+  onFpsChange: (value: string) => void;
+}) {
+  const minDurationFrames = frameCount > 0 ? Math.max(1, Math.ceil((frameCount / 24) * 60)) : 1;
+  const maxDurationFrames = frameCount > 0 ? Math.max(minDurationFrames, frameCount * 60) : 1;
+  return (
+    <section className="frame-data-editor" aria-label="Animation timing editor">
+      <header>
+        <span>Animation Timing</span>
+        <strong>{label}</strong>
+        <small>{formatAnimationTimingSummary(frameCount, fps)}</small>
+      </header>
+      <div className="frame-data-grid getup-frame-grid">
+        <FrameNumberInput
+          label="Duration"
+          value={durationFrames}
+          min={minDurationFrames}
+          max={maxDurationFrames}
+          disabled={frameCount <= 0}
+          onChange={onDurationChange}
+        />
+        <FrameNumberInput
+          label="FPS"
+          value={fps}
+          min={1}
+          max={24}
+          step={0.5}
+          disabled={frameCount <= 0}
+          onChange={onFpsChange}
+        />
       </div>
     </section>
   );

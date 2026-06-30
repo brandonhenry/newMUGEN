@@ -23,13 +23,7 @@
       "/characters/train-heartnet/frames/frame-000.png",
       "/characters/train-heartnet/frames/frame-001.png",
       "/characters/train-heartnet/frames/frame-002.png",
-      "/characters/train-heartnet/frames/frame-003.png",
-      "/characters/train-heartnet/frames/frame-004.png",
-      "/characters/train-heartnet/frames/frame-005.png",
-      "/characters/train-heartnet/frames/frame-006.png",
-      "/characters/train-heartnet/frames/frame-007.png",
-      "/characters/train-heartnet/frames/frame-008.png",
-      "/characters/train-heartnet/frames/frame-009.png"
+      "/characters/train-heartnet/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/train-heartnet/frames/frame-004.png",
@@ -1010,5 +1004,9 @@
   },
   "animationScales": {},
   "unplayable": false,
-  "hasTransform": false
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

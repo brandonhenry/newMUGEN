@@ -2228,11 +2228,9 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
       ? getChargeKiFrameIndex(fighter, sequence.length)
     : fighter.state === 'attack' || fighter.state === 'throwHold'
       ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
-      : fighter.state === 'getup'
-        ? Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length))
-      : key === 'idle' || key === 'crouch' || key === 'block' || key === 'crouchBlock' || key === 'hitLight' || key === 'win' || key === 'lose'
-        ? 0
-      : Math.floor(elapsedTime * fps) % sequence.length;
+    : fighter.state === 'getup'
+      ? Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length))
+    : Math.floor(elapsedTime * fps) % sequence.length;
   debugLogThrottled(9, 'voxel animation key resolved', {
     characterId: fighter.character.id,
     slot: fighter.slot,

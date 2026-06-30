@@ -23,13 +23,7 @@
       "/characters/pegasus-seiya/frames/frame-000.png",
       "/characters/pegasus-seiya/frames/frame-001.png",
       "/characters/pegasus-seiya/frames/frame-002.png",
-      "/characters/pegasus-seiya/frames/frame-003.png",
-      "/characters/pegasus-seiya/frames/frame-004.png",
-      "/characters/pegasus-seiya/frames/frame-005.png",
-      "/characters/pegasus-seiya/frames/frame-006.png",
-      "/characters/pegasus-seiya/frames/frame-007.png",
-      "/characters/pegasus-seiya/frames/frame-008.png",
-      "/characters/pegasus-seiya/frames/frame-009.png"
+      "/characters/pegasus-seiya/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/pegasus-seiya/frames/frame-004.png",
@@ -1005,5 +999,9 @@
   },
   "animationScales": {},
   "unplayable": false,
-  "hasTransform": false
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

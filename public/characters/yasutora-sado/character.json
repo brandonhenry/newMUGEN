@@ -35,12 +35,7 @@
       "/characters/yasutora-sado/frames/frame-000.png",
       "/characters/yasutora-sado/frames/frame-001.png",
       "/characters/yasutora-sado/frames/frame-002.png",
-      "/characters/yasutora-sado/frames/frame-003.png",
-      "/characters/yasutora-sado/frames/frame-004.png",
-      "/characters/yasutora-sado/frames/frame-005.png",
-      "/characters/yasutora-sado/frames/frame-006.png",
-      "/characters/yasutora-sado/frames/frame-007.png",
-      "/characters/yasutora-sado/frames/frame-008.png"
+      "/characters/yasutora-sado/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/yasutora-sado/frames/frame-000.png"
@@ -938,5 +933,10 @@
     "specialChance": 0.26
   },
   "animationScales": {},
-  "unplayable": true
+  "unplayable": true,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

@@ -24,13 +24,7 @@
       "/characters/gotenks-super-saiyan/frames/frame-000.png",
       "/characters/gotenks-super-saiyan/frames/frame-001.png",
       "/characters/gotenks-super-saiyan/frames/frame-002.png",
-      "/characters/gotenks-super-saiyan/frames/frame-003.png",
-      "/characters/gotenks-super-saiyan/frames/frame-004.png",
-      "/characters/gotenks-super-saiyan/frames/frame-005.png",
-      "/characters/gotenks-super-saiyan/frames/frame-006.png",
-      "/characters/gotenks-super-saiyan/frames/frame-007.png",
-      "/characters/gotenks-super-saiyan/frames/frame-008.png",
-      "/characters/gotenks-super-saiyan/frames/frame-009.png"
+      "/characters/gotenks-super-saiyan/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/gotenks-super-saiyan/frames/frame-004.png",
@@ -954,5 +948,10 @@
     }
   },
   "animationScales": {},
-  "unplayable": false
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

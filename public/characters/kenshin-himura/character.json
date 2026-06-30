@@ -23,13 +23,7 @@
       "/characters/kenshin-himura/frames/frame-000.png",
       "/characters/kenshin-himura/frames/frame-001.png",
       "/characters/kenshin-himura/frames/frame-002.png",
-      "/characters/kenshin-himura/frames/frame-003.png",
-      "/characters/kenshin-himura/frames/frame-004.png",
-      "/characters/kenshin-himura/frames/frame-005.png",
-      "/characters/kenshin-himura/frames/frame-006.png",
-      "/characters/kenshin-himura/frames/frame-007.png",
-      "/characters/kenshin-himura/frames/frame-008.png",
-      "/characters/kenshin-himura/frames/frame-009.png"
+      "/characters/kenshin-himura/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/kenshin-himura/frames/frame-004.png",
@@ -1041,5 +1035,9 @@
   },
   "animationScales": {},
   "unplayable": false,
-  "hasTransform": false
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

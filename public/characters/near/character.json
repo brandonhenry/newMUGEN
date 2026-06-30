@@ -36,11 +36,6 @@
       "/characters/near/frames/frame-002.png",
       "/characters/near/frames/frame-005.png",
       "/characters/near/frames/frame-008.png",
-      "/characters/near/frames/frame-011.png",
-      "/characters/near/frames/frame-014.png",
-      "/characters/near/frames/frame-017.png",
-      "/characters/near/frames/frame-020.png",
-      "/characters/near/frames/frame-023.png",
       "/characters/near/frames/frame-026.png"
     ],
     "walkForward": [
@@ -399,6 +394,7 @@
       "activeFrames": 3,
       "recoveryFrames": 16,
       "damage": 7,
+      "blockDamage": 1,
       "onBlockFrames": -3,
       "onHitFrames": 8,
       "onCounterHitFrames": 11,
@@ -406,7 +402,6 @@
       "range": 1.48,
       "label": "Near Left Check",
       "hitLevel": "high",
-      "blockDamage": 1,
       "tracking": "medium",
       "knockdown": false
     },
@@ -415,6 +410,7 @@
       "activeFrames": 2,
       "recoveryFrames": 14,
       "damage": 7,
+      "blockDamage": 1,
       "onBlockFrames": -3,
       "onHitFrames": 7,
       "onCounterHitFrames": 10,
@@ -422,7 +418,6 @@
       "range": 1.46,
       "label": "Near Right Check",
       "hitLevel": "mid",
-      "blockDamage": 1,
       "tracking": "medium",
       "knockdown": false
     },
@@ -431,6 +426,7 @@
       "activeFrames": 3,
       "recoveryFrames": 21,
       "damage": 8,
+      "blockDamage": 1,
       "onBlockFrames": -11,
       "onHitFrames": 3,
       "onCounterHitFrames": 7,
@@ -438,7 +434,6 @@
       "range": 1.56,
       "label": "Near Left Kick",
       "hitLevel": "low",
-      "blockDamage": 1,
       "tracking": "medium",
       "knockdown": false
     },
@@ -720,5 +715,10 @@
     "specialChance": 0.19
   },
   "unplayable": true,
-  "animationScales": {}
+  "animationScales": {},
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

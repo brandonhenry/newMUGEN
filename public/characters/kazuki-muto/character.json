@@ -23,13 +23,7 @@
       "/characters/kazuki-muto/frames/frame-000.png",
       "/characters/kazuki-muto/frames/frame-001.png",
       "/characters/kazuki-muto/frames/frame-002.png",
-      "/characters/kazuki-muto/frames/frame-003.png",
-      "/characters/kazuki-muto/frames/frame-004.png",
-      "/characters/kazuki-muto/frames/frame-005.png",
-      "/characters/kazuki-muto/frames/frame-006.png",
-      "/characters/kazuki-muto/frames/frame-007.png",
-      "/characters/kazuki-muto/frames/frame-008.png",
-      "/characters/kazuki-muto/frames/frame-009.png"
+      "/characters/kazuki-muto/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/kazuki-muto/frames/frame-006.png",
@@ -1014,5 +1008,9 @@
   },
   "animationScales": {},
   "unplayable": false,
-  "hasTransform": false
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }

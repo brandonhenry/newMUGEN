@@ -106,6 +106,12 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('animation-width-slider')).toBeHidden();
   await page.getByTestId('character-width-input').fill('1.25');
   await expect(page.getByTestId('character-width-slider')).toHaveValue('1.25');
+  await page.getByTestId('toggle-animation-editor').click();
+  const timingEditor = page.getByLabel('Animation timing editor');
+  await expect(timingEditor).toBeVisible();
+  await timingEditor.getByRole('spinbutton', { name: 'FPS' }).fill('12');
+  await expect(page.getByTestId('animation-speed-input')).toHaveValue('12');
+  await page.getByTestId('toggle-animation-editor').click();
   await page.getByTestId('viewer-pose-jableft').click();
   await expect(page.getByTestId('viewer-pose-jableft')).toHaveClass(/active/);
   await page.getByTestId('toggle-animation-editor').click();

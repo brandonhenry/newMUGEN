@@ -23,13 +23,7 @@
       "/characters/anna-kyoyama/frames/frame-000.png",
       "/characters/anna-kyoyama/frames/frame-001.png",
       "/characters/anna-kyoyama/frames/frame-002.png",
-      "/characters/anna-kyoyama/frames/frame-003.png",
-      "/characters/anna-kyoyama/frames/frame-004.png",
-      "/characters/anna-kyoyama/frames/frame-005.png",
-      "/characters/anna-kyoyama/frames/frame-006.png",
-      "/characters/anna-kyoyama/frames/frame-007.png",
-      "/characters/anna-kyoyama/frames/frame-008.png",
-      "/characters/anna-kyoyama/frames/frame-009.png"
+      "/characters/anna-kyoyama/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/anna-kyoyama/frames/frame-004.png",
@@ -159,7 +153,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 7,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
@@ -955,5 +949,19 @@
   "modelScale": {
     "width": 0.98,
     "height": 1.08
+  },
+  "animationFrameScales": {
+    "idle": {
+      "2": {
+        "width": 1,
+        "height": 1,
+        "offsetX": -0.02
+      },
+      "3": {
+        "width": 1,
+        "height": 1,
+        "offsetX": -0.03
+      }
+    }
   }
 }

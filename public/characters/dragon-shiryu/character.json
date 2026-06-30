@@ -35,13 +35,7 @@
       "/characters/dragon-shiryu/frames/frame-000.png",
       "/characters/dragon-shiryu/frames/frame-001.png",
       "/characters/dragon-shiryu/frames/frame-002.png",
-      "/characters/dragon-shiryu/frames/frame-003.png",
-      "/characters/dragon-shiryu/frames/frame-004.png",
-      "/characters/dragon-shiryu/frames/frame-005.png",
-      "/characters/dragon-shiryu/frames/frame-006.png",
-      "/characters/dragon-shiryu/frames/frame-007.png",
-      "/characters/dragon-shiryu/frames/frame-008.png",
-      "/characters/dragon-shiryu/frames/frame-009.png"
+      "/characters/dragon-shiryu/frames/frame-003.png"
     ],
     "walkForward": [
       "/characters/dragon-shiryu/frames/frame-000.png"
@@ -973,5 +967,10 @@
     "specialChance": 0.22
   },
   "animationScales": {},
-  "unplayable": true
+  "unplayable": true,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  }
 }
