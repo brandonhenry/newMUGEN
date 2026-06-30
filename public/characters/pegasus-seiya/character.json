@@ -165,8 +165,24 @@
       "/characters/pegasus-seiya/frames/frame-100.png",
       "/characters/pegasus-seiya/frames/frame-101.png"
     ],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
+    "cmd:1+3": [
+      "/characters/pegasus-seiya/frames/frame-132.png",
+      "/characters/pegasus-seiya/frames/frame-133.png",
+      "/characters/pegasus-seiya/frames/frame-134.png",
+      "/characters/pegasus-seiya/frames/frame-135.png"
+    ],
+    "cmd:2+3": [
+      "/characters/pegasus-seiya/frames/frame-212.png",
+      "/characters/pegasus-seiya/frames/frame-213.png",
+      "/characters/pegasus-seiya/frames/frame-214.png",
+      "/characters/pegasus-seiya/frames/frame-215.png",
+      "/characters/pegasus-seiya/frames/frame-216.png",
+      "/characters/pegasus-seiya/frames/frame-217.png",
+      "/characters/pegasus-seiya/frames/frame-218.png",
+      "/characters/pegasus-seiya/frames/frame-219.png",
+      "/characters/pegasus-seiya/frames/frame-220.png",
+      "/characters/pegasus-seiya/frames/frame-221.png"
+    ],
     "cmd:2+4": [],
     "cmd:3+4": [],
     "cmd:O+2": [],
@@ -176,6 +192,11 @@
       "/characters/pegasus-seiya/frames/frame-128.png",
       "/characters/pegasus-seiya/frames/frame-129.png",
       "/characters/pegasus-seiya/frames/frame-130.png"
+    ],
+    "cmd:1+4": [
+      "/characters/pegasus-seiya/frames/frame-138.png",
+      "/characters/pegasus-seiya/frames/frame-139.png",
+      "/characters/pegasus-seiya/frames/frame-140.png"
     ]
   },
   "animationFrameRates": {
@@ -585,9 +606,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
+      "startupFrames": 9,
       "activeFrames": 3,
-      "recoveryFrames": 28,
+      "recoveryFrames": 9,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -595,9 +616,10 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
+      "launchHeight": 0,
       "label": "Pegasus Seiya Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -955,6 +977,9 @@
       "blockDamage": 1,
       "hitLevel": "throw",
       "throwCapture": true
+    },
+    "cmd:1+4": {
+      "forwardForce": 3
     }
   },
   "effects": [],
