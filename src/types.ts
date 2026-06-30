@@ -123,6 +123,7 @@ export type MoveDefinition = {
   tornado?: boolean;
   throwCapture?: boolean;
   endsInCrouch?: boolean;
+  cancelable?: boolean;
   tracking: MoveTracking;
   armorStartFrame?: number | null;
   armorEndFrame?: number | null;

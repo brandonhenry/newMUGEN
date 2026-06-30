@@ -158,6 +158,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     tornado: Boolean(move.tornado),
     throwCapture: Boolean(move.throwCapture),
     endsInCrouch: Boolean(move.endsInCrouch),
+    cancelable: Boolean(move.cancelable),
     tracking: normalizeTracking(move.tracking),
     armorStartFrame: normalizeNullableFrame(move.armorStartFrame),
     armorEndFrame: normalizeNullableFrame(move.armorEndFrame),

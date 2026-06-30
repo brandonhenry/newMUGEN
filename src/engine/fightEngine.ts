@@ -64,7 +64,6 @@ const LOW_HURTBOX_MIN_HEIGHT = 0.34;
 const AI_RECENT_MEMORY_LIMIT = 12;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const FORCED_CROUCH_EXIT_FRAMES = 8;
-const BLOCKER_MIN_ADVANTAGE_FRAMES = 3;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
 const PRESSURE_LANE_TOLERANCE = 0.82;
 const AI_DECISION_BUCKETS_PER_SECOND = 4;
@@ -661,10 +660,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.state === 'attack' && (fighter.actionFramesRemaining > 0 || fighter.actionTimer > 0)) {
-    const bufferedMove = fighter.bufferedMoveInput;
-    if (bufferedMove && shouldDropSameMoveRecoveryBuffer(fighter, opponent, input, bufferedMove)) {
+    const cancelMove = freshMoveInput;
+    if (cancelMove && shouldDropSameMoveRecoveryBuffer(fighter, opponent, input, cancelMove)) {
       clearBufferedMoveInput(fighter);
-    } else if (bufferedMove && canComboCancel(fighter) && startComboAttack(fighter, opponent, input, bufferedMove, 'cancel')) {
+    } else if (cancelMove && canComboCancel(fighter) && startComboAttack(fighter, opponent, input, cancelMove, 'cancel')) {
       clearBufferedMoveInput(fighter);
       applyGravity(fighter, dt);
       finishFighterStep();
@@ -1051,7 +1050,7 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 }
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
-  if (fighter.state === 'attack') return true;
+  if (fighter.state === 'attack') return false;
   if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
   return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
 }
@@ -1549,9 +1548,7 @@ function getGetupAnimationKey(action: FighterRuntime['getupAction']) {
 function canComboCancel(fighter: FighterRuntime) {
   const move = fighter.currentMove;
   if (!move) return false;
-  const cancelWindow = move.cancelWindows?.find((window) => fighter.moveFrame >= window.startFrame && fighter.moveFrame <= window.endFrame);
-  if (cancelWindow) return true;
-  return fighter.hitConfirmed && fighter.moveFrame >= move.startupFrames + move.activeFrames;
+  return Boolean(move.cancelable) && fighter.hitConfirmed && fighter.moveFrame >= move.startupFrames + move.activeFrames;
 }
 
 function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput, chainMode: 'neutral' | 'cancel' | 'link' = 'neutral'): boolean {
@@ -1638,8 +1635,7 @@ function canChainInto(fighter: FighterRuntime, chainMode: 'neutral' | 'cancel' |
   const current = fighter.currentMove;
   if (chainMode === 'cancel') {
     if (!current || !fighter.hitConfirmed) return false;
-    const cancelWindow = current.cancelWindows?.find((window) => fighter.moveFrame >= window.startFrame && fighter.moveFrame <= window.endFrame);
-    return Boolean(cancelWindow) || fighter.moveFrame >= current.startupFrames + current.activeFrames;
+    return Boolean(current.cancelable) && fighter.moveFrame >= current.startupFrames + current.activeFrames;
   }
   if (fighter.comboTimer <= 0 || fighter.comboHits <= 0 || fighter.stunFramesRemaining > 0 || fighter.blockstunFramesRemaining > 0 || fighter.state === 'knockdown') return false;
   return true;
@@ -1894,6 +1890,7 @@ function applyMoveOverrides(
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
     juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2),
     throwCapture: Boolean(merged.throwCapture),
+    cancelable: Boolean(merged.cancelable),
     healsHp: Boolean(merged.healsHp),
     healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100)
   };
@@ -2775,7 +2772,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(move);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
     const defenderAdvantageFrames = Math.max(0, attackerRemaining - defender.blockstunFramesRemaining);
-    defender.blockPunishWindowFrames = Math.max(defender.blockPunishWindowFrames, defenderAdvantageFrames + BLOCK_PUNISH_BUFFER_FRAMES);
+    if (defenderAdvantageFrames > 0) {
+      defender.blockPunishWindowFrames = Math.max(defender.blockPunishWindowFrames, defenderAdvantageFrames + BLOCK_PUNISH_BUFFER_FRAMES);
+    }
     defender.stunFramesRemaining = 0;
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
@@ -3214,7 +3213,7 @@ function getWhiffRecoveryFrames(move: MoveDefinition) {
 }
 
 function getEffectiveOnBlockFrames(move: MoveDefinition) {
-  return Math.min(move.onBlockFrames, -BLOCKER_MIN_ADVANTAGE_FRAMES);
+  return move.onBlockFrames;
 }
 
 function isCrouchingState(fighter: FighterRuntime) {

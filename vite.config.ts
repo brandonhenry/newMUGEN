@@ -1315,6 +1315,7 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'tornado',
     'throwCapture',
     'endsInCrouch',
+    'cancelable',
     'tracking',
     'armorStartFrame',
     'armorEndFrame',
@@ -1330,7 +1331,7 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     Object.entries(override).filter(([key, value]) => {
       if (!allowed.has(key)) return false;
       if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
-      if (key === 'knockdown' || key === 'tornado' || key === 'throwCapture' || key === 'endsInCrouch' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
+      if (key === 'knockdown' || key === 'tornado' || key === 'throwCapture' || key === 'endsInCrouch' || key === 'cancelable' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
         return typeof value === 'boolean';
       }
       if (key === 'cancelWindows') return Array.isArray(value);

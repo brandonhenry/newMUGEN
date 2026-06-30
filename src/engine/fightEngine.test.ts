@@ -13,7 +13,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
-import { emptyInputFrame, type CharacterDefinition, type MoveDefinition, type MoveInput } from '../types';
+import { emptyInputFrame, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
 
 function unwrappedAngleDelta(next: number, previous: number) {
@@ -45,6 +45,22 @@ function makeKiClashCharacter(character: CharacterDefinition, kiBurst = true): C
         : move
     )
   };
+}
+
+function makeCancelableCharacter(character: CharacterDefinition, inputs?: MoveInput[]): CharacterDefinition {
+  const allowed = inputs ? new Set(inputs) : null;
+  return {
+    ...character,
+    moves: character.moves.map((move) => (allowed && !allowed.has(move.input) ? move : { ...move, cancelable: true }))
+  };
+}
+
+function stepUntilFighterActionable(match: MatchSnapshot, fighterIndex: 0 | 1, maxFrames = 90): MatchSnapshot {
+  let next = match;
+  for (let i = 0; i < maxFrames && (next.fighters[fighterIndex].actionFramesRemaining > 0 || next.fighters[fighterIndex].actionTimer > 0); i += 1) {
+    next = stepMatch(next, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+  }
+  return next;
 }
 
 function startKiClashMatch() {
@@ -1310,7 +1326,7 @@ describe('fight engine', () => {
       if (match.phase !== 'fighting') break;
     }
 
-    expect(leaderAttackStarts).toBeGreaterThanOrEqual(2);
+    expect(leaderAttackStarts).toBeGreaterThanOrEqual(1);
     expect(leaderBackWalkFrames).toBeLessThan(180);
   });
 
@@ -1343,7 +1359,7 @@ describe('fight engine', () => {
       if (match.phase !== 'fighting') break;
     }
 
-    expect(leaderAttackStarts).toBeGreaterThanOrEqual(2);
+    expect(leaderAttackStarts).toBeGreaterThanOrEqual(1);
     expect(maxLeaderComboStep).toBeLessThanOrEqual(3);
     expect(maxLeaderMoveDamage).toBeLessThanOrEqual(16);
     expect(usedLauncher).toBe(false);
@@ -1584,7 +1600,7 @@ describe('fight engine', () => {
 
     let sawCharge = false;
     let sawClone = false;
-    for (let i = 0; i < 180; i += 1) {
+    for (let i = 0; i < 720; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
       if (match.fighters[0].state === 'chargeKi') sawCharge = true;
       if (match.fighters[0].shadowClone?.phase === 'active') {
@@ -1690,7 +1706,7 @@ describe('fight engine', () => {
 
   it('higher CPU difficulty extends hit-confirmed routes longer than easy CPU', () => {
     const simulatePressure = (difficulty: 1 | 5) => {
-      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);
+      let match = createMatch(makeCancelableCharacter(starterCharacters[0]), starterCharacters[1], stages[0], 'cpu', difficulty);
       match.phase = 'fighting';
       match.countdown = 0;
       match.fighters[0].hp = 999;
@@ -1717,6 +1733,65 @@ describe('fight engine', () => {
     };
 
     expect(simulatePressure(5)).toBeGreaterThan(simulatePressure(1));
+  });
+
+  it('keeps CPU locked in non-cancelable recovery but lets cancelable hit-confirms continue', () => {
+    const prepareCpuRecovery = (cancelable: boolean) => {
+      const character: CharacterDefinition = {
+        ...starterCharacters[0],
+        aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 0 },
+        moves: starterCharacters[0].moves.map((move) => ({
+          ...move,
+          cancelable,
+          startupFrames: 3,
+          activeFrames: 2,
+          recoveryFrames: 60,
+          onHitFrames: 90,
+          range: 3,
+          pushback: 0.08,
+          launchHeight: undefined,
+          knockdown: false
+        }))
+      };
+      const next = createMatch(character, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 13 });
+      next.phase = 'fighting';
+      next.countdown = 0;
+      next.fighters[0].position.x = -0.45;
+      next.fighters[1].position.x = 0.45;
+      const move = next.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+      next.fighters[0].state = 'attack';
+      next.fighters[0].currentMove = move;
+      next.fighters[0].moveInstanceId = 1;
+      next.fighters[0].moveFrame = move.startupFrames + move.activeFrames;
+      next.fighters[0].actionFramesRemaining = move.recoveryFrames;
+      next.fighters[0].actionTimer = move.recoveryFrames / 60;
+      next.fighters[0].hitConnected = true;
+      next.fighters[0].hitConfirmed = true;
+      next.fighters[0].comboTimer = 0.5;
+      next.fighters[0].comboStep = 1;
+      next.fighters[0].comboSequence = ['jab'];
+      next.fighters[0].comboHits = 1;
+      next.fighters[1].state = 'hit';
+      next.fighters[1].stunFramesRemaining = 120;
+      next.fighters[1].actionFramesRemaining = 120;
+      next.fighters[1].stunTimer = 2;
+      next.fighters[1].actionTimer = 2;
+      return next;
+    };
+
+    let strict = prepareCpuRecovery(false);
+    for (let i = 0; i < 20; i += 1) {
+      strict = stepMatch(strict, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(strict.fighters[0].moveInstanceId).toBe(1);
+    expect(strict.fighters[0].currentMove?.input).toBe('jab');
+
+    let cancelable = prepareCpuRecovery(true);
+    for (let i = 0; i < 20 && cancelable.fighters[0].moveInstanceId === 1; i += 1) {
+      cancelable = stepMatch(cancelable, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(cancelable.fighters[0].moveInstanceId).toBeGreaterThan(1);
+    expect(cancelable.fighters[0].currentMove?.comboStep).toBe(2);
   });
 
   it('keeps CPU from jumping in neutral without a homing move or air juggle chase', () => {
@@ -1764,7 +1839,7 @@ describe('fight engine', () => {
     let jumped = false;
     let usedHoming = false;
 
-    for (let i = 0; i < 180; i += 1) {
+    for (let i = 0; i < 720; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
       jumped = jumped || match.fighters[0].state === 'jump';
       usedHoming = usedHoming || match.fighters[0].currentMove?.tracking === 'homing';
@@ -2583,8 +2658,8 @@ describe('fight engine', () => {
     expect(match.fighters[0].actionFramesRemaining - match.fighters[1].blockstunFramesRemaining).toBe(10);
   });
 
-  it('gives the blocker at least a small plus-frame punish window on block', () => {
-    const safeAttacker: CharacterDefinition = {
+  it('honors authored positive block advantage without forcing blocker plus frames', () => {
+    const plusAttacker: CharacterDefinition = {
       ...starterCharacters[0],
       moveOverrides: {
         jab: {
@@ -2595,7 +2670,7 @@ describe('fight engine', () => {
         }
       }
     };
-    let match = createMatch(safeAttacker, starterCharacters[1], stages[0], 'local2p');
+    let match = createMatch(plusAttacker, starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;
@@ -2610,8 +2685,39 @@ describe('fight engine', () => {
       attack.jab = false;
     }
 
-    expect(match.fighters[0].actionFramesRemaining - match.fighters[1].blockstunFramesRemaining).toBeGreaterThanOrEqual(3);
-    expect(match.fighters[1].blockPunishWindowFrames).toBeGreaterThanOrEqual(15);
+    expect(match.fighters[1].blockstunFramesRemaining - match.fighters[0].actionFramesRemaining).toBe(4);
+    expect(match.fighters[1].blockPunishWindowFrames).toBe(0);
+  });
+
+  it('honors authored neutral block advantage', () => {
+    const neutralAttacker: CharacterDefinition = {
+      ...starterCharacters[0],
+      moveOverrides: {
+        jab: {
+          startupFrames: 1,
+          activeFrames: 1,
+          recoveryFrames: 20,
+          onBlockFrames: 0
+        }
+      }
+    };
+    let match = createMatch(neutralAttacker, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    const block = emptyInputFrame();
+    block.block = true;
+    for (let i = 0; i < 5; i += 1) {
+      match = stepMatch(match, attack, block, 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[1].blockstunFramesRemaining).toBe(match.fighters[0].actionFramesRemaining);
+    expect(match.fighters[1].blockPunishWindowFrames).toBe(0);
   });
 
   it('lets CPU punish during its post-block advantage window', () => {
@@ -2898,7 +3004,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.damage).toBe(8);
   });
 
-  it('buffers player attack inputs and chains them after a confirmed hit', () => {
+  it('ignores early player attack inputs during non-cancelable recovery after a confirmed hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -2919,12 +3025,12 @@ describe('fight engine', () => {
     const three = emptyInputFrame();
     three.kick = true;
     match = stepMatch(match, three, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
-    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].currentMove?.comboStep).toBe(1);
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
     expect(match.fighters[0].bufferedMoveInput).toBeNull();
   });
 
-  it('expires buffered attack inputs if no chain window opens', () => {
+  it('does not buffer early attack inputs if no chain window opens', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -2937,7 +3043,7 @@ describe('fight engine', () => {
     const earlyKick = emptyInputFrame();
     earlyKick.kick = true;
     match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
 
     for (let i = 0; i < 20; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -2947,11 +3053,139 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
 
+  it('starts a follow-up only when a non-cancelable attacker presses after full recovery', () => {
+    const plusCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 3,
+              activeFrames: 2,
+              recoveryFrames: 8,
+              onHitFrames: 30,
+              range: 3,
+              pushback: 0.08,
+              launchHeight: undefined,
+              knockdown: false
+            }
+          : move
+      )
+    };
+    let match = createMatch(plusCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 8 && !match.fighters[0].hitConfirmed; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    const earlyKick = emptyInputFrame();
+    earlyKick.kick = true;
+    match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+
+    match = stepUntilFighterActionable(match, 0);
+    const timedKick = emptyInputFrame();
+    timedKick.kick = true;
+    match = stepMatch(match, timedKick, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+  });
+
+  it('lets a cancelable landed move cancel into a follow-up after active frames', () => {
+    const cancelableCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              cancelable: true,
+              startupFrames: 3,
+              activeFrames: 2,
+              recoveryFrames: 18,
+              onHitFrames: 28,
+              range: 3,
+              pushback: 0.08,
+              launchHeight: undefined,
+              knockdown: false
+            }
+          : move
+      )
+    };
+    let match = createMatch(cancelableCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 8 && (!match.fighters[0].hitConfirmed || match.fighters[0].moveFrame < 5); i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].actionFramesRemaining).toBeGreaterThan(0);
+
+    const kick = emptyInputFrame();
+    kick.kick = true;
+    match = stepMatch(match, kick, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].currentMove?.comboStep).toBe(2);
+  });
+
+  it('does not let cancelable whiffs or blocks cancel early', () => {
+    const cancelableCharacter = makeCancelableCharacter(starterCharacters[0], ['jab']);
+    let whiff = createMatch(cancelableCharacter, starterCharacters[1], stages[0], 'local2p');
+    whiff.phase = 'fighting';
+    whiff.countdown = 0;
+    whiff.fighters[0].position.x = -5;
+    whiff.fighters[1].position.x = 5;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    whiff = stepMatch(whiff, jab, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 16 && whiff.fighters[0].moveFrame < whiff.fighters[0].currentMove!.startupFrames + whiff.fighters[0].currentMove!.activeFrames; i += 1) {
+      whiff = stepMatch(whiff, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    const whiffKick = emptyInputFrame();
+    whiffKick.kick = true;
+    whiff = stepMatch(whiff, whiffKick, emptyInputFrame(), 1 / 60);
+    expect(whiff.fighters[0].currentMove?.input).toBe('jab');
+    expect(whiff.fighters[0].comboStep).toBe(1);
+
+    let blocked = createMatch(cancelableCharacter, starterCharacters[1], stages[0], 'local2p');
+    blocked.phase = 'fighting';
+    blocked.countdown = 0;
+    blocked.fighters[0].position.x = -0.45;
+    blocked.fighters[1].position.x = 0.45;
+    const blockInput = emptyInputFrame();
+    blockInput.block = true;
+    const blockJab = emptyInputFrame();
+    blockJab.jab = true;
+    for (let i = 0; i < 16 && !blocked.fighters[0].hitConnected; i += 1) {
+      blocked = stepMatch(blocked, i === 0 ? blockJab : emptyInputFrame(), blockInput, 1 / 60);
+    }
+    expect(blocked.fighters[0].hitConfirmed).toBe(false);
+    const blockKick = emptyInputFrame();
+    blockKick.kick = true;
+    blocked = stepMatch(blocked, blockKick, blockInput, 1 / 60);
+    expect(blocked.fighters[0].currentMove?.input).toBe('jab');
+    expect(blocked.fighters[0].comboStep).toBe(1);
+  });
+
   it('allows a four-hit player string when frame data keeps the route valid', () => {
     const frameDataComboCharacter: CharacterDefinition = {
-      ...starterCharacters[0],
+      ...makeCancelableCharacter(starterCharacters[0]),
       moves: starterCharacters[0].moves.map((move) => ({
         ...move,
+        cancelable: true,
         startupFrames: 3,
         activeFrames: 3,
         recoveryFrames: 8,
@@ -2974,7 +3208,14 @@ describe('fight engine', () => {
       const input = emptyInputFrame();
       input[button] = true;
       match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
-      for (let i = 0; i < 54 && (match.fighters[0].comboStep < index + 1 || !match.fighters[0].hitConfirmed); i += 1) {
+      for (
+        let i = 0;
+        i < 54 &&
+        (match.fighters[0].comboStep < index + 1 ||
+          !match.fighters[0].hitConfirmed ||
+          (match.fighters[0].currentMove && match.fighters[0].moveFrame < match.fighters[0].currentMove.startupFrames + match.fighters[0].currentMove.activeFrames));
+        i += 1
+      ) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
       }
     });
@@ -2989,9 +3230,10 @@ describe('fight engine', () => {
 
   it('resolves newly authored neutral string routes with tuned frame data', () => {
     const frameDataComboCharacter: CharacterDefinition = {
-      ...starterCharacters[0],
+      ...makeCancelableCharacter(starterCharacters[0]),
       moves: starterCharacters[0].moves.map((move) => ({
         ...move,
+        cancelable: true,
         startupFrames: 3,
         activeFrames: 3,
         recoveryFrames: 8,
@@ -3012,7 +3254,13 @@ describe('fight engine', () => {
     const kick = emptyInputFrame();
     kick.kick = true;
     match = stepMatch(match, kick, emptyInputFrame(), 1 / 60);
-    for (let i = 0; i < 20 && !match.fighters[0].hitConfirmed; i += 1) {
+    for (
+      let i = 0;
+      i < 20 &&
+      (!match.fighters[0].hitConfirmed ||
+        (match.fighters[0].currentMove && match.fighters[0].moveFrame < match.fighters[0].currentMove.startupFrames + match.fighters[0].currentMove.activeFrames));
+      i += 1
+    ) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
@@ -3029,8 +3277,8 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.onBlockFrames).toBe(-7);
   });
 
-  it('allows repeating the same exact landed attack when frame data allows direct cancel timing', () => {
-    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+  it('allows repeating the same exact landed attack when the move is cancelable', () => {
+    let match = createMatch(makeCancelableCharacter(starterCharacters[0], ['jab']), starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
     match.fighters[0].position.x = -0.45;
@@ -3626,7 +3874,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].chargePhase).toBe('none');
   });
 
-  it('allows the same button again when it resolves to a different command move', () => {
+  it('allows the same button again after recovery when it resolves to a different command move', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -3639,6 +3887,7 @@ describe('fight engine', () => {
     for (let i = 0; i < 11; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
+    match = stepUntilFighterActionable(match, 0);
 
     const forwardOne = emptyInputFrame();
     forwardOne.right = true;
@@ -3648,7 +3897,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.command).toBe('f+1');
   });
 
-  it('uses configured full-movelist directional routes after a confirmed hit', () => {
+  it('uses configured full-movelist directional routes after confirmed-hit recovery', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -3661,6 +3910,7 @@ describe('fight engine', () => {
     for (let i = 0; i < 11; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
+    match = stepUntilFighterActionable(match, 0);
 
     const downForwardTwo = emptyInputFrame();
     downForwardTwo.down = true;

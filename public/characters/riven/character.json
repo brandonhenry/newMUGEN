@@ -353,7 +353,8 @@
       "/characters/riven/frames/frame-184.png",
       "/characters/riven/frames/frame-185.png",
       "/characters/riven/frames/frame-186.png",
-      "/characters/riven/frames/frame-191.png"
+      "/characters/riven/frames/frame-191.png",
+      "/characters/riven/frames/frame-186.png"
     ],
     "cmd:3+4": [
       "/characters/riven/frames/frame-103.png",
@@ -636,13 +637,16 @@
     },
     "cmd:1+3": {
       "startupFrames": 14,
+      "activeFrames": 15,
+      "recoveryFrames": 5,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52
     },
     "kickleft": {
-      "startupFrames": 12,
+      "startupFrames": 5,
+      "activeFrames": 8,
       "recoveryFrames": 10,
       "onBlockFrames": -4,
       "onHitFrames": 5,
@@ -668,17 +672,26 @@
     },
     "cmd:1+2": {
       "startupFrames": 23,
+      "activeFrames": 10,
+      "recoveryFrames": 7,
       "onHitFrames": 7
     },
     "cmd:2+3": {
+      "startupFrames": 23,
+      "activeFrames": 8,
+      "recoveryFrames": 3,
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 16,
+      "startupFrames": 14,
+      "recoveryFrames": 15,
       "hitLevel": "low",
       "knockdown": true
     },
-    "cmd:3+4": {},
+    "cmd:3+4": {
+      "startupFrames": 20,
+      "recoveryFrames": 8
+    },
     "cmd:FC+2": {
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
@@ -708,6 +721,17 @@
           "retrigger": false
         }
       ]
+    },
+    "kickright": {
+      "startupFrames": 9,
+      "activeFrames": 21,
+      "recoveryFrames": 10,
+      "jumpBeforeMove": true
+    },
+    "cmd:1+4": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 11
     }
   },
   "spriteFrameEdits": {
@@ -1621,6 +1645,23 @@
       "89": {
         "width": 0.84,
         "height": 0.71,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "184": {
+        "width": 1.11,
+        "height": 1.06,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 0.58,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 0.62,
+        "height": 0.74,
         "offsetX": 0
       }
     }

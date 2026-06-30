@@ -883,6 +883,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
   if (typeof override.throwCapture === 'boolean') next.throwCapture = override.throwCapture;
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
+  if (typeof override.cancelable === 'boolean') next.cancelable = override.cancelable;
   if (typeof override.jumpBeforeMove === 'boolean') next.jumpBeforeMove = override.jumpBeforeMove;
   if (typeof override.usesKi === 'boolean') next.usesKi = override.usesKi;
   if (typeof override.healsHp === 'boolean') next.healsHp = override.healsHp;
@@ -8736,6 +8737,10 @@ function FrameDataEditor({ move, onChange }: { move: MoveDefinition; onChange: (
             <label className="frame-toggle">
               <span>End Crouch</span>
               <input type="checkbox" checked={Boolean(move.endsInCrouch)} onChange={(event) => onChange({ endsInCrouch: event.target.checked })} />
+            </label>
+            <label className="frame-toggle">
+              <span>Cancelable</span>
+              <input type="checkbox" checked={Boolean(move.cancelable)} onChange={(event) => onChange({ cancelable: event.target.checked })} />
             </label>
           </div>
         </div>
