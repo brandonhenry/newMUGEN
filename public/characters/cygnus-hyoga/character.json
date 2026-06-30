@@ -31,12 +31,7 @@
     }
   },
   "animationFrames": {
-    "idle": [
-      "/characters/cygnus-hyoga/frames/frame-000.png",
-      "/characters/cygnus-hyoga/frames/frame-001.png",
-      "/characters/cygnus-hyoga/frames/frame-002.png",
-      "/characters/cygnus-hyoga/frames/frame-003.png"
-    ],
+    "idle": [],
     "walkForward": [
       "/characters/cygnus-hyoga/frames/frame-018.png"
     ],
@@ -186,7 +181,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 8,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

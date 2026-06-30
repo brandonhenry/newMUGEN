@@ -23,7 +23,8 @@
       "/characters/eve/frames/frame-000.png",
       "/characters/eve/frames/frame-001.png",
       "/characters/eve/frames/frame-002.png",
-      "/characters/eve/frames/frame-003.png"
+      "/characters/eve/frames/frame-003.png",
+      "/characters/eve/frames/frame-002.png"
     ],
     "walkForward": [
       "/characters/eve/frames/frame-004.png",
@@ -178,7 +179,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 9,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

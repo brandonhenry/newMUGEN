@@ -23,7 +23,9 @@
       "/characters/don-patch-poppa-rocks/frames/frame-000.png",
       "/characters/don-patch-poppa-rocks/frames/frame-001.png",
       "/characters/don-patch-poppa-rocks/frames/frame-002.png",
-      "/characters/don-patch-poppa-rocks/frames/frame-003.png"
+      "/characters/don-patch-poppa-rocks/frames/frame-003.png",
+      "/characters/don-patch-poppa-rocks/frames/frame-002.png",
+      "/characters/don-patch-poppa-rocks/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/don-patch-poppa-rocks/frames/frame-004.png",
@@ -186,7 +188,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 9,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

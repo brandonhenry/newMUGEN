@@ -23,7 +23,9 @@
       "/characters/frieza/frames/frame-000.png",
       "/characters/frieza/frames/frame-001.png",
       "/characters/frieza/frames/frame-002.png",
-      "/characters/frieza/frames/frame-003.png"
+      "/characters/frieza/frames/frame-003.png",
+      "/characters/frieza/frames/frame-002.png",
+      "/characters/frieza/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/frieza/frames/frame-006.png",
@@ -189,7 +191,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 9,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,

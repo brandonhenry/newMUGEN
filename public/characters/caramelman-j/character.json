@@ -23,7 +23,9 @@
       "/characters/caramelman-j/frames/frame-000.png",
       "/characters/caramelman-j/frames/frame-001.png",
       "/characters/caramelman-j/frames/frame-002.png",
-      "/characters/caramelman-j/frames/frame-003.png"
+      "/characters/caramelman-j/frames/frame-003.png",
+      "/characters/caramelman-j/frames/frame-002.png",
+      "/characters/caramelman-j/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/caramelman-j/frames/frame-019.png",
@@ -179,7 +181,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 8.5,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
