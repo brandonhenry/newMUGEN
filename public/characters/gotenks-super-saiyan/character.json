@@ -24,7 +24,9 @@
       "/characters/gotenks-super-saiyan/frames/frame-000.png",
       "/characters/gotenks-super-saiyan/frames/frame-001.png",
       "/characters/gotenks-super-saiyan/frames/frame-002.png",
-      "/characters/gotenks-super-saiyan/frames/frame-003.png"
+      "/characters/gotenks-super-saiyan/frames/frame-003.png",
+      "/characters/gotenks-super-saiyan/frames/frame-002.png",
+      "/characters/gotenks-super-saiyan/frames/frame-001.png"
     ],
     "walkForward": [
       "/characters/gotenks-super-saiyan/frames/frame-004.png",
@@ -155,7 +157,7 @@
     "cmd:O+2": []
   },
   "animationFrameRates": {
-    "idle": 5,
+    "idle": 10,
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
