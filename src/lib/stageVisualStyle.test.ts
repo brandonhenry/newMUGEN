@@ -29,7 +29,8 @@ describe('stage visual style normalization', () => {
     expect(normalized.visualStylePreset).toBe('anime-daylight');
     expect(normalized.visualStyle?.lighting.keyIntensity).toBeGreaterThan(0);
     expect(normalized.visualStyle?.outline.enabled).toBe(true);
-    expect(normalized.visualStyle?.post.bloomEnabled).toBe(true);
+    expect(normalized.visualStyle?.post.bloomEnabled).toBe(false);
+    expect(normalized.visualStyle?.post.bloomStrength).toBe(0);
   });
 
   it('merges partial visual style overrides into the selected preset and clamps unsafe values', () => {
@@ -55,7 +56,8 @@ describe('stage visual style normalization', () => {
 
     expect(style.lighting.keyIntensity).toBe(8);
     expect(style.lighting.keyPosition).toEqual([100, 7, -100]);
-    expect(style.post.bloomStrength).toBe(3);
+    expect(style.post.bloomEnabled).toBe(false);
+    expect(style.post.bloomStrength).toBe(0);
     expect(style.post.warmth).toBe(-1);
     expect(style.outline.fighterThickness).toBe(6);
     expect(style.combatFx.reducedMotionScale).toBe(1);
@@ -75,7 +77,8 @@ describe('stage visual style normalization', () => {
     }));
 
     expect(normalized.visualStylePreset).toBe('anime-night');
-    expect(normalized.visualStyle?.post.bloomStrength).toBeGreaterThan(0.3);
+    expect(normalized.visualStyle?.post.bloomEnabled).toBe(false);
+    expect(normalized.visualStyle?.post.bloomStrength).toBe(0);
   });
 
   it('preserves normalized floor effects while adding visual style defaults', () => {

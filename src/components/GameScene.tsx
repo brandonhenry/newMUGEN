@@ -224,7 +224,7 @@ function StagePostProcessing({
     const previousToneMapping = gl.toneMapping;
     const previousExposure = gl.toneMappingExposure;
     gl.toneMapping = THREE.ACESFilmicToneMapping;
-    gl.toneMappingExposure = 1.08;
+    gl.toneMappingExposure = 1;
     return () => {
       composerSetup.composer.dispose();
       gl.toneMapping = previousToneMapping;
@@ -1128,7 +1128,7 @@ function MenuMoonStage() {
       ))}
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.035, 1.1]}>
         <planeGeometry args={[18, 10, 28, 20]} />
-        <meshStandardMaterial color="#07182c" roughness={0.22} metalness={0.68} transparent opacity={0.92} />
+        <meshLambertMaterial color="#07182c" transparent opacity={0.92} />
       </mesh>
       <mesh position={[0, -0.018, 1.1]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[3.25, 3.7, 96]} />
@@ -1136,7 +1136,7 @@ function MenuMoonStage() {
       </mesh>
       <mesh position={[0, -0.012, 1.1]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[3.25, 96]} />
-        <meshStandardMaterial color="#0d2140" emissive="#0a2c5a" emissiveIntensity={0.35} roughness={0.34} metalness={0.35} transparent opacity={0.55} />
+        <meshLambertMaterial color="#0d2140" transparent opacity={0.55} />
       </mesh>
       <gridHelper args={[12, 12, '#2ee6ff', '#14345d']} position={[0, 0.004, 1.1]} />
     </group>
@@ -1469,7 +1469,7 @@ function PreviewFloor({ color }: { color: string }) {
     <group>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[1.55, 72]} />
-        <meshStandardMaterial color="#181c22" roughness={0.72} metalness={0.2} />
+        <meshLambertMaterial color="#181c22" />
       </mesh>
       <mesh position={[0, 0.015, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[1.24, 1.3, 72]} />

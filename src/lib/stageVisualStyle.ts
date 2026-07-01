@@ -512,10 +512,10 @@ export function normalizeStageVisualStyle(stage: Pick<StageDefinition, 'id' | 'l
     },
     post: {
       enabled: source.post?.enabled !== false,
-      bloomEnabled: typeof source.post?.bloomEnabled === 'boolean' ? source.post.bloomEnabled : defaults.post.bloomEnabled,
+      bloomEnabled: false,
       bloomThreshold: clampNumber(source.post?.bloomThreshold, defaults.post.bloomThreshold, 0, 2),
-      bloomStrength: clampNumber(source.post?.bloomStrength, defaults.post.bloomStrength, 0, 3),
-      bloomRadius: clampNumber(source.post?.bloomRadius, defaults.post.bloomRadius, 0, 2),
+      bloomStrength: 0,
+      bloomRadius: 0,
       saturation: clampNumber(source.post?.saturation, defaults.post.saturation, 0.2, 2.5),
       contrast: clampNumber(source.post?.contrast, defaults.post.contrast, 0.2, 2.5),
       brightness: clampNumber(source.post?.brightness, defaults.post.brightness, 0.2, 2),
