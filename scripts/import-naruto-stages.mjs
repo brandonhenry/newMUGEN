@@ -34,6 +34,7 @@ const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.12);
 const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.025);
 const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 128));
 const hiddenLeafTextureCompress = args.get('hidden-leaf-texture-compress') ?? process.env.KORE_HIDDEN_LEAF_TEXTURE_COMPRESS ?? 'webp';
+const hiddenLeafGeometryCompress = args.get('hidden-leaf-geometry-compress') ?? process.env.KORE_HIDDEN_LEAF_GEOMETRY_COMPRESS ?? 'false';
 
 const stages = [
   {
@@ -116,8 +117,8 @@ const stages = [
       camera: { previewPosition: [24, 24, 64], previewTarget: [0, 3.2, 0], target: [0, 1.4, 0], distance: 8, height: 3.4, fov: 38 },
       collision: { mode: 'box' },
       model: {
-        path: '/stages/hidden-leaf-village/stage.glb',
-        url: '/stages/hidden-leaf-village/stage.glb',
+        path: '/stages/hidden-leaf-village/stage.flattened.glb',
+        url: '/stages/hidden-leaf-village/stage.flattened.glb',
         format: 'glb',
         position: [0, 0, 0],
         scale: [1, 1, 1],
@@ -272,11 +273,13 @@ async function importStage(stage) {
   const stageDir = join(publicStagesRoot, stage.id);
   await mkdir(stageDir, { recursive: true });
   const rawGlbPath = join(stageDir, 'stage.raw.glb');
-  const finalGlbPath = join(stageDir, 'stage.glb');
+  const finalGlbPath = join(stageDir, stage.id === 'hidden-leaf-village' ? 'stage.flattened.glb' : 'stage.glb');
   const previewPath = join(stageDir, 'preview.png');
   const exportMetaPath = join(stageDir, 'stage-export-meta.json');
   await rm(rawGlbPath, { force: true });
   await rm(finalGlbPath, { force: true });
+  await rm(join(stageDir, 'stage.glb'), { force: true });
+  await rm(join(stageDir, 'stage.flattened.glb'), { force: true });
   await rm(previewPath, { force: true });
   await rm(exportMetaPath, { force: true });
 
@@ -381,7 +384,7 @@ async function optimizeGlb(inputPath, outputPath, stage) {
       inputPath,
       outputPath,
       '--compress',
-      hiddenLeaf ? 'quantize' : 'false',
+      hiddenLeaf ? hiddenLeafGeometryCompress : 'false',
       '--texture-compress',
       hiddenLeaf ? hiddenLeafTextureCompress : 'false',
       '--simplify',

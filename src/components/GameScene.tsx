@@ -90,6 +90,30 @@ const MODEL_STAGE_INSERTION_HYPOTHESES = [
   'H47 the fight camera had model-only distance changes that made maps feel inconsistent',
   'H48 transformed insertion bounds must be checked after all scrub/ground steps'
 ];
+const MODEL_STAGE_DEV_EDITOR_HYPOTHESES = [
+  'H50 React StrictMode effect cleanup disposes freshly assigned model materials after the first visible frame',
+  'H51 the Stages local-dev editor briefly renders the in-memory roster stage, then replaces it with a refetched manifest',
+  'H52 OrbitControls overwrites the fixed preview camera after the model first appears',
+  'H53 the model is loaded, but material replacement happens after first paint and turns it invisible',
+  'H54 the Suspense fallback flashes and is mistaken for the model',
+  'H55 WebP textures load after geometry and cause a material update that clears visible output',
+  'H56 per-mesh culling or stale geometry bounding spheres hide large optimized meshes',
+  'H57 the editor overlay/canvas scissor or CSS clips the model after resize',
+  'H58 stage safe-lane markers render on top of the model due renderOrder/depth settings',
+  'H59 dev-only remounts reset the cloned GLB scene after it has already been mutated'
+];
+const MODEL_STAGE_DEV_EDITOR_HYPOTHESES_2 = [
+  'H60 SkeletonUtils.clone strips or corrupts static imported stage mesh transforms',
+  'H61 the manifest bounds are stale after the latest Blender export axis conversion',
+  'H62 the GLB primitive tree renders but every source mesh has an unexpected zero draw range',
+  'H63 the object tree is mounted, but the largest real mesh is outside the shared preview camera',
+  'H64 imported mesh parents carry matrix state that only updates after a manual world-matrix refresh',
+  'H65 the local-dev editor is rendering the lane and debug React meshes while rejecting GLB mesh primitives',
+  'H66 the stage model is present but fully hidden behind an exported helper plane that shares the sky color',
+  'H67 the fixed editor camera sees the model bounds but not the triangles because the runtime bounds source is wrong',
+  'H68 the model group is visible, but real mesh renderOrder/depth state loses against the stage guide overlay',
+  'H69 the native glTF scene clone must be used for non-character stage assets'
+];
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
   if (!import.meta.env.DEV) return;
@@ -148,6 +172,15 @@ function boxToDebugPayload(box: THREE.Box3) {
   };
 }
 
+function stageModelBoundsToBox(bounds: StageModelDefinition['bounds']) {
+  if (!bounds) return undefined;
+  const center = tupleToVector(bounds.center, [0, 0, 0]);
+  const size = tupleToVector(bounds.size, [0, 0, 0]);
+  if (size.x <= 0 || size.y <= 0 || size.z <= 0) return undefined;
+  const half = size.multiplyScalar(0.5);
+  return new THREE.Box3(center.clone().sub(half), center.clone().add(half));
+}
+
 function getGeometryTriangleCount(geometry: THREE.BufferGeometry) {
   const indexCount = geometry.index?.count;
   if (typeof indexCount === 'number') return Math.floor(indexCount / 3);
@@ -167,6 +200,15 @@ function materialHasColorOrTexture(material: THREE.Material) {
     normalMap?: THREE.Texture | null;
   };
   return Boolean(mapped.map ?? mapped.emissiveMap ?? mapped.normalMap) || Boolean(mapped.color);
+}
+
+function colorFromString(value: string) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = ((hash << 5) - hash + value.charCodeAt(index)) | 0;
+  }
+  const hue = Math.abs(hash) % 360;
+  return new THREE.Color().setHSL(hue / 360, 0.72, 0.56);
 }
 
 function objectDebugPath(object: THREE.Object3D) {
@@ -209,7 +251,15 @@ function computeVisibleModelBounds(root: THREE.Object3D) {
   return bounds;
 }
 
-function getStageModelMeshHideReason(mesh: THREE.Mesh, stageId: string) {
+function hasSaneStageModelBounds(bounds: THREE.Box3) {
+  if (bounds.isEmpty()) return false;
+  const size = new THREE.Vector3();
+  bounds.getSize(size);
+  const maxSize = Math.max(size.x, size.y, size.z);
+  return Number.isFinite(maxSize) && maxSize > 0.001 && maxSize < 5000;
+}
+
+function getStageModelMeshHideReason(mesh: THREE.Mesh, stageId: string, useGeometryPlaneHeuristic = true) {
   if (stageId !== 'hidden-leaf-village') return null;
   const meshName = mesh.name || '';
   const parentName = mesh.parent?.name || '';
@@ -217,6 +267,7 @@ function getStageModelMeshHideReason(mesh: THREE.Mesh, stageId: string) {
   const hasMaterialSignal = materials.some(materialHasColorOrTexture);
   if (parentName === 'KORE_export_Quad_a' || meshName === 'Plane.067') return 'source-helper-ground-quad';
   if (/^KORE_export_Quad/i.test(parentName) && !hasMaterialSignal) return 'source-helper-quad';
+  if (!useGeometryPlaneHeuristic) return null;
   mesh.geometry.computeBoundingBox();
   const localBounds = mesh.geometry.boundingBox;
   if (!localBounds) return null;
@@ -229,14 +280,18 @@ function getStageModelMeshHideReason(mesh: THREE.Mesh, stageId: string) {
   return null;
 }
 
-function prepareStageModelSceneForRender(root: THREE.Object3D, stageId: string) {
+function prepareStageModelSceneForRender(
+  root: THREE.Object3D,
+  stageId: string,
+  options: { boundsOverride?: THREE.Box3; useGeometryPlaneHeuristic?: boolean } = {}
+) {
   const hiddenSamples: Array<Record<string, unknown>> = [];
   let hiddenMeshCount = 0;
   root.updateMatrixWorld(true);
   root.traverse((object) => {
     const mesh = object as THREE.Mesh;
     if (!mesh.isMesh) return;
-    const reason = getStageModelMeshHideReason(mesh, stageId);
+    const reason = getStageModelMeshHideReason(mesh, stageId, options.useGeometryPlaneHeuristic ?? true);
     if (!reason) return;
     mesh.visible = false;
     hiddenMeshCount += 1;
@@ -249,12 +304,70 @@ function prepareStageModelSceneForRender(root: THREE.Object3D, stageId: string) 
       });
     }
   });
-  const visibleBounds = computeVisibleModelBounds(root);
+  const visibleBounds = options.boundsOverride?.clone() ?? computeVisibleModelBounds(root);
   return {
     hiddenMeshCount,
     hiddenSamples,
     visibleBounds
   };
+}
+
+function normalizeStageModelSceneForRender(root: THREE.Object3D, stageId: string, modelDefinition: StageModelDefinition, useGeometryPlaneHeuristic: boolean) {
+  let normalizedMeshCount = 0;
+  let normalizedMaterialCount = 0;
+  root.traverse((object) => {
+    object.layers.enable(0);
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh) {
+      object.visible = true;
+      return;
+    }
+    if (getStageModelMeshHideReason(mesh, stageId, useGeometryPlaneHeuristic)) {
+      mesh.visible = false;
+      return;
+    }
+    mesh.visible = true;
+    mesh.frustumCulled = false;
+    mesh.castShadow = modelDefinition.castShadow !== false;
+    mesh.receiveShadow = modelDefinition.receiveShadow !== false;
+    const materials = meshMaterials(mesh);
+    normalizedMeshCount += 1;
+    normalizedMaterialCount += materials.length;
+    mesh.material = materials.map((material) => normalizeStageModelMaterial(material, stageId, mesh.name || objectDebugPath(mesh))).filter(Boolean) as THREE.Material | THREE.Material[];
+  });
+  return { normalizedMeshCount, normalizedMaterialCount };
+}
+
+type FlattenedStageModelMesh = {
+  id: string;
+  name: string;
+  geometry: THREE.BufferGeometry;
+  material: THREE.Material | THREE.Material[];
+  triangleCount: number;
+};
+
+function createFlattenedStageModelMeshes(root: THREE.Object3D, stageId: string) {
+  const meshes: FlattenedStageModelMesh[] = [];
+  root.updateMatrixWorld(true);
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh || !mesh.visible || !mesh.geometry?.getAttribute('position')) return;
+    if (getStageModelMeshHideReason(mesh, stageId, false)) return;
+    const geometry = mesh.geometry.clone();
+    geometry.applyMatrix4(mesh.matrixWorld);
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
+    const sourceMaterial = meshMaterials(mesh)[0];
+    const material = sourceMaterial?.clone();
+    meshes.push({
+      id: `${meshes.length}-${mesh.uuid}`,
+      name: mesh.name || mesh.type,
+      geometry,
+      material: material ?? new THREE.MeshBasicMaterial({ color: colorFromString(mesh.name || mesh.uuid), side: THREE.DoubleSide, depthTest: false, depthWrite: false, fog: false }),
+      triangleCount: getGeometryTriangleCount(mesh.geometry)
+    });
+  });
+  return meshes;
 }
 
 function textureDebugPayload(texture: THREE.Texture | null | undefined) {
@@ -1201,6 +1314,7 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
   }, [interactive, modelStage, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
   return (
     <Canvas
+      key={`${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}`}
       shadows
       frameloop={interactive || modelStage ? 'always' : 'demand'}
       dpr={[1, 1.25]}
@@ -2223,6 +2337,10 @@ function ModelStage({
       stageId: stage.id,
       hypotheses: MODEL_STAGE_WORLD_HYPOTHESES
     });
+    logStageModelDebug('H50-H59 Stages local-dev disappearance hypotheses registered', {
+      stageId: stage.id,
+      hypotheses: MODEL_STAGE_DEV_EDITOR_HYPOTHESES
+    });
     if (!modelPath || !import.meta.env.DEV) return;
     let cancelled = false;
     const startedAt = performance.now();
@@ -2410,14 +2528,42 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       resolveMs: Math.round(performance.now() - requestStartedAtRef.current)
     });
   }, [gltf.scene, modelPath, stage.id, stage.renderMode]);
-  const scene = useMemo(() => clone(gltf.scene) as THREE.Object3D, [gltf.scene]);
   const basePosition = modelDefinition?.position ?? [0, 0, 0];
   const scale = modelDefinition?.scale ?? [1, 1, 1];
   const rotation = modelDefinition?.rotation ?? [0, 0, 0];
-  const scenePreparation = useMemo(() => prepareStageModelSceneForRender(scene, stage.id), [scene, stage.id]);
+  const manifestBoundsBox = useMemo(() => stageModelBoundsToBox(modelDefinition.bounds), [modelDefinition.bounds]);
+  const sceneClone = useMemo(() => {
+    const cloned = gltf.scene.clone(true) as THREE.Object3D;
+    cloned.visible = true;
+    cloned.position.set(0, 0, 0);
+    cloned.rotation.set(0, 0, 0);
+    cloned.scale.setScalar(1);
+    const normalization = normalizeStageModelSceneForRender(cloned, stage.id, modelDefinition, !manifestBoundsBox);
+    cloned.updateMatrixWorld(true);
+    const shouldBuildFlattenedMeshes = stage.id === 'hidden-leaf-village' && /stage\.flattened\.glb/i.test(modelPath);
+    const flattenedMeshes = shouldBuildFlattenedMeshes ? createFlattenedStageModelMeshes(cloned, stage.id) : [];
+    return { scene: cloned, normalization, flattenedMeshes };
+  }, [gltf.scene, manifestBoundsBox, modelDefinition, modelPath, stage.id]);
+  const scene = sceneClone.scene;
+  const sceneNormalization = sceneClone.normalization;
+  const flattenedMeshes = sceneClone.flattenedMeshes;
+  const useFlattenedModel = stage.id === 'hidden-leaf-village' && flattenedMeshes.length > 0;
+  const scenePreparation = useMemo(
+    () => prepareStageModelSceneForRender(scene, stage.id, {
+      boundsOverride: manifestBoundsBox,
+      useGeometryPlaneHeuristic: !manifestBoundsBox
+    }),
+    [manifestBoundsBox, scene, stage.id]
+  );
   const position = useMemo<[number, number, number]>(() => {
+    if (modelDefinition.bounds) {
+      return [basePosition[0] ?? 0, basePosition[1] ?? 0, basePosition[2] ?? 0];
+    }
     const floorY = stage.world?.floorY ?? 0;
     const scaleY = scale[1] ?? 1;
+    if (!hasSaneStageModelBounds(scenePreparation.visibleBounds)) {
+      return [basePosition[0] ?? 0, basePosition[1] ?? 0, basePosition[2] ?? 0];
+    }
     const transformedVisibleMinY = scenePreparation.visibleBounds.min.y * scaleY + (basePosition[1] ?? 0);
     const shouldGroundVisibleModel =
       !scenePreparation.visibleBounds.isEmpty() &&
@@ -2425,48 +2571,30 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       Math.abs(transformedVisibleMinY - floorY) > 1.5;
     const groundOffsetY = shouldGroundVisibleModel ? floorY - transformedVisibleMinY : 0;
     return [basePosition[0] ?? 0, (basePosition[1] ?? 0) + groundOffsetY, basePosition[2] ?? 0];
-  }, [basePosition, scale, scenePreparation.visibleBounds, stage.id, stage.world?.floorY]);
+  }, [basePosition, modelDefinition.bounds, scale, scenePreparation.visibleBounds, stage.id, stage.world?.floorY]);
   const sourceInspection = useMemo(() => {
-    const sourceBounds = new THREE.Box3().setFromObject(gltf.scene);
+    const sourceBounds = manifestBoundsBox ?? new THREE.Box3().setFromObject(gltf.scene);
     return {
       bounds: boxToDebugPayload(sourceBounds),
       tree: inspectModelObjectTree(gltf.scene)
     };
-  }, [gltf.scene]);
+  }, [gltf.scene, manifestBoundsBox]);
 
   useEffect(() => {
-    scene.traverse((object) => {
-      object.layers.enable(0);
-      const mesh = object as THREE.Mesh;
-      if (!mesh.isMesh) {
-        object.visible = true;
-        return;
-      }
-      if (getStageModelMeshHideReason(mesh, stage.id)) {
-        mesh.visible = false;
-        return;
-      }
-      mesh.visible = true;
-      mesh.frustumCulled = false;
-      mesh.geometry.computeBoundingBox();
-      mesh.geometry.computeBoundingSphere();
-      mesh.castShadow = modelDefinition?.castShadow !== false;
-      mesh.receiveShadow = modelDefinition?.receiveShadow !== false;
-      const materials = meshMaterials(mesh);
-      mesh.material = materials.map((material) => normalizeStageModelMaterial(material, stage.id)).filter(Boolean) as THREE.Material | THREE.Material[];
+    logStageModelDebug('H50 material/visibility normalization applied during GLB clone', {
+      stageId: stage.id,
+      normalizedMeshCount: sceneNormalization.normalizedMeshCount,
+      normalizedMaterialCount: sceneNormalization.normalizedMaterialCount,
+      flattenedMeshCount: flattenedMeshes.length,
+      flattenedTriangleCount: flattenedMeshes.reduce((sum, mesh) => sum + mesh.triangleCount, 0),
+      renderPath: useFlattenedModel ? 'flattened-react-meshes' : 'primitive-scene',
+      strictModeSafe: true,
+      firstRenderSafe: true
     });
-    return () => {
-      scene.traverse((object) => {
-        const mesh = object as THREE.Mesh;
-        if (!mesh.isMesh) return;
-        const materials = meshMaterials(mesh);
-        materials.forEach((material) => material?.dispose());
-      });
-    };
-  }, [modelDefinition?.castShadow, modelDefinition?.receiveShadow, scene, stage.id]);
+  }, [flattenedMeshes, sceneNormalization.normalizedMaterialCount, sceneNormalization.normalizedMeshCount, stage.id, useFlattenedModel]);
 
   useEffect(() => {
-    const cloneBounds = new THREE.Box3().setFromObject(scene);
+    const cloneBounds = manifestBoundsBox?.clone() ?? new THREE.Box3().setFromObject(scene);
     const transformedProbe = new THREE.Object3D();
     transformedProbe.position.copy(tupleToVector(position, [0, 0, 0]));
     transformedProbe.scale.copy(tupleToVector(scale, [1, 1, 1]));
@@ -2492,12 +2620,10 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
         });
         if (!sample) return null;
         const sampleMesh = sample as THREE.Mesh;
-        const meshBounds = new THREE.Box3().setFromObject(sampleMesh);
         return {
           name: sampleMesh.name || sampleMesh.type,
           path: objectDebugPath(sampleMesh),
           materialCount: meshMaterials(sampleMesh).length,
-          bounds: boxToDebugPayload(meshBounds),
           triangles: sampleMesh.geometry ? getGeometryTriangleCount(sampleMesh.geometry) : 0
         };
       })();
@@ -2523,6 +2649,10 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
     logStageModelDebug('H39-H48 model insertion hypotheses registered', {
       stageId: stage.id,
       hypotheses: MODEL_STAGE_INSERTION_HYPOTHESES
+    });
+    logStageModelDebug('H60-H69 Stages local-dev insertion hypotheses registered', {
+      stageId: stage.id,
+      hypotheses: MODEL_STAGE_DEV_EDITOR_HYPOTHESES_2
     });
     logStageModelDebug('H19-H21 model bounds inspected', {
       stageId: stage.id,
@@ -2551,12 +2681,22 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       scrubbedMeshCount: scenePreparation.hiddenMeshCount,
       scrubbedMeshSamples: scenePreparation.hiddenSamples
     });
-  }, [basePosition, modelDefinition.bounds, modelPath, position, rotation, scale, scene, scenePreparation.hiddenMeshCount, scenePreparation.hiddenSamples, scenePreparation.visibleBounds, sourceInspection, stage.id]);
+  }, [basePosition, manifestBoundsBox, modelDefinition.bounds, modelPath, position, rotation, scale, scene, scenePreparation.hiddenMeshCount, scenePreparation.hiddenSamples, scenePreparation.visibleBounds, sourceInspection, stage.id]);
 
   return (
     <group ref={modelGroupRef} position={position} scale={scale} rotation={rotation}>
-      <primitive object={scene} />
+      {useFlattenedModel ? <StageModelFlattenedMeshes meshes={flattenedMeshes} /> : <primitive object={scene} />}
       <StageModelRuntimeProbe stage={stage} modelDefinition={modelDefinition} modelGroupRef={modelGroupRef} />
+    </group>
+  );
+}
+
+function StageModelFlattenedMeshes({ meshes }: { meshes: FlattenedStageModelMesh[] }) {
+  return (
+    <group renderOrder={3}>
+      {meshes.map((mesh) => (
+        <mesh key={mesh.id} geometry={mesh.geometry} material={mesh.material} frustumCulled={false} renderOrder={3} />
+      ))}
     </group>
   );
 }
@@ -2580,7 +2720,8 @@ function StageModelRuntimeProbe({
     modelGroup.updateWorldMatrix(true, true);
     camera.updateMatrixWorld(true);
     camera.updateProjectionMatrix();
-    const bounds = new THREE.Box3().setFromObject(modelGroup);
+    const manifestBounds = stageModelBoundsToBox(modelDefinition.bounds);
+    const bounds = manifestBounds?.clone().applyMatrix4(modelGroup.matrixWorld) ?? new THREE.Box3().setFromObject(modelGroup);
     const size = new THREE.Vector3();
     const center = new THREE.Vector3();
     bounds.getSize(size);
@@ -2618,13 +2759,12 @@ function StageModelRuntimeProbe({
   return null;
 }
 
-function normalizeStageModelMaterial(material: THREE.Material | undefined, stageId?: string) {
+function normalizeStageModelMaterial(material: THREE.Material | undefined, stageId?: string, meshKey = '') {
   if (!material) return material;
   const forceOpaqueStageMaterial = stageId === 'hidden-leaf-village';
   if (forceOpaqueStageMaterial) {
     const source = material as THREE.MeshStandardMaterial & {
       alphaMap?: THREE.Texture | null;
-      color?: THREE.Color;
       emissiveMap?: THREE.Texture | null;
       map?: THREE.Texture | null;
       opacity?: number;
@@ -2635,19 +2775,19 @@ function normalizeStageModelMaterial(material: THREE.Material | undefined, stage
       texture.anisotropy = 8;
       texture.needsUpdate = true;
     });
-    const unlit = new THREE.MeshBasicMaterial({
-      map: source.map ?? source.emissiveMap ?? null,
-      color: source.map || source.emissiveMap ? '#ffffff' : source.color ?? new THREE.Color('#d8d2aa'),
+    const stageMaterial = new THREE.MeshBasicMaterial({
+      color: source.map ? '#ffffff' : colorFromString(meshKey || material.name || 'hidden-leaf-village'),
+      map: source.map ?? null,
       transparent: false,
       opacity: 1,
-      depthTest: true,
-      depthWrite: true,
+      depthTest: false,
+      depthWrite: false,
       side: THREE.DoubleSide,
       fog: false,
       toneMapped: false
     });
-    unlit.name = material.name;
-    return unlit;
+    stageMaterial.name = material.name;
+    return stageMaterial;
   }
   const cloned = material.clone();
   const maybeMapped = cloned as THREE.MeshStandardMaterial & {
