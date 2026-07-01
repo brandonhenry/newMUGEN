@@ -7,16 +7,16 @@
   "floor": "#1b1024",
   "floorTexturePath": "/stages/energy-floor/floor-texture.png",
   "floorTextureRepeat": [
-    16,
-    16
+    30,
+    30
   ],
   "safePlatform": {
     "enabled": true,
     "shape": "octagon",
     "texturePath": "/stages/shared/handpainted-stone-platform.png",
     "textureRepeat": [
-      7,
-      7
+      14,
+      14
     ],
     "radius": 38,
     "height": 0.18,

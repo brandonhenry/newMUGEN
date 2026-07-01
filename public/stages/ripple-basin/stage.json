@@ -7,16 +7,16 @@
   "floor": "#1f6578",
   "floorTexturePath": "/stages/ripple-basin/floor-texture.png",
   "floorTextureRepeat": [
-    10,
-    10
+    24,
+    24
   ],
   "safePlatform": {
     "enabled": true,
     "shape": "octagon",
     "texturePath": "/stages/shared/handpainted-stone-platform.png",
     "textureRepeat": [
-      7,
-      7
+      14,
+      14
     ],
     "radius": 38,
     "height": 0.16,
