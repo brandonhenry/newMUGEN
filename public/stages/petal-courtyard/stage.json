@@ -1,0 +1,38 @@
+{
+  "id": "petal-courtyard",
+  "name": "Petal Courtyard",
+  "subtitle": "Anime courtyard atmosphere with drifting petals",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#4d6f48",
+  "floorTexturePath": "/stages/petal-courtyard/floor-texture.png",
+  "floorTextureRepeat": [
+    16,
+    16
+  ],
+  "floorEffects": {
+    "petals": {
+      "enabled": true,
+      "intensity": 0.72,
+      "density": 0.72,
+      "size": 0.56,
+      "speed": 0.85,
+      "opacity": 0.76,
+      "windStrength": 0.48,
+      "fallSpeed": 0.62,
+      "colorA": "#ff9ac5",
+      "colorB": "#fff4fb",
+      "amount": 220
+    }
+  },
+  "rail": "#ffb7d5",
+  "light": "#fff1f8",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#ffd6e8"
+  },
+  "props": []
+}

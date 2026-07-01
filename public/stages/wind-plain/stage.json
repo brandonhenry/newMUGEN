@@ -1,0 +1,36 @@
+{
+  "id": "wind-plain",
+  "name": "Wind Plain",
+  "subtitle": "Open arena with fast visible wind streaks",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#67785a",
+  "floorTexturePath": "/stages/wind-plain/floor-texture.png",
+  "floorTextureRepeat": [
+    16,
+    16
+  ],
+  "floorEffects": {
+    "windStreaks": {
+      "enabled": true,
+      "intensity": 0.62,
+      "density": 0.66,
+      "size": 0.95,
+      "speed": 1.55,
+      "opacity": 0.36,
+      "windStrength": 0.95,
+      "color": "#dff8ff",
+      "amount": 190
+    }
+  },
+  "rail": "#d8f7ff",
+  "light": "#f5fff8",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#c2e1d5"
+  },
+  "props": []
+}

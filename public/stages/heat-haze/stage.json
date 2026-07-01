@@ -1,0 +1,34 @@
+{
+  "id": "heat-haze",
+  "name": "Heat Haze",
+  "subtitle": "Warm arena with subtle heat distortion sheets",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#9b5b2f",
+  "floorTexturePath": "/stages/heat-haze/floor-texture.png",
+  "floorTextureRepeat": [
+    12,
+    12
+  ],
+  "floorEffects": {
+    "heat": {
+      "enabled": true,
+      "intensity": 0.72,
+      "density": 0.62,
+      "size": 1.2,
+      "speed": 1.2,
+      "opacity": 0.22,
+      "color": "#ffbf6e"
+    }
+  },
+  "rail": "#ffb866",
+  "light": "#ffe2b5",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#e6a66a"
+  },
+  "props": []
+}

@@ -6059,6 +6059,49 @@ button {
   gap: 7px;
 }
 
+.floor-effect-toggle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.floor-effect-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border-radius: 6px;
+  padding: 0 8px;
+  background: rgba(11, 15, 22, 0.72);
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition-property: background, color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.floor-effect-chip:active {
+  scale: 0.96;
+}
+
+.floor-effect-chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.floor-effect-chip:has(input:checked) {
+  background: rgba(46, 230, 255, 0.16);
+  color: #f7f7f2;
+  box-shadow: 0 0 0 1px rgba(46, 230, 255, 0.36) inset;
+}
+
 .floor-effect-panel .stage-prop-slider {
   display: grid;
   min-height: 58px;

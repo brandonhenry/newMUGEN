@@ -1,0 +1,34 @@
+{
+  "id": "glow-trail-arena",
+  "name": "Glow Trail Arena",
+  "subtitle": "Sci-fi floor with movement glow trails",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#07182c",
+  "floorTexturePath": "/stages/glow-trail-arena/floor-texture.png",
+  "floorTextureRepeat": [
+    18,
+    18
+  ],
+  "floorEffects": {
+    "glowTrails": {
+      "enabled": true,
+      "intensity": 0.78,
+      "density": 0.68,
+      "size": 1.15,
+      "speed": 1.2,
+      "opacity": 0.56,
+      "color": "#5cf4ff"
+    }
+  },
+  "rail": "#2ee6ff",
+  "light": "#dbe8ff",
+  "skyboxPath": "/stages/chamber/skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#101114"
+  },
+  "props": []
+}

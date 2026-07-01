@@ -5646,12 +5646,23 @@ function FloorEffectsEditor({
   onUpdate: (effects: StageFloorEffects) => void;
 }) {
   const grass = { ...defaultGrassEffect(), ...(floor.effects?.grass ?? {}) };
+  const simpleEffects = floor.effects ?? {};
   const updateGrass = (patch: Partial<typeof grass>) => {
     onUpdate({
       ...(floor.effects ?? {}),
       grass: {
         ...grass,
         ...patch
+      }
+    });
+  };
+  const updateSimpleEffect = (key: StageFloorSimpleEffectKey, enabled: boolean) => {
+    onUpdate({
+      ...(floor.effects ?? {}),
+      [key]: {
+        ...defaultSimpleFloorEffect(key),
+        ...(simpleEffects[key] ?? {}),
+        enabled
       }
     });
   };
@@ -5670,6 +5681,18 @@ function FloorEffectsEditor({
           <StagePropSlider label="Speed" value={grass.windSpeed ?? 1.1} min={0} max={4} step={0.05} onChange={(value) => updateGrass({ windSpeed: value })} />
         </div>
       )}
+      <div className="floor-effect-toggle-grid">
+        {stageFloorSimpleEffectOptions.map((option) => (
+          <label key={option.key} className="floor-effect-chip">
+            <input
+              type="checkbox"
+              checked={simpleEffects[option.key]?.enabled === true}
+              onChange={(event) => updateSimpleEffect(option.key, event.target.checked)}
+            />
+            <span>{option.label}</span>
+          </label>
+        ))}
+      </div>
     </div>
   );
 }
@@ -5678,14 +5701,55 @@ function defaultGrassEffect() {
   return {
     enabled: false,
     density: 0.45,
-    height: 0.48,
-    patchWidth: 32,
-    patchDepth: 16,
+    height: 0.28,
+    patchWidth: 220,
+    patchDepth: 220,
     windStrength: 0.14,
     windSpeed: 1.1,
     colorBottom: '#174d25',
     colorTop: '#7bd34d'
   };
+}
+
+type StageFloorSimpleEffectKey = Exclude<keyof StageFloorEffects, 'grass'>;
+
+const stageFloorSimpleEffectOptions: Array<{ key: StageFloorSimpleEffectKey; label: string }> = [
+  { key: 'dust', label: 'Dust' },
+  { key: 'footsteps', label: 'Footsteps' },
+  { key: 'impact', label: 'Impact' },
+  { key: 'petals', label: 'Petals' },
+  { key: 'snow', label: 'Snow' },
+  { key: 'rainPuddles', label: 'Puddles' },
+  { key: 'ripples', label: 'Ripples' },
+  { key: 'energy', label: 'Energy' },
+  { key: 'fog', label: 'Fog' },
+  { key: 'heat', label: 'Heat' },
+  { key: 'glowTrails', label: 'Trails' },
+  { key: 'windStreaks', label: 'Wind' },
+  { key: 'cherryBurst', label: 'Cherry' },
+  { key: 'tileShimmer', label: 'Shimmer' },
+  { key: 'debris', label: 'Debris' }
+];
+
+function defaultSimpleFloorEffect(key: StageFloorSimpleEffectKey) {
+  const defaults: Record<StageFloorSimpleEffectKey, NonNullable<StageFloorEffects[StageFloorSimpleEffectKey]>> = {
+    dust: { enabled: false, intensity: 0.7, density: 0.45, size: 1.1, speed: 0.8, opacity: 0.38, color: '#c8b48a' },
+    footsteps: { enabled: false, intensity: 0.55, density: 0.35, size: 0.8, speed: 0.7, opacity: 0.28, color: '#f4f0de' },
+    impact: { enabled: false, intensity: 0.8, density: 0.35, size: 1.5, speed: 1.1, opacity: 0.46, color: '#ffffff' },
+    petals: { enabled: false, intensity: 0.65, density: 0.45, size: 0.45, speed: 0.8, opacity: 0.72, windStrength: 0.42, fallSpeed: 0.72, colorA: '#ff9ac5', colorB: '#fff4fb' },
+    snow: { enabled: false, intensity: 0.62, density: 0.55, size: 0.34, speed: 0.55, opacity: 0.82, windStrength: 0.18, fallSpeed: 0.45, color: '#f8fcff' },
+    rainPuddles: { enabled: false, intensity: 0.65, density: 0.4, size: 1.2, speed: 1.35, opacity: 0.34, radius: 1.5, color: '#9ad7ff' },
+    ripples: { enabled: false, intensity: 0.7, density: 0.4, size: 1.4, speed: 1.4, opacity: 0.38, radius: 1.8, color: '#b5f3ff' },
+    energy: { enabled: false, intensity: 0.82, density: 0.5, size: 1, speed: 1.25, opacity: 0.44, pulseSpeed: 1.35, color: '#ff5a2a', colorA: '#ffb347', colorB: '#a920ff' },
+    fog: { enabled: false, intensity: 0.56, density: 0.55, size: 1.2, speed: 0.45, opacity: 0.32, color: '#c7f2d7' },
+    heat: { enabled: false, intensity: 0.55, density: 0.38, size: 1.2, speed: 1.1, opacity: 0.2, color: '#ffbf6e' },
+    glowTrails: { enabled: false, intensity: 0.7, density: 0.42, size: 1.1, speed: 1.2, opacity: 0.5, color: '#5cf4ff' },
+    windStreaks: { enabled: false, intensity: 0.5, density: 0.44, size: 0.8, speed: 1.4, opacity: 0.34, windStrength: 0.8, color: '#dff8ff' },
+    cherryBurst: { enabled: false, intensity: 0.78, density: 0.5, size: 0.48, speed: 1, opacity: 0.78, windStrength: 0.5, fallSpeed: 0.62, colorA: '#ff7eb6', colorB: '#ffe6f0' },
+    tileShimmer: { enabled: false, intensity: 0.62, density: 0.4, size: 1, speed: 1.2, opacity: 0.26, pulseSpeed: 1.4, color: '#fff2a8' },
+    debris: { enabled: false, intensity: 0.58, density: 0.35, size: 0.9, speed: 0.45, opacity: 0.72, color: '#6e6256' }
+  };
+  return defaults[key];
 }
 
 function buildStagePropFromAsset(asset: StagePropAssetDefinition, index = 0): StagePropDefinition {

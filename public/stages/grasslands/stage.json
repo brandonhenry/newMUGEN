@@ -1,0 +1,36 @@
+{
+  "id": "grasslands",
+  "name": "Grasslands",
+  "subtitle": "Open green field with animated grass",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#2f7a3c",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    18,
+    18
+  ],
+  "floorEffects": {
+    "grass": {
+      "enabled": true,
+      "density": 0.9,
+      "height": 0.24,
+      "patchWidth": 238,
+      "patchDepth": 238,
+      "windStrength": 0.24,
+      "windSpeed": 1.2,
+      "colorBottom": "#174d25",
+      "colorTop": "#8ce05a"
+    }
+  },
+  "rail": "#bdf76c",
+  "light": "#f0ffd7",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "props": []
+}

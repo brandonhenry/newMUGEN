@@ -1,0 +1,38 @@
+{
+  "id": "cherry-burst-stage",
+  "name": "Cherry Burst Stage",
+  "subtitle": "Pink burst atmosphere for round-start energy",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#4f5f49",
+  "floorTexturePath": "/stages/cherry-burst-stage/floor-texture.png",
+  "floorTextureRepeat": [
+    16,
+    16
+  ],
+  "floorEffects": {
+    "cherryBurst": {
+      "enabled": true,
+      "intensity": 0.88,
+      "density": 0.74,
+      "size": 0.58,
+      "speed": 1.05,
+      "opacity": 0.82,
+      "windStrength": 0.55,
+      "fallSpeed": 0.55,
+      "colorA": "#ff7eb6",
+      "colorB": "#ffe6f0",
+      "amount": 260
+    }
+  },
+  "rail": "#ff99c8",
+  "light": "#fff0f8",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#ffd6e8"
+  },
+  "props": []
+}

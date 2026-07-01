@@ -20,6 +20,7 @@ import type {
   MoveInput,
   StageDefinition,
   StageFloorGrassEffect,
+  StageFloorSimpleEffect,
   StageLayerDefinition,
   StagePropDefinition
 } from '../types';
@@ -69,7 +70,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <pointLight position={[-4, 2, -3]} color={match.fighters[0].character.colors.primary} intensity={8} distance={7} />
       <pointLight position={[4, 2, 3]} color={match.fighters[1].character.colors.primary} intensity={8} distance={7} />
       <CameraRig match={match} settings={cameraSettings} />
-      <Arena stage={match.stage} />
+      <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
       <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} />
       <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} />
       <TransformEffectLayer fighter={match.fighters[0]} />
@@ -822,7 +823,7 @@ export function MenuAttractScene({ match }: GameSceneProps) {
       <pointLight position={[3.3, 1.6, 2.1]} color={match.fighters[1].character.colors.primary} intensity={5.2} distance={6} />
       <MenuAttractCamera match={match} />
       <group position={[0, 0, 1.75]}>
-        <Arena stage={match.stage} />
+        <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
       </group>
       <group position={[0, 0, 1.75]} scale={0.82}>
         <FighterRig fighter={match.fighters[0]} />
@@ -1620,10 +1621,14 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
 
 function Arena({
   stage,
+  fighters,
+  impactEvents,
   selectedPropId,
   onSelectProp
 }: {
   stage: MatchSnapshot['stage'];
+  fighters?: FighterRuntime[];
+  impactEvents?: ImpactSparkEvent[];
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
 }) {
@@ -1640,12 +1645,12 @@ function Arena({
   );
 
   if (stage.renderMode === 'spriteCutout') {
-    return <SpriteCutoutStage stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
+    return <SpriteCutoutStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
   }
 
   const floorTexturePath = stage.floorTexturePath;
   if (floorTexturePath) {
-    return <TexturedInfiniteArena stage={stage} floorTexturePath={floorTexturePath} />;
+    return <TexturedInfiniteArena stage={stage} floorTexturePath={floorTexturePath} fighters={fighters} impactEvents={impactEvents} />;
   }
 
   return (
@@ -1692,12 +1697,22 @@ function Arena({
         <ringGeometry args={[1.65, 2.05, 72]} />
         <meshBasicMaterial color={stage.rail} transparent opacity={0.15} />
       </mesh>
-      <StageFloorEffects stage={stage} />
+      <StageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>
   );
 }
 
-function TexturedInfiniteArena({ stage, floorTexturePath }: { stage: StageDefinition; floorTexturePath: string }) {
+function TexturedInfiniteArena({
+  stage,
+  floorTexturePath,
+  fighters,
+  impactEvents
+}: {
+  stage: StageDefinition;
+  floorTexturePath: string;
+  fighters?: FighterRuntime[];
+  impactEvents?: ImpactSparkEvent[];
+}) {
   const texture = useLoader(THREE.TextureLoader, floorTexturePath);
   const repeat = stage.floorTextureRepeat ?? [24, 24];
   const [repeatX, repeatY] = repeat;
@@ -1729,17 +1744,21 @@ function TexturedInfiniteArena({ stage, floorTexturePath }: { stage: StageDefini
         <circleGeometry args={[4.38, 128]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
       </mesh>
-      <StageFloorEffects stage={stage} />
+      <StageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>
   );
 }
 
 function SpriteCutoutStage({
   stage,
+  fighters,
+  impactEvents,
   selectedPropId,
   onSelectProp
 }: {
   stage: StageDefinition;
+  fighters?: FighterRuntime[];
+  impactEvents?: ImpactSparkEvent[];
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
 }) {
@@ -1788,7 +1807,7 @@ function SpriteCutoutStage({
         <ringGeometry args={[4.8, 5.05, 72]} />
         <meshBasicMaterial color="#f0d27b" transparent opacity={0.26} />
       </mesh>
-      <StageFloorEffects stage={stage} />
+      <StageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
       {(stage.backgroundLayers ?? []).map((layer) => (
         <StageLayerPlane key={layer.id} layer={layer} />
       ))}
@@ -1823,19 +1842,46 @@ function SpriteCutoutFloorTexture({ stage, floorTexturePath }: { stage: StageDef
   );
 }
 
-function StageFloorEffects({ stage }: { stage: StageDefinition }) {
-  const grass = stage.floorEffects?.grass;
-  if (!grass?.enabled) return null;
-  return <StageGrassField stage={stage} grass={grass} />;
+function StageFloorEffects({
+  stage,
+  fighters,
+  impactEvents
+}: {
+  stage: StageDefinition;
+  fighters?: FighterRuntime[];
+  impactEvents?: ImpactSparkEvent[];
+}) {
+  const effects = stage.floorEffects;
+  if (!effects) return null;
+  return (
+    <group>
+      {effects.grass?.enabled && <StageGrassField stage={stage} grass={effects.grass} />}
+      {effects.dust?.enabled && <StageDustPuffs stage={stage} effect={effects.dust} fighters={fighters} />}
+      {effects.footsteps?.enabled && <StageFootstepDecals stage={stage} effect={effects.footsteps} fighters={fighters} />}
+      {effects.impact?.enabled && <StageImpactRings stage={stage} effect={effects.impact} impactEvents={impactEvents} />}
+      {effects.petals?.enabled && <StageFloatingParticles stage={stage} effect={effects.petals} variant="petals" />}
+      {effects.snow?.enabled && <StageFloatingParticles stage={stage} effect={effects.snow} variant="snow" />}
+      {effects.rainPuddles?.enabled && <StagePuddleField stage={stage} effect={effects.rainPuddles} />}
+      {effects.ripples?.enabled && <StageRippleField stage={stage} effect={effects.ripples} fighters={fighters} />}
+      {effects.energy?.enabled && <StageEnergyFloor stage={stage} effect={effects.energy} />}
+      {effects.fog?.enabled && <StageFogSheets stage={stage} effect={effects.fog} />}
+      {effects.heat?.enabled && <StageHeatHaze stage={stage} effect={effects.heat} />}
+      {effects.glowTrails?.enabled && <StageGlowTrails stage={stage} effect={effects.glowTrails} fighters={fighters} />}
+      {effects.windStreaks?.enabled && <StageFloatingParticles stage={stage} effect={effects.windStreaks} variant="wind" />}
+      {effects.cherryBurst?.enabled && <StageFloatingParticles stage={stage} effect={effects.cherryBurst} variant="cherry" />}
+      {effects.tileShimmer?.enabled && <StageTileShimmer stage={stage} effect={effects.tileShimmer} />}
+      {effects.debris?.enabled && <StageDebrisField stage={stage} effect={effects.debris} />}
+    </group>
+  );
 }
 
 function StageGrassField({ stage, grass }: { stage: StageDefinition; grass: StageFloorGrassEffect }) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const density = THREE.MathUtils.clamp(grass.density ?? 0.45, 0.05, 1);
-  const bladeCount = Math.round(260 + density * 1900);
-  const height = THREE.MathUtils.clamp(grass.height ?? 0.48, 0.08, 1.8);
-  const patchWidth = THREE.MathUtils.clamp(grass.patchWidth ?? Math.min(stage.world?.width ?? 32, 32), 4, stage.world?.width ?? 220);
-  const patchDepth = THREE.MathUtils.clamp(grass.patchDepth ?? Math.min(stage.world?.depth ?? 16, 16), 4, stage.world?.depth ?? 220);
+  const patchWidth = THREE.MathUtils.clamp(grass.patchWidth ?? floorEffectWidth(stage), 4, floorEffectWidth(stage, 1.18));
+  const patchDepth = THREE.MathUtils.clamp(grass.patchDepth ?? floorEffectDepth(stage), 4, floorEffectDepth(stage, 1.18));
+  const bladeCount = Math.round(THREE.MathUtils.clamp((patchWidth * patchDepth * density) / 7.2, 1200, 9000));
+  const height = THREE.MathUtils.clamp(grass.height ?? 0.28, 0.04, 1.8);
   const floorY = (stage.world?.floorY ?? -0.045) + 0.012;
 
   const geometry = useMemo(() => {
@@ -1874,8 +1920,9 @@ function StageGrassField({ stage, grass }: { stage: StageDefinition; grass: Stag
 
       void main() {
         float taper = smoothstep(0.0, 0.18, vUv.x) * (1.0 - smoothstep(0.78, 1.0, vUv.x));
+        if (taper < 0.05) discard;
         vec3 color = mix(uBottomColor, uTopColor, vUv.y);
-        gl_FragColor = vec4(color, max(0.42, taper));
+        gl_FragColor = vec4(color, taper * 0.82);
       }
     `,
     transparent: true,
@@ -1916,6 +1963,359 @@ function StageGrassField({ stage, grass }: { stage: StageDefinition; grass: Stag
   return (
     <instancedMesh ref={meshRef} args={[geometry, material, bladeCount]} position={[0, floorY, 0]} renderOrder={3} frustumCulled={false} />
   );
+}
+
+function StageDustPuffs({ stage, effect, fighters }: { stage: StageDefinition; effect: StageFloorSimpleEffect; fighters?: FighterRuntime[] }) {
+  const color = effect.color ?? '#c8b48a';
+  const floorY = floorEffectY(stage, 0.018);
+  const ambientPuffs = useMemo(() => floorEffectPositions(stage, 'dust', floorEffectCount(stage, effect, 18, 140), floorEffectWidth(stage), floorEffectDepth(stage)), [effect, stage.id, stage.world?.depth, stage.world?.width]);
+  const puffs = [
+    ...ambientPuffs,
+    ...(fighters ?? []).map((fighter) => [fighter.position.x - fighter.facing * 0.42, fighter.position.z] as [number, number])
+  ];
+  return (
+    <group>
+      {puffs.map(([x, z], index) => (
+        <mesh key={`dust-${index}`} position={[x, floorY, z]} rotation={[-Math.PI / 2, 0, index * 0.7]} renderOrder={5}>
+          <circleGeometry args={[0.34 * (effect.size ?? 1) * (1 + (index % 3) * 0.18), 22]} />
+          <meshBasicMaterial color={color} transparent opacity={(effect.opacity ?? 0.38) * (index < ambientPuffs.length ? 0.6 : 1)} depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageFootstepDecals({ stage, effect, fighters }: { stage: StageDefinition; effect: StageFloorSimpleEffect; fighters?: FighterRuntime[] }) {
+  const floorY = floorEffectY(stage, 0.02);
+  const color = effect.color ?? '#f4f0de';
+  const laneSteps = useMemo(() => {
+    const random = seededRandom(hashString(`${stage.id}:footsteps`));
+    return floorEffectPositions(stage, 'footsteps', floorEffectCount(stage, effect, 16, 120), floorEffectWidth(stage), floorEffectDepth(stage)).map(([x, z], index) => {
+      const side = index % 2 === 0 ? -0.12 : 0.12;
+      return [x + side, z, (random() - 0.5) * 0.8] as [number, number, number];
+    });
+  }, [effect, stage.id, stage.world?.depth, stage.world?.width]);
+  const liveSteps = (fighters ?? []).map((fighter) => [fighter.position.x, fighter.position.z - 0.22, fighter.facing * 0.08] as [number, number, number]);
+  return (
+    <group>
+      {[...laneSteps, ...liveSteps].map(([x, z, rot], index) => (
+        <mesh key={`footstep-${index}`} position={[x, floorY, z]} rotation={[-Math.PI / 2, 0, rot]} renderOrder={6}>
+          <planeGeometry args={[0.18 * (effect.size ?? 1), 0.46 * (effect.size ?? 1)]} />
+          <meshBasicMaterial color={color} transparent opacity={(effect.opacity ?? 0.28) * (index < laneSteps.length ? 0.66 : 1)} depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageImpactRings({ stage, effect, impactEvents }: { stage: StageDefinition; effect: StageFloorSimpleEffect; impactEvents?: ImpactSparkEvent[] }) {
+  const floorY = floorEffectY(stage, 0.028);
+  const color = effect.color ?? '#ffffff';
+  const recent = (impactEvents ?? []).slice(-6).map((event) => [event.position[0], event.position[2], Math.max(0.9, Math.min(2.3, 0.9 + event.damage / 18))] as [number, number, number]);
+  const fallback = recent.length > 0 ? [] : [[0, 0, 1.6], [-2.2, -1.4, 0.9], [2.4, 1.2, 1.05]] as Array<[number, number, number]>;
+  return (
+    <group>
+      {[...fallback, ...recent].map(([x, z, scale], index) => (
+        <group key={`impact-ring-${index}`} position={[x, floorY, z]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh renderOrder={7}>
+            <ringGeometry args={[0.5 * scale * (effect.size ?? 1), 0.58 * scale * (effect.size ?? 1), 64]} />
+            <meshBasicMaterial color={color} transparent opacity={(effect.opacity ?? 0.46) * (recent.length ? 1 : 0.45)} depthWrite={false} />
+          </mesh>
+          <mesh renderOrder={7}>
+            <circleGeometry args={[0.18 * scale * (effect.size ?? 1), 32]} />
+            <meshBasicMaterial color={color} transparent opacity={0.12 * (effect.intensity ?? 0.8)} depthWrite={false} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
+function StageFloatingParticles({
+  stage,
+  effect,
+  variant
+}: {
+  stage: StageDefinition;
+  effect: StageFloorSimpleEffect;
+  variant: 'petals' | 'snow' | 'wind' | 'cherry';
+}) {
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const width = floorEffectWidth(stage);
+  const depth = floorEffectDepth(stage);
+  const areaScale = Math.sqrt((width * depth) / (72 * 42));
+  const count = Math.round(THREE.MathUtils.clamp(Math.max(effect.amount ?? 120, 50) * (0.45 + (effect.density ?? 0.45)) * areaScale, 80, 1000));
+  const colorA = effect.colorA ?? effect.color ?? (variant === 'snow' ? '#f8fcff' : variant === 'wind' ? '#dff8ff' : '#ff9ac5');
+  const colorB = effect.colorB ?? colorA;
+  const geometry = useMemo(() => new THREE.PlaneGeometry(variant === 'wind' ? 0.08 : 0.12, variant === 'wind' ? 1.6 : 0.24), [variant]);
+  const material = useMemo(() => new THREE.MeshBasicMaterial({
+    color: new THREE.Color(colorA).lerp(new THREE.Color(colorB), 0.35),
+    transparent: true,
+    opacity: effect.opacity ?? (variant === 'snow' ? 0.82 : 0.72),
+    depthWrite: false,
+    side: THREE.DoubleSide
+  }), []);
+
+  useEffect(() => {
+    material.color.set(colorA).lerp(new THREE.Color(colorB), 0.35);
+    material.opacity = effect.opacity ?? (variant === 'snow' ? 0.82 : 0.72);
+  }, [colorA, colorB, effect.opacity, material, variant]);
+
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh) return;
+    const dummy = new THREE.Object3D();
+    const random = seededRandom(hashString(`${stage.id}:${variant}`));
+    for (let index = 0; index < count; index += 1) {
+      dummy.position.set((random() - 0.5) * width, 0.6 + random() * 5.8, (random() - 0.5) * depth);
+      dummy.rotation.set(random() * Math.PI, random() * Math.PI, random() * Math.PI);
+      dummy.scale.setScalar((0.65 + random() * 0.8) * (effect.size ?? 1));
+      dummy.updateMatrix();
+      mesh.setMatrixAt(index, dummy.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+  }, [count, depth, effect.size, stage.id, variant, width]);
+
+  useFrame(({ clock }) => {
+    if (!meshRef.current) return;
+    const time = clock.elapsedTime;
+    meshRef.current.position.x = Math.sin(time * 0.24 * (effect.speed ?? 1)) * (effect.windStrength ?? 0.35);
+    meshRef.current.position.y = -((time * (effect.fallSpeed ?? 0.65)) % 6);
+    meshRef.current.rotation.y = Math.sin(time * 0.08) * 0.08;
+  });
+
+  return <instancedMesh ref={meshRef} args={[geometry, material, count]} position={[0, 4.8, 0]} renderOrder={10} frustumCulled={false} />;
+}
+
+function StagePuddleField({ stage, effect }: { stage: StageDefinition; effect: StageFloorSimpleEffect }) {
+  const puddles = useMemo(() => floorEffectPositions(stage, 'puddles', floorEffectCount(stage, effect, 12, 90), floorEffectWidth(stage), floorEffectDepth(stage)), [effect, stage.id, stage.world?.depth, stage.world?.width]);
+  const floorY = floorEffectY(stage, 0.018);
+  return (
+    <group>
+      {puddles.map(([x, z], index) => (
+        <mesh key={`puddle-${index}`} position={[x, floorY, z]} rotation={[-Math.PI / 2, 0, index * 0.3]} renderOrder={4}>
+          <circleGeometry args={[0.58 * (effect.size ?? 1) * (1 + (index % 4) * 0.22), 48]} />
+          <meshBasicMaterial color={effect.color ?? '#9ad7ff'} transparent opacity={effect.opacity ?? 0.34} depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageRippleField({ stage, effect, fighters }: { stage: StageDefinition; effect: StageFloorSimpleEffect; fighters?: FighterRuntime[] }) {
+  const floorY = floorEffectY(stage, 0.026);
+  const ambient = useMemo(() => floorEffectPositions(stage, 'ripples', floorEffectCount(stage, effect, 10, 64), floorEffectWidth(stage), floorEffectDepth(stage)), [effect, stage.id, stage.world?.depth, stage.world?.width]);
+  const anchors = [...ambient, ...((fighters ?? []).map((fighter) => [fighter.position.x, fighter.position.z] as [number, number]))];
+  return (
+    <group>
+      {anchors.map(([x, z], index) => (
+        <mesh key={`ripple-${index}`} position={[x, floorY, z]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={8}>
+          <ringGeometry args={[0.52 * (effect.radius ?? 1.4), 0.59 * (effect.radius ?? 1.4), 72]} />
+          <meshBasicMaterial color={effect.color ?? '#b5f3ff'} transparent opacity={effect.opacity ?? 0.38} depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageEnergyFloor({ stage, effect }: { stage: StageDefinition; effect: StageFloorSimpleEffect }) {
+  const material = useMemo(() => new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uColorA: { value: new THREE.Color(effect.colorA ?? effect.color ?? '#ffb347') },
+      uColorB: { value: new THREE.Color(effect.colorB ?? '#a920ff') },
+      uOpacity: { value: effect.opacity ?? 0.44 }
+    },
+    vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `
+      uniform float uTime;
+      uniform vec3 uColorA;
+      uniform vec3 uColorB;
+      uniform float uOpacity;
+      varying vec2 vUv;
+      void main() {
+        float pulse = 0.5 + 0.5 * sin(uTime + vUv.x * 18.0 + vUv.y * 12.0);
+        vec3 color = mix(uColorA, uColorB, pulse);
+        gl_FragColor = vec4(color, uOpacity * (0.35 + pulse * 0.65));
+      }
+    `,
+    transparent: true,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  }), []);
+  useEffect(() => {
+    (material.uniforms.uColorA.value as THREE.Color).set(effect.colorA ?? effect.color ?? '#ffb347');
+    (material.uniforms.uColorB.value as THREE.Color).set(effect.colorB ?? '#a920ff');
+    material.uniforms.uOpacity.value = effect.opacity ?? 0.44;
+  }, [effect.color, effect.colorA, effect.colorB, effect.opacity, material]);
+  useFrame(({ clock }) => {
+    material.uniforms.uTime.value = clock.elapsedTime * (effect.pulseSpeed ?? effect.speed ?? 1.2);
+  });
+  return (
+    <mesh position={[0, floorEffectY(stage, 0.016), 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={4}>
+      <planeGeometry args={[floorEffectWidth(stage), floorEffectDepth(stage), 1, 1]} />
+      <primitive object={material} attach="material" />
+    </mesh>
+  );
+}
+
+function StageFogSheets({ stage, effect }: { stage: StageDefinition; effect: StageFloorSimpleEffect }) {
+  const floorY = floorEffectY(stage, 0.12);
+  const width = floorEffectWidth(stage);
+  const depth = floorEffectDepth(stage);
+  const sheetCount = Math.max(6, Math.min(18, Math.round(depth / 14)));
+  const sheets = Array.from({ length: sheetCount }, (_, index) => -depth / 2 + (depth * (index + 0.5)) / sheetCount);
+  return (
+    <group>
+      {sheets.map((z, index) => (
+        <mesh key={`fog-${index}`} position={[0, floorY + index * 0.025, z]} rotation={[-Math.PI / 2, 0, index * 0.08]} renderOrder={9}>
+          <planeGeometry args={[width, Math.max(8, depth / sheetCount * 1.25)]} />
+          <meshBasicMaterial color={effect.color ?? '#c7f2d7'} transparent opacity={(effect.opacity ?? 0.32) * Math.max(0.18, 0.82 - index * 0.08)} depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageHeatHaze({ stage, effect }: { stage: StageDefinition; effect: StageFloorSimpleEffect }) {
+  const material = useMemo(() => new THREE.MeshBasicMaterial({
+    color: effect.color ?? '#ffbf6e',
+    transparent: true,
+    opacity: effect.opacity ?? 0.2,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  }), []);
+  useFrame(({ clock }) => {
+    material.opacity = (effect.opacity ?? 0.2) * (0.72 + Math.sin(clock.elapsedTime * (effect.speed ?? 1.1)) * 0.18);
+  });
+  const width = floorEffectWidth(stage);
+  const depth = floorEffectDepth(stage);
+  const columns = 7;
+  const rows = 5;
+  return (
+    <group position={[0, 0.8, 0]}>
+      {Array.from({ length: columns * rows }, (_, index) => {
+        const column = index % columns;
+        const row = Math.floor(index / columns);
+        const x = -width / 2 + (width * (column + 0.5)) / columns;
+        const z = -depth / 2 + (depth * (row + 0.5)) / rows;
+        return (
+          <mesh key={`heat-${index}`} position={[x, 0, z]} rotation={[0, 0.18 * (column - 3), 0]} renderOrder={11}>
+            <planeGeometry args={[Math.max(4.6, width / columns * 0.92), 1.35]} />
+            <primitive object={material} attach="material" />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+function StageGlowTrails({ stage, effect, fighters }: { stage: StageDefinition; effect: StageFloorSimpleEffect; fighters?: FighterRuntime[] }) {
+  const floorY = floorEffectY(stage, 0.024);
+  const ambient = useMemo(() => {
+    const random = seededRandom(hashString(`${stage.id}:glow-trails`));
+    return floorEffectPositions(stage, 'glow-trails', floorEffectCount(stage, effect, 8, 56), floorEffectWidth(stage), floorEffectDepth(stage)).map(([x, z]) => [x, z, random() > 0.5 ? 1 : -1] as [number, number, number]);
+  }, [effect, stage.id, stage.world?.depth, stage.world?.width]);
+  const anchors = [
+    ...ambient,
+    ...((fighters ?? []).map((fighter) => [fighter.position.x - fighter.facing * 0.42, fighter.position.z, fighter.facing] as [number, number, number]))
+  ];
+  return (
+    <group>
+      {anchors.map(([x, z, facing], index) => (
+        <mesh key={`glow-trail-${index}`} position={[x, floorY, z]} rotation={[-Math.PI / 2, 0, facing > 0 ? 0.16 : -0.16]} renderOrder={8}>
+          <planeGeometry args={[1.7 * (effect.size ?? 1), 0.34 * (effect.size ?? 1)]} />
+          <meshBasicMaterial color={effect.color ?? '#5cf4ff'} transparent opacity={effect.opacity ?? 0.5} depthWrite={false} blending={THREE.AdditiveBlending} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageTileShimmer({ stage, effect }: { stage: StageDefinition; effect: StageFloorSimpleEffect }) {
+  const material = useMemo(() => new THREE.MeshBasicMaterial({
+    color: effect.color ?? '#fff2a8',
+    transparent: true,
+    opacity: effect.opacity ?? 0.26,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  }), []);
+  useFrame(({ clock }) => {
+    material.opacity = (effect.opacity ?? 0.26) * (0.55 + Math.sin(clock.elapsedTime * (effect.pulseSpeed ?? 1.4)) * 0.25 + 0.25);
+  });
+  const width = floorEffectWidth(stage);
+  const depth = floorEffectDepth(stage);
+  const xLines = useMemo(() => shimmerLines(width), [width]);
+  const zLines = useMemo(() => shimmerLines(depth), [depth]);
+  return (
+    <group position={[0, floorEffectY(stage, 0.023), 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      {xLines.map((x, index) => (
+        <mesh key={`tile-shimmer-v-${index}`} position={[x, 0, 0]} renderOrder={6}>
+          <planeGeometry args={[0.045, depth]} />
+          <primitive object={material} attach="material" />
+        </mesh>
+      ))}
+      {zLines.map((z, index) => (
+        <mesh key={`tile-shimmer-h-${index}`} position={[0, z, 0]} renderOrder={6}>
+          <planeGeometry args={[width, 0.045]} />
+          <primitive object={material} attach="material" />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function StageDebrisField({ stage, effect }: { stage: StageDefinition; effect: StageFloorSimpleEffect }) {
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const count = floorEffectCount(stage, effect, 24, 360);
+  const geometry = useMemo(() => new THREE.BoxGeometry(0.16, 0.08, 0.12), []);
+  const material = useMemo(() => new THREE.MeshStandardMaterial({ color: effect.color ?? '#6e6256', roughness: 0.94, metalness: 0.02, transparent: true, opacity: effect.opacity ?? 0.72 }), []);
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh) return;
+    const random = seededRandom(hashString(`${stage.id}:debris`));
+    const dummy = new THREE.Object3D();
+    for (let index = 0; index < count; index += 1) {
+      dummy.position.set((random() - 0.5) * floorEffectWidth(stage), random() * 0.05, (random() - 0.5) * floorEffectDepth(stage));
+      dummy.rotation.set(random() * Math.PI, random() * Math.PI, random() * Math.PI);
+      dummy.scale.setScalar((0.7 + random() * 1.6) * (effect.size ?? 0.9));
+      dummy.updateMatrix();
+      mesh.setMatrixAt(index, dummy.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+  }, [count, effect.size, stage.id, stage.world?.depth, stage.world?.width]);
+  return <instancedMesh ref={meshRef} args={[geometry, material, count]} position={[0, floorEffectY(stage, 0.03), 0]} renderOrder={4} />;
+}
+
+function floorEffectY(stage: StageDefinition, offset = 0) {
+  return (stage.world?.floorY ?? -0.045) + offset;
+}
+
+function floorEffectPositions(stage: StageDefinition, salt: string, count: number, width: number, depth: number): Array<[number, number]> {
+  const random = seededRandom(hashString(`${stage.id}:${salt}`));
+  return Array.from({ length: count }, () => [(random() - 0.5) * width, (random() - 0.5) * depth]);
+}
+
+function floorEffectWidth(stage: StageDefinition, multiplier = 1.08) {
+  return Math.max(24, (stage.world?.width ?? 220) * multiplier);
+}
+
+function floorEffectDepth(stage: StageDefinition, multiplier = 1.08) {
+  return Math.max(18, (stage.world?.depth ?? 220) * multiplier);
+}
+
+function floorEffectCount(stage: StageDefinition, effect: StageFloorSimpleEffect, base = 12, max = 120) {
+  const area = floorEffectWidth(stage) * floorEffectDepth(stage);
+  const areaScale = area / (48 * 32);
+  return Math.round(THREE.MathUtils.clamp(base + areaScale * (effect.density ?? 0.45) * base * 0.42, base, max));
+}
+
+function shimmerLines(size: number) {
+  const step = 10;
+  const count = Math.max(5, Math.min(29, Math.ceil(size / step) + 1));
+  return Array.from({ length: count }, (_, index) => -size / 2 + (size * index) / Math.max(1, count - 1));
 }
 
 function seededRandom(seed: number) {

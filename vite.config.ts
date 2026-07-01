@@ -2649,19 +2649,62 @@ function sanitizeFloorEffects(value: unknown) {
   if (!value || typeof value !== 'object') return undefined;
   const source = value as Record<string, unknown>;
   const grass = source.grass && typeof source.grass === 'object' ? source.grass as Record<string, unknown> : undefined;
-  if (!grass) return undefined;
-  return {
-    grass: {
+  const effects: Record<string, unknown> = {};
+  if (grass) {
+    effects.grass = {
       enabled: grass.enabled === true,
       density: clamp(finiteOr(grass.density, 0.45), 0.05, 1),
-      height: clamp(finiteOr(grass.height, 0.48), 0.08, 1.8),
-      patchWidth: clamp(finiteOr(grass.patchWidth, 32), 4, 220),
-      patchDepth: clamp(finiteOr(grass.patchDepth, 16), 4, 220),
+      height: clamp(finiteOr(grass.height, 0.28), 0.04, 1.8),
+      patchWidth: clamp(finiteOr(grass.patchWidth, 220), 4, 520),
+      patchDepth: clamp(finiteOr(grass.patchDepth, 220), 4, 520),
       windStrength: clamp(finiteOr(grass.windStrength, 0.14), 0, 0.8),
       windSpeed: clamp(finiteOr(grass.windSpeed, 1.1), 0, 4),
       colorBottom: typeof grass.colorBottom === 'string' && grass.colorBottom ? grass.colorBottom : '#174d25',
       colorTop: typeof grass.colorTop === 'string' && grass.colorTop ? grass.colorTop : '#7bd34d'
-    }
+    };
+  }
+  [
+    'dust',
+    'footsteps',
+    'impact',
+    'petals',
+    'snow',
+    'rainPuddles',
+    'ripples',
+    'energy',
+    'fog',
+    'heat',
+    'glowTrails',
+    'windStreaks',
+    'cherryBurst',
+    'tileShimmer',
+    'debris'
+  ].forEach((key) => {
+    const effect = source[key];
+    if (effect && typeof effect === 'object') effects[key] = sanitizeSimpleFloorEffect(effect);
+  });
+  return Object.keys(effects).length ? effects : undefined;
+}
+
+function sanitizeSimpleFloorEffect(value: unknown) {
+  const source = value && typeof value === 'object' ? value as Record<string, unknown> : {};
+  return {
+    enabled: source.enabled === true,
+    intensity: clamp(finiteOr(source.intensity, 0.6), 0, 2),
+    density: clamp(finiteOr(source.density, 0.45), 0, 1),
+    size: clamp(finiteOr(source.size, 1), 0.05, 12),
+    speed: clamp(finiteOr(source.speed, 1), 0, 6),
+    opacity: clamp(finiteOr(source.opacity, 0.55), 0, 1),
+    radius: clamp(finiteOr(source.radius, 1.4), 0.05, 24),
+    strength: clamp(finiteOr(source.strength, 0.35), 0, 2),
+    lifetime: clamp(finiteOr(source.lifetime, 900), 100, 6000),
+    amount: clamp(finiteOr(source.amount, 80), 0, 800),
+    windStrength: clamp(finiteOr(source.windStrength, 0.35), 0, 2),
+    fallSpeed: clamp(finiteOr(source.fallSpeed, 0.8), 0, 4),
+    pulseSpeed: clamp(finiteOr(source.pulseSpeed, 1.2), 0, 6),
+    color: typeof source.color === 'string' && source.color ? source.color : undefined,
+    colorA: typeof source.colorA === 'string' && source.colorA ? source.colorA : undefined,
+    colorB: typeof source.colorB === 'string' && source.colorB ? source.colorB : undefined
   };
 }
 

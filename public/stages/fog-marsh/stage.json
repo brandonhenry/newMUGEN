@@ -1,0 +1,34 @@
+{
+  "id": "fog-marsh",
+  "name": "Fog Marsh",
+  "subtitle": "Low mist rolling over a green floor",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#2a6045",
+  "floorTexturePath": "/stages/fog-marsh/floor-texture.png",
+  "floorTextureRepeat": [
+    14,
+    14
+  ],
+  "floorEffects": {
+    "fog": {
+      "enabled": true,
+      "intensity": 0.68,
+      "density": 0.78,
+      "size": 1.2,
+      "speed": 0.45,
+      "opacity": 0.34,
+      "color": "#c7f2d7"
+    }
+  },
+  "rail": "#9cfac7",
+  "light": "#dcffe9",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#7ec9a4"
+  },
+  "props": []
+}

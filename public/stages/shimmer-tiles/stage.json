@@ -1,0 +1,35 @@
+{
+  "id": "shimmer-tiles",
+  "name": "Shimmer Tiles",
+  "subtitle": "Clean tiled floor with a subtle gold shimmer",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#e2ded2",
+  "floorTexturePath": "/stages/shimmer-tiles/floor-texture.png",
+  "floorTextureRepeat": [
+    16,
+    16
+  ],
+  "floorEffects": {
+    "tileShimmer": {
+      "enabled": true,
+      "intensity": 0.7,
+      "density": 0.66,
+      "size": 1,
+      "speed": 1.2,
+      "opacity": 0.32,
+      "pulseSpeed": 1.45,
+      "color": "#fff2a8"
+    }
+  },
+  "rail": "#f6dc83",
+  "light": "#fff9dc",
+  "skyboxPath": "/stages/chamber/skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#f8fbff"
+  },
+  "props": []
+}

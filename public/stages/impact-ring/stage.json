@@ -1,0 +1,34 @@
+{
+  "id": "impact-ring",
+  "name": "Impact Ring",
+  "subtitle": "Arena focused on hit shockwaves and floor bursts",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#1d2230",
+  "floorTexturePath": "/stages/impact-ring/floor-texture.png",
+  "floorTextureRepeat": [
+    14,
+    14
+  ],
+  "floorEffects": {
+    "impact": {
+      "enabled": true,
+      "intensity": 0.9,
+      "density": 0.55,
+      "size": 1.45,
+      "speed": 1.1,
+      "opacity": 0.52,
+      "color": "#ffffff"
+    }
+  },
+  "rail": "#ffdc64",
+  "light": "#fff7d7",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#111827"
+  },
+  "props": []
+}

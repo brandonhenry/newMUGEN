@@ -1,0 +1,35 @@
+{
+  "id": "ripple-basin",
+  "name": "Ripple Basin",
+  "subtitle": "Shallow water floor with reactive ripple rings",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#1f6578",
+  "floorTexturePath": "/stages/ripple-basin/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "floorEffects": {
+    "ripples": {
+      "enabled": true,
+      "intensity": 0.82,
+      "density": 0.72,
+      "size": 1.2,
+      "speed": 1.4,
+      "opacity": 0.44,
+      "radius": 1.65,
+      "color": "#b5f3ff"
+    }
+  },
+  "rail": "#80f4ff",
+  "light": "#e5fcff",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#9be8f3"
+  },
+  "props": []
+}

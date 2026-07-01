@@ -1,0 +1,34 @@
+{
+  "id": "footstep-grid",
+  "name": "Footstep Grid",
+  "subtitle": "Clean chamber floor showing grounded movement marks",
+  "renderMode": "procedural",
+  "hidden": false,
+  "floor": "#dfe8ef",
+  "floorTexturePath": "/stages/footstep-grid/floor-texture.png",
+  "floorTextureRepeat": [
+    18,
+    18
+  ],
+  "floorEffects": {
+    "footsteps": {
+      "enabled": true,
+      "intensity": 0.62,
+      "density": 0.62,
+      "size": 0.9,
+      "speed": 0.7,
+      "opacity": 0.34,
+      "color": "#ffffff"
+    }
+  },
+  "rail": "#7deaff",
+  "light": "#ffffff",
+  "skyboxPath": "/stages/chamber/skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#f8fbff"
+  },
+  "props": []
+}

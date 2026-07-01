@@ -486,8 +486,42 @@ export type StageFloorGrassEffect = {
   colorTop?: string;
 };
 
+export type StageFloorSimpleEffect = {
+  enabled: boolean;
+  intensity?: number;
+  density?: number;
+  size?: number;
+  speed?: number;
+  opacity?: number;
+  radius?: number;
+  strength?: number;
+  lifetime?: number;
+  amount?: number;
+  windStrength?: number;
+  fallSpeed?: number;
+  pulseSpeed?: number;
+  color?: string;
+  colorA?: string;
+  colorB?: string;
+};
+
 export type StageFloorEffects = {
   grass?: StageFloorGrassEffect;
+  dust?: StageFloorSimpleEffect;
+  footsteps?: StageFloorSimpleEffect;
+  impact?: StageFloorSimpleEffect;
+  petals?: StageFloorSimpleEffect;
+  snow?: StageFloorSimpleEffect;
+  rainPuddles?: StageFloorSimpleEffect;
+  ripples?: StageFloorSimpleEffect;
+  energy?: StageFloorSimpleEffect;
+  fog?: StageFloorSimpleEffect;
+  heat?: StageFloorSimpleEffect;
+  glowTrails?: StageFloorSimpleEffect;
+  windStreaks?: StageFloorSimpleEffect;
+  cherryBurst?: StageFloorSimpleEffect;
+  tileShimmer?: StageFloorSimpleEffect;
+  debris?: StageFloorSimpleEffect;
 };
 
 export type StageFloorAssetDefinition = {
