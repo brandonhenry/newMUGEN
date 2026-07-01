@@ -109,6 +109,20 @@ test('defaults character and stage select to random slots', async ({ page }) => 
   await firstRealStage.click();
   await expect(randomStage).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('.stage-hero-label strong')).not.toHaveText('Random');
+
+  const firstStageName = (await page.locator('.stage-hero-label strong').textContent())?.trim() ?? '';
+  await page.getByRole('button', { name: 'Next stage' }).click();
+  await expect(page.locator('.stage-hero-label strong')).not.toHaveText(firstStageName);
+  const nextStageName = (await page.locator('.stage-hero-label strong').textContent())?.trim() ?? '';
+  await expect(page.locator('.stage-thumbnail.is-selected strong')).toHaveText(nextStageName);
+
+  await page.getByRole('button', { name: 'Previous stage' }).click();
+  await expect(page.locator('.stage-hero-label strong')).toHaveText(firstStageName);
+
+  await page.keyboard.press('p');
+  await expect(page.locator('.stage-hero-label strong')).toHaveText(nextStageName);
+  await page.keyboard.press('o');
+  await expect(page.locator('.stage-hero-label strong')).toHaveText(firstStageName);
 });
 
 test('opens controls and character viewer', async ({ page }) => {

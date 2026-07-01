@@ -992,9 +992,11 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
     >
       <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
       <StageVisualStyleRig stage={stage} preview />
-      <StagePreviewCamera />
+      <StagePreviewCamera stage={stage} />
       <group position={[0, -0.05, 0]} scale={0.82}>
-        <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />
+        {stage.renderMode === 'model' && !interactive
+          ? <ModelStageThumbnailPreview stage={stage} />
+          : <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />}
       </group>
       {interactive && (
         <OrbitControls
@@ -1012,13 +1014,36 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
   );
 }
 
-function StagePreviewCamera() {
+function StagePreviewCamera({ stage }: { stage: StageDefinition }) {
   const { camera, invalidate } = useThree();
   useEffect(() => {
-    camera.lookAt(0, 0.2, -0.8);
+    const position = stage.camera?.previewPosition ?? (stage.renderMode === 'model' ? [0, 6.6, 11.2] : undefined);
+    const target = stage.camera?.previewTarget ?? stage.model?.focus ?? [0, 0.2, -0.8];
+    if (position) camera.position.set(position[0], position[1], position[2]);
+    camera.lookAt(target[0], target[1], target[2]);
+    camera.updateProjectionMatrix();
     invalidate();
-  }, [camera, invalidate]);
+  }, [camera, invalidate, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.model?.focus, stage.renderMode]);
   return null;
+}
+
+function ModelStageThumbnailPreview({ stage }: { stage: StageDefinition }) {
+  const imagePath = stage.thumbnailPath ?? stage.skyboxPath ?? DEFAULT_SKYBOX_PATH;
+  const texture = useLoader(THREE.TextureLoader, imagePath);
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
+  return (
+    <group>
+      <mesh position={[0, 2.8, -7.6]} scale={[13.2, 7.42, 1]}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial map={texture} color="#ffffff" toneMapped={false} />
+      </mesh>
+    </group>
+  );
 }
 
 function DefaultSkybox({ imagePath }: { imagePath: string }) {
@@ -1890,6 +1915,10 @@ function Arena({
     return <SpriteCutoutStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
   }
 
+  if (stage.renderMode === 'model') {
+    return <ModelStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
+  }
+
   const floorTexturePath = stage.floorTexturePath;
   if (floorTexturePath) {
     return <TexturedInfiniteArena stage={stage} floorTexturePath={floorTexturePath} fighters={fighters} impactEvents={impactEvents} />;
@@ -1942,6 +1971,133 @@ function Arena({
       <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>
+  );
+}
+
+function ModelStage({
+  stage,
+  fighters,
+  impactEvents,
+  selectedPropId,
+  onSelectProp
+}: {
+  stage: StageDefinition;
+  fighters?: FighterRuntime[];
+  impactEvents?: ImpactSparkEvent[];
+  selectedPropId?: string;
+  onSelectProp?: (propId: string) => void;
+}) {
+  const modelDefinition = stage.model;
+  const modelPath = modelDefinition?.path ?? modelDefinition?.url;
+  if (!modelPath) {
+    return <TexturedInfiniteArena stage={stage} floorTexturePath={stage.floorTexturePath ?? '/stages/shared/handpainted-stone-platform.png'} fighters={fighters} impactEvents={impactEvents} />;
+  }
+  return (
+    <group>
+      <Suspense fallback={<ModelStageLoadBackdrop stage={stage} />}>
+        <StageModelScene stage={stage} />
+      </Suspense>
+      {stage.floorTexturePath ? (
+        <ModelStageFightFloor stage={stage} floorTexturePath={stage.floorTexturePath} />
+      ) : (
+        <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0]}>
+          <planeGeometry args={[stage.world?.width ?? 52, stage.world?.depth ?? 42, 1, 1]} />
+          <meshLambertMaterial color={stage.floor} transparent opacity={0.72} />
+        </mesh>
+      )}
+      <mesh position={[0, (stage.world?.floorY ?? -0.045) + 0.012, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+        <ringGeometry args={[4.45, 4.82, 8]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.32} depthWrite={false} />
+      </mesh>
+      <StageSafePlatform stage={stage} />
+      <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
+      {(modelDefinition?.decorativeProps ?? []).filter((prop) => !prop.hidden).map((prop) => (
+        <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
+      ))}
+    </group>
+  );
+}
+
+function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
+  const imagePath = stage.thumbnailPath ?? stage.skyboxPath ?? DEFAULT_SKYBOX_PATH;
+  const texture = useLoader(THREE.TextureLoader, imagePath);
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
+  return (
+    <mesh position={[0, 3.2, -13]} scale={[16, 9, 1]} renderOrder={-5}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial map={texture} color="#ffffff" toneMapped={false} />
+    </mesh>
+  );
+}
+
+function StageModelScene({ stage }: { stage: StageDefinition }) {
+  const modelDefinition = stage.model;
+  const gltf = useGLTF(modelDefinition?.path ?? modelDefinition?.url ?? '');
+  const scene = useMemo(() => clone(gltf.scene) as THREE.Object3D, [gltf.scene]);
+  const position = modelDefinition?.position ?? [0, 0, 0];
+  const scale = modelDefinition?.scale ?? [1, 1, 1];
+  const rotation = modelDefinition?.rotation ?? [0, 0, 0];
+
+  useEffect(() => {
+    scene.traverse((object) => {
+      const mesh = object as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.castShadow = modelDefinition?.castShadow !== false;
+      mesh.receiveShadow = modelDefinition?.receiveShadow !== false;
+      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      mesh.material = materials.map((material) => normalizeStageModelMaterial(material)).filter(Boolean) as THREE.Material | THREE.Material[];
+    });
+    return () => {
+      scene.traverse((object) => {
+        const mesh = object as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        materials.forEach((material) => material?.dispose());
+      });
+    };
+  }, [modelDefinition?.castShadow, modelDefinition?.receiveShadow, scene]);
+
+  return <primitive object={scene} position={position} scale={scale} rotation={rotation} />;
+}
+
+function normalizeStageModelMaterial(material: THREE.Material | undefined) {
+  if (!material) return material;
+  const cloned = material.clone();
+  const maybeMapped = cloned as THREE.MeshStandardMaterial & { map?: THREE.Texture | null; emissiveMap?: THREE.Texture | null };
+  [maybeMapped.map, maybeMapped.emissiveMap].forEach((texture) => {
+    if (!texture) return;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = 8;
+    texture.needsUpdate = true;
+  });
+  cloned.needsUpdate = true;
+  return cloned;
+}
+
+function ModelStageFightFloor({ stage, floorTexturePath }: { stage: StageDefinition; floorTexturePath: string }) {
+  const texture = useLoader(THREE.TextureLoader, floorTexturePath);
+  const repeat = stage.floorTextureRepeat ?? [10, 10];
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(repeat[0], repeat[1]);
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.anisotropy = 8;
+    texture.needsUpdate = true;
+  }, [repeat, texture]);
+
+  return (
+    <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0]}>
+      <planeGeometry args={[stage.world?.width ?? 52, stage.world?.depth ?? 42, 1, 1]} />
+      <meshBasicMaterial map={texture} color="#ffffff" transparent opacity={0.86} />
+    </mesh>
   );
 }
 

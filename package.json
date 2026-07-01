@@ -10,6 +10,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "import:naruto-stages": "node scripts/import-naruto-stages.mjs",
     "tag:patch": "node scripts/bump-version.mjs patch",
     "tag:minor": "node scripts/bump-version.mjs minor",
     "tag:major": "node scripts/bump-version.mjs major"
@@ -29,6 +30,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@gltf-transform/cli": "^4.4.0",
     "@playwright/test": "^1.49.1",
     "@testing-library/react": "^16.1.0",
     "@types/animejs": "^3.1.12",
@@ -37,6 +39,7 @@
     "@types/react-dom": "^18.3.5",
     "@types/three": "^0.171.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "fbx2gltf": "^0.9.7-p1",
     "jsdom": "^25.0.1",
     "typescript": "^5.7.2",
     "vite": "^6.0.5",

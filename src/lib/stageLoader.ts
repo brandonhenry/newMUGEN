@@ -1,5 +1,5 @@
 import { stages as fallbackStages } from '../data/stages';
-import type { StageDefinition, StageFloorEffects } from '../types';
+import type { StageDefinition, StageFloorEffects, StageModelDefinition, StagePropDefinition, Vec3Tuple } from '../types';
 import { inferStageVisualStylePreset, normalizeStageVisualStyle } from './stageVisualStyle';
 
 export type StageLoadResult = {
@@ -62,6 +62,10 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     light: stage.light ?? '#dbe8ff',
     skyboxAssetId: stage.skyboxAssetId,
     skyboxPath: stage.skyboxPath,
+    fightPlane: normalizeFightPlane(stage.fightPlane),
+    spawns: normalizeSpawns(stage.spawns),
+    collision: normalizeCollision(stage.collision),
+    model: normalizeStageModel(stage.model),
     world: stage.world
       ? {
           width: finiteOr(stage.world.width, 96),
@@ -89,6 +93,7 @@ function validateStage(stage: StageDefinition) {
     if (!stage.sourcePath) warnings.push('Sprite-cutout stage is missing sourcePath.');
     if (!stage.backgroundLayers?.length && !stage.props?.length) warnings.push('Sprite-cutout stage has no visual layers or props.');
   }
+  if (stage.renderMode === 'model' && !stage.model?.path) warnings.push('Model stage is missing model.path.');
   return warnings;
 }
 
@@ -112,6 +117,71 @@ function normalizeSafePlatform(value: StageDefinition['safePlatform']): StageDef
 
 function finiteOr(value: unknown, fallback: number) {
   return Number.isFinite(value) ? Number(value) : fallback;
+}
+
+function normalizeStageModel(value: unknown): StageModelDefinition | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as StageModelDefinition;
+  const path = typeof source.path === 'string' && source.path.trim()
+    ? source.path
+    : typeof source.url === 'string' && source.url.trim()
+      ? source.url
+      : '';
+  if (!path) return undefined;
+  return {
+    path,
+    url: typeof source.url === 'string' && source.url.trim() ? source.url : path,
+    format: source.format === 'gltf' || source.format === 'fbx' ? source.format : 'glb',
+    position: normalizeVec3(source.position, [0, 0, 0]),
+    scale: normalizeVec3(source.scale, [1, 1, 1]),
+    rotation: normalizeVec3(source.rotation, [0, 0, 0]),
+    focus: normalizeVec3(source.focus, [0, 0.8, 0]),
+    bounds: source.bounds && typeof source.bounds === 'object'
+      ? {
+          center: normalizeVec3(source.bounds.center, [0, 0, 0]),
+          size: normalizeVec3(source.bounds.size, [1, 1, 1]),
+          radius: clamp(finiteOr(source.bounds.radius, 0), 0, 1000)
+        }
+      : undefined,
+    castShadow: source.castShadow !== false,
+    receiveShadow: source.receiveShadow !== false,
+    decorativeProps: Array.isArray(source.decorativeProps) ? source.decorativeProps.filter(isStagePropDefinition) : []
+  };
+}
+
+function normalizeFightPlane(value: unknown): StageDefinition['fightPlane'] {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as NonNullable<StageDefinition['fightPlane']>;
+  return {
+    center: normalizeVec3(source.center, [0, 0, 0]),
+    width: clamp(finiteOr(source.width, 24), 4, 220),
+    depth: clamp(finiteOr(source.depth, 16), 4, 220),
+    y: finiteOr(source.y, 0)
+  };
+}
+
+function normalizeSpawns(value: unknown): StageDefinition['spawns'] {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as NonNullable<StageDefinition['spawns']>;
+  return {
+    p1: normalizeVec3(source.p1, [-2.2, 0, 0]),
+    p2: normalizeVec3(source.p2, [2.2, 0, 0])
+  };
+}
+
+function normalizeCollision(value: unknown): StageDefinition['collision'] {
+  if (!value || typeof value !== 'object') return undefined;
+  const mode = (value as NonNullable<StageDefinition['collision']>).mode;
+  return { mode: mode === 'mesh' || mode === 'none' ? mode : 'box' };
+}
+
+function normalizeVec3(value: unknown, fallback: Vec3Tuple): Vec3Tuple {
+  if (!Array.isArray(value) || value.length < 3) return fallback;
+  return [finiteOr(value[0], fallback[0]), finiteOr(value[1], fallback[1]), finiteOr(value[2], fallback[2])];
+}
+
+function isStagePropDefinition(value: unknown): value is StagePropDefinition {
+  return Boolean(value && typeof value === 'object' && typeof (value as StagePropDefinition).id === 'string' && typeof (value as StagePropDefinition).imagePath === 'string');
 }
 
 function normalizeFloorEffects(value: unknown): StageFloorEffects | undefined {

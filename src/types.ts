@@ -358,7 +358,7 @@ export type StageDefinition = {
   id: string;
   name: string;
   subtitle: string;
-  renderMode?: 'procedural' | 'spriteCutout';
+  renderMode?: 'procedural' | 'spriteCutout' | 'model';
   visualStylePreset?: StageVisualStylePreset;
   visualStyle?: StageVisualStyle;
   hidden?: boolean;
@@ -389,11 +389,30 @@ export type StageDefinition = {
   camera?: {
     previewPosition?: Vec3Tuple;
     previewTarget?: Vec3Tuple;
+    target?: Vec3Tuple;
+    distance?: number;
+    height?: number;
+    fov?: number;
   };
   lighting?: {
     ambient?: string;
     sky?: string;
   };
+  type?: 'model-stage';
+  fightPlane?: {
+    center: Vec3Tuple;
+    width: number;
+    depth: number;
+    y: number;
+  };
+  spawns?: {
+    p1: Vec3Tuple;
+    p2: Vec3Tuple;
+  };
+  collision?: {
+    mode: 'box' | 'mesh' | 'none';
+  };
+  model?: StageModelDefinition;
   mugen?: MugenStageMetadata;
   backgroundLayers?: StageLayerDefinition[];
   props?: StagePropDefinition[];
@@ -492,6 +511,24 @@ export type StageSafePlatformDefinition = {
   color?: string;
   edgeColor?: string;
   edgeOpacity?: number;
+};
+
+export type StageModelDefinition = {
+  path?: string;
+  url?: string;
+  format?: 'glb' | 'gltf' | 'fbx';
+  position?: Vec3Tuple;
+  scale?: Vec3Tuple;
+  rotation?: Vec3Tuple;
+  focus?: Vec3Tuple;
+  bounds?: {
+    center?: Vec3Tuple;
+    size?: Vec3Tuple;
+    radius?: number;
+  };
+  castShadow?: boolean;
+  receiveShadow?: boolean;
+  decorativeProps?: StagePropDefinition[];
 };
 
 export type StageLayerDefinition = {

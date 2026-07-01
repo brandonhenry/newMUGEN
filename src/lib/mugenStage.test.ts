@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { loadStageRoster, normalizeStage } from './stageLoader';
 import { convertMugenDefToPropAssets, convertMugenDefToStage, parseMugenDef, referencedMugenSprites } from './mugenStage';
+import { sanitizeStageManifest } from './stageManifestSanitizer';
 
 const cherryBlossomsDef = `
 [Info]
@@ -154,6 +155,78 @@ describe('MUGEN stage parsing', () => {
       parallax: [1.04, 1],
       tile: [1, 0],
       sourceSprite: [0, 0]
+    });
+  });
+
+  it('normalizes model-backed stages without dropping model metadata', () => {
+    const normalized = normalizeStage({
+      id: 'hidden-leaf-village',
+      name: 'Hidden Leaf Village',
+      subtitle: 'Model stage',
+      renderMode: 'model',
+      floor: '#547a42',
+      rail: '#f0b35a',
+      light: '#fff1d0',
+      model: {
+        path: '/stages/hidden-leaf-village/stage.glb',
+        position: [0, -0.05, -7],
+        scale: [0.075, 0.075, 0.075],
+        rotation: [0, Math.PI, 0],
+        focus: [0, 1.2, -4],
+        castShadow: true,
+        receiveShadow: true,
+        decorativeProps: [{
+          id: 'gate-banner',
+          name: 'Gate Banner',
+          imagePath: '/stages/hidden-leaf-village/props/banner.png',
+          position: [0, 2.5, -7],
+          scale: [4, 2, 1],
+          renderMode: 'plane'
+        }]
+      }
+    });
+
+    expect(normalized.renderMode).toBe('model');
+    expect(normalized.model).toMatchObject({
+      path: '/stages/hidden-leaf-village/stage.glb',
+      position: [0, -0.05, -7],
+      scale: [0.075, 0.075, 0.075],
+      rotation: [0, Math.PI, 0],
+      focus: [0, 1.2, -4],
+      castShadow: true,
+      receiveShadow: true
+    });
+    expect(normalized.model?.decorativeProps?.[0]).toMatchObject({ id: 'gate-banner' });
+  });
+
+  it('sanitizes saved model stage manifests without coercing them to procedural', () => {
+    const sanitized = sanitizeStageManifest({
+      name: 'Hidden Leaf Village',
+      subtitle: 'Complete 3D arena',
+      renderMode: 'model',
+      floor: '#547a42',
+      rail: '#f0b35a',
+      light: '#fff1d0',
+      model: {
+        path: '/stages/hidden-leaf-village/stage.glb',
+        position: [0, 0, -6],
+        scale: [0.08, 0.08, 0.08],
+        rotation: [0, 3.14, 0],
+        focus: [0, 1.2, -4],
+        castShadow: true,
+        receiveShadow: false
+      }
+    }, 'hidden-leaf-village');
+
+    expect(sanitized.renderMode).toBe('model');
+    expect(sanitized.model).toMatchObject({
+      path: '/stages/hidden-leaf-village/stage.glb',
+      position: [0, 0, -6],
+      scale: [0.08, 0.08, 0.08],
+      rotation: [0, 3.14, 0],
+      focus: [0, 1.2, -4],
+      castShadow: true,
+      receiveShadow: false
     });
   });
 

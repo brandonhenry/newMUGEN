@@ -1,0 +1,205 @@
+{
+  "id": "naruto-apartment-fix",
+  "name": "Naruto's Apartment Fix",
+  "subtitle": "Revised 3D interior arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "dojo-sunset",
+  "hidden": false,
+  "floor": "#6d5743",
+  "floorTexturePath": "/stages/dust-arena/floor-texture.png",
+  "floorTextureRepeat": [
+    9,
+    9
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#7a6a58",
+    "edgeColor": "#ffd28a",
+    "edgeOpacity": 0.68
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.38,
+      "density": 0.34,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.28,
+      "color": "#d0b08a",
+      "quality": "low",
+      "maxParticles": 180,
+      "reactive": true
+    },
+    "footsteps": {
+      "enabled": true,
+      "intensity": 0.28,
+      "density": 0.26,
+      "size": 0.72,
+      "speed": 0.7,
+      "opacity": 0.22,
+      "color": "#f4e6c9",
+      "quality": "low",
+      "maxDecals": 48,
+      "reactive": true
+    }
+  },
+  "rail": "#ffd28a",
+  "light": "#ffe8bd",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#3a2d24"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      5.8,
+      12
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.5,
+    "height": 3,
+    "fov": 35
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/naruto-apartment-fix/stage.glb",
+    "url": "/stages/naruto-apartment-fix/stage.glb",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.1302,
+        0
+      ],
+      "size": [
+        8.7258,
+        4.2604,
+        18
+      ],
+      "radius": 10.2261
+    }
+  },
+  "mugen": {
+    "sourceDef": "Apartment Fix.blend",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "naruto-apartment-fix",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 186,
+      "meshCount": 176,
+      "boundsBeforeNormalize": {
+        "min": [
+          -3.3208,
+          -0.8934,
+          -0.3064
+        ],
+        "max": [
+          5.1013,
+          16.4802,
+          3.8058
+        ],
+        "center": [
+          0.8902,
+          7.7934,
+          1.7497
+        ],
+        "size": [
+          8.4221,
+          17.3736,
+          4.1122
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -4.3629,
+          -9,
+          0
+        ],
+        "max": [
+          4.3629,
+          9,
+          4.2604
+        ],
+        "center": [
+          0,
+          0,
+          2.1302
+        ],
+        "size": [
+          8.7258,
+          18,
+          4.2604
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/naruto-apartment-fix/preview.png"
+}

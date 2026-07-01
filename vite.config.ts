@@ -5,6 +5,7 @@ import { dirname, extname, resolve } from 'node:path';
 import { defineConfig, type ViteDevServer } from 'vite';
 import react from '@vitejs/plugin-react';
 import { importMugenStageFiles, importMugenStageFolder } from './mugenStageImporter';
+import { sanitizeStageManifest as sanitizeStageManifestPayload } from './src/lib/stageManifestSanitizer';
 
 export default defineConfig({
   plugins: [react(), koreDevManifestWriter()]
@@ -1223,7 +1224,7 @@ function koreDevManifestWriter() {
           }
           const stageDir = resolve(server.config.root, 'public', 'stages', stageId);
           await mkdir(stageDir, { recursive: true });
-          const stage = sanitizeStageManifest(payload.stage ?? {}, stageId);
+          const stage = sanitizeStageManifestPayload(payload.stage ?? {}, stageId);
           await writeFile(resolve(stageDir, 'stage.json'), `${JSON.stringify(stage, null, 2)}\n`, 'utf8');
           await updateStageIndex(server.config.root, stageId);
           response.statusCode = 200;
@@ -1288,7 +1289,7 @@ function koreDevManifestWriter() {
             }, null, 2)}\n`,
             'utf8'
           );
-          const stage = sanitizeStageManifest(payload.stage ?? {}, stageId);
+          const stage = sanitizeStageManifestPayload(payload.stage ?? {}, stageId);
           await writeFile(resolve(stageDir, 'stage.json'), `${JSON.stringify(stage, null, 2)}\n`, 'utf8');
           await updateStageIndex(server.config.root, stageId);
           response.statusCode = 200;
@@ -2600,7 +2601,7 @@ async function updateStageFloorEffects(root: string, floorId: string, effects: R
   return floor;
 }
 
-function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) {
+export function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) {
   const colors = {
     floor: typeof stage.floor === 'string' ? stage.floor : '#07182c',
     rail: typeof stage.rail === 'string' ? stage.rail : '#2ee6ff',
@@ -2611,7 +2612,7 @@ function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) 
     id: stageId,
     name: typeof stage.name === 'string' && stage.name.trim() ? stage.name.trim() : stageId,
     subtitle: typeof stage.subtitle === 'string' ? stage.subtitle : 'Sprite-cutout arena',
-    renderMode: stage.renderMode === 'spriteCutout' ? 'spriteCutout' : 'procedural',
+    renderMode: sanitizeStageRenderMode(stage.renderMode),
     hidden: Boolean(stage.hidden),
     floor: colors.floor,
     floorAssetId: typeof stage.floorAssetId === 'string' ? stage.floorAssetId : undefined,
@@ -2630,8 +2631,37 @@ function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) 
     world: sanitizeStageWorld(stage.world),
     camera: stage.camera && typeof stage.camera === 'object' ? stage.camera : undefined,
     lighting: stage.lighting && typeof stage.lighting === 'object' ? stage.lighting : undefined,
+    model: sanitizeStageModel(stage.model),
     backgroundLayers: sanitizeStageLayers(stage.backgroundLayers),
     props: sanitizeStageProps(stage.props)
+  };
+}
+
+function sanitizeStageRenderMode(value: unknown) {
+  return value === 'spriteCutout' || value === 'model' ? value : 'procedural';
+}
+
+function sanitizeStageModel(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const model = value as Record<string, unknown>;
+  if (typeof model.path !== 'string' || !model.path.trim()) return undefined;
+  const bounds = model.bounds && typeof model.bounds === 'object' ? model.bounds as Record<string, unknown> : undefined;
+  return {
+    path: model.path,
+    position: normalizeVec3(model.position, [0, 0, 0]),
+    scale: normalizeVec3(model.scale, [1, 1, 1]),
+    rotation: normalizeVec3(model.rotation, [0, 0, 0]),
+    focus: normalizeVec3(model.focus, [0, 0.8, 0]),
+    bounds: bounds
+      ? {
+          center: normalizeVec3(bounds.center, [0, 0, 0]),
+          size: normalizeVec3(bounds.size, [1, 1, 1]),
+          radius: Math.max(0, finiteOr(bounds.radius, 0))
+        }
+      : undefined,
+    castShadow: model.castShadow !== false,
+    receiveShadow: model.receiveShadow !== false,
+    decorativeProps: sanitizeStageProps(model.decorativeProps)
   };
 }
 

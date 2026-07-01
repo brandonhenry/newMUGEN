@@ -1,0 +1,221 @@
+{
+  "id": "hidden-leaf-village",
+  "name": "Hidden Leaf Village",
+  "subtitle": "Complete 3D village arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    16,
+    16
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      8,
+      8
+    ],
+    "radius": 18,
+    "height": 0.16,
+    "yOffset": 0.08,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "grass": {
+      "enabled": true,
+      "density": 0.62,
+      "height": 0.18,
+      "patchWidth": 76,
+      "patchDepth": 54,
+      "bladeCount": 8200,
+      "bladeWidth": 0.06,
+      "segments": 4,
+      "windStrength": 0.12,
+      "windSpeed": 0.85,
+      "quality": "medium",
+      "colorBottom": "#24481f",
+      "colorTop": "#78c14c"
+    },
+    "dust": {
+      "enabled": true,
+      "intensity": 0.45,
+      "density": 0.42,
+      "size": 1.1,
+      "speed": 0.72,
+      "opacity": 0.32,
+      "color": "#c8b48a",
+      "quality": "medium",
+      "maxParticles": 320,
+      "reactive": true
+    },
+    "petals": {
+      "enabled": true,
+      "intensity": 0.36,
+      "density": 0.34,
+      "size": 0.42,
+      "speed": 0.72,
+      "opacity": 0.68,
+      "windStrength": 0.32,
+      "fallSpeed": 0.46,
+      "colorA": "#ff9ac5",
+      "colorB": "#fff4fb",
+      "quality": "low",
+      "maxParticles": 260,
+      "reactive": false
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 72,
+    "depth": 72,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 30,
+    "depth": 22,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -3.2,
+      0,
+      0
+    ],
+    "p2": [
+      3.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      12,
+      28
+    ],
+    "previewTarget": [
+      0,
+      2.1,
+      0
+    ],
+    "target": [
+      0,
+      1.4,
+      0
+    ],
+    "distance": 8,
+    "height": 3.4,
+    "fov": 38
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/hidden-leaf-village/stage.glb",
+    "url": "/stages/hidden-leaf-village/stage.glb",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      2.1,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.6684,
+        0
+      ],
+      "size": [
+        72,
+        5.3368,
+        27.7551
+      ],
+      "radius": 38.6744
+    }
+  },
+  "mugen": {
+    "exportMeta": {
+      "stageId": "hidden-leaf-village",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 2215,
+      "meshCount": 2144,
+      "boundsBeforeNormalize": {
+        "min": [
+          -3050.7551,
+          -747.1311,
+          -152.4743
+        ],
+        "max": [
+          1171.9359,
+          880.6636,
+          160.518
+        ],
+        "center": [
+          -939.4096,
+          66.7662,
+          4.0218
+        ],
+        "size": [
+          4222.6909,
+          1627.7947,
+          312.9923
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -36,
+          -13.8776,
+          0
+        ],
+        "max": [
+          36,
+          13.8776,
+          5.3368
+        ],
+        "center": [
+          0,
+          0,
+          2.6684
+        ],
+        "size": [
+          72,
+          27.7551,
+          5.3368
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/hidden-leaf-village/preview.png"
+}

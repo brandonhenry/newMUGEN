@@ -2714,6 +2714,8 @@ export default function App() {
         )}
         {screen === 'stage' && (
           <StageSelect
+            mode={mode}
+            controls={settings.controls}
             selected={stageId}
             stages={playableStageRoster}
             randomSelected={randomStageSelected}
@@ -4111,7 +4113,6 @@ function CharacterSelect({
           <AnimatedCharacterSprite character={p1Character} />
         )}
         <span className="versus-hero-name">{randomCharacterSlots[1] ? 'Random' : p1Character.displayName}</span>
-        <span className="versus-hero-meta">{randomCharacterSlots[1] ? 'Fighter is rolled when you continue' : p1Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
       </button>
 
       <section className="versus-roster-panel" aria-label="Character select">
@@ -4259,9 +4260,6 @@ function CharacterSelect({
           <AnimatedCharacterSprite character={p2Character} />
         )}
         <span className="versus-hero-name">{isArcadeMode ? 'Random CPU' : randomCharacterSlots[2] ? 'Random' : p2Character.displayName}</span>
-        <span className="versus-hero-meta">
-          {isArcadeMode ? 'Opponent is rolled after you enter the fight' : randomCharacterSlots[2] ? 'Fighter is rolled when you continue' : p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}
-        </span>
       </button>
       <div className="versus-floor-glow" aria-hidden="true" />
     </div>
@@ -4633,6 +4631,8 @@ function VersusSplashScreen({
 }
 
 function StageSelect({
+  mode,
+  controls,
   selected,
   stages,
   randomSelected,
@@ -4641,6 +4641,8 @@ function StageSelect({
   onBack,
   onFight
 }: {
+  mode: MatchMode;
+  controls: GameSettings['controls'];
   selected: string;
   stages: StageDefinition[];
   randomSelected: boolean;
@@ -4649,8 +4651,59 @@ function StageSelect({
   onBack: () => void;
   onFight: () => void;
 }) {
+  const stageGamepadStateRef = useRef({ previous: false, next: false });
   const selectedStage = stages.find((stage) => stage.id === selected) ?? stages[0];
   const stageColor = randomSelected ? '#f7d45a' : selectedStage.rail;
+  const selectedStageIndex = randomSelected ? 0 : Math.max(0, stages.findIndex((stage) => stage.id === selected) + 1);
+  const stageOptionCount = stages.length + 1;
+  const cycleStage = useCallback((direction: -1 | 1) => {
+    const nextIndex = (selectedStageIndex + direction + stageOptionCount) % stageOptionCount;
+    if (nextIndex === 0) {
+      setRandomSelected(true);
+      return;
+    }
+    const nextStage = stages[nextIndex - 1];
+    if (!nextStage) return;
+    setRandomSelected(false);
+    setSelected(nextStage.id);
+  }, [selectedStageIndex, setRandomSelected, setSelected, stageOptionCount, stages]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.repeat || isTextEntryElement(event.target)) return;
+      const key = event.key.toLowerCase();
+      const bindingDirection = getKeyboardBindingsForEvent(event, mode, controls).some((binding) => binding.action === 'charge') ? -1 : 0;
+      const direction = key === 'o' ? -1 : key === 'p' ? 1 : bindingDirection;
+      if (direction === 0) return;
+      event.preventDefault();
+      cycleStage(direction);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [controls, cycleStage, mode]);
+
+  useEffect(() => {
+    let frame = 0;
+    const tick = () => {
+      const pad = getPrimaryMenuGamepad();
+      if (!pad || isTextEntryElement(document.activeElement)) {
+        stageGamepadStateRef.current = { previous: false, next: false };
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const current = {
+        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
+        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
+      };
+      const previous = stageGamepadStateRef.current;
+      if (current.previous && !previous.previous) cycleStage(-1);
+      if (current.next && !previous.next) cycleStage(1);
+      stageGamepadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleStage]);
 
   return (
     <div className="stage-screen">
@@ -4664,61 +4717,91 @@ function StageSelect({
         aria-label={randomSelected ? 'Random selected stage preview' : `${selectedStage.name} selected stage preview`}
       >
         <div className="stage-hero-preview">
-          {randomSelected ? (
+          <StagePreviewCanvas key={selectedStage.id} stage={selectedStage} />
+          {randomSelected && (
             <div className="stage-random-preview" aria-hidden="true">
               <Shuffle size={76} />
             </div>
-          ) : (
-            <StagePreviewCanvas stage={selectedStage} />
           )}
         </div>
         <div className="stage-hero-label">
           <strong>{randomSelected ? 'Random' : selectedStage.name}</strong>
-          <small>{randomSelected ? 'Stage is rolled when the fight starts' : selectedStage.subtitle}</small>
         </div>
       </section>
 
-      <div className="stage-thumbnail-grid" aria-label="Stage choices">
+      <div className="stage-reel-shell">
         <button
           type="button"
-          className={`stage-thumbnail stage-random-thumbnail ${randomSelected ? 'is-selected' : ''}`}
-          style={{ '--stage-color': '#f7d45a', '--stage-floor': '#2ee6ff' } as CSSProperties}
-          onClick={() => setRandomSelected(true)}
-          aria-label="Select random stage"
-          aria-pressed={randomSelected}
+          className="stage-reel-arrow"
+          onClick={() => cycleStage(-1)}
+          aria-label="Previous stage"
         >
-          <span className="stage-thumbnail-flag" aria-hidden="true">
-            {randomSelected ? '1P' : ''}
-          </span>
-          <span className="stage-random-thumbnail-preview" aria-hidden="true">
-            <Shuffle size={30} />
-          </span>
-          <strong>Random</strong>
+          <ChevronLeft size={30} />
         </button>
-        {stages.map((stage) => (
+        <div className="stage-thumbnail-grid" aria-label="Stage choices">
           <button
-            key={stage.id}
-            className={`stage-thumbnail ${!randomSelected && selected === stage.id ? 'is-selected' : ''}`}
-            style={{ '--stage-color': stage.rail, '--stage-floor': stage.floor } as CSSProperties}
-            onClick={() => {
-              setRandomSelected(false);
-              setSelected(stage.id);
-            }}
-            aria-label={`Select ${stage.name}`}
+            type="button"
+            className={`stage-thumbnail stage-random-thumbnail ${randomSelected ? 'is-selected' : ''}`}
+            style={{ '--stage-color': '#f7d45a', '--stage-floor': '#2ee6ff' } as CSSProperties}
+            onClick={() => setRandomSelected(true)}
+            aria-label="Select random stage"
+            aria-pressed={randomSelected}
           >
             <span className="stage-thumbnail-flag" aria-hidden="true">
-              {!randomSelected && selected === stage.id ? '1P' : ''}
+              {randomSelected ? '1P' : ''}
             </span>
-            <span className="stage-preview" data-testid={`stage-preview-${stage.id}`}>
-              <StagePreviewCanvas stage={stage} />
+            <span className="stage-random-thumbnail-preview" aria-hidden="true">
+              <Shuffle size={30} />
             </span>
-            <strong>{stage.name}</strong>
+            <strong>Random</strong>
           </button>
-        ))}
+          {stages.map((stage) => (
+            <button
+              key={stage.id}
+              className={`stage-thumbnail ${!randomSelected && selected === stage.id ? 'is-selected' : ''}`}
+              style={{ '--stage-color': stage.rail, '--stage-floor': stage.floor } as CSSProperties}
+              onClick={() => {
+                setRandomSelected(false);
+                setSelected(stage.id);
+              }}
+              aria-label={`Select ${stage.name}`}
+            >
+              <span className="stage-thumbnail-flag" aria-hidden="true">
+                {!randomSelected && selected === stage.id ? '1P' : ''}
+              </span>
+              <span className="stage-preview" data-testid={`stage-preview-${stage.id}`}>
+                <StageThumbnailPreview stage={stage} />
+              </span>
+              <strong>{stage.name}</strong>
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="stage-reel-arrow"
+          onClick={() => cycleStage(1)}
+          aria-label="Next stage"
+        >
+          <ChevronRight size={30} />
+        </button>
       </div>
 
       <FooterActions onBack={onBack} onNext={onFight} nextLabel="Fight" />
     </div>
+  );
+}
+
+function StageThumbnailPreview({ stage }: { stage: StageDefinition }) {
+  const thumbnailPath = stage.thumbnailPath ?? stage.sourcePath ?? stage.floorTexturePath ?? stage.skyboxPath;
+  const style = {
+    '--stage-floor': stage.floor,
+    '--stage-color': stage.rail
+  } as CSSProperties;
+
+  return (
+    <span className="stage-thumbnail-preview-art" style={style} aria-hidden="true">
+      {thumbnailPath ? <img src={thumbnailPath} alt="" loading="eager" decoding="async" draggable={false} /> : null}
+    </span>
   );
 }
 
