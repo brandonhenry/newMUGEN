@@ -1899,17 +1899,17 @@ function Arena({
     <group>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.045, 0]}>
         <planeGeometry args={[96, 42, 48, 24]} />
-        <meshStandardMaterial color={stage.floor} roughness={0.34} metalness={0.46} transparent opacity={0.96} />
+        <meshLambertMaterial color={stage.floor} transparent opacity={0.96} />
       </mesh>
       <mesh receiveShadow position={[0, -0.018, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[38, 19, 36, 18]} />
-        <meshStandardMaterial color="#0d2140" emissive="#08284f" emissiveIntensity={0.2} roughness={0.42} metalness={0.35} transparent opacity={0.74} />
+        <meshLambertMaterial color="#0d2140" transparent opacity={0.74} />
       </mesh>
       <gridHelper args={[48, 48, stage.rail, '#14345d']} position={[0, 0.004, 0]} />
       <gridHelper args={[96, 48, '#174d88', '#071d35']} position={[0, -0.006, 0]} />
       <mesh position={[0, -0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[4.2, 96]} />
-        <meshStandardMaterial color="#102a4c" emissive="#0a2c5a" emissiveIntensity={0.24} roughness={0.34} metalness={0.35} transparent opacity={0.48} />
+        <meshLambertMaterial color="#102a4c" transparent opacity={0.48} />
       </mesh>
       <mesh position={[0, -0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[4.2, 4.72, 96]} />
@@ -1928,7 +1928,7 @@ function Arena({
       {horizonBlocks.map(([x, y, z, width, height, depth], index) => (
         <mesh key={`horizon-${index}`} position={[x, y, z]} castShadow receiveShadow>
           <boxGeometry args={[width, height, depth]} />
-          <meshStandardMaterial color="#030712" emissive="#061326" emissiveIntensity={0.32} roughness={0.62} metalness={0.12} transparent opacity={0.74} />
+          <meshLambertMaterial color="#030712" transparent opacity={0.74} />
         </mesh>
       ))}
       <mesh position={[0, 3.65, -14.4]}>
@@ -1977,7 +1977,7 @@ function TexturedInfiniteArena({
     <group>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0]}>
         <planeGeometry args={[width, depth, 1, 1]} />
-        <meshStandardMaterial map={texture} color="#ffffff" roughness={0.26} metalness={0.1} />
+        <meshBasicMaterial map={texture} color="#ffffff" />
       </mesh>
       <mesh position={[0, -0.026, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[4.4, 4.82, 128]} />
@@ -2049,7 +2049,7 @@ function TexturedSafePlatformTop({
   return (
     <mesh receiveShadow position={[0, y, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
       <circleGeometry args={[radius, 8]} />
-      <meshToonMaterial map={texture} color="#ffffff" emissive={fallbackColor} emissiveIntensity={0.015} />
+      <meshBasicMaterial map={texture} color="#ffffff" />
     </mesh>
   );
 }
@@ -2081,36 +2081,36 @@ function SpriteCutoutStage({
     <group>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.052, 0]}>
         <planeGeometry args={[96, 42, 32, 18]} />
-        <meshStandardMaterial color={stage.floor} roughness={0.78} metalness={0.02} />
+        <meshLambertMaterial color={stage.floor} />
       </mesh>
       {stage.floorTexturePath && <SpriteCutoutFloorTexture stage={stage} floorTexturePath={stage.floorTexturePath} />}
       <mesh receiveShadow position={[0, -0.028, 0.05]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[5.35, 72]} />
-        <meshStandardMaterial color="#d7be6d" roughness={0.84} metalness={0.02} />
+        <meshLambertMaterial color="#d7be6d" />
       </mesh>
       <mesh receiveShadow position={[0, -0.024, 0.05]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[14.8, 5.6]} />
-        <meshStandardMaterial color="#d2b35e" roughness={0.86} metalness={0.02} transparent opacity={0.78} />
+        <meshLambertMaterial color="#d2b35e" transparent opacity={0.78} />
       </mesh>
       <mesh receiveShadow position={[0, -0.018, 3.7]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[34, 9.2]} />
-        <meshStandardMaterial color="#2f7a3c" roughness={0.9} transparent opacity={0.76} />
+        <meshLambertMaterial color="#2f7a3c" transparent opacity={0.76} />
       </mesh>
       <mesh receiveShadow position={[0, -0.018, -5.6]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[42, 12]} />
-        <meshStandardMaterial color="#265f33" roughness={0.9} transparent opacity={0.72} />
+        <meshLambertMaterial color="#265f33" transparent opacity={0.72} />
       </mesh>
       <mesh position={[-7, 1.15, -14]} rotation={[0, 0, -0.14]}>
         <coneGeometry args={[4.9, 2.4, 3]} />
-        <meshStandardMaterial color={hillColor} roughness={0.95} />
+        <meshLambertMaterial color={hillColor} />
       </mesh>
       <mesh position={[-1.4, 1.3, -14.8]} rotation={[0, 0, 0.08]}>
         <coneGeometry args={[5.8, 2.7, 3]} />
-        <meshStandardMaterial color="#2f8c82" roughness={0.96} />
+        <meshLambertMaterial color="#2f8c82" />
       </mesh>
       <mesh position={[5.8, 1.1, -14.2]} rotation={[0, 0, 0.18]}>
         <coneGeometry args={[4.6, 2.2, 3]} />
-        <meshStandardMaterial color="#4aa08c" roughness={0.96} />
+        <meshLambertMaterial color="#4aa08c" />
       </mesh>
       <mesh position={[0, 1.75, -15.2]}>
         <boxGeometry args={[42, 0.18, 0.2]} />
@@ -2151,7 +2151,7 @@ function SpriteCutoutFloorTexture({ stage, floorTexturePath }: { stage: StageDef
   return (
     <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0.01]}>
       <planeGeometry args={[width, depth, 1, 1]} />
-      <meshStandardMaterial map={texture} color="#ffffff" roughness={0.82} metalness={0.02} transparent alphaTest={0.04} />
+      <meshBasicMaterial map={texture} color="#ffffff" transparent alphaTest={0.04} />
     </mesh>
   );
 }
