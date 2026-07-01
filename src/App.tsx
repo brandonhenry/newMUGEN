@@ -575,10 +575,6 @@ function stageBgmSource(stage: StageDefinition): BgmSource | null {
   return fixedBgmSource(`stage:${stage.id}:${track?.id ?? 'none'}`, track);
 }
 
-const menuAttractStage: StageDefinition = {
-  ...stages[0]
-};
-
 const baseAnimationSlots: AnimationSlot[] = [
   { key: 'idle', label: 'Neutral', pose: 'idle', notation: ['N'], category: 'stance' },
   { key: 'walkForward', label: 'Forward', pose: 'walk', notation: ['f'], category: 'stance' },
@@ -1192,7 +1188,13 @@ function pickRandomUnlockedCharacter(roster: CharacterDefinition[], unlockedIds:
 }
 
 function pickRandomStage(stageRoster: StageDefinition[]) {
-  return stageRoster[Math.floor(Math.random() * stageRoster.length)] ?? stageRoster[0];
+  const visibleRoster = stageRoster.filter((stage) => !stage.hidden);
+  const pool = visibleRoster.length > 0 ? visibleRoster : stageRoster;
+  return pool[Math.floor(Math.random() * pool.length)] ?? pool[0];
+}
+
+function pickMenuAttractStage(stageRoster: StageDefinition[]) {
+  return pickRandomStage(stageRoster) ?? stages[0];
 }
 
 function resolveUnlockedTrainingCharacters(
@@ -2586,6 +2588,7 @@ export default function App() {
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
+            stages={playableStageRoster}
             unlockedCharacterIds={effectiveUnlockedCharacterIds}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
@@ -3302,6 +3305,7 @@ function UnlockRevealScreen({
 
 function MenuScreen({
   roster,
+  stages: stageRoster,
   unlockedCharacterIds,
   onMenuSelect,
   onMenuHover,
@@ -3315,6 +3319,7 @@ function MenuScreen({
   onExit
 }: {
   roster: CharacterDefinition[];
+  stages: StageDefinition[];
   unlockedCharacterIds: Set<string>;
   onMenuSelect: () => void;
   onMenuHover: () => void;
@@ -3330,7 +3335,7 @@ function MenuScreen({
   const [attractIds] = useState(() => pickAttractCharacterIds(roster, unlockedCharacterIds));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster }) : null));
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const [menuChromeHidden, setMenuChromeHidden] = useState(false);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
@@ -3384,10 +3389,10 @@ function MenuScreen({
 
   useEffect(() => {
     if (!p1 || !p2) return;
-    const fresh = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster });
+    const fresh = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster });
     matchRef.current = fresh;
     setAttractMatch(fresh);
-  }, [p1, p2, roster]);
+  }, [p1, p2, roster, stageRoster]);
 
   useEffect(() => {
     if (!p1 || !p2) return;
@@ -3400,9 +3405,9 @@ function MenuScreen({
       accumulator += Math.min(0.05, (now - last) / 1000);
       last = now;
       while (accumulator >= fixedStep) {
-        const current = matchRef.current ?? createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster });
+        const current = matchRef.current ?? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster });
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = createMatch(p1, p2, menuAttractStage, 'cpu', 4, { aiSeed: freshAiSeed(), roster });
+          matchRef.current = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster });
         } else {
           matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
         }
@@ -3414,7 +3419,7 @@ function MenuScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [p1, p2, roster]);
+  }, [p1, p2, roster, stageRoster]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
