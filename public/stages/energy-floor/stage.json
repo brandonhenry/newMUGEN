@@ -3,6 +3,7 @@
   "name": "Energy Floor",
   "subtitle": "Boss arena with animated emissive floor energy",
   "renderMode": "procedural",
+  "visualStylePreset": "void-boss",
   "hidden": false,
   "floor": "#1b1024",
   "floorTexturePath": "/stages/energy-floor/floor-texture.png",
@@ -15,10 +16,10 @@
     "shape": "octagon",
     "texturePath": "/stages/shared/handpainted-stone-platform.png",
     "textureRepeat": [
-      14,
-      14
+      10,
+      10
     ],
-    "radius": 38,
+    "radius": 18,
     "height": 0.18,
     "yOffset": 0.08,
     "color": "#777777",
@@ -46,8 +47,8 @@
   "light": "#ffd6a3",
   "skyboxPath": "/stages/shared/default-skybox.png",
   "world": {
-    "width": 220,
-    "depth": 220,
+    "width": 52,
+    "depth": 42,
     "floorY": -0.045,
     "backgroundColor": "#201024"
   },

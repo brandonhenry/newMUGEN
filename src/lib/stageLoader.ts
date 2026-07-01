@@ -1,5 +1,6 @@
 import { stages as fallbackStages } from '../data/stages';
 import type { StageDefinition, StageFloorEffects } from '../types';
+import { inferStageVisualStylePreset, normalizeStageVisualStyle } from './stageVisualStyle';
 
 export type StageLoadResult = {
   stages: StageDefinition[];
@@ -44,7 +45,7 @@ export async function loadStageRoster(): Promise<StageLoadResult> {
 }
 
 export function normalizeStage(stage: StageDefinition): StageDefinition {
-  return {
+  const normalized: StageDefinition = {
     ...stage,
     renderMode: stage.renderMode ?? 'procedural',
     hidden: stage.hidden === true,
@@ -71,6 +72,12 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
       : undefined,
     backgroundLayers: Array.isArray(stage.backgroundLayers) ? stage.backgroundLayers : [],
     props: Array.isArray(stage.props) ? stage.props : []
+  };
+  const visualStylePreset = inferStageVisualStylePreset(normalized);
+  return {
+    ...normalized,
+    visualStylePreset,
+    visualStyle: normalizeStageVisualStyle({ ...normalized, visualStylePreset })
   };
 }
 

@@ -359,6 +359,8 @@ export type StageDefinition = {
   name: string;
   subtitle: string;
   renderMode?: 'procedural' | 'spriteCutout';
+  visualStylePreset?: StageVisualStylePreset;
+  visualStyle?: StageVisualStyle;
   hidden?: boolean;
   music?: {
     path?: string;
@@ -395,6 +397,88 @@ export type StageDefinition = {
   mugen?: MugenStageMetadata;
   backgroundLayers?: StageLayerDefinition[];
   props?: StagePropDefinition[];
+};
+
+export type StageVisualStylePreset =
+  | 'anime-daylight'
+  | 'anime-night'
+  | 'dojo-sunset'
+  | 'storm-temple'
+  | 'void-boss'
+  | 'training-clean';
+
+export type StageVisualStyle = {
+  lighting: {
+    backgroundColor: string;
+    fogColor: string;
+    fogNear: number;
+    fogFar: number;
+    ambientMode: 'hemisphere' | 'ambient';
+    skyColor: string;
+    groundColor: string;
+    hemiIntensity: number;
+    ambientIntensity: number;
+    keyColor: string;
+    keyIntensity: number;
+    keyPosition: Vec3Tuple;
+    fillColor: string;
+    fillIntensity: number;
+    fillPosition: Vec3Tuple;
+    rimColor: string;
+    rimIntensity: number;
+    rimPosition: Vec3Tuple;
+    accentIntensity: number;
+    accentDistance: number;
+    shadowStrength: number;
+    shadowSoftness: number;
+  };
+  toon: {
+    enabled: boolean;
+    steps: number;
+    shadowStrength: number;
+    highlightStrength: number;
+    rimStrength: number;
+    saturation: number;
+    stagePropIntensity: number;
+  };
+  outline: {
+    enabled: boolean;
+    fighterThickness: number;
+    fighterStrength: number;
+    effectThickness: number;
+    effectStrength: number;
+    propThickness: number;
+    propStrength: number;
+    visibleColor: string;
+    hiddenColor: string;
+  };
+  post: {
+    enabled: boolean;
+    bloomEnabled: boolean;
+    bloomThreshold: number;
+    bloomStrength: number;
+    bloomRadius: number;
+    saturation: number;
+    contrast: number;
+    brightness: number;
+    warmth: number;
+    vignetteStrength: number;
+    vignetteRadius: number;
+  };
+  camera: {
+    impactShake: number;
+    impactZoom: number;
+    clashZoom: number;
+  };
+  combatFx: {
+    hitBloom: number;
+    blockBloom: number;
+    punishBloom: number;
+    launchBloom: number;
+    rimPulse: number;
+    shockwaveStrength: number;
+    reducedMotionScale: number;
+  };
 };
 
 export type StageSafePlatformDefinition = {

@@ -6,6 +6,7 @@ export const stages: StageDefinition[] = [
     name: 'The Chamber (Silver)',
     subtitle: 'Infinite white simulation room',
     renderMode: 'procedural',
+    visualStylePreset: 'training-clean',
     music: {
       path: 'sounds/0012 SEQ_BGMB_STG_01.mp3',
       trackIndex: 0,
@@ -28,6 +29,7 @@ export const stages: StageDefinition[] = [
     name: 'The Chamber (Green)',
     subtitle: 'Infinite green simulation room',
     renderMode: 'procedural',
+    visualStylePreset: 'training-clean',
     music: {
       path: 'sounds/0013 SEQ_BGMB_STG_02.mp3',
       trackIndex: 1,
@@ -50,6 +52,7 @@ export const stages: StageDefinition[] = [
     name: 'Infinite Grid',
     subtitle: 'Wide procedural arena for movement testing',
     hidden: true,
+    visualStylePreset: 'anime-night',
     music: {
       path: 'sounds/0014 SEQ_BGMB_STG_03.mp3',
       trackIndex: 2,
@@ -64,6 +67,7 @@ export const stages: StageDefinition[] = [
     name: 'Forge Yard',
     subtitle: 'Warm steel courtyard',
     hidden: true,
+    visualStylePreset: 'dojo-sunset',
     music: {
       path: 'sounds/0015 SEQ_BGMB_STG_04.mp3',
       trackIndex: 3,
