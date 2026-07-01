@@ -1,0 +1,142 @@
+;--------------------------------------------------------
+[Info]
+name = "Cherry Blossoms - Angry Birds Seasons"
+displayname = "Cherry Blossoms" 
+versiondate = 02,27,2024
+mugenversion = 1.0
+author = "K-Rock35"
+;--------------------------------------------------------
+[Camera]
+startx = 0
+starty = 0
+boundleft = -650;-650
+boundright = 650;650
+boundhigh = -250
+boundlow = 0
+verticalfollow = .90
+floortension = 0
+tension = 50
+overdrawhigh = 0
+overdrawlow = 0
+cuthigh = 35
+cutlow = 25
+
+;--------------------------------------------------------
+[PlayerInfo]
+;--- Player 1 ---
+p1startx = -140
+p1starty = 0
+p1facing = 1
+
+;--- Player 2 ---
+p2startx = 140
+p2starty = 0
+p2facing = -1
+
+p3startx = -210
+p3starty = 0
+p3facing = 1
+
+p4startx = 210
+p4starty = 0
+p4facing = -1
+;--- Common ---
+ ;Don't change these values.
+leftbound  = -1600;-1000 ;Left bound (x-movement)
+rightbound =  1600;1000 ;Right bound
+;--------------------------------------------------------
+[Bound]
+screenleft = 30    ;Dist from left of screen that player can move to
+screenright = 30   ;Right edge
+;--------------------------------------------------------
+[StageInfo]
+
+zoffset = 380
+autoturn = 1
+resetBG = 1
+localcoord = 640,480
+;xscale = 1
+;yscale = 1
+
+;--------------------------------------------------------
+[Shadow]
+intensity = 96
+color = 0,0,0
+yscale = .3
+fade.range = 0,0
+;--------------------------------------------------------
+[Reflection]
+intensity = 0
+;--------------------------------------------------------
+[Music]
+bgmusic = sound/Cherry Blossoms.mp3
+;bgmusic = sound/Sakura Sakura.mp3
+;bgmusic = sound/Sakura, Sakura (Di Gi Charat Black Metal Cover).mp3
+bgmvolume = 500
+;-------------------------------------
+; Main background definition
+[BGdef]
+spr = Cherry_Blossom.sff
+debugbg = 0
+
+[BG Background]
+type = normal
+spriteno = 0,0
+start = 0, 0
+delta = 1.04,1
+tile  = 1,0
+tilespacing = 0,0
+trans = none
+
+[BG Mountain]
+type = normal
+spriteno = 0,1
+start = 0, 0
+delta = 1,1
+tile  = 0,0
+tilespacing = 0,0
+mask = 1
+
+[BG Tres Background]
+type = normal
+spriteno = 0,2
+start = 0, 0
+delta = 1.08,1
+mask = 1
+tile = 1, 0
+
+[BG Gate]
+type = normal
+spriteno = 1,0
+start = 0, 0
+delta = 1.08,1
+tile  = 0,0
+tilespacing = 0,0
+mask = 1
+
+[BG BackTreesGround]
+type = normal
+spriteno = 0,3
+start = 0, 0
+delta = 1.14,1
+tile  = 1,0
+tilespacing = 0,0
+mask = 1
+
+[BG FrontTreesGround]
+type = normal
+spriteno = 0,4
+start = 0, 0
+delta = 1.16,1
+tile  = 1,0
+tilespacing = 0,0
+mask = 1
+
+[BG Ground]
+type = normal
+spriteno = 0,5
+start = 0, 0
+delta = 1.18,1
+tile  = 1,0
+tilespacing = 0,0
+mask = 1

@@ -44,6 +44,9 @@ import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
+import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
+import { loadStagePropLibrary } from './lib/stagePropLibrary';
+import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
@@ -68,6 +71,7 @@ import {
   type EffectBlendMode,
   type EffectKeyframe,
   type EffectSoundCue,
+  type FighterRuntime,
   type GetupAction,
   type GetupFrameOverrides,
   type GameSettings,
@@ -83,7 +87,13 @@ import {
   type MoveTracking,
   type SpriteFrameEdit,
   type StageDefinition,
+  type StageAssetLibraryManifest,
+  type StageFloorAssetDefinition,
+  type StageFloorEffects,
+  type StageFloorSoundKey,
+  type StagePropAssetDefinition,
   type StagePropDefinition,
+  type StageSkyboxAssetDefinition,
   type VoxelFidelitySettings
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
@@ -93,6 +103,7 @@ import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnal
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
+type RandomCharacterSlots = Record<1 | 2, boolean>;
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
 
 type CharacterAnimationOverride = {
@@ -106,6 +117,15 @@ type CharacterAnimationOverride = {
   sprites?: Record<string, SpriteFrameEdit>;
   effects?: CharacterEffectDefinition[];
   moveEffects?: Record<string, MoveEffectInstance[]>;
+};
+
+type StageFloorAudioSnapshot = {
+  state: string;
+  y: number;
+  dashForwardFrames: number;
+  x: number;
+  z: number;
+  lastRunAt: number;
 };
 type AnimationOverrideMap = Record<string, CharacterAnimationOverride>;
 type StoredAnimationOverrides = {
@@ -533,6 +553,16 @@ const KORE_MENU_BGM_SOURCE: BgmSource = {
 function stageBgmTrack(stage: StageDefinition) {
   const configuredPath = stage.music?.path;
   if (configuredPath) {
+    if (configuredPath.startsWith('/stages/') || configuredPath.startsWith('stages/')) {
+      const url = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+      const filename = url.split('/').pop() ?? url;
+      return {
+        id: `stage-${stage.id}-${filename}`,
+        title: stage.music?.title ?? filename.replace(/\.[^.]+$/, ''),
+        url,
+        filename
+      };
+    }
     const track = findBgmTrack(configuredPath.split('/').pop() ?? configuredPath);
     if (track) return track;
   }
@@ -1145,6 +1175,24 @@ function findFirstUnlockedCharacter(roster: CharacterDefinition[], unlockedIds: 
     roster.find((character) => character.id !== excludeId && isCharacterUnlocked(character, unlockedIds)) ??
     roster.find((character) => isCharacterUnlocked(character, unlockedIds))
   );
+}
+
+function pickRandomUnlockedCharacter(roster: CharacterDefinition[], unlockedIds: Set<string>, excludeId?: string) {
+  const unlockedRoster = roster.filter((character) => isCharacterUnlocked(character, unlockedIds));
+  const unlockedPool = unlockedRoster.filter((character) => character.id !== excludeId);
+  const fallbackPool = roster.filter((character) => character.id !== excludeId);
+  const pool = unlockedPool.length > 0
+    ? unlockedPool
+    : unlockedRoster.length > 0
+      ? unlockedRoster
+      : fallbackPool.length > 0
+        ? fallbackPool
+        : roster;
+  return pool[Math.floor(Math.random() * pool.length)] ?? roster[0];
+}
+
+function pickRandomStage(stageRoster: StageDefinition[]) {
+  return stageRoster[Math.floor(Math.random() * stageRoster.length)] ?? stageRoster[0];
 }
 
 function resolveUnlockedTrainingCharacters(
@@ -1965,6 +2013,8 @@ export default function App() {
   const [p1Id, setP1Id] = useState('astra');
   const [p2Id, setP2Id] = useState('dax');
   const [stageId, setStageId] = useState(stages[0].id);
+  const [randomCharacterSlots, setRandomCharacterSlots] = useState<RandomCharacterSlots>({ 1: true, 2: true });
+  const [randomStageSelected, setRandomStageSelected] = useState(true);
   const [mode, setMode] = useState<MatchMode>('ai');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
@@ -1997,6 +2047,34 @@ export default function App() {
       ...properties
     });
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
+  const resetRandomSelections = useCallback(() => {
+    setRandomCharacterSlots({ 1: true, 2: true });
+    setRandomStageSelected(true);
+  }, []);
+  const setRandomCharacterSlot = useCallback((slot: 1 | 2, selected: boolean) => {
+    setRandomCharacterSlots((current) => ({ ...current, [slot]: selected }));
+  }, []);
+  const resolveRandomCharacterSelection = useCallback((targetMode: MatchMode = mode) => {
+    let nextP1Id = p1Id;
+    let nextP2Id = p2Id;
+    if (randomCharacterSlots[1]) {
+      const nextP1 = pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds);
+      if (nextP1) nextP1Id = nextP1.id;
+    }
+    if (targetMode !== 'ai' && randomCharacterSlots[2]) {
+      const nextP2 = pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds, nextP1Id);
+      if (nextP2) nextP2Id = nextP2.id;
+    }
+    if (nextP1Id !== p1Id) setP1Id(nextP1Id);
+    if (nextP2Id !== p2Id) setP2Id(nextP2Id);
+    return { p1Id: nextP1Id, p2Id: nextP2Id };
+  }, [effectiveUnlockedCharacterIds, mode, p1Id, p2Id, randomCharacterSlots, roster]);
+  const resolveRandomStageSelection = useCallback(() => {
+    const currentStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
+    const nextStage = randomStageSelected ? pickRandomStage(playableStageRoster) : currentStage;
+    if (nextStage && nextStage.id !== stageId) setStageId(nextStage.id);
+    return nextStage;
+  }, [playableStageRoster, randomStageSelected, stageId]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -2513,16 +2591,19 @@ export default function App() {
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'ai' });
+              resetRandomSelections();
               setMode('ai');
               setScreen('select');
             }}
             onVersus={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'local2p' });
+              resetRandomSelections();
               setMode('local2p');
               setScreen('select');
             }}
             onTraining={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'training' });
+              resetRandomSelections();
               setMode('training');
               const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
@@ -2531,6 +2612,7 @@ export default function App() {
             }}
             onOnline={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'online' });
+              resetRandomSelections();
               setMode('online');
               setPrivateRoomIntent(null);
               setScreen('select');
@@ -2547,6 +2629,7 @@ export default function App() {
             onProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onFindMatch={() => {
               captureAppAnalytics('game_start_clicked', { source: 'leaderboard_find_match', selected_mode: 'online' });
+              resetRandomSelections();
               setMode('online');
               setScreen('select');
             }}
@@ -2586,31 +2669,40 @@ export default function App() {
             cpuDifficulty={cpuDifficulty}
             setP1Id={setP1Id}
             setP2Id={setP2Id}
+            randomCharacterSlots={randomCharacterSlots}
+            setRandomCharacterSlot={setRandomCharacterSlot}
             setMode={setMode}
             setCpuDifficulty={setCpuDifficulty}
             onlineProfile={onlineProfile}
             onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onLeaderboards={() => setScreen('leaderboard')}
-            onPrivateRooms={() => setScreen('privateRooms')}
+            onPrivateRooms={() => {
+              resolveRandomCharacterSelection('private');
+              resolveRandomStageSelection();
+              setScreen('privateRooms');
+            }}
             onUiNavigate={playInnerMenuSelectSound}
             onBack={() => setScreen('menu')}
             onNext={() => {
+              const resolvedCharacters = resolveRandomCharacterSelection(mode);
               if (mode === 'training') {
-                const p1Selected = roster.find((character) => character.id === p1Id);
-                const p2Selected = roster.find((character) => character.id === p2Id);
+                const p1Selected = roster.find((character) => character.id === resolvedCharacters.p1Id);
+                const p2Selected = roster.find((character) => character.id === resolvedCharacters.p2Id);
                 if (
                   (p1Selected && !isCharacterUnlocked(p1Selected, effectiveUnlockedCharacterIds)) ||
                   (p2Selected && !isCharacterUnlocked(p2Selected, effectiveUnlockedCharacterIds))
                 ) {
-                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, resolvedCharacters.p1Id, resolvedCharacters.p2Id);
                   if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                   if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
                   return;
                 }
               }
               captureAppAnalytics('character_selected', {
-                p1_character_id: p1Id,
-                p2_character_id: p2Id
+                p1_character_id: resolvedCharacters.p1Id,
+                p2_character_id: resolvedCharacters.p2Id,
+                p1_random: randomCharacterSlots[1],
+                p2_random: mode !== 'ai' && randomCharacterSlots[2]
               });
               if (mode !== 'private') setPrivateRoomIntent(null);
               setScreen('stage');
@@ -2621,9 +2713,13 @@ export default function App() {
           <StageSelect
             selected={stageId}
             stages={playableStageRoster}
+            randomSelected={randomStageSelected}
             setSelected={setStageId}
+            setRandomSelected={setRandomStageSelected}
             onBack={() => setScreen('select')}
             onFight={() => {
+              const fightStage = resolveRandomStageSelection();
+              if (!fightStage) return;
               if (mode === 'private' && !privateRoomIntent) {
                 setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
               }
@@ -2635,7 +2731,7 @@ export default function App() {
                   return;
                 }
               }
-              captureAppAnalytics('stage_selected', { stage_id: stageId });
+              captureAppAnalytics('stage_selected', { stage_id: fightStage.id, stage_random: randomStageSelected });
               if (mode === 'ai') {
                 const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
                 if (opponent) setP2Id(opponent.id);
@@ -3823,6 +3919,8 @@ function CharacterSelect({
   cpuDifficulty,
   setP1Id,
   setP2Id,
+  randomCharacterSlots,
+  setRandomCharacterSlot,
   setMode,
   setCpuDifficulty,
   onlineProfile,
@@ -3841,6 +3939,8 @@ function CharacterSelect({
   cpuDifficulty: CpuDifficulty;
   setP1Id: (id: string) => void;
   setP2Id: (id: string) => void;
+  randomCharacterSlots: RandomCharacterSlots;
+  setRandomCharacterSlot: (slot: 1 | 2, selected: boolean) => void;
   setMode: (mode: MatchMode) => void;
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   onlineProfile?: OnlinePlayerProfile | null;
@@ -3864,15 +3964,24 @@ function CharacterSelect({
   const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + CHARACTER_SELECT_PAGE_SIZE);
   const isArcadeMode = mode === 'ai';
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
+  const targetIsRandom = randomCharacterSlots[selectTarget];
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
     if (character && !isCharacterUnlocked(character, unlockedCharacterIds)) return;
     if (selectTarget === 1) {
+      setRandomCharacterSlot(1, false);
       setP1Id(id);
       return;
     }
     if (isArcadeMode) return;
+    setRandomCharacterSlot(2, false);
     setP2Id(id);
+  };
+  const assignRandomCharacter = () => {
+    if (selectTarget === 2 && isArcadeMode) return;
+    setRandomCharacterSlot(selectTarget, true);
+    setRosterPage(0);
+    onUiNavigate();
   };
   const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
     const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
@@ -3896,11 +4005,15 @@ function CharacterSelect({
   }, [totalRosterPages]);
 
   useEffect(() => {
+    if (randomCharacterSlots[selectTarget]) {
+      setRosterPage(0);
+      return;
+    }
     const selected = selectTarget === 1 ? p1Character : p2Character;
     const selectedBaseId = getCharacterBaseId(selected);
     const selectedIndex = Math.max(0, baseRoster.findIndex((character) => character.id === selectedBaseId));
     setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / CHARACTER_SELECT_PAGE_SIZE)));
-  }, [baseRoster, p1Character, p2Character, selectTarget, totalRosterPages]);
+  }, [baseRoster, p1Character, p2Character, randomCharacterSlots, selectTarget, totalRosterPages]);
 
   useEffect(() => {
     if (isArcadeMode && selectTarget === 2) setSelectTarget(1);
@@ -3973,20 +4086,27 @@ function CharacterSelect({
 
   const trainingSelectionLocked =
     mode === 'training' &&
-    (!isCharacterUnlocked(p1Character, unlockedCharacterIds) || !isCharacterUnlocked(p2Character, unlockedCharacterIds));
+    ((!randomCharacterSlots[1] && !isCharacterUnlocked(p1Character, unlockedCharacterIds)) ||
+      (!randomCharacterSlots[2] && !isCharacterUnlocked(p2Character, unlockedCharacterIds)));
 
   return (
     <div className="select-screen versus-select-screen">
       <button
         type="button"
-        className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''}`}
+        className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''} ${randomCharacterSlots[1] ? 'is-random-selection' : ''}`}
         style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
         onClick={() => setSelectTarget(1)}
       >
         <span className="versus-player-kicker">{getSlotLabel(mode, 1)}</span>
-        <AnimatedCharacterSprite character={p1Character} />
-        <span className="versus-hero-name">{p1Character.displayName}</span>
-        <span className="versus-hero-meta">{p1Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
+        {randomCharacterSlots[1] ? (
+          <span className="versus-random-mark" aria-hidden="true">
+            <Shuffle size={64} />
+          </span>
+        ) : (
+          <AnimatedCharacterSprite character={p1Character} />
+        )}
+        <span className="versus-hero-name">{randomCharacterSlots[1] ? 'Random' : p1Character.displayName}</span>
+        <span className="versus-hero-meta">{randomCharacterSlots[1] ? 'Fighter is rolled when you continue' : p1Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}</span>
       </button>
 
       <section className="versus-roster-panel" aria-label="Character select">
@@ -4037,6 +4157,24 @@ function CharacterSelect({
         </div>
 
         <div className="versus-roster-grid">
+          {visibleRosterPage === 0 && (
+            <button
+              type="button"
+              className={`versus-roster-tile versus-random-tile ${targetIsRandom ? 'is-random-selected' : ''}`}
+              style={{ '--fighter-color': '#f7d45a' } as CSSProperties}
+              onClick={assignRandomCharacter}
+              onMouseEnter={() => setHoveredBaseId('')}
+              onFocus={() => setHoveredBaseId('')}
+              aria-label={`Select random ${getSlotLabel(mode, selectTarget)}`}
+              aria-pressed={targetIsRandom}
+            >
+              <span className="versus-random-tile-icon" aria-hidden="true">
+                <Shuffle size={30} />
+              </span>
+              <span>Random</span>
+              <small>{targetIsRandom ? getSlotShortLabel(mode, selectTarget) : 'Surprise'}</small>
+            </button>
+          )}
           {pagedBaseRoster.map((character) => {
             const baseId = character.id;
             const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
@@ -4044,8 +4182,8 @@ function CharacterSelect({
             const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
             const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
             const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
-            const isP1 = getCharacterBaseId(p1Character) === baseId;
-            const isP2 = getCharacterBaseId(p2Character) === baseId;
+            const isP1 = !randomCharacterSlots[1] && getCharacterBaseId(p1Character) === baseId;
+            const isP2 = !randomCharacterSlots[2] && getCharacterBaseId(p2Character) === baseId;
             const isLocked = family.length === 0;
             const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
             return (
@@ -4099,7 +4237,7 @@ function CharacterSelect({
 
       <button
         type="button"
-        className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''} ${isArcadeMode ? 'is-random-opponent' : ''}`}
+        className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''} ${isArcadeMode ? 'is-random-opponent' : ''} ${!isArcadeMode && randomCharacterSlots[2] ? 'is-random-selection' : ''}`}
         style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
         onClick={() => {
           if (!isArcadeMode) setSelectTarget(2);
@@ -4108,10 +4246,16 @@ function CharacterSelect({
         aria-label={isArcadeMode ? 'Random CPU opponent' : `Select ${p2Character.displayName}`}
       >
         <span className="versus-player-kicker">{getSlotLabel(mode, 2)}</span>
-        <AnimatedCharacterSprite character={p2Character} />
-        <span className="versus-hero-name">{isArcadeMode ? 'Random CPU' : p2Character.displayName}</span>
+        {!isArcadeMode && randomCharacterSlots[2] ? (
+          <span className="versus-random-mark" aria-hidden="true">
+            <Shuffle size={64} />
+          </span>
+        ) : (
+          <AnimatedCharacterSprite character={p2Character} />
+        )}
+        <span className="versus-hero-name">{isArcadeMode ? 'Random CPU' : randomCharacterSlots[2] ? 'Random' : p2Character.displayName}</span>
         <span className="versus-hero-meta">
-          {isArcadeMode ? 'Opponent is rolled after you enter the fight' : p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}
+          {isArcadeMode ? 'Opponent is rolled after you enter the fight' : randomCharacterSlots[2] ? 'Fighter is rolled when you continue' : p2Character.moves.map((move) => move.label).slice(0, 3).join(' / ')}
         </span>
       </button>
       <div className="versus-floor-glow" aria-hidden="true" />
@@ -4486,17 +4630,22 @@ function VersusSplashScreen({
 function StageSelect({
   selected,
   stages,
+  randomSelected,
   setSelected,
+  setRandomSelected,
   onBack,
   onFight
 }: {
   selected: string;
   stages: StageDefinition[];
+  randomSelected: boolean;
   setSelected: (id: string) => void;
+  setRandomSelected: (selected: boolean) => void;
   onBack: () => void;
   onFight: () => void;
 }) {
   const selectedStage = stages.find((stage) => stage.id === selected) ?? stages[0];
+  const stageColor = randomSelected ? '#f7d45a' : selectedStage.rail;
 
   return (
     <div className="stage-screen">
@@ -4505,30 +4654,55 @@ function StageSelect({
       </header>
 
       <section
-        className="stage-hero"
-        style={{ '--stage-color': selectedStage.rail, '--stage-floor': selectedStage.floor } as CSSProperties}
-        aria-label={`${selectedStage.name} selected stage preview`}
+        className={`stage-hero ${randomSelected ? 'is-random-stage' : ''}`}
+        style={{ '--stage-color': stageColor, '--stage-floor': selectedStage.floor } as CSSProperties}
+        aria-label={randomSelected ? 'Random selected stage preview' : `${selectedStage.name} selected stage preview`}
       >
         <div className="stage-hero-preview">
-          <StagePreviewCanvas stage={selectedStage} />
+          {randomSelected ? (
+            <div className="stage-random-preview" aria-hidden="true">
+              <Shuffle size={76} />
+            </div>
+          ) : (
+            <StagePreviewCanvas stage={selectedStage} />
+          )}
         </div>
         <div className="stage-hero-label">
-          <strong>{selectedStage.name}</strong>
-          <small>{selectedStage.subtitle}</small>
+          <strong>{randomSelected ? 'Random' : selectedStage.name}</strong>
+          <small>{randomSelected ? 'Stage is rolled when the fight starts' : selectedStage.subtitle}</small>
         </div>
       </section>
 
       <div className="stage-thumbnail-grid" aria-label="Stage choices">
+        <button
+          type="button"
+          className={`stage-thumbnail stage-random-thumbnail ${randomSelected ? 'is-selected' : ''}`}
+          style={{ '--stage-color': '#f7d45a', '--stage-floor': '#2ee6ff' } as CSSProperties}
+          onClick={() => setRandomSelected(true)}
+          aria-label="Select random stage"
+          aria-pressed={randomSelected}
+        >
+          <span className="stage-thumbnail-flag" aria-hidden="true">
+            {randomSelected ? '1P' : ''}
+          </span>
+          <span className="stage-random-thumbnail-preview" aria-hidden="true">
+            <Shuffle size={30} />
+          </span>
+          <strong>Random</strong>
+        </button>
         {stages.map((stage) => (
           <button
             key={stage.id}
-            className={`stage-thumbnail ${selected === stage.id ? 'is-selected' : ''}`}
+            className={`stage-thumbnail ${!randomSelected && selected === stage.id ? 'is-selected' : ''}`}
             style={{ '--stage-color': stage.rail, '--stage-floor': stage.floor } as CSSProperties}
-            onClick={() => setSelected(stage.id)}
+            onClick={() => {
+              setRandomSelected(false);
+              setSelected(stage.id);
+            }}
             aria-label={`Select ${stage.name}`}
           >
             <span className="stage-thumbnail-flag" aria-hidden="true">
-              {selected === stage.id ? '1P' : ''}
+              {!randomSelected && selected === stage.id ? '1P' : ''}
             </span>
             <span className="stage-preview" data-testid={`stage-preview-${stage.id}`}>
               <StagePreviewCanvas stage={stage} />
@@ -4561,6 +4735,15 @@ type StageImportDraft = {
   light: string;
 };
 
+type MugenStageImportResult = {
+  packId: string;
+  props: StagePropAssetDefinition[];
+  defFile: string;
+  sffFile?: string;
+  spriteCount: number;
+  warnings?: string[];
+};
+
 function StageEditor({
   stages,
   onReload,
@@ -4579,8 +4762,30 @@ function StageEditor({
   const [sourceName, setSourceName] = useState('');
   const [pieces, setPieces] = useState<StagePieceDraft[]>([]);
   const [importStage, setImportStage] = useState<StageDefinition | null>(null);
+  const [mugenFolderPath, setMugenFolderPath] = useState('');
+  const [mugenFolderName, setMugenFolderName] = useState('');
+  const [mugenStageId, setMugenStageId] = useState('');
+  const [mugenImportResult, setMugenImportResult] = useState<MugenStageImportResult | null>(null);
+  const [propLibrary, setPropLibrary] = useState<StagePropAssetDefinition[]>([]);
+  const [stageAssetLibrary, setStageAssetLibrary] = useState<StageAssetLibraryManifest>(() => emptyStageAssetLibrary());
+  const [propPickerOpen, setPropPickerOpen] = useState(false);
+  const [environmentPickerOpen, setEnvironmentPickerOpen] = useState(false);
+  const [selectedLibraryPropIds, setSelectedLibraryPropIds] = useState<Set<string>>(() => new Set());
   const [status, setStatus] = useState<'idle' | 'working' | 'ready' | 'saving' | 'saved' | 'error'>('idle');
   const [showStageControls, setShowStageControls] = useState(true);
+
+  const reloadPropLibrary = useCallback(async () => {
+    setPropLibrary(await loadStagePropLibrary());
+  }, []);
+
+  const reloadStageAssetLibrary = useCallback(async () => {
+    setStageAssetLibrary(await loadStageAssetLibrary());
+  }, []);
+
+  useEffect(() => {
+    void reloadPropLibrary();
+    void reloadStageAssetLibrary();
+  }, [reloadPropLibrary, reloadStageAssetLibrary]);
 
   useEffect(() => {
     const next = stages.find((stage) => stage.id === selectedStageId) ?? stages[0] ?? defaultStageDraft();
@@ -4611,24 +4816,7 @@ function StageEditor({
   };
 
   const addStageProp = () => {
-    const imagePath = editableStage.thumbnailPath ?? editableStage.backgroundLayers?.[0]?.imagePath ?? editableStage.sourcePath;
-    if (!imagePath) return;
-    const prop: StagePropDefinition = {
-      id: `prop-${Date.now().toString(36)}`,
-      name: 'New Prop',
-      imagePath,
-      position: [0, 1, -2],
-      scale: [1.5, 1.5, 1],
-      opacity: 1,
-      billboard: false,
-      renderMode: 'voxel',
-      voxelDepth: 0.16,
-      voxelScale: 4,
-      hidden: false,
-      locked: false
-    };
-    setEditableStage((current) => ({ ...current, props: [...(current.props ?? []), prop] }));
-    setSelectedPropId(prop.id);
+    setPropPickerOpen(true);
   };
 
   const removeSelectedProp = () => {
@@ -4638,6 +4826,232 @@ function StageEditor({
       props: (current.props ?? []).filter((prop) => prop.id !== selectedProp.id)
     }));
     setSelectedPropId('');
+  };
+
+  const addPropAssetToStage = (asset: StagePropAssetDefinition, index = 0) => {
+    const prop = buildStagePropFromAsset(asset, index);
+    setEditableStage((current) => ({ ...current, props: [...(current.props ?? []), prop] }));
+    setSelectedPropId(prop.id);
+    return prop;
+  };
+
+  const addSelectedPropAssetsToStage = () => {
+    const selectedAssets = propLibrary.filter((asset) => selectedLibraryPropIds.has(asset.id));
+    if (selectedAssets.length === 0) return;
+    const startIndex = editableStage.props?.length ?? 0;
+    const nextProps = selectedAssets.map((asset, index) => buildStagePropFromAsset(asset, startIndex + index));
+    setEditableStage((current) => ({ ...current, props: [...(current.props ?? []), ...nextProps] }));
+    const lastProp = nextProps[nextProps.length - 1];
+    if (lastProp) setSelectedPropId(lastProp.id);
+    setSelectedLibraryPropIds(new Set());
+    setPropPickerOpen(false);
+  };
+
+  const toggleLibraryPropSelection = (propId: string) => {
+    setSelectedLibraryPropIds((current) => {
+      const next = new Set(current);
+      if (next.has(propId)) next.delete(propId);
+      else next.add(propId);
+      return next;
+    });
+  };
+
+  const copySelectedProp = async () => {
+    if (!selectedProp) return;
+    await navigator.clipboard?.writeText(JSON.stringify(selectedProp, null, 2));
+    setStatus('saved');
+    window.setTimeout(() => setStatus('idle'), 1200);
+  };
+
+  const copyPropAsset = async (asset: StagePropAssetDefinition) => {
+    await navigator.clipboard?.writeText(JSON.stringify(asset, null, 2));
+    setStatus('saved');
+    window.setTimeout(() => setStatus('idle'), 1200);
+  };
+
+  const importIndividualProp = async (file: File | undefined) => {
+    if (!file) return;
+    setStatus('working');
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const image = await loadImage(dataUrl);
+      const name = file.name.replace(/\.[^.]+$/, '');
+      const response = await fetch('/__kore/dev/import-stage-prop-asset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          id: slugifyCharacterId(name),
+          dataUrl,
+          width: image.naturalWidth,
+          height: image.naturalHeight
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const result = await response.json() as { ok: boolean; prop?: StagePropAssetDefinition };
+      if (!result.ok || !result.prop) throw new Error('Prop import failed');
+      await reloadPropLibrary();
+      setSelectedLibraryPropIds(new Set([result.prop.id]));
+      setStatus('saved');
+    } catch (error) {
+      console.error('Failed to import individual prop', error);
+      setStatus('error');
+    }
+  };
+
+  const importEnvironmentImage = async (kind: 'floor' | 'skybox', file: File | undefined) => {
+    if (!file) return;
+    setStatus('working');
+    try {
+      const name = file.name.replace(/\.[^.]+$/, '');
+      const response = await fetch('/__kore/dev/import-stage-environment-asset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kind,
+          id: slugifyCharacterId(name),
+          name,
+          dataUrl: await readFileAsDataUrl(file)
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      await reloadStageAssetLibrary();
+      setStatus('saved');
+    } catch (error) {
+      console.error('Failed to import stage environment asset', error);
+      setStatus('error');
+    }
+  };
+
+  const importFloorSound = async (floorId: string, soundKey: StageFloorSoundKey, file: File | undefined) => {
+    if (!file) return;
+    setStatus('working');
+    try {
+      const response = await fetch('/__kore/dev/import-stage-floor-sound', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          floorId,
+          soundKey,
+          fileName: file.name,
+          dataUrl: await readFileAsDataUrl(file)
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const result = await response.json() as { ok: boolean; floor?: StageFloorAssetDefinition };
+      if (!result.ok) throw new Error('Floor sound import failed');
+      await reloadStageAssetLibrary();
+      if (editableStage.floorAssetId === floorId && result.floor) applyFloorAsset(result.floor);
+      setStatus('saved');
+    } catch (error) {
+      console.error('Failed to import floor sound', error);
+      setStatus('error');
+    }
+  };
+
+  const applyFloorAsset = (floor: StageFloorAssetDefinition) => {
+    setEditableStage((current) => ({
+      ...current,
+      floorAssetId: floor.id,
+      floorTexturePath: floor.texturePath,
+      floorTextureRepeat: floor.repeat ?? current.floorTextureRepeat ?? [24, 24],
+      floorSounds: floor.sounds,
+      floorEffects: floor.effects
+    }));
+  };
+
+  const applySkyAsset = (sky: StageSkyboxAssetDefinition) => {
+    setEditableStage((current) => ({
+      ...current,
+      skyboxAssetId: sky.id,
+      skyboxPath: sky.imagePath
+    }));
+  };
+
+  const deletePropAsset = async (asset: StagePropAssetDefinition) => {
+    const confirmed = window.confirm(`Delete prop asset "${asset.name}" from the library?`);
+    if (!confirmed) return;
+    setStatus('working');
+    try {
+      const response = await fetch('/__kore/dev/delete-stage-prop-asset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ propId: asset.id })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setSelectedLibraryPropIds((current) => {
+        const next = new Set(current);
+        next.delete(asset.id);
+        return next;
+      });
+      await reloadPropLibrary();
+      setStatus('saved');
+      window.setTimeout(() => setStatus('idle'), 1200);
+    } catch (error) {
+      console.error('Failed to delete prop asset', error);
+      setStatus('error');
+    }
+  };
+
+  const updateFloorEffects = async (floor: StageFloorAssetDefinition, effects: StageFloorEffects) => {
+    setStatus('working');
+    try {
+      const response = await fetch('/__kore/dev/update-stage-floor-effects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ floorId: floor.id, effects })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const result = await response.json() as { ok: boolean; floor?: StageFloorAssetDefinition };
+      if (!result.ok || !result.floor) throw new Error('Floor effects update failed');
+      await reloadStageAssetLibrary();
+      if (editableStage.floorAssetId === floor.id) applyFloorAsset(result.floor);
+      setStatus('saved');
+      window.setTimeout(() => setStatus('idle'), 1000);
+    } catch (error) {
+      console.error('Failed to update floor effects', error);
+      setStatus('error');
+    }
+  };
+
+  const convertPropAsset = async (asset: StagePropAssetDefinition, kind: 'floor' | 'skybox') => {
+    const label = kind === 'skybox' ? 'skybox' : 'floor texture';
+    const confirmed = window.confirm(`Convert "${asset.name}" into a ${label}? It will be removed from the 3D prop library.`);
+    if (!confirmed) return;
+    setStatus('working');
+    try {
+      const response = await fetch('/__kore/dev/convert-stage-prop-asset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ propId: asset.id, kind })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const result = await response.json() as {
+        ok: boolean;
+        floor?: StageFloorAssetDefinition;
+        sky?: StageSkyboxAssetDefinition;
+      };
+      if (!result.ok) throw new Error('Prop conversion failed');
+      setSelectedLibraryPropIds((current) => {
+        const next = new Set(current);
+        next.delete(asset.id);
+        return next;
+      });
+      await reloadPropLibrary();
+      await reloadStageAssetLibrary();
+      if (kind === 'floor' && result.floor) applyFloorAsset(result.floor);
+      if (kind === 'skybox' && result.sky) applySkyAsset(result.sky);
+      setEditableStage((current) => ({
+        ...current,
+        props: (current.props ?? []).filter((prop) => prop.imagePath !== asset.imagePath)
+      }));
+      if (selectedProp?.imagePath === asset.imagePath) setSelectedPropId('');
+      setStatus('saved');
+      window.setTimeout(() => setStatus('idle'), 1200);
+    } catch (error) {
+      console.error('Failed to convert prop asset', error);
+      setStatus('error');
+    }
   };
 
   const saveEditedStage = async () => {
@@ -4689,24 +5103,108 @@ function StageEditor({
     if (!importStage || !sourceDataUrl || pieces.length === 0) return;
     setStatus('saving');
     try {
-      const response = await fetch('/__kore/dev/import-stage', {
+      const response = await fetch('/__kore/dev/import-stage-props', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          stageId: draft.id,
+          packId: draft.id,
+          packName: draft.name,
           sourceDataUrl,
           sourceName,
-          pieces,
-          stage: buildImportedStageDraft(draft, pieces, sourceDataUrl, false)
+          pieces
         })
       });
       if (!response.ok) throw new Error(await response.text());
       setStatus('saved');
-      await onReload(draft.id);
+      await reloadPropLibrary();
+      setPropPickerOpen(true);
       setMode('edit');
-      setSelectedStageId(draft.id);
     } catch (error) {
       console.error('Failed to save imported stage', error);
+      setStatus('error');
+    }
+  };
+
+  const acceptMugenFolder = async (fileList: FileList | null) => {
+    const files = Array.from(fileList ?? []);
+    if (files.length === 0) return;
+    setStatus('working');
+    setMugenImportResult(null);
+    try {
+      const payloadFiles = await buildMugenFolderUpload(files);
+      const folderName = folderNameFromFiles(files);
+      setMugenFolderName(folderName);
+      const response = await fetch('/__kore/dev/import-mugen-stage-files', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          files: payloadFiles,
+          stageId: mugenStageId.trim() || undefined
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const result = (await response.json()) as { ok: boolean } & MugenStageImportResult;
+      if (!result.ok) throw new Error('MUGEN import failed');
+      setMugenImportResult(result);
+      await reloadPropLibrary();
+      setSelectedLibraryPropIds(new Set(result.props.map((prop) => prop.id)));
+      setStatus(result.warnings?.length ? 'ready' : 'saved');
+      setMode('edit');
+      setPropPickerOpen(true);
+    } catch (error) {
+      console.error('Failed to import MUGEN stage', error);
+      setStatus('error');
+    }
+  };
+
+  const importMugenFolderPath = async () => {
+    if (!mugenFolderPath.trim()) return;
+    setStatus('working');
+    setMugenImportResult(null);
+    try {
+      const response = await fetch('/__kore/dev/import-mugen-stage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          folderPath: mugenFolderPath.trim(),
+          stageId: mugenStageId.trim() || undefined
+        })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const result = (await response.json()) as { ok: boolean } & MugenStageImportResult;
+      if (!result.ok) throw new Error('MUGEN import failed');
+      setMugenImportResult(result);
+      await reloadPropLibrary();
+      setSelectedLibraryPropIds(new Set(result.props.map((prop) => prop.id)));
+      setStatus(result.warnings?.length ? 'ready' : 'saved');
+      setMode('edit');
+      setPropPickerOpen(true);
+    } catch (error) {
+      console.error('Failed to import MUGEN stage path', error);
+      setStatus('error');
+    }
+  };
+
+  const deleteSelectedStage = async () => {
+    const confirmed = window.confirm(`Delete stage "${editableStage.name}"? This removes its local stage folder and cannot be undone.`);
+    if (!confirmed) return;
+    setStatus('working');
+    try {
+      const deletedStageId = editableStage.id;
+      const response = await fetch('/__kore/dev/delete-stage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stageId: deletedStageId })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setMugenImportResult(null);
+      const nextStageId = stages.find((stage) => stage.id !== deletedStageId)?.id ?? '';
+      if (nextStageId) setSelectedStageId(nextStageId);
+      await onReload(nextStageId || undefined);
+      setStatus('saved');
+      window.setTimeout(() => setStatus('idle'), 1500);
+    } catch (error) {
+      console.error('Failed to delete stage', error);
       setStatus('error');
     }
   };
@@ -4719,7 +5217,7 @@ function StageEditor({
       </header>
       <div className="stage-editor-tabs">
         <button className={mode === 'edit' ? 'active' : ''} onClick={() => setMode('edit')}>Edit Existing</button>
-        <button className={mode === 'import' ? 'active' : ''} onClick={() => setMode('import')}>Import Stage</button>
+        <button className={mode === 'import' ? 'active' : ''} onClick={() => setMode('import')}>Import Props</button>
       </div>
 
       {mode === 'edit' ? (
@@ -4746,8 +5244,18 @@ function StageEditor({
                   {showStageControls ? 'Hide Controls' : 'Show Controls'}
                 </button>
                 <button className="secondary-button compact-button" onClick={addStageProp}>Add Prop</button>
+                <button className="secondary-button compact-button" onClick={() => setEnvironmentPickerOpen(true)}>Floor / Sky</button>
                 <button className="secondary-button compact-button" onClick={duplicateSelectedProp} disabled={!selectedProp}>Duplicate</button>
-                <button className="secondary-button compact-button" onClick={removeSelectedProp} disabled={!selectedProp}>Remove</button>
+                <button className="secondary-button compact-button" onClick={copySelectedProp} disabled={!selectedProp}>Copy</button>
+                <button className="secondary-button compact-button" onClick={removeSelectedProp} disabled={!selectedProp}>Delete</button>
+                <button
+                  className="secondary-button compact-button danger-button"
+                  onClick={deleteSelectedStage}
+                  disabled={!editableStage.id || status === 'working' || status === 'saving'}
+                >
+                  <Trash2 size={14} />
+                  Delete Stage
+                </button>
                 <button className="secondary-button compact-button dev-save-button" onClick={saveEditedStage}>
                   <Save size={14} />
                   Save Stage
@@ -4755,6 +5263,13 @@ function StageEditor({
                 {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
               </div>
               <small>Drag to rotate. Scroll to zoom. Right-drag or shift-drag to pan. Click a prop in the world to select it.</small>
+              {mugenImportResult && (
+                <small>
+                  MUGEN import: {mugenImportResult.defFile}
+                  {mugenImportResult.sffFile ? ` + ${mugenImportResult.sffFile}` : ''}, {mugenImportResult.spriteCount} props
+                  {mugenImportResult.warnings?.length ? `, ${mugenImportResult.warnings.length} warnings` : ''}
+                </small>
+              )}
             </div>
             {showStageControls && (
               <div className="stage-viewport-props">
@@ -4780,10 +5295,50 @@ function StageEditor({
       ) : (
         <section className="stage-editor-layout">
           <aside className="stage-editor-panel">
+            <div className="mugen-import-panel">
+              <header>
+                <strong>MUGEN Prop Folder</strong>
+                <small>Pick a local stage folder and import its DEF/SFF sprites as reusable 3D props.</small>
+              </header>
+              <label className="file-drop mugen-folder-picker">
+                <Upload size={24} />
+                <strong>{mugenFolderName || 'Choose MUGEN folder'}</strong>
+                <small>{status === 'working' ? 'Importing props...' : 'Select the folder that contains the .def and .sff files'}</small>
+                <input
+                  type="file"
+                  multiple
+                  {...({ webkitdirectory: '', directory: '' } as Record<string, string>)}
+                  onChange={(event) => {
+                    void acceptMugenFolder(event.target.files);
+                    event.currentTarget.value = '';
+                  }}
+                />
+              </label>
+              <label>
+                <span>Prop Pack ID</span>
+                <input placeholder="Auto from DEF name" value={mugenStageId} onChange={(event) => setMugenStageId(slugifyCharacterId(event.target.value))} />
+              </label>
+              <label>
+                <span>Path Fallback</span>
+                <input placeholder="/Users/.../Stages/My Stage" value={mugenFolderPath} onChange={(event) => setMugenFolderPath(event.target.value)} />
+              </label>
+              <button className="secondary-button dev-save-button" onClick={importMugenFolderPath} disabled={!mugenFolderPath.trim() || status === 'working' || status === 'saving'}>
+                <Upload size={16} />
+                Import Props
+              </button>
+              {mugenImportResult && (
+                <div className="mugen-import-result">
+                  <strong>{mugenImportResult.packId}</strong>
+                  <small>{mugenImportResult.defFile}{mugenImportResult.sffFile ? ` + ${mugenImportResult.sffFile}` : ''}</small>
+                  <small>{mugenImportResult.spriteCount} props imported</small>
+                  {(mugenImportResult.warnings ?? []).map((warning) => <small key={warning}>{warning}</small>)}
+                </div>
+              )}
+            </div>
             <label className="file-drop">
               <Upload size={26} />
-              <strong>{sourceName || 'Choose stage spritesheet'}</strong>
-              <small>{status === 'working' ? 'Cutting pieces...' : 'Auto-cut props and build a 3D arena'}</small>
+              <strong>{sourceName || 'Choose prop spritesheet'}</strong>
+              <small>{status === 'working' ? 'Cutting props...' : 'Auto-cut props into the reusable library'}</small>
               <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => importSource(event.target.files?.[0])} />
             </label>
             <div className="import-field-grid">
@@ -4801,13 +5356,13 @@ function StageEditor({
               </button>
               <button className="secondary-button dev-save-button" onClick={saveImportedStage} disabled={!importStage || status === 'saving'}>
                 <Save size={16} />
-                {status === 'saving' ? 'Saving' : 'Save Stage'}
+                {status === 'saving' ? 'Saving' : 'Save Props'}
               </button>
               {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
             </div>
           </aside>
           <main className="stage-editor-preview">
-            {importStage ? <StagePreviewCanvas stage={importStage} /> : <div className="stage-empty-preview">Upload a stage sheet to preview the arena.</div>}
+            {importStage ? <StagePreviewCanvas stage={importStage} /> : <div className="stage-empty-preview">Upload art to preview the cut props.</div>}
             <div className="stage-piece-grid">
               {pieces.map((piece) => (
                 <span key={piece.id}>
@@ -4823,29 +5378,59 @@ function StageEditor({
         <Home size={18} />
         Back
       </button>
+      {propPickerOpen && (
+        <StagePropPickerModal
+          props={propLibrary}
+          selectedIds={selectedLibraryPropIds}
+          onToggle={toggleLibraryPropSelection}
+          onClose={() => setPropPickerOpen(false)}
+          onAddOne={(asset) => {
+            addPropAssetToStage(asset);
+            setPropPickerOpen(false);
+          }}
+          onAddSelected={addSelectedPropAssetsToStage}
+          onCopy={copyPropAsset}
+          onDelete={deletePropAsset}
+          onConvert={convertPropAsset}
+          onImportProp={importIndividualProp}
+        />
+      )}
+      {environmentPickerOpen && (
+        <StageEnvironmentPickerModal
+          library={stageAssetLibrary}
+          stage={editableStage}
+          onClose={() => setEnvironmentPickerOpen(false)}
+          onImportFloor={(file) => void importEnvironmentImage('floor', file)}
+          onImportSky={(file) => void importEnvironmentImage('skybox', file)}
+          onImportFloorSound={(floorId, soundKey, file) => void importFloorSound(floorId, soundKey, file)}
+          onUpdateFloorEffects={(floor, effects) => void updateFloorEffects(floor, effects)}
+          onApplyFloor={applyFloorAsset}
+          onApplySky={applySkyAsset}
+        />
+      )}
     </div>
   );
 }
 
 function StagePropEditor({ prop, onChange }: { prop: StagePropDefinition; onChange: (patch: Partial<StagePropDefinition>) => void }) {
-  const setPosition = (axis: 0 | 1 | 2, value: string) => {
+  const setPosition = (axis: 0 | 1 | 2, value: number) => {
     const next: [number, number, number] = [...prop.position] as [number, number, number];
-    next[axis] = Number(value) || 0;
+    next[axis] = value;
     onChange({ position: next });
   };
-  const setScale = (axis: 0 | 1 | 2, value: string) => {
+  const setScale = (axis: 0 | 1 | 2, value: number) => {
     const next: [number, number, number] = [...prop.scale] as [number, number, number];
-    next[axis] = Math.max(0.05, Number(value) || 1);
+    next[axis] = Math.max(0.05, value);
     onChange({ scale: next });
   };
   return (
     <div className="stage-prop-editor">
-      <FrameNumberInput label="X" value={prop.position[0]} step={0.1} onChange={(value) => setPosition(0, value)} />
-      <FrameNumberInput label="Y" value={prop.position[1]} step={0.1} onChange={(value) => setPosition(1, value)} />
-      <FrameNumberInput label="Z" value={prop.position[2]} step={0.1} onChange={(value) => setPosition(2, value)} />
-      <FrameNumberInput label="Scale X" value={prop.scale[0]} min={0.05} step={0.05} onChange={(value) => setScale(0, value)} />
-      <FrameNumberInput label="Scale Y" value={prop.scale[1]} min={0.05} step={0.05} onChange={(value) => setScale(1, value)} />
-      <FrameNumberInput label="Opacity" value={prop.opacity ?? 1} min={0} step={0.05} onChange={(value) => onChange({ opacity: Math.max(0, Math.min(1, Number(value) || 0)) })} />
+      <StagePropSlider label="X" value={prop.position[0]} min={-220} max={220} step={0.05} onChange={(value) => setPosition(0, value)} />
+      <StagePropSlider label="Y" value={prop.position[1]} min={-10} max={40} step={0.01} onChange={(value) => setPosition(1, value)} />
+      <StagePropSlider label="Z" value={prop.position[2]} min={-80} max={80} step={0.05} onChange={(value) => setPosition(2, value)} />
+      <StagePropSlider label="Scale X" value={prop.scale[0]} min={0.05} max={40} step={0.01} onChange={(value) => setScale(0, value)} />
+      <StagePropSlider label="Scale Y" value={prop.scale[1]} min={0.05} max={40} step={0.01} onChange={(value) => setScale(1, value)} />
+      <StagePropSlider label="Opacity" value={prop.opacity ?? 1} min={0} max={1} step={0.01} onChange={(value) => onChange({ opacity: Math.max(0, Math.min(1, value)) })} />
       <label>
         <span>Render</span>
         <select value={prop.renderMode ?? 'plane'} onChange={(event) => onChange({ renderMode: event.target.value as StagePropDefinition['renderMode'] })}>
@@ -4853,12 +5438,326 @@ function StagePropEditor({ prop, onChange }: { prop: StagePropDefinition; onChan
           <option value="plane">Plane</option>
         </select>
       </label>
-      <FrameNumberInput label="Voxel Step" value={prop.voxelScale ?? 4} min={2} step={1} onChange={(value) => onChange({ voxelScale: Math.max(2, Number(value) || 4) })} />
-      <FrameNumberInput label="Voxel Depth" value={prop.voxelDepth ?? 0.16} min={0.04} step={0.02} onChange={(value) => onChange({ voxelDepth: Math.max(0.04, Number(value) || 0.16) })} />
+      <StagePropSlider label="Voxel Step" value={prop.voxelScale ?? 4} min={2} max={12} step={1} precision={0} onChange={(value) => onChange({ voxelScale: Math.max(2, Math.round(value)) })} />
+      <StagePropSlider label="Voxel Depth" value={prop.voxelDepth ?? 0.16} min={0.04} max={0.8} step={0.01} onChange={(value) => onChange({ voxelDepth: Math.max(0.04, value) })} />
       <label className="frame-toggle"><span>Billboard</span><input type="checkbox" checked={Boolean(prop.billboard)} onChange={(event) => onChange({ billboard: event.target.checked })} /></label>
       <label className="frame-toggle"><span>Hidden</span><input type="checkbox" checked={Boolean(prop.hidden)} onChange={(event) => onChange({ hidden: event.target.checked })} /></label>
     </div>
   );
+}
+
+function StagePropPickerModal({
+  props,
+  selectedIds,
+  onToggle,
+  onClose,
+  onAddOne,
+  onAddSelected,
+  onCopy,
+  onDelete,
+  onConvert,
+  onImportProp
+}: {
+  props: StagePropAssetDefinition[];
+  selectedIds: Set<string>;
+  onToggle: (propId: string) => void;
+  onClose: () => void;
+  onAddOne: (asset: StagePropAssetDefinition) => void;
+  onAddSelected: () => void;
+  onCopy: (asset: StagePropAssetDefinition) => void;
+  onDelete: (asset: StagePropAssetDefinition) => void;
+  onConvert: (asset: StagePropAssetDefinition, kind: 'floor' | 'skybox') => void;
+  onImportProp: (file: File | undefined) => void;
+}) {
+  return (
+    <div className="stage-prop-picker-overlay" role="dialog" aria-modal="true" aria-label="Add stage props">
+      <section className="stage-prop-picker">
+        <header>
+          <div>
+            <span>Prop Library</span>
+            <h3>Add Props</h3>
+          </div>
+          <div className="stage-prop-picker-actions">
+            <label className="secondary-button compact-button asset-file-button">
+              <Upload size={14} />
+              Import Prop
+              <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => {
+                onImportProp(event.target.files?.[0]);
+                event.currentTarget.value = '';
+              }} />
+            </label>
+            <button className="secondary-button compact-button" onClick={onAddSelected} disabled={selectedIds.size === 0}>
+              Add Selected ({selectedIds.size})
+            </button>
+            <button className="secondary-button compact-button" onClick={onClose}>Close</button>
+          </div>
+        </header>
+        {props.length === 0 ? (
+          <div className="stage-prop-picker-empty">
+            <strong>No props imported yet</strong>
+            <small>Import a MUGEN DEF/SFF folder to fill this library.</small>
+          </div>
+        ) : (
+          <div className="stage-prop-library-grid">
+            {props.map((asset) => {
+              const selected = selectedIds.has(asset.id);
+              return (
+                <article key={asset.id} className={`stage-prop-library-card ${selected ? 'is-selected' : ''}`}>
+                  <button className="stage-prop-library-select" onClick={() => onToggle(asset.id)} aria-pressed={selected}>
+                    <img src={asset.thumbnailPath ?? asset.imagePath} alt="" />
+                    <span>{selected ? 'Selected' : 'Select'}</span>
+                  </button>
+                  <div>
+                    <strong>{asset.name}</strong>
+                    <small>{asset.sourceName ?? asset.sourcePackId ?? 'Imported'}{asset.sourceSprite ? ` · ${asset.sourceSprite[0]},${asset.sourceSprite[1]}` : ''}</small>
+                  </div>
+                  <div className="stage-prop-library-card-actions">
+                    <button className="secondary-button compact-button" onClick={() => onAddOne(asset)}>Add</button>
+                    <button className="secondary-button compact-button" onClick={() => void onCopy(asset)}>Copy</button>
+                    <button className="secondary-button compact-button" onClick={() => void onConvert(asset, 'floor')}>Make Floor</button>
+                    <button className="secondary-button compact-button" onClick={() => void onConvert(asset, 'skybox')}>Make Sky</button>
+                    <button className="secondary-button compact-button danger-button" onClick={() => void onDelete(asset)}>
+                      <Trash2 size={14} />
+                      Delete
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function StageEnvironmentPickerModal({
+  library,
+  stage,
+  onClose,
+  onImportFloor,
+  onImportSky,
+  onImportFloorSound,
+  onUpdateFloorEffects,
+  onApplyFloor,
+  onApplySky
+}: {
+  library: StageAssetLibraryManifest;
+  stage: StageDefinition;
+  onClose: () => void;
+  onImportFloor: (file: File | undefined) => void;
+  onImportSky: (file: File | undefined) => void;
+  onImportFloorSound: (floorId: string, soundKey: StageFloorSoundKey, file: File | undefined) => void;
+  onUpdateFloorEffects: (floor: StageFloorAssetDefinition, effects: StageFloorEffects) => void;
+  onApplyFloor: (floor: StageFloorAssetDefinition) => void;
+  onApplySky: (sky: StageSkyboxAssetDefinition) => void;
+}) {
+  return (
+    <div className="stage-prop-picker-overlay" role="dialog" aria-modal="true" aria-label="Stage floor and sky assets">
+      <section className="stage-prop-picker stage-environment-picker">
+        <header>
+          <div>
+            <span>Stage Assets</span>
+            <h3>Floor / Sky</h3>
+          </div>
+          <div className="stage-prop-picker-actions">
+            <label className="secondary-button compact-button asset-file-button">
+              <Upload size={14} />
+              Import Floor
+              <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => {
+                onImportFloor(event.target.files?.[0]);
+                event.currentTarget.value = '';
+              }} />
+            </label>
+            <label className="secondary-button compact-button asset-file-button">
+              <Upload size={14} />
+              Import Sky
+              <input type="file" accept="image/png,image/webp,image/jpeg" onChange={(event) => {
+                onImportSky(event.target.files?.[0]);
+                event.currentTarget.value = '';
+              }} />
+            </label>
+            <button className="secondary-button compact-button" onClick={onClose}>Close</button>
+          </div>
+        </header>
+        <div className="stage-environment-columns">
+          <section>
+            <div className="stage-environment-section-title">
+              <strong>Floors</strong>
+              <small>{stage.floorAssetId ? `Current: ${stage.floorAssetId}` : 'No stored floor selected'}</small>
+            </div>
+            <div className="stage-asset-card-grid">
+              {library.floors.map((floor) => (
+                <article key={floor.id} className={`stage-asset-card ${stage.floorAssetId === floor.id ? 'is-selected' : ''}`}>
+                  <img src={floor.thumbnailPath ?? floor.texturePath} alt="" />
+                  <div>
+                    <strong>{floor.name}</strong>
+                    <small>{floor.texturePath}</small>
+                  </div>
+                  <button className="secondary-button compact-button" onClick={() => onApplyFloor(floor)}>Use Floor</button>
+                  <FloorEffectsEditor floor={floor} onUpdate={(effects) => onUpdateFloorEffects(floor, effects)} />
+                  <div className="floor-sound-grid">
+                    {(['run', 'jump', 'land', 'sprint'] as const).map((soundKey) => (
+                      <label key={soundKey} className="floor-sound-upload">
+                        <span>{soundKey}</span>
+                        <small>{floor.sounds?.[soundKey] ? 'set' : 'empty'}</small>
+                        <input type="file" accept="audio/*" onChange={(event) => {
+                          onImportFloorSound(floor.id, soundKey, event.target.files?.[0]);
+                          event.currentTarget.value = '';
+                        }} />
+                      </label>
+                    ))}
+                  </div>
+                </article>
+              ))}
+              {library.floors.length === 0 && <div className="stage-prop-picker-empty"><strong>No floors yet</strong><small>Import a floor texture to start.</small></div>}
+            </div>
+          </section>
+          <section>
+            <div className="stage-environment-section-title">
+              <strong>Skies</strong>
+              <small>{stage.skyboxAssetId ? `Current: ${stage.skyboxAssetId}` : 'No stored sky selected'}</small>
+            </div>
+            <div className="stage-asset-card-grid">
+              {library.skies.map((sky) => (
+                <article key={sky.id} className={`stage-asset-card ${stage.skyboxAssetId === sky.id ? 'is-selected' : ''}`}>
+                  <img src={sky.thumbnailPath ?? sky.imagePath} alt="" />
+                  <div>
+                    <strong>{sky.name}</strong>
+                    <small>{sky.imagePath}</small>
+                  </div>
+                  <button className="secondary-button compact-button" onClick={() => onApplySky(sky)}>Use Sky</button>
+                </article>
+              ))}
+              {library.skies.length === 0 && <div className="stage-prop-picker-empty"><strong>No skies yet</strong><small>Import a skybox image to start.</small></div>}
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function FloorEffectsEditor({
+  floor,
+  onUpdate
+}: {
+  floor: StageFloorAssetDefinition;
+  onUpdate: (effects: StageFloorEffects) => void;
+}) {
+  const grass = { ...defaultGrassEffect(), ...(floor.effects?.grass ?? {}) };
+  const updateGrass = (patch: Partial<typeof grass>) => {
+    onUpdate({
+      ...(floor.effects ?? {}),
+      grass: {
+        ...grass,
+        ...patch
+      }
+    });
+  };
+
+  return (
+    <div className="floor-effect-panel">
+      <label className="frame-toggle">
+        <span>Grass</span>
+        <input type="checkbox" checked={grass.enabled} onChange={(event) => updateGrass({ enabled: event.target.checked })} />
+      </label>
+      {grass.enabled && (
+        <div className="floor-effect-slider-grid">
+          <StagePropSlider label="Density" value={grass.density ?? 0.45} min={0.05} max={1} step={0.01} onChange={(value) => updateGrass({ density: value })} />
+          <StagePropSlider label="Height" value={grass.height ?? 0.48} min={0.08} max={1.8} step={0.01} onChange={(value) => updateGrass({ height: value })} />
+          <StagePropSlider label="Wind" value={grass.windStrength ?? 0.14} min={0} max={0.8} step={0.01} onChange={(value) => updateGrass({ windStrength: value })} />
+          <StagePropSlider label="Speed" value={grass.windSpeed ?? 1.1} min={0} max={4} step={0.05} onChange={(value) => updateGrass({ windSpeed: value })} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function defaultGrassEffect() {
+  return {
+    enabled: false,
+    density: 0.45,
+    height: 0.48,
+    patchWidth: 32,
+    patchDepth: 16,
+    windStrength: 0.14,
+    windSpeed: 1.1,
+    colorBottom: '#174d25',
+    colorTop: '#7bd34d'
+  };
+}
+
+function buildStagePropFromAsset(asset: StagePropAssetDefinition, index = 0): StagePropDefinition {
+  const scale = asset.defaultScale ?? defaultStagePropScale(asset);
+  const row = Math.floor(index / 4);
+  const column = index % 4;
+  const x = (column - 1.5) * 1.2;
+  const z = -2.5 - row * 1.1;
+  return {
+    id: `${asset.id}-instance-${Date.now().toString(36)}-${index}`,
+    name: asset.name,
+    imagePath: asset.imagePath,
+    position: [x, Math.max(0.05, scale[1] / 2 - 0.04), z],
+    scale,
+    rotation: [0, 0, 0],
+    opacity: 1,
+    billboard: false,
+    renderMode: asset.defaultRenderMode ?? 'voxel',
+    voxelDepth: asset.defaultVoxelDepth ?? 0.16,
+    voxelScale: asset.defaultVoxelScale ?? 4,
+    hidden: false,
+    locked: false
+  };
+}
+
+function defaultStagePropScale(asset: StagePropAssetDefinition): [number, number, number] {
+  const widthPx = Math.max(1, asset.width ?? 128);
+  const heightPx = Math.max(1, asset.height ?? 128);
+  const width = Math.max(0.8, Math.min(8, widthPx / 96));
+  const height = Math.max(0.8, Math.min(6, heightPx / 96));
+  return [width, height, 1];
+}
+
+function StagePropSlider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  precision = 2,
+  onChange
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  precision?: number;
+  onChange: (value: number) => void;
+}) {
+  const safeValue = Number.isFinite(value) ? value : min;
+  const sliderMin = Math.min(min, safeValue);
+  const sliderMax = Math.max(max, safeValue);
+  const displayValue = precision === 0 ? String(Math.round(safeValue)) : formatSliderValue(safeValue, precision);
+  return (
+    <label className="stage-prop-slider">
+      <span>{label}</span>
+      <strong>{displayValue}</strong>
+      <input
+        type="range"
+        min={sliderMin}
+        max={sliderMax}
+        step={step}
+        value={safeValue}
+        onChange={(event) => onChange(Number(event.target.value))}
+      />
+    </label>
+  );
+}
+
+function formatSliderValue(value: number, precision: number) {
+  return value.toFixed(precision).replace(/\.?0+$/, '');
 }
 
 function defaultStageDraft(): StageDefinition {
@@ -4884,6 +5783,56 @@ function randomStageDraft(): StageImportDraft {
     rail: '#2ee6ff',
     light: '#dbe8ff'
   };
+}
+
+async function buildMugenFolderUpload(files: File[]) {
+  const stageFiles = files.filter((file) => isMugenImportCandidate(file));
+  const defFile = stageFiles.find((file) => file.name.toLowerCase().endsWith('.def'));
+  if (!defFile) throw new Error('Selected folder does not include a .def file.');
+  const parsed = parseMugenDef(await defFile.text());
+  const selected = new Map<string, File>();
+  const add = (file: File | undefined) => {
+    if (!file) return;
+    selected.set(mugenFileRelativePath(file), file);
+  };
+
+  add(defFile);
+  add(findMugenFile(stageFiles, parsed.bgDef.spr, '.sff'));
+  add(findMugenFile(stageFiles, parsed.music.bgmusic, '.mp3'));
+  stageFiles.filter((file) => file.name.toLowerCase().endsWith('.png')).forEach(add);
+
+  return Promise.all(
+    [...selected.values()].map(async (file) => ({
+      relativePath: mugenFileRelativePath(file),
+      dataUrl: await readFileAsDataUrl(file)
+    }))
+  );
+}
+
+function findMugenFile(files: File[], reference: string | undefined, extension: string) {
+  if (reference) {
+    const normalized = reference.replace(/\\/g, '/').replace(/^\.?\//, '').toLowerCase();
+    const exact = files.find((file) => mugenFileRelativePath(file).toLowerCase() === normalized);
+    if (exact) return exact;
+    const base = normalized.split('/').pop();
+    const byBase = files.find((file) => file.name.toLowerCase() === base);
+    if (byBase) return byBase;
+  }
+  return files.find((file) => file.name.toLowerCase().endsWith(extension));
+}
+
+function isMugenImportCandidate(file: File) {
+  return /\.(def|sff|png|mp3|ogg|wav|webm)$/i.test(file.name);
+}
+
+function mugenFileRelativePath(file: File) {
+  const withWebkitPath = file as File & { webkitRelativePath?: string };
+  return withWebkitPath.webkitRelativePath || file.name;
+}
+
+function folderNameFromFiles(files: File[]) {
+  const firstPath = files.map(mugenFileRelativePath).find((path) => path.includes('/'));
+  return firstPath?.split('/')[0] ?? 'Selected MUGEN folder';
 }
 
 async function detectStagePieces(file: File): Promise<{ sourceDataUrl: string; pieces: StagePieceDraft[] }> {
@@ -5025,6 +5974,7 @@ function buildImportedStageDraft(draft: StageImportDraft, pieces: StagePieceDraf
     name: draft.name,
     subtitle: draft.subtitle,
     renderMode: 'spriteCutout',
+    hidden: true,
     floor: draft.floor,
     rail: draft.rail,
     light: draft.light,
@@ -6022,6 +6972,26 @@ function chooseHitSfx(event: ImpactSparkEvent) {
   if (event.moveInput === 'kick') return HIT_SFX.kick3;
   if (event.moveInput === 'special') return HIT_SFX.special4;
   return HIT_SFX.punch1;
+}
+
+function makeStageFloorAudioSnapshot(fighter: FighterRuntime, lastRunAt = 0): StageFloorAudioSnapshot {
+  return {
+    state: fighter.state,
+    y: fighter.position.y,
+    dashForwardFrames: fighter.dashForwardFrames,
+    x: fighter.position.x,
+    z: fighter.position.z,
+    lastRunAt
+  };
+}
+
+function playStageFloorSfx(stage: StageDefinition, kind: StageFloorSoundKey, audioSettings: GameSettings['audio'], gain = 1) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  const url = stage.floorSounds?.[kind];
+  if (!url) return;
+  const base = kind === 'run' ? 0.32 : kind === 'jump' ? 0.36 : kind === 'land' ? 0.48 : 0.42;
+  const playbackRate = kind === 'run' ? 0.96 + Math.random() * 0.08 : kind === 'land' ? 0.92 : 1;
+  playPooledSfx(url, clamp(audioSettings.master * audioSettings.sfx * base * gain, 0, 0.8), playbackRate);
 }
 
 function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
@@ -11173,6 +12143,10 @@ function FightScreen({
   const kiChargeCutawayPlayingRef = useRef(false);
   const previousKiBySlotRef = useRef<[number, number]>([match.fighters[0].ki, match.fighters[1].ki]);
   const previousShadowCloneActiveBySlotRef = useRef<[boolean, boolean]>([Boolean(match.fighters[0].shadowClone), Boolean(match.fighters[1].shadowClone)]);
+  const previousFloorAudioBySlotRef = useRef<[StageFloorAudioSnapshot, StageFloorAudioSnapshot]>([
+    makeStageFloorAudioSnapshot(match.fighters[0]),
+    makeStageFloorAudioSnapshot(match.fighters[1])
+  ]);
   const latestAudioSettingsRef = useRef(settings.audio);
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
@@ -11246,6 +12220,43 @@ function FightScreen({
   useEffect(() => {
     latestAudioSettingsRef.current = settings.audio;
   }, [settings.audio]);
+
+  useEffect(() => {
+    if (match.phase !== 'fighting' || paused) {
+      previousFloorAudioBySlotRef.current = [
+        makeStageFloorAudioSnapshot(match.fighters[0]),
+        makeStageFloorAudioSnapshot(match.fighters[1])
+      ];
+      return;
+    }
+    const now = performance.now();
+    const previous = previousFloorAudioBySlotRef.current;
+    const nextSnapshots: [StageFloorAudioSnapshot, StageFloorAudioSnapshot] = [
+      makeStageFloorAudioSnapshot(match.fighters[0], previous[0].lastRunAt),
+      makeStageFloorAudioSnapshot(match.fighters[1], previous[1].lastRunAt)
+    ];
+    match.fighters.forEach((fighter, index) => {
+      const before = previous[index];
+      const next = nextSnapshots[index];
+      const wasGrounded = before.y <= 0.02;
+      const grounded = fighter.position.y <= 0.02 && fighter.velocityY <= 0;
+      const moved = Math.hypot(fighter.position.x - before.x, fighter.position.z - before.z);
+      if (before.state !== 'jump' && fighter.state === 'jump' && fighter.position.y > before.y) {
+        playStageFloorSfx(match.stage, 'jump', settings.audio, 0.7);
+      }
+      if (!wasGrounded && grounded) {
+        playStageFloorSfx(match.stage, 'land', settings.audio, 0.9);
+      }
+      if (before.dashForwardFrames <= 0 && fighter.dashForwardFrames > 0) {
+        playStageFloorSfx(match.stage, 'sprint', settings.audio, 0.82);
+      }
+      if (grounded && fighter.state === 'walk' && moved > 0.015 && now - before.lastRunAt > 260) {
+        playStageFloorSfx(match.stage, 'run', settings.audio, 0.5);
+        next.lastRunAt = now;
+      }
+    });
+    previousFloorAudioBySlotRef.current = nextSnapshots;
+  }, [match, paused, settings.audio]);
 
   useEffect(() => {
     return () => onPausedChange(false);

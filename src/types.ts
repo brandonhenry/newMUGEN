@@ -366,10 +366,14 @@ export type StageDefinition = {
     title?: string;
   };
   floor: string;
+  floorAssetId?: string;
   floorTexturePath?: string;
   floorTextureRepeat?: [number, number];
+  floorSounds?: StageFloorSoundSet;
+  floorEffects?: StageFloorEffects;
   rail: string;
   light: string;
+  skyboxAssetId?: string;
   skyboxPath?: string;
   sourcePath?: string;
   thumbnailPath?: string;
@@ -387,6 +391,7 @@ export type StageDefinition = {
     ambient?: string;
     sky?: string;
   };
+  mugen?: MugenStageMetadata;
   backgroundLayers?: StageLayerDefinition[];
   props?: StagePropDefinition[];
 };
@@ -398,6 +403,37 @@ export type StageLayerDefinition = {
   scale: Vec3Tuple;
   rotation?: Vec3Tuple;
   opacity?: number;
+  followCamera?: boolean;
+  parallax?: [number, number];
+  tile?: [number, number];
+  tileSpacing?: [number, number];
+  sourceSprite?: [number, number];
+};
+
+export type MugenStageMetadata = {
+  sourceDef: string;
+  sourceSff?: string;
+  localcoord?: [number, number];
+  zoffset?: number;
+  camera?: Record<string, number>;
+  playerInfo?: Record<string, number>;
+  bgm?: string;
+  layers?: MugenStageLayerMetadata[];
+  warnings?: string[];
+};
+
+export type MugenStageLayerMetadata = {
+  id: string;
+  name: string;
+  type: string;
+  sprite?: [number, number];
+  action?: number;
+  start: [number, number];
+  delta: [number, number];
+  tile: [number, number];
+  tileSpacing: [number, number];
+  mask: boolean;
+  raw: Record<string, string>;
 };
 
 export type StagePropDefinition = {
@@ -414,6 +450,70 @@ export type StagePropDefinition = {
   voxelScale?: number;
   hidden?: boolean;
   locked?: boolean;
+};
+
+export type StagePropAssetDefinition = {
+  id: string;
+  name: string;
+  imagePath: string;
+  thumbnailPath?: string;
+  width?: number;
+  height?: number;
+  sourcePackId?: string;
+  sourceName?: string;
+  sourceKind?: 'mugen' | 'spritesheet' | 'manual';
+  sourceSprite?: [number, number];
+  tags?: string[];
+  defaultScale?: Vec3Tuple;
+  defaultRenderMode?: 'plane' | 'voxel';
+  defaultVoxelDepth?: number;
+  defaultVoxelScale?: number;
+};
+
+export type StageFloorSoundKey = 'run' | 'jump' | 'land' | 'sprint';
+
+export type StageFloorSoundSet = Partial<Record<StageFloorSoundKey, string>>;
+
+export type StageFloorGrassEffect = {
+  enabled: boolean;
+  density?: number;
+  height?: number;
+  patchWidth?: number;
+  patchDepth?: number;
+  windStrength?: number;
+  windSpeed?: number;
+  colorBottom?: string;
+  colorTop?: string;
+};
+
+export type StageFloorEffects = {
+  grass?: StageFloorGrassEffect;
+};
+
+export type StageFloorAssetDefinition = {
+  id: string;
+  name: string;
+  texturePath: string;
+  thumbnailPath?: string;
+  repeat?: [number, number];
+  sounds?: StageFloorSoundSet;
+  effects?: StageFloorEffects;
+};
+
+export type StageSkyboxAssetDefinition = {
+  id: string;
+  name: string;
+  imagePath: string;
+  thumbnailPath?: string;
+};
+
+export type StageAssetLibraryManifest = {
+  floors: StageFloorAssetDefinition[];
+  skies: StageSkyboxAssetDefinition[];
+};
+
+export type StagePropLibraryManifest = {
+  props: StagePropAssetDefinition[];
 };
 
 export type InputFrame = Record<ActionName, boolean>;

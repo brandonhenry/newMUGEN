@@ -1,0 +1,23 @@
+{
+  "floors": [
+    {
+      "id": "chamber-silver",
+      "name": "Chamber Silver",
+      "texturePath": "/stage-assets/floors/chamber-silver/texture.png",
+      "thumbnailPath": "/stage-assets/floors/chamber-silver/texture.png",
+      "repeat": [
+        24,
+        24
+      ],
+      "sounds": {}
+    }
+  ],
+  "skies": [
+    {
+      "id": "chamber-sky",
+      "name": "Chamber Sky",
+      "imagePath": "/stage-assets/skies/chamber-sky/sky.png",
+      "thumbnailPath": "/stage-assets/skies/chamber-sky/sky.png"
+    }
+  ]
+}

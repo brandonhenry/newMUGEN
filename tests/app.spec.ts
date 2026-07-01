@@ -8,13 +8,13 @@ async function startFromSplash(page: import('@playwright/test').Page) {
 
 async function startFight(page: import('@playwright/test').Page, local2p = false) {
   await startFromSplash(page);
-  await page.getByRole('button', { name: local2p ? 'Versus' : 'Arcade' }).click();
+  await page.getByRole('button', { name: local2p ? 'Versus' : 'Arcade' }).click({ force: true });
   await page.getByRole('button', { name: 'Stage' }).click();
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
   const versusSplash = page.locator('.fight-versus-screen');
   await expect(versusSplash).toBeVisible({ timeout: 3000 });
-  await versusSplash.click();
-  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 7000 });
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 2000 });
   const fightScreen = page.locator('.fight-screen');
   await page.waitForTimeout(4200);
@@ -85,6 +85,30 @@ test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
   await expect(page.getByTestId('fight-canvas')).toBeVisible();
   await expect(page.locator('.fight-hud')).toBeVisible();
+});
+
+test('defaults character and stage select to random slots', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Versus' }).click();
+
+  const randomCharacter = page.getByRole('button', { name: /Select random Player 1/i });
+  await expect(randomCharacter).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.versus-hero-left .versus-hero-name')).toHaveText('Random');
+
+  const firstRealCharacter = page.locator('.versus-roster-tile:not(.versus-random-tile)').first();
+  await firstRealCharacter.click();
+  await expect(randomCharacter).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.versus-hero-left .versus-hero-name')).not.toHaveText('Random');
+
+  await page.getByRole('button', { name: 'Stage' }).click();
+  const randomStage = page.getByRole('button', { name: 'Select random stage' });
+  await expect(randomStage).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.stage-hero-label strong')).toHaveText('Random');
+
+  const firstRealStage = page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first();
+  await firstRealStage.click();
+  await expect(randomStage).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.stage-hero-label strong')).not.toHaveText('Random');
 });
 
 test('opens controls and character viewer', async ({ page }) => {

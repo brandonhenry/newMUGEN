@@ -1,9 +1,10 @@
 import { mkdir, readFile, rm, unlink, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { dirname, resolve } from 'node:path';
+import { dirname, extname, resolve } from 'node:path';
 import { defineConfig, type ViteDevServer } from 'vite';
 import react from '@vitejs/plugin-react';
+import { importMugenStageFiles, importMugenStageFolder } from './mugenStageImporter';
 
 export default defineConfig({
   plugins: [react(), koreDevManifestWriter()]
@@ -154,6 +155,74 @@ type DevImportStagePayload = {
     height?: number;
   }>;
   stage?: Record<string, unknown>;
+};
+
+type DevImportStagePropsPayload = {
+  packId?: string;
+  packName?: string;
+  sourceDataUrl?: string;
+  sourceName?: string;
+  pieces?: Array<{
+    id?: string;
+    name?: string;
+    dataUrl?: string;
+    box?: unknown;
+    width?: number;
+    height?: number;
+  }>;
+};
+
+type DevImportMugenStagePayload = {
+  folderPath?: string;
+  stageId?: string;
+};
+
+type DevImportMugenStageFilesPayload = {
+  stageId?: string;
+  files?: Array<{
+    relativePath?: string;
+    dataUrl?: string;
+  }>;
+};
+
+type DevDeleteStagePayload = {
+  stageId?: string;
+};
+
+type DevDeleteStagePropPayload = {
+  propId?: string;
+};
+
+type DevConvertStagePropPayload = {
+  propId?: string;
+  kind?: 'floor' | 'skybox';
+};
+
+type DevImportStagePropAssetPayload = {
+  id?: string;
+  name?: string;
+  dataUrl?: string;
+  width?: number;
+  height?: number;
+};
+
+type DevImportStageEnvironmentAssetPayload = {
+  kind?: 'floor' | 'skybox';
+  id?: string;
+  name?: string;
+  dataUrl?: string;
+};
+
+type DevImportStageFloorSoundPayload = {
+  floorId?: string;
+  soundKey?: 'run' | 'jump' | 'land' | 'sprint';
+  fileName?: string;
+  dataUrl?: string;
+};
+
+type DevUpdateStageFloorEffectsPayload = {
+  floorId?: string;
+  effects?: Record<string, unknown>;
 };
 
 type DevOnlineRoom = {
@@ -308,7 +377,9 @@ function koreDevManifestWriter() {
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: true, characterId, manifestPath }));
         } catch (error) {
-          response.statusCode = 500;
+          response.statusCode = error && typeof error === 'object' && typeof (error as { statusCode?: unknown }).statusCode === 'number'
+            ? (error as { statusCode: number }).statusCode
+            : 500;
           response.setHeader('Content-Type', 'application/json');
           response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
         }
@@ -1230,6 +1301,494 @@ function koreDevManifestWriter() {
         }
       });
 
+      server.middlewares.use('/__kore/dev/import-stage-props', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportStagePropsPayload;
+          const packId = sanitizeAssetId(payload.packId ?? '');
+          if (!isSafeId(packId)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid prop pack id' }));
+            return;
+          }
+          const pieces = Array.isArray(payload.pieces) ? payload.pieces.slice(0, 300) : [];
+          if (pieces.length === 0) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Expected prop pieces' }));
+            return;
+          }
+
+          const packDir = resolve(server.config.root, 'public', 'stage-props', packId);
+          const piecesDir = resolve(packDir, 'pieces');
+          await mkdir(piecesDir, { recursive: true });
+          if (payload.sourceDataUrl) await writeFile(resolve(packDir, 'source.png'), dataUrlToPngBuffer(payload.sourceDataUrl));
+          const props = await Promise.all(pieces.map(async (piece, index) => {
+            const pieceId = sanitizePieceId(piece.id ?? `piece-${index.toString().padStart(3, '0')}`);
+            await writeFile(resolve(piecesDir, `${pieceId}.png`), dataUrlToPngBuffer(piece.dataUrl));
+            const width = Math.max(1, Math.round(finiteOr(piece.width, 96)));
+            const height = Math.max(1, Math.round(finiteOr(piece.height, 96)));
+            return {
+              id: `${packId}-${pieceId}`,
+              name: typeof piece.name === 'string' && piece.name.trim() ? piece.name.trim() : pieceId,
+              imagePath: `/stage-props/${packId}/pieces/${pieceId}.png`,
+              thumbnailPath: `/stage-props/${packId}/pieces/${pieceId}.png`,
+              width,
+              height,
+              sourcePackId: packId,
+              sourceName: typeof payload.packName === 'string' && payload.packName.trim()
+                ? payload.packName.trim()
+                : payload.sourceName ?? packId,
+              sourceKind: 'spritesheet',
+              tags: ['spritesheet', packId],
+              defaultScale: [
+                Math.max(0.8, Math.min(8, width / 96)),
+                Math.max(0.8, Math.min(6, height / 96)),
+                1
+              ],
+              defaultRenderMode: 'voxel',
+              defaultVoxelDepth: 0.16,
+              defaultVoxelScale: width > 600 || height > 300 ? 8 : 5
+            };
+          }));
+          await updateStagePropIndex(server.config.root, props);
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, packId, props, propCount: props.length }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-stage-prop-asset', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportStagePropAssetPayload;
+          const image = dataUrlToImageBuffer(payload.dataUrl);
+          const baseId = sanitizeAssetId(payload.id || payload.name || image.extension || 'prop') || `prop-${Date.now().toString(36)}`;
+          const propDir = resolve(server.config.root, 'public', 'stage-props', 'manual');
+          await mkdir(propDir, { recursive: true });
+          const fileName = `${baseId}.${image.extension}`;
+          await writeFile(resolve(propDir, fileName), image.buffer);
+          const width = Math.max(1, Math.round(finiteOr(payload.width, 128)));
+          const height = Math.max(1, Math.round(finiteOr(payload.height, 128)));
+          const prop = {
+            id: `manual-${baseId}`,
+            name: typeof payload.name === 'string' && payload.name.trim() ? payload.name.trim() : baseId,
+            imagePath: `/stage-props/manual/${fileName}`,
+            thumbnailPath: `/stage-props/manual/${fileName}`,
+            width,
+            height,
+            sourcePackId: 'manual',
+            sourceName: 'Manual Props',
+            sourceKind: 'manual',
+            tags: ['manual'],
+            defaultScale: [
+              Math.max(0.8, Math.min(8, width / 96)),
+              Math.max(0.8, Math.min(6, height / 96)),
+              1
+            ],
+            defaultRenderMode: 'voxel',
+            defaultVoxelDepth: 0.16,
+            defaultVoxelScale: width > 600 || height > 300 ? 8 : 5
+          };
+          await updateStagePropIndex(server.config.root, [prop]);
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, prop }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-stage-environment-asset', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportStageEnvironmentAssetPayload;
+          const kind = payload.kind === 'skybox' ? 'skybox' : 'floor';
+          const image = dataUrlToImageBuffer(payload.dataUrl);
+          const id = sanitizeAssetId(payload.id || payload.name || kind) || `${kind}-${Date.now().toString(36)}`;
+          const dirName = kind === 'skybox' ? 'skies' : 'floors';
+          const assetDir = resolve(server.config.root, 'public', 'stage-assets', dirName, id);
+          await mkdir(assetDir, { recursive: true });
+          const fileName = kind === 'skybox' ? `sky.${image.extension}` : `texture.${image.extension}`;
+          await writeFile(resolve(assetDir, fileName), image.buffer);
+          const publicPath = `/stage-assets/${dirName}/${id}/${fileName}`;
+          if (kind === 'skybox') {
+            const sky = {
+              id,
+              name: typeof payload.name === 'string' && payload.name.trim() ? payload.name.trim() : id,
+              imagePath: publicPath,
+              thumbnailPath: publicPath
+            };
+            await updateStageAssetIndex(server.config.root, { skies: [sky] });
+            response.statusCode = 200;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: true, kind, sky }));
+            return;
+          }
+          const floor = {
+            id,
+            name: typeof payload.name === 'string' && payload.name.trim() ? payload.name.trim() : id,
+            texturePath: publicPath,
+            thumbnailPath: publicPath,
+            repeat: [24, 24],
+            sounds: {},
+            effects: {}
+          };
+          await updateStageAssetIndex(server.config.root, { floors: [floor] });
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, kind, floor }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/convert-stage-prop-asset', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevConvertStagePropPayload;
+          const propId = typeof payload.propId === 'string' ? payload.propId.trim() : '';
+          const kind = payload.kind === 'skybox' ? 'skybox' : payload.kind === 'floor' ? 'floor' : undefined;
+          if (!propId || !kind) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Missing prop conversion target' }));
+            return;
+          }
+
+          const propIndexPath = resolve(server.config.root, 'public', 'stage-props', 'index.json');
+          const propManifest = JSON.parse(await readFile(propIndexPath, 'utf8')) as { props?: Array<Record<string, unknown>> };
+          const props = Array.isArray(propManifest.props) ? propManifest.props : [];
+          const prop = props.find((entry) => entry.id === propId);
+          if (!prop) {
+            response.statusCode = 404;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Prop not found' }));
+            return;
+          }
+
+          const imagePath = typeof prop.imagePath === 'string' ? prop.imagePath : '';
+          if (!imagePath.startsWith('/stage-props/')) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Prop image must be a local stage prop asset' }));
+            return;
+          }
+
+          const publicRoot = resolve(server.config.root, 'public');
+          const sourcePath = resolve(publicRoot, imagePath.replace(/^\/+/, ''));
+          const propRoot = resolve(publicRoot, 'stage-props');
+          if (!sourcePath.startsWith(propRoot)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Unsafe prop image path' }));
+            return;
+          }
+
+          const extension = extname(sourcePath).replace(/^\./, '').toLowerCase();
+          const allowedExtension = ['png', 'webp', 'jpg', 'jpeg'].includes(extension) ? extension : 'png';
+          const image = await readFile(sourcePath);
+          const propName = typeof prop.name === 'string' && prop.name.trim() ? prop.name.trim() : propId;
+          const baseId = sanitizeAssetId(propName || propId) || sanitizeAssetId(propId) || Date.now().toString(36);
+          const assetId = sanitizeAssetId(`${kind === 'skybox' ? 'sky' : 'floor'}-${baseId}`);
+          const dirName = kind === 'skybox' ? 'skies' : 'floors';
+          const assetDir = resolve(publicRoot, 'stage-assets', dirName, assetId);
+          await mkdir(assetDir, { recursive: true });
+          const fileName = kind === 'skybox' ? `sky.${allowedExtension}` : `texture.${allowedExtension}`;
+          await writeFile(resolve(assetDir, fileName), image);
+          const publicPath = `/stage-assets/${dirName}/${assetId}/${fileName}`;
+          const nextProps = props.filter((entry) => entry.id !== propId);
+          await writeFile(propIndexPath, `${JSON.stringify({ props: nextProps }, null, 2)}\n`, 'utf8');
+
+          if (kind === 'skybox') {
+            const sky = {
+              id: assetId,
+              name: propName,
+              imagePath: publicPath,
+              thumbnailPath: publicPath
+            };
+            await updateStageAssetIndex(server.config.root, { skies: [sky] });
+            response.statusCode = 200;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: true, kind, propId, sky }));
+            return;
+          }
+
+          const floor = {
+            id: assetId,
+            name: propName,
+            texturePath: publicPath,
+            thumbnailPath: publicPath,
+            repeat: [24, 24],
+            sounds: {},
+            effects: {}
+          };
+          await updateStageAssetIndex(server.config.root, { floors: [floor] });
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, kind, propId, floor }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-stage-floor-sound', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportStageFloorSoundPayload;
+          const floorId = sanitizeAssetId(payload.floorId ?? '');
+          const soundKey = payload.soundKey;
+          if (!floorId || !soundKey || !['run', 'jump', 'land', 'sprint'].includes(soundKey)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid floor sound target' }));
+            return;
+          }
+          const audio = dataUrlToAudioBuffer(payload.dataUrl, payload.fileName);
+          const soundsDir = resolve(server.config.root, 'public', 'stage-assets', 'floors', floorId, 'sounds');
+          await mkdir(soundsDir, { recursive: true });
+          const fileName = `${soundKey}.${audio.extension}`;
+          await writeFile(resolve(soundsDir, fileName), audio.buffer);
+          const soundPath = `/stage-assets/floors/${floorId}/sounds/${fileName}`;
+          const floor = await updateStageFloorSound(server.config.root, floorId, soundKey, soundPath);
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, floor, soundKey, soundPath }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/update-stage-floor-effects', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevUpdateStageFloorEffectsPayload;
+          const floorId = sanitizeAssetId(payload.floorId ?? '');
+          if (!floorId) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid floor id' }));
+            return;
+          }
+          const floor = await updateStageFloorEffects(server.config.root, floorId, sanitizeFloorEffects(payload.effects));
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, floor }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-mugen-stage', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportMugenStagePayload;
+          const folderPath = typeof payload.folderPath === 'string' ? payload.folderPath.trim() : '';
+          const requestedStageId = typeof payload.stageId === 'string' && payload.stageId.trim()
+            ? sanitizeAssetId(payload.stageId)
+            : undefined;
+          if (!folderPath) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Missing folder path' }));
+            return;
+          }
+          const result = await importMugenStageFolder({
+            folderPath,
+            stageId: requestedStageId,
+            outputRoot: resolve(server.config.root, 'public', 'stage-props')
+          });
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, ...result }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/import-mugen-stage-files', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevImportMugenStageFilesPayload;
+          const requestedStageId = typeof payload.stageId === 'string' && payload.stageId.trim()
+            ? sanitizeAssetId(payload.stageId)
+            : undefined;
+          const files = Array.isArray(payload.files)
+            ? payload.files
+                .filter((file) => typeof file.relativePath === 'string' && typeof file.dataUrl === 'string')
+                .map((file) => ({
+                  relativePath: file.relativePath as string,
+                  data: dataUrlToBuffer(file.dataUrl)
+                }))
+            : [];
+          if (files.length === 0) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'No selected folder files received' }));
+            return;
+          }
+          const result = await importMugenStageFiles({
+            files,
+            stageId: requestedStageId,
+            outputRoot: resolve(server.config.root, 'public', 'stage-props')
+          });
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, ...result }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
+      const deleteStageMiddleware = async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevDeleteStagePayload;
+          const stageId = payload.stageId ?? '';
+          if (!isSafeId(stageId)) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Invalid stage id' }));
+            return;
+          }
+
+          await deleteLocalStage(server.config.root, stageId);
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, stageId }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      };
+
+      server.middlewares.use('/__kore/dev/delete-stage', deleteStageMiddleware);
+      server.middlewares.use('/__kore/dev/delete-mugen-stage', deleteStageMiddleware);
+
+      server.middlewares.use('/__kore/dev/delete-stage-prop-asset', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          response.statusCode = 405;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: 'POST required' }));
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevDeleteStagePropPayload;
+          const propId = typeof payload.propId === 'string' ? payload.propId.trim() : '';
+          if (!propId) {
+            response.statusCode = 400;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Missing prop id' }));
+            return;
+          }
+
+          const indexPath = resolve(server.config.root, 'public', 'stage-props', 'index.json');
+          const manifest = JSON.parse(await readFile(indexPath, 'utf8')) as { props?: Array<Record<string, unknown>> };
+          const props = Array.isArray(manifest.props) ? manifest.props : [];
+          const prop = props.find((entry) => entry.id === propId);
+          if (!prop) {
+            response.statusCode = 404;
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify({ ok: false, error: 'Prop not found' }));
+            return;
+          }
+
+          const imagePath = typeof prop.imagePath === 'string' ? prop.imagePath : '';
+          if (imagePath.startsWith('/stage-props/')) {
+            const publicRoot = resolve(server.config.root, 'public');
+            const assetPath = resolve(publicRoot, imagePath.replace(/^\/+/, ''));
+            const propRoot = resolve(publicRoot, 'stage-props');
+            if (assetPath.startsWith(propRoot)) await rm(assetPath, { force: true });
+          }
+          const nextProps = props.filter((entry) => entry.id !== propId);
+          await writeFile(indexPath, `${JSON.stringify({ props: nextProps }, null, 2)}\n`, 'utf8');
+
+          response.statusCode = 200;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: true, propId }));
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json');
+          response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : 'Unknown error' }));
+        }
+      });
+
       server.middlewares.use('/__kore/dev/save-stage-piece', async (request: IncomingMessage, response: ServerResponse) => {
         if (request.method !== 'POST') {
           response.statusCode = 405;
@@ -1602,6 +2161,13 @@ function dataUrlToPngBuffer(dataUrl: unknown) {
   return Buffer.from(match[1], 'base64');
 }
 
+function dataUrlToBuffer(dataUrl: unknown) {
+  if (typeof dataUrl !== 'string') throw new Error('Missing data URL');
+  const match = dataUrl.match(/^data:[^;]+;base64,([a-z0-9+/=]+)$/i);
+  if (!match) throw new Error('Invalid data URL');
+  return Buffer.from(match[1], 'base64');
+}
+
 function dataUrlToImageBuffer(dataUrl: unknown) {
   if (typeof dataUrl !== 'string') throw new Error('Missing image data URL');
   const match = dataUrl.match(/^data:image\/(png|webp|jpe?g);base64,([a-z0-9+/=]+)$/i);
@@ -1610,6 +2176,25 @@ function dataUrlToImageBuffer(dataUrl: unknown) {
   return {
     buffer: Buffer.from(match[2], 'base64'),
     extension: kind === 'jpeg' || kind === 'jpg' ? 'jpg' : kind
+  };
+}
+
+function dataUrlToAudioBuffer(dataUrl: unknown, fileName: unknown) {
+  if (typeof dataUrl !== 'string') throw new Error('Missing audio data URL');
+  const match = dataUrl.match(/^data:audio\/([^;]+);base64,([a-z0-9+/=]+)$/i);
+  if (!match) throw new Error('Invalid audio data URL');
+  const mimeKind = match[1].toLowerCase();
+  const nameExtension = typeof fileName === 'string' ? fileName.split('.').pop()?.toLowerCase() : '';
+  const extension =
+    nameExtension && ['mp3', 'wav', 'ogg', 'webm', 'm4a'].includes(nameExtension) ? nameExtension :
+    mimeKind.includes('mpeg') || mimeKind.includes('mp3') ? 'mp3' :
+    mimeKind.includes('wav') ? 'wav' :
+    mimeKind.includes('ogg') ? 'ogg' :
+    mimeKind.includes('webm') ? 'webm' :
+    'mp3';
+  return {
+    extension,
+    buffer: Buffer.from(match[2], 'base64')
   };
 }
 
@@ -1875,6 +2460,10 @@ function finiteOr(value: unknown, fallback: number) {
   return Number.isFinite(value) ? Number(value) : fallback;
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+
 function isSafeId(value: string) {
   return /^[a-z0-9-]+$/i.test(value);
 }
@@ -1897,6 +2486,120 @@ async function updateStageIndex(root: string, stageId: string) {
   await writeFile(indexPath, `${JSON.stringify({ stages: ids }, null, 2)}\n`, 'utf8');
 }
 
+async function removeStageFromIndex(root: string, stageId: string) {
+  const indexPath = resolve(root, 'public', 'stages', 'index.json');
+  let ids: string[] = [];
+  try {
+    const index = JSON.parse(await readFile(indexPath, 'utf8')) as { stages?: string[] };
+    ids = Array.isArray(index.stages) ? index.stages : [];
+  } catch {
+    ids = [];
+  }
+  await mkdir(dirname(indexPath), { recursive: true });
+  await writeFile(indexPath, `${JSON.stringify({ stages: ids.filter((id) => id !== stageId) }, null, 2)}\n`, 'utf8');
+}
+
+async function deleteLocalStage(root: string, stageId: string) {
+  const stagesRoot = resolve(root, 'public', 'stages');
+  const stageDir = resolve(stagesRoot, stageId);
+  if (!stageDir.startsWith(`${stagesRoot}/`)) {
+    throw Object.assign(new Error('Unsafe stage path.'), { statusCode: 400 });
+  }
+
+  const manifestPath = resolve(stageDir, 'stage.json');
+  try {
+    JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+  } catch {
+    throw Object.assign(new Error('Only local stages saved in public/stages can be deleted.'), { statusCode: 404 });
+  }
+
+  await rm(stageDir, { recursive: true, force: true });
+  await removeStageFromIndex(root, stageId);
+}
+
+async function updateStagePropIndex(root: string, props: Array<Record<string, unknown>>) {
+  const indexPath = resolve(root, 'public', 'stage-props', 'index.json');
+  let existing: Array<Record<string, unknown>> = [];
+  try {
+    const manifest = JSON.parse(await readFile(indexPath, 'utf8')) as { props?: Array<Record<string, unknown>> };
+    existing = Array.isArray(manifest.props) ? manifest.props : [];
+  } catch {
+    existing = [];
+  }
+  const next = new Map<string, Record<string, unknown>>();
+  existing.forEach((prop) => {
+    if (typeof prop.id === 'string') next.set(prop.id, prop);
+  });
+  props.forEach((prop) => {
+    if (typeof prop.id === 'string') next.set(prop.id, prop);
+  });
+  await mkdir(dirname(indexPath), { recursive: true });
+  await writeFile(indexPath, `${JSON.stringify({ props: [...next.values()] }, null, 2)}\n`, 'utf8');
+}
+
+async function updateStageAssetIndex(root: string, patch: { floors?: Array<Record<string, unknown>>; skies?: Array<Record<string, unknown>> }) {
+  const indexPath = resolve(root, 'public', 'stage-assets', 'index.json');
+  let floors: Array<Record<string, unknown>> = [];
+  let skies: Array<Record<string, unknown>> = [];
+  try {
+    const manifest = JSON.parse(await readFile(indexPath, 'utf8')) as { floors?: Array<Record<string, unknown>>; skies?: Array<Record<string, unknown>> };
+    floors = Array.isArray(manifest.floors) ? manifest.floors : [];
+    skies = Array.isArray(manifest.skies) ? manifest.skies : [];
+  } catch {
+    floors = [];
+    skies = [];
+  }
+  const floorMap = new Map<string, Record<string, unknown>>();
+  const skyMap = new Map<string, Record<string, unknown>>();
+  floors.forEach((floor) => {
+    if (typeof floor.id === 'string') floorMap.set(floor.id, floor);
+  });
+  skies.forEach((sky) => {
+    if (typeof sky.id === 'string') skyMap.set(sky.id, sky);
+  });
+  patch.floors?.forEach((floor) => {
+    if (typeof floor.id === 'string') floorMap.set(floor.id, floor);
+  });
+  patch.skies?.forEach((sky) => {
+    if (typeof sky.id === 'string') skyMap.set(sky.id, sky);
+  });
+  await mkdir(dirname(indexPath), { recursive: true });
+  await writeFile(indexPath, `${JSON.stringify({ floors: [...floorMap.values()], skies: [...skyMap.values()] }, null, 2)}\n`, 'utf8');
+}
+
+async function updateStageFloorSound(root: string, floorId: string, soundKey: 'run' | 'jump' | 'land' | 'sprint', soundPath: string) {
+  const indexPath = resolve(root, 'public', 'stage-assets', 'index.json');
+  let manifest: { floors?: Array<Record<string, unknown>>; skies?: Array<Record<string, unknown>> } = {};
+  try {
+    manifest = JSON.parse(await readFile(indexPath, 'utf8')) as { floors?: Array<Record<string, unknown>>; skies?: Array<Record<string, unknown>> };
+  } catch {
+    manifest = { floors: [], skies: [] };
+  }
+  const floors = Array.isArray(manifest.floors) ? manifest.floors : [];
+  const floor = floors.find((entry) => entry.id === floorId);
+  if (!floor) throw new Error(`Floor asset not found: ${floorId}`);
+  const sounds = floor.sounds && typeof floor.sounds === 'object' ? floor.sounds as Record<string, unknown> : {};
+  floor.sounds = { ...sounds, [soundKey]: soundPath };
+  await updateStageAssetIndex(root, { floors });
+  return floor;
+}
+
+async function updateStageFloorEffects(root: string, floorId: string, effects: Record<string, unknown> | undefined) {
+  const indexPath = resolve(root, 'public', 'stage-assets', 'index.json');
+  let manifest: { floors?: Array<Record<string, unknown>>; skies?: Array<Record<string, unknown>> } = {};
+  try {
+    manifest = JSON.parse(await readFile(indexPath, 'utf8')) as { floors?: Array<Record<string, unknown>>; skies?: Array<Record<string, unknown>> };
+  } catch {
+    manifest = { floors: [], skies: [] };
+  }
+  const floors = Array.isArray(manifest.floors) ? manifest.floors : [];
+  const floor = floors.find((entry) => entry.id === floorId);
+  if (!floor) throw new Error(`Floor asset not found: ${floorId}`);
+  floor.effects = effects;
+  await updateStageAssetIndex(root, { floors });
+  return floor;
+}
+
 function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) {
   const colors = {
     floor: typeof stage.floor === 'string' ? stage.floor : '#07182c',
@@ -1911,12 +2614,16 @@ function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) 
     renderMode: stage.renderMode === 'spriteCutout' ? 'spriteCutout' : 'procedural',
     hidden: Boolean(stage.hidden),
     floor: colors.floor,
+    floorAssetId: typeof stage.floorAssetId === 'string' ? stage.floorAssetId : undefined,
     floorTexturePath: typeof stage.floorTexturePath === 'string' ? stage.floorTexturePath : undefined,
     floorTextureRepeat: Array.isArray(stage.floorTextureRepeat)
       ? [finiteOr(stage.floorTextureRepeat[0], 24), finiteOr(stage.floorTextureRepeat[1], 24)]
       : undefined,
+    floorSounds: sanitizeFloorSounds(stage.floorSounds),
+    floorEffects: sanitizeFloorEffects(stage.floorEffects),
     rail: colors.rail,
     light: colors.light,
+    skyboxAssetId: typeof stage.skyboxAssetId === 'string' ? stage.skyboxAssetId : undefined,
     skyboxPath: typeof stage.skyboxPath === 'string' ? stage.skyboxPath : undefined,
     sourcePath: typeof stage.sourcePath === 'string' ? stage.sourcePath : `/stages/${stageId}/source.png`,
     thumbnailPath: typeof stage.thumbnailPath === 'string' ? stage.thumbnailPath : undefined,
@@ -1925,6 +2632,36 @@ function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) 
     lighting: stage.lighting && typeof stage.lighting === 'object' ? stage.lighting : undefined,
     backgroundLayers: sanitizeStageLayers(stage.backgroundLayers),
     props: sanitizeStageProps(stage.props)
+  };
+}
+
+function sanitizeFloorSounds(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  const sounds: Record<string, string> = {};
+  ['run', 'jump', 'land', 'sprint'].forEach((key) => {
+    if (typeof source[key] === 'string' && source[key]) sounds[key] = source[key] as string;
+  });
+  return Object.keys(sounds).length ? sounds : undefined;
+}
+
+function sanitizeFloorEffects(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  const grass = source.grass && typeof source.grass === 'object' ? source.grass as Record<string, unknown> : undefined;
+  if (!grass) return undefined;
+  return {
+    grass: {
+      enabled: grass.enabled === true,
+      density: clamp(finiteOr(grass.density, 0.45), 0.05, 1),
+      height: clamp(finiteOr(grass.height, 0.48), 0.08, 1.8),
+      patchWidth: clamp(finiteOr(grass.patchWidth, 32), 4, 220),
+      patchDepth: clamp(finiteOr(grass.patchDepth, 16), 4, 220),
+      windStrength: clamp(finiteOr(grass.windStrength, 0.14), 0, 0.8),
+      windSpeed: clamp(finiteOr(grass.windSpeed, 1.1), 0, 4),
+      colorBottom: typeof grass.colorBottom === 'string' && grass.colorBottom ? grass.colorBottom : '#174d25',
+      colorTop: typeof grass.colorTop === 'string' && grass.colorTop ? grass.colorTop : '#7bd34d'
+    }
   };
 }
 
@@ -1950,7 +2687,12 @@ function sanitizeStageLayers(value: unknown) {
         position: normalizeVec3(layer.position, [0, 3, -12]),
         scale: normalizeVec3(layer.scale, [12, 8, 1]),
         rotation: normalizeVec3(layer.rotation, [0, 0, 0]),
-        opacity: Math.max(0, Math.min(1, finiteOr(layer.opacity, 1)))
+        opacity: Math.max(0, Math.min(1, finiteOr(layer.opacity, 1))),
+        followCamera: Boolean(layer.followCamera),
+        parallax: normalizeVec2(layer.parallax, [1, 1]),
+        tile: normalizeVec2(layer.tile, [0, 0]),
+        tileSpacing: normalizeVec2(layer.tileSpacing, [0, 0]),
+        sourceSprite: normalizeOptionalVec2(layer.sourceSprite)
       };
     })
     .filter((layer) => layer.imagePath);
@@ -1988,6 +2730,16 @@ function normalizeVec3(value: unknown, fallback: [number, number, number]): [num
     finiteOr(value[1], fallback[1]),
     finiteOr(value[2], fallback[2])
   ];
+}
+
+function normalizeVec2(value: unknown, fallback: [number, number]): [number, number] {
+  if (!Array.isArray(value) || value.length < 2) return fallback;
+  return [finiteOr(value[0], fallback[0]), finiteOr(value[1], fallback[1])];
+}
+
+function normalizeOptionalVec2(value: unknown): [number, number] | undefined {
+  if (!Array.isArray(value) || value.length < 2) return undefined;
+  return [finiteOr(value[0], 0), finiteOr(value[1], 0)];
 }
 
 function sanitizeImportedManifest(manifest: Record<string, unknown>, characterId: string, frameCount: number) {

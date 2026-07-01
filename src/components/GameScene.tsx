@@ -19,6 +19,7 @@ import type {
   MoveDefinition,
   MoveInput,
   StageDefinition,
+  StageFloorGrassEffect,
   StageLayerDefinition,
   StagePropDefinition
 } from '../types';
@@ -1691,6 +1692,7 @@ function Arena({
         <ringGeometry args={[1.65, 2.05, 72]} />
         <meshBasicMaterial color={stage.rail} transparent opacity={0.15} />
       </mesh>
+      <StageFloorEffects stage={stage} />
     </group>
   );
 }
@@ -1727,6 +1729,7 @@ function TexturedInfiniteArena({ stage, floorTexturePath }: { stage: StageDefini
         <circleGeometry args={[4.38, 128]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
       </mesh>
+      <StageFloorEffects stage={stage} />
     </group>
   );
 }
@@ -1747,6 +1750,7 @@ function SpriteCutoutStage({
         <planeGeometry args={[96, 42, 32, 18]} />
         <meshStandardMaterial color={stage.floor} roughness={0.78} metalness={0.02} />
       </mesh>
+      {stage.floorTexturePath && <SpriteCutoutFloorTexture stage={stage} floorTexturePath={stage.floorTexturePath} />}
       <mesh receiveShadow position={[0, -0.028, 0.05]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[5.35, 72]} />
         <meshStandardMaterial color="#d7be6d" roughness={0.84} metalness={0.02} />
@@ -1784,8 +1788,9 @@ function SpriteCutoutStage({
         <ringGeometry args={[4.8, 5.05, 72]} />
         <meshBasicMaterial color="#f0d27b" transparent opacity={0.26} />
       </mesh>
+      <StageFloorEffects stage={stage} />
       {(stage.backgroundLayers ?? []).map((layer) => (
-        <StageTexturePlane key={layer.id} imagePath={layer.imagePath} position={layer.position} scale={layer.scale} rotation={layer.rotation} opacity={layer.opacity ?? 1} />
+        <StageLayerPlane key={layer.id} layer={layer} />
       ))}
       {(stage.props ?? []).filter((prop) => !prop.hidden).map((prop) => (
         <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
@@ -1794,19 +1799,173 @@ function SpriteCutoutStage({
   );
 }
 
+function SpriteCutoutFloorTexture({ stage, floorTexturePath }: { stage: StageDefinition; floorTexturePath: string }) {
+  const texture = useLoader(THREE.TextureLoader, floorTexturePath);
+  const repeat = stage.floorTextureRepeat ?? [12, 8];
+  const width = stage.world?.width ?? 96;
+  const depth = stage.world?.depth ?? 42;
+
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(repeat[0], repeat[1]);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.needsUpdate = true;
+  }, [repeat, texture]);
+
+  return (
+    <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0.01]}>
+      <planeGeometry args={[width, depth, 1, 1]} />
+      <meshStandardMaterial map={texture} color="#ffffff" roughness={0.82} metalness={0.02} transparent alphaTest={0.04} />
+    </mesh>
+  );
+}
+
+function StageFloorEffects({ stage }: { stage: StageDefinition }) {
+  const grass = stage.floorEffects?.grass;
+  if (!grass?.enabled) return null;
+  return <StageGrassField stage={stage} grass={grass} />;
+}
+
+function StageGrassField({ stage, grass }: { stage: StageDefinition; grass: StageFloorGrassEffect }) {
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const density = THREE.MathUtils.clamp(grass.density ?? 0.45, 0.05, 1);
+  const bladeCount = Math.round(260 + density * 1900);
+  const height = THREE.MathUtils.clamp(grass.height ?? 0.48, 0.08, 1.8);
+  const patchWidth = THREE.MathUtils.clamp(grass.patchWidth ?? Math.min(stage.world?.width ?? 32, 32), 4, stage.world?.width ?? 220);
+  const patchDepth = THREE.MathUtils.clamp(grass.patchDepth ?? Math.min(stage.world?.depth ?? 16, 16), 4, stage.world?.depth ?? 220);
+  const floorY = (stage.world?.floorY ?? -0.045) + 0.012;
+
+  const geometry = useMemo(() => {
+    const bladeGeometry = new THREE.PlaneGeometry(0.075, 1, 1, 4);
+    bladeGeometry.translate(0, 0.5, 0);
+    return bladeGeometry;
+  }, []);
+
+  const material = useMemo(() => new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uWindStrength: { value: grass.windStrength ?? 0.14 },
+      uWindSpeed: { value: grass.windSpeed ?? 1.1 },
+      uBottomColor: { value: new THREE.Color(grass.colorBottom ?? '#174d25') },
+      uTopColor: { value: new THREE.Color(grass.colorTop ?? '#7bd34d') }
+    },
+    vertexShader: `
+      uniform float uTime;
+      uniform float uWindStrength;
+      uniform float uWindSpeed;
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        vec3 transformed = position;
+        vec4 instanceOrigin = instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+        float wind = sin(uTime * uWindSpeed + instanceOrigin.x * 0.72 + instanceOrigin.z * 0.58);
+        transformed.x += wind * uWindStrength * uv.y;
+        gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(transformed, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 uBottomColor;
+      uniform vec3 uTopColor;
+      varying vec2 vUv;
+
+      void main() {
+        float taper = smoothstep(0.0, 0.18, vUv.x) * (1.0 - smoothstep(0.78, 1.0, vUv.x));
+        vec3 color = mix(uBottomColor, uTopColor, vUv.y);
+        gl_FragColor = vec4(color, max(0.42, taper));
+      }
+    `,
+    transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    alphaTest: 0.04
+  }), []);
+
+  useEffect(() => {
+    material.uniforms.uWindStrength.value = grass.windStrength ?? 0.14;
+    material.uniforms.uWindSpeed.value = grass.windSpeed ?? 1.1;
+    (material.uniforms.uBottomColor.value as THREE.Color).set(grass.colorBottom ?? '#174d25');
+    (material.uniforms.uTopColor.value as THREE.Color).set(grass.colorTop ?? '#7bd34d');
+  }, [grass.colorBottom, grass.colorTop, grass.windSpeed, grass.windStrength, material]);
+
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh) return;
+    const dummy = new THREE.Object3D();
+    const random = seededRandom(hashString(`${stage.id}:${stage.floorAssetId ?? stage.floorTexturePath ?? 'floor'}:grass`));
+    for (let index = 0; index < bladeCount; index += 1) {
+      const x = (random() - 0.5) * patchWidth;
+      const z = (random() - 0.5) * patchDepth;
+      const scale = (0.68 + random() * 0.72) * height;
+      dummy.position.set(x, 0, z);
+      dummy.rotation.set(0, random() * Math.PI, (random() - 0.5) * 0.18);
+      dummy.scale.setScalar(scale);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(index, dummy.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+  }, [bladeCount, height, patchDepth, patchWidth, stage.floorAssetId, stage.floorTexturePath, stage.id]);
+
+  useFrame(({ clock }) => {
+    material.uniforms.uTime.value = clock.elapsedTime;
+  });
+
+  return (
+    <instancedMesh ref={meshRef} args={[geometry, material, bladeCount]} position={[0, floorY, 0]} renderOrder={3} frustumCulled={false} />
+  );
+}
+
+function seededRandom(seed: number) {
+  let state = seed || 1;
+  return () => {
+    state = Math.imul(1664525, state) + 1013904223;
+    return (state >>> 0) / 4294967296;
+  };
+}
+
+function StageLayerPlane({ layer }: { layer: StageLayerDefinition }) {
+  const tileX = (layer.tile?.[0] ?? 0) !== 0;
+  const repeatOffsets = tileX ? [-2, -1, 0, 1, 2] : [0];
+  const spacing = Math.abs(layer.scale[0]) + Math.max(0, layer.tileSpacing?.[0] ?? 0) / 48;
+  return (
+    <>
+      {repeatOffsets.map((repeat) => (
+        <StageTexturePlane
+          key={`${layer.id}-${repeat}`}
+          imagePath={layer.imagePath}
+          position={[layer.position[0] + repeat * spacing, layer.position[1], layer.position[2]]}
+          scale={layer.scale}
+          rotation={layer.rotation}
+          opacity={layer.opacity ?? 1}
+          followCamera={layer.followCamera}
+          parallax={layer.parallax}
+        />
+      ))}
+    </>
+  );
+}
+
 function StageTexturePlane({
   imagePath,
   position,
   scale,
   rotation,
-  opacity
+  opacity,
+  followCamera = false,
+  parallax = [1, 1]
 }: {
   imagePath: string;
   position: [number, number, number];
   scale: [number, number, number];
   rotation?: [number, number, number];
   opacity: number;
+  followCamera?: boolean;
+  parallax?: [number, number];
 }) {
+  const mesh = useRef<THREE.Mesh>(null);
   const texture = useLoader(THREE.TextureLoader, imagePath);
   useEffect(() => {
     texture.colorSpace = THREE.SRGBColorSpace;
@@ -1814,10 +1973,15 @@ function StageTexturePlane({
     texture.minFilter = THREE.NearestFilter;
     texture.needsUpdate = true;
   }, [texture]);
+  useFrame(({ camera }) => {
+    if (!followCamera || !mesh.current) return;
+    mesh.current.position.x = position[0] + camera.position.x * (parallax[0] - 1);
+    mesh.current.position.y = position[1] + (camera.position.y - 4) * (parallax[1] - 1) * 0.18;
+  });
   return (
-    <mesh position={position} rotation={rotation ?? [0, 0, 0]} scale={scale} renderOrder={position[2] < 0 ? -10 : 2}>
+    <mesh ref={mesh} position={position} rotation={rotation ?? [0, 0, 0]} scale={scale} renderOrder={position[2] < 0 ? -10 : 2}>
       <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial map={texture} transparent opacity={opacity} alphaTest={0.04} side={THREE.DoubleSide} depthWrite={false} />
+      <meshBasicMaterial map={texture} transparent opacity={opacity} alphaTest={0.04} side={THREE.DoubleSide} depthWrite={false} depthTest={!followCamera} />
     </mesh>
   );
 }
