@@ -1696,6 +1696,7 @@ function Arena({
         <ringGeometry args={[1.65, 2.05, 72]} />
         <meshBasicMaterial color={stage.rail} transparent opacity={0.15} />
       </mesh>
+      <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>
   );
@@ -1743,8 +1744,79 @@ function TexturedInfiniteArena({
         <circleGeometry args={[4.38, 128]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
       </mesh>
+      <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>
+  );
+}
+
+function StageSafePlatform({ stage }: { stage: StageDefinition }) {
+  const platform = stage.safePlatform;
+  if (!platform || platform.enabled === false) return null;
+  const radius = platform.radius ?? 38;
+  const height = platform.height ?? 0.16;
+  const topY = (stage.world?.floorY ?? -0.045) + (platform.yOffset ?? 0.06);
+  const sideY = topY - height / 2;
+  const color = platform.color ?? stage.floor;
+  const edgeColor = platform.edgeColor ?? stage.rail;
+  const edgeOpacity = platform.edgeOpacity ?? 0.92;
+  const top = platform.texturePath
+    ? <TexturedSafePlatformTop platform={platform} radius={radius} y={topY + 0.003} fallbackColor={color} />
+    : <ColoredSafePlatformTop radius={radius} y={topY + 0.003} color={color} />;
+
+  return (
+    <group renderOrder={8}>
+      <mesh receiveShadow position={[0, sideY, 0]} rotation={[0, Math.PI / 8, 0]}>
+        <cylinderGeometry args={[radius, radius * 1.012, height, 8, 1, false]} />
+        <meshStandardMaterial color={edgeColor} roughness={0.58} metalness={0.08} transparent opacity={edgeOpacity} />
+      </mesh>
+      {top}
+      <mesh position={[0, topY + 0.01, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+        <ringGeometry args={[radius * 0.986, radius * 1.012, 8]} />
+        <meshBasicMaterial color={edgeColor} transparent opacity={0.44} depthWrite={false} />
+      </mesh>
+    </group>
+  );
+}
+
+function TexturedSafePlatformTop({
+  platform,
+  radius,
+  y,
+  fallbackColor
+}: {
+  platform: NonNullable<StageDefinition['safePlatform']>;
+  radius: number;
+  y: number;
+  fallbackColor: string;
+}) {
+  const texture = useLoader(THREE.TextureLoader, platform.texturePath ?? '');
+  const repeat = platform.textureRepeat ?? [6, 6];
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(repeat[0], repeat[1]);
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.anisotropy = 8;
+    texture.needsUpdate = true;
+  }, [repeat, texture]);
+
+  return (
+    <mesh receiveShadow position={[0, y, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+      <circleGeometry args={[radius, 8]} />
+      <meshStandardMaterial map={texture} color="#ffffff" roughness={0.42} metalness={0.04} emissive={fallbackColor} emissiveIntensity={0.02} />
+    </mesh>
+  );
+}
+
+function ColoredSafePlatformTop({ radius, y, color }: { radius: number; y: number; color: string }) {
+  return (
+    <mesh receiveShadow position={[0, y, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+      <circleGeometry args={[radius, 8]} />
+      <meshStandardMaterial color={color} roughness={0.48} metalness={0.05} />
+    </mesh>
   );
 }
 

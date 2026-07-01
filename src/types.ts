@@ -369,6 +369,7 @@ export type StageDefinition = {
   floorAssetId?: string;
   floorTexturePath?: string;
   floorTextureRepeat?: [number, number];
+  safePlatform?: StageSafePlatformDefinition;
   floorSounds?: StageFloorSoundSet;
   floorEffects?: StageFloorEffects;
   rail: string;
@@ -394,6 +395,19 @@ export type StageDefinition = {
   mugen?: MugenStageMetadata;
   backgroundLayers?: StageLayerDefinition[];
   props?: StagePropDefinition[];
+};
+
+export type StageSafePlatformDefinition = {
+  enabled?: boolean;
+  shape?: 'octagon';
+  texturePath?: string;
+  textureRepeat?: [number, number];
+  radius?: number;
+  height?: number;
+  yOffset?: number;
+  color?: string;
+  edgeColor?: string;
+  edgeOpacity?: number;
 };
 
 export type StageLayerDefinition = {

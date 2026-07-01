@@ -54,6 +54,7 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     floorTextureRepeat: Array.isArray(stage.floorTextureRepeat)
       ? [finiteOr(stage.floorTextureRepeat[0], 24), finiteOr(stage.floorTextureRepeat[1], 24)]
       : undefined,
+    safePlatform: normalizeSafePlatform(stage.safePlatform),
     floorSounds: stage.floorSounds && typeof stage.floorSounds === 'object' ? stage.floorSounds : undefined,
     floorEffects: normalizeFloorEffects(stage.floorEffects),
     rail: stage.rail ?? '#2ee6ff',
@@ -82,6 +83,24 @@ function validateStage(stage: StageDefinition) {
     if (!stage.backgroundLayers?.length && !stage.props?.length) warnings.push('Sprite-cutout stage has no visual layers or props.');
   }
   return warnings;
+}
+
+function normalizeSafePlatform(value: StageDefinition['safePlatform']): StageDefinition['safePlatform'] {
+  if (!value || typeof value !== 'object') return undefined;
+  return {
+    enabled: value.enabled !== false,
+    shape: value.shape === 'octagon' ? value.shape : 'octagon',
+    texturePath: typeof value.texturePath === 'string' ? value.texturePath : undefined,
+    textureRepeat: Array.isArray(value.textureRepeat)
+      ? [finiteOr(value.textureRepeat[0], 6), finiteOr(value.textureRepeat[1], 6)]
+      : undefined,
+    radius: clamp(finiteOr(value.radius, 38), 4, 120),
+    height: clamp(finiteOr(value.height, 0.16), 0.02, 2),
+    yOffset: clamp(finiteOr(value.yOffset, 0.06), -0.5, 2),
+    color: typeof value.color === 'string' ? value.color : undefined,
+    edgeColor: typeof value.edgeColor === 'string' ? value.edgeColor : undefined,
+    edgeOpacity: clamp(finiteOr(value.edgeOpacity, 0.92), 0, 1)
+  };
 }
 
 function finiteOr(value: unknown, fallback: number) {

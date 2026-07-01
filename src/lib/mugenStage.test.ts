@@ -166,6 +166,18 @@ describe('MUGEN stage parsing', () => {
       floor: '#000000',
       rail: '#ffffff',
       light: '#ffffff',
+      safePlatform: {
+        enabled: true,
+        shape: 'octagon',
+        texturePath: '/stages/shared/handpainted-stone-platform.png',
+        textureRepeat: [7, 7],
+        radius: 38,
+        height: 0.18,
+        yOffset: 0.08,
+        color: '#777777',
+        edgeColor: '#ff7a2f',
+        edgeOpacity: 0.94
+      },
       floorEffects: {
         grass: {
           enabled: true,
@@ -218,6 +230,18 @@ describe('MUGEN stage parsing', () => {
       maxDecals: 32,
       reactive: true,
       quality: 'low'
+    });
+    expect(normalized.safePlatform).toMatchObject({
+      enabled: true,
+      shape: 'octagon',
+      texturePath: '/stages/shared/handpainted-stone-platform.png',
+      textureRepeat: [7, 7],
+      radius: 38,
+      height: 0.18,
+      yOffset: 0.08,
+      color: '#777777',
+      edgeColor: '#ff7a2f',
+      edgeOpacity: 0.94
     });
   });
 

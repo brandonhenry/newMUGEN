@@ -10,6 +10,21 @@
     10,
     10
   ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      7,
+      7
+    ],
+    "radius": 38,
+    "height": 0.16,
+    "yOffset": 0.075,
+    "color": "#777777",
+    "edgeColor": "#80f4ff",
+    "edgeOpacity": 0.88
+  },
   "floorEffects": {
     "ripples": {
       "enabled": true,
