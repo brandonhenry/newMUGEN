@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { Suspense, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { Component, Suspense, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -2259,13 +2259,68 @@ function ModelStage({
   }
   return (
     <group>
-      <Suspense fallback={<ModelStageLoadBackdrop stage={stage} />}>
-        <StageModelScene stage={stage} modelDefinition={modelDefinition} />
-      </Suspense>
+      <StageModelErrorBoundary stageId={stage.id} fallback={<ModelStageLoadFailureMarker stage={stage} />}>
+        <Suspense fallback={<ModelStageLoadBackdrop stage={stage} />}>
+          <StageModelScene stage={stage} modelDefinition={modelDefinition} />
+        </Suspense>
+      </StageModelErrorBoundary>
       <ModelStageFightLane stage={stage} />
       {(modelDefinition?.decorativeProps ?? []).filter((prop) => !prop.hidden).map((prop) => (
         <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
       ))}
+    </group>
+  );
+}
+
+type StageModelErrorBoundaryProps = {
+  stageId: string;
+  fallback: ReactNode;
+  children: ReactNode;
+};
+
+type StageModelErrorBoundaryState = {
+  error: Error | null;
+};
+
+class StageModelErrorBoundary extends Component<StageModelErrorBoundaryProps, StageModelErrorBoundaryState> {
+  state: StageModelErrorBoundaryState = { error: null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    logStageModelDebug('H49 model render error boundary caught', {
+      stageId: this.props.stageId,
+      error: error.message,
+      componentStack: info.componentStack?.slice(0, 1000)
+    });
+  }
+
+  render() {
+    if (this.state.error) return this.props.fallback;
+    return this.props.children;
+  }
+}
+
+function ModelStageLoadFailureMarker({ stage }: { stage: StageDefinition }) {
+  useEffect(() => {
+    logStageModelDebug('H49 model load failure marker rendered', {
+      stageId: stage.id,
+      modelPath: stage.model?.path,
+      modelUrl: stage.model?.url
+    });
+  }, [stage.id, stage.model?.path, stage.model?.url]);
+  return (
+    <group position={[0, 1.4, 0]}>
+      <mesh>
+        <boxGeometry args={[2.4, 2.4, 2.4]} />
+        <meshBasicMaterial color="#ff335d" wireframe fog={false} />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 4, 0]}>
+        <boxGeometry args={[3.4, 0.08, 3.4]} />
+        <meshBasicMaterial color="#ffcc33" fog={false} />
+      </mesh>
     </group>
   );
 }
@@ -2304,9 +2359,7 @@ function ModelStageFightLane({ stage }: { stage: StageDefinition }) {
 }
 
 function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
-  const imagePath = stage.thumbnailPath ?? stage.skyboxPath ?? DEFAULT_SKYBOX_PATH;
   const progress = useProgress();
-  const texture = useLoader(THREE.TextureLoader, imagePath);
   useEffect(() => {
     logStageModelDebug('H11-H18 Suspense fallback/progress', {
       stageId: stage.id,
@@ -2316,20 +2369,21 @@ function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
       total: progress.total,
       item: progress.item,
       errors: progress.errors.length,
-      thumbnail: imagePath
+      modelPath: stage.model?.path,
+      modelUrl: stage.model?.url
     });
-  }, [imagePath, progress.active, progress.errors.length, progress.item, progress.loaded, progress.progress, progress.total, stage.id]);
-  useEffect(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.magFilter = THREE.LinearFilter;
-    texture.minFilter = THREE.LinearMipmapLinearFilter;
-    texture.needsUpdate = true;
-  }, [texture]);
+  }, [progress.active, progress.errors.length, progress.item, progress.loaded, progress.progress, progress.total, stage.id, stage.model?.path, stage.model?.url]);
   return (
-    <mesh position={[0, 3.2, -13]} scale={[16, 9, 1]} renderOrder={-5}>
-      <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial map={texture} color="#ffffff" toneMapped={false} />
-    </mesh>
+    <group renderOrder={-5}>
+      <mesh position={[0, 1.4, 0]}>
+        <boxGeometry args={[1.4, 1.4, 1.4]} />
+        <meshBasicMaterial color="#35e6ff" wireframe fog={false} />
+      </mesh>
+      <mesh position={[0, 0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.15, 1.35, 36]} />
+        <meshBasicMaterial color="#35e6ff" transparent opacity={0.75} depthWrite={false} fog={false} />
+      </mesh>
+    </group>
   );
 }
 
@@ -2382,9 +2436,20 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
 
   useEffect(() => {
     scene.traverse((object) => {
+      object.layers.enable(0);
       const mesh = object as THREE.Mesh;
-      if (!mesh.isMesh) return;
-      if (!mesh.visible) return;
+      if (!mesh.isMesh) {
+        object.visible = true;
+        return;
+      }
+      if (getStageModelMeshHideReason(mesh, stage.id)) {
+        mesh.visible = false;
+        return;
+      }
+      mesh.visible = true;
+      mesh.frustumCulled = false;
+      mesh.geometry.computeBoundingBox();
+      mesh.geometry.computeBoundingSphere();
       mesh.castShadow = modelDefinition?.castShadow !== false;
       mesh.receiveShadow = modelDefinition?.receiveShadow !== false;
       const materials = meshMaterials(mesh);
@@ -2417,6 +2482,40 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
     transformedBounds.getSize(transformedSize);
     transformedBounds.getCenter(transformedCenter);
     const materializedInspection = inspectModelObjectTree(scene);
+    if (import.meta.env.DEV && typeof window !== 'undefined') {
+      const firstVisibleMesh = (() => {
+        let sample: THREE.Mesh | null = null;
+        scene.traverse((object) => {
+          if (sample) return;
+          const mesh = object as THREE.Mesh;
+          if (mesh.isMesh && isEffectivelyVisible(mesh)) sample = mesh;
+        });
+        if (!sample) return null;
+        const sampleMesh = sample as THREE.Mesh;
+        const meshBounds = new THREE.Box3().setFromObject(sampleMesh);
+        return {
+          name: sampleMesh.name || sampleMesh.type,
+          path: objectDebugPath(sampleMesh),
+          materialCount: meshMaterials(sampleMesh).length,
+          bounds: boxToDebugPayload(meshBounds),
+          triangles: sampleMesh.geometry ? getGeometryTriangleCount(sampleMesh.geometry) : 0
+        };
+      })();
+      (window as Window & { __KORE_STAGE_MODEL_DEBUG?: unknown }).__KORE_STAGE_MODEL_DEBUG = {
+        stageId: stage.id,
+        modelPath,
+        sourceBounds: sourceInspection.bounds,
+        cloneBounds: boxToDebugPayload(cloneBounds),
+        visibleCloneBounds: boxToDebugPayload(scenePreparation.visibleBounds),
+        transformedBounds: boxToDebugPayload(transformedBounds),
+        visibleTransformedBounds: boxToDebugPayload(visibleTransformedBounds),
+        materializedInspection,
+        scrubbedMeshCount: scenePreparation.hiddenMeshCount,
+        scrubbedMeshSamples: scenePreparation.hiddenSamples,
+        transform: { basePosition, position, scale, rotation },
+        firstVisibleMesh
+      };
+    }
     logStageModelDebug('H19-H28 visibility hypotheses registered', {
       stageId: stage.id,
       hypotheses: MODEL_STAGE_VISIBILITY_HYPOTHESES
@@ -2521,8 +2620,36 @@ function StageModelRuntimeProbe({
 
 function normalizeStageModelMaterial(material: THREE.Material | undefined, stageId?: string) {
   if (!material) return material;
-  const cloned = material.clone();
   const forceOpaqueStageMaterial = stageId === 'hidden-leaf-village';
+  if (forceOpaqueStageMaterial) {
+    const source = material as THREE.MeshStandardMaterial & {
+      alphaMap?: THREE.Texture | null;
+      color?: THREE.Color;
+      emissiveMap?: THREE.Texture | null;
+      map?: THREE.Texture | null;
+      opacity?: number;
+    };
+    [source.map, source.emissiveMap].forEach((texture) => {
+      if (!texture) return;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = 8;
+      texture.needsUpdate = true;
+    });
+    const unlit = new THREE.MeshBasicMaterial({
+      map: source.map ?? source.emissiveMap ?? null,
+      color: source.map || source.emissiveMap ? '#ffffff' : source.color ?? new THREE.Color('#d8d2aa'),
+      transparent: false,
+      opacity: 1,
+      depthTest: true,
+      depthWrite: true,
+      side: THREE.DoubleSide,
+      fog: false,
+      toneMapped: false
+    });
+    unlit.name = material.name;
+    return unlit;
+  }
+  const cloned = material.clone();
   const maybeMapped = cloned as THREE.MeshStandardMaterial & {
     alphaMap?: THREE.Texture | null;
     emissiveMap?: THREE.Texture | null;
@@ -2535,15 +2662,6 @@ function normalizeStageModelMaterial(material: THREE.Material | undefined, stage
     texture.anisotropy = 8;
     texture.needsUpdate = true;
   });
-  if (forceOpaqueStageMaterial) {
-    cloned.transparent = false;
-    cloned.depthWrite = true;
-    cloned.depthTest = true;
-    cloned.side = THREE.DoubleSide;
-    (cloned as THREE.Material & { fog?: boolean }).fog = false;
-    maybeMapped.opacity = 1;
-    maybeMapped.alphaMap = null;
-  }
   cloned.needsUpdate = true;
   return cloned;
 }

@@ -29,9 +29,11 @@ const sourceRoot = resolve(args.get('source') ?? defaultSourceRoot);
 const publicStagesRoot = resolve(repoRoot, 'public', 'stages');
 const skipUnavailable = flags.has('skip-unavailable');
 const hiddenLeafBudgetMb = numberArg('hidden-leaf-budget-mb', 30);
-const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.16);
-const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.02);
-const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 256));
+const onlyStageId = args.get('stage');
+const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.12);
+const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.025);
+const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 128));
+const hiddenLeafTextureCompress = args.get('hidden-leaf-texture-compress') ?? process.env.KORE_HIDDEN_LEAF_TEXTURE_COMPRESS ?? 'webp';
 
 const stages = [
   {
@@ -168,7 +170,11 @@ const stages = [
 ];
 
 const unavailable = [];
-for (const stage of stages) {
+const stagesToImport = onlyStageId ? stages.filter((stage) => stage.id === onlyStageId) : stages;
+if (onlyStageId && stagesToImport.length === 0) {
+  throw new Error(`Unknown stage id "${onlyStageId}". Known stages: ${stages.map((stage) => stage.id).join(', ')}`);
+}
+for (const stage of stagesToImport) {
   try {
     await importStage(stage);
     console.log(`Imported ${stage.id}`);
@@ -377,7 +383,7 @@ async function optimizeGlb(inputPath, outputPath, stage) {
       '--compress',
       hiddenLeaf ? 'quantize' : 'false',
       '--texture-compress',
-      hiddenLeaf ? 'webp' : 'false',
+      hiddenLeaf ? hiddenLeafTextureCompress : 'false',
       '--simplify',
       hiddenLeaf ? 'true' : 'false',
       '--simplify-ratio',
