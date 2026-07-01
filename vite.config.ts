@@ -1229,7 +1229,7 @@ function koreDevManifestWriter() {
           await updateStageIndex(server.config.root, stageId);
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');
-          response.end(JSON.stringify({ ok: true, stageId }));
+          response.end(JSON.stringify({ ok: true, stageId, stage }));
         } catch (error) {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
@@ -1294,7 +1294,7 @@ function koreDevManifestWriter() {
           await updateStageIndex(server.config.root, stageId);
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');
-          response.end(JSON.stringify({ ok: true, stageId, pieceCount: pieces.length }));
+          response.end(JSON.stringify({ ok: true, stageId, pieceCount: pieces.length, stage }));
         } catch (error) {
           response.statusCode = 500;
           response.setHeader('Content-Type', 'application/json');
@@ -2631,6 +2631,10 @@ export function sanitizeStageManifest(stage: Record<string, unknown>, stageId: s
     world: sanitizeStageWorld(stage.world),
     camera: stage.camera && typeof stage.camera === 'object' ? stage.camera : undefined,
     lighting: stage.lighting && typeof stage.lighting === 'object' ? stage.lighting : undefined,
+    type: stage.type === 'model-stage' ? 'model-stage' : undefined,
+    fightPlane: sanitizeFightPlane(stage.fightPlane),
+    spawns: sanitizeSpawns(stage.spawns),
+    collision: sanitizeCollision(stage.collision),
     model: sanitizeStageModel(stage.model),
     backgroundLayers: sanitizeStageLayers(stage.backgroundLayers),
     props: sanitizeStageProps(stage.props)
@@ -2644,10 +2648,17 @@ function sanitizeStageRenderMode(value: unknown) {
 function sanitizeStageModel(value: unknown) {
   if (!value || typeof value !== 'object') return undefined;
   const model = value as Record<string, unknown>;
-  if (typeof model.path !== 'string' || !model.path.trim()) return undefined;
+  const path = typeof model.path === 'string' && model.path.trim()
+    ? model.path
+    : typeof model.url === 'string' && model.url.trim()
+      ? model.url
+      : '';
+  if (!path) return undefined;
   const bounds = model.bounds && typeof model.bounds === 'object' ? model.bounds as Record<string, unknown> : undefined;
   return {
-    path: model.path,
+    path,
+    url: typeof model.url === 'string' && model.url.trim() ? model.url : path,
+    format: model.format === 'gltf' || model.format === 'fbx' ? model.format : 'glb',
     position: normalizeVec3(model.position, [0, 0, 0]),
     scale: normalizeVec3(model.scale, [1, 1, 1]),
     rotation: normalizeVec3(model.rotation, [0, 0, 0]),
@@ -2663,6 +2674,33 @@ function sanitizeStageModel(value: unknown) {
     receiveShadow: model.receiveShadow !== false,
     decorativeProps: sanitizeStageProps(model.decorativeProps)
   };
+}
+
+function sanitizeFightPlane(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  return {
+    center: normalizeVec3(source.center, [0, 0, 0]),
+    width: Math.max(4, finiteOr(source.width, 24)),
+    depth: Math.max(4, finiteOr(source.depth, 16)),
+    y: finiteOr(source.y, 0),
+    rotationY: finiteOr(source.rotationY, 0)
+  };
+}
+
+function sanitizeSpawns(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  return {
+    p1: normalizeVec3(source.p1, [-2.2, 0, 0]),
+    p2: normalizeVec3(source.p2, [2.2, 0, 0])
+  };
+}
+
+function sanitizeCollision(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const mode = (value as Record<string, unknown>).mode;
+  return { mode: mode === 'mesh' || mode === 'none' ? mode : 'box' };
 }
 
 function sanitizeFloorSounds(value: unknown) {

@@ -17,6 +17,7 @@ import type {
   FighterState,
   GameSettings,
   GetupAction,
+  InputFrame,
   ImpactSparkEvent,
   MatchSnapshot,
   MoveEffectInstance,
@@ -27,11 +28,14 @@ import type {
   StageModelDefinition,
   StagePropDefinition
 } from '../types';
-import { activeMoveProgress, createMatch } from '../engine/fightEngine';
+import { emptyInputFrame } from '../types';
+import { activeMoveProgress, createMatch, stepMatch } from '../engine/fightEngine';
 import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
+import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
+import { getKeyboardBindingsForEvent } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 
 type GameSceneProps = {
@@ -51,6 +55,7 @@ const defaultCameraSettings: GameSettings['camera'] = {
 
 const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
 const MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
+const MODEL_STAGE_DEBUG_ID_PREFIXES = ['bleach-', 'dbz-', 'general-', 'naruto-', 'one-piece-', 'one-punch-man-'];
 const FIXED_STAGE_PREVIEW_CAMERA_POSITION: [number, number, number] = [24, 24, 64];
 const FIXED_STAGE_PREVIEW_TARGET: [number, number, number] = [0, 3.2, 0];
 const FIXED_STAGE_PREVIEW_FOV = 38;
@@ -118,7 +123,14 @@ const MODEL_STAGE_DEV_EDITOR_HYPOTHESES_2 = [
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
   if (!import.meta.env.DEV) return;
   const stageId = payload.stageId;
-  if (typeof stageId === 'string' && !MODEL_STAGE_IDS.has(stageId)) return;
+  if (
+    typeof stageId === 'string' &&
+    !MODEL_STAGE_IDS.has(stageId) &&
+    !MODEL_STAGE_DEBUG_ID_PREFIXES.some((prefix) => stageId.startsWith(prefix)) &&
+    payload.renderMode !== 'model' &&
+    !payload.hasModel &&
+    !payload.hasModelDefinition
+  ) return;
   console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
 }
 
@@ -1316,10 +1328,14 @@ export function StagePreviewCanvas({
   const previewMaxDistance = previewMode === 'fly' ? Math.max(240, (stage.model?.bounds?.radius ?? 64) * 4) : Math.max(96, (stage.model?.bounds?.radius ?? 42) * 1.8);
   const previewMinDistance = previewMode === 'fly' ? 1 : 5;
   const fightersVisible = Boolean(testFighters && (previewMode === 'fly' || previewMode === 'play' || showTestFighters));
-  const previewMatch = useMemo(
+  const initialPreviewMatch = useMemo(
     () => (testFighters && fightersVisible ? buildStagePreviewMatch(stage, testFighters[0], testFighters[1]) : null),
     [fightersVisible, stage, testFighters]
   );
+  const [previewMatch, setPreviewMatch] = useState<MatchSnapshot | null>(initialPreviewMatch);
+  useEffect(() => {
+    setPreviewMatch(initialPreviewMatch);
+  }, [initialPreviewMatch]);
   const previewFighters = previewMatch?.fighters;
   const propSelectionEnabled = interactive && previewMode === 'edit';
   const controlTarget = previewMode === 'fly'
@@ -1349,6 +1365,12 @@ export function StagePreviewCanvas({
     >
       {!modelStage && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
       <StageVisualStyleRig stage={stage} fighters={previewFighters} preview={previewMode !== 'play'} />
+      <StagePreviewKeyboardControls
+        active={interactive && (previewMode === 'fly' || previewMode === 'play')}
+        previewMode={previewMode}
+        match={previewMatch}
+        onMatchChange={setPreviewMatch}
+      />
       {previewMode === 'play' && previewMatch ? <CameraRig match={previewMatch} settings={defaultCameraSettings} /> : <StagePreviewCamera stage={stage} previewMode={previewMode} />}
       <group position={modelStage ? [0, 0, 0] : [0, -0.05, 0]} scale={modelStage ? 1 : 0.82}>
         <Arena
@@ -1375,6 +1397,124 @@ export function StagePreviewCanvas({
       )}
     </Canvas>
   );
+}
+
+function StagePreviewKeyboardControls({
+  active,
+  previewMode,
+  match,
+  onMatchChange
+}: {
+  active: boolean;
+  previewMode: StagePreviewMode;
+  match: MatchSnapshot | null;
+  onMatchChange: (match: MatchSnapshot | null | ((current: MatchSnapshot | null) => MatchSnapshot | null)) => void;
+}) {
+  const camera = useThree((state) => state.camera);
+  const controls = useThree((state) => state.controls as { target?: THREE.Vector3; update?: () => void } | undefined);
+  const flyKeysRef = useRef(new Set<string>());
+  const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
+
+  useEffect(() => {
+    if (!active) return undefined;
+    const handleKey = (event: KeyboardEvent, pressed: boolean) => {
+      if (isStagePreviewTextEntryTarget(event.target)) return;
+      if (previewMode === 'fly' && isStagePreviewFlyKey(event.code)) {
+        captureStagePreviewKey(event);
+        if (pressed) flyKeysRef.current.add(event.code);
+        else flyKeysRef.current.delete(event.code);
+        return;
+      }
+      if (previewMode === 'play') {
+        const bindings = getKeyboardBindingsForEvent(event, 'local2p', defaultGameSettings.controls);
+        if (!bindings.length) return;
+        captureStagePreviewKey(event);
+        bindings.forEach((binding) => {
+          inputRefs.current[binding.player - 1][binding.action] = pressed;
+        });
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => handleKey(event, true);
+    const handleKeyUp = (event: KeyboardEvent) => handleKey(event, false);
+    window.addEventListener('keydown', handleKeyDown, true);
+    window.addEventListener('keyup', handleKeyUp, true);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown, true);
+      window.removeEventListener('keyup', handleKeyUp, true);
+      flyKeysRef.current.clear();
+      inputRefs.current = [emptyInputFrame(), emptyInputFrame()];
+    };
+  }, [active, previewMode]);
+
+  useFrame((_, delta) => {
+    if (!active) return;
+    if (previewMode === 'fly') {
+      moveStagePreviewFlyCamera(camera, controls, flyKeysRef.current, delta);
+      return;
+    }
+    if (previewMode === 'play' && match) {
+      const frameDelta = Math.min(delta, 1 / 30);
+      onMatchChange((current) => current ? stepMatch(current, inputRefs.current[0], inputRefs.current[1], frameDelta) : current);
+    }
+  });
+
+  return null;
+}
+
+function captureStagePreviewKey(event: KeyboardEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+}
+
+function isStagePreviewFlyKey(code: string) {
+  return code === 'KeyW' ||
+    code === 'KeyA' ||
+    code === 'KeyS' ||
+    code === 'KeyD' ||
+    code === 'Space' ||
+    code === 'ShiftLeft' ||
+    code === 'ShiftRight' ||
+    code === 'KeyQ' ||
+    code === 'KeyE';
+}
+
+function isStagePreviewTextEntryTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tagName = target.tagName;
+  if (tagName === 'TEXTAREA' || tagName === 'SELECT') return true;
+  if (tagName !== 'INPUT') return false;
+  const input = target as HTMLInputElement;
+  const type = (input.type || 'text').toLowerCase();
+  return !['button', 'checkbox', 'color', 'file', 'image', 'radio', 'range', 'reset', 'submit'].includes(type);
+}
+
+function moveStagePreviewFlyCamera(
+  camera: THREE.Camera,
+  controls: { target?: THREE.Vector3; update?: () => void } | undefined,
+  keys: Set<string>,
+  delta: number
+) {
+  if (keys.size === 0) return;
+  const forward = new THREE.Vector3();
+  camera.getWorldDirection(forward);
+  forward.y = 0;
+  if (forward.lengthSq() < 0.0001) forward.set(0, 0, -1);
+  forward.normalize();
+  const right = new THREE.Vector3().crossVectors(forward, camera.up).normalize();
+  const move = new THREE.Vector3();
+  if (keys.has('KeyW')) move.add(forward);
+  if (keys.has('KeyS')) move.sub(forward);
+  if (keys.has('KeyD')) move.add(right);
+  if (keys.has('KeyA')) move.sub(right);
+  if (keys.has('Space') || keys.has('KeyE')) move.y += 1;
+  if (keys.has('ShiftLeft') || keys.has('ShiftRight') || keys.has('KeyQ')) move.y -= 1;
+  if (move.lengthSq() === 0) return;
+  move.normalize().multiplyScalar(18 * Math.min(delta, 1 / 30));
+  camera.position.add(move);
+  controls?.target?.add(move);
+  controls?.update?.();
 }
 
 export function buildStagePreviewMatch(stage: StageDefinition, p1: CharacterDefinition, p2: CharacterDefinition) {
@@ -2597,14 +2737,14 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
     cloned.scale.setScalar(1);
     const normalization = normalizeStageModelSceneForRender(cloned, stage.id, modelDefinition, !manifestBoundsBox);
     cloned.updateMatrixWorld(true);
-    const shouldBuildFlattenedMeshes = stage.id === 'hidden-leaf-village' && /stage\.flattened\.glb/i.test(modelPath);
+    const shouldBuildFlattenedMeshes = true;
     const flattenedMeshes = shouldBuildFlattenedMeshes ? createFlattenedStageModelMeshes(cloned, stage.id) : [];
     return { scene: cloned, normalization, flattenedMeshes };
   }, [gltf.scene, manifestBoundsBox, modelDefinition, modelPath, stage.id]);
   const scene = sceneClone.scene;
   const sceneNormalization = sceneClone.normalization;
   const flattenedMeshes = sceneClone.flattenedMeshes;
-  const useFlattenedModel = stage.id === 'hidden-leaf-village' && flattenedMeshes.length > 0;
+  const useFlattenedModel = flattenedMeshes.length > 0;
   const scenePreparation = useMemo(
     () => prepareStageModelSceneForRender(scene, stage.id, {
       boundsOverride: manifestBoundsBox,
@@ -2818,7 +2958,7 @@ function StageModelRuntimeProbe({
 
 function normalizeStageModelMaterial(material: THREE.Material | undefined, stageId?: string, meshKey = '') {
   if (!material) return material;
-  const forceOpaqueStageMaterial = stageId === 'hidden-leaf-village';
+  const forceOpaqueStageMaterial = true;
   if (forceOpaqueStageMaterial) {
     const source = material as THREE.MeshStandardMaterial & {
       alphaMap?: THREE.Texture | null;

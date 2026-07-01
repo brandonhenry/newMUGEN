@@ -10,6 +10,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "import:kore-stages": "node scripts/import-kore-stages.mjs",
     "import:naruto-stages": "node scripts/import-naruto-stages.mjs",
     "tag:patch": "node scripts/bump-version.mjs patch",
     "tag:minor": "node scripts/bump-version.mjs minor",

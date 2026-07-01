@@ -320,7 +320,7 @@ describe('MUGEN stage parsing', () => {
 
   it('keeps valid indexed stages when another indexed stage fails to load', async () => {
     vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
-      const url = String(input);
+      const url = String(input).split('?')[0];
       if (url === '/stages/index.json') {
         return new Response(JSON.stringify({ stages: ['bad-stage', 'good-stage'] }), {
           headers: { 'content-type': 'application/json' }

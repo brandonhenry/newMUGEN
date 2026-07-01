@@ -1,0 +1,199 @@
+{
+  "id": "naruto-opbw-amazon-lily-city",
+  "name": "Amazon Lily City",
+  "subtitle": "Naruto model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/naruto-opbw-amazon-lily-city/stage.glb?v=mr2mbiio-cgj0s",
+    "url": "/stages/naruto-opbw-amazon-lily-city/stage.glb?v=mr2mbiio-cgj0s",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        9.0388,
+        0
+      ],
+      "size": [
+        18,
+        18.0775,
+        18
+      ],
+      "radius": 15.6109
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/Naruto/OPBW - Amazon Lily (City)/OPBWAmazonLilyCity.blend",
+    "sourceKind": "blend",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/Naruto/OPBW - Amazon Lily (City)",
+    "category": "Naruto",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "naruto-opbw-amazon-lily-city",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 52,
+      "meshCount": 24,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/Naruto/OPBW - Amazon Lily (City)/OPBWAmazonLilyCity.blend",
+      "sourceKind": "blend",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -44.3987,
+          -46.6858,
+          -46.4112
+        ],
+        "max": [
+          42.3963,
+          40.1092,
+          40.7576
+        ],
+        "center": [
+          -1.0012,
+          -3.2883,
+          -2.8268
+        ],
+        "size": [
+          86.795,
+          86.795,
+          87.1688
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -9,
+          0
+        ],
+        "max": [
+          9,
+          9,
+          18.0775
+        ],
+        "center": [
+          0,
+          0,
+          9.0388
+        ],
+        "size": [
+          18,
+          18,
+          18.0775
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/naruto-opbw-amazon-lily-city/preview.png"
+}

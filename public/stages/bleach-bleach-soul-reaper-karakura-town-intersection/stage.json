@@ -1,0 +1,301 @@
+{
+  "id": "bleach-bleach-soul-reaper-karakura-town-intersection",
+  "name": "Karakura Town Intersection",
+  "subtitle": "Bleach model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "radius": 1.4,
+      "strength": 0.35,
+      "lifetime": 900,
+      "amount": 80,
+      "maxParticles": 160,
+      "maxDecals": 0,
+      "spread": 1,
+      "coverageScale": 1.08,
+      "decay": 0.86,
+      "frameCount": 1,
+      "reactive": true,
+      "quality": "low",
+      "windStrength": 0.35,
+      "fallSpeed": 0.8,
+      "pulseSpeed": 1.2,
+      "color": "#c8b48a"
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0.25,
+      0,
+      -3.1
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0,
+    "rotationY": 0
+  },
+  "spawns": {
+    "p1": [
+      -1.9500000000000002,
+      0,
+      -3.1
+    ],
+    "p2": [
+      2.45,
+      0,
+      -3.1
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/bleach-bleach-soul-reaper-karakura-town-intersection/stage.glb?v=mr2n251m-8278c",
+    "url": "/stages/bleach-bleach-soul-reaper-karakura-town-intersection/stage.glb?v=mr2n251m-8278c",
+    "format": "glb",
+    "position": [
+      0,
+      -1.2,
+      0
+    ],
+    "scale": [
+      8,
+      8,
+      8
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "bounds": {
+      "center": [
+        0,
+        1.7253,
+        0
+      ],
+      "size": [
+        18,
+        3.4506,
+        16.3836
+      ],
+      "radius": 12.2915
+    },
+    "castShadow": true,
+    "receiveShadow": true,
+    "decorativeProps": []
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/Bleach/Bleach Soul Reaper - Karakura Town (Intersection)/BleachSoulReaperKarakuratownintersection.blend",
+    "sourceKind": "blend",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/Bleach/Bleach Soul Reaper - Karakura Town (Intersection)",
+    "category": "Bleach",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "bleach-bleach-soul-reaper-karakura-town-intersection",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 49,
+      "meshCount": 22,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/Bleach/Bleach Soul Reaper - Karakura Town (Intersection)/BleachSoulReaperKarakuratownintersection.blend",
+      "sourceKind": "blend",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -115.6326,
+          -105.7387,
+          -3.01
+        ],
+        "max": [
+          115.3982,
+          104.5455,
+          41.2781
+        ],
+        "center": [
+          -0.1172,
+          -0.5966,
+          19.1341
+        ],
+        "size": [
+          231.0308,
+          210.2841,
+          44.2881
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -8.1918,
+          0
+        ],
+        "max": [
+          9,
+          8.1918,
+          3.4506
+        ],
+        "center": [
+          0,
+          0,
+          1.7253
+        ],
+        "size": [
+          18,
+          16.3836,
+          3.4506
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/bleach-bleach-soul-reaper-karakura-town-intersection/preview.png",
+  "backgroundLayers": [],
+  "props": [],
+  "visualStyle": {
+    "lighting": {
+      "backgroundColor": "#9bdfff",
+      "fogColor": "#9bdfff",
+      "fogNear": 30,
+      "fogFar": 145,
+      "ambientMode": "hemisphere",
+      "skyColor": "#b8dcff",
+      "groundColor": "#54456b",
+      "hemiIntensity": 0.72,
+      "ambientIntensity": 0.28,
+      "keyColor": "#fff1d0",
+      "keyIntensity": 2.45,
+      "keyPosition": [
+        4,
+        7,
+        5
+      ],
+      "fillColor": "#7aa8ff",
+      "fillIntensity": 0.82,
+      "fillPosition": [
+        -5,
+        3,
+        4
+      ],
+      "rimColor": "#ffffff",
+      "rimIntensity": 1.65,
+      "rimPosition": [
+        0,
+        4.2,
+        -6
+      ],
+      "accentIntensity": 5.8,
+      "accentDistance": 8.5,
+      "shadowStrength": 0.48,
+      "shadowSoftness": 2.6
+    },
+    "toon": {
+      "enabled": true,
+      "steps": 3,
+      "shadowStrength": 0.42,
+      "highlightStrength": 0.18,
+      "rimStrength": 0.22,
+      "saturation": 1.12,
+      "stagePropIntensity": 0.48
+    },
+    "outline": {
+      "enabled": true,
+      "fighterThickness": 1.55,
+      "fighterStrength": 2.2,
+      "effectThickness": 1.1,
+      "effectStrength": 1.45,
+      "propThickness": 0.58,
+      "propStrength": 0.46,
+      "visibleColor": "#08090d",
+      "hiddenColor": "#000000"
+    },
+    "post": {
+      "enabled": true,
+      "bloomEnabled": false,
+      "bloomThreshold": 0.72,
+      "bloomStrength": 0,
+      "bloomRadius": 0,
+      "saturation": 1.12,
+      "contrast": 1.08,
+      "brightness": 1,
+      "warmth": 0.06,
+      "vignetteStrength": 0.15,
+      "vignetteRadius": 0.82
+    },
+    "camera": {
+      "impactShake": 0,
+      "impactZoom": 0,
+      "clashZoom": 0
+    },
+    "combatFx": {
+      "hitBloom": 0.34,
+      "blockBloom": 0.16,
+      "punishBloom": 0.52,
+      "launchBloom": 0.48,
+      "rimPulse": 0,
+      "shockwaveStrength": 0,
+      "reducedMotionScale": 0.36
+    }
+  },
+  "sourcePath": "/stages/bleach-bleach-soul-reaper-karakura-town-intersection/source.png"
+}

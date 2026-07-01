@@ -9,21 +9,31 @@ from mathutils import Matrix, Vector
 import bpy
 
 DEFAULT_HIDDEN_LEAF_DECIMATE_RATIO = 0.45
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".tga", ".dds"}
 
 
 def main():
     args = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
-    if len(args) != 4:
-        raise SystemExit("Usage: blender --background source.blend --python scripts/blender-export-stage.py -- output.glb preview.png meta.json stage-id")
+    if len(args) not in {4, 6}:
+        raise SystemExit(
+            "Usage: blender --background [source.blend] --python scripts/blender-export-stage.py -- "
+            "output.glb preview.png meta.json stage-id [source-path source-kind]"
+        )
 
     output_path = Path(args[0])
     preview_path = Path(args[1])
     meta_path = Path(args[2])
     stage_id = args[3]
+    source_path = Path(args[4]) if len(args) == 6 else Path(bpy.data.filepath) if bpy.data.filepath else None
+    source_kind = args[5].lower() if len(args) == 6 else source_kind_for_path(source_path)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     preview_path.parent.mkdir(parents=True, exist_ok=True)
     meta_path.parent.mkdir(parents=True, exist_ok=True)
+
+    warnings = []
+    if source_path and (source_kind != "blend" or not bpy.data.filepath):
+        import_source_scene(source_path, source_kind, warnings)
 
     image_files = relink_local_images()
     normalize_material_nodes(image_files)
@@ -49,12 +59,118 @@ def main():
             "blenderVersion": bpy.app.version_string,
             "objectCount": len(bpy.context.scene.objects),
             "meshCount": len(visible_meshes()),
+            "sourcePath": str(source_path) if source_path else None,
+            "sourceKind": source_kind,
+            "warnings": warnings,
             "boundsBeforeNormalize": bounds_payload(before_bounds),
             "boundsAfterNormalize": bounds_payload(after_bounds),
         },
         "bounds": game_bounds_payload(after_bounds),
     }
     meta_path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+
+
+def source_kind_for_path(path):
+    if not path:
+        return "blend"
+    suffix = path.suffix.lower()
+    if path.name.lower().endswith(".mesh.ascii"):
+        return "mesh"
+    return suffix[1:] if suffix.startswith(".") else suffix
+
+
+def import_source_scene(source_path, source_kind, warnings):
+    if not source_path.exists():
+        raise SystemExit(f"Missing source file: {source_path}")
+
+    clear_scene()
+    source_kind = "mesh" if source_kind == "mesh.ascii" else source_kind
+    if source_kind == "blend":
+        bpy.ops.wm.open_mainfile(filepath=str(source_path))
+    elif source_kind in {"xps", "mesh"}:
+        import_xps_source(source_path)
+    elif source_kind == "fbx":
+        bpy.ops.import_scene.fbx(filepath=str(source_path))
+    elif source_kind == "dae":
+        bpy.ops.wm.collada_import(filepath=str(source_path))
+    elif source_kind == "obj":
+        import_obj_source(source_path)
+    else:
+        raise SystemExit(f"Unsupported source kind: {source_kind}")
+
+    warnings.extend(clean_imported_scene(source_path))
+    bpy.context.view_layer.update()
+
+
+def clear_scene():
+    bpy.ops.object.select_all(action="SELECT")
+    bpy.ops.object.delete()
+    for collection in (
+        bpy.data.meshes,
+        bpy.data.materials,
+        bpy.data.images,
+        bpy.data.armatures,
+        bpy.data.lights,
+        bpy.data.cameras,
+    ):
+        for datablock in list(collection):
+            if datablock.users == 0:
+                collection.remove(datablock)
+
+
+def import_xps_source(source_path):
+    operator_attempts = [
+        ("xps_tools.import_model", {"filepath": str(source_path)}),
+        ("import_scene.xps", {"filepath": str(source_path)}),
+        ("import_scene.xnalara_model", {"filepath": str(source_path)}),
+        ("import_scene.xnalara", {"filepath": str(source_path)}),
+    ]
+    errors = []
+    for operator_name, kwargs in operator_attempts:
+        op = resolve_operator(operator_name)
+        if not op:
+            continue
+        try:
+            result = op(**kwargs)
+            if result != {"CANCELLED"}:
+                return
+        except Exception as error:
+            errors.append(f"{operator_name}: {error}")
+
+    details = "; ".join(errors) if errors else "no known XPS/XNALara Blender import operator is registered"
+    raise SystemExit(
+        "Could not import XPS/XNALara source. Install or enable Blender Extensions io-xnalara "
+        f"or johnzero7/XNALaraMesh. Details: {details}"
+    )
+
+
+def resolve_operator(name):
+    group_name, operator_name = name.split(".", 1)
+    group = getattr(bpy.ops, group_name, None)
+    if not group:
+        return None
+    return getattr(group, operator_name, None)
+
+
+def import_obj_source(source_path):
+    if hasattr(bpy.ops, "wm") and hasattr(bpy.ops.wm, "obj_import"):
+        bpy.ops.wm.obj_import(filepath=str(source_path))
+        return
+    if hasattr(bpy.ops, "import_scene") and hasattr(bpy.ops.import_scene, "obj"):
+        bpy.ops.import_scene.obj(filepath=str(source_path))
+        return
+    raise SystemExit("Could not import OBJ source; no Blender OBJ import operator is registered.")
+
+
+def clean_imported_scene(source_path):
+    warnings = []
+    for obj in bpy.context.scene.objects:
+        if obj.type in {"CAMERA", "LIGHT", "ARMATURE", "EMPTY"}:
+            obj.hide_render = True
+            obj.hide_viewport = True
+    if not any(obj.type == "MESH" and obj.visible_get() and not obj.hide_render for obj in bpy.context.scene.objects):
+        warnings.append(f"No visible mesh remained after importing {source_path.name}.")
+    return warnings
 
 
 def visible_meshes():
@@ -66,10 +182,16 @@ def visible_meshes():
 
 
 def relink_local_images():
-    source_root = Path(bpy.data.filepath).parent
+    env_root = os.environ.get("KORE_STAGE_SOURCE_ROOT")
+    if env_root:
+        source_root = Path(env_root)
+    elif bpy.data.filepath:
+        source_root = Path(bpy.data.filepath).parent
+    else:
+        source_root = Path(".")
     image_files = {}
     for path in source_root.rglob("*"):
-        if path.is_file() and path.suffix.lower() in {".png", ".jpg", ".jpeg", ".bmp", ".tga", ".dds"}:
+        if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS:
             image_files.setdefault(path.name.lower(), path)
             image_files.setdefault(path.stem.lower(), path)
             if path.stem.lower().endswith(".dds"):
@@ -203,8 +325,35 @@ def prepare_scene_for_stage(stage_id):
             if "ceiling" in name:
                 obj.hide_render = True
                 obj.hide_viewport = True
+    else:
+        hide_generic_stage_helpers()
 
     bpy.context.view_layer.update()
+
+
+def hide_generic_stage_helpers():
+    for obj in bpy.context.scene.objects:
+        if obj.type != "MESH":
+            continue
+        names = [obj.name.lower()]
+        if obj.data:
+            names.append(obj.data.name.lower())
+        for material in obj.data.materials:
+            if material:
+                names.append(material.name.lower())
+        if any(is_generic_stage_helper_name(name) for name in names):
+            obj.hide_render = True
+            obj.hide_viewport = True
+
+
+def is_generic_stage_helper_name(name):
+    normalized = name.replace("-", "_").replace(" ", "_")
+    return (
+        "skybox" in normalized
+        or normalized.startswith("sky_")
+        or normalized.endswith("_sky")
+        or "_sky_" in normalized
+    )
 
 
 def object_center(obj):

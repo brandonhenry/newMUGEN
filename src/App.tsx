@@ -3054,6 +3054,7 @@ function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
 function isMenuNavigationActive(screen: Screen) {
   if (screen === 'boot') return false;
   if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
+  if (screen === 'stageEditor') return false;
   return true;
 }
 
@@ -4877,6 +4878,25 @@ type MugenStageImportResult = {
 
 const STAGE_MODEL_SELECTION_ID = '__stage-model__';
 
+function roundStageEditorNumber(value: number) {
+  return Number(value.toFixed(4));
+}
+
+function stageModelBottomY(model: NonNullable<StageDefinition['model']>) {
+  const centerY = model.bounds?.center?.[1] ?? 0;
+  const sizeY = model.bounds?.size?.[1] ?? 0;
+  return centerY - sizeY / 2;
+}
+
+function stageFeetY(stage: StageDefinition) {
+  return stage.fightPlane?.y
+    ?? stage.fightPlane?.center?.[1]
+    ?? stage.spawns?.p1?.[1]
+    ?? stage.spawns?.p2?.[1]
+    ?? stage.world?.floorY
+    ?? 0;
+}
+
 function tupleWithAxis(tuple: Vec3Tuple | undefined, axis: 0 | 1 | 2, value: number, fallback: Vec3Tuple = [0, 0, 0]): Vec3Tuple {
   const next = [...(tuple ?? fallback)] as Vec3Tuple;
   next[axis] = Number.isFinite(value) ? value : fallback[axis];
@@ -4963,6 +4983,11 @@ function StageEditor({
   const [selectedLibraryPropIds, setSelectedLibraryPropIds] = useState<Set<string>>(() => new Set());
   const [status, setStatus] = useState<'idle' | 'working' | 'ready' | 'saving' | 'saved' | 'error'>('idle');
   const [showStageControls, setShowStageControls] = useState(true);
+  const editRevisionRef = useRef(0);
+
+  const markStageEdited = () => {
+    editRevisionRef.current += 1;
+  };
 
   const reloadPropLibrary = useCallback(async () => {
     setPropLibrary(await loadStagePropLibrary());
@@ -4980,17 +5005,27 @@ function StageEditor({
   useEffect(() => {
     let active = true;
     const next = stages.find((stage) => stage.id === selectedStageId) ?? stages[0] ?? defaultStageDraft();
+    const loadRevision = editRevisionRef.current;
     setEditableStage(next);
-    setSelectedPropId(next.props?.[0]?.id ?? '');
+    setSelectedPropId((current) => {
+      if (current === STAGE_MODEL_SELECTION_ID && next.model) return current;
+      if (current && next.props?.some((prop) => prop.id === current)) return current;
+      return next.model ? STAGE_MODEL_SELECTION_ID : next.props?.[0]?.id ?? '';
+    });
     if (next.id) {
       const cacheBust = Date.now().toString(36);
       fetch(`/stages/${next.id}/stage.json?v=${cacheBust}`, { cache: 'no-store' })
         .then((response) => response.ok ? response.json() as Promise<StageDefinition> : null)
         .then((stage) => {
           if (!active || !stage || stage.id !== next.id) return;
+          if (editRevisionRef.current !== loadRevision) return;
           const normalized = normalizeStage(stage);
           setEditableStage(normalized);
-          setSelectedPropId(normalized.props?.[0]?.id ?? '');
+          setSelectedPropId((current) => {
+            if (current === STAGE_MODEL_SELECTION_ID && normalized.model) return current;
+            if (current && normalized.props?.some((prop) => prop.id === current)) return current;
+            return normalized.model ? STAGE_MODEL_SELECTION_ID : normalized.props?.[0]?.id ?? '';
+          });
         })
         .catch(() => {
           // The editor can still use the in-memory roster entry when a stage has no public manifest.
@@ -5015,13 +5050,39 @@ function StageEditor({
   };
 
   const updateStageModel = (patch: Partial<NonNullable<StageDefinition['model']>>) => {
+    markStageEdited();
     setEditableStage((current) => {
       if (!current.model) return current;
       return { ...current, model: { ...current.model, ...patch } };
     });
   };
 
+  const groundStageModelToFeet = () => {
+    markStageEdited();
+    setEditableStage((current) => {
+      if (!current.model) return current;
+      const model = current.model;
+      const currentPosition = model.position ?? [0, 0, 0];
+      const scaleY = model.scale?.[1] ?? model.scale?.[0] ?? 1;
+      const nextY = stageFeetY(current) - stageModelBottomY(model) * scaleY;
+      return {
+        ...current,
+        model: {
+          ...model,
+          position: [
+            currentPosition[0] ?? 0,
+            roundStageEditorNumber(nextY),
+            currentPosition[2] ?? 0
+          ]
+        }
+      };
+    });
+    setSelectedPropId(STAGE_MODEL_SELECTION_ID);
+    setShowLaneControls(false);
+  };
+
   const updateFightPlane = (patch: Partial<NonNullable<StageDefinition['fightPlane']>>) => {
+    markStageEdited();
     setEditableStage((current) => {
       const currentLane = defaultFightPlane(current);
       const center = patch.center ?? currentLane.center;
@@ -5300,6 +5361,11 @@ function StageEditor({
         body: JSON.stringify({ stageId: editableStage.id, stage: editableStage })
       });
       if (!response.ok) throw new Error(await response.text());
+      const result = await response.json() as { ok?: boolean; stage?: StageDefinition };
+      if (result.stage) {
+        setEditableStage(normalizeStage(result.stage));
+        setSelectedPropId((current) => current || (result.stage?.model ? STAGE_MODEL_SELECTION_ID : result.stage?.props?.[0]?.id ?? ''));
+      }
       setStatus('saved');
       await onReload(editableStage.id);
       window.setTimeout(() => setStatus('idle'), 1500);
@@ -5609,6 +5675,10 @@ function StageEditor({
                   <StagePropSlider label="Model Y" value={selectedModel.position?.[1] ?? 0} min={-30} max={30} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 1, value) })} />
                   <StagePropSlider label="Model Z" value={selectedModel.position?.[2] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 2, value) })} />
                   <StagePropSlider label="Scale" value={selectedModel.scale?.[0] ?? 1} min={0.05} max={8} step={0.01} onChange={(value) => updateStageModel({ scale: [value, value, value] })} />
+                  <button className="secondary-button compact-button" type="button" onClick={groundStageModelToFeet}>
+                    <Target size={14} />
+                    Bottom To Feet
+                  </button>
                 </div>
               </div>
             )}
