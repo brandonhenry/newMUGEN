@@ -1356,6 +1356,7 @@ export function StagePreviewCanvas({
           fighters={previewFighters}
           selectedPropId={propSelectionEnabled ? selectedPropId : undefined}
           onSelectProp={propSelectionEnabled ? onSelectProp : undefined}
+          showFightLaneMarkers={propSelectionEnabled}
         />
       </group>
       {previewFighters?.map((fighter) => <FighterRig key={`stage-preview-fighter-${fighter.slot}`} fighter={fighter} stage={stage} />)}
@@ -2264,13 +2265,15 @@ function Arena({
   fighters,
   impactEvents,
   selectedPropId,
-  onSelectProp
+  onSelectProp,
+  showFightLaneMarkers = false
 }: {
   stage: MatchSnapshot['stage'];
   fighters?: FighterRuntime[];
   impactEvents?: ImpactSparkEvent[];
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
+  showFightLaneMarkers?: boolean;
 }) {
   const modelStage = isModelStage(stage);
   useEffect(() => {
@@ -2299,12 +2302,12 @@ function Arena({
   }
 
   if (modelStage) {
-    return <ModelStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
+    return <ModelStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} showFightLaneMarkers={showFightLaneMarkers} />;
   }
 
   const floorTexturePath = stage.floorTexturePath;
   if (floorTexturePath) {
-    return <TexturedInfiniteArena stage={stage} floorTexturePath={floorTexturePath} fighters={fighters} impactEvents={impactEvents} />;
+    return <TexturedInfiniteArena stage={stage} floorTexturePath={floorTexturePath} fighters={fighters} impactEvents={impactEvents} showFightLaneMarkers={showFightLaneMarkers} />;
   }
 
   return (
@@ -2319,7 +2322,7 @@ function Arena({
       </mesh>
       <gridHelper args={[48, 48, stage.rail, '#14345d']} position={[0, 0.004, 0]} />
       <gridHelper args={[96, 48, '#174d88', '#071d35']} position={[0, -0.006, 0]} />
-      <StageFightLaneMarkers stage={stage} />
+      {showFightLaneMarkers && <StageFightLaneMarkers stage={stage} />}
       {horizonBlocks.map(([x, y, z, width, height, depth], index) => (
         <mesh key={`horizon-${index}`} position={[x, y, z]} castShadow receiveShadow>
           <boxGeometry args={[width, height, depth]} />
@@ -2345,13 +2348,15 @@ function ModelStage({
   fighters,
   impactEvents,
   selectedPropId,
-  onSelectProp
+  onSelectProp,
+  showFightLaneMarkers = false
 }: {
   stage: StageDefinition;
   fighters?: FighterRuntime[];
   impactEvents?: ImpactSparkEvent[];
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
+  showFightLaneMarkers?: boolean;
 }) {
   const modelDefinition = resolveStageModel(stage);
   const modelPath = modelDefinition?.path ?? modelDefinition?.url;
@@ -2415,7 +2420,7 @@ function ModelStage({
           <StageModelScene stage={stage} modelDefinition={modelDefinition} />
         </Suspense>
       </StageModelErrorBoundary>
-      <ModelStageFightLane stage={stage} />
+      {showFightLaneMarkers && <ModelStageFightLane stage={stage} />}
       {(modelDefinition?.decorativeProps ?? []).filter((prop) => !prop.hidden).map((prop) => (
         <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
       ))}
@@ -2745,9 +2750,9 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
 
 function StageModelFlattenedMeshes({ meshes }: { meshes: FlattenedStageModelMesh[] }) {
   return (
-    <group renderOrder={3}>
+    <group renderOrder={-20}>
       {meshes.map((mesh) => (
-        <mesh key={mesh.id} geometry={mesh.geometry} material={mesh.material} frustumCulled={false} renderOrder={3} />
+        <mesh key={mesh.id} geometry={mesh.geometry} material={mesh.material} frustumCulled={false} renderOrder={-20} />
       ))}
     </group>
   );
@@ -2833,7 +2838,7 @@ function normalizeStageModelMaterial(material: THREE.Material | undefined, stage
       transparent: false,
       opacity: 1,
       depthTest: true,
-      depthWrite: true,
+      depthWrite: false,
       side: THREE.DoubleSide,
       fog: false,
       toneMapped: false
@@ -2884,12 +2889,14 @@ function TexturedInfiniteArena({
   stage,
   floorTexturePath,
   fighters,
-  impactEvents
+  impactEvents,
+  showFightLaneMarkers = false
 }: {
   stage: StageDefinition;
   floorTexturePath: string;
   fighters?: FighterRuntime[];
   impactEvents?: ImpactSparkEvent[];
+  showFightLaneMarkers?: boolean;
 }) {
   const texture = useLoader(THREE.TextureLoader, floorTexturePath);
   const repeat = stage.floorTextureRepeat ?? [24, 24];
@@ -2914,7 +2921,7 @@ function TexturedInfiniteArena({
         <planeGeometry args={[width, depth, 1, 1]} />
         <meshBasicMaterial map={texture} color="#ffffff" />
       </mesh>
-      <StageFightLaneMarkers stage={stage} />
+      {showFightLaneMarkers && <StageFightLaneMarkers stage={stage} />}
       <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>
