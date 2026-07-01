@@ -8,6 +8,8 @@ from mathutils import Matrix, Vector
 
 import bpy
 
+DEFAULT_HIDDEN_LEAF_DECIMATE_RATIO = 0.45
+
 
 def main():
     args = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
@@ -393,9 +395,9 @@ def decimate_stage_meshes(stage_id):
     if mode in {"off", "false", "0", "none"}:
         return
     try:
-        ratio = float(os.environ.get("KORE_DECIMATE_RATIO", "0.18"))
+        ratio = float(os.environ.get("KORE_DECIMATE_RATIO", str(DEFAULT_HIDDEN_LEAF_DECIMATE_RATIO)))
     except ValueError:
-        ratio = 0.18
+        ratio = DEFAULT_HIDDEN_LEAF_DECIMATE_RATIO
     ratio = max(0.04, min(0.85, ratio))
     for obj in visible_meshes():
         if len(obj.data.polygons) < 900:

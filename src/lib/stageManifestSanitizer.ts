@@ -80,7 +80,8 @@ function sanitizeFightPlane(value: unknown) {
     center: normalizeVec3(source.center, [0, 0, 0]),
     width: Math.max(4, finiteOr(source.width, 24)),
     depth: Math.max(4, finiteOr(source.depth, 16)),
-    y: finiteOr(source.y, 0)
+    y: finiteOr(source.y, 0),
+    rotationY: finiteOr(source.rotationY, 0)
   };
 }
 

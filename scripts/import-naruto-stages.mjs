@@ -28,11 +28,11 @@ for (let index = 2; index < process.argv.length; index += 1) {
 const sourceRoot = resolve(args.get('source') ?? defaultSourceRoot);
 const publicStagesRoot = resolve(repoRoot, 'public', 'stages');
 const skipUnavailable = flags.has('skip-unavailable');
-const hiddenLeafBudgetMb = numberArg('hidden-leaf-budget-mb', 30);
+const hiddenLeafBudgetMb = numberArg('hidden-leaf-budget-mb', 60);
 const onlyStageId = args.get('stage');
-const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.12);
-const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.025);
-const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 128));
+const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.35);
+const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.012);
+const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 512));
 const hiddenLeafTextureCompress = args.get('hidden-leaf-texture-compress') ?? process.env.KORE_HIDDEN_LEAF_TEXTURE_COMPRESS ?? 'webp';
 const hiddenLeafGeometryCompress = args.get('hidden-leaf-geometry-compress') ?? process.env.KORE_HIDDEN_LEAF_GEOMETRY_COMPRESS ?? 'false';
 

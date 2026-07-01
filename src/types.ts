@@ -404,6 +404,7 @@ export type StageDefinition = {
     width: number;
     depth: number;
     y: number;
+    rotationY?: number;
   };
   spawns?: {
     p1: Vec3Tuple;

@@ -32,7 +32,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -94,6 +94,7 @@ import {
   type StagePropAssetDefinition,
   type StagePropDefinition,
   type StageSkyboxAssetDefinition,
+  type Vec3Tuple,
   type VoxelFidelitySettings
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
@@ -2791,6 +2792,9 @@ export default function App() {
         {screen === 'stageEditor' && (
           <StageEditor
             stages={stageRoster}
+            roster={roster}
+            p1={p1}
+            p2={p2}
             onReload={reloadStages}
             onBack={() => setScreen('menu')}
           />
@@ -4871,19 +4875,78 @@ type MugenStageImportResult = {
   warnings?: string[];
 };
 
+const STAGE_MODEL_SELECTION_ID = '__stage-model__';
+
+function tupleWithAxis(tuple: Vec3Tuple | undefined, axis: 0 | 1 | 2, value: number, fallback: Vec3Tuple = [0, 0, 0]): Vec3Tuple {
+  const next = [...(tuple ?? fallback)] as Vec3Tuple;
+  next[axis] = Number.isFinite(value) ? value : fallback[axis];
+  return next;
+}
+
+function resolveStagePreviewFighters(roster: CharacterDefinition[], p1?: CharacterDefinition, p2?: CharacterDefinition): [CharacterDefinition, CharacterDefinition] | null {
+  const first = p1 ?? roster[0];
+  if (!first) return null;
+  const second = p2 && p2.id !== first.id ? p2 : roster.find((character) => character.id !== first.id) ?? roster[1] ?? first;
+  return [first, second];
+}
+
+function defaultFightPlane(stage: StageDefinition): NonNullable<StageDefinition['fightPlane']> {
+  const center = stage.fightPlane?.center ?? [0, stage.world?.floorY ?? 0, 0];
+  const y = stage.fightPlane?.y ?? center[1] ?? stage.world?.floorY ?? 0;
+  return {
+    center: [center[0], y, center[2]],
+    width: stage.fightPlane?.width ?? Math.max(10, Math.min(stage.world?.width ?? 24, 30)),
+    depth: stage.fightPlane?.depth ?? Math.max(7, Math.min(stage.world?.depth ?? 16, 22)),
+    y,
+    rotationY: stage.fightPlane?.rotationY ?? 0
+  };
+}
+
+function spawnHalfDistanceForLane(stage: StageDefinition, lane: NonNullable<StageDefinition['fightPlane']>) {
+  const p1 = stage.spawns?.p1;
+  const p2 = stage.spawns?.p2;
+  if (p1 && p2) {
+    const distance = Math.hypot(p2[0] - p1[0], p2[2] - p1[2]);
+    if (Number.isFinite(distance) && distance > 0.1) return distance / 2;
+  }
+  return Math.max(1.8, Math.min(lane.width * 0.32, 5.2));
+}
+
+function spawnsForLane(stage: StageDefinition, lane: NonNullable<StageDefinition['fightPlane']>): NonNullable<StageDefinition['spawns']> {
+  const halfDistance = spawnHalfDistanceForLane(stage, lane);
+  const yaw = lane.rotationY ?? 0;
+  const axisX = Math.cos(yaw);
+  const axisZ = -Math.sin(yaw);
+  const [centerX, , centerZ] = lane.center;
+  const y = lane.y ?? lane.center[1] ?? 0;
+  return {
+    p1: [centerX - axisX * halfDistance, y, centerZ - axisZ * halfDistance],
+    p2: [centerX + axisX * halfDistance, y, centerZ + axisZ * halfDistance]
+  };
+}
+
 function StageEditor({
   stages,
+  roster,
+  p1,
+  p2,
   onReload,
   onBack
 }: {
   stages: StageDefinition[];
+  roster: CharacterDefinition[];
+  p1?: CharacterDefinition;
+  p2?: CharacterDefinition;
   onReload: (preferredStageId?: string) => Promise<void>;
   onBack: () => void;
 }) {
   const [mode, setMode] = useState<'edit' | 'import'>('edit');
+  const [previewMode, setPreviewMode] = useState<StagePreviewMode>('edit');
   const [selectedStageId, setSelectedStageId] = useState(stages[0]?.id ?? '');
   const [editableStage, setEditableStage] = useState<StageDefinition>(stages[0] ?? defaultStageDraft());
   const [selectedPropId, setSelectedPropId] = useState('');
+  const [showTestFighters, setShowTestFighters] = useState(false);
+  const [showLaneControls, setShowLaneControls] = useState(false);
   const [draft, setDraft] = useState<StageImportDraft>(() => randomStageDraft());
   const [sourceDataUrl, setSourceDataUrl] = useState('');
   const [sourceName, setSourceName] = useState('');
@@ -4938,7 +5001,10 @@ function StageEditor({
     };
   }, [selectedStageId, stages]);
 
-  const selectedProp = editableStage.props?.find((prop) => prop.id === selectedPropId) ?? editableStage.props?.[0];
+  const selectedProp = selectedPropId === STAGE_MODEL_SELECTION_ID ? undefined : editableStage.props?.find((prop) => prop.id === selectedPropId) ?? editableStage.props?.[0];
+  const selectedModel = selectedPropId === STAGE_MODEL_SELECTION_ID ? editableStage.model : undefined;
+  const stagePreviewFighters = useMemo(() => resolveStagePreviewFighters(roster, p1, p2), [p1, p2, roster]);
+  const lane = defaultFightPlane(editableStage);
 
   const updateSelectedProp = (patch: Partial<StagePropDefinition>) => {
     if (!selectedProp) return;
@@ -4946,6 +5012,32 @@ function StageEditor({
       ...current,
       props: (current.props ?? []).map((prop) => prop.id === selectedProp.id ? { ...prop, ...patch } : prop)
     }));
+  };
+
+  const updateStageModel = (patch: Partial<NonNullable<StageDefinition['model']>>) => {
+    setEditableStage((current) => {
+      if (!current.model) return current;
+      return { ...current, model: { ...current.model, ...patch } };
+    });
+  };
+
+  const updateFightPlane = (patch: Partial<NonNullable<StageDefinition['fightPlane']>>) => {
+    setEditableStage((current) => {
+      const currentLane = defaultFightPlane(current);
+      const center = patch.center ?? currentLane.center;
+      const nextLane: NonNullable<StageDefinition['fightPlane']> = {
+        ...currentLane,
+        ...patch,
+        center,
+        y: patch.y ?? center[1] ?? currentLane.y
+      };
+      if (patch.center && patch.y === undefined) nextLane.y = patch.center[1];
+      return {
+        ...current,
+        fightPlane: nextLane,
+        spawns: spawnsForLane(current, nextLane)
+      };
+    });
   };
 
   const duplicateSelectedProp = () => {
@@ -5368,7 +5460,18 @@ function StageEditor({
       {mode === 'edit' ? (
         <section className="stage-editor-layout is-viewport-editor">
           <main className="stage-editor-preview is-interactive">
-            <StagePreviewCanvas stage={editableStage} interactive selectedPropId={selectedProp?.id} onSelectProp={setSelectedPropId} />
+            <StagePreviewCanvas
+              stage={editableStage}
+              interactive
+              previewMode={previewMode}
+              testFighters={stagePreviewFighters}
+              showTestFighters={previewMode !== 'edit' || showTestFighters}
+              selectedPropId={selectedProp?.id}
+              onSelectProp={(propId) => {
+                setShowLaneControls(false);
+                setSelectedPropId(propId);
+              }}
+            />
             <div className="stage-viewport-toolbar">
               <label>
                 <span>Stage</span>
@@ -5377,6 +5480,34 @@ function StageEditor({
                 </select>
               </label>
               <div className="stage-viewport-actions">
+                {(['edit', 'fly', 'play'] as StagePreviewMode[]).map((viewMode) => (
+                  <button
+                    key={viewMode}
+                    className={`secondary-button compact-button ${previewMode === viewMode ? 'is-active' : ''}`}
+                    onClick={() => setPreviewMode(viewMode)}
+                  >
+                    {viewMode === 'edit' ? <Target size={14} /> : viewMode === 'fly' ? <Rotate3D size={14} /> : <Play size={14} />}
+                    {viewMode === 'play' ? 'Play' : viewMode[0].toUpperCase() + viewMode.slice(1)}
+                  </button>
+                ))}
+                <button
+                  className={`secondary-button compact-button ${showTestFighters ? 'is-active' : ''}`}
+                  onClick={() => setShowTestFighters((current) => !current)}
+                  disabled={!stagePreviewFighters}
+                >
+                  <Users size={14} />
+                  Test Fighters
+                </button>
+                <button
+                  className={`secondary-button compact-button ${showLaneControls ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setShowLaneControls((current) => !current);
+                    setSelectedPropId('');
+                  }}
+                >
+                  <Target size={14} />
+                  Change Center Lane
+                </button>
                 <button
                   className="secondary-button compact-button"
                   onClick={() => setEditableStage((current) => ({ ...current, hidden: !current.hidden }))}
@@ -5407,7 +5538,13 @@ function StageEditor({
                 </button>
                 {status !== 'idle' && <span className={`manifest-save-status is-${status}`}>{status}</span>}
               </div>
-              <small>Drag to rotate. Scroll to zoom. Right-drag or shift-drag to pan. Click a prop in the world to select it.</small>
+              <small>
+                {previewMode === 'play'
+                  ? 'Play Preview uses the fight camera and selected test fighters.'
+                  : previewMode === 'fly'
+                    ? 'Fly mode allows wide map inspection without prop selection.'
+                    : 'Drag to rotate. Scroll to zoom. Right-drag or shift-drag to pan. Click a prop in the world to select it.'}
+              </small>
               {mugenImportResult && (
                 <small>
                   MUGEN import: {mugenImportResult.defFile}
@@ -5418,15 +5555,64 @@ function StageEditor({
             </div>
             {showStageControls && (
               <div className="stage-viewport-props">
+                {editableStage.model && (
+                  <button
+                    className={selectedModel ? 'active' : ''}
+                    onClick={() => {
+                      setShowLaneControls(false);
+                      setSelectedPropId(STAGE_MODEL_SELECTION_ID);
+                    }}
+                  >
+                    <span>Stage Model</span>
+                    <small>{editableStage.model.path ?? editableStage.model.url ?? 'Model'}</small>
+                  </button>
+                )}
                 {(editableStage.props ?? []).map((prop) => (
-                  <button key={prop.id} className={prop.id === selectedProp?.id ? 'active' : ''} onClick={() => setSelectedPropId(prop.id)}>
+                  <button
+                    key={prop.id}
+                    className={prop.id === selectedProp?.id ? 'active' : ''}
+                    onClick={() => {
+                      setShowLaneControls(false);
+                      setSelectedPropId(prop.id);
+                    }}
+                  >
                     <span>{prop.name}</span>
                     <small>{prop.hidden ? 'Hidden' : prop.billboard ? 'Billboard' : prop.renderMode === 'voxel' ? 'Voxel' : 'Plane'}</small>
                   </button>
                 ))}
               </div>
             )}
-            {showStageControls && selectedProp && (
+            {showLaneControls && (
+              <div className="stage-viewport-inspector">
+                <header>
+                  <span>Center Lane</span>
+                  <strong>Playable Lane</strong>
+                </header>
+                <div className="stage-prop-editor">
+                  <StagePropSlider label="Center X" value={lane.center[0]} min={-40} max={40} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 0, value) })} />
+                  <StagePropSlider label="Center Y" value={lane.center[1]} min={-10} max={20} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 1, value), y: value })} />
+                  <StagePropSlider label="Center Z" value={lane.center[2]} min={-40} max={40} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 2, value) })} />
+                  <StagePropSlider label="Yaw" value={lane.rotationY ?? 0} min={-Math.PI} max={Math.PI} step={0.01} onChange={(value) => updateFightPlane({ rotationY: value })} />
+                  <StagePropSlider label="Width" value={lane.width} min={4} max={80} step={0.1} onChange={(value) => updateFightPlane({ width: value })} />
+                  <StagePropSlider label="Depth" value={lane.depth} min={4} max={80} step={0.1} onChange={(value) => updateFightPlane({ depth: value })} />
+                </div>
+              </div>
+            )}
+            {showStageControls && selectedModel && !showLaneControls && (
+              <div className="stage-viewport-inspector">
+                <header>
+                  <span>Selected</span>
+                  <strong>Stage Model</strong>
+                </header>
+                <div className="stage-prop-editor">
+                  <StagePropSlider label="Model X" value={selectedModel.position?.[0] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 0, value) })} />
+                  <StagePropSlider label="Model Y" value={selectedModel.position?.[1] ?? 0} min={-30} max={30} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 1, value) })} />
+                  <StagePropSlider label="Model Z" value={selectedModel.position?.[2] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 2, value) })} />
+                  <StagePropSlider label="Scale" value={selectedModel.scale?.[0] ?? 1} min={0.05} max={8} step={0.01} onChange={(value) => updateStageModel({ scale: [value, value, value] })} />
+                </div>
+              </div>
+            )}
+            {showStageControls && selectedProp && !showLaneControls && (
               <div className="stage-viewport-inspector">
                 <header>
                   <span>Selected</span>

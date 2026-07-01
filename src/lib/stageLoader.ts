@@ -193,7 +193,8 @@ function normalizeFightPlane(value: unknown): StageDefinition['fightPlane'] {
     center: normalizeVec3(source.center, [0, 0, 0]),
     width: clamp(finiteOr(source.width, 24), 4, 220),
     depth: clamp(finiteOr(source.depth, 16), 4, 220),
-    y: finiteOr(source.y, 0)
+    y: finiteOr(source.y, 0),
+    rotationY: finiteOr(source.rotationY, 0)
   };
 }
 

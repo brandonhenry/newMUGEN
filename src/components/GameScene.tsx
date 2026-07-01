@@ -27,7 +27,7 @@ import type {
   StageModelDefinition,
   StagePropDefinition
 } from '../types';
-import { activeMoveProgress } from '../engine/fightEngine';
+import { activeMoveProgress, createMatch } from '../engine/fightEngine';
 import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
@@ -1294,14 +1294,37 @@ function resolveEffectWorldPosition(fighter: FighterRuntime, transform: EffectTr
 type StagePreviewCanvasProps = {
   stage: StageDefinition;
   interactive?: boolean;
+  previewMode?: StagePreviewMode;
+  testFighters?: [CharacterDefinition, CharacterDefinition] | null;
+  showTestFighters?: boolean;
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
 };
 
-export function StagePreviewCanvas({ stage, interactive = false, selectedPropId, onSelectProp }: StagePreviewCanvasProps) {
+export type StagePreviewMode = 'edit' | 'fly' | 'play';
+
+export function StagePreviewCanvas({
+  stage,
+  interactive = false,
+  previewMode = 'edit',
+  testFighters = null,
+  showTestFighters = false,
+  selectedPropId,
+  onSelectProp
+}: StagePreviewCanvasProps) {
   const modelStage = isModelStage(stage);
-  const previewMaxDistance = Math.max(96, (stage.model?.bounds?.radius ?? 42) * 1.8);
-  const previewMinDistance = 5;
+  const previewMaxDistance = previewMode === 'fly' ? Math.max(240, (stage.model?.bounds?.radius ?? 64) * 4) : Math.max(96, (stage.model?.bounds?.radius ?? 42) * 1.8);
+  const previewMinDistance = previewMode === 'fly' ? 1 : 5;
+  const fightersVisible = Boolean(testFighters && (previewMode === 'fly' || previewMode === 'play' || showTestFighters));
+  const previewMatch = useMemo(
+    () => (testFighters && fightersVisible ? buildStagePreviewMatch(stage, testFighters[0], testFighters[1]) : null),
+    [fightersVisible, stage, testFighters]
+  );
+  const previewFighters = previewMatch?.fighters;
+  const propSelectionEnabled = interactive && previewMode === 'edit';
+  const controlTarget = previewMode === 'fly'
+    ? stage.fightPlane?.center ?? stage.model?.focus ?? stage.camera?.previewTarget ?? FIXED_STAGE_PREVIEW_TARGET
+    : FIXED_STAGE_PREVIEW_TARGET;
   useEffect(() => {
     logStageModelDebug('H9 StagePreviewCanvas classified stage', {
       stageId: stage.id,
@@ -1309,26 +1332,35 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
       modelStage,
       modelPath: stage.model?.path,
       modelUrl: stage.model?.url,
-      interactive
+      interactive,
+      previewMode,
+      fightersVisible
     });
-  }, [interactive, modelStage, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
+  }, [fightersVisible, interactive, modelStage, previewMode, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
   return (
     <Canvas
-      key={`${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}`}
+      key={`${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}:${previewMode}`}
       shadows
-      frameloop={interactive || modelStage ? 'always' : 'demand'}
+      frameloop={interactive || modelStage || fightersVisible ? 'always' : 'demand'}
       dpr={[1, 1.25]}
-      camera={{ position: [0, 7.4, 12.4], fov: 38 }}
+      camera={previewMode === 'play' ? { position: [0, 3.3, 6.8], fov: 46 } : { position: [0, 7.4, 12.4], fov: 38 }}
       data-testid={`stage-preview-canvas-${stage.id}`}
       aria-label={`${stage.name} stage preview`}
     >
       {!modelStage && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
-      <StageVisualStyleRig stage={stage} preview />
-      <StagePreviewCamera stage={stage} />
+      <StageVisualStyleRig stage={stage} fighters={previewFighters} preview={previewMode !== 'play'} />
+      {previewMode === 'play' && previewMatch ? <CameraRig match={previewMatch} settings={defaultCameraSettings} /> : <StagePreviewCamera stage={stage} previewMode={previewMode} />}
       <group position={modelStage ? [0, 0, 0] : [0, -0.05, 0]} scale={modelStage ? 1 : 0.82}>
-        <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />
+        <Arena
+          stage={stage}
+          fighters={previewFighters}
+          selectedPropId={propSelectionEnabled ? selectedPropId : undefined}
+          onSelectProp={propSelectionEnabled ? onSelectProp : undefined}
+        />
       </group>
-      {interactive && (
+      {previewFighters?.map((fighter) => <FighterRig key={`stage-preview-fighter-${fighter.slot}`} fighter={fighter} stage={stage} />)}
+      {previewFighters ? <ContactShadows position={[0, (stage.fightPlane?.y ?? stage.world?.floorY ?? 0) - 0.01, 0]} opacity={0.34} scale={14} blur={2.4} far={3} /> : null}
+      {interactive && previewMode !== 'play' && (
         <OrbitControls
           makeDefault
           enableDamping
@@ -1337,19 +1369,37 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
           enableZoom
           minDistance={previewMinDistance}
           maxDistance={previewMaxDistance}
-          target={FIXED_STAGE_PREVIEW_TARGET}
+          target={controlTarget}
         />
       )}
     </Canvas>
   );
 }
 
-function StagePreviewCamera({ stage }: { stage: StageDefinition }) {
+export function buildStagePreviewMatch(stage: StageDefinition, p1: CharacterDefinition, p2: CharacterDefinition) {
+  const match = createMatch(p1, p2, stage, 'local2p', 3, { roster: [p1, p2], playIntro: false });
+  const spawnP1 = stage.spawns?.p1 ?? [-3.2, stage.fightPlane?.y ?? 0, 0];
+  const spawnP2 = stage.spawns?.p2 ?? [3.2, stage.fightPlane?.y ?? 0, 0];
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  match.fighters[0].position = { x: spawnP1[0], y: spawnP1[1], z: spawnP1[2] };
+  match.fighters[0].facing = 1;
+  match.fighters[0].facingYaw = Math.PI / 2 - rotationY;
+  match.fighters[0].state = 'idle';
+  match.fighters[1].position = { x: spawnP2[0], y: spawnP2[1], z: spawnP2[2] };
+  match.fighters[1].facing = -1;
+  match.fighters[1].facingYaw = -Math.PI / 2 - rotationY;
+  match.fighters[1].state = 'idle';
+  return match;
+}
+
+function StagePreviewCamera({ stage, previewMode }: { stage: StageDefinition; previewMode: StagePreviewMode }) {
   const { camera, invalidate } = useThree();
   useEffect(() => {
     const modelStage = isModelStage(stage);
-    const position = FIXED_STAGE_PREVIEW_CAMERA_POSITION;
-    const target = FIXED_STAGE_PREVIEW_TARGET;
+    const position = previewMode === 'fly' && stage.camera?.previewPosition ? stage.camera.previewPosition : FIXED_STAGE_PREVIEW_CAMERA_POSITION;
+    const target = previewMode === 'fly'
+      ? stage.fightPlane?.center ?? stage.model?.focus ?? stage.camera?.previewTarget ?? FIXED_STAGE_PREVIEW_TARGET
+      : FIXED_STAGE_PREVIEW_TARGET;
     camera.position.set(position[0], position[1], position[2]);
     if ('fov' in camera) camera.fov = FIXED_STAGE_PREVIEW_FOV;
     camera.near = 0.05;
@@ -1366,7 +1416,7 @@ function StagePreviewCamera({ stage }: { stage: StageDefinition }) {
       fov: 'fov' in camera ? roundDebugNumber(camera.fov) : null
     });
     invalidate();
-  }, [camera, invalidate, stage.id, stage.renderMode]);
+  }, [camera, invalidate, previewMode, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.fightPlane?.center, stage.id, stage.model?.focus, stage.renderMode]);
   return null;
 }
 
@@ -2269,24 +2319,7 @@ function Arena({
       </mesh>
       <gridHelper args={[48, 48, stage.rail, '#14345d']} position={[0, 0.004, 0]} />
       <gridHelper args={[96, 48, '#174d88', '#071d35']} position={[0, -0.006, 0]} />
-      <mesh position={[0, -0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[4.2, 96]} />
-        <meshLambertMaterial color="#102a4c" transparent opacity={0.48} />
-      </mesh>
-      <mesh position={[0, -0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[4.2, 4.72, 96]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.22} />
-      </mesh>
-      {[-10, 10].map((x) => (
-        <mesh key={`lane-${x}`} position={[x, 0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[0.04, 18]} />
-          <meshBasicMaterial color={stage.rail} transparent opacity={0.28} />
-        </mesh>
-      ))}
-      <mesh position={[0, 0.012, -9]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
-        <planeGeometry args={[0.04, 36]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.24} />
-      </mesh>
+      <StageFightLaneMarkers stage={stage} />
       {horizonBlocks.map(([x, y, z, width, height, depth], index) => (
         <mesh key={`horizon-${index}`} position={[x, y, z]} castShadow receiveShadow>
           <boxGeometry args={[width, height, depth]} />
@@ -2444,28 +2477,47 @@ function ModelStageLoadFailureMarker({ stage }: { stage: StageDefinition }) {
 }
 
 function ModelStageFightLane({ stage }: { stage: StageDefinition }) {
+  return <StageFightLaneMarkers stage={stage} modelStage />;
+}
+
+function StageFightLaneMarkers({ stage, modelStage = false }: { stage: StageDefinition; modelStage?: boolean }) {
   const radius = stage.safePlatform?.radius ?? Math.max(5, Math.min(stage.fightPlane?.width ?? 12, stage.fightPlane?.depth ?? 8) * 0.5);
-  const y = (stage.world?.floorY ?? -0.045) + 0.035;
+  const center = stage.fightPlane?.center ?? [0, 0, 0];
+  const y = (stage.fightPlane?.y ?? center[1] ?? stage.world?.floorY ?? -0.045) + (modelStage ? 0.035 : 0.018);
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  const width = stage.fightPlane?.width ?? radius * 2;
+  const depth = stage.fightPlane?.depth ?? radius * 1.5;
   const p1 = stage.spawns?.p1 ?? [-3.2, 0, 0];
   const p2 = stage.spawns?.p2 ?? [3.2, 0, 0];
+  const opacityScale = modelStage ? 1 : 0.62;
   return (
     <group renderOrder={9}>
-      <mesh position={[0, y, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
-        <circleGeometry args={[radius, 8]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.08} depthWrite={false} fog={false} />
-      </mesh>
-      <mesh position={[0, y + 0.004, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
-        <ringGeometry args={[radius * 0.985, radius * 1.015, 8]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.7} depthWrite={false} fog={false} />
-      </mesh>
-      <mesh position={[0, y + 0.008, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
-        <ringGeometry args={[4.45, 4.82, 8]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.42} depthWrite={false} fog={false} />
-      </mesh>
-      <mesh position={[0, y + 0.012, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
-        <planeGeometry args={[0.12, Math.min(radius * 1.75, 24)]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.62} depthWrite={false} fog={false} />
-      </mesh>
+      <group position={[center[0], y, center[2]]} rotation={[0, rotationY, 0]}>
+        <mesh rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+          <circleGeometry args={[radius, 8]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.08 * opacityScale} depthWrite={false} fog={false} />
+        </mesh>
+        <mesh position={[0, 0.004, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+          <ringGeometry args={[radius * 0.985, radius * 1.015, 8]} />
+          <meshBasicMaterial color={stage.rail} transparent opacity={0.7 * opacityScale} depthWrite={false} fog={false} />
+        </mesh>
+        <mesh position={[0, 0.008, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+          <ringGeometry args={[Math.max(0.2, Math.min(width, depth) * 0.28), Math.max(0.4, Math.min(width, depth) * 0.31), 8]} />
+          <meshBasicMaterial color={stage.rail} transparent opacity={0.42 * opacityScale} depthWrite={false} fog={false} />
+        </mesh>
+        <mesh position={[0, 0.012, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+          <planeGeometry args={[0.12, Math.min(depth, radius * 1.75, 24)]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.62 * opacityScale} depthWrite={false} fog={false} />
+        </mesh>
+        <mesh position={[-width / 2, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.05, depth]} />
+          <meshBasicMaterial color={stage.rail} transparent opacity={0.22 * opacityScale} depthWrite={false} fog={false} />
+        </mesh>
+        <mesh position={[width / 2, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.05, depth]} />
+          <meshBasicMaterial color={stage.rail} transparent opacity={0.22 * opacityScale} depthWrite={false} fog={false} />
+        </mesh>
+      </group>
       {[p1, p2].map((spawn, index) => (
         <mesh key={`model-stage-spawn-${index}`} position={[spawn[0], y + 0.018, spawn[2]]} rotation={[-Math.PI / 2, 0, 0]}>
           <ringGeometry args={[0.62, 0.82, 40]} />
@@ -2780,8 +2832,8 @@ function normalizeStageModelMaterial(material: THREE.Material | undefined, stage
       map: source.map ?? null,
       transparent: false,
       opacity: 1,
-      depthTest: false,
-      depthWrite: false,
+      depthTest: true,
+      depthWrite: true,
       side: THREE.DoubleSide,
       fog: false,
       toneMapped: false
@@ -2862,14 +2914,7 @@ function TexturedInfiniteArena({
         <planeGeometry args={[width, depth, 1, 1]} />
         <meshBasicMaterial map={texture} color="#ffffff" />
       </mesh>
-      <mesh position={[0, -0.026, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[4.4, 4.82, 128]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.28} />
-      </mesh>
-      <mesh position={[0, -0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[4.38, 128]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
-      </mesh>
+      <StageFightLaneMarkers stage={stage} />
       <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
     </group>

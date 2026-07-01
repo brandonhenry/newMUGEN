@@ -5836,9 +5836,14 @@ button {
   gap: 8px;
 }
 
+.stage-viewport-actions .compact-button.is-active {
+  color: #101114;
+  background: #2ee6ff;
+}
+
 .stage-viewport-props {
   left: 12px;
-  top: 132px;
+  top: 172px;
   bottom: 12px;
   display: grid;
   align-content: start;
@@ -5884,7 +5889,7 @@ button {
 
 .stage-viewport-inspector {
   right: 12px;
-  top: 132px;
+  top: 172px;
   bottom: 12px;
   width: min(440px, calc(50% - 18px));
   padding: 12px;
