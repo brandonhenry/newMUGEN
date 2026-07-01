@@ -2414,7 +2414,7 @@ function FighterRig({
 
   const color = fighter.character.colors.primary;
   const globalScale = getCharacterGlobalScale(fighter.character);
-  const outlineStyle = getFighterOutlineStyle(stage);
+  const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
   return (
     <group ref={group} scale={[globalScale.width, globalScale.height, globalScale.width]}>
       <Bounds fit={false}>
@@ -2446,8 +2446,8 @@ function getFighterOutlineStyle(stage?: StageDefinition): FighterOutlineStyle {
   return {
     enabled: style.outline.enabled && style.outline.fighterStrength > 0 && style.outline.fighterThickness > 0,
     color: style.outline.visibleColor,
-    opacity: THREE.MathUtils.clamp(0.34 + style.outline.fighterStrength * 0.055, 0.38, 0.58),
-    scale: 1 + style.outline.fighterThickness * 0.026
+    opacity: THREE.MathUtils.clamp(0.18 + style.outline.fighterStrength * 0.028, 0.2, 0.34),
+    scale: 1 + style.outline.fighterThickness * 0.015
   };
 }
 
@@ -2820,25 +2820,11 @@ function ImageVoxelPartGroup({
   outlineStyle?: FighterOutlineStyle;
 }) {
   const mesh = useMemo(() => buildInstancedVoxelMesh(part), [part]);
-  const outlineMesh = useMemo(() => {
-    if (!mesh || !outlineStyle?.enabled) return null;
-    const material = new THREE.MeshBasicMaterial({
-      color: outlineStyle.color,
-      transparent: true,
-      opacity: outlineStyle.opacity,
-      side: THREE.BackSide,
-      depthWrite: false,
-      toneMapped: false
-    });
-    const outline = new THREE.Mesh(mesh.geometry, material);
-    outline.scale.setScalar(outlineStyle.scale);
-    outline.renderOrder = -8;
-    outline.frustumCulled = false;
-    return outline;
-  }, [mesh, outlineStyle]);
+  const outlineMesh = useMemo(() => buildInstancedVoxelOutlineMesh(part, outlineStyle), [part, outlineStyle]);
 
   useEffect(() => {
     return () => {
+      outlineMesh?.geometry.dispose();
       const outlineMaterial = outlineMesh?.material;
       if (Array.isArray(outlineMaterial)) {
         outlineMaterial.forEach((entry) => entry.dispose());
@@ -2861,6 +2847,55 @@ function ImageVoxelPartGroup({
       {mesh && <primitive object={mesh} />}
     </group>
   );
+}
+
+function buildInstancedVoxelOutlineMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }, outlineStyle?: FighterOutlineStyle) {
+  if (!outlineStyle?.enabled || part.voxels.length === 0) return null;
+  const outlinedVoxels = part.voxels
+    .map(normalizeImageVoxelForRender)
+    .filter((voxel) => shouldRenderVoxelOutline(voxel.color));
+  if (outlinedVoxels.length === 0) return null;
+  const baseGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const geometries = outlinedVoxels.map((renderVoxel) => {
+    const geometry = baseGeometry.clone();
+    const color = outlineColorForVoxel(renderVoxel.color);
+    const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
+    for (let index = 0; index < colors.length; index += 3) {
+      colors[index] = color.r;
+      colors[index + 1] = color.g;
+      colors[index + 2] = color.b;
+    }
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.applyMatrix4(
+      new THREE.Matrix4().compose(
+        new THREE.Vector3(
+          renderVoxel.position[0] - part.anchor[0],
+          renderVoxel.position[1] - part.anchor[1],
+          renderVoxel.position[2] - part.anchor[2]
+        ),
+        new THREE.Quaternion(),
+        new THREE.Vector3(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2])
+      )
+    );
+    return geometry;
+  });
+  baseGeometry.dispose();
+  const geometry = mergeGeometries(geometries, false);
+  geometries.forEach((entry) => entry.dispose());
+  if (!geometry) return null;
+  const material = new THREE.MeshBasicMaterial({
+    vertexColors: true,
+    transparent: true,
+    opacity: outlineStyle.opacity,
+    side: THREE.BackSide,
+    depthWrite: false,
+    toneMapped: false
+  });
+  const outline = new THREE.Mesh(geometry, material);
+  outline.scale.setScalar(outlineStyle.scale);
+  outline.renderOrder = -8;
+  outline.frustumCulled = false;
+  return outline;
 }
 
 function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }) {
@@ -2931,6 +2966,24 @@ function enhanceVoxelColor(color: string) {
   source.getHSL(hsl);
   source.setHSL(hsl.h, Math.min(1, hsl.s * 1.12), Math.min(0.86, Math.max(0.045, hsl.l * 1.08 + 0.025)));
   return `#${source.getHexString()}`;
+}
+
+function shouldRenderVoxelOutline(color: string) {
+  const source = new THREE.Color(color);
+  const hsl = { h: 0, s: 0, l: 0 };
+  source.getHSL(hsl);
+  const luminance = source.r * 0.2126 + source.g * 0.7152 + source.b * 0.0722;
+  if (luminance > 0.84) return false;
+  if (luminance > 0.68 && hsl.s < 0.35) return false;
+  return hsl.s > 0.22 || luminance < 0.52;
+}
+
+function outlineColorForVoxel(color: string) {
+  const source = new THREE.Color(color);
+  const hsl = { h: 0, s: 0, l: 0 };
+  source.getHSL(hsl);
+  source.setHSL(hsl.h, Math.min(1, hsl.s * 1.08 + 0.04), Math.max(0.035, hsl.l * 0.34));
+  return source;
 }
 
 function buildVoxelParts(voxels: ImageVoxel[], lodStep = 1) {
@@ -3277,12 +3330,14 @@ function VoxelBox({
   color: string;
   outlineStyle?: FighterOutlineStyle;
 }) {
+  const outlineColor = useMemo(() => outlineColorForVoxel(color), [color]);
+  const showOutline = outlineStyle?.enabled && shouldRenderVoxelOutline(color);
   return (
     <group position={position}>
-      {outlineStyle?.enabled && (
+      {showOutline && (
         <mesh scale={outlineStyle.scale} renderOrder={-8}>
           <boxGeometry args={size} />
-          <meshBasicMaterial color={outlineStyle.color} transparent opacity={outlineStyle.opacity} side={THREE.BackSide} depthWrite={false} toneMapped={false} />
+          <meshBasicMaterial color={outlineColor} transparent opacity={outlineStyle.opacity} side={THREE.BackSide} depthWrite={false} toneMapped={false} />
         </mesh>
       )}
       <mesh castShadow receiveShadow>
