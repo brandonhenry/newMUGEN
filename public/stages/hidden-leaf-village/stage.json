@@ -104,13 +104,13 @@
   },
   "camera": {
     "previewPosition": [
-      0,
-      12,
-      28
+      24,
+      18,
+      56
     ],
     "previewTarget": [
       0,
-      2.1,
+      2.7,
       0
     ],
     "target": [
@@ -126,8 +126,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/hidden-leaf-village/stage.glb",
-    "url": "/stages/hidden-leaf-village/stage.glb",
+    "path": "/stages/hidden-leaf-village/stage.glb?v=mr28mzva-1ldyqk",
+    "url": "/stages/hidden-leaf-village/stage.glb?v=mr28mzva-1ldyqk",
     "format": "glb",
     "position": [
       0,
@@ -135,9 +135,9 @@
       0
     ],
     "scale": [
-      1,
-      1,
-      1
+      6.6,
+      6.6,
+      6.6
     ],
     "rotation": [
       0,
@@ -154,65 +154,65 @@
     "bounds": {
       "center": [
         0,
-        2.6684,
+        21.1463,
         0
       ],
       "size": [
-        72,
-        5.3368,
-        27.7551
+        71.4069,
+        42.2926,
+        72
       ],
-      "radius": 38.6744
+      "radius": 54.9354
     }
   },
   "mugen": {
     "exportMeta": {
       "stageId": "hidden-leaf-village",
       "blenderVersion": "4.5.11 LTS",
-      "objectCount": 2215,
-      "meshCount": 2144,
+      "objectCount": 3806,
+      "meshCount": 1592,
       "boundsBeforeNormalize": {
         "min": [
-          -3050.7551,
-          -747.1311,
-          -152.4743
+          -4835.7944,
+          -332.7096,
+          -3039.8843
         ],
         "max": [
-          1171.9359,
-          880.6636,
-          160.518
+          364.8689,
+          4911.1504,
+          40.348
         ],
         "center": [
-          -939.4096,
-          66.7662,
-          4.0218
+          -2235.4629,
+          2289.2205,
+          -1499.7682
         ],
         "size": [
-          4222.6909,
-          1627.7947,
-          312.9923
+          5200.6631,
+          5243.8599,
+          3080.2322
         ]
       },
       "boundsAfterNormalize": {
         "min": [
+          -35.7034,
           -36,
-          -13.8776,
           0
         ],
         "max": [
+          35.7034,
           36,
-          13.8776,
-          5.3368
+          42.2926
         ],
         "center": [
           0,
           0,
-          2.6684
+          21.1463
         ],
         "size": [
+          71.4069,
           72,
-          27.7551,
-          5.3368
+          42.2926
         ]
       }
     }

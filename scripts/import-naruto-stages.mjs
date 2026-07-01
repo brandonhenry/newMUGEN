@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createRequire } from 'node:module';
-import { access, copyFile, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { constants, existsSync } from 'node:fs';
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { spawn } from 'node:child_process';
@@ -107,14 +107,14 @@ const stages = [
       world: { width: 72, depth: 72, floorY: -0.045, backgroundColor: '#9bdfff' },
       fightPlane: { center: [0, 0, 0], width: 30, depth: 22, y: 0 },
       spawns: { p1: [-3.2, 0, 0], p2: [3.2, 0, 0] },
-      camera: { previewPosition: [0, 12, 28], previewTarget: [0, 2.1, 0], target: [0, 1.4, 0], distance: 8, height: 3.4, fov: 38 },
+      camera: { previewPosition: [24, 18, 56], previewTarget: [0, 2.7, 0], target: [0, 1.4, 0], distance: 8, height: 3.4, fov: 38 },
       collision: { mode: 'box' },
       model: {
         path: '/stages/hidden-leaf-village/stage.glb',
         url: '/stages/hidden-leaf-village/stage.glb',
         format: 'glb',
         position: [0, 0, 0],
-        scale: [1, 1, 1],
+        scale: [6.6, 6.6, 6.6],
         rotation: [0, 0, 0],
         focus: [0, 2.1, 0],
         castShadow: true,
@@ -282,13 +282,14 @@ async function importStage(stage) {
   await rm(rawGlbPath, { force: true });
   const thumbnailPath = existsSync(previewPath) ? `/stages/${stage.id}/preview.png` : await copyThumbnail(stage.thumbnail, stageDir);
   const exportMeta = await readJsonIfExists(exportMetaPath);
+  const model = stage.manifest.model ? await versionModelPaths(stage.manifest.model, finalGlbPath) : undefined;
   const manifest = {
     id: stage.id,
     name: stage.manifest.name ?? stage.name,
     subtitle: stage.manifest.subtitle ?? stage.subtitle,
     ...stage.manifest,
     model: {
-      ...stage.manifest.model,
+      ...model,
       bounds: exportMeta?.bounds ?? stage.manifest.model?.bounds
     },
     mugen: {
@@ -301,6 +302,22 @@ async function importStage(stage) {
   await writeFile(join(stageDir, 'stage.json'), manifestJson, 'utf8');
   await writeFile(join(stageDir, 'manifest.json'), manifestJson, 'utf8');
   await updateStageIndex(stage.id);
+}
+
+async function versionModelPaths(model, modelPath) {
+  const stats = await stat(modelPath);
+  const version = `${Math.round(stats.mtimeMs).toString(36)}-${stats.size.toString(36)}`;
+  return {
+    ...model,
+    path: appendAssetVersion(model.path, version),
+    url: appendAssetVersion(model.url ?? model.path, version)
+  };
+}
+
+function appendAssetVersion(path, version) {
+  if (typeof path !== 'string' || !path.trim()) return path;
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}v=${version}`;
 }
 
 async function convertFbx(sourcePath, outputPath) {
@@ -357,22 +374,34 @@ async function optimizeGlb(inputPath, outputPath, stage) {
       '--texture-compress',
       'false',
       '--simplify',
-      'false',
+      stage.id === 'hidden-leaf-village' ? 'true' : 'false',
       '--simplify-ratio',
-      '0',
+      stage.id === 'hidden-leaf-village' ? '0.38' : '0',
       '--simplify-error',
-      '0.0001',
+      stage.id === 'hidden-leaf-village' ? '0.006' : '0.0001',
       '--texture-size',
-      stage.id === 'hidden-leaf-village' ? '2048' : '2048',
+      stage.id === 'hidden-leaf-village' ? '512' : '2048',
       '--palette',
       'false'
     ]);
+    if (stage.id === 'hidden-leaf-village') {
+      await centerGlb(outputPath);
+    }
     await run(gltfTransform, ['inspect', outputPath]);
   } catch (error) {
     await rm(outputPath, { force: true });
     await rename(inputPath, outputPath);
     console.warn(`gltf-transform optimize failed; kept raw GLB. ${error instanceof Error ? error.message : error}`);
   }
+}
+
+async function centerGlb(outputPath) {
+  const gltfTransform = resolve(repoRoot, 'node_modules', '.bin', process.platform === 'win32' ? 'gltf-transform.cmd' : 'gltf-transform');
+  const centeredPath = `${outputPath}.centered.glb`;
+  await rm(centeredPath, { force: true });
+  await run(gltfTransform, ['center', outputPath, centeredPath, '--pivot', 'below']);
+  await rm(outputPath, { force: true });
+  await rename(centeredPath, outputPath);
 }
 
 async function copyThumbnail(thumbnail, stageDir) {

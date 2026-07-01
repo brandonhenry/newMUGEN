@@ -43,7 +43,7 @@ import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLo
 import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
-import { type StageLoadResult, loadStageRoster } from './lib/stageLoader';
+import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/stageLoader';
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { parseMugenDef } from './lib/mugenStage';
@@ -101,6 +101,15 @@ import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, 
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
+
+function logStageModelDebug(event: string, payload: Record<string, unknown>) {
+  if (!import.meta.env.DEV) return;
+  const stageId = payload.stageId;
+  if (typeof stageId === 'string' && !DEBUG_MODEL_STAGE_IDS.has(stageId)) return;
+  console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
+}
+
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type RandomCharacterSlots = Record<1 | 2, boolean>;
@@ -2107,6 +2116,17 @@ export default function App() {
         stageIds: loadedStages.stages.map((stage) => stage.id),
         warnings: loadedStages.warnings
       });
+      const hiddenLeafStage = loadedStages.stages.find((stage) => stage.id === 'hidden-leaf-village');
+      if (hiddenLeafStage) {
+        logStageModelDebug('H6 app accepted stage roster', {
+          stageId: hiddenLeafStage.id,
+          renderMode: hiddenLeafStage.renderMode,
+          hasModel: Boolean(hiddenLeafStage.model),
+          modelPath: hiddenLeafStage.model?.path,
+          modelUrl: hiddenLeafStage.model?.url,
+          warningCount: loadedStages.warnings[hiddenLeafStage.id]?.length ?? 0
+        });
+      }
       setRosterResult(result);
       setStageResult(loadedStages);
       setP1Id(result.characters[0]?.id ?? 'astra');
@@ -4656,6 +4676,18 @@ function StageSelect({
   const stageColor = randomSelected ? '#f7d45a' : selectedStage.rail;
   const selectedStageIndex = randomSelected ? 0 : Math.max(0, stages.findIndex((stage) => stage.id === selected) + 1);
   const stageOptionCount = stages.length + 1;
+  useEffect(() => {
+    logStageModelDebug('H8 StageSelect selectedStage object', {
+      stageId: selectedStage?.id,
+      selected,
+      randomSelected,
+      renderMode: selectedStage?.renderMode,
+      hasModel: Boolean(selectedStage?.model),
+      modelPath: selectedStage?.model?.path,
+      modelUrl: selectedStage?.model?.url,
+      stageCount: stages.length
+    });
+  }, [randomSelected, selected, selectedStage, stages.length]);
   const cycleStage = useCallback((direction: -1 | 1) => {
     const nextIndex = (selectedStageIndex + direction + stageOptionCount) % stageOptionCount;
     if (nextIndex === 0) {
@@ -4761,6 +4793,13 @@ function StageSelect({
               className={`stage-thumbnail ${!randomSelected && selected === stage.id ? 'is-selected' : ''}`}
               style={{ '--stage-color': stage.rail, '--stage-floor': stage.floor } as CSSProperties}
               onClick={() => {
+                logStageModelDebug('H7 StageSelect thumbnail clicked', {
+                  stageId: stage.id,
+                  renderMode: stage.renderMode,
+                  hasModel: Boolean(stage.model),
+                  modelPath: stage.model?.path,
+                  modelUrl: stage.model?.url
+                });
                 setRandomSelected(false);
                 setSelected(stage.id);
               }}
@@ -4876,9 +4915,27 @@ function StageEditor({
   }, [reloadPropLibrary, reloadStageAssetLibrary]);
 
   useEffect(() => {
+    let active = true;
     const next = stages.find((stage) => stage.id === selectedStageId) ?? stages[0] ?? defaultStageDraft();
     setEditableStage(next);
     setSelectedPropId(next.props?.[0]?.id ?? '');
+    if (next.id) {
+      const cacheBust = Date.now().toString(36);
+      fetch(`/stages/${next.id}/stage.json?v=${cacheBust}`, { cache: 'no-store' })
+        .then((response) => response.ok ? response.json() as Promise<StageDefinition> : null)
+        .then((stage) => {
+          if (!active || !stage || stage.id !== next.id) return;
+          const normalized = normalizeStage(stage);
+          setEditableStage(normalized);
+          setSelectedPropId(normalized.props?.[0]?.id ?? '');
+        })
+        .catch(() => {
+          // The editor can still use the in-memory roster entry when a stage has no public manifest.
+        });
+    }
+    return () => {
+      active = false;
+    };
   }, [selectedStageId, stages]);
 
   const selectedProp = editableStage.props?.find((prop) => prop.id === selectedPropId) ?? editableStage.props?.[0];

@@ -1,9 +1,10 @@
 import json
 import math
+import os
 import re
 import sys
 from pathlib import Path
-from mathutils import Vector
+from mathutils import Matrix, Vector
 
 import bpy
 
@@ -29,8 +30,11 @@ def main():
     if not meshes:
         raise SystemExit("No visible mesh objects found in the Blender scene.")
 
+    optimize_stage_meshes(stage_id)
+    meshes = visible_meshes()
     before_bounds = world_bounds(meshes)
     normalize_scene(stage_id, before_bounds)
+    bake_visible_mesh_transforms()
     after_bounds = world_bounds(visible_meshes())
 
     ensure_lighting(stage_id)
@@ -166,15 +170,22 @@ def prepare_scene_for_stage(stage_id):
             name = obj.name.lower()
             dims = obj.dimensions
             max_dim = max(dims)
-            distance = math.sqrt(obj.location.x * obj.location.x + obj.location.y * obj.location.y)
+            center = object_center(obj)
+            distance = math.sqrt(center.x * center.x + center.y * center.y)
+            in_village_crop = -260 <= center.x <= 260 and -240 <= center.y <= 230
             hide = (
                 "sky" in name
+                or name.startswith("naruto_room")
+                or name.startswith("ki")
+                or name.startswith("ha00")
+                or "kusa" in name
                 or name.startswith("plane01")
                 or name.startswith("outer plains")
                 or name.startswith("plains_")
                 or name.endswith("_control")
                 or max_dim > 1100
-                or (distance > 1450 and max_dim > 120)
+                or distance > 340
+                or not in_village_crop
             )
             if hide:
                 obj.hide_render = True
@@ -189,6 +200,10 @@ def prepare_scene_for_stage(stage_id):
                 obj.hide_viewport = True
 
     bpy.context.view_layer.update()
+
+
+def object_center(obj):
+    return sum((obj.matrix_world @ Vector(corner) for corner in obj.bound_box), Vector()) / 8
 
 
 def world_bounds(objects):
@@ -212,21 +227,141 @@ def normalize_scene(stage_id, bounds):
     target = 72.0 if stage_id == "hidden-leaf-village" else 18.0
     footprint = max(bounds["size"].x, bounds["size"].y, 0.001)
     scale = target / footprint
-
-    root = bpy.data.objects.new("KORE_stage_normalize_root", None)
-    bpy.context.collection.objects.link(root)
-    roots = [obj for obj in bpy.context.scene.objects if obj.parent is None and obj != root]
-    for obj in roots:
-        obj.parent = root
-        obj.matrix_parent_inverse.identity()
-
-    root.scale = (scale, scale, scale)
-    root.location = (
-        -bounds["center"].x * scale,
-        -bounds["center"].y * scale,
-        -bounds["min"].z * scale,
+    transform = (
+        Matrix.Translation(Vector((-bounds["center"].x * scale, -bounds["center"].y * scale, -bounds["min"].z * scale)))
+        @ Matrix.Diagonal((scale, scale, scale, 1.0))
     )
 
+    for obj in visible_meshes():
+        world_matrix = obj.matrix_world.copy()
+        obj.parent = None
+        obj.matrix_world = transform @ world_matrix
+
+    bpy.context.view_layer.update()
+
+
+def bake_visible_mesh_transforms():
+    depsgraph = bpy.context.evaluated_depsgraph_get()
+    export_collection = bpy.data.collections.new("KORE_export_stage")
+    bpy.context.scene.collection.children.link(export_collection)
+    source_objects = visible_meshes()
+
+    for obj in source_objects:
+        evaluated = obj.evaluated_get(depsgraph)
+        mesh = bpy.data.meshes.new_from_object(evaluated, preserve_all_data_layers=True, depsgraph=depsgraph)
+        mesh.transform(obj.matrix_world)
+        mesh.update()
+        if not mesh.materials and obj.data.materials:
+            for material in obj.data.materials:
+                mesh.materials.append(material)
+        baked = bpy.data.objects.new(f"KORE_export_{obj.name}", mesh)
+        baked.matrix_world = Matrix.Identity(4)
+        baked.hide_render = False
+        baked.hide_viewport = False
+        export_collection.objects.link(baked)
+
+    for obj in source_objects:
+        obj.hide_render = True
+        obj.hide_viewport = True
+
+    bpy.context.view_layer.update()
+
+
+def optimize_stage_meshes(stage_id):
+    if stage_id != "hidden-leaf-village":
+        return
+    auto_retopology_stage_meshes(stage_id)
+    decimate_stage_meshes(stage_id)
+
+
+def auto_retopology_stage_meshes(stage_id):
+    if stage_id != "hidden-leaf-village":
+        return
+    candidates = [
+        obj
+        for obj in visible_meshes()
+        if should_quadriflow_retopology(obj)
+    ]
+    candidates.sort(key=lambda obj: len(obj.data.polygons), reverse=True)
+
+    for obj in candidates[:28]:
+        source_faces = len(obj.data.polygons)
+        target_faces = max(450, min(2200, int(source_faces * 0.12)))
+        materials = list(obj.data.materials)
+        if obj.data.shape_keys:
+            obj.shape_key_clear()
+        bpy.ops.object.select_all(action="DESELECT")
+        bpy.context.view_layer.objects.active = obj
+        obj.select_set(True)
+        try:
+            bpy.ops.object.quadriflow_remesh(
+                use_mesh_symmetry=False,
+                use_preserve_sharp=True,
+                use_preserve_boundary=True,
+                preserve_attributes=True,
+                smooth_normals=True,
+                mode="FACES",
+                target_faces=target_faces,
+                seed=0,
+            )
+            if not obj.data.materials and materials:
+                for material in materials:
+                    obj.data.materials.append(material)
+            print(f"KORE retopo quadriflow {obj.name}: {source_faces} -> {len(obj.data.polygons)} faces")
+        except Exception as error:
+            print(f"KORE retopo quadriflow failed for {obj.name}: {error}; decimate fallback will run")
+        finally:
+            obj.select_set(False)
+    bpy.context.view_layer.update()
+
+
+def should_quadriflow_retopology(obj):
+    mode = os.environ.get("KORE_RETOPO_MODE", "safe").lower()
+    if mode in {"off", "false", "0"}:
+        return False
+    faces = len(obj.data.polygons)
+    if faces < 6500:
+        return False
+    if mode in {"force", "forced", "all"}:
+        return True
+    if has_image_texture_material(obj):
+        return False
+    return True
+
+
+def has_image_texture_material(obj):
+    for material in obj.data.materials:
+        if not material:
+            continue
+        if material.use_nodes and material.node_tree:
+            for node in material.node_tree.nodes:
+                if node.type == "TEX_IMAGE":
+                    return True
+        if material.name.lower().startswith("sa00") and "text" in material.name.lower():
+            return True
+    return False
+
+
+def decimate_stage_meshes(stage_id):
+    if stage_id != "hidden-leaf-village":
+        return
+    for obj in visible_meshes():
+        if len(obj.data.polygons) < 900:
+            continue
+        if obj.data.shape_keys:
+            obj.shape_key_clear()
+        modifier = obj.modifiers.new("KORE_runtime_decimate", "DECIMATE")
+        modifier.ratio = 0.05
+        modifier.use_collapse_triangulate = True
+        bpy.ops.object.select_all(action="DESELECT")
+        bpy.context.view_layer.objects.active = obj
+        obj.select_set(True)
+        try:
+            bpy.ops.object.modifier_apply(modifier=modifier.name)
+        except Exception:
+            obj.modifiers.remove(modifier)
+        finally:
+            obj.select_set(False)
     bpy.context.view_layer.update()
 
 
@@ -307,9 +442,18 @@ def look_at(obj, target):
 
 
 def export_glb(output_path):
+    for obj in bpy.context.scene.objects:
+        obj.select_set(False)
+    export_objects = visible_meshes()
+    if not export_objects:
+        raise SystemExit("No visible mesh objects selected for glTF export.")
+    for obj in export_objects:
+        obj.select_set(True)
+    bpy.context.view_layer.objects.active = export_objects[0]
     bpy.ops.export_scene.gltf(
         filepath=str(output_path),
         export_format="GLB",
+        use_selection=True,
         export_apply=False,
         export_yup=True,
         export_texcoords=True,

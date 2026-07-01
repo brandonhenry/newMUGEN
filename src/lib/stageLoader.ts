@@ -7,26 +7,63 @@ export type StageLoadResult = {
   warnings: Record<string, string[]>;
 };
 
+function logStageModelDebug(event: string, payload: Record<string, unknown>) {
+  if (!import.meta.env.DEV) return;
+  console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
+}
+
 export async function loadStageRoster(): Promise<StageLoadResult> {
   try {
-    const index = (await fetch('/stages/index.json').then((response) => response.json())) as {
+    const cacheBust = Date.now().toString(36);
+    const index = (await fetch(`/stages/index.json?v=${cacheBust}`, { cache: 'no-store' }).then((response) => response.json())) as {
       stages?: string[];
     };
     const ids = Array.isArray(index.stages) ? index.stages : [];
+    logStageModelDebug('H1 index fetched', {
+      cacheBust,
+      includesHiddenLeaf: ids.includes('hidden-leaf-village'),
+      modelStageIds: ids.filter((id) => id.includes('naruto') || id.includes('hidden-leaf'))
+    });
     const loaded = (
       await Promise.all(
         ids.map(async (id) => {
           try {
-            const response = await fetch(`/stages/${id}/stage.json`);
+            const response = await fetch(`/stages/${id}/stage.json?v=${cacheBust}`, { cache: 'no-store' });
             if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return null;
-            return await response.json() as StageDefinition;
+            const stage = await response.json() as StageDefinition;
+            if (id === 'hidden-leaf-village') {
+              logStageModelDebug('H2-H4 raw stage fetched', {
+                id,
+                ok: response.ok,
+                renderMode: stage.renderMode,
+                hasModel: Boolean(stage.model),
+                modelPath: stage.model?.path,
+                modelUrl: stage.model?.url,
+                thumbnailPath: stage.thumbnailPath
+              });
+            }
+            return stage;
           } catch {
+            if (id === 'hidden-leaf-village') {
+              logStageModelDebug('H2 hidden leaf fetch failed', { id });
+            }
             return null;
           }
         })
       )
     ).filter((stage): stage is StageDefinition => Boolean(stage));
     const normalizedLoaded = loaded.map(normalizeStage);
+    const normalizedHiddenLeaf = normalizedLoaded.find((stage) => stage.id === 'hidden-leaf-village');
+    if (normalizedHiddenLeaf) {
+      logStageModelDebug('H5 normalized stage', {
+        id: normalizedHiddenLeaf.id,
+        renderMode: normalizedHiddenLeaf.renderMode,
+        hasModel: Boolean(normalizedHiddenLeaf.model),
+        modelPath: normalizedHiddenLeaf.model?.path,
+        modelUrl: normalizedHiddenLeaf.model?.url,
+        warnings: validateStage(normalizedHiddenLeaf)
+      });
+    }
     const fallback = fallbackStages
       .map(normalizeStage)
       .filter((stage) => !normalizedLoaded.some((loadedStage) => loadedStage.id === stage.id));

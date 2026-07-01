@@ -1,4 +1,4 @@
-import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF } from '@react-three/drei';
+import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -24,6 +24,7 @@ import type {
   MoveInput,
   StageDefinition,
   StageLayerDefinition,
+  StageModelDefinition,
   StagePropDefinition
 } from '../types';
 import { activeMoveProgress } from '../engine/fightEngine';
@@ -49,6 +50,36 @@ const defaultCameraSettings: GameSettings['camera'] = {
 };
 
 const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
+const MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
+
+function logStageModelDebug(event: string, payload: Record<string, unknown>) {
+  if (!import.meta.env.DEV) return;
+  const stageId = payload.stageId;
+  if (typeof stageId === 'string' && !MODEL_STAGE_IDS.has(stageId)) return;
+  console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
+}
+
+function isModelStage(stage: Pick<StageDefinition, 'id' | 'renderMode' | 'model'>) {
+  return stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url) || MODEL_STAGE_IDS.has(stage.id);
+}
+
+function resolveStageModel(stage: StageDefinition): StageModelDefinition | undefined {
+  if (stage.model?.path || stage.model?.url) return stage.model;
+  if (!MODEL_STAGE_IDS.has(stage.id)) return undefined;
+  return {
+    path: `/stages/${stage.id}/stage.glb`,
+    url: `/stages/${stage.id}/stage.glb`,
+    format: 'glb',
+    position: stage.id === 'hidden-leaf-village' ? [-16, 0, -8] : [0, 0, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0],
+    focus: stage.id === 'hidden-leaf-village' ? [0, 2.1, 0] : [0, 1.5, 0],
+    castShadow: true,
+    receiveShadow: true,
+    decorativeProps: []
+  };
+}
+
 const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
   enabled: true,
   shape: 'burst',
@@ -67,10 +98,9 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <Environment preset="city" />
       </Suspense>
       <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
-      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} reducedMotion={reducedMotion} />
-      <CameraRig match={match} settings={cameraSettings} reducedMotion={reducedMotion} />
+      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
+      <CameraRig match={match} settings={cameraSettings} />
       <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
-      <StageCombatFieldFeedback stage={match.stage} impactEvents={match.impactEvents} reducedMotion={reducedMotion} />
       <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
       <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
       <TransformEffectLayer fighter={match.fighters[0]} />
@@ -80,7 +110,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
       <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
-      <StagePostProcessing stage={match.stage} impactEvents={match.impactEvents} reducedMotion={reducedMotion} />
+      <StagePostProcessing stage={match.stage} reducedMotion={reducedMotion} />
     </Canvas>
   );
 }
@@ -93,8 +123,7 @@ const AnimeColorGradeShader = {
     uBrightness: { value: 1 },
     uWarmth: { value: 0 },
     uVignetteStrength: { value: 0 },
-    uVignetteRadius: { value: 0.8 },
-    uHitPulse: { value: 0 }
+    uVignetteRadius: { value: 0.8 }
   },
   vertexShader: `
     varying vec2 vUv;
@@ -111,7 +140,6 @@ const AnimeColorGradeShader = {
     uniform float uWarmth;
     uniform float uVignetteStrength;
     uniform float uVignetteRadius;
-    uniform float uHitPulse;
     varying vec2 vUv;
 
     void main() {
@@ -125,7 +153,6 @@ const AnimeColorGradeShader = {
       float dist = distance(vUv, vec2(0.5));
       float vignette = smoothstep(uVignetteRadius, uVignetteRadius - 0.35, dist);
       color *= mix(1.0 - uVignetteStrength, 1.0, vignette);
-      color = mix(color, color + vec3(1.0, 0.82, 0.46) * 0.22, clamp(uHitPulse, 0.0, 1.0));
       gl_FragColor = vec4(color, texel.a);
     }
   `
@@ -134,34 +161,14 @@ const AnimeColorGradeShader = {
 function StageVisualStyleRig({
   stage,
   fighters,
-  impactEvents,
-  reducedMotion = false,
   preview = false
 }: {
   stage: StageDefinition;
   fighters?: [FighterRuntime, FighterRuntime] | FighterRuntime[];
-  impactEvents?: ImpactSparkEvent[];
-  reducedMotion?: boolean;
   preview?: boolean;
 }) {
   const style = resolveStageVisualStyle(stage);
-  const keyRef = useRef<THREE.DirectionalLight>(null);
-  const fillRef = useRef<THREE.DirectionalLight>(null);
-  const rimRef = useRef<THREE.DirectionalLight>(null);
-  const p1LightRef = useRef<THREE.PointLight>(null);
-  const p2LightRef = useRef<THREE.PointLight>(null);
-  const pulse = useCombatPulse(impactEvents, style.combatFx.reducedMotionScale, reducedMotion);
   const previewScale = preview ? 0.82 : 1;
-
-  useFrame(() => {
-    const hitPulse = pulse.current;
-    if (keyRef.current) keyRef.current.intensity = style.lighting.keyIntensity * previewScale + hitPulse * 0.18;
-    if (fillRef.current) fillRef.current.intensity = style.lighting.fillIntensity * previewScale;
-    if (rimRef.current) rimRef.current.intensity = (style.lighting.rimIntensity + hitPulse * style.combatFx.rimPulse) * previewScale;
-    const accent = style.lighting.accentIntensity * previewScale + hitPulse * style.combatFx.rimPulse * 1.8;
-    if (p1LightRef.current) p1LightRef.current.intensity = accent;
-    if (p2LightRef.current) p2LightRef.current.intensity = accent;
-  });
 
   const [fighterA, fighterB] = fighters ?? [];
   return (
@@ -174,34 +181,30 @@ function StageVisualStyleRig({
         <ambientLight color={style.lighting.skyColor} intensity={style.lighting.ambientIntensity * previewScale} />
       )}
       <directionalLight
-        ref={keyRef}
         castShadow
         position={style.lighting.keyPosition}
         color={style.lighting.keyColor}
         intensity={style.lighting.keyIntensity * previewScale}
         shadow-mapSize={[1024, 1024]}
       />
-      <directionalLight ref={fillRef} position={style.lighting.fillPosition} color={style.lighting.fillColor} intensity={style.lighting.fillIntensity * previewScale} />
-      <directionalLight ref={rimRef} position={style.lighting.rimPosition} color={style.lighting.rimColor} intensity={style.lighting.rimIntensity * previewScale} />
-      {fighterA && <pointLight ref={p1LightRef} position={[-4, 2.15, -3]} color={fighterA.character.colors.primary} intensity={style.lighting.accentIntensity * previewScale} distance={style.lighting.accentDistance} />}
-      {fighterB && <pointLight ref={p2LightRef} position={[4, 2.15, 3]} color={fighterB.character.colors.primary} intensity={style.lighting.accentIntensity * previewScale} distance={style.lighting.accentDistance} />}
+      <directionalLight position={style.lighting.fillPosition} color={style.lighting.fillColor} intensity={style.lighting.fillIntensity * previewScale} />
+      <directionalLight position={style.lighting.rimPosition} color={style.lighting.rimColor} intensity={style.lighting.rimIntensity * previewScale} />
+      {fighterA && <pointLight position={[-4, 2.15, -3]} color={fighterA.character.colors.primary} intensity={style.lighting.accentIntensity * previewScale} distance={style.lighting.accentDistance} />}
+      {fighterB && <pointLight position={[4, 2.15, 3]} color={fighterB.character.colors.primary} intensity={style.lighting.accentIntensity * previewScale} distance={style.lighting.accentDistance} />}
     </>
   );
 }
 
 function StagePostProcessing({
   stage,
-  impactEvents,
   reducedMotion
 }: {
   stage: StageDefinition;
-  impactEvents: ImpactSparkEvent[];
   reducedMotion: boolean;
 }) {
   const { gl, scene, camera, size } = useThree();
   const style = resolveStageVisualStyle(stage);
   const disabled = reducedMotion || !style.post.enabled || size.width < 420 || size.height < 280;
-  const pulse = useCombatPulse(impactEvents, style.combatFx.reducedMotionScale, reducedMotion);
   const composerSetup = useMemo(() => {
     if (disabled) return null;
     const composer = new EffectComposer(gl);
@@ -238,84 +241,10 @@ function StagePostProcessing({
 
   useFrame((_, delta) => {
     if (!composerSetup) return;
-    const hitPulse = pulse.current;
-    composerSetup.gradePass.uniforms.uHitPulse.value = hitPulse;
     composerSetup.composer.render(delta);
   }, disabled ? 0 : 1);
 
   return null;
-}
-
-function useCombatPulse(impactEvents: ImpactSparkEvent[] | undefined, reducedMotionScale: number, reducedMotion: boolean) {
-  const latestImpactId = impactEvents?.[impactEvents.length - 1]?.id ?? 0;
-  const pulse = useRef(0);
-  const previousImpactId = useRef(latestImpactId);
-  useEffect(() => {
-    const latest = impactEvents?.[impactEvents.length - 1];
-    if (!latest || latest.id === previousImpactId.current) return;
-    previousImpactId.current = latest.id;
-    pulse.current = Math.max(pulse.current, combatPulseForImpact(latest) * (reducedMotion ? reducedMotionScale : 1));
-  }, [impactEvents, latestImpactId, reducedMotion, reducedMotionScale]);
-  useFrame((_, delta) => {
-    pulse.current = THREE.MathUtils.damp(pulse.current, 0, 8.5, delta);
-  });
-  return pulse;
-}
-
-function combatPulseForImpact(event: ImpactSparkEvent) {
-  if (event.kind === 'block') return 0.42;
-  if (event.kind === 'punish' || event.kind === 'whiffPunish') return 1;
-  if (event.launched || event.juggled || event.tornado || event.kiBurst) return 0.86;
-  return 0.68;
-}
-
-function StageCombatFieldFeedback({
-  stage,
-  impactEvents,
-  reducedMotion
-}: {
-  stage: StageDefinition;
-  impactEvents: ImpactSparkEvent[];
-  reducedMotion: boolean;
-}) {
-  const style = resolveStageVisualStyle(stage);
-  if (style.combatFx.shockwaveStrength <= 0) return null;
-  return (
-    <group>
-      {impactEvents.slice(-5).map((event) => (
-        <StageImpactShockwave key={event.id} stage={stage} event={event} reducedMotion={reducedMotion} />
-      ))}
-    </group>
-  );
-}
-
-function StageImpactShockwave({ stage, event, reducedMotion }: { stage: StageDefinition; event: ImpactSparkEvent; reducedMotion: boolean }) {
-  const style = resolveStageVisualStyle(stage);
-  const groupRef = useRef<THREE.Group>(null);
-  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
-  const ageRef = useRef(0);
-  const floorY = (stage.world?.floorY ?? -0.045) + 0.03;
-  const pulse = combatPulseForImpact(event) * style.combatFx.shockwaveStrength * (reducedMotion ? style.combatFx.reducedMotionScale : 1);
-  const duration = reducedMotion ? 0.32 : 0.52;
-  const color = event.kind === 'block' ? '#b9f7ff' : event.kind === 'punish' || event.kind === 'whiffPunish' ? '#ffd96a' : stage.rail;
-  useFrame((_, delta) => {
-    ageRef.current += delta;
-    const progress = THREE.MathUtils.clamp(ageRef.current / duration, 0, 1);
-    if (groupRef.current) {
-      groupRef.current.visible = progress < 1;
-      const expansion = 0.75 + progress * (reducedMotion ? 1.1 : 2.4 + pulse * 0.7);
-      groupRef.current.scale.setScalar(expansion);
-    }
-    if (materialRef.current) materialRef.current.opacity = Math.max(0, (1 - progress) * 0.34 * pulse);
-  });
-  return (
-    <group ref={groupRef} position={[event.position[0], floorY, event.position[2]]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={24}>
-      <mesh>
-        <ringGeometry args={[0.46, 0.54, 72]} />
-        <meshBasicMaterial ref={materialRef} color={color} transparent opacity={0.28 * pulse} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
-      </mesh>
-    </group>
-  );
 }
 
 const SHADOW_CLONE_SMOKE_PATH = '/effects/shadow-clone-smoke.png';
@@ -981,10 +910,21 @@ type StagePreviewCanvasProps = {
 };
 
 export function StagePreviewCanvas({ stage, interactive = false, selectedPropId, onSelectProp }: StagePreviewCanvasProps) {
+  const modelStage = isModelStage(stage);
+  useEffect(() => {
+    logStageModelDebug('H9 StagePreviewCanvas classified stage', {
+      stageId: stage.id,
+      renderMode: stage.renderMode,
+      modelStage,
+      modelPath: stage.model?.path,
+      modelUrl: stage.model?.url,
+      interactive
+    });
+  }, [interactive, modelStage, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
   return (
     <Canvas
       shadows
-      frameloop={interactive ? 'always' : 'demand'}
+      frameloop={interactive || modelStage ? 'always' : 'demand'}
       dpr={[1, 1.25]}
       camera={{ position: [0, 7.4, 12.4], fov: 38 }}
       data-testid={`stage-preview-canvas-${stage.id}`}
@@ -994,9 +934,7 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
       <StageVisualStyleRig stage={stage} preview />
       <StagePreviewCamera stage={stage} />
       <group position={[0, -0.05, 0]} scale={0.82}>
-        {stage.renderMode === 'model' && !interactive
-          ? <ModelStageThumbnailPreview stage={stage} />
-          : <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />}
+        <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />
       </group>
       {interactive && (
         <OrbitControls
@@ -1017,33 +955,18 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
 function StagePreviewCamera({ stage }: { stage: StageDefinition }) {
   const { camera, invalidate } = useThree();
   useEffect(() => {
-    const position = stage.camera?.previewPosition ?? (stage.renderMode === 'model' ? [0, 6.6, 11.2] : undefined);
+    const modelStage = isModelStage(stage);
+    const position = stage.camera?.previewPosition ?? (modelStage ? [0, 6.6, 11.2] : undefined);
     const target = stage.camera?.previewTarget ?? stage.model?.focus ?? [0, 0.2, -0.8];
     if (position) camera.position.set(position[0], position[1], position[2]);
+    if (stage.camera?.fov && 'fov' in camera) camera.fov = stage.camera.fov;
+    camera.near = 0.05;
+    camera.far = modelStage ? 1200 : 300;
     camera.lookAt(target[0], target[1], target[2]);
     camera.updateProjectionMatrix();
     invalidate();
-  }, [camera, invalidate, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.model?.focus, stage.renderMode]);
+  }, [camera, invalidate, stage.camera?.fov, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.model?.focus, stage.renderMode]);
   return null;
-}
-
-function ModelStageThumbnailPreview({ stage }: { stage: StageDefinition }) {
-  const imagePath = stage.thumbnailPath ?? stage.skyboxPath ?? DEFAULT_SKYBOX_PATH;
-  const texture = useLoader(THREE.TextureLoader, imagePath);
-  useEffect(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.magFilter = THREE.LinearFilter;
-    texture.minFilter = THREE.LinearMipmapLinearFilter;
-    texture.needsUpdate = true;
-  }, [texture]);
-  return (
-    <group>
-      <mesh position={[0, 2.8, -7.6]} scale={[13.2, 7.42, 1]}>
-        <planeGeometry args={[1, 1]} />
-        <meshBasicMaterial map={texture} color="#ffffff" toneMapped={false} />
-      </mesh>
-    </group>
-  );
 }
 
 function DefaultSkybox({ imagePath }: { imagePath: string }) {
@@ -1070,7 +993,7 @@ export function MenuAttractScene({ match }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
-      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} preview />
+      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
       <MenuAttractCamera match={match} />
       <group position={[0, 0, 1.75]}>
         <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
@@ -1769,10 +1692,9 @@ function enforceCameraHorizontalDistance(camera: THREE.Camera, focus: THREE.Vect
   camera.position.z = focus.z + directionZ * minDistance;
 }
 
-function CameraRig({ match, settings, reducedMotion = false }: { match: MatchSnapshot; settings: GameSettings['camera']; reducedMotion?: boolean }) {
+function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
   const { camera, size } = useThree();
-  const style = resolveStageVisualStyle(match.stage);
-  const combatPulse = useCombatPulse(match.impactEvents, style.combatFx.reducedMotionScale, reducedMotion);
+  const modelStageCamera = isModelStage(match.stage);
   const target = useMemo(() => new THREE.Vector3(), []);
   const focus = useMemo(() => new THREE.Vector3(), []);
   const lookFocus = useMemo(() => new THREE.Vector3(), []);
@@ -1784,8 +1706,10 @@ function CameraRig({ match, settings, reducedMotion = false }: { match: MatchSna
   const initializedRef = useRef(false);
   const cameraDistanceRef = useRef(6.4);
   const cameraHeightRef = useRef(2.8);
-  useFrame(({ clock }, delta) => {
-    const impactPulse = combatPulse.current;
+  useFrame((_, delta) => {
+    camera.near = 0.05;
+    camera.far = modelStageCamera ? 1400 : 300;
+    camera.updateProjectionMatrix();
     const [p1, p2] = match.fighters;
     if (match.clashState?.status !== 'none') {
       const [x, y, z] = match.clashState.contactPoint;
@@ -1803,13 +1727,16 @@ function CameraRig({ match, settings, reducedMotion = false }: { match: MatchSna
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
       const cameraX = rawSide.x;
       const cameraZ = rawSide.z;
-      const cameraDistance = THREE.MathUtils.clamp(4.3 * settings.distance * settings.zoomBias * (1 - impactPulse * style.camera.clashZoom), MIN_CLASH_CAMERA_DISTANCE, 6.6);
+      const cameraDistance = THREE.MathUtils.clamp(
+        4.3 * settings.distance * settings.zoomBias * (modelStageCamera ? 1.35 : 1),
+        modelStageCamera ? 6.4 : MIN_CLASH_CAMERA_DISTANCE,
+        modelStageCamera ? 9.8 : 6.6
+      );
       desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
       camera.position.lerp(desired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
       target.set(contactX, Math.max(1.12, contactY), contactZ);
-      enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
+      enforceCameraHorizontalDistance(camera, target, rawSide, modelStageCamera ? 6.4 : MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
-      applyCameraImpactShake(camera, rawSide, impactPulse, style.camera.impactShake, clock.elapsedTime);
       return;
     }
     const p1x = finiteOr(p1.position.x, focus.x - 0.65);
@@ -1836,9 +1763,17 @@ function CameraRig({ match, settings, reducedMotion = false }: { match: MatchSna
     const horizontalFit = (distance * 0.5 + 1.55) / Math.tan(horizontalFov / 2);
     const verticalSpan = 2.65 + Math.max(p1y, p2y) * 0.55;
     const verticalFit = verticalSpan / Math.tan(verticalFov / 2);
-    const distanceScale = settings.distance * settings.zoomBias;
-    const cameraDistance = THREE.MathUtils.clamp(Math.max(horizontalFit, verticalFit, 5.2) * distanceScale * (1 - impactPulse * style.camera.impactZoom), MIN_FIGHT_CAMERA_DISTANCE, 21);
-    const cameraHeight = THREE.MathUtils.clamp((2.35 + cameraDistance * 0.13 + Math.max(p1y, p2y) * 0.22) * settings.height, 2.2, 6.4);
+    const distanceScale = settings.distance * settings.zoomBias * (modelStageCamera ? 1.55 : 1);
+    const cameraDistance = THREE.MathUtils.clamp(
+      Math.max(horizontalFit, verticalFit, modelStageCamera ? 7.8 : 5.2) * distanceScale,
+      modelStageCamera ? 7.2 : MIN_FIGHT_CAMERA_DISTANCE,
+      modelStageCamera ? 28 : 21
+    );
+    const cameraHeight = THREE.MathUtils.clamp(
+      (2.35 + cameraDistance * (modelStageCamera ? 0.18 : 0.13) + Math.max(p1y, p2y) * 0.22) * settings.height,
+      modelStageCamera ? 3.15 : 2.2,
+      modelStageCamera ? 8.2 : 6.4
+    );
 
     rawFocus.set(midX, 0, midZ);
     rawLookFocus.set(midX, midY, midZ);
@@ -1867,23 +1802,10 @@ function CameraRig({ match, settings, reducedMotion = false }: { match: MatchSna
       focus.z + side.z * cameraDistanceRef.current
     );
     camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
-    enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+    enforceCameraHorizontalDistance(camera, lookFocus, side, modelStageCamera ? 7.2 : MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
-    applyCameraImpactShake(camera, side, impactPulse + match.cameraShake * 0.25, style.camera.impactShake, clock.elapsedTime);
   });
   return null;
-}
-
-function applyCameraImpactShake(camera: THREE.Camera, side: THREE.Vector3, pulse: number, strength: number, elapsedTime: number) {
-  const amount = pulse * strength;
-  if (amount <= 0.0001) return;
-  const rightX = side.z;
-  const rightZ = -side.x;
-  const shakeX = Math.sin(elapsedTime * 91.7) * amount * 0.08;
-  const shakeY = Math.cos(elapsedTime * 76.3) * amount * 0.045;
-  camera.position.x += rightX * shakeX;
-  camera.position.y += shakeY;
-  camera.position.z += rightZ * shakeX;
 }
 
 function Arena({
@@ -1899,6 +1821,16 @@ function Arena({
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
 }) {
+  const modelStage = isModelStage(stage);
+  useEffect(() => {
+    logStageModelDebug('H9 Arena branch decision', {
+      stageId: stage.id,
+      renderMode: stage.renderMode,
+      modelStage,
+      modelPath: stage.model?.path,
+      modelUrl: stage.model?.url
+    });
+  }, [modelStage, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
   const horizonBlocks = useMemo(
     () => [
       [-18, 0.55, -12, 4.8, 1.1, 0.5],
@@ -1915,7 +1847,7 @@ function Arena({
     return <SpriteCutoutStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
   }
 
-  if (stage.renderMode === 'model') {
+  if (modelStage) {
     return <ModelStage stage={stage} fighters={fighters} impactEvents={impactEvents} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />;
   }
 
@@ -1987,29 +1919,59 @@ function ModelStage({
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
 }) {
-  const modelDefinition = stage.model;
+  const modelDefinition = resolveStageModel(stage);
   const modelPath = modelDefinition?.path ?? modelDefinition?.url;
-  if (!modelPath) {
+  useEffect(() => {
+    logStageModelDebug('H10 ModelStage mounted', {
+      stageId: stage.id,
+      renderMode: stage.renderMode,
+      hasModelDefinition: Boolean(modelDefinition),
+      modelPath,
+      originalModelPath: stage.model?.path,
+      originalModelUrl: stage.model?.url
+    });
+  }, [modelDefinition, modelPath, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
+  useEffect(() => {
+    if (!modelPath || !import.meta.env.DEV) return;
+    let cancelled = false;
+    const startedAt = performance.now();
+    fetch(modelPath, { cache: 'no-store' })
+      .then(async (response) => {
+        const bytes = await response.arrayBuffer();
+        if (cancelled) return;
+        logStageModelDebug('H11 raw GLB fetch probe completed', {
+          stageId: stage.id,
+          modelPath,
+          ok: response.ok,
+          status: response.status,
+          contentType: response.headers.get('content-type'),
+          contentLength: response.headers.get('content-length'),
+          byteLength: bytes.byteLength,
+          elapsedMs: Math.round(performance.now() - startedAt)
+        });
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        logStageModelDebug('H11 raw GLB fetch probe failed', {
+          stageId: stage.id,
+          modelPath,
+          elapsedMs: Math.round(performance.now() - startedAt),
+          error: error instanceof Error ? error.message : String(error)
+        });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [modelPath, stage.id]);
+  if (!modelPath || !modelDefinition) {
     return <TexturedInfiniteArena stage={stage} floorTexturePath={stage.floorTexturePath ?? '/stages/shared/handpainted-stone-platform.png'} fighters={fighters} impactEvents={impactEvents} />;
   }
   return (
     <group>
       <Suspense fallback={<ModelStageLoadBackdrop stage={stage} />}>
-        <StageModelScene stage={stage} />
+        <StageModelScene stage={stage} modelDefinition={modelDefinition} />
       </Suspense>
-      {stage.floorTexturePath ? (
-        <ModelStageFightFloor stage={stage} floorTexturePath={stage.floorTexturePath} />
-      ) : (
-        <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, stage.world?.floorY ?? -0.045, 0]}>
-          <planeGeometry args={[stage.world?.width ?? 52, stage.world?.depth ?? 42, 1, 1]} />
-          <meshLambertMaterial color={stage.floor} transparent opacity={0.72} />
-        </mesh>
-      )}
-      <mesh position={[0, (stage.world?.floorY ?? -0.045) + 0.012, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
-        <ringGeometry args={[4.45, 4.82, 8]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.32} depthWrite={false} />
-      </mesh>
-      <StageSafePlatform stage={stage} />
+      <ModelStageFightLane stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
       {(modelDefinition?.decorativeProps ?? []).filter((prop) => !prop.hidden).map((prop) => (
         <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
@@ -2018,9 +1980,43 @@ function ModelStage({
   );
 }
 
+function ModelStageFightLane({ stage }: { stage: StageDefinition }) {
+  const radius = stage.safePlatform?.radius ?? Math.max(5, Math.min(stage.fightPlane?.width ?? 12, stage.fightPlane?.depth ?? 8) * 0.5);
+  const y = (stage.world?.floorY ?? -0.045) + 0.035;
+  return (
+    <group renderOrder={9}>
+      <mesh position={[0, y, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+        <circleGeometry args={[radius, 8]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.1} depthWrite={false} />
+      </mesh>
+      <mesh position={[0, y + 0.004, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+        <ringGeometry args={[radius * 0.985, radius * 1.015, 8]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.58} depthWrite={false} />
+      </mesh>
+      <mesh position={[0, y + 0.008, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
+        <ringGeometry args={[4.45, 4.82, 8]} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.32} depthWrite={false} />
+      </mesh>
+    </group>
+  );
+}
+
 function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
   const imagePath = stage.thumbnailPath ?? stage.skyboxPath ?? DEFAULT_SKYBOX_PATH;
+  const progress = useProgress();
   const texture = useLoader(THREE.TextureLoader, imagePath);
+  useEffect(() => {
+    logStageModelDebug('H11-H18 Suspense fallback/progress', {
+      stageId: stage.id,
+      active: progress.active,
+      progress: Math.round(progress.progress),
+      loaded: progress.loaded,
+      total: progress.total,
+      item: progress.item,
+      errors: progress.errors.length,
+      thumbnail: imagePath
+    });
+  }, [imagePath, progress.active, progress.errors.length, progress.item, progress.loaded, progress.progress, progress.total, stage.id]);
   useEffect(() => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.magFilter = THREE.LinearFilter;
@@ -2035,9 +2031,23 @@ function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
   );
 }
 
-function StageModelScene({ stage }: { stage: StageDefinition }) {
-  const modelDefinition = stage.model;
-  const gltf = useGLTF(modelDefinition?.path ?? modelDefinition?.url ?? '');
+function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; modelDefinition: StageModelDefinition }) {
+  const modelPath = modelDefinition?.path ?? modelDefinition?.url ?? '';
+  const requestStartedAtRef = useRef(performance.now());
+  logStageModelDebug('H10 StageModelScene useGLTF requested', {
+    stageId: stage.id,
+    renderMode: stage.renderMode,
+    modelPath
+  });
+  const gltf = useGLTF(modelPath);
+  const resolveMs = Math.round(performance.now() - requestStartedAtRef.current);
+  logStageModelDebug('H10 StageModelScene useGLTF resolved', {
+    stageId: stage.id,
+    renderMode: stage.renderMode,
+    modelPath,
+    childCount: gltf.scene.children.length,
+    resolveMs
+  });
   const scene = useMemo(() => clone(gltf.scene) as THREE.Object3D, [gltf.scene]);
   const position = modelDefinition?.position ?? [0, 0, 0];
   const scale = modelDefinition?.scale ?? [1, 1, 1];

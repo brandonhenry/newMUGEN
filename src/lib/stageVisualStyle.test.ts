@@ -100,6 +100,6 @@ describe('stage visual style normalization', () => {
       quality: 'low'
     });
     expect(normalized.visualStylePreset).toBe('anime-daylight');
-    expect(normalized.visualStyle?.combatFx.shockwaveStrength).toBeGreaterThan(0);
+    expect(normalized.visualStyle?.combatFx.shockwaveStrength).toBe(0);
   });
 });

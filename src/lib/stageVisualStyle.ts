@@ -524,17 +524,17 @@ export function normalizeStageVisualStyle(stage: Pick<StageDefinition, 'id' | 'l
       vignetteRadius: clampNumber(source.post?.vignetteRadius, defaults.post.vignetteRadius, 0.1, 1.5)
     },
     camera: {
-      impactShake: clampNumber(source.camera?.impactShake, defaults.camera.impactShake, 0, 1),
-      impactZoom: clampNumber(source.camera?.impactZoom, defaults.camera.impactZoom, 0, 0.5),
-      clashZoom: clampNumber(source.camera?.clashZoom, defaults.camera.clashZoom, 0, 0.6)
+      impactShake: 0,
+      impactZoom: 0,
+      clashZoom: 0
     },
     combatFx: {
       hitBloom: clampNumber(source.combatFx?.hitBloom, defaults.combatFx.hitBloom, 0, 3),
       blockBloom: clampNumber(source.combatFx?.blockBloom, defaults.combatFx.blockBloom, 0, 3),
       punishBloom: clampNumber(source.combatFx?.punishBloom, defaults.combatFx.punishBloom, 0, 4),
       launchBloom: clampNumber(source.combatFx?.launchBloom, defaults.combatFx.launchBloom, 0, 4),
-      rimPulse: clampNumber(source.combatFx?.rimPulse, defaults.combatFx.rimPulse, 0, 5),
-      shockwaveStrength: clampNumber(source.combatFx?.shockwaveStrength, defaults.combatFx.shockwaveStrength, 0, 3),
+      rimPulse: 0,
+      shockwaveStrength: 0,
       reducedMotionScale: clampNumber(source.combatFx?.reducedMotionScale, defaults.combatFx.reducedMotionScale, 0, 1)
     }
   };
