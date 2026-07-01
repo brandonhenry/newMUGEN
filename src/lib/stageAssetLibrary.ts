@@ -61,6 +61,14 @@ function normalizeFloorEffects(value: unknown): StageFloorEffects | undefined {
       height: clamp(finiteOr(grass.height, 0.28), 0.04, 1.8),
       patchWidth: clamp(finiteOr(grass.patchWidth, 220), 4, 520),
       patchDepth: clamp(finiteOr(grass.patchDepth, 220), 4, 520),
+      bladeCount: clamp(finiteOr(grass.bladeCount, 0), 0, 120000),
+      bladeWidth: clamp(finiteOr(grass.bladeWidth, 0.075), 0.01, 0.4),
+      segments: Math.round(clamp(finiteOr(grass.segments, 5), 2, 10)),
+      coverageScale: clamp(finiteOr(grass.coverageScale, 1.08), 0.2, 2),
+      colorVariation: clamp(finiteOr(grass.colorVariation, 0.18), 0, 1),
+      windDirection: Array.isArray(grass.windDirection) ? [finiteOr(grass.windDirection[0], 1), finiteOr(grass.windDirection[1], 0.35)] : [1, 0.35],
+      windNoiseScale: clamp(finiteOr(grass.windNoiseScale, 0.58), 0.02, 4),
+      quality: normalizeQuality(grass.quality, 'medium'),
       windStrength: clamp(finiteOr(grass.windStrength, 0.14), 0, 0.8),
       windSpeed: clamp(finiteOr(grass.windSpeed, 1.1), 0, 4),
       colorBottom: typeof grass.colorBottom === 'string' ? grass.colorBottom : '#174d25',
@@ -73,6 +81,7 @@ function normalizeFloorEffects(value: unknown): StageFloorEffects | undefined {
     'impact',
     'petals',
     'snow',
+    'rain',
     'rainPuddles',
     'ripples',
     'energy',
@@ -103,6 +112,15 @@ function normalizeSimpleFloorEffect(value: unknown) {
     strength: clamp(finiteOr(source.strength, 0.35), 0, 2),
     lifetime: clamp(finiteOr(source.lifetime, 900), 100, 6000),
     amount: clamp(finiteOr(source.amount, 80), 0, 800),
+    maxParticles: Math.round(clamp(finiteOr(source.maxParticles, 0), 0, 5000)),
+    maxDecals: Math.round(clamp(finiteOr(source.maxDecals, 0), 0, 256)),
+    spread: clamp(finiteOr(source.spread, 1), 0, 4),
+    coverageScale: clamp(finiteOr(source.coverageScale, 1.08), 0.2, 2),
+    decay: clamp(finiteOr(source.decay, 0.86), 0, 1),
+    atlasPath: typeof source.atlasPath === 'string' ? source.atlasPath : undefined,
+    frameCount: Math.round(clamp(finiteOr(source.frameCount, 1), 1, 64)),
+    reactive: typeof source.reactive === 'boolean' ? source.reactive : undefined,
+    quality: normalizeQuality(source.quality),
     windStrength: clamp(finiteOr(source.windStrength, 0.35), 0, 2),
     fallSpeed: clamp(finiteOr(source.fallSpeed, 0.8), 0, 4),
     pulseSpeed: clamp(finiteOr(source.pulseSpeed, 1.2), 0, 6),
@@ -119,6 +137,10 @@ function finiteOr(value: unknown, fallback: number) {
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
+}
+
+function normalizeQuality(value: unknown, fallback?: 'low' | 'medium' | 'high') {
+  return value === 'low' || value === 'medium' || value === 'high' ? value : fallback;
 }
 
 function slugifyAssetId(value: string) {

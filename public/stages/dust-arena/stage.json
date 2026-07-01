@@ -14,11 +14,15 @@
     "dust": {
       "enabled": true,
       "intensity": 0.85,
-      "density": 0.72,
-      "size": 1.2,
-      "speed": 0.8,
-      "opacity": 0.42,
-      "color": "#c8b48a"
+      "density": 0.78,
+      "size": 1.18,
+      "speed": 0.9,
+      "opacity": 0.4,
+      "color": "#c8b48a",
+      "quality": "medium",
+      "maxParticles": 520,
+      "coverageScale": 1.18,
+      "reactive": true
     }
   },
   "rail": "#f0c878",

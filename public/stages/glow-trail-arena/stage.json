@@ -14,11 +14,15 @@
     "glowTrails": {
       "enabled": true,
       "intensity": 0.78,
-      "density": 0.68,
-      "size": 1.15,
-      "speed": 1.2,
-      "opacity": 0.56,
-      "color": "#5cf4ff"
+      "density": 0.74,
+      "size": 1.18,
+      "speed": 1.25,
+      "opacity": 0.58,
+      "color": "#5cf4ff",
+      "quality": "high",
+      "maxParticles": 96,
+      "coverageScale": 1.14,
+      "reactive": true
     }
   },
   "rail": "#2ee6ff",

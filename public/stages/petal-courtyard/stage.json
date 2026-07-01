@@ -14,15 +14,19 @@
     "petals": {
       "enabled": true,
       "intensity": 0.72,
-      "density": 0.72,
-      "size": 0.56,
+      "density": 0.76,
+      "size": 0.62,
       "speed": 0.85,
       "opacity": 0.76,
-      "windStrength": 0.48,
-      "fallSpeed": 0.62,
+      "windStrength": 0.55,
+      "fallSpeed": 0.56,
       "colorA": "#ff9ac5",
       "colorB": "#fff4fb",
-      "amount": 220
+      "amount": 340,
+      "quality": "high",
+      "maxParticles": 680,
+      "coverageScale": 1.16,
+      "reactive": false
     }
   },
   "rail": "#ffb7d5",

@@ -14,11 +14,16 @@
     "impact": {
       "enabled": true,
       "intensity": 0.9,
-      "density": 0.55,
-      "size": 1.45,
+      "density": 0.58,
+      "size": 1.55,
       "speed": 1.1,
-      "opacity": 0.52,
-      "color": "#ffffff"
+      "opacity": 0.54,
+      "color": "#ffffff",
+      "quality": "medium",
+      "maxDecals": 32,
+      "coverageScale": 1.12,
+      "decay": 0.82,
+      "reactive": true
     }
   },
   "rail": "#ffdc64",

@@ -157,6 +157,70 @@ describe('MUGEN stage parsing', () => {
     });
   });
 
+  it('normalizes stage floor effect advanced metadata', () => {
+    const normalized = normalizeStage({
+      id: 'fx-stage',
+      name: 'FX Stage',
+      subtitle: 'Effects',
+      renderMode: 'procedural',
+      floor: '#000000',
+      rail: '#ffffff',
+      light: '#ffffff',
+      floorEffects: {
+        grass: {
+          enabled: true,
+          density: 0.8,
+          height: 0.22,
+          bladeCount: 12000,
+          bladeWidth: 0.07,
+          segments: 6,
+          coverageScale: 1.15,
+          colorVariation: 0.25,
+          windDirection: [1, 0.25],
+          windNoiseScale: 0.5,
+          quality: 'high'
+        },
+        rain: {
+          enabled: true,
+          maxParticles: 900,
+          coverageScale: 1.2,
+          decay: 0.8,
+          reactive: false,
+          quality: 'medium'
+        },
+        impact: {
+          enabled: true,
+          maxDecals: 32,
+          reactive: true,
+          quality: 'low'
+        }
+      }
+    });
+
+    expect(normalized.floorEffects?.grass).toMatchObject({
+      bladeCount: 12000,
+      bladeWidth: 0.07,
+      segments: 6,
+      coverageScale: 1.15,
+      colorVariation: 0.25,
+      windDirection: [1, 0.25],
+      windNoiseScale: 0.5,
+      quality: 'high'
+    });
+    expect(normalized.floorEffects?.rain).toMatchObject({
+      maxParticles: 900,
+      coverageScale: 1.2,
+      decay: 0.8,
+      reactive: false,
+      quality: 'medium'
+    });
+    expect(normalized.floorEffects?.impact).toMatchObject({
+      maxDecals: 32,
+      reactive: true,
+      quality: 'low'
+    });
+  });
+
   it('keeps valid indexed stages when another indexed stage fails to load', async () => {
     vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);

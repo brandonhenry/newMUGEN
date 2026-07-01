@@ -14,11 +14,14 @@
     "heat": {
       "enabled": true,
       "intensity": 0.72,
-      "density": 0.62,
-      "size": 1.2,
-      "speed": 1.2,
+      "density": 0.64,
+      "size": 1.25,
+      "speed": 1.25,
       "opacity": 0.22,
-      "color": "#ffbf6e"
+      "color": "#ffbf6e",
+      "quality": "medium",
+      "coverageScale": 1.15,
+      "reactive": false
     }
   },
   "rail": "#ffb866",

@@ -5666,6 +5666,16 @@ function FloorEffectsEditor({
       }
     });
   };
+  const updateSimpleEffectPatch = (key: StageFloorSimpleEffectKey, patch: Partial<NonNullable<StageFloorEffects[StageFloorSimpleEffectKey]>>) => {
+    onUpdate({
+      ...(floor.effects ?? {}),
+      [key]: {
+        ...defaultSimpleFloorEffect(key),
+        ...(simpleEffects[key] ?? {}),
+        ...patch
+      }
+    });
+  };
 
   return (
     <div className="floor-effect-panel">
@@ -5675,10 +5685,23 @@ function FloorEffectsEditor({
       </label>
       {grass.enabled && (
         <div className="floor-effect-slider-grid">
+          <label className="stage-prop-control">
+            <span>Quality</span>
+            <select value={grass.quality ?? 'medium'} onChange={(event) => updateGrass({ quality: event.target.value as 'low' | 'medium' | 'high' })}>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
           <StagePropSlider label="Density" value={grass.density ?? 0.45} min={0.05} max={1} step={0.01} onChange={(value) => updateGrass({ density: value })} />
-          <StagePropSlider label="Height" value={grass.height ?? 0.48} min={0.08} max={1.8} step={0.01} onChange={(value) => updateGrass({ height: value })} />
+          <StagePropSlider label="Height" value={grass.height ?? 0.28} min={0.04} max={1.8} step={0.01} onChange={(value) => updateGrass({ height: value })} />
+          <StagePropSlider label="Coverage" value={grass.coverageScale ?? 1.08} min={0.2} max={2} step={0.01} onChange={(value) => updateGrass({ coverageScale: value })} />
+          <StagePropSlider label="Blade Width" value={grass.bladeWidth ?? 0.075} min={0.01} max={0.4} step={0.005} precision={3} onChange={(value) => updateGrass({ bladeWidth: value })} />
+          <StagePropSlider label="Segments" value={grass.segments ?? 5} min={2} max={10} step={1} precision={0} onChange={(value) => updateGrass({ segments: value })} />
+          <StagePropSlider label="Variation" value={grass.colorVariation ?? 0.18} min={0} max={1} step={0.01} onChange={(value) => updateGrass({ colorVariation: value })} />
           <StagePropSlider label="Wind" value={grass.windStrength ?? 0.14} min={0} max={0.8} step={0.01} onChange={(value) => updateGrass({ windStrength: value })} />
           <StagePropSlider label="Speed" value={grass.windSpeed ?? 1.1} min={0} max={4} step={0.05} onChange={(value) => updateGrass({ windSpeed: value })} />
+          <StagePropSlider label="Noise" value={grass.windNoiseScale ?? 0.58} min={0.02} max={4} step={0.01} onChange={(value) => updateGrass({ windNoiseScale: value })} />
         </div>
       )}
       <div className="floor-effect-toggle-grid">
@@ -5693,6 +5716,43 @@ function FloorEffectsEditor({
           </label>
         ))}
       </div>
+      {stageFloorSimpleEffectOptions.filter((option) => simpleEffects[option.key]?.enabled === true).map((option) => {
+        const effect = { ...defaultSimpleFloorEffect(option.key), ...(simpleEffects[option.key] ?? {}) };
+        const isDecal = option.key === 'impact' || option.key === 'footsteps';
+        const isParticle = option.key === 'dust' || option.key === 'petals' || option.key === 'snow' || option.key === 'rain' || option.key === 'windStreaks' || option.key === 'cherryBurst' || option.key === 'debris' || option.key === 'glowTrails';
+        return (
+          <div key={`${option.key}-controls`} className="floor-effect-slider-grid">
+            <label className="stage-prop-control">
+              <span>{option.label} Quality</span>
+              <select value={effect.quality ?? 'medium'} onChange={(event) => updateSimpleEffectPatch(option.key, { quality: event.target.value as 'low' | 'medium' | 'high' })}>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <StagePropSlider label={`${option.label} Coverage`} value={effect.coverageScale ?? 1.08} min={0.2} max={2} step={0.01} onChange={(value) => updateSimpleEffectPatch(option.key, { coverageScale: value })} />
+            <StagePropSlider label={`${option.label} Density`} value={effect.density ?? 0.45} min={0} max={1} step={0.01} onChange={(value) => updateSimpleEffectPatch(option.key, { density: value })} />
+            <StagePropSlider label={`${option.label} Size`} value={effect.size ?? 1} min={0.05} max={12} step={0.05} onChange={(value) => updateSimpleEffectPatch(option.key, { size: value })} />
+            <StagePropSlider label={`${option.label} Opacity`} value={effect.opacity ?? 0.55} min={0} max={1} step={0.01} onChange={(value) => updateSimpleEffectPatch(option.key, { opacity: value })} />
+            <StagePropSlider label={`${option.label} Speed`} value={effect.speed ?? 1} min={0} max={6} step={0.05} onChange={(value) => updateSimpleEffectPatch(option.key, { speed: value })} />
+            {(option.key === 'petals' || option.key === 'snow' || option.key === 'rain' || option.key === 'windStreaks' || option.key === 'cherryBurst') && (
+              <StagePropSlider label={`${option.label} Wind`} value={effect.windStrength ?? 0.35} min={0} max={2} step={0.01} onChange={(value) => updateSimpleEffectPatch(option.key, { windStrength: value })} />
+            )}
+            {(option.key === 'petals' || option.key === 'snow' || option.key === 'rain' || option.key === 'cherryBurst') && (
+              <StagePropSlider label={`${option.label} Fall`} value={effect.fallSpeed ?? 0.8} min={0} max={4} step={0.05} onChange={(value) => updateSimpleEffectPatch(option.key, { fallSpeed: value })} />
+            )}
+            {(option.key === 'ripples' || option.key === 'rainPuddles') && (
+              <StagePropSlider label={`${option.label} Decay`} value={effect.decay ?? 0.86} min={0} max={1} step={0.01} onChange={(value) => updateSimpleEffectPatch(option.key, { decay: value })} />
+            )}
+            {isParticle && (
+              <StagePropSlider label={`${option.label} Max Particles`} value={effect.maxParticles ?? 0} min={0} max={5000} step={10} precision={0} onChange={(value) => updateSimpleEffectPatch(option.key, { maxParticles: value })} />
+            )}
+            {isDecal && (
+              <StagePropSlider label={`${option.label} Max Decals`} value={effect.maxDecals ?? 0} min={0} max={256} step={1} precision={0} onChange={(value) => updateSimpleEffectPatch(option.key, { maxDecals: value })} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -5704,6 +5764,14 @@ function defaultGrassEffect() {
     height: 0.28,
     patchWidth: 220,
     patchDepth: 220,
+    bladeCount: 0,
+    bladeWidth: 0.075,
+    segments: 5,
+    coverageScale: 1.08,
+    colorVariation: 0.18,
+    windDirection: [1, 0.35] as [number, number],
+    windNoiseScale: 0.58,
+    quality: 'medium' as const,
     windStrength: 0.14,
     windSpeed: 1.1,
     colorBottom: '#174d25',
@@ -5719,6 +5787,7 @@ const stageFloorSimpleEffectOptions: Array<{ key: StageFloorSimpleEffectKey; lab
   { key: 'impact', label: 'Impact' },
   { key: 'petals', label: 'Petals' },
   { key: 'snow', label: 'Snow' },
+  { key: 'rain', label: 'Rain' },
   { key: 'rainPuddles', label: 'Puddles' },
   { key: 'ripples', label: 'Ripples' },
   { key: 'energy', label: 'Energy' },
@@ -5738,6 +5807,7 @@ function defaultSimpleFloorEffect(key: StageFloorSimpleEffectKey) {
     impact: { enabled: false, intensity: 0.8, density: 0.35, size: 1.5, speed: 1.1, opacity: 0.46, color: '#ffffff' },
     petals: { enabled: false, intensity: 0.65, density: 0.45, size: 0.45, speed: 0.8, opacity: 0.72, windStrength: 0.42, fallSpeed: 0.72, colorA: '#ff9ac5', colorB: '#fff4fb' },
     snow: { enabled: false, intensity: 0.62, density: 0.55, size: 0.34, speed: 0.55, opacity: 0.82, windStrength: 0.18, fallSpeed: 0.45, color: '#f8fcff' },
+    rain: { enabled: false, intensity: 0.6, density: 0.7, size: 0.75, speed: 1.6, opacity: 0.5, windStrength: 0.32, fallSpeed: 2.2, maxParticles: 900, color: '#b6edff' },
     rainPuddles: { enabled: false, intensity: 0.65, density: 0.4, size: 1.2, speed: 1.35, opacity: 0.34, radius: 1.5, color: '#9ad7ff' },
     ripples: { enabled: false, intensity: 0.7, density: 0.4, size: 1.4, speed: 1.4, opacity: 0.38, radius: 1.8, color: '#b5f3ff' },
     energy: { enabled: false, intensity: 0.82, density: 0.5, size: 1, speed: 1.25, opacity: 0.44, pulseSpeed: 1.35, color: '#ff5a2a', colorA: '#ffb347', colorB: '#a920ff' },

@@ -13,15 +13,18 @@
   "floorEffects": {
     "energy": {
       "enabled": true,
-      "intensity": 0.95,
-      "density": 0.55,
+      "intensity": 1.05,
+      "density": 0.65,
       "size": 1,
-      "speed": 1.25,
-      "opacity": 0.48,
-      "pulseSpeed": 1.45,
+      "speed": 1.35,
+      "opacity": 0.5,
+      "pulseSpeed": 1.55,
       "color": "#ff5a2a",
       "colorA": "#ffb347",
-      "colorB": "#a920ff"
+      "colorB": "#a920ff",
+      "quality": "high",
+      "coverageScale": 1.1,
+      "reactive": false
     }
   },
   "rail": "#ff7a2f",

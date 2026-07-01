@@ -14,11 +14,15 @@
     "fog": {
       "enabled": true,
       "intensity": 0.68,
-      "density": 0.78,
-      "size": 1.2,
-      "speed": 0.45,
+      "density": 0.8,
+      "size": 1.28,
+      "speed": 0.5,
       "opacity": 0.34,
-      "color": "#c7f2d7"
+      "color": "#c7f2d7",
+      "quality": "high",
+      "coverageScale": 1.18,
+      "decay": 0.9,
+      "reactive": false
     }
   },
   "rail": "#9cfac7",

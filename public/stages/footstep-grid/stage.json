@@ -14,11 +14,16 @@
     "footsteps": {
       "enabled": true,
       "intensity": 0.62,
-      "density": 0.62,
-      "size": 0.9,
+      "density": 0.68,
+      "size": 0.92,
       "speed": 0.7,
-      "opacity": 0.34,
-      "color": "#ffffff"
+      "opacity": 0.36,
+      "color": "#ffffff",
+      "quality": "medium",
+      "maxDecals": 72,
+      "coverageScale": 1.12,
+      "decay": 0.88,
+      "reactive": true
     }
   },
   "rail": "#7deaff",

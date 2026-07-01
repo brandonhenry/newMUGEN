@@ -480,6 +480,14 @@ export type StageFloorGrassEffect = {
   height?: number;
   patchWidth?: number;
   patchDepth?: number;
+  bladeCount?: number;
+  bladeWidth?: number;
+  segments?: number;
+  coverageScale?: number;
+  colorVariation?: number;
+  windDirection?: [number, number];
+  windNoiseScale?: number;
+  quality?: 'low' | 'medium' | 'high';
   windStrength?: number;
   windSpeed?: number;
   colorBottom?: string;
@@ -497,6 +505,15 @@ export type StageFloorSimpleEffect = {
   strength?: number;
   lifetime?: number;
   amount?: number;
+  maxParticles?: number;
+  maxDecals?: number;
+  spread?: number;
+  coverageScale?: number;
+  decay?: number;
+  atlasPath?: string;
+  frameCount?: number;
+  reactive?: boolean;
+  quality?: 'low' | 'medium' | 'high';
   windStrength?: number;
   fallSpeed?: number;
   pulseSpeed?: number;
@@ -512,6 +529,7 @@ export type StageFloorEffects = {
   impact?: StageFloorSimpleEffect;
   petals?: StageFloorSimpleEffect;
   snow?: StageFloorSimpleEffect;
+  rain?: StageFloorSimpleEffect;
   rainPuddles?: StageFloorSimpleEffect;
   ripples?: StageFloorSimpleEffect;
   energy?: StageFloorSimpleEffect;

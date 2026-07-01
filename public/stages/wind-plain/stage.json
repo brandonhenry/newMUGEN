@@ -14,13 +14,17 @@
     "windStreaks": {
       "enabled": true,
       "intensity": 0.62,
-      "density": 0.66,
-      "size": 0.95,
-      "speed": 1.55,
+      "density": 0.72,
+      "size": 1.05,
+      "speed": 1.7,
       "opacity": 0.36,
-      "windStrength": 0.95,
+      "windStrength": 1.25,
       "color": "#dff8ff",
-      "amount": 190
+      "amount": 280,
+      "quality": "high",
+      "maxParticles": 620,
+      "coverageScale": 1.2,
+      "reactive": false
     }
   },
   "rail": "#d8f7ff",
