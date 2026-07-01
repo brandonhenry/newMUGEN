@@ -6301,7 +6301,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
   audio: ['Menu Music', 'Stage Music', 'Mix'],
-  console: ['Terminal', 'Memory Card']
+  console: ['Terminal', 'Memory Card', 'About']
 };
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
@@ -6956,6 +6956,20 @@ function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCa
             <div><dt>/memorycard copy</dt><dd>Copy card JSON</dd></div>
             <div><dt>/memorycard load</dt><dd>Import pasted JSON</dd></div>
           </dl>
+        </article>
+      </SettingsSection>
+      <SettingsSection index={2} title="About" active={activeSectionIndex === 2} showTitle={false}>
+        <article className="about-kore-panel" aria-label="About game">
+          <div className="about-kore-heading">
+            <img src="/brand/kore-logo-generated.png" alt="Game logo" />
+            <strong>Developed by BG Games.</strong>
+          </div>
+          <p className="about-kore-copy">
+            Disclaimer: Game assets owned by their respective businesses, no copyright infringements intended.
+            This is a fan-based project intended for educational purposes only. This engine is a free-to-play
+            open-source 3D fighting game engine built in the browser. It can run on mobile, iPad, Xbox, PS5,
+            PC, you name it. Full online support and arcade mode. Will you become a KORE fighter?
+          </p>
         </article>
       </SettingsSection>
     </div>
