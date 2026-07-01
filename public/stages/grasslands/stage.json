@@ -13,25 +13,25 @@
   "floorEffects": {
     "grass": {
       "enabled": true,
-      "density": 0.92,
-      "height": 0.22,
-      "patchWidth": 238,
-      "patchDepth": 238,
+      "density": 0.96,
+      "height": 0.24,
+      "patchWidth": 242,
+      "patchDepth": 242,
       "windStrength": 0.2,
-      "windSpeed": 1.1,
+      "windSpeed": 1.05,
       "colorBottom": "#174d25",
       "colorTop": "#8ce05a",
       "quality": "high",
-      "bladeCount": 18000,
-      "bladeWidth": 0.068,
-      "segments": 6,
+      "bladeCount": 21000,
+      "bladeWidth": 0.074,
+      "segments": 5,
       "coverageScale": 1.12,
-      "colorVariation": 0.24,
+      "colorVariation": 0.3,
       "windDirection": [
         1,
         0.28
       ],
-      "windNoiseScale": 0.48
+      "windNoiseScale": 0.46
     }
   },
   "rail": "#bdf76c",
