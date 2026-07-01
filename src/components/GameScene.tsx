@@ -6,7 +6,6 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import type {
@@ -207,9 +206,6 @@ function StagePostProcessing({
     if (disabled) return null;
     const composer = new EffectComposer(gl);
     const renderPass = new RenderPass(scene, camera);
-    const bloomPass = style.post.bloomEnabled
-      ? new UnrealBloomPass(new THREE.Vector2(size.width, size.height), style.post.bloomStrength, style.post.bloomRadius, style.post.bloomThreshold)
-      : null;
     const gradePass = new ShaderPass(AnimeColorGradeShader);
     gradePass.uniforms.uSaturation.value = style.post.saturation;
     gradePass.uniforms.uContrast.value = style.post.contrast;
@@ -218,10 +214,9 @@ function StagePostProcessing({
     gradePass.uniforms.uVignetteStrength.value = style.post.vignetteStrength;
     gradePass.uniforms.uVignetteRadius.value = style.post.vignetteRadius;
     composer.addPass(renderPass);
-    if (bloomPass) composer.addPass(bloomPass);
     composer.addPass(gradePass);
     composer.addPass(new OutputPass());
-    return { composer, bloomPass, gradePass };
+    return { composer, gradePass };
   }, [camera, disabled, gl, scene, size.height, size.width, style]);
 
   useEffect(() => {
@@ -239,17 +234,11 @@ function StagePostProcessing({
 
   useEffect(() => {
     composerSetup?.composer.setSize(size.width, size.height);
-    composerSetup?.bloomPass?.setSize(size.width, size.height);
   }, [composerSetup, size.height, size.width]);
 
   useFrame((_, delta) => {
     if (!composerSetup) return;
     const hitPulse = pulse.current;
-    if (composerSetup.bloomPass) {
-      composerSetup.bloomPass.strength = style.post.bloomStrength + hitPulse * getCombatBloomBoost(impactEvents, style);
-      composerSetup.bloomPass.radius = style.post.bloomRadius + hitPulse * 0.04;
-      composerSetup.bloomPass.threshold = style.post.bloomThreshold;
-    }
     composerSetup.gradePass.uniforms.uHitPulse.value = hitPulse;
     composerSetup.composer.render(delta);
   }, disabled ? 0 : 1);
@@ -278,15 +267,6 @@ function combatPulseForImpact(event: ImpactSparkEvent) {
   if (event.kind === 'punish' || event.kind === 'whiffPunish') return 1;
   if (event.launched || event.juggled || event.tornado || event.kiBurst) return 0.86;
   return 0.68;
-}
-
-function getCombatBloomBoost(events: ImpactSparkEvent[], style: ReturnType<typeof resolveStageVisualStyle>) {
-  const latest = events[events.length - 1];
-  if (!latest) return style.combatFx.hitBloom;
-  if (latest.kind === 'block') return style.combatFx.blockBloom;
-  if (latest.kind === 'punish' || latest.kind === 'whiffPunish') return style.combatFx.punishBloom;
-  if (latest.launched || latest.juggled || latest.tornado || latest.kiBurst) return style.combatFx.launchBloom;
-  return style.combatFx.hitBloom;
 }
 
 function StageCombatFieldFeedback({
@@ -2466,7 +2446,7 @@ function getFighterOutlineStyle(stage?: StageDefinition): FighterOutlineStyle {
   return {
     enabled: style.outline.enabled && style.outline.fighterStrength > 0 && style.outline.fighterThickness > 0,
     color: style.outline.visibleColor,
-    opacity: THREE.MathUtils.clamp(0.58 + style.outline.fighterStrength * 0.08, 0.62, 0.92),
+    opacity: THREE.MathUtils.clamp(0.34 + style.outline.fighterStrength * 0.055, 0.38, 0.58),
     scale: 1 + style.outline.fighterThickness * 0.026
   };
 }
