@@ -932,7 +932,13 @@
     "spacing": 1.46,
     "specialChance": 0.26
   },
-  "animationScales": {},
+  "animationScales": {
+    "crouch": {
+      "width": 0.81,
+      "height": 1,
+      "offsetX": 0
+    }
+  },
   "unplayable": true,
   "hasTransform": false,
   "modelScale": {

@@ -34,12 +34,12 @@ def main():
     meshes = visible_meshes()
     before_bounds = world_bounds(meshes)
     normalize_scene(stage_id, before_bounds)
-    bake_visible_mesh_transforms()
-    after_bounds = world_bounds(visible_meshes())
+    export_meshes = bake_visible_mesh_transforms()
+    after_bounds = world_bounds(export_meshes)
 
     ensure_lighting(stage_id)
     render_preview(stage_id, after_bounds, preview_path)
-    export_glb(output_path)
+    export_glb(output_path, export_meshes)
 
     meta = {
         "source": {
@@ -168,6 +168,7 @@ def prepare_scene_for_stage(stage_id):
             if obj.type != "MESH":
                 continue
             name = obj.name.lower()
+            mesh_name = obj.data.name.lower() if obj.data else ""
             dims = obj.dimensions
             max_dim = max(dims)
             center = object_center(obj)
@@ -175,6 +176,8 @@ def prepare_scene_for_stage(stage_id):
             in_village_crop = -260 <= center.x <= 260 and -240 <= center.y <= 230
             hide = (
                 "sky" in name
+                or name.startswith("quad")
+                or mesh_name.startswith("plane.")
                 or name.startswith("naruto_room")
                 or name.startswith("ki")
                 or name.startswith("ha00")
@@ -203,21 +206,48 @@ def prepare_scene_for_stage(stage_id):
 
 
 def object_center(obj):
-    return sum((obj.matrix_world @ Vector(corner) for corner in obj.bound_box), Vector()) / 8
+    bounds = object_world_bounds(obj)
+    if bounds is None:
+        return obj.matrix_world.translation
+    return bounds["center"]
 
 
 def world_bounds(objects):
     mins = Vector((math.inf, math.inf, math.inf))
     maxs = Vector((-math.inf, -math.inf, -math.inf))
     for obj in objects:
-        for corner in obj.bound_box:
-            world_corner = obj.matrix_world @ Vector(corner)
-            mins.x = min(mins.x, world_corner.x)
-            mins.y = min(mins.y, world_corner.y)
-            mins.z = min(mins.z, world_corner.z)
-            maxs.x = max(maxs.x, world_corner.x)
-            maxs.y = max(maxs.y, world_corner.y)
-            maxs.z = max(maxs.z, world_corner.z)
+        bounds = object_world_bounds(obj)
+        if bounds is None:
+            continue
+        mins.x = min(mins.x, bounds["min"].x)
+        mins.y = min(mins.y, bounds["min"].y)
+        mins.z = min(mins.z, bounds["min"].z)
+        maxs.x = max(maxs.x, bounds["max"].x)
+        maxs.y = max(maxs.y, bounds["max"].y)
+        maxs.z = max(maxs.z, bounds["max"].z)
+    if not math.isfinite(mins.x):
+        raise SystemExit("No valid mesh vertex bounds found in the Blender scene.")
+    center = (mins + maxs) * 0.5
+    size = maxs - mins
+    return {"min": mins, "max": maxs, "center": center, "size": size}
+
+
+def object_world_bounds(obj):
+    if obj.type != "MESH" or not obj.data.vertices:
+        return None
+
+    obj.data.update()
+    mins = Vector((math.inf, math.inf, math.inf))
+    maxs = Vector((-math.inf, -math.inf, -math.inf))
+    for vertex in obj.data.vertices:
+        world_vertex = obj.matrix_world @ vertex.co
+        mins.x = min(mins.x, world_vertex.x)
+        mins.y = min(mins.y, world_vertex.y)
+        mins.z = min(mins.z, world_vertex.z)
+        maxs.x = max(maxs.x, world_vertex.x)
+        maxs.y = max(maxs.y, world_vertex.y)
+        maxs.z = max(maxs.z, world_vertex.z)
+
     center = (mins + maxs) * 0.5
     size = maxs - mins
     return {"min": mins, "max": maxs, "center": center, "size": size}
@@ -245,6 +275,7 @@ def bake_visible_mesh_transforms():
     export_collection = bpy.data.collections.new("KORE_export_stage")
     bpy.context.scene.collection.children.link(export_collection)
     source_objects = visible_meshes()
+    baked_objects = []
 
     for obj in source_objects:
         evaluated = obj.evaluated_get(depsgraph)
@@ -259,19 +290,32 @@ def bake_visible_mesh_transforms():
         baked.hide_render = False
         baked.hide_viewport = False
         export_collection.objects.link(baked)
+        baked_objects.append(baked)
 
     for obj in source_objects:
         obj.hide_render = True
         obj.hide_viewport = True
 
     bpy.context.view_layer.update()
+    return baked_objects
 
 
 def optimize_stage_meshes(stage_id):
     if stage_id != "hidden-leaf-village":
         return
+    remove_unneeded_material_slots()
     auto_retopology_stage_meshes(stage_id)
     decimate_stage_meshes(stage_id)
+
+
+def remove_unneeded_material_slots():
+    for obj in visible_meshes():
+        if not obj.data.materials:
+            continue
+        used_slots = {poly.material_index for poly in obj.data.polygons}
+        for index in range(len(obj.data.materials) - 1, -1, -1):
+            if index not in used_slots:
+                obj.data.materials.pop(index=index)
 
 
 def auto_retopology_stage_meshes(stage_id):
@@ -316,7 +360,7 @@ def auto_retopology_stage_meshes(stage_id):
 
 
 def should_quadriflow_retopology(obj):
-    mode = os.environ.get("KORE_RETOPO_MODE", "safe").lower()
+    mode = os.environ.get("KORE_RETOPO_MODE", "off").lower()
     if mode in {"off", "false", "0"}:
         return False
     faces = len(obj.data.polygons)
@@ -345,24 +389,56 @@ def has_image_texture_material(obj):
 def decimate_stage_meshes(stage_id):
     if stage_id != "hidden-leaf-village":
         return
+    mode = os.environ.get("KORE_DECIMATE_MODE", "safe").lower()
+    if mode in {"off", "false", "0", "none"}:
+        return
+    try:
+        ratio = float(os.environ.get("KORE_DECIMATE_RATIO", "0.18"))
+    except ValueError:
+        ratio = 0.18
+    ratio = max(0.04, min(0.85, ratio))
     for obj in visible_meshes():
         if len(obj.data.polygons) < 900:
             continue
+        before_bounds = object_world_bounds(obj)
+        if before_bounds is None:
+            continue
+        before_mesh = obj.data.copy()
         if obj.data.shape_keys:
             obj.shape_key_clear()
         modifier = obj.modifiers.new("KORE_runtime_decimate", "DECIMATE")
-        modifier.ratio = 0.05
+        modifier.ratio = ratio
         modifier.use_collapse_triangulate = True
         bpy.ops.object.select_all(action="DESELECT")
         bpy.context.view_layer.objects.active = obj
         obj.select_set(True)
         try:
             bpy.ops.object.modifier_apply(modifier=modifier.name)
+            after_bounds = object_world_bounds(obj)
+            if not decimation_bounds_are_valid(before_bounds, after_bounds):
+                bad_mesh = obj.data
+                obj.data = before_mesh
+                bpy.data.meshes.remove(bad_mesh)
+                print(f"KORE decimate reverted {obj.name}: bounds expanded outside safe limits")
+            else:
+                bpy.data.meshes.remove(before_mesh)
         except Exception:
             obj.modifiers.remove(modifier)
+            bpy.data.meshes.remove(before_mesh)
         finally:
             obj.select_set(False)
     bpy.context.view_layer.update()
+
+
+def decimation_bounds_are_valid(before_bounds, after_bounds):
+    if after_bounds is None:
+        return False
+    before_size = before_bounds["size"]
+    after_size = after_bounds["size"]
+    before_max = max(before_size.x, before_size.y, before_size.z, 0.001)
+    after_max = max(after_size.x, after_size.y, after_size.z)
+    center_shift = (after_bounds["center"] - before_bounds["center"]).length
+    return after_max <= before_max * 1.35 and center_shift <= before_max * 0.25
 
 
 def ensure_lighting(stage_id):
@@ -416,15 +492,16 @@ def render_preview(stage_id, bounds, preview_path):
     bpy.context.collection.objects.link(camera)
     scene.camera = camera
 
+    center = bounds["center"]
     footprint = max(bounds["size"].x, bounds["size"].y, 1.0)
     height = max(bounds["size"].z, 2.0)
     if stage_id == "hidden-leaf-village":
-        location = Vector((footprint * 0.28, -footprint * 0.72, height * 0.92 + 16.0))
-        target = Vector((0, 0, height * 0.26))
+        location = center + Vector((footprint * 0.28, -footprint * 0.72, height * 0.92 + 16.0))
+        target = Vector((center.x, center.y, bounds["min"].z + height * 0.26))
         camera.data.lens = 24
     else:
-        location = Vector((footprint * 0.22, -footprint * 0.76, height * 0.86 + 3.4))
-        target = Vector((0, 0, height * 0.34))
+        location = center + Vector((footprint * 0.22, -footprint * 0.76, height * 0.86 + 3.4))
+        target = Vector((center.x, center.y, bounds["min"].z + height * 0.34))
         camera.data.lens = 22
 
     camera.location = location
@@ -441,10 +518,10 @@ def look_at(obj, target):
     obj.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
 
 
-def export_glb(output_path):
+def export_glb(output_path, export_objects=None):
     for obj in bpy.context.scene.objects:
         obj.select_set(False)
-    export_objects = visible_meshes()
+    export_objects = export_objects or visible_meshes()
     if not export_objects:
         raise SystemExit("No visible mesh objects selected for glTF export.")
     for obj in export_objects:

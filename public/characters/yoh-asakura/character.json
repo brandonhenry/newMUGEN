@@ -986,7 +986,13 @@
     }
   },
   "unplayable": false,
-  "animationScales": {},
+  "animationScales": {
+    "crouch": {
+      "width": 0.62,
+      "height": 1,
+      "offsetX": 0
+    }
+  },
   "hasTransform": false,
   "modelScale": {
     "width": 0.8,

@@ -105,12 +105,12 @@
   "camera": {
     "previewPosition": [
       24,
-      18,
-      56
+      24,
+      64
     ],
     "previewTarget": [
       0,
-      2.7,
+      3.2,
       0
     ],
     "target": [
@@ -126,8 +126,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/hidden-leaf-village/stage.glb?v=mr28mzva-1ldyqk",
-    "url": "/stages/hidden-leaf-village/stage.glb?v=mr28mzva-1ldyqk",
+    "path": "/stages/hidden-leaf-village/stage.glb?v=mr2behj4-d3n0s",
+    "url": "/stages/hidden-leaf-village/stage.glb?v=mr2behj4-d3n0s",
     "format": "glb",
     "position": [
       0,
@@ -135,9 +135,9 @@
       0
     ],
     "scale": [
-      6.6,
-      6.6,
-      6.6
+      1,
+      1,
+      1
     ],
     "rotation": [
       0,
@@ -146,7 +146,7 @@
     ],
     "focus": [
       0,
-      2.1,
+      3.2,
       0
     ],
     "castShadow": true,
@@ -154,15 +154,15 @@
     "bounds": {
       "center": [
         0,
-        21.1463,
+        8.3965,
         0
       ],
       "size": [
-        71.4069,
-        42.2926,
+        67.71,
+        16.793,
         72
       ],
-      "radius": 54.9354
+      "radius": 50.1264
     }
   },
   "mugen": {
@@ -173,46 +173,46 @@
       "meshCount": 1592,
       "boundsBeforeNormalize": {
         "min": [
-          -4835.7944,
+          -385.1454,
           -332.7096,
-          -3039.8843
+          -144.6774
         ],
         "max": [
           364.8689,
-          4911.1504,
-          40.348
+          464.8249,
+          41.3359
         ],
         "center": [
-          -2235.4629,
-          2289.2205,
-          -1499.7682
+          -10.1383,
+          66.0576,
+          -51.6707
         ],
         "size": [
-          5200.6631,
-          5243.8599,
-          3080.2322
+          750.0143,
+          797.5345,
+          186.0133
         ]
       },
       "boundsAfterNormalize": {
         "min": [
-          -35.7034,
+          -33.855,
           -36,
           0
         ],
         "max": [
-          35.7034,
+          33.855,
           36,
-          42.2926
+          16.793
         ],
         "center": [
           0,
           0,
-          21.1463
+          8.3965
         ],
         "size": [
-          71.4069,
+          67.71,
           72,
-          42.2926
+          16.793
         ]
       }
     }

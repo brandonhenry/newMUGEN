@@ -1022,7 +1022,13 @@
       "farStep": 2
     }
   },
-  "animationScales": {},
+  "animationScales": {
+    "crouch": {
+      "width": 0.7,
+      "height": 1,
+      "offsetX": 0
+    }
+  },
   "unplayable": false,
   "animationFrameScales": {
     "cmd:2+3": {

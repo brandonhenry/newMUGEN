@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -51,6 +51,45 @@ const defaultCameraSettings: GameSettings['camera'] = {
 
 const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
 const MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
+const FIXED_STAGE_PREVIEW_CAMERA_POSITION: [number, number, number] = [24, 24, 64];
+const FIXED_STAGE_PREVIEW_TARGET: [number, number, number] = [0, 3.2, 0];
+const FIXED_STAGE_PREVIEW_FOV = 38;
+const MODEL_STAGE_VISIBILITY_HYPOTHESES = [
+  'H19 model scene bounds are empty/collapsed after GLTF parse',
+  'H20 manifest transform places the model outside the preview/fight camera',
+  'H21 manifest bounds disagree with runtime GLTF bounds',
+  'H22 camera frustum does not intersect the transformed model bounds',
+  'H23 StagePreviewCamera is aiming at the wrong target for model stages',
+  'H24 loaded meshes are hidden, on disabled layers, or have invisible parents',
+  'H25 materials are transparent/zero-opacity/depth-disabled after normalization',
+  'H26 texture maps failed to attach or image dimensions are unusable',
+  'H27 geometries contain no position attributes or no triangles',
+  'H28 another stage surface/effect is visually occluding the model'
+];
+const MODEL_STAGE_WORLD_HYPOTHESES = [
+  'H29 model is being scaled or shifted by the preview wrapper',
+  'H30 skybox/backdrop renders over the GLB',
+  'H31 fog makes the GLB indistinguishable from the sky',
+  'H32 orbit controls clamp the camera too close or aim at the wrong target',
+  'H33 imported model materials still participate in fog/depth weirdness',
+  'H34 the fight-lane marker is hiding the center of the model',
+  'H35 the model is present but behind the camera after wrapper transforms',
+  'H36 the GLB is loaded into a group that is not attached at world origin',
+  'H37 the editor preview camera differs from the game camera',
+  'H38 a non-model preview surface is still being rendered in the model path'
+];
+const MODEL_STAGE_INSERTION_HYPOTHESES = [
+  'H39 imported helper quads are covering the actual village geometry',
+  'H40 the model visual floor is vertically offset from the playable floor',
+  'H41 hidden meshes still contribute to bounds or raycasts',
+  'H42 the center fight lane is on an empty source helper plane',
+  'H43 the GLB node transform bakes village geometry above the world origin',
+  'H44 preview raycasts are hitting a wrapper instead of a real mesh',
+  'H45 the real village is visible only after excluding source guide meshes',
+  'H46 the marker needs to live on the game floor while the model is grounded to it',
+  'H47 the fight camera had model-only distance changes that made maps feel inconsistent',
+  'H48 transformed insertion bounds must be checked after all scrub/ground steps'
+];
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
   if (!import.meta.env.DEV) return;
@@ -80,6 +119,240 @@ function resolveStageModel(stage: StageDefinition): StageModelDefinition | undef
   };
 }
 
+function roundDebugNumber(value: number, decimals = 4) {
+  if (!Number.isFinite(value)) return value;
+  const factor = 10 ** decimals;
+  return Math.round(value * factor) / factor;
+}
+
+function vectorToDebugArray(vector: THREE.Vector3) {
+  return [roundDebugNumber(vector.x), roundDebugNumber(vector.y), roundDebugNumber(vector.z)];
+}
+
+function tupleToVector(tuple: [number, number, number] | undefined, fallback: [number, number, number]) {
+  return new THREE.Vector3(...(tuple ?? fallback));
+}
+
+function boxToDebugPayload(box: THREE.Box3) {
+  const size = new THREE.Vector3();
+  const center = new THREE.Vector3();
+  box.getSize(size);
+  box.getCenter(center);
+  return {
+    empty: box.isEmpty(),
+    min: vectorToDebugArray(box.min),
+    max: vectorToDebugArray(box.max),
+    center: vectorToDebugArray(center),
+    size: vectorToDebugArray(size),
+    radius: roundDebugNumber(size.length() * 0.5)
+  };
+}
+
+function getGeometryTriangleCount(geometry: THREE.BufferGeometry) {
+  const indexCount = geometry.index?.count;
+  if (typeof indexCount === 'number') return Math.floor(indexCount / 3);
+  const positionCount = geometry.getAttribute('position')?.count;
+  return typeof positionCount === 'number' ? Math.floor(positionCount / 3) : 0;
+}
+
+function meshMaterials(mesh: THREE.Mesh) {
+  return (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).filter(Boolean) as THREE.Material[];
+}
+
+function materialHasColorOrTexture(material: THREE.Material) {
+  const mapped = material as THREE.Material & {
+    color?: THREE.Color;
+    map?: THREE.Texture | null;
+    emissiveMap?: THREE.Texture | null;
+    normalMap?: THREE.Texture | null;
+  };
+  return Boolean(mapped.map ?? mapped.emissiveMap ?? mapped.normalMap) || Boolean(mapped.color);
+}
+
+function objectDebugPath(object: THREE.Object3D) {
+  const names: string[] = [];
+  let current: THREE.Object3D | null = object;
+  while (current && names.length < 6) {
+    names.unshift(current.name || current.type);
+    current = current.parent;
+  }
+  return names.join(' > ');
+}
+
+function isDescendantOf(object: THREE.Object3D, root: THREE.Object3D) {
+  let current: THREE.Object3D | null = object;
+  while (current) {
+    if (current === root) return true;
+    current = current.parent;
+  }
+  return false;
+}
+
+function isEffectivelyVisible(object: THREE.Object3D) {
+  let current: THREE.Object3D | null = object;
+  while (current) {
+    if (!current.visible) return false;
+    current = current.parent;
+  }
+  return true;
+}
+
+function computeVisibleModelBounds(root: THREE.Object3D) {
+  const bounds = new THREE.Box3();
+  root.updateMatrixWorld(true);
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh || !mesh.geometry?.getAttribute('position') || !isEffectivelyVisible(mesh)) return;
+    const meshBounds = new THREE.Box3().setFromObject(mesh);
+    if (!meshBounds.isEmpty()) bounds.union(meshBounds);
+  });
+  return bounds;
+}
+
+function getStageModelMeshHideReason(mesh: THREE.Mesh, stageId: string) {
+  if (stageId !== 'hidden-leaf-village') return null;
+  const meshName = mesh.name || '';
+  const parentName = mesh.parent?.name || '';
+  const materials = meshMaterials(mesh);
+  const hasMaterialSignal = materials.some(materialHasColorOrTexture);
+  if (parentName === 'KORE_export_Quad_a' || meshName === 'Plane.067') return 'source-helper-ground-quad';
+  if (/^KORE_export_Quad/i.test(parentName) && !hasMaterialSignal) return 'source-helper-quad';
+  mesh.geometry.computeBoundingBox();
+  const localBounds = mesh.geometry.boundingBox;
+  if (!localBounds) return null;
+  const size = new THREE.Vector3();
+  localBounds.getSize(size);
+  const maxSize = Math.max(size.x, size.y, size.z);
+  const minSize = Math.min(size.x, size.y, size.z);
+  const flatLargeUnmappedPlane = /^Plane\.\d+$/i.test(meshName) && maxSize > 18 && minSize < 0.05 && !hasMaterialSignal;
+  if (flatLargeUnmappedPlane) return 'large-unmapped-plane';
+  return null;
+}
+
+function prepareStageModelSceneForRender(root: THREE.Object3D, stageId: string) {
+  const hiddenSamples: Array<Record<string, unknown>> = [];
+  let hiddenMeshCount = 0;
+  root.updateMatrixWorld(true);
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const reason = getStageModelMeshHideReason(mesh, stageId);
+    if (!reason) return;
+    mesh.visible = false;
+    hiddenMeshCount += 1;
+    if (hiddenSamples.length < 12) {
+      hiddenSamples.push({
+        reason,
+        name: mesh.name || mesh.type,
+        path: objectDebugPath(mesh),
+        triangles: mesh.geometry ? getGeometryTriangleCount(mesh.geometry) : 0
+      });
+    }
+  });
+  const visibleBounds = computeVisibleModelBounds(root);
+  return {
+    hiddenMeshCount,
+    hiddenSamples,
+    visibleBounds
+  };
+}
+
+function textureDebugPayload(texture: THREE.Texture | null | undefined) {
+  if (!texture) return null;
+  const image = texture.image as { width?: number; height?: number; complete?: boolean } | undefined;
+  return {
+    uuid: texture.uuid,
+    name: texture.name,
+    loaded: Boolean(image),
+    width: image?.width ?? null,
+    height: image?.height ?? null,
+    complete: image?.complete ?? null
+  };
+}
+
+function inspectModelObjectTree(root: THREE.Object3D) {
+  const stats = {
+    objectCount: 0,
+    visibleObjectCount: 0,
+    hiddenObjectCount: 0,
+    meshCount: 0,
+    visibleMeshCount: 0,
+    hiddenMeshCount: 0,
+    geometryCount: 0,
+    geometryWithPositionCount: 0,
+    geometryWithoutPositionCount: 0,
+    triangleCount: 0,
+    materialSlotCount: 0,
+    transparentMaterialCount: 0,
+    zeroOpacityMaterialCount: 0,
+    depthWriteDisabledCount: 0,
+    mapCount: 0,
+    loadedMapCount: 0,
+    missingMapImageCount: 0,
+    layerMaskSamples: [] as number[],
+    hiddenSamples: [] as string[],
+    materialSamples: [] as Array<Record<string, unknown>>,
+    textureSamples: [] as Array<Record<string, unknown>>
+  };
+  root.traverse((object) => {
+    stats.objectCount += 1;
+    if (object.visible) {
+      stats.visibleObjectCount += 1;
+    } else {
+      stats.hiddenObjectCount += 1;
+      if (stats.hiddenSamples.length < 8) stats.hiddenSamples.push(object.name || object.uuid);
+    }
+    if (stats.layerMaskSamples.length < 8 && !stats.layerMaskSamples.includes(object.layers.mask)) {
+      stats.layerMaskSamples.push(object.layers.mask);
+    }
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    stats.meshCount += 1;
+    if (mesh.visible) stats.visibleMeshCount += 1;
+    else stats.hiddenMeshCount += 1;
+    if (mesh.geometry) {
+      stats.geometryCount += 1;
+      if (mesh.geometry.getAttribute('position')) stats.geometryWithPositionCount += 1;
+      else stats.geometryWithoutPositionCount += 1;
+      stats.triangleCount += getGeometryTriangleCount(mesh.geometry);
+    }
+    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    materials.forEach((material) => {
+      if (!material) return;
+      stats.materialSlotCount += 1;
+      const mapped = material as THREE.Material & { opacity?: number; map?: THREE.Texture | null; alphaMap?: THREE.Texture | null };
+      if (material.transparent) stats.transparentMaterialCount += 1;
+      if ((mapped.opacity ?? 1) <= 0.001) stats.zeroOpacityMaterialCount += 1;
+      if (material.depthWrite === false) stats.depthWriteDisabledCount += 1;
+      const textures = [mapped.map, mapped.alphaMap].filter(Boolean) as THREE.Texture[];
+      textures.forEach((texture) => {
+        stats.mapCount += 1;
+        const image = texture.image as { width?: number; height?: number } | undefined;
+        if (image?.width && image?.height) stats.loadedMapCount += 1;
+        else stats.missingMapImageCount += 1;
+        if (stats.textureSamples.length < 8) {
+          const sample = textureDebugPayload(texture);
+          if (sample) stats.textureSamples.push(sample);
+        }
+      });
+      if (stats.materialSamples.length < 8) {
+        stats.materialSamples.push({
+          name: material.name,
+          type: material.type,
+          transparent: material.transparent,
+          opacity: roundDebugNumber(mapped.opacity ?? 1),
+          depthWrite: material.depthWrite,
+          depthTest: material.depthTest,
+          side: material.side,
+          hasMap: Boolean(mapped.map),
+          hasAlphaMap: Boolean(mapped.alphaMap)
+        });
+      }
+    });
+  });
+  return stats;
+}
+
 const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
   enabled: true,
   shape: 'burst',
@@ -97,7 +370,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <Suspense fallback={null}>
         <Environment preset="city" />
       </Suspense>
-      <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
+      {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
       <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
       <CameraRig match={match} settings={cameraSettings} />
       <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
@@ -169,12 +442,15 @@ function StageVisualStyleRig({
 }) {
   const style = resolveStageVisualStyle(stage);
   const previewScale = preview ? 0.82 : 1;
+  const modelStage = isModelStage(stage);
+  const fogNear = modelStage ? Math.max(style.lighting.fogNear, preview ? 80 : 44) : style.lighting.fogNear;
+  const fogFar = modelStage ? Math.max(style.lighting.fogFar, preview ? 620 : 260) : style.lighting.fogFar;
 
   const [fighterA, fighterB] = fighters ?? [];
   return (
     <>
       <color attach="background" args={[style.lighting.backgroundColor]} />
-      <fog attach="fog" args={[style.lighting.fogColor, style.lighting.fogNear, style.lighting.fogFar]} />
+      {modelStage ? null : <fog attach="fog" args={[style.lighting.fogColor, fogNear, fogFar]} />}
       {style.lighting.ambientMode === 'hemisphere' ? (
         <hemisphereLight color={style.lighting.skyColor} groundColor={style.lighting.groundColor} intensity={style.lighting.hemiIntensity * previewScale} />
       ) : (
@@ -911,6 +1187,8 @@ type StagePreviewCanvasProps = {
 
 export function StagePreviewCanvas({ stage, interactive = false, selectedPropId, onSelectProp }: StagePreviewCanvasProps) {
   const modelStage = isModelStage(stage);
+  const previewMaxDistance = Math.max(96, (stage.model?.bounds?.radius ?? 42) * 1.8);
+  const previewMinDistance = 5;
   useEffect(() => {
     logStageModelDebug('H9 StagePreviewCanvas classified stage', {
       stageId: stage.id,
@@ -930,10 +1208,10 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
       data-testid={`stage-preview-canvas-${stage.id}`}
       aria-label={`${stage.name} stage preview`}
     >
-      <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
+      {!modelStage && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
       <StageVisualStyleRig stage={stage} preview />
       <StagePreviewCamera stage={stage} />
-      <group position={[0, -0.05, 0]} scale={0.82}>
+      <group position={modelStage ? [0, 0, 0] : [0, -0.05, 0]} scale={modelStage ? 1 : 0.82}>
         <Arena stage={stage} selectedPropId={selectedPropId} onSelectProp={onSelectProp} />
       </group>
       {interactive && (
@@ -943,9 +1221,9 @@ export function StagePreviewCanvas({ stage, interactive = false, selectedPropId,
           enablePan
           enableRotate
           enableZoom
-          minDistance={5}
-          maxDistance={32}
-          target={[0, 0.8, -2.4]}
+          minDistance={previewMinDistance}
+          maxDistance={previewMaxDistance}
+          target={FIXED_STAGE_PREVIEW_TARGET}
         />
       )}
     </Canvas>
@@ -956,16 +1234,25 @@ function StagePreviewCamera({ stage }: { stage: StageDefinition }) {
   const { camera, invalidate } = useThree();
   useEffect(() => {
     const modelStage = isModelStage(stage);
-    const position = stage.camera?.previewPosition ?? (modelStage ? [0, 6.6, 11.2] : undefined);
-    const target = stage.camera?.previewTarget ?? stage.model?.focus ?? [0, 0.2, -0.8];
-    if (position) camera.position.set(position[0], position[1], position[2]);
-    if (stage.camera?.fov && 'fov' in camera) camera.fov = stage.camera.fov;
+    const position = FIXED_STAGE_PREVIEW_CAMERA_POSITION;
+    const target = FIXED_STAGE_PREVIEW_TARGET;
+    camera.position.set(position[0], position[1], position[2]);
+    if ('fov' in camera) camera.fov = FIXED_STAGE_PREVIEW_FOV;
     camera.near = 0.05;
-    camera.far = modelStage ? 1200 : 300;
+    camera.far = 1200;
     camera.lookAt(target[0], target[1], target[2]);
     camera.updateProjectionMatrix();
+    logStageModelDebug('H23/H37 fixed StagePreviewCamera applied', {
+      stageId: stage.id,
+      modelStage,
+      cameraPosition: vectorToDebugArray(camera.position),
+      target,
+      near: camera.near,
+      far: camera.far,
+      fov: 'fov' in camera ? roundDebugNumber(camera.fov) : null
+    });
     invalidate();
-  }, [camera, invalidate, stage.camera?.fov, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.model?.focus, stage.renderMode]);
+  }, [camera, invalidate, stage.id, stage.renderMode]);
   return null;
 }
 
@@ -992,7 +1279,7 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
 export function MenuAttractScene({ match }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
-      <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
+      {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
       <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
       <MenuAttractCamera match={match} />
       <group position={[0, 0, 1.75]}>
@@ -1728,14 +2015,14 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       const cameraX = rawSide.x;
       const cameraZ = rawSide.z;
       const cameraDistance = THREE.MathUtils.clamp(
-        4.3 * settings.distance * settings.zoomBias * (modelStageCamera ? 1.35 : 1),
-        modelStageCamera ? 6.4 : MIN_CLASH_CAMERA_DISTANCE,
-        modelStageCamera ? 9.8 : 6.6
+        4.3 * settings.distance * settings.zoomBias,
+        MIN_CLASH_CAMERA_DISTANCE,
+        6.6
       );
       desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
       camera.position.lerp(desired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
       target.set(contactX, Math.max(1.12, contactY), contactZ);
-      enforceCameraHorizontalDistance(camera, target, rawSide, modelStageCamera ? 6.4 : MIN_CLASH_CAMERA_DISTANCE);
+      enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
       return;
     }
@@ -1763,16 +2050,16 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const horizontalFit = (distance * 0.5 + 1.55) / Math.tan(horizontalFov / 2);
     const verticalSpan = 2.65 + Math.max(p1y, p2y) * 0.55;
     const verticalFit = verticalSpan / Math.tan(verticalFov / 2);
-    const distanceScale = settings.distance * settings.zoomBias * (modelStageCamera ? 1.55 : 1);
+    const distanceScale = settings.distance * settings.zoomBias;
     const cameraDistance = THREE.MathUtils.clamp(
-      Math.max(horizontalFit, verticalFit, modelStageCamera ? 7.8 : 5.2) * distanceScale,
-      modelStageCamera ? 7.2 : MIN_FIGHT_CAMERA_DISTANCE,
-      modelStageCamera ? 28 : 21
+      Math.max(horizontalFit, verticalFit, 5.2) * distanceScale,
+      MIN_FIGHT_CAMERA_DISTANCE,
+      21
     );
     const cameraHeight = THREE.MathUtils.clamp(
-      (2.35 + cameraDistance * (modelStageCamera ? 0.18 : 0.13) + Math.max(p1y, p2y) * 0.22) * settings.height,
-      modelStageCamera ? 3.15 : 2.2,
-      modelStageCamera ? 8.2 : 6.4
+      (2.35 + cameraDistance * 0.13 + Math.max(p1y, p2y) * 0.22) * settings.height,
+      2.2,
+      6.4
     );
 
     rawFocus.set(midX, 0, midZ);
@@ -1802,7 +2089,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       focus.z + side.z * cameraDistanceRef.current
     );
     camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
-    enforceCameraHorizontalDistance(camera, lookFocus, side, modelStageCamera ? 7.2 : MIN_FIGHT_CAMERA_DISTANCE);
+    enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
   });
   return null;
@@ -1932,6 +2219,10 @@ function ModelStage({
     });
   }, [modelDefinition, modelPath, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
   useEffect(() => {
+    logStageModelDebug('H29-H38 model world insertion hypotheses registered', {
+      stageId: stage.id,
+      hypotheses: MODEL_STAGE_WORLD_HYPOTHESES
+    });
     if (!modelPath || !import.meta.env.DEV) return;
     let cancelled = false;
     const startedAt = performance.now();
@@ -1972,7 +2263,6 @@ function ModelStage({
         <StageModelScene stage={stage} modelDefinition={modelDefinition} />
       </Suspense>
       <ModelStageFightLane stage={stage} />
-      <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
       {(modelDefinition?.decorativeProps ?? []).filter((prop) => !prop.hidden).map((prop) => (
         <StagePropPlane key={prop.id} prop={prop} selected={prop.id === selectedPropId} onSelectProp={onSelectProp} />
       ))}
@@ -1983,20 +2273,32 @@ function ModelStage({
 function ModelStageFightLane({ stage }: { stage: StageDefinition }) {
   const radius = stage.safePlatform?.radius ?? Math.max(5, Math.min(stage.fightPlane?.width ?? 12, stage.fightPlane?.depth ?? 8) * 0.5);
   const y = (stage.world?.floorY ?? -0.045) + 0.035;
+  const p1 = stage.spawns?.p1 ?? [-3.2, 0, 0];
+  const p2 = stage.spawns?.p2 ?? [3.2, 0, 0];
   return (
     <group renderOrder={9}>
       <mesh position={[0, y, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
         <circleGeometry args={[radius, 8]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.1} depthWrite={false} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.08} depthWrite={false} fog={false} />
       </mesh>
       <mesh position={[0, y + 0.004, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
         <ringGeometry args={[radius * 0.985, radius * 1.015, 8]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.58} depthWrite={false} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.7} depthWrite={false} fog={false} />
       </mesh>
       <mesh position={[0, y + 0.008, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 8]}>
         <ringGeometry args={[4.45, 4.82, 8]} />
-        <meshBasicMaterial color={stage.rail} transparent opacity={0.32} depthWrite={false} />
+        <meshBasicMaterial color={stage.rail} transparent opacity={0.42} depthWrite={false} fog={false} />
       </mesh>
+      <mesh position={[0, y + 0.012, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+        <planeGeometry args={[0.12, Math.min(radius * 1.75, 24)]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.62} depthWrite={false} fog={false} />
+      </mesh>
+      {[p1, p2].map((spawn, index) => (
+        <mesh key={`model-stage-spawn-${index}`} position={[spawn[0], y + 0.018, spawn[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[0.62, 0.82, 40]} />
+          <meshBasicMaterial color={index === 0 ? '#35e6ff' : '#ffbf2f'} transparent opacity={0.9} depthWrite={false} fog={false} />
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -2033,58 +2335,215 @@ function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
 
 function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; modelDefinition: StageModelDefinition }) {
   const modelPath = modelDefinition?.path ?? modelDefinition?.url ?? '';
+  const modelGroupRef = useRef<THREE.Group>(null);
   const requestStartedAtRef = useRef(performance.now());
-  logStageModelDebug('H10 StageModelScene useGLTF requested', {
-    stageId: stage.id,
-    renderMode: stage.renderMode,
-    modelPath
-  });
-  const gltf = useGLTF(modelPath);
-  const resolveMs = Math.round(performance.now() - requestStartedAtRef.current);
-  logStageModelDebug('H10 StageModelScene useGLTF resolved', {
-    stageId: stage.id,
-    renderMode: stage.renderMode,
-    modelPath,
-    childCount: gltf.scene.children.length,
-    resolveMs
-  });
+  const gltfRequestPath = useMemo(() => {
+    requestStartedAtRef.current = performance.now();
+    logStageModelDebug('H10 StageModelScene useGLTF requested', {
+      stageId: stage.id,
+      renderMode: stage.renderMode,
+      modelPath
+    });
+    return modelPath;
+  }, [modelPath, stage.id, stage.renderMode]);
+  const gltf = useGLTF(gltfRequestPath);
+  useEffect(() => {
+    logStageModelDebug('H10 StageModelScene useGLTF resolved', {
+      stageId: stage.id,
+      renderMode: stage.renderMode,
+      modelPath,
+      childCount: gltf.scene.children.length,
+      resolveMs: Math.round(performance.now() - requestStartedAtRef.current)
+    });
+  }, [gltf.scene, modelPath, stage.id, stage.renderMode]);
   const scene = useMemo(() => clone(gltf.scene) as THREE.Object3D, [gltf.scene]);
-  const position = modelDefinition?.position ?? [0, 0, 0];
+  const basePosition = modelDefinition?.position ?? [0, 0, 0];
   const scale = modelDefinition?.scale ?? [1, 1, 1];
   const rotation = modelDefinition?.rotation ?? [0, 0, 0];
+  const scenePreparation = useMemo(() => prepareStageModelSceneForRender(scene, stage.id), [scene, stage.id]);
+  const position = useMemo<[number, number, number]>(() => {
+    const floorY = stage.world?.floorY ?? 0;
+    const scaleY = scale[1] ?? 1;
+    const transformedVisibleMinY = scenePreparation.visibleBounds.min.y * scaleY + (basePosition[1] ?? 0);
+    const shouldGroundVisibleModel =
+      !scenePreparation.visibleBounds.isEmpty() &&
+      stage.id === 'hidden-leaf-village' &&
+      Math.abs(transformedVisibleMinY - floorY) > 1.5;
+    const groundOffsetY = shouldGroundVisibleModel ? floorY - transformedVisibleMinY : 0;
+    return [basePosition[0] ?? 0, (basePosition[1] ?? 0) + groundOffsetY, basePosition[2] ?? 0];
+  }, [basePosition, scale, scenePreparation.visibleBounds, stage.id, stage.world?.floorY]);
+  const sourceInspection = useMemo(() => {
+    const sourceBounds = new THREE.Box3().setFromObject(gltf.scene);
+    return {
+      bounds: boxToDebugPayload(sourceBounds),
+      tree: inspectModelObjectTree(gltf.scene)
+    };
+  }, [gltf.scene]);
 
   useEffect(() => {
     scene.traverse((object) => {
       const mesh = object as THREE.Mesh;
       if (!mesh.isMesh) return;
+      if (!mesh.visible) return;
       mesh.castShadow = modelDefinition?.castShadow !== false;
       mesh.receiveShadow = modelDefinition?.receiveShadow !== false;
-      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-      mesh.material = materials.map((material) => normalizeStageModelMaterial(material)).filter(Boolean) as THREE.Material | THREE.Material[];
+      const materials = meshMaterials(mesh);
+      mesh.material = materials.map((material) => normalizeStageModelMaterial(material, stage.id)).filter(Boolean) as THREE.Material | THREE.Material[];
     });
     return () => {
       scene.traverse((object) => {
         const mesh = object as THREE.Mesh;
         if (!mesh.isMesh) return;
-        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        const materials = meshMaterials(mesh);
         materials.forEach((material) => material?.dispose());
       });
     };
-  }, [modelDefinition?.castShadow, modelDefinition?.receiveShadow, scene]);
+  }, [modelDefinition?.castShadow, modelDefinition?.receiveShadow, scene, stage.id]);
 
-  return <primitive object={scene} position={position} scale={scale} rotation={rotation} />;
+  useEffect(() => {
+    const cloneBounds = new THREE.Box3().setFromObject(scene);
+    const transformedProbe = new THREE.Object3D();
+    transformedProbe.position.copy(tupleToVector(position, [0, 0, 0]));
+    transformedProbe.scale.copy(tupleToVector(scale, [1, 1, 1]));
+    transformedProbe.rotation.set(...rotation);
+    transformedProbe.updateMatrixWorld(true);
+    const transformedBounds = cloneBounds.clone().applyMatrix4(transformedProbe.matrixWorld);
+    const visibleTransformedBounds = scenePreparation.visibleBounds.clone().applyMatrix4(transformedProbe.matrixWorld);
+    const manifestBounds = modelDefinition.bounds;
+    const manifestCenter = tupleToVector(manifestBounds?.center, [0, 0, 0]);
+    const manifestSize = tupleToVector(manifestBounds?.size, [0, 0, 0]);
+    const transformedSize = new THREE.Vector3();
+    const transformedCenter = new THREE.Vector3();
+    transformedBounds.getSize(transformedSize);
+    transformedBounds.getCenter(transformedCenter);
+    const materializedInspection = inspectModelObjectTree(scene);
+    logStageModelDebug('H19-H28 visibility hypotheses registered', {
+      stageId: stage.id,
+      hypotheses: MODEL_STAGE_VISIBILITY_HYPOTHESES
+    });
+    logStageModelDebug('H39-H48 model insertion hypotheses registered', {
+      stageId: stage.id,
+      hypotheses: MODEL_STAGE_INSERTION_HYPOTHESES
+    });
+    logStageModelDebug('H19-H21 model bounds inspected', {
+      stageId: stage.id,
+      modelPath,
+      sourceBounds: sourceInspection.bounds,
+      cloneBounds: boxToDebugPayload(cloneBounds),
+      transformedBounds: boxToDebugPayload(transformedBounds),
+      visibleCloneBounds: boxToDebugPayload(scenePreparation.visibleBounds),
+      visibleTransformedBounds: boxToDebugPayload(visibleTransformedBounds),
+      manifestBounds: manifestBounds
+        ? {
+            center: manifestBounds.center,
+            size: manifestBounds.size,
+            radius: manifestBounds.radius
+          }
+        : null,
+      manifestRuntimeCenterDelta: manifestBounds?.center ? vectorToDebugArray(transformedCenter.sub(manifestCenter)) : null,
+      manifestRuntimeSizeDelta: manifestBounds?.size ? vectorToDebugArray(transformedSize.sub(manifestSize)) : null,
+      transform: { basePosition, position, scale, rotation },
+      autoGroundOffsetY: roundDebugNumber(position[1] - (basePosition[1] ?? 0))
+    });
+    logStageModelDebug('H24-H27 model mesh/material inspected', {
+      stageId: stage.id,
+      sourceTree: sourceInspection.tree,
+      renderedTree: materializedInspection,
+      scrubbedMeshCount: scenePreparation.hiddenMeshCount,
+      scrubbedMeshSamples: scenePreparation.hiddenSamples
+    });
+  }, [basePosition, modelDefinition.bounds, modelPath, position, rotation, scale, scene, scenePreparation.hiddenMeshCount, scenePreparation.hiddenSamples, scenePreparation.visibleBounds, sourceInspection, stage.id]);
+
+  return (
+    <group ref={modelGroupRef} position={position} scale={scale} rotation={rotation}>
+      <primitive object={scene} />
+      <StageModelRuntimeProbe stage={stage} modelDefinition={modelDefinition} modelGroupRef={modelGroupRef} />
+    </group>
+  );
 }
 
-function normalizeStageModelMaterial(material: THREE.Material | undefined) {
+function StageModelRuntimeProbe({
+  stage,
+  modelDefinition,
+  modelGroupRef
+}: {
+  stage: StageDefinition;
+  modelDefinition: StageModelDefinition;
+  modelGroupRef: RefObject<THREE.Group>;
+}) {
+  const { camera, scene } = useThree();
+  const loggedRef = useRef(false);
+  useFrame(() => {
+    if (loggedRef.current) return;
+    const modelGroup = modelGroupRef.current;
+    if (!modelGroup) return;
+    loggedRef.current = true;
+    modelGroup.updateWorldMatrix(true, true);
+    camera.updateMatrixWorld(true);
+    camera.updateProjectionMatrix();
+    const bounds = new THREE.Box3().setFromObject(modelGroup);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    bounds.getSize(size);
+    bounds.getCenter(center);
+    const frustum = new THREE.Frustum();
+    frustum.setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+    const cameraDirection = new THREE.Vector3();
+    camera.getWorldDirection(cameraDirection);
+    const toModelCenter = center.clone().sub(camera.position);
+    const distanceToCenter = toModelCenter.length();
+    const directionDot = distanceToCenter > 0.001 ? cameraDirection.dot(toModelCenter.normalize()) : 1;
+    const perspective = camera as THREE.PerspectiveCamera;
+    logStageModelDebug('H22-H23 runtime camera/frustum inspected', {
+      stageId: stage.id,
+      cameraPosition: vectorToDebugArray(camera.position),
+      cameraDirection: vectorToDebugArray(cameraDirection),
+      cameraNear: roundDebugNumber(camera.near),
+      cameraFar: roundDebugNumber(camera.far),
+      cameraFov: 'fov' in perspective ? roundDebugNumber(perspective.fov) : null,
+      modelBounds: boxToDebugPayload(bounds),
+      modelCenterDistance: roundDebugNumber(distanceToCenter),
+      cameraDirectionDotToModelCenter: roundDebugNumber(directionDot),
+      frustumIntersectsModelBounds: frustum.intersectsBox(bounds),
+      modelFocus: modelDefinition.focus ?? null,
+      previewTarget: stage.camera?.previewTarget ?? null
+    });
+    logStageModelDebug('H28 occlusion ray inspected', {
+      stageId: stage.id,
+      skippedDenseRaycast: true,
+      reason: 'Bounds/frustum logs are used instead because raycasting dense imported stages can stall the browser main thread.',
+      modelGroupPath: objectDebugPath(modelGroup),
+      sceneChildCount: scene.children.length
+    });
+  });
+  return null;
+}
+
+function normalizeStageModelMaterial(material: THREE.Material | undefined, stageId?: string) {
   if (!material) return material;
   const cloned = material.clone();
-  const maybeMapped = cloned as THREE.MeshStandardMaterial & { map?: THREE.Texture | null; emissiveMap?: THREE.Texture | null };
+  const forceOpaqueStageMaterial = stageId === 'hidden-leaf-village';
+  const maybeMapped = cloned as THREE.MeshStandardMaterial & {
+    alphaMap?: THREE.Texture | null;
+    emissiveMap?: THREE.Texture | null;
+    map?: THREE.Texture | null;
+    opacity?: number;
+  };
   [maybeMapped.map, maybeMapped.emissiveMap].forEach((texture) => {
     if (!texture) return;
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = 8;
     texture.needsUpdate = true;
   });
+  if (forceOpaqueStageMaterial) {
+    cloned.transparent = false;
+    cloned.depthWrite = true;
+    cloned.depthTest = true;
+    cloned.side = THREE.DoubleSide;
+    (cloned as THREE.Material & { fog?: boolean }).fog = false;
+    maybeMapped.opacity = 1;
+    maybeMapped.alphaMap = null;
+  }
   cloned.needsUpdate = true;
   return cloned;
 }

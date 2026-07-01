@@ -28,6 +28,10 @@ for (let index = 2; index < process.argv.length; index += 1) {
 const sourceRoot = resolve(args.get('source') ?? defaultSourceRoot);
 const publicStagesRoot = resolve(repoRoot, 'public', 'stages');
 const skipUnavailable = flags.has('skip-unavailable');
+const hiddenLeafBudgetMb = numberArg('hidden-leaf-budget-mb', 30);
+const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.16);
+const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.02);
+const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 256));
 
 const stages = [
   {
@@ -107,16 +111,16 @@ const stages = [
       world: { width: 72, depth: 72, floorY: -0.045, backgroundColor: '#9bdfff' },
       fightPlane: { center: [0, 0, 0], width: 30, depth: 22, y: 0 },
       spawns: { p1: [-3.2, 0, 0], p2: [3.2, 0, 0] },
-      camera: { previewPosition: [24, 18, 56], previewTarget: [0, 2.7, 0], target: [0, 1.4, 0], distance: 8, height: 3.4, fov: 38 },
+      camera: { previewPosition: [24, 24, 64], previewTarget: [0, 3.2, 0], target: [0, 1.4, 0], distance: 8, height: 3.4, fov: 38 },
       collision: { mode: 'box' },
       model: {
         path: '/stages/hidden-leaf-village/stage.glb',
         url: '/stages/hidden-leaf-village/stage.glb',
         format: 'glb',
         position: [0, 0, 0],
-        scale: [6.6, 6.6, 6.6],
+        scale: [1, 1, 1],
         rotation: [0, 0, 0],
-        focus: [0, 2.1, 0],
+        focus: [0, 3.2, 0],
         castShadow: true,
         receiveShadow: true
       }
@@ -365,34 +369,49 @@ async function optimizeGlb(inputPath, outputPath, stage) {
     return;
   }
   try {
+    const hiddenLeaf = stage.id === 'hidden-leaf-village';
     await run(gltfTransform, [
       'optimize',
       inputPath,
       outputPath,
       '--compress',
-      'false',
+      hiddenLeaf ? 'quantize' : 'false',
       '--texture-compress',
-      'false',
+      hiddenLeaf ? 'webp' : 'false',
       '--simplify',
-      stage.id === 'hidden-leaf-village' ? 'true' : 'false',
+      hiddenLeaf ? 'true' : 'false',
       '--simplify-ratio',
-      stage.id === 'hidden-leaf-village' ? '0.38' : '0',
+      hiddenLeaf ? String(hiddenLeafSimplifyRatio) : '0',
       '--simplify-error',
-      stage.id === 'hidden-leaf-village' ? '0.006' : '0.0001',
+      hiddenLeaf ? String(hiddenLeafSimplifyError) : '0.0001',
       '--texture-size',
-      stage.id === 'hidden-leaf-village' ? '512' : '2048',
+      hiddenLeaf ? String(hiddenLeafTextureSize) : '2048',
       '--palette',
       'false'
     ]);
-    if (stage.id === 'hidden-leaf-village') {
+    if (hiddenLeaf) {
       await centerGlb(outputPath);
+      await assertGlbBudget(outputPath, hiddenLeafBudgetMb, stage.id);
     }
     await run(gltfTransform, ['inspect', outputPath]);
   } catch (error) {
     await rm(outputPath, { force: true });
+    if (stage.id === 'hidden-leaf-village') {
+      throw error;
+    }
     await rename(inputPath, outputPath);
     console.warn(`gltf-transform optimize failed; kept raw GLB. ${error instanceof Error ? error.message : error}`);
   }
+}
+
+async function assertGlbBudget(outputPath, budgetMb, stageId) {
+  const stats = await stat(outputPath);
+  const sizeMb = stats.size / 1024 / 1024;
+  if (sizeMb <= budgetMb) return;
+  throw new Error(
+    `${stageId} optimized GLB is ${sizeMb.toFixed(1)} MB, above the ${budgetMb} MB budget. ` +
+    'Raise --hidden-leaf-budget-mb intentionally or lower --hidden-leaf-simplify-ratio / --hidden-leaf-texture-size.'
+  );
 }
 
 async function centerGlb(outputPath) {
@@ -471,4 +490,11 @@ async function run(command, args) {
       reject(new Error(output.trim() || `${command} exited with ${code}`));
     });
   });
+}
+
+function numberArg(name, fallback) {
+  const raw = args.get(name) ?? process.env[`KORE_${name.toUpperCase().replace(/-/g, '_')}`];
+  if (raw === undefined) return fallback;
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }

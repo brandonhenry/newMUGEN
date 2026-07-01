@@ -1244,7 +1244,13 @@
       "farStep": 2
     }
   },
-  "animationScales": {},
+  "animationScales": {
+    "crouch": {
+      "width": 0.61,
+      "height": 1,
+      "offsetX": 0
+    }
+  },
   "unplayable": false,
   "hasTransform": false,
   "modelScale": {

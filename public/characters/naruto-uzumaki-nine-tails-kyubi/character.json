@@ -1070,7 +1070,13 @@
       "farStep": 2
     }
   },
-  "animationScales": {},
+  "animationScales": {
+    "crouch": {
+      "width": 0.73,
+      "height": 0.95,
+      "offsetX": 0
+    }
+  },
   "unplayable": false,
   "animationFrameScales": {
     "kickleft": {
