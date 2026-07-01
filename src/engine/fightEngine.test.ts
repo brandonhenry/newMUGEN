@@ -1009,6 +1009,45 @@ describe('fight engine', () => {
     expect(next.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
   });
 
+  it('keeps fighters inside the authored stage world bounds', () => {
+    const boundedStage = { ...stages[0], world: { width: 20, depth: 12, floorY: -0.045, backgroundColor: '#101114' } };
+    let match = createMatch(starterCharacters[0], starterCharacters[1], boundedStage, 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -99;
+    match.fighters[0].position.z = 99;
+    match.fighters[1].position.x = 99;
+    match.fighters[1].position.z = -99;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    for (const fighter of match.fighters) {
+      expect(fighter.position.x).toBeGreaterThan(-10);
+      expect(fighter.position.x).toBeLessThan(10);
+      expect(fighter.position.z).toBeGreaterThan(-6);
+      expect(fighter.position.z).toBeLessThan(6);
+    }
+  });
+
+  it('prevents active movement from walking through the invisible wall', () => {
+    const boundedStage = { ...stages[0], world: { width: 20, depth: 12, floorY: -0.045, backgroundColor: '#101114' } };
+    let match = createMatch(starterCharacters[0], starterCharacters[1], boundedStage, 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -9.7;
+    match.fighters[0].position.z = 5.7;
+    const p1 = emptyInputFrame();
+    p1.left = true;
+    p1.sidewalkDown = true;
+
+    for (let i = 0; i < 90; i += 1) {
+      match = stepMatch(match, p1, emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].position.x).toBeGreaterThan(-10);
+    expect(match.fighters[0].position.z).toBeLessThan(6);
+  });
+
   it('drives both fighters from AI in CPU vs CPU mode', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu');
     match.phase = 'fighting';

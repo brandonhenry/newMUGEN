@@ -87,6 +87,12 @@ const MAX_COMBO_STEPS = 6;
 const SIDESTEP_TAP_SCALE = 1.45;
 const SIDEWALK_SCALE = 1.15;
 const DEFAULT_DASH_FORWARD_DISTANCE = 0.78;
+const DEFAULT_STAGE_BOUND_WIDTH = 96;
+const DEFAULT_STAGE_BOUND_DEPTH = 42;
+const MIN_STAGE_BOUND_WIDTH = 16;
+const MIN_STAGE_BOUND_DEPTH = 10;
+const MIN_WALL_RADIUS = 0.34;
+const MAX_WALL_RADIUS = 1.05;
 const DASH_FORWARD_ANIMATION_FRAMES = 18;
 const DASH_FORWARD_COOLDOWN_FRAMES = 14;
 const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
@@ -227,13 +233,16 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     const clashInput1 = next.mode === 'cpu' ? makeAiClashInput(next, 1) : input1;
     const clashInput2 = next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu' ? makeAiClashInput(next, 2) : input2;
     handleClashStep(next, clashInput1, clashInput2, dt);
+    constrainFightersToStageBounds(next);
     return next;
   }
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
   resolveFacing(next);
   resolveBodyCollision(next);
+  constrainFightersToStageBounds(next);
   resolveHits(next);
+  constrainFightersToStageBounds(next);
 
   const infiniteTimer = isInfiniteRoundTime(next.roundTime);
   next.timer = infiniteTimer || (next.mode === 'training' && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
@@ -508,7 +517,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const opponent = match.fighters[fighterIndex === 0 ? 1 : 0];
   const previousPosition = { ...fighter.position };
   const finishFighterStep = () => {
+    constrainFighterToStageBounds(match, fighter);
     applyShadowCloneMovementDelta(fighter, previousPosition);
+    constrainShadowCloneToStageBounds(match, fighter);
     syncShadowClonePassiveState(fighter);
     updateAttackInputMemory(fighter, input);
   };
@@ -3709,6 +3720,49 @@ function resolveBodyCollision(match: MatchSnapshot) {
     p2.position.x += correction * directionX;
     p2.position.z += correction * directionZ;
   }
+}
+
+function constrainFightersToStageBounds(match: MatchSnapshot) {
+  match.fighters.forEach((fighter) => constrainFighterToStageBounds(match, fighter));
+}
+
+function constrainFighterToStageBounds(match: MatchSnapshot, fighter: FighterRuntime) {
+  constrainPositionToStageBounds(match.stage, fighter.position, getFighterWallRadius(fighter));
+  constrainShadowCloneToStageBounds(match, fighter);
+}
+
+function constrainShadowCloneToStageBounds(match: MatchSnapshot, fighter: FighterRuntime) {
+  if (!fighter.shadowClone) return;
+  constrainPositionToStageBounds(match.stage, fighter.shadowClone.position, getFighterWallRadius(fighter));
+}
+
+function constrainPositionToStageBounds(
+  stage: StageDefinition,
+  position: { x: number; z: number },
+  radius = MIN_WALL_RADIUS
+) {
+  const bounds = getStageMovementBounds(stage, radius);
+  position.x = clamp(position.x, bounds.minX, bounds.maxX);
+  position.z = clamp(position.z, bounds.minZ, bounds.maxZ);
+}
+
+function getStageMovementBounds(stage: StageDefinition, radius = MIN_WALL_RADIUS) {
+  const width = Math.max(MIN_STAGE_BOUND_WIDTH, Number.isFinite(stage.world?.width) ? Number(stage.world?.width) : DEFAULT_STAGE_BOUND_WIDTH);
+  const depth = Math.max(MIN_STAGE_BOUND_DEPTH, Number.isFinite(stage.world?.depth) ? Number(stage.world?.depth) : DEFAULT_STAGE_BOUND_DEPTH);
+  const wallPadding = clamp(radius, 0, Math.min(width, depth) * 0.45);
+  const halfWidth = Math.max(0.1, width / 2 - wallPadding);
+  const halfDepth = Math.max(0.1, depth / 2 - wallPadding);
+  return {
+    minX: -halfWidth,
+    maxX: halfWidth,
+    minZ: -halfDepth,
+    maxZ: halfDepth
+  };
+}
+
+function getFighterWallRadius(fighter: FighterRuntime) {
+  const scale = getCharacterCombatScale(fighter.character);
+  return clamp(scale.width * 0.38, MIN_WALL_RADIUS, MAX_WALL_RADIUS);
 }
 
 function getDashForwardDistance(fighter: FighterRuntime) {
