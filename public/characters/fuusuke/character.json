@@ -1004,5 +1004,21 @@
   "modelScale": {
     "width": 0.82,
     "height": 0.73
+  },
+  "animationFrameScales": {
+    "sprint": {
+      "30": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "30": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0
+      }
+    }
   }
 }
