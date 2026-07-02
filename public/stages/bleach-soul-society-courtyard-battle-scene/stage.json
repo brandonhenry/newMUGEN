@@ -1,0 +1,199 @@
+{
+  "id": "bleach-soul-society-courtyard-battle-scene",
+  "name": "Soul Society Courtyard Battle Scene",
+  "subtitle": "Bleach model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/bleach-soul-society-courtyard-battle-scene/stage.glb?v=mr2s1p6w-27txw",
+    "url": "/stages/bleach-soul-society-courtyard-battle-scene/stage.glb?v=mr2s1p6w-27txw",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        1.3171,
+        0
+      ],
+      "size": [
+        18,
+        2.6343,
+        9.1149
+      ],
+      "radius": 10.1738
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/bleach_soul_reaper___soul_society_courtyard_battle_by_o_dv89_o_dhr1wzp (1)/Bleach Soul Reaper - Soul Society Courtyard Battle Scene/BleachCourtyardBattleScene.blend",
+    "sourceKind": "blend",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/bleach_soul_reaper___soul_society_courtyard_battle_by_o_dv89_o_dhr1wzp (1)/Bleach Soul Reaper - Soul Society Courtyard Battle Scene",
+    "category": "Bleach",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "bleach-soul-society-courtyard-battle-scene",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 23,
+      "meshCount": 9,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/bleach_soul_reaper___soul_society_courtyard_battle_by_o_dv89_o_dhr1wzp (1)/Bleach Soul Reaper - Soul Society Courtyard Battle Scene/BleachCourtyardBattleScene.blend",
+      "sourceKind": "blend",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -172.7803,
+          -57.9904,
+          -2.7345
+        ],
+        "max": [
+          201.2806,
+          131.428,
+          52.0084
+        ],
+        "center": [
+          14.2502,
+          36.7188,
+          24.6369
+        ],
+        "size": [
+          374.0609,
+          189.4184,
+          54.7429
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -4.5575,
+          0
+        ],
+        "max": [
+          9,
+          4.5575,
+          2.6343
+        ],
+        "center": [
+          0,
+          0,
+          1.3171
+        ],
+        "size": [
+          18,
+          9.1149,
+          2.6343
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/bleach-soul-society-courtyard-battle-scene/preview.png"
+}

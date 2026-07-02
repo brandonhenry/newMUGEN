@@ -1,0 +1,199 @@
+{
+  "id": "dbz-capsule-corp-stage",
+  "name": "Capsule Corp Stage",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-capsule-corp-stage/stage.glb?v=mr2s243j-s0fiw",
+    "url": "/stages/dbz-capsule-corp-stage/stage.glb?v=mr2s243j-s0fiw",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        4.5342,
+        0
+      ],
+      "size": [
+        18,
+        9.0684,
+        18
+      ],
+      "radius": 13.5114
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___capsule_corp_stage__xps__by_higuys920_deokxh9/Capsule Corporation Stage.obj",
+    "sourceKind": "obj",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___capsule_corp_stage__xps__by_higuys920_deokxh9",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-capsule-corp-stage",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 5,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___capsule_corp_stage__xps__by_higuys920_deokxh9/Capsule Corporation Stage.obj",
+      "sourceKind": "obj",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -988.0253,
+          -988.0268,
+          -16.099
+        ],
+        "max": [
+          988.0264,
+          988.0242,
+          979.4382
+        ],
+        "center": [
+          0.0005,
+          -0.0013,
+          481.6696
+        ],
+        "size": [
+          1976.0518,
+          1976.051,
+          995.5371
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -9,
+          0
+        ],
+        "max": [
+          9,
+          9,
+          9.0684
+        ],
+        "center": [
+          0,
+          0,
+          4.5342
+        ],
+        "size": [
+          18,
+          18,
+          9.0684
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-capsule-corp-stage/preview.png"
+}

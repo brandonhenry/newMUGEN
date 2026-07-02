@@ -1,0 +1,199 @@
+{
+  "id": "dbz-planet-vegeta-lookout-stage",
+  "name": "Planet Vegeta Lookout Stage",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-planet-vegeta-lookout-stage/stage.glb?v=mr2s3oc6-11e0eg",
+    "url": "/stages/dbz-planet-vegeta-lookout-stage/stage.glb?v=mr2s3oc6-11e0eg",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        1.7697,
+        0
+      ],
+      "size": [
+        18,
+        3.5393,
+        16.7057
+      ],
+      "radius": 12.4057
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbz_kakarot___planet_vegeta__lookout__stage__xps__by_higuys920_dfn97dy/Planet Vegeta Stage.fbx",
+    "sourceKind": "fbx",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbz_kakarot___planet_vegeta__lookout__stage__xps__by_higuys920_dfn97dy",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-planet-vegeta-lookout-stage",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 6,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbz_kakarot___planet_vegeta__lookout__stage__xps__by_higuys920_dfn97dy/Planet Vegeta Stage.fbx",
+      "sourceKind": "fbx",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -8813.1436,
+          -8066.3286,
+          -395.0363
+        ],
+        "max": [
+          11009.5029,
+          10330.9775,
+          3502.6946
+        ],
+        "center": [
+          1098.1797,
+          1132.3245,
+          1553.8291
+        ],
+        "size": [
+          19822.6465,
+          18397.3066,
+          3897.731
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -8.3529,
+          0
+        ],
+        "max": [
+          9,
+          8.3529,
+          3.5393
+        ],
+        "center": [
+          0,
+          0,
+          1.7697
+        ],
+        "size": [
+          18,
+          16.7057,
+          3.5393
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-planet-vegeta-lookout-stage/preview.png"
+}

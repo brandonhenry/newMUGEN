@@ -1,0 +1,199 @@
+{
+  "id": "dbz-hell-stage",
+  "name": "Hell Stage",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-hell-stage/stage.glb?v=mr2s9x22-1jafs",
+    "url": "/stages/dbz-hell-stage/stage.glb?v=mr2s9x22-1jafs",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.5752,
+        0
+      ],
+      "size": [
+        18,
+        5.1504,
+        16.9117
+      ],
+      "radius": 12.6148
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____hell_stage_stage_dl_by_blacksoul1890_dipsnne/Hell Stage/Hell Stage.pmx",
+    "sourceKind": "mmd",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____hell_stage_stage_dl_by_blacksoul1890_dipsnne/Hell Stage",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-hell-stage",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 7,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____hell_stage_stage_dl_by_blacksoul1890_dipsnne/Hell Stage/Hell Stage.pmx",
+      "sourceKind": "mmd",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -2769.1499,
+          -2298.7146,
+          -383.4807
+        ],
+        "max": [
+          2647.9404,
+          2790.8408,
+          1166.5201
+        ],
+        "center": [
+          -60.6047,
+          246.0631,
+          391.5197
+        ],
+        "size": [
+          5417.0903,
+          5089.5557,
+          1550.0009
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -8.4558,
+          0
+        ],
+        "max": [
+          9,
+          8.4558,
+          5.1504
+        ],
+        "center": [
+          0,
+          0,
+          2.5752
+        ],
+        "size": [
+          18,
+          16.9117,
+          5.1504
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-hell-stage/preview.png"
+}

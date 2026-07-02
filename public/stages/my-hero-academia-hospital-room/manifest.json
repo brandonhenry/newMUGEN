@@ -1,0 +1,199 @@
+{
+  "id": "my-hero-academia-hospital-room",
+  "name": "Hospital Room",
+  "subtitle": "My Hero Academia model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/my-hero-academia-hospital-room/stage.glb?v=mr2s4nbj-fa1o",
+    "url": "/stages/my-hero-academia-hospital-room/stage.glb?v=mr2s4nbj-fa1o",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.3825,
+        0
+      ],
+      "size": [
+        10.9484,
+        4.7649,
+        18
+      ],
+      "radius": 10.8001
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/mha_tsh___hospital_room__stage__dl_by_mha_deaf_djchw3x/MHA TSH - Hospital Room/Hospital Room.blend",
+    "sourceKind": "blend",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/mha_tsh___hospital_room__stage__dl_by_mha_deaf_djchw3x/MHA TSH - Hospital Room",
+    "category": "My Hero Academia",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "my-hero-academia-hospital-room",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 7,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/mha_tsh___hospital_room__stage__dl_by_mha_deaf_djchw3x/MHA TSH - Hospital Room/Hospital Room.blend",
+      "sourceKind": "blend",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -3.2316,
+          -5.385,
+          -0.0252
+        ],
+        "max": [
+          3.1915,
+          5.1751,
+          2.7703
+        ],
+        "center": [
+          -0.02,
+          -0.105,
+          1.3726
+        ],
+        "size": [
+          6.4231,
+          10.56,
+          2.7954
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -5.4742,
+          -9,
+          0
+        ],
+        "max": [
+          5.4742,
+          9,
+          4.7649
+        ],
+        "center": [
+          0,
+          0,
+          2.3825
+        ],
+        "size": [
+          10.9484,
+          18,
+          4.7649
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/my-hero-academia-hospital-room/preview.png"
+}

@@ -375,7 +375,7 @@ function createFlattenedStageModelMeshes(root: THREE.Object3D, stageId: string) 
       id: `${meshes.length}-${mesh.uuid}`,
       name: mesh.name || mesh.type,
       geometry,
-      material: material ?? new THREE.MeshBasicMaterial({ color: colorFromString(mesh.name || mesh.uuid), side: THREE.DoubleSide, depthTest: false, depthWrite: false, fog: false }),
+      material: material ?? new THREE.MeshBasicMaterial({ color: colorFromString(mesh.name || mesh.uuid), side: THREE.DoubleSide, depthTest: true, depthWrite: true, fog: false }),
       triangleCount: getGeometryTriangleCount(mesh.geometry)
     });
   });
@@ -2978,7 +2978,7 @@ function normalizeStageModelMaterial(material: THREE.Material | undefined, stage
       transparent: false,
       opacity: 1,
       depthTest: true,
-      depthWrite: false,
+      depthWrite: true,
       side: THREE.DoubleSide,
       fog: false,
       toneMapped: false

@@ -1,0 +1,199 @@
+{
+  "id": "naruto-corner-scene",
+  "name": "Corner Scene",
+  "subtitle": "Naruto model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/naruto-corner-scene/stage.glb?v=mr2s4sw6-2fhds",
+    "url": "/stages/naruto-corner-scene/stage.glb?v=mr2s4sw6-2fhds",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        5.6931,
+        0
+      ],
+      "size": [
+        17.4573,
+        11.3861,
+        18
+      ],
+      "radius": 13.7695
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/naruto_mobile_tencent___corner_scene_xps_obj_blend_by_o_dv89_o_dgfz4uu/Naruto Mobile Tencent - Corner Scene/NarutoMobileCornerScene.blend",
+    "sourceKind": "blend",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/naruto_mobile_tencent___corner_scene_xps_obj_blend_by_o_dv89_o_dgfz4uu/Naruto Mobile Tencent - Corner Scene",
+    "category": "Naruto",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "naruto-corner-scene",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 29,
+      "meshCount": 12,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/naruto_mobile_tencent___corner_scene_xps_obj_blend_by_o_dv89_o_dgfz4uu/Naruto Mobile Tencent - Corner Scene/NarutoMobileCornerScene.blend",
+      "sourceKind": "blend",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -130.8421,
+          -15.2928,
+          -1.8111
+        ],
+        "max": [
+          53.0922,
+          174.3598,
+          118.156
+        ],
+        "center": [
+          -38.875,
+          79.5335,
+          58.1724
+        ],
+        "size": [
+          183.9342,
+          189.6527,
+          119.9671
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -8.7286,
+          -9,
+          0
+        ],
+        "max": [
+          8.7286,
+          9,
+          11.3861
+        ],
+        "center": [
+          0,
+          0,
+          5.6931
+        ],
+        "size": [
+          17.4573,
+          18,
+          11.3861
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/naruto-corner-scene/preview.png"
+}

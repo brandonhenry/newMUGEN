@@ -1,0 +1,199 @@
+{
+  "id": "general-kame-house-mod",
+  "name": "Kame House Mod",
+  "subtitle": "General model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/general-kame-house-mod/stage.glb?v=mr2s48oi-9vbao",
+    "url": "/stages/general-kame-house-mod/stage.glb?v=mr2s48oi-9vbao",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        4.4074,
+        0
+      ],
+      "size": [
+        18,
+        8.8148,
+        18
+      ],
+      "radius": 13.4694
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/kame_house_mod_obj_by_o_dv89_o_ddr6i1y/Kame House Mod/kamehousemod.obj",
+    "sourceKind": "obj",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/kame_house_mod_obj_by_o_dv89_o_ddr6i1y/Kame House Mod",
+    "category": "General",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "general-kame-house-mod",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 5,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/kame_house_mod_obj_by_o_dv89_o_ddr6i1y/Kame House Mod/kamehousemod.obj",
+      "sourceKind": "obj",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -105.4417,
+          -105.4414,
+          -1.7806
+        ],
+        "max": [
+          105.4464,
+          105.4466,
+          101.4937
+        ],
+        "center": [
+          0.0023,
+          0.0026,
+          49.8565
+        ],
+        "size": [
+          210.8881,
+          210.888,
+          103.2743
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -9,
+          0
+        ],
+        "max": [
+          9,
+          9,
+          8.8148
+        ],
+        "center": [
+          0,
+          0,
+          4.4074
+        ],
+        "size": [
+          18,
+          18,
+          8.8148
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/general-kame-house-mod/preview.png"
+}

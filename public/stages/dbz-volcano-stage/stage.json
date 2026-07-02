@@ -1,0 +1,199 @@
+{
+  "id": "dbz-volcano-stage",
+  "name": "Volcano Stage",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-volcano-stage/stage.glb?v=mr2s3xoi-15a8gw",
+    "url": "/stages/dbz-volcano-stage/stage.glb?v=mr2s3xoi-15a8gw",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.5519,
+        0
+      ],
+      "size": [
+        13.2954,
+        5.1039,
+        18
+      ],
+      "radius": 11.4762
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___volcano_stage__xps__by_higuys920_deolbd1/Volcano Stage.obj",
+    "sourceKind": "obj",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___volcano_stage__xps__by_higuys920_deolbd1",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-volcano-stage",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 5,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___volcano_stage__xps__by_higuys920_deolbd1/Volcano Stage.obj",
+      "sourceKind": "obj",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -1130.301,
+          -1014.984,
+          -190.3102
+        ],
+        "max": [
+          1774.647,
+          2917.8989,
+          924.8481
+        ],
+        "center": [
+          322.173,
+          951.4575,
+          367.2689
+        ],
+        "size": [
+          2904.948,
+          3932.8828,
+          1115.1583
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -6.6477,
+          -9,
+          0
+        ],
+        "max": [
+          6.6477,
+          9,
+          5.1039
+        ],
+        "center": [
+          0,
+          0,
+          2.5519
+        ],
+        "size": [
+          13.2954,
+          18,
+          5.1039
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-volcano-stage/preview.png"
+}

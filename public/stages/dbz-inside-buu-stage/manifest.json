@@ -1,0 +1,199 @@
+{
+  "id": "dbz-inside-buu-stage",
+  "name": "Inside Buu Stage",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-inside-buu-stage/stage.glb?v=mr2s37qn-23m3k",
+    "url": "/stages/dbz-inside-buu-stage/stage.glb?v=mr2s37qn-23m3k",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        3.3439,
+        0
+      ],
+      "size": [
+        17.5016,
+        6.6879,
+        18
+      ],
+      "radius": 12.9907
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbxv2___inside_buu_stage__xps__by_higuys920_dengv25/MAisb00.emd.fbx",
+    "sourceKind": "fbx",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbxv2___inside_buu_stage__xps__by_higuys920_dengv25",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-inside-buu-stage",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 204,
+      "meshCount": 53,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbxv2___inside_buu_stage__xps__by_higuys920_dengv25/MAisb00.emd.fbx",
+      "sourceKind": "fbx",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -2328.1938,
+          -2411.5879,
+          -1203.9672
+        ],
+        "max": [
+          2329.5435,
+          2378.7927,
+          575.892
+        ],
+        "center": [
+          0.6748,
+          -16.3976,
+          -314.0376
+        ],
+        "size": [
+          4657.7373,
+          4790.3809,
+          1779.8591
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -8.7508,
+          -9,
+          0
+        ],
+        "max": [
+          8.7508,
+          9,
+          6.6879
+        ],
+        "center": [
+          0,
+          0,
+          3.3439
+        ],
+        "size": [
+          17.5016,
+          18,
+          6.6879
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-inside-buu-stage/preview.png"
+}

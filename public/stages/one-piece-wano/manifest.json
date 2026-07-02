@@ -1,0 +1,199 @@
+{
+  "id": "one-piece-wano",
+  "name": "Wano",
+  "subtitle": "One Piece model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/one-piece-wano/stage.glb?v=mr2s7pk9-6igrg",
+    "url": "/stages/one-piece-wano/stage.glb?v=mr2s7pk9-6igrg",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.0401,
+        0
+      ],
+      "size": [
+        13.6844,
+        4.0802,
+        18
+      ],
+      "radius": 11.4882
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/opbr___wano_xps_obj_blend_by_o_dv89_o_dg6iz7l/OPBR - Wano/Wano.blend",
+    "sourceKind": "blend",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/opbr___wano_xps_obj_blend_by_o_dv89_o_dg6iz7l/OPBR - Wano",
+    "category": "One Piece",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "one-piece-wano",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 47,
+      "meshCount": 21,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/opbr___wano_xps_obj_blend_by_o_dv89_o_dg6iz7l/OPBR - Wano/Wano.blend",
+      "sourceKind": "blend",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -390.9382,
+          -456.8352,
+          -4.6762
+        ],
+        "max": [
+          403.8209,
+          588.5656,
+          232.2951
+        ],
+        "center": [
+          6.4413,
+          65.8652,
+          113.8094
+        ],
+        "size": [
+          794.7591,
+          1045.4008,
+          236.9713
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -6.8422,
+          -9,
+          0
+        ],
+        "max": [
+          6.8422,
+          9,
+          4.0802
+        ],
+        "center": [
+          0,
+          0,
+          2.0401
+        ],
+        "size": [
+          13.6844,
+          18,
+          4.0802
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/one-piece-wano/preview.png"
+}

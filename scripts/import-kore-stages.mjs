@@ -1,14 +1,27 @@
 #!/usr/bin/env node
-import { access, copyFile, mkdir, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, mkdtemp, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { constants, existsSync } from 'node:fs';
 import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path';
+import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
 
 const repoRoot = resolve(new URL('..', import.meta.url).pathname);
 const defaultSourceRoot = '/Users/brandonhenry/Documents/Kore/Stages';
 const publicStagesRoot = resolve(repoRoot, 'public', 'stages');
-const sourcePriority = ['blend', 'xps', 'mesh', 'fbx', 'dae', 'obj'];
-const supportedExtensions = new Set(['.blend', '.xps', '.mesh', '.fbx', '.dae', '.obj']);
+const sourcePriority = ['blend', 'mmd', 'xps', 'mesh', 'fbx', 'dae', 'obj'];
+const supportedExtensions = new Set(['.blend', '.xps', '.mesh', '.fbx', '.dae', '.obj', '.pmx', '.pmd']);
+const mmdOperators = [
+  'mmd_tools.import_model',
+  'import_scene.mmd',
+  'import_scene.pmx',
+  'import_scene.pmd'
+];
+const xpsOperators = [
+  'xps_tools.import_model',
+  'import_scene.xps',
+  'import_scene.xnalara_model',
+  'import_scene.xnalara'
+];
 const args = new Map();
 const flags = new Set();
 
@@ -35,6 +48,8 @@ const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.012);
 const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 512));
 const hiddenLeafTextureCompress = args.get('hidden-leaf-texture-compress') ?? process.env.KORE_HIDDEN_LEAF_TEXTURE_COMPRESS ?? 'webp';
 const hiddenLeafGeometryCompress = args.get('hidden-leaf-geometry-compress') ?? process.env.KORE_HIDDEN_LEAF_GEOMETRY_COMPRESS ?? 'false';
+const installAddons = !flags.has('no-addon-install') && process.env.KORE_STAGE_AUTO_INSTALL_ADDONS !== 'false';
+const duplicateSkips = [];
 
 await assertReadable(sourceRoot, 'source root');
 let stages = await discoverStages(sourceRoot);
@@ -50,7 +65,7 @@ if (dryRun) {
 
 const report = {
   imported: [],
-  skipped: [],
+  skipped: [...duplicateSkips],
   failed: []
 };
 
@@ -69,11 +84,12 @@ if (!blender) {
   process.exit(0);
 }
 try {
-  await preflightXpsSupportIfNeeded(blender, stages);
+  await preflightImportAddons(blender, stages);
 } catch (error) {
   if (!skipUnavailable) throw error;
   const message = error instanceof Error ? error.message : String(error);
-  const skippedStages = stages.filter((stage) => stage.sourceKind === 'xps' || stage.sourceKind === 'mesh');
+  const unavailableKinds = unavailableSourceKinds(error);
+  const skippedStages = stages.filter((stage) => unavailableKinds.has(stage.sourceKind));
   const fallbackStages = [];
   for (const stage of skippedStages) {
     const fallback = firstBuiltInFallback(stage);
@@ -96,7 +112,7 @@ try {
     }
   }
   stages = [
-    ...stages.filter((stage) => stage.sourceKind !== 'xps' && stage.sourceKind !== 'mesh'),
+    ...stages.filter((stage) => !unavailableKinds.has(stage.sourceKind)),
     ...fallbackStages
   ].sort((a, b) => a.id.localeCompare(b.id));
 }
@@ -139,6 +155,7 @@ async function discoverStages(root) {
     grouped.set(folder, files);
   });
 
+  const deduped = new Set();
   const usedIds = new Map();
   const discovered = [];
   for (const [folder, files] of [...grouped.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
@@ -148,6 +165,18 @@ async function discoverStages(root) {
     const relativeFolder = relative(root, folder);
     const stage = buildStageDefinition(root, folder, relativeFolder, source, usedIds);
     stage.alternateSources = sources.slice(1);
+    const duplicateKey = stageDuplicateKey(stage);
+    if (deduped.has(duplicateKey)) {
+      duplicateSkips.push({
+        id: stage.id,
+        name: stage.name,
+        sourceKind: stage.sourceKind,
+        source: stage.source,
+        message: `Duplicate download copy of ${duplicateKey}`
+      });
+      continue;
+    }
+    deduped.add(duplicateKey);
     discovered.push(stage);
   }
   return discovered;
@@ -169,6 +198,7 @@ async function walk(root, visitor) {
 function sourceKindForFile(path) {
   const name = basename(path).toLowerCase();
   if (name.endsWith('.mesh.ascii')) return 'mesh';
+  if (name.endsWith('.pmx') || name.endsWith('.pmd')) return 'mmd';
   const extension = extname(name);
   if (!supportedExtensions.has(extension)) return undefined;
   return extension.slice(1);
@@ -189,27 +219,28 @@ function sourceScore(folder, path) {
   if (stem === folderName) score -= 40;
   if (stem.includes(folderName) || folderName.includes(stem)) score -= 18;
   if (stem === 'xps' || stem === 'generic-item' || stem === 'stage') score += 8;
+  if (stem.includes('final')) score -= 5;
   if (stem.includes('apartment') && !folderName.includes('apartment')) score += 25;
   if (stem.includes('fix')) score += 6;
   return score;
 }
 
 function firstBuiltInFallback(stage) {
-  return stage.alternateSources.find((source) => source.kind === 'fbx' || source.kind === 'dae' || source.kind === 'obj');
+  return stage.alternateSources.find((source) => source.kind === 'blend' || source.kind === 'fbx' || source.kind === 'dae' || source.kind === 'obj');
 }
 
 function buildStageDefinition(root, folder, relativeFolder, source, usedIds) {
   const parts = relativeFolder.split(sep).filter(Boolean);
-  const category = parts[0] ?? 'stage';
-  const folderName = basename(folder);
+  const category = inferCategory(parts, folder, source);
+  const folderName = displayNameSource(folder, source);
   const override = knownStageOverride(category, folderName);
-  const baseId = override?.id ?? slugify([category, folderName].filter(Boolean).join(' '));
+  const cleanName = override?.name ?? cleanStageName(folderName);
+  const baseId = override?.id ?? slugify([category, cleanName].filter(Boolean).join(' '));
   const id = uniqueId(baseId, usedIds);
-  const name = override?.name ?? cleanStageName(folderName);
   const sourceKind = source.kind;
   return {
     id,
-    name,
+    name: cleanName,
     subtitle: override?.subtitle ?? `${titleize(category)} model arena`,
     category: titleize(category),
     source: source.path,
@@ -218,7 +249,7 @@ function buildStageDefinition(root, folder, relativeFolder, source, usedIds) {
     sourceRoot: root,
     thumbnail: findThumbnail(folder),
     manifest: override?.manifest?.(id) ?? genericManifest(id, {
-      name,
+      name: cleanName,
       subtitle: `${titleize(category)} model arena`,
       source,
       sourceFolder: folder,
@@ -227,8 +258,57 @@ function buildStageDefinition(root, folder, relativeFolder, source, usedIds) {
   };
 }
 
+function inferCategory(parts, folder, source) {
+  const text = [relative(sourceRoot, folder), basename(source.path)].join(' ').toLowerCase();
+  if (text.includes('bleach') || text.includes('ichigo') || text.includes('senkaimon') || text.includes('urahara') || text.includes('seireitei')) return 'bleach';
+  if (text.includes('naruto') || text.includes('nuns') || text.includes('konoha') || text.includes('kumogakure') || text.includes('uzumaki')) return 'naruto';
+  if (text.includes('one_piece') || text.includes('one piece') || text.includes('opbw') || text.includes('opbr') || text.includes('opfp') || text.includes('opdp')) return 'one-piece';
+  if (text.includes('dbfz') || text.includes('dbxv') || text.includes('dbs') || text.includes('dbz') || text.includes('sdbh') || text.includes('dragon')) return 'dbz';
+  if (text.includes('jujutsu') || text.includes('jjk') || text.includes('jjbts')) return 'jujutsu-kaisen';
+  if (text.includes('mha') || text.includes('mhaui')) return 'my-hero-academia';
+  if (text.includes('shaman')) return 'shaman-king';
+  if (text.includes('rumble')) return 'rumble-roses';
+  return 'general';
+}
+
+function displayNameSource(folder, source) {
+  const folderName = basename(folder);
+  const fileStem = basename(source.path)
+    .replace(/\.mesh\.ascii$/i, '')
+    .replace(/\.[^.]+$/i, '');
+  const folderScore = noisyNameScore(folderName);
+  const fileScore = noisyNameScore(fileStem);
+  if (/xfbin|xps|generic[-_ ]?item/i.test(fileStem) && !/xfbin|xps|generic[-_ ]?item/i.test(folderName)) {
+    return folderName;
+  }
+  if (!['xps', 'generic_item', 'generic-item', 'stage'].includes(normalizeText(fileStem)) && fileScore + 8 < folderScore) {
+    return fileStem;
+  }
+  return folderName;
+}
+
+function noisyNameScore(value) {
+  const normalized = value.toLowerCase();
+  let score = normalized.length / 4;
+  for (const token of [' by ', 'xps', 'obj', 'blend', 'fbx', 'mmd', 'download', ' dl', 'deviantart', '___', '__', '_']) {
+    if (normalized.includes(token)) score += 12;
+  }
+  if (/d[a-z0-9]{5,}$/i.test(normalized)) score += 8;
+  return score;
+}
+
+function stageDuplicateKey(stage) {
+  return [
+    normalizeText(stage.category),
+    normalizeText(stage.name),
+    stage.sourceKind,
+    basename(stage.source).toLowerCase()
+  ].join(':');
+}
+
 function knownStageOverride(category, folderName) {
-  if (category === 'Naruto' && folderName === 'Hidden Leaf Village - Complete') {
+  const normalizedCategory = category.toLowerCase();
+  if (normalizedCategory === 'naruto' && folderName === 'Hidden Leaf Village - Complete') {
     return {
       id: 'hidden-leaf-village',
       name: 'Hidden Leaf Village',
@@ -236,7 +316,7 @@ function knownStageOverride(category, folderName) {
       manifest: hiddenLeafManifest
     };
   }
-  if (category === 'Naruto' && folderName === 'Naruto apartment') {
+  if (normalizedCategory === 'naruto' && folderName === 'Naruto apartment') {
     return {
       id: 'naruto-apartment',
       name: "Naruto's Apartment",
@@ -606,11 +686,94 @@ async function updateStageIndex(stageId) {
   await writeFile(indexPath, `${JSON.stringify({ stages: stageIds }, null, 2)}\n`, 'utf8');
 }
 
-async function preflightXpsSupportIfNeeded(blender, stagesToImport) {
-  if (!stagesToImport.some((stage) => stage.sourceKind === 'xps' || stage.sourceKind === 'mesh')) return;
+async function preflightImportAddons(blender, stagesToImport) {
+  const missing = [];
+  if (stagesToImport.some((stage) => stage.sourceKind === 'mmd')) {
+    const available = await ensureBlenderOperators(blender, {
+      label: 'MMD Tools',
+      operators: mmdOperators,
+      extensionPackages: ['mmd_tools'],
+      fallbackDownloads: [
+        {
+          url: 'https://github.com/MMD-Blender/blender_mmd_tools/archive/refs/heads/main.zip',
+          module: 'mmd_tools'
+        }
+      ]
+    });
+    if (!available) missing.push({ label: 'MMD Tools for .pmx/.pmd', kinds: ['mmd'] });
+  }
+  if (stagesToImport.some((stage) => stage.sourceKind === 'xps' || stage.sourceKind === 'mesh')) {
+    const available = await ensureBlenderOperators(blender, {
+      label: 'XPS/XNALara',
+      operators: xpsOperators,
+      extensionPackages: ['io_xnalara', 'io-xnalara'],
+      fallbackDownloads: [
+        {
+          url: 'https://github.com/johnzero7/XNALaraMesh/archive/refs/heads/master.zip',
+          module: 'xps_tools'
+        }
+      ]
+    });
+    if (!available) missing.push({ label: 'XPS/XNALara importer for .xps/.mesh', kinds: ['xps', 'mesh'] });
+  }
+  if (!missing.length) return;
+  const error = new Error(
+    `${missing.map((entry) => entry.label).join(' and ')} sources were discovered, but the required Blender import operators are unavailable. ` +
+    'The importer will use built-in .blend/.fbx/.dae/.obj fallbacks where present.'
+  );
+  error.missingKinds = new Set(missing.flatMap((entry) => entry.kinds));
+  throw error;
+}
+
+function unavailableSourceKinds(error) {
+  if (error && error.missingKinds instanceof Set) return error.missingKinds;
+  const message = error instanceof Error ? error.message : String(error);
+  const kinds = new Set();
+  if (/MMD/i.test(message)) kinds.add('mmd');
+  if (/XPS|XNALara|mesh/i.test(message)) {
+    kinds.add('xps');
+    kinds.add('mesh');
+  }
+  if (!kinds.size) {
+    kinds.add('xps');
+    kinds.add('mesh');
+    kinds.add('mmd');
+  }
+  return kinds;
+}
+
+async function ensureBlenderOperators(blender, options) {
+  if (await hasBlenderOperators(blender, options.operators)) return true;
+  if (!installAddons) return false;
+
+  for (const packageId of options.extensionPackages) {
+    try {
+      console.log(`Installing Blender extension ${packageId} for ${options.label}...`);
+      await run(blender, ['--online-mode', '--command', 'extension', 'install', '-s', '-e', packageId]);
+      if (await hasBlenderOperators(blender, options.operators)) return true;
+    } catch (error) {
+      console.warn(`Could not install Blender extension ${packageId}: ${error instanceof Error ? error.message : error}`);
+    }
+  }
+
+  for (const download of options.fallbackDownloads) {
+    try {
+      console.log(`Installing Blender addon fallback for ${options.label} from ${download.url}...`);
+      const addonZip = await downloadToTempFile(download.url, `${download.module}.zip`);
+      await installAddonZip(blender, addonZip, download.module);
+      if (await hasBlenderOperators(blender, options.operators)) return true;
+    } catch (error) {
+      console.warn(`Could not install Blender addon fallback ${download.module}: ${error instanceof Error ? error.message : error}`);
+    }
+  }
+
+  return false;
+}
+
+async function hasBlenderOperators(blender, operators) {
   const script = [
     'import bpy, sys',
-    'known = ["xps_tools.import_model", "import_scene.xps", "import_scene.xnalara_model", "import_scene.xnalara"]',
+    `known = ${JSON.stringify(operators)}`,
     'def has_op(name):',
     '    group, op = name.split(".", 1)',
     '    ops_group = getattr(bpy.ops, group, None)',
@@ -622,18 +785,40 @@ async function preflightXpsSupportIfNeeded(blender, stagesToImport) {
     '    except Exception:',
     '        return False',
     'available = [name for name in known if has_op(name)]',
-    'print("KORE_XPS_OPERATORS=" + ",".join(available))',
+    'print("KORE_IMPORT_OPERATORS=" + ",".join(available))',
     'sys.exit(0 if available else 3)'
   ].join('\n');
   try {
     await run(blender, ['-b', '--python-expr', script]);
+    return true;
   } catch (error) {
-    throw new Error(
-      'XPS/XNALara sources were discovered, but no Blender XPS importer is available. ' +
-      'Install or enable Blender Extensions io-xnalara or johnzero7/XNALaraMesh. ' +
-      `${error instanceof Error ? error.message : error}`
-    );
+    return false;
   }
+}
+
+async function downloadToTempFile(url, fileName) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+  const tempDirectory = await mkdtemp(join(tmpdir(), 'kore-stage-addon-'));
+  const destination = join(tempDirectory, fileName);
+  const buffer = Buffer.from(await response.arrayBuffer());
+  await writeFile(destination, buffer);
+  return destination;
+}
+
+async function installAddonZip(blender, addonZip, moduleName) {
+  const script = [
+    'import bpy, sys',
+    `addon_zip = ${JSON.stringify(addonZip)}`,
+    `module_name = ${JSON.stringify(moduleName)}`,
+    'bpy.ops.preferences.addon_install(filepath=addon_zip, overwrite=True)',
+    'try:',
+    '    bpy.ops.preferences.addon_enable(module=module_name)',
+    'except Exception as error:',
+    '    print(f"KORE addon enable warning: {error}")',
+    'bpy.ops.wm.save_userpref()'
+  ].join('\n');
+  await run(blender, ['-b', '--python-expr', script]);
 }
 
 async function resolveBlenderExecutable() {
@@ -665,18 +850,18 @@ async function assertReadable(path, label) {
 }
 
 async function run(command, runArgs, options = {}) {
-  await new Promise((resolvePromise, reject) => {
+  return await new Promise((resolvePromise, reject) => {
     const child = spawn(command, runArgs, {
       stdio: ['ignore', 'pipe', 'pipe'],
       env: options.env ?? process.env
     });
     let output = '';
-    child.stdout.on('data', (chunk) => {
+    const appendOutput = (chunk) => {
       output += chunk;
-    });
-    child.stderr.on('data', (chunk) => {
-      output += chunk;
-    });
+      if (output.length > 30000) output = output.slice(-30000);
+    };
+    child.stdout.on('data', appendOutput);
+    child.stderr.on('data', appendOutput);
     child.on('error', reject);
     child.on('close', (code) => {
       if (code === 0 && !/Traceback \(most recent call last\):|Fatal Python error|TypeError:|ModuleNotFoundError:/.test(output)) {
@@ -739,22 +924,76 @@ function titleize(value) {
 function cleanStageName(value) {
   let name = titleize(value)
     .replace(/\bDbfz\b/g, 'DBFZ')
+    .replace(/\bDbs\b/g, 'DBS')
+    .replace(/\bDbxv2?\b/g, (match) => match.toUpperCase())
+    .replace(/\bSdbh\b/g, 'SDBH')
+    .replace(/\bMha\b/g, 'MHA')
+    .replace(/\bMhaui\b/g, 'MHAUI')
+    .replace(/\bJjbts\b/g, 'JJBTS')
+    .replace(/\bKkrt\b/g, 'KKRT')
+    .replace(/\bNuns3\b/g, 'NUNS3')
+    .replace(/\bNuns4\b/g, 'NUNS4')
+    .replace(/\bNunsc\b/g, 'NUNSC')
     .replace(/\bXps\b/g, 'XPS')
+    .replace(/\bObj\b/g, 'OBJ')
+    .replace(/\bFbx\b/g, 'FBX')
+    .replace(/\bMmd\b/g, 'MMD')
+    .replace(/\bDl\b/g, 'DL')
     .replace(/\bOpbw\b/g, 'OPBW')
+    .replace(/\bOpbr\b/g, 'OPBR')
+    .replace(/\bOpdp\b/g, 'OPDP')
     .replace(/\bOpfp\b/g, 'OPFP')
     .replace(/\bOpmje\b/g, 'OPMJE')
+    .replace(/^MMD\s+/i, '')
+    .replace(/^MHAUI\s+/i, '')
+    .replace(/^MHA\s+TSH\s+/i, '')
+    .replace(/^MHA\s+/i, '')
+    .replace(/^JJBTS\s+/i, '')
+    .replace(/^Jujutsu Battles Tokyo Saga\s+/i, '')
+    .replace(/^Bleach\s+KKRT\s+/i, '')
+    .replace(/^Bleach Mobile 3D\s+/i, '')
     .replace(/^Bleach Soul Reaper\s+/i, '')
+    .replace(/^Bleach Soul Resonance\s+/i, '')
     .replace(/^Naruto Slugfest\s+/i, '')
+    .replace(/^Naruto Mobile Tencent\s+/i, '')
+    .replace(/^Naruto Mobile\s+/i, '')
+    .replace(/^Naruto Stage\s+/i, '')
+    .replace(/^NUNS3\s+/i, '')
+    .replace(/^NUNS4\s+/i, '')
+    .replace(/^NUNSC\s+/i, '')
+    .replace(/^One Piece Burning Will\s+/i, '')
+    .replace(/^One Piece UWR\s+/i, '')
     .replace(/^Shaman King Funbari Chronicle\s+/i, '')
     .replace(/^OPBW\s+/i, '')
+    .replace(/^OPBR\s+/i, '')
+    .replace(/^OPDP\s+/i, '')
     .replace(/^OPFP\s+/i, '')
     .replace(/^OPMJE\s+/i, '')
     .replace(/^DBFZ\s+/i, '')
-    .replace(/\s+XPS\s+By\s+.+$/i, '')
+    .replace(/^DBS\s+/i, '')
+    .replace(/^DBXV2?Mod\s+/i, '')
+    .replace(/^DBXV2?\s+/i, '')
+    .replace(/^DBZ Kakarot\s+/i, '')
+    .replace(/^SDBH WM\s+/i, '')
+    .replace(/\s+(?:XPS|OBJ|BLEND|FBX|MMD)(?:\s+(?:OBJ|BLEND|FBX|MMD))*\s+By\s+.+$/i, '')
+    .replace(/\s+(?:XPS|OBJ|BLEND|FBX|MMD)(?:\s+(?:Stage|Pack))?$/i, '')
+    .replace(/\s+By\s+.+$/i, '')
+    .replace(/\s+For\s+XPS$/i, '')
+    .replace(/\s+Stage\s+DL$/i, ' Stage')
+    .replace(/\s+DL$/i, '')
+    .replace(/\s+d(?=[a-z0-9]*\d)[a-z0-9]{5,}$/i, '')
     .replace(/\(([^)]+)\)/g, '$1')
     .replace(/\s+/g, ' ')
     .trim();
+  name = name
+    .replace(/'S\b/g, "'s")
+    .replace(/\s+(?:XPS|OBJ|BLEND|FBX|MMD)$/i, '')
+    .trim();
   if (name.toLowerCase() === 'gm namek') name = 'Namek';
+  if (name.toLowerCase() === 'templo de poseidon') name = 'Temple Of Poseidon';
+  if (name.toLowerCase() === 'rrxx canyon final') name = 'Canyon Arena';
+  if (name.toLowerCase() === 'rrxx canyon stage') name = 'Canyon Arena';
+  if (name.toLowerCase() === 'canyon stage') name = 'Canyon Arena';
   return name || titleize(value);
 }
 

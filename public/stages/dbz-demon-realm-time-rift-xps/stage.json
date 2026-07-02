@@ -1,0 +1,199 @@
+{
+  "id": "dbz-demon-realm-time-rift-xps",
+  "name": "Demon Realm Time Rift",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-demon-realm-time-rift-xps/stage.glb?v=mr2s2gje-21wtk",
+    "url": "/stages/dbz-demon-realm-time-rift-xps/stage.glb?v=mr2s2gje-21wtk",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        24.1412,
+        0
+      ],
+      "size": [
+        18,
+        48.2825,
+        18
+      ],
+      "radius": 27.291
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbxv2___time_rift_stages__xps__by_higuys920_denuiur/Demon Realm Time Rift (XPS)/BFtok01.emd.fbx",
+    "sourceKind": "fbx",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbxv2___time_rift_stages__xps__by_higuys920_denuiur/Demon Realm Time Rift (XPS)",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-demon-realm-time-rift-xps",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 425,
+      "meshCount": 105,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbxv2___time_rift_stages__xps__by_higuys920_denuiur/Demon Realm Time Rift (XPS)/BFtok01.emd.fbx",
+      "sourceKind": "fbx",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -1729.179,
+          -1729.1803,
+          -4638.2842
+        ],
+        "max": [
+          1729.179,
+          1729.1803,
+          4638.2842
+        ],
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          3458.3579,
+          3458.3606,
+          9276.5684
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -9,
+          0
+        ],
+        "max": [
+          9,
+          9,
+          48.2825
+        ],
+        "center": [
+          0,
+          0,
+          24.1412
+        ],
+        "size": [
+          18,
+          18,
+          48.2825
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-demon-realm-time-rift-xps/preview.png"
+}

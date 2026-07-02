@@ -1,0 +1,199 @@
+{
+  "id": "dbz-planet-namek",
+  "name": "Planet Namek",
+  "subtitle": "Dbz model arena",
+  "renderMode": "model",
+  "type": "model-stage",
+  "visualStylePreset": "anime-daylight",
+  "hidden": false,
+  "floor": "#4f7942",
+  "floorTexturePath": "/stages/grasslands/floor-texture.png",
+  "floorTextureRepeat": [
+    10,
+    10
+  ],
+  "safePlatform": {
+    "enabled": true,
+    "shape": "octagon",
+    "texturePath": "/stages/shared/handpainted-stone-platform.png",
+    "textureRepeat": [
+      6,
+      6
+    ],
+    "radius": 11,
+    "height": 0.14,
+    "yOffset": 0.07,
+    "color": "#777777",
+    "edgeColor": "#f0b35a",
+    "edgeOpacity": 0.72
+  },
+  "floorEffects": {
+    "dust": {
+      "enabled": true,
+      "intensity": 0.3,
+      "density": 0.25,
+      "size": 0.82,
+      "speed": 0.62,
+      "opacity": 0.24,
+      "color": "#c8b48a",
+      "quality": "low",
+      "maxParticles": 160,
+      "reactive": true
+    }
+  },
+  "rail": "#f0b35a",
+  "light": "#fff1d0",
+  "skyboxPath": "/stages/shared/default-skybox.png",
+  "world": {
+    "width": 24,
+    "depth": 24,
+    "floorY": -0.045,
+    "backgroundColor": "#9bdfff"
+  },
+  "fightPlane": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "width": 10,
+    "depth": 7,
+    "y": 0
+  },
+  "spawns": {
+    "p1": [
+      -2.2,
+      0,
+      0
+    ],
+    "p2": [
+      2.2,
+      0,
+      0
+    ]
+  },
+  "camera": {
+    "previewPosition": [
+      0,
+      6,
+      13
+    ],
+    "previewTarget": [
+      0,
+      1.5,
+      0
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "distance": 7.8,
+    "height": 3,
+    "fov": 36
+  },
+  "collision": {
+    "mode": "box"
+  },
+  "model": {
+    "path": "/stages/dbz-planet-namek/stage.glb?v=mr2sdfnw-5xvk",
+    "url": "/stages/dbz-planet-namek/stage.glb?v=mr2sdfnw-5xvk",
+    "format": "glb",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "focus": [
+      0,
+      1.5,
+      0
+    ],
+    "castShadow": true,
+    "receiveShadow": true,
+    "bounds": {
+      "center": [
+        0,
+        2.2699,
+        0
+      ],
+      "size": [
+        18,
+        4.5397,
+        18
+      ],
+      "radius": 12.9287
+    }
+  },
+  "mugen": {
+    "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____planet_namek_stage_dl__by_blacksoul1890_denkpb6/Planet Namek/Planet Namek.pmx",
+    "sourceKind": "mmd",
+    "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____planet_namek_stage_dl__by_blacksoul1890_denkpb6/Planet Namek",
+    "category": "Dbz",
+    "warnings": [],
+    "exportMeta": {
+      "stageId": "dbz-planet-namek",
+      "blenderVersion": "4.5.11 LTS",
+      "objectCount": 7,
+      "meshCount": 1,
+      "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____planet_namek_stage_dl__by_blacksoul1890_denkpb6/Planet Namek/Planet Namek.pmx",
+      "sourceKind": "mmd",
+      "warnings": [],
+      "boundsBeforeNormalize": {
+        "min": [
+          -3597.8101,
+          -3597.8103,
+          -317.396
+        ],
+        "max": [
+          3597.8103,
+          3597.8101,
+          1497.385
+        ],
+        "center": [
+          0.0001,
+          -0.0001,
+          589.9945
+        ],
+        "size": [
+          7195.6201,
+          7195.6201,
+          1814.781
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -9,
+          0
+        ],
+        "max": [
+          9,
+          9,
+          4.5397
+        ],
+        "center": [
+          0,
+          0,
+          2.2699
+        ],
+        "size": [
+          18,
+          18,
+          4.5397
+        ]
+      }
+    }
+  },
+  "thumbnailPath": "/stages/dbz-planet-namek/preview.png"
+}

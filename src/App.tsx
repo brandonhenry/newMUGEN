@@ -5674,7 +5674,7 @@ function StageEditor({
                   <StagePropSlider label="Model X" value={selectedModel.position?.[0] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 0, value) })} />
                   <StagePropSlider label="Model Y" value={selectedModel.position?.[1] ?? 0} min={-30} max={30} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 1, value) })} />
                   <StagePropSlider label="Model Z" value={selectedModel.position?.[2] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 2, value) })} />
-                  <StagePropSlider label="Scale" value={selectedModel.scale?.[0] ?? 1} min={0.05} max={8} step={0.01} onChange={(value) => updateStageModel({ scale: [value, value, value] })} />
+                  <StagePropSlider label="Scale" value={selectedModel.scale?.[0] ?? 1} min={0.05} max={50} step={0.01} onChange={(value) => updateStageModel({ scale: [value, value, value] })} />
                   <button className="secondary-button compact-button" type="button" onClick={groundStageModelToFeet}>
                     <Target size={14} />
                     Bottom To Feet
@@ -6275,10 +6275,33 @@ function StagePropSlider({
   const sliderMin = Math.min(min, safeValue);
   const sliderMax = Math.max(max, safeValue);
   const displayValue = precision === 0 ? String(Math.round(safeValue)) : formatSliderValue(safeValue, precision);
+  const inputStep = precision === 0 ? step : 0.01;
+  const applyInputValue = (nextValue: number) => {
+    if (!Number.isFinite(nextValue)) return;
+    const clamped = Math.max(sliderMin, Math.min(sliderMax, nextValue));
+    const rounded = precision === 0 ? Math.round(clamped) : Number(clamped.toFixed(Math.max(2, precision)));
+    onChange(rounded);
+  };
+  const handleInputKeyDown = (event: ReactKeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+    event.preventDefault();
+    const direction = event.key === 'ArrowUp' ? 1 : -1;
+    applyInputValue(safeValue + direction * inputStep);
+  };
   return (
     <label className="stage-prop-slider">
       <span>{label}</span>
-      <strong>{displayValue}</strong>
+      <input
+        className="stage-prop-value-input"
+        type="number"
+        min={sliderMin}
+        max={sliderMax}
+        step={inputStep}
+        value={displayValue}
+        onChange={(event) => applyInputValue(Number(event.target.value))}
+        onKeyDown={handleInputKeyDown}
+        aria-label={`${label} value`}
+      />
       <input
         type="range"
         min={sliderMin}

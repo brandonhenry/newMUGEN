@@ -5742,12 +5742,22 @@ button {
   gap: 8px 10px;
 }
 
-.stage-prop-slider strong {
+.stage-prop-slider .stage-prop-value-input {
+  width: 82px;
+  min-height: 30px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 7px;
   color: #f7f7f2;
-  font-size: 18px;
+  background: #15181f;
+  text-align: right;
   font-weight: 950;
   font-variant-numeric: tabular-nums;
-  line-height: 1;
+}
+
+.stage-prop-slider .stage-prop-value-input:focus-visible {
+  outline: 2px solid rgba(46, 230, 255, 0.88);
+  outline-offset: 2px;
 }
 
 .stage-prop-editor .stage-prop-slider input[type='range'],

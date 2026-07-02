@@ -76,6 +76,8 @@ def source_kind_for_path(path):
     suffix = path.suffix.lower()
     if path.name.lower().endswith(".mesh.ascii"):
         return "mesh"
+    if suffix in {".pmx", ".pmd"}:
+        return "mmd"
     return suffix[1:] if suffix.startswith(".") else suffix
 
 
@@ -87,6 +89,8 @@ def import_source_scene(source_path, source_kind, warnings):
     source_kind = "mesh" if source_kind == "mesh.ascii" else source_kind
     if source_kind == "blend":
         bpy.ops.wm.open_mainfile(filepath=str(source_path))
+    elif source_kind == "mmd":
+        import_mmd_source(source_path)
     elif source_kind in {"xps", "mesh"}:
         import_xps_source(source_path)
     elif source_kind == "fbx":
@@ -98,7 +102,7 @@ def import_source_scene(source_path, source_kind, warnings):
     else:
         raise SystemExit(f"Unsupported source kind: {source_kind}")
 
-    warnings.extend(clean_imported_scene(source_path))
+    warnings.extend(clean_imported_scene(source_path, source_kind))
     bpy.context.view_layer.update()
 
 
@@ -144,6 +148,35 @@ def import_xps_source(source_path):
     )
 
 
+def import_mmd_source(source_path):
+    operator_attempts = [
+        ("mmd_tools.import_model", {"filepath": str(source_path), "scale": 1.0}),
+        ("mmd_tools.import_model", {"filepath": str(source_path)}),
+        ("import_scene.mmd", {"filepath": str(source_path)}),
+        ("import_scene.pmx", {"filepath": str(source_path)}),
+        ("import_scene.pmd", {"filepath": str(source_path)}),
+    ]
+    errors = []
+    for operator_name, kwargs in operator_attempts:
+        op = resolve_operator(operator_name)
+        if not op:
+            continue
+        try:
+            result = op(**kwargs)
+            if result != {"CANCELLED"}:
+                return
+        except TypeError as error:
+            errors.append(f"{operator_name}: {error}")
+        except Exception as error:
+            errors.append(f"{operator_name}: {error}")
+
+    details = "; ".join(errors) if errors else "no known MMD Tools import operator is registered"
+    raise SystemExit(
+        "Could not import MMD source. Install or enable Blender Extensions MMD Tools "
+        f"or MMD-Blender/blender_mmd_tools. Details: {details}"
+    )
+
+
 def resolve_operator(name):
     group_name, operator_name = name.split(".", 1)
     group = getattr(bpy.ops, group_name, None)
@@ -162,15 +195,36 @@ def import_obj_source(source_path):
     raise SystemExit("Could not import OBJ source; no Blender OBJ import operator is registered.")
 
 
-def clean_imported_scene(source_path):
+def clean_imported_scene(source_path, source_kind):
     warnings = []
     for obj in bpy.context.scene.objects:
         if obj.type in {"CAMERA", "LIGHT", "ARMATURE", "EMPTY"}:
+            obj.hide_render = True
+        if source_kind == "mmd" and is_mmd_helper_object(obj):
             obj.hide_render = True
             obj.hide_viewport = True
     if not any(obj.type == "MESH" and obj.visible_get() and not obj.hide_render for obj in bpy.context.scene.objects):
         warnings.append(f"No visible mesh remained after importing {source_path.name}.")
     return warnings
+
+
+def is_mmd_helper_object(obj):
+    names = [obj.name.lower()]
+    if obj.data:
+        names.append(obj.data.name.lower())
+    for collection in obj.users_collection:
+        names.append(collection.name.lower())
+    combined = " ".join(names)
+    return any(
+        token in combined
+        for token in [
+            "rigid",
+            "joint",
+            "physics",
+            "temporary",
+            "mmd_shadow",
+        ]
+    )
 
 
 def visible_meshes():
@@ -338,9 +392,10 @@ def hide_generic_stage_helpers():
         names = [obj.name.lower()]
         if obj.data:
             names.append(obj.data.name.lower())
-        for material in obj.data.materials:
-            if material:
-                names.append(material.name.lower())
+            if len(obj.data.materials) <= 2:
+                for material in obj.data.materials:
+                    if material:
+                        names.append(material.name.lower())
         if any(is_generic_stage_helper_name(name) for name in names):
             obj.hide_render = True
             obj.hide_viewport = True
