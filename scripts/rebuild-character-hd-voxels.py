@@ -241,6 +241,42 @@ def scale_payload_to_idle_reference(payload: dict, scale_x: float, scale_y: floa
     return payload
 
 
+def payload_body_bounds(payload: dict) -> tuple[float, float, float, float] | None:
+    body_voxels = [
+        voxel
+        for voxel in payload.get("voxels", [])
+        if voxel.get("part") in {"head", "torso", "leadLeg", "rearLeg"}
+    ]
+    if not body_voxels:
+        return payload_bounds(payload)
+    return (
+        min(float(voxel["x"]) - float(voxel["w"]) / 2 for voxel in body_voxels),
+        min(float(voxel["y"]) - float(voxel["h"]) / 2 for voxel in body_voxels),
+        max(float(voxel["x"]) + float(voxel["w"]) / 2 for voxel in body_voxels),
+        max(float(voxel["y"]) + float(voxel["h"]) / 2 for voxel in body_voxels),
+    )
+
+
+def payload_body_bounds_center_x(payload: dict) -> float:
+    bounds = payload_body_bounds(payload)
+    return (bounds[0] + bounds[2]) / 2 if bounds else 0
+
+
+def widen_payload_around_body(payload: dict, expansion: float) -> dict:
+    if not math.isfinite(expansion) or expansion <= 1.00001:
+        return payload
+    center_x = payload_body_bounds_center_x(payload)
+    for voxel in payload.get("voxels", []):
+        voxel["x"] = round_voxel(center_x + (float(voxel["x"]) - center_x) * expansion)
+        voxel["z"] = round_voxel(float(voxel.get("z", 0)) * expansion)
+        voxel["w"] = round_voxel(float(voxel["w"]) * expansion)
+        voxel["d"] = round_voxel(float(voxel["d"]) * expansion)
+    next_center_x = payload_body_bounds_center_x(payload)
+    for voxel in payload.get("voxels", []):
+        voxel["x"] = round_voxel(float(voxel["x"]) - next_center_x)
+    return payload
+
+
 def palette_index(color: str, palette: list[str], indexes: dict[str, int]) -> int:
     if color in indexes:
         return indexes[color]
@@ -492,11 +528,39 @@ def idle_body_reference(character_manifest: dict, frames: list[dict]) -> dict | 
     return {"animation": "firstFrame", "frames": [int(first["frameIndex"])], "metrics": first["metrics"]}
 
 
+def is_wide_visual_animation_key(animation_key: str) -> bool:
+    return animation_key.startswith("cmd:") or animation_key in {"sprint", "jableft", "jabright", "kickleft", "kickright"}
+
+
+def wide_visual_candidate_frames(character_manifest: dict) -> set[int]:
+    animation_frames = character_manifest.get("animationFrames", {})
+    if not isinstance(animation_frames, dict):
+        return set()
+    eligible_indices: set[int] = set()
+    protected_indices: set[int] = set()
+    protected_keys = {"crouch", "crouchBlock", "jump", "backflip", "chargeKi"}
+    for animation_key, paths in animation_frames.items():
+        if not isinstance(animation_key, str) or not isinstance(paths, list):
+            continue
+        for path in paths:
+            if not isinstance(path, str):
+                continue
+            index = frame_index_from_path(path)
+            if index is not None:
+                if is_wide_visual_animation_key(animation_key):
+                    eligible_indices.add(index)
+                if animation_key in protected_keys:
+                    protected_indices.add(index)
+    return eligible_indices - protected_indices
+
+
 def normalize_payloads_to_idle_visual(character_manifest: dict, frames: list[dict], min_scale: float = 0.2, max_scale: float = 6.0) -> list[dict]:
     reference = idle_reference(character_manifest, frames)
     if not reference:
         return frames
+    wide_candidates = wide_visual_candidate_frames(character_manifest)
     for frame in frames:
+        frame_index = int(frame["frameIndex"])
         payload = frame["payload"]
         bound = payload_bounds(payload)
         if not bound:
@@ -508,6 +572,10 @@ def normalize_payloads_to_idle_visual(character_manifest: dict, frames: list[dic
         scale_x = clamp(raw_scale_x, min_scale, max_scale)
         scale_y = clamp(raw_scale_y, min_scale, max_scale)
         scale_payload_to_idle_reference(payload, scale_x, scale_y, bound[1])
+        wide_expansion = scale_y / scale_x if scale_x > 0 else 1
+        wide_exception = frame_index in wide_candidates and wide_expansion > 1.28
+        if wide_exception:
+            widen_payload_around_body(payload, wide_expansion)
         next_bound = payload_bounds(payload)
         source = payload.setdefault("source", {})
         if next_bound:
@@ -525,6 +593,8 @@ def normalize_payloads_to_idle_visual(character_manifest: dict, frames: list[dic
             "rawScaleY": round_voxel(raw_scale_y),
             "minScale": min_scale,
             "maxScale": max_scale,
+            "wideException": wide_exception,
+            "wideExpansion": round_voxel(wide_expansion),
         }
     return frames
 

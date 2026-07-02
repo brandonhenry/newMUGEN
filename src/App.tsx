@@ -231,6 +231,8 @@ type HdVoxelPayload = {
       rawScaleY: number;
       minScale: number;
       maxScale: number;
+      wideException?: boolean;
+      wideExpansion?: number;
     };
   };
 };
@@ -1790,6 +1792,7 @@ function normalizeHdVoxelFramesToIdleReference(
   const byFrame = new Map(frames.map((frame) => [frame.frameIndex, frame.payload]));
   const reference = getIdleVisualReference(character, byFrame);
   if (!reference) return frames;
+  const wideCandidates = getWideVisualCandidateFrames(character);
 
   return frames.map(({ frameIndex, payload }) => {
     const bounds = getHdVoxelPayloadBounds(payload);
@@ -1802,7 +1805,10 @@ function normalizeHdVoxelFramesToIdleReference(
     const maxScale = 6;
     const scaleX = clamp(rawScaleX, minScale, maxScale);
     const scaleY = clamp(rawScaleY, minScale, maxScale);
-    const nextPayload = scaleHdVoxelPayloadToIdleReference(payload, bounds.minY, scaleX, scaleY);
+    const wideExpansion = scaleX > 0 ? scaleY / scaleX : 1;
+    const wideException = wideCandidates.has(frameIndex) && wideExpansion > 1.28;
+    const fittedPayload = scaleHdVoxelPayloadToIdleReference(payload, bounds.minY, scaleX, scaleY);
+    const nextPayload = wideException ? widenHdVoxelPayloadAroundBody(fittedPayload, wideExpansion) : fittedPayload;
     const nextBounds = getHdVoxelPayloadBounds(nextPayload);
     return {
       frameIndex,
@@ -1823,12 +1829,34 @@ function normalizeHdVoxelFramesToIdleReference(
             rawScaleX: roundVoxelNumber(rawScaleX),
             rawScaleY: roundVoxelNumber(rawScaleY),
             minScale,
-            maxScale
+            maxScale,
+            wideException,
+            wideExpansion: roundVoxelNumber(wideExpansion)
           }
         }
       }
     };
   });
+}
+
+function isWideVisualAnimationKey(animationKey: string) {
+  return animationKey.startsWith('cmd:') || ['sprint', 'jableft', 'jabright', 'kickleft', 'kickright'].includes(animationKey);
+}
+
+function getWideVisualCandidateFrames(character: CharacterDefinition) {
+  const eligibleIndices = new Set<number>();
+  const protectedIndices = new Set<number>();
+  const protectedKeys = new Set(['crouch', 'crouchBlock', 'jump', 'backflip', 'chargeKi']);
+  Object.entries(character.animationFrames ?? {}).forEach(([animationKey, paths]) => {
+    paths.forEach((path) => {
+      const frameIndex = getFrameIndex(path);
+      if (!Number.isFinite(frameIndex)) return;
+      if (isWideVisualAnimationKey(animationKey)) eligibleIndices.add(frameIndex);
+      if (protectedKeys.has(animationKey)) protectedIndices.add(frameIndex);
+    });
+  });
+  protectedIndices.forEach((frameIndex) => eligibleIndices.delete(frameIndex));
+  return eligibleIndices;
 }
 
 function getIdleVisualReference(character: CharacterDefinition, payloads: Map<number, HdVoxelPayload>) {
@@ -1879,6 +1907,48 @@ function getHdVoxelPayloadBounds(payload: HdVoxelPayload) {
     }),
     { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
   );
+}
+
+function getHdVoxelBodyBounds(payload: HdVoxelPayload) {
+  const bodyVoxels = payload.voxels.filter((voxel) => ['head', 'torso', 'leadLeg', 'rearLeg'].includes(voxel.part));
+  if (bodyVoxels.length === 0) return getHdVoxelPayloadBounds(payload);
+  return bodyVoxels.reduce(
+    (bounds, voxel) => ({
+      minX: Math.min(bounds.minX, voxel.x - voxel.w / 2),
+      minY: Math.min(bounds.minY, voxel.y - voxel.h / 2),
+      maxX: Math.max(bounds.maxX, voxel.x + voxel.w / 2),
+      maxY: Math.max(bounds.maxY, voxel.y + voxel.h / 2)
+    }),
+    { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+  );
+}
+
+function getHdVoxelBodyCenterX(payload: HdVoxelPayload) {
+  const bounds = getHdVoxelBodyBounds(payload);
+  return bounds ? (bounds.minX + bounds.maxX) / 2 : 0;
+}
+
+function widenHdVoxelPayloadAroundBody(payload: HdVoxelPayload, expansion: number): HdVoxelPayload {
+  if (!Number.isFinite(expansion) || expansion <= 1.00001) return payload;
+  const bodyCenterX = getHdVoxelBodyCenterX(payload);
+  const widenedPayload = {
+    ...payload,
+    voxels: payload.voxels.map((voxel) => ({
+      ...voxel,
+      x: roundVoxelNumber(bodyCenterX + (voxel.x - bodyCenterX) * expansion),
+      z: roundVoxelNumber(voxel.z * expansion),
+      w: roundVoxelNumber(voxel.w * expansion),
+      d: roundVoxelNumber(voxel.d * expansion)
+    }))
+  };
+  const nextBodyCenterX = getHdVoxelBodyCenterX(widenedPayload);
+  return {
+    ...widenedPayload,
+    voxels: widenedPayload.voxels.map((voxel) => ({
+      ...voxel,
+      x: roundVoxelNumber(voxel.x - nextBodyCenterX)
+    }))
+  };
 }
 
 function scaleHdVoxelPayloadToIdleReference(payload: HdVoxelPayload, anchorY: number, scaleX: number, scaleY: number): HdVoxelPayload {
