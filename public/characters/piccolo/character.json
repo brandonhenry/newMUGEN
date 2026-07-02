@@ -1238,9 +1238,44 @@
   },
   "animationFrameScales": {
     "getupStand": {
+      "30": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0
+      },
       "38": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.81,
+        "height": 0.81,
         "offsetX": 0
       }
     },
@@ -1248,6 +1283,28 @@
       "38": {
         "width": 0.68,
         "height": 0.68,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "30": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.57,
+        "height": 0.57,
         "offsetX": 0
       }
     }

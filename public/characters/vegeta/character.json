@@ -1003,16 +1003,36 @@
   },
   "animationFrameScales": {
     "knockdown": {
+      "30": {
+        "width": 0.48,
+        "height": 0.48,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.51,
+        "height": 0.51,
+        "offsetX": 0
+      },
       "32": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.43,
+        "height": 0.43,
         "offsetX": 0
       }
     },
     "getupStand": {
+      "30": {
+        "width": 0.48,
+        "height": 0.48,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.51,
+        "height": 0.51,
+        "offsetX": 0
+      },
       "32": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.43,
+        "height": 0.43,
         "offsetX": 0
       }
     },

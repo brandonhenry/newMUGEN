@@ -1239,15 +1239,25 @@
   "animationFrameScales": {
     "knockdown": {
       "30": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.56,
+        "height": 0.56,
         "offsetX": 0
       }
     },
     "getupStand": {
       "30": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.56,
+        "height": 0.56,
         "offsetX": 0
       }
     },
