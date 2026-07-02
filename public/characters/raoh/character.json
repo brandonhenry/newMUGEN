@@ -455,9 +455,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 3,
-      "recoveryFrames": 16,
+      "startupFrames": 5,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": -3,
@@ -485,9 +485,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 23,
+      "activeFrames": 9,
+      "recoveryFrames": 12,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -606,9 +606,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 15,
-      "activeFrames": 5,
-      "recoveryFrames": 21,
+      "startupFrames": 24,
+      "activeFrames": 10,
+      "recoveryFrames": 7,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -622,9 +622,9 @@
       "throwCapture": true
     },
     "cmd:1+3": {
-      "startupFrames": 14,
-      "activeFrames": 6,
-      "recoveryFrames": 25,
+      "startupFrames": 19,
+      "activeFrames": 20,
+      "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -638,9 +638,9 @@
       "throwCapture": true
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 29,
+      "activeFrames": 10,
+      "recoveryFrames": 4,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -991,9 +991,9 @@
       "label": "Raoh Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 9,
-      "activeFrames": 6,
-      "recoveryFrames": 20,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 12,
       "forwardForce": 2
     }
   },

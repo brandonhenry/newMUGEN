@@ -482,9 +482,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 10,
+      "startupFrames": 4,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 21,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -498,8 +498,8 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 2,
+      "startupFrames": 11,
+      "activeFrames": 4,
       "recoveryFrames": 17,
       "damage": 9,
       "blockDamage": 1,
@@ -514,9 +514,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 23,
+      "activeFrames": 9,
+      "recoveryFrames": 12,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -637,9 +637,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 26,
+      "activeFrames": 11,
+      "recoveryFrames": 8,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -651,9 +651,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 28,
+      "startupFrames": 20,
+      "activeFrames": 22,
+      "recoveryFrames": 7,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -666,9 +666,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 11,
+      "recoveryFrames": 4,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -1044,9 +1044,9 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 12,
-      "activeFrames": 8,
-      "recoveryFrames": 13
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 11
     }
   },
   "effects": [],

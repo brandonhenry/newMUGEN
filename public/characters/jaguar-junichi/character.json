@@ -462,9 +462,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 10,
+      "startupFrames": 4,
       "activeFrames": 2,
-      "recoveryFrames": 14,
+      "recoveryFrames": 20,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -478,9 +478,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 11,
+      "activeFrames": 4,
+      "recoveryFrames": 15,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -3,
@@ -613,9 +613,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 26,
+      "activeFrames": 11,
+      "recoveryFrames": 8,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -628,8 +628,8 @@
     },
     "cmd:1+3": {
       "startupFrames": 26,
-      "activeFrames": 6,
-      "recoveryFrames": 30,
+      "activeFrames": 27,
+      "recoveryFrames": 9,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -643,9 +643,9 @@
       "knockdown": false
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 29,
+      "activeFrames": 10,
+      "recoveryFrames": 4,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -657,9 +657,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 27,
+      "activeFrames": 15,
+      "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -16,
@@ -673,9 +673,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 14,
-      "activeFrames": 4,
-      "recoveryFrames": 12,
+      "startupFrames": 12,
+      "activeFrames": 7,
+      "recoveryFrames": 11,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -996,9 +996,9 @@
       "label": "Jaguar Junichi Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 22,
-      "activeFrames": 6,
-      "recoveryFrames": 26
+      "startupFrames": 30,
+      "activeFrames": 5,
+      "recoveryFrames": 19
     }
   },
   "effects": [],

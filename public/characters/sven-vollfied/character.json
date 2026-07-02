@@ -417,9 +417,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 23,
+      "activeFrames": 9,
+      "recoveryFrames": 12,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -433,9 +433,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 21,
+      "activeFrames": 10,
+      "recoveryFrames": 12,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,

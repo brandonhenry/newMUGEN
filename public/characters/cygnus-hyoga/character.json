@@ -1,6 +1,6 @@
 {
   "id": "cygnus-hyoga",
-  "displayName": "Cygnus Hyōga",
+  "displayName": "Cygnus Hyo\u0304ga",
   "locked": true,
   "variant": false,
   "faceCardPath": "/characters/cygnus-hyoga/face-card.png",
@@ -265,7 +265,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Cygnus Hyōga Left Check",
+      "label": "Cygnus Hyo\u0304ga Left Check",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -297,7 +297,7 @@
     },
     {
       "id": "kick",
-      "label": "Cygnus Hyōga Left Kick",
+      "label": "Cygnus Hyo\u0304ga Left Kick",
       "input": "kick",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -329,7 +329,7 @@
     },
     {
       "id": "heavy",
-      "label": "Cygnus Hyōga Right Check",
+      "label": "Cygnus Hyo\u0304ga Right Check",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -361,7 +361,7 @@
     },
     {
       "id": "special",
-      "label": "Cygnus Hyōga Right Kick",
+      "label": "Cygnus Hyo\u0304ga Right Kick",
       "input": "special",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -420,9 +420,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 3,
-      "recoveryFrames": 16,
+      "startupFrames": 5,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": -3,
@@ -430,14 +430,14 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 5,
       "range": 1.48,
-      "label": "Cygnus Hyōga Left Check",
+      "label": "Cygnus Hyo\u0304ga Left Check",
       "hitLevel": "high",
       "tracking": "medium",
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 3,
+      "startupFrames": 12,
+      "activeFrames": 4,
       "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
@@ -446,15 +446,15 @@
       "onCounterHitFrames": 10,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "Cygnus Hyōga Right Check",
+      "label": "Cygnus Hyo\u0304ga Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 25,
+      "activeFrames": 10,
+      "recoveryFrames": 13,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -13,
@@ -462,15 +462,15 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 8,
       "range": 1.66,
-      "label": "Cygnus Hyōga Left Kick",
+      "label": "Cygnus Hyo\u0304ga Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 22,
+      "activeFrames": 11,
+      "recoveryFrames": 13,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -478,7 +478,7 @@
       "onCounterHitFrames": 12,
       "whiffRecoveryFrames": 9,
       "range": 1.73,
-      "label": "Cygnus Hyōga Right Kick",
+      "label": "Cygnus Hyo\u0304ga Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false
@@ -495,7 +495,7 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Cygnus Hyōga Rush",
+      "label": "Cygnus Hyo\u0304ga Rush",
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
@@ -513,7 +513,7 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Cygnus Hyōga Launcher",
+      "label": "Cygnus Hyo\u0304ga Launcher",
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
@@ -527,7 +527,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 13,
       "range": 2.05,
-      "label": "Cygnus Hyōga Burst",
+      "label": "Cygnus Hyo\u0304ga Burst",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -542,7 +542,7 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Cygnus Hyōga Rising Strike",
+      "label": "Cygnus Hyo\u0304ga Rising Strike",
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
@@ -556,7 +556,7 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Cygnus Hyōga Crouch Jab",
+      "label": "Cygnus Hyo\u0304ga Crouch Jab",
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
@@ -571,7 +571,7 @@
       "whiffRecoveryFrames": 12,
       "range": 1.48,
       "launchHeight": 2,
-      "label": "Cygnus Hyōga Crouch Launcher",
+      "label": "Cygnus Hyo\u0304ga Crouch Launcher",
       "hitLevel": "mid"
     },
     "cmd:1+2": {
@@ -585,7 +585,7 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Cygnus Hyōga Twin Assault",
+      "label": "Cygnus Hyo\u0304ga Twin Assault",
       "hitLevel": "mid"
     },
     "cmd:1+3": {
@@ -600,7 +600,7 @@
       "whiffRecoveryFrames": 13,
       "range": 1.65,
       "launchHeight": 2.2,
-      "label": "Cygnus Hyōga Cross Launcher",
+      "label": "Cygnus Hyo\u0304ga Cross Launcher",
       "hitLevel": "mid"
     },
     "cmd:2+3": {
@@ -614,7 +614,7 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Cygnus Hyōga Low Feint",
+      "label": "Cygnus Hyo\u0304ga Low Feint",
       "hitLevel": "low"
     },
     "cmd:2+4": {
@@ -628,7 +628,7 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Cygnus Hyōga Driving Kick",
+      "label": "Cygnus Hyo\u0304ga Driving Kick",
       "hitLevel": "low",
       "knockdown": true
     },
@@ -643,7 +643,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 14,
       "range": 1.9,
-      "label": "Cygnus Hyōga Power Crush",
+      "label": "Cygnus Hyo\u0304ga Power Crush",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -658,7 +658,7 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 15,
       "range": 2.1,
-      "label": "Cygnus Hyōga Aura Drive",
+      "label": "Cygnus Hyo\u0304ga Aura Drive",
       "hitLevel": "special",
       "knockdown": true
     },
@@ -670,7 +670,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Second Beat"
+      "label": "Cygnus Hyo\u0304ga Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -680,7 +680,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Body Blow"
+      "label": "Cygnus Hyo\u0304ga Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -690,7 +690,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Low Changeup"
+      "label": "Cygnus Hyo\u0304ga Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -700,7 +700,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Pressure Feint"
+      "label": "Cygnus Hyo\u0304ga Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -710,7 +710,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Drive"
+      "label": "Cygnus Hyo\u0304ga Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -720,7 +720,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Barrage"
+      "label": "Cygnus Hyo\u0304ga Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -730,7 +730,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Finisher"
+      "label": "Cygnus Hyo\u0304ga Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -741,7 +741,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Step Kick"
+      "label": "Cygnus Hyo\u0304ga Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -751,7 +751,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Palm String"
+      "label": "Cygnus Hyo\u0304ga Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -761,7 +761,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Rising Chain"
+      "label": "Cygnus Hyo\u0304ga Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -771,7 +771,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Special Setup"
+      "label": "Cygnus Hyo\u0304ga Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -781,7 +781,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Break Art"
+      "label": "Cygnus Hyo\u0304ga Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -791,7 +791,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Check Hook"
+      "label": "Cygnus Hyo\u0304ga Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -801,7 +801,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Heavy Break"
+      "label": "Cygnus Hyo\u0304ga Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -811,7 +811,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Charged Follow"
+      "label": "Cygnus Hyo\u0304ga Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -822,7 +822,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Drop Kick"
+      "label": "Cygnus Hyo\u0304ga Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -832,7 +832,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Arc Finisher"
+      "label": "Cygnus Hyo\u0304ga Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -842,7 +842,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Focus Stance"
+      "label": "Cygnus Hyo\u0304ga Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -852,7 +852,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Mode Shift"
+      "label": "Cygnus Hyo\u0304ga Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -862,7 +862,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Heel Feint"
+      "label": "Cygnus Hyo\u0304ga Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -872,7 +872,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Summon Strike"
+      "label": "Cygnus Hyo\u0304ga Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -882,7 +882,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Guard Snare"
+      "label": "Cygnus Hyo\u0304ga Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -892,7 +892,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Armor Break"
+      "label": "Cygnus Hyo\u0304ga Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -902,7 +902,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Power Setup"
+      "label": "Cygnus Hyo\u0304ga Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -912,7 +912,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Switch Strike"
+      "label": "Cygnus Hyo\u0304ga Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -922,7 +922,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Spark Jab"
+      "label": "Cygnus Hyo\u0304ga Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -932,7 +932,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Binding Blow"
+      "label": "Cygnus Hyo\u0304ga Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -942,7 +942,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Heavy Draw"
+      "label": "Cygnus Hyo\u0304ga Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -953,7 +953,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Cygnus Hyōga Kick Ender"
+      "label": "Cygnus Hyo\u0304ga Kick Ender"
     }
   },
   "effects": [],

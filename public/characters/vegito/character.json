@@ -441,9 +441,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 11,
+      "activeFrames": 4,
+      "recoveryFrames": 15,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -3,
@@ -457,9 +457,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 25,
+      "activeFrames": 10,
+      "recoveryFrames": 13,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -13,
@@ -473,9 +473,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 26,
+      "startupFrames": 24,
+      "activeFrames": 12,
+      "recoveryFrames": 13,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -609,9 +609,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 23,
+      "activeFrames": 9,
+      "recoveryFrames": 11,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -623,9 +623,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 27,
+      "activeFrames": 15,
+      "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -16,
@@ -639,8 +639,8 @@
     },
     "cmd:3+4": {
       "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "activeFrames": 13,
+      "recoveryFrames": 21,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -10,

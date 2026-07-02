@@ -1,6 +1,6 @@
 {
   "id": "dragon-shiryu",
-  "displayName": "Dragon Shiryū",
+  "displayName": "Dragon Shiryu\u0304",
   "locked": true,
   "variant": false,
   "faceCardPath": "/characters/dragon-shiryu/face-card.png",
@@ -261,7 +261,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Dragon Shiryū Left Check",
+      "label": "Dragon Shiryu\u0304 Left Check",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -293,7 +293,7 @@
     },
     {
       "id": "kick",
-      "label": "Dragon Shiryū Left Kick",
+      "label": "Dragon Shiryu\u0304 Left Kick",
       "input": "kick",
       "startupFrames": 17,
       "activeFrames": 3,
@@ -325,7 +325,7 @@
     },
     {
       "id": "heavy",
-      "label": "Dragon Shiryū Right Check",
+      "label": "Dragon Shiryu\u0304 Right Check",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -357,7 +357,7 @@
     },
     {
       "id": "special",
-      "label": "Dragon Shiryū Right Kick",
+      "label": "Dragon Shiryu\u0304 Right Kick",
       "input": "special",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -416,9 +416,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 3,
-      "recoveryFrames": 15,
+      "startupFrames": 5,
+      "activeFrames": 2,
+      "recoveryFrames": 22,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": -3,
@@ -426,14 +426,14 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.47,
-      "label": "Dragon Shiryū Left Check",
+      "label": "Dragon Shiryu\u0304 Left Check",
       "hitLevel": "high",
       "tracking": "medium",
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 3,
+      "startupFrames": 12,
+      "activeFrames": 4,
       "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
@@ -442,15 +442,15 @@
       "onCounterHitFrames": 10,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "Dragon Shiryū Right Check",
+      "label": "Dragon Shiryu\u0304 Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 22,
+      "activeFrames": 9,
+      "recoveryFrames": 11,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -458,15 +458,15 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.6,
-      "label": "Dragon Shiryū Left Kick",
+      "label": "Dragon Shiryu\u0304 Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 26,
+      "startupFrames": 24,
+      "activeFrames": 12,
+      "recoveryFrames": 13,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -474,7 +474,7 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 9,
       "range": 1.76,
-      "label": "Dragon Shiryū Right Kick",
+      "label": "Dragon Shiryu\u0304 Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
       "knockdown": false
@@ -491,7 +491,7 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Dragon Shiryū Rush",
+      "label": "Dragon Shiryu\u0304 Rush",
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
@@ -509,7 +509,7 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Dragon Shiryū Launcher",
+      "label": "Dragon Shiryu\u0304 Launcher",
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
@@ -523,7 +523,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 13,
       "range": 2.05,
-      "label": "Dragon Shiryū Burst",
+      "label": "Dragon Shiryu\u0304 Burst",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -538,7 +538,7 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Dragon Shiryū Rising Strike",
+      "label": "Dragon Shiryu\u0304 Rising Strike",
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
@@ -552,7 +552,7 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Dragon Shiryū Crouch Jab",
+      "label": "Dragon Shiryu\u0304 Crouch Jab",
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
@@ -567,7 +567,7 @@
       "whiffRecoveryFrames": 12,
       "range": 1.48,
       "launchHeight": 2,
-      "label": "Dragon Shiryū Crouch Launcher",
+      "label": "Dragon Shiryu\u0304 Crouch Launcher",
       "hitLevel": "mid"
     },
     "cmd:1+2": {
@@ -581,7 +581,7 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Dragon Shiryū Twin Assault",
+      "label": "Dragon Shiryu\u0304 Twin Assault",
       "hitLevel": "mid"
     },
     "cmd:1+3": {
@@ -596,7 +596,7 @@
       "whiffRecoveryFrames": 13,
       "range": 1.65,
       "launchHeight": 2.2,
-      "label": "Dragon Shiryū Cross Launcher",
+      "label": "Dragon Shiryu\u0304 Cross Launcher",
       "hitLevel": "mid"
     },
     "cmd:2+3": {
@@ -610,7 +610,7 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Dragon Shiryū Low Feint",
+      "label": "Dragon Shiryu\u0304 Low Feint",
       "hitLevel": "low"
     },
     "cmd:2+4": {
@@ -624,7 +624,7 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Dragon Shiryū Driving Kick",
+      "label": "Dragon Shiryu\u0304 Driving Kick",
       "hitLevel": "low",
       "knockdown": true
     },
@@ -639,7 +639,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 14,
       "range": 1.9,
-      "label": "Dragon Shiryū Power Crush",
+      "label": "Dragon Shiryu\u0304 Power Crush",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -654,7 +654,7 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 15,
       "range": 2.1,
-      "label": "Dragon Shiryū Aura Drive",
+      "label": "Dragon Shiryu\u0304 Aura Drive",
       "hitLevel": "special",
       "knockdown": true
     },
@@ -666,7 +666,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Second Beat"
+      "label": "Dragon Shiryu\u0304 Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -676,7 +676,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Body Blow"
+      "label": "Dragon Shiryu\u0304 Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -686,7 +686,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Low Changeup"
+      "label": "Dragon Shiryu\u0304 Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -696,7 +696,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Pressure Feint"
+      "label": "Dragon Shiryu\u0304 Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -706,7 +706,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Drive"
+      "label": "Dragon Shiryu\u0304 Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -716,7 +716,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Barrage"
+      "label": "Dragon Shiryu\u0304 Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -726,7 +726,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Finisher"
+      "label": "Dragon Shiryu\u0304 Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -737,7 +737,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Step Kick"
+      "label": "Dragon Shiryu\u0304 Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -747,7 +747,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Palm String"
+      "label": "Dragon Shiryu\u0304 Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -757,7 +757,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Rising Chain"
+      "label": "Dragon Shiryu\u0304 Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -767,7 +767,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Special Setup"
+      "label": "Dragon Shiryu\u0304 Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -777,7 +777,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Break Art"
+      "label": "Dragon Shiryu\u0304 Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -787,7 +787,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Check Hook"
+      "label": "Dragon Shiryu\u0304 Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -797,7 +797,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Heavy Break"
+      "label": "Dragon Shiryu\u0304 Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -807,7 +807,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Charged Follow"
+      "label": "Dragon Shiryu\u0304 Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -818,7 +818,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Drop Kick"
+      "label": "Dragon Shiryu\u0304 Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -828,7 +828,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Arc Finisher"
+      "label": "Dragon Shiryu\u0304 Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -838,7 +838,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Focus Stance"
+      "label": "Dragon Shiryu\u0304 Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -848,7 +848,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Mode Shift"
+      "label": "Dragon Shiryu\u0304 Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -858,7 +858,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Heel Feint"
+      "label": "Dragon Shiryu\u0304 Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -868,7 +868,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Summon Strike"
+      "label": "Dragon Shiryu\u0304 Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -878,7 +878,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Guard Snare"
+      "label": "Dragon Shiryu\u0304 Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -888,7 +888,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Armor Break"
+      "label": "Dragon Shiryu\u0304 Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -898,7 +898,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Power Setup"
+      "label": "Dragon Shiryu\u0304 Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -908,7 +908,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Switch Strike"
+      "label": "Dragon Shiryu\u0304 Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -918,7 +918,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Spark Jab"
+      "label": "Dragon Shiryu\u0304 Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -928,7 +928,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Binding Blow"
+      "label": "Dragon Shiryu\u0304 Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -938,7 +938,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Heavy Draw"
+      "label": "Dragon Shiryu\u0304 Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -949,7 +949,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dragon Shiryū Kick Ender"
+      "label": "Dragon Shiryu\u0304 Kick Ender"
     }
   },
   "effects": [],

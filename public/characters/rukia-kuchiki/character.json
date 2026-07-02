@@ -416,9 +416,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 3,
-      "recoveryFrames": 15,
+      "startupFrames": 5,
+      "activeFrames": 2,
+      "recoveryFrames": 22,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": -3,
@@ -432,9 +432,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 13,
+      "activeFrames": 5,
+      "recoveryFrames": 18,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -448,9 +448,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 22,
+      "activeFrames": 9,
+      "recoveryFrames": 11,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -464,9 +464,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 21,
+      "activeFrames": 10,
+      "recoveryFrames": 12,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
