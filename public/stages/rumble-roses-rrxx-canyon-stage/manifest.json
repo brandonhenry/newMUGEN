@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -1.78,
+      -0.84,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      3.76,
+      3.76,
+      3.76
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           19.2204
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 38.2808,
+      "previousScale": 8,
+      "updatedScale": 3.76,
+      "previousModelY": -1.78,
+      "updatedModelY": -0.84
     }
   },
   "thumbnailPath": "/stages/rumble-roses-rrxx-canyon-stage/preview.png"

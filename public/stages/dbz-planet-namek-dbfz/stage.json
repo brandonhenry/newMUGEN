@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -2.62,
+      -0.94,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      2.86,
+      2.86,
+      2.86
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           33.601
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 50.2625,
+      "previousScale": 8,
+      "updatedScale": 2.86,
+      "previousModelY": -2.62,
+      "updatedModelY": -0.94
     }
   },
   "thumbnailPath": "/stages/dbz-planet-namek-dbfz/preview.png"

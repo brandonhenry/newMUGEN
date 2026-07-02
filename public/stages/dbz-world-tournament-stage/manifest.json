@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -0.08,
+      -0.03,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      3.23,
+      3.23,
+      3.23
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           26.7357
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 44.6357,
+      "previousScale": 8,
+      "updatedScale": 3.23,
+      "previousModelY": -0.08,
+      "updatedModelY": -0.03
     }
   },
   "thumbnailPath": "/stages/dbz-world-tournament-stage/preview.png"

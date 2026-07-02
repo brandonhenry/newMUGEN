@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -0.65,
+      -0.41,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      5.08,
+      5.08,
+      5.08
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           6.2473
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 28.3201,
+      "previousScale": 8,
+      "updatedScale": 5.08,
+      "previousModelY": -0.65,
+      "updatedModelY": -0.41
     }
   },
   "thumbnailPath": "/stages/general-temple-of-poseidon/preview.png"

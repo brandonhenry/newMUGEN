@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -4.15,
+      -1.27,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      2.44,
+      2.44,
+      2.44
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           14.4581
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 59.1188,
+      "previousScale": 8,
+      "updatedScale": 2.44,
+      "previousModelY": -4.15,
+      "updatedModelY": -1.27
     }
   },
   "thumbnailPath": "/stages/dbz-west-city-dbfz/preview.png"

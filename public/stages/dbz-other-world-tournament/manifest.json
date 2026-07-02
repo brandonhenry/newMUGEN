@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -5.79,
+      -0.46,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      0.64,
+      0.64,
+      0.64
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           210.9859
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 223.9221,
+      "previousScale": 8,
+      "updatedScale": 0.64,
+      "previousModelY": -5.79,
+      "updatedModelY": -0.46
     }
   },
   "thumbnailPath": "/stages/dbz-other-world-tournament/preview.png"

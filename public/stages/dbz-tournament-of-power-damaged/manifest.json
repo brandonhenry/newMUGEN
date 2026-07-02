@@ -102,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      -4.03,
+      -2.15,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      4.26,
+      4.26,
+      4.26
     ],
     "rotation": [
       0,
@@ -243,6 +243,15 @@
           19.3127
         ]
       }
+    },
+    "calibration": {
+      "scalePass": "oversized-source-footprint-match-karakura",
+      "referenceWorldFootprint": 144,
+      "sourceLocalFootprint": 33.7973,
+      "previousScale": 8,
+      "updatedScale": 4.26,
+      "previousModelY": -4.03,
+      "updatedModelY": -2.15
     }
   },
   "thumbnailPath": "/stages/dbz-tournament-of-power-damaged/preview.png"

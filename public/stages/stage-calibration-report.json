@@ -514,5 +514,190 @@
     "normalizedStageCount": 76,
     "safetyClamp": "Rejected non-pass model Y values outside [-12, 0] and replaced them with bounds fallback.",
     "safetyFixedCount": 8
-  }
+  },
+  "scaleReview": {
+    "checkedAt": "2026-07-02T01:58:41.273Z",
+    "method": "Compare GLB X/Z footprint against Karakura reference after UI spot-check; reduce only oversized source footprints, leave normalized 18-unit stages at scale 8.",
+    "referenceStage": "bleach-bleach-soul-reaper-karakura-town-intersection",
+    "targetWorldFootprint": 144,
+    "checkedStageCount": 79,
+    "changedStageCount": 10,
+    "changed": [
+      {
+        "id": "general-temple-of-poseidon",
+        "name": "Temple Of Poseidon",
+        "localFoot": 28.32,
+        "oldScale": 8,
+        "newScale": 5.08,
+        "oldY": -0.65,
+        "newY": -0.41
+      },
+      {
+        "id": "rumble-roses-rrxx-canyon-stage",
+        "name": "Canyon Arena",
+        "localFoot": 38.28,
+        "oldScale": 8,
+        "newScale": 3.76,
+        "oldY": -1.78,
+        "newY": -0.84
+      },
+      {
+        "id": "dbz-other-world-tournament",
+        "name": "Other World Tournament",
+        "localFoot": 223.92,
+        "oldScale": 8,
+        "newScale": 0.64,
+        "oldY": -5.79,
+        "newY": -0.46
+      },
+      {
+        "id": "dbz-planet-namek-dbfz",
+        "name": "Planet Namek",
+        "localFoot": 50.26,
+        "oldScale": 8,
+        "newScale": 2.86,
+        "oldY": -2.62,
+        "newY": -0.94
+      },
+      {
+        "id": "dbz-west-city-dbfz",
+        "name": "West City",
+        "localFoot": 59.12,
+        "oldScale": 8,
+        "newScale": 2.44,
+        "oldY": -4.15,
+        "newY": -1.27
+      },
+      {
+        "id": "dbz-world-tournament-stage",
+        "name": "World Tournament Stage",
+        "localFoot": 44.64,
+        "oldScale": 8,
+        "newScale": 3.23,
+        "oldY": -0.08,
+        "newY": -0.03
+      },
+      {
+        "id": "dbz-hero-city",
+        "name": "Hero City",
+        "localFoot": 44.29,
+        "oldScale": 8,
+        "newScale": 3.25,
+        "oldY": -1.16,
+        "newY": -0.47
+      },
+      {
+        "id": "dbz-planet-namek",
+        "name": "Planet Namek",
+        "localFoot": 25.97,
+        "oldScale": 8,
+        "newScale": 5.54,
+        "oldY": -1.69,
+        "newY": -1.17
+      },
+      {
+        "id": "dbz-tournament-of-power-damaged",
+        "name": "Tournament Of Power Damaged",
+        "localFoot": 33.8,
+        "oldScale": 8,
+        "newScale": 4.26,
+        "oldY": -4.03,
+        "newY": -2.15
+      },
+      {
+        "id": "dbz-west-city-damaged",
+        "name": "West City Damaged",
+        "localFoot": 47.56,
+        "oldScale": 8,
+        "newScale": 3.03,
+        "oldY": -2.22,
+        "newY": -0.84
+      }
+    ]
+  },
+  "stages": [
+    {
+      "id": "general-temple-of-poseidon",
+      "name": "Temple Of Poseidon",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 5.08 to match Karakura footprint; model Y moved from -0.65 to -0.41."
+      ]
+    },
+    {
+      "id": "rumble-roses-rrxx-canyon-stage",
+      "name": "Canyon Arena",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 3.76 to match Karakura footprint; model Y moved from -1.78 to -0.84."
+      ]
+    },
+    {
+      "id": "dbz-other-world-tournament",
+      "name": "Other World Tournament",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 0.64 to match Karakura footprint; model Y moved from -5.79 to -0.46."
+      ]
+    },
+    {
+      "id": "dbz-planet-namek-dbfz",
+      "name": "Planet Namek",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 2.86 to match Karakura footprint; model Y moved from -2.62 to -0.94."
+      ]
+    },
+    {
+      "id": "dbz-west-city-dbfz",
+      "name": "West City",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 2.44 to match Karakura footprint; model Y moved from -4.15 to -1.27."
+      ]
+    },
+    {
+      "id": "dbz-world-tournament-stage",
+      "name": "World Tournament Stage",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 3.23 to match Karakura footprint; model Y moved from -0.08 to -0.03."
+      ]
+    },
+    {
+      "id": "dbz-hero-city",
+      "name": "Hero City",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 3.25 to match Karakura footprint; model Y moved from -1.16 to -0.47."
+      ]
+    },
+    {
+      "id": "dbz-planet-namek",
+      "name": "Planet Namek",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 5.54 to match Karakura footprint; model Y moved from -1.69 to -1.17."
+      ]
+    },
+    {
+      "id": "dbz-tournament-of-power-damaged",
+      "name": "Tournament Of Power Damaged",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 4.26 to match Karakura footprint; model Y moved from -4.03 to -2.15."
+      ]
+    },
+    {
+      "id": "dbz-west-city-damaged",
+      "name": "West City Damaged",
+      "status": "scale adjusted",
+      "notes": [
+        "Reduced scale from 8 to 3.03 to match Karakura footprint; model Y moved from -2.22 to -0.84."
+      ]
+    }
+  ],
+  "ignoredStages": [
+    "my-hero-academia-hospital-room"
+  ]
 }
