@@ -339,9 +339,9 @@ button {
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-.arcade-menu-list button:hover,
-.arcade-menu-list button:focus-visible,
-.arcade-menu-list button.is-active {
+.arcade-menu-list button:not(:disabled):hover,
+.arcade-menu-list button:not(:disabled):focus-visible,
+.arcade-menu-list button:not(:disabled).is-active {
   color: #ffffff;
   background: linear-gradient(90deg, rgba(76, 112, 255, 0.58), rgba(108, 174, 255, 0.36));
   text-shadow:
@@ -350,14 +350,20 @@ button {
   outline: 0;
 }
 
-.arcade-menu-list:has(button:hover) button.is-active:not(:hover),
-.arcade-menu-list:has(button:focus-visible) button.is-active:not(:focus-visible) {
+.arcade-menu-list button:disabled {
+  color: rgba(247, 247, 242, 0.32);
+  cursor: not-allowed;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.22);
+}
+
+.arcade-menu-list:has(button:not(:disabled):hover) button.is-active:not(:hover),
+.arcade-menu-list:has(button:not(:disabled):focus-visible) button.is-active:not(:focus-visible) {
   color: rgba(247, 247, 242, 0.82);
   background: transparent;
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.34);
 }
 
-.arcade-menu-list button:active {
+.arcade-menu-list button:not(:disabled):active {
   transform: scale(0.96);
 }
 

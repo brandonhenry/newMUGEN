@@ -3363,10 +3363,10 @@ function MenuScreen({
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster }) : null));
-  const [activeMenuIndex, setActiveMenuIndex] = useState(0);
+  const [activeMenuIndex, setActiveMenuIndex] = useState(1);
   const [menuChromeHidden, setMenuChromeHidden] = useState(false);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
-  const activeMenuIndexRef = useRef(0);
+  const activeMenuIndexRef = useRef(1);
   const menuChromeHiddenRef = useRef(false);
   const hiddenMenuGamepadPressedRef = useRef(false);
   const menuScreenRef = useRef<HTMLDivElement>(null);
@@ -3547,6 +3547,7 @@ function MenuScreen({
   }, [clearMenuIdleTimer, menuChromeHidden, scheduleMenuScreensaver]);
 
   const menuItems = [
+    { label: 'Story', action: undefined, disabled: true },
     { label: 'Arcade', action: onArcade },
     { label: 'Versus', action: onVersus },
     { label: 'Training', action: onTraining },
@@ -3608,13 +3609,15 @@ function MenuScreen({
             <button
               key={item.label}
               className={index === activeMenuIndex ? 'is-active' : ''}
+              disabled={item.disabled}
               data-sound="off"
               onPointerEnter={() => activateMenuItem(index, true)}
               onMouseMove={() => activateMenuItem(index, false)}
               onFocus={() => activateMenuItem(index, false)}
               onClick={() => {
+                if (item.disabled) return;
                 onMenuSelect();
-                item.action();
+                item.action?.();
               }}
             >
               {item.label}
@@ -4877,6 +4880,7 @@ type MugenStageImportResult = {
 };
 
 const STAGE_MODEL_SELECTION_ID = '__stage-model__';
+type StageViewportTool = 'props' | 'lane' | 'bounds';
 
 function roundStageEditorNumber(value: number) {
   return Number(value.toFixed(4));
@@ -4920,6 +4924,21 @@ function defaultFightPlane(stage: StageDefinition): NonNullable<StageDefinition[
     y,
     rotationY: stage.fightPlane?.rotationY ?? 0
   };
+}
+
+function defaultPlayableBounds(stage: StageDefinition): NonNullable<StageDefinition['playableBounds']> {
+  return {
+    shape: stage.playableBounds?.shape ?? 'box',
+    width: stage.playableBounds?.width ?? stage.fightPlane?.width ?? Math.max(10, Math.min(stage.world?.width ?? 24, 30)),
+    depth: stage.playableBounds?.depth ?? stage.fightPlane?.depth ?? Math.max(7, Math.min(stage.world?.depth ?? 16, 22))
+  };
+}
+
+function isStageEditorStageHotkeyTextTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tagName = target.tagName;
+  return tagName === 'INPUT' || tagName === 'TEXTAREA';
 }
 
 function spawnHalfDistanceForLane(stage: StageDefinition, lane: NonNullable<StageDefinition['fightPlane']>) {
@@ -4966,7 +4985,7 @@ function StageEditor({
   const [editableStage, setEditableStage] = useState<StageDefinition>(stages[0] ?? defaultStageDraft());
   const [selectedPropId, setSelectedPropId] = useState('');
   const [showTestFighters, setShowTestFighters] = useState(false);
-  const [showLaneControls, setShowLaneControls] = useState(false);
+  const [activeViewportTool, setActiveViewportTool] = useState<StageViewportTool>('props');
   const [draft, setDraft] = useState<StageImportDraft>(() => randomStageDraft());
   const [sourceDataUrl, setSourceDataUrl] = useState('');
   const [sourceName, setSourceName] = useState('');
@@ -5036,10 +5055,37 @@ function StageEditor({
     };
   }, [selectedStageId, stages]);
 
+  useEffect(() => {
+    const handleStageHotkeys = (event: KeyboardEvent) => {
+      if (mode !== 'edit' || propPickerOpen || environmentPickerOpen || stages.length < 2) return;
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (isStageEditorStageHotkeyTextTarget(event.target)) return;
+      const key = event.key.toLowerCase();
+      const direction = event.code === 'KeyP' || key === 'p'
+        ? 1
+        : event.code === 'KeyO' || key === 'o'
+          ? -1
+          : 0;
+      if (direction === 0) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      setSelectedStageId((current) => {
+        const currentIndex = stages.findIndex((stage) => stage.id === current);
+        const nextIndex = ((currentIndex >= 0 ? currentIndex : 0) + direction + stages.length) % stages.length;
+        return stages[nextIndex]?.id ?? current;
+      });
+    };
+
+    window.addEventListener('keydown', handleStageHotkeys, true);
+    return () => window.removeEventListener('keydown', handleStageHotkeys, true);
+  }, [environmentPickerOpen, mode, propPickerOpen, stages]);
+
   const selectedProp = selectedPropId === STAGE_MODEL_SELECTION_ID ? undefined : editableStage.props?.find((prop) => prop.id === selectedPropId) ?? editableStage.props?.[0];
   const selectedModel = selectedPropId === STAGE_MODEL_SELECTION_ID ? editableStage.model : undefined;
   const stagePreviewFighters = useMemo(() => resolveStagePreviewFighters(roster, p1, p2), [p1, p2, roster]);
   const lane = defaultFightPlane(editableStage);
+  const playableBounds = defaultPlayableBounds(editableStage);
 
   const updateSelectedProp = (patch: Partial<StagePropDefinition>) => {
     if (!selectedProp) return;
@@ -5078,7 +5124,7 @@ function StageEditor({
       };
     });
     setSelectedPropId(STAGE_MODEL_SELECTION_ID);
-    setShowLaneControls(false);
+    setActiveViewportTool('props');
   };
 
   const updateFightPlane = (patch: Partial<NonNullable<StageDefinition['fightPlane']>>) => {
@@ -5100,6 +5146,27 @@ function StageEditor({
       };
     });
   };
+
+  const updatePlayableBounds = (patch: Partial<NonNullable<StageDefinition['playableBounds']>>) => {
+    markStageEdited();
+    setEditableStage((current) => {
+      const currentBounds = defaultPlayableBounds(current);
+      return {
+        ...current,
+        playableBounds: {
+          ...currentBounds,
+          ...patch
+        }
+      };
+    });
+  };
+
+  const matchPlayableBoundsToLane = () => updatePlayableBounds({ width: lane.width, depth: lane.depth });
+
+  const matchPlayableBoundsToWorld = () => updatePlayableBounds({
+    width: editableStage.world?.width ?? playableBounds.width,
+    depth: editableStage.world?.depth ?? playableBounds.depth
+  });
 
   const duplicateSelectedProp = () => {
     if (!selectedProp) return;
@@ -5532,9 +5599,10 @@ function StageEditor({
               previewMode={previewMode}
               testFighters={stagePreviewFighters}
               showTestFighters={previewMode !== 'edit' || showTestFighters}
+              showPlayableBounds={activeViewportTool === 'bounds'}
               selectedPropId={selectedProp?.id}
               onSelectProp={(propId) => {
-                setShowLaneControls(false);
+                setActiveViewportTool('props');
                 setSelectedPropId(propId);
               }}
             />
@@ -5565,14 +5633,24 @@ function StageEditor({
                   Test Fighters
                 </button>
                 <button
-                  className={`secondary-button compact-button ${showLaneControls ? 'is-active' : ''}`}
+                  className={`secondary-button compact-button ${activeViewportTool === 'lane' ? 'is-active' : ''}`}
                   onClick={() => {
-                    setShowLaneControls((current) => !current);
+                    setActiveViewportTool((current) => current === 'lane' ? 'props' : 'lane');
                     setSelectedPropId('');
                   }}
                 >
                   <Target size={14} />
-                  Change Center Lane
+                  Edit Lane
+                </button>
+                <button
+                  className={`secondary-button compact-button ${activeViewportTool === 'bounds' ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setActiveViewportTool((current) => current === 'bounds' ? 'props' : 'bounds');
+                    setSelectedPropId('');
+                  }}
+                >
+                  <Maximize2 size={14} />
+                  Edit Bounds
                 </button>
                 <button
                   className="secondary-button compact-button"
@@ -5625,7 +5703,7 @@ function StageEditor({
                   <button
                     className={selectedModel ? 'active' : ''}
                     onClick={() => {
-                      setShowLaneControls(false);
+                      setActiveViewportTool('props');
                       setSelectedPropId(STAGE_MODEL_SELECTION_ID);
                     }}
                   >
@@ -5638,7 +5716,7 @@ function StageEditor({
                     key={prop.id}
                     className={prop.id === selectedProp?.id ? 'active' : ''}
                     onClick={() => {
-                      setShowLaneControls(false);
+                      setActiveViewportTool('props');
                       setSelectedPropId(prop.id);
                     }}
                   >
@@ -5648,7 +5726,7 @@ function StageEditor({
                 ))}
               </div>
             )}
-            {showLaneControls && (
+            {activeViewportTool === 'lane' && (
               <div className="stage-viewport-inspector">
                 <header>
                   <span>Center Lane</span>
@@ -5664,7 +5742,37 @@ function StageEditor({
                 </div>
               </div>
             )}
-            {showStageControls && selectedModel && !showLaneControls && (
+            {activeViewportTool === 'bounds' && (
+              <div className="stage-viewport-inspector">
+                <header>
+                  <span>Playable Wall</span>
+                  <strong>Edit Bounds</strong>
+                </header>
+                <div className="stage-prop-editor">
+                  <label>
+                    <span>Shape</span>
+                    <select
+                      value={playableBounds.shape}
+                      onChange={(event) => updatePlayableBounds({ shape: event.target.value as NonNullable<StageDefinition['playableBounds']>['shape'] })}
+                    >
+                      <option value="box">Box</option>
+                      <option value="ellipse">Ellipse</option>
+                    </select>
+                  </label>
+                  <StagePropSlider label="Width" value={playableBounds.width} min={4} max={220} step={0.1} onChange={(value) => updatePlayableBounds({ width: value })} />
+                  <StagePropSlider label="Depth" value={playableBounds.depth} min={4} max={220} step={0.1} onChange={(value) => updatePlayableBounds({ depth: value })} />
+                  <button className="secondary-button compact-button" type="button" onClick={matchPlayableBoundsToLane}>
+                    <Target size={14} />
+                    Match Lane
+                  </button>
+                  <button className="secondary-button compact-button" type="button" onClick={matchPlayableBoundsToWorld}>
+                    <Maximize2 size={14} />
+                    Match World
+                  </button>
+                </div>
+              </div>
+            )}
+            {showStageControls && selectedModel && activeViewportTool === 'props' && (
               <div className="stage-viewport-inspector">
                 <header>
                   <span>Selected</span>
@@ -5682,7 +5790,7 @@ function StageEditor({
                 </div>
               </div>
             )}
-            {showStageControls && selectedProp && !showLaneControls && (
+            {showStageControls && selectedProp && activeViewportTool === 'props' && (
               <div className="stage-viewport-inspector">
                 <header>
                   <span>Selected</span>
@@ -8928,6 +9036,7 @@ function CharacterViewer({
                     previewEffectFrame={isEditingAnimation ? clampedAnimationPreviewFrame : undefined}
                     rotationTurn={rotationTurn}
                     zoom={zoom}
+                    preserveCameraFrame={isLocalDev}
                   />
                 ) : (
                   <NoFrameDataPreview />

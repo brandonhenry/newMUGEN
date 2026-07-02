@@ -102,6 +102,7 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     fightPlane: normalizeFightPlane(stage.fightPlane),
     spawns: normalizeSpawns(stage.spawns),
     collision: normalizeCollision(stage.collision),
+    playableBounds: normalizePlayableBounds(stage.playableBounds),
     model: normalizeStageModel(stage.model),
     world: stage.world
       ? {
@@ -211,6 +212,16 @@ function normalizeCollision(value: unknown): StageDefinition['collision'] {
   if (!value || typeof value !== 'object') return undefined;
   const mode = (value as NonNullable<StageDefinition['collision']>).mode;
   return { mode: mode === 'mesh' || mode === 'none' ? mode : 'box' };
+}
+
+function normalizePlayableBounds(value: unknown): StageDefinition['playableBounds'] {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as NonNullable<StageDefinition['playableBounds']>;
+  return {
+    shape: source.shape === 'ellipse' ? 'ellipse' : 'box',
+    width: clamp(finiteOr(source.width, 24), 4, 220),
+    depth: clamp(finiteOr(source.depth, 16), 4, 220)
+  };
 }
 
 function normalizeVec3(value: unknown, fallback: Vec3Tuple): Vec3Tuple {

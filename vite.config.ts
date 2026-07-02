@@ -2637,6 +2637,7 @@ export function sanitizeStageManifest(stage: Record<string, unknown>, stageId: s
     fightPlane: sanitizeFightPlane(stage.fightPlane),
     spawns: sanitizeSpawns(stage.spawns),
     collision: sanitizeCollision(stage.collision),
+    playableBounds: sanitizePlayableBounds(stage.playableBounds),
     model: sanitizeStageModel(stage.model),
     backgroundLayers: sanitizeStageLayers(stage.backgroundLayers),
     props: sanitizeStageProps(stage.props)
@@ -2703,6 +2704,16 @@ function sanitizeCollision(value: unknown) {
   if (!value || typeof value !== 'object') return undefined;
   const mode = (value as Record<string, unknown>).mode;
   return { mode: mode === 'mesh' || mode === 'none' ? mode : 'box' };
+}
+
+function sanitizePlayableBounds(value: unknown) {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  return {
+    shape: source.shape === 'ellipse' ? 'ellipse' : 'box',
+    width: clamp(finiteOr(source.width, 24), 4, 220),
+    depth: clamp(finiteOr(source.depth, 16), 4, 220)
+  };
 }
 
 function sanitizeFloorSounds(value: unknown) {

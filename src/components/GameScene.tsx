@@ -1311,6 +1311,7 @@ type StagePreviewCanvasProps = {
   previewMode?: StagePreviewMode;
   testFighters?: [CharacterDefinition, CharacterDefinition] | null;
   showTestFighters?: boolean;
+  showPlayableBounds?: boolean;
   selectedPropId?: string;
   onSelectProp?: (propId: string) => void;
 };
@@ -1323,6 +1324,7 @@ export function StagePreviewCanvas({
   previewMode = 'edit',
   testFighters = null,
   showTestFighters = false,
+  showPlayableBounds = false,
   selectedPropId,
   onSelectProp
 }: StagePreviewCanvasProps) {
@@ -1382,6 +1384,7 @@ export function StagePreviewCanvas({
           onSelectProp={propSelectionEnabled ? onSelectProp : undefined}
           showFightLaneMarkers={propSelectionEnabled}
         />
+        {interactive && previewMode === 'edit' && showPlayableBounds && <StagePlayableBoundsMarkers stage={stage} />}
       </group>
       {previewFighters?.map((fighter) => <FighterRig key={`stage-preview-fighter-${fighter.slot}`} fighter={fighter} stage={stage} />)}
       {previewFighters ? <ContactShadows position={[0, (stage.fightPlane?.y ?? stage.world?.floorY ?? 0) - 0.01, 0]} opacity={0.34} scale={14} blur={2.4} far={3} /> : null}
@@ -1698,7 +1701,8 @@ export function CharacterPreviewCanvas({
   previewEffectInstances,
   previewEffectFrame,
   rotationTurn,
-  zoom
+  zoom,
+  preserveCameraFrame = false
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
@@ -1709,13 +1713,19 @@ export function CharacterPreviewCanvas({
   previewEffectFrame?: number;
   rotationTurn: number;
   zoom: number;
+  preserveCameraFrame?: boolean;
 }) {
   const frameFit = useMemo(() => getPreviewFrameFit(character, animationKey), [animationKey, character]);
+  const initialFrameFit = useRef<PreviewFrameFit | null>(null);
+  if (!preserveCameraFrame) initialFrameFit.current = null;
+  else if (!initialFrameFit.current) initialFrameFit.current = frameFit;
+  const cameraFrameFit = preserveCameraFrame ? initialFrameFit.current ?? frameFit : frameFit;
+  const maxCameraDistance = preserveCameraFrame ? 18 : 6.2 + cameraFrameFit.extraDistance;
   return (
     <Canvas
       shadows
       dpr={[1, 1.75]}
-      camera={{ position: [0, 1.7 + frameFit.extraTargetY, 4.4 + frameFit.extraDistance], fov: 38 }}
+      camera={{ position: [0, 1.7 + cameraFrameFit.extraTargetY, 4.4 + cameraFrameFit.extraDistance], fov: 38 }}
       data-testid="character-viewer-canvas"
       aria-label="3D character model viewer"
     >
@@ -1740,16 +1750,16 @@ export function CharacterPreviewCanvas({
         previewEffectFrame={previewEffectFrame}
         rotationTurn={rotationTurn}
       />
-      <PreviewCamera zoom={zoom} frameFit={frameFit} />
+      <PreviewCamera zoom={zoom} frameFit={cameraFrameFit} />
       <OrbitControls
         makeDefault
         enablePan={false}
         enableZoom
         minDistance={2.25}
-        maxDistance={6.2 + frameFit.extraDistance}
+        maxDistance={maxCameraDistance}
         minPolarAngle={Math.PI * 0.22}
         maxPolarAngle={Math.PI * 0.52}
-        target={[0, 1 + frameFit.extraTargetY, 0]}
+        target={[0, 1 + cameraFrameFit.extraTargetY, 0]}
         rotateSpeed={0.75}
         zoomSpeed={0.72}
       />
@@ -2629,6 +2639,59 @@ function ModelStageLoadFailureMarker({ stage }: { stage: StageDefinition }) {
 
 function ModelStageFightLane({ stage }: { stage: StageDefinition }) {
   return <StageFightLaneMarkers stage={stage} modelStage />;
+}
+
+function StagePlayableBoundsMarkers({ stage }: { stage: StageDefinition }) {
+  const bounds = stage.playableBounds ?? {
+    shape: 'box' as const,
+    width: stage.fightPlane?.width ?? Math.max(10, Math.min(stage.world?.width ?? 24, 30)),
+    depth: stage.fightPlane?.depth ?? Math.max(7, Math.min(stage.world?.depth ?? 16, 22))
+  };
+  const center = stage.fightPlane?.center ?? [0, stage.world?.floorY ?? 0, 0];
+  const y = (stage.fightPlane?.y ?? center[1] ?? stage.world?.floorY ?? -0.045) + 0.032;
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  const width = Math.max(4, bounds.width);
+  const depth = Math.max(4, bounds.depth);
+  const edgeOpacity = 0.84;
+  const fillOpacity = 0.075;
+  if (bounds.shape === 'ellipse') {
+    return (
+      <group position={[center[0], y, center[2]]} rotation={[0, rotationY, 0]} renderOrder={12}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} scale={[width / 2, depth / 2, 1]}>
+          <circleGeometry args={[1, 96]} />
+          <meshBasicMaterial color="#35e6ff" transparent opacity={fillOpacity} depthWrite={false} fog={false} />
+        </mesh>
+        <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[width / 2, depth / 2, 1]}>
+          <ringGeometry args={[0.985, 1.015, 96]} />
+          <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+        </mesh>
+      </group>
+    );
+  }
+  return (
+    <group position={[center[0], y, center[2]]} rotation={[0, rotationY, 0]} renderOrder={12}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[width, depth]} />
+        <meshBasicMaterial color="#35e6ff" transparent opacity={fillOpacity} depthWrite={false} fog={false} />
+      </mesh>
+      <mesh position={[0, 0.012, -depth / 2]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[width, 0.08]} />
+        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+      </mesh>
+      <mesh position={[0, 0.012, depth / 2]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[width, 0.08]} />
+        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+      </mesh>
+      <mesh position={[-width / 2, 0.014, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.08, depth]} />
+        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+      </mesh>
+      <mesh position={[width / 2, 0.014, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.08, depth]} />
+        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+      </mesh>
+    </group>
+  );
 }
 
 function StageFightLaneMarkers({ stage, modelStage = false }: { stage: StageDefinition; modelStage?: boolean }) {

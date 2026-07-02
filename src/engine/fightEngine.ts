@@ -3741,23 +3741,87 @@ function constrainPositionToStageBounds(
   position: { x: number; z: number },
   radius = MIN_WALL_RADIUS
 ) {
-  const bounds = getStageMovementBounds(stage, radius);
-  position.x = clamp(position.x, bounds.minX, bounds.maxX);
-  position.z = clamp(position.z, bounds.minZ, bounds.maxZ);
+  const bounds = resolveStageMovementBounds(stage, radius);
+  const local = worldToStageBoundsLocal(position, bounds);
+  if (bounds.shape === 'ellipse') {
+    constrainLocalPointToEllipse(local, bounds);
+  } else {
+    local.x = clamp(local.x, -bounds.halfWidth, bounds.halfWidth);
+    local.z = clamp(local.z, -bounds.halfDepth, bounds.halfDepth);
+  }
+  const next = stageBoundsLocalToWorld(local, bounds);
+  position.x = next.x;
+  position.z = next.z;
 }
 
-function getStageMovementBounds(stage: StageDefinition, radius = MIN_WALL_RADIUS) {
-  const width = Math.max(MIN_STAGE_BOUND_WIDTH, Number.isFinite(stage.world?.width) ? Number(stage.world?.width) : DEFAULT_STAGE_BOUND_WIDTH);
-  const depth = Math.max(MIN_STAGE_BOUND_DEPTH, Number.isFinite(stage.world?.depth) ? Number(stage.world?.depth) : DEFAULT_STAGE_BOUND_DEPTH);
+type ResolvedStageMovementBounds = {
+  shape: 'box' | 'ellipse';
+  centerX: number;
+  centerZ: number;
+  rotationY: number;
+  halfWidth: number;
+  halfDepth: number;
+};
+
+function resolveStageMovementBounds(stage: StageDefinition, radius = MIN_WALL_RADIUS): ResolvedStageMovementBounds {
+  const authoredBounds = stage.playableBounds;
+  const minWidth = authoredBounds ? 4 : MIN_STAGE_BOUND_WIDTH;
+  const minDepth = authoredBounds ? 4 : MIN_STAGE_BOUND_DEPTH;
+  const width = Math.max(
+    minWidth,
+    Number.isFinite(authoredBounds?.width)
+      ? Number(authoredBounds?.width)
+      : Number.isFinite(stage.world?.width)
+        ? Number(stage.world?.width)
+        : DEFAULT_STAGE_BOUND_WIDTH
+  );
+  const depth = Math.max(
+    minDepth,
+    Number.isFinite(authoredBounds?.depth)
+      ? Number(authoredBounds?.depth)
+      : Number.isFinite(stage.world?.depth)
+        ? Number(stage.world?.depth)
+        : DEFAULT_STAGE_BOUND_DEPTH
+  );
   const wallPadding = clamp(radius, 0, Math.min(width, depth) * 0.45);
-  const halfWidth = Math.max(0.1, width / 2 - wallPadding);
-  const halfDepth = Math.max(0.1, depth / 2 - wallPadding);
+  const laneCenter = stage.fightPlane?.center;
   return {
-    minX: -halfWidth,
-    maxX: halfWidth,
-    minZ: -halfDepth,
-    maxZ: halfDepth
+    shape: authoredBounds?.shape === 'ellipse' ? 'ellipse' : 'box',
+    centerX: authoredBounds ? laneCenter?.[0] ?? 0 : 0,
+    centerZ: authoredBounds ? laneCenter?.[2] ?? 0 : 0,
+    rotationY: authoredBounds ? stage.fightPlane?.rotationY ?? 0 : 0,
+    halfWidth: Math.max(0.1, width / 2 - wallPadding),
+    halfDepth: Math.max(0.1, depth / 2 - wallPadding)
   };
+}
+
+function worldToStageBoundsLocal(position: { x: number; z: number }, bounds: ResolvedStageMovementBounds) {
+  const dx = position.x - bounds.centerX;
+  const dz = position.z - bounds.centerZ;
+  const cos = Math.cos(bounds.rotationY);
+  const sin = Math.sin(bounds.rotationY);
+  return {
+    x: dx * cos - dz * sin,
+    z: dx * sin + dz * cos
+  };
+}
+
+function stageBoundsLocalToWorld(position: { x: number; z: number }, bounds: ResolvedStageMovementBounds) {
+  const cos = Math.cos(bounds.rotationY);
+  const sin = Math.sin(bounds.rotationY);
+  return {
+    x: bounds.centerX + position.x * cos + position.z * sin,
+    z: bounds.centerZ - position.x * sin + position.z * cos
+  };
+}
+
+function constrainLocalPointToEllipse(position: { x: number; z: number }, bounds: ResolvedStageMovementBounds) {
+  const normalizedDistance = (position.x * position.x) / (bounds.halfWidth * bounds.halfWidth)
+    + (position.z * position.z) / (bounds.halfDepth * bounds.halfDepth);
+  if (normalizedDistance <= 1) return;
+  const scale = 1 / Math.sqrt(normalizedDistance);
+  position.x *= scale;
+  position.z *= scale;
 }
 
 function getFighterWallRadius(fighter: FighterRuntime) {

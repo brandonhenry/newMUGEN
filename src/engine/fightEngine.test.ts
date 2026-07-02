@@ -13,7 +13,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
-import { emptyInputFrame, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../types';
+import { emptyInputFrame, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput, type StageDefinition } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
 
 function unwrappedAngleDelta(next: number, previous: number) {
@@ -21,6 +21,26 @@ function unwrappedAngleDelta(next: number, previous: number) {
   if (delta > Math.PI) delta -= Math.PI * 2;
   if (delta < -Math.PI) delta += Math.PI * 2;
   return delta;
+}
+
+function boundsLocalPosition(stage: StageDefinition, position: { x: number; z: number }) {
+  const center = stage.fightPlane?.center ?? [0, 0, 0];
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  const dx = position.x - center[0];
+  const dz = position.z - center[2];
+  return {
+    x: dx * Math.cos(rotationY) - dz * Math.sin(rotationY),
+    z: dx * Math.sin(rotationY) + dz * Math.cos(rotationY)
+  };
+}
+
+function boundsWorldPosition(stage: StageDefinition, local: { x: number; z: number }) {
+  const center = stage.fightPlane?.center ?? [0, 0, 0];
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  return {
+    x: center[0] + local.x * Math.cos(rotationY) + local.z * Math.sin(rotationY),
+    z: center[2] - local.x * Math.sin(rotationY) + local.z * Math.cos(rotationY)
+  };
 }
 
 function makeKiClashCharacter(character: CharacterDefinition, kiBurst = true): CharacterDefinition {
@@ -1046,6 +1066,97 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].position.x).toBeGreaterThan(-10);
     expect(match.fighters[0].position.z).toBeLessThan(6);
+  });
+
+  it('keeps authored box playable bounds aligned to the center lane', () => {
+    const boundedStage: StageDefinition = {
+      ...stages[0],
+      world: { width: 80, depth: 80, floorY: -0.045, backgroundColor: '#101114' },
+      fightPlane: { center: [10, 0, 5], width: 14, depth: 8, y: 0, rotationY: Math.PI / 2 },
+      playableBounds: { shape: 'box', width: 8, depth: 4 }
+    };
+    let match = createMatch(starterCharacters[0], starterCharacters[1], boundedStage, 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const outside = boundsWorldPosition(boundedStage, { x: 12, z: 0.5 });
+    match.fighters[0].position.x = outside.x;
+    match.fighters[0].position.z = outside.z;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    const local = boundsLocalPosition(boundedStage, match.fighters[0].position);
+    expect(local.x).toBeLessThanOrEqual(4);
+    expect(local.x).toBeGreaterThanOrEqual(-4);
+    expect(local.z).toBeLessThanOrEqual(2);
+    expect(local.z).toBeGreaterThanOrEqual(-2);
+  });
+
+  it('projects fighters back inside ellipse playable bounds from cardinal and diagonal edges', () => {
+    const boundedStage: StageDefinition = {
+      ...stages[0],
+      world: { width: 80, depth: 80, floorY: -0.045, backgroundColor: '#101114' },
+      fightPlane: { center: [2, 0, -3], width: 14, depth: 8, y: 0, rotationY: Math.PI / 5 },
+      playableBounds: { shape: 'ellipse', width: 8, depth: 4 }
+    };
+    const outsidePoints = [
+      { x: 14, z: 0 },
+      { x: 0, z: -9 },
+      { x: 9, z: 5 }
+    ];
+
+    for (const outsideLocal of outsidePoints) {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], boundedStage, 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      const outside = boundsWorldPosition(boundedStage, outsideLocal);
+      match.fighters[0].position.x = outside.x;
+      match.fighters[0].position.z = outside.z;
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+      const local = boundsLocalPosition(boundedStage, match.fighters[0].position);
+      const ellipseDistance = (local.x * local.x) / (4 * 4) + (local.z * local.z) / (2 * 2);
+      expect(ellipseDistance).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it('keeps shadow clones inside authored playable bounds', () => {
+    const boundedStage: StageDefinition = {
+      ...stages[0],
+      world: { width: 80, depth: 80, floorY: -0.045, backgroundColor: '#101114' },
+      fightPlane: { center: [0, 0, 0], width: 14, depth: 8, y: 0, rotationY: 0 },
+      playableBounds: { shape: 'ellipse', width: 8, depth: 4 }
+    };
+    let match = createMatch(starterCharacters[0], starterCharacters[1], boundedStage, 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = 0;
+    match.fighters[0].position.z = 0;
+    match.fighters[0].shadowClone = {
+      phase: 'active',
+      position: { x: 99, y: 0, z: 0 },
+      velocityY: 0,
+      facing: 1,
+      facingYaw: 0,
+      state: 'attack',
+      currentMove: null,
+      moveInstanceId: 0,
+      moveFrame: 0,
+      actionFramesRemaining: 0,
+      hitConnected: false,
+      attackConsumed: true,
+      vanishOnLanding: false,
+      spawnSmokeFrames: 0,
+      vanishSmokeFrames: 0
+    };
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    const clone = match.fighters[0].shadowClone;
+    expect(clone).not.toBeNull();
+    const local = boundsLocalPosition(boundedStage, clone?.position ?? { x: 99, z: 99 });
+    const ellipseDistance = (local.x * local.x) / (4 * 4) + (local.z * local.z) / (2 * 2);
+    expect(ellipseDistance).toBeLessThanOrEqual(1);
   });
 
   it('drives both fighters from AI in CPU vs CPU mode', () => {

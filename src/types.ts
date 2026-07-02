@@ -354,6 +354,12 @@ export type CharacterDefinition = {
   };
 };
 
+export type StagePlayableBoundsDefinition = {
+  shape: 'box' | 'ellipse';
+  width: number;
+  depth: number;
+};
+
 export type StageDefinition = {
   id: string;
   name: string;
@@ -413,6 +419,7 @@ export type StageDefinition = {
   collision?: {
     mode: 'box' | 'mesh' | 'none';
   };
+  playableBounds?: StagePlayableBoundsDefinition;
   model?: StageModelDefinition;
   mugen?: MugenStageMetadata;
   backgroundLayers?: StageLayerDefinition[];

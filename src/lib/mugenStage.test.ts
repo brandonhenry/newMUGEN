@@ -158,6 +158,51 @@ describe('MUGEN stage parsing', () => {
     });
   });
 
+  it('normalizes playable bounds metadata for loaded stage manifests', () => {
+    const normalized = normalizeStage({
+      id: 'bounds-stage',
+      name: 'Bounds Stage',
+      subtitle: 'Bounds',
+      renderMode: 'procedural',
+      floor: '#000000',
+      rail: '#ffffff',
+      light: '#ffffff',
+      playableBounds: {
+        shape: 'ellipse',
+        width: 18,
+        depth: 7
+      }
+    });
+
+    expect(normalized.playableBounds).toEqual({
+      shape: 'ellipse',
+      width: 18,
+      depth: 7
+    });
+  });
+
+  it('sanitizes saved playable bounds metadata', () => {
+    const sanitized = sanitizeStageManifest({
+      name: 'Bounds Stage',
+      subtitle: 'Bounds',
+      renderMode: 'procedural',
+      floor: '#000000',
+      rail: '#ffffff',
+      light: '#ffffff',
+      playableBounds: {
+        shape: 'triangle',
+        width: -10,
+        depth: 999
+      }
+    }, 'bounds-stage');
+
+    expect(sanitized.playableBounds).toEqual({
+      shape: 'box',
+      width: 4,
+      depth: 220
+    });
+  });
+
   it('normalizes model-backed stages without dropping model metadata', () => {
     const normalized = normalizeStage({
       id: 'hidden-leaf-village',
