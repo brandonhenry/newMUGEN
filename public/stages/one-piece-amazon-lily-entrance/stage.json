@@ -35,10 +35,22 @@
       "size": 0.82,
       "speed": 0.62,
       "opacity": 0.24,
-      "color": "#c8b48a",
-      "quality": "low",
+      "radius": 1.4,
+      "strength": 0.35,
+      "lifetime": 900,
+      "amount": 80,
       "maxParticles": 160,
-      "reactive": true
+      "maxDecals": 0,
+      "spread": 1,
+      "coverageScale": 1.08,
+      "decay": 0.86,
+      "frameCount": 1,
+      "reactive": true,
+      "quality": "low",
+      "windStrength": 0.35,
+      "fallSpeed": 0.8,
+      "pulseSpeed": 1.2,
+      "color": "#c8b48a"
     }
   },
   "rail": "#f0b35a",
@@ -101,14 +113,14 @@
     "url": "/stages/one-piece-amazon-lily-entrance/stage.glb?v=mr2s6tsc-cq9ik",
     "format": "glb",
     "position": [
-      0,
-      -4.71,
-      0
+      -20.76,
+      -19.65,
+      55.95
     ],
     "scale": [
-      8,
-      8,
-      8
+      30.18,
+      30.18,
+      30.18
     ],
     "rotation": [
       0,
@@ -120,8 +132,6 @@
       1.5,
       0
     ],
-    "castShadow": true,
-    "receiveShadow": true,
     "bounds": {
       "center": [
         0,
@@ -135,6 +145,8 @@
       ],
       "radius": 10.3125
     },
+    "castShadow": true,
+    "receiveShadow": true,
     "decorativeProps": []
   },
   "mugen": {
@@ -197,5 +209,93 @@
       }
     }
   },
-  "thumbnailPath": "/stages/one-piece-amazon-lily-entrance/preview.png"
+  "thumbnailPath": "/stages/one-piece-amazon-lily-entrance/preview.png",
+  "backgroundLayers": [],
+  "props": [],
+  "visualStyle": {
+    "lighting": {
+      "backgroundColor": "#9bdfff",
+      "fogColor": "#9bdfff",
+      "fogNear": 30,
+      "fogFar": 145,
+      "ambientMode": "hemisphere",
+      "skyColor": "#b8dcff",
+      "groundColor": "#54456b",
+      "hemiIntensity": 0.72,
+      "ambientIntensity": 0.28,
+      "keyColor": "#fff1d0",
+      "keyIntensity": 2.45,
+      "keyPosition": [
+        4,
+        7,
+        5
+      ],
+      "fillColor": "#7aa8ff",
+      "fillIntensity": 0.82,
+      "fillPosition": [
+        -5,
+        3,
+        4
+      ],
+      "rimColor": "#ffffff",
+      "rimIntensity": 1.65,
+      "rimPosition": [
+        0,
+        4.2,
+        -6
+      ],
+      "accentIntensity": 5.8,
+      "accentDistance": 8.5,
+      "shadowStrength": 0.48,
+      "shadowSoftness": 2.6
+    },
+    "toon": {
+      "enabled": true,
+      "steps": 3,
+      "shadowStrength": 0.42,
+      "highlightStrength": 0.18,
+      "rimStrength": 0.22,
+      "saturation": 1.12,
+      "stagePropIntensity": 0.48
+    },
+    "outline": {
+      "enabled": true,
+      "fighterThickness": 1.55,
+      "fighterStrength": 2.2,
+      "effectThickness": 1.1,
+      "effectStrength": 1.45,
+      "propThickness": 0.58,
+      "propStrength": 0.46,
+      "visibleColor": "#08090d",
+      "hiddenColor": "#000000"
+    },
+    "post": {
+      "enabled": true,
+      "bloomEnabled": false,
+      "bloomThreshold": 0.72,
+      "bloomStrength": 0,
+      "bloomRadius": 0,
+      "saturation": 1.12,
+      "contrast": 1.08,
+      "brightness": 1,
+      "warmth": 0.06,
+      "vignetteStrength": 0.15,
+      "vignetteRadius": 0.82
+    },
+    "camera": {
+      "impactShake": 0,
+      "impactZoom": 0,
+      "clashZoom": 0
+    },
+    "combatFx": {
+      "hitBloom": 0.34,
+      "blockBloom": 0.16,
+      "punishBloom": 0.52,
+      "launchBloom": 0.48,
+      "rimPulse": 0,
+      "shockwaveStrength": 0,
+      "reducedMotionScale": 0.36
+    }
+  },
+  "sourcePath": "/stages/one-piece-amazon-lily-entrance/source.png"
 }
