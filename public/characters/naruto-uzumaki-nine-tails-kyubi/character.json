@@ -1094,14 +1094,19 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.73,
-      "height": 0.73,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
   "unplayable": false,
   "animationFrameScales": {
     "kickleft": {
+      "84": {
+        "width": 1.085,
+        "height": 1.085,
+        "offsetX": 0
+      },
       "85": {
         "width": 1,
         "height": 1,
@@ -1116,6 +1121,16 @@
         "width": 1,
         "height": 1,
         "offsetX": 0.84
+      },
+      "88": {
+        "width": 1.085,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 1.085,
+        "height": 1.085,
+        "offsetX": 0
       }
     },
     "knockdown": {
@@ -1223,9 +1238,19 @@
       }
     },
     "sprint": {
+      "30": {
+        "width": 0.802,
+        "height": 0.802,
+        "offsetX": 0
+      },
       "31": {
         "width": 0.68,
         "height": 0.68,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.802,
+        "height": 0.802,
         "offsetX": 0
       },
       "33": {
@@ -1252,6 +1277,16 @@
         "width": 0.68,
         "height": 0.68,
         "offsetX": 0
+      },
+      "38": {
+        "width": 0.802,
+        "height": 0.802,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.802,
+        "height": 0.802,
+        "offsetX": 0
       }
     },
     "juggle": {
@@ -1259,12 +1294,79 @@
         "width": 0.68,
         "height": 0.68,
         "offsetX": 0
+      },
+      "32": {
+        "width": 0.924,
+        "height": 0.924,
+        "offsetX": 0
       }
     },
     "lose": {
       "33": {
         "width": 0.31,
         "height": 0.31,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "89": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 0.688,
+        "height": 0.688,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "100": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     }

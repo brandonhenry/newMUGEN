@@ -1059,20 +1059,35 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.7,
-      "height": 0.7,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
   "unplayable": false,
   "animationFrameScales": {
     "cmd:2+3": {
+      "108": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "109": {
         "width": 1,
         "height": 1,
         "offsetX": 0.4
       },
       "110": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "113": {
         "width": 1,
         "height": 1,
         "offsetX": 0
@@ -1138,9 +1153,14 @@
       }
     },
     "sprint": {
+      "30": {
+        "width": 0.829,
+        "height": 0.829,
+        "offsetX": 0
+      },
       "31": {
-        "width": 0.42,
-        "height": 0.42,
+        "width": 0.5,
+        "height": 0.5,
         "offsetX": 0
       },
       "32": {
@@ -1161,6 +1181,26 @@
       "35": {
         "width": 0.65,
         "height": 0.65,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.829,
+        "height": 0.829,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.829,
+        "height": 0.829,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.829,
+        "height": 0.829,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },

@@ -990,8 +990,8 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.71,
-      "height": 0.71,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
@@ -1003,16 +1003,115 @@
   },
   "animationFrameScales": {
     "knockdown": {
+      "38": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "39": {
         "width": 0.84,
         "height": 0.84,
-        "offsetX": 0.0
+        "offsetX": 0
+      },
+      "40": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       }
     },
     "getupStand": {
       "31": {
         "width": 0.54,
         "height": 0.54,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "30": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.885,
+        "height": 0.885,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.221,
+        "height": 1.221,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.221,
+        "height": 1.221,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.221,
+        "height": 1.221,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.845,
+        "height": 0.845,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.845,
+        "height": 0.845,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.845,
+        "height": 0.845,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 1.416,
+        "height": 1.416,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1.025,
+        "height": 1.025,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "29": {
+        "width": 1.208,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 0.853,
+        "height": 0.853,
         "offsetX": 0
       }
     }

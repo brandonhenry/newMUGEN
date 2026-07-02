@@ -1010,8 +1010,8 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.68,
-      "height": 0.68,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
@@ -1023,9 +1023,14 @@
   },
   "animationFrameScales": {
     "knockdown": {
+      "29": {
+        "width": 0.711,
+        "height": 0.711,
+        "offsetX": 0
+      },
       "30": {
-        "width": 0.39,
-        "height": 0.39,
+        "width": 0.382,
+        "height": 0.382,
         "offsetX": 0
       },
       "31": {
@@ -1040,19 +1045,44 @@
       }
     },
     "getupStand": {
+      "29": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "30": {
-        "width": 0.39,
-        "height": 0.39,
+        "width": 0.538,
+        "height": 0.538,
         "offsetX": 0
       },
       "31": {
-        "width": 0.49,
-        "height": 0.49,
+        "width": 0.689,
+        "height": 0.689,
         "offsetX": 0
       },
       "32": {
-        "width": 0.37,
-        "height": 0.37,
+        "width": 0.521,
+        "height": 0.521,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1062,9 +1092,49 @@
         "height": 0.66,
         "offsetX": 0
       },
+      "31": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0
+      },
       "32": {
         "width": 0.64,
         "height": 0.64,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.008,
+        "height": 1.008,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.008,
+        "height": 1.008,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.879,
+        "height": 0.879,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     }

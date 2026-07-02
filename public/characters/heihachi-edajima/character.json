@@ -1012,8 +1012,8 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.61,
-      "height": 0.61,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
@@ -1066,6 +1066,26 @@
         "width": 0.57,
         "height": 0.57,
         "offsetX": 0
+      },
+      "53": {
+        "width": 0.834,
+        "height": 0.834,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 0.834,
+        "height": 0.834,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 0.834,
+        "height": 0.834,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       }
     },
     "sprint": {
@@ -1074,9 +1094,49 @@
         "height": 0.48,
         "offsetX": 0
       },
+      "31": {
+        "width": 1.119,
+        "height": 1.119,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.101,
+        "height": 1.101,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.882,
+        "height": 0.882,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.917,
+        "height": 0.917,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.738,
+        "height": 0.738,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.751,
+        "height": 0.751,
+        "offsetX": 0
+      },
       "37": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.725,
+        "height": 0.725,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.818,
+        "height": 0.818,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1.099,
+        "height": 1.099,
         "offsetX": 0
       }
     },
@@ -1084,6 +1144,134 @@
       "30": {
         "width": 0.31,
         "height": 0.31,
+        "offsetX": 0
+      }
+    },
+    "block": {
+      "14": {
+        "width": 1.237,
+        "height": 1.237,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.839,
+        "height": 0.839,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "92": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 0.673,
+        "height": 0.673,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "92": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 0.673,
+        "height": 0.673,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+4": {
+      "100": {
+        "width": 1.355,
+        "height": 1.355,
+        "offsetX": 0
+      },
+      "101": {
+        "width": 1.355,
+        "height": 1.355,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 0.965,
+        "height": 0.965,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 0.743,
+        "height": 0.743,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 0.751,
+        "height": 0.751,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.919,
+        "height": 0.919,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 1.355,
+        "height": 1.355,
         "offsetX": 0
       }
     }

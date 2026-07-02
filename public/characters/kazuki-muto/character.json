@@ -1028,8 +1028,8 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.63,
-      "height": 0.63,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
@@ -1105,9 +1105,44 @@
       }
     },
     "sprint": {
+      "30": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "33": {
-        "width": 0.42,
-        "height": 0.42,
+        "width": 0.588,
+        "height": 0.588,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "38": {
@@ -1129,12 +1164,37 @@
       }
     },
     "cmd:1+4": {
+      "273": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "274": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "275": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "276": {
         "width": 1,
         "height": 1,
         "offsetX": 0
       },
       "277": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "278": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "279": {
         "width": 1,
         "height": 1,
         "offsetX": 0

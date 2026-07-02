@@ -967,8 +967,8 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.64,
-      "height": 0.64,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
@@ -977,5 +977,74 @@
   "modelScale": {
     "width": 0.81,
     "height": 1.11
+  },
+  "animationFrameScales": {
+    "cmd:1+2": {
+      "91": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 0.635,
+        "height": 0.635,
+        "offsetX": 0
+      },
+      "100": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "101": {
+        "width": 0.609,
+        "height": 0.609,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 0.768,
+        "height": 0.768,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 0.828,
+        "height": 0.828,
+        "offsetX": 0
+      }
+    }
   }
 }

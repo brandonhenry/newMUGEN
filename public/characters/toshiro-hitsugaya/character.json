@@ -1,6 +1,6 @@
 {
   "id": "toshiro-hitsugaya",
-  "displayName": "To\u0304shiro\u0304 Hitsugaya",
+  "displayName": "Tōshirō Hitsugaya",
   "locked": true,
   "variant": false,
   "faceCardPath": "/characters/toshiro-hitsugaya/face-card.png",
@@ -303,7 +303,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "To\u0304shiro\u0304 Hitsugaya Left Check",
+      "label": "Tōshirō Hitsugaya Left Check",
       "input": "jab",
       "startupFrames": 12,
       "activeFrames": 3,
@@ -335,7 +335,7 @@
     },
     {
       "id": "kick",
-      "label": "To\u0304shiro\u0304 Hitsugaya Left Kick",
+      "label": "Tōshirō Hitsugaya Left Kick",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -367,7 +367,7 @@
     },
     {
       "id": "heavy",
-      "label": "To\u0304shiro\u0304 Hitsugaya Right Check",
+      "label": "Tōshirō Hitsugaya Right Check",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -399,7 +399,7 @@
     },
     {
       "id": "special",
-      "label": "To\u0304shiro\u0304 Hitsugaya Right Kick",
+      "label": "Tōshirō Hitsugaya Right Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -468,7 +468,7 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 5,
       "range": 1.51,
-      "label": "To\u0304shiro\u0304 Hitsugaya Left Check",
+      "label": "Tōshirō Hitsugaya Left Check",
       "hitLevel": "high",
       "tracking": "medium",
       "knockdown": false
@@ -484,7 +484,7 @@
       "onCounterHitFrames": 10,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "To\u0304shiro\u0304 Hitsugaya Right Check",
+      "label": "Tōshirō Hitsugaya Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
       "knockdown": false
@@ -500,7 +500,7 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "To\u0304shiro\u0304 Hitsugaya Left Kick",
+      "label": "Tōshirō Hitsugaya Left Kick",
       "hitLevel": "low"
     },
     "kickright": {
@@ -514,7 +514,7 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "To\u0304shiro\u0304 Hitsugaya Right Kick",
+      "label": "Tōshirō Hitsugaya Right Kick",
       "hitLevel": "mid"
     },
     "cmd:f+1": {
@@ -529,7 +529,7 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "To\u0304shiro\u0304 Hitsugaya Rush",
+      "label": "Tōshirō Hitsugaya Rush",
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
@@ -547,7 +547,7 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "To\u0304shiro\u0304 Hitsugaya Launcher",
+      "label": "Tōshirō Hitsugaya Launcher",
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
@@ -561,7 +561,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 13,
       "range": 2.05,
-      "label": "To\u0304shiro\u0304 Hitsugaya Burst",
+      "label": "Tōshirō Hitsugaya Burst",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -576,7 +576,7 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "To\u0304shiro\u0304 Hitsugaya Rising Strike",
+      "label": "Tōshirō Hitsugaya Rising Strike",
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
@@ -590,7 +590,7 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "To\u0304shiro\u0304 Hitsugaya Crouch Jab",
+      "label": "Tōshirō Hitsugaya Crouch Jab",
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
@@ -605,7 +605,7 @@
       "whiffRecoveryFrames": 12,
       "range": 1.48,
       "launchHeight": 2,
-      "label": "To\u0304shiro\u0304 Hitsugaya Crouch Launcher",
+      "label": "Tōshirō Hitsugaya Crouch Launcher",
       "hitLevel": "mid"
     },
     "cmd:1+2": {
@@ -619,7 +619,7 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "To\u0304shiro\u0304 Hitsugaya Twin Assault",
+      "label": "Tōshirō Hitsugaya Twin Assault",
       "hitLevel": "mid"
     },
     "cmd:1+3": {
@@ -635,7 +635,7 @@
       "range": 1.65,
       "forwardForce": 2,
       "launchHeight": 2.2,
-      "label": "To\u0304shiro\u0304 Hitsugaya Cross Launcher",
+      "label": "Tōshirō Hitsugaya Cross Launcher",
       "hitLevel": "mid"
     },
     "cmd:2+3": {
@@ -649,7 +649,7 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "To\u0304shiro\u0304 Hitsugaya Low Feint",
+      "label": "Tōshirō Hitsugaya Low Feint",
       "hitLevel": "low",
       "tracking": "homing",
       "knockdown": true
@@ -665,7 +665,7 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "To\u0304shiro\u0304 Hitsugaya Driving Kick",
+      "label": "Tōshirō Hitsugaya Driving Kick",
       "hitLevel": "low",
       "knockdown": true
     },
@@ -681,7 +681,7 @@
       "whiffRecoveryFrames": 14,
       "range": 1.9,
       "forwardForce": 2,
-      "label": "To\u0304shiro\u0304 Hitsugaya Power Crush",
+      "label": "Tōshirō Hitsugaya Power Crush",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -696,7 +696,7 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 15,
       "range": 2.1,
-      "label": "To\u0304shiro\u0304 Hitsugaya Aura Drive",
+      "label": "Tōshirō Hitsugaya Aura Drive",
       "hitLevel": "special",
       "knockdown": true
     },
@@ -708,7 +708,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Second Beat"
+      "label": "Tōshirō Hitsugaya Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -718,7 +718,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Body Blow"
+      "label": "Tōshirō Hitsugaya Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -728,7 +728,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Low Changeup"
+      "label": "Tōshirō Hitsugaya Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -738,7 +738,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Pressure Feint"
+      "label": "Tōshirō Hitsugaya Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -748,7 +748,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Drive"
+      "label": "Tōshirō Hitsugaya Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -758,7 +758,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Barrage"
+      "label": "Tōshirō Hitsugaya Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -768,7 +768,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Finisher"
+      "label": "Tōshirō Hitsugaya Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -779,7 +779,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Step Kick"
+      "label": "Tōshirō Hitsugaya Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -789,7 +789,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Palm String"
+      "label": "Tōshirō Hitsugaya Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -799,7 +799,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Rising Chain"
+      "label": "Tōshirō Hitsugaya Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -809,7 +809,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Special Setup"
+      "label": "Tōshirō Hitsugaya Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -819,7 +819,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Break Art"
+      "label": "Tōshirō Hitsugaya Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -829,7 +829,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Check Hook"
+      "label": "Tōshirō Hitsugaya Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -839,7 +839,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Heavy Break"
+      "label": "Tōshirō Hitsugaya Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -849,7 +849,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Charged Follow"
+      "label": "Tōshirō Hitsugaya Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -860,7 +860,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Drop Kick"
+      "label": "Tōshirō Hitsugaya Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -870,7 +870,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Arc Finisher"
+      "label": "Tōshirō Hitsugaya Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -880,7 +880,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Focus Stance"
+      "label": "Tōshirō Hitsugaya Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -890,7 +890,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Mode Shift"
+      "label": "Tōshirō Hitsugaya Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -900,7 +900,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Heel Feint"
+      "label": "Tōshirō Hitsugaya Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -910,7 +910,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Summon Strike"
+      "label": "Tōshirō Hitsugaya Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -920,7 +920,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Guard Snare"
+      "label": "Tōshirō Hitsugaya Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -930,7 +930,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Armor Break"
+      "label": "Tōshirō Hitsugaya Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -940,7 +940,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Power Setup"
+      "label": "Tōshirō Hitsugaya Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -950,7 +950,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Switch Strike"
+      "label": "Tōshirō Hitsugaya Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -960,7 +960,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Spark Jab"
+      "label": "Tōshirō Hitsugaya Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -970,7 +970,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Binding Blow"
+      "label": "Tōshirō Hitsugaya Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -980,7 +980,7 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Heavy Draw"
+      "label": "Tōshirō Hitsugaya Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -991,7 +991,7 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "To\u0304shiro\u0304 Hitsugaya Kick Ender"
+      "label": "Tōshirō Hitsugaya Kick Ender"
     }
   },
   "effects": [],
@@ -1017,8 +1017,8 @@
   },
   "animationScales": {
     "crouch": {
-      "width": 0.65,
-      "height": 0.65,
+      "width": 0.86,
+      "height": 0.86,
       "offsetX": 0
     }
   },
@@ -1099,9 +1099,19 @@
         "height": 0.44,
         "offsetX": 0
       },
+      "31": {
+        "width": 0.995,
+        "height": 0.995,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.744,
+        "height": 0.744,
+        "offsetX": 0
+      },
       "33": {
-        "width": 0.68,
-        "height": 0.68,
+        "width": 0.714,
+        "height": 0.714,
         "offsetX": 0
       },
       "34": {
@@ -1113,6 +1123,26 @@
         "width": 0.68,
         "height": 0.68,
         "offsetX": 0
+      },
+      "36": {
+        "width": 0.995,
+        "height": 0.995,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.994,
+        "height": 0.994,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.876,
+        "height": 0.876,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       }
     },
     "lose": {
@@ -1123,9 +1153,64 @@
       }
     },
     "cmd:1+3": {
+      "213": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "214": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "215": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 0.793,
+        "height": 0.793,
+        "offsetX": 0
+      },
+      "217": {
+        "width": 0.763,
+        "height": 0.763,
+        "offsetX": 0
+      },
+      "218": {
+        "width": 0.772,
+        "height": 0.772,
+        "offsetX": 0
+      },
       "219": {
-        "width": 1.0,
-        "height": 1.0,
+        "width": 0.665,
+        "height": 0.665,
+        "offsetX": 0
+      },
+      "220": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "221": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "222": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "223": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "224": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     }
