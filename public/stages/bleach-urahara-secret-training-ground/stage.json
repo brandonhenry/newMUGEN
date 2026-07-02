@@ -64,9 +64,9 @@
   },
   "fightPlane": {
     "center": [
+      -0.1,
       0,
-      0,
-      0
+      10.65
     ],
     "width": 10,
     "depth": 7,
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      -2.2,
+      -2.2999999999999994,
       0,
-      0
+      10.65
     ],
     "p2": [
-      2.2,
+      2.099999999999999,
       0,
-      0
+      10.65
     ]
   },
   "camera": {
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/bleach-urahara-secret-training-ground/source.png"
+  "sourcePath": "/stages/bleach-urahara-secret-training-ground/source.png",
+  "playableBounds": {
+    "shape": "ellipse",
+    "width": 38.4,
+    "depth": 22.2
+  }
 }

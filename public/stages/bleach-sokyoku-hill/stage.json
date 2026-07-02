@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/bleach-sokyoku-hill/source.png"
+  "sourcePath": "/stages/bleach-sokyoku-hill/source.png",
+  "playableBounds": {
+    "shape": "ellipse",
+    "width": 67.6,
+    "depth": 48.7
+  }
 }

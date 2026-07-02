@@ -64,25 +64,25 @@
   },
   "fightPlane": {
     "center": [
-      0,
+      -2.9,
       0,
       0
     ],
     "width": 10,
     "depth": 7,
     "y": 0,
-    "rotationY": 1.71840734641021
+    "rotationY": 1.52840734641021
   },
   "spawns": {
     "p1": [
-      0.3235662178581055,
+      -2.9932278319657923,
       0,
-      2.176075573747614
+      2.198023787711809
     ],
     "p2": [
-      -0.3235662178581055,
+      -2.8067721680342075,
       0,
-      -2.176075573747614
+      -2.198023787711809
     ]
   },
   "camera": {
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/bleach-soul-society-courtyard-battle-scene/source.png"
+  "sourcePath": "/stages/bleach-soul-society-courtyard-battle-scene/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 38.7,
+    "depth": 7
+  }
 }

@@ -71,18 +71,18 @@
     "width": 10,
     "depth": 7,
     "y": 0,
-    "rotationY": 1.47840734641021
+    "rotationY": 1.57840734641021
   },
   "spawns": {
     "p1": [
-      -0.20296672439891864,
+      0.016744081495132998,
       0,
-      2.190617380736941
+      2.199936279926056
     ],
     "p2": [
-      0.20296672439891864,
+      -0.016744081495132998,
       0,
-      -2.190617380736941
+      -2.199936279926056
     ]
   },
   "camera": {
@@ -354,5 +354,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/dbz-west-city-damaged/source.png"
+  "sourcePath": "/stages/dbz-west-city-damaged/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 68.9,
+    "depth": 7
+  }
 }

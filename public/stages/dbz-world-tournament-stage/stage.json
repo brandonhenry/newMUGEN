@@ -64,9 +64,9 @@
   },
   "fightPlane": {
     "center": [
+      -0.1,
       0,
-      0,
-      0
+      -4.16
     ],
     "width": 10,
     "depth": 7,
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      -2.2,
+      -2.3000000000000047,
       0,
-      0
+      -4.16
     ],
     "p2": [
-      2.2,
+      2.1000000000000045,
       0,
-      0
+      -4.16
     ]
   },
   "camera": {
@@ -354,5 +354,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/dbz-world-tournament-stage/source.png"
+  "sourcePath": "/stages/dbz-world-tournament-stage/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 37.31,
+    "depth": 38.8
+  }
 }

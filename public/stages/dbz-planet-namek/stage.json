@@ -354,5 +354,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/dbz-planet-namek/source.png"
+  "sourcePath": "/stages/dbz-planet-namek/source.png",
+  "playableBounds": {
+    "shape": "ellipse",
+    "width": 63.6,
+    "depth": 53.5
+  }
 }

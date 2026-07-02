@@ -64,7 +64,7 @@
   },
   "fightPlane": {
     "center": [
-      0,
+      -4.6,
       0,
       0
     ],
@@ -75,12 +75,12 @@
   },
   "spawns": {
     "p1": [
-      -2.2,
+      -6.799999999999997,
       0,
       0
     ],
     "p2": [
-      2.2,
+      -2.400000000000002,
       0,
       0
     ]
@@ -354,5 +354,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/dbz-hero-city/source.png"
+  "sourcePath": "/stages/dbz-hero-city/source.png",
+  "playableBounds": {
+    "shape": "ellipse",
+    "width": 25.5,
+    "depth": 29.4
+  }
 }

@@ -1,0 +1,121 @@
+{
+  "id": "the-chamber",
+  "name": "The Chamber (Silver)",
+  "subtitle": "Infinite white simulation room",
+  "renderMode": "procedural",
+  "visualStylePreset": "training-clean",
+  "music": {
+    "path": "sounds/0012 SEQ_BGMB_STG_01.mp3",
+    "trackIndex": 0,
+    "title": "The Chamber Silver"
+  },
+  "floor": "#f7fff6",
+  "floorTexturePath": "/stages/chamber/floor-silver.png",
+  "floorTextureRepeat": [
+    28,
+    28
+  ],
+  "rail": "#dce6ec",
+  "light": "#ffffff",
+  "skyboxPath": "/stages/chamber/skybox.png",
+  "world": {
+    "width": 220,
+    "depth": 220,
+    "floorY": -0.045,
+    "backgroundColor": "#f8fbff"
+  },
+  "hidden": false,
+  "playableBounds": {
+    "shape": "box",
+    "width": 101.4,
+    "depth": 135.5
+  },
+  "backgroundLayers": [],
+  "props": [],
+  "visualStyle": {
+    "lighting": {
+      "backgroundColor": "#f8fbff",
+      "fogColor": "#f8fbff",
+      "fogNear": 36,
+      "fogFar": 160,
+      "ambientMode": "hemisphere",
+      "skyColor": "#f8fbff",
+      "groundColor": "#d5e2ec",
+      "hemiIntensity": 0.84,
+      "ambientIntensity": 0.34,
+      "keyColor": "#ffffff",
+      "keyIntensity": 2.15,
+      "keyPosition": [
+        4.2,
+        7.2,
+        5
+      ],
+      "fillColor": "#dbe8ff",
+      "fillIntensity": 0.68,
+      "fillPosition": [
+        -5,
+        3.1,
+        4
+      ],
+      "rimColor": "#ffffff",
+      "rimIntensity": 1.38,
+      "rimPosition": [
+        0,
+        4.1,
+        -6
+      ],
+      "accentIntensity": 4.8,
+      "accentDistance": 8,
+      "shadowStrength": 0.4,
+      "shadowSoftness": 2.4
+    },
+    "toon": {
+      "enabled": true,
+      "steps": 3,
+      "shadowStrength": 0.34,
+      "highlightStrength": 0.14,
+      "rimStrength": 0.18,
+      "saturation": 1.06,
+      "stagePropIntensity": 0.38
+    },
+    "outline": {
+      "enabled": true,
+      "fighterThickness": 1.36,
+      "fighterStrength": 1.95,
+      "effectThickness": 0.95,
+      "effectStrength": 1.22,
+      "propThickness": 0.42,
+      "propStrength": 0.3,
+      "visibleColor": "#141820",
+      "hiddenColor": "#000000"
+    },
+    "post": {
+      "enabled": true,
+      "bloomEnabled": false,
+      "bloomThreshold": 0.78,
+      "bloomStrength": 0,
+      "bloomRadius": 0,
+      "saturation": 1.06,
+      "contrast": 1.05,
+      "brightness": 1.02,
+      "warmth": 0.02,
+      "vignetteStrength": 0.08,
+      "vignetteRadius": 0.88
+    },
+    "camera": {
+      "impactShake": 0,
+      "impactZoom": 0,
+      "clashZoom": 0
+    },
+    "combatFx": {
+      "hitBloom": 0.24,
+      "blockBloom": 0.12,
+      "punishBloom": 0.38,
+      "launchBloom": 0.36,
+      "rimPulse": 0,
+      "shockwaveStrength": 0,
+      "reducedMotionScale": 0.4
+    }
+  },
+  "sourcePath": "/stages/the-chamber/source.png"
+}
