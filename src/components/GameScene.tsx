@@ -1340,9 +1340,9 @@ export function StagePreviewCanvas({
   }, [initialPreviewMatch]);
   const previewFighters = previewMatch?.fighters;
   const propSelectionEnabled = interactive && previewMode === 'edit';
-  const controlTarget = previewMode === 'fly'
+  const controlTarget = useMemo(() => previewMode === 'fly'
     ? stage.fightPlane?.center ?? stage.model?.focus ?? stage.camera?.previewTarget ?? FIXED_STAGE_PREVIEW_TARGET
-    : FIXED_STAGE_PREVIEW_TARGET;
+    : FIXED_STAGE_PREVIEW_TARGET, [previewMode, stage.camera?.previewTarget, stage.id, stage.model?.focus]);
   useEffect(() => {
     logStageModelDebug('H9 StagePreviewCanvas classified stage', {
       stageId: stage.id,
@@ -1357,7 +1357,7 @@ export function StagePreviewCanvas({
   }, [fightersVisible, interactive, modelStage, previewMode, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
   return (
     <Canvas
-      key={`${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}:${previewMode}`}
+      key={`${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}`}
       shadows
       frameloop={interactive || modelStage || fightersVisible ? 'always' : 'demand'}
       dpr={[1, 1.25]}
@@ -1537,7 +1537,11 @@ export function buildStagePreviewMatch(stage: StageDefinition, p1: CharacterDefi
 
 function StagePreviewCamera({ stage, previewMode }: { stage: StageDefinition; previewMode: StagePreviewMode }) {
   const { camera, invalidate } = useThree();
+  const resetKey = `${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}`;
   useEffect(() => {
+    const cameraState = camera.userData as { stagePreviewResetKey?: string };
+    if (cameraState.stagePreviewResetKey === resetKey) return;
+    cameraState.stagePreviewResetKey = resetKey;
     const modelStage = isModelStage(stage);
     const position = previewMode === 'fly' && stage.camera?.previewPosition ? stage.camera.previewPosition : FIXED_STAGE_PREVIEW_CAMERA_POSITION;
     const target = previewMode === 'fly'
@@ -1559,7 +1563,7 @@ function StagePreviewCamera({ stage, previewMode }: { stage: StageDefinition; pr
       fov: 'fov' in camera ? roundDebugNumber(camera.fov) : null
     });
     invalidate();
-  }, [camera, invalidate, previewMode, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.fightPlane?.center, stage.id, stage.model?.focus, stage.renderMode]);
+  }, [camera, invalidate, previewMode, resetKey, stage.camera?.previewPosition, stage.camera?.previewTarget, stage.fightPlane?.center, stage.id, stage.model?.focus, stage.renderMode]);
   return null;
 }
 
