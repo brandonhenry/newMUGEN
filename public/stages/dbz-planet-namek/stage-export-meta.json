@@ -6,8 +6,54 @@
     "meshCount": 1,
     "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____planet_namek_stage_dl__by_blacksoul1890_denkpb6/Planet Namek/Planet Namek.pmx",
     "sourceKind": "mmd",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_SKY_1_0_0 (background-name), 7_Cloud_1_0_0 (background-name)."
+    ],
     "boundsBeforeNormalize": {
+      "min": [
+        -2729.4333,
+        -1959.3663,
+        -82.4661
+      ],
+      "max": [
+        2257.6133,
+        2997.8008,
+        731.1365
+      ],
+      "center": [
+        -235.91,
+        519.2172,
+        324.3352
+      ],
+      "size": [
+        4987.0469,
+        4957.167,
+        813.6027
+      ]
+    },
+    "boundsAfterNormalize": {
+      "min": [
+        -9.0,
+        -8.9461,
+        0.0
+      ],
+      "max": [
+        9.0,
+        8.9461,
+        2.9366
+      ],
+      "center": [
+        0.0,
+        0.0,
+        1.4683
+      ],
+      "size": [
+        18.0,
+        17.8922,
+        2.9366
+      ]
+    },
+    "fullBoundsBeforeNormalize": {
       "min": [
         -3597.8101,
         -3597.8103,
@@ -29,40 +75,40 @@
         1814.781
       ]
     },
-    "boundsAfterNormalize": {
+    "fullBoundsAfterNormalize": {
       "min": [
-        -9.0,
-        -9.0,
-        0.0
+        -12.1343,
+        -14.8598,
+        -0.8479
       ],
       "max": [
-        9.0,
-        9.0,
-        4.5397
+        13.8372,
+        11.1117,
+        5.7022
       ],
       "center": [
-        0.0,
-        -0.0,
-        2.2699
+        0.8515,
+        -1.874,
+        2.4271
       ],
       "size": [
-        18.0,
-        18.0,
-        4.5397
+        25.9715,
+        25.9715,
+        6.5502
       ]
     }
   },
   "bounds": {
     "center": [
       0.0,
-      2.2699,
-      0.0
+      1.4683,
+      -0.0
     ],
     "size": [
       18.0,
-      4.5397,
-      18.0
+      2.9366,
+      17.8922
     ],
-    "radius": 12.9287
+    "radius": 12.7745
   }
 }

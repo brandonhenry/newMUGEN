@@ -6,8 +6,54 @@
     "meshCount": 1,
     "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____tournament_of_power__damaged__dl__by_blacksoul1890_dem6hq8/Tournament Of Power (Damaged)/Tournament Of Power (Damaged).pmx",
     "sourceKind": "mmd",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_Sky_1_0_0 (background-name)."
+    ],
     "boundsBeforeNormalize": {
+      "min": [
+        -8079.5747,
+        -8079.5747,
+        -2420.4844
+      ],
+      "max": [
+        8079.5747,
+        8079.5742,
+        4284.0684
+      ],
+      "center": [
+        0.0,
+        -0.0002,
+        931.792
+      ],
+      "size": [
+        16159.1494,
+        16159.1484,
+        6704.5527
+      ]
+    },
+    "boundsAfterNormalize": {
+      "min": [
+        -9.0,
+        -9.0,
+        -0.0
+      ],
+      "max": [
+        9.0,
+        9.0,
+        7.4683
+      ],
+      "center": [
+        0.0,
+        -0.0,
+        3.7342
+      ],
+      "size": [
+        18.0,
+        18.0,
+        7.4683
+      ]
+    },
+    "fullBoundsBeforeNormalize": {
       "min": [
         -15170.4336,
         -15170.4336,
@@ -29,40 +75,40 @@
         17337.6367
       ]
     },
-    "boundsAfterNormalize": {
+    "fullBoundsAfterNormalize": {
       "min": [
-        -9.0,
-        -9.0,
-        0.0
+        -16.8987,
+        -16.8987,
+        -3.0346
       ],
       "max": [
-        9.0,
-        9.0,
-        10.2857
+        16.8987,
+        16.8987,
+        16.2782
       ],
       "center": [
         0.0,
         0.0,
-        5.1429
+        6.6218
       ],
       "size": [
-        18.0,
-        18.0,
-        10.2857
+        33.7973,
+        33.7973,
+        19.3127
       ]
     }
   },
   "bounds": {
     "center": [
       0.0,
-      5.1429,
-      -0.0
+      3.7342,
+      0.0
     ],
     "size": [
       18.0,
-      10.2857,
+      7.4683,
       18.0
     ],
-    "radius": 13.7277
+    "radius": 13.2644
   }
 }

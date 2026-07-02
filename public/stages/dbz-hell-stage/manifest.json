@@ -96,8 +96,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/dbz-hell-stage/stage.glb?v=mr2s9x22-1jafs",
-    "url": "/stages/dbz-hell-stage/stage.glb?v=mr2s9x22-1jafs",
+    "path": "/stages/dbz-hell-stage/stage.glb?v=mr2sydob-9ir8k",
+    "url": "/stages/dbz-hell-stage/stage.glb?v=mr2sydob-9ir8k",
     "format": "glb",
     "position": [
       0,
@@ -124,15 +124,15 @@
     "bounds": {
       "center": [
         0,
-        2.5752,
+        1.4654,
         0
       ],
       "size": [
         18,
-        5.1504,
+        2.9308,
         16.9117
       ],
-      "radius": 12.6148
+      "radius": 12.4358
     }
   },
   "mugen": {
@@ -140,7 +140,9 @@
     "sourceKind": "mmd",
     "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____hell_stage_stage_dl_by_blacksoul1890_dipsnne/Hell Stage",
     "category": "Dbz",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: Sky (background-name)."
+    ],
     "exportMeta": {
       "stageId": "dbz-hell-stage",
       "blenderVersion": "4.5.11 LTS",
@@ -148,8 +150,54 @@
       "meshCount": 1,
       "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____hell_stage_stage_dl_by_blacksoul1890_dipsnne/Hell Stage/Hell Stage.pmx",
       "sourceKind": "mmd",
-      "warnings": [],
+      "warnings": [
+        "MMD normalization ignored background bounds from: Sky (background-name)."
+      ],
       "boundsBeforeNormalize": {
+        "min": [
+          -2769.1499,
+          -2298.7146,
+          -253.2044
+        ],
+        "max": [
+          2647.9404,
+          2790.8408,
+          628.8077
+        ],
+        "center": [
+          -60.6047,
+          246.0631,
+          187.8017
+        ],
+        "size": [
+          5417.0903,
+          5089.5557,
+          882.0121
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -8.4558,
+          0
+        ],
+        "max": [
+          9,
+          8.4558,
+          2.9308
+        ],
+        "center": [
+          0,
+          0,
+          1.4654
+        ],
+        "size": [
+          18,
+          16.9117,
+          2.9308
+        ]
+      },
+      "fullBoundsBeforeNormalize": {
         "min": [
           -2769.1499,
           -2298.7146,
@@ -171,21 +219,21 @@
           1550.0009
         ]
       },
-      "boundsAfterNormalize": {
+      "fullBoundsAfterNormalize": {
         "min": [
           -9,
           -8.4558,
-          0
+          -0.4329
         ],
         "max": [
           9,
           8.4558,
-          5.1504
+          4.7175
         ],
         "center": [
           0,
           0,
-          2.5752
+          2.1423
         ],
         "size": [
           18,

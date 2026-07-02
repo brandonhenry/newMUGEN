@@ -323,6 +323,13 @@ function knownStageOverride(category, folderName) {
       subtitle: 'Compact 3D interior arena'
     };
   }
+  if (normalizedCategory === 'rumble-roses' && cleanStageName(folderName) === 'Canyon Arena') {
+    return {
+      id: 'rumble-roses-rrxx-canyon-stage',
+      name: 'Canyon Arena',
+      subtitle: 'Rumble Roses canyon arena'
+    };
+  }
   return undefined;
 }
 

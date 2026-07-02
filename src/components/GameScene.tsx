@@ -369,8 +369,10 @@ function createFlattenedStageModelMeshes(root: THREE.Object3D, stageId: string) 
     geometry.applyMatrix4(mesh.matrixWorld);
     geometry.computeBoundingBox();
     geometry.computeBoundingSphere();
-    const sourceMaterial = meshMaterials(mesh)[0];
-    const material = sourceMaterial?.clone();
+    const sourceMaterials = meshMaterials(mesh);
+    const material = sourceMaterials.length > 1
+      ? sourceMaterials.map((sourceMaterial) => sourceMaterial.clone())
+      : sourceMaterials[0]?.clone();
     meshes.push({
       id: `${meshes.length}-${mesh.uuid}`,
       name: mesh.name || mesh.type,

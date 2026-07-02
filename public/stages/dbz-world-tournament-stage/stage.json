@@ -96,8 +96,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/dbz-world-tournament-stage/stage.glb?v=mr2sd85a-20388",
-    "url": "/stages/dbz-world-tournament-stage/stage.glb?v=mr2sd85a-20388",
+    "path": "/stages/dbz-world-tournament-stage/stage.glb?v=mr2t8hkt-7bm5s",
+    "url": "/stages/dbz-world-tournament-stage/stage.glb?v=mr2t8hkt-7bm5s",
     "format": "glb",
     "position": [
       0,
@@ -124,15 +124,15 @@
     "bounds": {
       "center": [
         0,
-        5.3908,
+        1.7423,
         0
       ],
       "size": [
-        18,
-        10.7815,
+        17.9255,
+        3.4846,
         18
       ],
-      "radius": 13.8225
+      "radius": 12.8205
     }
   },
   "mugen": {
@@ -140,7 +140,9 @@
     "sourceKind": "mmd",
     "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbxv____world_tournament_stage_dl__by_blacksoul1890_dfqthri/World Tournament Stage",
     "category": "Dbz",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_BLDmetal00_1_0_0 (oversized-shell), 5_BLDmetal01_1_0_0 (oversized-shell), 5_FarGround_1_0_0 (background-name), 5_FarWall01_1_0_0 (oversized-shell), 5_FarWall02_1_0_0 (oversized-shell), 5_ground01.011_1_0_0 (oversized-shell), 5_ground02.009_1_0_0 (oversized-shell), 5_pillar_1_0_0 (oversized-shell), +4 more."
+    ],
     "exportMeta": {
       "stageId": "dbz-world-tournament-stage",
       "blenderVersion": "4.5.11 LTS",
@@ -148,8 +150,54 @@
       "meshCount": 1,
       "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbxv____world_tournament_stage_dl__by_blacksoul1890_dfqthri/World Tournament Stage/World Tournament.pmx",
       "sourceKind": "mmd",
-      "warnings": [],
+      "warnings": [
+        "MMD normalization ignored background bounds from: 5_BLDmetal00_1_0_0 (oversized-shell), 5_BLDmetal01_1_0_0 (oversized-shell), 5_FarGround_1_0_0 (background-name), 5_FarWall01_1_0_0 (oversized-shell), 5_FarWall02_1_0_0 (oversized-shell), 5_ground01.011_1_0_0 (oversized-shell), 5_ground02.009_1_0_0 (oversized-shell), 5_pillar_1_0_0 (oversized-shell), +4 more."
+      ],
       "boundsBeforeNormalize": {
+        "min": [
+          -1718.2654,
+          -1690.201,
+          -17.2164
+        ],
+        "max": [
+          2068.1179,
+          2111.9241,
+          718.8362
+        ],
+        "center": [
+          174.9263,
+          210.8615,
+          350.8099
+        ],
+        "size": [
+          3786.3833,
+          3802.125,
+          736.0527
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -8.9627,
+          -9,
+          0
+        ],
+        "max": [
+          8.9627,
+          9,
+          3.4846
+        ],
+        "center": [
+          0,
+          0,
+          1.7423
+        ],
+        "size": [
+          17.9255,
+          18,
+          3.4846
+        ]
+      },
+      "fullBoundsBeforeNormalize": {
         "min": [
           -4774.9355,
           -4380.4648,
@@ -171,26 +219,26 @@
           5647.3496
         ]
       },
-      "boundsAfterNormalize": {
+      "fullBoundsAfterNormalize": {
         "min": [
-          -9,
-          -9,
-          0
+          -23.4336,
+          -21.7362,
+          -11.1874
         ],
         "max": [
-          9,
-          9,
-          10.7815
+          21.2021,
+          22.8995,
+          15.5482
         ],
         "center": [
-          0,
-          0,
-          5.3908
+          -1.1157,
+          0.5816,
+          2.1804
         ],
         "size": [
-          18,
-          18,
-          10.7815
+          44.6357,
+          44.6357,
+          26.7357
         ]
       }
     }

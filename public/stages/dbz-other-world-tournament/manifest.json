@@ -96,8 +96,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/dbz-other-world-tournament/stage.glb?v=mr2scana-9nmg",
-    "url": "/stages/dbz-other-world-tournament/stage.glb?v=mr2scana-9nmg",
+    "path": "/stages/dbz-other-world-tournament/stage.glb?v=mr2syjmf-1bxv8",
+    "url": "/stages/dbz-other-world-tournament/stage.glb?v=mr2syjmf-1bxv8",
     "format": "glb",
     "position": [
       0,
@@ -124,15 +124,15 @@
     "bounds": {
       "center": [
         0,
-        8.4801,
+        5.361,
         0
       ],
       "size": [
-        18,
-        16.9601,
-        17.9999
+        17.763,
+        10.7219,
+        18
       ],
-      "radius": 15.2941
+      "radius": 13.7339
     }
   },
   "mugen": {
@@ -140,7 +140,9 @@
     "sourceKind": "mmd",
     "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbxv2mod____other_world_tournament_stage_dl_by_blacksoul1890_del1fk2/Other World Tournament",
     "category": "Dbz",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_Sky_1_0_0 (background-name)."
+    ],
     "exportMeta": {
       "stageId": "dbz-other-world-tournament",
       "blenderVersion": "4.5.11 LTS",
@@ -148,8 +150,54 @@
       "meshCount": 1,
       "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbxv2mod____other_world_tournament_stage_dl_by_blacksoul1890_del1fk2/Other World Tournament/Other World Tournament.pmx",
       "sourceKind": "mmd",
-      "warnings": [],
+      "warnings": [
+        "MMD normalization ignored background bounds from: 5_Sky_1_0_0 (background-name)."
+      ],
       "boundsBeforeNormalize": {
+        "min": [
+          -878.4026,
+          -942.3729,
+          -733.2659
+        ],
+        "max": [
+          878.4045,
+          837.8774,
+          327.1611
+        ],
+        "center": [
+          0.0009,
+          -52.2477,
+          -203.0524
+        ],
+        "size": [
+          1756.8071,
+          1780.2504,
+          1060.427
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -8.8815,
+          -9,
+          0
+        ],
+        "max": [
+          8.8815,
+          9,
+          10.7219
+        ],
+        "center": [
+          0,
+          0,
+          5.361
+        ],
+        "size": [
+          17.763,
+          18,
+          10.7219
+        ]
+      },
+      "fullBoundsBeforeNormalize": {
         "min": [
           -11033.3965,
           -11059.5889,
@@ -171,26 +219,26 @@
           20867.0938
         ]
       },
-      "boundsAfterNormalize": {
+      "fullBoundsAfterNormalize": {
         "min": [
-          -9,
-          -8.9999,
-          0
+          -111.558,
+          -111.2945,
+          -97.2859
         ],
         "max": [
-          9,
-          8.9999,
-          16.9601
+          112.3641,
+          112.6261,
+          113.7
         ],
         "center": [
-          0,
-          0,
-          8.4801
+          0.403,
+          0.6658,
+          8.2071
         ],
         "size": [
-          18,
-          17.9999,
-          16.9601
+          223.9221,
+          223.9206,
+          210.9859
         ]
       }
     }

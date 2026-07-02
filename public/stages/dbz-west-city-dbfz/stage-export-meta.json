@@ -6,8 +6,54 @@
     "meshCount": 1,
     "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____planet_namek___west_city___stages_dl__by_blacksoul1890_deudcd4/West City (DBFZ)/West City (DBFZ).pmx",
     "sourceKind": "mmd",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_part1-Far Ground_1_0_0 (background-name), 5_part1-Sky_1_0_0 (background-name), 7_part1-Building Sky_1_0_0 (background-name), 7_part1-Cloud_1_0_0 (background-name), 7_part1-Cloud.material01_1_0_0 (background-name)."
+    ],
     "boundsBeforeNormalize": {
+      "min": [
+        -2569.4497,
+        -1688.7954,
+        -472.2707
+      ],
+      "max": [
+        2487.594,
+        4273.0791,
+        896.9435
+      ],
+      "center": [
+        -40.9279,
+        1292.1418,
+        212.3364
+      ],
+      "size": [
+        5057.0439,
+        5961.8745,
+        1369.2141
+      ]
+    },
+    "boundsAfterNormalize": {
+      "min": [
+        -7.6341,
+        -9.0,
+        0.0
+      ],
+      "max": [
+        7.6341,
+        9.0,
+        4.1339
+      ],
+      "center": [
+        -0.0,
+        -0.0,
+        2.067
+      ],
+      "size": [
+        15.2681,
+        18.0,
+        4.1339
+      ]
+    },
+    "fullBoundsBeforeNormalize": {
       "min": [
         -9397.457,
         -8608.9131,
@@ -29,40 +75,40 @@
         4788.7539
       ]
     },
-    "boundsAfterNormalize": {
+    "fullBoundsAfterNormalize": {
       "min": [
-        -9.0,
-        -9.0,
+        -28.2491,
+        -29.8931,
         0.0
       ],
       "max": [
-        9.0,
-        9.0,
-        4.4021
+        30.8697,
+        29.2257,
+        14.4581
       ],
       "center": [
-        0.0,
-        -0.0,
-        2.201
+        1.3103,
+        -0.3337,
+        7.2291
       ],
       "size": [
-        18.0,
-        18.0,
-        4.4021
+        59.1188,
+        59.1188,
+        14.4581
       ]
     }
   },
   "bounds": {
     "center": [
-      0.0,
-      2.201,
+      -0.0,
+      2.067,
       0.0
     ],
     "size": [
-      18.0,
-      4.4021,
+      15.2681,
+      4.1339,
       18.0
     ],
-    "radius": 12.9168
+    "radius": 11.9813
   }
 }

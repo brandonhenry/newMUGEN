@@ -44,10 +44,12 @@ def main():
 
     optimize_stage_meshes(stage_id)
     meshes = visible_meshes()
-    before_bounds = world_bounds(meshes)
+    full_before_bounds = world_bounds(meshes)
+    before_bounds = normalization_bounds(meshes, source_kind, warnings)
     normalize_scene(stage_id, before_bounds)
     export_meshes = bake_visible_mesh_transforms()
-    after_bounds = world_bounds(export_meshes)
+    full_after_bounds = world_bounds(export_meshes)
+    after_bounds = normalization_bounds(export_meshes, source_kind, warnings)
 
     ensure_lighting(stage_id)
     render_preview(stage_id, after_bounds, preview_path)
@@ -64,6 +66,8 @@ def main():
             "warnings": warnings,
             "boundsBeforeNormalize": bounds_payload(before_bounds),
             "boundsAfterNormalize": bounds_payload(after_bounds),
+            "fullBoundsBeforeNormalize": bounds_payload(full_before_bounds),
+            "fullBoundsAfterNormalize": bounds_payload(full_after_bounds),
         },
         "bounds": game_bounds_payload(after_bounds),
     }
@@ -235,6 +239,122 @@ def visible_meshes():
     ]
 
 
+def normalization_bounds(meshes, source_kind, warnings):
+    if source_kind != "mmd":
+        return world_bounds(meshes)
+    bounds, ignored = mmd_content_bounds(meshes)
+    if bounds is None:
+        warnings.append("MMD content-bounds filter found no usable stage geometry; falling back to full bounds.")
+        return world_bounds(meshes)
+    if ignored:
+        sample = ", ".join(ignored[:8])
+        suffix = "" if len(ignored) <= 8 else f", +{len(ignored) - 8} more"
+        warning = f"MMD normalization ignored background bounds from: {sample}{suffix}."
+        if warning not in warnings:
+            warnings.append(warning)
+    return bounds
+
+
+def mmd_content_bounds(meshes):
+    sections = mmd_material_sections(meshes)
+    if not sections:
+        return None, []
+    footprints = sorted(section["footprint"] for section in sections if section["footprint"] > 0.001)
+    if not footprints:
+        return None, []
+    median = footprints[len(footprints) // 2]
+    p75 = footprints[min(len(footprints) - 1, int(len(footprints) * 0.75))]
+    full_footprint = max(footprints)
+    max_reasonable = max(median * 7.0, p75 * 3.2, full_footprint * 0.18)
+
+    included = []
+    ignored = []
+    for section in sections:
+        reason = mmd_background_section_reason(section, max_reasonable)
+        if reason:
+            ignored.append(f"{section['name']} ({reason})")
+        else:
+            included.append(section)
+
+    if not included:
+        return None, ignored
+    included_footprint = max(section["footprint"] for section in included)
+    if included_footprint < full_footprint * 0.015:
+        return None, ignored
+
+    mins = Vector((math.inf, math.inf, math.inf))
+    maxs = Vector((-math.inf, -math.inf, -math.inf))
+    for section in included:
+        mins.x = min(mins.x, section["min"].x)
+        mins.y = min(mins.y, section["min"].y)
+        mins.z = min(mins.z, section["min"].z)
+        maxs.x = max(maxs.x, section["max"].x)
+        maxs.y = max(maxs.y, section["max"].y)
+        maxs.z = max(maxs.z, section["max"].z)
+    center = (mins + maxs) * 0.5
+    size = maxs - mins
+    return {"min": mins, "max": maxs, "center": center, "size": size}, ignored
+
+
+def mmd_material_sections(meshes):
+    sections = []
+    for obj in meshes:
+        if obj.type != "MESH" or not obj.data.polygons:
+            continue
+        material_count = max(1, len(obj.data.materials))
+        for material_index in range(material_count):
+            mins = Vector((math.inf, math.inf, math.inf))
+            maxs = Vector((-math.inf, -math.inf, -math.inf))
+            faces = 0
+            for polygon in obj.data.polygons:
+                if polygon.material_index != material_index:
+                    continue
+                faces += 1
+                for vertex_index in polygon.vertices:
+                    world_vertex = obj.matrix_world @ obj.data.vertices[vertex_index].co
+                    mins.x = min(mins.x, world_vertex.x)
+                    mins.y = min(mins.y, world_vertex.y)
+                    mins.z = min(mins.z, world_vertex.z)
+                    maxs.x = max(maxs.x, world_vertex.x)
+                    maxs.y = max(maxs.y, world_vertex.y)
+                    maxs.z = max(maxs.z, world_vertex.z)
+            if faces == 0:
+                continue
+            material = obj.data.materials[material_index] if material_index < len(obj.data.materials) else None
+            size = maxs - mins
+            sections.append({
+                "object": obj,
+                "material_index": material_index,
+                "name": material.name if material else f"{obj.name}:material_{material_index}",
+                "faces": faces,
+                "min": mins,
+                "max": maxs,
+                "size": size,
+                "footprint": max(size.x, size.y),
+                "height": size.z,
+            })
+    return sections
+
+
+def mmd_background_section_reason(section, max_reasonable):
+    normalized = section["name"].lower().replace("-", "_").replace(" ", "_")
+    background_tokens = [
+        "sky",
+        "cloud",
+        "far_ground",
+        "farground",
+        "landscape_far",
+        "background",
+        "backdrop",
+        "horizon",
+    ]
+    if any(token in normalized for token in background_tokens):
+        return "background-name"
+    if section["footprint"] > max_reasonable and section["faces"] <= 2500:
+        return "oversized-shell"
+    return None
+
+
 def relink_local_images():
     env_root = os.environ.get("KORE_STAGE_SOURCE_ROOT")
     if env_root:
@@ -268,12 +388,13 @@ def relink_local_images():
 
 def normalize_material_nodes(image_files):
     for material in bpy.data.materials:
-        image_path = texture_for_material(material.name, image_files)
-        if not image_path:
-            continue
-        image = load_image(image_path)
+        image = existing_base_texture_image(material)
+        if not image:
+            image_path = texture_for_material(material.name, image_files)
+            image = load_image(image_path) if image_path else None
         if not image:
             continue
+        diffuse_color = tuple(material.diffuse_color)
         material.use_nodes = True
         nodes = material.node_tree.nodes
         links = material.node_tree.links
@@ -286,6 +407,8 @@ def normalize_material_nodes(image_files):
         texture.location = (-220, 80)
         texture.image = image
         texture.extension = "REPEAT"
+        if "Base Color" in principled.inputs:
+            principled.inputs["Base Color"].default_value = diffuse_color
         links.new(texture.outputs["Color"], principled.inputs["Base Color"])
         if "Alpha" in texture.outputs and "Alpha" in principled.inputs:
             links.new(texture.outputs["Alpha"], principled.inputs["Alpha"])
@@ -293,6 +416,34 @@ def normalize_material_nodes(image_files):
         if "Roughness" in principled.inputs:
             principled.inputs["Roughness"].default_value = 0.68
         links.new(principled.outputs["BSDF"], output.inputs["Surface"])
+
+
+def existing_base_texture_image(material):
+    if not material.use_nodes or not material.node_tree:
+        return None
+    texture_nodes = [
+        node
+        for node in material.node_tree.nodes
+        if node.type == "TEX_IMAGE" and getattr(node, "image", None)
+    ]
+    if not texture_nodes:
+        return None
+    preferred = []
+    fallback = []
+    for node in texture_nodes:
+        image = node.image
+        image_name = image.name.lower()
+        image_path = image.filepath.lower() if image.filepath else ""
+        node_name = node.name.lower()
+        if "toon" in image_name or "toon" in image_path or "toon" in node_name:
+            continue
+        if "sphere" in image_name or image_name.endswith(".spa") or image_name.endswith(".sph"):
+            continue
+        if "base" in node_name or "diffuse" in node_name or "tex" in node_name:
+            preferred.append(image)
+        else:
+            fallback.append(image)
+    return (preferred or fallback or [None])[0]
 
 
 def texture_for_material(name, image_files):

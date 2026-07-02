@@ -96,8 +96,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/dbz-hero-city/stage.glb?v=mr2sdc5y-1k6fc",
-    "url": "/stages/dbz-hero-city/stage.glb?v=mr2sdc5y-1k6fc",
+    "path": "/stages/dbz-hero-city/stage.glb?v=mr2t0t5p-7gw7o",
+    "url": "/stages/dbz-hero-city/stage.glb?v=mr2t0t5p-7gw7o",
     "format": "glb",
     "position": [
       0,
@@ -124,15 +124,15 @@
     "bounds": {
       "center": [
         0,
-        2.7357,
+        3.1741,
         0
       ],
       "size": [
-        18,
-        5.4713,
-        17.9991
+        11.6244,
+        6.3481,
+        18
       ],
-      "radius": 13.0183
+      "radius": 11.1739
     }
   },
   "mugen": {
@@ -140,7 +140,9 @@
     "sourceKind": "mmd",
     "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____hero_city___stage_dl_by_blacksoul1890_dekr0vr/Hero City",
     "category": "Dbz",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_Sky_1.0_0_0 (background-name)."
+    ],
     "exportMeta": {
       "stageId": "dbz-hero-city",
       "blenderVersion": "4.5.11 LTS",
@@ -148,8 +150,54 @@
       "meshCount": 1,
       "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____hero_city___stage_dl_by_blacksoul1890_dekr0vr/Hero City/Hero City.pmx",
       "sourceKind": "mmd",
-      "warnings": [],
+      "warnings": [
+        "MMD normalization ignored background bounds from: 5_Sky_1.0_0_0 (background-name)."
+      ],
       "boundsBeforeNormalize": {
+        "min": [
+          -1038.9807,
+          -1723.4519,
+          -24.2421
+        ],
+        "max": [
+          908.7394,
+          1292.5293,
+          1039.4174
+        ],
+        "center": [
+          -65.1207,
+          -215.4613,
+          507.5876
+        ],
+        "size": [
+          1947.7201,
+          3015.9812,
+          1063.6595
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -5.8122,
+          -9,
+          0
+        ],
+        "max": [
+          5.8122,
+          9,
+          6.3481
+        ],
+        "center": [
+          0,
+          0,
+          3.1741
+        ],
+        "size": [
+          11.6244,
+          18,
+          6.3481
+        ]
+      },
+      "fullBoundsBeforeNormalize": {
         "min": [
           -3670.7812,
           -3749.5815,
@@ -171,26 +219,26 @@
           2255.6292
         ]
       },
-      "boundsAfterNormalize": {
+      "fullBoundsAfterNormalize": {
         "min": [
-          -9,
-          -8.9996,
-          0
+          -21.5193,
+          -21.0924,
+          -0.1565
         ],
         "max": [
-          9,
-          8.9996,
-          5.4713
+          22.7691,
+          23.1939,
+          13.3056
         ],
         "center": [
-          0,
-          0,
-          2.7357
+          0.6249,
+          1.0508,
+          6.5746
         ],
         "size": [
-          18,
-          17.9991,
-          5.4713
+          44.2884,
+          44.2863,
+          13.4621
         ]
       }
     }

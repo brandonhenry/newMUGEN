@@ -96,8 +96,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/dbz-planet-namek-dbfz/stage.glb?v=mr2scphg-53b7g",
-    "url": "/stages/dbz-planet-namek-dbfz/stage.glb?v=mr2scphg-53b7g",
+    "path": "/stages/dbz-planet-namek-dbfz/stage.glb?v=mr2t837p-inmd4",
+    "url": "/stages/dbz-planet-namek-dbfz/stage.glb?v=mr2t837p-inmd4",
     "format": "glb",
     "position": [
       0,
@@ -124,15 +124,15 @@
     "bounds": {
       "center": [
         0,
-        6.0166,
+        0.7808,
         0
       ],
       "size": [
         18,
-        12.0332,
-        17.997
+        1.5616,
+        14.2365
       ],
-      "radius": 14.0774
+      "radius": 11.5013
     }
   },
   "mugen": {
@@ -140,7 +140,9 @@
     "sourceKind": "mmd",
     "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____planet_namek___west_city___stages_dl__by_blacksoul1890_deudcd4/Planet Namek (DBFZ)",
     "category": "Dbz",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_part1-Sea_1_0_0 (oversized-shell), 5_part1-Sky.material02_1_0_0 (background-name), 7_part1-Sky.material01_1_0_0 (background-name), 7_part1-Sky_1_0_0 (background-name), 7_part1-Sky.material03_1_0_0 (background-name), 7_part1-Sky.material04_1_0_0 (background-name)."
+    ],
     "exportMeta": {
       "stageId": "dbz-planet-namek-dbfz",
       "blenderVersion": "4.5.11 LTS",
@@ -148,8 +150,54 @@
       "meshCount": 1,
       "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_dbfz____planet_namek___west_city___stages_dl__by_blacksoul1890_deudcd4/Planet Namek (DBFZ)/Planet Namek (DBFZ).Pmx",
       "sourceKind": "mmd",
-      "warnings": [],
+      "warnings": [
+        "MMD normalization ignored background bounds from: 5_part1-Sea_1_0_0 (oversized-shell), 5_part1-Sky.material02_1_0_0 (background-name), 7_part1-Sky.material01_1_0_0 (background-name), 7_part1-Sky_1_0_0 (background-name), 7_part1-Sky.material03_1_0_0 (background-name), 7_part1-Sky.material04_1_0_0 (background-name)."
+      ],
       "boundsBeforeNormalize": {
+        "min": [
+          -1779.2341,
+          -644.2692,
+          -77.0805
+        ],
+        "max": [
+          2452.3406,
+          2702.5579,
+          290.0281
+        ],
+        "center": [
+          336.5532,
+          1029.1443,
+          106.4738
+        ],
+        "size": [
+          4231.5747,
+          3346.8271,
+          367.1086
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -7.1183,
+          0
+        ],
+        "max": [
+          9,
+          7.1183,
+          1.5616
+        ],
+        "center": [
+          0,
+          0,
+          0.7808
+        ],
+        "size": [
+          18,
+          14.2365,
+          1.5616
+        ]
+      },
+      "fullBoundsBeforeNormalize": {
         "min": [
           -5907.8989,
           -5899.4419,
@@ -171,26 +219,26 @@
           7899.1836
         ]
       },
-      "boundsAfterNormalize": {
+      "fullBoundsAfterNormalize": {
         "min": [
-          -9,
-          -8.9985,
-          0
+          -26.5622,
+          -29.4724,
+          -8.8238
         ],
         "max": [
-          9,
-          8.9985,
-          12.0332
+          23.7002,
+          20.7818,
+          24.7773
         ],
         "center": [
-          0,
-          0,
-          6.0166
+          -1.431,
+          -4.3453,
+          7.9768
         ],
         "size": [
-          18,
-          17.997,
-          12.0332
+          50.2625,
+          50.2541,
+          33.601
         ]
       }
     }

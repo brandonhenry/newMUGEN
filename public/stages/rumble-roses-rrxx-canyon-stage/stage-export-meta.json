@@ -6,8 +6,54 @@
     "meshCount": 1,
     "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd__rumble_roses_xx___canyon_arena___dl_by_mrwhitefolks_d9118w3/RRXX_Canyon_Stage/RRXX_Canyon_Final.pmx",
     "sourceKind": "mmd",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: Object01: Multimaterial.005 (oversized-shell), Object01: Multimaterial.030 (oversized-shell), Object01: Multimaterial.037 (oversized-shell), Object01: Multimaterial.040 (oversized-shell), Object01: Multimaterial.066 (oversized-shell)."
+    ],
     "boundsBeforeNormalize": {
+      "min": [
+        -970.7553,
+        -1131.5276,
+        -38.0375
+      ],
+      "max": [
+        1756.082,
+        1197.5105,
+        430.7515
+      ],
+      "center": [
+        392.6634,
+        32.9915,
+        196.357
+      ],
+      "size": [
+        2726.8374,
+        2329.0381,
+        468.789
+      ]
+    },
+    "boundsAfterNormalize": {
+      "min": [
+        -9.0,
+        -7.6871,
+        0.0
+      ],
+      "max": [
+        9.0,
+        7.6871,
+        3.0945
+      ],
+      "center": [
+        0.0,
+        0.0,
+        1.5473
+      ],
+      "size": [
+        18.0,
+        15.3741,
+        3.0945
+      ]
+    },
+    "fullBoundsBeforeNormalize": {
       "min": [
         -2834.4062,
         -2918.0598,
@@ -29,40 +75,40 @@
         2911.7131
       ]
     },
-    "boundsAfterNormalize": {
+    "fullBoundsAfterNormalize": {
       "min": [
-        -9.0,
-        -8.9862,
+        -21.3021,
+        -19.48,
         0.0
       ],
       "max": [
-        9.0,
-        8.9862,
-        9.0376
+        16.9787,
+        18.7419,
+        19.2204
       ],
       "center": [
-        -0.0,
-        0.0,
-        4.5188
+        -2.1617,
+        -0.3691,
+        9.6102
       ],
       "size": [
-        18.0,
-        17.9723,
-        9.0376
+        38.2808,
+        38.2219,
+        19.2204
       ]
     }
   },
   "bounds": {
     "center": [
-      -0.0,
-      4.5188,
+      0.0,
+      1.5473,
       -0.0
     ],
     "size": [
       18.0,
-      9.0376,
-      17.9723
+      3.0945,
+      15.3741
     ],
-    "radius": 13.4971
+    "radius": 11.9367
   }
 }

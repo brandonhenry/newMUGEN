@@ -96,8 +96,8 @@
     "mode": "box"
   },
   "model": {
-    "path": "/stages/general-temple-of-poseidon/stage.glb?v=mr2s0m3t-r68k",
-    "url": "/stages/general-temple-of-poseidon/stage.glb?v=mr2s0m3t-r68k",
+    "path": "/stages/general-temple-of-poseidon/stage.glb?v=mr2t7gu6-32bdg",
+    "url": "/stages/general-temple-of-poseidon/stage.glb?v=mr2t7gu6-32bdg",
     "format": "glb",
     "position": [
       0,
@@ -124,15 +124,15 @@
     "bounds": {
       "center": [
         0,
-        1.9854,
+        1.593,
         0
       ],
       "size": [
         18,
-        3.9707,
-        11.941
+        3.186,
+        14.1683
       ],
-      "radius": 10.9813
+      "radius": 11.5638
     }
   },
   "mugen": {
@@ -140,7 +140,9 @@
     "sourceKind": "mmd",
     "sourceFolder": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/stage_temple_of_poseidon_mmd_by_poseidon2julian_dctf82m",
     "category": "General",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 材質13 (oversized-shell)."
+    ],
     "exportMeta": {
       "stageId": "general-temple-of-poseidon",
       "blenderVersion": "4.5.11 LTS",
@@ -148,8 +150,54 @@
       "meshCount": 1,
       "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/stage_temple_of_poseidon_mmd_by_poseidon2julian_dctf82m/Templo de Poseidon.pmd",
       "sourceKind": "mmd",
-      "warnings": [],
+      "warnings": [
+        "MMD normalization ignored background bounds from: 材質13 (oversized-shell)."
+      ],
       "boundsBeforeNormalize": {
+        "min": [
+          -377.6816,
+          -106.013,
+          -18.9687
+        ],
+        "max": [
+          374.1657,
+          485.7858,
+          114.1064
+        ],
+        "center": [
+          -1.7579,
+          189.8864,
+          47.5689
+        ],
+        "size": [
+          751.8474,
+          591.7987,
+          133.0751
+        ]
+      },
+      "boundsAfterNormalize": {
+        "min": [
+          -9,
+          -7.0841,
+          0
+        ],
+        "max": [
+          9,
+          7.0841,
+          3.186
+        ],
+        "center": [
+          0,
+          0,
+          1.593
+        ],
+        "size": [
+          18,
+          14.1683,
+          3.186
+        ]
+      },
+      "fullBoundsBeforeNormalize": {
         "min": [
           -593.2641,
           -106.013,
@@ -171,26 +219,26 @@
           260.9457
         ]
       },
-      "boundsAfterNormalize": {
+      "fullBoundsAfterNormalize": {
         "min": [
-          -9,
-          -5.9705,
-          0
+          -14.1613,
+          -7.0841,
+          -0.1323
         ],
         "max": [
-          9,
-          5.9705,
-          3.9707
+          14.1589,
+          11.7031,
+          6.115
         ],
         "center": [
-          0,
-          0,
-          1.9854
+          -0.0012,
+          2.3095,
+          2.9913
         ],
         "size": [
-          18,
-          11.941,
-          3.9707
+          28.3201,
+          18.7873,
+          6.2473
         ]
       }
     }

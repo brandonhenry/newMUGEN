@@ -6,8 +6,54 @@
     "meshCount": 1,
     "sourcePath": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd_sdbh_wm____west_city__damaged__stage_dl__by_blacksoul1890_denrkms/West City (Damaged)/West City (Damaged).pmx",
     "sourceKind": "mmd",
-    "warnings": [],
+    "warnings": [
+      "MMD normalization ignored background bounds from: 5_Sky_1.0_0_0 (background-name)."
+    ],
     "boundsBeforeNormalize": {
+      "min": [
+        -5252.1455,
+        -5550.0718,
+        -167.6148
+      ],
+      "max": [
+        5588.5864,
+        5507.5317,
+        3504.906
+      ],
+      "center": [
+        168.2205,
+        -21.27,
+        1668.6456
+      ],
+      "size": [
+        10840.7324,
+        11057.6035,
+        3672.5208
+      ]
+    },
+    "boundsAfterNormalize": {
+      "min": [
+        -8.8235,
+        -9.0,
+        0.0
+      ],
+      "max": [
+        8.8235,
+        9.0,
+        5.9783
+      ],
+      "center": [
+        -0.0,
+        0.0,
+        2.9891
+      ],
+      "size": [
+        17.647,
+        18.0,
+        5.9783
+      ]
+    },
+    "fullBoundsBeforeNormalize": {
       "min": [
         -14538.0342,
         -14615.3174,
@@ -29,40 +75,40 @@
         10040.1836
       ]
     },
-    "boundsAfterNormalize": {
+    "fullBoundsAfterNormalize": {
       "min": [
-        -9.0,
-        -9.0,
-        -0.0
+        -23.9394,
+        -23.7568,
+        -6.7754
       ],
       "max": [
-        9.0,
-        9.0,
-        6.1853
+        23.6229,
+        23.8055,
+        9.5684
       ],
       "center": [
-        0.0,
-        0.0,
-        3.0927
+        -0.1583,
+        0.0244,
+        1.3965
       ],
       "size": [
-        18.0,
-        18.0,
-        6.1853
+        47.5623,
+        47.5623,
+        16.3438
       ]
     }
   },
   "bounds": {
     "center": [
-      0.0,
-      3.0927,
+      -0.0,
+      2.9891,
       -0.0
     ],
     "size": [
-      18.0,
-      6.1853,
+      17.647,
+      5.9783,
       18.0
     ],
-    "radius": 13.0983
+    "radius": 12.9533
   }
 }
