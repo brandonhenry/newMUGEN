@@ -5,7 +5,7 @@
   "renderMode": "model",
   "type": "model-stage",
   "visualStylePreset": "anime-daylight",
-  "hidden": true,
+  "hidden": false,
   "floor": "#4f7942",
   "floorTexturePath": "/stages/grasslands/floor-texture.png",
   "floorTextureRepeat": [
@@ -64,7 +64,7 @@
   },
   "fightPlane": {
     "center": [
-      0,
+      -9.65,
       0,
       0
     ],
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      0.2144033948946766,
+      -9.435596605105323,
       0,
-      2.1895276166921565
+      2.189527616692162
     ],
     "p2": [
-      -0.2144033948946766,
+      -9.864403394894678,
       0,
-      -2.1895276166921565
+      -2.189527616692162
     ]
   },
   "camera": {
@@ -114,13 +114,13 @@
     "format": "glb",
     "position": [
       -14.8,
-      -0.59,
+      -0.12,
       0
     ],
     "scale": [
-      8,
-      8,
-      8
+      2.3,
+      2.3,
+      2.3
     ],
     "rotation": [
       0,
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/one-piece-impel-down-room-3/source.png"
+  "sourcePath": "/stages/one-piece-impel-down-room-3/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 15.1,
+    "depth": 14.6
+  }
 }

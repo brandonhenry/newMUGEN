@@ -5,7 +5,7 @@
   "renderMode": "model",
   "type": "model-stage",
   "visualStylePreset": "anime-daylight",
-  "hidden": true,
+  "hidden": false,
   "floor": "#4f7942",
   "floorTexturePath": "/stages/grasslands/floor-texture.png",
   "floorTextureRepeat": [
@@ -66,7 +66,7 @@
     "center": [
       0,
       0,
-      0
+      11.45
     ],
     "width": 10,
     "depth": 7,
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      -2.2,
+      -2.1999999999999975,
       0,
-      0
+      11.45
     ],
     "p2": [
-      2.2,
+      2.1999999999999975,
       0,
-      0
+      11.45
     ]
   },
   "camera": {
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/one-piece-amazon-lily-entrance/source.png"
+  "sourcePath": "/stages/one-piece-amazon-lily-entrance/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 15.35,
+    "depth": 6.4
+  }
 }
