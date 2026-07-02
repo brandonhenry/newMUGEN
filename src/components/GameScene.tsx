@@ -2652,18 +2652,20 @@ function StagePlayableBoundsMarkers({ stage }: { stage: StageDefinition }) {
   const rotationY = stage.fightPlane?.rotationY ?? 0;
   const width = Math.max(4, bounds.width);
   const depth = Math.max(4, bounds.depth);
-  const edgeOpacity = 0.84;
-  const fillOpacity = 0.075;
+  const fillColor = '#ff3f73';
+  const outlineColor = '#ffffff';
+  const edgeOpacity = 0.92;
+  const fillOpacity = 0.16;
   if (bounds.shape === 'ellipse') {
     return (
       <group position={[center[0], y, center[2]]} rotation={[0, rotationY, 0]} renderOrder={12}>
         <mesh rotation={[-Math.PI / 2, 0, 0]} scale={[width / 2, depth / 2, 1]}>
           <circleGeometry args={[1, 96]} />
-          <meshBasicMaterial color="#35e6ff" transparent opacity={fillOpacity} depthWrite={false} fog={false} />
+          <meshBasicMaterial color={fillColor} transparent opacity={fillOpacity} depthWrite={false} fog={false} />
         </mesh>
         <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[width / 2, depth / 2, 1]}>
           <ringGeometry args={[0.985, 1.015, 96]} />
-          <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+          <meshBasicMaterial color={outlineColor} transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
         </mesh>
       </group>
     );
@@ -2672,23 +2674,23 @@ function StagePlayableBoundsMarkers({ stage }: { stage: StageDefinition }) {
     <group position={[center[0], y, center[2]]} rotation={[0, rotationY, 0]} renderOrder={12}>
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, depth]} />
-        <meshBasicMaterial color="#35e6ff" transparent opacity={fillOpacity} depthWrite={false} fog={false} />
+        <meshBasicMaterial color={fillColor} transparent opacity={fillOpacity} depthWrite={false} fog={false} />
       </mesh>
       <mesh position={[0, 0.012, -depth / 2]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, 0.08]} />
-        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+        <meshBasicMaterial color={outlineColor} transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
       </mesh>
       <mesh position={[0, 0.012, depth / 2]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, 0.08]} />
-        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+        <meshBasicMaterial color={outlineColor} transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
       </mesh>
       <mesh position={[-width / 2, 0.014, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.08, depth]} />
-        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+        <meshBasicMaterial color={outlineColor} transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
       </mesh>
       <mesh position={[width / 2, 0.014, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.08, depth]} />
-        <meshBasicMaterial color="#35e6ff" transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
+        <meshBasicMaterial color={outlineColor} transparent opacity={edgeOpacity} depthWrite={false} fog={false} />
       </mesh>
     </group>
   );

@@ -66,7 +66,7 @@
     "center": [
       0.25,
       0,
-      -3.1
+      -0.69
     ],
     "width": 10,
     "depth": 7,
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      -1.95,
+      -1.9500000000000002,
       0,
-      -3.1
+      -0.69
     ],
     "p2": [
       2.45,
       0,
-      -3.1
+      -0.69
     ]
   },
   "camera": {
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/bleach-bleach-soul-reaper-karakura-town-intersection/source.png"
+  "sourcePath": "/stages/bleach-bleach-soul-reaper-karakura-town-intersection/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 80.2,
+    "depth": 5.6
+  }
 }

@@ -64,7 +64,7 @@
   },
   "fightPlane": {
     "center": [
-      0,
+      -1.4,
       0,
       0
     ],
@@ -75,12 +75,12 @@
   },
   "spawns": {
     "p1": [
-      -2.2,
+      -3.6,
       0,
       0
     ],
     "p2": [
-      2.2,
+      0.8000000000000003,
       0,
       0
     ]
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/naruto-opbw-amazon-lily-city/source.png"
+  "sourcePath": "/stages/naruto-opbw-amazon-lily-city/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 40.5,
+    "depth": 7
+  }
 }

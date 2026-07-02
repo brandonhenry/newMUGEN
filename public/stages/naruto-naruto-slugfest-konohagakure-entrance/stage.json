@@ -64,7 +64,7 @@
   },
   "fightPlane": {
     "center": [
-      -5.27,
+      -3.27,
       0,
       9.39
     ],
@@ -75,12 +75,12 @@
   },
   "spawns": {
     "p1": [
-      -6.303830850200732,
+      -4.3038308502007325,
       0,
       7.448043828204859
     ],
     "p2": [
-      -4.2361691497992675,
+      -2.2361691497992675,
       0,
       11.331956171795142
     ]
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/naruto-naruto-slugfest-konohagakure-entrance/source.png"
+  "sourcePath": "/stages/naruto-naruto-slugfest-konohagakure-entrance/source.png",
+  "playableBounds": {
+    "shape": "ellipse",
+    "width": 31.6,
+    "depth": 12.7
+  }
 }

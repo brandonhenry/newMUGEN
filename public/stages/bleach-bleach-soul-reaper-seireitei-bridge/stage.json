@@ -64,7 +64,7 @@
   },
   "fightPlane": {
     "center": [
-      0,
+      0.84,
       0,
       0
     ],
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      -0.0238,
+      0.8162482322081559,
       0,
-      2.1999
+      2.1999005212797154
     ],
     "p2": [
-      0.0238,
+      0.863751767791844,
       0,
-      -2.1999
+      -2.1999005212797154
     ]
   },
   "camera": {
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/bleach-bleach-soul-reaper-seireitei-bridge/source.png"
+  "sourcePath": "/stages/bleach-bleach-soul-reaper-seireitei-bridge/source.png",
+  "playableBounds": {
+    "shape": "ellipse",
+    "width": 97.5,
+    "depth": 8.9
+  }
 }

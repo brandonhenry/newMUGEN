@@ -64,9 +64,9 @@
   },
   "fightPlane": {
     "center": [
-      0.25,
+      0.12,
       0,
-      -5.77
+      -19.24
     ],
     "width": 10,
     "depth": 7,
@@ -75,14 +75,14 @@
   },
   "spawns": {
     "p1": [
-      -1.949999999999994,
+      -2.079999999999994,
       0,
-      -5.77
+      -19.24
     ],
     "p2": [
-      2.449999999999994,
+      2.319999999999994,
       0,
-      -5.77
+      -19.24
     ]
   },
   "camera": {
@@ -114,7 +114,7 @@
     "format": "glb",
     "position": [
       0,
-      -0.02,
+      0.07,
       0
     ],
     "scale": [
@@ -297,5 +297,10 @@
       "reducedMotionScale": 0.36
     }
   },
-  "sourcePath": "/stages/one-punch-man-opmje-combat-experimentation-room-2/source.png"
+  "sourcePath": "/stages/one-punch-man-opmje-combat-experimentation-room-2/source.png",
+  "playableBounds": {
+    "shape": "box",
+    "width": 43.2,
+    "depth": 50.4
+  }
 }
