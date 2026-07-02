@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { Component, Suspense, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
+import { Component, Suspense, createContext, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -45,6 +45,12 @@ type GameSceneProps = {
   audioSettings?: GameSettings['audio'];
   reducedMotion?: boolean;
 };
+
+type StageCameraCollisionRegistry = {
+  colliders: Set<THREE.Box3>;
+};
+
+const StageCameraCollisionContext = createContext<StageCameraCollisionRegistry | null>(null);
 
 const defaultCameraSettings: GameSettings['camera'] = {
   distance: 1,
@@ -492,25 +498,28 @@ const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<THREE.Box3>() }), [match.stage.id]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
-      {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
-      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
-      <CameraRig match={match} settings={cameraSettings} />
-      <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
-      <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
-      <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
-      <TransformEffectLayer fighter={match.fighters[0]} />
-      <TransformEffectLayer fighter={match.fighters[1]} />
-      <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
-      <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
-      <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
-      <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
-      <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
-      <StagePostProcessing stage={match.stage} reducedMotion={reducedMotion} />
+      <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+        <Suspense fallback={null}>
+          <Environment preset="city" />
+        </Suspense>
+        {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+        <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
+        <CameraRig match={match} settings={cameraSettings} />
+        <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
+        <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <TransformEffectLayer fighter={match.fighters[0]} />
+        <TransformEffectLayer fighter={match.fighters[1]} />
+        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
+        <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
+        <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
+        <StagePostProcessing stage={match.stage} reducedMotion={reducedMotion} />
+      </StageCameraCollisionContext.Provider>
     </Canvas>
   );
 }
@@ -1345,6 +1354,7 @@ export function StagePreviewCanvas({
   const controlTarget = useMemo(() => previewMode === 'fly'
     ? stage.fightPlane?.center ?? stage.model?.focus ?? stage.camera?.previewTarget ?? FIXED_STAGE_PREVIEW_TARGET
     : FIXED_STAGE_PREVIEW_TARGET, [previewMode, stage.camera?.previewTarget, stage.id, stage.model?.focus]);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<THREE.Box3>() }), [stage.id]);
   useEffect(() => {
     logStageModelDebug('H9 StagePreviewCanvas classified stage', {
       stageId: stage.id,
@@ -1367,39 +1377,41 @@ export function StagePreviewCanvas({
       data-testid={`stage-preview-canvas-${stage.id}`}
       aria-label={`${stage.name} stage preview`}
     >
-      {!modelStage && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
-      <StageVisualStyleRig stage={stage} fighters={previewFighters} preview={previewMode !== 'play'} />
-      <StagePreviewKeyboardControls
-        active={interactive && (previewMode === 'fly' || previewMode === 'play')}
-        previewMode={previewMode}
-        match={previewMatch}
-        onMatchChange={setPreviewMatch}
-      />
-      {previewMode === 'play' && previewMatch ? <CameraRig match={previewMatch} settings={defaultCameraSettings} /> : <StagePreviewCamera stage={stage} previewMode={previewMode} />}
-      <group position={modelStage ? [0, 0, 0] : [0, -0.05, 0]} scale={modelStage ? 1 : 0.82}>
-        <Arena
-          stage={stage}
-          fighters={previewFighters}
-          selectedPropId={propSelectionEnabled ? selectedPropId : undefined}
-          onSelectProp={propSelectionEnabled ? onSelectProp : undefined}
-          showFightLaneMarkers={propSelectionEnabled}
+      <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+        {!modelStage && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+        <StageVisualStyleRig stage={stage} fighters={previewFighters} preview={previewMode !== 'play'} />
+        <StagePreviewKeyboardControls
+          active={interactive && (previewMode === 'fly' || previewMode === 'play')}
+          previewMode={previewMode}
+          match={previewMatch}
+          onMatchChange={setPreviewMatch}
         />
-        {interactive && previewMode === 'edit' && showPlayableBounds && <StagePlayableBoundsMarkers stage={stage} />}
-      </group>
-      {previewFighters?.map((fighter) => <FighterRig key={`stage-preview-fighter-${fighter.slot}`} fighter={fighter} stage={stage} />)}
-      {previewFighters ? <ContactShadows position={[0, (stage.fightPlane?.y ?? stage.world?.floorY ?? 0) - 0.01, 0]} opacity={0.34} scale={14} blur={2.4} far={3} /> : null}
-      {interactive && previewMode !== 'play' && (
-        <OrbitControls
-          makeDefault
-          enableDamping
-          enablePan
-          enableRotate
-          enableZoom
-          minDistance={previewMinDistance}
-          maxDistance={previewMaxDistance}
-          target={controlTarget}
-        />
-      )}
+        {previewMode === 'play' && previewMatch ? <CameraRig match={previewMatch} settings={defaultCameraSettings} /> : <StagePreviewCamera stage={stage} previewMode={previewMode} />}
+        <group position={modelStage ? [0, 0, 0] : [0, -0.05, 0]} scale={modelStage ? 1 : 0.82}>
+          <Arena
+            stage={stage}
+            fighters={previewFighters}
+            selectedPropId={propSelectionEnabled ? selectedPropId : undefined}
+            onSelectProp={propSelectionEnabled ? onSelectProp : undefined}
+            showFightLaneMarkers={propSelectionEnabled}
+          />
+          {interactive && previewMode === 'edit' && showPlayableBounds && <StagePlayableBoundsMarkers stage={stage} />}
+        </group>
+        {previewFighters?.map((fighter) => <FighterRig key={`stage-preview-fighter-${fighter.slot}`} fighter={fighter} stage={stage} />)}
+        {previewFighters ? <ContactShadows position={[0, (stage.fightPlane?.y ?? stage.world?.floorY ?? 0) - 0.01, 0]} opacity={0.34} scale={14} blur={2.4} far={3} /> : null}
+        {interactive && previewMode !== 'play' && (
+          <OrbitControls
+            makeDefault
+            enableDamping
+            enablePan
+            enableRotate
+            enableZoom
+            minDistance={previewMinDistance}
+            maxDistance={previewMaxDistance}
+            target={controlTarget}
+          />
+        )}
+      </StageCameraCollisionContext.Provider>
     </Canvas>
   );
 }
@@ -2277,6 +2289,8 @@ function cameraDamp(delta: number, speed: number) {
 
 const MIN_FIGHT_CAMERA_DISTANCE = 4.85;
 const MIN_CLASH_CAMERA_DISTANCE = 4.85;
+const MODEL_CAMERA_COLLISION_PADDING = 0.38;
+const MODEL_CAMERA_COLLISION_MIN_DISTANCE = 2.35;
 
 function finiteOr(value: number, fallback: number) {
   return Number.isFinite(value) ? value : fallback;
@@ -2300,8 +2314,46 @@ function enforceCameraHorizontalDistance(camera: THREE.Camera, focus: THREE.Vect
   camera.position.z = focus.z + directionZ * minDistance;
 }
 
+function resolveCameraModelCollision(
+  focus: THREE.Vector3,
+  desired: THREE.Vector3,
+  colliders: Set<THREE.Box3> | undefined,
+  output: THREE.Vector3
+) {
+  output.copy(desired);
+  if (!colliders?.size) return false;
+
+  const path = desired.clone().sub(focus);
+  const totalDistance = path.length();
+  if (totalDistance <= MODEL_CAMERA_COLLISION_MIN_DISTANCE) return false;
+
+  const direction = path.multiplyScalar(1 / totalDistance);
+  const ray = new THREE.Ray(focus, direction);
+  const hitPoint = new THREE.Vector3();
+  let closestDistance = Number.POSITIVE_INFINITY;
+
+  colliders.forEach((box) => {
+    if (box.containsPoint(focus)) return;
+    const hit = ray.intersectBox(box, hitPoint);
+    if (!hit) return;
+    const hitDistance = focus.distanceTo(hit);
+    if (hitDistance <= MODEL_CAMERA_COLLISION_MIN_DISTANCE || hitDistance >= totalDistance) return;
+    closestDistance = Math.min(closestDistance, hitDistance);
+  });
+
+  if (!Number.isFinite(closestDistance)) return false;
+  const resolvedDistance = THREE.MathUtils.clamp(
+    closestDistance - MODEL_CAMERA_COLLISION_PADDING,
+    MODEL_CAMERA_COLLISION_MIN_DISTANCE,
+    totalDistance
+  );
+  output.copy(focus).addScaledVector(direction, resolvedDistance);
+  return true;
+}
+
 function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
   const { camera, size } = useThree();
+  const cameraCollisionRegistry = useContext(StageCameraCollisionContext);
   const modelStageCamera = isModelStage(match.stage);
   const target = useMemo(() => new THREE.Vector3(), []);
   const focus = useMemo(() => new THREE.Vector3(), []);
@@ -2311,6 +2363,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   const rawLookFocus = useMemo(() => new THREE.Vector3(), []);
   const rawSide = useMemo(() => new THREE.Vector3(), []);
   const desired = useMemo(() => new THREE.Vector3(), []);
+  const collisionAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
   const initializedRef = useRef(false);
   const cameraDistanceRef = useRef(6.4);
   const cameraHeightRef = useRef(2.8);
@@ -2341,9 +2394,11 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
         6.6
       );
       desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
-      camera.position.lerp(desired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
       target.set(contactX, Math.max(1.12, contactY), contactZ);
-      enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
+      const collided = resolveCameraModelCollision(target, desired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+      camera.position.lerp(collisionAdjustedDesired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
+      const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position);
+      if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
       return;
     }
@@ -2409,8 +2464,10 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       cameraHeightRef.current,
       focus.z + side.z * cameraDistanceRef.current
     );
-    camera.position.lerp(desired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
-    enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+    const collided = resolveCameraModelCollision(lookFocus, desired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+    camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
+    const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
+    if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
   });
   return null;
@@ -2954,9 +3011,58 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
   return (
     <group ref={modelGroupRef} position={position} scale={scale} rotation={rotation}>
       {useFlattenedModel ? <StageModelFlattenedMeshes meshes={flattenedMeshes} /> : <primitive object={scene} />}
+      <StageModelCameraColliders stage={stage} modelGroupRef={modelGroupRef} />
       <StageModelRuntimeProbe stage={stage} modelDefinition={modelDefinition} modelGroupRef={modelGroupRef} />
     </group>
   );
+}
+
+function StageModelCameraColliders({
+  stage,
+  modelGroupRef
+}: {
+  stage: StageDefinition;
+  modelGroupRef: RefObject<THREE.Group>;
+}) {
+  const registry = useContext(StageCameraCollisionContext);
+  const collisionMode = stage.collision?.mode;
+  const floorY = stage.fightPlane?.y ?? stage.world?.floorY ?? 0;
+  const stageId = stage.id;
+  useEffect(() => {
+    if (!registry || collisionMode === 'none') return undefined;
+    const modelGroup = modelGroupRef.current;
+    if (!modelGroup) return undefined;
+    const boxes: THREE.Box3[] = [];
+    modelGroup.updateWorldMatrix(true, true);
+    modelGroup.traverse((object) => {
+      const mesh = object as THREE.Mesh;
+      if (!mesh.isMesh || !mesh.geometry?.getAttribute('position') || !isEffectivelyVisible(mesh)) return;
+      if (getStageModelMeshHideReason(mesh, stageId, false)) return;
+      const box = new THREE.Box3().setFromObject(mesh);
+      if (!isUsableStageCameraColliderBox(box, floorY)) return;
+      boxes.push(box);
+      registry.colliders.add(box);
+    });
+    logStageModelDebug('H70 camera model colliders registered', {
+      stageId,
+      colliderCount: boxes.length,
+      collisionMode: collisionMode ?? 'box'
+    });
+    return () => {
+      boxes.forEach((box) => registry.colliders.delete(box));
+    };
+  }, [collisionMode, floorY, modelGroupRef, registry, stageId]);
+  return null;
+}
+
+function isUsableStageCameraColliderBox(box: THREE.Box3, floorY: number) {
+  if (box.isEmpty()) return false;
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  const maxSize = Math.max(size.x, size.y, size.z);
+  if (!Number.isFinite(maxSize) || maxSize < 0.05 || maxSize > 900) return false;
+  const lowFlatFloor = size.y < 0.35 && size.x > 4 && size.z > 4 && box.max.y <= floorY + 0.55;
+  return !lowFlatFloor;
 }
 
 function StageModelFlattenedMeshes({ meshes }: { meshes: FlattenedStageModelMesh[] }) {
