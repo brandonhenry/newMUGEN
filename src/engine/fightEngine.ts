@@ -720,9 +720,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
-  const forward = resolveForwardInput(fighter, opponent, input);
+  const horizontalIntent = resolveHorizontalIntent(fighter, input);
+  const forward = horizontalIntent.direction;
   fighter.walkDirection = 0;
-  const holdingBack = forward < 0;
+  const holdingBack = horizontalIntent.back;
   const blocking = input.block || holdingBack;
   const laneWalk = input.sidewalkUp ? -1 : input.sidewalkDown ? 1 : 0;
   const sidestepTap = input.sidestepUp ? -1 : input.sidestepDown ? 1 : 0;
@@ -3874,13 +3875,25 @@ function applyAirHomingForce(fighter: FighterRuntime, opponent: FighterRuntime, 
   fighter.position.z += (dz / distance) * amount;
 }
 
-function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
+type HorizontalControlIntent = {
+  direction: -1 | 0 | 1;
+  forward: boolean;
+  back: boolean;
+  neutral: boolean;
+};
+
+function resolveForwardInput(fighter: FighterRuntime, _opponent: FighterRuntime, input: InputFrame) {
+  return resolveHorizontalIntent(fighter, input).direction;
+}
+
+function resolveHorizontalIntent(fighter: FighterRuntime, input: InputFrame): HorizontalControlIntent {
+  if (input.left === input.right) return { direction: 0, forward: false, back: false, neutral: true };
   const sideSign = getStableControlSideSign(fighter);
-  const toward = (input.right && sideSign > 0) || (input.left && sideSign < 0);
-  const away = (input.left && sideSign > 0) || (input.right && sideSign < 0);
-  if (toward) return 1;
-  if (away) return -1;
-  return 0;
+  const forward = sideSign > 0 ? input.right : input.left;
+  const back = sideSign > 0 ? input.left : input.right;
+  if (forward) return { direction: 1, forward: true, back: false, neutral: false };
+  if (back) return { direction: -1, forward: false, back: true, neutral: false };
+  return { direction: 0, forward: false, back: false, neutral: true };
 }
 
 function getStableControlSideSign(fighter: FighterRuntime): 1 | -1 {

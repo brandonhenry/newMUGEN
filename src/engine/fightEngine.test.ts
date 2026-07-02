@@ -8,6 +8,7 @@ import {
   applyVerticalTap,
   consumeVerticalTapAfterRead,
   consumeHorizontalTapAfterRead,
+  createHorizontalTapState,
   createVerticalTapState,
   getKeyboardBindingsForEvent,
   prepareVerticalTapForRead
@@ -875,7 +876,7 @@ describe('character manifests', () => {
 
   it('turns double tap left or right into a one-frame dash-forward flag while preserving hold movement', () => {
     const input = emptyInputFrame();
-    const state = createVerticalTapState();
+    const state = createHorizontalTapState();
 
     applyHorizontalTap(input, state, 'right', true, 'keyboard', 100);
     expect(input.right).toBe(true);
@@ -895,6 +896,33 @@ describe('character manifests', () => {
     applyHorizontalTap(input, state, 'left', true, 'keyboard', 410);
     expect(input.left).toBe(true);
     expect(input.right).toBe(false);
+    expect(input.dashForward).toBe(true);
+  });
+
+  it('keeps vertical tap gestures isolated from horizontal holds and double taps', () => {
+    const input = emptyInputFrame();
+    const verticalState = createVerticalTapState();
+    const horizontalState = createHorizontalTapState();
+
+    applyVerticalTap(input, verticalState, 'up', true, 'keyboard', 100);
+    applyVerticalTap(input, verticalState, 'up', false, 'keyboard', 130);
+    applyVerticalTap(input, verticalState, 'up', true, 'keyboard', 210);
+    prepareVerticalTapForRead(input, verticalState, 'keyboard', 211);
+    expect(input.sidestepUp).toBe(true);
+
+    applyHorizontalTap(input, horizontalState, 'right', true, 'keyboard', 220);
+    expect(input.right).toBe(true);
+    expect(input.left).toBe(false);
+    expect(input.sidestepUp).toBe(true);
+
+    consumeVerticalTapAfterRead(input, verticalState, 'keyboard');
+    consumeHorizontalTapAfterRead(input, horizontalState, 'keyboard');
+    expect(input.right).toBe(true);
+    expect(input.dashForward).toBe(false);
+
+    applyHorizontalTap(input, horizontalState, 'right', false, 'keyboard', 250);
+    applyHorizontalTap(input, horizontalState, 'right', true, 'keyboard', 310);
+    expect(input.right).toBe(true);
     expect(input.dashForward).toBe(true);
   });
 
@@ -2101,6 +2129,79 @@ describe('fight engine', () => {
       laneDownResult.fighters[0].position.x - laneDownResult.fighters[1].position.x
     );
     expect(unwrappedAngleDelta(laneDownAngle, laneAngleBefore)).toBeLessThan(0);
+  });
+
+  it('keeps stable-slot horizontal controls after repeated up-up sidesteps', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    for (let tap = 0; tap < 36; tap += 1) {
+      const sidestep = emptyInputFrame();
+      sidestep.sidestepUp = true;
+      match = stepMatch(match, sidestep, emptyInputFrame(), 1 / 60);
+      for (let frame = 0; frame < 12; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+    }
+
+    match.fighters[0].position.x = -1.3;
+    match.fighters[0].position.z = 0;
+    match.fighters[1].position.x = 1.3;
+    match.fighters[1].position.z = 0;
+    const sameSideForward = emptyInputFrame();
+    sameSideForward.right = true;
+    const sameSideForwardResult = stepMatch(match, sameSideForward, emptyInputFrame(), 1 / 60);
+    expect(sameSideForwardResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
+
+    const sameSideBack = emptyInputFrame();
+    sameSideBack.left = true;
+    const sameSideBackResult = stepMatch(match, sameSideBack, emptyInputFrame(), 1 / 60);
+    expect(sameSideBackResult.fighters[0].state).toBe('block');
+    expect(sameSideBackResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
+
+    match.fighters[0].position.x = 1.3;
+    match.fighters[0].position.z = 0;
+    match.fighters[1].position.x = -1.3;
+    match.fighters[1].position.z = 0;
+    const crossedForward = emptyInputFrame();
+    crossedForward.right = true;
+    const crossedForwardResult = stepMatch(match, crossedForward, emptyInputFrame(), 1 / 60);
+    expect(crossedForwardResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
+
+    const crossedBack = emptyInputFrame();
+    crossedBack.left = true;
+    const crossedBackResult = stepMatch(match, crossedBack, emptyInputFrame(), 1 / 60);
+    expect(crossedBackResult.fighters[0].state).toBe('block');
+    expect(crossedBackResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
+
+    let p2Match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    p2Match.phase = 'fighting';
+    p2Match.countdown = 0;
+    const p2Forward = emptyInputFrame();
+    p2Forward.left = true;
+    const p2ForwardResult = stepMatch(p2Match, emptyInputFrame(), p2Forward, 1 / 60);
+    expect(p2ForwardResult.fighters[1].position.x).toBeLessThan(p2Match.fighters[1].position.x);
+
+    const p2Back = emptyInputFrame();
+    p2Back.right = true;
+    const p2BackResult = stepMatch(p2Match, emptyInputFrame(), p2Back, 1 / 60);
+    expect(p2BackResult.fighters[1].state).toBe('block');
+    expect(p2BackResult.fighters[1].position.x).toBeGreaterThan(p2Match.fighters[1].position.x);
+  });
+
+  it('treats simultaneous left and right as neutral movement', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const input = emptyInputFrame();
+    input.left = true;
+    input.right = true;
+
+    const next = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+
+    expect(next.fighters[0].state).toBe('idle');
+    expect(next.fighters[0].position.x).toBeCloseTo(match.fighters[0].position.x, 5);
   });
 
   it('uses up for jump, down for crouch, and lane inputs for 3D movement', () => {
