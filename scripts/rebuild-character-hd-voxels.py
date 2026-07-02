@@ -175,6 +175,39 @@ def apply_body_scale(voxels: list[dict], scale: float, anchor_x: float = 0, anch
     return scaled
 
 
+def body_center_model_x(payload: dict, metrics: dict | None) -> float:
+    if not metrics:
+        return 0
+    bounds = metrics.get("bounds", {})
+    min_x = float(bounds.get("minX", 0))
+    max_x = float(bounds.get("maxX", min_x))
+    center_x = float(metrics.get("centerX", (min_x + max_x) / 2))
+    source = payload.get("source", {})
+    model_width = source.get("modelWidth")
+    if not isinstance(model_width, (int, float)):
+        foreground_width = source.get("foregroundWidth")
+        foreground_height = source.get("foregroundHeight")
+        model_height = source.get("modelHeight")
+        if isinstance(foreground_width, (int, float)) and isinstance(foreground_height, (int, float)) and isinstance(model_height, (int, float)) and foreground_height > 0:
+            model_width = float(model_height) * float(foreground_width) / float(foreground_height)
+        else:
+            bounds_model = payload_bounds(payload)
+            model_width = (bounds_model[2] - bounds_model[0]) if bounds_model else 1
+    source_width = max(1, max_x - min_x + 1)
+    return ((center_x - min_x + 0.5) / source_width) * float(model_width) - float(model_width) / 2
+
+
+def scale_payload_around_body(payload: dict, scale: float, center_x: float, anchor_y: float) -> dict:
+    for voxel in payload.get("voxels", []):
+        voxel["x"] = round_voxel((float(voxel["x"]) - center_x) * scale)
+        voxel["y"] = round_voxel(anchor_y + (float(voxel["y"]) - anchor_y) * scale)
+        voxel["z"] = round_voxel(float(voxel.get("z", 0)) * scale)
+        voxel["w"] = round_voxel(float(voxel["w"]) * scale)
+        voxel["h"] = round_voxel(float(voxel["h"]) * scale)
+        voxel["d"] = round_voxel(float(voxel["d"]) * scale)
+    return payload
+
+
 def payload_bounds(payload: dict) -> tuple[float, float, float, float] | None:
     voxels = payload.get("voxels", [])
     if not voxels:
@@ -351,6 +384,7 @@ def build_payload(frame_path: Path, public_frame_path: str, alpha_threshold: int
             "foregroundHeight": bbox_height,
             "baselineForegroundHeight": baseline,
             "modelHeight": round_voxel(model_height),
+            "modelWidth": round_voxel(model_width),
             "modelHeightScale": round_voxel(model_height_scale),
         },
     }, metrics
@@ -426,6 +460,38 @@ def idle_reference(character_manifest: dict, frames: list[dict]) -> dict | None:
     }
 
 
+def idle_body_reference(character_manifest: dict, frames: list[dict]) -> dict | None:
+    by_index = {int(frame["frameIndex"]): frame for frame in frames}
+    animation_frames = character_manifest.get("animationFrames", {})
+    if not isinstance(animation_frames, dict):
+        animation_frames = {}
+    for animation in ["idle", "walkForward", "walkBack", "sidestepLeft", "sidestepRight", "block"]:
+        indices = [
+            frame_index_from_path(path)
+            for path in animation_frames.get(animation, [])
+            if isinstance(path, str)
+        ]
+        indices = [index for index in indices if index is not None and by_index.get(index, {}).get("metrics")]
+        metrics = [by_index[index]["metrics"] for index in indices]
+        if metrics:
+            zones: dict[str, dict[str, float | int]] = {}
+            for zone in BODY_ZONE_ORDER:
+                widths = [
+                    metric.get("zones", {}).get(zone, {}).get("width")
+                    for metric in metrics
+                ]
+                widths = [float(width) for width in widths if isinstance(width, (int, float)) and width > 0]
+                width = median(widths)
+                if width is not None:
+                    zones[zone] = {"width": round_voxel(width), "rows": len(widths)}
+            if zones:
+                return {"animation": animation, "frames": indices, "metrics": {"zones": zones}}
+    first = next((frame for frame in sorted(frames, key=lambda item: int(item["frameIndex"])) if frame.get("metrics")), None)
+    if not first:
+        return None
+    return {"animation": "firstFrame", "frames": [int(first["frameIndex"])], "metrics": first["metrics"]}
+
+
 def normalize_payloads_to_idle_visual(character_manifest: dict, frames: list[dict], min_scale: float = 0.2, max_scale: float = 6.0) -> list[dict]:
     reference = idle_reference(character_manifest, frames)
     if not reference:
@@ -457,6 +523,37 @@ def normalize_payloads_to_idle_visual(character_manifest: dict, frames: list[dic
             "scaleY": round_voxel(scale_y),
             "rawScaleX": round_voxel(raw_scale_x),
             "rawScaleY": round_voxel(raw_scale_y),
+            "minScale": min_scale,
+            "maxScale": max_scale,
+        }
+    return frames
+
+
+def normalize_payloads_to_idle_body(character_manifest: dict, frames: list[dict], enabled: bool = True, min_scale: float = 0.35, max_scale: float = 3.0) -> list[dict]:
+    reference = idle_body_reference(character_manifest, frames)
+    if not enabled or not reference:
+        return frames
+    reference_metrics = reference["metrics"]
+    for frame in frames:
+        payload = frame["payload"]
+        metrics = frame.get("metrics")
+        bound = payload_bounds(payload)
+        scale, ratios = compute_body_normalization(reference_metrics, metrics, True, min_scale, max_scale)
+        center_x = body_center_model_x(payload, metrics)
+        anchor_y = bound[1] if bound else 0
+        scale_payload_around_body(payload, scale, center_x, anchor_y)
+        next_bound = payload_bounds(payload)
+        source = payload.setdefault("source", {})
+        if next_bound:
+            source["bodyCenteredWidth"] = round_voxel(next_bound[2] - next_bound[0])
+            source["bodyCenteredHeight"] = round_voxel(next_bound[3] - next_bound[1])
+        source["idleBodyNormalization"] = {
+            "enabled": True,
+            "referenceAnimation": reference["animation"],
+            "referenceFrames": reference["frames"],
+            "scale": scale,
+            "ratios": ratios,
+            "bodyCenterX": round_voxel(center_x),
             "minScale": min_scale,
             "maxScale": max_scale,
         }

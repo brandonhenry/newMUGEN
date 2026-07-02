@@ -202,8 +202,21 @@ type HdVoxelPayload = {
     foregroundHeight?: number;
     baselineForegroundHeight?: number;
     modelHeight?: number;
+    modelWidth?: number;
     modelHeightScale?: number;
     normalization?: VoxelBodyNormalization;
+    bodyCenteredWidth?: number;
+    bodyCenteredHeight?: number;
+    idleBodyNormalization?: {
+      enabled: boolean;
+      referenceAnimation: string;
+      referenceFrames: number[];
+      scale: number;
+      ratios: Partial<Record<string, number>>;
+      bodyCenterX: number;
+      minScale: number;
+      maxScale: number;
+    };
     idleVisualWidth?: number;
     idleVisualHeight?: number;
     idleVisualNormalization?: {
@@ -1612,6 +1625,7 @@ async function buildHdVoxelResult(
         foregroundHeight: bboxHeight,
         baselineForegroundHeight,
         modelHeight: roundVoxelNumber(modelHeight),
+        modelWidth: roundVoxelNumber(modelWidth),
         modelHeightScale: roundVoxelNumber(modelHeightScale)
       }
     },
@@ -1657,6 +1671,116 @@ function normalizeHdVoxelFrameResults(
     };
     return { frameIndex, payload };
   });
+}
+
+function normalizeHdVoxelFrameResultsToIdleBody(
+  frameResults: Array<{ frameIndex: number; result: HdVoxelBuildResult }>,
+  character: CharacterDefinition,
+  fidelity: Required<VoxelFidelitySettings>
+) {
+  const options = normalizeVoxelBodyOptions({
+    ...fidelity.normalization,
+    minScale: 0.35,
+    maxScale: 3
+  });
+  const reference = getIdleBodyReference(character, frameResults);
+  if (!options.enabled || !reference) {
+    return frameResults.map(({ frameIndex, result }) => ({ frameIndex, payload: result.payload }));
+  }
+
+  return frameResults.map(({ frameIndex, result }) => {
+    const { scale, ratios } = computeVoxelBodyNormalization(reference.metrics, result.metrics, options);
+    const bounds = getHdVoxelPayloadBounds(result.payload);
+    const bodyCenterX = getHdBodyCenterModelX(result.payload, result.metrics);
+    const anchorY = bounds?.minY ?? 0;
+    const payload = scaleHdVoxelPayloadAroundBody(result.payload, bodyCenterX, anchorY, scale);
+    const nextBounds = getHdVoxelPayloadBounds(payload);
+    return {
+      frameIndex,
+      payload: {
+        ...payload,
+        source: {
+          ...payload.source,
+          bodyCenteredWidth: nextBounds ? roundVoxelNumber(nextBounds.maxX - nextBounds.minX) : undefined,
+          bodyCenteredHeight: nextBounds ? roundVoxelNumber(nextBounds.maxY - nextBounds.minY) : undefined,
+          idleBodyNormalization: {
+            enabled: true,
+            referenceAnimation: reference.animation,
+            referenceFrames: reference.frames,
+            scale,
+            ratios,
+            bodyCenterX: roundVoxelNumber(bodyCenterX),
+            minScale: options.minScale,
+            maxScale: options.maxScale
+          }
+        }
+      }
+    };
+  });
+}
+
+function getIdleBodyReference(
+  character: CharacterDefinition,
+  frameResults: Array<{ frameIndex: number; result: HdVoxelBuildResult }>
+): { animation: string; frames: number[]; metrics: VoxelBodyMetrics } | null {
+  const byFrame = new Map(frameResults.map((frame) => [frame.frameIndex, frame.result.metrics]));
+  const referenceKeys = ['idle', 'walkForward', 'walkBack', 'sidestepLeft', 'sidestepRight', 'block'];
+  for (const key of referenceKeys) {
+    const indices = (character.animationFrames?.[key] ?? [])
+      .map((path) => getFrameIndex(path))
+      .filter((index) => Number.isFinite(index) && Boolean(byFrame.get(index)));
+    const metrics = indices.map((index) => byFrame.get(index)).filter((metric): metric is VoxelBodyMetrics => Boolean(metric));
+    const merged = mergeBodyMetrics(metrics);
+    if (merged) return { animation: key, frames: indices, metrics: merged };
+  }
+  const first = frameResults.find((frame) => frame.result.metrics);
+  return first?.result.metrics ? { animation: 'firstFrame', frames: [first.frameIndex], metrics: first.result.metrics } : null;
+}
+
+function mergeBodyMetrics(metrics: VoxelBodyMetrics[]): VoxelBodyMetrics | null {
+  if (metrics.length === 0) return null;
+  const zones: VoxelBodyMetrics['zones'] = {};
+  (['chest', 'waist', 'hip', 'ankle'] as const).forEach((zone) => {
+    const widths = metrics
+      .map((metric) => metric.zones[zone]?.width)
+      .filter((width): width is number => typeof width === 'number' && Number.isFinite(width) && width > 0);
+    const width = medianNumber(widths);
+    if (width !== null) zones[zone] = { width: roundVoxelNumber(width), rows: widths.length };
+  });
+  if (Object.keys(zones).length === 0) return null;
+  const first = metrics[0];
+  return {
+    ...first,
+    centerX: medianNumber(metrics.map((metric) => metric.centerX)) ?? first.centerX,
+    height: medianNumber(metrics.map((metric) => metric.height)) ?? first.height,
+    zones
+  };
+}
+
+function getHdBodyCenterModelX(payload: HdVoxelPayload, metrics: VoxelBodyMetrics | null) {
+  if (!metrics) return 0;
+  const sourceWidth = Math.max(1, metrics.bounds.maxX - metrics.bounds.minX + 1);
+  const modelWidth =
+    payload.source.modelWidth ??
+    (payload.source.modelHeight && payload.source.foregroundWidth && payload.source.foregroundHeight
+      ? payload.source.modelHeight * (payload.source.foregroundWidth / Math.max(1, payload.source.foregroundHeight))
+      : getHdVoxelPayloadBounds(payload)?.maxX ?? 1);
+  return ((metrics.centerX - metrics.bounds.minX + 0.5) / sourceWidth) * modelWidth - modelWidth / 2;
+}
+
+function scaleHdVoxelPayloadAroundBody(payload: HdVoxelPayload, bodyCenterX: number, anchorY: number, scale: number): HdVoxelPayload {
+  return {
+    ...payload,
+    voxels: payload.voxels.map((voxel) => ({
+      ...voxel,
+      x: roundVoxelNumber((voxel.x - bodyCenterX) * scale),
+      y: roundVoxelNumber(anchorY + (voxel.y - anchorY) * scale),
+      z: roundVoxelNumber(voxel.z * scale),
+      w: roundVoxelNumber(voxel.w * scale),
+      h: roundVoxelNumber(voxel.h * scale),
+      d: roundVoxelNumber(voxel.d * scale)
+    }))
+  };
 }
 
 function normalizeHdVoxelFramesToIdleReference(
