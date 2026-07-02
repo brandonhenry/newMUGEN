@@ -1,0 +1,417 @@
+# Granular Voxel Review Decisions
+
+Candidates reviewed: 410
+Scale-fixed candidates: 38
+Accepted intentional: 214
+Accepted false positive: 158
+
+- accepted-intentional: Allen Walker `sprint` frame 012 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Allen Walker `sprint` frame 013 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Allen Walker `cmd:1+2` frame 094 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Anna Kyoyama `sprint` frame 030 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Anna Kyoyama `sprint` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Anna Kyoyama `cmd:qcf+4` frame 160 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Anna Kyoyama `cmd:qcf+4` frame 161 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Anna Kyoyama `cmd:qcf+4` frame 163 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Arale Norimaki `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Arale Norimaki `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Arale Norimaki `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Arale Norimaki `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Arale Norimaki `lose` frame 031 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Bobobo-bo Bo-bobo `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Bobobo-bo Bo-bobo `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Bobobo-bo Bo-bobo `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Bobobo-bo Bo-bobo `cmd:O+2` frame 168 - Low-color frame is an effect-heavy or silhouette frame, not a missing/blank character frame.
+- accepted-intentional: DIO `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: DIO `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: DIO `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: DIO `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: DIO `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: DIO `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: DIO `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: DIO `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Don Patch _ Poppa Rocks `lose` frame 034 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-intentional: Dr. Mashirito `walkForward` frame 007 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Dr. Mashirito `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Dr. Mashirito `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Dr. Mashirito `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Dr. Mashirito `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Eve `sprint` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Eve `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Eve `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Eve `sprint` frame 039 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- fix-scale: Eve `lose` frame 031 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Franky `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Franky `cmd:1+2` frame 100 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Franky `cmd:1+2` frame 101 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Franky `cmd:1+2` frame 102 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Franky `cmd:1+4` frame 100 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Franky `cmd:1+4` frame 101 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Franky `cmd:1+4` frame 102 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Frieza `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Frieza `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Frieza `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Frieza `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Frieza `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Frieza `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Frieza `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Fuusuke `sprint` frame 030 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-intentional: Fuusuke `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Fuusuke `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Fuusuke `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Fuusuke `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Fuusuke `sidestepLeft` frame 112 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Fuusuke `sidestepRight` frame 112 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Fuusuke `crouchBlock` frame 096 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Fuusuke `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Fuusuke `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Fuusuke `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Gintoki Sakata `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gintoki Sakata `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gintoki Sakata `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gintoki Sakata `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gintoki Sakata `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gintoki Sakata `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Gintoki Sakata `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Gohan (Super Saiyan 2) `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gohan (Super Saiyan 2) `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gohan (Super Saiyan 2) `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gohan (Super Saiyan 2) `sprint` frame 039 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gohan (Super Saiyan 2) `kickleft` frame 081 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gohan (Super Saiyan 2) `kickleft` frame 082 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Gohan (Super Saiyan 2) `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gohan (Super Saiyan 2) `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gohan (Super Saiyan 2) `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gohan (Super Saiyan) `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gohan (Super Saiyan) `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Goku `kickright` frame 105 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Goku `cmd:f+1` frame 160 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Goku (Super Saiyan) `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Goku (Super Saiyan) `kickright` frame 101 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Goku (Super Saiyan) `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Goku (Super Saiyan) `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Goku (Super Saiyan) `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Goku (Super Saiyan) `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Goku (Super Saiyan) `cmd:qcf+4` frame 183 - Low-color frame is an effect-heavy or silhouette frame, not a missing/blank character frame.
+- accepted-intentional: Goku (Super Saiyan) `cmd:qcf+4` frame 186 - Low-color frame is an effect-heavy or silhouette frame, not a missing/blank character frame.
+- accepted-intentional: Gon Freecss `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Gon Freecss `sprint` frame 032 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Gon Freecss `sprint` frame 034 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Gon Freecss `sprint` frame 036 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-intentional: Gon Freecss `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gon Freecss `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gon Freecss `jabright` frame 111 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Gon Freecss `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gon Freecss `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gon Freecss `getupStand` frame 036 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Gon Freecss `lose` frame 032 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Gotenks `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gotenks `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Gotenks (Super Saiyan) `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gotenks (Super Saiyan) `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gotenks (Super Saiyan) `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Gotenks (Super Saiyan) `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Gotenks (Super Saiyan) `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gotenks (Super Saiyan) `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gotenks (Super Saiyan) `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Gotenks (Super Saiyan) `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Heihachi Edajima `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Heihachi Edajima `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Heihachi Edajima `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Heihachi Edajima `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Heihachi Edajima `jableft` frame 086 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- fix-scale: Heihachi Edajima `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Hiei `sprint` frame 030 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Hiei `sprint` frame 032 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Hiei `sprint` frame 034 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Hiei `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Hiei `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Hiei `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Ichigo Kurosaki `sprint` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Ichigo Kurosaki `lose` frame 031 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Ichigo Kurosaki `cmd:qcf+4` frame 162 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Ichigo Kurosaki `cmd:qcf+4` frame 164 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Jaguar Junichi `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Jaguar Junichi `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Jaguar Junichi `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Jaguar Junichi `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Jaguar Junichi `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Jaguar Junichi `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Jaguar Junichi `getupStand` frame 052 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Jaguar Junichi `getupStand` frame 053 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Jaguar Junichi `getupStand` frame 054 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 184 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 185 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 186 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 187 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 188 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 189 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 190 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 191 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 192 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Jaguar Junichi `cmd:qcf+4` frame 193 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Jotaro Kujo `sprint` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Jotaro Kujo `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Jotaro Kujo `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Jotaro Kujo `getupStand` frame 035 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kagura `sprint` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kagura `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kagura `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Kagura `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 089 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 090 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 091 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 092 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 094 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 095 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 096 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `crouchBlock` frame 097 - Crouch block body was visibly too tall/large versus idle; uniform per-frame scale targets a crouched body height.
+- fix-scale: Kakashi Hatake `knockdown` frame 034 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- fix-scale: Kakashi Hatake `knockdown` frame 035 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- fix-scale: Kakashi Hatake `knockdown` frame 036 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- fix-scale: Kakashi Hatake `knockdown` frame 037 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- fix-scale: Kakashi Hatake `getupStand` frame 034 - Getup prone phase footprint was too long versus idle height; uniform per-frame scale keeps recovery body volume stable.
+- fix-scale: Kakashi Hatake `getupStand` frame 035 - Getup prone phase footprint was too long versus idle height; uniform per-frame scale keeps recovery body volume stable.
+- fix-scale: Kakashi Hatake `getupStand` frame 036 - Getup prone phase footprint was too long versus idle height; uniform per-frame scale keeps recovery body volume stable.
+- fix-scale: Kakashi Hatake `getupStand` frame 037 - Getup prone phase footprint was too long versus idle height; uniform per-frame scale keeps recovery body volume stable.
+- accepted-false-positive: Kakashi Hatake `getupStand` frame 052 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Kakashi Hatake `getupStand` frame 053 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Kakashi Hatake `getupStand` frame 054 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Kakashi Hatake `getupStand` frame 055 - Metric review only; sheet/video does not require a manifest edit.
+- fix-scale: Kakashi Hatake `lose` frame 033 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Kazuki Muto `sprint` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kazuki Muto `sprint` frame 038 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Kazuki Muto `getupStand` frame 038 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kazuki Muto `getupStand` frame 039 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Kazuki Muto `lose` frame 033 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Kenshin Himura `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kenshin Himura `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kenshin Himura `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kenshin Himura `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Kenshin Himura `getupStand` frame 052 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kenshin Himura `getupStand` frame 053 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kenshin Himura `getupStand` frame 054 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Kenshiro `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kenshiro `kickleft` frame 108 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Kenshiro `kickleft` frame 111 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Kenshiro `knockdown` frame 039 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kenshiro `getupStand` frame 038 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kenshiro `getupStand` frame 039 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Kenshiro `lose` frame 035 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Kenshiro `cmd:f+1` frame 172 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Kenshiro `cmd:f+1` frame 175 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Killua Zoldyck `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `jabright` frame 147 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `jabright` frame 148 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Killua Zoldyck `jabright` frame 149 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Killua Zoldyck `getupStand` frame 053 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Killua Zoldyck `getupStand` frame 054 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Killua Zoldyck `getupStand` frame 055 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Killua Zoldyck `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Kinnikuman `sprint` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kinnikuman `getupStand` frame 052 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kinnikuman `getupStand` frame 053 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Kinnikuman `getupStand` frame 054 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Kinnikuman `lose` frame 032 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Kurama `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kurama `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kurama `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kurama `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Kurama `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- fix-scale: Kurama `lose` frame 031 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Lenalee Lee `sprint` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Lenalee Lee `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Lenalee Lee `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Lenalee Lee `getupStand` frame 035 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Lenalee Lee `lose` frame 031 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Momotaro Tsurugi `sprint` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Momotaro Tsurugi `knockdown` frame 038 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Momotaro Tsurugi `getupStand` frame 036 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Momotaro Tsurugi `getupStand` frame 037 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Momotaro Tsurugi `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Monkey D. Luffy `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy `jableft` frame 074 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy `jableft` frame 075 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy `jableft` frame 078 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy `cmd:1+2` frame 070 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy `cmd:2+4` frame 171 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy `cmd:2+4` frame 165 - Low-color frame is an effect-heavy or silhouette frame, not a missing/blank character frame.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `crouchBlock` frame 093 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `jableft` frame 078 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Monkey D. Luffy (2nd Gear) `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Monkey D. Luffy (2nd Gear) `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `cmd:1+2` frame 081 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `cmd:1+2` frame 085 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `cmd:1+3` frame 093 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `cmd:3+4` frame 101 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `cmd:3+4` frame 102 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Monkey D. Luffy (2nd Gear) `cmd:f+1` frame 196 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Nami `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Nami `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Nami `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Nami `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Nami (Perfect Clima-Tact) `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nami (Perfect Clima-Tact) `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nami (Perfect Clima-Tact) `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nami (Perfect Clima-Tact) `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nami (Perfect Clima-Tact) `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nami (Perfect Clima-Tact) `jableft` frame 074 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Nami (Perfect Clima-Tact) `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Nami (Perfect Clima-Tact) `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Nami (Perfect Clima-Tact) `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Nami (Perfect Clima-Tact) `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Nami (Perfect Clima-Tact) `cmd:1+2` frame 059 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Naruto Uzumaki (Nine-Tails_Kyubi) `sprint` frame 033 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Naruto Uzumaki (Nine-Tails_Kyubi) `sprint` frame 034 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Naruto Uzumaki (Nine-Tails_Kyubi) `sprint` frame 035 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-intentional: Naruto Uzumaki (Nine-Tails_Kyubi) `hitHeavy` frame 169 - Low-color frame is an effect-heavy or silhouette frame, not a missing/blank character frame.
+- accepted-false-positive: Naruto Uzumaki (Nine-Tails_Kyubi) `knockdown` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Naruto Uzumaki (Nine-Tails_Kyubi) `knockdown` frame 035 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Naruto Uzumaki (Nine-Tails_Kyubi) `lose` frame 033 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Naruto Uzumaki (Nine-Tails_Kyubi) `cmd:f+1` frame 131 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Naruto Uzumaki (Nine-Tails_Kyubi) `cmd:f+1` frame 132 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Neuro Nogami `getupStand` frame 037 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Neuro Nogami `getupStand` frame 038 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Neuro Nogami `getupStand` frame 039 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Neuro Nogami `cmd:f+1` frame 188 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Nico Robin `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `backflip` frame 043 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Nico Robin `jableft` frame 077 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `jableft` frame 078 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `jableft` frame 079 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Nico Robin `getupStand` frame 052 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Nico Robin `getupStand` frame 053 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Pegasus Seiya `sprint` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Pegasus Seiya `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Pegasus Seiya `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Pegasus Seiya `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Pegasus Seiya `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Pegasus Seiya `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Raoh `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Renji Abarai `sprint` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Renji Abarai `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Renji Abarai `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Renji Abarai `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Renji Abarai `cmd:qcf+4` frame 145 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Renji Abarai `cmd:qcf+4` frame 146 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Roronoa Zoro `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Rukia Kuchiki `sprint` frame 030 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-false-positive: Rukia Kuchiki `sprint` frame 032 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-intentional: Rukia Kuchiki `sprint` frame 033 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Rukia Kuchiki `knockdown` frame 033 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Rukia Kuchiki `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Rukia Kuchiki `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Rukia Kuchiki `getupStand` frame 033 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Rukia Kuchiki `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Ryotsu Kankichi `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Ryotsu Kankichi `sprint` frame 035 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Ryotsu Kankichi `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Ryotsu Kankichi `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Ryotsu Kankichi `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Ryotsu Kankichi `cmd:2+3` frame 113 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Sakura Haruno `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sakura Haruno `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sakura Haruno `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sakura Haruno `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sakura Haruno `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sakura Haruno `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Sakura Haruno `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Sakura Haruno `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Sakura Haruno `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Sakura Haruno `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 032 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sanji Vinsmoke `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Sanji Vinsmoke `getupStand` frame 038 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Sanji Vinsmoke `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-intentional: Sanji Vinsmoke `cmd:1+4` frame 143 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Sanji Vinsmoke `cmd:2+4` frame 116 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Sasuke `sprint` frame 012 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sasuke `sprint` frame 013 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Sasuke `jabright` frame 087 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Taikoubou `sprint` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Taikoubou `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Taikoubou `getupStand` frame 033 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Taikoubou `getupStand` frame 034 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Taikoubou `getupStand` frame 035 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Taikoubou `lose` frame 031 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Tōshirō Hitsugaya `sprint` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Train Heartnet `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `jabright` frame 083 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Train Heartnet `jabright` frame 084 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Train Heartnet `getupStand` frame 037 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Train Heartnet `lose` frame 032 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Vegeta `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegeta `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegeta `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegeta `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Vegeta (Super Saiyan) `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegeta (Super Saiyan) `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegeta (Super Saiyan) `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegeta (Super Saiyan) `sprint` frame 039 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegeta (Super Saiyan) `jabright` frame 082 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegeta (Super Saiyan) `kickright` frame 076 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Vegeta (Super Saiyan) `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegeta (Super Saiyan) `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegeta (Super Saiyan) `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegeta (Super Saiyan) `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Vegeta (Super Saiyan) `cmd:qcf+4` frame 174 - Low-color frame is an effect-heavy or silhouette frame, not a missing/blank character frame.
+- accepted-intentional: Vegito `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegito `sprint` frame 031 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegito `sprint` frame 032 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegito `sprint` frame 039 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Vegito `kickleft` frame 075 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Vegito `knockdown` frame 029 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegito `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegito `getupStand` frame 031 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Vegito `getupStand` frame 032 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-intentional: Yoh Asakura `sprint` frame 035 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Yoh Asakura `sprint` frame 036 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-intentional: Yoh Asakura `hitLight` frame 026 - Reviewed as VFX/afterimage/projectile/weapon smear or single-character pose; no confirmed two-character crop from the focused crop sheet.
+- accepted-false-positive: Yoh Asakura `getupStand` frame 053 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Yoh Asakura `getupStand` frame 054 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Yoh Asakura `getupStand` frame 055 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Yoh Asakura (Power Sword) `lose` frame 027 - Metric review only; sheet/video does not require a manifest edit.
+- accepted-intentional: Yugi Mutou `sprint` frame 030 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Yugi Mutou `sprint` frame 033 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Yugi Mutou `sprint` frame 034 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Yugi Mutou `sprint` frame 035 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Yugi Mutou `sprint` frame 036 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Yugi Mutou `sprint` frame 037 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-intentional: Yugi Mutou `sprint` frame 038 - Wide silhouette comes from sprint smear, prone motion, reach, weapon, limb, projectile, or afterimage; body volume is not fixed by shrinking reach.
+- accepted-false-positive: Yugi Mutou `getupStand` frame 035 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Yugi Mutou `getupStand` frame 037 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- fix-scale: Yugi Mutou `lose` frame 030 - Prone/lose frame footprint was too long versus idle height; uniform per-frame scale caps the lying body footprint.
+- accepted-false-positive: Yusuke Urameshi `knockdown` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.
+- accepted-false-positive: Yusuke Urameshi `getupStand` frame 030 - Animation mixes prone/standing or windup/impact poses; metric compares against neighboring poses, not an actual body-scale break.

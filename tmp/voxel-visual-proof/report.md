@@ -1,0 +1,385 @@
+# Exhaustive KORE Voxel Visual Proof Report
+
+Generated: 2026-07-02T22:37:06.702Z
+
+## Summary
+
+- Included playable idle-backed characters: 63
+- Skipped characters: 10
+- Audited animation sequences: 1621
+- Audited frame references: 7957
+- PASS frame checks: 7581
+- REVIEW frame checks: 376
+- FAIL frame checks: 0
+
+## Evidence
+
+- Per-character sheets: `tmp/voxel-visual-proof/sheets/`
+- Review pages: `tmp/voxel-visual-proof/pages/`
+- Per-character HD Character Viewer videos: `tmp/voxel-visual-proof/viewer-videos/`
+- Video recording summary: `tmp/voxel-visual-proof/viewer-recordings-summary.json`
+- Metrics CSV: `tmp/voxel-visual-proof/metrics/frame-metrics.csv`
+- Suspect details: `tmp/voxel-visual-proof/metrics/suspects.json`
+- Included roster: `tmp/voxel-visual-proof/metrics/included-characters.json`
+- Skipped roster: `tmp/voxel-visual-proof/metrics/skipped-characters.json`
+- Review decisions: `tmp/voxel-visual-proof/review-decisions.md`
+- Final reviewed status: `tmp/voxel-visual-proof/final-reviewed-report.md`
+
+## Final Reviewed Status
+
+- Original proof candidates reviewed: 410
+- Scale-fixed candidates: 38
+- Crop-fixed candidates: 0
+- Centering-fixed candidates: 0
+- Accepted intentional candidates: 214
+- Accepted false-positive candidates: 158
+- Unresolved visual review candidates: 0
+- Current raw heuristic REVIEW frame checks after fixes: 376
+- Current hard FAIL frame checks after fixes: 0
+
+## Video Pass
+
+- Recorded playable idle-backed characters: 63
+- Non-empty HD viewer videos: 63
+- Captured viewer move/stance selections: 1619
+- Viewer-only skipped slots: 2 (`hitHeavy` for base Naruto and base Sasuke; these remain covered by static sheets/metrics)
+- Recording method: in-app Character Viewer with HD voxel preview enabled, canvas captured to `.webm`
+
+## Review Pages
+
+- tmp/voxel-visual-proof/pages/page-01.png
+- tmp/voxel-visual-proof/pages/page-02.png
+- tmp/voxel-visual-proof/pages/page-03.png
+- tmp/voxel-visual-proof/pages/page-04.png
+- tmp/voxel-visual-proof/pages/page-05.png
+- tmp/voxel-visual-proof/pages/page-06.png
+- tmp/voxel-visual-proof/pages/page-07.png
+- tmp/voxel-visual-proof/pages/page-08.png
+- tmp/voxel-visual-proof/pages/page-09.png
+- tmp/voxel-visual-proof/pages/page-10.png
+- tmp/voxel-visual-proof/pages/page-11.png
+- tmp/voxel-visual-proof/pages/page-12.png
+- tmp/voxel-visual-proof/pages/page-13.png
+- tmp/voxel-visual-proof/pages/page-14.png
+- tmp/voxel-visual-proof/pages/page-15.png
+- tmp/voxel-visual-proof/pages/page-16.png
+- tmp/voxel-visual-proof/pages/page-17.png
+- tmp/voxel-visual-proof/pages/page-18.png
+- tmp/voxel-visual-proof/pages/page-19.png
+- tmp/voxel-visual-proof/pages/page-20.png
+- tmp/voxel-visual-proof/pages/page-21.png
+- tmp/voxel-visual-proof/pages/page-22.png
+- tmp/voxel-visual-proof/pages/page-23.png
+- tmp/voxel-visual-proof/pages/page-24.png
+- tmp/voxel-visual-proof/pages/page-25.png
+- tmp/voxel-visual-proof/pages/page-26.png
+- tmp/voxel-visual-proof/pages/page-27.png
+- tmp/voxel-visual-proof/pages/page-28.png
+- tmp/voxel-visual-proof/pages/page-29.png
+- tmp/voxel-visual-proof/pages/page-30.png
+- tmp/voxel-visual-proof/pages/page-31.png
+- tmp/voxel-visual-proof/pages/page-32.png
+- tmp/voxel-visual-proof/pages/page-33.png
+- tmp/voxel-visual-proof/pages/page-34.png
+- tmp/voxel-visual-proof/pages/page-35.png
+- tmp/voxel-visual-proof/pages/page-36.png
+- tmp/voxel-visual-proof/pages/page-37.png
+- tmp/voxel-visual-proof/pages/page-38.png
+- tmp/voxel-visual-proof/pages/page-39.png
+- tmp/voxel-visual-proof/pages/page-40.png
+- tmp/voxel-visual-proof/pages/page-41.png
+- tmp/voxel-visual-proof/pages/page-42.png
+- tmp/voxel-visual-proof/pages/page-43.png
+- tmp/voxel-visual-proof/pages/page-44.png
+- tmp/voxel-visual-proof/pages/page-45.png
+- tmp/voxel-visual-proof/pages/page-46.png
+- tmp/voxel-visual-proof/pages/page-47.png
+- tmp/voxel-visual-proof/pages/page-48.png
+- tmp/voxel-visual-proof/pages/page-49.png
+- tmp/voxel-visual-proof/pages/page-50.png
+- tmp/voxel-visual-proof/pages/page-51.png
+- tmp/voxel-visual-proof/pages/page-52.png
+- tmp/voxel-visual-proof/pages/page-53.png
+- tmp/voxel-visual-proof/pages/page-54.png
+- tmp/voxel-visual-proof/pages/page-55.png
+- tmp/voxel-visual-proof/pages/page-56.png
+- tmp/voxel-visual-proof/pages/page-57.png
+- tmp/voxel-visual-proof/pages/page-58.png
+- tmp/voxel-visual-proof/pages/page-59.png
+- tmp/voxel-visual-proof/pages/page-60.png
+- tmp/voxel-visual-proof/pages/page-61.png
+- tmp/voxel-visual-proof/pages/page-62.png
+- tmp/voxel-visual-proof/pages/page-63.png
+
+## Suspects
+
+- REVIEW: Allen Walker `sprint` frame 012 (wide-body-vs-idle)
+- REVIEW: Allen Walker `sprint` frame 013 (wide-body-vs-idle)
+- REVIEW: Allen Walker `cmd:1+2` frame 094 (possible-two-character-crop)
+- REVIEW: Anna Kyoyama `sprint` frame 030 (possible-two-character-crop)
+- REVIEW: Anna Kyoyama `sprint` frame 033 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Anna Kyoyama `cmd:qcf+4` frame 160 (possible-two-character-crop)
+- REVIEW: Anna Kyoyama `cmd:qcf+4` frame 161 (possible-two-character-crop)
+- REVIEW: Anna Kyoyama `cmd:qcf+4` frame 163 (possible-two-character-crop)
+- REVIEW: Arale Norimaki `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: Arale Norimaki `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: Arale Norimaki `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Arale Norimaki `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Arale Norimaki `lose` frame 031 (huge-prone-footprint-vs-idle-height)
+- REVIEW: Bobobo-bo Bo-bobo `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Bobobo-bo Bo-bobo `getupStand` frame 033 (tiny-frame-vs-animation)
+- REVIEW: Bobobo-bo Bo-bobo `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Bobobo-bo Bo-bobo `cmd:O+2` frame 168 (low-color-frame)
+- REVIEW: DIO `sprint` frame 030 (wide-body-vs-idle)
+- REVIEW: DIO `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: DIO `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: DIO `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: DIO `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: DIO `knockdown` frame 029 (huge-frame-vs-animation)
+- REVIEW: DIO `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: DIO `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Don Patch _ Poppa Rocks `lose` frame 034 (huge-prone-footprint-vs-idle-height)
+- REVIEW: Dr. Mashirito `walkForward` frame 007 (possible-two-character-crop)
+- REVIEW: Dr. Mashirito `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Dr. Mashirito `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Dr. Mashirito `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: Dr. Mashirito `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Eve `sprint` frame 031 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Eve `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: Eve `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Eve `sprint` frame 039 (wide-body-vs-idle)
+- REVIEW: Franky `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Franky `cmd:1+2` frame 100 (possible-two-character-crop)
+- REVIEW: Franky `cmd:1+2` frame 101 (possible-two-character-crop)
+- REVIEW: Franky `cmd:1+2` frame 102 (possible-two-character-crop)
+- REVIEW: Franky `cmd:1+4` frame 100 (possible-two-character-crop)
+- REVIEW: Franky `cmd:1+4` frame 101 (possible-two-character-crop)
+- REVIEW: Franky `cmd:1+4` frame 102 (possible-two-character-crop)
+- REVIEW: Frieza `sprint` frame 030 (wide-body-vs-idle)
+- REVIEW: Frieza `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Frieza `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Frieza `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: Frieza `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: Frieza `knockdown` frame 029 (huge-frame-vs-animation)
+- REVIEW: Frieza `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Fuusuke `sprint` frame 030 (tiny-height-vs-idle)
+- REVIEW: Fuusuke `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Fuusuke `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Fuusuke `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Fuusuke `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Fuusuke `sidestepLeft` frame 112 (possible-two-character-crop)
+- REVIEW: Fuusuke `sidestepRight` frame 112 (possible-two-character-crop)
+- REVIEW: Fuusuke `crouchBlock` frame 096 (possible-two-character-crop)
+- REVIEW: Fuusuke `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Fuusuke `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Gintoki Sakata `sprint` frame 030 (wide-body-vs-idle)
+- REVIEW: Gintoki Sakata `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Gintoki Sakata `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Gintoki Sakata `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Gintoki Sakata `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: Gintoki Sakata `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Gintoki Sakata `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Gohan (Super Saiyan 2) `sprint` frame 030 (tiny-height-vs-idle, wide-body-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Gohan (Super Saiyan 2) `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Gohan (Super Saiyan 2) `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Gohan (Super Saiyan 2) `sprint` frame 039 (wide-body-vs-idle)
+- REVIEW: Gohan (Super Saiyan 2) `kickleft` frame 081 (wide-body-vs-idle)
+- REVIEW: Gohan (Super Saiyan 2) `kickleft` frame 082 (wide-body-vs-idle)
+- REVIEW: Gohan (Super Saiyan 2) `knockdown` frame 029 (huge-frame-vs-animation)
+- REVIEW: Gohan (Super Saiyan 2) `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Gohan (Super Saiyan 2) `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Gohan (Super Saiyan) `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Gohan (Super Saiyan) `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Goku `kickright` frame 105 (possible-two-character-crop)
+- REVIEW: Goku `cmd:f+1` frame 160 (possible-two-character-crop)
+- REVIEW: Goku (Super Saiyan) `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Goku (Super Saiyan) `kickright` frame 101 (possible-two-character-crop)
+- REVIEW: Goku (Super Saiyan) `knockdown` frame 029 (huge-frame-vs-animation)
+- REVIEW: Goku (Super Saiyan) `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Goku (Super Saiyan) `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Goku (Super Saiyan) `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Goku (Super Saiyan) `cmd:qcf+4` frame 183 (low-color-frame)
+- REVIEW: Goku (Super Saiyan) `cmd:qcf+4` frame 186 (low-color-frame)
+- REVIEW: Gon Freecss `sprint` frame 030 (wide-body-vs-idle)
+- REVIEW: Gon Freecss `sprint` frame 032 (tiny-height-vs-idle)
+- REVIEW: Gon Freecss `sprint` frame 034 (tiny-height-vs-idle)
+- REVIEW: Gon Freecss `sprint` frame 036 (tiny-height-vs-idle)
+- REVIEW: Gon Freecss `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Gon Freecss `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Gon Freecss `jabright` frame 111 (wide-body-vs-idle)
+- REVIEW: Gon Freecss `getupStand` frame 033 (tiny-frame-vs-animation)
+- REVIEW: Gon Freecss `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Gon Freecss `getupStand` frame 036 (tiny-frame-vs-animation)
+- REVIEW: Gotenks `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Gotenks `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Gotenks (Super Saiyan) `sprint` frame 030 (wide-body-vs-idle)
+- REVIEW: Gotenks (Super Saiyan) `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Gotenks (Super Saiyan) `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Gotenks (Super Saiyan) `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Gotenks (Super Saiyan) `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Gotenks (Super Saiyan) `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Gotenks (Super Saiyan) `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Gotenks (Super Saiyan) `getupStand` frame 033 (tiny-frame-vs-animation)
+- REVIEW: Heihachi Edajima `sprint` frame 030 (tiny-height-vs-idle, wide-body-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Heihachi Edajima `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: Heihachi Edajima `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: Heihachi Edajima `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Heihachi Edajima `jableft` frame 086 (wide-body-vs-idle)
+- REVIEW: Hiei `sprint` frame 030 (tiny-height-vs-idle)
+- REVIEW: Hiei `sprint` frame 032 (tiny-height-vs-idle)
+- REVIEW: Hiei `sprint` frame 034 (tiny-height-vs-idle)
+- REVIEW: Hiei `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Hiei `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Ichigo Kurosaki `sprint` frame 031 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Ichigo Kurosaki `cmd:qcf+4` frame 162 (possible-two-character-crop)
+- REVIEW: Ichigo Kurosaki `cmd:qcf+4` frame 164 (possible-two-character-crop)
+- REVIEW: Jaguar Junichi `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Jaguar Junichi `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Jaguar Junichi `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Jaguar Junichi `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Jaguar Junichi `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Jaguar Junichi `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Jaguar Junichi `getupStand` frame 052 (huge-frame-vs-animation)
+- REVIEW: Jaguar Junichi `getupStand` frame 053 (huge-frame-vs-animation)
+- REVIEW: Jaguar Junichi `getupStand` frame 054 (huge-frame-vs-animation)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 184 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 185 (huge-frame-vs-animation)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 186 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 187 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 188 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 189 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 190 (huge-frame-vs-animation)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 191 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 192 (tiny-height-vs-idle)
+- REVIEW: Jaguar Junichi `cmd:qcf+4` frame 193 (huge-frame-vs-animation)
+- REVIEW: Jotaro Kujo `sprint` frame 032 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Jotaro Kujo `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Jotaro Kujo `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Jotaro Kujo `getupStand` frame 035 (tiny-frame-vs-animation)
+- REVIEW: Kagura `sprint` frame 030 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Kagura `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Kagura `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 035 (tiny-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 036 (tiny-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 037 (tiny-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 052 (huge-prone-footprint-vs-idle-height, huge-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 053 (huge-prone-footprint-vs-idle-height, huge-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 054 (huge-prone-footprint-vs-idle-height, huge-frame-vs-animation)
+- REVIEW: Kakashi Hatake `getupStand` frame 055 (huge-prone-footprint-vs-idle-height, huge-frame-vs-animation)
+- REVIEW: Kazuki Muto `sprint` frame 033 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Kazuki Muto `sprint` frame 038 (tiny-height-vs-idle)
+- REVIEW: Kazuki Muto `getupStand` frame 038 (tiny-frame-vs-animation)
+- REVIEW: Kazuki Muto `getupStand` frame 039 (tiny-frame-vs-animation)
+- REVIEW: Kenshin Himura `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Kenshin Himura `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Kenshin Himura `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Kenshin Himura `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Kenshin Himura `getupStand` frame 052 (huge-frame-vs-animation)
+- REVIEW: Kenshin Himura `getupStand` frame 053 (huge-frame-vs-animation)
+- REVIEW: Kenshin Himura `getupStand` frame 054 (huge-frame-vs-animation)
+- REVIEW: Kenshiro `sprint` frame 035 (tiny-height-vs-idle, wide-body-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Kenshiro `kickleft` frame 108 (possible-two-character-crop)
+- REVIEW: Kenshiro `kickleft` frame 111 (possible-two-character-crop)
+- REVIEW: Kenshiro `knockdown` frame 039 (tiny-frame-vs-animation)
+- REVIEW: Kenshiro `getupStand` frame 038 (tiny-frame-vs-animation)
+- REVIEW: Kenshiro `getupStand` frame 039 (tiny-frame-vs-animation)
+- REVIEW: Kenshiro `cmd:f+1` frame 172 (possible-two-character-crop)
+- REVIEW: Kenshiro `cmd:f+1` frame 175 (possible-two-character-crop)
+- REVIEW: Killua Zoldyck `sprint` frame 030 (tiny-height-vs-idle, wide-body-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Killua Zoldyck `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `jabright` frame 147 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `jabright` frame 148 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `jabright` frame 149 (wide-body-vs-idle)
+- REVIEW: Killua Zoldyck `getupStand` frame 053 (huge-frame-vs-animation)
+- REVIEW: Killua Zoldyck `getupStand` frame 054 (huge-frame-vs-animation)
+- REVIEW: Killua Zoldyck `getupStand` frame 055 (huge-frame-vs-animation)
+- REVIEW: Kinnikuman `sprint` frame 032 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Kinnikuman `getupStand` frame 052 (huge-frame-vs-animation)
+- REVIEW: Kinnikuman `getupStand` frame 053 (huge-frame-vs-animation)
+- REVIEW: Kinnikuman `getupStand` frame 054 (huge-frame-vs-animation)
+- REVIEW: Kurama `sprint` frame 031 (tiny-height-vs-idle, wide-body-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Kurama `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Kurama `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Kurama `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Kurama `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: Lenalee Lee `sprint` frame 031 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Lenalee Lee `getupStand` frame 033 (tiny-frame-vs-animation)
+- REVIEW: Lenalee Lee `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Lenalee Lee `getupStand` frame 035 (tiny-frame-vs-animation)
+- REVIEW: Momotaro Tsurugi `sprint` frame 030 (tiny-height-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Momotaro Tsurugi `knockdown` frame 038 (huge-frame-vs-animation)
+- REVIEW: Momotaro Tsurugi `getupStand` frame 036 (tiny-frame-vs-animation)
+- REVIEW: Momotaro Tsurugi `getupStand` frame 037 (tiny-frame-vs-animation)
+- REVIEW: Monkey D. Luffy `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy `jableft` frame 074 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy `jableft` frame 075 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy `jableft` frame 078 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy `cmd:1+2` frame 070 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy `cmd:2+4` frame 171 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy `cmd:2+4` frame 165 (low-color-frame)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 030 (tiny-height-vs-idle, wide-body-vs-idle, tiny-frame-vs-animation)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 033 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 034 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 037 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `sprint` frame 038 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `crouchBlock` frame 093 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy (2nd Gear) `jableft` frame 078 (wide-body-vs-idle)
+- REVIEW: Monkey D. Luffy (2nd Gear) `getupStand` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Monkey D. Luffy (2nd Gear) `cmd:1+2` frame 081 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy (2nd Gear) `cmd:1+2` frame 085 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy (2nd Gear) `cmd:1+3` frame 093 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy (2nd Gear) `cmd:3+4` frame 101 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy (2nd Gear) `cmd:3+4` frame 102 (possible-two-character-crop)
+- REVIEW: Monkey D. Luffy (2nd Gear) `cmd:f+1` frame 196 (possible-two-character-crop)
+- REVIEW: Nami `knockdown` frame 029 (huge-frame-vs-animation)
+- REVIEW: Nami `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Nami `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Nami `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Nami (Perfect Clima-Tact) `sprint` frame 030 (wide-body-vs-idle)
+- REVIEW: Nami (Perfect Clima-Tact) `sprint` frame 031 (wide-body-vs-idle)
+- REVIEW: Nami (Perfect Clima-Tact) `sprint` frame 032 (wide-body-vs-idle)
+- REVIEW: Nami (Perfect Clima-Tact) `sprint` frame 035 (wide-body-vs-idle)
+- REVIEW: Nami (Perfect Clima-Tact) `sprint` frame 036 (wide-body-vs-idle)
+- REVIEW: Nami (Perfect Clima-Tact) `jableft` frame 074 (wide-body-vs-idle)
+- REVIEW: Nami (Perfect Clima-Tact) `knockdown` frame 029 (huge-frame-vs-animation)
+- REVIEW: Nami (Perfect Clima-Tact) `getupStand` frame 030 (tiny-frame-vs-animation)
+- REVIEW: Nami (Perfect Clima-Tact) `getupStand` frame 031 (tiny-frame-vs-animation)
+- REVIEW: Nami (Perfect Clima-Tact) `getupStand` frame 032 (tiny-frame-vs-animation)
+- REVIEW: Nami (Perfect Clima-Tact) `cmd:1+2` frame 059 (possible-two-character-crop)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `sprint` frame 033 (tiny-height-vs-idle)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `sprint` frame 034 (tiny-height-vs-idle)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `sprint` frame 035 (tiny-height-vs-idle)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `hitHeavy` frame 169 (low-color-frame)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `knockdown` frame 034 (tiny-frame-vs-animation)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `knockdown` frame 035 (tiny-frame-vs-animation)
+- REVIEW: Naruto Uzumaki (Nine-Tails_Kyubi) `cmd:f+1` frame 131 (possible-two-character-crop)
+- ... 126 additional suspect frames in suspects.json
+
+## Skipped Characters
+
+- Astra (astra): no-idle-animation
+- Caramelman J (caramelman-j): unplayable
+- Cygnus Hyōga (cygnus-hyoga): unplayable
+- Dax (dax): no-idle-animation
+- Dragon Shiryū (dragon-shiryu): unplayable
+- Near (near): unplayable
+- Seto Kaiba (seto-kaiba): unplayable
+- Sven Vollfied (sven-vollfied): unplayable
+- Taizo Momote (taizo-momote): unplayable
+- Yasutora Sado (yasutora-sado): unplayable
+
+## Status Meaning
+
+- `PASS`: no missing assets, no blank voxels/sprites, and no scale/crop metric exceeded the review thresholds.
+- `REVIEW`: frame exists but should be visually inspected because metrics found a possible scale/crop outlier.
+- `FAIL`: missing/blank source or voxel asset.
