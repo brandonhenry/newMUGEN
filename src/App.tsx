@@ -5655,9 +5655,9 @@ function StageEditor({
                   <strong>Playable Lane</strong>
                 </header>
                 <div className="stage-prop-editor">
-                  <StagePropSlider label="Center X" value={lane.center[0]} min={-40} max={40} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 0, value) })} />
-                  <StagePropSlider label="Center Y" value={lane.center[1]} min={-10} max={20} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 1, value), y: value })} />
-                  <StagePropSlider label="Center Z" value={lane.center[2]} min={-40} max={40} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 2, value) })} />
+                  <StagePropSlider label="Center X" value={lane.center[0]} min={-500} max={500} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 0, value) })} />
+                  <StagePropSlider label="Center Y" value={lane.center[1]} min={-200} max={200} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 1, value), y: value })} />
+                  <StagePropSlider label="Center Z" value={lane.center[2]} min={-500} max={500} step={0.05} onChange={(value) => updateFightPlane({ center: tupleWithAxis(lane.center, 2, value) })} />
                   <StagePropSlider label="Yaw" value={lane.rotationY ?? 0} min={-Math.PI} max={Math.PI} step={0.01} onChange={(value) => updateFightPlane({ rotationY: value })} />
                   <StagePropSlider label="Width" value={lane.width} min={4} max={80} step={0.1} onChange={(value) => updateFightPlane({ width: value })} />
                   <StagePropSlider label="Depth" value={lane.depth} min={4} max={80} step={0.1} onChange={(value) => updateFightPlane({ depth: value })} />
@@ -5671,9 +5671,9 @@ function StageEditor({
                   <strong>Stage Model</strong>
                 </header>
                 <div className="stage-prop-editor">
-                  <StagePropSlider label="Model X" value={selectedModel.position?.[0] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 0, value) })} />
-                  <StagePropSlider label="Model Y" value={selectedModel.position?.[1] ?? 0} min={-30} max={30} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 1, value) })} />
-                  <StagePropSlider label="Model Z" value={selectedModel.position?.[2] ?? 0} min={-80} max={80} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 2, value) })} />
+                  <StagePropSlider label="Model X" value={selectedModel.position?.[0] ?? 0} min={-500} max={500} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 0, value) })} />
+                  <StagePropSlider label="Model Y" value={selectedModel.position?.[1] ?? 0} min={-500} max={200} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 1, value) })} />
+                  <StagePropSlider label="Model Z" value={selectedModel.position?.[2] ?? 0} min={-500} max={500} step={0.05} onChange={(value) => updateStageModel({ position: tupleWithAxis(selectedModel.position, 2, value) })} />
                   <StagePropSlider label="Scale" value={selectedModel.scale?.[0] ?? 1} min={0.05} max={50} step={0.01} onChange={(value) => updateStageModel({ scale: [value, value, value] })} />
                   <button className="secondary-button compact-button" type="button" onClick={groundStageModelToFeet}>
                     <Target size={14} />
