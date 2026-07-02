@@ -166,7 +166,18 @@
     "lose": [
       "/characters/kenshiro/frames/frame-035.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/kenshiro/frames/frame-170.png",
+      "/characters/kenshiro/frames/frame-171.png",
+      "/characters/kenshiro/frames/frame-172.png",
+      "/characters/kenshiro/frames/frame-173.png",
+      "/characters/kenshiro/frames/frame-174.png",
+      "/characters/kenshiro/frames/frame-175.png",
+      "/characters/kenshiro/frames/frame-176.png",
+      "/characters/kenshiro/frames/frame-177.png",
+      "/characters/kenshiro/frames/frame-178.png",
+      "/characters/kenshiro/frames/frame-179.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -543,9 +554,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 9,
+      "activeFrames": 31,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

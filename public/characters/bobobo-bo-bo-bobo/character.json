@@ -144,9 +144,32 @@
     "lose": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-029.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-313.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-314.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-315.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-316.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-317.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-318.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-319.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-320.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-321.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-322.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-393.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-394.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-395.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-396.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-397.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-398.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-399.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-400.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-401.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-402.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-403.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -169,7 +192,18 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-126.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-127.png"
     ],
-    "cmd:O+2": []
+    "cmd:O+2": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-161.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-162.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-163.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-164.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-165.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-166.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-167.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-168.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-169.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-170.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 8,
@@ -471,9 +505,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 35,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -504,9 +538,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 5,
+      "activeFrames": 45,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -635,9 +669,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 6,
+      "activeFrames": 48,
+      "recoveryFrames": 6,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -12,

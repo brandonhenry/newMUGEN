@@ -156,7 +156,18 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/goku-super-saiyan/frames/frame-181.png",
+      "/characters/goku-super-saiyan/frames/frame-182.png",
+      "/characters/goku-super-saiyan/frames/frame-183.png",
+      "/characters/goku-super-saiyan/frames/frame-184.png",
+      "/characters/goku-super-saiyan/frames/frame-185.png",
+      "/characters/goku-super-saiyan/frames/frame-186.png",
+      "/characters/goku-super-saiyan/frames/frame-187.png",
+      "/characters/goku-super-saiyan/frames/frame-188.png",
+      "/characters/goku-super-saiyan/frames/frame-189.png",
+      "/characters/goku-super-saiyan/frames/frame-190.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -525,9 +536,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 11,
+      "activeFrames": 39,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

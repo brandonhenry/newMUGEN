@@ -149,9 +149,27 @@
     "lose": [
       "/characters/kazuki-muto/frames/frame-033.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/kazuki-muto/frames/frame-120.png",
+      "/characters/kazuki-muto/frames/frame-121.png",
+      "/characters/kazuki-muto/frames/frame-122.png",
+      "/characters/kazuki-muto/frames/frame-123.png",
+      "/characters/kazuki-muto/frames/frame-124.png",
+      "/characters/kazuki-muto/frames/frame-125.png",
+      "/characters/kazuki-muto/frames/frame-126.png",
+      "/characters/kazuki-muto/frames/frame-127.png",
+      "/characters/kazuki-muto/frames/frame-128.png",
+      "/characters/kazuki-muto/frames/frame-129.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/kazuki-muto/frames/frame-315.png",
+      "/characters/kazuki-muto/frames/frame-316.png",
+      "/characters/kazuki-muto/frames/frame-317.png",
+      "/characters/kazuki-muto/frames/frame-318.png",
+      "/characters/kazuki-muto/frames/frame-319.png",
+      "/characters/kazuki-muto/frames/frame-320.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -485,9 +503,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 37,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -518,9 +536,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 10,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

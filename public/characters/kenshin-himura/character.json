@@ -141,9 +141,31 @@
     "lose": [
       "/characters/kenshin-himura/frames/frame-029.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/kenshin-himura/frames/frame-363.png",
+      "/characters/kenshin-himura/frames/frame-364.png",
+      "/characters/kenshin-himura/frames/frame-365.png",
+      "/characters/kenshin-himura/frames/frame-366.png",
+      "/characters/kenshin-himura/frames/frame-367.png",
+      "/characters/kenshin-himura/frames/frame-368.png",
+      "/characters/kenshin-himura/frames/frame-369.png",
+      "/characters/kenshin-himura/frames/frame-370.png",
+      "/characters/kenshin-himura/frames/frame-371.png",
+      "/characters/kenshin-himura/frames/frame-372.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/kenshin-himura/frames/frame-170.png",
+      "/characters/kenshin-himura/frames/frame-171.png",
+      "/characters/kenshin-himura/frames/frame-172.png",
+      "/characters/kenshin-himura/frames/frame-173.png",
+      "/characters/kenshin-himura/frames/frame-174.png",
+      "/characters/kenshin-himura/frames/frame-175.png",
+      "/characters/kenshin-himura/frames/frame-176.png",
+      "/characters/kenshin-himura/frames/frame-177.png",
+      "/characters/kenshin-himura/frames/frame-178.png",
+      "/characters/kenshin-himura/frames/frame-179.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -526,9 +548,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 35,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -559,9 +581,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 44,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

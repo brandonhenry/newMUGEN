@@ -156,7 +156,18 @@
     "lose": [
       "/characters/gon-freecss/frames/frame-032.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/gon-freecss/frames/frame-192.png",
+      "/characters/gon-freecss/frames/frame-193.png",
+      "/characters/gon-freecss/frames/frame-194.png",
+      "/characters/gon-freecss/frames/frame-195.png",
+      "/characters/gon-freecss/frames/frame-196.png",
+      "/characters/gon-freecss/frames/frame-197.png",
+      "/characters/gon-freecss/frames/frame-198.png",
+      "/characters/gon-freecss/frames/frame-199.png",
+      "/characters/gon-freecss/frames/frame-200.png",
+      "/characters/gon-freecss/frames/frame-201.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -516,9 +527,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 35,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

@@ -139,7 +139,17 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/gotenks/frames/frame-200.png",
+      "/characters/gotenks/frames/frame-201.png",
+      "/characters/gotenks/frames/frame-202.png",
+      "/characters/gotenks/frames/frame-203.png",
+      "/characters/gotenks/frames/frame-204.png",
+      "/characters/gotenks/frames/frame-205.png",
+      "/characters/gotenks/frames/frame-206.png",
+      "/characters/gotenks/frames/frame-207.png",
+      "/characters/gotenks/frames/frame-208.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -512,9 +522,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 13,
+      "activeFrames": 36,
+      "recoveryFrames": 6,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

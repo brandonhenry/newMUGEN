@@ -149,7 +149,19 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/eve/frames/frame-193.png",
+      "/characters/eve/frames/frame-194.png",
+      "/characters/eve/frames/frame-195.png",
+      "/characters/eve/frames/frame-196.png",
+      "/characters/eve/frames/frame-197.png",
+      "/characters/eve/frames/frame-198.png",
+      "/characters/eve/frames/frame-199.png",
+      "/characters/eve/frames/frame-200.png",
+      "/characters/eve/frames/frame-201.png",
+      "/characters/eve/frames/frame-202.png",
+      "/characters/eve/frames/frame-203.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -511,9 +523,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 5,
+      "activeFrames": 45,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -523,7 +535,8 @@
       "range": 2.05,
       "label": "Eve Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,

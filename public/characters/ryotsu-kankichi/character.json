@@ -150,7 +150,27 @@
     "lose": [
       "/characters/ryotsu-kankichi/frames/frame-028.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/ryotsu-kankichi/frames/frame-166.png",
+      "/characters/ryotsu-kankichi/frames/frame-168.png",
+      "/characters/ryotsu-kankichi/frames/frame-169.png",
+      "/characters/ryotsu-kankichi/frames/frame-170.png",
+      "/characters/ryotsu-kankichi/frames/frame-171.png",
+      "/characters/ryotsu-kankichi/frames/frame-172.png",
+      "/characters/ryotsu-kankichi/frames/frame-173.png",
+      "/characters/ryotsu-kankichi/frames/frame-174.png",
+      "/characters/ryotsu-kankichi/frames/frame-175.png",
+      "/characters/ryotsu-kankichi/frames/frame-176.png",
+      "/characters/ryotsu-kankichi/frames/frame-177.png",
+      "/characters/ryotsu-kankichi/frames/frame-178.png",
+      "/characters/ryotsu-kankichi/frames/frame-179.png",
+      "/characters/ryotsu-kankichi/frames/frame-180.png",
+      "/characters/ryotsu-kankichi/frames/frame-181.png",
+      "/characters/ryotsu-kankichi/frames/frame-182.png",
+      "/characters/ryotsu-kankichi/frames/frame-183.png",
+      "/characters/ryotsu-kankichi/frames/frame-184.png",
+      "/characters/ryotsu-kankichi/frames/frame-185.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -507,9 +527,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 39,
+      "recoveryFrames": 2,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -8,

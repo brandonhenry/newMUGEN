@@ -158,7 +158,18 @@
     "cmd:f+1": [],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:WS+4": [
+      "/characters/lenalee-lee/frames/frame-235.png",
+      "/characters/lenalee-lee/frames/frame-236.png",
+      "/characters/lenalee-lee/frames/frame-237.png",
+      "/characters/lenalee-lee/frames/frame-238.png",
+      "/characters/lenalee-lee/frames/frame-239.png",
+      "/characters/lenalee-lee/frames/frame-240.png",
+      "/characters/lenalee-lee/frames/frame-241.png",
+      "/characters/lenalee-lee/frames/frame-242.png",
+      "/characters/lenalee-lee/frames/frame-243.png",
+      "/characters/lenalee-lee/frames/frame-244.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [
@@ -569,9 +580,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 9,
+      "activeFrames": 29,
+      "recoveryFrames": 4,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -580,7 +591,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Lenalee Lee Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "jumpBeforeMove": true
     },
     "cmd:FC+1": {
       "startupFrames": 12,

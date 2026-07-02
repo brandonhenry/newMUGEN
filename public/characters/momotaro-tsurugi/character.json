@@ -147,7 +147,18 @@
     "lose": [
       "/characters/momotaro-tsurugi/frames/frame-030.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/momotaro-tsurugi/frames/frame-196.png",
+      "/characters/momotaro-tsurugi/frames/frame-197.png",
+      "/characters/momotaro-tsurugi/frames/frame-198.png",
+      "/characters/momotaro-tsurugi/frames/frame-199.png",
+      "/characters/momotaro-tsurugi/frames/frame-200.png",
+      "/characters/momotaro-tsurugi/frames/frame-201.png",
+      "/characters/momotaro-tsurugi/frames/frame-202.png",
+      "/characters/momotaro-tsurugi/frames/frame-203.png",
+      "/characters/momotaro-tsurugi/frames/frame-204.png",
+      "/characters/momotaro-tsurugi/frames/frame-205.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -509,9 +520,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 8,
+      "activeFrames": 28,
+      "recoveryFrames": 3,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

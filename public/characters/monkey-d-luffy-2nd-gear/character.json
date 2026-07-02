@@ -135,7 +135,18 @@
     "lose": [
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-030.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-190.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-191.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-192.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-193.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-194.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-195.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-196.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-197.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-198.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-199.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -479,9 +490,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 35,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

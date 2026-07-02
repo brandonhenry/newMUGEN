@@ -142,7 +142,18 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/renji-abarai/frames/frame-140.png",
+      "/characters/renji-abarai/frames/frame-141.png",
+      "/characters/renji-abarai/frames/frame-142.png",
+      "/characters/renji-abarai/frames/frame-143.png",
+      "/characters/renji-abarai/frames/frame-144.png",
+      "/characters/renji-abarai/frames/frame-145.png",
+      "/characters/renji-abarai/frames/frame-146.png",
+      "/characters/renji-abarai/frames/frame-147.png",
+      "/characters/renji-abarai/frames/frame-148.png",
+      "/characters/renji-abarai/frames/frame-149.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -529,9 +540,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 44,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

@@ -152,7 +152,18 @@
     "lose": [
       "/characters/killua-zoldyck/frames/frame-030.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/killua-zoldyck/frames/frame-221.png",
+      "/characters/killua-zoldyck/frames/frame-222.png",
+      "/characters/killua-zoldyck/frames/frame-223.png",
+      "/characters/killua-zoldyck/frames/frame-224.png",
+      "/characters/killua-zoldyck/frames/frame-225.png",
+      "/characters/killua-zoldyck/frames/frame-226.png",
+      "/characters/killua-zoldyck/frames/frame-227.png",
+      "/characters/killua-zoldyck/frames/frame-228.png",
+      "/characters/killua-zoldyck/frames/frame-229.png",
+      "/characters/killua-zoldyck/frames/frame-230.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -521,9 +532,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 10,
+      "activeFrames": 32,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -8,

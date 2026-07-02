@@ -182,9 +182,31 @@
     "lose": [
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-033.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-130.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-131.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-132.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-133.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-134.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-135.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-136.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-137.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-138.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-139.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-140.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-141.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-142.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-143.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-144.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-145.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-146.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-147.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-148.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-149.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -546,9 +568,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 37,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -579,9 +601,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 44,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

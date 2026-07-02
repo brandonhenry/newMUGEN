@@ -145,9 +145,43 @@
     "lose": [
       "/characters/ichigo-kurosaki/frames/frame-031.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:f+1": [
+      "/characters/ichigo-kurosaki/frames/frame-409.png",
+      "/characters/ichigo-kurosaki/frames/frame-410.png",
+      "/characters/ichigo-kurosaki/frames/frame-411.png",
+      "/characters/ichigo-kurosaki/frames/frame-412.png",
+      "/characters/ichigo-kurosaki/frames/frame-413.png",
+      "/characters/ichigo-kurosaki/frames/frame-414.png",
+      "/characters/ichigo-kurosaki/frames/frame-415.png",
+      "/characters/ichigo-kurosaki/frames/frame-416.png",
+      "/characters/ichigo-kurosaki/frames/frame-417.png",
+      "/characters/ichigo-kurosaki/frames/frame-418.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/ichigo-kurosaki/frames/frame-311.png",
+      "/characters/ichigo-kurosaki/frames/frame-312.png",
+      "/characters/ichigo-kurosaki/frames/frame-313.png",
+      "/characters/ichigo-kurosaki/frames/frame-314.png",
+      "/characters/ichigo-kurosaki/frames/frame-315.png",
+      "/characters/ichigo-kurosaki/frames/frame-316.png",
+      "/characters/ichigo-kurosaki/frames/frame-317.png",
+      "/characters/ichigo-kurosaki/frames/frame-318.png",
+      "/characters/ichigo-kurosaki/frames/frame-319.png",
+      "/characters/ichigo-kurosaki/frames/frame-320.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/ichigo-kurosaki/frames/frame-160.png",
+      "/characters/ichigo-kurosaki/frames/frame-161.png",
+      "/characters/ichigo-kurosaki/frames/frame-162.png",
+      "/characters/ichigo-kurosaki/frames/frame-163.png",
+      "/characters/ichigo-kurosaki/frames/frame-164.png",
+      "/characters/ichigo-kurosaki/frames/frame-165.png",
+      "/characters/ichigo-kurosaki/frames/frame-166.png",
+      "/characters/ichigo-kurosaki/frames/frame-167.png",
+      "/characters/ichigo-kurosaki/frames/frame-168.png",
+      "/characters/ichigo-kurosaki/frames/frame-169.png",
+      "/characters/ichigo-kurosaki/frames/frame-170.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -503,9 +537,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 37,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -518,9 +552,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 5,
+      "activeFrames": 40,
+      "recoveryFrames": 5,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -13,
@@ -536,9 +570,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 15,
+      "activeFrames": 39,
+      "recoveryFrames": 1,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -548,7 +582,8 @@
       "range": 2.05,
       "label": "Ichigo Kurosaki Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,

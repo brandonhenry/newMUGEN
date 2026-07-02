@@ -154,7 +154,17 @@
     "lose": [
       "/characters/neuro-nogami/frames/frame-029.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/neuro-nogami/frames/frame-180.png",
+      "/characters/neuro-nogami/frames/frame-181.png",
+      "/characters/neuro-nogami/frames/frame-182.png",
+      "/characters/neuro-nogami/frames/frame-183.png",
+      "/characters/neuro-nogami/frames/frame-184.png",
+      "/characters/neuro-nogami/frames/frame-185.png",
+      "/characters/neuro-nogami/frames/frame-186.png",
+      "/characters/neuro-nogami/frames/frame-187.png",
+      "/characters/neuro-nogami/frames/frame-188.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -525,9 +535,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 10,
+      "activeFrames": 30,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

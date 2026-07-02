@@ -146,7 +146,19 @@
     "lose": [
       "/characters/franky/frames/frame-029.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/franky/frames/frame-233.png",
+      "/characters/franky/frames/frame-234.png",
+      "/characters/franky/frames/frame-235.png",
+      "/characters/franky/frames/frame-236.png",
+      "/characters/franky/frames/frame-237.png",
+      "/characters/franky/frames/frame-238.png",
+      "/characters/franky/frames/frame-239.png",
+      "/characters/franky/frames/frame-240.png",
+      "/characters/franky/frames/frame-241.png",
+      "/characters/franky/frames/frame-242.png",
+      "/characters/franky/frames/frame-243.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -520,9 +532,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 8,
+      "activeFrames": 28,
+      "recoveryFrames": 8,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

@@ -171,7 +171,22 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/majin-buu/frames/frame-179.png",
+      "/characters/majin-buu/frames/frame-180.png",
+      "/characters/majin-buu/frames/frame-181.png",
+      "/characters/majin-buu/frames/frame-182.png",
+      "/characters/majin-buu/frames/frame-183.png",
+      "/characters/majin-buu/frames/frame-184.png",
+      "/characters/majin-buu/frames/frame-185.png",
+      "/characters/majin-buu/frames/frame-186.png",
+      "/characters/majin-buu/frames/frame-187.png",
+      "/characters/majin-buu/frames/frame-188.png",
+      "/characters/majin-buu/frames/frame-189.png",
+      "/characters/majin-buu/frames/frame-190.png",
+      "/characters/majin-buu/frames/frame-191.png",
+      "/characters/majin-buu/frames/frame-192.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -209,7 +224,19 @@
       "/characters/majin-buu/frames/frame-143.png",
       "/characters/majin-buu/frames/frame-144.png"
     ],
-    "cmd:O+2": []
+    "cmd:O+2": [
+      "/characters/majin-buu/frames/frame-146.png",
+      "/characters/majin-buu/frames/frame-147.png",
+      "/characters/majin-buu/frames/frame-148.png",
+      "/characters/majin-buu/frames/frame-149.png",
+      "/characters/majin-buu/frames/frame-150.png",
+      "/characters/majin-buu/frames/frame-151.png",
+      "/characters/majin-buu/frames/frame-152.png",
+      "/characters/majin-buu/frames/frame-153.png",
+      "/characters/majin-buu/frames/frame-154.png",
+      "/characters/majin-buu/frames/frame-155.png",
+      "/characters/majin-buu/frames/frame-156.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 10,
@@ -546,9 +573,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 4,
+      "activeFrames": 44,
+      "recoveryFrames": 7,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -677,9 +704,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 6,
+      "activeFrames": 49,
+      "recoveryFrames": 5,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -12,

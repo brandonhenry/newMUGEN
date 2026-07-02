@@ -146,7 +146,18 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/jaguar-junichi/frames/frame-184.png",
+      "/characters/jaguar-junichi/frames/frame-185.png",
+      "/characters/jaguar-junichi/frames/frame-186.png",
+      "/characters/jaguar-junichi/frames/frame-187.png",
+      "/characters/jaguar-junichi/frames/frame-188.png",
+      "/characters/jaguar-junichi/frames/frame-189.png",
+      "/characters/jaguar-junichi/frames/frame-190.png",
+      "/characters/jaguar-junichi/frames/frame-191.png",
+      "/characters/jaguar-junichi/frames/frame-192.png",
+      "/characters/jaguar-junichi/frames/frame-193.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -555,9 +566,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 11,
+      "activeFrames": 39,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

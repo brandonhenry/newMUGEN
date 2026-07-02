@@ -146,7 +146,18 @@
     "lose": [
       "/characters/kakashi-hatake/frames/frame-033.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/kakashi-hatake/frames/frame-318.png",
+      "/characters/kakashi-hatake/frames/frame-319.png",
+      "/characters/kakashi-hatake/frames/frame-320.png",
+      "/characters/kakashi-hatake/frames/frame-321.png",
+      "/characters/kakashi-hatake/frames/frame-322.png",
+      "/characters/kakashi-hatake/frames/frame-323.png",
+      "/characters/kakashi-hatake/frames/frame-324.png",
+      "/characters/kakashi-hatake/frames/frame-325.png",
+      "/characters/kakashi-hatake/frames/frame-326.png",
+      "/characters/kakashi-hatake/frames/frame-327.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -497,9 +508,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 9,
+      "activeFrames": 31,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

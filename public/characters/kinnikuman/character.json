@@ -141,7 +141,18 @@
     "lose": [
       "/characters/kinnikuman/frames/frame-032.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/kinnikuman/frames/frame-271.png",
+      "/characters/kinnikuman/frames/frame-272.png",
+      "/characters/kinnikuman/frames/frame-273.png",
+      "/characters/kinnikuman/frames/frame-274.png",
+      "/characters/kinnikuman/frames/frame-275.png",
+      "/characters/kinnikuman/frames/frame-276.png",
+      "/characters/kinnikuman/frames/frame-277.png",
+      "/characters/kinnikuman/frames/frame-278.png",
+      "/characters/kinnikuman/frames/frame-279.png",
+      "/characters/kinnikuman/frames/frame-280.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -518,9 +529,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 37,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -8,

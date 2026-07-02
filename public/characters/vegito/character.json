@@ -152,7 +152,18 @@
     "lose": [
       "/characters/vegito/frames/frame-024.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/vegito/frames/frame-166.png",
+      "/characters/vegito/frames/frame-167.png",
+      "/characters/vegito/frames/frame-168.png",
+      "/characters/vegito/frames/frame-169.png",
+      "/characters/vegito/frames/frame-170.png",
+      "/characters/vegito/frames/frame-171.png",
+      "/characters/vegito/frames/frame-172.png",
+      "/characters/vegito/frames/frame-173.png",
+      "/characters/vegito/frames/frame-174.png",
+      "/characters/vegito/frames/frame-175.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -489,9 +500,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 9,
+      "activeFrames": 31,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,

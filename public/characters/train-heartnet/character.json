@@ -144,7 +144,19 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/train-heartnet/frames/frame-183.png",
+      "/characters/train-heartnet/frames/frame-184.png",
+      "/characters/train-heartnet/frames/frame-185.png",
+      "/characters/train-heartnet/frames/frame-186.png",
+      "/characters/train-heartnet/frames/frame-187.png",
+      "/characters/train-heartnet/frames/frame-188.png",
+      "/characters/train-heartnet/frames/frame-189.png",
+      "/characters/train-heartnet/frames/frame-190.png",
+      "/characters/train-heartnet/frames/frame-191.png",
+      "/characters/train-heartnet/frames/frame-192.png",
+      "/characters/train-heartnet/frames/frame-193.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -533,9 +545,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 15,
+      "activeFrames": 35,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

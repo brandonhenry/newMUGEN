@@ -133,7 +133,19 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/yoh-asakura-power-sword/frames/frame-152.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-153.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-154.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-155.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-156.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-157.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-158.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-159.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-160.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-161.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-162.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -547,9 +559,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 5,
+      "activeFrames": 40,
+      "recoveryFrames": 10,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -9,

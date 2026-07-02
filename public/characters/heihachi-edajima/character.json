@@ -145,7 +145,18 @@
     "lose": [
       "/characters/heihachi-edajima/frames/frame-030.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/heihachi-edajima/frames/frame-140.png",
+      "/characters/heihachi-edajima/frames/frame-141.png",
+      "/characters/heihachi-edajima/frames/frame-142.png",
+      "/characters/heihachi-edajima/frames/frame-143.png",
+      "/characters/heihachi-edajima/frames/frame-144.png",
+      "/characters/heihachi-edajima/frames/frame-145.png",
+      "/characters/heihachi-edajima/frames/frame-146.png",
+      "/characters/heihachi-edajima/frames/frame-147.png",
+      "/characters/heihachi-edajima/frames/frame-148.png",
+      "/characters/heihachi-edajima/frames/frame-149.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -506,9 +517,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 35,
+      "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,
