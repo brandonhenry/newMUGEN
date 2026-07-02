@@ -1,0 +1,229 @@
+# Voxel Visual Audit Report
+
+- Total animation sequences checked: 1169
+- Looks OK by automated shared-scale audit: 831
+- Needs review: 234
+- Critical visual mismatch: 104
+
+Critical means the shared-scale contact sheet shows major size instability or likely non-character/artifact frames. Sheets live in `tmp/voxel-visual-audit/sequence-sheets-shared-scale/`.
+
+## Top Characters To Repair
+- **naruto-uzumaki-nine-tails-kyubi**: critical=6, review=7, ok=6
+  - crouchBlock score=1.67 w=0.82-1.59 h=0.60-2.09
+  - sprint score=1.65 w=0.85-1.52 h=0.36-2.03
+  - getupStand score=1.51 w=0.76-1.37 h=0.52-1.99
+  - knockdown score=1.23 w=0.60-1.07 h=0.31-1.23
+- **seto-kaiba**: critical=5, review=3, ok=3
+  - backflip score=1.70 w=0.50-2.29 h=0.37-1.35
+  - jump score=1.70 w=0.50-2.29 h=0.37-1.35
+  - crouchBlock score=1.59 w=0.89-2.31 h=0.50-1.05
+  - kickright score=1.59 w=0.89-2.31 h=0.50-1.05
+- **lenalee-lee**: critical=4, review=6, ok=9
+  - backflip score=1.58 w=0.69-2.73 h=0.73-1.22
+  - cmd:1+2 score=1.57 w=0.70-1.82 h=0.93-1.77
+  - cmd:1+3 score=1.53 w=0.64-1.76 h=0.93-1.77
+  - sprint score=0.90 w=0.61-1.24 h=0.42-1.21
+- **yasutora-sado**: critical=4, review=1, ok=7
+  - chargeKi score=1.64 w=0.48-2.24 h=1.00-1.60
+  - jump score=1.64 w=0.48-2.24 h=1.00-1.60
+  - kickright score=1.64 w=0.48-2.24 h=1.00-1.60
+  - sprint score=1.64 w=0.48-2.24 h=1.00-1.60
+- **cygnus-hyoga**: critical=4, review=0, ok=8
+  - chargeKi score=2.41 w=0.49-3.18 h=1.00-1.80
+  - jump score=2.41 w=0.49-3.18 h=1.00-1.80
+  - kickright score=2.41 w=0.49-3.18 h=1.00-1.80
+  - sprint score=2.41 w=0.49-3.18 h=1.00-1.80
+- **jaguar-junichi**: critical=3, review=5, ok=12
+  - getupStand score=1.75 w=0.76-1.80 h=0.82-1.97
+  - sprint score=1.52 w=0.48-1.80 h=0.60-1.74
+  - crouchBlock score=1.05 w=0.55-1.30 h=0.35-1.21
+- **dragon-shiryu**: critical=3, review=4, ok=5
+  - chargeKi score=1.61 w=0.74-2.45 h=0.56-1.00
+  - crouch score=1.61 w=0.74-2.45 h=0.56-1.00
+  - kickleft score=1.61 w=0.74-2.45 h=0.56-1.00
+- **kiro**: critical=3, review=4, ok=28
+  - getupStand score=1.49 w=0.73-1.80 h=0.29-1.13
+  - getupRollUp score=1.42 w=0.73-1.80 h=0.36-1.29
+  - hitHeavy score=0.75 w=1.00-1.09 h=0.41-1.57
+- **momotaro-tsurugi**: critical=3, review=3, ok=14
+  - knockdown score=1.93 w=0.84-1.52 h=0.73-2.32
+  - getupStand score=1.51 w=0.86-1.77 h=0.55-1.75
+  - sprint score=1.41 w=0.86-1.55 h=0.22-1.34
+- **gotenks**: critical=3, review=1, ok=11
+  - knockdown score=1.81 w=1.00-1.80 h=0.88-2.03
+  - sprint score=1.55 w=0.60-1.99 h=0.34-1.19
+  - getupStand score=1.34 w=0.69-1.80 h=0.44-1.32
+- **killua-zoldyck**: critical=3, review=1, ok=15
+  - sprint score=1.51 w=0.69-1.00 h=0.51-2.09
+  - getupStand score=1.39 w=0.63-1.17 h=0.70-2.01
+  - jabright score=1.36 w=0.73-2.43 h=0.70-1.09
+- **frieza**: critical=2, review=7, ok=6
+  - sprint score=1.83 w=0.49-2.63 h=0.45-1.04
+  - jableft score=1.40 w=0.88-2.27 h=0.80-1.34
+- **sakura-haruno**: critical=2, review=5, ok=9
+  - getupStand score=1.88 w=0.41-1.00 h=0.75-2.40
+  - backflip score=1.41 w=0.73-1.78 h=0.33-1.20
+- **nico-robin**: critical=2, review=5, ok=13
+  - cmd:2+3 score=1.52 w=0.67-1.85 h=0.92-1.71
+  - getupStand score=1.08 w=0.63-1.44 h=0.36-1.32
+- **yusuke-urameshi**: critical=2, review=4, ok=11
+  - backflip score=1.76 w=0.51-2.10 h=0.86-1.80
+  - sprint score=1.15 w=0.47-1.52 h=0.41-1.16
+- **kazuki-muto**: critical=2, review=4, ok=10
+  - sprint score=1.36 w=0.88-1.58 h=0.29-1.26
+  - backflip score=1.20 w=0.68-1.49 h=0.39-1.05
+- **ichigo-kurosaki**: critical=2, review=4, ok=10
+  - getupStand score=1.30 w=0.65-1.04 h=0.73-1.98
+  - sprint score=0.71 w=1.00-1.12 h=0.43-1.58
+- **yoh-asakura-power-sword**: critical=2, review=4, ok=12
+  - knockdown score=1.16 w=0.56-1.00 h=0.41-1.09
+  - sprint score=1.14 w=0.71-1.27 h=0.33-1.16
+- **nami**: critical=2, review=3, ok=13
+  - getupStand score=1.72 w=0.93-1.59 h=0.70-2.13
+  - sprint score=1.14 w=0.45-1.40 h=0.41-1.24
+- **gintoki-sakata**: critical=2, review=3, ok=11
+  - knockdown score=1.70 w=1.00-1.78 h=0.88-1.94
+  - sprint score=1.53 w=0.58-1.78 h=0.53-1.76
+- **fuusuke**: critical=2, review=3, ok=13
+  - knockdown score=1.65 w=1.00-1.57 h=0.90-2.07
+  - sprint score=1.54 w=0.59-1.57 h=0.56-1.96
+- **bobobo-bo-bo-bobo**: critical=2, review=3, ok=9
+  - backflip score=1.41 w=0.46-1.64 h=0.41-1.73
+  - getupStand score=1.34 w=0.67-1.00 h=0.87-1.98
+- **train-heartnet**: critical=2, review=3, ok=12
+  - sprint score=1.33 w=0.42-1.56 h=0.32-1.19
+  - cmd:1+3 score=1.00 w=0.92-2.45 h=0.95-1.07
+- **yugi-mutou**: critical=2, review=2, ok=14
+  - sprint score=2.96 w=0.51-1.80 h=0.80-3.18
+  - backflip score=2.17 w=0.71-3.51 h=0.64-1.27
+- **gotenks-super-saiyan**: critical=2, review=2, ok=8
+  - knockdown score=1.84 w=1.00-1.80 h=0.86-2.06
+  - sprint score=1.75 w=0.60-2.37 h=0.37-1.35
+- **nami-perfect-clima-tact**: critical=2, review=2, ok=14
+  - backflip score=1.77 w=0.44-2.37 h=1.00-1.65
+  - jableft score=1.52 w=0.90-1.44 h=0.98-1.95
+- **gohan-super-saiyan**: critical=2, review=2, ok=10
+  - sprint score=1.61 w=0.63-2.24 h=0.43-1.26
+  - getupStand score=1.43 w=0.79-1.13 h=0.75-2.11
+- **kenshiro**: critical=2, review=2, ok=15
+  - backflip score=1.30 w=0.41-1.82 h=0.44-1.48
+  - sprint score=0.94 w=0.76-1.00 h=0.30-1.40
+- **rukia-kuchiki**: critical=2, review=1, ok=11
+  - backflip score=1.51 w=0.71-2.13 h=0.75-1.53
+  - sprint score=1.45 w=0.50-1.17 h=0.49-1.93
+- **yoh-asakura**: critical=2, review=1, ok=13
+  - sprint score=1.21 w=0.53-1.50 h=0.39-1.30
+  - getupStand score=1.18 w=0.83-1.49 h=0.41-1.40
+- **renji-abarai**: critical=2, review=0, ok=13
+  - sprint score=1.74 w=0.64-1.18 h=0.54-2.22
+  - getupStand score=1.29 w=0.92-1.58 h=0.36-1.48
+- **kagura**: critical=1, review=10, ok=9
+  - sprint score=1.18 w=0.63-1.15 h=0.30-1.34
+- **kenshin-himura**: critical=1, review=8, ok=10
+  - getupStand score=1.31 w=0.67-1.05 h=0.75-2.01
+- **vegeta**: critical=1, review=7, ok=10
+  - sprint score=1.49 w=0.58-2.04 h=0.44-1.16
+- **toshiro-hitsugaya**: critical=1, review=6, ok=10
+  - sprint score=1.31 w=0.84-1.50 h=0.29-1.26
+
+## Top Critical Sequences
+- 2.960 `yugi-mutou` / `sprint` frames=10 width=0.51-1.80 height=0.80-3.18 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.960-yugi-mutou-sprint.png`
+- 2.534 `kakashi-hatake` / `sprint` frames=10 width=0.62-1.29 height=0.58-3.01 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.534-kakashi-hatake-sprint.png`
+- 2.410 `cygnus-hyoga` / `chargeKi` frames=7 width=0.49-3.18 height=1.00-1.80 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.410-cygnus-hyoga-chargeKi.png`
+- 2.410 `cygnus-hyoga` / `jump` frames=7 width=0.49-3.18 height=1.00-1.80 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.410-cygnus-hyoga-jump.png`
+- 2.410 `cygnus-hyoga` / `kickright` frames=7 width=0.49-3.18 height=1.00-1.80 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.410-cygnus-hyoga-kickright.png`
+- 2.410 `cygnus-hyoga` / `sprint` frames=7 width=0.49-3.18 height=1.00-1.80 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.410-cygnus-hyoga-sprint.png`
+- 2.168 `yugi-mutou` / `backflip` frames=8 width=0.71-3.51 height=0.64-1.27 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/002.168-yugi-mutou-backflip.png`
+- 1.958 `franky` / `knockdown` frames=4 width=0.98-1.75 height=0.82-2.21 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.958-franky-knockdown.png`
+- 1.932 `momotaro-tsurugi` / `knockdown` frames=4 width=0.84-1.52 height=0.73-2.32 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.932-momotaro-tsurugi-knockdown.png`
+- 1.883 `sakura-haruno` / `getupStand` frames=9 width=0.41-1.00 height=0.75-2.40 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.883-sakura-haruno-getupStand.png`
+- 1.836 `gotenks-super-saiyan` / `knockdown` frames=4 width=1.00-1.80 height=0.86-2.06 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.836-gotenks-super-saiyan-knockdown.png`
+- 1.835 `sanji-vinsmoke` / `sprint` frames=10 width=0.52-1.41 height=0.47-2.25 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.835-sanji-vinsmoke-sprint.png`
+- 1.827 `frieza` / `sprint` frames=10 width=0.49-2.63 height=0.45-1.04 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.827-frieza-sprint.png`
+- 1.809 `gotenks` / `knockdown` frames=4 width=1.00-1.80 height=0.88-2.03 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.809-gotenks-knockdown.png`
+- 1.774 `nami-perfect-clima-tact` / `backflip` frames=8 width=0.44-2.37 height=1.00-1.65 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.774-nami-perfect-clima-tact-backflip.png`
+- 1.769 `hiei` / `sprint` frames=10 width=0.54-1.21 height=0.57-2.31 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.769-hiei-sprint.png`
+- 1.758 `yusuke-urameshi` / `backflip` frames=8 width=0.51-2.10 height=0.86-1.80 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.758-yusuke-urameshi-backflip.png`
+- 1.752 `gotenks-super-saiyan` / `sprint` frames=10 width=0.60-2.37 height=0.37-1.35 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.752-gotenks-super-saiyan-sprint.png`
+- 1.750 `jaguar-junichi` / `getupStand` frames=7 width=0.76-1.80 height=0.82-1.97 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.750-jaguar-junichi-getupStand.png`
+- 1.737 `renji-abarai` / `sprint` frames=10 width=0.64-1.18 height=0.54-2.22 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.737-renji-abarai-sprint.png`
+- 1.717 `nami` / `getupStand` frames=8 width=0.93-1.59 height=0.70-2.13 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.717-nami-getupStand.png`
+- 1.700 `seto-kaiba` / `backflip` frames=8 width=0.50-2.29 height=0.37-1.35 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.700-seto-kaiba-backflip.png`
+- 1.700 `seto-kaiba` / `jump` frames=8 width=0.50-2.29 height=0.37-1.35 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.700-seto-kaiba-jump.png`
+- 1.697 `gintoki-sakata` / `knockdown` frames=4 width=1.00-1.78 height=0.88-1.94 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.697-gintoki-sakata-knockdown.png`
+- 1.677 `raoh` / `sprint` frames=10 width=0.40-1.14 height=0.61-2.02 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.677-raoh-sprint.png`
+- 1.666 `naruto-uzumaki-nine-tails-kyubi` / `crouchBlock` frames=8 width=0.82-1.59 height=0.60-2.09 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.666-naruto-uzumaki-nine-tails-kyubi-crouchBlock.png`
+- 1.659 `kinnikuman` / `sprint` frames=10 width=0.57-1.70 height=0.39-1.97 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.659-kinnikuman-sprint.png`
+- 1.649 `fuusuke` / `knockdown` frames=4 width=1.00-1.57 height=0.90-2.07 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.649-fuusuke-knockdown.png`
+- 1.646 `naruto-uzumaki-nine-tails-kyubi` / `sprint` frames=10 width=0.85-1.52 height=0.36-2.03 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.646-naruto-uzumaki-nine-tails-kyubi-sprint.png`
+- 1.642 `yasutora-sado` / `chargeKi` frames=5 width=0.48-2.24 height=1.00-1.60 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.642-yasutora-sado-chargeKi.png`
+- 1.642 `yasutora-sado` / `jump` frames=5 width=0.48-2.24 height=1.00-1.60 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.642-yasutora-sado-jump.png`
+- 1.642 `yasutora-sado` / `kickright` frames=5 width=0.48-2.24 height=1.00-1.60 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.642-yasutora-sado-kickright.png`
+- 1.642 `yasutora-sado` / `sprint` frames=5 width=0.48-2.24 height=1.00-1.60 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.642-yasutora-sado-sprint.png`
+- 1.615 `gohan-super-saiyan` / `sprint` frames=10 width=0.63-2.24 height=0.43-1.26 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.615-gohan-super-saiyan-sprint.png`
+- 1.615 `dragon-shiryu` / `chargeKi` frames=5 width=0.74-2.45 height=0.56-1.00 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.615-dragon-shiryu-chargeKi.png`
+- 1.615 `dragon-shiryu` / `crouch` frames=5 width=0.74-2.45 height=0.56-1.00 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.615-dragon-shiryu-crouch.png`
+- 1.615 `dragon-shiryu` / `kickleft` frames=5 width=0.74-2.45 height=0.56-1.00 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.615-dragon-shiryu-kickleft.png`
+- 1.588 `seto-kaiba` / `crouchBlock` frames=8 width=0.89-2.31 height=0.50-1.05 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.588-seto-kaiba-crouchBlock.png`
+- 1.588 `seto-kaiba` / `kickright` frames=8 width=0.89-2.31 height=0.50-1.05 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.588-seto-kaiba-kickright.png`
+- 1.588 `seto-kaiba` / `sidestepRight` frames=8 width=0.89-2.31 height=0.50-1.05 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.588-seto-kaiba-sidestepRight.png`
+- 1.580 `gon-freecss` / `sprint` frames=10 width=0.51-1.42 height=0.53-2.06 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.580-gon-freecss-sprint.png`
+- 1.576 `lenalee-lee` / `backflip` frames=8 width=0.69-2.73 height=0.73-1.22 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.576-lenalee-lee-backflip.png`
+- 1.567 `lenalee-lee` / `cmd:1+2` frames=7 width=0.70-1.82 height=0.93-1.77 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.567-lenalee-lee-cmd_1plus2.png`
+- 1.553 `gotenks` / `sprint` frames=10 width=0.60-1.99 height=0.34-1.19 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.553-gotenks-sprint.png`
+- 1.542 `fuusuke` / `sprint` frames=10 width=0.59-1.57 height=0.56-1.96 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.542-fuusuke-sprint.png`
+- 1.542 `goku-super-saiyan` / `sprint` frames=10 width=0.55-2.16 height=0.45-1.39 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.542-goku-super-saiyan-sprint.png`
+- 1.534 `vegito` / `sprint` frames=10 width=0.53-2.14 height=0.45-1.38 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.534-vegito-sprint.png`
+- 1.528 `gintoki-sakata` / `sprint` frames=10 width=0.58-1.78 height=0.53-1.76 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.528-gintoki-sakata-sprint.png`
+- 1.528 `lenalee-lee` / `cmd:1+3` frames=9 width=0.64-1.76 height=0.93-1.77 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.528-lenalee-lee-cmd_1plus3.png`
+- 1.521 `nico-robin` / `cmd:2+3` frames=13 width=0.67-1.85 height=0.92-1.71 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.521-nico-robin-cmd_2plus3.png`
+- 1.521 `jaguar-junichi` / `sprint` frames=10 width=0.48-1.80 height=0.60-1.74 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.521-jaguar-junichi-sprint.png`
+- 1.521 `roronoa-zoro` / `sprint` frames=10 width=0.51-1.30 height=0.70-1.98 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.521-roronoa-zoro-sprint.png`
+- 1.520 `anna-kyoyama` / `sprint` frames=10 width=0.72-1.49 height=0.43-1.93 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.520-anna-kyoyama-sprint.png`
+- 1.520 `pegasus-seiya` / `backflip` frames=8 width=0.70-2.25 height=0.70-1.47 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.520-pegasus-seiya-backflip.png`
+- 1.516 `nami-perfect-clima-tact` / `jableft` frames=7 width=0.90-1.44 height=0.98-1.95 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.516-nami-perfect-clima-tact-jableft.png`
+- 1.514 `killua-zoldyck` / `sprint` frames=10 width=0.69-1.00 height=0.51-2.09 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.514-killua-zoldyck-sprint.png`
+- 1.513 `momotaro-tsurugi` / `getupStand` frames=8 width=0.86-1.77 height=0.55-1.75 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.513-momotaro-tsurugi-getupStand.png`
+- 1.513 `rukia-kuchiki` / `backflip` frames=8 width=0.71-2.13 height=0.75-1.53 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.513-rukia-kuchiki-backflip.png`
+- 1.510 `naruto-uzumaki-nine-tails-kyubi` / `getupStand` frames=8 width=0.76-1.37 height=0.52-1.99 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.510-naruto-uzumaki-nine-tails-kyubi-getupStand.png`
+- 1.494 `kiro` / `getupStand` frames=7 width=0.73-1.80 height=0.29-1.13 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.494-kiro-getupStand.png`
+- 1.486 `vegeta` / `sprint` frames=10 width=0.58-2.04 height=0.44-1.16 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.486-vegeta-sprint.png`
+- 1.454 `rukia-kuchiki` / `sprint` frames=10 width=0.50-1.17 height=0.49-1.93 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.454-rukia-kuchiki-sprint.png`
+- 1.427 `gohan-super-saiyan` / `getupStand` frames=8 width=0.79-1.13 height=0.75-2.11 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.427-gohan-super-saiyan-getupStand.png`
+- 1.425 `kiro` / `getupRollUp` frames=6 width=0.73-1.80 height=0.36-1.29 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.425-kiro-getupRollUp.png`
+- 1.421 `near` / `idle` frames=5 width=0.71-1.99 height=0.42-1.12 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.421-near-idle.png`
+- 1.411 `bobobo-bo-bo-bobo` / `backflip` frames=8 width=0.46-1.64 height=0.41-1.73 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.411-bobobo-bo-bo-bobo-backflip.png`
+- 1.409 `sakura-haruno` / `backflip` frames=8 width=0.73-1.78 height=0.33-1.20 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.409-sakura-haruno-backflip.png`
+- 1.408 `momotaro-tsurugi` / `sprint` frames=10 width=0.86-1.55 height=0.22-1.34 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.408-momotaro-tsurugi-sprint.png`
+- 1.399 `frieza` / `jableft` frames=7 width=0.88-2.27 height=0.80-1.34 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.399-frieza-jableft.png`
+- 1.393 `killua-zoldyck` / `getupStand` frames=7 width=0.63-1.17 height=0.70-2.01 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.393-killua-zoldyck-getupStand.png`
+- 1.365 `kazuki-muto` / `sprint` frames=10 width=0.88-1.58 height=0.29-1.26 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.365-kazuki-muto-sprint.png`
+- 1.359 `killua-zoldyck` / `jabright` frames=8 width=0.73-2.43 height=0.70-1.09 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.359-killua-zoldyck-jabright.png`
+- 1.340 `bobobo-bo-bo-bobo` / `getupStand` frames=8 width=0.67-1.00 height=0.87-1.98 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.340-bobobo-bo-bo-bobo-getupStand.png`
+- 1.336 `gotenks` / `getupStand` frames=9 width=0.69-1.80 height=0.44-1.32 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.336-gotenks-getupStand.png`
+- 1.330 `train-heartnet` / `sprint` frames=10 width=0.42-1.56 height=0.32-1.19 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.330-train-heartnet-sprint.png`
+- 1.313 `toshiro-hitsugaya` / `sprint` frames=10 width=0.84-1.50 height=0.29-1.26 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.313-toshiro-hitsugaya-sprint.png`
+- 1.310 `kenshin-himura` / `getupStand` frames=7 width=0.67-1.05 height=0.75-2.01 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.310-kenshin-himura-getupStand.png`
+- 1.304 `ichigo-kurosaki` / `getupStand` frames=7 width=0.65-1.04 height=0.73-1.98 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.304-ichigo-kurosaki-getupStand.png`
+- 1.302 `kenshiro` / `backflip` frames=8 width=0.41-1.82 height=0.44-1.48 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.302-kenshiro-backflip.png`
+- 1.286 `renji-abarai` / `getupStand` frames=8 width=0.92-1.58 height=0.36-1.48 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.286-renji-abarai-getupStand.png`
+- 1.249 `gohan-super-saiyan-2` / `sprint` frames=10 width=0.49-1.34 height=0.36-1.49 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.249-gohan-super-saiyan-2-sprint.png`
+- 1.234 `naruto-uzumaki-nine-tails-kyubi` / `knockdown` frames=12 width=0.60-1.07 height=0.31-1.23 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.234-naruto-uzumaki-nine-tails-kyubi-knockdown.png`
+- 1.215 `yoh-asakura` / `sprint` frames=10 width=0.53-1.50 height=0.39-1.30 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.215-yoh-asakura-sprint.png`
+- 1.206 `naruto-uzumaki-nine-tails-kyubi` / `backflip` frames=8 width=0.34-1.45 height=0.39-1.00 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.206-naruto-uzumaki-nine-tails-kyubi-backflip.png`
+- 1.203 `kazuki-muto` / `backflip` frames=8 width=0.68-1.49 height=0.39-1.05 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.203-kazuki-muto-backflip.png`
+- 1.179 `kagura` / `sprint` frames=10 width=0.63-1.15 height=0.30-1.34 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.179-kagura-sprint.png`
+- 1.178 `yoh-asakura` / `getupStand` frames=7 width=0.83-1.49 height=0.41-1.40 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.178-yoh-asakura-getupStand.png`
+- 1.178 `taizo-momote` / `sprint` frames=9 width=0.86-1.62 height=0.36-1.17 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.178-taizo-momote-sprint.png`
+- 1.157 `yoh-asakura-power-sword` / `knockdown` frames=4 width=0.56-1.00 height=0.41-1.09 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.157-yoh-asakura-power-sword-knockdown.png`
+- 1.149 `yusuke-urameshi` / `sprint` frames=10 width=0.47-1.52 height=0.41-1.16 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.149-yusuke-urameshi-sprint.png`
+- 1.145 `yoh-asakura-power-sword` / `sprint` frames=10 width=0.71-1.27 height=0.33-1.16 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.145-yoh-asakura-power-sword-sprint.png`
+- 1.140 `nami` / `sprint` frames=10 width=0.45-1.40 height=0.41-1.24 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.140-nami-sprint.png`
+- 1.090 `taikoubou` / `sprint` frames=10 width=0.78-1.36 height=0.40-1.73 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.090-taikoubou-sprint.png`
+- 1.076 `nico-robin` / `getupStand` frames=7 width=0.63-1.44 height=0.36-1.32 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.076-nico-robin-getupStand.png`
+- 1.064 `naruto-uzumaki-nine-tails-kyubi` / `hitLight` frames=9 width=0.68-1.20 height=0.43-1.24 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.064-naruto-uzumaki-nine-tails-kyubi-hitLight.png`
+- 1.048 `jaguar-junichi` / `crouchBlock` frames=8 width=0.55-1.30 height=0.35-1.21 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/001.048-jaguar-junichi-crouchBlock.png`
+- 0.999 `kurama` / `sprint` frames=10 width=1.00-1.16 height=0.41-1.71 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/000.999-kurama-sprint.png`
+- 0.996 `train-heartnet` / `cmd:1+3` frames=9 width=0.92-2.45 height=0.95-1.07 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/000.996-train-heartnet-cmd_1plus3.png`
+- 0.943 `kenshiro` / `sprint` frames=10 width=0.76-1.00 height=0.30-1.40 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/000.943-kenshiro-sprint.png`
+- 0.932 `majin-buu` / `cmd:1+2` frames=10 width=0.72-1.31 height=0.37-1.11 sheet=`tmp/voxel-visual-audit/sequence-sheets-shared-scale/000.932-majin-buu-cmd_1plus2.png`

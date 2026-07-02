@@ -100,6 +100,14 @@ import {
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
 import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
+import {
+  applyVoxelBodyScale,
+  computeVoxelBodyNormalization,
+  measureVoxelBodyMetrics,
+  normalizeVoxelBodyOptions,
+  type VoxelBodyMetrics,
+  type VoxelBodyNormalization
+} from './lib/voxelBodyNormalization';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -195,6 +203,22 @@ type HdVoxelPayload = {
     baselineForegroundHeight?: number;
     modelHeight?: number;
     modelHeightScale?: number;
+    normalization?: VoxelBodyNormalization;
+    idleVisualWidth?: number;
+    idleVisualHeight?: number;
+    idleVisualNormalization?: {
+      enabled: boolean;
+      referenceAnimation: string;
+      referenceFrames: number[];
+      targetWidth: number;
+      targetHeight: number;
+      scaleX: number;
+      scaleY: number;
+      rawScaleX: number;
+      rawScaleY: number;
+      minScale: number;
+      maxScale: number;
+    };
   };
 };
 
@@ -209,6 +233,11 @@ type HdVoxelBuildSizing = {
   baselineForegroundHeight?: number;
 };
 
+type HdVoxelBuildResult = {
+  payload: HdVoxelPayload;
+  metrics: VoxelBodyMetrics | null;
+};
+
 const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
   resolutionScale: 2,
   maxRows: 64,
@@ -216,6 +245,7 @@ const defaultVoxelFidelitySettings: Required<VoxelFidelitySettings> = {
   alphaThreshold: 24,
   paletteSnap: 1,
   mergeRuns: true,
+  normalization: normalizeVoxelBodyOptions(),
   lod: {
     mobileStep: 2,
     farStep: 2
@@ -1418,6 +1448,7 @@ function normalizeVoxelFidelity(settings?: VoxelFidelitySettings): Required<Voxe
     alphaThreshold: Math.max(1, Math.min(254, Math.round(Number(settings?.alphaThreshold) || defaultVoxelFidelitySettings.alphaThreshold))),
     paletteSnap: Math.max(1, Math.min(32, Math.round(Number(settings?.paletteSnap) || defaultVoxelFidelitySettings.paletteSnap))),
     mergeRuns: settings?.mergeRuns !== false,
+    normalization: normalizeVoxelBodyOptions(settings?.normalization),
     lod: {
       mobileStep: Math.max(1, Math.min(4, Math.round(Number(lod.mobileStep) || defaultMobileStep))),
       farStep: Math.max(1, Math.min(4, Math.round(Number(lod.farStep) || defaultFarStep)))
@@ -1430,15 +1461,16 @@ async function saveHdVoxelsToDev(character: CharacterDefinition, onProgress?: (c
     character.spriteFrameCount ??
     Math.max(0, ...Object.values(character.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
   const fidelity = normalizeVoxelFidelity(character.voxelFidelity);
-  const frames: Array<{ frameIndex: number; payload: HdVoxelPayload }> = [];
+  const frameResults: Array<{ frameIndex: number; result: HdVoxelBuildResult }> = [];
   for (let index = 0; index < frameCount; index += 1) {
     const frameEdit = character.spriteFrameEdits?.[String(index)];
-    frames.push({
+    frameResults.push({
       frameIndex: index,
-      payload: await buildHdVoxelPayload(framePath(character, index), fidelity, framePath(character, index), getSpriteFrameVoxelSizing(frameEdit))
+      result: await buildHdVoxelResult(framePath(character, index), fidelity, framePath(character, index), getSpriteFrameVoxelSizing(frameEdit))
     });
     onProgress?.(index + 1, frameCount);
   }
+  const frames = normalizeHdVoxelFramesToIdleReference(normalizeHdVoxelFrameResults(frameResults, fidelity), character);
   await saveHdVoxelFramesToDev(character, frames, fidelity);
 }
 
@@ -1481,6 +1513,15 @@ async function buildHdVoxelPayload(
   sourceFrame = src,
   sizing: HdVoxelBuildSizing = {}
 ): Promise<HdVoxelPayload> {
+  return (await buildHdVoxelResult(src, fidelity, sourceFrame, sizing)).payload;
+}
+
+async function buildHdVoxelResult(
+  src: string,
+  fidelity: Required<VoxelFidelitySettings>,
+  sourceFrame = src,
+  sizing: HdVoxelBuildSizing = {}
+): Promise<HdVoxelBuildResult> {
   const image = new Image();
   image.crossOrigin = 'anonymous';
   image.src = src;
@@ -1490,13 +1531,28 @@ async function buildHdVoxelPayload(
   canvas.width = image.naturalWidth;
   canvas.height = image.naturalHeight;
   const context = canvas.getContext('2d', { willReadFrequently: true });
-  if (!context) return emptyHdVoxelPayload(src, canvas.width, canvas.height, 1);
+  if (!context) return { payload: emptyHdVoxelPayload(src, canvas.width, canvas.height, 1), metrics: null };
   context.imageSmoothingEnabled = false;
   context.drawImage(image, 0, 0);
   const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
   const background = averageImageCornerColor(imageData);
   const bounds = getHdForegroundBounds(imageData, background, fidelity.alphaThreshold);
-  if (!bounds) return emptyHdVoxelPayload(src, canvas.width, canvas.height, 1);
+  if (!bounds) return { payload: emptyHdVoxelPayload(src, canvas.width, canvas.height, 1), metrics: null };
+  const metrics = measureVoxelBodyMetrics({
+    width: canvas.width,
+    height: canvas.height,
+    isForeground: (x, y) => {
+      const offset = (y * canvas.width + x) * 4;
+      return isHdForegroundPixel(
+        imageData.data[offset],
+        imageData.data[offset + 1],
+        imageData.data[offset + 2],
+        imageData.data[offset + 3],
+        background,
+        fidelity.alphaThreshold
+      );
+    }
+  });
 
   const bboxWidth = bounds.maxX - bounds.minX + 1;
   const bboxHeight = bounds.maxY - bounds.minY + 1;
@@ -1543,21 +1599,184 @@ async function buildHdVoxelPayload(
   }
 
   return {
-    format: 'kore-hd-voxels-v1',
-    palette,
-    voxels: fidelity.mergeRuns ? mergeHdVoxelRuns(cells, cellWidth) : cells.map(({ row: _row, column: _column, ...cell }) => cell),
-    source: {
-      frame: sourceFrame,
-      width: canvas.width,
-      height: canvas.height,
-      sampleStep,
-      foregroundWidth: bboxWidth,
-      foregroundHeight: bboxHeight,
-      baselineForegroundHeight,
-      modelHeight: roundVoxelNumber(modelHeight),
-      modelHeightScale: roundVoxelNumber(modelHeightScale)
-    }
+    payload: {
+      format: 'kore-hd-voxels-v1',
+      palette,
+      voxels: fidelity.mergeRuns ? mergeHdVoxelRuns(cells, cellWidth) : cells.map(({ row: _row, column: _column, ...cell }) => cell),
+      source: {
+        frame: sourceFrame,
+        width: canvas.width,
+        height: canvas.height,
+        sampleStep,
+        foregroundWidth: bboxWidth,
+        foregroundHeight: bboxHeight,
+        baselineForegroundHeight,
+        modelHeight: roundVoxelNumber(modelHeight),
+        modelHeightScale: roundVoxelNumber(modelHeightScale)
+      }
+    },
+    metrics
   };
+}
+
+function normalizeHdVoxelFrameResults(
+  frameResults: Array<{ frameIndex: number; result: HdVoxelBuildResult }>,
+  fidelity: Required<VoxelFidelitySettings>
+) {
+  const options = normalizeVoxelBodyOptions(fidelity.normalization);
+  const referenceFrame = frameResults.find((frame) => frame.frameIndex === options.referenceFrame && frame.result.metrics)?.frameIndex
+    ?? frameResults.find((frame) => frame.result.metrics)?.frameIndex
+    ?? options.referenceFrame;
+  const referenceMetrics = frameResults.find((frame) => frame.frameIndex === referenceFrame)?.result.metrics ?? null;
+
+  return frameResults.map(({ frameIndex, result }) => {
+    const { scale, ratios } = computeVoxelBodyNormalization(referenceMetrics, result.metrics, options);
+    const normalization: VoxelBodyNormalization = {
+      enabled: options.enabled && Boolean(referenceMetrics && result.metrics),
+      referenceFrame,
+      scale,
+      ratios
+    };
+    if (result.metrics) normalization.metrics = result.metrics;
+    const payload: HdVoxelPayload = {
+      ...result.payload,
+      voxels: applyVoxelBodyScale(result.payload.voxels, scale).map((voxel) => ({
+        ...voxel,
+        x: roundVoxelNumber(voxel.x),
+        y: roundVoxelNumber(voxel.y),
+        w: roundVoxelNumber(voxel.w),
+        h: roundVoxelNumber(voxel.h),
+        d: roundVoxelNumber(voxel.d)
+      })),
+      source: {
+        ...result.payload.source,
+        modelHeight: result.payload.source.modelHeight === undefined ? undefined : roundVoxelNumber(result.payload.source.modelHeight * scale),
+        modelHeightScale: result.payload.source.modelHeightScale === undefined ? undefined : roundVoxelNumber(result.payload.source.modelHeightScale * scale),
+        normalization
+      }
+    };
+    return { frameIndex, payload };
+  });
+}
+
+function normalizeHdVoxelFramesToIdleReference(
+  frames: Array<{ frameIndex: number; payload: HdVoxelPayload }>,
+  character: CharacterDefinition
+) {
+  const byFrame = new Map(frames.map((frame) => [frame.frameIndex, frame.payload]));
+  const reference = getIdleVisualReference(character, byFrame);
+  if (!reference) return frames;
+
+  return frames.map(({ frameIndex, payload }) => {
+    const bounds = getHdVoxelPayloadBounds(payload);
+    if (!bounds) return { frameIndex, payload };
+    const currentWidth = bounds.maxX - bounds.minX;
+    const currentHeight = bounds.maxY - bounds.minY;
+    const rawScaleX = currentWidth > 0 ? reference.targetWidth / currentWidth : 1;
+    const rawScaleY = currentHeight > 0 ? reference.targetHeight / currentHeight : 1;
+    const minScale = 0.2;
+    const maxScale = 6;
+    const scaleX = clamp(rawScaleX, minScale, maxScale);
+    const scaleY = clamp(rawScaleY, minScale, maxScale);
+    const nextPayload = scaleHdVoxelPayloadToIdleReference(payload, bounds.minY, scaleX, scaleY);
+    const nextBounds = getHdVoxelPayloadBounds(nextPayload);
+    return {
+      frameIndex,
+      payload: {
+        ...nextPayload,
+        source: {
+          ...nextPayload.source,
+          idleVisualWidth: nextBounds ? roundVoxelNumber(nextBounds.maxX - nextBounds.minX) : undefined,
+          idleVisualHeight: nextBounds ? roundVoxelNumber(nextBounds.maxY - nextBounds.minY) : undefined,
+          idleVisualNormalization: {
+            enabled: true,
+            referenceAnimation: reference.animation,
+            referenceFrames: reference.frames,
+            targetWidth: roundVoxelNumber(reference.targetWidth),
+            targetHeight: roundVoxelNumber(reference.targetHeight),
+            scaleX: roundVoxelNumber(scaleX),
+            scaleY: roundVoxelNumber(scaleY),
+            rawScaleX: roundVoxelNumber(rawScaleX),
+            rawScaleY: roundVoxelNumber(rawScaleY),
+            minScale,
+            maxScale
+          }
+        }
+      }
+    };
+  });
+}
+
+function getIdleVisualReference(character: CharacterDefinition, payloads: Map<number, HdVoxelPayload>) {
+  const candidateKeys = ['idle', 'walkForward', 'walkBack', 'sidestepLeft', 'sidestepRight', 'block'];
+  for (const key of candidateKeys) {
+    const indices = (character.animationFrames?.[key] ?? [])
+      .map((path) => getFrameIndex(path))
+      .filter((index) => Number.isFinite(index) && payloads.has(index));
+    const dimensions = indices
+      .map((index) => getHdVoxelPayloadBounds(payloads.get(index)!))
+      .filter((bounds): bounds is NonNullable<ReturnType<typeof getHdVoxelPayloadBounds>> => Boolean(bounds))
+      .map((bounds) => ({ width: bounds.maxX - bounds.minX, height: bounds.maxY - bounds.minY }));
+    if (dimensions.length > 0) {
+      return {
+        animation: key,
+        frames: indices,
+        targetWidth: medianNumber(dimensions.map((item) => item.width)) ?? dimensions[0].width,
+        targetHeight: medianNumber(dimensions.map((item) => item.height)) ?? dimensions[0].height
+      };
+    }
+  }
+  const first = framesFirstPayload(payloads);
+  if (!first) return null;
+  const bounds = getHdVoxelPayloadBounds(first.payload);
+  if (!bounds) return null;
+  return {
+    animation: 'firstFrame',
+    frames: [first.frameIndex],
+    targetWidth: bounds.maxX - bounds.minX,
+    targetHeight: bounds.maxY - bounds.minY
+  };
+}
+
+function framesFirstPayload(payloads: Map<number, HdVoxelPayload>) {
+  const [frameIndex] = [...payloads.keys()].sort((a, b) => a - b);
+  const payload = payloads.get(frameIndex);
+  return payload ? { frameIndex, payload } : null;
+}
+
+function getHdVoxelPayloadBounds(payload: HdVoxelPayload) {
+  if (payload.voxels.length === 0) return null;
+  return payload.voxels.reduce(
+    (bounds, voxel) => ({
+      minX: Math.min(bounds.minX, voxel.x - voxel.w / 2),
+      minY: Math.min(bounds.minY, voxel.y - voxel.h / 2),
+      maxX: Math.max(bounds.maxX, voxel.x + voxel.w / 2),
+      maxY: Math.max(bounds.maxY, voxel.y + voxel.h / 2)
+    }),
+    { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+  );
+}
+
+function scaleHdVoxelPayloadToIdleReference(payload: HdVoxelPayload, anchorY: number, scaleX: number, scaleY: number): HdVoxelPayload {
+  return {
+    ...payload,
+    voxels: payload.voxels.map((voxel) => ({
+      ...voxel,
+      x: roundVoxelNumber(voxel.x * scaleX),
+      y: roundVoxelNumber(anchorY + (voxel.y - anchorY) * scaleY),
+      z: roundVoxelNumber(voxel.z * scaleX),
+      w: roundVoxelNumber(voxel.w * scaleX),
+      h: roundVoxelNumber(voxel.h * scaleY),
+      d: roundVoxelNumber(voxel.d * scaleX)
+    }))
+  };
+}
+
+function medianNumber(values: number[]) {
+  const finite = values.filter((value) => Number.isFinite(value)).sort((a, b) => a - b);
+  if (finite.length === 0) return null;
+  const middle = Math.floor(finite.length / 2);
+  return finite.length % 2 === 1 ? finite[middle] : (finite[middle - 1] + finite[middle]) / 2;
 }
 
 function emptyHdVoxelPayload(frame: string, width: number, height: number, sampleStep: number): HdVoxelPayload {

@@ -282,6 +282,12 @@ export type VoxelFidelitySettings = {
   alphaThreshold?: number;
   paletteSnap?: number;
   mergeRuns?: boolean;
+  normalization?: {
+    enabled?: boolean;
+    referenceFrame?: number;
+    minScale?: number;
+    maxScale?: number;
+  };
   lod?: {
     mobileStep?: number;
     farStep?: number;

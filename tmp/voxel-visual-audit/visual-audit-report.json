@@ -1,0 +1,1704 @@
+{
+  "ok": 831,
+  "review": 234,
+  "critical": 104,
+  "characters": [
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "critical": 6,
+      "review": 7,
+      "ok": 6,
+      "examples": [
+        "crouchBlock score=1.67 w=0.82-1.59 h=0.60-2.09",
+        "sprint score=1.65 w=0.85-1.52 h=0.36-2.03",
+        "getupStand score=1.51 w=0.76-1.37 h=0.52-1.99",
+        "knockdown score=1.23 w=0.60-1.07 h=0.31-1.23",
+        "backflip score=1.21 w=0.34-1.45 h=0.39-1.00",
+        "hitLight score=1.06 w=0.68-1.20 h=0.43-1.24"
+      ]
+    },
+    {
+      "character": "seto-kaiba",
+      "critical": 5,
+      "review": 3,
+      "ok": 3,
+      "examples": [
+        "backflip score=1.70 w=0.50-2.29 h=0.37-1.35",
+        "jump score=1.70 w=0.50-2.29 h=0.37-1.35",
+        "crouchBlock score=1.59 w=0.89-2.31 h=0.50-1.05",
+        "kickright score=1.59 w=0.89-2.31 h=0.50-1.05",
+        "sidestepRight score=1.59 w=0.89-2.31 h=0.50-1.05"
+      ]
+    },
+    {
+      "character": "lenalee-lee",
+      "critical": 4,
+      "review": 6,
+      "ok": 9,
+      "examples": [
+        "backflip score=1.58 w=0.69-2.73 h=0.73-1.22",
+        "cmd:1+2 score=1.57 w=0.70-1.82 h=0.93-1.77",
+        "cmd:1+3 score=1.53 w=0.64-1.76 h=0.93-1.77",
+        "sprint score=0.90 w=0.61-1.24 h=0.42-1.21"
+      ]
+    },
+    {
+      "character": "yasutora-sado",
+      "critical": 4,
+      "review": 1,
+      "ok": 7,
+      "examples": [
+        "chargeKi score=1.64 w=0.48-2.24 h=1.00-1.60",
+        "jump score=1.64 w=0.48-2.24 h=1.00-1.60",
+        "kickright score=1.64 w=0.48-2.24 h=1.00-1.60",
+        "sprint score=1.64 w=0.48-2.24 h=1.00-1.60"
+      ]
+    },
+    {
+      "character": "cygnus-hyoga",
+      "critical": 4,
+      "review": 0,
+      "ok": 8,
+      "examples": [
+        "chargeKi score=2.41 w=0.49-3.18 h=1.00-1.80",
+        "jump score=2.41 w=0.49-3.18 h=1.00-1.80",
+        "kickright score=2.41 w=0.49-3.18 h=1.00-1.80",
+        "sprint score=2.41 w=0.49-3.18 h=1.00-1.80"
+      ]
+    },
+    {
+      "character": "jaguar-junichi",
+      "critical": 3,
+      "review": 5,
+      "ok": 12,
+      "examples": [
+        "getupStand score=1.75 w=0.76-1.80 h=0.82-1.97",
+        "sprint score=1.52 w=0.48-1.80 h=0.60-1.74",
+        "crouchBlock score=1.05 w=0.55-1.30 h=0.35-1.21"
+      ]
+    },
+    {
+      "character": "dragon-shiryu",
+      "critical": 3,
+      "review": 4,
+      "ok": 5,
+      "examples": [
+        "chargeKi score=1.61 w=0.74-2.45 h=0.56-1.00",
+        "crouch score=1.61 w=0.74-2.45 h=0.56-1.00",
+        "kickleft score=1.61 w=0.74-2.45 h=0.56-1.00"
+      ]
+    },
+    {
+      "character": "kiro",
+      "critical": 3,
+      "review": 4,
+      "ok": 28,
+      "examples": [
+        "getupStand score=1.49 w=0.73-1.80 h=0.29-1.13",
+        "getupRollUp score=1.42 w=0.73-1.80 h=0.36-1.29",
+        "hitHeavy score=0.75 w=1.00-1.09 h=0.41-1.57"
+      ]
+    },
+    {
+      "character": "momotaro-tsurugi",
+      "critical": 3,
+      "review": 3,
+      "ok": 14,
+      "examples": [
+        "knockdown score=1.93 w=0.84-1.52 h=0.73-2.32",
+        "getupStand score=1.51 w=0.86-1.77 h=0.55-1.75",
+        "sprint score=1.41 w=0.86-1.55 h=0.22-1.34"
+      ]
+    },
+    {
+      "character": "gotenks",
+      "critical": 3,
+      "review": 1,
+      "ok": 11,
+      "examples": [
+        "knockdown score=1.81 w=1.00-1.80 h=0.88-2.03",
+        "sprint score=1.55 w=0.60-1.99 h=0.34-1.19",
+        "getupStand score=1.34 w=0.69-1.80 h=0.44-1.32"
+      ]
+    },
+    {
+      "character": "killua-zoldyck",
+      "critical": 3,
+      "review": 1,
+      "ok": 15,
+      "examples": [
+        "sprint score=1.51 w=0.69-1.00 h=0.51-2.09",
+        "getupStand score=1.39 w=0.63-1.17 h=0.70-2.01",
+        "jabright score=1.36 w=0.73-2.43 h=0.70-1.09"
+      ]
+    },
+    {
+      "character": "frieza",
+      "critical": 2,
+      "review": 7,
+      "ok": 6,
+      "examples": [
+        "sprint score=1.83 w=0.49-2.63 h=0.45-1.04",
+        "jableft score=1.40 w=0.88-2.27 h=0.80-1.34"
+      ]
+    },
+    {
+      "character": "sakura-haruno",
+      "critical": 2,
+      "review": 5,
+      "ok": 9,
+      "examples": [
+        "getupStand score=1.88 w=0.41-1.00 h=0.75-2.40",
+        "backflip score=1.41 w=0.73-1.78 h=0.33-1.20"
+      ]
+    },
+    {
+      "character": "nico-robin",
+      "critical": 2,
+      "review": 5,
+      "ok": 13,
+      "examples": [
+        "cmd:2+3 score=1.52 w=0.67-1.85 h=0.92-1.71",
+        "getupStand score=1.08 w=0.63-1.44 h=0.36-1.32"
+      ]
+    },
+    {
+      "character": "yusuke-urameshi",
+      "critical": 2,
+      "review": 4,
+      "ok": 11,
+      "examples": [
+        "backflip score=1.76 w=0.51-2.10 h=0.86-1.80",
+        "sprint score=1.15 w=0.47-1.52 h=0.41-1.16"
+      ]
+    },
+    {
+      "character": "kazuki-muto",
+      "critical": 2,
+      "review": 4,
+      "ok": 10,
+      "examples": [
+        "sprint score=1.36 w=0.88-1.58 h=0.29-1.26",
+        "backflip score=1.20 w=0.68-1.49 h=0.39-1.05"
+      ]
+    },
+    {
+      "character": "ichigo-kurosaki",
+      "critical": 2,
+      "review": 4,
+      "ok": 10,
+      "examples": [
+        "getupStand score=1.30 w=0.65-1.04 h=0.73-1.98",
+        "sprint score=0.71 w=1.00-1.12 h=0.43-1.58"
+      ]
+    },
+    {
+      "character": "yoh-asakura-power-sword",
+      "critical": 2,
+      "review": 4,
+      "ok": 12,
+      "examples": [
+        "knockdown score=1.16 w=0.56-1.00 h=0.41-1.09",
+        "sprint score=1.14 w=0.71-1.27 h=0.33-1.16"
+      ]
+    },
+    {
+      "character": "nami",
+      "critical": 2,
+      "review": 3,
+      "ok": 13,
+      "examples": [
+        "getupStand score=1.72 w=0.93-1.59 h=0.70-2.13",
+        "sprint score=1.14 w=0.45-1.40 h=0.41-1.24"
+      ]
+    },
+    {
+      "character": "gintoki-sakata",
+      "critical": 2,
+      "review": 3,
+      "ok": 11,
+      "examples": [
+        "knockdown score=1.70 w=1.00-1.78 h=0.88-1.94",
+        "sprint score=1.53 w=0.58-1.78 h=0.53-1.76"
+      ]
+    },
+    {
+      "character": "fuusuke",
+      "critical": 2,
+      "review": 3,
+      "ok": 13,
+      "examples": [
+        "knockdown score=1.65 w=1.00-1.57 h=0.90-2.07",
+        "sprint score=1.54 w=0.59-1.57 h=0.56-1.96"
+      ]
+    },
+    {
+      "character": "bobobo-bo-bo-bobo",
+      "critical": 2,
+      "review": 3,
+      "ok": 9,
+      "examples": [
+        "backflip score=1.41 w=0.46-1.64 h=0.41-1.73",
+        "getupStand score=1.34 w=0.67-1.00 h=0.87-1.98"
+      ]
+    },
+    {
+      "character": "train-heartnet",
+      "critical": 2,
+      "review": 3,
+      "ok": 12,
+      "examples": [
+        "sprint score=1.33 w=0.42-1.56 h=0.32-1.19",
+        "cmd:1+3 score=1.00 w=0.92-2.45 h=0.95-1.07"
+      ]
+    },
+    {
+      "character": "yugi-mutou",
+      "critical": 2,
+      "review": 2,
+      "ok": 14,
+      "examples": [
+        "sprint score=2.96 w=0.51-1.80 h=0.80-3.18",
+        "backflip score=2.17 w=0.71-3.51 h=0.64-1.27"
+      ]
+    },
+    {
+      "character": "gotenks-super-saiyan",
+      "critical": 2,
+      "review": 2,
+      "ok": 8,
+      "examples": [
+        "knockdown score=1.84 w=1.00-1.80 h=0.86-2.06",
+        "sprint score=1.75 w=0.60-2.37 h=0.37-1.35"
+      ]
+    },
+    {
+      "character": "nami-perfect-clima-tact",
+      "critical": 2,
+      "review": 2,
+      "ok": 14,
+      "examples": [
+        "backflip score=1.77 w=0.44-2.37 h=1.00-1.65",
+        "jableft score=1.52 w=0.90-1.44 h=0.98-1.95"
+      ]
+    },
+    {
+      "character": "gohan-super-saiyan",
+      "critical": 2,
+      "review": 2,
+      "ok": 10,
+      "examples": [
+        "sprint score=1.61 w=0.63-2.24 h=0.43-1.26",
+        "getupStand score=1.43 w=0.79-1.13 h=0.75-2.11"
+      ]
+    },
+    {
+      "character": "kenshiro",
+      "critical": 2,
+      "review": 2,
+      "ok": 15,
+      "examples": [
+        "backflip score=1.30 w=0.41-1.82 h=0.44-1.48",
+        "sprint score=0.94 w=0.76-1.00 h=0.30-1.40"
+      ]
+    },
+    {
+      "character": "rukia-kuchiki",
+      "critical": 2,
+      "review": 1,
+      "ok": 11,
+      "examples": [
+        "backflip score=1.51 w=0.71-2.13 h=0.75-1.53",
+        "sprint score=1.45 w=0.50-1.17 h=0.49-1.93"
+      ]
+    },
+    {
+      "character": "yoh-asakura",
+      "critical": 2,
+      "review": 1,
+      "ok": 13,
+      "examples": [
+        "sprint score=1.21 w=0.53-1.50 h=0.39-1.30",
+        "getupStand score=1.18 w=0.83-1.49 h=0.41-1.40"
+      ]
+    },
+    {
+      "character": "renji-abarai",
+      "critical": 2,
+      "review": 0,
+      "ok": 13,
+      "examples": [
+        "sprint score=1.74 w=0.64-1.18 h=0.54-2.22",
+        "getupStand score=1.29 w=0.92-1.58 h=0.36-1.48"
+      ]
+    },
+    {
+      "character": "kagura",
+      "critical": 1,
+      "review": 10,
+      "ok": 9,
+      "examples": [
+        "sprint score=1.18 w=0.63-1.15 h=0.30-1.34"
+      ]
+    },
+    {
+      "character": "kenshin-himura",
+      "critical": 1,
+      "review": 8,
+      "ok": 10,
+      "examples": [
+        "getupStand score=1.31 w=0.67-1.05 h=0.75-2.01"
+      ]
+    },
+    {
+      "character": "vegeta",
+      "critical": 1,
+      "review": 7,
+      "ok": 10,
+      "examples": [
+        "sprint score=1.49 w=0.58-2.04 h=0.44-1.16"
+      ]
+    },
+    {
+      "character": "toshiro-hitsugaya",
+      "critical": 1,
+      "review": 6,
+      "ok": 10,
+      "examples": [
+        "sprint score=1.31 w=0.84-1.50 h=0.29-1.26"
+      ]
+    },
+    {
+      "character": "kakashi-hatake",
+      "critical": 1,
+      "review": 5,
+      "ok": 11,
+      "examples": [
+        "sprint score=2.53 w=0.62-1.29 h=0.58-3.01"
+      ]
+    },
+    {
+      "character": "franky",
+      "critical": 1,
+      "review": 5,
+      "ok": 11,
+      "examples": [
+        "knockdown score=1.96 w=0.98-1.75 h=0.82-2.21"
+      ]
+    },
+    {
+      "character": "gon-freecss",
+      "critical": 1,
+      "review": 5,
+      "ok": 11,
+      "examples": [
+        "sprint score=1.58 w=0.51-1.42 h=0.53-2.06"
+      ]
+    },
+    {
+      "character": "hiei",
+      "critical": 1,
+      "review": 4,
+      "ok": 13,
+      "examples": [
+        "sprint score=1.77 w=0.54-1.21 h=0.57-2.31"
+      ]
+    },
+    {
+      "character": "anna-kyoyama",
+      "critical": 1,
+      "review": 4,
+      "ok": 6,
+      "examples": [
+        "sprint score=1.52 w=0.72-1.49 h=0.43-1.93"
+      ]
+    },
+    {
+      "character": "majin-buu",
+      "critical": 1,
+      "review": 4,
+      "ok": 13,
+      "examples": [
+        "cmd:1+2 score=0.93 w=0.72-1.31 h=0.37-1.11"
+      ]
+    },
+    {
+      "character": "sanji-vinsmoke",
+      "critical": 1,
+      "review": 3,
+      "ok": 15,
+      "examples": [
+        "sprint score=1.83 w=0.52-1.41 h=0.47-2.25"
+      ]
+    },
+    {
+      "character": "kinnikuman",
+      "critical": 1,
+      "review": 3,
+      "ok": 16,
+      "examples": [
+        "sprint score=1.66 w=0.57-1.70 h=0.39-1.97"
+      ]
+    },
+    {
+      "character": "vegito",
+      "critical": 1,
+      "review": 3,
+      "ok": 12,
+      "examples": [
+        "sprint score=1.53 w=0.53-2.14 h=0.45-1.38"
+      ]
+    },
+    {
+      "character": "roronoa-zoro",
+      "critical": 1,
+      "review": 3,
+      "ok": 15,
+      "examples": [
+        "sprint score=1.52 w=0.51-1.30 h=0.70-1.98"
+      ]
+    },
+    {
+      "character": "pegasus-seiya",
+      "critical": 1,
+      "review": 3,
+      "ok": 14,
+      "examples": [
+        "backflip score=1.52 w=0.70-2.25 h=0.70-1.47"
+      ]
+    },
+    {
+      "character": "near",
+      "critical": 1,
+      "review": 3,
+      "ok": 8,
+      "examples": [
+        "idle score=1.42 w=0.71-1.99 h=0.42-1.12"
+      ]
+    },
+    {
+      "character": "taikoubou",
+      "critical": 1,
+      "review": 3,
+      "ok": 13,
+      "examples": [
+        "sprint score=1.09 w=0.78-1.36 h=0.40-1.73"
+      ]
+    },
+    {
+      "character": "raoh",
+      "critical": 1,
+      "review": 2,
+      "ok": 13,
+      "examples": [
+        "sprint score=1.68 w=0.40-1.14 h=0.61-2.02"
+      ]
+    },
+    {
+      "character": "goku-super-saiyan",
+      "critical": 1,
+      "review": 2,
+      "ok": 12,
+      "examples": [
+        "sprint score=1.54 w=0.55-2.16 h=0.45-1.39"
+      ]
+    },
+    {
+      "character": "kurama",
+      "critical": 1,
+      "review": 2,
+      "ok": 14,
+      "examples": [
+        "sprint score=1.00 w=1.00-1.16 h=0.41-1.71"
+      ]
+    },
+    {
+      "character": "jotaro-kujo",
+      "critical": 1,
+      "review": 2,
+      "ok": 12,
+      "examples": [
+        "sprint score=0.86 w=0.64-1.14 h=0.42-1.27"
+      ]
+    },
+    {
+      "character": "gohan-super-saiyan-2",
+      "critical": 1,
+      "review": 1,
+      "ok": 12,
+      "examples": [
+        "sprint score=1.25 w=0.49-1.34 h=0.36-1.49"
+      ]
+    },
+    {
+      "character": "taizo-momote",
+      "critical": 1,
+      "review": 0,
+      "ok": 8,
+      "examples": [
+        "sprint score=1.18 w=0.86-1.62 h=0.36-1.17"
+      ]
+    },
+    {
+      "character": "dio",
+      "critical": 0,
+      "review": 6,
+      "ok": 6,
+      "examples": []
+    },
+    {
+      "character": "monkey-d-luffy-2nd-gear",
+      "critical": 0,
+      "review": 5,
+      "ok": 10,
+      "examples": []
+    },
+    {
+      "character": "dr-mashirito",
+      "critical": 0,
+      "review": 5,
+      "ok": 9,
+      "examples": []
+    },
+    {
+      "character": "monkey-d-luffy",
+      "critical": 0,
+      "review": 4,
+      "ok": 12,
+      "examples": []
+    },
+    {
+      "character": "sven-vollfied",
+      "critical": 0,
+      "review": 4,
+      "ok": 7,
+      "examples": []
+    },
+    {
+      "character": "vegeta-super-saiyan",
+      "critical": 0,
+      "review": 4,
+      "ok": 12,
+      "examples": []
+    },
+    {
+      "character": "goku",
+      "critical": 0,
+      "review": 4,
+      "ok": 11,
+      "examples": []
+    },
+    {
+      "character": "eve",
+      "critical": 0,
+      "review": 4,
+      "ok": 10,
+      "examples": []
+    },
+    {
+      "character": "riven",
+      "critical": 0,
+      "review": 3,
+      "ok": 29,
+      "examples": []
+    },
+    {
+      "character": "allen-walker",
+      "critical": 0,
+      "review": 3,
+      "ok": 8,
+      "examples": []
+    },
+    {
+      "character": "ryotsu-kankichi",
+      "critical": 0,
+      "review": 2,
+      "ok": 17,
+      "examples": []
+    },
+    {
+      "character": "piccolo",
+      "critical": 0,
+      "review": 2,
+      "ok": 13,
+      "examples": []
+    },
+    {
+      "character": "neuro-nogami",
+      "critical": 0,
+      "review": 2,
+      "ok": 16,
+      "examples": []
+    },
+    {
+      "character": "heihachi-edajima",
+      "critical": 0,
+      "review": 2,
+      "ok": 17,
+      "examples": []
+    },
+    {
+      "character": "don-patch-poppa-rocks",
+      "critical": 0,
+      "review": 1,
+      "ok": 14,
+      "examples": []
+    },
+    {
+      "character": "arale-norimaki",
+      "critical": 0,
+      "review": 0,
+      "ok": 13,
+      "examples": []
+    },
+    {
+      "character": "caramelman-j",
+      "critical": 0,
+      "review": 0,
+      "ok": 14,
+      "examples": []
+    }
+  ],
+  "criticalSequences": [
+    {
+      "character": "yugi-mutou",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 2.959852433145868,
+      "min_width_ratio": 0.5086103848060618,
+      "max_width_ratio": 1.7999541987422272,
+      "min_height_ratio": 0.8033420188059364,
+      "max_height_ratio": 3.1798799139005323
+    },
+    {
+      "character": "kakashi-hatake",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 2.534427474660239,
+      "min_width_ratio": 0.6184683369739187,
+      "max_width_ratio": 1.2860443111240851,
+      "min_height_ratio": 0.5827743665786952,
+      "max_height_ratio": 3.0055084768445903
+    },
+    {
+      "character": "cygnus-hyoga",
+      "animation": "chargeKi",
+      "frames": 7,
+      "score": 2.409890369421741,
+      "min_width_ratio": 0.4923458429335728,
+      "max_width_ratio": 3.183133518178623,
+      "min_height_ratio": 0.9997499487074273,
+      "max_height_ratio": 1.8000102585145672
+    },
+    {
+      "character": "cygnus-hyoga",
+      "animation": "jump",
+      "frames": 7,
+      "score": 2.409890369421741,
+      "min_width_ratio": 0.4923458429335728,
+      "max_width_ratio": 3.183133518178623,
+      "min_height_ratio": 0.9997499487074273,
+      "max_height_ratio": 1.8000102585145672
+    },
+    {
+      "character": "cygnus-hyoga",
+      "animation": "kickright",
+      "frames": 7,
+      "score": 2.409890369421741,
+      "min_width_ratio": 0.4923458429335728,
+      "max_width_ratio": 3.183133518178623,
+      "min_height_ratio": 0.9997499487074273,
+      "max_height_ratio": 1.8000102585145672
+    },
+    {
+      "character": "cygnus-hyoga",
+      "animation": "sprint",
+      "frames": 7,
+      "score": 2.409890369421741,
+      "min_width_ratio": 0.4923458429335728,
+      "max_width_ratio": 3.183133518178623,
+      "min_height_ratio": 0.9997499487074273,
+      "max_height_ratio": 1.8000102585145672
+    },
+    {
+      "character": "yugi-mutou",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 2.1675390695200596,
+      "min_width_ratio": 0.7145218325298073,
+      "max_width_ratio": 3.507879132682338,
+      "min_height_ratio": 0.637188410089343,
+      "max_height_ratio": 1.2663260772989782
+    },
+    {
+      "character": "franky",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.958372982810377,
+      "min_width_ratio": 0.9825944398149408,
+      "max_width_ratio": 1.7509909473283367,
+      "min_height_ratio": 0.8244074294284168,
+      "max_height_ratio": 2.214523414413375
+    },
+    {
+      "character": "momotaro-tsurugi",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.931551394021409,
+      "min_width_ratio": 0.8448819483570571,
+      "max_width_ratio": 1.520760292976432,
+      "min_height_ratio": 0.7320857605395685,
+      "max_height_ratio": 2.31909521823555
+    },
+    {
+      "character": "sakura-haruno",
+      "animation": "getupStand",
+      "frames": 9,
+      "score": 1.8828535995616837,
+      "min_width_ratio": 0.4111227997765172,
+      "max_width_ratio": 1.0000100667931728,
+      "min_height_ratio": 0.7497479010639141,
+      "max_height_ratio": 2.395982279427594
+    },
+    {
+      "character": "gotenks-super-saiyan",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.8355078881062767,
+      "min_width_ratio": 0.9999924500381273,
+      "max_width_ratio": 1.7999713101448835,
+      "min_height_ratio": 0.855102074716367,
+      "max_height_ratio": 2.0555251020193466
+    },
+    {
+      "character": "sanji-vinsmoke",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.8347148405981846,
+      "min_width_ratio": 0.5203549533406485,
+      "max_width_ratio": 1.4071041001842215,
+      "min_height_ratio": 0.4708552489372433,
+      "max_height_ratio": 2.2469278126025736
+    },
+    {
+      "character": "frieza",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.8271656670628154,
+      "min_width_ratio": 0.48834177480744445,
+      "max_width_ratio": 2.62974645607936,
+      "min_height_ratio": 0.45068220658480057,
+      "max_height_ratio": 1.03516945012361
+    },
+    {
+      "character": "gotenks",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.8093017371960491,
+      "min_width_ratio": 0.9999899333081665,
+      "max_width_ratio": 1.7999848999622499,
+      "min_height_ratio": 0.8844404600516028,
+      "max_height_ratio": 2.0293107972186992
+    },
+    {
+      "character": "nami-perfect-clima-tact",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.7736682817585556,
+      "min_width_ratio": 0.44294002585949666,
+      "max_width_ratio": 2.371169976461227,
+      "min_height_ratio": 0.9997787475830578,
+      "max_height_ratio": 1.6509662958818194
+    },
+    {
+      "character": "hiei",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.7694951050358445,
+      "min_width_ratio": 0.5428756225666734,
+      "max_width_ratio": 1.211611010023984,
+      "min_height_ratio": 0.5707685552916758,
+      "max_height_ratio": 2.3128604785758484
+    },
+    {
+      "character": "yusuke-urameshi",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.7584603014962543,
+      "min_width_ratio": 0.5107711138310892,
+      "max_width_ratio": 2.096674826601387,
+      "min_height_ratio": 0.8614669189570572,
+      "max_height_ratio": 1.800455405535422
+    },
+    {
+      "character": "gotenks-super-saiyan",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.7517215866167006,
+      "min_width_ratio": 0.6014696820106415,
+      "max_width_ratio": 2.3695938827302423,
+      "min_height_ratio": 0.37003474302144485,
+      "max_height_ratio": 1.3451395711033904
+    },
+    {
+      "character": "jaguar-junichi",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.7502766894005723,
+      "min_width_ratio": 0.7616706009069724,
+      "max_width_ratio": 1.7999979867427005,
+      "min_height_ratio": 0.8188740613191753,
+      "max_height_ratio": 1.970277897354952
+    },
+    {
+      "character": "renji-abarai",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.7367574071773837,
+      "min_width_ratio": 0.6399625535084694,
+      "max_width_ratio": 1.1782760017817282,
+      "min_height_ratio": 0.5416478778529331,
+      "max_height_ratio": 2.2207349392824653
+    },
+    {
+      "character": "nami",
+      "animation": "getupStand",
+      "frames": 8,
+      "score": 1.7166862600076636,
+      "min_width_ratio": 0.9294371684266688,
+      "max_width_ratio": 1.5896242085023709,
+      "min_height_ratio": 0.7001635201427086,
+      "max_height_ratio": 2.133746734906241
+    },
+    {
+      "character": "seto-kaiba",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.6995825698065614,
+      "min_width_ratio": 0.4992987736543818,
+      "max_width_ratio": 2.290166821427428,
+      "min_height_ratio": 0.37451752304989544,
+      "max_height_ratio": 1.3546157495864486
+    },
+    {
+      "character": "seto-kaiba",
+      "animation": "jump",
+      "frames": 8,
+      "score": 1.6995825698065614,
+      "min_width_ratio": 0.4992987736543818,
+      "max_width_ratio": 2.290166821427428,
+      "min_height_ratio": 0.37451752304989544,
+      "max_height_ratio": 1.3546157495864486
+    },
+    {
+      "character": "gintoki-sakata",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.6966986779097875,
+      "min_width_ratio": 1.0,
+      "max_width_ratio": 1.77995601032801,
+      "min_height_ratio": 0.8771081323354668,
+      "max_height_ratio": 1.9362400717129815
+    },
+    {
+      "character": "raoh",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.67740634444579,
+      "min_width_ratio": 0.39713720575578676,
+      "max_width_ratio": 1.143089381791461,
+      "min_height_ratio": 0.6111400312337325,
+      "max_height_ratio": 2.015688667899262
+    },
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "animation": "crouchBlock",
+      "frames": 8,
+      "score": 1.6662759161753424,
+      "min_width_ratio": 0.8229269937446216,
+      "max_width_ratio": 1.593058190620455,
+      "min_height_ratio": 0.5981001803069614,
+      "max_height_ratio": 2.0879810018030693
+    },
+    {
+      "character": "kinnikuman",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.6594497913590613,
+      "min_width_ratio": 0.5693269380791087,
+      "max_width_ratio": 1.703712837650801,
+      "min_height_ratio": 0.391431171679929,
+      "max_height_ratio": 1.9733320887685808
+    },
+    {
+      "character": "fuusuke",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.6492186946462764,
+      "min_width_ratio": 0.9999773463516299,
+      "max_width_ratio": 1.574690337212141,
+      "min_height_ratio": 0.8954525980782178,
+      "max_height_ratio": 2.069404492318992
+    },
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.645710918937882,
+      "min_width_ratio": 0.8457481900173232,
+      "max_width_ratio": 1.52221564863565,
+      "min_height_ratio": 0.3585733050419319,
+      "max_height_ratio": 2.032381529756492
+    },
+    {
+      "character": "yasutora-sado",
+      "animation": "chargeKi",
+      "frames": 5,
+      "score": 1.6418585558232748,
+      "min_width_ratio": 0.48411732222194337,
+      "max_width_ratio": 2.2444903235522977,
+      "min_height_ratio": 0.999993588387287,
+      "max_height_ratio": 1.595164361691896
+    },
+    {
+      "character": "yasutora-sado",
+      "animation": "jump",
+      "frames": 5,
+      "score": 1.6418585558232748,
+      "min_width_ratio": 0.48411732222194337,
+      "max_width_ratio": 2.2444903235522977,
+      "min_height_ratio": 0.999993588387287,
+      "max_height_ratio": 1.595164361691896
+    },
+    {
+      "character": "yasutora-sado",
+      "animation": "kickright",
+      "frames": 5,
+      "score": 1.6418585558232748,
+      "min_width_ratio": 0.48411732222194337,
+      "max_width_ratio": 2.2444903235522977,
+      "min_height_ratio": 0.999993588387287,
+      "max_height_ratio": 1.595164361691896
+    },
+    {
+      "character": "yasutora-sado",
+      "animation": "sprint",
+      "frames": 5,
+      "score": 1.6418585558232748,
+      "min_width_ratio": 0.48411732222194337,
+      "max_width_ratio": 2.2444903235522977,
+      "min_height_ratio": 0.999993588387287,
+      "max_height_ratio": 1.595164361691896
+    },
+    {
+      "character": "gohan-super-saiyan",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.6146935593633887,
+      "min_width_ratio": 0.6335154955399639,
+      "max_width_ratio": 2.240214363783802,
+      "min_height_ratio": 0.4294350589068925,
+      "max_height_ratio": 1.2589122742500412
+    },
+    {
+      "character": "dragon-shiryu",
+      "animation": "chargeKi",
+      "frames": 5,
+      "score": 1.61465778203328,
+      "min_width_ratio": 0.7412835825070275,
+      "max_width_ratio": 2.4504426387704012,
+      "min_height_ratio": 0.5556078012289607,
+      "max_height_ratio": 1.0000854929201175
+    },
+    {
+      "character": "dragon-shiryu",
+      "animation": "crouch",
+      "frames": 5,
+      "score": 1.61465778203328,
+      "min_width_ratio": 0.7412835825070275,
+      "max_width_ratio": 2.4504426387704012,
+      "min_height_ratio": 0.5556078012289607,
+      "max_height_ratio": 1.0000854929201175
+    },
+    {
+      "character": "dragon-shiryu",
+      "animation": "kickleft",
+      "frames": 5,
+      "score": 1.61465778203328,
+      "min_width_ratio": 0.7412835825070275,
+      "max_width_ratio": 2.4504426387704012,
+      "min_height_ratio": 0.5556078012289607,
+      "max_height_ratio": 1.0000854929201175
+    },
+    {
+      "character": "seto-kaiba",
+      "animation": "crouchBlock",
+      "frames": 8,
+      "score": 1.5879702521377952,
+      "min_width_ratio": 0.8934230237847947,
+      "max_width_ratio": 2.3124993933275744,
+      "min_height_ratio": 0.4995293838587496,
+      "max_height_ratio": 1.0493352073865287
+    },
+    {
+      "character": "seto-kaiba",
+      "animation": "kickright",
+      "frames": 8,
+      "score": 1.5879702521377952,
+      "min_width_ratio": 0.8934230237847947,
+      "max_width_ratio": 2.3124993933275744,
+      "min_height_ratio": 0.4995293838587496,
+      "max_height_ratio": 1.0493352073865287
+    },
+    {
+      "character": "seto-kaiba",
+      "animation": "sidestepRight",
+      "frames": 8,
+      "score": 1.5879702521377952,
+      "min_width_ratio": 0.8934230237847947,
+      "max_width_ratio": 2.3124993933275744,
+      "min_height_ratio": 0.4995293838587496,
+      "max_height_ratio": 1.0493352073865287
+    },
+    {
+      "character": "gon-freecss",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.5795142714591526,
+      "min_width_ratio": 0.508000583874004,
+      "max_width_ratio": 1.4166142354522258,
+      "min_height_ratio": 0.5334534934920105,
+      "max_height_ratio": 2.057989621783555
+    },
+    {
+      "character": "lenalee-lee",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.5760051864305913,
+      "min_width_ratio": 0.6905210342908124,
+      "max_width_ratio": 2.7268325415767523,
+      "min_height_ratio": 0.7317093385154604,
+      "max_height_ratio": 1.216800909053237
+    },
+    {
+      "character": "lenalee-lee",
+      "animation": "cmd:1+2",
+      "frames": 7,
+      "score": 1.5667070529244773,
+      "min_width_ratio": 0.6992462657458184,
+      "max_width_ratio": 1.8201018745841269,
+      "min_height_ratio": 0.9279906423874559,
+      "max_height_ratio": 1.7746459281740012
+    },
+    {
+      "character": "gotenks",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.5532047415449164,
+      "min_width_ratio": 0.5970579382155877,
+      "max_width_ratio": 1.9934001493885105,
+      "min_height_ratio": 0.3428353480881901,
+      "max_height_ratio": 1.1895705976458621
+    },
+    {
+      "character": "fuusuke",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.542129454203784,
+      "min_width_ratio": 0.5933644946852024,
+      "max_width_ratio": 1.574690337212141,
+      "min_height_ratio": 0.5619128685289794,
+      "max_height_ratio": 1.9623152518764995
+    },
+    {
+      "character": "goku-super-saiyan",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.541658955203254,
+      "min_width_ratio": 0.5468131125584089,
+      "max_width_ratio": 2.1576475343817023,
+      "min_height_ratio": 0.4529295654257672,
+      "max_height_ratio": 1.3869714195366947
+    },
+    {
+      "character": "vegito",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.5344627261199515,
+      "min_width_ratio": 0.5339766330260411,
+      "max_width_ratio": 2.1394540527282406,
+      "min_height_ratio": 0.4492097055169929,
+      "max_height_ratio": 1.3755754779621645
+    },
+    {
+      "character": "gintoki-sakata",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.528449230751927,
+      "min_width_ratio": 0.5812424817422729,
+      "max_width_ratio": 1.77995601032801,
+      "min_height_ratio": 0.5277275193081369,
+      "max_height_ratio": 1.760475624555121
+    },
+    {
+      "character": "lenalee-lee",
+      "animation": "cmd:1+3",
+      "frames": 9,
+      "score": 1.5280208420167047,
+      "min_width_ratio": 0.6391284385907655,
+      "max_width_ratio": 1.755192804473971,
+      "min_height_ratio": 0.9279906423874559,
+      "max_height_ratio": 1.774905159332322
+    },
+    {
+      "character": "nico-robin",
+      "animation": "cmd:2+3",
+      "frames": 13,
+      "score": 1.5209959395781933,
+      "min_width_ratio": 0.6683727296827913,
+      "max_width_ratio": 1.8506581688136727,
+      "min_height_ratio": 0.9224024470496478,
+      "max_height_ratio": 1.7106010382899897
+    },
+    {
+      "character": "jaguar-junichi",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.52069719856369,
+      "min_width_ratio": 0.4791837597587924,
+      "max_width_ratio": 1.8001429527802806,
+      "min_height_ratio": 0.5977473010907365,
+      "max_height_ratio": 1.7406114268955215
+    },
+    {
+      "character": "roronoa-zoro",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.5205258475526282,
+      "min_width_ratio": 0.5057582346782636,
+      "max_width_ratio": 1.3000070467906903,
+      "min_height_ratio": 0.6967847744002441,
+      "max_height_ratio": 1.9760707883595863
+    },
+    {
+      "character": "anna-kyoyama",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.5202181911807329,
+      "min_width_ratio": 0.718944806706447,
+      "max_width_ratio": 1.485122650365296,
+      "min_height_ratio": 0.4263145776271793,
+      "max_height_ratio": 1.9291446009615554
+    },
+    {
+      "character": "pegasus-seiya",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.5197448699713496,
+      "min_width_ratio": 0.6988692829692945,
+      "max_width_ratio": 2.2506856384861784,
+      "min_height_ratio": 0.7031653222640403,
+      "max_height_ratio": 1.4693334868796424
+    },
+    {
+      "character": "nami-perfect-clima-tact",
+      "animation": "jableft",
+      "frames": 7,
+      "score": 1.5164147736793903,
+      "min_width_ratio": 0.8981222854669625,
+      "max_width_ratio": 1.4403494733239723,
+      "min_height_ratio": 0.9753374924364137,
+      "max_height_ratio": 1.9522050896850067
+    },
+    {
+      "character": "killua-zoldyck",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.5142957548466571,
+      "min_width_ratio": 0.6900054362051262,
+      "max_width_ratio": 1.0000251676163248,
+      "min_height_ratio": 0.5112113513136346,
+      "max_height_ratio": 2.0907990165697328
+    },
+    {
+      "character": "momotaro-tsurugi",
+      "animation": "getupStand",
+      "frames": 8,
+      "score": 1.5131490427230208,
+      "min_width_ratio": 0.8566618054506696,
+      "max_width_ratio": 1.771039202529483,
+      "min_height_ratio": 0.5526012030288978,
+      "max_height_ratio": 1.750525521205331
+    },
+    {
+      "character": "rukia-kuchiki",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.512734794671081,
+      "min_width_ratio": 0.7130132147964371,
+      "max_width_ratio": 2.129856480763598,
+      "min_height_ratio": 0.7464255056235066,
+      "max_height_ratio": 1.534820906212922
+    },
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "animation": "getupStand",
+      "frames": 8,
+      "score": 1.5100107704497079,
+      "min_width_ratio": 0.7622352004756562,
+      "max_width_ratio": 1.3718653202527884,
+      "min_height_ratio": 0.5166260317833328,
+      "max_height_ratio": 1.9868915782980348
+    },
+    {
+      "character": "kiro",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.4942125204256722,
+      "min_width_ratio": 0.733071599345665,
+      "max_width_ratio": 1.8000402667673336,
+      "min_height_ratio": 0.2858116396347281,
+      "max_height_ratio": 1.1335423197492165
+    },
+    {
+      "character": "vegeta",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.4861372646608844,
+      "min_width_ratio": 0.5789458684587017,
+      "max_width_ratio": 2.038434135303204,
+      "min_height_ratio": 0.43692321652103794,
+      "max_height_ratio": 1.1577594971427627
+    },
+    {
+      "character": "rukia-kuchiki",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.4537960123903462,
+      "min_width_ratio": 0.5002000800320129,
+      "max_width_ratio": 1.165261072982652,
+      "min_height_ratio": 0.49491769081121617,
+      "max_height_ratio": 1.933676060409554
+    },
+    {
+      "character": "gohan-super-saiyan",
+      "animation": "getupStand",
+      "frames": 8,
+      "score": 1.4267965100695075,
+      "min_width_ratio": 0.7929010761131077,
+      "max_width_ratio": 1.1344638057560474,
+      "min_height_ratio": 0.7490945501616955,
+      "max_height_ratio": 2.113967155737372
+    },
+    {
+      "character": "kiro",
+      "animation": "getupRollUp",
+      "frames": 6,
+      "score": 1.4245088173925942,
+      "min_width_ratio": 0.73306421981407,
+      "max_width_ratio": 1.8000221464990918,
+      "min_height_ratio": 0.3555044705068609,
+      "max_height_ratio": 1.2870991038642676
+    },
+    {
+      "character": "near",
+      "animation": "idle",
+      "frames": 5,
+      "score": 1.4211179501633464,
+      "min_width_ratio": 0.713660532193843,
+      "max_width_ratio": 1.9909075458871517,
+      "min_height_ratio": 0.4177465773689448,
+      "max_height_ratio": 1.118502380376019
+    },
+    {
+      "character": "bobobo-bo-bo-bobo",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.4112915819535896,
+      "min_width_ratio": 0.46272869311022624,
+      "max_width_ratio": 1.6394486165011843,
+      "min_height_ratio": 0.41252677186676845,
+      "max_height_ratio": 1.727622412052879
+    },
+    {
+      "character": "sakura-haruno",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.4088068256985635,
+      "min_width_ratio": 0.7324819395674443,
+      "max_width_ratio": 1.7774149538144977,
+      "min_height_ratio": 0.328477146590135,
+      "max_height_ratio": 1.1996828551965961
+    },
+    {
+      "character": "momotaro-tsurugi",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.408334777154262,
+      "min_width_ratio": 0.8605861894222566,
+      "max_width_ratio": 1.5490274210524035,
+      "min_height_ratio": 0.2210816754771801,
+      "max_height_ratio": 1.3445684193535372
+    },
+    {
+      "character": "frieza",
+      "animation": "jableft",
+      "frames": 7,
+      "score": 1.3987609791462134,
+      "min_width_ratio": 0.8760359948723806,
+      "max_width_ratio": 2.2695363565980022,
+      "min_height_ratio": 0.7999261227798357,
+      "max_height_ratio": 1.337039165187412
+    },
+    {
+      "character": "killua-zoldyck",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.3934788718709554,
+      "min_width_ratio": 0.6302901264395586,
+      "max_width_ratio": 1.1719114923089313,
+      "min_height_ratio": 0.7000836173024879,
+      "max_height_ratio": 2.0091529477346906
+    },
+    {
+      "character": "kazuki-muto",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.3645283940661277,
+      "min_width_ratio": 0.8801669184323488,
+      "max_width_ratio": 1.584227802905125,
+      "min_height_ratio": 0.28600828767694736,
+      "max_height_ratio": 1.2643536345179973
+    },
+    {
+      "character": "killua-zoldyck",
+      "animation": "jabright",
+      "frames": 8,
+      "score": 1.3586084295057548,
+      "min_width_ratio": 0.7277496396304144,
+      "max_width_ratio": 2.427843375107323,
+      "min_height_ratio": 0.7048275955586392,
+      "max_height_ratio": 1.0914013609746946
+    },
+    {
+      "character": "bobobo-bo-bo-bobo",
+      "animation": "getupStand",
+      "frames": 8,
+      "score": 1.3399321491932095,
+      "min_width_ratio": 0.6696027925073424,
+      "max_width_ratio": 1.0000931171338043,
+      "min_height_ratio": 0.8708171308575514,
+      "max_height_ratio": 1.975028824697615
+    },
+    {
+      "character": "gotenks",
+      "animation": "getupStand",
+      "frames": 9,
+      "score": 1.3356586761679525,
+      "min_width_ratio": 0.6947798644002959,
+      "max_width_ratio": 1.800003020037952,
+      "min_height_ratio": 0.4443431358548187,
+      "max_height_ratio": 1.3170897826015315
+    },
+    {
+      "character": "train-heartnet",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.3302513582429147,
+      "min_width_ratio": 0.4190322179917749,
+      "max_width_ratio": 1.5587989791715247,
+      "min_height_ratio": 0.3183293109620203,
+      "max_height_ratio": 1.1928197785193824
+    },
+    {
+      "character": "toshiro-hitsugaya",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.3128211160845762,
+      "min_width_ratio": 0.8356185124745545,
+      "max_width_ratio": 1.5041427634124591,
+      "min_height_ratio": 0.28966454196289937,
+      "max_height_ratio": 1.2614764648198087
+    },
+    {
+      "character": "kenshin-himura",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.3101946707851435,
+      "min_width_ratio": 0.6656231282998546,
+      "max_width_ratio": 1.0452932560913617,
+      "min_height_ratio": 0.7455719018417264,
+      "max_height_ratio": 2.0055785477650563
+    },
+    {
+      "character": "ichigo-kurosaki",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.3037478164498544,
+      "min_width_ratio": 0.6484707256063496,
+      "max_width_ratio": 1.0425841390313504,
+      "min_height_ratio": 0.7271156155716337,
+      "max_height_ratio": 1.980130251813664
+    },
+    {
+      "character": "kenshiro",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.3020146325600008,
+      "min_width_ratio": 0.4136278674596432,
+      "max_width_ratio": 1.817135089209856,
+      "min_height_ratio": 0.4446764209659126,
+      "max_height_ratio": 1.4816020674750736
+    },
+    {
+      "character": "renji-abarai",
+      "animation": "getupStand",
+      "frames": 8,
+      "score": 1.286454364035523,
+      "min_width_ratio": 0.9178708120179764,
+      "max_width_ratio": 1.5790550142993567,
+      "min_height_ratio": 0.36097864454409095,
+      "max_height_ratio": 1.4797609538647287
+    },
+    {
+      "character": "gohan-super-saiyan-2",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.249375141669752,
+      "min_width_ratio": 0.49028028647576705,
+      "max_width_ratio": 1.3442256438757594,
+      "min_height_ratio": 0.35645668644478773,
+      "max_height_ratio": 1.48779524742085
+    },
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "animation": "knockdown",
+      "frames": 12,
+      "score": 1.2337970916485088,
+      "min_width_ratio": 0.5971989721550183,
+      "max_width_ratio": 1.0749725757735134,
+      "min_height_ratio": 0.3078835250584803,
+      "max_height_ratio": 1.228579993916729
+    },
+    {
+      "character": "yoh-asakura",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.2146079792531532,
+      "min_width_ratio": 0.5288848424329642,
+      "max_width_ratio": 1.500455226291521,
+      "min_height_ratio": 0.38566515652175926,
+      "max_height_ratio": 1.3035205495038813
+    },
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.2062438033050769,
+      "min_width_ratio": 0.34406036706905624,
+      "max_width_ratio": 1.4533742913599845,
+      "min_height_ratio": 0.3914099764534894,
+      "max_height_ratio": 1.0000819318825453
+    },
+    {
+      "character": "kazuki-muto",
+      "animation": "backflip",
+      "frames": 8,
+      "score": 1.2025493836022894,
+      "min_width_ratio": 0.6763753312345707,
+      "max_width_ratio": 1.4858736162384838,
+      "min_height_ratio": 0.3889747861408008,
+      "max_height_ratio": 1.0509331186941955
+    },
+    {
+      "character": "kagura",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.1790565362768533,
+      "min_width_ratio": 0.627010279737813,
+      "max_width_ratio": 1.1520649020380387,
+      "min_height_ratio": 0.29513229588045903,
+      "max_height_ratio": 1.3416732023445888
+    },
+    {
+      "character": "yoh-asakura",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.1782749744715026,
+      "min_width_ratio": 0.8259253716452161,
+      "max_width_ratio": 1.4866764774352326,
+      "min_height_ratio": 0.41373091198963696,
+      "max_height_ratio": 1.3983309667937125
+    },
+    {
+      "character": "taizo-momote",
+      "animation": "sprint",
+      "frames": 9,
+      "score": 1.177954748399738,
+      "min_width_ratio": 0.8618921523047173,
+      "max_width_ratio": 1.6169338265515825,
+      "min_height_ratio": 0.3588705475312116,
+      "max_height_ratio": 1.1735863606994728
+    },
+    {
+      "character": "yoh-asakura-power-sword",
+      "animation": "knockdown",
+      "frames": 4,
+      "score": 1.1566673248938886,
+      "min_width_ratio": 0.5555449921566764,
+      "max_width_ratio": 1.0,
+      "min_height_ratio": 0.41000567981210573,
+      "max_height_ratio": 1.0853251052812019
+    },
+    {
+      "character": "yusuke-urameshi",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.1485214885576127,
+      "min_width_ratio": 0.47054527628966025,
+      "max_width_ratio": 1.5161391977670733,
+      "min_height_ratio": 0.4123313456685912,
+      "max_height_ratio": 1.1604230520960759
+    },
+    {
+      "character": "yoh-asakura-power-sword",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.1448918217071482,
+      "min_width_ratio": 0.7078273602231656,
+      "max_width_ratio": 1.2741134745456262,
+      "min_height_ratio": 0.33041176215895246,
+      "max_height_ratio": 1.157540107172385
+    },
+    {
+      "character": "nami",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.1398649061010726,
+      "min_width_ratio": 0.45014695008997213,
+      "max_width_ratio": 1.3980214078057132,
+      "min_height_ratio": 0.41147692384494416,
+      "max_height_ratio": 1.2381299453360957
+    },
+    {
+      "character": "taikoubou",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 1.0896681751385882,
+      "min_width_ratio": 0.7847396632861062,
+      "max_width_ratio": 1.3560007046329619,
+      "min_height_ratio": 0.40314295073061224,
+      "max_height_ratio": 1.7302127523588111
+    },
+    {
+      "character": "nico-robin",
+      "animation": "getupStand",
+      "frames": 7,
+      "score": 1.0764874929907933,
+      "min_width_ratio": 0.6307723521270661,
+      "max_width_ratio": 1.4395791517821561,
+      "min_height_ratio": 0.36434499807850046,
+      "max_height_ratio": 1.3167950534291597
+    },
+    {
+      "character": "naruto-uzumaki-nine-tails-kyubi",
+      "animation": "hitLight",
+      "frames": 9,
+      "score": 1.0635429112083608,
+      "min_width_ratio": 0.6782029724838622,
+      "max_width_ratio": 1.1967881214642975,
+      "min_height_ratio": 0.42953530530132195,
+      "max_height_ratio": 1.2412521554582834
+    },
+    {
+      "character": "jaguar-junichi",
+      "animation": "crouchBlock",
+      "frames": 8,
+      "score": 1.0481971833125776,
+      "min_width_ratio": 0.5477134876687058,
+      "max_width_ratio": 1.29513299285251,
+      "min_height_ratio": 0.34817472408619904,
+      "max_height_ratio": 1.2090548571295656
+    },
+    {
+      "character": "kurama",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 0.9994297983195675,
+      "min_width_ratio": 0.9999748326370363,
+      "max_width_ratio": 1.1581013741380177,
+      "min_height_ratio": 0.41068978127296885,
+      "max_height_ratio": 1.7112339738367568
+    },
+    {
+      "character": "train-heartnet",
+      "animation": "cmd:1+3",
+      "frames": 9,
+      "score": 0.9962719324529717,
+      "min_width_ratio": 0.9198006170163943,
+      "max_width_ratio": 2.4496698197394253,
+      "min_height_ratio": 0.9546146031810211,
+      "max_height_ratio": 1.0710650406093165
+    },
+    {
+      "character": "kenshiro",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 0.9429540124083924,
+      "min_width_ratio": 0.7604588190292122,
+      "max_width_ratio": 1.0000251655895795,
+      "min_height_ratio": 0.3049356961740804,
+      "max_height_ratio": 1.3995898041033639
+    },
+    {
+      "character": "majin-buu",
+      "animation": "cmd:1+2",
+      "frames": 10,
+      "score": 0.9324621768246646,
+      "min_width_ratio": 0.7240287122589351,
+      "max_width_ratio": 1.3051387018439138,
+      "min_height_ratio": 0.36743604428168364,
+      "max_height_ratio": 1.105728561896105
+    },
+    {
+      "character": "lenalee-lee",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 0.9017176496956658,
+      "min_width_ratio": 0.6124671886285791,
+      "max_width_ratio": 1.2397476261303093,
+      "min_height_ratio": 0.4207120371271866,
+      "max_height_ratio": 1.2144809009184436
+    },
+    {
+      "character": "jotaro-kujo",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 0.8580264587555468,
+      "min_width_ratio": 0.6391133547914627,
+      "max_width_ratio": 1.1386364608682742,
+      "min_height_ratio": 0.4187305283695755,
+      "max_height_ratio": 1.2655064984108004
+    },
+    {
+      "character": "kiro",
+      "animation": "hitHeavy",
+      "frames": 5,
+      "score": 0.7528374000050215,
+      "min_width_ratio": 1.0,
+      "max_width_ratio": 1.0943098024411728,
+      "min_height_ratio": 0.41141848145968213,
+      "max_height_ratio": 1.5748793407886992
+    },
+    {
+      "character": "ichigo-kurosaki",
+      "animation": "sprint",
+      "frames": 10,
+      "score": 0.7113018554008336,
+      "min_width_ratio": 0.9999295381223923,
+      "max_width_ratio": 1.1224677762734727,
+      "min_height_ratio": 0.4293507178917041,
+      "max_height_ratio": 1.57500118963675
+    }
+  ]
+}
