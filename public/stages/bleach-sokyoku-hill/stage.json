@@ -58,7 +58,8 @@
     ],
     "width": 10,
     "depth": 7,
-    "y": 0
+    "y": 0,
+    "rotationY": 0
   },
   "spawns": {
     "p1": [
@@ -101,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      0,
+      -4.9,
       0
     ],
     "scale": [
-      1,
-      1,
-      1
+      8,
+      8,
+      8
     ],
     "rotation": [
       0,
@@ -133,7 +134,8 @@
         18
       ],
       "radius": 10.7018
-    }
+    },
+    "decorativeProps": []
   },
   "mugen": {
     "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/bleach_soul_reaper___sokyoku_hill_by_o_dv89_o_dhvokgo/Bleach Soul Reaper - Sōkyoku Hill/SokyokuHill.blend",

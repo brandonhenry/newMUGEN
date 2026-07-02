@@ -58,7 +58,8 @@
     ],
     "width": 10,
     "depth": 7,
-    "y": 0
+    "y": 0,
+    "rotationY": 0
   },
   "spawns": {
     "p1": [
@@ -101,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      0,
+      -0.2,
       0
     ],
     "scale": [
-      1,
-      1,
-      1
+      8,
+      8,
+      8
     ],
     "rotation": [
       0,
@@ -133,7 +134,8 @@
         17.997
       ],
       "radius": 13.4811
-    }
+    },
+    "decorativeProps": []
   },
   "mugen": {
     "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/dbfz___island_stage__xps__by_higuys920_deoeu8d/Island Stage.obj",

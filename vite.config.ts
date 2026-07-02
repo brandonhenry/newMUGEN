@@ -1225,7 +1225,9 @@ function koreDevManifestWriter() {
           const stageDir = resolve(server.config.root, 'public', 'stages', stageId);
           await mkdir(stageDir, { recursive: true });
           const stage = sanitizeStageManifestPayload(payload.stage ?? {}, stageId);
-          await writeFile(resolve(stageDir, 'stage.json'), `${JSON.stringify(stage, null, 2)}\n`, 'utf8');
+          const serializedStage = `${JSON.stringify(stage, null, 2)}\n`;
+          await writeFile(resolve(stageDir, 'stage.json'), serializedStage, 'utf8');
+          await writeFile(resolve(stageDir, 'manifest.json'), serializedStage, 'utf8');
           await updateStageIndex(server.config.root, stageId);
           response.statusCode = 200;
           response.setHeader('Content-Type', 'application/json');

@@ -58,7 +58,8 @@
     ],
     "width": 10,
     "depth": 7,
-    "y": 0
+    "y": 0,
+    "rotationY": 0
   },
   "spawns": {
     "p1": [
@@ -101,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      0,
+      -0.65,
       0
     ],
     "scale": [
-      1,
-      1,
-      1
+      8,
+      8,
+      8
     ],
     "rotation": [
       0,
@@ -133,7 +134,8 @@
         14.1683
       ],
       "radius": 11.5638
-    }
+    },
+    "decorativeProps": []
   },
   "mugen": {
     "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/stage_temple_of_poseidon_mmd_by_poseidon2julian_dctf82m/Templo de Poseidon.pmd",

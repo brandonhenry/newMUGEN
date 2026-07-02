@@ -58,7 +58,8 @@
     ],
     "width": 10,
     "depth": 7,
-    "y": 0
+    "y": 0,
+    "rotationY": 0
   },
   "spawns": {
     "p1": [
@@ -101,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      0,
+      -1.63,
       0
     ],
     "scale": [
-      1,
-      1,
-      1
+      8,
+      8,
+      8
     ],
     "rotation": [
       0,
@@ -133,7 +134,8 @@
         18
       ],
       "radius": 10.7994
-    }
+    },
+    "decorativeProps": []
   },
   "mugen": {
     "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/nunsc___living_room__day__xps_blend_by_o_dv89_o_dgj4w1b/NUNSC - Living Room (Day)/LivingRoomDay.blend",

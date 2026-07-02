@@ -58,7 +58,8 @@
     ],
     "width": 10,
     "depth": 7,
-    "y": 0
+    "y": 0,
+    "rotationY": 0
   },
   "spawns": {
     "p1": [
@@ -101,13 +102,13 @@
     "format": "glb",
     "position": [
       0,
-      0,
+      -1.78,
       0
     ],
     "scale": [
-      1,
-      1,
-      1
+      8,
+      8,
+      8
     ],
     "rotation": [
       0,
@@ -133,7 +134,8 @@
         15.3741
       ],
       "radius": 11.9367
-    }
+    },
+    "decorativeProps": []
   },
   "mugen": {
     "sourceDef": "/Users/brandonhenry/Documents/Kore/Stages/deviantart_download_batches/extracted_assets/_mmd__rumble_roses_xx___canyon_arena___dl_by_mrwhitefolks_d9118w3/RRXX_Canyon_Stage/RRXX_Canyon_Final.pmx",

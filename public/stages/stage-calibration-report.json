@@ -1,0 +1,518 @@
+{
+  "referenceStageId": "bleach-bleach-soul-reaper-karakura-town-intersection",
+  "reference": {
+    "model": {
+      "position": [
+        0,
+        -1.85,
+        0
+      ],
+      "scale": [
+        8,
+        8,
+        8
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    "fightPlane": {
+      "center": [
+        0.25,
+        0,
+        -3.1
+      ],
+      "width": 10,
+      "depth": 7,
+      "y": 0,
+      "rotationY": 0
+    }
+  },
+  "statuses": [
+    {
+      "stageId": "one-piece-alabasta-plaza",
+      "name": "Alabasta Plaza",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -3.79 from GLB surface material \"TextMask\"."
+    },
+    {
+      "stageId": "one-piece-alvida-ship-inner",
+      "name": "Alvida Ship Inner",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -5.68 from GLB surface material \"5_floor01_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-amazon-lily-boa-s-bathhouse",
+      "name": "Amazon Lily Boa's Bathhouse",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.34 from GLB surface material \"46_nverguoyuchi_601.0_0_0\"."
+    },
+    {
+      "stageId": "naruto-opbw-amazon-lily-city",
+      "name": "Amazon Lily City",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"5_sky_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-amazon-lily-entrance",
+      "name": "Amazon Lily Entrance",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -4.71 from GLB surface material \"5_water_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-arlong-park-stage",
+      "name": "Arlong Park Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.53 from GLB surface material \"005_alonggongyuanrun_001_3b\"."
+    },
+    {
+      "stageId": "naruto-boruto-room-day",
+      "name": "Boruto Room Day",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.15 from GLB surface material \"3_aircurtain_1.0_0_0\"."
+    },
+    {
+      "stageId": "rumble-roses-rrxx-canyon-stage",
+      "name": "Canyon Arena",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.78 from GLB surface material \"Object01: Multimaterial.048\"."
+    },
+    {
+      "stageId": "dbz-capsule-corp-stage",
+      "name": "Capsule Corp Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.17 from GLB surface material \"ModelGround.material04_Material022\"."
+    },
+    {
+      "stageId": "dbz-cave-stage",
+      "name": "Cave Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.31 using safety-clamped bounds fallback after rejecting an extreme surface offset (-13.93)."
+    },
+    {
+      "stageId": "one-punch-man-opmje-combat-experimentation-room-2",
+      "name": "Combat Experimentation Room 2",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"5_floor_1.0_0_0\"."
+    },
+    {
+      "stageId": "naruto-corner-scene",
+      "name": "Corner Scene",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -6.15 from bounds fallback; needs visual spot-check."
+    },
+    {
+      "stageId": "dbz-crystal-time-rift-xps",
+      "name": "Crystal Time Rift",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"crystal02.023\"."
+    },
+    {
+      "stageId": "dbz-demon-realm-time-rift-xps",
+      "name": "Demon Realm Time Rift",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"crystal02.023\"."
+    },
+    {
+      "stageId": "one-piece-dressrosa",
+      "name": "Dressrosa",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -7.82 from GLB surface material \"5_landmark_1.0_0_0\"."
+    },
+    {
+      "stageId": "one-piece-dressrosa-birdcage",
+      "name": "Dressrosa Birdcage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.31 from GLB surface material \"5_ground01A_1_0_0\"."
+    },
+    {
+      "stageId": "general-shaman-king-funbari-chronicle-funbari-hell",
+      "name": "Funbari Hell",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.61 from GLB surface material \"mat_bg005_base_05\"."
+    },
+    {
+      "stageId": "shaman-king-funbari-hell",
+      "name": "Funbari Hell",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.61 from GLB surface material \"mat_bg005_base_05\"."
+    },
+    {
+      "stageId": "dbz-future-planet-tuffle",
+      "name": "Future Planet Tuffle",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.22 from GLB surface material \"7_0002-Base\"."
+    },
+    {
+      "stageId": "dbz-galactic-arena-stage",
+      "name": "Galactic Arena Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -8.48 from GLB surface material \"Modelpart1-Seat Set A.material59_Material034\"."
+    },
+    {
+      "stageId": "my-hero-academia-gym-gamma",
+      "name": "Gym Gamma",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.22 from GLB surface material \"mat_bg1200_01\"."
+    },
+    {
+      "stageId": "jujutsu-kaisen-haunted-house-level",
+      "name": "Haunted House Level",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.74 from GLB surface material \"5_walls_1.0_0_0\"."
+    },
+    {
+      "stageId": "dbz-hell-stage",
+      "name": "Hell Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -6.75 from GLB surface material \"Stone\"."
+    },
+    {
+      "stageId": "dbz-hell-stage-2",
+      "name": "Hell Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -3.05 from GLB surface material \"ground\"."
+    },
+    {
+      "stageId": "dbz-hero-city",
+      "name": "Hero City",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.16 from GLB surface material \"5_Road_1.0_0_0\"."
+    },
+    {
+      "stageId": "dbz-hero-stadium",
+      "name": "Hero Stadium",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.72 from GLB surface material \"Polygon.005\"."
+    },
+    {
+      "stageId": "my-hero-academia-hospital-room",
+      "name": "Hospital Room",
+      "status": "source/model issue",
+      "notes": "Bulk scale/drop applied, but Play view still shows sky/background instead of room geometry. Likely source/model visibility or import issue."
+    },
+    {
+      "stageId": "one-piece-impel-down-room-3",
+      "name": "Impel Down Room 3",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.59 from GLB surface material \"SHJY_Room_03_01\"."
+    },
+    {
+      "stageId": "dbz-inside-buu-stage",
+      "name": "Inside Buu Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -3.61 using safety-clamped bounds fallback after rejecting an extreme surface offset (-35.1)."
+    },
+    {
+      "stageId": "dbz-dbfz-island-stage-xps-by-higuys920-deoeu8d",
+      "name": "Island Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.2 from GLB surface material \"ModelFar_Material003\"."
+    },
+    {
+      "stageId": "dbz-island-stage",
+      "name": "Island Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.2 from GLB surface material \"ModelFar_Material003\"."
+    },
+    {
+      "stageId": "general-kame-house-mod",
+      "name": "Kame House Mod",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.94 from GLB surface material \"Model001_Material048\"."
+    },
+    {
+      "stageId": "bleach-bleach-soul-reaper-karakura-town-intersection",
+      "name": "Karakura Town Intersection",
+      "status": "pass",
+      "notes": "Reference transform preserved. Characters stand on the road and the lane aligns with the street."
+    },
+    {
+      "stageId": "naruto-naruto-slugfest-konohagakure-entrance",
+      "name": "Konohagakure Entrance",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -6.68 using safety-clamped bounds fallback after rejecting an extreme surface offset (-23.2)."
+    },
+    {
+      "stageId": "naruto-kumogakure-night-upper",
+      "name": "Kumogakure Night Upper",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"[XFBIN] sp31a_back_01_sp31a_back_ground001\"."
+    },
+    {
+      "stageId": "bleach-kurosaki-house",
+      "name": "Kurosaki House",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -3.68 from GLB surface material \"5_ceiling_1_0_0\"."
+    },
+    {
+      "stageId": "naruto-living-room-day",
+      "name": "Living Room Day",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.63 from GLB surface material \"3_aircurtain01_1.0_0_0\"."
+    },
+    {
+      "stageId": "jujutsu-kaisen-malevolent-shrine",
+      "name": "Malevolent Shrine",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -7.74 using safety-clamped bounds fallback after rejecting an extreme surface offset (-99.26)."
+    },
+    {
+      "stageId": "jujutsu-kaisen-malevolent-shrine-domain-expansion",
+      "name": "Malevolent Shrine Domain Expansion",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.98 from GLB surface material \"5_BoneSpikes_1_0_0\"."
+    },
+    {
+      "stageId": "dbz-nameless-planet-stage",
+      "name": "Nameless Planet Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"no6_wall01_2\"."
+    },
+    {
+      "stageId": "dbz-other-world-tournament",
+      "name": "Other World Tournament",
+      "status": "pass",
+      "notes": "Playable view is usable at the current scale and grounding."
+    },
+    {
+      "stageId": "dbz-planet-namek",
+      "name": "Planet Namek",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.69 from GLB surface material \"5_Sea_1_0_0\"."
+    },
+    {
+      "stageId": "dbz-planet-namek-dbfz",
+      "name": "Planet Namek",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.62 from GLB surface material \"5_part1-Ground_1_0_0\"."
+    },
+    {
+      "stageId": "dbz-planet-vampa-stage",
+      "name": "Planet Vampa Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.55 from GLB surface material \"whitewave\"."
+    },
+    {
+      "stageId": "dbz-planet-vegeta-lookout-stage",
+      "name": "Planet Vegeta Lookout Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.43 from GLB surface material \"0010-Planet Vegeta Stage\"."
+    },
+    {
+      "stageId": "naruto-prison-large",
+      "name": "Prison Large",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -9.12 from GLB surface material \"5_02_1.0_0_0\"."
+    },
+    {
+      "stageId": "one-piece-puffing-tom",
+      "name": "Puffing Tom",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.52 from GLB surface material \"5_shuizhiduB2_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-punk-hazard-small-room",
+      "name": "Punk Hazard Small Room",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -5.18 from GLB surface material \"5_building01_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-rain-dinners",
+      "name": "Rain Dinners",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.57 from GLB surface material \"013_yudi_002\"."
+    },
+    {
+      "stageId": "dbz-rocky-field-stage-afternoon",
+      "name": "Rocky Field Stage Afternoon",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -3.76 from GLB surface material \"ModelBase Ground_Material001\"."
+    },
+    {
+      "stageId": "one-piece-seatrain-inside-01",
+      "name": "Seatrain Inside 01",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.17 from GLB surface material \"5_floor_1.0_0_0\"."
+    },
+    {
+      "stageId": "one-piece-seatrain-inside-02",
+      "name": "Seatrain Inside 02",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.02 from GLB surface material \"5_floor_1.0_0_0.001\"."
+    },
+    {
+      "stageId": "bleach-bleach-soul-reaper-seireitei-bridge",
+      "name": "Seireitei Bridge",
+      "status": "pass",
+      "notes": "Characters stand on the bridge tiles. Current yaw follows the bridge direction."
+    },
+    {
+      "stageId": "bleach-seireitei-bridge",
+      "name": "Seireitei Bridge",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.62 from GLB surface material \"5_Ground02_1_0_0\"."
+    },
+    {
+      "stageId": "bleach-seireitei-shopping-district",
+      "name": "Seireitei Shopping District",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.13 from GLB surface material \"5_Floor01A_1_0_0\"."
+    },
+    {
+      "stageId": "bleach-senkaimon",
+      "name": "Senkaimon",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -7.55 using safety-clamped bounds fallback after rejecting an extreme surface offset (-12.01)."
+    },
+    {
+      "stageId": "jujutsu-kaisen-sewer-level-2",
+      "name": "Sewer Level 2",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.71 from GLB surface material \"5_ground_1.0_0_0\"."
+    },
+    {
+      "stageId": "bleach-sokyoku-hill",
+      "name": "Sokyoku Hill",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -4.9 using safety-clamped bounds fallback after rejecting an extreme surface offset (-47.46)."
+    },
+    {
+      "stageId": "bleach-soul-society-courtyard-battle-scene",
+      "name": "Soul Society Courtyard Battle Scene",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.05 from GLB surface material \"5_Floor01B_1_0_0\"."
+    },
+    {
+      "stageId": "dbz-space-stage",
+      "name": "Space Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"ModelSpace_Material017\"."
+    },
+    {
+      "stageId": "general-temple-of-poseidon",
+      "name": "Temple Of Poseidon",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.65 from GLB surface material \"材質17\"."
+    },
+    {
+      "stageId": "naruto-temple-stage",
+      "name": "Temple Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -11.74 from GLB surface material \"5_CeilingReflection_1.0_0_0\"."
+    },
+    {
+      "stageId": "naruto-thunder-burger-inside",
+      "name": "Thunder Burger Inside",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.57 from GLB surface material \"3_art009_1_0_0\"."
+    },
+    {
+      "stageId": "dbz-tournament-of-power-damaged",
+      "name": "Tournament Of Power Damaged",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -4.03 using safety-clamped bounds fallback after rejecting an extreme surface offset (22.21)."
+    },
+    {
+      "stageId": "dbz-tropical-stage",
+      "name": "Tropical Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -6.59 from GLB surface material \"cgfxShader1SG\"."
+    },
+    {
+      "stageId": "bleach-urahara-secret-training-ground",
+      "name": "Urahara Secret Training Ground",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -3.66 from GLB surface material \"5_ground_1_0_0\"."
+    },
+    {
+      "stageId": "bleach-urahara-s-shop",
+      "name": "Urahara's Shop",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.47 from GLB surface material \"5_buildings_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-utan-sonar",
+      "name": "Utan Sonar",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y 0 from GLB surface material \"5_Ship_1_0_0\"."
+    },
+    {
+      "stageId": "naruto-uzumaki-house",
+      "name": "Uzumaki House",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -8.94 from GLB surface material \"3_asphalt02_1.0_0_0\"."
+    },
+    {
+      "stageId": "dbz-volcano-stage",
+      "name": "Volcano Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -7.09 from GLB surface material \"ModelLava Fall.material01_Material018\"."
+    },
+    {
+      "stageId": "one-piece-wano",
+      "name": "Wano",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.64 from GLB surface material \"5_stonewall_1_0_0\"."
+    },
+    {
+      "stageId": "one-piece-opfp-wano-side-street",
+      "name": "Wano Side Street",
+      "status": "needs yaw review",
+      "notes": "Bulk scale/drop applied and fighters are visible, but the default lane is still centered over water. Needs lane center shifted onto the nearby grass/stone playable area."
+    },
+    {
+      "stageId": "one-piece-warehouse-2",
+      "name": "Warehouse 2",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -11.18 from GLB surface material \"5_CangKu02_1_0_0.003\"."
+    },
+    {
+      "stageId": "dbz-wasteland-stage",
+      "name": "Wasteland Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -1.41 from GLB surface material \"ModelGround Far A.material02_Material002\"."
+    },
+    {
+      "stageId": "dbz-west-city-dbfz",
+      "name": "West City",
+      "status": "source/model issue",
+      "notes": "After bulk scale/drop, Play view is dominated by a close white/foreground surface and fighters are not visible. Needs per-stage lane/model offset or source mesh cleanup."
+    },
+    {
+      "stageId": "dbz-west-city-damaged",
+      "name": "West City Damaged",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.22 from GLB surface material \"5_Ground_1.0_0_0\"."
+    },
+    {
+      "stageId": "dbz-world-tournament-stage",
+      "name": "World Tournament Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -0.08 from GLB surface material \"5_StageWall01.001_1_0_0\"."
+    },
+    {
+      "stageId": "dbz-yamcha-desert",
+      "name": "Yamcha Desert",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -8.04 from GLB surface material \"rock_a\"."
+    },
+    {
+      "stageId": "dbz-zeno-expo-arena-stage",
+      "name": "Zeno Expo Arena Stage",
+      "status": "bulk-normalized",
+      "notes": "Bulk normalized to model scale 8 and model Y -2.79 from GLB surface material \"Cosmos\"."
+    }
+  ],
+  "updatedAt": "2026-07-02T01:49:10.619Z",
+  "bulkNormalization": {
+    "modelScale": 8,
+    "yOffset": "GLB walkable-surface sample at fight lane, preferring non-water/non-sky materials; bounds fallback when no surface is found",
+    "changedFileCount": 116,
+    "normalizedStageCount": 76,
+    "safetyClamp": "Rejected non-pass model Y values outside [-12, 0] and replaced them with bounds fallback.",
+    "safetyFixedCount": 8
+  }
+}
