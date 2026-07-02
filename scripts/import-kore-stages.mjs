@@ -232,6 +232,7 @@ function firstBuiltInFallback(stage) {
 function buildStageDefinition(root, folder, relativeFolder, source, usedIds) {
   const parts = relativeFolder.split(sep).filter(Boolean);
   const category = inferCategory(parts, folder, source);
+  const categoryLabel = displayCategoryName(category);
   const folderName = displayNameSource(folder, source);
   const override = knownStageOverride(category, folderName);
   const cleanName = override?.name ?? cleanStageName(folderName);
@@ -241,8 +242,8 @@ function buildStageDefinition(root, folder, relativeFolder, source, usedIds) {
   return {
     id,
     name: cleanName,
-    subtitle: override?.subtitle ?? `${titleize(category)} model arena`,
-    category: titleize(category),
+    subtitle: override?.subtitle ?? `${categoryLabel} model arena`,
+    category: categoryLabel,
     source: source.path,
     sourceKind,
     sourceFolder: folder,
@@ -250,12 +251,20 @@ function buildStageDefinition(root, folder, relativeFolder, source, usedIds) {
     thumbnail: findThumbnail(folder),
     manifest: override?.manifest?.(id) ?? genericManifest(id, {
       name: cleanName,
-      subtitle: `${titleize(category)} model arena`,
+      subtitle: `${categoryLabel} model arena`,
       source,
       sourceFolder: folder,
-      category: titleize(category)
+      category: categoryLabel
     })
   };
+}
+
+function displayCategoryName(category) {
+  const labels = {
+    dbz: 'Dragon Ball',
+    'one-piece': 'One Piece'
+  };
+  return labels[category] ?? titleize(category);
 }
 
 function inferCategory(parts, folder, source) {
@@ -983,18 +992,19 @@ function cleanStageName(value) {
     .replace(/^DBZ Kakarot\s+/i, '')
     .replace(/^SDBH WM\s+/i, '')
     .replace(/\s+(?:XPS|OBJ|BLEND|FBX|MMD)(?:\s+(?:OBJ|BLEND|FBX|MMD))*\s+By\s+.+$/i, '')
-    .replace(/\s+(?:XPS|OBJ|BLEND|FBX|MMD)(?:\s+(?:Stage|Pack))?$/i, '')
+    .replace(/\s+(?:DBFZ|DBS|DBXV2?|SDBH|MHA|MHAUI|JJBTS|KKRT|NUNS3|NUNS4|NUNSC|OPBW|OPBR|OPDP|OPFP|OPMJE|XPS|OBJ|BLEND|FBX|MMD)(?:\s+(?:Stage|Pack))?$/i, '')
     .replace(/\s+By\s+.+$/i, '')
     .replace(/\s+For\s+XPS$/i, '')
     .replace(/\s+Stage\s+DL$/i, ' Stage')
     .replace(/\s+DL$/i, '')
     .replace(/\s+d(?=[a-z0-9]*\d)[a-z0-9]{5,}$/i, '')
     .replace(/\(([^)]+)\)/g, '$1')
+    .replace(/\b(?:DBXV2?Mod|DBFZ|DBS|DBXV2?|SDBH|MHAUI|MHA|JJBTS|KKRT|NUNS3|NUNS4|NUNSC|OPBW|OPBR|OPDP|OPFP|OPMJE|XPS|OBJ|BLEND|FBX|MMD)\b/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
   name = name
     .replace(/'S\b/g, "'s")
-    .replace(/\s+(?:XPS|OBJ|BLEND|FBX|MMD)$/i, '')
+    .replace(/\s+(?:DBFZ|DBS|DBXV2?|SDBH|MHA|MHAUI|JJBTS|KKRT|NUNS3|NUNS4|NUNSC|OPBW|OPBR|OPDP|OPFP|OPMJE|XPS|OBJ|BLEND|FBX|MMD)$/i, '')
     .trim();
   if (name.toLowerCase() === 'gm namek') name = 'Namek';
   if (name.toLowerCase() === 'templo de poseidon') name = 'Temple Of Poseidon';
