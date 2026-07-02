@@ -1034,5 +1034,41 @@
   "modelScale": {
     "width": 1.08,
     "height": 1.28
+  },
+  "animationFrameScales": {
+    "knockdown": {
+      "31": {
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      }
+    },
+    "getupStand": {
+      "31": {
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      }
+    }
   }
 }

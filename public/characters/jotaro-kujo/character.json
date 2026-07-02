@@ -1008,5 +1008,21 @@
   "modelScale": {
     "width": 0.92,
     "height": 1.21
+  },
+  "animationFrameScales": {
+    "knockdown": {
+      "35": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      }
+    },
+    "getupStand": {
+      "35": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      }
+    }
   }
 }
