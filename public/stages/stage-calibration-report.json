@@ -697,7 +697,27 @@
       ]
     }
   ],
-  "ignoredStages": [
-    "my-hero-academia-hospital-room"
+  "ignoredStages": [],
+  "deletedStages": [
+    {
+      "id": "my-hero-academia-hospital-room",
+      "reason": "User requested deletion; blank/non-useful in game."
+    },
+    {
+      "id": "dbz-hero-stadium",
+      "reason": "Matched blank/flat failed-stage pattern during delete sweep."
+    },
+    {
+      "id": "dbz-nameless-planet-stage",
+      "reason": "Matched blank/flat failed-stage pattern during delete sweep."
+    },
+    {
+      "id": "dbz-planet-vampa-stage",
+      "reason": "Matched blank/flat failed-stage pattern during delete sweep."
+    },
+    {
+      "id": "dbz-tropical-stage",
+      "reason": "Matched blank/flat failed-stage pattern during delete sweep."
+    }
   ]
 }
