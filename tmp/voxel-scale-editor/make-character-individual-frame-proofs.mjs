@@ -164,9 +164,19 @@ function colorDistance(a, b) {
 
 async function buildHeadPalette(buffer) {
   const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
-  const maxY = Math.max(1, Math.min(info.height, Math.round(info.height * 0.42)));
+  let topY = info.height;
+  for (let y = 0; y < info.height; y += 1) {
+    for (let x = 0; x < info.width; x += 1) {
+      if (data[(y * info.width + x) * 4 + 3] > 24) {
+        topY = y;
+        break;
+      }
+    }
+    if (topY !== info.height) break;
+  }
+  const maxY = Math.max(topY + 1, Math.min(info.height, topY + Math.max(28, Math.round(info.height * 0.18))));
   const counts = new Map();
-  for (let y = 0; y < maxY; y += 1) {
+  for (let y = topY; y < maxY; y += 1) {
     for (let x = 0; x < info.width; x += 1) {
       const offset = (y * info.width + x) * 4;
       if (data[offset + 3] <= 24) continue;
@@ -180,11 +190,11 @@ async function buildHeadPalette(buffer) {
   }
   return [...counts.entries()]
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 16)
+    .slice(0, 20)
     .map(([key]) => key.split(',').map(Number));
 }
 
-async function detectHeadColorTop(buffer, palette) {
+async function detectHeadColorTop(buffer, palette, targetTop, idleHeadGuide) {
   if (!palette.length) return null;
   const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const rowScores = Array.from({ length: info.height }, () => 0);
@@ -197,13 +207,19 @@ async function detectHeadColorTop(buffer, palette) {
       if (palette.some((color) => colorDistance(rgb, color) <= threshold)) rowScores[y] += 1;
     }
   }
-  const minWindowScore = Math.max(12, Math.round(info.width * 0.12));
+  const minWindowScore = Math.max(8, Math.round(info.width * 0.08));
+  const candidates = [];
   for (let y = 0; y < info.height; y += 1) {
     let windowScore = 0;
     for (let yy = y; yy < Math.min(info.height, y + 6); yy += 1) windowScore += rowScores[yy];
-    if (windowScore >= minWindowScore) return y;
+    if (windowScore >= minWindowScore) candidates.push({ y, windowScore });
   }
-  return null;
+  if (!candidates.length) return null;
+  const localIdleGuide = idleHeadGuide - targetTop;
+  const nearGuide = candidates
+    .filter((candidate) => Math.abs(candidate.y - localIdleGuide) <= 70)
+    .sort((a, b) => Math.abs(a.y - localIdleGuide) - Math.abs(b.y - localIdleGuide) || b.windowScore - a.windowScore);
+  return (nearGuide[0] ?? candidates[0]).y;
 }
 
 function svgGuideGrid(width, height, baseline, idleHeadGuide, targetLeft, targetWidth, detectedHeadY) {
@@ -226,7 +242,8 @@ function svgGuideGrid(width, height, baseline, idleHeadGuide, targetLeft, target
   svg += svgText('too tall', targetLeft + targetWidth + 12, top + 4, 10, '#ef4444');
   svg += svgText('too short', targetLeft + targetWidth + 12, bottom + 4, 10, '#38bdf8');
   if (Number.isFinite(detectedHeadY)) {
-    svg += `<line x1="${targetLeft - 8}" y1="${detectedHeadY}" x2="${targetLeft + targetWidth + 8}" y2="${detectedHeadY}" stroke="#ec4899" stroke-width="2" stroke-dasharray="10 3" opacity="0.95"/>`;
+    svg += `<line x1="${targetLeft - 10}" y1="${detectedHeadY}" x2="${targetLeft + targetWidth + 10}" y2="${detectedHeadY}" stroke="#020617" stroke-width="6" opacity="0.95"/>`;
+    svg += `<line x1="${targetLeft - 10}" y1="${detectedHeadY}" x2="${targetLeft + targetWidth + 10}" y2="${detectedHeadY}" stroke="#ec4899" stroke-width="4" stroke-dasharray="12 3" opacity="1"/>`;
     svg += svgText('auto head color', targetLeft + targetWidth + 12, detectedHeadY + 4, 10, '#ec4899');
   }
   svg += '</svg>';
@@ -284,7 +301,6 @@ for (const key of animationKeys) {
     const renderWidth = bounds.width * scale.effectiveWidth;
     const renderHeight = bounds.height * scale.effectiveHeight;
     const target = await renderFrame(characterId, frame, renderWidth, renderHeight, pixelsPerUnit);
-    const detectedHeadTop = await detectHeadColorTop(target.buffer, idleHeadPalette);
     const pad = 22;
     const gap = 34;
     const baselinePad = 34;
@@ -297,6 +313,7 @@ for (const key of animationKeys) {
     const idleTop = baseline - idleRendered.height;
     const targetTop = baseline - target.height;
     const idleHeadGuide = idleTop;
+    const detectedHeadTop = await detectHeadColorTop(target.buffer, idleHeadPalette, targetTop, idleHeadGuide);
     let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
     svg += '<rect width="100%" height="100%" fill="#080808"/>';
     svg += `<rect x="${pad - 8}" y="${baseline - idleRendered.height - 8}" width="${idleRendered.width + 16}" height="${idleRendered.height + 16}" fill="#101010" stroke="#3a3f48"/>`;

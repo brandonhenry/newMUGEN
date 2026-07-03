@@ -25,7 +25,7 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | # | Character | Status |
 |---:|---|---|
 | 1 | Allen Walker (`allen-walker`) | Restarted again under height-first/head-top lock rule; rechecking all 108 frames from the top. |
-| 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; restarted under strict head-top/head-width/head-volume rule after frame 086 correction. |
+| 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; restarted from top under multi-line ruler + auto head-color proof rules. |
 
 ## Strict Frame Checklist
 
@@ -139,3 +139,10 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `cmd:O+1` | 076 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | Same source/scale as jableft; verified by reuse check. |
 | Allen Walker | `cmd:O+1` | 077 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | Same source/scale as jableft; verified by reuse check. |
 | Allen Walker | `cmd:O+1` | 078 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | Same source/scale as jableft/win; verified by reuse check. |
+| Anna Kyoyama | `jabright` | 086 | fixed: slash/box reached high but ruler showed red head marker below idle | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; verified with multi-line ruler. |
+| Anna Kyoyama | `cmd:d/f+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; verified with multi-line ruler. |
+| Anna Kyoyama | `cmd:FC+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
+| Anna Kyoyama | `cmd:1+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
+| Anna Kyoyama | `cmd:f+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
+| Anna Kyoyama | `cmd:WS+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
+| Anna Kyoyama | `cmd:f+1` | 109 | fixed: crescent/box reached high but actual red head sat too low | pass: red head now lands near orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: crescent ignored; auto head line fooled by effect | pass | Increased to `1.50w/1.62h`; verified with multi-line ruler. |
