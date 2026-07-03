@@ -311,7 +311,8 @@ test('mobile touch controls drive movement and attacks', async ({ page }, testIn
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
 });
 
-test('opens training combo trials and shows counter-hit progress', async ({ page }) => {
+test('opens training combo trials and shows counter-hit progress', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Keyboard combo-trial route is covered by the desktop project');
   await startTraining(page);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Combo Trials' }).click();
@@ -325,5 +326,6 @@ test('opens training combo trials and shows counter-hit progress', async ({ page
   await page.waitForTimeout(260);
   await setKeys(page, trialKeys.reverse(), false);
 
+  await expect(page.getByTestId('last-impact-kind')).toHaveText('counterHit', { timeout: 5000 });
   await expect(page.locator('.counter-hit-line')).toContainText('Counter Hit', { timeout: 5000 });
 });

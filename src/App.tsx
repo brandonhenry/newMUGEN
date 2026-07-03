@@ -13244,6 +13244,8 @@ function FightScreen({
     [activeComboTrialId, comboTrials]
   );
   const [comboTrialProgress, setComboTrialProgress] = useState<ComboTrialProgress | null>(() => makeComboTrialProgress(activeComboTrial));
+  const activeComboTrialRef = useRef<ComboTrial | null>(activeComboTrial);
+  const comboTrialProgressRef = useRef<ComboTrialProgress | null>(comboTrialProgress);
   const isOnline = mode === 'online' || mode === 'private';
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
@@ -13339,10 +13341,21 @@ function FightScreen({
 
   useEffect(() => {
     const nextTrial = comboTrials.find((trial) => trial.id === activeComboTrialId) ?? comboTrials[0] ?? null;
+    const nextProgress = makeComboTrialProgress(nextTrial);
     setActiveComboTrialId(nextTrial?.id ?? null);
-    setComboTrialProgress(makeComboTrialProgress(nextTrial));
+    activeComboTrialRef.current = nextTrial;
+    comboTrialProgressRef.current = nextProgress;
+    setComboTrialProgress(nextProgress);
     seenTrialImpactEventIds.current.clear();
   }, [comboTrials, activeComboTrialId]);
+
+  useEffect(() => {
+    activeComboTrialRef.current = activeComboTrial;
+  }, [activeComboTrial]);
+
+  useEffect(() => {
+    comboTrialProgressRef.current = comboTrialProgress;
+  }, [comboTrialProgress]);
 
   useEffect(() => {
     const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
@@ -13519,7 +13532,11 @@ function FightScreen({
       if (seenTrialImpactEventIds.current.has(event.id)) return;
       seenTrialImpactEventIds.current.add(event.id);
       if (event.attackerSlot !== 1 || event.kind === 'block' || event.kind === 'clash') return;
-      setComboTrialProgress((current) => current ? advanceComboTrialProgress(current, activeComboTrial, event) : current);
+      setComboTrialProgress((current) => {
+        const next = current ? advanceComboTrialProgress(current, activeComboTrial, event) : current;
+        comboTrialProgressRef.current = next;
+        return next;
+      });
     });
   }, [activeComboTrial, comboTrialProgress, match.impactEvents, mode]);
 
@@ -14157,9 +14174,12 @@ function FightScreen({
               : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
           } else {
             if (mode === 'training') {
-              const currentStep = activeComboTrial && comboTrialProgress && !comboTrialProgress.completed
-                ? activeComboTrial.steps[comboTrialProgress.stepIndex]
+              const currentTrial = activeComboTrialRef.current;
+              const currentProgress = comboTrialProgressRef.current;
+              const currentStep = currentTrial && currentProgress && !currentProgress.completed
+                ? currentTrial.steps[currentProgress.stepIndex]
                 : null;
+              if (currentStep?.counterHit) primeCounterHitTrialDummy(matchRef.current);
               matchRef.current = {
                 ...matchRef.current,
                 trainingDummyInput: currentStep?.counterHit ? makeCounterHitTrialDummyInput(matchRef.current.fighters[1], matchRef.current.fighters[0]) : null
@@ -14254,12 +14274,18 @@ function FightScreen({
     seenTrialImpactEventIds.current.clear();
     matchRef.current = fresh;
     setMatch(fresh);
-    setComboTrialProgress(makeComboTrialProgress(trial));
+    const progress = makeComboTrialProgress(trial);
+    activeComboTrialRef.current = trial;
+    comboTrialProgressRef.current = progress;
+    setComboTrialProgress(progress);
   }, [activeComboTrial, cpuDifficulty, matchOptions, mode, p1, p2, prepareComboTrialMatch, resetTrackedMatchAnalytics, stage]);
 
   const selectComboTrial = useCallback((trial: ComboTrial) => {
+    const progress = makeComboTrialProgress(trial);
     setActiveComboTrialId(trial.id);
-    setComboTrialProgress(makeComboTrialProgress(trial));
+    activeComboTrialRef.current = trial;
+    comboTrialProgressRef.current = progress;
+    setComboTrialProgress(progress);
     seenTrialImpactEventIds.current.clear();
     const fresh = prepareComboTrialMatch(createMatch(p1, p2, stage, mode, cpuDifficulty, withFreshAiSeed({ ...matchOptions, playIntro: false })), trial);
     resetTrackedMatchAnalytics(fresh);
@@ -14267,8 +14293,8 @@ function FightScreen({
     setMatch(fresh);
   }, [cpuDifficulty, matchOptions, mode, p1, p2, prepareComboTrialMatch, resetTrackedMatchAnalytics, stage]);
 
-  const trainActiveComboTrial = useCallback((trial: ComboTrial | null = activeComboTrial) => {
-    restartTrainingTrial(trial ?? undefined);
+  const trainActiveComboTrial = useCallback(() => {
+    restartTrainingTrial(activeComboTrialRef.current ?? activeComboTrial ?? undefined);
     setPaused(false);
   }, [activeComboTrial, restartTrainingTrial]);
 
@@ -14571,7 +14597,7 @@ function ComboTrialPanel({
   onSelectTrial: (trial: ComboTrial) => void;
   onRetry: () => void;
   onBack: () => void;
-  onResume: (trial: ComboTrial | null) => void;
+  onResume: () => void;
 }) {
   const groupedTrials = comboTrialCategories.map((category) => ({
     category,
@@ -14639,7 +14665,7 @@ function ComboTrialPanel({
           <RotateCcw size={18} />
           Retry
         </button>
-        <button className="primary-button" onClick={() => onResume(activeTrial)}>
+        <button className="primary-button" onClick={onResume}>
           <Play size={18} />
           Train
         </button>
@@ -14782,17 +14808,45 @@ function makeCounterHitTrialDummyInput(dummy: FighterRuntime, attacker?: Fighter
   const input = emptyInputFrame();
   if (dummy.state === 'hit' || dummy.state === 'juggle' || dummy.state === 'knockdown' || dummy.state === 'getup') return input;
   if (dummy.state === 'attack' && dummy.currentMove && dummy.moveFrame <= dummy.currentMove.startupFrames + dummy.currentMove.activeFrames) {
-    input.special = true;
+    input[dummy.currentMove.input] = true;
     return input;
   }
   if (dummy.state === 'attack') return input;
+  const challengeMove = [...dummy.character.moves]
+    .filter((move) => move.damage > 0)
+    .sort((a, b) => b.startupFrames - a.startupFrames)[0];
+  const challengeInput = challengeMove?.input ?? 'special';
   if (attacker) {
     if (attacker.state !== 'attack' || !attacker.currentMove) return input;
-    const triggerFrame = Math.max(0, attacker.currentMove.startupFrames - 4);
+    const triggerFrame = Math.max(1, attacker.currentMove.startupFrames - (challengeMove?.startupFrames ?? 18) + 2);
     if (attacker.moveFrame < triggerFrame) return input;
   }
-  input.special = true;
+  input[challengeInput] = true;
   return input;
+}
+
+function primeCounterHitTrialDummy(match: MatchSnapshot) {
+  const attacker = match.fighters[0];
+  const dummy = match.fighters[1];
+  const move = attacker.currentMove;
+  if (!move || attacker.state !== 'attack') return;
+  if (dummy.state === 'hit' || dummy.state === 'juggle' || dummy.state === 'knockdown' || dummy.state === 'getup') return;
+  if (dummy.state === 'attack' && dummy.currentMove && dummy.moveFrame <= dummy.currentMove.startupFrames + dummy.currentMove.activeFrames) return;
+  const triggerFrame = Math.max(1, move.startupFrames - 2);
+  if (attacker.moveFrame < triggerFrame) return;
+  const challengeMove = [...dummy.character.moves]
+    .filter((candidate) => candidate.damage > 0)
+    .sort((a, b) => b.startupFrames - a.startupFrames)[0];
+  if (!challengeMove) return;
+  const frames = Math.max(1, challengeMove.startupFrames + challengeMove.activeFrames + challengeMove.recoveryFrames);
+  dummy.state = 'attack';
+  dummy.currentMove = challengeMove;
+  dummy.moveFrame = 1;
+  dummy.actionFramesRemaining = frames;
+  dummy.actionTimer = frames / 60;
+  dummy.hitConnected = true;
+  dummy.hitConfirmed = false;
+  dummy.whiffRecoveryApplied = false;
 }
 
 function mergeInputFrames(primary: InputFrame, secondary: InputFrame): InputFrame {
@@ -14834,7 +14888,7 @@ function FightDebug({
   frameInput: string;
 }) {
   const [p1, p2] = match.fighters;
-  const lastImpact = match.impactEvents.at(-1);
+  const lastImpact = match.impactEvents[match.impactEvents.length - 1];
   return (
     <div className="fight-debug" aria-hidden="true">
       <span data-testid="match-phase">{paused ? 'paused' : match.phase}</span>
