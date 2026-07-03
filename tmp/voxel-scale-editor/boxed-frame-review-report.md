@@ -1,12 +1,28 @@
 # KORE Boxed Frame Review Report
 
-Restarted with the compact black primary proof requested by the user.
+Fresh pass started with the corrected per-frame black-box workflow.
 
-Primary evidence: `tmp/voxel-scale-editor/character-review-sheets/<character>-black-primary.png`.
-Secondary evidence: `tmp/voxel-scale-editor/character-review-sheets/<character>-ghost-secondary.png` plus `tmp/voxel-scale-editor/family-ghost-sheets/ghost-difference-review/candidates.json`.
+Primary evidence: `tmp/voxel-scale-editor/character-review-sheets/<character>-black-boxes.png`.
+Motion-flow evidence: `tmp/voxel-scale-editor/character-review-sheets/<character>-black-primary.png`.
+Secondary evidence: `tmp/voxel-scale-editor/character-review-sheets/<character>-ghost-secondary.png`.
+
+Required visual checklist for every individual black-boxed frame:
+
+- Head size compared to idle.
+- Body volume compared to idle.
+- Laying/prone/curled body mass is not oversized.
+- Laying/prone frames break aspect ratio when needed: lower height, longer width, horizontal body length corresponding to idle standing height.
+- Feet/body support makes sense for the pose.
+- Weapons/effects do not drive body scale decisions.
+- Neighboring frames do not pop larger or smaller.
 
 ## Character Log
 
-| # | Character | Result |
+| # | Character | Status |
 |---:|---|---|
-| 1 | Allen Walker (`allen-walker`) | Reviewed compact black primary and white ghost secondary. Accepted wide arm/weapon command frames as reach, crouch as compact, and juggle/knockdown/getup/lose as intentional vertical/prone silhouettes. No manifest edits. |
+| 1 | Allen Walker (`allen-walker`) | In progress. |
+
+## Frame Decisions
+
+| Character | Move | Frame | Decision | Verified |
+|---|---|---:|---|---|
