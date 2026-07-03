@@ -72,16 +72,6 @@
     "crouch": [
       "/characters/sanji-vinsmoke/frames/frame-021.png"
     ],
-    "crouchBlock": [
-      "/characters/sanji-vinsmoke/frames/frame-090.png",
-      "/characters/sanji-vinsmoke/frames/frame-091.png",
-      "/characters/sanji-vinsmoke/frames/frame-092.png",
-      "/characters/sanji-vinsmoke/frames/frame-093.png",
-      "/characters/sanji-vinsmoke/frames/frame-095.png",
-      "/characters/sanji-vinsmoke/frames/frame-096.png",
-      "/characters/sanji-vinsmoke/frames/frame-097.png",
-      "/characters/sanji-vinsmoke/frames/frame-098.png"
-    ],
     "block": [
       "/characters/sanji-vinsmoke/frames/frame-015.png"
     ],
@@ -216,7 +206,6 @@
     "sidestepRight": 10,
     "jump": 8,
     "crouch": 5,
-    "crouchBlock": 5,
     "block": 5,
     "chargeKi": 6,
     "jableft": 10,
@@ -1447,48 +1436,6 @@
     },
     "crouch": {
       "21": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      }
-    },
-    "crouchBlock": {
-      "90": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "91": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "92": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "93": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "95": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "96": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "97": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "98": {
         "width": 0.98,
         "height": 0.72,
         "offsetX": 0

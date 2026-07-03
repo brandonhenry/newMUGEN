@@ -82,16 +82,6 @@
     "crouch": [
       "/characters/majin-buu/frames/frame-018.png"
     ],
-    "crouchBlock": [
-      "/characters/majin-buu/frames/frame-092.png",
-      "/characters/majin-buu/frames/frame-093.png",
-      "/characters/majin-buu/frames/frame-095.png",
-      "/characters/majin-buu/frames/frame-097.png",
-      "/characters/majin-buu/frames/frame-099.png",
-      "/characters/majin-buu/frames/frame-100.png",
-      "/characters/majin-buu/frames/frame-102.png",
-      "/characters/majin-buu/frames/frame-104.png"
-    ],
     "block": [
       "/characters/majin-buu/frames/frame-015.png"
     ],
@@ -235,7 +225,6 @@
     "sidestepRight": 10,
     "jump": 8,
     "crouch": 5,
-    "crouchBlock": 5,
     "block": 5,
     "chargeKi": 6,
     "jableft": 10,
@@ -1192,48 +1181,6 @@
     },
     "crouch": {
       "18": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      }
-    },
-    "crouchBlock": {
-      "92": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "93": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "95": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "97": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "99": {
-        "width": 0.98,
-        "height": 0.79,
-        "offsetX": 0
-      },
-      "100": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "102": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "104": {
         "width": 0.98,
         "height": 0.72,
         "offsetX": 0

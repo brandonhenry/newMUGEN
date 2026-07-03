@@ -66,16 +66,6 @@
     "crouch": [
       "/characters/kakashi-hatake/frames/frame-021.png"
     ],
-    "crouchBlock": [
-      "/characters/kakashi-hatake/frames/frame-089.png",
-      "/characters/kakashi-hatake/frames/frame-090.png",
-      "/characters/kakashi-hatake/frames/frame-091.png",
-      "/characters/kakashi-hatake/frames/frame-092.png",
-      "/characters/kakashi-hatake/frames/frame-094.png",
-      "/characters/kakashi-hatake/frames/frame-095.png",
-      "/characters/kakashi-hatake/frames/frame-096.png",
-      "/characters/kakashi-hatake/frames/frame-097.png"
-    ],
     "block": [
       "/characters/kakashi-hatake/frames/frame-015.png"
     ],
@@ -207,7 +197,6 @@
     "sidestepRight": 10,
     "jump": 8,
     "crouch": 5,
-    "crouchBlock": 5,
     "block": 5,
     "chargeKi": 6,
     "jableft": 10,
@@ -1135,48 +1124,6 @@
       "33": {
         "width": 0.29,
         "height": 0.29,
-        "offsetX": 0
-      }
-    },
-    "crouchBlock": {
-      "89": {
-        "width": 0.67,
-        "height": 0.55,
-        "offsetX": 0
-      },
-      "90": {
-        "width": 0.67,
-        "height": 0.49,
-        "offsetX": 0
-      },
-      "91": {
-        "width": 0.67,
-        "height": 0.49,
-        "offsetX": 0
-      },
-      "92": {
-        "width": 0.67,
-        "height": 0.49,
-        "offsetX": 0
-      },
-      "94": {
-        "width": 0.67,
-        "height": 0.49,
-        "offsetX": 0
-      },
-      "95": {
-        "width": 0.67,
-        "height": 0.49,
-        "offsetX": 0
-      },
-      "96": {
-        "width": 0.67,
-        "height": 0.49,
-        "offsetX": 0
-      },
-      "97": {
-        "width": 0.67,
-        "height": 0.49,
         "offsetX": 0
       }
     },

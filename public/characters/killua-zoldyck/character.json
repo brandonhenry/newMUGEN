@@ -78,16 +78,6 @@
     "crouch": [
       "/characters/killua-zoldyck/frames/frame-022.png"
     ],
-    "crouchBlock": [
-      "/characters/killua-zoldyck/frames/frame-091.png",
-      "/characters/killua-zoldyck/frames/frame-092.png",
-      "/characters/killua-zoldyck/frames/frame-093.png",
-      "/characters/killua-zoldyck/frames/frame-094.png",
-      "/characters/killua-zoldyck/frames/frame-096.png",
-      "/characters/killua-zoldyck/frames/frame-097.png",
-      "/characters/killua-zoldyck/frames/frame-098.png",
-      "/characters/killua-zoldyck/frames/frame-099.png"
-    ],
     "block": [
       "/characters/killua-zoldyck/frames/frame-015.png"
     ],
@@ -233,7 +223,6 @@
     "sidestepRight": 10,
     "jump": 8,
     "crouch": 5,
-    "crouchBlock": 5,
     "block": 5,
     "chargeKi": 6,
     "jableft": 10,
@@ -1499,48 +1488,6 @@
     },
     "crouch": {
       "22": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      }
-    },
-    "crouchBlock": {
-      "91": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "92": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "93": {
-        "width": 0.98,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "94": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "96": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "97": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "98": {
-        "width": 0.98,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "99": {
         "width": 0.98,
         "height": 0.72,
         "offsetX": 0

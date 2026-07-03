@@ -3784,22 +3784,27 @@ function ImageVoxelFighter({
   const rearArm = useRef<THREE.Group>(null);
   const leadLeg = useRef<THREE.Group>(null);
   const rearLeg = useRef<THREE.Group>(null);
-  const activeFrameSrc = useRef(getImageVoxelFramePath(fighter, progress, 0));
+  const initialFrameSelection = useRef(getImageVoxelFrameSelection(fighter, progress, 0));
+  const activeFrameSelection = useRef(initialFrameSelection.current);
   const scaledTime = useRef(0);
-  const [frameSrc, setFrameSrc] = useState(activeFrameSrc.current);
+  const [frameRequest, setFrameRequest] = useState(initialFrameSelection.current);
+  const [loadedFrameSelection, setLoadedFrameSelection] = useState(initialFrameSelection.current);
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
   const lodStep = getImageVoxelLodStep(fighter.character);
 
   useEffect(() => {
     let canceled = false;
-    if (!frameSrc) return undefined;
-    getCachedImageVoxels(frameSrc, fighter.character).then((nextVoxels) => {
-      if (!canceled) setVoxels(nextVoxels);
+    if (!frameRequest.frameSource) return undefined;
+    getCachedImageVoxels(frameRequest.frameSource, fighter.character).then((nextVoxels) => {
+      if (!canceled) {
+        setVoxels(nextVoxels);
+        setLoadedFrameSelection(frameRequest);
+      }
     });
     return () => {
       canceled = true;
     };
-  }, [fighter.character, frameSrc]);
+  }, [fighter.character, frameRequest]);
 
   const parts = useMemo(() => buildVoxelParts(voxels, lodStep), [lodStep, voxels]);
 
@@ -3808,11 +3813,12 @@ function ImageVoxelFighter({
     else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
     const liveProgress = activeMoveProgress(fighter);
-    const nextFrameSrc = getImageVoxelFramePath(fighter, liveProgress, t);
-    const animationScale = getCharacterAnimationScale(fighter.character, getImageVoxelAnimationKey(fighter), nextFrameSrc);
-    if (nextFrameSrc !== activeFrameSrc.current) {
-      activeFrameSrc.current = nextFrameSrc;
-      setFrameSrc(nextFrameSrc);
+    const nextFrameSelection = getImageVoxelFrameSelection(fighter, liveProgress, t);
+    const nextFrameSrc = nextFrameSelection.frameSource;
+    const animationScale = getCharacterAnimationScale(fighter.character, loadedFrameSelection.animationKey, loadedFrameSelection.frameSource);
+    if (nextFrameSrc !== activeFrameSelection.current.frameSource || nextFrameSelection.animationKey !== activeFrameSelection.current.animationKey) {
+      activeFrameSelection.current = nextFrameSelection;
+      setFrameRequest(nextFrameSelection);
     }
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
@@ -3890,9 +3896,8 @@ function getCharacterAnimationScale(character: CharacterDefinition, animationKey
 }
 
 function getFighterRenderOffsetX(fighter: FighterRuntime, progress: number, elapsedTime: number) {
-  const animationKey = getImageVoxelAnimationKey(fighter);
-  const frameSource = getImageVoxelFramePath(fighter, progress, elapsedTime);
-  return getCharacterAnimationScale(fighter.character, animationKey, frameSource).offsetX;
+  const frameSelection = getImageVoxelFrameSelection(fighter, progress, elapsedTime);
+  return getCharacterAnimationScale(fighter.character, frameSelection.animationKey, frameSelection.frameSource).offsetX;
 }
 
 function getCachedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[]> {
@@ -3905,13 +3910,17 @@ function getCachedImageVoxels(src: string, character: CharacterDefinition): Prom
 }
 
 function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elapsedTime: number) {
+  return getImageVoxelFrameSelection(fighter, progress, elapsedTime).frameSource;
+}
+
+function getImageVoxelFrameSelection(fighter: FighterRuntime, progress: number, elapsedTime: number) {
   const frames = fighter.character.animationFrames;
-  if (!frames) return fighter.character.spriteSheetPath;
-  const key = getImageVoxelAnimationKey(fighter);
-  const resolved = resolveAnimationFrameSequence(frames, key);
-  if (!resolved) return fighter.character.spriteSheetPath;
+  const requestedKey = getImageVoxelAnimationKey(fighter);
+  if (!frames) return { animationKey: requestedKey, frameSource: fighter.character.spriteSheetPath };
+  const resolved = resolveAnimationFrameSequence(frames, requestedKey);
+  if (!resolved) return { animationKey: requestedKey, frameSource: fighter.character.spriteSheetPath };
   const { key: resolvedKey, sequence } = resolved;
-  const fps = fighter.character.animationFrameRates?.[resolvedKey] ?? fighter.character.animationFrameRates?.[key] ?? fighter.character.animationFps ?? 8;
+  const fps = fighter.character.animationFrameRates?.[resolvedKey] ?? fighter.character.animationFrameRates?.[requestedKey] ?? fighter.character.animationFps ?? 8;
   const frameIndex =
     fighter.state === 'chargeKi'
       ? getChargeKiFrameIndex(fighter, sequence.length)
@@ -3925,7 +3934,7 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
     slot: fighter.slot,
     state: fighter.state,
     animationKey: resolvedKey,
-    requestedAnimationKey: key,
+    requestedAnimationKey: requestedKey,
     fps,
     sequence: sequence.map((frame) => frame.match(/frame-(\d+)\.png$/)?.[1] ?? frame)
   });
@@ -3934,13 +3943,16 @@ function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elaps
     characterId: fighter.character.id,
     slot: fighter.slot,
     animationKey: resolvedKey,
-    requestedAnimationKey: key,
+    requestedAnimationKey: requestedKey,
     frameIndex,
     frameSource,
     elapsedTime: Number(elapsedTime.toFixed(2)),
     progress: Number(progress.toFixed(2))
   });
-  return versionEditedSpriteFrameSource(frameSource, fighter.character);
+  return {
+    animationKey: resolvedKey,
+    frameSource: versionEditedSpriteFrameSource(frameSource, fighter.character)
+  };
 }
 
 function resolveAnimationFrameSequence(frames: NonNullable<CharacterDefinition['animationFrames']>, key: string) {

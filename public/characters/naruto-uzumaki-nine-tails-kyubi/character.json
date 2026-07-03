@@ -67,16 +67,6 @@
     "crouch": [
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-025.png"
     ],
-    "crouchBlock": [
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-090.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-091.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-092.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-093.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-095.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-096.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-097.png",
-      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-098.png"
-    ],
     "block": [
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-017.png"
     ],
@@ -266,7 +256,6 @@
     "sidestepRight": 10,
     "jump": 8,
     "crouch": 5,
-    "crouchBlock": 5,
     "block": 5,
     "chargeKi": 6,
     "jableft": 10,
@@ -1476,48 +1465,6 @@
     },
     "crouch": {
       "25": {
-        "width": 0.84,
-        "height": 0.63,
-        "offsetX": 0
-      }
-    },
-    "crouchBlock": {
-      "90": {
-        "width": 0.84,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "91": {
-        "width": 0.84,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "92": {
-        "width": 0.84,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "93": {
-        "width": 0.84,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "95": {
-        "width": 0.84,
-        "height": 0.61,
-        "offsetX": 0
-      },
-      "96": {
-        "width": 0.84,
-        "height": 0.65,
-        "offsetX": 0
-      },
-      "97": {
-        "width": 0.84,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "98": {
         "width": 0.84,
         "height": 0.63,
         "offsetX": 0
