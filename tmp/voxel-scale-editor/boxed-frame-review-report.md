@@ -62,5 +62,5 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `block` | 015 | pass | n/a: guard pose/hair covers top | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | No edit. |
 | Allen Walker | `chargeKi` | 060 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | No edit. |
 | Allen Walker | `chargeKi` | 061 | fixed: head/face mass no longer pops | pass | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | Reduced to `1.03w/1.03h`; verified individual PNG. |
-| Allen Walker | `chargeKi` | 062 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | No edit. |
-| Allen Walker | `chargeKi` | 063 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | No edit. |
+| Allen Walker | `chargeKi` | 062 | fixed: arm-over-head interference; head now tall enough while width stays controlled | pass: upright charge pose/head top matches idle band better | pass | n/a: not laying | n/a: not ball | pass | pass: raised arm ignored for body scale | pass | Non-uniform fix to `0.88w/1.04h`; verified individual PNG after strict head-height check. |
+| Allen Walker | `chargeKi` | 063 | fixed: uniform shrink made head top too low; height restored separately from width | pass: upright charge pose/head top matches idle band better | pass | n/a: not laying | n/a: not ball | pass | pass: raised arm ignored for body scale | pass | Non-uniform fix to `0.88w/1.08h`; verified individual PNG after strict head-height check. |
