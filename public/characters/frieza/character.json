@@ -1096,291 +1096,573 @@
   "unplayable": false,
   "hasTransform": false,
   "modelScale": {
-    "width": 0.96,
-    "height": 1.08
+    "width": 1.018,
+    "height": 1.018
   },
   "animationFrameScales": {
     "knockdown": {
       "29": {
-        "width": 0.795,
-        "height": 0.795,
+        "width": 0.944,
+        "height": 0.944,
         "offsetX": 0
       },
       "30": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.559,
+        "height": 0.559,
         "offsetX": 0
       },
       "31": {
-        "width": 0.54,
-        "height": 0.54,
+        "width": 0.555,
+        "height": 0.555,
         "offsetX": 0
       },
       "32": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.566,
+        "height": 0.566,
         "offsetX": 0
       }
     },
     "getupStand": {
       "29": {
-        "width": 0.902,
-        "height": 0.902,
+        "width": 0.944,
+        "height": 0.944,
         "offsetX": 0
       },
       "30": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.559,
+        "height": 0.559,
         "offsetX": 0
       },
       "31": {
-        "width": 0.54,
-        "height": 0.54,
+        "width": 0.555,
+        "height": 0.555,
         "offsetX": 0
       },
       "32": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.566,
+        "height": 0.566,
         "offsetX": 0
       },
       "41": {
-        "width": 0.902,
-        "height": 0.902,
+        "width": 1.011,
+        "height": 1.011,
         "offsetX": 0
       },
       "42": {
-        "width": 0.902,
-        "height": 0.902,
+        "width": 1.005,
+        "height": 1.005,
         "offsetX": 0
       },
       "43": {
-        "width": 0.902,
-        "height": 0.902,
+        "width": 0.913,
+        "height": 0.913,
         "offsetX": 0
       },
       "44": {
-        "width": 1,
-        "height": 1,
+        "width": 0.931,
+        "height": 0.931,
         "offsetX": 0
       }
     },
     "sprint": {
       "30": {
-        "width": 1,
-        "height": 1,
+        "width": 0.76,
+        "height": 0.76,
         "offsetX": 0
       },
       "31": {
-        "width": 1,
-        "height": 1,
+        "width": 0.755,
+        "height": 0.755,
         "offsetX": 0
       },
       "32": {
-        "width": 0.864,
-        "height": 0.864,
+        "width": 0.769,
+        "height": 0.769,
         "offsetX": 0
       },
       "33": {
-        "width": 1.186,
-        "height": 1.186,
+        "width": 0.91,
+        "height": 0.91,
         "offsetX": 0
       },
       "34": {
-        "width": 1.213,
-        "height": 1.213,
+        "width": 0.91,
+        "height": 0.91,
         "offsetX": 0
       },
       "35": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.865,
+        "height": 0.865,
         "offsetX": 0
       },
       "36": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.865,
+        "height": 0.865,
         "offsetX": 0
       },
       "37": {
-        "width": 1.213,
-        "height": 1.213,
+        "width": 0.913,
+        "height": 0.913,
         "offsetX": 0
       },
       "38": {
-        "width": 1.213,
-        "height": 1.213,
+        "width": 0.923,
+        "height": 0.923,
         "offsetX": 0
       },
       "39": {
-        "width": 1.213,
-        "height": 1.213,
+        "width": 0.903,
+        "height": 0.903,
         "offsetX": 0
       }
     },
     "jableft": {
       "78": {
-        "width": 1,
-        "height": 1,
+        "width": 1.008,
+        "height": 1.008,
         "offsetX": 0
       },
       "79": {
-        "width": 0.998,
-        "height": 0.998,
+        "width": 0.967,
+        "height": 0.967,
         "offsetX": 0
       },
       "80": {
-        "width": 0.784,
-        "height": 0.784,
+        "width": 0.79,
+        "height": 0.79,
         "offsetX": 0
       },
       "81": {
-        "width": 0.82,
-        "height": 0.82,
+        "width": 0.953,
+        "height": 0.953,
         "offsetX": 0
       },
       "82": {
-        "width": 1.209,
-        "height": 1.209,
+        "width": 0.996,
+        "height": 0.996,
         "offsetX": 0
       },
       "83": {
-        "width": 1.209,
-        "height": 1.209,
+        "width": 0.984,
+        "height": 0.984,
         "offsetX": 0
       },
       "84": {
-        "width": 1.209,
-        "height": 1.209,
+        "width": 0.929,
+        "height": 0.929,
         "offsetX": 0
       }
     },
     "kickright": {
       "131": {
-        "width": 1,
-        "height": 1,
+        "width": 0.958,
+        "height": 0.958,
         "offsetX": 0
       },
       "132": {
-        "width": 1,
-        "height": 1,
+        "width": 1.008,
+        "height": 1.008,
         "offsetX": 0
       },
       "133": {
-        "width": 0.998,
-        "height": 0.998,
+        "width": 0.967,
+        "height": 0.967,
         "offsetX": 0
       },
       "134": {
-        "width": 0.784,
-        "height": 0.784,
+        "width": 0.79,
+        "height": 0.79,
         "offsetX": 0
       },
       "135": {
-        "width": 0.82,
-        "height": 0.82,
+        "width": 0.953,
+        "height": 0.953,
         "offsetX": 0
       },
       "136": {
-        "width": 1.209,
-        "height": 1.209,
+        "width": 0.996,
+        "height": 0.996,
         "offsetX": 0
       },
       "137": {
-        "width": 1.209,
-        "height": 1.209,
+        "width": 0.984,
+        "height": 0.984,
         "offsetX": 0
       }
     },
     "cmd:2+3": {
       "156": {
-        "width": 1,
-        "height": 1,
+        "width": 0.818,
+        "height": 0.818,
         "offsetX": 0
       },
       "157": {
-        "width": 1,
-        "height": 1,
+        "width": 0.818,
+        "height": 0.818,
         "offsetX": 0
       },
       "158": {
-        "width": 1,
-        "height": 1,
+        "width": 0.809,
+        "height": 0.809,
         "offsetX": 0
       },
       "159": {
-        "width": 1,
-        "height": 1,
+        "width": 0.825,
+        "height": 0.825,
         "offsetX": 0
       },
       "160": {
-        "width": 1,
-        "height": 1,
+        "width": 0.882,
+        "height": 0.882,
         "offsetX": 0
       },
       "161": {
-        "width": 1,
-        "height": 1,
+        "width": 0.905,
+        "height": 0.905,
         "offsetX": 0
       },
       "162": {
-        "width": 1,
-        "height": 1,
+        "width": 0.865,
+        "height": 0.865,
         "offsetX": 0
       },
       "163": {
-        "width": 0.893,
-        "height": 0.893,
+        "width": 0.862,
+        "height": 0.862,
         "offsetX": 0
       },
       "164": {
-        "width": 0.855,
-        "height": 0.855,
+        "width": 0.856,
+        "height": 0.856,
         "offsetX": 0
       },
       "165": {
-        "width": 0.855,
-        "height": 0.855,
+        "width": 0.856,
+        "height": 0.856,
         "offsetX": 0
       },
       "166": {
-        "width": 1.302,
-        "height": 1.302,
+        "width": 0.921,
+        "height": 0.921,
         "offsetX": 0
       },
       "167": {
-        "width": 1.473,
-        "height": 1.473,
+        "width": 0.958,
+        "height": 0.958,
         "offsetX": 0
       }
     },
     "cmd:3+4": {
       "78": {
-        "width": 1,
-        "height": 1,
+        "width": 1.008,
+        "height": 1.008,
         "offsetX": 0
       },
       "79": {
-        "width": 0.999,
-        "height": 0.999,
+        "width": 0.967,
+        "height": 0.967,
         "offsetX": 0
       },
       "80": {
-        "width": 0.786,
-        "height": 0.786,
+        "width": 0.79,
+        "height": 0.79,
         "offsetX": 0
       },
       "81": {
-        "width": 0.821,
-        "height": 0.821,
+        "width": 0.953,
+        "height": 0.953,
         "offsetX": 0
       },
       "82": {
-        "width": 1.211,
-        "height": 1.211,
+        "width": 0.996,
+        "height": 0.996,
         "offsetX": 0
       },
       "83": {
-        "width": 1.211,
-        "height": 1.211,
+        "width": 0.984,
+        "height": 0.984,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "6": {
+        "width": 1.013,
+        "height": 1.013,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.037,
+        "height": 1.037,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 1.004,
+        "height": 1.004,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.011,
+        "height": 1.011,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "12": {
+        "width": 0.974,
+        "height": 0.974,
+        "offsetX": 0
+      }
+    },
+    "backflip": {
+      "40": {
+        "width": 1.019,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 1.011,
+        "height": 1.011,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 1.005,
+        "height": 1.005,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.913,
+        "height": 0.913,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.916,
+        "height": 0.916,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.867,
+        "height": 0.867,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 0.887,
+        "height": 0.887,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 0.971,
+        "height": 0.971,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "11": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "11": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "15": {
+        "width": 0.958,
+        "height": 0.958,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 0.956,
+        "height": 0.956,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "21": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      }
+    },
+    "crouchBlock": {
+      "90": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 0.98,
+        "height": 0.72,
+        "offsetX": 0
+      }
+    },
+    "block": {
+      "13": {
+        "width": 0.965,
+        "height": 0.965,
+        "offsetX": 0
+      }
+    },
+    "chargeKi": {
+      "52": {
+        "width": 0.949,
+        "height": 0.949,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 0.965,
+        "height": 0.965,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "106": {
+        "width": 0.905,
+        "height": 0.905,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 0.874,
+        "height": 0.874,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.82,
+        "height": 0.82,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 0.815,
+        "height": 0.815,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 0.902,
+        "height": 0.902,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 0.913,
+        "height": 0.913,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.89,
+        "height": 0.89,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "23": {
+        "width": 0.984,
+        "height": 0.984,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "27": {
+        "width": 0.903,
+        "height": 0.903,
+        "offsetX": 0
+      }
+    },
+    "win": {
+      "137": {
+        "width": 0.984,
+        "height": 0.984,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "28": {
+        "width": 1.028,
+        "height": 1.028,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "57": {
+        "width": 0.963,
+        "height": 0.963,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 0.931,
+        "height": 0.931,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 0.956,
+        "height": 0.956,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 0.894,
+        "height": 0.894,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "62": {
+        "width": 0.901,
+        "height": 0.901,
+        "offsetX": 0
+      },
+      "63": {
+        "width": 0.982,
+        "height": 0.982,
         "offsetX": 0
       }
     }
