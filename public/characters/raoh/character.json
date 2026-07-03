@@ -762,6 +762,9 @@
       "label": "Raoh Twin Assault",
       "hitLevel": "throw",
       "throwCapture": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 37
     },
@@ -832,6 +835,7 @@
       "label": "Raoh Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "endsInCrouch": true,
       "forwardForce": 1.7,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 23
@@ -1256,6 +1260,7 @@
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 12,
+      "endsInCrouch": true,
       "forwardForce": 2,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
@@ -1275,6 +1280,7 @@
       "counterHit": true,
       "whiffRecoveryFrames": 6,
       "cancelable": false,
+      "endsInCrouch": true,
       "forwardForce": 1.34,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21
@@ -1311,6 +1317,7 @@
       "counterHit": true,
       "whiffRecoveryFrames": 6,
       "cancelable": false,
+      "endsInCrouch": true,
       "forwardForce": 1.06,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21
@@ -1329,6 +1336,7 @@
       "counterHit": true,
       "whiffRecoveryFrames": 6,
       "cancelable": false,
+      "endsInCrouch": true,
       "forwardForce": 1.34,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21
@@ -1367,6 +1375,7 @@
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
       "cancelable": false,
+      "endsInCrouch": true,
       "forwardForce": 1.92,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21
@@ -1385,6 +1394,7 @@
       "counterHit": true,
       "whiffRecoveryFrames": 7,
       "cancelable": false,
+      "endsInCrouch": true,
       "forwardForce": 1.4,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21

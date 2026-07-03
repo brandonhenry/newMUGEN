@@ -811,6 +811,9 @@
       "launchHeight": 2.2,
       "label": "Tōshirō Hitsugaya Cross Launcher",
       "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12
     },
@@ -847,6 +850,9 @@
       "label": "Tōshirō Hitsugaya Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.84,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15
@@ -866,6 +872,9 @@
       "label": "Tōshirō Hitsugaya Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 15
     },

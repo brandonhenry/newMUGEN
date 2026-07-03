@@ -629,6 +629,10 @@
       "label": "Yoh Asakura (Power Sword) Burst",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.4,
+      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10
@@ -767,6 +771,9 @@
       "label": "Yoh Asakura (Power Sword) Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.07,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23
@@ -785,6 +792,10 @@
       "label": "Yoh Asakura (Power Sword) Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 3.62,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 37

@@ -671,6 +671,8 @@
       "hitLevel": "mid",
       "knockdown": true,
       "jumpBeforeMove": true,
+      "moveJumpForce": 9.8,
+      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 24
@@ -763,6 +765,7 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
+      "tornado": true,
       "cancelable": false,
       "forwardForce": 2.25,
       "forwardForceStartFrame": 6,
@@ -799,6 +802,9 @@
       "range": 1.58,
       "label": "Ichigo Kurosaki Low Feint",
       "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.4,
+      "moveJumpGravity": 26,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 7
@@ -817,6 +823,9 @@
       "label": "Ichigo Kurosaki Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.18,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 30

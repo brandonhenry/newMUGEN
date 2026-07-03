@@ -755,6 +755,7 @@
       "route": "multi:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "tornado": true,
       "forwardForce": 2.23,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8
@@ -826,6 +827,7 @@
       "label": "Nami (Perfect Clima-Tact) Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
       "forwardForce": 3.28,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 41

@@ -867,6 +867,10 @@
       "route": "multi:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
       "forwardForce": 1.93,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16
@@ -910,6 +914,9 @@
       "label": "Kagura Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.79,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 21
@@ -929,6 +936,10 @@
       "hitLevel": "mid",
       "tracking": "homing",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 3.4,
       "forwardForceStartFrame": 34,
       "forwardForceEndFrame": 44

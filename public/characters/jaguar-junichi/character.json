@@ -672,6 +672,9 @@
       "label": "Jaguar Junichi Burst",
       "hitLevel": "mid",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.4,
+      "moveJumpGravity": 24,
       "forwardForce": 3.75,
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 36
@@ -838,6 +841,10 @@
       "label": "Jaguar Junichi Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.69,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 23

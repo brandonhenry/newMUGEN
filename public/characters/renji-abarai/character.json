@@ -647,6 +647,10 @@
       "label": "Renji Abarai Burst",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16

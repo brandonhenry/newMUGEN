@@ -664,6 +664,9 @@
       "label": "Train Heartnet Burst",
       "hitLevel": "mid",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
       "forwardForce": 3.97,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16
@@ -793,6 +796,7 @@
       "label": "Train Heartnet Low Feint",
       "hitLevel": "low",
       "tracking": "homing",
+      "endsInCrouch": true,
       "forwardForce": 1.31,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16
@@ -833,6 +837,10 @@
       "label": "Train Heartnet Power Crush",
       "hitLevel": "mid",
       "knockdown": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 3.31,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14
@@ -1236,6 +1244,10 @@
       "forwardForceEndFrame": 43
     },
     "cmd:1+4": {
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 17,

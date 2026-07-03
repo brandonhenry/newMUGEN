@@ -754,6 +754,9 @@
       "launchHeight": 2.2,
       "label": "Hiei Cross Launcher",
       "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
       "forwardForce": 1.64,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 24
@@ -807,6 +810,7 @@
       "label": "Hiei Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
       "forwardForce": 3.21,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26

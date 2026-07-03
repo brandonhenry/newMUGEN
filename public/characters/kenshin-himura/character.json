@@ -806,6 +806,9 @@
       "range": 1.58,
       "label": "Kenshin Himura Low Feint",
       "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.6,
+      "moveJumpGravity": 26,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 40,
       "forwardForceEndFrame": 43
@@ -842,6 +845,7 @@
       "label": "Kenshin Himura Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
       "endsInCrouch": true,
       "jumpBeforeMove": true,
       "forwardForce": 3.69,

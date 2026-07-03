@@ -687,6 +687,9 @@
       "route": "multi:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.59,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 31
@@ -740,6 +743,9 @@
       "label": "Yusuke Urameshi Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.67,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 34

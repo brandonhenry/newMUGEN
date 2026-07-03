@@ -754,6 +754,10 @@
       "route": "multi:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.21,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14

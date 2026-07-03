@@ -837,7 +837,10 @@
       "tracking": "homing",
       "knockdown": true,
       "endsInCrouch": true,
+      "tornado": true,
       "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.79,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 28
@@ -856,7 +859,10 @@
       "label": "Roronoa Zoro Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
       "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 32

@@ -807,6 +807,9 @@
       "label": "Momotaro Tsurugi Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.85,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 48
@@ -825,6 +828,10 @@
       "label": "Momotaro Tsurugi Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 3.19,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18

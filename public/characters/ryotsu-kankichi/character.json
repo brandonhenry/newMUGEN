@@ -703,6 +703,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "cancelable": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 2.64,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 36
@@ -728,6 +732,10 @@
       "route": "state:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.51,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29
@@ -899,6 +907,9 @@
       "route": "multi:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.08,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 23
@@ -1432,6 +1443,10 @@
       "counterHit": true,
       "whiffRecoveryFrames": 7,
       "cancelable": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 1.66,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29
@@ -1470,6 +1485,10 @@
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 29,
       "cancelable": false,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 2.24,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29

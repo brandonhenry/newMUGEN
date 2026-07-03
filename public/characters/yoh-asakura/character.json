@@ -691,6 +691,7 @@
       "route": "multi:frame-link",
       "counterHit": true,
       "cancelable": false,
+      "endsInCrouch": true,
       "forwardForce": 2.12,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26
@@ -744,6 +745,9 @@
       "label": "Yoh Asakura Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.4,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 29
