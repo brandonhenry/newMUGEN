@@ -5,24 +5,23 @@
     "key": "cmd:1+2",
     "frame": 94,
     "isAttack": true,
-    "widthRatio": 1.694,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.694,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.694,
+    "widthRatio": 1.783,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.783,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 1.783,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.609,
-    "bodyAreaRatio": 1.609,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.783,
+    "bodyAreaRatio": 1.783,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.69x-idleW",
-      "high-area:1.61"
+      "too-wide:1.78x-idleW",
+      "high-area:1.78"
     ]
   },
   {
@@ -106,24 +105,23 @@
     "key": "cmd:1+2",
     "frame": 102,
     "isAttack": true,
-    "widthRatio": 1.611,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.611,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.611,
+    "widthRatio": 1.696,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.696,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 1.696,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.531,
-    "bodyAreaRatio": 1.531,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.696,
+    "bodyAreaRatio": 1.696,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.61x-idleW",
-      "high-area:1.53"
+      "too-wide:1.70x-idleW",
+      "high-area:1.70"
     ]
   },
   {
@@ -132,46 +130,22 @@
     "key": "cmd:1+2",
     "frame": 103,
     "isAttack": true,
-    "widthRatio": 1.386,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.148,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.386,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.316,
-    "bodyAreaRatio": 1.091,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:d+1",
-    "frame": 74,
-    "isAttack": true,
-    "widthRatio": 1.371,
+    "widthRatio": 1.459,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.371,
+    "bodyWidthRatio": 1.209,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.371,
+    "expectedWidthRatio": 1.459,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.371,
-    "bodyAreaRatio": 1.371,
+    "areaRatio": 1.459,
+    "bodyAreaRatio": 1.209,
     "scaleWidth": 1,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.96/0.96"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "same-source-scaled:jableft"
+      "high-area:1.46"
     ]
   },
   {
@@ -190,13 +164,16 @@
     "bodyAreaRatio": 1.5,
     "scaleWidth": 1,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1",
+      "cmd:FC+1:1/1",
+      "cmd:d+1:1/1",
+      "cmd:qcf+1:1/1",
+      "cmd:O+1:1/1"
     ],
     "reasons": [
-      "high-area:1.50",
-      "same-source-scaled:jableft"
+      "high-area:1.50"
     ]
   },
   {
@@ -205,24 +182,26 @@
     "key": "cmd:d+1",
     "frame": 76,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
     ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62",
-      "same-source-scaled:jableft"
+      "high-area:1.49"
     ]
   },
   {
@@ -231,21 +210,26 @@
     "key": "cmd:d+1",
     "frame": 77,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [],
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
+    ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62"
+      "high-area:1.49"
     ]
   },
   {
@@ -254,72 +238,27 @@
     "key": "cmd:d+1",
     "frame": 78,
     "isAttack": true,
-    "widthRatio": 1,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1,
+    "widthRatio": 1.03,
+    "heightRatio": 1.03,
+    "bodyWidthRatio": 1.03,
+    "bodyHeightRatio": 1.03,
+    "expectedWidthRatio": 1.03,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1,
-    "bodyAreaRatio": 1,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
+    "areaRatio": 1.061,
+    "bodyAreaRatio": 1.061,
+    "scaleWidth": 1.03,
+    "scaleHeight": 1.03,
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
       "jableft:1.03/1.03",
-      "win:1.03/1.03"
+      "win:1.03/1.03",
+      "cmd:FC+1:1.03/1.03",
+      "cmd:d+1:1.03/1.03",
+      "cmd:qcf+1:1.03/1.03",
+      "cmd:O+1:1.03/1.03"
     ],
     "reasons": [
-      "seq-area-low:0.50",
-      "same-source-scaled:jableft/win"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:f+1",
-    "frame": 251,
-    "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.932,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.867,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:f+1:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:f+1",
-    "frame": 252,
-    "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.935,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.902,
-    "bodyAreaRatio": 0.888,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:f+1:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
+      "seq-area-low:0.43"
     ]
   },
   {
@@ -328,71 +267,23 @@
     "key": "cmd:f+1",
     "frame": 253,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.747,
-    "expectedWidthRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1.04,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 0.793,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.732,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:f+1:0.98/0.98"
-    ],
-    "reasons": [
-      "body-below:0.75h",
-      "seq-body-dip:0.22"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:f+1",
-    "frame": 255,
-    "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.796,
-    "bodyHeightRatio": 0.96,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.764,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:f+1:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:FC+1",
-    "frame": 74,
-    "isAttack": true,
-    "widthRatio": 1.371,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1.371,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.371,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.371,
-    "bodyAreaRatio": 1.371,
+    "areaRatio": 1.04,
+    "bodyAreaRatio": 0.793,
     "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleHeight": 1.04,
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.96/0.96"
+      "cmd:f+1:1/1.04"
     ],
     "reasons": [
-      "same-source-scaled:jableft"
+      "body-below:0.79h",
+      "seq-body-dip:0.19"
     ]
   },
   {
@@ -411,13 +302,16 @@
     "bodyAreaRatio": 1.5,
     "scaleWidth": 1,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1",
+      "cmd:FC+1:1/1",
+      "cmd:d+1:1/1",
+      "cmd:qcf+1:1/1",
+      "cmd:O+1:1/1"
     ],
     "reasons": [
-      "high-area:1.50",
-      "same-source-scaled:jableft"
+      "high-area:1.50"
     ]
   },
   {
@@ -426,24 +320,26 @@
     "key": "cmd:FC+1",
     "frame": 76,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
     ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62",
-      "same-source-scaled:jableft"
+      "high-area:1.49"
     ]
   },
   {
@@ -452,21 +348,26 @@
     "key": "cmd:FC+1",
     "frame": 77,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [],
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
+    ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62"
+      "high-area:1.49"
     ]
   },
   {
@@ -475,48 +376,27 @@
     "key": "cmd:FC+1",
     "frame": 78,
     "isAttack": true,
-    "widthRatio": 1,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1,
+    "widthRatio": 1.03,
+    "heightRatio": 1.03,
+    "bodyWidthRatio": 1.03,
+    "bodyHeightRatio": 1.03,
+    "expectedWidthRatio": 1.03,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1,
-    "bodyAreaRatio": 1,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
+    "areaRatio": 1.061,
+    "bodyAreaRatio": 1.061,
+    "scaleWidth": 1.03,
+    "scaleHeight": 1.03,
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
       "jableft:1.03/1.03",
-      "win:1.03/1.03"
+      "win:1.03/1.03",
+      "cmd:FC+1:1.03/1.03",
+      "cmd:d+1:1.03/1.03",
+      "cmd:qcf+1:1.03/1.03",
+      "cmd:O+1:1.03/1.03"
     ],
     "reasons": [
-      "seq-area-low:0.50",
-      "same-source-scaled:jableft/win"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:O+1",
-    "frame": 74,
-    "isAttack": true,
-    "widthRatio": 1.371,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1.371,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.371,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.371,
-    "bodyAreaRatio": 1.371,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [
-      "jableft:0.96/0.96"
-    ],
-    "reasons": [
-      "same-source-scaled:jableft"
+      "seq-area-low:0.43"
     ]
   },
   {
@@ -535,13 +415,16 @@
     "bodyAreaRatio": 1.5,
     "scaleWidth": 1,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1",
+      "cmd:FC+1:1/1",
+      "cmd:d+1:1/1",
+      "cmd:qcf+1:1/1",
+      "cmd:O+1:1/1"
     ],
     "reasons": [
-      "high-area:1.50",
-      "same-source-scaled:jableft"
+      "high-area:1.50"
     ]
   },
   {
@@ -550,24 +433,26 @@
     "key": "cmd:O+1",
     "frame": 76,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
     ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62",
-      "same-source-scaled:jableft"
+      "high-area:1.49"
     ]
   },
   {
@@ -576,21 +461,26 @@
     "key": "cmd:O+1",
     "frame": 77,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [],
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
+    ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62"
+      "high-area:1.49"
     ]
   },
   {
@@ -599,48 +489,27 @@
     "key": "cmd:O+1",
     "frame": 78,
     "isAttack": true,
-    "widthRatio": 1,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1,
+    "widthRatio": 1.03,
+    "heightRatio": 1.03,
+    "bodyWidthRatio": 1.03,
+    "bodyHeightRatio": 1.03,
+    "expectedWidthRatio": 1.03,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1,
-    "bodyAreaRatio": 1,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
+    "areaRatio": 1.061,
+    "bodyAreaRatio": 1.061,
+    "scaleWidth": 1.03,
+    "scaleHeight": 1.03,
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
       "jableft:1.03/1.03",
-      "win:1.03/1.03"
+      "win:1.03/1.03",
+      "cmd:FC+1:1.03/1.03",
+      "cmd:d+1:1.03/1.03",
+      "cmd:qcf+1:1.03/1.03",
+      "cmd:O+1:1.03/1.03"
     ],
     "reasons": [
-      "seq-area-low:0.50",
-      "same-source-scaled:jableft/win"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:qcf+1",
-    "frame": 74,
-    "isAttack": true,
-    "widthRatio": 1.371,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1.371,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.371,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.371,
-    "bodyAreaRatio": 1.371,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [
-      "jableft:0.96/0.96"
-    ],
-    "reasons": [
-      "same-source-scaled:jableft"
+      "seq-area-low:0.43"
     ]
   },
   {
@@ -659,13 +528,16 @@
     "bodyAreaRatio": 1.5,
     "scaleWidth": 1,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1",
+      "cmd:FC+1:1/1",
+      "cmd:d+1:1/1",
+      "cmd:qcf+1:1/1",
+      "cmd:O+1:1/1"
     ],
     "reasons": [
-      "high-area:1.50",
-      "same-source-scaled:jableft"
+      "high-area:1.50"
     ]
   },
   {
@@ -674,24 +546,26 @@
     "key": "cmd:qcf+1",
     "frame": 76,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
     ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62",
-      "same-source-scaled:jableft"
+      "high-area:1.49"
     ]
   },
   {
@@ -700,21 +574,26 @@
     "key": "cmd:qcf+1",
     "frame": 77,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [],
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
+    ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62"
+      "high-area:1.49"
     ]
   },
   {
@@ -723,72 +602,27 @@
     "key": "cmd:qcf+1",
     "frame": 78,
     "isAttack": true,
-    "widthRatio": 1,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1,
-    "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1,
+    "widthRatio": 1.03,
+    "heightRatio": 1.03,
+    "bodyWidthRatio": 1.03,
+    "bodyHeightRatio": 1.03,
+    "expectedWidthRatio": 1.03,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1,
-    "bodyAreaRatio": 1,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "default",
+    "areaRatio": 1.061,
+    "bodyAreaRatio": 1.061,
+    "scaleWidth": 1.03,
+    "scaleHeight": 1.03,
+    "scaleSource": "frame",
     "sameSourceScaleUses": [
       "jableft:1.03/1.03",
-      "win:1.03/1.03"
+      "win:1.03/1.03",
+      "cmd:FC+1:1.03/1.03",
+      "cmd:d+1:1.03/1.03",
+      "cmd:qcf+1:1.03/1.03",
+      "cmd:O+1:1.03/1.03"
     ],
     "reasons": [
-      "seq-area-low:0.50",
-      "same-source-scaled:jableft/win"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:qcf+4",
-    "frame": 80,
-    "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.932,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.867,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:qcf+4:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:qcf+4",
-    "frame": 81,
-    "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.935,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.902,
-    "bodyAreaRatio": 0.888,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:qcf+4:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
+      "seq-area-low:0.43"
     ]
   },
   {
@@ -797,47 +631,23 @@
     "key": "cmd:qcf+4",
     "frame": 82,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.747,
-    "expectedWidthRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1.04,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 0.793,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.732,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1.04,
+    "bodyAreaRatio": 0.793,
+    "scaleWidth": 1,
+    "scaleHeight": 1.04,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:qcf+4:0.98/0.98"
+      "cmd:qcf+4:1/1.04"
     ],
     "reasons": [
-      "body-below:0.75h",
-      "seq-body-dip:0.22"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "cmd:qcf+4",
-    "frame": 84,
-    "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.796,
-    "bodyHeightRatio": 0.96,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.764,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:qcf+4:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
+      "body-below:0.79h",
+      "seq-body-dip:0.19"
     ]
   },
   {
@@ -846,24 +656,23 @@
     "key": "crouch",
     "frame": 22,
     "isAttack": false,
-    "widthRatio": 0.98,
-    "heightRatio": 0.72,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.72,
-    "expectedWidthRatio": 0.98,
+    "widthRatio": 1.08,
+    "heightRatio": 0.78,
+    "bodyWidthRatio": 1.08,
+    "bodyHeightRatio": 0.78,
+    "expectedWidthRatio": 1.08,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.706,
-    "bodyAreaRatio": 0.706,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.72,
+    "areaRatio": 0.842,
+    "bodyAreaRatio": 0.842,
+    "scaleWidth": 1.08,
+    "scaleHeight": 0.78,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "crouch:0.98/0.72"
+      "crouch:1.08/0.78"
     ],
     "reasons": [
-      "below-blue:0.72h",
-      "body-below:0.72h",
-      "low-area:0.71"
+      "below-blue:0.78h",
+      "body-below:0.78h"
     ]
   },
   {
@@ -872,24 +681,23 @@
     "key": "getupStand",
     "frame": 32,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92",
-      "getupStand:0.92/0.92"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -898,24 +706,23 @@
     "key": "getupStand",
     "frame": 33,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92",
-      "getupStand:0.92/0.92"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -924,24 +731,23 @@
     "key": "getupStand",
     "frame": 34,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92",
-      "getupStand:0.92/0.92"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -950,23 +756,22 @@
     "key": "getupStand",
     "frame": 53,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -975,24 +780,22 @@
     "key": "getupStand",
     "frame": 54,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "body-below:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1001,23 +804,22 @@
     "key": "getupStand",
     "frame": 55,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1026,24 +828,22 @@
     "key": "getupStand",
     "frame": 56,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "body-below:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1072,48 +872,28 @@
     "character": "allen-walker",
     "displayName": "Allen Walker",
     "key": "jableft",
-    "frame": 74,
-    "isAttack": true,
-    "widthRatio": 1.316,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 1.316,
-    "bodyHeightRatio": 0.96,
-    "expectedWidthRatio": 1.316,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.263,
-    "bodyAreaRatio": 1.263,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jableft:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
-    "key": "jableft",
     "frame": 75,
     "isAttack": true,
-    "widthRatio": 1.425,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.425,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.425,
+    "widthRatio": 1.5,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.5,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 1.5,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.354,
-    "bodyAreaRatio": 1.354,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.5,
+    "bodyAreaRatio": 1.5,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1",
+      "cmd:FC+1:1/1",
+      "cmd:d+1:1/1",
+      "cmd:qcf+1:1/1",
+      "cmd:O+1:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h"
+      "high-area:1.50"
     ]
   },
   {
@@ -1122,23 +902,26 @@
     "key": "jableft",
     "frame": 76,
     "isAttack": true,
-    "widthRatio": 1.537,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.537,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.537,
+    "widthRatio": 1.488,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.488,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.46,
-    "bodyAreaRatio": 1.46,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "high-area:1.46"
+      "high-area:1.49"
     ]
   },
   {
@@ -1147,21 +930,55 @@
     "key": "jableft",
     "frame": 77,
     "isAttack": true,
-    "widthRatio": 1.618,
+    "widthRatio": 1.488,
     "heightRatio": 1,
-    "bodyWidthRatio": 1.618,
+    "bodyWidthRatio": 1.488,
     "bodyHeightRatio": 1,
-    "expectedWidthRatio": 1.618,
+    "expectedWidthRatio": 1.488,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.618,
-    "bodyAreaRatio": 1.618,
-    "scaleWidth": 1,
+    "areaRatio": 1.488,
+    "bodyAreaRatio": 1.488,
+    "scaleWidth": 0.92,
     "scaleHeight": 1,
-    "scaleSource": "default",
-    "sameSourceScaleUses": [],
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "jableft:0.92/1",
+      "cmd:FC+1:0.92/1",
+      "cmd:d+1:0.92/1",
+      "cmd:qcf+1:0.92/1",
+      "cmd:O+1:0.92/1"
+    ],
     "reasons": [
-      "too-wide:1.62x-idleW",
-      "high-area:1.62"
+      "high-area:1.49"
+    ]
+  },
+  {
+    "character": "allen-walker",
+    "displayName": "Allen Walker",
+    "key": "jableft",
+    "frame": 78,
+    "isAttack": true,
+    "widthRatio": 1.03,
+    "heightRatio": 1.03,
+    "bodyWidthRatio": 1.03,
+    "bodyHeightRatio": 1.03,
+    "expectedWidthRatio": 1.03,
+    "expectedWidthLabel": "idleW",
+    "areaRatio": 1.061,
+    "bodyAreaRatio": 1.061,
+    "scaleWidth": 1.03,
+    "scaleHeight": 1.03,
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "jableft:1.03/1.03",
+      "win:1.03/1.03",
+      "cmd:FC+1:1.03/1.03",
+      "cmd:d+1:1.03/1.03",
+      "cmd:qcf+1:1.03/1.03",
+      "cmd:O+1:1.03/1.03"
+    ],
+    "reasons": [
+      "seq-area-low:0.43"
     ]
   },
   {
@@ -1189,51 +1006,25 @@
   {
     "character": "allen-walker",
     "displayName": "Allen Walker",
-    "key": "jump",
-    "frame": 21,
-    "isAttack": false,
-    "widthRatio": 1.11,
-    "heightRatio": 1.11,
-    "bodyWidthRatio": 1.11,
-    "bodyHeightRatio": 1.11,
-    "expectedWidthRatio": 1.11,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.232,
-    "bodyAreaRatio": 1.232,
-    "scaleWidth": 1.11,
-    "scaleHeight": 1.11,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:1.11/1.11"
-    ],
-    "reasons": [
-      "above-blue:1.11h"
-    ]
-  },
-  {
-    "character": "allen-walker",
-    "displayName": "Allen Walker",
     "key": "knockdown",
     "frame": 31,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92"
+      "knockdown:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "body-below:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1242,24 +1033,23 @@
     "key": "knockdown",
     "frame": 32,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92",
-      "getupStand:0.92/0.92"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1268,24 +1058,23 @@
     "key": "knockdown",
     "frame": 33,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92",
-      "getupStand:0.92/0.92"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1294,24 +1083,23 @@
     "key": "knockdown",
     "frame": 34,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "expectedWidthRatio": 0.46,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 0.5,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.92/0.92",
-      "getupStand:0.92/0.92"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.46x-idleH"
+      "too-narrow:0.50x-idleH"
     ]
   },
   {
@@ -1342,24 +1130,23 @@
     "key": "sprint",
     "frame": 12,
     "isAttack": false,
-    "widthRatio": 1.831,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.831,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.831,
+    "widthRatio": 1.711,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.711,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 1.711,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.74,
-    "bodyAreaRatio": 1.74,
-    "scaleWidth": 0.61,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.711,
+    "bodyAreaRatio": 1.711,
+    "scaleWidth": 0.57,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "sprint:0.61/0.95"
+      "sprint:0.57/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.83x-idleW",
-      "high-area:1.74"
+      "too-wide:1.71x-idleW",
+      "high-area:1.71"
     ]
   },
   {
@@ -1368,24 +1155,23 @@
     "key": "sprint",
     "frame": 13,
     "isAttack": false,
-    "widthRatio": 1.784,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.784,
-    "bodyHeightRatio": 0.95,
-    "expectedWidthRatio": 1.784,
+    "widthRatio": 1.668,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.668,
+    "bodyHeightRatio": 1,
+    "expectedWidthRatio": 1.668,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.694,
-    "bodyAreaRatio": 1.694,
-    "scaleWidth": 0.62,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.668,
+    "bodyAreaRatio": 1.668,
+    "scaleWidth": 0.58,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "sprint:0.62/0.95"
+      "sprint:0.58/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.78x-idleW",
-      "high-area:1.69"
+      "too-wide:1.67x-idleW",
+      "high-area:1.67"
     ]
   },
   {
