@@ -478,7 +478,11 @@
       "cancelable": false,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     {
       "id": "kick",
@@ -515,7 +519,11 @@
       "cancelable": false,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     {
       "id": "heavy",
@@ -552,7 +560,11 @@
       "cancelable": false,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     {
       "id": "special",
@@ -589,7 +601,11 @@
       "cancelable": false,
       "forwardForce": 1.05,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     }
   ],
   "hurtboxes": [
@@ -636,7 +652,11 @@
       "knockdown": false,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "jabright": {
       "startupFrames": 11,
@@ -655,7 +675,11 @@
       "knockdown": false,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "kickleft": {
       "startupFrames": 23,
@@ -674,7 +698,11 @@
       "knockdown": false,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "kickright": {
       "startupFrames": 18,
@@ -693,7 +721,11 @@
       "knockdown": false,
       "forwardForce": 1.05,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -718,7 +750,11 @@
       "counterHit": true,
       "cancelable": false,
       "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -747,7 +783,11 @@
       "cancelable": false,
       "forwardForce": 2.05,
       "forwardForceStartFrame": 22,
-      "forwardForceEndFrame": 28
+      "forwardForceEndFrame": 28,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -769,7 +809,11 @@
       "moveJumpGravity": 24,
       "forwardForce": 3.63,
       "forwardForceStartFrame": 39,
-      "forwardForceEndFrame": 43
+      "forwardForceEndFrame": 43,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -786,7 +830,11 @@
       "hitLevel": "mid",
       "forwardForce": 1.44,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -811,7 +859,11 @@
       "cancelable": false,
       "forwardForce": 1.81,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -837,7 +889,11 @@
       "cancelable": false,
       "forwardForce": 1.96,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -862,7 +918,11 @@
       "cancelable": false,
       "forwardForce": 1.75,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 24
+      "forwardForceEndFrame": 24,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -892,7 +952,11 @@
       "moveJumpGravity": 24,
       "forwardForce": 1.71,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -917,7 +981,11 @@
       "cancelable": false,
       "forwardForce": 2.27,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -935,7 +1003,11 @@
       "knockdown": true,
       "forwardForce": 1.71,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -953,7 +1025,11 @@
       "knockdown": true,
       "forwardForce": 2.91,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -971,7 +1047,11 @@
       "knockdown": true,
       "forwardForce": 3.19,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 34
+      "forwardForceEndFrame": 34,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 11
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -985,7 +1065,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Second Beat",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -999,7 +1083,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Body Blow",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1013,7 +1101,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Low Changeup",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1027,7 +1119,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Pressure Feint",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1041,7 +1137,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Drive",
       "forwardForce": 1.75,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1055,7 +1155,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Barrage",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1069,7 +1173,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Finisher",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1083,7 +1191,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Step Kick",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1097,7 +1209,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Palm String",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1111,7 +1227,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Rising Chain",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1125,7 +1245,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Special Setup",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1139,7 +1263,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Break Art",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1153,7 +1281,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Check Hook",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1167,7 +1299,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heavy Break",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1181,7 +1317,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Charged Follow",
       "forwardForce": 2.67,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1195,7 +1335,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Drop Kick",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1209,7 +1353,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Arc Finisher",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1223,7 +1371,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Focus Stance",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1237,7 +1389,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Mode Shift",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1251,7 +1407,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heel Feint",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1265,7 +1425,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Summon Strike",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1279,7 +1443,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Guard Snare",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1293,7 +1461,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Armor Break",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1307,7 +1479,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Power Setup",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1321,7 +1497,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Switch Strike",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1335,7 +1515,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Spark Jab",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1349,7 +1533,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Binding Blow",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1363,7 +1551,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heavy Draw",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1377,7 +1569,11 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Kick Ender",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+4": {
       "startupFrames": 19,
@@ -1390,7 +1586,11 @@
       "forwardForce": 1.86,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 26,
-      "whiffRecoveryFrames": 9
+      "whiffRecoveryFrames": 9,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 11
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1408,7 +1608,11 @@
       "cancelable": false,
       "forwardForce": 1.66,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1426,7 +1630,11 @@
       "cancelable": false,
       "forwardForce": 1.86,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1444,7 +1652,11 @@
       "cancelable": false,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1462,7 +1674,11 @@
       "cancelable": false,
       "forwardForce": 1.58,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1480,7 +1696,11 @@
       "cancelable": false,
       "forwardForce": 1.86,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1499,7 +1719,11 @@
       "cancelable": false,
       "forwardForce": 2.33,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1518,7 +1742,11 @@
       "cancelable": false,
       "forwardForce": 2.44,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1536,7 +1764,11 @@
       "cancelable": false,
       "forwardForce": 1.72,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1554,7 +1786,11 @@
       "cancelable": false,
       "forwardForce": 1.92,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1573,7 +1809,11 @@
       "cancelable": false,
       "forwardForce": 2.39,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     }
   },
   "effects": [],

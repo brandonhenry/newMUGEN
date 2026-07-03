@@ -1,4 +1,5 @@
 import type { CharacterDefinition, ImpactSparkEvent, MoveDefinition, MoveInput, MoveOverride } from '../types';
+import { contextualComboFrameData, contextualHitAdvantage } from './comboFrameMath';
 
 export type ComboRouteCategory = 'basic' | 'advanced' | 'crouch' | 'launcher' | 'tornado' | 'counterHit';
 export type ComboRouteState = 'standing' | 'crouch' | 'whileStanding' | 'juggle';
@@ -125,48 +126,54 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
 
   const basics = routes
     .filter((route) => route.category === 'basic' && route.move.damage > 0)
-    .sort((a, b) => a.move.startupFrames - b.move.startupFrames || b.move.onHitFrames - a.move.onHitFrames);
+    .sort((a, b) => a.move.startupFrames - b.move.startupFrames || contextualHitAdvantage(b.move, { context: 'neutral' }) - contextualHitAdvantage(a.move, { context: 'neutral' }));
   for (const starter of basics) {
-    const target = findBestLink(routes, starter.move.onHitFrames, starter, { allowStates: ['standing'] });
+    const advantage = contextualHitAdvantage(starter.move, { context: 'neutral' });
+    const target = findBestLink(routes, advantage, starter, { allowStates: ['standing'] });
     if (!target) continue;
-    pushTrial(makeRouteTrial('basic', starter, [target], `+${starter.move.onHitFrames} -> i${target.move.startupFrames} link`));
+    pushTrial(makeRouteTrial('basic', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} link`));
   }
 
   const advanced = routes
     .filter((route) => route.category === 'advanced' && route.move.damage > 0)
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of advanced) {
-    const target = findBestLink(routes, starter.move.onHitFrames, starter, { allowStates: ['standing'] });
+    const advantage = contextualHitAdvantage(starter.move, { context: 'neutral' });
+    const target = findBestLink(routes, advantage, starter, { allowStates: ['standing'] });
     if (!target) continue;
-    pushTrial(makeRouteTrial('advanced', starter, [target], `+${starter.move.onHitFrames} -> i${target.move.startupFrames} command link`));
+    pushTrial(makeRouteTrial('advanced', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} command link`));
   }
 
   const crouchStarters = routes
     .filter((route) => route.move.endsInCrouch && route.move.onHitFrames > 0)
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of crouchStarters) {
-    const target = findBestLink(routes, starter.move.onHitFrames, starter, { allowStates: ['crouch', 'whileStanding'] });
+    const advantage = contextualHitAdvantage(starter.move, { context: 'neutral' });
+    const target = findBestLink(routes, advantage, starter, { allowStates: ['crouch', 'whileStanding'] });
     if (!target) continue;
-    pushTrial(makeRouteTrial('crouch', starter, [target], `FC end -> ${target.command ?? target.notation.join('+')}`));
+    pushTrial(makeRouteTrial('crouch', starter, [target], `FC end +${advantage} -> ${target.command ?? target.notation.join('+')}`));
   }
 
   const launchers = routes
     .filter((route) => (route.move.launchHeight ?? 0) > 0 && route.move.damage > 0)
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of launchers) {
-    const target = findBestLink(routes, Math.max(starter.move.onHitFrames, 24), starter, { allowStates: ['standing'], preferJuggle: true });
+    const advantage = Math.max(contextualHitAdvantage(starter.move, { context: 'neutral' }), 24);
+    const target = findBestLink(routes, advantage, starter, { allowStates: ['standing'], preferJuggle: true });
     if (!target) continue;
-    pushTrial(makeRouteTrial('launcher', starter, [target], `Launch -> i${target.move.startupFrames} juggle`, { launched: true }));
+    pushTrial(makeRouteTrial('launcher', starter, [target], `Launch +${advantage} -> i${target.move.startupFrames} juggle`, { launched: true }));
   }
 
   const tornadoes = routes
     .filter((route) => route.move.tornado && route.move.damage > 0)
     .sort((a, b) => a.move.startupFrames - b.move.startupFrames || routeRewardScore(b) - routeRewardScore(a));
   for (const launcher of launchers) {
-    const tornado = findBestLink(tornadoes, Math.max(launcher.move.onHitFrames, 30), launcher, { allowStates: ['standing'], preferJuggle: true });
+    const launcherAdvantage = Math.max(contextualHitAdvantage(launcher.move, { context: 'neutral' }), 28);
+    const tornado = findBestLink(tornadoes, launcherAdvantage, launcher, { allowStates: ['standing'], preferJuggle: true });
     if (!tornado) continue;
-    const finisher = findBestLink(routes, Math.max(tornado.move.onHitFrames, 20), tornado, { allowStates: ['standing'], preferJuggle: true });
-    pushTrial(makeRouteTrial('tornado', launcher, finisher ? [tornado, finisher] : [tornado], `Launch -> ${tornado.command ?? tornado.notation.join('+')} tornado`, { launched: true }, { tornado: true, juggled: true }));
+    const tornadoFrameData = contextualComboFrameData(tornado.move, { context: 'juggle', comboHits: 2 });
+    const finisher = findBestLink(routes, Math.max(tornadoFrameData.effectiveAdvantage, 16), tornado, { allowStates: ['standing'], preferJuggle: true });
+    pushTrial(makeRouteTrial('tornado', launcher, finisher ? [tornado, finisher] : [tornado], `Launch +${launcherAdvantage} -> ${tornado.command ?? tornado.notation.join('+')} | Juggle +${tornadoFrameData.effectiveAdvantage}`, { launched: true }, { tornado: true, juggled: true }));
   }
 
   const counterHitters = routes

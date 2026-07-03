@@ -2251,6 +2251,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     comboTimer: 0,
     comboStep: 0,
     comboSequence: [],
+    comboIdentitySequence: [],
     comboUsedKeys: [],
     comboHits: 0,
     comboDamage: 0,

@@ -103,6 +103,10 @@ export type MoveDefinition = {
   onBlockFrames: number;
   onHitFrames: number;
   onCounterHitFrames: number;
+  onComboHitFrames?: number;
+  onJuggleHitFrames?: number;
+  comboRepeatPenaltyFrames?: number;
+  juggleRepeatPenaltyFrames?: number;
   counterHit?: boolean;
   counterHitStunBonusFrames?: number;
   whiffRecoveryFrames?: number;
@@ -871,6 +875,7 @@ export type FighterRuntime = {
   comboTimer: number;
   comboStep: number;
   comboSequence: MoveInput[];
+  comboIdentitySequence: string[];
   comboUsedKeys: string[];
   comboHits: number;
   comboDamage: number;

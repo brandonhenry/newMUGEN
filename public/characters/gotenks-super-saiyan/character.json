@@ -295,7 +295,11 @@
       "cancelable": false,
       "forwardForce": 0.35,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     {
       "id": "kick",
@@ -332,7 +336,11 @@
       "cancelable": false,
       "forwardForce": 0.66,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     {
       "id": "heavy",
@@ -369,7 +377,11 @@
       "cancelable": false,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     {
       "id": "special",
@@ -406,7 +418,11 @@
       "cancelable": false,
       "forwardForce": 0.94,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     }
   ],
   "hurtboxes": [
@@ -453,7 +469,11 @@
       "knockdown": false,
       "forwardForce": 0.35,
       "forwardForceStartFrame": 2,
-      "forwardForceEndFrame": 7
+      "forwardForceEndFrame": 7,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "jabright": {
       "startupFrames": 11,
@@ -472,7 +492,11 @@
       "knockdown": false,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "kickleft": {
       "startupFrames": 18,
@@ -489,7 +513,11 @@
       "hitLevel": "low",
       "forwardForce": 0.66,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "kickright": {
       "startupFrames": 19,
@@ -506,7 +534,11 @@
       "hitLevel": "mid",
       "forwardForce": 0.94,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -531,7 +563,11 @@
       "counterHit": true,
       "cancelable": false,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 24
+      "forwardForceEndFrame": 24,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -560,7 +596,11 @@
       "cancelable": false,
       "forwardForce": 2.47,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 24
+      "forwardForceEndFrame": 24,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -578,7 +618,11 @@
       "knockdown": true,
       "forwardForce": 3.38,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -595,7 +639,11 @@
       "hitLevel": "mid",
       "forwardForce": 1.33,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -620,7 +668,11 @@
       "cancelable": false,
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -646,7 +698,11 @@
       "cancelable": false,
       "forwardForce": 2.38,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -671,7 +727,11 @@
       "cancelable": false,
       "forwardForce": 2.17,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -689,7 +749,11 @@
       "hitLevel": "mid",
       "forwardForce": 1.47,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 11
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -709,7 +773,11 @@
       "moveJumpGravity": 26,
       "forwardForce": 1.55,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -727,7 +795,11 @@
       "knockdown": true,
       "forwardForce": 1.6,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "onComboHitFrames": 4,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -745,7 +817,11 @@
       "knockdown": true,
       "forwardForce": 2.8,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -763,7 +839,11 @@
       "knockdown": true,
       "forwardForce": 3.61,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 11
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -776,7 +856,11 @@
       "label": "Gotenks (Super Saiyan) Second Beat",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -789,7 +873,11 @@
       "label": "Gotenks (Super Saiyan) Body Blow",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -802,7 +890,11 @@
       "label": "Gotenks (Super Saiyan) Low Changeup",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -815,7 +907,11 @@
       "label": "Gotenks (Super Saiyan) Pressure Feint",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -828,7 +924,11 @@
       "label": "Gotenks (Super Saiyan) Drive",
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -841,7 +941,11 @@
       "label": "Gotenks (Super Saiyan) Barrage",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -854,7 +958,11 @@
       "label": "Gotenks (Super Saiyan) Finisher",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -868,7 +976,11 @@
       "label": "Gotenks (Super Saiyan) Step Kick",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -881,7 +993,11 @@
       "label": "Gotenks (Super Saiyan) Palm String",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -894,7 +1010,11 @@
       "label": "Gotenks (Super Saiyan) Rising Chain",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -907,7 +1027,11 @@
       "label": "Gotenks (Super Saiyan) Special Setup",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -920,7 +1044,11 @@
       "label": "Gotenks (Super Saiyan) Break Art",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -933,7 +1061,11 @@
       "label": "Gotenks (Super Saiyan) Check Hook",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -946,7 +1078,11 @@
       "label": "Gotenks (Super Saiyan) Heavy Break",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -959,7 +1095,11 @@
       "label": "Gotenks (Super Saiyan) Charged Follow",
       "forwardForce": 1.75,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -973,7 +1113,11 @@
       "label": "Gotenks (Super Saiyan) Drop Kick",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -986,7 +1130,11 @@
       "label": "Gotenks (Super Saiyan) Arc Finisher",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -999,7 +1147,11 @@
       "label": "Gotenks (Super Saiyan) Focus Stance",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1012,7 +1164,11 @@
       "label": "Gotenks (Super Saiyan) Mode Shift",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1025,7 +1181,11 @@
       "label": "Gotenks (Super Saiyan) Heel Feint",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1038,7 +1198,11 @@
       "label": "Gotenks (Super Saiyan) Summon Strike",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1051,7 +1215,11 @@
       "label": "Gotenks (Super Saiyan) Guard Snare",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1064,7 +1232,11 @@
       "label": "Gotenks (Super Saiyan) Armor Break",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1077,7 +1249,11 @@
       "label": "Gotenks (Super Saiyan) Power Setup",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1090,7 +1266,11 @@
       "label": "Gotenks (Super Saiyan) Switch Strike",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1103,7 +1283,11 @@
       "label": "Gotenks (Super Saiyan) Spark Jab",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1116,7 +1300,11 @@
       "label": "Gotenks (Super Saiyan) Binding Blow",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1129,7 +1317,11 @@
       "label": "Gotenks (Super Saiyan) Heavy Draw",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1143,7 +1335,11 @@
       "label": "Gotenks (Super Saiyan) Kick Ender",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1161,7 +1357,11 @@
       "cancelable": false,
       "forwardForce": 2.08,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1179,7 +1379,11 @@
       "cancelable": false,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1198,7 +1402,11 @@
       "cancelable": false,
       "forwardForce": 1.41,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1216,7 +1424,11 @@
       "cancelable": false,
       "forwardForce": 2.14,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1235,7 +1447,11 @@
       "cancelable": false,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 2,
+      "juggleRepeatPenaltyFrames": 4
     }
   },
   "effects": [],

@@ -3749,6 +3749,101 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.onHitFrames).toBeLessThan(plusKickCharacter.moves[1].onHitFrames);
   });
 
+  it('makes repeated launcher hits lose juggle control instead of looping forever', () => {
+    const launcherCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 3,
+        activeFrames: 2,
+        recoveryFrames: 4,
+        damage: 2,
+        range: 2.8,
+        pushback: 0.05,
+        launchHeight: move.input === 'jab' ? 2.2 : undefined,
+        knockdown: false,
+        onHitFrames: move.input === 'jab' ? 28 : 12,
+        onCounterHitFrames: move.input === 'jab' ? 30 : 14,
+        onComboHitFrames: move.input === 'jab' ? 8 : 10,
+        onJuggleHitFrames: move.input === 'jab' ? 4 : 12,
+        comboRepeatPenaltyFrames: move.input === 'jab' ? 6 : 3,
+        juggleRepeatPenaltyFrames: move.input === 'jab' ? 14 : 5,
+        comboKey: `neutral:${move.input}`,
+        hitbox: { offset: [0, 1.8, 0.72], size: [2.1, 4.2, 2.2] }
+      }))
+    };
+    let match = createMatch(launcherCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const jab = emptyInputFrame();
+      jab.jab = true;
+      match = stepUntilFighterActionable(match, 0);
+      match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+      for (let i = 0; i < 28 && (!match.fighters[0].hitConfirmed || match.fighters[0].state === 'attack'); i += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+    }
+
+    for (let i = 0; i < 120; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].comboHits).toBeLessThanOrEqual(2);
+    expect(match.fighters[1].state === 'juggle' && match.fighters[1].stunFramesRemaining > 0).toBe(false);
+  });
+
+  it('keeps launcher into varied juggle followup viable', () => {
+    const variedCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 3,
+        activeFrames: 2,
+        recoveryFrames: 4,
+        damage: move.input === 'heavy' ? 6 : 2,
+        range: 2.8,
+        pushback: 0.05,
+        launchHeight: move.input === 'jab' ? 2.2 : undefined,
+        knockdown: false,
+        onHitFrames: move.input === 'jab' ? 28 : 16,
+        onCounterHitFrames: move.input === 'jab' ? 30 : 18,
+        onComboHitFrames: move.input === 'jab' ? 8 : 12,
+        onJuggleHitFrames: move.input === 'heavy' ? 18 : 4,
+        comboRepeatPenaltyFrames: 4,
+        juggleRepeatPenaltyFrames: move.input === 'heavy' ? 4 : 14,
+        comboKey: `neutral:${move.input}`,
+        hitbox: { offset: [0, 1.8, 0.72], size: [2.1, 4.2, 2.2] }
+      }))
+    };
+    let match = createMatch(variedCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const jab = emptyInputFrame();
+    jab.jab = true;
+    match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 28 && (!match.fighters[0].hitConfirmed || match.fighters[0].state === 'attack'); i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    match = stepUntilFighterActionable(match, 0);
+
+    const heavy = emptyInputFrame();
+    heavy.heavy = true;
+    match = stepMatch(match, heavy, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 28 && match.fighters[0].comboHits < 2; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].comboHits).toBeGreaterThanOrEqual(2);
+    expect(match.fighters[1].state).toBe('juggle');
+  });
+
   it('charges ki while holding the charge input in neutral', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

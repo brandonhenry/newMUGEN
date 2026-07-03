@@ -67,7 +67,11 @@
       "cancelable": false,
       "forwardForce": 0.35,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     {
       "id": "kick",
@@ -101,7 +105,11 @@
       "cancelable": false,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     {
       "id": "heavy",
@@ -135,7 +143,11 @@
       "cancelable": false,
       "forwardForce": 0.72,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     {
       "id": "special",
@@ -169,7 +181,11 @@
       "cancelable": false,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 3,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 11
     }
   ],
   "hurtboxes": [

@@ -19,6 +19,7 @@ import type {
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale } from '../lib/characterScale';
+import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
 import { recommendCpuComboRoute, type ComboTrialStep } from '../lib/comboRoutes';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
@@ -474,6 +475,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     comboTimer: 0,
     comboStep: 0,
     comboSequence: [],
+    comboIdentitySequence: [],
     comboUsedKeys: [],
     comboHits: 0,
     comboDamage: 0,
@@ -540,6 +542,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   if (fighter.comboTimer === 0 && fighter.state !== 'attack') {
     fighter.comboStep = 0;
     fighter.comboSequence = [];
+    fighter.comboIdentitySequence = [];
     fighter.comboUsedKeys = [];
     fighter.comboHits = 0;
     fighter.comboDamage = 0;
@@ -1203,6 +1206,7 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.comboTimer = 0;
   fighter.comboStep = 0;
   fighter.comboSequence = [];
+  fighter.comboIdentitySequence = [];
   fighter.comboUsedKeys = [];
   fighter.comboHits = 0;
   fighter.comboDamage = 0;
@@ -1672,6 +1676,7 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   fighter.comboTimer = COMBO_WINDOW;
   fighter.comboStep = comboStep;
   fighter.comboSequence = sequence;
+  fighter.comboIdentitySequence = continuing ? [...fighter.comboIdentitySequence, identity].slice(-6) : [identity];
   if (!continuing) fighter.comboUsedKeys = [];
 
   const forwardNudge = route.toward ? 0.18 : route.away ? -0.08 : continuing ? 0.16 : 0;
@@ -1903,6 +1908,14 @@ function countTrailingSameInputs(sequence: MoveInput[]) {
   return count;
 }
 
+function countTrailingIdentityRepeats(sequence: string[], identity: string) {
+  let count = 0;
+  for (let index = sequence.length - 1; index >= 0 && sequence[index] === identity; index -= 1) {
+    count += 1;
+  }
+  return Math.max(1, count);
+}
+
 function isAuthoredChain(character: CharacterDefinition, move: MoveDefinition, route: ComboRoute, sequence: MoveInput[], command?: CommandCandidate | null) {
   if (command && !command.isBaseButton) {
     return Boolean(
@@ -1962,6 +1975,10 @@ function applyMoveOverrides(
     onBlockFrames: Math.round(merged.onBlockFrames),
     onHitFrames: Math.round(merged.onHitFrames),
     onCounterHitFrames: Math.round(merged.onCounterHitFrames),
+    onComboHitFrames: merged.onComboHitFrames === undefined ? undefined : Math.round(merged.onComboHitFrames),
+    onJuggleHitFrames: merged.onJuggleHitFrames === undefined ? undefined : Math.round(merged.onJuggleHitFrames),
+    comboRepeatPenaltyFrames: merged.comboRepeatPenaltyFrames === undefined ? undefined : Math.max(0, Math.round(merged.comboRepeatPenaltyFrames)),
+    juggleRepeatPenaltyFrames: merged.juggleRepeatPenaltyFrames === undefined ? undefined : Math.max(0, Math.round(merged.juggleRepeatPenaltyFrames)),
     counterHit: Boolean(merged.counterHit),
     counterHitStunBonusFrames: merged.counterHitStunBonusFrames === undefined ? undefined : Math.max(0, Math.round(merged.counterHitStunBonusFrames)),
     range: Math.max(0.1, merged.range),
@@ -2894,7 +2911,15 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     kiBurst: Boolean(move.kiBurst)
   });
 
-  const advantage = counterHit ? move.onCounterHitFrames + Math.max(0, Math.round(move.counterHitStunBonusFrames ?? 0)) : move.onHitFrames;
+  const repeatCount = countTrailingIdentityRepeats(attacker.comboIdentitySequence, identity);
+  const hitContext = wasAirborne ? 'juggle' : defender.state === 'hit' && defender.stunFramesRemaining > 0 ? 'combo' : 'neutral';
+  const frameData = contextualComboFrameData(move, {
+    context: hitContext,
+    counterHit,
+    comboHits: attacker.comboHits,
+    repeatCount
+  });
+  const advantage = frameData.effectiveAdvantage;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
   const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const entersJuggle = launchHeight > 0 || wasJuggled;
@@ -2940,7 +2965,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.position.y = Math.max(defender.position.y, minHeight);
     defender.velocityY = Math.max(defender.velocityY, refloatVelocity);
     defender.juggleGravityScale = getMoveJuggleGravityScale(move);
-    defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, tornadoExtendsJuggle ? TORNADO_REFLOAT_STUN_FRAMES : wasAirborne ? 18 : 28);
+    const explicitRefloat = wasAirborne && Number.isFinite(move.juggleRefloatVelocity);
+    const juggleFloor = tornadoExtendsJuggle ? TORNADO_REFLOAT_STUN_FRAMES : !wasAirborne ? 28 : explicitRefloat ? 16 : 1;
+    defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, juggleFloor);
     defender.stunTimer = framesToSeconds(defender.stunFramesRemaining);
     defender.actionFramesRemaining = Math.max(defender.actionFramesRemaining, defender.stunFramesRemaining);
     defender.actionTimer = framesToSeconds(defender.actionFramesRemaining);
@@ -3011,7 +3038,13 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   });
 
   const wasJuggled = defender.state === 'juggle';
-  const stunFrames = Math.max(8, attackerRemaining + Math.round(weakMove.onHitFrames * 0.72));
+  const cloneContext = wasJuggled || isAirborne(defender) ? 'juggle' : defender.state === 'hit' && defender.stunFramesRemaining > 0 ? 'combo' : 'neutral';
+  const cloneAdvantage = contextualHitAdvantage(weakMove, {
+    context: cloneContext,
+    comboHits: attacker.comboHits,
+    repeatCount: 1
+  });
+  const stunFrames = Math.max(8, attackerRemaining + cloneAdvantage);
   defender.hp = Math.max(0, defender.hp - weakMove.damage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
@@ -3045,6 +3078,10 @@ function buildShadowCloneMove(move: MoveDefinition): MoveDefinition {
     onBlockFrames: Math.min(move.onBlockFrames, -1),
     onHitFrames: Math.max(6, Math.round(move.onHitFrames * 0.72)),
     onCounterHitFrames: Math.max(8, Math.round(move.onCounterHitFrames * 0.72)),
+    onComboHitFrames: move.onComboHitFrames === undefined ? undefined : Math.max(4, Math.round(move.onComboHitFrames * 0.72)),
+    onJuggleHitFrames: move.onJuggleHitFrames === undefined ? undefined : Math.max(3, Math.round(move.onJuggleHitFrames * 0.62)),
+    comboRepeatPenaltyFrames: move.comboRepeatPenaltyFrames,
+    juggleRepeatPenaltyFrames: move.juggleRepeatPenaltyFrames,
     pushback: move.pushback * 0.62,
     blockPushback: move.blockPushback * 0.58,
     launchHeight: 0,
@@ -5063,6 +5100,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       currentMove: fighter.currentMove,
       commandHistory: fighter.commandHistory.map((entry) => ({ ...entry })),
       comboSequence: [...fighter.comboSequence],
+      comboIdentitySequence: [...fighter.comboIdentitySequence],
       comboUsedKeys: [...fighter.comboUsedKeys],
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
       previousAttackInputs: { ...fighter.previousAttackInputs },
