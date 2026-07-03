@@ -131,7 +131,14 @@
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/monkey-d-luffy/frames/frame-073.png",
+      "/characters/monkey-d-luffy/frames/frame-074.png",
+      "/characters/monkey-d-luffy/frames/frame-075.png",
+      "/characters/monkey-d-luffy/frames/frame-076.png",
+      "/characters/monkey-d-luffy/frames/frame-078.png",
+      "/characters/monkey-d-luffy/frames/frame-079.png"
+    ],
     "cmd:FC+2": [],
     "cmd:1+2": [
       "/characters/monkey-d-luffy/frames/frame-068.png",
@@ -196,6 +203,30 @@
       "/characters/monkey-d-luffy/frames/frame-101.png",
       "/characters/monkey-d-luffy/frames/frame-102.png",
       "/characters/monkey-d-luffy/frames/frame-097.png"
+    ],
+    "cmd:d+1": [
+      "/characters/monkey-d-luffy/frames/frame-073.png",
+      "/characters/monkey-d-luffy/frames/frame-074.png",
+      "/characters/monkey-d-luffy/frames/frame-075.png",
+      "/characters/monkey-d-luffy/frames/frame-076.png",
+      "/characters/monkey-d-luffy/frames/frame-078.png",
+      "/characters/monkey-d-luffy/frames/frame-079.png"
+    ],
+    "cmd:qcf+1": [
+      "/characters/monkey-d-luffy/frames/frame-073.png",
+      "/characters/monkey-d-luffy/frames/frame-074.png",
+      "/characters/monkey-d-luffy/frames/frame-075.png",
+      "/characters/monkey-d-luffy/frames/frame-076.png",
+      "/characters/monkey-d-luffy/frames/frame-078.png",
+      "/characters/monkey-d-luffy/frames/frame-079.png"
+    ],
+    "cmd:O+1": [
+      "/characters/monkey-d-luffy/frames/frame-073.png",
+      "/characters/monkey-d-luffy/frames/frame-074.png",
+      "/characters/monkey-d-luffy/frames/frame-075.png",
+      "/characters/monkey-d-luffy/frames/frame-076.png",
+      "/characters/monkey-d-luffy/frames/frame-078.png",
+      "/characters/monkey-d-luffy/frames/frame-079.png"
     ]
   },
   "animationFrameRates": {
@@ -233,7 +264,10 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8
+    "cmd:O+2": 8,
+    "cmd:d+1": 10,
+    "cmd:qcf+1": 10,
+    "cmd:O+1": 10
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -290,9 +324,9 @@
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
-      "onBlockFrames": -2,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 4,
       "range": 1.45,
       "pushback": 0.93,
@@ -310,7 +344,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -322,9 +358,9 @@
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
-      "onBlockFrames": -14,
-      "onHitFrames": 5,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "pushback": 0.96,
@@ -342,7 +378,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -354,9 +392,9 @@
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -374,7 +412,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -386,9 +426,9 @@
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -8,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -9,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 7,
       "range": 1.72,
       "pushback": 0.98,
@@ -406,7 +446,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -500,14 +542,22 @@
       "recoveryFrames": 8,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 11,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Monkey D. Luffy Rush",
-      "hitLevel": "mid"
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "f+1",
+      "notation": "f+1",
+      "animationKey": "cmd:f+1",
+      "comboKey": "f+1:link",
+      "route": "direction:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -562,13 +612,21 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -4,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 9,
-      "whiffRecoveryFrames": 5,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "Monkey D. Luffy Crouch Jab",
-      "hitLevel": "mid"
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "FC+1",
+      "notation": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "comboKey": "FC+1:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -970,6 +1028,53 @@
       "startupFrames": 13,
       "recoveryFrames": 13,
       "tornado": true
+    },
+    "cmd:d+1": {
+      "input": "jab",
+      "command": "d+1",
+      "notation": "d+1",
+      "animationKey": "cmd:d+1",
+      "comboKey": "d+1:link",
+      "label": "d+1 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
+      "input": "jab",
+      "command": "qcf+1",
+      "notation": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "comboKey": "qcf+1:link",
+      "label": "qcf+1 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:O+1": {
+      "input": "jab",
+      "command": "O+1",
+      "notation": "O+1",
+      "animationKey": "cmd:O+1",
+      "comboKey": "O+1:link",
+      "label": "O+1 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -12,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1326,8 +1431,8 @@
     },
     "win": {
       "79": {
-        "width": 0.79,
-        "height": 0.79,
+        "width": 0.95,
+        "height": 0.95,
         "offsetX": 0
       }
     },

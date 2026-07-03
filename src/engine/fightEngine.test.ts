@@ -4624,6 +4624,83 @@ describe('fight engine', () => {
     expect(whiff.impactEvents).toHaveLength(0);
   });
 
+  it('emits counter hit events and uses counter-hit advantage only for eligible moves', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const counterMove: MoveDefinition = {
+      ...starterCharacters[0].moves[0],
+      label: 'Counter Hit Test',
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      range: 2.5,
+      onHitFrames: 2,
+      onCounterHitFrames: 30,
+      counterHitStunBonusFrames: 4,
+      counterHit: true
+    };
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = counterMove;
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+    match.fighters[1].state = 'attack';
+    match.fighters[1].currentMove = {
+      ...starterCharacters[1].moves[2],
+      startupFrames: 20,
+      activeFrames: 3,
+      recoveryFrames: 20
+    };
+    match.fighters[1].moveFrame = 5;
+    match.fighters[1].actionFramesRemaining = 38;
+    match.fighters[1].actionTimer = 38 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'counterHit', attackerSlot: 1, defenderSlot: 2, moveLabel: 'Counter Hit Test' });
+    expect(match.combatEvents[0]).toMatchObject({ kind: 'counterHit', slot: 1, moveLabel: 'Counter Hit Test' });
+    expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(30);
+  });
+
+  it('does not counter hit during startup when the attacking move is not counter-hit eligible', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      range: 2.5,
+      onHitFrames: 2,
+      onCounterHitFrames: 30,
+      counterHit: false
+    };
+    match.fighters[0].actionFramesRemaining = 12;
+    match.fighters[0].actionTimer = 12 / 60;
+    match.fighters[1].state = 'attack';
+    match.fighters[1].currentMove = {
+      ...starterCharacters[1].moves[2],
+      startupFrames: 20,
+      activeFrames: 3,
+      recoveryFrames: 20
+    };
+    match.fighters[1].moveFrame = 5;
+    match.fighters[1].actionFramesRemaining = 38;
+    match.fighters[1].actionTimer = 38 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2 });
+    expect(match.combatEvents).toHaveLength(0);
+    expect(match.fighters[1].stunFramesRemaining).toBeLessThan(20);
+  });
+
   it('keeps the fight phase active without hit-stop and accepts movement after hitstun', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

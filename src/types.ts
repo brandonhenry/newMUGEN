@@ -48,8 +48,8 @@ export type GetupAction = 'none' | 'stand' | 'rollUp' | 'rollDown' | 'rollBack';
 export type GetupFrameOverrides = Partial<Record<Exclude<GetupAction, 'none'>, number>>;
 export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
-export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish' | 'clashWin' | 'clashDraw' | 'clashPerfect';
-export type ImpactSparkKind = 'hit' | 'block' | 'punish' | 'whiffPunish' | 'clash';
+export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish' | 'counterHit' | 'clashWin' | 'clashDraw' | 'clashPerfect';
+export type ImpactSparkKind = 'hit' | 'block' | 'punish' | 'whiffPunish' | 'counterHit' | 'clash';
 export type ImpactSparkShape = 'burst' | 'ring' | 'shards';
 
 export type ClashParticipantState = {
@@ -103,6 +103,8 @@ export type MoveDefinition = {
   onBlockFrames: number;
   onHitFrames: number;
   onCounterHitFrames: number;
+  counterHit?: boolean;
+  counterHitStunBonusFrames?: number;
   whiffRecoveryFrames?: number;
   range: number;
   forwardForce?: number;
@@ -148,6 +150,7 @@ export type CombatPopupEvent = {
   damage: number;
   moveLabel: string;
   moveInput?: MoveInput;
+  moveCommand?: string;
   hitLevel?: HitLevel;
   launched?: boolean;
   juggled?: boolean;
@@ -165,6 +168,7 @@ export type ImpactSparkEvent = {
   damage: number;
   moveLabel: string;
   moveInput?: MoveInput;
+  moveCommand?: string;
   comboHits?: number;
   launched?: boolean;
   juggled?: boolean;
@@ -920,6 +924,7 @@ export type MatchSnapshot = {
   roundTime: number;
   maxHealth?: number;
   trainingInfiniteHealth: boolean;
+  trainingDummyInput?: InputFrame | null;
   introEnabled: boolean;
   timer: number;
   round: number;

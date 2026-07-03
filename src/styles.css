@@ -6565,6 +6565,7 @@ button {
 
 .health-track {
   display: flex;
+  justify-content: flex-end;
   overflow: hidden;
   height: clamp(24px, 3vw, 34px);
   border-radius: 4px;
@@ -6576,7 +6577,6 @@ button {
     0 1px 0 rgba(255, 255, 255, 0.24) inset,
     0 0 0 2px rgba(0, 0, 0, 0.34),
     0 0 22px var(--health-glow);
-  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 100%, 0 100%);
 }
 
 .health-track span {
@@ -6593,8 +6593,7 @@ button {
 }
 
 .health.right .health-track {
-  justify-content: flex-end;
-  clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%);
+  justify-content: flex-start;
 }
 
 .ki-track {
@@ -6758,6 +6757,7 @@ button {
 
 .combat-popup-card.whiffPunish,
 .combat-popup-card.punish,
+.combat-popup-card.counterHit,
 .combat-popup-card.clashWin,
 .combat-popup-card.clashDraw,
 .combat-popup-card.clashPerfect {
@@ -6780,6 +6780,7 @@ button {
 
 .combat-popup-column.right .combat-popup-card.whiffPunish,
 .combat-popup-column.right .combat-popup-card.punish,
+.combat-popup-column.right .combat-popup-card.counterHit,
 .combat-popup-column.right .combat-popup-card.clashWin,
 .combat-popup-column.right .combat-popup-card.clashDraw,
 .combat-popup-column.right .combat-popup-card.clashPerfect {
@@ -6835,6 +6836,14 @@ button {
     0 2px 0 rgba(0, 0, 0, 0.54),
     0 0 16px rgba(245, 87, 255, 0.86);
   border-bottom: 2px solid rgba(255, 154, 255, 0.72);
+}
+
+.counter-hit-line {
+  color: #fff4a6;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.54),
+    0 0 18px rgba(255, 226, 82, 0.78);
+  border-bottom-color: rgba(255, 235, 128, 0.78);
 }
 
 .combat-popup-column.right .punish-line {
@@ -7672,6 +7681,139 @@ button {
   grid-column: 1 / -1;
 }
 
+.combo-trial-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.combo-trial-list,
+.combo-trial-detail {
+  min-height: 0;
+  overflow: auto;
+  border-radius: 8px;
+  padding: 14px;
+  text-align: left;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(6, 10, 20, 0.78);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.combo-trial-list h3,
+.combo-trial-detail h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.combo-trial-list section {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.combo-trial-list section > strong,
+.combo-trial-detail header > span {
+  color: #ffe373;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.combo-trial-list button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 6px;
+  padding: 7px 9px;
+  color: rgba(255, 255, 255, 0.84);
+  background: rgba(0, 0, 0, 0.24);
+  font-weight: 850;
+  text-align: left;
+}
+
+.combo-trial-list button.active,
+.combo-trial-list button:hover,
+.combo-trial-list button:focus-visible {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(255, 220, 82, 0.32), rgba(82, 190, 255, 0.18));
+  outline: 0;
+}
+
+.combo-trial-list button span,
+.combo-trial-stats span {
+  font-variant-numeric: tabular-nums;
+}
+
+.combo-trial-detail {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 14px;
+}
+
+.combo-trial-detail header small,
+.combo-trial-step small {
+  color: var(--text-muted);
+}
+
+.combo-trial-sequence {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-height: 0;
+}
+
+.combo-trial-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.combo-trial-step.correct {
+  background: rgba(82, 255, 161, 0.16);
+}
+
+.combo-trial-step.current {
+  background: rgba(255, 226, 82, 0.16);
+}
+
+.combo-trial-step.missed {
+  background: rgba(255, 70, 98, 0.18);
+}
+
+.combo-trial-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.combo-trial-stats span {
+  border-radius: 6px;
+  padding: 6px 9px;
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 900;
+}
+
+.combo-trial-actions {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-self: center;
+}
+
 @media (max-width: 760px) {
   .match-message.fight-message {
     font-size: clamp(68px, 20vw, 118px);
@@ -7739,6 +7881,15 @@ button {
 
   .pause-movelist-overlay .pause-movelist-actions {
     width: min(460px, 92vw);
+  }
+
+  .combo-trial-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(120px, 0.38fr) minmax(0, 1fr) auto;
+  }
+
+  .combo-trial-actions {
+    grid-template-columns: 1fr;
   }
 
 }

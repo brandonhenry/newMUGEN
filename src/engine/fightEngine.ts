@@ -163,6 +163,7 @@ export function createMatch(
     roundTime,
     maxHealth,
     trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
+    trainingDummyInput: null,
     introEnabled: options.playIntro ?? false,
     timer: roundTime,
     round: 1,
@@ -227,7 +228,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   const input1 = next.mode === 'cpu' ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
-      ? makeTrainingDummyInput(next.fighters[1])
+      ? next.trainingDummyInput ?? makeTrainingDummyInput(next.fighters[1])
       : next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu'
         ? makeAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
         : p2Input;
@@ -1754,6 +1755,8 @@ function buildKiBurstMove(move: MoveDefinition, kiCost = getMoveKiCost(move)): M
     onBlockFrames: move.onBlockFrames - 2,
     onHitFrames: move.onHitFrames + 5,
     onCounterHitFrames: move.onCounterHitFrames + 7,
+    counterHit: move.counterHit,
+    counterHitStunBonusFrames: move.counterHitStunBonusFrames,
     range: move.range + 0.18,
     pushback: move.pushback + 0.32,
     blockPushback: move.blockPushback + 0.24,
@@ -1958,6 +1961,8 @@ function applyMoveOverrides(
     onBlockFrames: Math.round(merged.onBlockFrames),
     onHitFrames: Math.round(merged.onHitFrames),
     onCounterHitFrames: Math.round(merged.onCounterHitFrames),
+    counterHit: Boolean(merged.counterHit),
+    counterHitStunBonusFrames: merged.counterHitStunBonusFrames === undefined ? undefined : Math.max(0, Math.round(merged.counterHitStunBonusFrames)),
     range: Math.max(0.1, merged.range),
     pushback: Math.max(0, merged.pushback),
     blockPushback: Math.max(0, merged.blockPushback),
@@ -2827,12 +2832,12 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const wasAirborne = isAirborne(defender) || wasJuggled;
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
   const blocked = canDefenderBlockMove(defender, attacker, move);
-  const counterHit = isCounterHit(defender);
+  const counterHit = isCounterHit(move, defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
   const impactId = nextHitEventId(match);
   const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
-  pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
+  pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
     comboHits,
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
@@ -2881,14 +2886,14 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
-  pushCombatPopupEvent(match, impactId, attacker, move, whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
+  pushCombatPopupEvent(match, impactId, attacker, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
     tornado: Boolean(move.tornado) && wasJuggled,
     kiBurst: Boolean(move.kiBurst)
   });
 
-  const advantage = counterHit ? move.onCounterHitFrames : move.onHitFrames;
+  const advantage = counterHit ? move.onCounterHitFrames + Math.max(0, Math.round(move.counterHitStunBonusFrames ?? 0)) : move.onHitFrames;
   const stunFrames = Math.max(1, attackerRemaining + advantage);
   const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const entersJuggle = launchHeight > 0 || wasJuggled;
@@ -3080,7 +3085,7 @@ function pushCombatPopupEvent(
   id: number,
   attacker: FighterRuntime,
   move: MoveDefinition,
-  kind: 'combo' | 'punish' | 'whiffPunish' | null,
+  kind: 'combo' | 'punish' | 'whiffPunish' | 'counterHit' | null,
   context: { launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {}
 ) {
   if (!kind) return;
@@ -3094,6 +3099,7 @@ function pushCombatPopupEvent(
       damage: attacker.comboDamage,
       moveLabel: move.label,
       moveInput: move.input,
+      moveCommand: move.command,
       hitLevel: move.hitLevel,
       launched: context.launched,
       juggled: context.juggled,
@@ -3155,6 +3161,7 @@ function pushImpactSparkEvent(
       damage: kind === 'block' ? move.blockDamage : move.damage,
       moveLabel: move.label,
       moveInput: move.input,
+      moveCommand: move.command,
       comboHits: context.comboHits,
       launched: context.launched,
       juggled: context.juggled,
@@ -3626,7 +3633,8 @@ function applyPoseToHurtbox(fighter: FighterRuntime, box: BoxSpec): BoxSpec {
   return box;
 }
 
-function isCounterHit(defender: FighterRuntime) {
+function isCounterHit(move: MoveDefinition, defender: FighterRuntime) {
+  if (!move.counterHit) return false;
   if (defender.state !== 'attack' || !defender.currentMove) return false;
   return defender.moveFrame <= defender.currentMove.startupFrames + defender.currentMove.activeFrames;
 }
@@ -4969,6 +4977,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
     ...match,
     roster: [...match.roster],
     stage: { ...match.stage },
+    trainingDummyInput: match.trainingDummyInput ? cloneInputFrame(match.trainingDummyInput) : null,
     combatEvents: [...match.combatEvents],
     impactEvents: [...match.impactEvents],
     clashState: cloneClashState(match.clashState),

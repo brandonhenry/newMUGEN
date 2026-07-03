@@ -220,9 +220,9 @@
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
-      "onBlockFrames": -2,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 5,
       "range": 1.42,
       "pushback": 0.93,
@@ -240,7 +240,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -252,9 +254,9 @@
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
-      "onBlockFrames": -14,
-      "onHitFrames": 5,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "pushback": 0.96,
@@ -272,7 +274,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -284,9 +288,9 @@
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -304,7 +308,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -316,9 +322,9 @@
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -8,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -9,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 7,
       "range": 1.72,
       "pushback": 0.98,
@@ -336,7 +342,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [

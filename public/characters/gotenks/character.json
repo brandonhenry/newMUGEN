@@ -119,8 +119,16 @@
     "lose": [
       "/characters/gotenks/frames/frame-023.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
+    "cmd:f+1": [
+      "/characters/gotenks/frames/frame-071.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/gotenks/frames/frame-064.png",
+      "/characters/gotenks/frames/frame-065.png",
+      "/characters/gotenks/frames/frame-066.png",
+      "/characters/gotenks/frames/frame-067.png",
+      "/characters/gotenks/frames/frame-068.png"
+    ],
     "cmd:qcf+4": [
       "/characters/gotenks/frames/frame-200.png",
       "/characters/gotenks/frames/frame-201.png",
@@ -131,9 +139,25 @@
       "/characters/gotenks/frames/frame-206.png",
       "/characters/gotenks/frames/frame-207.png"
     ],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
+    "cmd:WS+4": [
+      "/characters/gotenks/frames/frame-168.png",
+      "/characters/gotenks/frames/frame-169.png",
+      "/characters/gotenks/frames/frame-170.png",
+      "/characters/gotenks/frames/frame-171.png",
+      "/characters/gotenks/frames/frame-172.png",
+      "/characters/gotenks/frames/frame-173.png",
+      "/characters/gotenks/frames/frame-174.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/gotenks/frames/frame-071.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/gotenks/frames/frame-064.png",
+      "/characters/gotenks/frames/frame-065.png",
+      "/characters/gotenks/frames/frame-066.png",
+      "/characters/gotenks/frames/frame-067.png",
+      "/characters/gotenks/frames/frame-068.png"
+    ],
     "cmd:1+2": [
       "/characters/gotenks/frames/frame-068.png",
       "/characters/gotenks/frames/frame-070.png",
@@ -156,8 +180,24 @@
       "/characters/gotenks/frames/frame-135.png",
       "/characters/gotenks/frames/frame-136.png"
     ],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
+    "cmd:2+4": [
+      "/characters/gotenks/frames/frame-168.png",
+      "/characters/gotenks/frames/frame-169.png",
+      "/characters/gotenks/frames/frame-170.png",
+      "/characters/gotenks/frames/frame-171.png",
+      "/characters/gotenks/frames/frame-172.png",
+      "/characters/gotenks/frames/frame-173.png",
+      "/characters/gotenks/frames/frame-174.png"
+    ],
+    "cmd:3+4": [
+      "/characters/gotenks/frames/frame-168.png",
+      "/characters/gotenks/frames/frame-169.png",
+      "/characters/gotenks/frames/frame-170.png",
+      "/characters/gotenks/frames/frame-171.png",
+      "/characters/gotenks/frames/frame-172.png",
+      "/characters/gotenks/frames/frame-173.png",
+      "/characters/gotenks/frames/frame-174.png"
+    ],
     "cmd:O+2": [],
     "cmd:1+4": [
       "/characters/gotenks/frames/frame-123.png",
@@ -166,6 +206,47 @@
       "/characters/gotenks/frames/frame-126.png",
       "/characters/gotenks/frames/frame-127.png",
       "/characters/gotenks/frames/frame-128.png"
+    ],
+    "cmd:f+2": [
+      "/characters/gotenks/frames/frame-064.png",
+      "/characters/gotenks/frames/frame-065.png",
+      "/characters/gotenks/frames/frame-066.png",
+      "/characters/gotenks/frames/frame-067.png",
+      "/characters/gotenks/frames/frame-068.png"
+    ],
+    "cmd:d+1": [
+      "/characters/gotenks/frames/frame-071.png"
+    ],
+    "cmd:qcf+1": [
+      "/characters/gotenks/frames/frame-071.png"
+    ],
+    "cmd:WS+2": [
+      "/characters/gotenks/frames/frame-064.png",
+      "/characters/gotenks/frames/frame-065.png",
+      "/characters/gotenks/frames/frame-066.png",
+      "/characters/gotenks/frames/frame-067.png",
+      "/characters/gotenks/frames/frame-068.png"
+    ],
+    "cmd:SS+4": [
+      "/characters/gotenks/frames/frame-168.png",
+      "/characters/gotenks/frames/frame-169.png",
+      "/characters/gotenks/frames/frame-170.png",
+      "/characters/gotenks/frames/frame-171.png",
+      "/characters/gotenks/frames/frame-172.png",
+      "/characters/gotenks/frames/frame-173.png",
+      "/characters/gotenks/frames/frame-174.png"
+    ],
+    "cmd:O+1": [
+      "/characters/gotenks/frames/frame-071.png"
+    ],
+    "cmd:O+4": [
+      "/characters/gotenks/frames/frame-168.png",
+      "/characters/gotenks/frames/frame-169.png",
+      "/characters/gotenks/frames/frame-170.png",
+      "/characters/gotenks/frames/frame-171.png",
+      "/characters/gotenks/frames/frame-172.png",
+      "/characters/gotenks/frames/frame-173.png",
+      "/characters/gotenks/frames/frame-174.png"
     ]
   },
   "animationFrameRates": {
@@ -203,7 +284,15 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8
+    "cmd:O+2": 8,
+    "cmd:1+4": 9,
+    "cmd:f+2": 10,
+    "cmd:d+1": 10,
+    "cmd:qcf+1": 10,
+    "cmd:WS+2": 10,
+    "cmd:SS+4": 9,
+    "cmd:O+1": 10,
+    "cmd:O+4": 9
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -260,9 +349,9 @@
       "damage": 5,
       "blockDamage": 1,
       "hitLevel": "high",
-      "onBlockFrames": -1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 3,
       "range": 1.38,
       "pushback": 0.93,
@@ -280,7 +369,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -292,9 +383,9 @@
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
-      "onBlockFrames": -14,
-      "onHitFrames": 5,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "pushback": 0.96,
@@ -312,7 +403,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -324,9 +417,9 @@
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
-      "onBlockFrames": -3,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 10,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 5,
       "range": 1.53,
       "pushback": 0.94,
@@ -344,7 +437,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -356,9 +451,9 @@
       "damage": 14,
       "blockDamage": 1,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -9,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 9,
       "range": 1.73,
       "pushback": 0.98,
@@ -376,7 +471,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -474,14 +571,22 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 11,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Gotenks Rush",
-      "hitLevel": "mid"
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "f+1",
+      "notation": "f+1",
+      "animationKey": "cmd:f+1",
+      "comboKey": "f+1:link",
+      "route": "direction:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -489,17 +594,25 @@
       "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -13,
-      "onHitFrames": 25,
-      "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 12,
+      "onBlockFrames": -15,
+      "onHitFrames": 23,
+      "onCounterHitFrames": 35,
+      "whiffRecoveryFrames": 10,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Gotenks Launcher",
-      "hitLevel": "mid"
+      "label": "d/f+2 Frame Link",
+      "hitLevel": "mid",
+      "input": "heavy",
+      "command": "d/f+2",
+      "notation": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "comboKey": "d/f+2:link",
+      "route": "launcher:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 13,
@@ -507,14 +620,23 @@
       "recoveryFrames": 6,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -11,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 9,
       "range": 2.05,
-      "label": "Gotenks Burst",
+      "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "qcf+4",
+      "notation": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "comboKey": "qcf+4:link",
+      "route": "motion:frame-link",
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -522,13 +644,21 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -9,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Gotenks Rising Strike",
-      "hitLevel": "mid"
+      "label": "WS+4 Frame Link",
+      "hitLevel": "mid",
+      "input": "special",
+      "command": "WS+4",
+      "notation": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "comboKey": "WS+4:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -536,13 +666,21 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -4,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 9,
-      "whiffRecoveryFrames": 5,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "Gotenks Crouch Jab",
-      "hitLevel": "mid"
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "FC+1",
+      "notation": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "comboKey": "FC+1:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -550,14 +688,22 @@
       "recoveryFrames": 27,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -13,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 12,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.48,
       "launchHeight": 2,
-      "label": "Gotenks Crouch Launcher",
-      "hitLevel": "mid"
+      "label": "FC+2 Frame Link",
+      "hitLevel": "mid",
+      "input": "heavy",
+      "command": "FC+2",
+      "notation": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "comboKey": "FC+2:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 16,
@@ -565,13 +711,21 @@
       "recoveryFrames": 4,
       "damage": 14,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 10,
-      "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 9,
+      "onBlockFrames": -6,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.72,
-      "label": "Gotenks Twin Assault",
-      "hitLevel": "mid"
+      "label": "1+2 Frame Link",
+      "hitLevel": "mid",
+      "input": "heavy",
+      "command": "1+2",
+      "notation": "1+2",
+      "animationKey": "cmd:1+2",
+      "comboKey": "1+2:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -613,14 +767,22 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -16,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.74,
-      "label": "Gotenks Driving Kick",
+      "label": "2+4 Frame Link",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "2+4",
+      "notation": "2+4",
+      "animationKey": "cmd:2+4",
+      "comboKey": "2+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -628,14 +790,22 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.9,
-      "label": "Gotenks Power Crush",
+      "label": "3+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "3+4",
+      "notation": "3+4",
+      "animationKey": "cmd:3+4",
+      "comboKey": "3+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -944,6 +1114,129 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Gotenks Kick Ender"
+    },
+    "cmd:1+4": {
+      "input": "special",
+      "command": "1+4",
+      "notation": "1+4",
+      "animationKey": "cmd:1+4",
+      "comboKey": "1+4:link",
+      "label": "1+4 Frame Link",
+      "route": "multi:frame-link",
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:f+2": {
+      "input": "heavy",
+      "command": "f+2",
+      "notation": "f+2",
+      "animationKey": "cmd:f+2",
+      "comboKey": "f+2:link",
+      "label": "f+2 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d+1": {
+      "input": "jab",
+      "command": "d+1",
+      "notation": "d+1",
+      "animationKey": "cmd:d+1",
+      "comboKey": "d+1:link",
+      "label": "d+1 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
+      "input": "jab",
+      "command": "qcf+1",
+      "notation": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "comboKey": "qcf+1:link",
+      "label": "qcf+1 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:WS+2": {
+      "input": "heavy",
+      "command": "WS+2",
+      "notation": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "comboKey": "WS+2:link",
+      "label": "WS+2 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:SS+4": {
+      "input": "special",
+      "command": "SS+4",
+      "notation": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "comboKey": "SS+4:link",
+      "label": "SS+4 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -9,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:O+1": {
+      "input": "jab",
+      "command": "O+1",
+      "notation": "O+1",
+      "animationKey": "cmd:O+1",
+      "comboKey": "O+1:link",
+      "label": "O+1 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -12,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:O+4": {
+      "input": "special",
+      "command": "O+4",
+      "notation": "O+4",
+      "animationKey": "cmd:O+4",
+      "comboKey": "O+4:link",
+      "label": "O+4 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
     }
   },
   "effects": [],

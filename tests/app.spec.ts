@@ -22,6 +22,21 @@ async function startFight(page: import('@playwright/test').Page, local2p = false
   await fightScreen.focus();
 }
 
+async function startTraining(page: import('@playwright/test').Page) {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Training' }).click({ force: true });
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  const versusSplash = page.locator('.fight-versus-screen');
+  await expect(versusSplash).toBeVisible({ timeout: 3000 });
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
+  await page.waitForTimeout(4200);
+  const fightScreen = page.locator('.fight-screen');
+  await fightScreen.click({ position: { x: 24, y: 24 } });
+  await fightScreen.focus();
+}
+
 function xFromPosition(value: string) {
   return Number(value.split(',')[0]);
 }
@@ -73,12 +88,42 @@ async function setKey(page: import('@playwright/test').Page, code: string, press
   );
 }
 
+async function setKeys(page: import('@playwright/test').Page, codes: string[], pressed: boolean) {
+  await page.evaluate(
+    ({ codes, type }) => {
+      for (const code of codes) {
+        const key = code.startsWith('Key') ? code.slice(3).toLowerCase() : code;
+        const event = new KeyboardEvent(type, { code, key, bubbles: true, cancelable: true });
+        document.dispatchEvent(event);
+        window.dispatchEvent(new KeyboardEvent(type, { code, key, bubbles: true, cancelable: true }));
+      }
+    },
+    { codes, type: pressed ? 'keydown' : 'keyup' }
+  );
+}
+
 async function keyDown(page: import('@playwright/test').Page, code: string) {
   await setKey(page, code, true);
 }
 
 async function keyUp(page: import('@playwright/test').Page, code: string) {
   await setKey(page, code, false);
+}
+
+function keysForCounterHitTrialName(name: string) {
+  const keyByButton: Record<string, string> = {
+    '1': 'KeyU',
+    '2': 'KeyI',
+    '3': 'KeyJ',
+    '4': 'KeyK'
+  };
+  const command = name.match(/(?:Lv\s+\d+\s+)?(.+?)\s+Counter Hit/i)?.[1]?.trim() ?? '1+2';
+  const keys = new Set<string>();
+  if (/\bf\+/.test(command) || command.includes('d/f')) keys.add('KeyD');
+  if (/\bb\+/.test(command) || command.includes('d/b')) keys.add('KeyA');
+  if (/\bd\+/.test(command) || command.includes('d/f') || command.includes('d/b')) keys.add('KeyS');
+  for (const button of command.match(/[1-4]/g) ?? ['1', '2']) keys.add(keyByButton[button]);
+  return [...keys].filter(Boolean);
 }
 
 test('starts a playable match from the menu', async ({ page }) => {
@@ -264,4 +309,21 @@ test('mobile touch controls drive movement and attacks', async ({ page }, testIn
 
   await touchHold(page, 'touch-jab', 220);
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
+});
+
+test('opens training combo trials and shows counter-hit progress', async ({ page }) => {
+  await startTraining(page);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Combo Trials' }).click();
+  await expect(page.getByRole('heading', { name: 'Combo Trials' })).toBeVisible();
+  const counterHitTrial = page.getByRole('button', { name: /Counter Hit/i }).first();
+  await expect(counterHitTrial).toBeVisible();
+  const trialKeys = keysForCounterHitTrialName(await counterHitTrial.innerText());
+  await counterHitTrial.click();
+  await page.getByRole('button', { name: 'Train' }).click();
+  await setKeys(page, trialKeys, true);
+  await page.waitForTimeout(260);
+  await setKeys(page, trialKeys.reverse(), false);
+
+  await expect(page.locator('.counter-hit-line')).toContainText('Counter Hit', { timeout: 5000 });
 });

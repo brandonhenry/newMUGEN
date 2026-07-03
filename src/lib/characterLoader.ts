@@ -140,6 +140,8 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     onBlockFrames: Math.round(finiteOr(move.onBlockFrames, -Math.max(1, recoveryFrames - 12))),
     onHitFrames: Math.round(finiteOr(move.onHitFrames, Math.max(2, hitstunFrames - recoveryFrames))),
     onCounterHitFrames: Math.round(finiteOr(move.onCounterHitFrames, Math.max(4, hitstunFrames + 2 - recoveryFrames))),
+    counterHit: Boolean(move.counterHit),
+    counterHitStunBonusFrames: move.counterHitStunBonusFrames === undefined ? undefined : Math.max(0, Math.round(finiteOr(move.counterHitStunBonusFrames, 0))),
     whiffRecoveryFrames: move.whiffRecoveryFrames === undefined ? undefined : Math.max(0, Math.round(finiteOr(move.whiffRecoveryFrames, recoveryFrames))),
     range: Math.max(0.1, finiteOr(move.range, 1.3)),
     forwardForce: move.forwardForce === undefined ? undefined : clamp(finiteOr(move.forwardForce, 0), -4, 4),

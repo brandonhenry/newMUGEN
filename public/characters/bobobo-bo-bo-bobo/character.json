@@ -152,7 +152,12 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-402.png"
     ],
     "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-068.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-069.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-070.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-071.png"
+    ],
     "cmd:FC+2": [],
     "cmd:1+2": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-128.png",
@@ -163,8 +168,22 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-133.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-134.png"
     ],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
+    "cmd:1+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
+    "cmd:2+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
     "cmd:2+4": [],
     "cmd:3+4": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-123.png",
@@ -184,6 +203,64 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-168.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-169.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-170.png"
+    ],
+    "cmd:f+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
+    "cmd:d+1": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-068.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-069.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-070.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-071.png"
+    ],
+    "cmd:d+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
+    "cmd:d/f+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
+    "cmd:qcf+1": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-068.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-069.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-070.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-071.png"
+    ],
+    "cmd:qcf+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
+    "cmd:SS+3": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-098.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-099.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-100.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-101.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
+    ],
+    "cmd:O+1": [
+      "/characters/bobobo-bo-bo-bobo/frames/frame-068.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-069.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-070.png",
+      "/characters/bobobo-bo-bo-bobo/frames/frame-071.png"
     ]
   },
   "animationFrameRates": {
@@ -221,7 +298,15 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8
+    "cmd:O+2": 8,
+    "cmd:f+3": 9,
+    "cmd:d+1": 10,
+    "cmd:d+3": 9,
+    "cmd:d/f+3": 9,
+    "cmd:qcf+1": 10,
+    "cmd:qcf+3": 9,
+    "cmd:SS+3": 9,
+    "cmd:O+1": 10
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -278,9 +363,9 @@
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
-      "onBlockFrames": -1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "pushback": 0.93,
@@ -298,7 +383,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -310,9 +397,9 @@
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "pushback": 0.96,
@@ -330,7 +417,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -342,9 +431,9 @@
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -362,7 +451,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -374,9 +465,9 @@
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -8,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -9,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 7,
       "range": 1.72,
       "pushback": 0.98,
@@ -394,7 +485,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -490,14 +583,22 @@
       "recoveryFrames": 4,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 11,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Bobobo-bo Bo-bobo Rush",
-      "hitLevel": "mid"
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "f+1",
+      "notation": "f+1",
+      "animationKey": "cmd:f+1",
+      "comboKey": "f+1:link",
+      "route": "direction:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -552,13 +653,21 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -4,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 9,
-      "whiffRecoveryFrames": 5,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "Bobobo-bo Bo-bobo Crouch Jab",
-      "hitLevel": "mid"
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "FC+1",
+      "notation": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "comboKey": "FC+1:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -595,14 +704,22 @@
       "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -14,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.65,
       "launchHeight": 2.2,
-      "label": "Bobobo-bo Bo-bobo Cross Launcher",
-      "hitLevel": "mid"
+      "label": "1+3 Frame Link",
+      "hitLevel": "mid",
+      "input": "kick",
+      "command": "1+3",
+      "notation": "1+3",
+      "animationKey": "cmd:1+3",
+      "comboKey": "1+3:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -610,13 +727,21 @@
       "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "Bobobo-bo Bo-bobo Low Feint",
-      "hitLevel": "low"
+      "label": "2+3 Frame Link",
+      "hitLevel": "low",
+      "input": "kick",
+      "command": "2+3",
+      "notation": "2+3",
+      "animationKey": "cmd:2+3",
+      "comboKey": "2+3:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -955,6 +1080,129 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Bobobo-bo Bo-bobo Kick Ender"
+    },
+    "cmd:f+3": {
+      "input": "kick",
+      "command": "f+3",
+      "notation": "f+3",
+      "animationKey": "cmd:f+3",
+      "comboKey": "f+3:link",
+      "label": "f+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d+1": {
+      "input": "jab",
+      "command": "d+1",
+      "notation": "d+1",
+      "animationKey": "cmd:d+1",
+      "comboKey": "d+1:link",
+      "label": "d+1 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d+3": {
+      "input": "kick",
+      "command": "d+3",
+      "notation": "d+3",
+      "animationKey": "cmd:d+3",
+      "comboKey": "d+3:link",
+      "label": "d+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d/f+3": {
+      "input": "kick",
+      "command": "d/f+3",
+      "notation": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "comboKey": "d/f+3:link",
+      "label": "d/f+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
+      "input": "jab",
+      "command": "qcf+1",
+      "notation": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "comboKey": "qcf+1:link",
+      "label": "qcf+1 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:qcf+3": {
+      "input": "kick",
+      "command": "qcf+3",
+      "notation": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "comboKey": "qcf+3:link",
+      "label": "qcf+3 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -10,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:SS+3": {
+      "input": "kick",
+      "command": "SS+3",
+      "notation": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "comboKey": "SS+3:link",
+      "label": "SS+3 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:O+1": {
+      "input": "jab",
+      "command": "O+1",
+      "notation": "O+1",
+      "animationKey": "cmd:O+1",
+      "comboKey": "O+1:link",
+      "label": "O+1 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -12,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
     }
   },
   "effects": [],

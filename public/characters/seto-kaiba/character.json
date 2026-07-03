@@ -118,16 +118,75 @@
     "lose": [],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:qcf+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
     "cmd:1+3": [],
     "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:2+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ],
+    "cmd:3+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ],
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ],
+    "cmd:SS+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ],
+    "cmd:O+4": [
+      "/characters/seto-kaiba/frames/frame-000.png",
+      "/characters/seto-kaiba/frames/frame-002.png",
+      "/characters/seto-kaiba/frames/frame-005.png",
+      "/characters/seto-kaiba/frames/frame-007.png",
+      "/characters/seto-kaiba/frames/frame-010.png",
+      "/characters/seto-kaiba/frames/frame-012.png",
+      "/characters/seto-kaiba/frames/frame-015.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -164,7 +223,10 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8
+    "cmd:O+2": 8,
+    "cmd:1+4": 9,
+    "cmd:SS+4": 9,
+    "cmd:O+4": 9
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -221,9 +283,9 @@
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
-      "onBlockFrames": -2,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 5,
       "range": 1.42,
       "pushback": 0.93,
@@ -241,7 +303,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -253,9 +317,9 @@
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "pushback": 0.96,
@@ -273,7 +337,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -285,9 +351,9 @@
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -305,7 +371,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -317,9 +385,9 @@
       "damage": 15,
       "blockDamage": 1,
       "hitLevel": "mid",
-      "onBlockFrames": -8,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 13,
+      "onBlockFrames": -10,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 9,
       "range": 1.76,
       "pushback": 0.98,
@@ -337,7 +405,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -466,14 +536,23 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -12,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 10,
       "range": 2.05,
-      "label": "Seto Kaiba Burst",
+      "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "qcf+4",
+      "notation": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "comboKey": "qcf+4:link",
+      "route": "motion:frame-link",
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -483,11 +562,19 @@
       "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
-      "onCounterHitFrames": 25,
+      "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Seto Kaiba Rising Strike",
-      "hitLevel": "mid"
+      "label": "WS+4 Frame Link",
+      "hitLevel": "mid",
+      "input": "special",
+      "command": "WS+4",
+      "notation": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "comboKey": "WS+4:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -567,14 +654,22 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -16,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 7,
       "range": 1.74,
-      "label": "Seto Kaiba Driving Kick",
+      "label": "2+4 Frame Link",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "2+4",
+      "notation": "2+4",
+      "animationKey": "cmd:2+4",
+      "comboKey": "2+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -582,14 +677,22 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "onBlockFrames": -7,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 7,
       "range": 1.9,
-      "label": "Seto Kaiba Power Crush",
+      "label": "3+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "3+4",
+      "notation": "3+4",
+      "animationKey": "cmd:3+4",
+      "comboKey": "3+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -898,6 +1001,52 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Seto Kaiba Kick Ender"
+    },
+    "cmd:1+4": {
+      "input": "special",
+      "command": "1+4",
+      "notation": "1+4",
+      "animationKey": "cmd:1+4",
+      "comboKey": "1+4:link",
+      "label": "1+4 Frame Link",
+      "route": "multi:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:SS+4": {
+      "input": "special",
+      "command": "SS+4",
+      "notation": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "comboKey": "SS+4:link",
+      "label": "SS+4 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 8,
+      "cancelable": false
+    },
+    "cmd:O+4": {
+      "input": "special",
+      "command": "O+4",
+      "notation": "O+4",
+      "animationKey": "cmd:O+4",
+      "comboKey": "O+4:link",
+      "label": "O+4 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -13,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 10,
+      "cancelable": false
     }
   },
   "effects": [],

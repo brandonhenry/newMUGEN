@@ -122,16 +122,115 @@
     "lose": [],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:qcf+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:1+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:2+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:2+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ],
+    "cmd:3+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ],
+    "cmd:O+2": [],
+    "cmd:1+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ],
+    "cmd:f+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:d+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:d/f+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:qcf+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:SS+3": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png",
+      "/characters/sven-vollfied/frames/frame-027.png",
+      "/characters/sven-vollfied/frames/frame-028.png",
+      "/characters/sven-vollfied/frames/frame-029.png"
+    ],
+    "cmd:SS+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ],
+    "cmd:O+4": [
+      "/characters/sven-vollfied/frames/frame-030.png",
+      "/characters/sven-vollfied/frames/frame-031.png",
+      "/characters/sven-vollfied/frames/frame-032.png",
+      "/characters/sven-vollfied/frames/frame-033.png",
+      "/characters/sven-vollfied/frames/frame-034.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -168,7 +267,15 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8
+    "cmd:O+2": 8,
+    "cmd:1+4": 9,
+    "cmd:f+3": 9,
+    "cmd:d+3": 9,
+    "cmd:d/f+3": 9,
+    "cmd:qcf+3": 9,
+    "cmd:SS+3": 9,
+    "cmd:SS+4": 9,
+    "cmd:O+4": 9
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -225,9 +332,9 @@
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
-      "onBlockFrames": -2,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 5,
       "range": 1.42,
       "pushback": 0.93,
@@ -245,7 +352,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -257,9 +366,9 @@
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "pushback": 0.96,
@@ -277,7 +386,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -289,9 +400,9 @@
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -309,7 +420,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -321,9 +434,9 @@
       "damage": 12,
       "blockDamage": 1,
       "hitLevel": "mid",
-      "onBlockFrames": -6,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -9,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 8,
       "range": 1.69,
       "pushback": 0.98,
@@ -341,7 +454,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -470,14 +585,23 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -10,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 9,
       "range": 2.05,
-      "label": "Sven Vollfied Burst",
+      "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "qcf+4",
+      "notation": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "comboKey": "qcf+4:link",
+      "route": "motion:frame-link",
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -485,13 +609,21 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -8,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Sven Vollfied Rising Strike",
-      "hitLevel": "mid"
+      "label": "WS+4 Frame Link",
+      "hitLevel": "mid",
+      "input": "special",
+      "command": "WS+4",
+      "notation": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "comboKey": "WS+4:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -542,14 +674,22 @@
       "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -14,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.65,
       "launchHeight": 2.2,
-      "label": "Sven Vollfied Cross Launcher",
-      "hitLevel": "mid"
+      "label": "1+3 Frame Link",
+      "hitLevel": "mid",
+      "input": "kick",
+      "command": "1+3",
+      "notation": "1+3",
+      "animationKey": "cmd:1+3",
+      "comboKey": "1+3:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -557,13 +697,21 @@
       "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "Sven Vollfied Low Feint",
-      "hitLevel": "low"
+      "label": "2+3 Frame Link",
+      "hitLevel": "low",
+      "input": "kick",
+      "command": "2+3",
+      "notation": "2+3",
+      "animationKey": "cmd:2+3",
+      "comboKey": "2+3:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -571,14 +719,22 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -16,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.74,
-      "label": "Sven Vollfied Driving Kick",
+      "label": "2+4 Frame Link",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "2+4",
+      "notation": "2+4",
+      "animationKey": "cmd:2+4",
+      "comboKey": "2+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -586,14 +742,22 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.9,
-      "label": "Sven Vollfied Power Crush",
+      "label": "3+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "3+4",
+      "notation": "3+4",
+      "animationKey": "cmd:3+4",
+      "comboKey": "3+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -902,6 +1066,128 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Sven Vollfied Kick Ender"
+    },
+    "cmd:1+4": {
+      "input": "special",
+      "command": "1+4",
+      "notation": "1+4",
+      "animationKey": "cmd:1+4",
+      "comboKey": "1+4:link",
+      "label": "1+4 Frame Link",
+      "route": "multi:frame-link",
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:f+3": {
+      "input": "kick",
+      "command": "f+3",
+      "notation": "f+3",
+      "animationKey": "cmd:f+3",
+      "comboKey": "f+3:link",
+      "label": "f+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d+3": {
+      "input": "kick",
+      "command": "d+3",
+      "notation": "d+3",
+      "animationKey": "cmd:d+3",
+      "comboKey": "d+3:link",
+      "label": "d+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d/f+3": {
+      "input": "kick",
+      "command": "d/f+3",
+      "notation": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "comboKey": "d/f+3:link",
+      "label": "d/f+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:qcf+3": {
+      "input": "kick",
+      "command": "qcf+3",
+      "notation": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "comboKey": "qcf+3:link",
+      "label": "qcf+3 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -10,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:SS+3": {
+      "input": "kick",
+      "command": "SS+3",
+      "notation": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "comboKey": "SS+3:link",
+      "label": "SS+3 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:SS+4": {
+      "input": "special",
+      "command": "SS+4",
+      "notation": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "comboKey": "SS+4:link",
+      "label": "SS+4 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:O+4": {
+      "input": "special",
+      "command": "O+4",
+      "notation": "O+4",
+      "animationKey": "cmd:O+4",
+      "comboKey": "O+4:link",
+      "label": "O+4 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -11,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
     }
   },
   "effects": [],

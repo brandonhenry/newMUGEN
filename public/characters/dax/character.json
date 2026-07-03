@@ -59,7 +59,12 @@
           0.48,
           0.55
         ]
-      }
+      },
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -85,7 +90,12 @@
           0.4,
           0.62
         ]
-      }
+      },
+      "onBlockFrames": -4,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 19,
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -111,7 +121,12 @@
           0.64,
           0.6
         ]
-      }
+      },
+      "onBlockFrames": -6,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -137,7 +152,12 @@
           0.72,
           0.7
         ]
-      }
+      },
+      "onBlockFrames": -8,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 23,
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -174,5 +194,8 @@
   },
   "renderMode": "spriteVoxel",
   "spriteSheetPath": "/characters/dax/sprite-sheet-online.png",
-  "voxelProfile": "shinobi-blue"
+  "voxelProfile": "shinobi-blue",
+  "animationFrames": {},
+  "animationFrameRates": {},
+  "moveOverrides": {}
 }

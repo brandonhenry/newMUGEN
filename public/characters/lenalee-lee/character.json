@@ -137,9 +137,23 @@
     "lose": [
       "/characters/lenalee-lee/frames/frame-031.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/lenalee-lee/frames/frame-113.png",
+      "/characters/lenalee-lee/frames/frame-114.png",
+      "/characters/lenalee-lee/frames/frame-115.png",
+      "/characters/lenalee-lee/frames/frame-116.png",
+      "/characters/lenalee-lee/frames/frame-117.png",
+      "/characters/lenalee-lee/frames/frame-118.png",
+      "/characters/lenalee-lee/frames/frame-119.png",
+      "/characters/lenalee-lee/frames/frame-120.png"
+    ],
     "cmd:WS+4": [
       "/characters/lenalee-lee/frames/frame-235.png",
       "/characters/lenalee-lee/frames/frame-236.png",
@@ -152,7 +166,12 @@
       "/characters/lenalee-lee/frames/frame-243.png",
       "/characters/lenalee-lee/frames/frame-244.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
     "cmd:FC+2": [],
     "cmd:1+2": [
       "/characters/lenalee-lee/frames/frame-216.png",
@@ -210,6 +229,84 @@
       "/characters/lenalee-lee/frames/frame-110.png",
       "/characters/lenalee-lee/frames/frame-111.png",
       "/characters/lenalee-lee/frames/frame-112.png"
+    ],
+    "cmd:f+3": [
+      "/characters/lenalee-lee/frames/frame-080.png",
+      "/characters/lenalee-lee/frames/frame-081.png",
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:d+1": [
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:d+3": [
+      "/characters/lenalee-lee/frames/frame-080.png",
+      "/characters/lenalee-lee/frames/frame-081.png",
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:d/f+3": [
+      "/characters/lenalee-lee/frames/frame-080.png",
+      "/characters/lenalee-lee/frames/frame-081.png",
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:qcf+1": [
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:qcf+3": [
+      "/characters/lenalee-lee/frames/frame-080.png",
+      "/characters/lenalee-lee/frames/frame-081.png",
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:SS+3": [
+      "/characters/lenalee-lee/frames/frame-080.png",
+      "/characters/lenalee-lee/frames/frame-081.png",
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:SS+4": [
+      "/characters/lenalee-lee/frames/frame-113.png",
+      "/characters/lenalee-lee/frames/frame-114.png",
+      "/characters/lenalee-lee/frames/frame-115.png",
+      "/characters/lenalee-lee/frames/frame-116.png",
+      "/characters/lenalee-lee/frames/frame-117.png",
+      "/characters/lenalee-lee/frames/frame-118.png",
+      "/characters/lenalee-lee/frames/frame-119.png",
+      "/characters/lenalee-lee/frames/frame-120.png"
+    ],
+    "cmd:O+1": [
+      "/characters/lenalee-lee/frames/frame-082.png",
+      "/characters/lenalee-lee/frames/frame-083.png",
+      "/characters/lenalee-lee/frames/frame-084.png",
+      "/characters/lenalee-lee/frames/frame-085.png"
+    ],
+    "cmd:O+4": [
+      "/characters/lenalee-lee/frames/frame-113.png",
+      "/characters/lenalee-lee/frames/frame-114.png",
+      "/characters/lenalee-lee/frames/frame-115.png",
+      "/characters/lenalee-lee/frames/frame-116.png",
+      "/characters/lenalee-lee/frames/frame-117.png",
+      "/characters/lenalee-lee/frames/frame-118.png",
+      "/characters/lenalee-lee/frames/frame-119.png",
+      "/characters/lenalee-lee/frames/frame-120.png"
     ]
   },
   "animationFrameRates": {
@@ -247,7 +344,18 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8
+    "cmd:O+2": 8,
+    "cmd:1+4": 9,
+    "cmd:f+3": 9,
+    "cmd:d+1": 10,
+    "cmd:d+3": 9,
+    "cmd:d/f+3": 9,
+    "cmd:qcf+1": 10,
+    "cmd:qcf+3": 9,
+    "cmd:SS+3": 9,
+    "cmd:SS+4": 9,
+    "cmd:O+1": 10,
+    "cmd:O+4": 9
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -304,9 +412,9 @@
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
-      "onBlockFrames": -1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "pushback": 0.93,
@@ -324,7 +432,9 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "kick",
@@ -336,9 +446,9 @@
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "pushback": 0.96,
@@ -356,7 +466,9 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "heavy",
@@ -368,9 +480,9 @@
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
-      "onBlockFrames": -7,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -5,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -388,7 +500,9 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     },
     {
       "id": "special",
@@ -400,9 +514,9 @@
       "damage": 15,
       "blockDamage": 1,
       "hitLevel": "mid",
-      "onBlockFrames": -8,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 13,
+      "onBlockFrames": -10,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 9,
       "range": 1.76,
       "pushback": 0.98,
@@ -420,7 +534,9 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "counterHit": false,
+      "cancelable": false
     }
   ],
   "hurtboxes": [
@@ -518,14 +634,22 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 11,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Lenalee Lee Rush",
-      "hitLevel": "mid"
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "f+1",
+      "notation": "f+1",
+      "animationKey": "cmd:f+1",
+      "comboKey": "f+1:link",
+      "route": "direction:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -551,14 +675,23 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -12,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 10,
       "range": 2.05,
-      "label": "Lenalee Lee Burst",
+      "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "qcf+4",
+      "notation": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "comboKey": "qcf+4:link",
+      "route": "motion:frame-link",
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 9,
@@ -568,12 +701,20 @@
       "blockDamage": 1,
       "onBlockFrames": -10,
       "onHitFrames": 18,
-      "onCounterHitFrames": 25,
+      "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Lenalee Lee Rising Strike",
+      "label": "WS+4 Frame Link",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "input": "special",
+      "command": "WS+4",
+      "notation": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "comboKey": "WS+4:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -581,13 +722,21 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -4,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 9,
-      "whiffRecoveryFrames": 5,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "Lenalee Lee Crouch Jab",
-      "hitLevel": "mid"
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "input": "jab",
+      "command": "FC+1",
+      "notation": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "comboKey": "FC+1:link",
+      "route": "state:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -624,14 +773,22 @@
       "recoveryFrames": 7,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -14,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.65,
       "launchHeight": 2.2,
-      "label": "Lenalee Lee Cross Launcher",
-      "hitLevel": "mid"
+      "label": "1+3 Frame Link",
+      "hitLevel": "mid",
+      "input": "kick",
+      "command": "1+3",
+      "notation": "1+3",
+      "animationKey": "cmd:1+3",
+      "comboKey": "1+3:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -639,13 +796,21 @@
       "recoveryFrames": 11,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
-      "whiffRecoveryFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "Lenalee Lee Low Feint",
-      "hitLevel": "low"
+      "label": "2+3 Frame Link",
+      "hitLevel": "low",
+      "input": "kick",
+      "command": "2+3",
+      "notation": "2+3",
+      "animationKey": "cmd:2+3",
+      "comboKey": "2+3:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -653,14 +818,22 @@
       "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -16,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 7,
       "range": 1.74,
-      "label": "Lenalee Lee Driving Kick",
+      "label": "2+4 Frame Link",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "2+4",
+      "notation": "2+4",
+      "animationKey": "cmd:2+4",
+      "comboKey": "2+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 13,
@@ -668,14 +841,22 @@
       "recoveryFrames": 12,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "onBlockFrames": -7,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 7,
       "range": 1.9,
-      "label": "Lenalee Lee Power Crush",
+      "label": "3+4 Frame Link",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "input": "special",
+      "command": "3+4",
+      "notation": "3+4",
+      "animationKey": "cmd:3+4",
+      "comboKey": "3+4:link",
+      "route": "multi:frame-link",
+      "counterHit": true,
+      "cancelable": false
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -984,6 +1165,175 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Lenalee Lee Kick Ender"
+    },
+    "cmd:1+4": {
+      "input": "special",
+      "command": "1+4",
+      "notation": "1+4",
+      "animationKey": "cmd:1+4",
+      "comboKey": "1+4:link",
+      "label": "1+4 Frame Link",
+      "route": "multi:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:f+3": {
+      "input": "kick",
+      "command": "f+3",
+      "notation": "f+3",
+      "animationKey": "cmd:f+3",
+      "comboKey": "f+3:link",
+      "label": "f+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d+1": {
+      "input": "jab",
+      "command": "d+1",
+      "notation": "d+1",
+      "animationKey": "cmd:d+1",
+      "comboKey": "d+1:link",
+      "label": "d+1 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d+3": {
+      "input": "kick",
+      "command": "d+3",
+      "notation": "d+3",
+      "animationKey": "cmd:d+3",
+      "comboKey": "d+3:link",
+      "label": "d+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:d/f+3": {
+      "input": "kick",
+      "command": "d/f+3",
+      "notation": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "comboKey": "d/f+3:link",
+      "label": "d/f+3 Frame Link",
+      "route": "direction:frame-link",
+      "onBlockFrames": -7,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "counterHit": true,
+      "whiffRecoveryFrames": 6,
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
+      "input": "jab",
+      "command": "qcf+1",
+      "notation": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "comboKey": "qcf+1:link",
+      "label": "qcf+1 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:qcf+3": {
+      "input": "kick",
+      "command": "qcf+3",
+      "notation": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "comboKey": "qcf+3:link",
+      "label": "qcf+3 Frame Link",
+      "route": "motion:frame-link",
+      "onBlockFrames": -10,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 30,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:SS+3": {
+      "input": "kick",
+      "command": "SS+3",
+      "notation": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "comboKey": "SS+3:link",
+      "label": "SS+3 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -8,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 7,
+      "cancelable": false
+    },
+    "cmd:SS+4": {
+      "input": "special",
+      "command": "SS+4",
+      "notation": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "comboKey": "SS+4:link",
+      "label": "SS+4 Frame Link",
+      "route": "state:frame-link",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 27,
+      "counterHit": true,
+      "whiffRecoveryFrames": 8,
+      "cancelable": false
+    },
+    "cmd:O+1": {
+      "input": "jab",
+      "command": "O+1",
+      "notation": "O+1",
+      "animationKey": "cmd:O+1",
+      "comboKey": "O+1:link",
+      "label": "O+1 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -12,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 9,
+      "cancelable": false
+    },
+    "cmd:O+4": {
+      "input": "special",
+      "command": "O+4",
+      "notation": "O+4",
+      "animationKey": "cmd:O+4",
+      "comboKey": "O+4:link",
+      "label": "O+4 Frame Link",
+      "route": "special:frame-link",
+      "onBlockFrames": -13,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 31,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 2,
+      "whiffRecoveryFrames": 10,
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1153,6 +1503,11 @@
       "93": {
         "width": 1.08,
         "height": 1.08,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 0.95,
+        "height": 0.95,
         "offsetX": 0
       },
       "95": {

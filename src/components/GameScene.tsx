@@ -837,11 +837,12 @@ function ImpactSpark({
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const ageRef = useRef(0);
-  const baseColor = event.kind === 'block' ? settings.blockColor : settings.hitColor;
+  const baseColor = event.kind === 'block' ? settings.blockColor : event.kind === 'counterHit' ? '#ffe96a' : settings.hitColor;
   const isBlock = event.kind === 'block';
   const isPunish = event.kind === 'punish' || event.kind === 'whiffPunish';
+  const isCounterHit = event.kind === 'counterHit';
   const duration = reducedMotion ? 0.32 : 0.48;
-  const particleCount = reducedMotion ? (isBlock ? 4 : 7) : isBlock ? 8 : isPunish ? 18 : 14;
+  const particleCount = reducedMotion ? (isBlock ? 4 : isCounterHit ? 9 : 7) : isBlock ? 8 : isCounterHit ? 22 : isPunish ? 18 : 14;
   const directions = useMemo(() => makeSparkDirections(event.id, particleCount), [event.id, particleCount]);
 
   useFrame(({ camera }, delta) => {
@@ -851,8 +852,8 @@ function ImpactSpark({
     if (!root) return;
     root.visible = progress < 1;
     root.lookAt(camera.position);
-    const expansion = reducedMotion ? 1 + progress * 0.45 : 1 + progress * (isBlock ? 0.85 : 1.65);
-    const baseScale = settings.size * (isBlock ? 0.58 : isPunish ? 1.28 : 1);
+    const expansion = reducedMotion ? 1 + progress * 0.45 : 1 + progress * (isBlock ? 0.85 : isCounterHit ? 1.95 : 1.65);
+    const baseScale = settings.size * (isBlock ? 0.58 : isCounterHit ? 1.42 : isPunish ? 1.28 : 1);
     root.scale.setScalar(baseScale * expansion);
     root.children.forEach((child, index) => {
       const mesh = child as THREE.Mesh;
@@ -861,7 +862,7 @@ function ImpactSpark({
         material.opacity = Math.max(0, (1 - progress) * settings.intensity * (index === 0 ? 0.9 : 1));
       }
     });
-    if (ringRef.current) ringRef.current.rotation.z += delta * (isBlock ? 2.2 : 5.8);
+    if (ringRef.current) ringRef.current.rotation.z += delta * (isBlock ? 2.2 : isCounterHit ? 7.4 : 5.8);
   });
 
   const showRing = settings.shape === 'burst' || settings.shape === 'ring' || isBlock;
@@ -871,7 +872,7 @@ function ImpactSpark({
     <group ref={groupRef} position={event.position}>
       {showRing && (
         <mesh ref={ringRef} renderOrder={30}>
-          <torusGeometry args={[0.26, isBlock ? 0.022 : 0.032, 8, 36]} />
+          <torusGeometry args={[isCounterHit ? 0.31 : 0.26, isBlock ? 0.022 : isCounterHit ? 0.04 : 0.032, 8, 36]} />
           <meshBasicMaterial color={baseColor} transparent opacity={0.82 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
         </mesh>
       )}
@@ -881,14 +882,14 @@ function ImpactSpark({
             key={`${event.id}-shard-${index}`}
             position={[direction[0] * 0.18, direction[1] * 0.18, direction[2] * 0.02]}
             rotation={[0, 0, direction[3]]}
-            scale={[direction[4] * (isBlock ? 0.55 : 1), 0.035, 0.035]}
+            scale={[direction[4] * (isBlock ? 0.55 : isCounterHit ? 1.18 : 1), 0.035, 0.035]}
             renderOrder={31}
           >
             <boxGeometry args={[0.34, 0.08, 0.08]} />
             <meshBasicMaterial color={baseColor} transparent opacity={0.96 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
           </mesh>
         ))}
-      <mesh scale={isBlock ? 0.11 : isPunish ? 0.18 : 0.15} renderOrder={32}>
+      <mesh scale={isBlock ? 0.11 : isCounterHit ? 0.22 : isPunish ? 0.18 : 0.15} renderOrder={32}>
         <sphereGeometry args={[1, 12, 8]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.74 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
