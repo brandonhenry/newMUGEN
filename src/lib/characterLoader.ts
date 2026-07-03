@@ -285,8 +285,17 @@ export function validateCharacter(character: CharacterDefinition): string[] {
     if (total <= 0) warnings.push(`${move.id} has invalid timing.`);
     if (move.damage <= 0) warnings.push(`${move.id} should deal positive damage.`);
     if (!move.hitLevel) warnings.push(`${move.id} is missing hit level.`);
+    if (!hasAttackAnimationFrames(character, move)) {
+      const animationKey = move.animationKey ?? baseInputToAnimationKey[move.input];
+      warnings.push(`${move.id} has move data but no attack animation frames: ${animationKey}.`);
+    }
   }
   return warnings;
+}
+
+function hasAttackAnimationFrames(character: CharacterDefinition, move: MoveDefinition) {
+  const animationKey = move.animationKey ?? baseInputToAnimationKey[move.input];
+  return (character.animationFrames?.[animationKey]?.length ?? 0) > 0 || (character.animationFrames?.[move.input]?.length ?? 0) > 0;
 }
 
 export async function loadCharacterRoster(): Promise<CharacterLoadResult> {

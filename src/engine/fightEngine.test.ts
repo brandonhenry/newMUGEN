@@ -4239,6 +4239,67 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.command).toBeUndefined();
   });
 
+  it('does not start a base button attack when its animation frame slot is missing', () => {
+    const missingKickFrames: CharacterDefinition = {
+      ...normalizeCharacter(starterCharacters[0]),
+      animationFrames: {
+        ...normalizeCharacter(starterCharacters[0]).animationFrames,
+        kickleft: []
+      }
+    };
+    let match = createMatch(missingKickFrames, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    match = stepMatch(match, { ...emptyInputFrame(), kick: true }, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
+  });
+
+  it('does not fall back from an unauthored command to a base attack with missing animation frames', () => {
+    const missingKickFrames: CharacterDefinition = {
+      ...normalizeCharacter(starterCharacters[0]),
+      animationFrames: {
+        ...normalizeCharacter(starterCharacters[0]).animationFrames,
+        kickleft: []
+      }
+    };
+    let match = createMatch(missingKickFrames, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.9;
+    match.fighters[1].position.x = 0.9;
+
+    const missingForwardKick = emptyInputFrame();
+    missingForwardKick.right = true;
+    missingForwardKick.kick = true;
+    match = stepMatch(match, missingForwardKick, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].currentMove).toBeNull();
+  });
+
+  it('does not start a move override that resolves to a missing animation key', () => {
+    const brokenOverride: CharacterDefinition = {
+      ...normalizeCharacter(starterCharacters[0]),
+      moveOverrides: {
+        kickleft: {
+          animationKey: 'missing-kickleft'
+        }
+      }
+    };
+    let match = createMatch(brokenOverride, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    match = stepMatch(match, { ...emptyInputFrame(), kick: true }, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].currentMove).toBeNull();
+  });
+
   it('uses configured Tekken-style command moves when their frame slot exists', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

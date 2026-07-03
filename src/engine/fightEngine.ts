@@ -1631,6 +1631,10 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const command = findConfiguredCommand(fighter, opponent, input, moveInput);
   if (continuing && !canChainInto(fighter, chainMode)) return false;
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
+  if (!hasResolvedAttackAnimationFrames(fighter.character, move)) {
+    if (fighter.bufferedMoveInput === moveInput) clearBufferedMoveInput(fighter);
+    return false;
+  }
   if (continuing && chainMode === 'cancel' && isSameInputRepeat(sequence) && !isAuthoredChain(fighter.character, move, route, sequence, command)) {
     if (fighter.bufferedMoveInput === moveInput) clearBufferedMoveInput(fighter);
     return false;
@@ -1685,6 +1689,7 @@ function getChargedMoveKiCost(fighter: FighterRuntime, opponent: FighterRuntime,
   const sequence = fighter.comboTimer > 0 ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
   const command = findConfiguredCommand(fighter, opponent, input, moveInput);
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
+  if (!hasResolvedAttackAnimationFrames(fighter.character, move)) return Number.POSITIVE_INFINITY;
   return getMoveKiCost(move);
 }
 
@@ -1833,7 +1838,7 @@ function buildComboMove(
     label: commandRouteNotation ? `${commandRouteNotation} ${limbNames[moveInput]}` : comboStep > 1 ? `${stringKey} String` : `${route.label} ${limbNames[moveInput]} ${comboStep}`,
     command: commandRouteNotation ?? undefined,
     notation: commandRouteNotation ?? undefined,
-    animationKey: command?.animationKey,
+    animationKey: command?.animationKey ?? resolveBaseAttackAnimationKey(character, moveInput),
     comboKey: generatedComboKey,
     comboStep,
     route: route.key,
@@ -1866,6 +1871,18 @@ function buildComboMove(
   };
 
   return applyMoveOverrides(character, applyStringFrameData(generated, route, sequence, command), baseMove, commandKey);
+}
+
+function resolveBaseAttackAnimationKey(character: CharacterDefinition, moveInput: MoveInput) {
+  const canonicalKey = baseInputToAnimationKey[moveInput];
+  if ((character.animationFrames?.[canonicalKey]?.length ?? 0) > 0) return canonicalKey;
+  if ((character.animationFrames?.[moveInput]?.length ?? 0) > 0) return moveInput;
+  return canonicalKey;
+}
+
+function hasResolvedAttackAnimationFrames(character: CharacterDefinition, move: MoveDefinition) {
+  const key = move.animationKey ?? resolveBaseAttackAnimationKey(character, move.input);
+  return (character.animationFrames?.[key]?.length ?? 0) > 0;
 }
 
 function isSameInputRepeat(sequence: MoveInput[]) {
@@ -3529,7 +3546,7 @@ function getFighterGetupProgress(fighter: FighterRuntime) {
 
 function getFighterAnimationKey(fighter: FighterRuntime) {
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
-  if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? resolveBaseAttackAnimationKey(fighter.character, fighter.currentMove?.input ?? 'jab');
   if (fighter.state === 'walk') {
     if (fighter.dashForwardFrames > 0 && fighter.character.animationFrames?.sprint?.length) return 'sprint';
     if (fighter.walkDirection > 0) return 'walkForward';
@@ -3540,7 +3557,7 @@ function getFighterAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'chargeKi') return 'chargeKi';
   if (fighter.state === 'transform') return fighter.character.animationFrames?.transform?.length ? 'transform' : fighter.character.animationFrames?.chargeKi?.length ? 'chargeKi' : 'idle';
-  if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? resolveBaseAttackAnimationKey(fighter.character, fighter.currentMove?.input ?? 'jab');
   if (fighter.state === 'throwHeld') return 'hitLight';
   if (fighter.state === 'hit') return 'hitLight';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
