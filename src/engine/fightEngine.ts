@@ -19,6 +19,7 @@ import type {
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale } from '../lib/characterScale';
+import { recommendCpuComboRoute, type ComboTrialStep } from '../lib/comboRoutes';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
@@ -4154,12 +4155,27 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   }
 
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
+  const routeOpening = opening.kind === 'hitstun' && opponent.state === 'juggle' ? 'juggle' : opening.kind;
+  const catalogRoute = routeOpening === 'none'
+    ? null
+    : recommendCpuComboRoute(ai.character, {
+        difficulty,
+        opening: routeOpening,
+        remainingFrames: opening.frames,
+        comboStep: ai.comboStep,
+        leaderCloseout,
+        usedKeys: ai.aiRecentComboKeys,
+        selector,
+        routeRoll
+      });
   const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
   const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4, roundAiSeed) < settings.pressureDropRate * style.imperfectionScale;
   const pressureAccepted =
     !pressureDropped &&
     pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - settings.leaderPressurePenalty * leaderBrake * 0.55);
   let pressureMoveInput = chooseAiPressureMoveInput(ai, opponent, difficulty, opening, selector, routeRoll);
+  const pressureCatalogStep = catalogRoute && opening.kind !== 'none' && isAiCatalogStepSpendable(ai, catalogRoute.step) ? catalogRoute.step : null;
+  if (pressureCatalogStep) pressureMoveInput = pressureCatalogStep.input;
   pressureMoveInput = chooseAiKiBurstMoveInput(ai, pressureMoveInput, difficulty, selector + 17, routeRoll + 9);
   if (leaderCloseout && opening.kind !== 'none') {
     pressureMoveInput = chooseAiCloseoutMoveInput(ai, pressureMoveInput, selector + 23, routeRoll + 11);
@@ -4192,6 +4208,8 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     input.sidewalkDown = false;
     if (pressureCrouchInput) {
       applyAiFullCrouchAttack(input, pressureCrouchInput, towardKey, awayKey);
+    } else if (pressureCatalogStep && !pressureKiBurst) {
+      applyAiCatalogRouteStep(input, pressureCatalogStep, towardKey, awayKey);
     } else {
       input.charge = pressureKiBurst;
       input[pressureMoveInput] = true;
@@ -4245,7 +4263,21 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const leaderComboScale = leaderCloseout ? 0.74 - leaderBrake * 0.14 : 1;
   const attackPulse = attackPhase < settings.attackPulse * style.attackPulseScale * leaderAttackScale || (shouldContinueCombo && comboPhase < settings.comboPulse * style.comboPulseScale * leaderComboScale);
   if (canPressure && attackPulse) {
-    if (!leaderCloseout) {
+    const neutralCatalogCandidate = opening.kind === 'none' && ai.ki >= KI_BURST_COST
+      ? recommendCpuComboRoute(ai.character, {
+          difficulty,
+          opening: 'neutral',
+          remainingFrames: 0,
+          comboStep: ai.comboStep,
+          leaderCloseout,
+          usedKeys: ai.aiRecentComboKeys,
+          selector: selector + 41,
+          routeRoll: routeRoll + 29
+        })
+      : null;
+    const neutralCatalogRoute = neutralCatalogCandidate && isAiCatalogStepSpendable(ai, neutralCatalogCandidate.step) ? neutralCatalogCandidate : null;
+    if (neutralCatalogRoute) selectedMoveInput = neutralCatalogRoute.input;
+    if (!leaderCloseout && !neutralCatalogRoute) {
       applyAiRoute(ai, input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
     }
     selectedMoveInput = chooseAiKiBurstMoveInput(ai, selectedMoveInput, difficulty, selector + 31, routeRoll + 37);
@@ -4260,7 +4292,11 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
         return input;
       }
       input.charge = shouldAiUseKiBurst(ai, opponent, selectedMoveInput, difficulty, shouldContinueCombo ? 'pressure' : 'neutral', selector + 29, routeRoll + 41, leaderCloseout);
-      input[selectedMoveInput] = true;
+      if (neutralCatalogRoute && isAiCatalogStepSpendable(ai, neutralCatalogRoute.step) && !input.charge) {
+        applyAiCatalogRouteStep(input, neutralCatalogRoute.step, towardKey, awayKey);
+      } else {
+        input[selectedMoveInput] = true;
+      }
     }
     if (!crouchInput && !leaderCloseout && difficulty >= 4 && routeRoll > 78) {
       const secondButton = routeRoll > 90 ? 'special' : routeRoll > 84 ? 'heavy' : 'kick';
@@ -4617,6 +4653,7 @@ function shouldAiStartCharacterAbilityCharge(
   if (hasTransformAbility && alreadyReady) return false;
   const safeWindow = distance > 1.35 || opponent.state === 'knockdown' || opponent.state === 'getup';
   if (!alreadyReady && !safeWindow) return false;
+  if (hasAuthoredKiAbility && !alreadyReady && difficulty >= 4 && distance > 1.9) return true;
 
   const difficultyChance =
     difficulty <= 1
@@ -4746,6 +4783,43 @@ function applyAiFullCrouchAttack(input: InputFrame, moveInput: MoveInput, toward
   input.sidewalkUp = false;
   input.sidewalkDown = false;
   input[moveInput] = true;
+}
+
+function applyAiCatalogRouteStep(input: InputFrame, step: ComboTrialStep, towardKey: 'left' | 'right', awayKey: 'left' | 'right') {
+  input.block = false;
+  input.charge = false;
+  input.up = false;
+  input.down = false;
+  input[towardKey] = false;
+  input[awayKey] = false;
+  input.sidestepUp = false;
+  input.sidestepDown = false;
+  input.sidewalkUp = false;
+  input.sidewalkDown = false;
+
+  const command = step.command ?? '';
+  const [prefix = ''] = command.split('+');
+  if (command.startsWith('O+')) input.charge = true;
+  if (command.startsWith('FC+')) input.down = true;
+  if (command.startsWith('SS+') || command.startsWith('SSL+')) input.sidestepUp = true;
+  if (command.startsWith('SSR+')) input.sidestepDown = true;
+  if (prefix.includes('f')) input[towardKey] = true;
+  if (prefix.includes('b')) input[awayKey] = true;
+  if (prefix.includes('d')) input.down = true;
+  if (prefix.includes('u')) input.up = true;
+
+  const buttons = command.match(/[1-4]/g) ?? [];
+  if (buttons.length === 0) {
+    input[step.input] = true;
+    return;
+  }
+  for (const button of buttons) {
+    input[buttonToInput[button] ?? step.input] = true;
+  }
+}
+
+function isAiCatalogStepSpendable(ai: FighterRuntime, step: ComboTrialStep) {
+  return !step.command?.startsWith('O+') || ai.ki >= KI_BURST_COST;
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {

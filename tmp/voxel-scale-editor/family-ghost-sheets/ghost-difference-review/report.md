@@ -1,26 +1,26 @@
 # Ghost Difference Review
 
-Generated 2026-07-03T19:26:27.172Z.
+Generated 2026-07-03T19:47:32.490Z.
 
 - Characters scanned: 63
-- Candidate rows: 1809
-- Candidate frames: 7800
-- Pages: 130
+- Candidate rows: 1802
+- Candidate frames: 7788
+- Pages: 129
 
 ## Reason Counts
 
 - same-source-scaled: 3968
-- high-area: 2485
+- high-area: 2486
 - too-wide: 1997
-- below-blue: 1669
+- below-blue: 1653
 - feet-above-ground: 1088
 - above-blue: 937
 - same-source-scale-diff: 749
-- body-below: 738
+- body-below: 736
 - body-above: 459
 - seq-area-low: 457
-- seq-body-dip: 408
-- seq-height-dip: 384
+- seq-body-dip: 406
+- seq-height-dip: 382
 - too-narrow: 375
 - low-area: 315
 - body-top-below-blue: 86
@@ -159,4 +159,3 @@ Generated 2026-07-03T19:26:27.172Z.
 - candidates-page-127.png
 - candidates-page-128.png
 - candidates-page-129.png
-- candidates-page-130.png

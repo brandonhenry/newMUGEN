@@ -101,6 +101,15 @@ import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/cha
 import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
 import {
+  comboTrialCategories,
+  comboTrialCategoryLabels,
+  comboTrialStepMatchesImpact,
+  generateCharacterComboRoutes,
+  generateComboTrials,
+  type ComboTrialStep,
+  type GeneratedComboRoute as ComboTrial
+} from './lib/comboRoutes';
+import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
   measureVoxelBodyMetrics,
@@ -173,23 +182,7 @@ type AnimationSlot = {
   category: 'stance' | 'raw' | 'direction' | 'motion' | 'state' | 'special';
   command?: string;
 };
-type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special';
-type ComboTrialStep = {
-  notation: NotationToken[];
-  label: string;
-  input: MoveInput;
-  command?: string;
-  counterHit?: boolean;
-  reason?: string;
-};
-type ComboTrial = {
-  id: string;
-  title: string;
-  category: 'basic' | 'advanced' | 'launcher' | 'counterHit';
-  level: number;
-  steps: ComboTrialStep[];
-  reason: string;
-};
+type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special' | 'combo';
 type ComboTrialProgress = {
   stepIndex: number;
   statuses: TrialStepStatus[];
@@ -724,13 +717,14 @@ const slotCategoryOptions: Array<{ value: AnimationSlot['category'] | 'all'; lab
   { value: 'special', label: 'Ki/Heat/Rage' },
   { value: 'all', label: 'All' }
 ];
-const moveListTabs: MoveListTab[] = ['raw', 'direction', 'motion', 'state', 'special'];
+const moveListTabs: MoveListTab[] = ['raw', 'direction', 'motion', 'state', 'special', 'combo'];
 const moveListTabLabels: Record<MoveListTab, string> = {
   raw: 'Basics',
   direction: 'Directions',
   motion: 'Motions',
   state: 'States',
-  special: 'Ki/Heat/Rage'
+  special: 'Ki/Heat/Rage',
+  combo: 'Combo Routes'
 };
 const hitLevelOptions: HitLevel[] = ['high', 'mid', 'low', 'throw', 'special'];
 const trackingOptions: MoveTracking[] = ['none', 'weakLeft', 'weakRight', 'medium', 'strong', 'homing'];
@@ -14537,6 +14531,7 @@ function ConfiguredMoveList({
     slot.category === activeTab &&
     (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0
   ));
+  const comboRoutes = useMemo(() => generateCharacterComboRoutes(character), [character]);
 
   return (
     <div className="pause-movelist-panel">
@@ -14556,7 +14551,21 @@ function ConfiguredMoveList({
       <div className="pause-movelist">
         <section>
           <h3>{character.displayName}</h3>
-          {configured.length === 0 ? (
+          {activeTab === 'combo' ? (
+            comboRoutes.length === 0 ? (
+              <p>No combo routes configured.</p>
+            ) : (
+              <div>
+                {comboRoutes.slice(0, 36).map((route) => (
+                  <span key={route.id}>
+                    <NotationGroup tokens={route.steps.flatMap((step, index) => index === 0 ? step.notation : ['>', ...step.notation])} />
+                    {route.title}
+                    <small>{comboTrialCategoryLabels[route.category]} Lv {route.level} | {route.reason}</small>
+                  </span>
+                ))}
+              </div>
+            )
+          ) : configured.length === 0 ? (
             <p>No {moveListTabLabels[activeTab].toLowerCase()} commands configured.</p>
           ) : (
             <div>
@@ -14674,14 +14683,6 @@ function ComboTrialPanel({
   );
 }
 
-const comboTrialCategories: ComboTrial['category'][] = ['basic', 'advanced', 'launcher', 'counterHit'];
-const comboTrialCategoryLabels: Record<ComboTrial['category'], string> = {
-  basic: 'Basic Links',
-  advanced: 'Advanced Links',
-  launcher: 'Launcher Routes',
-  counterHit: 'Counter Hit'
-};
-
 function makeComboTrialProgress(trial: ComboTrial | null): ComboTrialProgress | null {
   if (!trial) return null;
   return {
@@ -14689,93 +14690,6 @@ function makeComboTrialProgress(trial: ComboTrial | null): ComboTrialProgress | 
     statuses: trial.steps.map((_, index) => index === 0 ? 'current' : 'pending'),
     completed: false
   };
-}
-
-function generateComboTrials(character: CharacterDefinition): ComboTrial[] {
-  const baseSteps = character.moves
-    .map((move) => ({ move, step: moveToTrialStep(move) }))
-    .filter((entry) => entry.step);
-  const configuredCommands = animationSlots
-    .filter((slot) => slot.command && (character.animationFrames?.[slot.key]?.length ?? 0) > 0)
-    .map((slot) => ({ slot, move: resolveSlotMove(character, slot) }))
-    .filter((entry): entry is { slot: AnimationSlot; move: MoveDefinition } => Boolean(entry.move));
-
-  const trials: ComboTrial[] = [];
-  const pushTrial = (category: ComboTrial['category'], level: number, title: string, steps: ComboTrialStep[], reason: string) => {
-    if (steps.length < 2) return;
-    const id = `${category}:${level}:${steps.map((step) => step.command ?? step.input).join('>')}`;
-    if (trials.some((trial) => trial.id === id)) return;
-    trials.push({ id, category, level, title, steps, reason });
-  };
-
-  for (const [index, starter] of baseSteps.entries()) {
-    const next = findFrameLinkTarget(baseSteps.map((entry) => entry.move), starter.move.onHitFrames, starter.move.input);
-    if (!next || !starter.step) continue;
-    pushTrial(
-      'basic',
-      index + 1,
-      `${starter.step.label} Link`,
-      [starter.step, moveToTrialStep(next)].filter(Boolean) as ComboTrialStep[],
-      `+${starter.move.onHitFrames} -> i${next.startupFrames} link`
-    );
-    if (trials.filter((trial) => trial.category === 'basic').length >= 3) break;
-  }
-
-  for (const entry of configuredCommands) {
-    const category: ComboTrial['category'] = (entry.move.launchHeight ?? 0) > 0 || entry.move.onHitFrames >= 23 ? 'launcher' : 'advanced';
-    if (trials.filter((trial) => trial.category === category).length >= 4) continue;
-    const step = moveToTrialStep(entry.move, entry.slot);
-    const target = findFrameLinkTarget(character.moves, entry.move.onHitFrames, entry.move.input);
-    if (!step || !target) continue;
-    pushTrial(
-      category,
-      Math.min(8, 3 + trials.length),
-      `${entry.slot.command} Route`,
-      [step, moveToTrialStep(target)].filter(Boolean) as ComboTrialStep[],
-      `+${entry.move.onHitFrames} -> i${target.startupFrames} link`
-    );
-  }
-
-  for (const entry of configuredCommands.filter((candidate) => candidate.move.counterHit)) {
-    const step = moveToTrialStep(entry.move, entry.slot, true);
-    const target = findFrameLinkTarget(character.moves, entry.move.onCounterHitFrames + Math.max(0, entry.move.counterHitStunBonusFrames ?? 0), entry.move.input);
-    if (!step || !target) continue;
-    pushTrial(
-      'counterHit',
-      Math.min(10, 6 + trials.filter((trial) => trial.category === 'counterHit').length),
-      `${entry.slot.command} Counter Hit`,
-      [step, moveToTrialStep(target)].filter(Boolean) as ComboTrialStep[],
-      `CH +${entry.move.onCounterHitFrames + Math.max(0, entry.move.counterHitStunBonusFrames ?? 0)} -> i${target.startupFrames} link`
-    );
-    if (trials.filter((trial) => trial.category === 'counterHit').length >= 4) break;
-  }
-
-  return trials;
-}
-
-function moveToTrialStep(move: MoveDefinition, slot?: AnimationSlot, counterHit = false): ComboTrialStep | null {
-  const notation = slot?.notation ?? [inputToButtonLabel[move.input]];
-  const label = slot ? formatMoveSlotLabel(slot, move) : move.label;
-  return {
-    notation,
-    label,
-    input: move.input,
-    command: slot?.command ?? move.command,
-    counterHit,
-    reason: counterHit ? `CH +${move.onCounterHitFrames + Math.max(0, move.counterHitStunBonusFrames ?? 0)}` : `+${move.onHitFrames}`
-  };
-}
-
-function findFrameLinkTarget(moves: MoveDefinition[], advantage: number, avoidInput?: MoveInput) {
-  return [...moves]
-    .filter((move) => move.input !== avoidInput && move.startupFrames <= advantage && move.damage > 0)
-    .sort((a, b) => b.startupFrames - a.startupFrames || b.damage - a.damage)[0] ?? null;
-}
-
-function comboTrialStepMatchesImpact(step: ComboTrialStep, event: ImpactSparkEvent) {
-  if (step.counterHit && event.kind !== 'counterHit') return false;
-  if (step.command) return event.moveCommand === step.command;
-  return event.moveInput === step.input && !event.moveCommand;
 }
 
 function advanceComboTrialProgress(progress: ComboTrialProgress, trial: ComboTrial, event: ImpactSparkEvent): ComboTrialProgress {
@@ -14796,13 +14710,6 @@ function advanceComboTrialProgress(progress: ComboTrialProgress, trial: ComboTri
   statuses[nextIndex] = 'current';
   return { stepIndex: nextIndex, statuses, completed: false };
 }
-
-const inputToButtonLabel: Record<MoveInput, string> = {
-  jab: '1',
-  heavy: '2',
-  kick: '3',
-  special: '4'
-};
 
 function makeCounterHitTrialDummyInput(dummy: FighterRuntime, attacker?: FighterRuntime): InputFrame {
   const input = emptyInputFrame();

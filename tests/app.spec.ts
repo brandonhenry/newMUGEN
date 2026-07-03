@@ -317,6 +317,7 @@ test('opens training combo trials and shows counter-hit progress', async ({ page
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Combo Trials' }).click();
   await expect(page.getByRole('heading', { name: 'Combo Trials' })).toBeVisible();
+  await expect(page.locator('.combo-trial-list')).toContainText('Launcher Routes');
   const counterHitTrial = page.getByRole('button', { name: /Counter Hit/i }).first();
   await expect(counterHitTrial).toBeVisible();
   const trialKeys = keysForCounterHitTrialName(await counterHitTrial.innerText());

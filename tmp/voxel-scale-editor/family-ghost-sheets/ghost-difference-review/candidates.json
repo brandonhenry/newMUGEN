@@ -22639,33 +22639,6 @@
   {
     "character": "frieza",
     "displayName": "Frieza",
-    "key": "backflip",
-    "frame": 43,
-    "isAttack": false,
-    "widthRatio": 1,
-    "heightRatio": 1,
-    "bodyWidthRatio": 1,
-    "bodyHeightRatio": 1,
-    "bodyFootGapRatio": 0.061,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1,
-    "bodyAreaRatio": 1,
-    "scaleWidth": 1,
-    "scaleHeight": 1,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "getupStand:0.91/0.91",
-      "backflip:1/1"
-    ],
-    "reasons": [
-      "same-source-scale-diff:0.09"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
     "key": "cmd:1+2",
     "frame": 57,
     "isAttack": true,
@@ -22793,7 +22766,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
+      "kickright:1/1"
     ],
     "reasons": [
       "same-source-scaled:kickright"
@@ -22953,7 +22926,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
@@ -23308,7 +23281,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
+      "kickright:1/1"
     ],
     "reasons": [
       "same-source-scaled:kickright"
@@ -23468,7 +23441,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
@@ -23632,7 +23605,7 @@
     "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
+      "jableft:1/1",
       "cmd:3+4:1/1"
     ],
     "reasons": [
@@ -23659,7 +23632,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -23686,7 +23659,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -23796,7 +23769,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -23822,7 +23795,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -23963,7 +23936,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
+      "jableft:1/1",
       "cmd:3+4:1/1"
     ],
     "reasons": [
@@ -23990,7 +23963,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.99/0.99"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -24130,7 +24103,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
+      "jableft:1/1",
       "cmd:3+4:1/1"
     ],
     "reasons": [
@@ -24157,7 +24130,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.99/0.99"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -24183,7 +24156,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -24210,7 +24183,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -24320,7 +24293,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -24346,7 +24319,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -24487,7 +24460,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
+      "jableft:1/1",
       "cmd:3+4:1/1"
     ],
     "reasons": [
@@ -24514,7 +24487,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.99/0.99"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -24540,7 +24513,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -24567,7 +24540,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -24677,7 +24650,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -24703,7 +24676,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -24844,7 +24817,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
+      "jableft:1/1",
       "cmd:3+4:1/1"
     ],
     "reasons": [
@@ -24871,7 +24844,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.99/0.99"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -24897,7 +24870,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
+      "kickright:1/1"
     ],
     "reasons": [
       "same-source-scaled:kickright"
@@ -25057,7 +25030,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
@@ -25199,7 +25172,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
+      "jableft:1/1",
       "cmd:3+4:1/1"
     ],
     "reasons": [
@@ -25226,7 +25199,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.99/0.99"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -25252,7 +25225,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
+      "kickright:1/1"
     ],
     "reasons": [
       "same-source-scaled:kickright"
@@ -25412,7 +25385,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
@@ -25440,7 +25413,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
+      "kickright:1/1"
     ],
     "reasons": [
       "same-source-scaled:kickright"
@@ -25600,7 +25573,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
@@ -25628,7 +25601,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -25655,7 +25628,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -25765,7 +25738,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "same-source-scaled:jabright"
@@ -25791,7 +25764,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
       "seq-area-low:0.42",
@@ -25818,7 +25791,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
+      "kickright:1/1"
     ],
     "reasons": [
       "same-source-scaled:kickright"
@@ -25978,7 +25951,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
@@ -26034,12 +26007,13 @@
     "scaleHeight": 0.94,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.94/0.94",
+      "knockdown:1/1",
       "getupStand:0.94/0.94"
     ],
     "reasons": [
       "below-blue:0.94h",
-      "too-narrow:0.54x-idleH"
+      "too-narrow:0.54x-idleH",
+      "same-source-scale-diff:0.06"
     ]
   },
   {
@@ -26069,8 +26043,8 @@
     "reasons": [
       "below-blue:0.56h",
       "body-below:0.56h",
-      "seq-height-dip:0.38",
-      "seq-body-dip:0.36",
+      "seq-height-dip:0.44",
+      "seq-body-dip:0.41",
       "same-source-scale-diff:0.24"
     ]
   },
@@ -26101,8 +26075,8 @@
     "reasons": [
       "below-blue:0.56h",
       "body-below:0.56h",
-      "seq-height-dip:0.38",
-      "seq-body-dip:0.36",
+      "seq-height-dip:0.44",
+      "seq-body-dip:0.41",
       "same-source-scale-diff:0.24"
     ]
   },
@@ -26133,8 +26107,8 @@
     "reasons": [
       "below-blue:0.57h",
       "body-below:0.57h",
-      "seq-height-dip:0.37",
-      "seq-body-dip:0.35",
+      "seq-height-dip:0.43",
+      "seq-body-dip:0.40",
       "same-source-scale-diff:0.23"
     ]
   },
@@ -26195,28 +26169,25 @@
     "key": "getupStand",
     "frame": 43,
     "isAttack": false,
-    "widthRatio": 0.91,
-    "heightRatio": 0.91,
-    "bodyWidthRatio": 0.91,
-    "bodyHeightRatio": 0.91,
-    "bodyFootGapRatio": 0.056,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.061,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.525,
+    "expectedWidthRatio": 0.577,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.828,
-    "bodyAreaRatio": 0.828,
-    "scaleWidth": 0.91,
-    "scaleHeight": 0.91,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.91/0.91",
+      "getupStand:1/1",
       "backflip:1/1"
     ],
     "reasons": [
-      "below-blue:0.91h",
-      "body-below:0.91h",
-      "too-narrow:0.53x-idleH",
-      "same-source-scale-diff:0.09"
+      "too-narrow:0.58x-idleH"
     ]
   },
   {
@@ -26225,25 +26196,24 @@
     "key": "getupStand",
     "frame": 44,
     "isAttack": false,
-    "widthRatio": 0.93,
-    "heightRatio": 0.93,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.93,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.537,
+    "expectedWidthRatio": 0.577,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.865,
-    "bodyAreaRatio": 0.865,
-    "scaleWidth": 0.93,
-    "scaleHeight": 0.93,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.93/0.93"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.93h",
-      "too-narrow:0.54x-idleH"
+      "too-narrow:0.58x-idleH"
     ]
   },
   {
@@ -26361,54 +26331,27 @@
   {
     "character": "frieza",
     "displayName": "Frieza",
-    "key": "jableft",
-    "frame": 83,
-    "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.02,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jableft:0.98/0.98",
-      "cmd:3+4:1/1"
-    ],
-    "reasons": [
-      "seq-height-dip:0.08"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
     "key": "jabright",
     "frame": 106,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.39"
+      "seq-area-low:0.41"
     ]
   },
   {
@@ -26498,24 +26441,24 @@
     "key": "jabright",
     "frame": 112,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.019,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.02,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jabright:0.98/0.98"
+      "jabright:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.39"
+      "seq-area-low:0.41"
     ]
   },
   {
@@ -26524,105 +26467,24 @@
     "key": "juggle",
     "frame": 27,
     "isAttack": false,
-    "widthRatio": 0.9,
-    "heightRatio": 0.9,
-    "bodyWidthRatio": 0.9,
-    "bodyHeightRatio": 0.9,
-    "bodyFootGapRatio": 0.024,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.027,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.52,
+    "expectedWidthRatio": 0.577,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.81,
-    "bodyAreaRatio": 0.81,
-    "scaleWidth": 0.9,
-    "scaleHeight": 0.9,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "juggle:0.9/0.9"
+      "juggle:1/1"
     ],
     "reasons": [
-      "below-blue:0.90h",
-      "body-below:0.90h",
-      "too-narrow:0.52x-idleH"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
-    "key": "jump",
-    "frame": 15,
-    "isAttack": false,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0.183,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
-    "key": "jump",
-    "frame": 16,
-    "isAttack": false,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0.217,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
-    "key": "kickright",
-    "frame": 131,
-    "isAttack": true,
-    "widthRatio": 1.357,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 1.357,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.357,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.303,
-    "bodyAreaRatio": 1.303,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "kickright:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h",
-      "seq-height-dip:0.08"
+      "too-narrow:0.58x-idleH"
     ]
   },
   {
@@ -26753,7 +26615,7 @@
     "scaleSource": "default",
     "sameSourceScaleUses": [],
     "reasons": [
-      "seq-area-low:0.30"
+      "seq-area-low:0.41"
     ]
   },
   {
@@ -26762,25 +26624,25 @@
     "key": "kickright",
     "frame": 137,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.02,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.021,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "kickright:0.98/0.98",
+      "kickright:1/1",
       "win:0.98/0.98"
     ],
     "reasons": [
-      "seq-area-low:0.34"
+      "seq-area-low:0.41"
     ]
   },
   {
@@ -26789,26 +26651,26 @@
     "key": "knockdown",
     "frame": 29,
     "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0.101,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.107,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.543,
+    "expectedWidthRatio": 0.577,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.94/0.94",
+      "knockdown:1/1",
       "getupStand:0.94/0.94"
     ],
     "reasons": [
-      "below-blue:0.94h",
-      "too-narrow:0.54x-idleH"
+      "too-narrow:0.58x-idleH",
+      "same-source-scale-diff:0.06"
     ]
   },
   {
@@ -26838,7 +26700,7 @@
     "reasons": [
       "below-blue:0.56h",
       "body-below:0.56h",
-      "seq-height-dip:0.38",
+      "seq-height-dip:0.44",
       "same-source-scale-diff:0.24"
     ]
   },
@@ -26869,7 +26731,7 @@
     "reasons": [
       "below-blue:0.56h",
       "body-below:0.56h",
-      "seq-height-dip:0.38",
+      "seq-height-dip:0.44",
       "same-source-scale-diff:0.24"
     ]
   },
@@ -26900,7 +26762,7 @@
     "reasons": [
       "below-blue:0.57h",
       "body-below:0.57h",
-      "seq-height-dip:0.37",
+      "seq-height-dip:0.43",
       "same-source-scale-diff:0.23"
     ]
   },
@@ -26933,60 +26795,6 @@
   {
     "character": "frieza",
     "displayName": "Frieza",
-    "key": "sidestepLeft",
-    "frame": 11,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "sidestepLeft:0.94/0.94",
-      "sidestepRight:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
-    "key": "sidestepRight",
-    "frame": 11,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "sidestepLeft:0.94/0.94",
-      "sidestepRight:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
     "key": "sprint",
     "frame": 11,
     "isAttack": false,
@@ -27004,37 +26812,11 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "sidestepLeft:0.94/0.94",
-      "sidestepRight:0.94/0.94"
+      "sidestepLeft:1/1",
+      "sidestepRight:1/1"
     ],
     "reasons": [
       "same-source-scaled:sidestepLeft/sidestepRight"
-    ]
-  },
-  {
-    "character": "frieza",
-    "displayName": "Frieza",
-    "key": "walkBack",
-    "frame": 12,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "walkBack:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
     ]
   },
   {
@@ -27043,26 +26825,24 @@
     "key": "backflip",
     "frame": 40,
     "isAttack": false,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.902,
-    "bodyAreaRatio": 0.902,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "backflip:0.95/0.95"
+      "backflip:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "seq-height-dip:0.13",
-      "seq-body-dip:0.13"
+      "seq-height-dip:0.08"
     ]
   },
   {
@@ -27071,25 +26851,24 @@
     "key": "backflip",
     "frame": 41,
     "isAttack": false,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.023,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.024,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "backflip:0.98/0.98"
+      "backflip:1/1"
     ],
     "reasons": [
-      "seq-height-dip:0.10",
-      "seq-body-dip:0.10"
+      "seq-height-dip:0.08"
     ]
   },
   {
@@ -27197,136 +26976,6 @@
     "reasons": [
       "above-blue:1.14h",
       "body-above:1.14h"
-    ]
-  },
-  {
-    "character": "fuusuke",
-    "displayName": "Fuusuke",
-    "key": "chargeKi",
-    "frame": 59,
-    "isAttack": false,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "fuusuke",
-    "displayName": "Fuusuke",
-    "key": "cmd:1+2",
-    "frame": 115,
-    "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:1+2:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "fuusuke",
-    "displayName": "Fuusuke",
-    "key": "cmd:1+2",
-    "frame": 116,
-    "isAttack": true,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:1+2:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "fuusuke",
-    "displayName": "Fuusuke",
-    "key": "cmd:1+2",
-    "frame": 120,
-    "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:1+2:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "fuusuke",
-    "displayName": "Fuusuke",
-    "key": "cmd:1+2",
-    "frame": 121,
-    "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:1+2:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
     ]
   },
   {
@@ -27795,6 +27444,32 @@
       "too-wide:2.07x-idleW",
       "high-area:2.13",
       "feet-above-ground:0.37"
+    ]
+  },
+  {
+    "character": "fuusuke",
+    "displayName": "Fuusuke",
+    "key": "cmd:3+4",
+    "frame": 105,
+    "isAttack": true,
+    "widthRatio": 1.474,
+    "heightRatio": 1.03,
+    "bodyWidthRatio": 1.474,
+    "bodyHeightRatio": 1.03,
+    "bodyFootGapRatio": 0,
+    "bodyHeadGapRatio": 0,
+    "expectedWidthRatio": 1.474,
+    "expectedWidthLabel": "idleW",
+    "areaRatio": 1.518,
+    "bodyAreaRatio": 1.518,
+    "scaleWidth": 1.03,
+    "scaleHeight": 1.03,
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "cmd:3+4:1.03/1.03"
+    ],
+    "reasons": [
+      "high-area:1.52"
     ]
   },
   {
@@ -30317,7 +29992,7 @@
     "scaleSource": "frame",
     "sameSourceScaleUses": [
       "getupStand:0.98/0.98",
-      "chargeKi:0.98/0.98"
+      "chargeKi:1/1"
     ],
     "reasons": [
       "too-narrow:0.60x-idleH"
