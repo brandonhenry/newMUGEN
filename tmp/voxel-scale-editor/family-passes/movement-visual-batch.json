@@ -1,0 +1,5932 @@
+{
+  "generatedAt": "2026-07-03T01:30:05.891Z",
+  "changes": 242,
+  "touchedCharacters": [
+    "anna-kyoyama",
+    "arale-norimaki",
+    "bobobo-bo-bo-bobo",
+    "dio",
+    "don-patch-poppa-rocks",
+    "dr-mashirito",
+    "eve",
+    "franky",
+    "frieza",
+    "fuusuke",
+    "gintoki-sakata",
+    "gohan-super-saiyan",
+    "gohan-super-saiyan-2",
+    "goku",
+    "goku-super-saiyan",
+    "gon-freecss",
+    "gotenks",
+    "gotenks-super-saiyan",
+    "heihachi-edajima",
+    "hiei",
+    "jaguar-junichi",
+    "jotaro-kujo",
+    "kagura",
+    "kakashi-hatake",
+    "kazuki-muto",
+    "kenshin-himura",
+    "kenshiro",
+    "killua-zoldyck",
+    "kinnikuman",
+    "kurama",
+    "lenalee-lee",
+    "majin-buu",
+    "momotaro-tsurugi",
+    "monkey-d-luffy",
+    "monkey-d-luffy-2nd-gear",
+    "nami",
+    "nami-perfect-clima-tact",
+    "neuro-nogami",
+    "nico-robin",
+    "pegasus-seiya",
+    "piccolo",
+    "raoh",
+    "renji-abarai",
+    "roronoa-zoro",
+    "rukia-kuchiki",
+    "ryotsu-kankichi",
+    "sakura-haruno",
+    "sanji-vinsmoke",
+    "taikoubou",
+    "toshiro-hitsugaya",
+    "train-heartnet",
+    "vegeta",
+    "vegeta-super-saiyan",
+    "vegito",
+    "yoh-asakura",
+    "yugi-mutou",
+    "yusuke-urameshi"
+  ],
+  "byCharacter": {
+    "anna-kyoyama": 5,
+    "arale-norimaki": 4,
+    "bobobo-bo-bo-bobo": 4,
+    "dio": 2,
+    "don-patch-poppa-rocks": 1,
+    "dr-mashirito": 3,
+    "eve": 5,
+    "franky": 3,
+    "frieza": 3,
+    "fuusuke": 5,
+    "gintoki-sakata": 6,
+    "gohan-super-saiyan-2": 3,
+    "gohan-super-saiyan": 3,
+    "goku": 2,
+    "goku-super-saiyan": 4,
+    "gon-freecss": 8,
+    "gotenks": 4,
+    "gotenks-super-saiyan": 4,
+    "heihachi-edajima": 4,
+    "hiei": 7,
+    "jaguar-junichi": 6,
+    "jotaro-kujo": 4,
+    "kagura": 5,
+    "kakashi-hatake": 7,
+    "kazuki-muto": 3,
+    "kenshin-himura": 4,
+    "kenshiro": 3,
+    "killua-zoldyck": 5,
+    "kinnikuman": 8,
+    "kurama": 5,
+    "lenalee-lee": 3,
+    "majin-buu": 2,
+    "momotaro-tsurugi": 4,
+    "monkey-d-luffy": 3,
+    "monkey-d-luffy-2nd-gear": 6,
+    "nami": 3,
+    "nami-perfect-clima-tact": 3,
+    "neuro-nogami": 3,
+    "nico-robin": 3,
+    "pegasus-seiya": 5,
+    "piccolo": 1,
+    "raoh": 5,
+    "renji-abarai": 6,
+    "roronoa-zoro": 3,
+    "rukia-kuchiki": 7,
+    "ryotsu-kankichi": 2,
+    "sakura-haruno": 6,
+    "sanji-vinsmoke": 5,
+    "taikoubou": 5,
+    "toshiro-hitsugaya": 5,
+    "train-heartnet": 8,
+    "vegeta": 4,
+    "vegeta-super-saiyan": 4,
+    "vegito": 4,
+    "yoh-asakura": 4,
+    "yugi-mutou": 7,
+    "yusuke-urameshi": 1
+  },
+  "changeDetails": [
+    {
+      "id": "anna-kyoyama",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.602,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.642,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.39,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.4,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "anna-kyoyama",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.603,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.643,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.641,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "anna-kyoyama",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.604,
+        "height": 0.662
+      },
+      "ratioTarget": {
+        "width": 1.644,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.662,
+        "height": 0.662,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.679,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "anna-kyoyama",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.603,
+        "height": 0.778
+      },
+      "ratioTarget": {
+        "width": 1.643,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.778,
+        "height": 0.778,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.797,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "anna-kyoyama",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.602,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.642,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.676,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.922,
+        "height": 0.75
+      },
+      "ratioTarget": {
+        "width": 1.951,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.761,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.921,
+        "height": 0.684
+      },
+      "ratioTarget": {
+        "width": 1.95,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.684,
+        "height": 0.684,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.694,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.921,
+        "height": 0.684
+      },
+      "ratioTarget": {
+        "width": 1.95,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.684,
+        "height": 0.684,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.694,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.921,
+        "height": 0.684
+      },
+      "ratioTarget": {
+        "width": 1.95,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.684,
+        "height": 0.684,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.694,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "bobobo-bo-bo-bobo",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.731,
+        "height": 0.717
+      },
+      "ratioTarget": {
+        "width": 1.774,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.717,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.735,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "bobobo-bo-bo-bobo",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.73,
+        "height": 0.68
+      },
+      "ratioTarget": {
+        "width": 1.773,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.697,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "bobobo-bo-bo-bobo",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.731,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.774,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.641,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "bobobo-bo-bo-bobo",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.73,
+        "height": 0.714
+      },
+      "ratioTarget": {
+        "width": 1.773,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.714,
+        "height": 0.714,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.732,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.212,
+        "height": 0.668
+      },
+      "ratioTarget": {
+        "width": 3.26,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.668,
+        "height": 0.668,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.678,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.21,
+        "height": 0.635
+      },
+      "ratioTarget": {
+        "width": 3.258,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.635,
+        "height": 0.635,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.645,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "don-patch-poppa-rocks",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.115,
+        "height": 0.639
+      },
+      "ratioTarget": {
+        "width": 1.16,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.639,
+        "height": 0.639,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.665,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.05,
+        "height": 0.613
+      },
+      "ratioTarget": {
+        "width": 2.08,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.613,
+        "height": 0.613,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.622,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.05,
+        "height": 0.637
+      },
+      "ratioTarget": {
+        "width": 2.08,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.637,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.647,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.05,
+        "height": 0.637
+      },
+      "ratioTarget": {
+        "width": 2.08,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.637,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.647,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "eve",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.819,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.846,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.372,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.378,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "eve",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.819,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.846,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.66,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "eve",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.817,
+        "height": 0.612
+      },
+      "ratioTarget": {
+        "width": 1.844,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.612,
+        "height": 0.612,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.621,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "eve",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.819,
+        "height": 0.675
+      },
+      "ratioTarget": {
+        "width": 1.846,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.675,
+        "height": 0.675,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.685,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "eve",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.82,
+        "height": 0.638
+      },
+      "ratioTarget": {
+        "width": 1.847,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.638,
+        "height": 0.638,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.648,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "franky",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.521,
+        "height": 0.766
+      },
+      "ratioTarget": {
+        "width": 1.559,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.766,
+        "height": 0.766,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.785,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "franky",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.519,
+        "height": 0.584
+      },
+      "ratioTarget": {
+        "width": 1.557,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.584,
+        "height": 0.584,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.599,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "franky",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.521,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.559,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.641,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.166,
+        "height": 0.76
+      },
+      "ratioTarget": {
+        "width": 2.199,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.771,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.166,
+        "height": 0.755
+      },
+      "ratioTarget": {
+        "width": 2.199,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.755,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.766,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.165,
+        "height": 0.769
+      },
+      "ratioTarget": {
+        "width": 2.197,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.769,
+        "height": 0.769,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.781,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.058,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.089,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.457,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.464,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.056,
+        "height": 0.69
+      },
+      "ratioTarget": {
+        "width": 2.087,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.7,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.057,
+        "height": 0.709
+      },
+      "ratioTarget": {
+        "width": 2.088,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.709,
+        "height": 0.709,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.72,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.056,
+        "height": 0.69
+      },
+      "ratioTarget": {
+        "width": 2.087,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.7,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.056,
+        "height": 0.69
+      },
+      "ratioTarget": {
+        "width": 2.087,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.7,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.674,
+        "height": 0.635
+      },
+      "ratioTarget": {
+        "width": 2.714,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.635,
+        "height": 0.635,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.645,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.673,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.713,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.529,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.537,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.677,
+        "height": 0.657
+      },
+      "ratioTarget": {
+        "width": 2.717,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.657,
+        "height": 0.657,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.667,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.676,
+        "height": 0.572
+      },
+      "ratioTarget": {
+        "width": 2.716,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.572,
+        "height": 0.572,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.581,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.675,
+        "height": 0.717
+      },
+      "ratioTarget": {
+        "width": 2.715,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.717,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.728,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.675,
+        "height": 0.717
+      },
+      "ratioTarget": {
+        "width": 2.715,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.717,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.728,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.643,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.683,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.423,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.429,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.643,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.683,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.544,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.552,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.644,
+        "height": 0.58
+      },
+      "ratioTarget": {
+        "width": 2.683,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.589,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.49,
+        "height": 0.659
+      },
+      "ratioTarget": {
+        "width": 1.527,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.659,
+        "height": 0.659,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.675,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.488,
+        "height": 0.602
+      },
+      "ratioTarget": {
+        "width": 1.525,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.602,
+        "height": 0.602,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.617,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.489,
+        "height": 0.648
+      },
+      "ratioTarget": {
+        "width": 1.527,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.648,
+        "height": 0.648,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.664,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.303,
+        "height": 0.668
+      },
+      "ratioTarget": {
+        "width": 1.336,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.668,
+        "height": 0.668,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.685,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.304,
+        "height": 0.615
+      },
+      "ratioTarget": {
+        "width": 1.336,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.615,
+        "height": 0.615,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.63,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.206,
+        "height": 0.615
+      },
+      "ratioTarget": {
+        "width": 2.239,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.615,
+        "height": 0.615,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.624,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.206,
+        "height": 0.577
+      },
+      "ratioTarget": {
+        "width": 2.239,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.577,
+        "height": 0.577,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.586,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.205,
+        "height": 0.714
+      },
+      "ratioTarget": {
+        "width": 2.238,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.714,
+        "height": 0.714,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.725,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.204,
+        "height": 0.603
+      },
+      "ratioTarget": {
+        "width": 2.237,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.603,
+        "height": 0.603,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.612,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.833,
+        "height": 0.691
+      },
+      "ratioTarget": {
+        "width": 1.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.691,
+        "height": 0.691,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.701,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.835,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.862,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.408,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.414,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.832,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.514,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.522,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.832,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.471,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.478,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.835,
+        "height": 0.55
+      },
+      "ratioTarget": {
+        "width": 1.862,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.558,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.832,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.465,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.472,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.833,
+        "height": 0.691
+      },
+      "ratioTarget": {
+        "width": 1.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.691,
+        "height": 0.691,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.701,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.833,
+        "height": 0.691
+      },
+      "ratioTarget": {
+        "width": 1.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.691,
+        "height": 0.691,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.701,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.15,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.196,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.514,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.535,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.151,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.197,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.509,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.529,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.151,
+        "height": 0.649
+      },
+      "ratioTarget": {
+        "width": 1.197,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.649,
+        "height": 0.649,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.675,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.152,
+        "height": 0.637
+      },
+      "ratioTarget": {
+        "width": 1.198,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.637,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.662,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.818,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.486,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.493,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.818,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.861,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.5,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.507,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.818,
+        "height": 0.649
+      },
+      "ratioTarget": {
+        "width": 2.86,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.649,
+        "height": 0.649,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.659,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.819,
+        "height": 0.637
+      },
+      "ratioTarget": {
+        "width": 2.861,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.637,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.647,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.334,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.369,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.389,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.395,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.334,
+        "height": 0.647
+      },
+      "ratioTarget": {
+        "width": 2.369,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.647,
+        "height": 0.647,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.657,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.334,
+        "height": 0.671
+      },
+      "ratioTarget": {
+        "width": 2.369,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.671,
+        "height": 0.671,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.681,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.335,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 2.37,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.634,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.739,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.782,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.36,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.369,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.739,
+        "height": 0.55
+      },
+      "ratioTarget": {
+        "width": 1.783,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.564,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.739,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.783,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.448,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.459,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.739,
+        "height": 0.575
+      },
+      "ratioTarget": {
+        "width": 1.783,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.575,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.589,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.739,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.783,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.448,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.459,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.739,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.783,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.641,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.738,
+        "height": 0.613
+      },
+      "ratioTarget": {
+        "width": 1.782,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.613,
+        "height": 0.613,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.628,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.548,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.586,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.539,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.547,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.545,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.583,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.526,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.534,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.547,
+        "height": 0.582
+      },
+      "ratioTarget": {
+        "width": 2.585,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.582,
+        "height": 0.582,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.591,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.547,
+        "height": 0.658
+      },
+      "ratioTarget": {
+        "width": 2.585,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.658,
+        "height": 0.658,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.668,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.546,
+        "height": 0.755
+      },
+      "ratioTarget": {
+        "width": 2.584,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.755,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.766,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.546,
+        "height": 0.755
+      },
+      "ratioTarget": {
+        "width": 2.584,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.755,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.766,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.945,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.974,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.377,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.383,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.944,
+        "height": 0.692
+      },
+      "ratioTarget": {
+        "width": 1.973,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.692,
+        "height": 0.692,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.702,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.943,
+        "height": 0.711
+      },
+      "ratioTarget": {
+        "width": 1.972,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.711,
+        "height": 0.711,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.722,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.944,
+        "height": 0.572
+      },
+      "ratioTarget": {
+        "width": 1.973,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.572,
+        "height": 0.572,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.581,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kagura",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.672,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.714,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.36,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.369,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kagura",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.671,
+        "height": 0.691
+      },
+      "ratioTarget": {
+        "width": 1.713,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.691,
+        "height": 0.691,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.708,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kagura",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.671,
+        "height": 0.586
+      },
+      "ratioTarget": {
+        "width": 1.712,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.586,
+        "height": 0.586,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.601,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kagura",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.673,
+        "height": 0.778
+      },
+      "ratioTarget": {
+        "width": 1.715,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.778,
+        "height": 0.778,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.797,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kagura",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.673,
+        "height": 0.778
+      },
+      "ratioTarget": {
+        "width": 1.715,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.778,
+        "height": 0.778,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.797,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.395,
+        "height": 0.584
+      },
+      "ratioTarget": {
+        "width": 1.43,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.4,
+        "height": 0.4,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.41,
+        "height": 0.507,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.395,
+        "height": 0.584
+      },
+      "ratioTarget": {
+        "width": 1.43,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.4,
+        "height": 0.4,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.41,
+        "height": 0.507,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.488,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.525,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.25,
+        "height": 0.452,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.256,
+        "height": 0.534,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.395,
+        "height": 0.581
+      },
+      "ratioTarget": {
+        "width": 1.429,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.398,
+        "height": 0.398,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.408,
+        "height": 0.507,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.396,
+        "height": 0.562
+      },
+      "ratioTarget": {
+        "width": 1.43,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.385,
+        "height": 0.385,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.395,
+        "height": 0.507,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.395,
+        "height": 0.581
+      },
+      "ratioTarget": {
+        "width": 1.429,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.398,
+        "height": 0.398,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.408,
+        "height": 0.507,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.397,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.432,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.351,
+        "height": 0.452,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.36,
+        "height": 0.534,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kazuki-muto",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 0.931,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.322,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.346,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kazuki-muto",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 0.931,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.459,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.493,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kazuki-muto",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 0.931,
+        "height": 0.557
+      },
+      "ratioTarget": {
+        "width": 1,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.557,
+        "height": 0.557,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.598,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.285,
+        "height": 0.593
+      },
+      "ratioTarget": {
+        "width": 2.32,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.593,
+        "height": 0.593,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.602,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.286,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.32,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.466,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.473,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.286,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 2.32,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.634,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.283,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.318,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.541,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.549,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.874,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.903,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.273,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.277,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.877,
+        "height": 0.615
+      },
+      "ratioTarget": {
+        "width": 1.905,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.615,
+        "height": 0.615,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.624,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.875,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.903,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.544,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.552,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.972,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 3.016,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.392,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.398,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.972,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 3.016,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.55,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.558,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.971,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 3.015,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.49,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.497,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.971,
+        "height": 0.7
+      },
+      "ratioTarget": {
+        "width": 3.016,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.71,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.968,
+        "height": 0.637
+      },
+      "ratioTarget": {
+        "width": 3.012,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.637,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.647,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.515,
+        "height": 0.663
+      },
+      "ratioTarget": {
+        "width": 1.553,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.663,
+        "height": 0.663,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.68,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.513,
+        "height": 0.727
+      },
+      "ratioTarget": {
+        "width": 1.551,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.727,
+        "height": 0.727,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.745,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.515,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.553,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.264,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.271,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.515,
+        "height": 0.663
+      },
+      "ratioTarget": {
+        "width": 1.553,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.663,
+        "height": 0.663,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.68,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.515,
+        "height": 0.663
+      },
+      "ratioTarget": {
+        "width": 1.553,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.663,
+        "height": 0.663,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.68,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.515,
+        "height": 0.657
+      },
+      "ratioTarget": {
+        "width": 1.553,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.657,
+        "height": 0.657,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.673,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.513,
+        "height": 0.685
+      },
+      "ratioTarget": {
+        "width": 1.551,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.685,
+        "height": 0.685,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.702,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.515,
+        "height": 0.605
+      },
+      "ratioTarget": {
+        "width": 1.553,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.605,
+        "height": 0.605,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.62,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.553,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.592,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.357,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.362,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.552,
+        "height": 0.755
+      },
+      "ratioTarget": {
+        "width": 2.59,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.755,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.766,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.552,
+        "height": 0.755
+      },
+      "ratioTarget": {
+        "width": 2.59,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.755,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.766,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.552,
+        "height": 0.729
+      },
+      "ratioTarget": {
+        "width": 2.591,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.729,
+        "height": 0.729,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.74,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.553,
+        "height": 0.76
+      },
+      "ratioTarget": {
+        "width": 2.592,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.771,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "lenalee-lee",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.331,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.364,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.408,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.418,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "lenalee-lee",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.331,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.364,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.529,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.542,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "lenalee-lee",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.331,
+        "height": 0.601
+      },
+      "ratioTarget": {
+        "width": 1.364,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.601,
+        "height": 0.601,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.616,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "majin-buu",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.555,
+        "height": 0.659
+      },
+      "ratioTarget": {
+        "width": 1.593,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.659,
+        "height": 0.659,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.675,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "majin-buu",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.555,
+        "height": 0.659
+      },
+      "ratioTarget": {
+        "width": 1.593,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.659,
+        "height": 0.659,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.675,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "momotaro-tsurugi",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.18,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.227,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.276,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.287,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "momotaro-tsurugi",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.178,
+        "height": 0.615
+      },
+      "ratioTarget": {
+        "width": 1.225,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.615,
+        "height": 0.615,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.64,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "momotaro-tsurugi",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.178,
+        "height": 0.561
+      },
+      "ratioTarget": {
+        "width": 1.225,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.561,
+        "height": 0.561,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.583,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "momotaro-tsurugi",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.18,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.227,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.514,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.535,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.809,
+        "height": 0.638
+      },
+      "ratioTarget": {
+        "width": 1.837,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.638,
+        "height": 0.638,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.648,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.81,
+        "height": 0.649
+      },
+      "ratioTarget": {
+        "width": 1.837,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.649,
+        "height": 0.649,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.659,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.811,
+        "height": 0.638
+      },
+      "ratioTarget": {
+        "width": 1.838,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.638,
+        "height": 0.638,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.648,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.454,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.491,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.377,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.383,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.455,
+        "height": 0.663
+      },
+      "ratioTarget": {
+        "width": 2.491,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.663,
+        "height": 0.663,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.673,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.455,
+        "height": 0.649
+      },
+      "ratioTarget": {
+        "width": 2.492,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.649,
+        "height": 0.649,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.659,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.457,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.494,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.505,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.513,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.455,
+        "height": 0.7
+      },
+      "ratioTarget": {
+        "width": 2.492,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.71,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.455,
+        "height": 0.7
+      },
+      "ratioTarget": {
+        "width": 2.492,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.71,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.306,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.339,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.535,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.548,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.307,
+        "height": 0.686
+      },
+      "ratioTarget": {
+        "width": 1.34,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.686,
+        "height": 0.686,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.703,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.308,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.341,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.519,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.532,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.365,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.401,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.514,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.522,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.367,
+        "height": 0.686
+      },
+      "ratioTarget": {
+        "width": 2.403,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.686,
+        "height": 0.686,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.696,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.367,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.403,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.495,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.502,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "neuro-nogami",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.552,
+        "height": 0.714
+      },
+      "ratioTarget": {
+        "width": 1.591,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.714,
+        "height": 0.714,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.732,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "neuro-nogami",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.553,
+        "height": 0.702
+      },
+      "ratioTarget": {
+        "width": 1.592,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.702,
+        "height": 0.702,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.72,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "neuro-nogami",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.553,
+        "height": 0.678
+      },
+      "ratioTarget": {
+        "width": 1.592,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.678,
+        "height": 0.678,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.695,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.882,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.925,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.539,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.547,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.882,
+        "height": 0.697
+      },
+      "ratioTarget": {
+        "width": 2.926,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.697,
+        "height": 0.697,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.707,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.883,
+        "height": 0.675
+      },
+      "ratioTarget": {
+        "width": 2.926,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.675,
+        "height": 0.675,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.685,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.893,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.921,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.393,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.399,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.894,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.922,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.67,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.894,
+        "height": 0.58
+      },
+      "ratioTarget": {
+        "width": 1.922,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.589,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.894,
+        "height": 0.648
+      },
+      "ratioTarget": {
+        "width": 1.923,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.648,
+        "height": 0.648,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.658,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.893,
+        "height": 0.689
+      },
+      "ratioTarget": {
+        "width": 1.921,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.689,
+        "height": 0.689,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.699,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "piccolo",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.132,
+        "height": 0.606
+      },
+      "ratioTarget": {
+        "width": 1.177,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.559,
+        "height": 0.559,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.581,
+        "height": 0.682,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "raoh",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.639,
+        "height": 0.762
+      },
+      "ratioTarget": {
+        "width": 1.68,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.762,
+        "height": 0.762,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.781,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "raoh",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.636,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.677,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.535,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.548,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "raoh",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.639,
+        "height": 0.762
+      },
+      "ratioTarget": {
+        "width": 1.68,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.762,
+        "height": 0.762,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.781,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "raoh",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.637,
+        "height": 0.674
+      },
+      "ratioTarget": {
+        "width": 1.678,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.674,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.691,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "raoh",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.637,
+        "height": 0.674
+      },
+      "ratioTarget": {
+        "width": 1.678,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.674,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.691,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.047,
+        "height": 0.562
+      },
+      "ratioTarget": {
+        "width": 1.089,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.562,
+        "height": 0.562,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.584,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.048,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.09,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.431,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.448,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.048,
+        "height": 0.646
+      },
+      "ratioTarget": {
+        "width": 1.09,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.646,
+        "height": 0.646,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.672,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.047,
+        "height": 0.614
+      },
+      "ratioTarget": {
+        "width": 1.089,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.614,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.639,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.047,
+        "height": 0.795
+      },
+      "ratioTarget": {
+        "width": 1.089,
+        "height": 0.9
+      },
+      "scaleBefore": {
+        "width": 0.795,
+        "height": 0.795,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.827,
+        "height": 0.9,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.047,
+        "height": 0.795
+      },
+      "ratioTarget": {
+        "width": 1.089,
+        "height": 0.9
+      },
+      "scaleBefore": {
+        "width": 0.795,
+        "height": 0.795,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.827,
+        "height": 0.9,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "roronoa-zoro",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.45,
+        "height": 0.575
+      },
+      "ratioTarget": {
+        "width": 1.486,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.575,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.589,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "roronoa-zoro",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.45,
+        "height": 0.76
+      },
+      "ratioTarget": {
+        "width": 1.486,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.779,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "roronoa-zoro",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.45,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.486,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.666,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.921,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.95,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.399,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.405,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.919,
+        "height": 0.612
+      },
+      "ratioTarget": {
+        "width": 1.948,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.612,
+        "height": 0.612,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.621,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.918,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.946,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.416,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.422,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.92,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.948,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.634,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.92,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.949,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.525,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.533,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.92,
+        "height": 0.761
+      },
+      "ratioTarget": {
+        "width": 1.949,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.761,
+        "height": 0.761,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.772,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.92,
+        "height": 0.761
+      },
+      "ratioTarget": {
+        "width": 1.949,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.761,
+        "height": 0.761,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.772,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.086,
+        "height": 0.714
+      },
+      "ratioTarget": {
+        "width": 2.117,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.714,
+        "height": 0.714,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.725,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.087,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 2.118,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.634,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.223,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.257,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.539,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.547,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.221,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.254,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.465,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.472,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.221,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.254,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.465,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.472,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.221,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.254,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.416,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.422,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.223,
+        "height": 0.771
+      },
+      "ratioTarget": {
+        "width": 2.256,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.771,
+        "height": 0.771,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.783,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.223,
+        "height": 0.771
+      },
+      "ratioTarget": {
+        "width": 2.256,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.771,
+        "height": 0.771,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.783,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.037,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 3.083,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.37,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.376,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.038,
+        "height": 0.721
+      },
+      "ratioTarget": {
+        "width": 3.083,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.721,
+        "height": 0.721,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.732,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.038,
+        "height": 0.649
+      },
+      "ratioTarget": {
+        "width": 3.084,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.649,
+        "height": 0.649,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.659,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.038,
+        "height": 0.721
+      },
+      "ratioTarget": {
+        "width": 3.083,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.721,
+        "height": 0.721,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.732,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.04,
+        "height": 0.553
+      },
+      "ratioTarget": {
+        "width": 3.085,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.553,
+        "height": 0.553,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.561,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.899,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.927,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.317,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.322,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.902,
+        "height": 0.594
+      },
+      "ratioTarget": {
+        "width": 1.93,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.594,
+        "height": 0.594,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.603,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.903,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.932,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.516,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.524,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.903,
+        "height": 0.574
+      },
+      "ratioTarget": {
+        "width": 1.932,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.574,
+        "height": 0.574,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.583,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.903,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.932,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.492,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.499,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.171,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.218,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.357,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.371,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.172,
+        "height": 0.656
+      },
+      "ratioTarget": {
+        "width": 1.218,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.656,
+        "height": 0.656,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.682,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.171,
+        "height": 0.604
+      },
+      "ratioTarget": {
+        "width": 1.218,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.604,
+        "height": 0.604,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.628,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.171,
+        "height": 0.553
+      },
+      "ratioTarget": {
+        "width": 1.218,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.553,
+        "height": 0.553,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.575,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.171,
+        "height": 0.593
+      },
+      "ratioTarget": {
+        "width": 1.218,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.593,
+        "height": 0.593,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.617,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.217,
+        "height": 0.675
+      },
+      "ratioTarget": {
+        "width": 3.265,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.675,
+        "height": 0.675,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.685,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.217,
+        "height": 0.775
+      },
+      "ratioTarget": {
+        "width": 3.265,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.775,
+        "height": 0.775,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.787,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.217,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 3.265,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.347,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.352,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.217,
+        "height": 0.675
+      },
+      "ratioTarget": {
+        "width": 3.265,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.675,
+        "height": 0.675,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.685,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.217,
+        "height": 0.675
+      },
+      "ratioTarget": {
+        "width": 3.265,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.675,
+        "height": 0.675,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.685,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.216,
+        "height": 0.647
+      },
+      "ratioTarget": {
+        "width": 3.264,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.647,
+        "height": 0.647,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.657,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.218,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 3.266,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.5,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.507,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.214,
+        "height": 0.602
+      },
+      "ratioTarget": {
+        "width": 3.262,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.602,
+        "height": 0.602,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.611,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.611,
+        "height": 0.666
+      },
+      "ratioTarget": {
+        "width": 1.651,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.666,
+        "height": 0.666,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.683,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.612,
+        "height": 0.714
+      },
+      "ratioTarget": {
+        "width": 1.652,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.714,
+        "height": 0.714,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.732,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.611,
+        "height": 0.603
+      },
+      "ratioTarget": {
+        "width": 1.652,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.603,
+        "height": 0.603,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.618,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.613,
+        "height": 0.614
+      },
+      "ratioTarget": {
+        "width": 1.653,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.614,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.629,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.692,
+        "height": 0.656
+      },
+      "ratioTarget": {
+        "width": 2.733,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.656,
+        "height": 0.656,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.666,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.692,
+        "height": 0.656
+      },
+      "ratioTarget": {
+        "width": 2.733,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.656,
+        "height": 0.656,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.666,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.688,
+        "height": 0.584
+      },
+      "ratioTarget": {
+        "width": 2.729,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.584,
+        "height": 0.584,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.593,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.691,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 2.732,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.634,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.395,
+        "height": 0.605
+      },
+      "ratioTarget": {
+        "width": 2.431,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.605,
+        "height": 0.605,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.614,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.398,
+        "height": 0.577
+      },
+      "ratioTarget": {
+        "width": 2.434,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.577,
+        "height": 0.577,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.586,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.396,
+        "height": 0.714
+      },
+      "ratioTarget": {
+        "width": 2.432,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.714,
+        "height": 0.714,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.725,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.396,
+        "height": 0.603
+      },
+      "ratioTarget": {
+        "width": 2.431,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.603,
+        "height": 0.603,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.612,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yoh-asakura",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.302,
+        "height": 0.702
+      },
+      "ratioTarget": {
+        "width": 1.335,
+        "height": 0.82
+      },
+      "scaleBefore": {
+        "width": 0.702,
+        "height": 0.702,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.72,
+        "height": 0.82,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yoh-asakura",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.3,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 1.333,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.522,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.535,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yoh-asakura",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.302,
+        "height": 0.636
+      },
+      "ratioTarget": {
+        "width": 1.334,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.636,
+        "height": 0.636,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.652,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yoh-asakura",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.301,
+        "height": 0.58
+      },
+      "ratioTarget": {
+        "width": 1.334,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.594,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.487,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.525,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.446,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.453,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.488,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.525,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.526,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.534,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.488,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.525,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.504,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.512,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.489,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.527,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.5,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.507,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.487,
+        "height": 0.555
+      },
+      "ratioTarget": {
+        "width": 2.524,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.555,
+        "height": 0.555,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.563,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.488,
+        "height": 0.66
+      },
+      "ratioTarget": {
+        "width": 2.525,
+        "height": 0.78
+      },
+      "scaleBefore": {
+        "width": 0.512,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.52,
+        "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.487,
+        "height": 0.555
+      },
+      "ratioTarget": {
+        "width": 2.524,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.555,
+        "height": 0.555,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.563,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yusuke-urameshi",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "visual-sprint-low-body-volume-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.092,
+        "height": 0.575
+      },
+      "ratioTarget": {
+        "width": 2.123,
+        "height": 0.74
+      },
+      "scaleBefore": {
+        "width": 0.575,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.584,
+        "height": 0.74,
+        "offsetX": 0
+      }
+    }
+  ]
+}
