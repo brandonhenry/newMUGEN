@@ -1,0 +1,1169 @@
+{
+  "generatedAt": "2026-07-03T01:55:23.278Z",
+  "dryRun": false,
+  "changes": 47,
+  "touchedCharacters": [
+    "dio",
+    "gohan-super-saiyan-2",
+    "gotenks-super-saiyan",
+    "heihachi-edajima",
+    "hiei",
+    "kenshiro",
+    "killua-zoldyck",
+    "kurama",
+    "monkey-d-luffy-2nd-gear",
+    "nico-robin",
+    "sakura-haruno",
+    "sanji-vinsmoke",
+    "taikoubou",
+    "train-heartnet",
+    "yugi-mutou"
+  ],
+  "byCharacter": {
+    "dio": 4,
+    "gohan-super-saiyan-2": 2,
+    "gotenks-super-saiyan": 8,
+    "heihachi-edajima": 1,
+    "hiei": 1,
+    "kenshiro": 1,
+    "killua-zoldyck": 7,
+    "kurama": 1,
+    "monkey-d-luffy-2nd-gear": 3,
+    "nico-robin": 1,
+    "sakura-haruno": 2,
+    "sanji-vinsmoke": 5,
+    "taikoubou": 1,
+    "train-heartnet": 7,
+    "yugi-mutou": 3
+  },
+  "changeDetails": [
+    {
+      "id": "dio",
+      "key": "knockdown",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.034,
+        "height": 0.423
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.423,
+        "height": 0.423,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.385,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "knockdown",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.133,
+        "height": 0.422
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.422,
+        "height": 0.422,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.366,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "getupStand",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.034,
+        "height": 0.423
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.423,
+        "height": 0.423,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.385,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "getupStand",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.133,
+        "height": 0.422
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.422,
+        "height": 0.422,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.366,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "knockdown",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.412,
+        "height": 0.386
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.386,
+        "height": 0.386,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.304,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "getupStand",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.412,
+        "height": 0.386
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.386,
+        "height": 0.386,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.304,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "knockdown",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.406,
+        "height": 0.415
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.415,
+        "height": 0.415,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.328,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "knockdown",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.367,
+        "height": 0.42
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.42,
+        "height": 0.42,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.337,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "knockdown",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.075,
+        "height": 0.478
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.478,
+        "height": 0.478,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.426,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "knockdown",
+      "frame": 33,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.075,
+        "height": 0.469
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.469,
+        "height": 0.469,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.418,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "getupStand",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.406,
+        "height": 0.415
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.415,
+        "height": 0.415,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.328,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "getupStand",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.367,
+        "height": 0.42
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.42,
+        "height": 0.42,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.337,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "getupStand",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.075,
+        "height": 0.478
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.478,
+        "height": 0.478,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.426,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "getupStand",
+      "frame": 33,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.075,
+        "height": 0.469
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.469,
+        "height": 0.469,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.418,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "lose",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.226,
+        "height": 0.371
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.371,
+        "height": 0.371,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.308,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "lose",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.039,
+        "height": 0.422
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.422,
+        "height": 0.422,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.383,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "lose",
+      "frame": 35,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.376,
+        "height": 0.346
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.346,
+        "height": 0.346,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.277,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "knockdown",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.188,
+        "height": 0.405
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.405,
+        "height": 0.405,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.342,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "knockdown",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.334,
+        "height": 0.385
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.385,
+        "height": 0.385,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.305,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "knockdown",
+      "frame": 34,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.05,
+        "height": 0.44
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.397,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "getupStand",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.188,
+        "height": 0.405
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.405,
+        "height": 0.405,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.342,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "getupStand",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.334,
+        "height": 0.385
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.385,
+        "height": 0.385,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.305,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "getupStand",
+      "frame": 34,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.05,
+        "height": 0.44
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.397,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "lose",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.615,
+        "height": 0.345
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.345,
+        "height": 0.345,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.251,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "lose",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.539,
+        "height": 0.355
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.355,
+        "height": 0.355,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.266,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "knockdown",
+      "frame": 34,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.053,
+        "height": 0.422
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.422,
+        "height": 0.422,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.38,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "getupStand",
+      "frame": 34,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.053,
+        "height": 0.422
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.422,
+        "height": 0.422,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.38,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "lose",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.376,
+        "height": 0.365
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.365,
+        "height": 0.365,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.292,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "knockdown",
+      "frame": 33,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.123,
+        "height": 0.397
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.397,
+        "height": 0.397,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.346,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "knockdown",
+      "frame": 33,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.045,
+        "height": 0.383
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.383,
+        "height": 0.383,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.346,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "getupStand",
+      "frame": 33,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.045,
+        "height": 0.383
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.383,
+        "height": 0.383,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.346,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "knockdown",
+      "frame": 36,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.051,
+        "height": 0.438
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.438,
+        "height": 0.438,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.395,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "knockdown",
+      "frame": 38,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.237,
+        "height": 0.407
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.407,
+        "height": 0.407,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.337,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "getupStand",
+      "frame": 36,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.051,
+        "height": 0.438
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.438,
+        "height": 0.438,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.395,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "getupStand",
+      "frame": 38,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.237,
+        "height": 0.407
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.407,
+        "height": 0.407,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.337,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "lose",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.717,
+        "height": 0.331
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.331,
+        "height": 0.331,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.25,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "lose",
+      "frame": 31,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.072,
+        "height": 0.346
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.346,
+        "height": 0.346,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.309,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "knockdown",
+      "frame": 35,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.117,
+        "height": 0.426
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.426,
+        "height": 0.426,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.372,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "knockdown",
+      "frame": 37,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.407,
+        "height": 0.374
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.374,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.295,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "knockdown",
+      "frame": 38,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.194,
+        "height": 0.411
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.411,
+        "height": 0.411,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.347,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "getupStand",
+      "frame": 35,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.117,
+        "height": 0.426
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.426,
+        "height": 0.426,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.372,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "getupStand",
+      "frame": 37,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.407,
+        "height": 0.374
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.374,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.295,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "getupStand",
+      "frame": 38,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.194,
+        "height": 0.411
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.411,
+        "height": 0.411,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.347,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "lose",
+      "frame": 32,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.893,
+        "height": 0.312
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.312,
+        "height": 0.312,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.25,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "knockdown",
+      "frame": 35,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.091,
+        "height": 0.42
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.42,
+        "height": 0.42,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.372,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "getupStand",
+      "frame": 35,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.091,
+        "height": 0.42
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.56
+      },
+      "scaleBefore": {
+        "width": 0.42,
+        "height": 0.42,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.372,
+        "height": 0.56,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "lose",
+      "frame": 30,
+      "reason": "prone-strip-too-thin-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.214,
+        "height": 0.397
+      },
+      "ratioTarget": {
+        "width": 1.85,
+        "height": 0.52
+      },
+      "scaleBefore": {
+        "width": 0.397,
+        "height": 0.397,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.332,
+        "height": 0.52,
+        "offsetX": 0
+      }
+    }
+  ]
+}

@@ -16,6 +16,8 @@ const families = {
   reactions: ['hitLight', 'hitHeavy', 'win']
 };
 
+const nonAttackKeys = new Set(Object.values(families).flat().concat(['idle']));
+
 function frameIndexFromPath(framePath) {
   const match = /frame-(\d+)\.png$/i.exec(framePath);
   return match ? Number(match[1]) : NaN;
@@ -142,7 +144,10 @@ async function makeSheet(characters, keys) {
   const headerH = 32;
   const rows = [];
   for (const entry of characters) {
-    for (const key of keys) {
+    const familyKeys = keys ?? Object.keys(entry.character.animationFrames ?? {})
+      .filter((key) => entry.character.animationFrames?.[key]?.length && !nonAttackKeys.has(key))
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    for (const key of familyKeys) {
       const framePaths = entry.character.animationFrames?.[key];
       if (!framePaths?.length) continue;
       const frames = [];
@@ -216,11 +221,9 @@ async function makeSheet(characters, keys) {
   return pageFiles;
 }
 
-const keys = family === 'attacks'
-  ? null
-  : families[family];
-if (!keys) {
-  throw new Error(`Use one of: ${Object.keys(families).join(', ')}`);
+const keys = family === 'attacks' ? null : families[family];
+if (family !== 'attacks' && !keys) {
+  throw new Error(`Use one of: ${Object.keys(families).concat('attacks').join(', ')}`);
 }
 const characters = await collectCharacters();
 const files = await makeSheet(characters, keys);

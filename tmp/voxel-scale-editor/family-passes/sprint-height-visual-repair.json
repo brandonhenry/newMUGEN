@@ -1,0 +1,5303 @@
+{
+  "generatedAt": "2026-07-03T01:53:01.001Z",
+  "dryRun": false,
+  "changes": 216,
+  "touchedCharacters": [
+    "allen-walker",
+    "anna-kyoyama",
+    "arale-norimaki",
+    "bobobo-bo-bo-bobo",
+    "dio",
+    "dr-mashirito",
+    "eve",
+    "frieza",
+    "fuusuke",
+    "gintoki-sakata",
+    "gohan-super-saiyan",
+    "gohan-super-saiyan-2",
+    "goku",
+    "goku-super-saiyan",
+    "gon-freecss",
+    "gotenks",
+    "gotenks-super-saiyan",
+    "heihachi-edajima",
+    "hiei",
+    "ichigo-kurosaki",
+    "jaguar-junichi",
+    "jotaro-kujo",
+    "kagura",
+    "kakashi-hatake",
+    "kazuki-muto",
+    "kenshin-himura",
+    "kenshiro",
+    "killua-zoldyck",
+    "kinnikuman",
+    "kurama",
+    "lenalee-lee",
+    "momotaro-tsurugi",
+    "monkey-d-luffy",
+    "monkey-d-luffy-2nd-gear",
+    "nami",
+    "nami-perfect-clima-tact",
+    "naruto-uzumaki-nine-tails-kyubi",
+    "nico-robin",
+    "pegasus-seiya",
+    "raoh",
+    "renji-abarai",
+    "riven",
+    "rukia-kuchiki",
+    "ryotsu-kankichi",
+    "sakura-haruno",
+    "sanji-vinsmoke",
+    "taikoubou",
+    "toshiro-hitsugaya",
+    "train-heartnet",
+    "vegeta-super-saiyan",
+    "vegito",
+    "yoh-asakura",
+    "yugi-mutou",
+    "yusuke-urameshi"
+  ],
+  "byCharacter": {
+    "allen-walker": 2,
+    "anna-kyoyama": 1,
+    "arale-norimaki": 4,
+    "bobobo-bo-bo-bobo": 2,
+    "dio": 5,
+    "dr-mashirito": 4,
+    "eve": 1,
+    "frieza": 5,
+    "fuusuke": 6,
+    "gintoki-sakata": 6,
+    "gohan-super-saiyan": 1,
+    "gohan-super-saiyan-2": 5,
+    "goku": 1,
+    "goku-super-saiyan": 4,
+    "gon-freecss": 8,
+    "gotenks": 2,
+    "gotenks-super-saiyan": 4,
+    "heihachi-edajima": 7,
+    "hiei": 4,
+    "ichigo-kurosaki": 1,
+    "jaguar-junichi": 6,
+    "jotaro-kujo": 7,
+    "kagura": 1,
+    "kakashi-hatake": 3,
+    "kazuki-muto": 1,
+    "kenshin-himura": 6,
+    "kenshiro": 7,
+    "killua-zoldyck": 7,
+    "kinnikuman": 1,
+    "kurama": 8,
+    "lenalee-lee": 3,
+    "momotaro-tsurugi": 2,
+    "monkey-d-luffy": 2,
+    "monkey-d-luffy-2nd-gear": 7,
+    "nami": 2,
+    "nami-perfect-clima-tact": 5,
+    "naruto-uzumaki-nine-tails-kyubi": 1,
+    "nico-robin": 6,
+    "pegasus-seiya": 6,
+    "raoh": 1,
+    "renji-abarai": 1,
+    "riven": 2,
+    "rukia-kuchiki": 7,
+    "ryotsu-kankichi": 5,
+    "sakura-haruno": 6,
+    "sanji-vinsmoke": 7,
+    "taikoubou": 3,
+    "toshiro-hitsugaya": 2,
+    "train-heartnet": 9,
+    "vegeta-super-saiyan": 4,
+    "vegito": 4,
+    "yoh-asakura": 2,
+    "yugi-mutou": 7,
+    "yusuke-urameshi": 2
+  },
+  "changeDetails": [
+    {
+      "id": "allen-walker",
+      "key": "sprint",
+      "frame": 12,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.834,
+        "height": 0.611
+      },
+      "ratioTarget": {
+        "width": 1.834,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.611,
+        "height": 0.611,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.611,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "allen-walker",
+      "key": "sprint",
+      "frame": 13,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.795,
+        "height": 0.624
+      },
+      "ratioTarget": {
+        "width": 1.795,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.624,
+        "height": 0.624,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.624,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "anna-kyoyama",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.296,
+        "height": 0.559
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.559,
+        "height": 0.559,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.463,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.694,
+        "height": 0.661
+      },
+      "ratioTarget": {
+        "width": 1.694,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.661,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.661,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.775,
+        "height": 0.632
+      },
+      "ratioTarget": {
+        "width": 1.775,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.632,
+        "height": 0.632,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.632,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.775,
+        "height": 0.632
+      },
+      "ratioTarget": {
+        "width": 1.775,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.632,
+        "height": 0.632,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.632,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "arale-norimaki",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.775,
+        "height": 0.632
+      },
+      "ratioTarget": {
+        "width": 1.775,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.632,
+        "height": 0.632,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.632,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "bobobo-bo-bo-bobo",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.644,
+        "height": 0.681
+      },
+      "ratioTarget": {
+        "width": 1.644,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.681,
+        "height": 0.681,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.681,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "bobobo-bo-bo-bobo",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.647,
+        "height": 0.68
+      },
+      "ratioTarget": {
+        "width": 1.647,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.68,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.13,
+        "height": 0.525
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.525,
+        "height": 0.525,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.468,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.322,
+        "height": 0.483
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.483,
+        "height": 0.483,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.395,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.381,
+        "height": 0.471
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.471,
+        "height": 0.471,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.376,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.732,
+        "height": 0.647
+      },
+      "ratioTarget": {
+        "width": 1.732,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.647,
+        "height": 0.647,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.647,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dio",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.732,
+        "height": 0.647
+      },
+      "ratioTarget": {
+        "width": 1.732,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.647,
+        "height": 0.647,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.647,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.936,
+        "height": 0.579
+      },
+      "ratioTarget": {
+        "width": 1.936,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.579,
+        "height": 0.579,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.579,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.724,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.724,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.65,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.898,
+        "height": 0.59
+      },
+      "ratioTarget": {
+        "width": 1.898,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.59,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "dr-mashirito",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.898,
+        "height": 0.59
+      },
+      "ratioTarget": {
+        "width": 1.898,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.59,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "eve",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.655,
+        "height": 0.543
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.543,
+        "height": 0.543,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.389,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.787,
+        "height": 0.627
+      },
+      "ratioTarget": {
+        "width": 1.787,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.627,
+        "height": 0.627,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.627,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.793,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.793,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.625,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.776,
+        "height": 0.631
+      },
+      "ratioTarget": {
+        "width": 1.776,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.631,
+        "height": 0.631,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.631,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.804,
+        "height": 0.622
+      },
+      "ratioTarget": {
+        "width": 1.804,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.636,
+        "height": 0.636,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.636,
+        "height": 0.819,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "frieza",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.804,
+        "height": 0.622
+      },
+      "ratioTarget": {
+        "width": 1.804,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.636,
+        "height": 0.636,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.636,
+        "height": 0.819,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.247,
+        "height": 0.499
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.499,
+        "height": 0.499,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.422,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.662,
+        "height": 0.673
+      },
+      "ratioTarget": {
+        "width": 1.662,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.673,
+        "height": 0.673,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.673,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.827,
+        "height": 0.613
+      },
+      "ratioTarget": {
+        "width": 1.827,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.613,
+        "height": 0.613,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.613,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.802,
+        "height": 0.621
+      },
+      "ratioTarget": {
+        "width": 1.802,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.621,
+        "height": 0.621,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.621,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.827,
+        "height": 0.613
+      },
+      "ratioTarget": {
+        "width": 1.827,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.613,
+        "height": 0.613,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.613,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "fuusuke",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.827,
+        "height": 0.613
+      },
+      "ratioTarget": {
+        "width": 1.827,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.613,
+        "height": 0.613,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.613,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.173,
+        "height": 0.516
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.516,
+        "height": 0.516,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.451,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.38,
+        "height": 0.471
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.471,
+        "height": 0.471,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.376,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.135,
+        "height": 0.524
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.524,
+        "height": 0.524,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.466,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.288,
+        "height": 0.489
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.489,
+        "height": 0.489,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.406,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.045,
+        "height": 0.548
+      },
+      "ratioTarget": {
+        "width": 2.045,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.548,
+        "height": 0.548,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.548,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gintoki-sakata",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.045,
+        "height": 0.548
+      },
+      "ratioTarget": {
+        "width": 2.045,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.548,
+        "height": 0.548,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.548,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.525,
+        "height": 0.74
+      },
+      "ratioTarget": {
+        "width": 1.525,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.617,
+        "height": 0.74,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.617,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.643,
+        "height": 0.423
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.423,
+        "height": 0.423,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.304,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.939,
+        "height": 0.577
+      },
+      "ratioTarget": {
+        "width": 1.939,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.577,
+        "height": 0.577,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.577,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.332,
+        "height": 0.48
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.48,
+        "height": 0.48,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.391,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.587,
+        "height": 0.706
+      },
+      "ratioTarget": {
+        "width": 1.587,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.706,
+        "height": 0.706,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.706,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gohan-super-saiyan-2",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.261,
+        "height": 0.496
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.496,
+        "height": 0.496,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.417,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.335,
+        "height": 0.74
+      },
+      "ratioTarget": {
+        "width": 1.335,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.63,
+        "height": 0.74,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.63,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.005,
+        "height": 0.559
+      },
+      "ratioTarget": {
+        "width": 2.005,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.559,
+        "height": 0.559,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.559,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.069,
+        "height": 0.541
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.541,
+        "height": 0.541,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.497,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.859,
+        "height": 0.602
+      },
+      "ratioTarget": {
+        "width": 1.859,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.602,
+        "height": 0.602,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.602,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "goku-super-saiyan",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.025,
+        "height": 0.554
+      },
+      "ratioTarget": {
+        "width": 2.025,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.554,
+        "height": 0.554,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.554,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.724,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.724,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.65,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.244,
+        "height": 0.499
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.499,
+        "height": 0.499,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.423,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2,
+        "height": 0.561
+      },
+      "ratioTarget": {
+        "width": 2,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.561,
+        "height": 0.561,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.561,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.089,
+        "height": 0.537
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.537,
+        "height": 0.537,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.488,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.145,
+        "height": 0.643
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.643,
+        "height": 0.643,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.57,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.1,
+        "height": 0.533
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.533,
+        "height": 0.533,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.482,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.724,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.724,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.65,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gon-freecss",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.724,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.724,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.65,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.445,
+        "height": 0.646
+      },
+      "ratioTarget": {
+        "width": 1.445,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.646,
+        "height": 0.646,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.646,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.451,
+        "height": 0.642
+      },
+      "ratioTarget": {
+        "width": 1.451,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.642,
+        "height": 0.642,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.642,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.551,
+        "height": 0.44
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.328,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.514,
+        "height": 0.446
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.446,
+        "height": 0.446,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.337,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.205,
+        "height": 0.508
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.508,
+        "height": 0.508,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.438,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "gotenks-super-saiyan",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.226,
+        "height": 0.503
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.503,
+        "height": 0.503,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.429,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.592,
+        "height": 0.432
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.432,
+        "height": 0.432,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.317,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.681,
+        "height": 0.666
+      },
+      "ratioTarget": {
+        "width": 1.681,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.666,
+        "height": 0.666,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.666,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.618,
+        "height": 0.693
+      },
+      "ratioTarget": {
+        "width": 1.618,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.693,
+        "height": 0.693,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.693,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.009,
+        "height": 0.557
+      },
+      "ratioTarget": {
+        "width": 2.009,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.557,
+        "height": 0.557,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.557,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.972,
+        "height": 0.567
+      },
+      "ratioTarget": {
+        "width": 1.972,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.567,
+        "height": 0.567,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.567,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.047,
+        "height": 0.548
+      },
+      "ratioTarget": {
+        "width": 2.047,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.548,
+        "height": 0.548,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.548,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "heihachi-edajima",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.814,
+        "height": 0.618
+      },
+      "ratioTarget": {
+        "width": 1.814,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.618,
+        "height": 0.618,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.618,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.589,
+        "height": 0.536
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.536,
+        "height": 0.536,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.393,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.043,
+        "height": 0.646
+      },
+      "ratioTarget": {
+        "width": 2.043,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.646,
+        "height": 0.646,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.646,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.321,
+        "height": 0.598
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.598,
+        "height": 0.598,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.489,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "hiei",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.321,
+        "height": 0.598
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.598,
+        "height": 0.598,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.489,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ichigo-kurosaki",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.756,
+        "height": 0.639
+      },
+      "ratioTarget": {
+        "width": 1.756,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.548,
+        "height": 0.548,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.548,
+        "height": 0.686,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.302,
+        "height": 0.487
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.487,
+        "height": 0.487,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.402,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.328,
+        "height": 0.481
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.481,
+        "height": 0.481,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.393,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.214,
+        "height": 0.506
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.506,
+        "height": 0.506,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.434,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.082,
+        "height": 0.538
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.538,
+        "height": 0.538,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.491,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.942,
+        "height": 0.576
+      },
+      "ratioTarget": {
+        "width": 1.942,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.576,
+        "height": 0.576,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.576,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jaguar-junichi",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.942,
+        "height": 0.576
+      },
+      "ratioTarget": {
+        "width": 1.942,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.576,
+        "height": 0.576,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.576,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.524,
+        "height": 0.735
+      },
+      "ratioTarget": {
+        "width": 1.524,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.735,
+        "height": 0.735,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.735,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.404,
+        "height": 0.466
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.466,
+        "height": 0.466,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.368,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.773,
+        "height": 0.631
+      },
+      "ratioTarget": {
+        "width": 1.773,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.631,
+        "height": 0.631,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.631,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.749,
+        "height": 0.64
+      },
+      "ratioTarget": {
+        "width": 1.749,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.64,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.951,
+        "height": 0.574
+      },
+      "ratioTarget": {
+        "width": 1.951,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.574,
+        "height": 0.574,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.574,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.59,
+        "height": 0.705
+      },
+      "ratioTarget": {
+        "width": 1.59,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.705,
+        "height": 0.705,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.705,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "jotaro-kujo",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.524,
+        "height": 0.735
+      },
+      "ratioTarget": {
+        "width": 1.524,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.735,
+        "height": 0.735,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.735,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kagura",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.49,
+        "height": 0.536
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.536,
+        "height": 0.536,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.409,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.202,
+        "height": 0.54
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.37,
+        "height": 0.37,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.319,
+        "height": 0.548,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.624,
+        "height": 0.654
+      },
+      "ratioTarget": {
+        "width": 1.624,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.448,
+        "height": 0.448,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.448,
+        "height": 0.589,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.743,
+        "height": 0.639
+      },
+      "ratioTarget": {
+        "width": 1.743,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.438,
+        "height": 0.438,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.438,
+        "height": 0.548,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kazuki-muto",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.798,
+        "height": 0.622
+      },
+      "ratioTarget": {
+        "width": 1.798,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.622,
+        "height": 0.622,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.622,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.077,
+        "height": 0.539
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.539,
+        "height": 0.539,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.493,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.345,
+        "height": 0.478
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.478,
+        "height": 0.478,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.387,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.023,
+        "height": 0.553
+      },
+      "ratioTarget": {
+        "width": 2.023,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.553,
+        "height": 0.553,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.553,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.174,
+        "height": 0.515
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.515,
+        "height": 0.515,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.45,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.753,
+        "height": 0.639
+      },
+      "ratioTarget": {
+        "width": 1.753,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.639,
+        "height": 0.639,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.639,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshin-himura",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.753,
+        "height": 0.639
+      },
+      "ratioTarget": {
+        "width": 1.753,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.639,
+        "height": 0.639,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.639,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.53,
+        "height": 0.731
+      },
+      "ratioTarget": {
+        "width": 1.53,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.731,
+        "height": 0.731,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.731,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.528,
+        "height": 0.733
+      },
+      "ratioTarget": {
+        "width": 1.528,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.733,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.733,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.774,
+        "height": 0.404
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.404,
+        "height": 0.404,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.277,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.53,
+        "height": 0.731
+      },
+      "ratioTarget": {
+        "width": 1.53,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.731,
+        "height": 0.731,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.731,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.53,
+        "height": 0.731
+      },
+      "ratioTarget": {
+        "width": 1.53,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.731,
+        "height": 0.731,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.731,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.904,
+        "height": 0.74
+      },
+      "ratioTarget": {
+        "width": 1.904,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.624,
+        "height": 0.74,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.624,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kenshiro",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.964,
+        "height": 0.57
+      },
+      "ratioTarget": {
+        "width": 1.964,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.57,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.911,
+        "height": 0.384
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.384,
+        "height": 0.384,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.251,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.458,
+        "height": 0.455
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.455,
+        "height": 0.455,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.352,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.607,
+        "height": 0.43
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.43,
+        "height": 0.43,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.313,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.182,
+        "height": 0.514
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.514,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.448,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.283,
+        "height": 0.49
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.49,
+        "height": 0.49,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.408,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2,
+        "height": 0.561
+      },
+      "ratioTarget": {
+        "width": 2,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.561,
+        "height": 0.561,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.561,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2,
+        "height": 0.561
+      },
+      "ratioTarget": {
+        "width": 2,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.561,
+        "height": 0.561,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.561,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kinnikuman",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.64,
+        "height": 0.46
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.46,
+        "height": 0.46,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.331,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.587,
+        "height": 0.705
+      },
+      "ratioTarget": {
+        "width": 1.587,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.705,
+        "height": 0.705,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.705,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.832,
+        "height": 0.396
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.396,
+        "height": 0.396,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.266,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.947,
+        "height": 0.576
+      },
+      "ratioTarget": {
+        "width": 1.947,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.576,
+        "height": 0.576,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.576,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.947,
+        "height": 0.576
+      },
+      "ratioTarget": {
+        "width": 1.947,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.576,
+        "height": 0.576,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.576,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.982,
+        "height": 0.566
+      },
+      "ratioTarget": {
+        "width": 1.982,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.566,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.566,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.939,
+        "height": 0.577
+      },
+      "ratioTarget": {
+        "width": 1.939,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.577,
+        "height": 0.577,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.577,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.709,
+        "height": 0.655
+      },
+      "ratioTarget": {
+        "width": 1.709,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.655,
+        "height": 0.655,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.655,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "kurama",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.709,
+        "height": 0.655
+      },
+      "ratioTarget": {
+        "width": 1.709,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.655,
+        "height": 0.655,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.655,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "lenalee-lee",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.862,
+        "height": 0.571
+      },
+      "ratioTarget": {
+        "width": 1.862,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.571,
+        "height": 0.571,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.571,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "lenalee-lee",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.636,
+        "height": 0.65
+      },
+      "ratioTarget": {
+        "width": 1.636,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.65,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "lenalee-lee",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.33,
+        "height": 0.735
+      },
+      "ratioTarget": {
+        "width": 1.33,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.735,
+        "height": 0.735,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.735,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "momotaro-tsurugi",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.022,
+        "height": 0.473
+      },
+      "ratioTarget": {
+        "width": 2.022,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.473,
+        "height": 0.473,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.473,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "momotaro-tsurugi",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.482,
+        "height": 0.646
+      },
+      "ratioTarget": {
+        "width": 1.482,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.646,
+        "height": 0.646,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.646,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.576,
+        "height": 0.71
+      },
+      "ratioTarget": {
+        "width": 1.576,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.71,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.576,
+        "height": 0.71
+      },
+      "ratioTarget": {
+        "width": 1.576,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.71,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.702,
+        "height": 0.415
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.415,
+        "height": 0.415,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.292,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.876,
+        "height": 0.597
+      },
+      "ratioTarget": {
+        "width": 1.876,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.597,
+        "height": 0.597,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.597,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.036,
+        "height": 0.55
+      },
+      "ratioTarget": {
+        "width": 2.036,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.55,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.058,
+        "height": 0.544
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.544,
+        "height": 0.544,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.502,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.335,
+        "height": 0.48
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.48,
+        "height": 0.48,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.391,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.982,
+        "height": 0.565
+      },
+      "ratioTarget": {
+        "width": 1.982,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.565,
+        "height": 0.565,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.565,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.982,
+        "height": 0.565
+      },
+      "ratioTarget": {
+        "width": 1.982,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.565,
+        "height": 0.565,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.565,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.597,
+        "height": 0.654
+      },
+      "ratioTarget": {
+        "width": 1.597,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.654,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.654,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.623,
+        "height": 0.644
+      },
+      "ratioTarget": {
+        "width": 1.623,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.644,
+        "height": 0.644,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.644,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.269,
+        "height": 0.493
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.493,
+        "height": 0.493,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.413,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.967,
+        "height": 0.57
+      },
+      "ratioTarget": {
+        "width": 1.967,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.57,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.315,
+        "height": 0.484
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.484,
+        "height": 0.484,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.397,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.731,
+        "height": 0.648
+      },
+      "ratioTarget": {
+        "width": 1.731,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.648,
+        "height": 0.648,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.648,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nami-perfect-clima-tact",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.731,
+        "height": 0.648
+      },
+      "ratioTarget": {
+        "width": 1.731,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.648,
+        "height": 0.648,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.648,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.853,
+        "height": 0.605
+      },
+      "ratioTarget": {
+        "width": 1.853,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.517,
+        "height": 0.517,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.517,
+        "height": 0.683,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.542,
+        "height": 0.726
+      },
+      "ratioTarget": {
+        "width": 1.542,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.726,
+        "height": 0.726,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.726,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.587,
+        "height": 0.706
+      },
+      "ratioTarget": {
+        "width": 1.587,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.706,
+        "height": 0.706,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.706,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.449,
+        "height": 0.458
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.458,
+        "height": 0.458,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.355,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.019,
+        "height": 0.554
+      },
+      "ratioTarget": {
+        "width": 2.019,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.554,
+        "height": 0.554,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.554,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.15,
+        "height": 0.52
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.459,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "nico-robin",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.187,
+        "height": 0.512
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.512,
+        "height": 0.512,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.445,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.322,
+        "height": 0.482
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.482,
+        "height": 0.482,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.394,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.611,
+        "height": 0.695
+      },
+      "ratioTarget": {
+        "width": 1.611,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.695,
+        "height": 0.695,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.695,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.793,
+        "height": 0.625
+      },
+      "ratioTarget": {
+        "width": 1.793,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.625,
+        "height": 0.625,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.625,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.809,
+        "height": 0.619
+      },
+      "ratioTarget": {
+        "width": 1.809,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.619,
+        "height": 0.619,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.619,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.755,
+        "height": 0.639
+      },
+      "ratioTarget": {
+        "width": 1.755,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.639,
+        "height": 0.639,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.639,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "pegasus-seiya",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.631,
+        "height": 0.687
+      },
+      "ratioTarget": {
+        "width": 1.631,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.687,
+        "height": 0.687,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.687,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "raoh",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2,
+        "height": 0.654
+      },
+      "ratioTarget": {
+        "width": 2,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.654,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.654,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "renji-abarai",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.437,
+        "height": 0.591
+      },
+      "ratioTarget": {
+        "width": 1.437,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.591,
+        "height": 0.591,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.591,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "riven",
+      "key": "sprint",
+      "frame": 12,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.761,
+        "height": 0.636
+      },
+      "ratioTarget": {
+        "width": 1.761,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.636,
+        "height": 0.636,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.636,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "riven",
+      "key": "sprint",
+      "frame": 13,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.761,
+        "height": 0.636
+      },
+      "ratioTarget": {
+        "width": 1.761,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.636,
+        "height": 0.636,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.636,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.321,
+        "height": 0.482
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.482,
+        "height": 0.482,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.395,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.947,
+        "height": 0.74
+      },
+      "ratioTarget": {
+        "width": 1.947,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.621,
+        "height": 0.74,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.621,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.272,
+        "height": 0.493
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.493,
+        "height": 0.493,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.412,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.855,
+        "height": 0.604
+      },
+      "ratioTarget": {
+        "width": 1.855,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.604,
+        "height": 0.604,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.604,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.022,
+        "height": 0.553
+      },
+      "ratioTarget": {
+        "width": 2.022,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.553,
+        "height": 0.553,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.553,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.68,
+        "height": 0.666
+      },
+      "ratioTarget": {
+        "width": 1.68,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.666,
+        "height": 0.666,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.666,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "rukia-kuchiki",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.68,
+        "height": 0.666
+      },
+      "ratioTarget": {
+        "width": 1.68,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.666,
+        "height": 0.666,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.666,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.808,
+        "height": 0.619
+      },
+      "ratioTarget": {
+        "width": 1.808,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.619,
+        "height": 0.619,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.619,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.933,
+        "height": 0.579
+      },
+      "ratioTarget": {
+        "width": 1.933,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.579,
+        "height": 0.579,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.579,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.606,
+        "height": 0.698
+      },
+      "ratioTarget": {
+        "width": 1.606,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.698,
+        "height": 0.698,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.698,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.711,
+        "height": 0.655
+      },
+      "ratioTarget": {
+        "width": 1.711,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.655,
+        "height": 0.655,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.655,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "ryotsu-kankichi",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.636,
+        "height": 0.684
+      },
+      "ratioTarget": {
+        "width": 1.636,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.684,
+        "height": 0.684,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.684,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.149,
+        "height": 0.521
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.521,
+        "height": 0.521,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.461,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.312,
+        "height": 0.484
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.484,
+        "height": 0.484,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.398,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.312,
+        "height": 0.484
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.484,
+        "height": 0.484,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.398,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.445,
+        "height": 0.458
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.458,
+        "height": 0.458,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.356,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.796,
+        "height": 0.623
+      },
+      "ratioTarget": {
+        "width": 1.796,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.623,
+        "height": 0.623,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.623,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sakura-haruno",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.796,
+        "height": 0.623
+      },
+      "ratioTarget": {
+        "width": 1.796,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.623,
+        "height": 0.623,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.623,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.029,
+        "height": 0.369
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.369,
+        "height": 0.369,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.25,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.999,
+        "height": 0.56
+      },
+      "ratioTarget": {
+        "width": 1.999,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.56,
+        "height": 0.56,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.56,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.896,
+        "height": 0.591
+      },
+      "ratioTarget": {
+        "width": 1.896,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.591,
+        "height": 0.591,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.591,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.174,
+        "height": 0.516
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.516,
+        "height": 0.516,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.451,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.289,
+        "height": 0.489
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.489,
+        "height": 0.489,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.406,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.174,
+        "height": 0.516
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.516,
+        "height": 0.516,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.451,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "sanji-vinsmoke",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.479,
+        "height": 0.451
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.451,
+        "height": 0.451,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.346,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.588,
+        "height": 0.432
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.432,
+        "height": 0.432,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.317,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.032,
+        "height": 0.551
+      },
+      "ratioTarget": {
+        "width": 2.032,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.551,
+        "height": 0.551,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.551,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "taikoubou",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.081,
+        "height": 0.538
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.538,
+        "height": 0.538,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.491,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.765,
+        "height": 0.538
+      },
+      "ratioTarget": {
+        "width": 1.765,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.538,
+        "height": 0.538,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.538,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "toshiro-hitsugaya",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.38,
+        "height": 0.652
+      },
+      "ratioTarget": {
+        "width": 1.38,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.652,
+        "height": 0.652,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.652,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.312,
+        "height": 0.485
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.485,
+        "height": 0.485,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.399,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.154,
+        "height": 0.519
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.519,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.458,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 3.226,
+        "height": 0.348
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.348,
+        "height": 0.348,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.25,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.312,
+        "height": 0.485
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.485,
+        "height": 0.485,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.399,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.312,
+        "height": 0.485
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.485,
+        "height": 0.485,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.399,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.361,
+        "height": 0.475
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.475,
+        "height": 0.475,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.382,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.161,
+        "height": 0.519
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.519,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.456,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.684,
+        "height": 0.417
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.417,
+        "height": 0.417,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.295,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "train-heartnet",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.445,
+        "height": 0.458
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.458,
+        "height": 0.458,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.356,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.142,
+        "height": 0.522
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.522,
+        "height": 0.522,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.463,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.142,
+        "height": 0.522
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.522,
+        "height": 0.522,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.463,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.269,
+        "height": 0.493
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.493,
+        "height": 0.493,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.413,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegeta-super-saiyan",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.196,
+        "height": 0.51
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.51,
+        "height": 0.51,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.441,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.106,
+        "height": 0.532
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.532,
+        "height": 0.532,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.48,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.157,
+        "height": 0.519
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.519,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.457,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.94,
+        "height": 0.578
+      },
+      "ratioTarget": {
+        "width": 1.94,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.578,
+        "height": 0.578,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.578,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "vegito",
+      "key": "sprint",
+      "frame": 39,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.11,
+        "height": 0.531
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.531,
+        "height": 0.531,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.478,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yoh-asakura",
+      "key": "sprint",
+      "frame": 32,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.609,
+        "height": 0.646
+      },
+      "ratioTarget": {
+        "width": 1.609,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.646,
+        "height": 0.646,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.646,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yoh-asakura",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.332,
+        "height": 0.74
+      },
+      "ratioTarget": {
+        "width": 1.332,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.594,
+        "height": 0.74,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.594,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.499,
+        "height": 0.448
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.448,
+        "height": 0.448,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.341,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 33,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.303,
+        "height": 0.487
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.487,
+        "height": 0.487,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.402,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 34,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.349,
+        "height": 0.476
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.476,
+        "height": 0.476,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.385,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 35,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.36,
+        "height": 0.474
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.474,
+        "height": 0.474,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.382,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 36,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.24,
+        "height": 0.5
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.5,
+        "height": 0.5,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.424,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 37,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.332,
+        "height": 0.48
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.48,
+        "height": 0.48,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.391,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yugi-mutou",
+      "key": "sprint",
+      "frame": 38,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost,horizontal-sprint-too-wide-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.24,
+        "height": 0.5
+      },
+      "ratioTarget": {
+        "width": 1.9,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.5,
+        "height": 0.5,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.424,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yusuke-urameshi",
+      "key": "sprint",
+      "frame": 30,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 2.019,
+        "height": 0.555
+      },
+      "ratioTarget": {
+        "width": 2.019,
+        "height": 0.8
+      },
+      "scaleBefore": {
+        "width": 0.555,
+        "height": 0.555,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.555,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    {
+      "id": "yusuke-urameshi",
+      "key": "sprint",
+      "frame": 31,
+      "reason": "horizontal-sprint-too-low-vs-idle-ghost",
+      "ratioBefore": {
+        "width": 1.676,
+        "height": 0.668
+      },
+      "ratioTarget": {
+        "width": 1.676,
+        "height": 0.86
+      },
+      "scaleBefore": {
+        "width": 0.668,
+        "height": 0.668,
+        "offsetX": 0
+      },
+      "scaleAfter": {
+        "width": 0.668,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    }
+  ]
+}

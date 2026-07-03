@@ -10,6 +10,7 @@ import sharp from 'sharp';
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const charactersRoot = path.join(repoRoot, 'public/characters');
 const sheetsRoot = path.join(repoRoot, 'tmp/voxel-visual-proof/sheets');
+const familySheetsRoot = path.join(repoRoot, 'tmp/voxel-scale-editor/family-ghost-sheets');
 const defaultPort = Number(process.env.PORT || 4199);
 const execFileAsync = promisify(execFile);
 let proofGeneration = null;
@@ -650,6 +651,13 @@ async function handler(request, response) {
       const file = safeJoin(sheetsRoot, url.pathname.replace(/^\/sheets\//, ''));
       if (!file || !fsSync.existsSync(file)) return sendText(response, 404, 'Not found');
       response.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' });
+      return fsSync.createReadStream(file).pipe(response);
+    }
+    if (request.method === 'GET' && url.pathname.startsWith('/family-sheets/')) {
+      const file = safeJoin(familySheetsRoot, url.pathname.replace(/^\/family-sheets\//, ''));
+      if (!file || !fsSync.existsSync(file)) return sendText(response, 404, 'Not found');
+      const type = file.endsWith('.html') ? 'text/html; charset=utf-8' : 'image/png';
+      response.writeHead(200, { 'content-type': type, 'cache-control': 'no-store' });
       return fsSync.createReadStream(file).pipe(response);
     }
     return sendText(response, 404, 'Not found');
