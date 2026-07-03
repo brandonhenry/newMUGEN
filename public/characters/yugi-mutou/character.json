@@ -388,7 +388,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     {
       "id": "kick",
@@ -422,7 +425,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.8,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     {
       "id": "heavy",
@@ -456,7 +462,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 10
     },
     {
       "id": "special",
@@ -490,7 +499,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.08,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     }
   ],
   "hurtboxes": [
@@ -534,7 +546,10 @@
       "label": "Yugi Mutou Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "jabright": {
       "startupFrames": 13,
@@ -550,7 +565,10 @@
       "label": "Yugi Mutou Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 10
     },
     "kickleft": {
       "startupFrames": 18,
@@ -564,7 +582,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Yugi Mutou Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.8,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 33
     },
     "kickright": {
       "startupFrames": 16,
@@ -578,7 +599,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Yugi Mutou Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.08,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -601,7 +625,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -612,7 +638,7 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -627,7 +653,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 14
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -638,11 +667,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "Yugi Mutou Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.52,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 41
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -656,7 +688,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Yugi Mutou Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 31
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -678,7 +713,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -701,7 +739,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.99,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -723,7 +764,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -734,11 +778,14 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 31,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Yugi Mutou Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -752,7 +799,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Yugi Mutou Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 21
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -767,7 +817,10 @@
       "range": 1.74,
       "label": "Yugi Mutou Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 35
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -778,11 +831,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 19,
       "range": 1.9,
       "label": "Yugi Mutou Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.14,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -793,11 +849,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Yugi Mutou Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.22,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -807,7 +866,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Second Beat"
+      "label": "Yugi Mutou Second Beat",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -817,7 +879,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Body Blow"
+      "label": "Yugi Mutou Body Blow",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -827,7 +892,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Low Changeup"
+      "label": "Yugi Mutou Low Changeup",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -837,7 +905,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Pressure Feint"
+      "label": "Yugi Mutou Pressure Feint",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -847,7 +918,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Drive"
+      "label": "Yugi Mutou Drive",
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -857,7 +931,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Barrage"
+      "label": "Yugi Mutou Barrage",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -867,7 +944,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Finisher"
+      "label": "Yugi Mutou Finisher",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -878,7 +958,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Step Kick"
+      "label": "Yugi Mutou Step Kick",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -888,7 +971,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Palm String"
+      "label": "Yugi Mutou Palm String",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -898,7 +984,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Rising Chain"
+      "label": "Yugi Mutou Rising Chain",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -908,7 +997,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Special Setup"
+      "label": "Yugi Mutou Special Setup",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -918,7 +1010,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Break Art"
+      "label": "Yugi Mutou Break Art",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -928,7 +1023,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Check Hook"
+      "label": "Yugi Mutou Check Hook",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -938,7 +1036,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Heavy Break"
+      "label": "Yugi Mutou Heavy Break",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -946,9 +1047,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 24,
       "range": 1.55,
-      "label": "Yugi Mutou Charged Follow"
+      "label": "Yugi Mutou Charged Follow",
+      "forwardForce": 2.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -959,7 +1063,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Drop Kick"
+      "label": "Yugi Mutou Drop Kick",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -969,7 +1076,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Arc Finisher"
+      "label": "Yugi Mutou Arc Finisher",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -979,7 +1089,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Focus Stance"
+      "label": "Yugi Mutou Focus Stance",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -989,7 +1102,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Mode Shift"
+      "label": "Yugi Mutou Mode Shift",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -999,7 +1115,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Heel Feint"
+      "label": "Yugi Mutou Heel Feint",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1009,7 +1128,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Summon Strike"
+      "label": "Yugi Mutou Summon Strike",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1019,7 +1141,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Guard Snare"
+      "label": "Yugi Mutou Guard Snare",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1029,7 +1154,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Armor Break"
+      "label": "Yugi Mutou Armor Break",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1039,7 +1167,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Power Setup"
+      "label": "Yugi Mutou Power Setup",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1049,7 +1180,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Switch Strike"
+      "label": "Yugi Mutou Switch Strike",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1059,7 +1193,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Spark Jab"
+      "label": "Yugi Mutou Spark Jab",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1069,7 +1206,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Binding Blow"
+      "label": "Yugi Mutou Binding Blow",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1079,7 +1219,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Heavy Draw"
+      "label": "Yugi Mutou Heavy Draw",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1090,7 +1233,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yugi Mutou Kick Ender"
+      "label": "Yugi Mutou Kick Ender",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1105,7 +1251,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.69,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 10
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1120,7 +1269,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1136,7 +1288,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.83,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1151,7 +1306,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 10
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1167,7 +1325,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.89,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     }
   },
   "effects": [],

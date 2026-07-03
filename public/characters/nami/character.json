@@ -387,7 +387,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     {
       "id": "kick",
@@ -421,7 +424,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.94,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     },
     {
       "id": "heavy",
@@ -455,7 +461,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     {
       "id": "special",
@@ -489,7 +498,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     }
   ],
   "hurtboxes": [
@@ -533,7 +545,10 @@
       "label": "Nami Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "jabright": {
       "startupFrames": 11,
@@ -549,7 +564,10 @@
       "label": "Nami Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "kickleft": {
       "startupFrames": 16,
@@ -563,7 +581,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Nami Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.94,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     },
     "kickright": {
       "startupFrames": 19,
@@ -577,7 +598,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Nami Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 31,
+      "forwardForceEndFrame": 46
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -600,7 +624,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -626,7 +652,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -637,11 +666,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "Nami Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.66,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 55
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -655,7 +687,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Nami Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.61,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 42
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -677,7 +712,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.81,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 10
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -700,7 +738,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.64,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -722,7 +763,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.6,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 31
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -733,11 +777,14 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 14,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Nami Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -751,7 +798,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Nami Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -766,7 +816,10 @@
       "range": 1.74,
       "label": "Nami Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 28
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -777,11 +830,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.9,
       "label": "Nami Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.08,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 56
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -792,11 +848,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Nami Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.87,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -806,7 +865,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Second Beat"
+      "label": "Nami Second Beat",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -816,7 +878,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Body Blow"
+      "label": "Nami Body Blow",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -826,7 +891,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Low Changeup"
+      "label": "Nami Low Changeup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -836,7 +904,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Pressure Feint"
+      "label": "Nami Pressure Feint",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -846,7 +917,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Drive"
+      "label": "Nami Drive",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -856,7 +930,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Barrage"
+      "label": "Nami Barrage",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -866,7 +943,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Finisher"
+      "label": "Nami Finisher",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -877,7 +957,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Step Kick"
+      "label": "Nami Step Kick",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -887,7 +970,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Palm String"
+      "label": "Nami Palm String",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -897,7 +983,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Rising Chain"
+      "label": "Nami Rising Chain",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -907,7 +996,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Special Setup"
+      "label": "Nami Special Setup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -917,7 +1009,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Break Art"
+      "label": "Nami Break Art",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -927,7 +1022,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Check Hook"
+      "label": "Nami Check Hook",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -937,7 +1035,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Heavy Break"
+      "label": "Nami Heavy Break",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -945,9 +1046,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Nami Charged Follow"
+      "label": "Nami Charged Follow",
+      "forwardForce": 2.67,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -958,7 +1062,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Drop Kick"
+      "label": "Nami Drop Kick",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -968,7 +1075,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Arc Finisher"
+      "label": "Nami Arc Finisher",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -978,7 +1088,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Focus Stance"
+      "label": "Nami Focus Stance",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -988,7 +1101,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Mode Shift"
+      "label": "Nami Mode Shift",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -998,7 +1114,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Heel Feint"
+      "label": "Nami Heel Feint",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1008,7 +1127,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Summon Strike"
+      "label": "Nami Summon Strike",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1018,7 +1140,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Guard Snare"
+      "label": "Nami Guard Snare",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1028,7 +1153,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Armor Break"
+      "label": "Nami Armor Break",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1038,7 +1166,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Power Setup"
+      "label": "Nami Power Setup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1048,7 +1179,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Switch Strike"
+      "label": "Nami Switch Strike",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1058,7 +1192,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Spark Jab"
+      "label": "Nami Spark Jab",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1068,7 +1205,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Binding Blow"
+      "label": "Nami Binding Blow",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1078,7 +1218,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Heavy Draw"
+      "label": "Nami Heavy Draw",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1089,10 +1232,17 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Nami Kick Ender"
+      "label": "Nami Kick Ender",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "cmd:1+4": {
-      "activeFrames": 12
+      "activeFrames": 12,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 24,
+      "whiffRecoveryFrames": 7
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1107,7 +1257,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.34,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1122,7 +1275,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1137,8 +1293,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1153,7 +1312,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1168,8 +1330,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.39,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     }
   },
   "effects": [],

@@ -371,7 +371,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     {
       "id": "kick",
@@ -405,7 +408,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -439,7 +445,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     {
       "id": "special",
@@ -473,7 +482,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     }
   ],
   "hurtboxes": [
@@ -517,7 +529,10 @@
       "label": "Gotenks Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 2,
+      "forwardForceEndFrame": 7
     },
     "jabright": {
       "startupFrames": 11,
@@ -533,7 +548,10 @@
       "label": "Gotenks Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "kickleft": {
       "startupFrames": 18,
@@ -547,7 +565,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Gotenks Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 22,
@@ -563,7 +584,10 @@
       "label": "Gotenks Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -586,7 +610,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -597,7 +623,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -612,7 +638,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.47,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:qcf+4": {
       "startupFrames": 13,
@@ -623,7 +652,7 @@
       "onBlockFrames": -11,
       "onHitFrames": 21,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 15,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -636,7 +665,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 3.52,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -647,7 +679,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 27,
       "range": 1.62,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
@@ -658,7 +690,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.37,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 23
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -680,7 +715,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.89,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -691,7 +729,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -703,7 +741,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.38,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+2": {
       "startupFrames": 16,
@@ -714,7 +755,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 8,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -725,7 +766,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.04,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -740,7 +784,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Gotenks Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.17,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 34
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -751,7 +798,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 14,
       "range": 1.58,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
@@ -759,7 +806,10 @@
       "juggleGravityScale": 0.52,
       "label": "Gotenks Low Feint",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "forwardForce": 2.18,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -770,7 +820,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 32,
       "range": 1.74,
       "label": "2+4 Frame Link",
       "hitLevel": "low",
@@ -782,7 +832,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.64,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 27
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -793,7 +846,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -805,7 +858,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.64,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 31
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -816,11 +872,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Gotenks Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.61,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -830,7 +889,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Second Beat"
+      "label": "Gotenks Second Beat",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -840,7 +902,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Body Blow"
+      "label": "Gotenks Body Blow",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -850,7 +915,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Low Changeup"
+      "label": "Gotenks Low Changeup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -860,7 +928,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Pressure Feint"
+      "label": "Gotenks Pressure Feint",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -870,7 +941,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Drive"
+      "label": "Gotenks Drive",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -880,7 +954,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Barrage"
+      "label": "Gotenks Barrage",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -890,7 +967,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Finisher"
+      "label": "Gotenks Finisher",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -901,7 +981,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Step Kick"
+      "label": "Gotenks Step Kick",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -911,7 +994,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Palm String"
+      "label": "Gotenks Palm String",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -921,7 +1007,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Rising Chain"
+      "label": "Gotenks Rising Chain",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -931,7 +1020,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Special Setup"
+      "label": "Gotenks Special Setup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -941,7 +1033,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Break Art"
+      "label": "Gotenks Break Art",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -951,7 +1046,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Check Hook"
+      "label": "Gotenks Check Hook",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -961,7 +1059,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Heavy Break"
+      "label": "Gotenks Heavy Break",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -971,7 +1072,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Charged Follow"
+      "label": "Gotenks Charged Follow",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -982,7 +1086,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Drop Kick"
+      "label": "Gotenks Drop Kick",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -992,7 +1099,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Arc Finisher"
+      "label": "Gotenks Arc Finisher",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1002,7 +1112,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Focus Stance"
+      "label": "Gotenks Focus Stance",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1012,7 +1125,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Mode Shift"
+      "label": "Gotenks Mode Shift",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1022,7 +1138,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Heel Feint"
+      "label": "Gotenks Heel Feint",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1032,7 +1151,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Summon Strike"
+      "label": "Gotenks Summon Strike",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1042,7 +1164,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Guard Snare"
+      "label": "Gotenks Guard Snare",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1052,7 +1177,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Armor Break"
+      "label": "Gotenks Armor Break",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1062,7 +1190,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Power Setup"
+      "label": "Gotenks Power Setup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1072,7 +1203,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Switch Strike"
+      "label": "Gotenks Switch Strike",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1082,7 +1216,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Spark Jab"
+      "label": "Gotenks Spark Jab",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1092,7 +1229,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Binding Blow"
+      "label": "Gotenks Binding Blow",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1102,7 +1242,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Heavy Draw"
+      "label": "Gotenks Heavy Draw",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1113,7 +1256,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gotenks Kick Ender"
+      "label": "Gotenks Kick Ender",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:1+4": {
       "input": "special",
@@ -1127,8 +1273,11 @@
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.43,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 22
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1142,8 +1291,11 @@
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1158,7 +1310,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1174,7 +1329,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.41,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1188,8 +1346,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.14,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1203,8 +1364,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.52,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1220,7 +1384,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:O+4": {
       "input": "special",
@@ -1235,8 +1402,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 3.1,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     }
   },
   "effects": [],

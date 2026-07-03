@@ -453,7 +453,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     },
     {
       "id": "kick",
@@ -487,7 +490,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     {
       "id": "heavy",
@@ -521,7 +527,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     {
       "id": "special",
@@ -555,7 +564,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     }
   ],
   "hurtboxes": [
@@ -597,7 +609,10 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Vegito Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     },
     "jabright": {
       "startupFrames": 11,
@@ -613,7 +628,10 @@
       "label": "Vegito Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "kickleft": {
       "startupFrames": 25,
@@ -629,7 +647,10 @@
       "label": "Vegito Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     "kickright": {
       "startupFrames": 24,
@@ -645,7 +666,10 @@
       "label": "Vegito Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -660,7 +684,9 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Vegito Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 34
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -686,7 +712,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.98,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -697,7 +726,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -710,7 +739,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 3.29,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -721,7 +753,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 26,
       "range": 1.62,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
@@ -732,7 +764,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.16,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -746,7 +781,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Vegito Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.07,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 21
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -769,7 +807,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.89,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -791,7 +832,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -814,7 +858,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -836,7 +883,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 28
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -859,7 +909,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.62,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 38
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -870,7 +923,7 @@
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 28,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -882,7 +935,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.43,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -893,11 +949,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Vegito Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.12,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -907,7 +966,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Second Beat"
+      "label": "Vegito Second Beat",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -917,7 +979,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Body Blow"
+      "label": "Vegito Body Blow",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -927,7 +992,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Low Changeup"
+      "label": "Vegito Low Changeup",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -937,7 +1005,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Pressure Feint"
+      "label": "Vegito Pressure Feint",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -947,7 +1018,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Drive"
+      "label": "Vegito Drive",
+      "forwardForce": 1.01,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -957,7 +1031,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Barrage"
+      "label": "Vegito Barrage",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -967,7 +1044,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Finisher"
+      "label": "Vegito Finisher",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -978,7 +1058,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Step Kick"
+      "label": "Vegito Step Kick",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -988,7 +1071,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Palm String"
+      "label": "Vegito Palm String",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -998,7 +1084,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Rising Chain"
+      "label": "Vegito Rising Chain",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1008,7 +1097,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Special Setup"
+      "label": "Vegito Special Setup",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1018,7 +1110,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Break Art"
+      "label": "Vegito Break Art",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1028,7 +1123,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Check Hook"
+      "label": "Vegito Check Hook",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1038,7 +1136,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Heavy Break"
+      "label": "Vegito Heavy Break",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1048,7 +1149,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Charged Follow"
+      "label": "Vegito Charged Follow",
+      "forwardForce": 1.93,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1059,7 +1163,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Drop Kick"
+      "label": "Vegito Drop Kick",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1069,7 +1176,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Arc Finisher"
+      "label": "Vegito Arc Finisher",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1079,7 +1189,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Focus Stance"
+      "label": "Vegito Focus Stance",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1089,7 +1202,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Mode Shift"
+      "label": "Vegito Mode Shift",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1099,7 +1215,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Heel Feint"
+      "label": "Vegito Heel Feint",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1109,7 +1228,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Summon Strike"
+      "label": "Vegito Summon Strike",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1119,7 +1241,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Guard Snare"
+      "label": "Vegito Guard Snare",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1129,7 +1254,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Armor Break"
+      "label": "Vegito Armor Break",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1139,7 +1267,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Power Setup"
+      "label": "Vegito Power Setup",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1149,7 +1280,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Switch Strike"
+      "label": "Vegito Switch Strike",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1159,7 +1293,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Spark Jab"
+      "label": "Vegito Spark Jab",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1169,7 +1306,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Binding Blow"
+      "label": "Vegito Binding Blow",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1179,7 +1319,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Heavy Draw"
+      "label": "Vegito Heavy Draw",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1190,7 +1333,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Vegito Kick Ender"
+      "label": "Vegito Kick Ender",
+      "forwardForce": 0.73,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "cmd:1+4": {
       "input": "special",
@@ -1204,8 +1350,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.19,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1220,7 +1369,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1235,7 +1387,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1250,7 +1405,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1265,7 +1423,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1280,8 +1441,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.26,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1296,7 +1460,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1311,7 +1478,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 42
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1325,8 +1495,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 2.31,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:O+4": {
       "input": "special",
@@ -1341,8 +1514,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 32,
+      "cancelable": false,
+      "forwardForce": 2.89,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     }
   },
   "effects": [],

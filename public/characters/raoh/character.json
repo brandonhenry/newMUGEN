@@ -407,7 +407,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18
     },
     {
       "id": "kick",
@@ -441,7 +444,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.86,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -475,7 +481,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.69,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -509,7 +518,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.04,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -553,7 +565,10 @@
       "label": "Raoh Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18
     },
     "jabright": {
       "startupFrames": 13,
@@ -567,7 +582,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Raoh Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.69,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 15
     },
     "kickleft": {
       "startupFrames": 23,
@@ -583,7 +601,10 @@
       "label": "Raoh Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.86,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "kickright": {
       "startupFrames": 16,
@@ -597,7 +618,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Raoh Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.04,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 21
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -620,7 +644,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 27
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -638,7 +664,10 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Raoh Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.56,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 24
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -649,11 +678,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "Raoh Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.48,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 27
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -667,7 +699,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Raoh Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.43,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -689,7 +724,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.57,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -704,7 +742,10 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Raoh Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+2": {
       "startupFrames": 24,
@@ -715,12 +756,14 @@
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 11,
       "range": 1.72,
       "forwardForce": 2,
       "label": "Raoh Twin Assault",
       "hitLevel": "throw",
-      "throwCapture": true
+      "throwCapture": true,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 37
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -744,7 +787,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.72,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 38
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -755,7 +801,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "2+3 Frame Link",
       "hitLevel": "throw",
@@ -767,7 +813,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 37
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -782,7 +831,10 @@
       "range": 1.74,
       "label": "Raoh Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 23
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -793,11 +845,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.9,
       "label": "Raoh Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.9,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 27
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -808,11 +863,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 39,
       "range": 2.1,
       "label": "Raoh Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.7,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -822,7 +880,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Second Beat"
+      "label": "Raoh Second Beat",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -832,7 +893,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Body Blow"
+      "label": "Raoh Body Blow",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -842,7 +906,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Low Changeup"
+      "label": "Raoh Low Changeup",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -852,7 +919,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Pressure Feint"
+      "label": "Raoh Pressure Feint",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -862,7 +932,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Drive"
+      "label": "Raoh Drive",
+      "forwardForce": 1.51,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -872,7 +945,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Barrage"
+      "label": "Raoh Barrage",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -882,7 +958,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Finisher"
+      "label": "Raoh Finisher",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -893,7 +972,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Step Kick"
+      "label": "Raoh Step Kick",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 26
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -903,7 +985,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Palm String"
+      "label": "Raoh Palm String",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -913,7 +998,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Rising Chain"
+      "label": "Raoh Rising Chain",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -923,7 +1011,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Special Setup"
+      "label": "Raoh Special Setup",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -933,7 +1024,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Break Art"
+      "label": "Raoh Break Art",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -943,7 +1037,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Check Hook"
+      "label": "Raoh Check Hook",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -953,7 +1050,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Heavy Break"
+      "label": "Raoh Heavy Break",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -961,9 +1061,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Raoh Charged Follow"
+      "label": "Raoh Charged Follow",
+      "forwardForce": 2.43,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -974,7 +1077,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Drop Kick"
+      "label": "Raoh Drop Kick",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 26
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -984,7 +1090,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Arc Finisher"
+      "label": "Raoh Arc Finisher",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -994,7 +1103,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Focus Stance"
+      "label": "Raoh Focus Stance",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1004,7 +1116,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Mode Shift"
+      "label": "Raoh Mode Shift",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1014,7 +1129,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Heel Feint"
+      "label": "Raoh Heel Feint",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1024,7 +1142,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Summon Strike"
+      "label": "Raoh Summon Strike",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1034,7 +1155,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Guard Snare"
+      "label": "Raoh Guard Snare",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1044,7 +1168,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Armor Break"
+      "label": "Raoh Armor Break",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1054,7 +1181,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Power Setup"
+      "label": "Raoh Power Setup",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1064,7 +1194,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Switch Strike"
+      "label": "Raoh Switch Strike",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1074,7 +1207,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Spark Jab"
+      "label": "Raoh Spark Jab",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1084,7 +1220,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Binding Blow"
+      "label": "Raoh Binding Blow",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1094,7 +1233,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Heavy Draw"
+      "label": "Raoh Heavy Draw",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1105,13 +1247,19 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Raoh Kick Ender"
+      "label": "Raoh Kick Ender",
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 26
     },
     "cmd:1+4": {
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 12,
-      "forwardForce": 2
+      "forwardForce": 2,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13,
+      "whiffRecoveryFrames": 16
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1126,7 +1274,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.34,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1141,7 +1292,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1156,7 +1310,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.06,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1171,7 +1328,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.34,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1186,8 +1346,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1203,7 +1366,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.92,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1218,7 +1384,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1233,8 +1402,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.15,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18
     }
   },
   "effects": [],

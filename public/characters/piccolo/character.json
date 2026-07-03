@@ -370,7 +370,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "kick",
@@ -404,7 +407,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -438,7 +444,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.48,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -472,7 +481,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     }
   ],
   "hurtboxes": [
@@ -516,7 +528,10 @@
       "label": "Piccolo Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "jabright": {
       "startupFrames": 13,
@@ -530,7 +545,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Piccolo Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.48,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "kickleft": {
       "startupFrames": 18,
@@ -544,7 +562,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Piccolo Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 24,
@@ -560,7 +581,10 @@
       "label": "Piccolo Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:f+1": {
       "startupFrames": 8,
@@ -583,7 +607,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 26
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -601,7 +627,10 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Piccolo Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -612,7 +641,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -625,7 +654,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.89,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -647,7 +679,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.76,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -658,7 +693,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 19,
       "range": 1.34,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
@@ -669,7 +704,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.04,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -684,7 +722,10 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Piccolo Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+2": {
       "startupFrames": 14,
@@ -695,10 +736,13 @@
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 10,
       "range": 1.72,
       "label": "Piccolo Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -717,7 +761,10 @@
       "label": "Piccolo Cross Launcher",
       "hitLevel": "mid",
       "usesKi": true,
-      "healsHp": true
+      "healsHp": true,
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 30
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -735,7 +782,10 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Piccolo Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -746,7 +796,7 @@
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 31,
       "range": 1.74,
       "label": "2+4 Frame Link",
       "hitLevel": "low",
@@ -758,7 +808,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -769,7 +822,7 @@
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 36,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -781,7 +834,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -792,11 +848,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 39,
       "range": 2.1,
       "label": "Piccolo Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 30
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -806,7 +865,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Second Beat"
+      "label": "Piccolo Second Beat",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -816,7 +878,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Body Blow"
+      "label": "Piccolo Body Blow",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -826,7 +891,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Low Changeup"
+      "label": "Piccolo Low Changeup",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -836,7 +904,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Pressure Feint"
+      "label": "Piccolo Pressure Feint",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -846,7 +917,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Drive"
+      "label": "Piccolo Drive",
+      "forwardForce": 1.98,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -856,7 +930,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Barrage"
+      "label": "Piccolo Barrage",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -866,7 +943,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Finisher"
+      "label": "Piccolo Finisher",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -877,7 +957,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Step Kick"
+      "label": "Piccolo Step Kick",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -887,7 +970,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Palm String"
+      "label": "Piccolo Palm String",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -897,7 +983,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Rising Chain"
+      "label": "Piccolo Rising Chain",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -907,7 +996,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Special Setup"
+      "label": "Piccolo Special Setup",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -917,7 +1009,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Break Art"
+      "label": "Piccolo Break Art",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -927,7 +1022,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Check Hook"
+      "label": "Piccolo Check Hook",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -937,7 +1035,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Heavy Break"
+      "label": "Piccolo Heavy Break",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -945,9 +1046,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 26,
       "range": 1.55,
-      "label": "Piccolo Charged Follow"
+      "label": "Piccolo Charged Follow",
+      "forwardForce": 2.9,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -958,7 +1062,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Drop Kick"
+      "label": "Piccolo Drop Kick",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -968,7 +1075,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Arc Finisher"
+      "label": "Piccolo Arc Finisher",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -978,7 +1088,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Focus Stance"
+      "label": "Piccolo Focus Stance",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -988,7 +1101,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Mode Shift"
+      "label": "Piccolo Mode Shift",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -998,7 +1114,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Heel Feint"
+      "label": "Piccolo Heel Feint",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1008,7 +1127,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Summon Strike"
+      "label": "Piccolo Summon Strike",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1018,7 +1140,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Guard Snare"
+      "label": "Piccolo Guard Snare",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1028,7 +1153,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Armor Break"
+      "label": "Piccolo Armor Break",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1038,7 +1166,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Power Setup"
+      "label": "Piccolo Power Setup",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1048,7 +1179,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Switch Strike"
+      "label": "Piccolo Switch Strike",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1058,7 +1192,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Spark Jab"
+      "label": "Piccolo Spark Jab",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1068,7 +1205,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Binding Blow"
+      "label": "Piccolo Binding Blow",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1078,7 +1218,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Heavy Draw"
+      "label": "Piccolo Heavy Draw",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1089,7 +1232,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Piccolo Kick Ender"
+      "label": "Piccolo Kick Ender",
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+4": {
       "startupFrames": 9,
@@ -1105,8 +1251,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 13,
+      "cancelable": false,
+      "forwardForce": 2,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1121,7 +1270,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1136,8 +1288,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.56,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1152,7 +1307,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.91,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1167,8 +1325,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.62,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:O+4": {
       "input": "special",
@@ -1183,8 +1344,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     }
   },
   "effects": [],

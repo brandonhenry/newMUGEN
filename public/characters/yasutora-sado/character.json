@@ -379,7 +379,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.42,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     {
       "id": "kick",
@@ -413,7 +416,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     {
       "id": "heavy",
@@ -447,7 +453,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 20
     },
     {
       "id": "special",
@@ -481,7 +490,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 43
     }
   ],
   "hurtboxes": [
@@ -523,7 +535,10 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Yasutora Sado Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "forwardForce": 0.42,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "jabright": {
       "startupFrames": 11,
@@ -539,7 +554,10 @@
       "label": "Yasutora Sado Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 20
     },
     "kickleft": {
       "startupFrames": 9,
@@ -555,7 +573,10 @@
       "label": "Yasutora Sado Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 32
     },
     "kickright": {
       "startupFrames": 21,
@@ -571,7 +592,10 @@
       "label": "Yasutora Sado Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 43
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -586,7 +610,9 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Yasutora Sado Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 44
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -597,7 +623,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -612,7 +638,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.42,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 33
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -623,7 +652,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 21,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -636,7 +665,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 3.52,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 52
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -647,7 +679,7 @@
       "onBlockFrames": -8,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 27,
       "range": 1.62,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
@@ -658,7 +690,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.39,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 39
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -672,7 +707,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Yasutora Sado Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.96,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 29
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -683,7 +721,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -695,7 +733,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 31
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -706,7 +747,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 28,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -717,7 +758,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.12,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -740,7 +784,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.36,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -762,7 +809,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -773,7 +823,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 32,
       "range": 1.74,
       "label": "2+4 Frame Link",
       "hitLevel": "low",
@@ -785,7 +835,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -796,7 +849,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -808,7 +861,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 45,
+      "forwardForceEndFrame": 56
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -819,11 +875,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Yasutora Sado Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.56,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -833,7 +892,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Second Beat"
+      "label": "Yasutora Sado Second Beat",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -843,7 +905,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Body Blow"
+      "label": "Yasutora Sado Body Blow",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -853,7 +918,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Low Changeup"
+      "label": "Yasutora Sado Low Changeup",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -863,7 +931,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Pressure Feint"
+      "label": "Yasutora Sado Pressure Feint",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -873,7 +944,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Drive"
+      "label": "Yasutora Sado Drive",
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -883,7 +957,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Barrage"
+      "label": "Yasutora Sado Barrage",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -893,7 +970,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Finisher"
+      "label": "Yasutora Sado Finisher",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -904,7 +984,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Step Kick"
+      "label": "Yasutora Sado Step Kick",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -914,7 +997,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Palm String"
+      "label": "Yasutora Sado Palm String",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -924,7 +1010,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Rising Chain"
+      "label": "Yasutora Sado Rising Chain",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -934,7 +1023,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Special Setup"
+      "label": "Yasutora Sado Special Setup",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -944,7 +1036,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Break Art"
+      "label": "Yasutora Sado Break Art",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -954,7 +1049,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Check Hook"
+      "label": "Yasutora Sado Check Hook",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -964,7 +1062,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Heavy Break"
+      "label": "Yasutora Sado Heavy Break",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -974,7 +1075,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Charged Follow"
+      "label": "Yasutora Sado Charged Follow",
+      "forwardForce": 1.82,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -985,7 +1089,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Drop Kick"
+      "label": "Yasutora Sado Drop Kick",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -995,7 +1102,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Arc Finisher"
+      "label": "Yasutora Sado Arc Finisher",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1005,7 +1115,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Focus Stance"
+      "label": "Yasutora Sado Focus Stance",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1015,7 +1128,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Mode Shift"
+      "label": "Yasutora Sado Mode Shift",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1025,7 +1141,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Heel Feint"
+      "label": "Yasutora Sado Heel Feint",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1035,7 +1154,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Summon Strike"
+      "label": "Yasutora Sado Summon Strike",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1045,7 +1167,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Guard Snare"
+      "label": "Yasutora Sado Guard Snare",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1055,7 +1180,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Armor Break"
+      "label": "Yasutora Sado Armor Break",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1065,7 +1193,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Power Setup"
+      "label": "Yasutora Sado Power Setup",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1075,7 +1206,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Switch Strike"
+      "label": "Yasutora Sado Switch Strike",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1085,7 +1219,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Spark Jab"
+      "label": "Yasutora Sado Spark Jab",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1095,7 +1232,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Binding Blow"
+      "label": "Yasutora Sado Binding Blow",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1105,7 +1245,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Heavy Draw"
+      "label": "Yasutora Sado Heavy Draw",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1116,7 +1259,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yasutora Sado Kick Ender"
+      "label": "Yasutora Sado Kick Ender",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "cmd:1+4": {
       "input": "special",
@@ -1130,8 +1276,11 @@
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 28,
+      "cancelable": false,
+      "forwardForce": 2.42,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 43
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1145,8 +1294,11 @@
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 20
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1161,7 +1313,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1176,7 +1331,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.75,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1191,7 +1349,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1207,7 +1368,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.61,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1221,8 +1385,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 20
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1237,7 +1404,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.09,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1251,8 +1421,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 28,
+      "cancelable": false,
+      "forwardForce": 2.54,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 43
     },
     "cmd:O+4": {
       "input": "special",
@@ -1267,8 +1440,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 29,
+      "cancelable": false,
+      "forwardForce": 3.12,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 43
     }
   },
   "effects": [],

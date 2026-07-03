@@ -362,7 +362,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20
     },
     {
       "id": "kick",
@@ -396,7 +399,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.87,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     },
     {
       "id": "heavy",
@@ -430,7 +436,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.8,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     {
       "id": "special",
@@ -464,7 +473,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     }
   ],
   "hurtboxes": [
@@ -508,7 +520,10 @@
       "label": "Neuro Nogami Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20
     },
     "jabright": {
       "startupFrames": 13,
@@ -522,7 +537,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Neuro Nogami Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.8,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "kickleft": {
       "startupFrames": 18,
@@ -536,7 +554,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Neuro Nogami Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.87,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 45
     },
     "kickright": {
       "startupFrames": 19,
@@ -550,7 +571,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Neuro Nogami Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 31,
+      "forwardForceEndFrame": 46
     },
     "cmd:f+1": {
       "startupFrames": 10,
@@ -573,7 +597,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 21
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -591,7 +617,10 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Neuro Nogami Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 50
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -602,11 +631,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "Neuro Nogami Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.59,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 55
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -620,7 +652,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Neuro Nogami Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 42
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -642,7 +677,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -657,7 +695,10 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Neuro Nogami Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.58,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 47
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -671,7 +712,10 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "label": "Neuro Nogami Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.73,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 14
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -686,7 +730,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Neuro Nogami Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.64,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 34
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -700,7 +747,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Neuro Nogami Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.29,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -716,7 +766,10 @@
       "label": "Neuro Nogami Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "forwardForce": 2.22,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 38
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -727,11 +780,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 21,
       "range": 1.9,
       "label": "Neuro Nogami Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.99,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 23
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -742,11 +798,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Neuro Nogami Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.81,
+      "forwardForceStartFrame": 40,
+      "forwardForceEndFrame": 60
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -756,7 +815,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Second Beat"
+      "label": "Neuro Nogami Second Beat",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -766,7 +828,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Body Blow"
+      "label": "Neuro Nogami Body Blow",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -776,7 +841,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Low Changeup"
+      "label": "Neuro Nogami Low Changeup",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -786,7 +854,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Pressure Feint"
+      "label": "Neuro Nogami Pressure Feint",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -796,7 +867,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Drive"
+      "label": "Neuro Nogami Drive",
+      "forwardForce": 1.11,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -806,7 +880,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Barrage"
+      "label": "Neuro Nogami Barrage",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -816,7 +893,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Finisher"
+      "label": "Neuro Nogami Finisher",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -827,7 +907,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Step Kick"
+      "label": "Neuro Nogami Step Kick",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 34
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -837,7 +920,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Palm String"
+      "label": "Neuro Nogami Palm String",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -847,7 +933,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Rising Chain"
+      "label": "Neuro Nogami Rising Chain",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -857,7 +946,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Special Setup"
+      "label": "Neuro Nogami Special Setup",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -867,7 +959,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Break Art"
+      "label": "Neuro Nogami Break Art",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -877,7 +972,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Check Hook"
+      "label": "Neuro Nogami Check Hook",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -887,7 +985,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Heavy Break"
+      "label": "Neuro Nogami Heavy Break",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -895,9 +996,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 24,
       "range": 1.55,
-      "label": "Neuro Nogami Charged Follow"
+      "label": "Neuro Nogami Charged Follow",
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -908,7 +1012,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Drop Kick"
+      "label": "Neuro Nogami Drop Kick",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 34
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -918,7 +1025,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Arc Finisher"
+      "label": "Neuro Nogami Arc Finisher",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -928,7 +1038,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Focus Stance"
+      "label": "Neuro Nogami Focus Stance",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -938,7 +1051,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Mode Shift"
+      "label": "Neuro Nogami Mode Shift",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -948,7 +1064,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Heel Feint"
+      "label": "Neuro Nogami Heel Feint",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -958,7 +1077,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Summon Strike"
+      "label": "Neuro Nogami Summon Strike",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -968,7 +1090,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Guard Snare"
+      "label": "Neuro Nogami Guard Snare",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -978,7 +1103,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Armor Break"
+      "label": "Neuro Nogami Armor Break",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -988,7 +1116,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Power Setup"
+      "label": "Neuro Nogami Power Setup",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -998,7 +1129,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Switch Strike"
+      "label": "Neuro Nogami Switch Strike",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1008,7 +1142,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Spark Jab"
+      "label": "Neuro Nogami Spark Jab",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1018,7 +1155,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Binding Blow"
+      "label": "Neuro Nogami Binding Blow",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1028,7 +1168,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Heavy Draw"
+      "label": "Neuro Nogami Heavy Draw",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1039,7 +1182,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Neuro Nogami Kick Ender"
+      "label": "Neuro Nogami Kick Ender",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 34
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1054,7 +1200,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1070,7 +1219,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.69,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1086,7 +1238,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20
     }
   },
   "effects": [],

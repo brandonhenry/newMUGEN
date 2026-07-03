@@ -394,7 +394,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     {
       "id": "kick",
@@ -428,7 +431,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -462,7 +468,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     {
       "id": "special",
@@ -496,7 +505,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -540,7 +552,10 @@
       "label": "Kenshin Himura Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "jabright": {
       "startupFrames": 11,
@@ -556,7 +571,10 @@
       "label": "Kenshin Himura Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "kickleft": {
       "startupFrames": 18,
@@ -570,7 +588,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Kenshin Himura Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 19,
@@ -584,7 +605,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Kenshin Himura Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -607,7 +631,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -618,7 +644,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -633,7 +659,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.16,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 24
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -644,11 +673,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 14,
       "range": 2.05,
       "label": "Kenshin Himura Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -662,7 +694,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Kenshin Himura Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -684,7 +719,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.93,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -695,7 +733,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 33,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -707,7 +745,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.07,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+2": {
       "startupFrames": 17,
@@ -729,7 +770,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 3,
+      "forwardForceEndFrame": 5
     },
     "cmd:1+3": {
       "startupFrames": 4,
@@ -744,7 +788,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Kenshin Himura Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 19
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -758,7 +805,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Kenshin Himura Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 40,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -773,7 +823,10 @@
       "range": 1.74,
       "label": "Kenshin Himura Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.99,
+      "forwardForceStartFrame": 43,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 11,
@@ -784,13 +837,16 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 20,
       "range": 1.9,
       "label": "Kenshin Himura Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "forwardForce": 3.69,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -801,11 +857,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Kenshin Himura Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.3,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -815,7 +874,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Second Beat"
+      "label": "Kenshin Himura Second Beat",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -825,7 +887,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Body Blow"
+      "label": "Kenshin Himura Body Blow",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -835,7 +900,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Low Changeup"
+      "label": "Kenshin Himura Low Changeup",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -845,7 +913,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Pressure Feint"
+      "label": "Kenshin Himura Pressure Feint",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -855,7 +926,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Drive"
+      "label": "Kenshin Himura Drive",
+      "forwardForce": 1.87,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -865,7 +939,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Barrage"
+      "label": "Kenshin Himura Barrage",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -875,7 +952,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Finisher"
+      "label": "Kenshin Himura Finisher",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -886,7 +966,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Step Kick"
+      "label": "Kenshin Himura Step Kick",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -896,7 +979,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Palm String"
+      "label": "Kenshin Himura Palm String",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -906,7 +992,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Rising Chain"
+      "label": "Kenshin Himura Rising Chain",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -916,7 +1005,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Special Setup"
+      "label": "Kenshin Himura Special Setup",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -926,7 +1018,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Break Art"
+      "label": "Kenshin Himura Break Art",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -936,7 +1031,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Check Hook"
+      "label": "Kenshin Himura Check Hook",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -946,7 +1044,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Heavy Break"
+      "label": "Kenshin Himura Heavy Break",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -954,9 +1055,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 26,
       "range": 1.55,
-      "label": "Kenshin Himura Charged Follow"
+      "label": "Kenshin Himura Charged Follow",
+      "forwardForce": 2.79,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -967,7 +1071,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Drop Kick"
+      "label": "Kenshin Himura Drop Kick",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -977,7 +1084,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Arc Finisher"
+      "label": "Kenshin Himura Arc Finisher",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -987,7 +1097,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Focus Stance"
+      "label": "Kenshin Himura Focus Stance",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -997,7 +1110,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Mode Shift"
+      "label": "Kenshin Himura Mode Shift",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1007,7 +1123,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Heel Feint"
+      "label": "Kenshin Himura Heel Feint",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1017,7 +1136,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Summon Strike"
+      "label": "Kenshin Himura Summon Strike",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1027,7 +1149,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Guard Snare"
+      "label": "Kenshin Himura Guard Snare",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1037,7 +1162,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Armor Break"
+      "label": "Kenshin Himura Armor Break",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1047,7 +1175,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Power Setup"
+      "label": "Kenshin Himura Power Setup",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1057,7 +1188,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Switch Strike"
+      "label": "Kenshin Himura Switch Strike",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1067,7 +1201,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Spark Jab"
+      "label": "Kenshin Himura Spark Jab",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1077,7 +1214,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Binding Blow"
+      "label": "Kenshin Himura Binding Blow",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1087,7 +1227,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Heavy Draw"
+      "label": "Kenshin Himura Heavy Draw",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1098,17 +1241,28 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kenshin Himura Kick Ender"
+      "label": "Kenshin Himura Kick Ender",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "cmd:1+4": {
       "startupFrames": 21,
       "activeFrames": 3,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "forwardForce": 2.55,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18,
+      "whiffRecoveryFrames": 18
     },
     "cmd:1+2+3": {
       "startupFrames": 9,
       "activeFrames": 7,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 14,
+      "whiffRecoveryFrames": 14
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1123,7 +1277,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.77,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1138,7 +1295,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1153,8 +1313,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.45,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1169,7 +1332,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.83,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1184,8 +1350,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.51,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     }
   },
   "effects": [],

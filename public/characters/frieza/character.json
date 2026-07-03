@@ -421,7 +421,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     {
       "id": "kick",
@@ -455,7 +458,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.65,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 35
     },
     {
       "id": "heavy",
@@ -489,7 +495,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "special",
@@ -523,7 +532,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     }
   ],
   "hurtboxes": [
@@ -567,7 +579,10 @@
       "label": "Frieza Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "jabright": {
       "startupFrames": 11,
@@ -583,7 +598,10 @@
       "label": "Frieza Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     "kickleft": {
       "startupFrames": 16,
@@ -597,7 +615,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Frieza Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.65,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 35
     },
     "kickright": {
       "startupFrames": 22,
@@ -613,7 +634,10 @@
       "label": "Frieza Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -636,7 +660,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -647,7 +673,7 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -662,7 +688,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.41,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 21
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -673,7 +702,7 @@
       "onBlockFrames": -11,
       "onHitFrames": 21,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -686,7 +715,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.97,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 31
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -708,7 +740,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.84,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 23
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -730,7 +765,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.51,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -741,7 +779,7 @@
       "onBlockFrames": -8,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -753,7 +791,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.32,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 20
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -775,7 +816,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.82,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 25
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -790,7 +834,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Frieza Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 40
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -804,7 +851,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Frieza Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.79,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 32
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -815,7 +865,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 31,
       "range": 1.74,
       "label": "2+4 Frame Link",
       "hitLevel": "low",
@@ -827,7 +877,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.11,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 27
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -838,7 +891,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 27,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -850,7 +903,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.11,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 27
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -861,11 +917,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Frieza Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.55,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -875,7 +934,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Second Beat"
+      "label": "Frieza Second Beat",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -885,7 +947,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Body Blow"
+      "label": "Frieza Body Blow",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -895,7 +960,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Low Changeup"
+      "label": "Frieza Low Changeup",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -905,7 +973,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Pressure Feint"
+      "label": "Frieza Pressure Feint",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -915,7 +986,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Drive"
+      "label": "Frieza Drive",
+      "forwardForce": 1.45,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -925,7 +999,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Barrage"
+      "label": "Frieza Barrage",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -935,7 +1012,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Finisher"
+      "label": "Frieza Finisher",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -946,7 +1026,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Step Kick"
+      "label": "Frieza Step Kick",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -956,7 +1039,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Palm String"
+      "label": "Frieza Palm String",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -966,7 +1052,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Rising Chain"
+      "label": "Frieza Rising Chain",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -976,7 +1065,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Special Setup"
+      "label": "Frieza Special Setup",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -986,7 +1078,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Break Art"
+      "label": "Frieza Break Art",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -996,7 +1091,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Check Hook"
+      "label": "Frieza Check Hook",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1006,7 +1104,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Heavy Break"
+      "label": "Frieza Heavy Break",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1014,9 +1115,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Frieza Charged Follow"
+      "label": "Frieza Charged Follow",
+      "forwardForce": 2.37,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1027,7 +1131,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Drop Kick"
+      "label": "Frieza Drop Kick",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1037,7 +1144,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Arc Finisher"
+      "label": "Frieza Arc Finisher",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1047,7 +1157,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Focus Stance"
+      "label": "Frieza Focus Stance",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1057,7 +1170,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Mode Shift"
+      "label": "Frieza Mode Shift",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1067,7 +1183,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Heel Feint"
+      "label": "Frieza Heel Feint",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1077,7 +1196,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Summon Strike"
+      "label": "Frieza Summon Strike",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1087,7 +1209,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Guard Snare"
+      "label": "Frieza Guard Snare",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1097,7 +1222,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Armor Break"
+      "label": "Frieza Armor Break",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1107,7 +1235,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Power Setup"
+      "label": "Frieza Power Setup",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1117,7 +1248,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Switch Strike"
+      "label": "Frieza Switch Strike",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1127,7 +1261,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Spark Jab"
+      "label": "Frieza Spark Jab",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1137,7 +1274,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Binding Blow"
+      "label": "Frieza Binding Blow",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1147,7 +1287,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Heavy Draw"
+      "label": "Frieza Heavy Draw",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1158,7 +1301,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Frieza Kick Ender"
+      "label": "Frieza Kick Ender",
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:1+4": {
       "input": "special",
@@ -1173,7 +1319,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.87,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1187,8 +1336,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.02,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1203,7 +1355,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.17,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1218,8 +1373,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1233,8 +1391,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1249,7 +1410,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.99,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1264,8 +1428,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "cmd:O+4": {
       "input": "special",
@@ -1280,8 +1447,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.57,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     }
   },
   "effects": [],

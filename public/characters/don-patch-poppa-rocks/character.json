@@ -428,7 +428,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     {
       "id": "kick",
@@ -462,7 +465,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -496,7 +502,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     {
       "id": "special",
@@ -530,7 +539,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     }
   ],
   "hurtboxes": [
@@ -574,7 +586,10 @@
       "label": "Don Patch _ Poppa Rocks Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "jabright": {
       "startupFrames": 11,
@@ -590,7 +605,10 @@
       "label": "Don Patch _ Poppa Rocks Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "kickleft": {
       "startupFrames": 8,
@@ -606,7 +624,10 @@
       "label": "Don Patch _ Poppa Rocks Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 29
     },
     "kickright": {
       "startupFrames": 24,
@@ -622,7 +643,10 @@
       "label": "Don Patch _ Poppa Rocks Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -645,7 +669,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -671,7 +697,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.73,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -682,7 +711,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -695,7 +724,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.78,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -717,7 +749,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 36
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -739,7 +774,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.6,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -762,7 +800,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.64,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -784,7 +825,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -807,7 +851,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.36,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -829,7 +876,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -852,7 +902,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.92,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -875,7 +928,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.94,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 34
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -886,11 +942,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Don Patch _ Poppa Rocks Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.87,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -900,7 +959,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Second Beat"
+      "label": "Don Patch _ Poppa Rocks Second Beat",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -910,7 +972,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Body Blow"
+      "label": "Don Patch _ Poppa Rocks Body Blow",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -920,7 +985,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Low Changeup"
+      "label": "Don Patch _ Poppa Rocks Low Changeup",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -930,7 +998,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Pressure Feint"
+      "label": "Don Patch _ Poppa Rocks Pressure Feint",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -940,7 +1011,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Drive"
+      "label": "Don Patch _ Poppa Rocks Drive",
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -950,7 +1024,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Barrage"
+      "label": "Don Patch _ Poppa Rocks Barrage",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -960,7 +1037,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Finisher"
+      "label": "Don Patch _ Poppa Rocks Finisher",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -971,7 +1051,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Step Kick"
+      "label": "Don Patch _ Poppa Rocks Step Kick",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -981,7 +1064,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Palm String"
+      "label": "Don Patch _ Poppa Rocks Palm String",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -991,7 +1077,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Rising Chain"
+      "label": "Don Patch _ Poppa Rocks Rising Chain",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1001,7 +1090,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Special Setup"
+      "label": "Don Patch _ Poppa Rocks Special Setup",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1011,7 +1103,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Break Art"
+      "label": "Don Patch _ Poppa Rocks Break Art",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1021,7 +1116,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Check Hook"
+      "label": "Don Patch _ Poppa Rocks Check Hook",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1031,7 +1129,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Heavy Break"
+      "label": "Don Patch _ Poppa Rocks Heavy Break",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1039,9 +1140,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Charged Follow"
+      "label": "Don Patch _ Poppa Rocks Charged Follow",
+      "forwardForce": 2.46,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1052,7 +1156,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Drop Kick"
+      "label": "Don Patch _ Poppa Rocks Drop Kick",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1062,7 +1169,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Arc Finisher"
+      "label": "Don Patch _ Poppa Rocks Arc Finisher",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1072,7 +1182,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Focus Stance"
+      "label": "Don Patch _ Poppa Rocks Focus Stance",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1082,7 +1195,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Mode Shift"
+      "label": "Don Patch _ Poppa Rocks Mode Shift",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1092,7 +1208,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Heel Feint"
+      "label": "Don Patch _ Poppa Rocks Heel Feint",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1102,7 +1221,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Summon Strike"
+      "label": "Don Patch _ Poppa Rocks Summon Strike",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1112,7 +1234,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Guard Snare"
+      "label": "Don Patch _ Poppa Rocks Guard Snare",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1122,7 +1247,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Armor Break"
+      "label": "Don Patch _ Poppa Rocks Armor Break",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1132,7 +1260,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Power Setup"
+      "label": "Don Patch _ Poppa Rocks Power Setup",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1142,7 +1273,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Switch Strike"
+      "label": "Don Patch _ Poppa Rocks Switch Strike",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1152,7 +1286,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Spark Jab"
+      "label": "Don Patch _ Poppa Rocks Spark Jab",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1162,7 +1299,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Binding Blow"
+      "label": "Don Patch _ Poppa Rocks Binding Blow",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1172,7 +1312,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Heavy Draw"
+      "label": "Don Patch _ Poppa Rocks Heavy Draw",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1183,7 +1326,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Don Patch _ Poppa Rocks Kick Ender"
+      "label": "Don Patch _ Poppa Rocks Kick Ender",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:1+4": {
       "input": "special",
@@ -1198,7 +1344,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1213,7 +1362,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.34,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1228,7 +1380,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1243,7 +1398,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1258,7 +1416,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.75,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1273,7 +1434,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1288,8 +1452,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.12,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1305,7 +1472,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.61,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1320,7 +1490,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1335,7 +1508,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.09,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1350,7 +1526,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1365,8 +1544,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.18,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:O+4": {
       "input": "special",
@@ -1381,8 +1563,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 2.38,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     }
   },
   "effects": [],
@@ -1579,18 +1764,18 @@
         "offsetX": 0
       },
       "41": {
-        "width": 0.95,
-        "height": 0.95,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "42": {
-        "width": 0.95,
-        "height": 0.95,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "43": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "45": {
@@ -1625,13 +1810,13 @@
     },
     "jump": {
       "21": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "22": {
-        "width": 0.96,
-        "height": 0.96,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1651,8 +1836,8 @@
     },
     "chargeKi": {
       "12": {
-        "width": 0.93,
-        "height": 0.93,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "13": {
@@ -1661,13 +1846,13 @@
         "offsetX": 0
       },
       "14": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "15": {
-        "width": 0.99,
-        "height": 0.99,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1760,48 +1945,48 @@
     },
     "cmd:1+2": {
       "117": {
-        "width": 1.11,
-        "height": 1.11,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "118": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "119": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "120": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "121": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "122": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "123": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "124": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "125": {
-        "width": 1.05,
-        "height": 1.05,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },

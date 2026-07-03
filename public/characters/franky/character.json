@@ -393,7 +393,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 20
     },
     {
       "id": "kick",
@@ -427,7 +430,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -461,7 +467,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 30
     },
     {
       "id": "special",
@@ -495,7 +504,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -539,7 +551,10 @@
       "label": "Franky Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 20
     },
     "jabright": {
       "startupFrames": 11,
@@ -555,7 +570,10 @@
       "label": "Franky Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 30
     },
     "kickleft": {
       "startupFrames": 18,
@@ -569,7 +587,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Franky Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 19,
@@ -583,7 +604,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Franky Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 8,
@@ -606,7 +630,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -617,7 +643,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -632,7 +658,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.12,
+      "forwardForceStartFrame": 40,
+      "forwardForceEndFrame": 50
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -643,11 +672,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Franky Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -661,7 +693,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Franky Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -683,7 +718,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.62,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -694,7 +732,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 33,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -706,7 +744,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 47
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -717,7 +758,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 13,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -728,7 +769,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+3": {
       "startupFrames": 12,
@@ -743,7 +787,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Franky Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 21
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -757,7 +804,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Franky Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 9
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -772,7 +822,10 @@
       "range": 1.74,
       "label": "Franky Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -783,11 +836,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 29,
       "range": 1.9,
       "label": "Franky Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.15,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 10
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -798,11 +854,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Franky Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.26,
+      "forwardForceStartFrame": 48,
+      "forwardForceEndFrame": 60
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -812,7 +871,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Second Beat"
+      "label": "Franky Second Beat",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -822,7 +884,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Body Blow"
+      "label": "Franky Body Blow",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -832,7 +897,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Low Changeup"
+      "label": "Franky Low Changeup",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -842,7 +910,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Pressure Feint"
+      "label": "Franky Pressure Feint",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -852,7 +923,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Drive"
+      "label": "Franky Drive",
+      "forwardForce": 1.56,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -862,7 +936,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Barrage"
+      "label": "Franky Barrage",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -872,7 +949,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Finisher"
+      "label": "Franky Finisher",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -883,7 +963,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Step Kick"
+      "label": "Franky Step Kick",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 30
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -893,7 +976,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Palm String"
+      "label": "Franky Palm String",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -903,7 +989,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Rising Chain"
+      "label": "Franky Rising Chain",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -913,7 +1002,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Special Setup"
+      "label": "Franky Special Setup",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -923,7 +1015,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Break Art"
+      "label": "Franky Break Art",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -933,7 +1028,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Check Hook"
+      "label": "Franky Check Hook",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -943,7 +1041,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Heavy Break"
+      "label": "Franky Heavy Break",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -951,9 +1052,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Franky Charged Follow"
+      "label": "Franky Charged Follow",
+      "forwardForce": 2.48,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -964,7 +1068,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Drop Kick"
+      "label": "Franky Drop Kick",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 30
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -974,7 +1081,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Arc Finisher"
+      "label": "Franky Arc Finisher",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -984,7 +1094,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Focus Stance"
+      "label": "Franky Focus Stance",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -994,7 +1107,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Mode Shift"
+      "label": "Franky Mode Shift",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1004,7 +1120,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Heel Feint"
+      "label": "Franky Heel Feint",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1014,7 +1133,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Summon Strike"
+      "label": "Franky Summon Strike",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1024,7 +1146,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Guard Snare"
+      "label": "Franky Guard Snare",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1034,7 +1159,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Armor Break"
+      "label": "Franky Armor Break",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1044,7 +1172,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Power Setup"
+      "label": "Franky Power Setup",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1054,7 +1185,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Switch Strike"
+      "label": "Franky Switch Strike",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1064,7 +1198,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Spark Jab"
+      "label": "Franky Spark Jab",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1074,7 +1211,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Binding Blow"
+      "label": "Franky Binding Blow",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1084,7 +1224,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Heavy Draw"
+      "label": "Franky Heavy Draw",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 27
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1095,7 +1238,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Franky Kick Ender"
+      "label": "Franky Kick Ender",
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 30
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1110,7 +1256,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.73,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 30
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1125,7 +1274,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 20
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1140,8 +1292,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.14,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 20
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1156,7 +1311,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.79,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 30
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1171,8 +1329,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.2,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 20
     }
   },
   "effects": [],

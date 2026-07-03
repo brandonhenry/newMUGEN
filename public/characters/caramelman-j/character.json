@@ -518,7 +518,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     {
       "id": "kick",
@@ -552,7 +555,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     {
       "id": "heavy",
@@ -586,7 +592,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.79,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 25
     },
     {
       "id": "special",
@@ -620,7 +629,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.01,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 49
     }
   ],
   "hurtboxes": [
@@ -664,7 +676,10 @@
       "label": "Caramelman J Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "jabright": {
       "startupFrames": 12,
@@ -680,7 +695,10 @@
       "label": "Caramelman J Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.79,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 25
     },
     "kickleft": {
       "startupFrames": 25,
@@ -696,7 +714,10 @@
       "label": "Caramelman J Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "kickright": {
       "startupFrames": 24,
@@ -712,7 +733,10 @@
       "label": "Caramelman J Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.01,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 49
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -735,7 +759,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -761,7 +787,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.66,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 37
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -772,7 +801,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 36,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -785,7 +814,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.53,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 55
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -807,7 +839,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 42
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -829,7 +864,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.52,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 10
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -852,7 +890,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.57,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 35
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -874,7 +915,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.36,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 33
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -897,7 +941,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.83,
+      "forwardForceStartFrame": 43,
+      "forwardForceEndFrame": 49
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -919,7 +966,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.44,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -942,7 +992,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -965,7 +1018,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 56
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -976,11 +1032,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Caramelman J Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.8,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 44
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -990,7 +1049,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Second Beat"
+      "label": "Caramelman J Second Beat",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -1000,7 +1062,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Body Blow"
+      "label": "Caramelman J Body Blow",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1010,7 +1075,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Low Changeup"
+      "label": "Caramelman J Low Changeup",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1020,7 +1088,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Pressure Feint"
+      "label": "Caramelman J Pressure Feint",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1030,7 +1101,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Drive"
+      "label": "Caramelman J Drive",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1040,7 +1114,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Barrage"
+      "label": "Caramelman J Barrage",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1050,7 +1127,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Finisher"
+      "label": "Caramelman J Finisher",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1061,7 +1141,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Step Kick"
+      "label": "Caramelman J Step Kick",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1071,7 +1154,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Palm String"
+      "label": "Caramelman J Palm String",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1081,7 +1167,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Rising Chain"
+      "label": "Caramelman J Rising Chain",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1091,7 +1180,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Special Setup"
+      "label": "Caramelman J Special Setup",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1101,7 +1193,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Break Art"
+      "label": "Caramelman J Break Art",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1111,7 +1206,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Check Hook"
+      "label": "Caramelman J Check Hook",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1121,7 +1219,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Heavy Break"
+      "label": "Caramelman J Heavy Break",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1129,9 +1230,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Caramelman J Charged Follow"
+      "label": "Caramelman J Charged Follow",
+      "forwardForce": 2.38,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1142,7 +1246,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Drop Kick"
+      "label": "Caramelman J Drop Kick",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1152,7 +1259,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Arc Finisher"
+      "label": "Caramelman J Arc Finisher",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1162,7 +1272,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Focus Stance"
+      "label": "Caramelman J Focus Stance",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1172,7 +1285,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Mode Shift"
+      "label": "Caramelman J Mode Shift",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1182,7 +1298,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Heel Feint"
+      "label": "Caramelman J Heel Feint",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1192,7 +1311,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Summon Strike"
+      "label": "Caramelman J Summon Strike",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1202,7 +1324,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Guard Snare"
+      "label": "Caramelman J Guard Snare",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1212,7 +1337,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Armor Break"
+      "label": "Caramelman J Armor Break",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1222,7 +1350,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Power Setup"
+      "label": "Caramelman J Power Setup",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1232,7 +1363,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Switch Strike"
+      "label": "Caramelman J Switch Strike",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1242,7 +1376,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Spark Jab"
+      "label": "Caramelman J Spark Jab",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1252,7 +1389,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Binding Blow"
+      "label": "Caramelman J Binding Blow",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1262,7 +1402,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Heavy Draw"
+      "label": "Caramelman J Heavy Draw",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 14
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1273,7 +1416,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Caramelman J Kick Ender"
+      "label": "Caramelman J Kick Ender",
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "cmd:1+4": {
       "input": "special",
@@ -1288,7 +1434,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.43,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 49
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1303,7 +1452,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.27,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 25
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1318,7 +1470,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1333,7 +1488,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.18,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1348,7 +1506,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.37,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1363,7 +1524,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1378,8 +1542,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.04,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1394,8 +1561,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.23,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1410,7 +1580,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.33,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 25
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1425,7 +1598,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.71,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1440,7 +1616,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 49
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1455,8 +1634,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.1,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:O+4": {
       "input": "special",
@@ -1471,8 +1653,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.13,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 49
     }
   },
   "effects": [],

@@ -242,7 +242,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "kick",
@@ -276,7 +279,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -310,7 +316,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.48,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -344,7 +353,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -386,7 +398,10 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Taizo Momote Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 14
     },
     "jabright": {
       "startupFrames": 13,
@@ -400,7 +415,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Taizo Momote Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.48,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "kickleft": {
       "startupFrames": 17,
@@ -414,7 +432,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Taizo Momote Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "kickright": {
       "startupFrames": 19,
@@ -428,7 +449,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Taizo Momote Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -443,7 +467,9 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Taizo Momote Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -461,7 +487,10 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Taizo Momote Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:qcf+4": {
       "startupFrames": 21,
@@ -472,11 +501,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Taizo Momote Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 27
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -490,7 +522,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Taizo Momote Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -504,7 +539,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Taizo Momote Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.89,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -519,7 +557,10 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Taizo Momote Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -533,7 +574,10 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "label": "Taizo Momote Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -548,7 +592,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Taizo Momote Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.36,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -562,7 +609,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Taizo Momote Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -577,7 +627,10 @@
       "range": 1.74,
       "label": "Taizo Momote Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -588,11 +641,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Taizo Momote Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.69,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -603,11 +659,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 39,
       "range": 2.1,
       "label": "Taizo Momote Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 30
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -617,7 +676,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Second Beat"
+      "label": "Taizo Momote Second Beat",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -627,7 +689,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Body Blow"
+      "label": "Taizo Momote Body Blow",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -637,7 +702,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Low Changeup"
+      "label": "Taizo Momote Low Changeup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -647,7 +715,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Pressure Feint"
+      "label": "Taizo Momote Pressure Feint",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -657,7 +728,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Drive"
+      "label": "Taizo Momote Drive",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -667,7 +741,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Barrage"
+      "label": "Taizo Momote Barrage",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -677,7 +754,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Finisher"
+      "label": "Taizo Momote Finisher",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -688,7 +768,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Step Kick"
+      "label": "Taizo Momote Step Kick",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -698,7 +781,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Palm String"
+      "label": "Taizo Momote Palm String",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -708,7 +794,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Rising Chain"
+      "label": "Taizo Momote Rising Chain",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -718,7 +807,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Special Setup"
+      "label": "Taizo Momote Special Setup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -728,7 +820,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Break Art"
+      "label": "Taizo Momote Break Art",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -738,7 +833,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Check Hook"
+      "label": "Taizo Momote Check Hook",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -748,7 +846,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Heavy Break"
+      "label": "Taizo Momote Heavy Break",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -758,7 +859,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Charged Follow"
+      "label": "Taizo Momote Charged Follow",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -769,7 +873,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Drop Kick"
+      "label": "Taizo Momote Drop Kick",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -779,7 +886,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Arc Finisher"
+      "label": "Taizo Momote Arc Finisher",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -789,7 +899,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Focus Stance"
+      "label": "Taizo Momote Focus Stance",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -799,7 +912,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Mode Shift"
+      "label": "Taizo Momote Mode Shift",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -809,7 +925,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Heel Feint"
+      "label": "Taizo Momote Heel Feint",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -819,7 +938,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Summon Strike"
+      "label": "Taizo Momote Summon Strike",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -829,7 +951,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Guard Snare"
+      "label": "Taizo Momote Guard Snare",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -839,7 +964,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Armor Break"
+      "label": "Taizo Momote Armor Break",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -849,7 +977,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Power Setup"
+      "label": "Taizo Momote Power Setup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -859,7 +990,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Switch Strike"
+      "label": "Taizo Momote Switch Strike",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -869,7 +1003,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Spark Jab"
+      "label": "Taizo Momote Spark Jab",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -879,7 +1016,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Binding Blow"
+      "label": "Taizo Momote Binding Blow",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -889,7 +1029,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Heavy Draw"
+      "label": "Taizo Momote Heavy Draw",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -900,7 +1043,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taizo Momote Kick Ender"
+      "label": "Taizo Momote Kick Ender",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   },
   "effects": [],

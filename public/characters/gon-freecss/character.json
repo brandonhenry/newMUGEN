@@ -420,7 +420,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.42,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     {
       "id": "kick",
@@ -454,7 +457,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -488,7 +494,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 34
     },
     {
       "id": "special",
@@ -522,7 +531,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -566,7 +578,10 @@
       "label": "Gon Freecss Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.42,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "jabright": {
       "startupFrames": 14,
@@ -582,7 +597,10 @@
       "label": "Gon Freecss Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 34
     },
     "kickleft": {
       "startupFrames": 18,
@@ -596,7 +614,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Gon Freecss Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 16,
@@ -610,7 +631,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Gon Freecss Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -633,7 +657,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 14
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -644,7 +670,7 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -659,7 +685,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.57,
+      "forwardForceStartFrame": 41,
+      "forwardForceEndFrame": 43
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -670,11 +699,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Gon Freecss Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -688,7 +720,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Gon Freecss Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -710,7 +745,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.96,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -721,7 +759,7 @@
       "onBlockFrames": -8,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -733,7 +771,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.48,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 41
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -744,7 +785,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 13,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -755,7 +796,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 32
     },
     "cmd:1+3": {
       "startupFrames": 16,
@@ -770,7 +814,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Gon Freecss Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 26
     },
     "cmd:2+3": {
       "startupFrames": 14,
@@ -784,7 +831,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Gon Freecss Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.04,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -795,11 +845,14 @@
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 14,
       "range": 1.74,
       "label": "Gon Freecss Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.79,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -810,11 +863,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Gon Freecss Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.69,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -825,11 +881,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Gon Freecss Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.71,
+      "forwardForceStartFrame": 49,
+      "forwardForceEndFrame": 52
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -839,7 +898,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Second Beat"
+      "label": "Gon Freecss Second Beat",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -849,7 +911,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Body Blow"
+      "label": "Gon Freecss Body Blow",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -859,7 +924,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Low Changeup"
+      "label": "Gon Freecss Low Changeup",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -869,7 +937,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Pressure Feint"
+      "label": "Gon Freecss Pressure Feint",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -879,7 +950,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Drive"
+      "label": "Gon Freecss Drive",
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -889,7 +963,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Barrage"
+      "label": "Gon Freecss Barrage",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -899,7 +976,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Finisher"
+      "label": "Gon Freecss Finisher",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -910,7 +990,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Step Kick"
+      "label": "Gon Freecss Step Kick",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -920,7 +1003,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Palm String"
+      "label": "Gon Freecss Palm String",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -930,7 +1016,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Rising Chain"
+      "label": "Gon Freecss Rising Chain",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -940,7 +1029,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Special Setup"
+      "label": "Gon Freecss Special Setup",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -950,7 +1042,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Break Art"
+      "label": "Gon Freecss Break Art",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -960,7 +1055,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Check Hook"
+      "label": "Gon Freecss Check Hook",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -970,7 +1068,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Heavy Break"
+      "label": "Gon Freecss Heavy Break",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -980,7 +1081,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Charged Follow"
+      "label": "Gon Freecss Charged Follow",
+      "forwardForce": 1.82,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -991,7 +1095,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Drop Kick"
+      "label": "Gon Freecss Drop Kick",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1001,7 +1108,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Arc Finisher"
+      "label": "Gon Freecss Arc Finisher",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1011,7 +1121,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Focus Stance"
+      "label": "Gon Freecss Focus Stance",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1021,7 +1134,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Mode Shift"
+      "label": "Gon Freecss Mode Shift",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1031,7 +1147,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Heel Feint"
+      "label": "Gon Freecss Heel Feint",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1041,7 +1160,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Summon Strike"
+      "label": "Gon Freecss Summon Strike",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1051,7 +1173,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Guard Snare"
+      "label": "Gon Freecss Guard Snare",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1061,7 +1186,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Armor Break"
+      "label": "Gon Freecss Armor Break",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1071,7 +1199,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Power Setup"
+      "label": "Gon Freecss Power Setup",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1081,7 +1212,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Switch Strike"
+      "label": "Gon Freecss Switch Strike",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1091,7 +1225,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Spark Jab"
+      "label": "Gon Freecss Spark Jab",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1101,7 +1238,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Binding Blow"
+      "label": "Gon Freecss Binding Blow",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1111,7 +1251,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Heavy Draw"
+      "label": "Gon Freecss Heavy Draw",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1122,7 +1265,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gon Freecss Kick Ender"
+      "label": "Gon Freecss Kick Ender",
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 21
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1136,8 +1282,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 26,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 34
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1152,7 +1301,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.62,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1168,7 +1320,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.48,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1182,8 +1337,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 26,
+      "cancelable": false,
+      "forwardForce": 2.39,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 34
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1199,7 +1357,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     }
   },
   "effects": [],

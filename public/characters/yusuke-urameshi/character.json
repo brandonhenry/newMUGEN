@@ -328,7 +328,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "kick",
@@ -362,7 +365,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -396,7 +402,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -430,7 +439,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -472,7 +484,10 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Yusuke Urameshi Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 14
     },
     "jabright": {
       "startupFrames": 11,
@@ -488,7 +503,10 @@
       "label": "Yusuke Urameshi Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "kickleft": {
       "startupFrames": 18,
@@ -502,7 +520,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Yusuke Urameshi Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 16,
@@ -516,7 +537,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Yusuke Urameshi Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -531,7 +555,9 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Yusuke Urameshi Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -542,7 +568,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -557,7 +583,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.1,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -568,11 +597,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Yusuke Urameshi Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -586,7 +618,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Yusuke Urameshi Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -600,7 +635,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Yusuke Urameshi Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.89,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -611,7 +649,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 33,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -623,7 +661,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.01,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -645,7 +686,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 31
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -660,7 +704,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Yusuke Urameshi Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.01,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 27
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -674,7 +721,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Yusuke Urameshi Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 32
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -685,11 +735,14 @@
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 13,
       "range": 1.74,
       "label": "Yusuke Urameshi Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.67,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 34
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -700,11 +753,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Yusuke Urameshi Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.69,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -715,11 +771,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Yusuke Urameshi Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.24,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -729,7 +788,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Second Beat"
+      "label": "Yusuke Urameshi Second Beat",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -739,7 +801,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Body Blow"
+      "label": "Yusuke Urameshi Body Blow",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -749,7 +814,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Low Changeup"
+      "label": "Yusuke Urameshi Low Changeup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -759,7 +827,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Pressure Feint"
+      "label": "Yusuke Urameshi Pressure Feint",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -769,7 +840,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Drive"
+      "label": "Yusuke Urameshi Drive",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -779,7 +853,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Barrage"
+      "label": "Yusuke Urameshi Barrage",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -789,7 +866,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Finisher"
+      "label": "Yusuke Urameshi Finisher",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -800,7 +880,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Step Kick"
+      "label": "Yusuke Urameshi Step Kick",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -810,7 +893,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Palm String"
+      "label": "Yusuke Urameshi Palm String",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -820,7 +906,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Rising Chain"
+      "label": "Yusuke Urameshi Rising Chain",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -830,7 +919,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Special Setup"
+      "label": "Yusuke Urameshi Special Setup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -840,7 +932,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Break Art"
+      "label": "Yusuke Urameshi Break Art",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -850,7 +945,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Check Hook"
+      "label": "Yusuke Urameshi Check Hook",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -860,7 +958,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Heavy Break"
+      "label": "Yusuke Urameshi Heavy Break",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -870,7 +971,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Charged Follow"
+      "label": "Yusuke Urameshi Charged Follow",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -881,7 +985,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Drop Kick"
+      "label": "Yusuke Urameshi Drop Kick",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -891,7 +998,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Arc Finisher"
+      "label": "Yusuke Urameshi Arc Finisher",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -901,7 +1011,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Focus Stance"
+      "label": "Yusuke Urameshi Focus Stance",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -911,7 +1024,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Mode Shift"
+      "label": "Yusuke Urameshi Mode Shift",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -921,7 +1037,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Heel Feint"
+      "label": "Yusuke Urameshi Heel Feint",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -931,7 +1050,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Summon Strike"
+      "label": "Yusuke Urameshi Summon Strike",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -941,7 +1063,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Guard Snare"
+      "label": "Yusuke Urameshi Guard Snare",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -951,7 +1076,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Armor Break"
+      "label": "Yusuke Urameshi Armor Break",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -961,7 +1089,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Power Setup"
+      "label": "Yusuke Urameshi Power Setup",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -971,7 +1102,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Switch Strike"
+      "label": "Yusuke Urameshi Switch Strike",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -981,7 +1115,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Spark Jab"
+      "label": "Yusuke Urameshi Spark Jab",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -991,7 +1128,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Binding Blow"
+      "label": "Yusuke Urameshi Binding Blow",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1001,7 +1141,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Heavy Draw"
+      "label": "Yusuke Urameshi Heavy Draw",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1012,7 +1155,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yusuke Urameshi Kick Ender"
+      "label": "Yusuke Urameshi Kick Ender",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1027,7 +1173,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.71,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1042,7 +1191,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.77,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     }
   },
   "effects": [],

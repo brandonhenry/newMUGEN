@@ -403,7 +403,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "kick",
@@ -437,7 +440,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     {
       "id": "heavy",
@@ -471,7 +477,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -505,7 +514,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -549,7 +561,10 @@
       "label": "Kakashi Hatake Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "jabright": {
       "startupFrames": 11,
@@ -565,7 +580,10 @@
       "label": "Kakashi Hatake Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "kickleft": {
       "startupFrames": 22,
@@ -581,7 +599,10 @@
       "label": "Kakashi Hatake Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "kickright": {
       "startupFrames": 19,
@@ -595,7 +616,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Kakashi Hatake Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -618,7 +642,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 24
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -629,7 +655,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -644,7 +670,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.59,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -655,11 +684,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Kakashi Hatake Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -673,7 +705,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Kakashi Hatake Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -695,7 +730,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.73,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -706,7 +744,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -718,7 +756,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.5,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -740,7 +781,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.89,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+3": {
       "startupFrames": 6,
@@ -751,7 +795,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 20,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "1+3 Frame Link",
@@ -763,7 +807,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.02,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -785,7 +832,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -800,7 +850,10 @@
       "range": 1.74,
       "label": "Kakashi Hatake Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.97,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -811,11 +864,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Kakashi Hatake Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.69,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -826,11 +882,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Kakashi Hatake Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.73,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -840,7 +899,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Second Beat"
+      "label": "Kakashi Hatake Second Beat",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -850,7 +912,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Body Blow"
+      "label": "Kakashi Hatake Body Blow",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -860,7 +925,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Low Changeup"
+      "label": "Kakashi Hatake Low Changeup",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -870,7 +938,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Pressure Feint"
+      "label": "Kakashi Hatake Pressure Feint",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -880,7 +951,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Drive"
+      "label": "Kakashi Hatake Drive",
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -890,7 +964,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Barrage"
+      "label": "Kakashi Hatake Barrage",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -900,7 +977,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Finisher"
+      "label": "Kakashi Hatake Finisher",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -911,7 +991,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Step Kick"
+      "label": "Kakashi Hatake Step Kick",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -921,7 +1004,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Palm String"
+      "label": "Kakashi Hatake Palm String",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -931,7 +1017,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Rising Chain"
+      "label": "Kakashi Hatake Rising Chain",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -941,7 +1030,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Special Setup"
+      "label": "Kakashi Hatake Special Setup",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -951,7 +1043,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Break Art"
+      "label": "Kakashi Hatake Break Art",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -961,7 +1056,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Check Hook"
+      "label": "Kakashi Hatake Check Hook",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -971,7 +1069,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Heavy Break"
+      "label": "Kakashi Hatake Heavy Break",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -979,9 +1080,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Kakashi Hatake Charged Follow"
+      "label": "Kakashi Hatake Charged Follow",
+      "forwardForce": 2.59,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -992,7 +1096,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Drop Kick"
+      "label": "Kakashi Hatake Drop Kick",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1002,7 +1109,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Arc Finisher"
+      "label": "Kakashi Hatake Arc Finisher",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1012,7 +1122,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Focus Stance"
+      "label": "Kakashi Hatake Focus Stance",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1022,7 +1135,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Mode Shift"
+      "label": "Kakashi Hatake Mode Shift",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1032,7 +1148,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Heel Feint"
+      "label": "Kakashi Hatake Heel Feint",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1042,7 +1161,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Summon Strike"
+      "label": "Kakashi Hatake Summon Strike",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1052,7 +1174,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Guard Snare"
+      "label": "Kakashi Hatake Guard Snare",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1062,7 +1187,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Armor Break"
+      "label": "Kakashi Hatake Armor Break",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1072,7 +1200,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Power Setup"
+      "label": "Kakashi Hatake Power Setup",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1082,7 +1213,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Switch Strike"
+      "label": "Kakashi Hatake Switch Strike",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1092,7 +1226,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Spark Jab"
+      "label": "Kakashi Hatake Spark Jab",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1102,7 +1239,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Binding Blow"
+      "label": "Kakashi Hatake Binding Blow",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1112,7 +1252,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Heavy Draw"
+      "label": "Kakashi Hatake Heavy Draw",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1123,11 +1266,18 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kakashi Hatake Kick Ender"
+      "label": "Kakashi Hatake Kick Ender",
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:1+4": {
       "startupFrames": 12,
-      "activeFrames": 7
+      "activeFrames": 7,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12,
+      "whiffRecoveryFrames": 29
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1141,8 +1291,11 @@
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.2,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1156,8 +1309,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 27,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1172,7 +1328,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.39,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1186,8 +1345,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 26,
+      "cancelable": false,
+      "forwardForce": 2.05,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1201,8 +1363,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 27,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1217,8 +1382,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.25,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1233,8 +1401,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 28,
+      "cancelable": false,
+      "forwardForce": 2.91,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1248,8 +1419,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 22,
+      "cancelable": false,
+      "forwardForce": 2.26,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1263,8 +1437,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 27,
+      "cancelable": false,
+      "forwardForce": 2.39,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 25
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1279,8 +1456,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.31,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     }
   },
   "effects": [],

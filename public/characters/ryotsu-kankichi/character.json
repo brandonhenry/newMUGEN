@@ -408,7 +408,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     {
       "id": "kick",
@@ -442,7 +445,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -476,7 +482,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     {
       "id": "special",
@@ -510,7 +519,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.12,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     }
   ],
   "hurtboxes": [
@@ -554,7 +566,10 @@
       "label": "Ryotsu Kankichi Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "jabright": {
       "startupFrames": 11,
@@ -570,7 +585,10 @@
       "label": "Ryotsu Kankichi Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "kickleft": {
       "startupFrames": 18,
@@ -584,7 +602,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Ryotsu Kankichi Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 22,
@@ -600,7 +621,10 @@
       "label": "Ryotsu Kankichi Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.12,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -623,7 +647,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 29
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -649,7 +675,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.93,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -660,7 +689,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 21,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 36,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -673,7 +702,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.64,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 36
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -695,7 +727,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.51,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -717,7 +752,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -740,7 +778,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.84,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+2": {
       "startupFrames": 17,
@@ -762,7 +803,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.23,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 14
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -781,7 +825,10 @@
       "label": "Ryotsu Kankichi Cross Launcher",
       "hitLevel": "mid",
       "usesKi": true,
-      "healsHp": true
+      "healsHp": true,
+      "forwardForce": 1.64,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 27
     },
     "cmd:2+3": {
       "startupFrames": 24,
@@ -795,7 +842,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Ryotsu Kankichi Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.57,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -822,7 +872,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 13,
@@ -833,7 +886,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 20,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -845,7 +898,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 23
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -856,11 +912,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Ryotsu Kankichi Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.07,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -871,7 +930,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Second Beat"
+      "label": "Ryotsu Kankichi Second Beat",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -882,7 +944,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Body Blow"
+      "label": "Ryotsu Kankichi Body Blow",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -893,7 +958,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Low Changeup"
+      "label": "Ryotsu Kankichi Low Changeup",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -904,7 +972,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Pressure Feint"
+      "label": "Ryotsu Kankichi Pressure Feint",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -915,7 +986,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Drive"
+      "label": "Ryotsu Kankichi Drive",
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -926,7 +1000,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Barrage"
+      "label": "Ryotsu Kankichi Barrage",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -937,7 +1014,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Finisher"
+      "label": "Ryotsu Kankichi Finisher",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -948,7 +1028,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Step Kick"
+      "label": "Ryotsu Kankichi Step Kick",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -959,7 +1042,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Palm String"
+      "label": "Ryotsu Kankichi Palm String",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -970,7 +1056,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Rising Chain"
+      "label": "Ryotsu Kankichi Rising Chain",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -981,7 +1070,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Special Setup"
+      "label": "Ryotsu Kankichi Special Setup",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -992,7 +1084,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Break Art"
+      "label": "Ryotsu Kankichi Break Art",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1003,7 +1098,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Check Hook"
+      "label": "Ryotsu Kankichi Check Hook",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1014,7 +1112,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Heavy Break"
+      "label": "Ryotsu Kankichi Heavy Break",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1023,9 +1124,12 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -8,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 29,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Charged Follow"
+      "label": "Ryotsu Kankichi Charged Follow",
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1036,7 +1140,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Drop Kick"
+      "label": "Ryotsu Kankichi Drop Kick",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1047,7 +1154,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Arc Finisher"
+      "label": "Ryotsu Kankichi Arc Finisher",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1058,7 +1168,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Focus Stance"
+      "label": "Ryotsu Kankichi Focus Stance",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1069,7 +1182,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Mode Shift"
+      "label": "Ryotsu Kankichi Mode Shift",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1080,7 +1196,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Heel Feint"
+      "label": "Ryotsu Kankichi Heel Feint",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1091,7 +1210,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Summon Strike"
+      "label": "Ryotsu Kankichi Summon Strike",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1102,7 +1224,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Guard Snare"
+      "label": "Ryotsu Kankichi Guard Snare",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1113,7 +1238,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Armor Break"
+      "label": "Ryotsu Kankichi Armor Break",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1124,7 +1252,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Power Setup"
+      "label": "Ryotsu Kankichi Power Setup",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1135,7 +1266,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Switch Strike"
+      "label": "Ryotsu Kankichi Switch Strike",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1146,7 +1280,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Spark Jab"
+      "label": "Ryotsu Kankichi Spark Jab",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1157,7 +1294,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Binding Blow"
+      "label": "Ryotsu Kankichi Binding Blow",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1168,7 +1308,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Heavy Draw"
+      "label": "Ryotsu Kankichi Heavy Draw",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1179,7 +1322,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Ryotsu Kankichi Kick Ender"
+      "label": "Ryotsu Kankichi Kick Ender",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "cmd:1+4": {
       "input": "special",
@@ -1193,8 +1339,11 @@
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 28,
+      "cancelable": false,
+      "forwardForce": 2.11,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1209,7 +1358,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1224,7 +1376,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1239,8 +1394,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.32,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1255,7 +1413,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.6,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1270,7 +1431,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.66,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1285,8 +1449,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.38,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:O+4": {
       "input": "special",
@@ -1301,8 +1468,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 29,
+      "cancelable": false,
+      "forwardForce": 2.24,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     }
   },
   "effects": [],

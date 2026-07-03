@@ -383,7 +383,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "kick",
@@ -417,7 +420,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -451,7 +457,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     {
       "id": "special",
@@ -485,7 +494,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -529,7 +541,10 @@
       "label": "Kinnikuman Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "jabright": {
       "startupFrames": 11,
@@ -545,7 +560,10 @@
       "label": "Kinnikuman Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "kickleft": {
       "startupFrames": 18,
@@ -559,7 +577,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Kinnikuman Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 19,
@@ -573,7 +594,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Kinnikuman Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -596,7 +620,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 46
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -622,7 +648,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.77,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -633,11 +662,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Kinnikuman Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -651,7 +683,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Kinnikuman Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -673,7 +708,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.37,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 25
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -696,7 +734,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -718,7 +759,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 10
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -733,7 +777,10 @@
       "range": 1.65,
       "launchHeight": 0,
       "label": "Kinnikuman Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.61,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+3": {
       "startupFrames": 24,
@@ -744,14 +791,17 @@
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 18,
       "range": 1.58,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Kinnikuman Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -770,7 +820,10 @@
       "juggleGravityScale": 0.52,
       "label": "Kinnikuman Driving Kick",
       "hitLevel": "low",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 30
     },
     "cmd:3+4": {
       "startupFrames": 17,
@@ -781,11 +834,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 24,
       "range": 1.9,
       "label": "Kinnikuman Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.29,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 27
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -796,11 +852,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Kinnikuman Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.91,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -811,7 +870,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Second Beat"
+      "label": "Kinnikuman Second Beat",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -822,7 +884,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Body Blow"
+      "label": "Kinnikuman Body Blow",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -833,7 +898,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Low Changeup"
+      "label": "Kinnikuman Low Changeup",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -844,7 +912,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Pressure Feint"
+      "label": "Kinnikuman Pressure Feint",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -855,7 +926,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Drive"
+      "label": "Kinnikuman Drive",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -866,7 +940,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Barrage"
+      "label": "Kinnikuman Barrage",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -877,7 +954,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Finisher"
+      "label": "Kinnikuman Finisher",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -888,7 +968,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Step Kick"
+      "label": "Kinnikuman Step Kick",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -899,7 +982,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Palm String"
+      "label": "Kinnikuman Palm String",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -910,7 +996,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Rising Chain"
+      "label": "Kinnikuman Rising Chain",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -921,7 +1010,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Special Setup"
+      "label": "Kinnikuman Special Setup",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -932,7 +1024,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Break Art"
+      "label": "Kinnikuman Break Art",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -943,7 +1038,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Check Hook"
+      "label": "Kinnikuman Check Hook",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -954,7 +1052,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Heavy Break"
+      "label": "Kinnikuman Heavy Break",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -963,9 +1064,12 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -8,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 29,
       "range": 1.55,
-      "label": "Kinnikuman Charged Follow"
+      "label": "Kinnikuman Charged Follow",
+      "forwardForce": 2.23,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -976,7 +1080,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Drop Kick"
+      "label": "Kinnikuman Drop Kick",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -987,7 +1094,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Arc Finisher"
+      "label": "Kinnikuman Arc Finisher",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -998,7 +1108,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Focus Stance"
+      "label": "Kinnikuman Focus Stance",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1009,7 +1122,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Mode Shift"
+      "label": "Kinnikuman Mode Shift",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1020,7 +1136,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Heel Feint"
+      "label": "Kinnikuman Heel Feint",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1031,7 +1150,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Summon Strike"
+      "label": "Kinnikuman Summon Strike",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1042,7 +1164,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Guard Snare"
+      "label": "Kinnikuman Guard Snare",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1053,7 +1178,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Armor Break"
+      "label": "Kinnikuman Armor Break",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1064,7 +1192,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Power Setup"
+      "label": "Kinnikuman Power Setup",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1075,7 +1206,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Switch Strike"
+      "label": "Kinnikuman Switch Strike",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1086,7 +1220,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Spark Jab"
+      "label": "Kinnikuman Spark Jab",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1097,7 +1234,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Binding Blow"
+      "label": "Kinnikuman Binding Blow",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1108,7 +1248,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Heavy Draw"
+      "label": "Kinnikuman Heavy Draw",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1119,11 +1262,18 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Kinnikuman Kick Ender"
+      "label": "Kinnikuman Kick Ender",
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:1+4": {
       "startupFrames": 9,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "forwardForce": 1.62,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16,
+      "whiffRecoveryFrames": 7
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1138,7 +1288,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.38,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1153,7 +1306,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.03,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1169,7 +1325,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.89,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1184,7 +1343,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.44,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1200,7 +1362,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.95,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     }
   },
   "effects": [],

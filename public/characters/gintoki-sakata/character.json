@@ -429,7 +429,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     {
       "id": "kick",
@@ -463,7 +466,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     {
       "id": "heavy",
@@ -497,7 +503,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 6
     },
     {
       "id": "special",
@@ -531,7 +540,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.08,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 43
     }
   ],
   "hurtboxes": [
@@ -575,7 +587,10 @@
       "label": "Gintoki Sakata Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "jabright": {
       "startupFrames": 13,
@@ -591,7 +606,10 @@
       "label": "Gintoki Sakata Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 6
     },
     "kickleft": {
       "startupFrames": 9,
@@ -607,7 +625,10 @@
       "label": "Gintoki Sakata Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "kickright": {
       "startupFrames": 19,
@@ -621,7 +642,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Gintoki Sakata Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.08,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 46
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -644,7 +668,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 17
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -655,7 +681,7 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -670,7 +696,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.6,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -681,11 +710,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "Gintoki Sakata Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.52,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 52
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -699,7 +731,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Gintoki Sakata Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 44
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -710,7 +745,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 28,
       "range": 1.34,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
@@ -721,7 +756,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.19,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -732,7 +770,7 @@
       "onBlockFrames": -8,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -744,7 +782,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.51,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 8
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -755,7 +796,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 12,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -766,7 +807,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.19,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -777,7 +821,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 14,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "1+3 Frame Link",
@@ -789,7 +833,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.44,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 27
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -811,7 +858,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.78,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 33
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -826,7 +876,10 @@
       "range": 1.74,
       "label": "Gintoki Sakata Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -837,11 +890,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.9,
       "label": "Gintoki Sakata Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.94,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 56
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -852,11 +908,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Gintoki Sakata Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.74,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -867,7 +926,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Second Beat"
+      "label": "Gintoki Sakata Second Beat",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -878,7 +940,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Body Blow"
+      "label": "Gintoki Sakata Body Blow",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -889,7 +954,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Low Changeup"
+      "label": "Gintoki Sakata Low Changeup",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -900,7 +968,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Pressure Feint"
+      "label": "Gintoki Sakata Pressure Feint",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -909,9 +980,12 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -8,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 28,
       "range": 1.55,
-      "label": "Gintoki Sakata Drive"
+      "label": "Gintoki Sakata Drive",
+      "forwardForce": 2.13,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -922,7 +996,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Barrage"
+      "label": "Gintoki Sakata Barrage",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -933,7 +1010,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Finisher"
+      "label": "Gintoki Sakata Finisher",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -944,7 +1024,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Step Kick"
+      "label": "Gintoki Sakata Step Kick",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -955,7 +1038,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Palm String"
+      "label": "Gintoki Sakata Palm String",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -966,7 +1052,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Rising Chain"
+      "label": "Gintoki Sakata Rising Chain",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -977,7 +1066,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Special Setup"
+      "label": "Gintoki Sakata Special Setup",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -988,7 +1080,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Break Art"
+      "label": "Gintoki Sakata Break Art",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -999,7 +1094,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Check Hook"
+      "label": "Gintoki Sakata Check Hook",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1010,7 +1108,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Heavy Break"
+      "label": "Gintoki Sakata Heavy Break",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1019,9 +1120,12 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -8,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 30,
       "range": 1.55,
-      "label": "Gintoki Sakata Charged Follow"
+      "label": "Gintoki Sakata Charged Follow",
+      "forwardForce": 3.05,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1032,7 +1136,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Drop Kick"
+      "label": "Gintoki Sakata Drop Kick",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1043,7 +1150,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Arc Finisher"
+      "label": "Gintoki Sakata Arc Finisher",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1054,7 +1164,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Focus Stance"
+      "label": "Gintoki Sakata Focus Stance",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1065,7 +1178,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Mode Shift"
+      "label": "Gintoki Sakata Mode Shift",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1076,7 +1192,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Heel Feint"
+      "label": "Gintoki Sakata Heel Feint",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1087,7 +1206,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Summon Strike"
+      "label": "Gintoki Sakata Summon Strike",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1098,7 +1220,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Guard Snare"
+      "label": "Gintoki Sakata Guard Snare",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1109,7 +1234,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Armor Break"
+      "label": "Gintoki Sakata Armor Break",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1120,7 +1248,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Power Setup"
+      "label": "Gintoki Sakata Power Setup",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1131,7 +1262,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Switch Strike"
+      "label": "Gintoki Sakata Switch Strike",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1142,7 +1276,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Spark Jab"
+      "label": "Gintoki Sakata Spark Jab",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1153,7 +1290,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Binding Blow"
+      "label": "Gintoki Sakata Binding Blow",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1164,7 +1304,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Heavy Draw"
+      "label": "Gintoki Sakata Heavy Draw",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1175,7 +1318,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Gintoki Sakata Kick Ender"
+      "label": "Gintoki Sakata Kick Ender",
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1189,8 +1335,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 23,
+      "cancelable": false,
+      "forwardForce": 2.21,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 6
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1205,7 +1354,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.84,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1220,7 +1372,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1235,7 +1390,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.56,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1250,7 +1408,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.84,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1265,8 +1426,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.71,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1281,8 +1445,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 27,
+      "cancelable": false,
+      "forwardForce": 2.42,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1296,8 +1463,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 24,
+      "cancelable": false,
+      "forwardForce": 2.27,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 6
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1312,7 +1482,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.9,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1327,8 +1500,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.77,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11
     }
   },
   "effects": [],

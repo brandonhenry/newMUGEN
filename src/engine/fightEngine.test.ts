@@ -505,6 +505,43 @@ describe('character manifests', () => {
     expect(match.fighters[0].hitConnected).toBe(false);
   });
 
+  it('moves high-force attacks farther than low-force attacks over the same window', () => {
+    const makeForceCharacter = (forwardForce: number): CharacterDefinition => ({
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) =>
+        move.input === 'jab'
+          ? {
+              ...move,
+              startupFrames: 3,
+              activeFrames: 3,
+              recoveryFrames: 3,
+              range: 0.1,
+              forwardForce,
+              forwardForceStartFrame: 1,
+              forwardForceEndFrame: 9
+            }
+          : move
+      )
+    });
+    const runWhiff = (forwardForce: number) => {
+      let match = createMatch(makeForceCharacter(forwardForce), starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -3;
+      match.fighters[1].position.x = 3;
+      const jab = emptyInputFrame();
+      jab.jab = true;
+      match = stepMatch(match, jab, emptyInputFrame(), 1 / 60);
+      const startX = match.fighters[0].position.x;
+      for (let frame = 0; frame < 9; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+      return match.fighters[0].position.x - startX;
+    };
+
+    expect(runWhiff(2.4)).toBeGreaterThan(runWhiff(0.35) * 4);
+  });
+
   it('starts jump-enabled moves with the authored hop arc', () => {
     const jumpAttackCharacter: CharacterDefinition = {
       ...starterCharacters[0],

@@ -64,7 +64,10 @@
       "onHitFrames": 13,
       "onCounterHitFrames": 16,
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "kick",
@@ -95,7 +98,10 @@
       "onHitFrames": 15,
       "onCounterHitFrames": 19,
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "heavy",
@@ -126,7 +132,10 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.72,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "special",
@@ -157,7 +166,10 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 23,
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     }
   ],
   "hurtboxes": [

@@ -496,7 +496,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "kick",
@@ -530,7 +533,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     {
       "id": "heavy",
@@ -564,7 +570,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -598,7 +607,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     }
   ],
   "hurtboxes": [
@@ -642,7 +654,10 @@
       "label": "Goku (Super Saiyan) Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "jabright": {
       "startupFrames": 11,
@@ -658,7 +673,10 @@
       "label": "Goku (Super Saiyan) Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "kickleft": {
       "startupFrames": 25,
@@ -674,7 +692,10 @@
       "label": "Goku (Super Saiyan) Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "kickright": {
       "startupFrames": 24,
@@ -690,7 +711,10 @@
       "label": "Goku (Super Saiyan) Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -713,7 +737,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -739,7 +765,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.98,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:qcf+4": {
       "startupFrames": 11,
@@ -750,7 +779,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 13,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -763,7 +792,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.9,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -774,7 +806,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 26,
       "range": 1.62,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
@@ -785,7 +817,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.16,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -807,7 +842,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 14
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -830,7 +868,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.89,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -852,7 +893,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 41
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -875,7 +919,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -897,7 +944,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 37
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -908,7 +958,7 @@
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 32,
       "range": 1.74,
       "label": "2+4 Frame Link",
       "hitLevel": "low",
@@ -920,7 +970,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.43,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:3+4": {
       "startupFrames": 16,
@@ -947,7 +1000,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.97,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -958,11 +1014,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Goku (Super Saiyan) Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.12,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -972,7 +1031,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Second Beat"
+      "label": "Goku (Super Saiyan) Second Beat",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -982,7 +1044,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Body Blow"
+      "label": "Goku (Super Saiyan) Body Blow",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -992,7 +1057,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Low Changeup"
+      "label": "Goku (Super Saiyan) Low Changeup",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1002,7 +1070,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Pressure Feint"
+      "label": "Goku (Super Saiyan) Pressure Feint",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1012,7 +1083,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Drive"
+      "label": "Goku (Super Saiyan) Drive",
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1022,7 +1096,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Barrage"
+      "label": "Goku (Super Saiyan) Barrage",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1032,7 +1109,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Finisher"
+      "label": "Goku (Super Saiyan) Finisher",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1043,7 +1123,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Step Kick"
+      "label": "Goku (Super Saiyan) Step Kick",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1053,7 +1136,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Palm String"
+      "label": "Goku (Super Saiyan) Palm String",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1063,7 +1149,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Rising Chain"
+      "label": "Goku (Super Saiyan) Rising Chain",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1073,7 +1162,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Special Setup"
+      "label": "Goku (Super Saiyan) Special Setup",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1083,7 +1175,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Break Art"
+      "label": "Goku (Super Saiyan) Break Art",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1093,7 +1188,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Check Hook"
+      "label": "Goku (Super Saiyan) Check Hook",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1103,7 +1201,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Heavy Break"
+      "label": "Goku (Super Saiyan) Heavy Break",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1111,9 +1212,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Charged Follow"
+      "label": "Goku (Super Saiyan) Charged Follow",
+      "forwardForce": 2.51,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1124,7 +1228,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Drop Kick"
+      "label": "Goku (Super Saiyan) Drop Kick",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1134,7 +1241,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Arc Finisher"
+      "label": "Goku (Super Saiyan) Arc Finisher",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1144,7 +1254,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Focus Stance"
+      "label": "Goku (Super Saiyan) Focus Stance",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1154,7 +1267,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Mode Shift"
+      "label": "Goku (Super Saiyan) Mode Shift",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1164,7 +1280,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Heel Feint"
+      "label": "Goku (Super Saiyan) Heel Feint",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1174,7 +1293,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Summon Strike"
+      "label": "Goku (Super Saiyan) Summon Strike",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1184,7 +1306,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Guard Snare"
+      "label": "Goku (Super Saiyan) Guard Snare",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1194,7 +1319,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Armor Break"
+      "label": "Goku (Super Saiyan) Armor Break",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1204,7 +1332,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Power Setup"
+      "label": "Goku (Super Saiyan) Power Setup",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1214,7 +1345,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Switch Strike"
+      "label": "Goku (Super Saiyan) Switch Strike",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1224,7 +1358,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Spark Jab"
+      "label": "Goku (Super Saiyan) Spark Jab",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1234,7 +1371,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Binding Blow"
+      "label": "Goku (Super Saiyan) Binding Blow",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1244,7 +1384,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Heavy Draw"
+      "label": "Goku (Super Saiyan) Heavy Draw",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1255,7 +1398,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Goku (Super Saiyan) Kick Ender"
+      "label": "Goku (Super Saiyan) Kick Ender",
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:1+4": {
       "input": "special",
@@ -1269,8 +1415,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.19,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1285,7 +1434,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1300,7 +1452,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1315,7 +1470,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1330,7 +1488,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1345,7 +1506,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1360,8 +1524,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.17,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1376,8 +1543,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 2.26,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1392,7 +1562,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1407,7 +1580,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 41
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1421,8 +1597,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 2.31,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1437,8 +1616,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.23,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:O+4": {
       "input": "special",
@@ -1453,8 +1635,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 32,
+      "cancelable": false,
+      "forwardForce": 2.89,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     }
   },
   "effects": [],

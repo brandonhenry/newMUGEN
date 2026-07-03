@@ -353,21 +353,19 @@ dio,DIO,walkForward,6,false,1,1,1,1,0.089,1,idleW,1,1,1,1,frame,walkForward:1/1,
 dio,DIO,walkForward,7,false,1,1,1,1,0.116,1,idleW,1,1,1,1,frame,walkForward:1/1,feet-above-ground:0.12
 dio,DIO,win,78,false,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,40,false,1.09,1.09,1.09,1.09,0.073,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,41,false,0.95,0.95,0.95,0.95,0.054,0.95,idleW,0.903,0.903,0.95,0.95,frame,backflip:0.95/0.95,below-blue:0.95h
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,42,false,0.95,0.95,0.95,0.95,0.052,0.95,idleW,0.903,0.903,0.95,0.95,frame,backflip:0.95/0.95,below-blue:0.95h
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,48,false,1.09,1.09,1.09,1.09,0.109,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,chargeKi,12,false,0.93,0.93,0.93,0.93,0.053,0.93,idleW,0.865,0.865,0.93,0.93,frame,chargeKi:0.93/0.93,below-blue:0.93h
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,chargeKi,12,false,1,1,1,1,0.057,1,idleW,1,1,1,1,frame,chargeKi:1/1,feet-above-ground:0.06
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,chargeKi,13,false,1.02,1.02,1.02,1.02,0.096,1.02,idleW,1.04,1.04,1.02,1.02,frame,chargeKi:1.02/1.02,feet-above-ground:0.10
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+2,117,true,1.11,1.11,1.11,1.11,0,1.11,idleW,1.232,1.232,1.11,1.11,frame,cmd:1+2:1.11/1.11,above-blue:1.11h
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+2,121,true,0.98,0.98,0.98,0.98,0.055,0.98,idleW,0.96,0.96,0.98,0.98,frame,cmd:1+2:0.98/0.98,feet-above-ground:0.06
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+2,120,true,1,1,1,1,0.056,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,feet-above-ground:0.06
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+2,121,true,1,1,1,1,0.057,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,feet-above-ground:0.06
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+4,192,true,1,1,1,1,0.028,1,idleW,1,1,1,1,default,kickright:1.03/1.03,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+4,193,true,1,1,1,1,0.054,1,idleW,1,1,1,1,default,kickright:1.02/1.02,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+4,194,true,1.786,1,1.786,1,0,1.786,idleW,1.786,1.786,1,1,default,kickright:0.95/0.95,too-wide:1.79x-idleW|high-area:1.79|same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+4,195,true,1.786,1,1.786,1,0.053,1.786,idleW,1.786,1.786,1,1,default,kickright:0.95/0.95,too-wide:1.79x-idleW|high-area:1.79|same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+4,199,true,1,1,1,1,0.053,1,idleW,1,1,1,1,default,kickright:1.05/1.05,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:1+4,200,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,kickright:1.03/1.03|win:1.03/1.03,same-source-scaled:kickright/win
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:2+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:2+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:2+4,192,true,1,1,1,1,0.028,1,idleW,1,1,1,1,default,kickright:1.03/1.03,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:2+4,193,true,1,1,1,1,0.054,1,idleW,1,1,1,1,default,kickright:1.02/1.02,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:2+4,194,true,1.786,1,1.786,1,0,1.786,idleW,1.786,1.786,1,1,default,kickright:0.95/0.95,too-wide:1.79x-idleW|high-area:1.79|same-source-scaled:kickright
@@ -385,13 +383,13 @@ don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d/f+2,91,true,1,1,1,1,0,1,idle
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d/f+2,92,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:1.02/1.02,same-source-scaled:jabright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d/f+2,93,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:0.99/0.99,same-source-scaled:jabright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d/f+2,94,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:1.02/1.02,same-source-scaled:jabright
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d/f+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d/f+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+1,76,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+1,77,true,1.303,1,1.303,1,0.027,1.303,idleW,1.303,1.303,1,1,default,jableft:1.03/1.03,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+1,78,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+1,79,true,1,1,1,1,0.025,1,idleW,1,1,1,1,default,jableft:0.99/0.99,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+1,80,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:d+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+1,76,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+1,77,true,1.303,1,1.303,1,0.027,1.303,idleW,1.303,1.303,1,1,default,jableft:1.03/1.03,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+1,78,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
@@ -402,7 +400,7 @@ don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+2,91,true,1,1,1,1,0,1,idleW,
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+2,92,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:1.02/1.02,same-source-scaled:jabright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+2,93,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:0.99/0.99,same-source-scaled:jabright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+2,94,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:1.02/1.02,same-source-scaled:jabright
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:f+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:FC+1,76,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:FC+1,77,true,1.303,1,1.303,1,0.027,1.303,idleW,1.303,1.303,1,1,default,jableft:1.03/1.03,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:FC+1,78,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
@@ -429,14 +427,14 @@ don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+1,77,true,1.303,1,1.303,1,
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+1,78,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+1,79,true,1,1,1,1,0.025,1,idleW,1,1,1,1,default,jableft:0.99/0.99,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+1,80,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,jableft:1.04/1.04,same-source-scaled:jableft
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+4,192,true,1,1,1,1,0.028,1,idleW,1,1,1,1,default,kickright:1.03/1.03,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+4,193,true,1,1,1,1,0.054,1,idleW,1,1,1,1,default,kickright:1.02/1.02,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+4,194,true,1.786,1,1.786,1,0,1.786,idleW,1.786,1.786,1,1,default,kickright:0.95/0.95,too-wide:1.79x-idleW|high-area:1.79|same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+4,195,true,1.786,1,1.786,1,0.053,1.786,idleW,1.786,1.786,1,1,default,kickright:0.95/0.95,too-wide:1.79x-idleW|high-area:1.79|same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+4,199,true,1,1,1,1,0.053,1,idleW,1,1,1,1,default,kickright:1.05/1.05,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:qcf+4,200,true,1,1,1,1,0.026,1,idleW,1,1,1,1,default,kickright:1.03/1.03|win:1.03/1.03,same-source-scaled:kickright/win
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:SS+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:SS+3,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:SS+4,192,true,1,1,1,1,0.028,1,idleW,1,1,1,1,default,kickright:1.03/1.03,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:SS+4,193,true,1,1,1,1,0.054,1,idleW,1,1,1,1,default,kickright:1.02/1.02,same-source-scaled:kickright
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,cmd:SS+4,194,true,1.786,1,1.786,1,0,1.786,idleW,1.786,1.786,1,1,default,kickright:0.95/0.95,too-wide:1.79x-idleW|high-area:1.79|same-source-scaled:kickright
@@ -462,9 +460,7 @@ don-patch-poppa-rocks,Don Patch _ Poppa Rocks,getupStand,38,false,1,1,1,1,0.034,
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,getupStand,56,false,1,1,1,1,0,1.12,idleH,1,1,1,1,default,crouch:0.98/0.72,same-source-scaled:crouch
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,juggle,32,false,1.1,1.1,1.1,1.1,0.038,1.232,idleH,1.21,1.21,1.1,1.1,frame,sprint:1.1/1.1|juggle:1.1/1.1,above-blue:1.10h
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,juggle,33,false,1.189,0.888,1.189,0.888,0,1.332,idleH,1.056,1.056,0.888,0.888,frame,sprint:0.83/0.83|juggle:0.888/0.888,below-blue:0.89h|body-below:0.89h|too-wide:1.33x-idleH|seq-height-dip:0.11|seq-body-dip:0.11|same-source-scale-diff:0.06
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,jump,21,false,0.97,0.97,0.97,0.97,0.021,0.97,idleW,0.941,0.941,0.97,0.97,frame,jump:0.97/0.97,below-blue:0.97h
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,jump,22,false,0.96,0.96,0.96,0.96,0.02,0.96,idleW,0.922,0.922,0.96,0.96,frame,jump:0.96/0.96,below-blue:0.96h
-don-patch-poppa-rocks,Don Patch _ Poppa Rocks,kickleft,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:0.98/0.98,same-source-scaled:cmd:1+2
+don-patch-poppa-rocks,Don Patch _ Poppa Rocks,kickleft,124,true,1,1,1,1,0,1,idleW,1,1,1,1,default,cmd:1+2:1/1,same-source-scaled:cmd:1+2
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,kickright,193,true,1.02,1.02,1.02,1.02,0.055,1.02,idleW,1.04,1.04,1.02,1.02,frame,kickright:1.02/1.02,feet-above-ground:0.06
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,kickright,194,true,1.697,0.95,1.697,0.95,0,1.697,idleW,1.612,1.612,0.95,0.95,frame,kickright:0.95/0.95,below-blue:0.95h|too-wide:1.70x-idleW|high-area:1.61
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,kickright,195,true,1.697,0.95,1.697,0.95,0.05,1.697,idleW,1.612,1.612,0.95,0.95,frame,kickright:0.95/0.95,below-blue:0.95h|too-wide:1.70x-idleW|high-area:1.61
@@ -481,31 +477,28 @@ don-patch-poppa-rocks,Don Patch _ Poppa Rocks,walkForward,5,false,1.03,1.03,1.03
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,walkForward,7,false,1.09,1.09,1.09,1.09,0,1.09,idleW,1.188,1.188,1.09,1.09,frame,walkForward:1.09/1.09,above-blue:1.09h
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,walkForward,9,false,1.02,1.02,1.02,1.02,0.113,1.02,idleW,1.04,1.04,1.02,1.02,frame,walkForward:1.02/1.02,feet-above-ground:0.11
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,walkForward,11,false,1.09,1.09,1.09,1.09,0.027,1.09,idleW,1.188,1.188,1.09,1.09,frame,walkForward:1.09/1.09,above-blue:1.09h
-dr-mashirito,Dr. Mashirito,backflip,43,false,0.97,0.97,0.97,0.97,0,0.97,idleW,0.941,0.941,0.97,0.97,frame,backflip:0.97/0.97,below-blue:0.97h
-dr-mashirito,Dr. Mashirito,backflip,45,false,0.97,0.97,0.97,0.97,0.024,0.97,idleW,0.941,0.941,0.97,0.97,frame,backflip:0.97/0.97,below-blue:0.97h
-dr-mashirito,Dr. Mashirito,backflip,46,false,0.97,0.97,0.97,0.97,0.065,0.97,idleW,0.941,0.941,0.97,0.97,frame,backflip:0.97/0.97,below-blue:0.97h
-dr-mashirito,Dr. Mashirito,backflip,47,false,0.97,0.97,0.97,0.97,0.024,0.97,idleW,0.941,0.941,0.97,0.97,frame,backflip:0.97/0.97,below-blue:0.97h
-dr-mashirito,Dr. Mashirito,backflip,48,false,0.97,0.97,0.97,0.97,0,0.97,idleW,0.941,0.941,0.97,0.97,frame,backflip:0.97/0.97,below-blue:0.97h
-dr-mashirito,Dr. Mashirito,block,162,false,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,block:0.94/0.94,below-blue:0.94h
-dr-mashirito,Dr. Mashirito,cmd:1+2,136,true,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,cmd:1+2:0.94/0.94,below-blue:0.94h|seq-area-low:0.40
-dr-mashirito,Dr. Mashirito,cmd:1+2,137,true,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,cmd:1+2:0.94/0.94,below-blue:0.94h|seq-area-low:0.40
-dr-mashirito,Dr. Mashirito,cmd:1+2,138,true,1.627,0.95,1.627,0.95,0,1.627,idleW,1.546,1.546,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.63x-idleW|high-area:1.55
-dr-mashirito,Dr. Mashirito,cmd:1+2,139,true,1.627,0.95,1.627,0.95,0,1.627,idleW,1.546,1.546,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.63x-idleW|high-area:1.55
-dr-mashirito,Dr. Mashirito,cmd:1+2,140,true,1.627,0.95,1.627,0.95,0,1.627,idleW,1.546,1.546,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.63x-idleW|high-area:1.55
-dr-mashirito,Dr. Mashirito,cmd:1+2,142,true,1.627,0.95,1.627,0.95,0,1.627,idleW,1.546,1.546,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.63x-idleW|high-area:1.55
-dr-mashirito,Dr. Mashirito,cmd:1+2,144,true,1.302,0.95,1.302,0.95,0,1.302,idleW,1.237,1.237,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h
-dr-mashirito,Dr. Mashirito,cmd:1+2,145,true,1.512,0.95,1.489,0.95,0.014,1.512,idleW,1.436,1.414,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h
-dr-mashirito,Dr. Mashirito,cmd:1+2,147,true,1.404,0.95,1.404,0.95,0,1.404,idleW,1.334,1.334,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h
-dr-mashirito,Dr. Mashirito,cmd:1+2,148,true,1.834,0.95,1.834,0.95,0,1.834,idleW,1.742,1.742,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.83x-idleW|high-area:1.74
-dr-mashirito,Dr. Mashirito,cmd:3+4,60,true,0.99,0.99,0.99,0.99,0,0.99,idleW,0.98,0.98,0.99,0.99,frame,cmd:3+4:0.99/0.99,seq-area-low:0.53
-dr-mashirito,Dr. Mashirito,cmd:3+4,61,true,0.96,0.96,0.96,0.96,0,0.96,idleW,0.922,0.922,0.96,0.96,frame,cmd:3+4:0.96/0.96,below-blue:0.96h|seq-area-low:0.59
-dr-mashirito,Dr. Mashirito,cmd:3+4,62,true,0.96,0.96,0.96,0.96,0,0.96,idleW,0.922,0.922,0.96,0.96,frame,cmd:3+4:0.96/0.96,below-blue:0.96h|seq-area-low:0.59
-dr-mashirito,Dr. Mashirito,cmd:3+4,63,true,1.594,0.95,1.594,0.95,0.022,1.594,idleW,1.514,1.514,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.59x-idleW|high-area:1.51
-dr-mashirito,Dr. Mashirito,cmd:3+4,64,true,1.595,0.95,1.595,0.95,0.023,1.595,idleW,1.515,1.515,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.59x-idleW|high-area:1.52
-dr-mashirito,Dr. Mashirito,cmd:3+4,63,true,1.594,0.95,1.594,0.95,0.022,1.594,idleW,1.514,1.514,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.59x-idleW|high-area:1.51
-dr-mashirito,Dr. Mashirito,cmd:3+4,64,true,1.595,0.95,1.595,0.95,0.023,1.595,idleW,1.515,1.515,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.59x-idleW|high-area:1.52
-dr-mashirito,Dr. Mashirito,cmd:3+4,63,true,1.594,0.95,1.594,0.95,0.022,1.594,idleW,1.514,1.514,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.59x-idleW|high-area:1.51
-dr-mashirito,Dr. Mashirito,cmd:3+4,64,true,1.595,0.95,1.595,0.95,0.023,1.595,idleW,1.515,1.515,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.59x-idleW|high-area:1.52
+dr-mashirito,Dr. Mashirito,cmd:1+2,135,true,1.01,1.01,1.01,1.01,0,1.01,idleW,1.02,1.02,1.01,1.01,frame,cmd:1+2:1.01/1.01,seq-area-low:0.40
+dr-mashirito,Dr. Mashirito,cmd:1+2,136,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,seq-area-low:0.42
+dr-mashirito,Dr. Mashirito,cmd:1+2,137,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,seq-area-low:0.42
+dr-mashirito,Dr. Mashirito,cmd:1+2,138,true,1.713,1,1.713,1,0,1.713,idleW,1.713,1.713,1,1,frame,cmd:1+2:1/1,too-wide:1.71x-idleW|high-area:1.71
+dr-mashirito,Dr. Mashirito,cmd:1+2,139,true,1.713,1,1.713,1,0,1.713,idleW,1.713,1.713,1,1,frame,cmd:1+2:1/1,too-wide:1.71x-idleW|high-area:1.71
+dr-mashirito,Dr. Mashirito,cmd:1+2,140,true,1.713,1,1.713,1,0,1.713,idleW,1.713,1.713,1,1,frame,cmd:1+2:1/1,too-wide:1.71x-idleW|high-area:1.71
+dr-mashirito,Dr. Mashirito,cmd:1+2,142,true,1.713,1,1.713,1,0,1.713,idleW,1.713,1.713,1,1,frame,cmd:1+2:1/1,too-wide:1.71x-idleW|high-area:1.71
+dr-mashirito,Dr. Mashirito,cmd:1+2,143,true,1,1,1,1,0,1,idleW,1,1,1,1,default,,seq-area-low:0.42
+dr-mashirito,Dr. Mashirito,cmd:1+2,145,true,1.591,1,1.567,1,0.015,1.591,idleW,1.591,1.567,1,1,frame,cmd:1+2:1/1,too-wide:1.59x-idleW|high-area:1.59
+dr-mashirito,Dr. Mashirito,cmd:1+2,146,true,1,1,1,1,0.014,1,idleW,1,1,1,1,default,,seq-area-low:0.42
+dr-mashirito,Dr. Mashirito,cmd:1+2,147,true,1.478,1,1.478,1,0,1.478,idleW,1.478,1.478,1,1,frame,cmd:1+2:1/1,high-area:1.48
+dr-mashirito,Dr. Mashirito,cmd:1+2,148,true,1.931,1,1.931,1,0,1.931,idleW,1.931,1.931,1,1,frame,cmd:1+2:1/1,too-wide:1.93x-idleW|high-area:1.93
+dr-mashirito,Dr. Mashirito,cmd:1+2,159,true,1.01,1.01,1.01,1.01,0,1.01,idleW,1.02,1.02,1.01,1.01,frame,cmd:1+2:1.01/1.01,seq-area-low:0.40
+dr-mashirito,Dr. Mashirito,cmd:3+4,60,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:3+4:1/1,seq-area-low:0.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,61,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:3+4:1/1,seq-area-low:0.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,62,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:3+4:1/1,seq-area-low:0.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,63,true,1.678,1,1.678,1,0.023,1.678,idleW,1.678,1.678,1,1,frame,cmd:3+4:1/1,too-wide:1.68x-idleW|high-area:1.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,64,true,1.679,1,1.679,1,0.024,1.679,idleW,1.679,1.679,1,1,frame,cmd:3+4:1/1,too-wide:1.68x-idleW|high-area:1.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,63,true,1.678,1,1.678,1,0.023,1.678,idleW,1.678,1.678,1,1,frame,cmd:3+4:1/1,too-wide:1.68x-idleW|high-area:1.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,64,true,1.679,1,1.679,1,0.024,1.679,idleW,1.679,1.679,1,1,frame,cmd:3+4:1/1,too-wide:1.68x-idleW|high-area:1.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,63,true,1.678,1,1.678,1,0.023,1.678,idleW,1.678,1.678,1,1,frame,cmd:3+4:1/1,too-wide:1.68x-idleW|high-area:1.68
+dr-mashirito,Dr. Mashirito,cmd:3+4,64,true,1.679,1,1.679,1,0.024,1.679,idleW,1.679,1.679,1,1,frame,cmd:3+4:1/1,too-wide:1.68x-idleW|high-area:1.68
 dr-mashirito,Dr. Mashirito,cmd:d/f+2,181,true,1,1,0.793,0.896,0.083,1,idleW,1,0.71,1,1,default,,body-below:0.90h|seq-body-dip:0.10|seq-area-low:0.73|feet-above-ground:0.08
 dr-mashirito,Dr. Mashirito,cmd:d/f+2,182,true,1,1,0.793,0.896,0.083,1,idleW,1,0.71,1,1,default,,body-below:0.90h|seq-body-dip:0.10|seq-area-low:0.73|feet-above-ground:0.08
 dr-mashirito,Dr. Mashirito,cmd:d/f+2,183,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jabright:1.01/1.01,seq-area-low:0.73|same-source-scaled:jabright

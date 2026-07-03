@@ -475,7 +475,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "kick",
@@ -509,7 +512,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     {
       "id": "heavy",
@@ -543,7 +549,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18
     },
     {
       "id": "special",
@@ -577,7 +586,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     }
   ],
   "hurtboxes": [
@@ -621,7 +633,10 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "jabright": {
       "startupFrames": 11,
@@ -637,7 +652,10 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18
     },
     "kickleft": {
       "startupFrames": 23,
@@ -653,7 +671,10 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "kickright": {
       "startupFrames": 18,
@@ -669,7 +690,10 @@
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -692,7 +716,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 22
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -703,7 +729,7 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -718,7 +744,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.05,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 28
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -729,11 +758,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 14,
       "range": 2.05,
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.63,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 43
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -747,7 +779,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.44,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -769,7 +804,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.81,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -792,7 +830,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.96,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 26
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -814,7 +855,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 24
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -837,7 +881,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.71,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -848,7 +895,7 @@
       "onBlockFrames": -5,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 9,
       "range": 1.58,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
@@ -859,7 +906,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.27,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -874,7 +924,10 @@
       "range": 1.74,
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.71,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -885,11 +938,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.9,
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.91,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -900,11 +956,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.19,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 34
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -915,7 +974,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Second Beat"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Second Beat",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -926,7 +988,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Body Blow"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Body Blow",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -937,7 +1002,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Low Changeup"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Low Changeup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -948,7 +1016,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Pressure Feint"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Pressure Feint",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -959,7 +1030,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Drive"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Drive",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -970,7 +1044,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Barrage"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Barrage",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -981,7 +1058,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Finisher"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Finisher",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -992,7 +1072,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Step Kick"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Step Kick",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1003,7 +1086,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Palm String"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Palm String",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1014,7 +1100,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Rising Chain"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Rising Chain",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1025,7 +1114,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Special Setup"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Special Setup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1036,7 +1128,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Break Art"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Break Art",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1047,7 +1142,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Check Hook"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Check Hook",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1058,7 +1156,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heavy Break"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heavy Break",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1067,9 +1168,12 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -8,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 29,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Charged Follow"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Charged Follow",
+      "forwardForce": 2.67,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1080,7 +1184,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Drop Kick"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Drop Kick",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1091,7 +1198,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Arc Finisher"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Arc Finisher",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1102,7 +1212,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Focus Stance"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Focus Stance",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1113,7 +1226,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Mode Shift"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Mode Shift",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1124,7 +1240,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heel Feint"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heel Feint",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1135,7 +1254,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Summon Strike"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Summon Strike",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1146,7 +1268,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Guard Snare"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Guard Snare",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1157,7 +1282,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Armor Break"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Armor Break",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1168,7 +1296,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Power Setup"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Power Setup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1179,7 +1310,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Switch Strike"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Switch Strike",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1190,7 +1324,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Spark Jab"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Spark Jab",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1201,7 +1338,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Binding Blow"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Binding Blow",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1212,7 +1352,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heavy Draw"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Heavy Draw",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1223,12 +1366,19 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Kick Ender"
+      "label": "Naruto Uzumaki (Nine-Tails_Kyubi) Kick Ender",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:1+4": {
       "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 26,
+      "whiffRecoveryFrames": 9
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1243,7 +1393,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.66,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1258,7 +1411,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1273,7 +1429,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1288,7 +1447,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.58,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1303,7 +1465,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.86,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1318,8 +1483,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1334,8 +1502,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 28,
+      "cancelable": false,
+      "forwardForce": 2.44,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1350,7 +1521,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.72,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1365,7 +1539,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.92,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 29
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1380,8 +1557,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.39,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     }
   },
   "effects": [],

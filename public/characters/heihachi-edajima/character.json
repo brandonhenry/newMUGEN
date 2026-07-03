@@ -363,7 +363,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     },
     {
       "id": "kick",
@@ -397,7 +400,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -431,7 +437,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     {
       "id": "special",
@@ -465,7 +474,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -509,7 +521,10 @@
       "label": "Heihachi Edajima Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     },
     "jabright": {
       "startupFrames": 11,
@@ -525,7 +540,10 @@
       "label": "Heihachi Edajima Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "kickleft": {
       "startupFrames": 18,
@@ -539,7 +557,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Heihachi Edajima Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 19,
@@ -553,7 +574,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Heihachi Edajima Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -576,7 +600,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 13
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -602,7 +628,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.84,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 37
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -613,11 +642,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Heihachi Edajima Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -631,7 +663,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Heihachi Edajima Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -642,7 +677,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 19,
       "range": 1.34,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
@@ -653,7 +688,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.14,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 21
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -676,7 +714,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -698,7 +739,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -709,11 +753,14 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 32,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Heihachi Edajima Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.23,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 49
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -727,7 +774,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Heihachi Edajima Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.07,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -742,7 +792,10 @@
       "range": 1.74,
       "label": "Heihachi Edajima Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 35
     },
     "cmd:3+4": {
       "startupFrames": 14,
@@ -753,11 +806,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 22,
       "range": 1.9,
       "label": "Heihachi Edajima Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.14,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -768,11 +824,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Heihachi Edajima Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.98,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 44
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -782,7 +841,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Second Beat"
+      "label": "Heihachi Edajima Second Beat",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -792,7 +854,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Body Blow"
+      "label": "Heihachi Edajima Body Blow",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -802,7 +867,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Low Changeup"
+      "label": "Heihachi Edajima Low Changeup",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -812,7 +880,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Pressure Feint"
+      "label": "Heihachi Edajima Pressure Feint",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -820,9 +891,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 24,
       "range": 1.55,
-      "label": "Heihachi Edajima Drive"
+      "label": "Heihachi Edajima Drive",
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -832,7 +906,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Barrage"
+      "label": "Heihachi Edajima Barrage",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -842,7 +919,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Finisher"
+      "label": "Heihachi Edajima Finisher",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -853,7 +933,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Step Kick"
+      "label": "Heihachi Edajima Step Kick",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -863,7 +946,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Palm String"
+      "label": "Heihachi Edajima Palm String",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -873,7 +959,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Rising Chain"
+      "label": "Heihachi Edajima Rising Chain",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -883,7 +972,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Special Setup"
+      "label": "Heihachi Edajima Special Setup",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -893,7 +985,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Break Art"
+      "label": "Heihachi Edajima Break Art",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -903,7 +998,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Check Hook"
+      "label": "Heihachi Edajima Check Hook",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -913,7 +1011,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Heavy Break"
+      "label": "Heihachi Edajima Heavy Break",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -921,9 +1022,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 26,
       "range": 1.55,
-      "label": "Heihachi Edajima Charged Follow"
+      "label": "Heihachi Edajima Charged Follow",
+      "forwardForce": 3,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -934,7 +1038,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Drop Kick"
+      "label": "Heihachi Edajima Drop Kick",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -944,7 +1051,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Arc Finisher"
+      "label": "Heihachi Edajima Arc Finisher",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -954,7 +1064,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Focus Stance"
+      "label": "Heihachi Edajima Focus Stance",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -964,7 +1077,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Mode Shift"
+      "label": "Heihachi Edajima Mode Shift",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -974,7 +1090,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Heel Feint"
+      "label": "Heihachi Edajima Heel Feint",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -984,7 +1103,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Summon Strike"
+      "label": "Heihachi Edajima Summon Strike",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -994,7 +1116,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Guard Snare"
+      "label": "Heihachi Edajima Guard Snare",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1004,7 +1129,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Armor Break"
+      "label": "Heihachi Edajima Armor Break",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1014,7 +1142,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Power Setup"
+      "label": "Heihachi Edajima Power Setup",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1024,7 +1155,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Switch Strike"
+      "label": "Heihachi Edajima Switch Strike",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1034,7 +1168,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Spark Jab"
+      "label": "Heihachi Edajima Spark Jab",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1044,7 +1181,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Binding Blow"
+      "label": "Heihachi Edajima Binding Blow",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1054,7 +1194,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Heavy Draw"
+      "label": "Heihachi Edajima Heavy Draw",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 29
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1065,7 +1208,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Heihachi Edajima Kick Ender"
+      "label": "Heihachi Edajima Kick Ender",
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1080,7 +1226,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.45,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1095,7 +1244,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1110,8 +1262,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1126,7 +1281,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.51,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1141,8 +1299,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.72,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19
     }
   },
   "effects": [],

@@ -428,7 +428,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     {
       "id": "kick",
@@ -462,7 +465,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -496,7 +502,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.48,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 14
     },
     {
       "id": "special",
@@ -530,7 +539,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24
     }
   ],
   "hurtboxes": [
@@ -574,7 +586,10 @@
       "label": "Majin Buu Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "jabright": {
       "startupFrames": 10,
@@ -590,7 +605,10 @@
       "label": "Majin Buu Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.48,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 16
     },
     "kickleft": {
       "startupFrames": 18,
@@ -604,7 +622,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Majin Buu Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 24,
@@ -620,7 +641,10 @@
       "label": "Majin Buu Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -643,7 +667,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -669,7 +695,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:qcf+4": {
       "startupFrames": 4,
@@ -680,7 +709,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 16,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -693,7 +722,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 3.6,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 27
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -704,7 +736,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 27,
       "range": 1.62,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
@@ -715,7 +747,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.25,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -737,7 +772,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.81,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -760,7 +798,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.26,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -771,7 +812,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 13,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -782,7 +823,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -797,7 +841,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Majin Buu Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.36,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -811,7 +858,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Majin Buu Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -822,7 +872,7 @@
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 13,
       "range": 1.74,
       "label": "2+4 Frame Link",
       "hitLevel": "low",
@@ -834,7 +884,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.52,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 23
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -845,7 +898,7 @@
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 27,
       "range": 1.9,
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
@@ -857,7 +910,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 34
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -872,7 +928,10 @@
       "range": 2.1,
       "label": "Majin Buu Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.41,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 23
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -882,7 +941,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Second Beat"
+      "label": "Majin Buu Second Beat",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -892,7 +954,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Body Blow"
+      "label": "Majin Buu Body Blow",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -902,7 +967,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Low Changeup"
+      "label": "Majin Buu Low Changeup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -912,7 +980,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Pressure Feint"
+      "label": "Majin Buu Pressure Feint",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -922,7 +993,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Drive"
+      "label": "Majin Buu Drive",
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -932,7 +1006,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Barrage"
+      "label": "Majin Buu Barrage",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -942,7 +1019,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Finisher"
+      "label": "Majin Buu Finisher",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -953,7 +1033,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Step Kick"
+      "label": "Majin Buu Step Kick",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -963,7 +1046,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Palm String"
+      "label": "Majin Buu Palm String",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -973,7 +1059,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Rising Chain"
+      "label": "Majin Buu Rising Chain",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -983,7 +1072,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Special Setup"
+      "label": "Majin Buu Special Setup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -993,7 +1085,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Break Art"
+      "label": "Majin Buu Break Art",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1003,7 +1098,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Check Hook"
+      "label": "Majin Buu Check Hook",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1013,7 +1111,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Heavy Break"
+      "label": "Majin Buu Heavy Break",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1021,9 +1122,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Majin Buu Charged Follow"
+      "label": "Majin Buu Charged Follow",
+      "forwardForce": 2.67,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1034,7 +1138,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Drop Kick"
+      "label": "Majin Buu Drop Kick",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1044,7 +1151,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Arc Finisher"
+      "label": "Majin Buu Arc Finisher",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1054,7 +1164,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Focus Stance"
+      "label": "Majin Buu Focus Stance",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1064,7 +1177,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Mode Shift"
+      "label": "Majin Buu Mode Shift",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1074,7 +1190,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Heel Feint"
+      "label": "Majin Buu Heel Feint",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1084,7 +1203,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Summon Strike"
+      "label": "Majin Buu Summon Strike",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1094,7 +1216,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Guard Snare"
+      "label": "Majin Buu Guard Snare",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1104,7 +1229,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Armor Break"
+      "label": "Majin Buu Armor Break",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1114,7 +1242,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Power Setup"
+      "label": "Majin Buu Power Setup",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1124,7 +1255,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Switch Strike"
+      "label": "Majin Buu Switch Strike",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1134,7 +1268,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Spark Jab"
+      "label": "Majin Buu Spark Jab",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1144,7 +1281,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Binding Blow"
+      "label": "Majin Buu Binding Blow",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1154,7 +1294,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Heavy Draw"
+      "label": "Majin Buu Heavy Draw",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1165,7 +1308,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Majin Buu Kick Ender"
+      "label": "Majin Buu Kick Ender",
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "cmd:1+4": {
       "input": "special",
@@ -1179,8 +1325,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 2.28,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1195,7 +1344,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.96,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 14
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1210,7 +1362,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1225,8 +1380,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1241,7 +1399,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.02,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 14
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1255,8 +1416,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 8,
-      "cancelable": false
+      "whiffRecoveryFrames": 31,
+      "cancelable": false,
+      "forwardForce": 2.4,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1271,8 +1435,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 20,
+      "cancelable": false,
+      "forwardForce": 2.39,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:O+4": {
       "input": "special",
@@ -1287,8 +1454,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 32,
+      "cancelable": false,
+      "forwardForce": 2.98,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24
     }
   },
   "effects": [],

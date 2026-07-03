@@ -9640,58 +9640,6 @@
     "character": "don-patch-poppa-rocks",
     "displayName": "Don Patch _ Poppa Rocks",
     "key": "backflip",
-    "frame": 41,
-    "isAttack": false,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.054,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.903,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "backflip:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "don-patch-poppa-rocks",
-    "displayName": "Don Patch _ Poppa Rocks",
-    "key": "backflip",
-    "frame": 42,
-    "isAttack": false,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.052,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.903,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "backflip:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "don-patch-poppa-rocks",
-    "displayName": "Don Patch _ Poppa Rocks",
-    "key": "backflip",
     "frame": 48,
     "isAttack": false,
     "widthRatio": 1.09,
@@ -9720,24 +9668,24 @@
     "key": "chargeKi",
     "frame": 12,
     "isAttack": false,
-    "widthRatio": 0.93,
-    "heightRatio": 0.93,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.93,
-    "bodyFootGapRatio": 0.053,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.057,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.93,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.865,
-    "bodyAreaRatio": 0.865,
-    "scaleWidth": 0.93,
-    "scaleHeight": 0.93,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "chargeKi:0.93/0.93"
+      "chargeKi:1/1"
     ],
     "reasons": [
-      "below-blue:0.93h"
+      "feet-above-ground:0.06"
     ]
   },
   {
@@ -9770,26 +9718,26 @@
     "character": "don-patch-poppa-rocks",
     "displayName": "Don Patch _ Poppa Rocks",
     "key": "cmd:1+2",
-    "frame": 117,
+    "frame": 120,
     "isAttack": true,
-    "widthRatio": 1.11,
-    "heightRatio": 1.11,
-    "bodyWidthRatio": 1.11,
-    "bodyHeightRatio": 1.11,
-    "bodyFootGapRatio": 0,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.056,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.11,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.232,
-    "bodyAreaRatio": 1.232,
-    "scaleWidth": 1.11,
-    "scaleHeight": 1.11,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:1.11/1.11"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "above-blue:1.11h"
+      "feet-above-ground:0.06"
     ]
   },
   {
@@ -9798,21 +9746,21 @@
     "key": "cmd:1+2",
     "frame": 121,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.055,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.057,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "feet-above-ground:0.06"
@@ -9838,7 +9786,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -10025,7 +9973,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -10503,7 +10451,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -10659,7 +10607,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -10945,7 +10893,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -11652,7 +11600,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -11839,7 +11787,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -12525,58 +12473,6 @@
   {
     "character": "don-patch-poppa-rocks",
     "displayName": "Don Patch _ Poppa Rocks",
-    "key": "jump",
-    "frame": 21,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.021,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "don-patch-poppa-rocks",
-    "displayName": "Don Patch _ Poppa Rocks",
-    "key": "jump",
-    "frame": 22,
-    "isAttack": false,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
-    "bodyFootGapRatio": 0.02,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.96/0.96"
-    ],
-    "reasons": [
-      "below-blue:0.96h"
-    ]
-  },
-  {
-    "character": "don-patch-poppa-rocks",
-    "displayName": "Don Patch _ Poppa Rocks",
     "key": "kickleft",
     "frame": 124,
     "isAttack": true,
@@ -12594,7 +12490,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
       "same-source-scaled:cmd:1+2"
@@ -13037,157 +12933,27 @@
   {
     "character": "dr-mashirito",
     "displayName": "Dr. Mashirito",
-    "key": "backflip",
-    "frame": 43,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
+    "key": "cmd:1+2",
+    "frame": 135,
+    "isAttack": true,
+    "widthRatio": 1.01,
+    "heightRatio": 1.01,
+    "bodyWidthRatio": 1.01,
+    "bodyHeightRatio": 1.01,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
+    "expectedWidthRatio": 1.01,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
+    "areaRatio": 1.02,
+    "bodyAreaRatio": 1.02,
+    "scaleWidth": 1.01,
+    "scaleHeight": 1.01,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "backflip:0.97/0.97"
+      "cmd:1+2:1.01/1.01"
     ],
     "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dr-mashirito",
-    "displayName": "Dr. Mashirito",
-    "key": "backflip",
-    "frame": 45,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.024,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "backflip:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dr-mashirito",
-    "displayName": "Dr. Mashirito",
-    "key": "backflip",
-    "frame": 46,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.065,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "backflip:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dr-mashirito",
-    "displayName": "Dr. Mashirito",
-    "key": "backflip",
-    "frame": 47,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.024,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "backflip:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dr-mashirito",
-    "displayName": "Dr. Mashirito",
-    "key": "backflip",
-    "frame": 48,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "backflip:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dr-mashirito",
-    "displayName": "Dr. Mashirito",
-    "key": "block",
-    "frame": 162,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "block:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
+      "seq-area-low:0.40"
     ]
   },
   {
@@ -13196,25 +12962,24 @@
     "key": "cmd:1+2",
     "frame": 136,
     "isAttack": true,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.94/0.94"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.94h",
-      "seq-area-low:0.40"
+      "seq-area-low:0.42"
     ]
   },
   {
@@ -13223,25 +12988,24 @@
     "key": "cmd:1+2",
     "frame": 137,
     "isAttack": true,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.94/0.94"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.94h",
-      "seq-area-low:0.40"
+      "seq-area-low:0.42"
     ]
   },
   {
@@ -13250,26 +13014,25 @@
     "key": "cmd:1+2",
     "frame": 138,
     "isAttack": true,
-    "widthRatio": 1.627,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.627,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.713,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.713,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.627,
+    "expectedWidthRatio": 1.713,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.546,
-    "bodyAreaRatio": 1.546,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.713,
+    "bodyAreaRatio": 1.713,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.63x-idleW",
-      "high-area:1.55"
+      "too-wide:1.71x-idleW",
+      "high-area:1.71"
     ]
   },
   {
@@ -13278,26 +13041,25 @@
     "key": "cmd:1+2",
     "frame": 139,
     "isAttack": true,
-    "widthRatio": 1.627,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.627,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.713,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.713,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.627,
+    "expectedWidthRatio": 1.713,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.546,
-    "bodyAreaRatio": 1.546,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.713,
+    "bodyAreaRatio": 1.713,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.63x-idleW",
-      "high-area:1.55"
+      "too-wide:1.71x-idleW",
+      "high-area:1.71"
     ]
   },
   {
@@ -13306,26 +13068,25 @@
     "key": "cmd:1+2",
     "frame": 140,
     "isAttack": true,
-    "widthRatio": 1.627,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.627,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.713,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.713,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.627,
+    "expectedWidthRatio": 1.713,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.546,
-    "bodyAreaRatio": 1.546,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.713,
+    "bodyAreaRatio": 1.713,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.63x-idleW",
-      "high-area:1.55"
+      "too-wide:1.71x-idleW",
+      "high-area:1.71"
     ]
   },
   {
@@ -13334,52 +13095,49 @@
     "key": "cmd:1+2",
     "frame": 142,
     "isAttack": true,
-    "widthRatio": 1.627,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.627,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.713,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.713,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.627,
+    "expectedWidthRatio": 1.713,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.546,
-    "bodyAreaRatio": 1.546,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.713,
+    "bodyAreaRatio": 1.713,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.63x-idleW",
-      "high-area:1.55"
+      "too-wide:1.71x-idleW",
+      "high-area:1.71"
     ]
   },
   {
     "character": "dr-mashirito",
     "displayName": "Dr. Mashirito",
     "key": "cmd:1+2",
-    "frame": 144,
+    "frame": 143,
     "isAttack": true,
-    "widthRatio": 1.302,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.302,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.302,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.237,
-    "bodyAreaRatio": 1.237,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
-    ],
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
+    "scaleSource": "default",
+    "sameSourceScaleUses": [],
     "reasons": [
-      "below-blue:0.95h"
+      "seq-area-low:0.42"
     ]
   },
   {
@@ -13388,24 +13146,49 @@
     "key": "cmd:1+2",
     "frame": 145,
     "isAttack": true,
-    "widthRatio": 1.512,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.489,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.014,
+    "widthRatio": 1.591,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.567,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.015,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.512,
+    "expectedWidthRatio": 1.591,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.436,
-    "bodyAreaRatio": 1.414,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.591,
+    "bodyAreaRatio": 1.567,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h"
+      "too-wide:1.59x-idleW",
+      "high-area:1.59"
+    ]
+  },
+  {
+    "character": "dr-mashirito",
+    "displayName": "Dr. Mashirito",
+    "key": "cmd:1+2",
+    "frame": 146,
+    "isAttack": true,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.014,
+    "bodyHeadGapRatio": 0,
+    "expectedWidthRatio": 1,
+    "expectedWidthLabel": "idleW",
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
+    "scaleSource": "default",
+    "sameSourceScaleUses": [],
+    "reasons": [
+      "seq-area-low:0.42"
     ]
   },
   {
@@ -13414,24 +13197,24 @@
     "key": "cmd:1+2",
     "frame": 147,
     "isAttack": true,
-    "widthRatio": 1.404,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.404,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.478,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.478,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.404,
+    "expectedWidthRatio": 1.478,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.334,
-    "bodyAreaRatio": 1.334,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.478,
+    "bodyAreaRatio": 1.478,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h"
+      "high-area:1.48"
     ]
   },
   {
@@ -13440,26 +13223,51 @@
     "key": "cmd:1+2",
     "frame": 148,
     "isAttack": true,
-    "widthRatio": 1.834,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.834,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.931,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.931,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.834,
+    "expectedWidthRatio": 1.931,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.742,
-    "bodyAreaRatio": 1.742,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.931,
+    "bodyAreaRatio": 1.931,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.83x-idleW",
-      "high-area:1.74"
+      "too-wide:1.93x-idleW",
+      "high-area:1.93"
+    ]
+  },
+  {
+    "character": "dr-mashirito",
+    "displayName": "Dr. Mashirito",
+    "key": "cmd:1+2",
+    "frame": 159,
+    "isAttack": true,
+    "widthRatio": 1.01,
+    "heightRatio": 1.01,
+    "bodyWidthRatio": 1.01,
+    "bodyHeightRatio": 1.01,
+    "bodyFootGapRatio": 0,
+    "bodyHeadGapRatio": 0,
+    "expectedWidthRatio": 1.01,
+    "expectedWidthLabel": "idleW",
+    "areaRatio": 1.02,
+    "bodyAreaRatio": 1.02,
+    "scaleWidth": 1.01,
+    "scaleHeight": 1.01,
+    "scaleSource": "frame",
+    "sameSourceScaleUses": [
+      "cmd:1+2:1.01/1.01"
+    ],
+    "reasons": [
+      "seq-area-low:0.40"
     ]
   },
   {
@@ -13468,24 +13276,24 @@
     "key": "cmd:3+4",
     "frame": 60,
     "isAttack": true,
-    "widthRatio": 0.99,
-    "heightRatio": 0.99,
-    "bodyWidthRatio": 0.99,
-    "bodyHeightRatio": 0.99,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.99,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.98,
-    "bodyAreaRatio": 0.98,
-    "scaleWidth": 0.99,
-    "scaleHeight": 0.99,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.99/0.99"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.53"
+      "seq-area-low:0.68"
     ]
   },
   {
@@ -13494,25 +13302,24 @@
     "key": "cmd:3+4",
     "frame": 61,
     "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.96/0.96"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.96h",
-      "seq-area-low:0.59"
+      "seq-area-low:0.68"
     ]
   },
   {
@@ -13521,25 +13328,24 @@
     "key": "cmd:3+4",
     "frame": 62,
     "isAttack": true,
-    "widthRatio": 0.96,
-    "heightRatio": 0.96,
-    "bodyWidthRatio": 0.96,
-    "bodyHeightRatio": 0.96,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.96,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.922,
-    "bodyAreaRatio": 0.922,
-    "scaleWidth": 0.96,
-    "scaleHeight": 0.96,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.96/0.96"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.96h",
-      "seq-area-low:0.59"
+      "seq-area-low:0.68"
     ]
   },
   {
@@ -13548,26 +13354,25 @@
     "key": "cmd:3+4",
     "frame": 63,
     "isAttack": true,
-    "widthRatio": 1.594,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.594,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 1.678,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.678,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.594,
+    "expectedWidthRatio": 1.678,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.514,
-    "bodyAreaRatio": 1.514,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.678,
+    "bodyAreaRatio": 1.678,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.59x-idleW",
-      "high-area:1.51"
+      "too-wide:1.68x-idleW",
+      "high-area:1.68"
     ]
   },
   {
@@ -13576,26 +13381,25 @@
     "key": "cmd:3+4",
     "frame": 64,
     "isAttack": true,
-    "widthRatio": 1.595,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.595,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.023,
+    "widthRatio": 1.679,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.679,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.024,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.595,
+    "expectedWidthRatio": 1.679,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.515,
-    "bodyAreaRatio": 1.515,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.679,
+    "bodyAreaRatio": 1.679,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.59x-idleW",
-      "high-area:1.52"
+      "too-wide:1.68x-idleW",
+      "high-area:1.68"
     ]
   },
   {
@@ -13604,26 +13408,25 @@
     "key": "cmd:3+4",
     "frame": 63,
     "isAttack": true,
-    "widthRatio": 1.594,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.594,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 1.678,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.678,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.594,
+    "expectedWidthRatio": 1.678,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.514,
-    "bodyAreaRatio": 1.514,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.678,
+    "bodyAreaRatio": 1.678,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.59x-idleW",
-      "high-area:1.51"
+      "too-wide:1.68x-idleW",
+      "high-area:1.68"
     ]
   },
   {
@@ -13632,26 +13435,25 @@
     "key": "cmd:3+4",
     "frame": 64,
     "isAttack": true,
-    "widthRatio": 1.595,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.595,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.023,
+    "widthRatio": 1.679,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.679,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.024,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.595,
+    "expectedWidthRatio": 1.679,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.515,
-    "bodyAreaRatio": 1.515,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.679,
+    "bodyAreaRatio": 1.679,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.59x-idleW",
-      "high-area:1.52"
+      "too-wide:1.68x-idleW",
+      "high-area:1.68"
     ]
   },
   {
@@ -13660,26 +13462,25 @@
     "key": "cmd:3+4",
     "frame": 63,
     "isAttack": true,
-    "widthRatio": 1.594,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.594,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 1.678,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.678,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.594,
+    "expectedWidthRatio": 1.678,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.514,
-    "bodyAreaRatio": 1.514,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.678,
+    "bodyAreaRatio": 1.678,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.59x-idleW",
-      "high-area:1.51"
+      "too-wide:1.68x-idleW",
+      "high-area:1.68"
     ]
   },
   {
@@ -13688,26 +13489,25 @@
     "key": "cmd:3+4",
     "frame": 64,
     "isAttack": true,
-    "widthRatio": 1.595,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.595,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.023,
+    "widthRatio": 1.679,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.679,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.024,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.595,
+    "expectedWidthRatio": 1.679,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.515,
-    "bodyAreaRatio": 1.515,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.679,
+    "bodyAreaRatio": 1.679,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.59x-idleW",
-      "high-area:1.52"
+      "too-wide:1.68x-idleW",
+      "high-area:1.68"
     ]
   },
   {

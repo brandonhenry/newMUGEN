@@ -354,7 +354,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     {
       "id": "kick",
@@ -388,7 +391,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.68,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     {
       "id": "heavy",
@@ -422,7 +428,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.67,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 31
     },
     {
       "id": "special",
@@ -456,7 +465,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     }
   ],
   "hurtboxes": [
@@ -498,7 +510,10 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Sven Vollfied Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26
     },
     "jabright": {
       "startupFrames": 13,
@@ -512,7 +527,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Sven Vollfied Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.67,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 31
     },
     "kickleft": {
       "startupFrames": 23,
@@ -528,7 +546,10 @@
       "label": "Sven Vollfied Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.68,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     "kickright": {
       "startupFrames": 21,
@@ -544,7 +565,10 @@
       "label": "Sven Vollfied Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 36
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -559,7 +583,9 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Sven Vollfied Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 44
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -577,7 +603,10 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Sven Vollfied Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 50
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -588,7 +617,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 21,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 36,
       "range": 2.05,
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
@@ -601,7 +630,10 @@
       "route": "motion:frame-link",
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -623,7 +655,10 @@
       "comboKey": "WS+4:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 19
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -637,7 +672,10 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Sven Vollfied Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.08,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 29
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -652,7 +690,10 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Sven Vollfied Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.45,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 47
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -666,7 +707,10 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "label": "Sven Vollfied Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.24,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 45
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -689,7 +733,10 @@
       "comboKey": "1+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 40
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -711,7 +758,10 @@
       "comboKey": "2+3:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.1,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 35
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -734,7 +784,10 @@
       "comboKey": "2+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -757,7 +810,10 @@
       "comboKey": "3+4:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -768,11 +824,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 39,
       "range": 2.1,
       "label": "Sven Vollfied Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.68,
+      "forwardForceStartFrame": 45,
+      "forwardForceEndFrame": 60
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -782,7 +841,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Second Beat"
+      "label": "Sven Vollfied Second Beat",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -792,7 +854,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Body Blow"
+      "label": "Sven Vollfied Body Blow",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -802,7 +867,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Low Changeup"
+      "label": "Sven Vollfied Low Changeup",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -812,7 +880,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Pressure Feint"
+      "label": "Sven Vollfied Pressure Feint",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -822,7 +893,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Drive"
+      "label": "Sven Vollfied Drive",
+      "forwardForce": 1.02,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -832,7 +906,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Barrage"
+      "label": "Sven Vollfied Barrage",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -842,7 +919,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Finisher"
+      "label": "Sven Vollfied Finisher",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -853,7 +933,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Step Kick"
+      "label": "Sven Vollfied Step Kick",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -863,7 +946,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Palm String"
+      "label": "Sven Vollfied Palm String",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -873,7 +959,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Rising Chain"
+      "label": "Sven Vollfied Rising Chain",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -883,7 +972,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Special Setup"
+      "label": "Sven Vollfied Special Setup",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -893,7 +985,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Break Art"
+      "label": "Sven Vollfied Break Art",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -903,7 +998,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Check Hook"
+      "label": "Sven Vollfied Check Hook",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -913,7 +1011,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Heavy Break"
+      "label": "Sven Vollfied Heavy Break",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -923,7 +1024,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Charged Follow"
+      "label": "Sven Vollfied Charged Follow",
+      "forwardForce": 1.94,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -934,7 +1038,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Drop Kick"
+      "label": "Sven Vollfied Drop Kick",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -944,7 +1051,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Arc Finisher"
+      "label": "Sven Vollfied Arc Finisher",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -954,7 +1064,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Focus Stance"
+      "label": "Sven Vollfied Focus Stance",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -964,7 +1077,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Mode Shift"
+      "label": "Sven Vollfied Mode Shift",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -974,7 +1090,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Heel Feint"
+      "label": "Sven Vollfied Heel Feint",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -984,7 +1103,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Summon Strike"
+      "label": "Sven Vollfied Summon Strike",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -994,7 +1116,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Guard Snare"
+      "label": "Sven Vollfied Guard Snare",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1004,7 +1129,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Armor Break"
+      "label": "Sven Vollfied Armor Break",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1014,7 +1142,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Power Setup"
+      "label": "Sven Vollfied Power Setup",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1024,7 +1155,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Switch Strike"
+      "label": "Sven Vollfied Switch Strike",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1034,7 +1168,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Spark Jab"
+      "label": "Sven Vollfied Spark Jab",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1044,7 +1181,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Binding Blow"
+      "label": "Sven Vollfied Binding Blow",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1054,7 +1194,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Heavy Draw"
+      "label": "Sven Vollfied Heavy Draw",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1065,7 +1208,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Sven Vollfied Kick Ender"
+      "label": "Sven Vollfied Kick Ender",
+      "forwardForce": 0.74,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "cmd:1+4": {
       "input": "special",
@@ -1080,7 +1226,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1095,7 +1244,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1110,7 +1262,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.88,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1125,7 +1280,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     "cmd:qcf+3": {
       "input": "kick",
@@ -1141,7 +1299,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1156,7 +1317,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 36
     },
     "cmd:SS+4": {
       "input": "special",
@@ -1171,7 +1335,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.37,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:O+4": {
       "input": "special",
@@ -1187,7 +1354,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.95,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     }
   },
   "effects": [],

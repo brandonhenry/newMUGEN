@@ -366,7 +366,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 26
     },
     {
       "id": "kick",
@@ -400,7 +403,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.68,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     {
       "id": "heavy",
@@ -434,7 +440,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 25
     },
     {
       "id": "special",
@@ -468,7 +477,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.96,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     }
   ],
   "hurtboxes": [
@@ -512,7 +524,10 @@
       "label": "Taikoubou Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 26
     },
     "jabright": {
       "startupFrames": 11,
@@ -528,7 +543,10 @@
       "label": "Taikoubou Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 25
     },
     "kickleft": {
       "startupFrames": 16,
@@ -542,7 +560,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Taikoubou Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.68,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "kickright": {
       "startupFrames": 19,
@@ -556,7 +577,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Taikoubou Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.96,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 46
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -579,7 +603,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 44
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -590,7 +616,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -605,7 +631,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 41
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -616,11 +645,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 38,
       "range": 2.05,
       "label": "Taikoubou Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.4,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 55
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -634,7 +666,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Taikoubou Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 42
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -656,7 +691,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.54,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 29
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -679,7 +717,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.91,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -690,7 +731,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 12,
       "range": 1.72,
       "kiCost": 35,
       "healAmount": 8,
@@ -705,7 +746,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.11,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 38
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -716,11 +760,14 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 32,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Taikoubou Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.29,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 49
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -734,7 +781,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Taikoubou Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.53,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 14
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -749,7 +799,10 @@
       "range": 1.74,
       "label": "Taikoubou Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.13,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -760,11 +813,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.9,
       "label": "Taikoubou Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.82,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 56
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -775,11 +831,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Taikoubou Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.14,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 49
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -789,7 +848,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Second Beat"
+      "label": "Taikoubou Second Beat",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -799,7 +861,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Body Blow"
+      "label": "Taikoubou Body Blow",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -809,7 +874,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Low Changeup"
+      "label": "Taikoubou Low Changeup",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -819,7 +887,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Pressure Feint"
+      "label": "Taikoubou Pressure Feint",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -829,7 +900,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Drive"
+      "label": "Taikoubou Drive",
+      "forwardForce": 1.48,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -839,7 +913,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Barrage"
+      "label": "Taikoubou Barrage",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -849,7 +926,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Finisher"
+      "label": "Taikoubou Finisher",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -860,7 +940,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Step Kick"
+      "label": "Taikoubou Step Kick",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 43
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -870,7 +953,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Palm String"
+      "label": "Taikoubou Palm String",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -880,7 +966,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Rising Chain"
+      "label": "Taikoubou Rising Chain",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -890,7 +979,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Special Setup"
+      "label": "Taikoubou Special Setup",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -900,7 +992,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Break Art"
+      "label": "Taikoubou Break Art",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -910,7 +1005,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Check Hook"
+      "label": "Taikoubou Check Hook",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -920,7 +1018,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Heavy Break"
+      "label": "Taikoubou Heavy Break",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -928,9 +1029,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Taikoubou Charged Follow"
+      "label": "Taikoubou Charged Follow",
+      "forwardForce": 2.4,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -941,7 +1045,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Drop Kick"
+      "label": "Taikoubou Drop Kick",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 43
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -951,7 +1058,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Arc Finisher"
+      "label": "Taikoubou Arc Finisher",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -961,7 +1071,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Focus Stance"
+      "label": "Taikoubou Focus Stance",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -971,7 +1084,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Mode Shift"
+      "label": "Taikoubou Mode Shift",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -981,7 +1097,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Heel Feint"
+      "label": "Taikoubou Heel Feint",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -991,7 +1110,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Summon Strike"
+      "label": "Taikoubou Summon Strike",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1001,7 +1123,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Guard Snare"
+      "label": "Taikoubou Guard Snare",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1011,7 +1136,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Armor Break"
+      "label": "Taikoubou Armor Break",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1021,7 +1149,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Power Setup"
+      "label": "Taikoubou Power Setup",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1031,7 +1162,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Switch Strike"
+      "label": "Taikoubou Switch Strike",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1041,7 +1175,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Spark Jab"
+      "label": "Taikoubou Spark Jab",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1051,7 +1188,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Binding Blow"
+      "label": "Taikoubou Binding Blow",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1061,7 +1201,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Heavy Draw"
+      "label": "Taikoubou Heavy Draw",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 39
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1072,7 +1215,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Taikoubou Kick Ender"
+      "label": "Taikoubou Kick Ender",
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 43
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1087,7 +1233,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.61,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 25
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1102,7 +1251,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 26
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1117,8 +1269,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.06,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 26
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1133,7 +1288,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 25
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1148,8 +1306,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.12,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 26
     }
   },
   "effects": [],

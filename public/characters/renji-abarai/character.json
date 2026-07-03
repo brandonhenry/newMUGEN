@@ -363,7 +363,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     {
       "id": "kick",
@@ -397,7 +400,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.79,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     {
       "id": "heavy",
@@ -431,7 +437,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.81,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     {
       "id": "special",
@@ -465,7 +474,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.07,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     }
   ],
   "hurtboxes": [
@@ -509,7 +521,10 @@
       "label": "Renji Abarai Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "jabright": {
       "startupFrames": 11,
@@ -525,7 +540,10 @@
       "label": "Renji Abarai Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.81,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "kickleft": {
       "startupFrames": 18,
@@ -539,7 +557,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Renji Abarai Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.79,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 45
     },
     "kickright": {
       "startupFrames": 19,
@@ -553,7 +574,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Renji Abarai Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.07,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 46
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -576,7 +600,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -602,7 +628,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 37
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -613,11 +642,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 15,
       "range": 2.05,
       "label": "Renji Abarai Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 4,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -631,7 +663,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Renji Abarai Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 42
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -653,7 +688,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -676,7 +714,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "cmd:1+2": {
       "startupFrames": 33,
@@ -687,7 +728,7 @@
       "onBlockFrames": -6,
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 15,
       "range": 1.72,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
@@ -698,7 +739,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.18,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 7
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -709,11 +753,14 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 14,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Renji Abarai Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.5,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -727,7 +774,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Renji Abarai Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.21,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -742,7 +792,10 @@
       "range": 1.74,
       "label": "Renji Abarai Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 1.73,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -753,11 +806,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.9,
       "label": "Renji Abarai Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.93,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 56
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -768,11 +824,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 40,
       "range": 2.1,
       "label": "Renji Abarai Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.82,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 44
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -782,7 +841,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Second Beat"
+      "label": "Renji Abarai Second Beat",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -792,7 +854,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Body Blow"
+      "label": "Renji Abarai Body Blow",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -802,7 +867,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Low Changeup"
+      "label": "Renji Abarai Low Changeup",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -812,7 +880,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Pressure Feint"
+      "label": "Renji Abarai Pressure Feint",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -822,7 +893,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Drive"
+      "label": "Renji Abarai Drive",
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -832,7 +906,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Barrage"
+      "label": "Renji Abarai Barrage",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -842,7 +919,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Finisher"
+      "label": "Renji Abarai Finisher",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -853,7 +933,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Step Kick"
+      "label": "Renji Abarai Step Kick",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -863,7 +946,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Palm String"
+      "label": "Renji Abarai Palm String",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -873,7 +959,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Rising Chain"
+      "label": "Renji Abarai Rising Chain",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -883,7 +972,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Special Setup"
+      "label": "Renji Abarai Special Setup",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -893,7 +985,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Break Art"
+      "label": "Renji Abarai Break Art",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -903,7 +998,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Check Hook"
+      "label": "Renji Abarai Check Hook",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -913,7 +1011,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Heavy Break"
+      "label": "Renji Abarai Heavy Break",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -921,9 +1022,12 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Renji Abarai Charged Follow"
+      "label": "Renji Abarai Charged Follow",
+      "forwardForce": 2.6,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -934,7 +1038,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Drop Kick"
+      "label": "Renji Abarai Drop Kick",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -944,7 +1051,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Arc Finisher"
+      "label": "Renji Abarai Arc Finisher",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -954,7 +1064,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Focus Stance"
+      "label": "Renji Abarai Focus Stance",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -964,7 +1077,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Mode Shift"
+      "label": "Renji Abarai Mode Shift",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -974,7 +1090,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Heel Feint"
+      "label": "Renji Abarai Heel Feint",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -984,7 +1103,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Summon Strike"
+      "label": "Renji Abarai Summon Strike",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -994,7 +1116,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Guard Snare"
+      "label": "Renji Abarai Guard Snare",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1004,7 +1129,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Armor Break"
+      "label": "Renji Abarai Armor Break",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1014,7 +1142,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Power Setup"
+      "label": "Renji Abarai Power Setup",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1024,7 +1155,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Switch Strike"
+      "label": "Renji Abarai Switch Strike",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1034,7 +1168,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Spark Jab"
+      "label": "Renji Abarai Spark Jab",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1044,7 +1181,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Binding Blow"
+      "label": "Renji Abarai Binding Blow",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1054,7 +1194,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Heavy Draw"
+      "label": "Renji Abarai Heavy Draw",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1065,11 +1208,18 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Renji Abarai Kick Ender"
+      "label": "Renji Abarai Kick Ender",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:1+4": {
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.52,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 7,
+      "whiffRecoveryFrames": 31
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1084,7 +1234,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.29,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1099,7 +1252,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1114,8 +1270,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.26,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1130,7 +1289,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1145,8 +1307,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 19,
+      "cancelable": false,
+      "forwardForce": 2.32,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     }
   },
   "effects": [],

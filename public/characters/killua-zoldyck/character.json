@@ -393,7 +393,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     {
       "id": "kick",
@@ -427,7 +430,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     {
       "id": "heavy",
@@ -461,7 +467,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 16
     },
     {
       "id": "special",
@@ -495,7 +504,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -539,7 +551,10 @@
       "label": "Killua Zoldyck Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "jabright": {
       "startupFrames": 12,
@@ -555,7 +570,10 @@
       "label": "Killua Zoldyck Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 16
     },
     "kickleft": {
       "startupFrames": 18,
@@ -569,7 +587,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Killua Zoldyck Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 0.55,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 19,
@@ -583,7 +604,10 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Killua Zoldyck Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:f+1": {
       "startupFrames": 10,
@@ -606,7 +630,9 @@
       "comboKey": "f+1:link",
       "route": "direction:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForceStartFrame": 41,
+      "forwardForceEndFrame": 46
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -617,7 +643,7 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 35,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -632,7 +658,10 @@
       "comboKey": "d/f+2:link",
       "route": "launcher:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.64,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -643,11 +672,14 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Killua Zoldyck Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -661,7 +693,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Killua Zoldyck Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -683,7 +718,10 @@
       "comboKey": "FC+1:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.5,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -694,7 +732,7 @@
       "onBlockFrames": -8,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 34,
       "range": 1.48,
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
@@ -706,7 +744,10 @@
       "comboKey": "FC+2:link",
       "route": "state:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 2.55,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 23
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -728,7 +769,10 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -743,7 +787,10 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Killua Zoldyck Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.77,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 6
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -757,7 +804,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Killua Zoldyck Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "forwardForce": 1.6,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -768,11 +818,14 @@
       "onBlockFrames": -16,
       "onHitFrames": 6,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 13,
       "range": 1.74,
       "label": "Killua Zoldyck Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.25,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -783,11 +836,14 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Killua Zoldyck Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 2.69,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -798,11 +854,14 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 41,
       "range": 2.1,
       "label": "Killua Zoldyck Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "forwardForce": 3.78,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 29
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -813,7 +872,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Second Beat"
+      "label": "Killua Zoldyck Second Beat",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -824,7 +886,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Body Blow"
+      "label": "Killua Zoldyck Body Blow",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -835,7 +900,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Low Changeup"
+      "label": "Killua Zoldyck Low Changeup",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -846,7 +914,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Pressure Feint"
+      "label": "Killua Zoldyck Pressure Feint",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -857,7 +928,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Drive"
+      "label": "Killua Zoldyck Drive",
+      "forwardForce": 1.44,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -868,7 +942,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Barrage"
+      "label": "Killua Zoldyck Barrage",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -879,7 +956,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Finisher"
+      "label": "Killua Zoldyck Finisher",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -890,7 +970,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Step Kick"
+      "label": "Killua Zoldyck Step Kick",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -901,7 +984,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Palm String"
+      "label": "Killua Zoldyck Palm String",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -912,7 +998,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Rising Chain"
+      "label": "Killua Zoldyck Rising Chain",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -923,7 +1012,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Special Setup"
+      "label": "Killua Zoldyck Special Setup",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -934,7 +1026,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Break Art"
+      "label": "Killua Zoldyck Break Art",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -945,7 +1040,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Check Hook"
+      "label": "Killua Zoldyck Check Hook",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -956,7 +1054,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Heavy Break"
+      "label": "Killua Zoldyck Heavy Break",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -965,9 +1066,12 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -8,
-      "whiffRecoveryFrames": 4,
+      "whiffRecoveryFrames": 29,
       "range": 1.55,
-      "label": "Killua Zoldyck Charged Follow"
+      "label": "Killua Zoldyck Charged Follow",
+      "forwardForce": 2.36,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -978,7 +1082,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Drop Kick"
+      "label": "Killua Zoldyck Drop Kick",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -989,7 +1096,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Arc Finisher"
+      "label": "Killua Zoldyck Arc Finisher",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1000,7 +1110,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Focus Stance"
+      "label": "Killua Zoldyck Focus Stance",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1011,7 +1124,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Mode Shift"
+      "label": "Killua Zoldyck Mode Shift",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1022,7 +1138,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Heel Feint"
+      "label": "Killua Zoldyck Heel Feint",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1033,7 +1152,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Summon Strike"
+      "label": "Killua Zoldyck Summon Strike",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1044,7 +1166,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Guard Snare"
+      "label": "Killua Zoldyck Guard Snare",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1055,7 +1180,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Armor Break"
+      "label": "Killua Zoldyck Armor Break",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1066,7 +1194,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Power Setup"
+      "label": "Killua Zoldyck Power Setup",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1077,7 +1208,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Switch Strike"
+      "label": "Killua Zoldyck Switch Strike",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1088,7 +1222,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Spark Jab"
+      "label": "Killua Zoldyck Spark Jab",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1099,7 +1236,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Binding Blow"
+      "label": "Killua Zoldyck Binding Blow",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1110,7 +1250,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Heavy Draw"
+      "label": "Killua Zoldyck Heavy Draw",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1121,7 +1264,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Killua Zoldyck Kick Ender"
+      "label": "Killua Zoldyck Kick Ender",
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "cmd:f+2": {
       "input": "heavy",
@@ -1135,8 +1281,11 @@
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 23,
+      "cancelable": false,
+      "forwardForce": 2.25,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 16
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1151,7 +1300,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.16,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1166,8 +1318,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.02,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1181,8 +1336,11 @@
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 23,
+      "cancelable": false,
+      "forwardForce": 2.31,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 16
     },
     "cmd:O+1": {
       "input": "jab",
@@ -1197,8 +1355,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 18,
+      "cancelable": false,
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 19
     }
   },
   "effects": [],

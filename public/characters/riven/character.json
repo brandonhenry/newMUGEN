@@ -69,7 +69,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     {
       "id": "kick",
@@ -102,7 +105,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     {
       "id": "heavy",
@@ -135,7 +141,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     {
       "id": "special",
@@ -168,7 +177,10 @@
         ]
       },
       "counterHit": false,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     }
   ],
   "hurtboxes": [
@@ -636,7 +648,10 @@
       "route": "direction:frame-link",
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.34,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 36
     },
     "cmd:d/f+1": {
       "startupFrames": 13,
@@ -647,7 +662,10 @@
       "onHitFrames": 6,
       "onCounterHitFrames": 8,
       "label": "Fire Release: Phoenix Sage Fire Technique",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "cmd:qcf+3": {
       "startupFrames": 22,
@@ -670,7 +688,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.92,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 42
     },
     "cmd:SS+4": {
       "startupFrames": 16,
@@ -692,7 +713,10 @@
       "route": "state:frame-link",
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab": {
       "label": "Lion Combo: Second Fang"
@@ -801,7 +825,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.6,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 25
     },
     "kickleft": {
       "startupFrames": 5,
@@ -813,13 +840,19 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "jableft": {
       "activeFrames": 3,
       "recoveryFrames": 13,
       "onBlockFrames": -4,
-      "onHitFrames": 8
+      "onHitFrames": 8,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "jabright": {
       "startupFrames": 11,
@@ -827,7 +860,10 @@
       "recoveryFrames": 16,
       "onHitFrames": 3,
       "forwardForce": 2,
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
+      "whiffRecoveryFrames": 20
     },
     "cmd:1+2": {
       "startupFrames": 23,
@@ -845,7 +881,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 29
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -864,7 +903,10 @@
       "onCounterHitFrames": 22,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.27,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 34
     },
     "cmd:2+4": {
       "startupFrames": 14,
@@ -882,8 +924,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 22,
+      "cancelable": false,
+      "forwardForce": 2.3,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 25
     },
     "cmd:3+4": {
       "startupFrames": 20,
@@ -899,8 +944,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 13,
+      "cancelable": false,
+      "forwardForce": 2.3,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 31
     },
     "cmd:FC+2": {
       "launchHeight": 2.2,
@@ -918,18 +966,25 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 24,
+      "cancelable": false,
+      "forwardForce": 2.33,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+4": {
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "forwardForce": 2.36,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 38,
+      "whiffRecoveryFrames": 29
     },
     "cmd:O+1": {
       "startupFrames": 24,
       "recoveryFrames": 16,
       "damage": 32,
       "forwardForce": 3,
-      "forwardForceStartFrame": 30,
+      "forwardForceStartFrame": 18,
       "hitLevel": "mid",
       "knockdown": true,
       "soundCues": [
@@ -956,14 +1011,18 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 24,
+      "cancelable": false,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 9,
       "activeFrames": 21,
       "recoveryFrames": 10,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     },
     "cmd:1+4": {
       "startupFrames": 18,
@@ -980,8 +1039,11 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 22,
       "counterHit": true,
-      "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "whiffRecoveryFrames": 16,
+      "cancelable": false,
+      "forwardForce": 2.58,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:f+1": {
       "input": "jab",
@@ -996,7 +1058,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.21,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "cmd:f+3": {
       "input": "kick",
@@ -1011,7 +1076,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:d+1": {
       "input": "jab",
@@ -1026,7 +1094,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 0.93,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "cmd:d+3": {
       "input": "kick",
@@ -1041,7 +1112,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:d/f+2": {
       "input": "heavy",
@@ -1055,8 +1129,11 @@
       "onHitFrames": 23,
       "onCounterHitFrames": 35,
       "counterHit": true,
-      "whiffRecoveryFrames": 10,
-      "cancelable": false
+      "whiffRecoveryFrames": 21,
+      "cancelable": false,
+      "forwardForce": 2.21,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:d/f+3": {
       "input": "kick",
@@ -1071,7 +1148,10 @@
       "onCounterHitFrames": 24,
       "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.68,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:qcf+1": {
       "input": "jab",
@@ -1087,7 +1167,10 @@
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.79,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "cmd:qcf+4": {
       "input": "special",
@@ -1102,8 +1185,11 @@
       "onCounterHitFrames": 30,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 3.18,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     },
     "cmd:FC+1": {
       "input": "jab",
@@ -1118,7 +1204,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.27,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 25
     },
     "cmd:WS+2": {
       "input": "heavy",
@@ -1132,8 +1221,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 22,
+      "cancelable": false,
+      "forwardForce": 2.27,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:WS+4": {
       "input": "special",
@@ -1147,8 +1239,11 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
       "counterHit": true,
-      "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "whiffRecoveryFrames": 29,
+      "cancelable": false,
+      "forwardForce": 2.66,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     },
     "cmd:SS+3": {
       "input": "kick",
@@ -1163,7 +1258,10 @@
       "onCounterHitFrames": 27,
       "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false
+      "cancelable": false,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18
     },
     "cmd:O+4": {
       "input": "special",
@@ -1178,8 +1276,11 @@
       "onCounterHitFrames": 31,
       "counterHit": true,
       "counterHitStunBonusFrames": 2,
-      "whiffRecoveryFrames": 9,
-      "cancelable": false
+      "whiffRecoveryFrames": 30,
+      "cancelable": false,
+      "forwardForce": 3.24,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     }
   },
   "spriteFrameEdits": {
