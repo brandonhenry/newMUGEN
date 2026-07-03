@@ -17,6 +17,8 @@ const options = {
   nonAttackWidthHigh: numberArg('--non-attack-width-high', 1.24),
   areaLow: numberArg('--area-low', 0.72),
   areaHigh: numberArg('--area-high', 1.45),
+  feetGapHigh: numberArg('--feet-gap-high', 0.055),
+  headGapHigh: numberArg('--head-gap-high', 0.065),
   includeNear: process.argv.includes('--include-near')
 };
 
@@ -243,11 +245,29 @@ async function idleColorBodyBounds(file, bins) {
   components.sort((a, b) => b.area - a.area);
   const best = components[0];
   if (!best) {
-    return { width: info.width, height: info.height, cropWidth: info.width, cropHeight: info.height, area: 0, componentCount: 0 };
+    return { width: info.width, height: info.height, cropWidth: info.width, cropHeight: info.height, area: 0, componentCount: 0, supportMaxY: info.height - 1 };
+  }
+  const rowCounts = new Map();
+  for (let y = best.minY; y <= best.maxY; y += 1) {
+    let count = 0;
+    for (let x = best.minX; x <= best.maxX; x += 1) {
+      if (mask[y * info.width + x]) count += 1;
+    }
+    rowCounts.set(y, count);
+  }
+  const maxRowCount = Math.max(1, ...rowCounts.values());
+  const supportThreshold = Math.max(3, Math.ceil(maxRowCount * 0.18));
+  let supportMaxY = best.maxY;
+  for (let y = best.maxY; y >= best.minY; y -= 1) {
+    if ((rowCounts.get(y) ?? 0) >= supportThreshold) {
+      supportMaxY = y;
+      break;
+    }
   }
   const second = components.find((item) => item.area >= best.area * 0.24);
   return {
     ...best,
+    supportMaxY,
     cropWidth: info.width,
     cropHeight: info.height,
     componentCount: components.length,
@@ -273,6 +293,10 @@ function poseWidthReference(entry, frame, key) {
   const recoveryLike = /knockdown|getup|lose|juggle/i.test(key);
   if (looksProne || recoveryLike) return { value: entry.idleHeight, label: 'idleH' };
   return { value: entry.idleWidth, label: 'idleW' };
+}
+
+function isGroundedKey(key) {
+  return !/jump|backflip|juggle|knockdown|getup|lose|hitLight|hitHeavy/i.test(key);
 }
 
 async function collectCharacters() {
@@ -347,6 +371,8 @@ async function collectRows() {
         const bodyBounds = await idleColorBodyBounds(file, idleBins);
         const bodyRenderWidth = renderWidth * (bodyBounds.width / Math.max(1, bodyBounds.cropWidth));
         const bodyRenderHeight = renderHeight * (bodyBounds.height / Math.max(1, bodyBounds.cropHeight));
+        const bodyFootGap = renderHeight * ((bodyBounds.cropHeight - 1 - bodyBounds.supportMaxY) / Math.max(1, bodyBounds.cropHeight));
+        const bodyHeadGap = renderHeight * (bodyBounds.minY / Math.max(1, bodyBounds.cropHeight));
         const item = {
           key,
           frame,
@@ -356,6 +382,8 @@ async function collectRows() {
           renderHeight,
           bodyRenderWidth,
           bodyRenderHeight,
+          bodyFootGap,
+          bodyHeadGap,
           bodyBounds,
           scale,
           isAttack: isAttackKey(key),
@@ -363,6 +391,8 @@ async function collectRows() {
           heightRatio: renderHeight / entry.idleHeight,
           bodyWidthRatio: bodyRenderWidth / entry.idleWidth,
           bodyHeightRatio: bodyRenderHeight / entry.idleHeight,
+          bodyFootGapRatio: bodyFootGap / entry.idleHeight,
+          bodyHeadGapRatio: bodyHeadGap / entry.idleHeight,
           areaRatio: (renderWidth * renderHeight) / entry.idleArea,
           bodyAreaRatio: (bodyRenderWidth * bodyRenderHeight) / entry.idleArea,
           expectedWidthRatio: 1,
@@ -390,6 +420,9 @@ async function collectRows() {
         if (frame.bodyBounds.area >= 16 && frame.bodyHeightRatio > options.bodyHeightHigh) {
           frame.reasons.push(`body-above:${frame.bodyHeightRatio.toFixed(2)}h`);
         }
+        if (isGroundedKey(frame.key) && frame.bodyBounds.area >= 16 && frame.bodyHeadGapRatio > options.headGapHigh) {
+          frame.reasons.push(`body-top-below-blue:${frame.bodyHeadGapRatio.toFixed(2)}`);
+        }
         if (frame.expectedWidthRatio < options.widthLow) {
           frame.reasons.push(`too-narrow:${frame.expectedWidthRatio.toFixed(2)}x-${frame.expectedWidthLabel}`);
         }
@@ -407,6 +440,9 @@ async function collectRows() {
         if (frame.areaRatio < localArea - 0.30) frame.reasons.push(`seq-area-low:${(localArea - frame.areaRatio).toFixed(2)}`);
         if (frame.bodyBounds.hasLargeSecondComponent && frame.expectedWidthRatio > 1.35) {
           frame.reasons.push('multi-component-review');
+        }
+        if (isGroundedKey(frame.key) && frame.bodyBounds.area >= 16 && frame.bodyFootGapRatio > options.feetGapHigh) {
+          frame.reasons.push(`feet-above-ground:${frame.bodyFootGapRatio.toFixed(2)}`);
         }
         const sourceScaleUses = explicitScaleUses.get(String(frame.frame)) ?? [];
         const otherScaleUses = sourceScaleUses.filter((use) => use.key !== frame.key);
@@ -438,6 +474,8 @@ async function collectRows() {
           heightRatio: round(frame.heightRatio),
           bodyWidthRatio: round(frame.bodyWidthRatio),
           bodyHeightRatio: round(frame.bodyHeightRatio),
+          bodyFootGapRatio: round(frame.bodyFootGapRatio),
+          bodyHeadGapRatio: round(frame.bodyHeadGapRatio),
           expectedWidthRatio: round(frame.expectedWidthRatio),
           expectedWidthLabel: frame.expectedWidthLabel,
           areaRatio: round(frame.areaRatio),
@@ -586,6 +624,7 @@ const csv = [
     'heightRatio',
     'bodyWidthRatio',
     'bodyHeightRatio',
+    'bodyFootGapRatio',
     'expectedWidthRatio',
     'expectedWidthLabel',
     'areaRatio',
@@ -606,6 +645,7 @@ const csv = [
     item.heightRatio,
     item.bodyWidthRatio,
     item.bodyHeightRatio,
+    item.bodyFootGapRatio,
     item.expectedWidthRatio,
     item.expectedWidthLabel,
     item.areaRatio,

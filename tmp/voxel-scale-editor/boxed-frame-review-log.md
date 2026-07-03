@@ -1,0 +1,49 @@
+# Boxed Frame Review Log
+
+Source: `tmp/voxel-scale-editor/family-ghost-sheets/ghost-difference-review/index.html`
+
+Rules: inspect boxed frame plus neighbors; head/body top to blue for grounded standing frames; feet/body support to red; ignore weapons/effects for body sizing; preserve pose intent; verify after regeneration.
+
+| Status | Character | Move | Frame(s) | Decision | Notes |
+| --- | --- | --- | --- | --- | --- |
+| verified | allen-walker | cmd:f+1 | 253 | scale-uniform | Increased from `1.25/1.25` to `1.31/1.31`; after-proof shows head/body top meeting blue while blade extends above. Neighbor 252 acceptable; 254 verified at `1.25/1.25`. |
+| verified | allen-walker | cmd:qcf+4 | 82 | scale-uniform | Same pose family as `cmd:f+1` frame 253; matched scale to `1.31/1.31`. After-proof matches head/body rule; neighbor 81 acceptable; 83 verified at `1.25/1.25`. |
+| verified | allen-walker | cmd:f+1 | 254 | scale-uniform | Kept `1.25/1.25` after zoom review; head/body top reads close to blue and feet stay grounded. |
+| verified | allen-walker | cmd:qcf+4 | 83 | scale-uniform | Duplicate pose family for frame 254; kept `1.25/1.25` after zoom review. |
+| accepted | allen-walker | cmd:1+2 | 94, 99, 100, 101, 102, 103 | accepted-intentional | Page-1 visual review: red boxes are caused by wide claw/arm reach. Body height and grounded stance are visually consistent with neighboring frames. |
+| accepted | allen-walker | cmd:d+1, cmd:FC+1, cmd:O+1, cmd:qcf+1, jableft | 75, 76, 77, 78 | accepted-intentional | Same repeated attack family. Wide hair/arm/claw silhouette causes area flags; head/body and feet read stable against the ghost. |
+| accepted | allen-walker | cmd:f+1, cmd:qcf+4 | 251, 80 | accepted-false-positive | Detector reports feet gap from green effect/body support interpretation; zoom review shows grounded standing pose reads acceptable. |
+| verified | allen-walker | sidestepLeft, sidestepRight | 145 | scale-uniform | Standing-like movement pose was slightly low versus blue line at `0.98/0.98`; increased both directions to `1.03/1.03`. After-proof head meets blue and feet stay grounded. |
+| accepted | allen-walker | crouch | 22 | accepted-intentional | Crouch pose is intentionally low; body volume reads consistent for crouch and feet remain grounded. |
+| accepted | allen-walker | getupStand | 32, 33, 34, 53, 54, 55, 56, 57 | accepted-intentional | Getup/prone-to-stand sequence reviewed at zoom; red boxes are pose-width/projection flags, not visible scale pops. |
+| accepted | allen-walker | juggle | 28 | accepted-intentional | Airborne/vertical hurt pose reads consistent against idle volume; no crop or size pop. |
+| accepted | allen-walker | knockdown | 31, 32, 33, 34 | accepted-intentional | Knockdown frames reviewed at zoom; volume reads consistent for the curled/prone pose family. |
+| accepted | allen-walker | lose | 30 | accepted-intentional | Lose pose is compact but body mass and baseline read consistent for the pose. |
+| accepted | allen-walker | sprint | 12, 13 | accepted-intentional | Page-2 zoom review: forward lean and coat/arm width create flags, but body volume is stable and head/feet read correctly for sprint. |
+| accepted | allen-walker | walkForward | 4, 8 | accepted-false-positive | Repeated walking source frames read consistent against neighbors; red boxes are detector repeats, not visible size issues. |
+| accepted | anna-kyoyama | backflip | 45, 46, 48 | accepted-intentional | Rotating/backflip poses reviewed with neighbors; compact/inverted silhouettes are intentional and body volume reads stable. |
+| accepted | anna-kyoyama | block | 15 | accepted-intentional | Standing block is compact but head/hair reaches the blue line and feet are grounded. |
+| accepted | anna-kyoyama | cmd:1+2, cmd:d/f+2, cmd:f+2, cmd:FC+2, cmd:WS+2 | 84, 85, 86, 87, 88, 89, 90 | accepted-intentional | Low sweeping attack family; red boxes are from weapon/cape reach and low pose, not body scale bounce. |
+| verified | anna-kyoyama | cmd:2+3 | 128, 129, 131, 132 | scale-uniform | User caught these as misses even when not all were detected. Increased 128/129 from `0.98/0.98` to `1.08/1.08`, added 131 at `1.08/1.08`, and increased 132 from `1.08/1.08` to `1.14/1.14`. Matched reused `win` frame 132 to `1.14/1.14`. After-proof shows surrounding body frames read consistently against the ghost. |
+| accepted | anna-kyoyama | cmd:2+3 | 130 | accepted-intentional | Weapon ball causes width/area flag; body width is intentionally dominated by the weapon. |
+| pending-verify | anna-kyoyama | cmd:f+1 | 102, 105, 107 | scale-uniform | Slightly low upright/standing attack frames; changed 102 and 105 from `0.97/0.97` to `1/1`, and 107 from `0.94/0.94` to `1/1`. |
+| pending-verify | anna-kyoyama | cmd:qcf+4 | 157, 166 | scale-uniform | Low standing endpoints in the sequence; changed 157 from `0.96/0.96` to `1/1`, and 166 from `0.95/0.95` to `1/1`. |
+| verified | anna-kyoyama | cmd:qcf+4 | 160, 161, 162, 163 | scale-uniform | User flagged these as needing updates; increased from `1.18/1.18` to `1.24/1.24` so Anna's body reads closer to idle ghost while effect is allowed to exceed the blue line. After-proof confirms improved body volume through the effect sequence. |
+| accepted | anna-kyoyama | crouch | 22 | accepted-intentional | Crouch is intentionally low and grounded; body volume reads correct for the pose. |
+| verified | anna-kyoyama | walkForward | 5, 6, 7, 9 | scale-uniform | Page-3 zoom review found subtle small standing movement frames. Increased 5 from `0.92/0.92` to `1.02/1.02`, 6 from `0.95/0.95` to `1.01/1.01`, 7 from `0.97/0.97` to `1/1`, and 9 from `0.95/0.95` to `1.01/1.01`. Row dropped from candidate page after regeneration. |
+| verified | anna-kyoyama | sidestepLeft, sidestepRight | 135 | scale-uniform | Standing sidestep read slightly low against ghost; added both directions at `1.04/1.04`. After-proof shows head meets blue and feet remain grounded. |
+| verified | anna-kyoyama | jump | 17, 18, 19 | scale-uniform | Jump frames read small in body volume; increased 17 to `0.98/0.98`, and 18/19 to `1/1`. Row dropped from candidate page after regeneration. |
+| verified | anna-kyoyama | juggle | 31, 32 | scale-uniform | Airborne hurt frames read slightly small, especially 32; increased 31 to `1/1` and 32 from `0.922/0.922` to `1/1`. After-proof body volume reads better for airborne hurt pose. |
+| accepted | anna-kyoyama | knockdown, lose | 34, 35, 36, 37, 33 | accepted-intentional | Prone/lying poses reviewed at zoom; compact height is pose-correct and width/body volume reads consistent. |
+| verified | arale-norimaki | backflip | 43 | scale-uniform | Page-3 zoom review found frame 43 slightly small/low in an upright backflip recovery pose; increased from `0.96/0.96` to `1.02/1.02`. After-proof reads aligned with neighboring backflip frames. |
+| verified | arale-norimaki | chargeKi | 38 | scale-uniform | Single standing charge pose read slightly low; increased from `0.99/0.99` to `1.03/1.03`. After-proof head/body top meets the blue line. |
+| accepted | arale-norimaki | backflip | 40, 41, 48 | accepted-intentional | Rotating/backflip silhouettes reviewed with neighbors; 48's extra height is pose/motion, not body-size pop. |
+| accepted | arale-norimaki | cmd:3+4 | 110, 112 | accepted-intentional | Diagonal/aerial attack poses; red boxes are width/tilt flags, body volume reads consistent. |
+| accepted | arale-norimaki | cmd:d/f+2, cmd:d+1, cmd:f+1 | 86, 87, 88, 127, 128, 129, 130, 131 | accepted-intentional | Attack and rolling/sliding poses reviewed at zoom; width flags come from motion/pose reach, not incorrect body scale. |
+| accepted | arale-norimaki | cmd:FC+1, cmd:FC+2, cmd:O+1, cmd:qcf+1, cmd:WS+2, jabright | 86, 87, 88, 127, 128, 129, 130, 131 | accepted-intentional | Page-4 repeated command/jab families reviewed at zoom; width flags are from attack pose and motion, with stable body size. |
+| accepted | arale-norimaki | crouch | 62 | accepted-intentional | Crouch is intentionally low and grounded; body volume reads correct for the pose. |
+| accepted | arale-norimaki | getupStand, lose | 31, 57, 59, 60 | accepted-intentional | Recovery/lose poses reviewed at zoom; compact height is pose-correct and no crop issue visible. |
+| verified | arale-norimaki | jump | 21 | scale-uniform | Jump frame 21 was slightly smaller than neighboring jump frames 19/20; increased from `0.97/0.97` to `1/1`. Row dropped from candidate page after regeneration. |
+| verified | arale-norimaki | knockdown | 38 | scale-uniform | Upright source pose also used by chargeKi; matched knockdown frame 38 from `0.99/0.99` to `1.03/1.03`. After-proof reads aligned with the corrected source pose. |
+| accepted | arale-norimaki | knockdown | 39, 40, 41, 42 | accepted-intentional | Knockdown roll/stand transition frames reviewed at zoom; pose sequence reads stable. |
+| accepted | arale-norimaki | sidestepLeft | 40 | accepted-intentional | Sidestep uses a turning/back pose that reads consistent with the ghost; no isolated scale change needed. |

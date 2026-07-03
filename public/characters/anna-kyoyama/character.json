@@ -1261,18 +1261,18 @@
         "offsetX": 0
       },
       "5": {
-        "width": 0.92,
-        "height": 0.92,
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       },
       "6": {
-        "width": 0.95,
-        "height": 0.95,
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0
       },
       "7": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "8": {
@@ -1281,8 +1281,8 @@
         "offsetX": 0
       },
       "9": {
-        "width": 0.95,
-        "height": 0.95,
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0
       }
     },
@@ -1337,18 +1337,18 @@
     },
     "jump": {
       "17": {
-        "width": 0.9,
-        "height": 0.9,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0
       },
       "18": {
-        "width": 0.93,
-        "height": 0.93,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "19": {
-        "width": 0.93,
-        "height": 0.93,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1363,6 +1363,20 @@
       "15": {
         "width": 0.96,
         "height": 0.96,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "135": {
+        "width": 1.04,
+        "height": 1.04,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "135": {
+        "width": 1.04,
+        "height": 1.04,
         "offsetX": 0
       }
     },
@@ -1382,27 +1396,27 @@
     },
     "juggle": {
       "31": {
-        "width": 0.99,
-        "height": 0.99,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "32": {
-        "width": 0.922,
-        "height": 0.922,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
     "win": {
       "132": {
-        "width": 1.08,
-        "height": 1.08,
+        "width": 1.14,
+        "height": 1.14,
         "offsetX": 0
       }
     },
     "cmd:f+1": {
       "102": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "103": {
@@ -1416,8 +1430,8 @@
         "offsetX": 0
       },
       "105": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "106": {
@@ -1426,8 +1440,8 @@
         "offsetX": 0
       },
       "107": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "109": {
@@ -1438,8 +1452,8 @@
     },
     "cmd:qcf+4": {
       "157": {
-        "width": 0.96,
-        "height": 0.96,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "159": {
@@ -1448,40 +1462,40 @@
         "offsetX": 0
       },
       "160": {
-        "width": 1.18,
-        "height": 1.18,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0
       },
       "161": {
-        "width": 1.18,
-        "height": 1.18,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0
       },
       "162": {
-        "width": 1.18,
-        "height": 1.18,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0
       },
       "163": {
-        "width": 1.18,
-        "height": 1.18,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0
       },
       "166": {
-        "width": 0.95,
-        "height": 0.95,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
     "cmd:2+3": {
       "128": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1.08,
+        "height": 1.08,
         "offsetX": 0
       },
       "129": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1.08,
+        "height": 1.08,
         "offsetX": 0
       },
       "130": {
@@ -1489,9 +1503,14 @@
         "height": 0.95,
         "offsetX": 0
       },
-      "132": {
+      "131": {
         "width": 1.08,
         "height": 1.08,
+        "offsetX": 0
+      },
+      "132": {
+        "width": 1.14,
+        "height": 1.14,
         "offsetX": 0
       }
     }
