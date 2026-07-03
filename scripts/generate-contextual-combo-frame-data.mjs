@@ -31,12 +31,12 @@ function defaultOnComboHitFrames(move) {
     Math.max(0, (move.activeFrames ?? 2) - 3) +
     Math.max(0, Math.round(((move.forwardForce ?? 0) - 1.4) * 1.5));
   const lowCredit = move.hitLevel === 'low' ? 1 : 0;
-  return clamp(Math.round((move.onHitFrames ?? 8) * 0.78) + commitmentCredit + lowCredit - risk, 4, Math.max(4, move.onHitFrames ?? 8));
+  return clamp(Math.round((move.onHitFrames ?? 8) * 0.84) + 1 + commitmentCredit + lowCredit - risk, 5, Math.max(5, (move.onHitFrames ?? 8) + 2));
 }
 
 function defaultOnJuggleHitFrames(move) {
   const command = move.command ?? move.notation;
-  const explicitJuggleCredit = move.tornado ? 10 : move.juggleRefloatVelocity ? 5 : 0;
+  const explicitJuggleCredit = move.tornado ? 11 : move.juggleRefloatVelocity ? 6 : 0;
   const commandCredit = command && !isPlainNeutralCommand(command) ? 2 : 0;
   const propertyRisk =
     (move.launchHeight ? 5 : 0) +
@@ -44,7 +44,7 @@ function defaultOnJuggleHitFrames(move) {
     Math.max(0, Math.round(((move.damage ?? 0) - 10) / 3)) +
     Math.max(0, (move.activeFrames ?? 2) - 3) +
     Math.max(0, Math.round(((move.forwardForce ?? 0) - 1) * 1.4));
-  return clamp(Math.round((move.onHitFrames ?? 8) * 0.55) + explicitJuggleCredit + commandCredit - propertyRisk, 3, move.tornado ? 28 : 18);
+  return clamp(Math.round((move.onHitFrames ?? 8) * 0.62) + 1 + explicitJuggleCredit + commandCredit - propertyRisk, 4, move.tornado ? 30 : 20);
 }
 
 function defaultComboRepeatPenaltyFrames(move) {

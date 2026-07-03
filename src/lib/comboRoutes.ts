@@ -91,11 +91,11 @@ const rawButtonCommandToBaseKey: Record<string, string> = {
 };
 
 const categoryLimits: Record<ComboRouteCategory, number> = {
-  basic: 4,
-  advanced: 6,
+  basic: 5,
+  advanced: 7,
   crouch: 5,
-  launcher: 5,
-  tornado: 4,
+  launcher: 6,
+  tornado: 5,
   counterHit: 5
 };
 
@@ -129,9 +129,10 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     .sort((a, b) => a.move.startupFrames - b.move.startupFrames || contextualHitAdvantage(b.move, { context: 'neutral' }) - contextualHitAdvantage(a.move, { context: 'neutral' }));
   for (const starter of basics) {
     const advantage = contextualHitAdvantage(starter.move, { context: 'neutral' });
-    const target = findBestLink(routes, advantage, starter, { allowStates: ['standing'] });
-    if (!target) continue;
-    pushTrial(makeRouteTrial('basic', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} link`));
+    const targets = findBestLinks(routes, advantage, starter, { allowStates: ['standing'] }, 2);
+    for (const target of targets) {
+      pushTrial(makeRouteTrial('basic', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} link`));
+    }
   }
 
   const advanced = routes
@@ -139,9 +140,10 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of advanced) {
     const advantage = contextualHitAdvantage(starter.move, { context: 'neutral' });
-    const target = findBestLink(routes, advantage, starter, { allowStates: ['standing'] });
-    if (!target) continue;
-    pushTrial(makeRouteTrial('advanced', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} command link`));
+    const targets = findBestLinks(routes, advantage, starter, { allowStates: ['standing'] }, 2);
+    for (const target of targets) {
+      pushTrial(makeRouteTrial('advanced', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} command link`));
+    }
   }
 
   const crouchStarters = routes
@@ -149,9 +151,10 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of crouchStarters) {
     const advantage = contextualHitAdvantage(starter.move, { context: 'neutral' });
-    const target = findBestLink(routes, advantage, starter, { allowStates: ['crouch', 'whileStanding'] });
-    if (!target) continue;
-    pushTrial(makeRouteTrial('crouch', starter, [target], `FC end +${advantage} -> ${target.command ?? target.notation.join('+')}`));
+    const targets = findBestLinks(routes, advantage, starter, { allowStates: ['crouch', 'whileStanding'] }, 2);
+    for (const target of targets) {
+      pushTrial(makeRouteTrial('crouch', starter, [target], `FC end +${advantage} -> ${target.command ?? target.notation.join('+')}`));
+    }
   }
 
   const launchers = routes
@@ -159,9 +162,10 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of launchers) {
     const advantage = Math.max(contextualHitAdvantage(starter.move, { context: 'neutral' }), 24);
-    const target = findBestLink(routes, advantage, starter, { allowStates: ['standing'], preferJuggle: true });
-    if (!target) continue;
-    pushTrial(makeRouteTrial('launcher', starter, [target], `Launch +${advantage} -> i${target.move.startupFrames} juggle`, { launched: true }));
+    const targets = findBestLinks(routes, advantage, starter, { allowStates: ['standing'], preferJuggle: true }, 2);
+    for (const target of targets) {
+      pushTrial(makeRouteTrial('launcher', starter, [target], `Launch +${advantage} -> i${target.move.startupFrames} juggle`, { launched: true }));
+    }
   }
 
   const tornadoes = routes
@@ -354,6 +358,16 @@ function findBestLink(
   starter: ResolvedMoveRoute,
   options: { allowStates: ComboRouteState[]; preferJuggle?: boolean }
 ) {
+  return findBestLinks(routes, advantage, starter, options, 1)[0] ?? null;
+}
+
+function findBestLinks(
+  routes: ResolvedMoveRoute[],
+  advantage: number,
+  starter: ResolvedMoveRoute,
+  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean },
+  limit: number
+) {
   return routes
     .filter((route) => route.id !== starter.id)
     .filter((route) => options.allowStates.includes(route.state))
@@ -365,7 +379,8 @@ function findBestLink(
       const aJuggle = options.preferJuggle ? juggleScore(a) : 0;
       const bJuggle = options.preferJuggle ? juggleScore(b) : 0;
       return bJuggle - aJuggle || aTightness - bTightness || routeRewardScore(b) - routeRewardScore(a);
-    })[0] ?? null;
+    })
+    .slice(0, limit);
 }
 
 function applyMoveOverrides(character: CharacterDefinition, move: MoveDefinition, keys: Array<string | undefined>): MoveDefinition {

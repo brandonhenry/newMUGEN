@@ -24,8 +24,8 @@ Values: `pass`, `fail`, or `n/a: reason`.
 
 | # | Character | Status |
 |---:|---|---|
-| 1 | Allen Walker (`allen-walker`) | Restarted again under height-first/head-top lock rule; rechecking all 108 frames from the top. |
-| 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; restarted from top under multi-line ruler + auto head-color proof rules. |
+| 1 | Allen Walker (`allen-walker`) | Completed fresh strict pass: 108/108 individual frame proofs checked; fixed `cmd:f+1` 254 and `cmd:qcf+4` 083 to `1.14w/1.38h`. |
+| 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; fresh restart from frame 000 with strong magenta head-line proofs. |
 
 ## Strict Frame Checklist
 
@@ -89,7 +89,7 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `cmd:f+1` | 251 | pass | n/a: side attack lean | pass | n/a: not laying | n/a: not ball | pass | pass: green weapon ignored | pass | No edit. |
 | Allen Walker | `cmd:f+1` | 252 | pass | n/a: crouched attack lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: green weapon ignored | pass | No edit. |
 | Allen Walker | `cmd:f+1` | 253 | pass | n/a: crouched attack lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: large weapon box ignored | pass | Existing `1.31w/1.31h` preserved; actual body needs this size. |
-| Allen Walker | `cmd:f+1` | 254 | pass | n/a: side attack lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: weapon ignored | pass | Existing `1.06w/1.06h` verified. |
+| Allen Walker | `cmd:f+1` | 254 | pass: head width/volume controlled after height solve | pass: real hair top now meets orange guide; raised weapon ignored | pass: body core has idle volume without becoming too wide | n/a: not laying | n/a: not ball | pass | pass: raised weapon ignored | pass | Fixed from `1.06w/1.06h` to `1.14w/1.38h`; verified against 253/255. |
 | Allen Walker | `cmd:f+1` | 255 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: red arm ignored | pass | No edit. |
 | Allen Walker | `cmd:f+1` | 256 | fixed: transformed extension no longer hides skinny body core | n/a: side/back attack pose | pass | n/a: not laying | n/a: not ball | pass | pass: hair/extension ignored after body fix | pass | Increased to `1.25w/1.10h`; verified. |
 | Allen Walker | `cmd:f+1` | 257 | fixed: side-on body core widened | n/a: side/back attack pose | pass | n/a: not laying | n/a: not ball | pass | pass: extension ignored after body fix | pass | Increased to `1.25w/1.10h`; verified. |
@@ -99,7 +99,7 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `cmd:qcf+4` | 080 | pass | n/a: side attack lean | pass | n/a: not laying | n/a: not ball | pass | pass: green weapon ignored | pass | Same behavior as `cmd:f+1` 251; no edit. |
 | Allen Walker | `cmd:qcf+4` | 081 | pass | n/a: crouched attack lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: green weapon ignored | pass | Same behavior as `cmd:f+1` 252; no edit. |
 | Allen Walker | `cmd:qcf+4` | 082 | pass | n/a: crouched attack lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: large weapon box ignored | pass | Existing `1.31w/1.31h` preserved; actual body needs this size. |
-| Allen Walker | `cmd:qcf+4` | 083 | pass | n/a: side attack lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: weapon ignored | pass | Existing `1.06w/1.06h` verified. |
+| Allen Walker | `cmd:qcf+4` | 083 | pass: head width/volume controlled after height solve | pass: real hair top now meets orange guide; raised weapon ignored | pass: body core has idle volume without becoming too wide | n/a: not laying | n/a: not ball | pass | pass: raised weapon ignored | pass | Fixed from `1.06w/1.06h` to `1.14w/1.38h`; verified against 082/084. |
 | Allen Walker | `cmd:qcf+4` | 084 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: red arm ignored | pass | No edit. |
 | Allen Walker | `cmd:qcf+4` | 085 | fixed: transformed extension no longer hides skinny body core | n/a: side/back attack pose | pass | n/a: not laying | n/a: not ball | pass | pass: hair/extension ignored after body fix | pass | Increased to `1.25w/1.10h`; verified. |
 | Allen Walker | `cmd:qcf+4` | 086 | fixed: side-on body core widened | n/a: side/back attack pose | pass | n/a: not laying | n/a: not ball | pass | pass: extension ignored after body fix | pass | Increased to `1.25w/1.10h`; verified. |
@@ -139,10 +139,3 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `cmd:O+1` | 076 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | Same source/scale as jableft; verified by reuse check. |
 | Allen Walker | `cmd:O+1` | 077 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | Same source/scale as jableft; verified by reuse check. |
 | Allen Walker | `cmd:O+1` | 078 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | Same source/scale as jableft/win; verified by reuse check. |
-| Anna Kyoyama | `jabright` | 086 | fixed: slash/box reached high but ruler showed red head marker below idle | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; verified with multi-line ruler. |
-| Anna Kyoyama | `cmd:d/f+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; verified with multi-line ruler. |
-| Anna Kyoyama | `cmd:FC+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
-| Anna Kyoyama | `cmd:1+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
-| Anna Kyoyama | `cmd:f+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
-| Anna Kyoyama | `cmd:WS+2` | 086 | fixed: reused source frame carried same short-head issue | pass: real red head now reaches orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: slash ignored; auto head line fooled by effect | pass | Increased to `1.10w/1.32h`; same source/scale as verified 086. |
-| Anna Kyoyama | `cmd:f+1` | 109 | fixed: crescent/box reached high but actual red head sat too low | pass: red head now lands near orange guide | pass | n/a: not laying | n/a: not ball | pass | pass: crescent ignored; auto head line fooled by effect | pass | Increased to `1.50w/1.62h`; verified with multi-line ruler. |
