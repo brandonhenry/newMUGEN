@@ -1,0 +1,155 @@
+# Ghost Difference Review
+
+Generated 2026-07-03T16:23:51.008Z.
+
+- Characters scanned: 63
+- Candidate rows: 1747
+- Candidate frames: 7534
+- Pages: 125
+
+## Reason Counts
+
+- same-source-scaled: 3984
+- high-area: 2458
+- too-wide: 1995
+- below-blue: 1859
+- above-blue: 932
+- body-below: 765
+- same-source-scale-diff: 751
+- body-above: 455
+- seq-area-low: 446
+- seq-body-dip: 409
+- seq-height-dip: 393
+- too-narrow: 375
+- low-area: 316
+
+## Files
+
+- index.html
+- candidates.json
+- candidates.csv
+- candidates-page-001.png
+- candidates-page-002.png
+- candidates-page-003.png
+- candidates-page-004.png
+- candidates-page-005.png
+- candidates-page-006.png
+- candidates-page-007.png
+- candidates-page-008.png
+- candidates-page-009.png
+- candidates-page-010.png
+- candidates-page-011.png
+- candidates-page-012.png
+- candidates-page-013.png
+- candidates-page-014.png
+- candidates-page-015.png
+- candidates-page-016.png
+- candidates-page-017.png
+- candidates-page-018.png
+- candidates-page-019.png
+- candidates-page-020.png
+- candidates-page-021.png
+- candidates-page-022.png
+- candidates-page-023.png
+- candidates-page-024.png
+- candidates-page-025.png
+- candidates-page-026.png
+- candidates-page-027.png
+- candidates-page-028.png
+- candidates-page-029.png
+- candidates-page-030.png
+- candidates-page-031.png
+- candidates-page-032.png
+- candidates-page-033.png
+- candidates-page-034.png
+- candidates-page-035.png
+- candidates-page-036.png
+- candidates-page-037.png
+- candidates-page-038.png
+- candidates-page-039.png
+- candidates-page-040.png
+- candidates-page-041.png
+- candidates-page-042.png
+- candidates-page-043.png
+- candidates-page-044.png
+- candidates-page-045.png
+- candidates-page-046.png
+- candidates-page-047.png
+- candidates-page-048.png
+- candidates-page-049.png
+- candidates-page-050.png
+- candidates-page-051.png
+- candidates-page-052.png
+- candidates-page-053.png
+- candidates-page-054.png
+- candidates-page-055.png
+- candidates-page-056.png
+- candidates-page-057.png
+- candidates-page-058.png
+- candidates-page-059.png
+- candidates-page-060.png
+- candidates-page-061.png
+- candidates-page-062.png
+- candidates-page-063.png
+- candidates-page-064.png
+- candidates-page-065.png
+- candidates-page-066.png
+- candidates-page-067.png
+- candidates-page-068.png
+- candidates-page-069.png
+- candidates-page-070.png
+- candidates-page-071.png
+- candidates-page-072.png
+- candidates-page-073.png
+- candidates-page-074.png
+- candidates-page-075.png
+- candidates-page-076.png
+- candidates-page-077.png
+- candidates-page-078.png
+- candidates-page-079.png
+- candidates-page-080.png
+- candidates-page-081.png
+- candidates-page-082.png
+- candidates-page-083.png
+- candidates-page-084.png
+- candidates-page-085.png
+- candidates-page-086.png
+- candidates-page-087.png
+- candidates-page-088.png
+- candidates-page-089.png
+- candidates-page-090.png
+- candidates-page-091.png
+- candidates-page-092.png
+- candidates-page-093.png
+- candidates-page-094.png
+- candidates-page-095.png
+- candidates-page-096.png
+- candidates-page-097.png
+- candidates-page-098.png
+- candidates-page-099.png
+- candidates-page-100.png
+- candidates-page-101.png
+- candidates-page-102.png
+- candidates-page-103.png
+- candidates-page-104.png
+- candidates-page-105.png
+- candidates-page-106.png
+- candidates-page-107.png
+- candidates-page-108.png
+- candidates-page-109.png
+- candidates-page-110.png
+- candidates-page-111.png
+- candidates-page-112.png
+- candidates-page-113.png
+- candidates-page-114.png
+- candidates-page-115.png
+- candidates-page-116.png
+- candidates-page-117.png
+- candidates-page-118.png
+- candidates-page-119.png
+- candidates-page-120.png
+- candidates-page-121.png
+- candidates-page-122.png
+- candidates-page-123.png
+- candidates-page-124.png
+- candidates-page-125.png
