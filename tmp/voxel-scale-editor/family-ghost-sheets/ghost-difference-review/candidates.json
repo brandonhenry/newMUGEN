@@ -5210,106 +5210,27 @@
   {
     "character": "bobobo-bo-bo-bobo",
     "displayName": "Bobobo-bo Bo-bobo",
-    "key": "chargeKi",
-    "frame": 62,
-    "isAttack": false,
-    "widthRatio": 0.93,
-    "heightRatio": 0.93,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.93,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.93,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.865,
-    "bodyAreaRatio": 0.865,
-    "scaleWidth": 0.93,
-    "scaleHeight": 0.93,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.93/0.93"
-    ],
-    "reasons": [
-      "below-blue:0.93h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "chargeKi",
-    "frame": 63,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "chargeKi",
-    "frame": 64,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
     "key": "cmd:1+2",
     "frame": 130,
     "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.015,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.016,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.903,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "seq-area-low:0.36"
+      "seq-area-low:0.33"
     ]
   },
   {
@@ -5318,26 +5239,25 @@
     "key": "cmd:1+2",
     "frame": 131,
     "isAttack": true,
-    "widthRatio": 2.781,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 2.781,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.031,
+    "widthRatio": 2.927,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.927,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.033,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 2.781,
+    "expectedWidthRatio": 2.927,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 2.642,
-    "bodyAreaRatio": 2.642,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 2.927,
+    "bodyAreaRatio": 2.927,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:2.78x-idleW",
-      "high-area:2.64"
+      "too-wide:2.93x-idleW",
+      "high-area:2.93"
     ]
   },
   {
@@ -5346,25 +5266,25 @@
     "key": "cmd:1+2",
     "frame": 132,
     "isAttack": true,
-    "widthRatio": 2.51,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 2.51,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 2.561,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.561,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0.033,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 2.51,
+    "expectedWidthRatio": 2.561,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 2.46,
-    "bodyAreaRatio": 2.46,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 2.561,
+    "bodyAreaRatio": 2.561,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "too-wide:2.51x-idleW",
-      "high-area:2.46"
+      "too-wide:2.56x-idleW",
+      "high-area:2.56"
     ]
   },
   {
@@ -5373,25 +5293,24 @@
     "key": "cmd:1+2",
     "frame": 134,
     "isAttack": true,
-    "widthRatio": 1.315,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.315,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.092,
+    "widthRatio": 1.384,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.384,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.097,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.315,
+    "expectedWidthRatio": 1.384,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.249,
-    "bodyAreaRatio": 1.249,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.384,
+    "bodyAreaRatio": 1.384,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "feet-above-ground:0.09"
+      "feet-above-ground:0.10"
     ]
   },
   {
@@ -5716,24 +5635,24 @@
     "key": "cmd:3+4",
     "frame": 123,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.048,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.049,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.98/0.98"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.40"
+      "seq-area-low:0.51"
     ]
   },
   {
@@ -5742,24 +5661,24 @@
     "key": "cmd:3+4",
     "frame": 124,
     "isAttack": true,
-    "widthRatio": 1.434,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.434,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 1.51,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.51,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.434,
+    "expectedWidthRatio": 1.51,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.363,
-    "bodyAreaRatio": 1.363,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.51,
+    "bodyAreaRatio": 1.51,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h"
+      "high-area:1.51"
     ]
   },
   {
@@ -5768,26 +5687,25 @@
     "key": "cmd:3+4",
     "frame": 125,
     "isAttack": true,
-    "widthRatio": 1.927,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.927,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 2.028,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.028,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.927,
+    "expectedWidthRatio": 2.028,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.83,
-    "bodyAreaRatio": 1.83,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 2.028,
+    "bodyAreaRatio": 2.028,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.93x-idleW",
-      "high-area:1.83"
+      "too-wide:2.03x-idleW",
+      "high-area:2.03"
     ]
   },
   {
@@ -5796,26 +5714,25 @@
     "key": "cmd:3+4",
     "frame": 126,
     "isAttack": true,
-    "widthRatio": 1.927,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.927,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 2.028,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.028,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.927,
+    "expectedWidthRatio": 2.028,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.83,
-    "bodyAreaRatio": 1.83,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 2.028,
+    "bodyAreaRatio": 2.028,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.93x-idleW",
-      "high-area:1.83"
+      "too-wide:2.03x-idleW",
+      "high-area:2.03"
     ]
   },
   {
@@ -5824,24 +5741,24 @@
     "key": "cmd:3+4",
     "frame": 127,
     "isAttack": true,
-    "widthRatio": 1.434,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.434,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.022,
+    "widthRatio": 1.51,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.51,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.434,
+    "expectedWidthRatio": 1.51,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.363,
-    "bodyAreaRatio": 1.363,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.51,
+    "bodyAreaRatio": 1.51,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h"
+      "high-area:1.51"
     ]
   },
   {
@@ -6074,7 +5991,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6100,7 +6017,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.97/0.97"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6262,32 +6179,6 @@
     ],
     "reasons": [
       "same-source-scaled:kickleft/win"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "cmd:f+1",
-    "frame": 318,
-    "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.034,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.903,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:f+1:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
     ]
   },
   {
@@ -6616,7 +6507,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6642,7 +6533,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.97/0.97"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6720,7 +6611,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6746,7 +6637,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.97/0.97"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6898,7 +6789,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -6924,7 +6815,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.97/0.97"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"
@@ -7092,81 +6983,28 @@
     "character": "bobobo-bo-bo-bobo",
     "displayName": "Bobobo-bo Bo-bobo",
     "key": "cmd:qcf+4",
-    "frame": 394,
-    "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.903,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:qcf+4:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "cmd:qcf+4",
-    "frame": 395,
-    "isAttack": true,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:qcf+4:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "cmd:qcf+4",
     "frame": 397,
     "isAttack": true,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.651,
-    "bodyHeightRatio": 0.795,
-    "bodyFootGapRatio": 0.193,
-    "bodyHeadGapRatio": 0.048,
-    "expectedWidthRatio": 0.94,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 0.692,
+    "bodyHeightRatio": 0.846,
+    "bodyFootGapRatio": 0.205,
+    "bodyHeadGapRatio": 0.051,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.518,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 0.586,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:qcf+4:0.94/0.94"
+      "cmd:qcf+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.94h",
-      "body-below:0.80h",
-      "seq-body-dip:0.17",
-      "feet-above-ground:0.19"
+      "body-below:0.85h",
+      "seq-body-dip:0.13",
+      "feet-above-ground:0.21"
     ]
   },
   {
@@ -7175,24 +7013,24 @@
     "key": "cmd:qcf+4",
     "frame": 398,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.663,
-    "bodyHeightRatio": 0.879,
-    "bodyFootGapRatio": 0.176,
-    "bodyHeadGapRatio": 0.025,
-    "expectedWidthRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 0.677,
+    "bodyHeightRatio": 0.897,
+    "bodyFootGapRatio": 0.179,
+    "bodyHeadGapRatio": 0.026,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.583,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 0.607,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:qcf+4:0.98/0.98"
+      "cmd:qcf+4:1/1"
     ],
     "reasons": [
-      "body-below:0.88h",
+      "body-below:0.90h",
       "feet-above-ground:0.18"
     ]
   },
@@ -7202,21 +7040,21 @@
     "key": "cmd:qcf+4",
     "frame": 399,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.633,
-    "bodyHeightRatio": 0.93,
-    "bodyFootGapRatio": 0.101,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 0.646,
+    "bodyHeightRatio": 0.949,
+    "bodyFootGapRatio": 0.103,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.589,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 0.613,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:qcf+4:0.98/0.98"
+      "cmd:qcf+4:1/1"
     ],
     "reasons": [
       "feet-above-ground:0.10"
@@ -7437,7 +7275,8 @@
       "body-below:0.50h",
       "low-area:0.64",
       "seq-height-dip:0.50",
-      "seq-body-dip:0.46",
+      "seq-body-dip:0.50",
+      "seq-area-low:0.36",
       "same-source-scale-diff:0.28"
     ]
   },
@@ -7469,7 +7308,7 @@
       "below-blue:0.56h",
       "body-below:0.56h",
       "seq-height-dip:0.44",
-      "seq-body-dip:0.40",
+      "seq-body-dip:0.44",
       "same-source-scale-diff:0.22"
     ]
   },
@@ -7502,7 +7341,8 @@
       "body-below:0.53h",
       "low-area:0.68",
       "seq-height-dip:0.47",
-      "seq-body-dip:0.43",
+      "seq-body-dip:0.47",
+      "seq-area-low:0.32",
       "same-source-scale-diff:0.33"
     ]
   },
@@ -7512,26 +7352,24 @@
     "key": "getupStand",
     "frame": 49,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.665,
+    "expectedWidthRatio": 0.722,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "body-below:0.92h",
-      "too-narrow:0.66x-idleH"
+      "too-narrow:0.72x-idleH"
     ]
   },
   {
@@ -7540,26 +7378,24 @@
     "key": "getupStand",
     "frame": 50,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "bodyFootGapRatio": 0.031,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.033,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.665,
+    "expectedWidthRatio": 0.723,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "body-below:0.92h",
-      "too-narrow:0.66x-idleH"
+      "too-narrow:0.72x-idleH"
     ]
   },
   {
@@ -7667,32 +7503,6 @@
   {
     "character": "bobobo-bo-bo-bobo",
     "displayName": "Bobobo-bo Bo-bobo",
-    "key": "jableft",
-    "frame": 70,
-    "isAttack": true,
-    "widthRatio": 1.226,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.226,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.016,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.226,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.164,
-    "bodyAreaRatio": 1.164,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
     "key": "juggle",
     "frame": 27,
     "isAttack": false,
@@ -7741,58 +7551,6 @@
     ],
     "reasons": [
       "too-narrow:0.75x-idleH"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "jump",
-    "frame": 19,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.103,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "bobobo-bo-bo-bobo",
-    "displayName": "Bobobo-bo Bo-bobo",
-    "key": "jump",
-    "frame": 20,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.118,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
     ]
   },
   {
@@ -7987,8 +7745,8 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "sidestepLeft:0.94/0.94",
-      "sidestepRight:0.94/0.94"
+      "sidestepLeft:1/1",
+      "sidestepRight:1/1"
     ],
     "reasons": [
       "same-source-scaled:sidestepLeft/sidestepRight"
@@ -8101,184 +7859,27 @@
   {
     "character": "dio",
     "displayName": "DIO",
-    "key": "chargeKi",
-    "frame": 54,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "getupStand:0.97/0.97",
-      "chargeKi:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "chargeKi",
-    "frame": 55,
-    "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.92,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.92/0.92"
-    ],
-    "reasons": [
-      "below-blue:0.92h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "chargeKi",
-    "frame": 60,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "chargeKi",
-    "frame": 61,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "chargeKi",
-    "frame": 62,
-    "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.97,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.97/0.97"
-    ],
-    "reasons": [
-      "below-blue:0.97h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "chargeKi",
-    "frame": 63,
-    "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "chargeKi:0.94/0.94"
-    ],
-    "reasons": [
-      "below-blue:0.94h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
     "key": "cmd:1+2",
     "frame": 160,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.70"
+      "seq-area-low:0.76"
     ]
   },
   {
@@ -8287,24 +7888,24 @@
     "key": "cmd:1+2",
     "frame": 161,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.70"
+      "seq-area-low:0.76"
     ]
   },
   {
@@ -8313,26 +7914,25 @@
     "key": "cmd:1+2",
     "frame": 162,
     "isAttack": true,
-    "widthRatio": 2.034,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 2.034,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 2.141,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.141,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 2.034,
+    "expectedWidthRatio": 2.141,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.932,
-    "bodyAreaRatio": 1.932,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 2.141,
+    "bodyAreaRatio": 2.141,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:2.03x-idleW",
-      "high-area:1.93"
+      "too-wide:2.14x-idleW",
+      "high-area:2.14"
     ]
   },
   {
@@ -8341,26 +7941,25 @@
     "key": "cmd:1+2",
     "frame": 163,
     "isAttack": true,
-    "widthRatio": 1.683,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.683,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.772,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.772,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.683,
+    "expectedWidthRatio": 1.772,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.599,
-    "bodyAreaRatio": 1.599,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.772,
+    "bodyAreaRatio": 1.772,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.68x-idleW",
-      "high-area:1.60"
+      "too-wide:1.77x-idleW",
+      "high-area:1.77"
     ]
   },
   {
@@ -8369,26 +7968,25 @@
     "key": "cmd:1+2",
     "frame": 164,
     "isAttack": true,
-    "widthRatio": 1.808,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.808,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.903,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.903,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.808,
+    "expectedWidthRatio": 1.903,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.717,
-    "bodyAreaRatio": 1.717,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.903,
+    "bodyAreaRatio": 1.903,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.81x-idleW",
-      "high-area:1.72"
+      "too-wide:1.90x-idleW",
+      "high-area:1.90"
     ]
   },
   {
@@ -8397,26 +7995,25 @@
     "key": "cmd:1+2",
     "frame": 165,
     "isAttack": true,
-    "widthRatio": 1.842,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.842,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.939,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.939,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.842,
+    "expectedWidthRatio": 1.939,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.75,
-    "bodyAreaRatio": 1.75,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.939,
+    "bodyAreaRatio": 1.939,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.84x-idleW",
-      "high-area:1.75"
+      "too-wide:1.94x-idleW",
+      "high-area:1.94"
     ]
   },
   {
@@ -8425,26 +8022,25 @@
     "key": "cmd:1+2",
     "frame": 166,
     "isAttack": true,
-    "widthRatio": 1.654,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.654,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.742,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.742,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.654,
+    "expectedWidthRatio": 1.742,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.572,
-    "bodyAreaRatio": 1.572,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.742,
+    "bodyAreaRatio": 1.742,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:1.65x-idleW",
-      "high-area:1.57"
+      "too-wide:1.74x-idleW",
+      "high-area:1.74"
     ]
   },
   {
@@ -8453,25 +8049,25 @@
     "key": "cmd:1+2",
     "frame": 167,
     "isAttack": true,
-    "widthRatio": 3.279,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 3.279,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 3.346,
+    "heightRatio": 1,
+    "bodyWidthRatio": 3.346,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0.023,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 3.279,
+    "expectedWidthRatio": 3.346,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 3.214,
-    "bodyAreaRatio": 3.214,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 3.346,
+    "bodyAreaRatio": 3.346,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "too-wide:3.28x-idleW",
-      "high-area:3.21"
+      "too-wide:3.35x-idleW",
+      "high-area:3.35"
     ]
   },
   {
@@ -8480,25 +8076,25 @@
     "key": "cmd:1+2",
     "frame": 168,
     "isAttack": true,
-    "widthRatio": 3.078,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 3.078,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 3.14,
+    "heightRatio": 1,
+    "bodyWidthRatio": 3.14,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0.022,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 3.078,
+    "expectedWidthRatio": 3.14,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 3.016,
-    "bodyAreaRatio": 3.016,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 3.14,
+    "bodyAreaRatio": 3.14,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.98/0.98"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "too-wide:3.08x-idleW",
-      "high-area:3.02"
+      "too-wide:3.14x-idleW",
+      "high-area:3.14"
     ]
   },
   {
@@ -8507,26 +8103,25 @@
     "key": "cmd:1+2",
     "frame": 169,
     "isAttack": true,
-    "widthRatio": 2.034,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 2.034,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 2.141,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.141,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 2.034,
+    "expectedWidthRatio": 2.141,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.932,
-    "bodyAreaRatio": 1.932,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 2.141,
+    "bodyAreaRatio": 2.141,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:1+2:0.95/0.95"
+      "cmd:1+2:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-wide:2.03x-idleW",
-      "high-area:1.93"
+      "too-wide:2.14x-idleW",
+      "high-area:2.14"
     ]
   },
   {
@@ -8535,24 +8130,24 @@
     "key": "cmd:3+4",
     "frame": 181,
     "isAttack": true,
-    "widthRatio": 1.489,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 1.489,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.041,
+    "widthRatio": 1.519,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.519,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.042,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.489,
+    "expectedWidthRatio": 1.519,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.459,
-    "bodyAreaRatio": 1.459,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1.519,
+    "bodyAreaRatio": 1.519,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.98/0.98"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "high-area:1.46"
+      "high-area:1.52"
     ]
   },
   {
@@ -8561,24 +8156,24 @@
     "key": "cmd:3+4",
     "frame": 182,
     "isAttack": true,
-    "widthRatio": 1.489,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 1.489,
-    "bodyHeightRatio": 0.98,
-    "bodyFootGapRatio": 0.041,
+    "widthRatio": 1.519,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.519,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.042,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.489,
+    "expectedWidthRatio": 1.519,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.459,
-    "bodyAreaRatio": 1.459,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1.519,
+    "bodyAreaRatio": 1.519,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.98/0.98"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "high-area:1.46"
+      "high-area:1.52"
     ]
   },
   {
@@ -8587,50 +8182,24 @@
     "key": "cmd:3+4",
     "frame": 183,
     "isAttack": true,
-    "widthRatio": 1.394,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.394,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1.468,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.468,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.394,
+    "expectedWidthRatio": 1.468,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.325,
-    "bodyAreaRatio": 1.325,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1.468,
+    "bodyAreaRatio": 1.468,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "cmd:3+4",
-    "frame": 184,
-    "isAttack": true,
-    "widthRatio": 1.334,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 1.334,
-    "bodyHeightRatio": 0.95,
-    "bodyFootGapRatio": 0.015,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.334,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 1.268,
-    "bodyAreaRatio": 1.268,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "cmd:3+4:0.95/0.95"
-    ],
-    "reasons": [
-      "below-blue:0.95h"
+      "high-area:1.47"
     ]
   },
   {
@@ -8639,25 +8208,25 @@
     "key": "cmd:3+4",
     "frame": 185,
     "isAttack": true,
-    "widthRatio": 2.833,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 2.833,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 2.89,
+    "heightRatio": 1,
+    "bodyWidthRatio": 2.89,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 2.833,
+    "expectedWidthRatio": 2.89,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 2.776,
-    "bodyAreaRatio": 2.776,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 2.89,
+    "bodyAreaRatio": 2.89,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "cmd:3+4:0.98/0.98"
+      "cmd:3+4:1/1"
     ],
     "reasons": [
-      "too-wide:2.83x-idleW",
-      "high-area:2.78"
+      "too-wide:2.89x-idleW",
+      "high-area:2.89"
     ]
   },
   {
@@ -8680,7 +8249,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -8707,7 +8276,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.73x-idleW",
@@ -8735,7 +8304,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.70x-idleW",
@@ -8763,7 +8332,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -8790,7 +8359,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -8817,7 +8386,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.73x-idleW",
@@ -8845,7 +8414,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.70x-idleW",
@@ -8873,7 +8442,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -8900,7 +8469,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -8927,7 +8496,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.73x-idleW",
@@ -8955,7 +8524,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.70x-idleW",
@@ -8983,7 +8552,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -9010,7 +8579,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -9037,7 +8606,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.73x-idleW",
@@ -9065,7 +8634,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.70x-idleW",
@@ -9093,7 +8662,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -9120,7 +8689,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -9147,7 +8716,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.73x-idleW",
@@ -9175,7 +8744,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "too-wide:1.70x-idleW",
@@ -9203,7 +8772,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "seq-area-low:0.35",
@@ -9230,14 +8799,14 @@
     "scaleHeight": 0.72,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92",
+      "getupStand:1/1",
       "crouch:0.98/0.72"
     ],
     "reasons": [
       "below-blue:0.72h",
       "body-below:0.72h",
       "low-area:0.71",
-      "same-source-scale-diff:0.20"
+      "same-source-scale-diff:0.28"
     ]
   },
   {
@@ -9246,26 +8815,25 @@
     "key": "getupStand",
     "frame": 29,
     "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.108,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.111,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.378,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.97/0.97",
-      "getupStand:0.97/0.97"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.97h",
-      "too-narrow:0.38x-idleH"
+      "too-narrow:0.39x-idleH"
     ]
   },
   {
@@ -9296,8 +8864,8 @@
       "below-blue:0.61h",
       "body-below:0.61h",
       "high-area:1.50",
-      "seq-height-dip:0.35",
-      "seq-body-dip:0.34",
+      "seq-height-dip:0.39",
+      "seq-body-dip:0.39",
       "same-source-scale-diff:0.19"
     ]
   },
@@ -9328,8 +8896,8 @@
     "reasons": [
       "below-blue:0.46h",
       "body-below:0.46h",
-      "seq-height-dip:0.50",
-      "seq-body-dip:0.49",
+      "seq-height-dip:0.54",
+      "seq-body-dip:0.54",
       "same-source-scale-diff:0.34"
     ]
   },
@@ -9360,8 +8928,8 @@
     "reasons": [
       "below-blue:0.45h",
       "body-below:0.45h",
-      "seq-height-dip:0.51",
-      "seq-body-dip:0.50",
+      "seq-height-dip:0.55",
+      "seq-body-dip:0.55",
       "same-source-scale-diff:0.35"
     ]
   },
@@ -9371,27 +8939,26 @@
     "key": "getupStand",
     "frame": 50,
     "isAttack": false,
-    "widthRatio": 0.92,
-    "heightRatio": 0.92,
-    "bodyWidthRatio": 0.92,
-    "bodyHeightRatio": 0.92,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.358,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.846,
-    "bodyAreaRatio": 0.846,
-    "scaleWidth": 0.92,
-    "scaleHeight": 0.92,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.92/0.92",
+      "getupStand:1/1",
       "crouch:0.98/0.72"
     ],
     "reasons": [
-      "below-blue:0.92h",
-      "too-narrow:0.36x-idleH",
-      "same-source-scale-diff:0.20"
+      "too-narrow:0.39x-idleH",
+      "same-source-scale-diff:0.28"
     ]
   },
   {
@@ -9426,26 +8993,24 @@
     "key": "getupStand",
     "frame": 52,
     "isAttack": false,
-    "widthRatio": 0.9,
-    "heightRatio": 0.9,
-    "bodyWidthRatio": 0.9,
-    "bodyHeightRatio": 0.9,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.35,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.81,
-    "bodyAreaRatio": 0.81,
-    "scaleWidth": 0.9,
-    "scaleHeight": 0.9,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.9/0.9"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.90h",
-      "body-below:0.90h",
-      "too-narrow:0.35x-idleH"
+      "too-narrow:0.39x-idleH"
     ]
   },
   {
@@ -9454,25 +9019,24 @@
     "key": "getupStand",
     "frame": 53,
     "isAttack": false,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.37,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.902,
-    "bodyAreaRatio": 0.902,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.95/0.95"
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "too-narrow:0.37x-idleH"
+      "too-narrow:0.39x-idleH"
     ]
   },
   {
@@ -9481,53 +9045,25 @@
     "key": "getupStand",
     "frame": 54,
     "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.378,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "getupStand:0.97/0.97",
-      "chargeKi:0.97/0.97"
+      "getupStand:1/1",
+      "chargeKi:1/1"
     ],
     "reasons": [
-      "below-blue:0.97h",
-      "too-narrow:0.38x-idleH"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
-    "key": "hitLight",
-    "frame": 23,
-    "isAttack": false,
-    "widthRatio": 0.91,
-    "heightRatio": 0.91,
-    "bodyWidthRatio": 0.91,
-    "bodyHeightRatio": 0.91,
-    "bodyFootGapRatio": 0.017,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.91,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.828,
-    "bodyAreaRatio": 0.828,
-    "scaleWidth": 0.91,
-    "scaleHeight": 0.91,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "hitLight:0.91/0.91"
-    ],
-    "reasons": [
-      "below-blue:0.91h",
-      "body-below:0.91h"
+      "too-narrow:0.39x-idleH"
     ]
   },
   {
@@ -9536,25 +9072,24 @@
     "key": "jableft",
     "frame": 75,
     "isAttack": true,
-    "widthRatio": 0.95,
-    "heightRatio": 0.95,
-    "bodyWidthRatio": 0.95,
-    "bodyHeightRatio": 0.95,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.95,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.903,
-    "bodyAreaRatio": 0.903,
-    "scaleWidth": 0.95,
-    "scaleHeight": 0.95,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.95/0.95"
+      "jableft:1/1"
     ],
     "reasons": [
-      "below-blue:0.95h",
-      "seq-area-low:0.39"
+      "seq-area-low:0.35"
     ]
   },
   {
@@ -9563,25 +9098,25 @@
     "key": "jableft",
     "frame": 76,
     "isAttack": true,
-    "widthRatio": 1.692,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 1.692,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 1.727,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.727,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0.016,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.692,
+    "expectedWidthRatio": 1.727,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.658,
-    "bodyAreaRatio": 1.658,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1.727,
+    "bodyAreaRatio": 1.727,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
-      "too-wide:1.69x-idleW",
-      "high-area:1.66"
+      "too-wide:1.73x-idleW",
+      "high-area:1.73"
     ]
   },
   {
@@ -9590,25 +9125,25 @@
     "key": "jableft",
     "frame": 77,
     "isAttack": true,
-    "widthRatio": 1.665,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 1.665,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 1.699,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1.699,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 1.665,
+    "expectedWidthRatio": 1.699,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 1.631,
-    "bodyAreaRatio": 1.631,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1.699,
+    "bodyAreaRatio": 1.699,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
-      "too-wide:1.66x-idleW",
-      "high-area:1.63"
+      "too-wide:1.70x-idleW",
+      "high-area:1.70"
     ]
   },
   {
@@ -9617,24 +9152,24 @@
     "key": "jableft",
     "frame": 78,
     "isAttack": true,
-    "widthRatio": 0.98,
-    "heightRatio": 0.98,
-    "bodyWidthRatio": 0.98,
-    "bodyHeightRatio": 0.98,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
     "bodyFootGapRatio": 0,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.98,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.96,
-    "bodyAreaRatio": 0.96,
-    "scaleWidth": 0.98,
-    "scaleHeight": 0.98,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
-      "seq-area-low:0.34"
+      "seq-area-low:0.35"
     ]
   },
   {
@@ -9643,25 +9178,24 @@
     "key": "juggle",
     "frame": 26,
     "isAttack": false,
-    "widthRatio": 0.93,
-    "heightRatio": 0.93,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.93,
-    "bodyFootGapRatio": 0.097,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.104,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.362,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.865,
-    "bodyAreaRatio": 0.865,
-    "scaleWidth": 0.93,
-    "scaleHeight": 0.93,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "juggle:0.93/0.93"
+      "juggle:1/1"
     ],
     "reasons": [
-      "below-blue:0.93h",
-      "too-narrow:0.36x-idleH"
+      "too-narrow:0.39x-idleH"
     ]
   },
   {
@@ -9693,56 +9227,28 @@
   {
     "character": "dio",
     "displayName": "DIO",
-    "key": "jump",
-    "frame": 21,
-    "isAttack": false,
-    "widthRatio": 0.91,
-    "heightRatio": 0.91,
-    "bodyWidthRatio": 0.91,
-    "bodyHeightRatio": 0.91,
-    "bodyFootGapRatio": 0.343,
-    "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.91,
-    "expectedWidthLabel": "idleW",
-    "areaRatio": 0.828,
-    "bodyAreaRatio": 0.828,
-    "scaleWidth": 0.91,
-    "scaleHeight": 0.91,
-    "scaleSource": "frame",
-    "sameSourceScaleUses": [
-      "jump:0.91/0.91"
-    ],
-    "reasons": [
-      "below-blue:0.91h",
-      "body-below:0.91h"
-    ]
-  },
-  {
-    "character": "dio",
-    "displayName": "DIO",
     "key": "knockdown",
     "frame": 29,
     "isAttack": false,
-    "widthRatio": 0.97,
-    "heightRatio": 0.97,
-    "bodyWidthRatio": 0.97,
-    "bodyHeightRatio": 0.97,
-    "bodyFootGapRatio": 0.108,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.111,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.378,
+    "expectedWidthRatio": 0.389,
     "expectedWidthLabel": "idleH",
-    "areaRatio": 0.941,
-    "bodyAreaRatio": 0.941,
-    "scaleWidth": 0.97,
-    "scaleHeight": 0.97,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "knockdown:0.97/0.97",
-      "getupStand:0.97/0.97"
+      "knockdown:1/1",
+      "getupStand:1/1"
     ],
     "reasons": [
-      "below-blue:0.97h",
-      "too-narrow:0.38x-idleH"
+      "too-narrow:0.39x-idleH"
     ]
   },
   {
@@ -9773,8 +9279,8 @@
       "below-blue:0.61h",
       "body-below:0.61h",
       "high-area:1.50",
-      "seq-height-dip:0.36",
-      "seq-body-dip:0.18",
+      "seq-height-dip:0.39",
+      "seq-body-dip:0.20",
       "same-source-scale-diff:0.19"
     ]
   },
@@ -9805,8 +9311,8 @@
     "reasons": [
       "below-blue:0.46h",
       "body-below:0.46h",
-      "seq-height-dip:0.51",
-      "seq-body-dip:0.33",
+      "seq-height-dip:0.54",
+      "seq-body-dip:0.34",
       "same-source-scale-diff:0.34"
     ]
   },
@@ -9837,8 +9343,8 @@
     "reasons": [
       "below-blue:0.45h",
       "body-below:0.45h",
-      "seq-height-dip:0.52",
-      "seq-body-dip:0.34",
+      "seq-height-dip:0.55",
+      "seq-body-dip:0.35",
       "same-source-scale-diff:0.35"
     ]
   },
@@ -9872,25 +9378,24 @@
     "key": "sidestepLeft",
     "frame": 42,
     "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0.106,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.113,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "sidestepLeft:0.94/0.94",
-      "sidestepRight:0.94/0.94"
+      "sidestepLeft:1/1",
+      "sidestepRight:1/1"
     ],
     "reasons": [
-      "below-blue:0.94h",
       "feet-above-ground:0.11"
     ]
   },
@@ -9900,25 +9405,24 @@
     "key": "sidestepRight",
     "frame": 42,
     "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0.106,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.113,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "sidestepLeft:0.94/0.94",
-      "sidestepRight:0.94/0.94"
+      "sidestepLeft:1/1",
+      "sidestepRight:1/1"
     ],
     "reasons": [
-      "below-blue:0.94h",
       "feet-above-ground:0.11"
     ]
   },
@@ -9942,7 +9446,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "walkForward:0.93/0.93"
+      "walkForward:1/1"
     ],
     "reasons": [
       "feet-above-ground:0.09",
@@ -9969,7 +9473,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "walkForward:0.91/0.91"
+      "walkForward:1/1"
     ],
     "reasons": [
       "feet-above-ground:0.12",
@@ -9982,24 +9486,23 @@
     "key": "walkForward",
     "frame": 4,
     "isAttack": false,
-    "widthRatio": 0.93,
-    "heightRatio": 0.93,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.93,
-    "bodyFootGapRatio": 0.106,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.114,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.93,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.865,
-    "bodyAreaRatio": 0.865,
-    "scaleWidth": 0.93,
-    "scaleHeight": 0.93,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "walkForward:0.93/0.93"
+      "walkForward:1/1"
     ],
     "reasons": [
-      "below-blue:0.93h",
       "feet-above-ground:0.11"
     ]
   },
@@ -10009,24 +9512,23 @@
     "key": "walkForward",
     "frame": 5,
     "isAttack": false,
-    "widthRatio": 0.94,
-    "heightRatio": 0.94,
-    "bodyWidthRatio": 0.94,
-    "bodyHeightRatio": 0.94,
-    "bodyFootGapRatio": 0.107,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.114,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.94,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.884,
-    "bodyAreaRatio": 0.884,
-    "scaleWidth": 0.94,
-    "scaleHeight": 0.94,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "walkForward:0.94/0.94"
+      "walkForward:1/1"
     ],
     "reasons": [
-      "below-blue:0.94h",
       "feet-above-ground:0.11"
     ]
   },
@@ -10036,25 +9538,24 @@
     "key": "walkForward",
     "frame": 6,
     "isAttack": false,
-    "widthRatio": 0.93,
-    "heightRatio": 0.93,
-    "bodyWidthRatio": 0.93,
-    "bodyHeightRatio": 0.93,
-    "bodyFootGapRatio": 0.083,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.089,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.93,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.865,
-    "bodyAreaRatio": 0.865,
-    "scaleWidth": 0.93,
-    "scaleHeight": 0.93,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "walkForward:0.93/0.93"
+      "walkForward:1/1"
     ],
     "reasons": [
-      "below-blue:0.93h",
-      "feet-above-ground:0.08"
+      "feet-above-ground:0.09"
     ]
   },
   {
@@ -10063,26 +9564,24 @@
     "key": "walkForward",
     "frame": 7,
     "isAttack": false,
-    "widthRatio": 0.91,
-    "heightRatio": 0.91,
-    "bodyWidthRatio": 0.91,
-    "bodyHeightRatio": 0.91,
-    "bodyFootGapRatio": 0.106,
+    "widthRatio": 1,
+    "heightRatio": 1,
+    "bodyWidthRatio": 1,
+    "bodyHeightRatio": 1,
+    "bodyFootGapRatio": 0.116,
     "bodyHeadGapRatio": 0,
-    "expectedWidthRatio": 0.91,
+    "expectedWidthRatio": 1,
     "expectedWidthLabel": "idleW",
-    "areaRatio": 0.828,
-    "bodyAreaRatio": 0.828,
-    "scaleWidth": 0.91,
-    "scaleHeight": 0.91,
+    "areaRatio": 1,
+    "bodyAreaRatio": 1,
+    "scaleWidth": 1,
+    "scaleHeight": 1,
     "scaleSource": "frame",
     "sameSourceScaleUses": [
-      "walkForward:0.91/0.91"
+      "walkForward:1/1"
     ],
     "reasons": [
-      "below-blue:0.91h",
-      "body-below:0.91h",
-      "feet-above-ground:0.11"
+      "feet-above-ground:0.12"
     ]
   },
   {
@@ -10105,7 +9604,7 @@
     "scaleHeight": 1,
     "scaleSource": "default",
     "sameSourceScaleUses": [
-      "jableft:0.98/0.98"
+      "jableft:1/1"
     ],
     "reasons": [
       "same-source-scaled:jableft"

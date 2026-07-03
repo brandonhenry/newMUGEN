@@ -188,13 +188,10 @@ bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,backflip,45,false,1.09,1.09,1.09,1.09,0,1.09
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,backflip,46,false,1.09,1.09,1.09,1.09,0.059,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,backflip,47,false,1.09,1.09,1.09,1.09,0,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,backflip,48,false,1.09,1.09,1.09,1.09,0.029,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,chargeKi,62,false,0.93,0.93,0.93,0.93,0,0.93,idleW,0.865,0.865,0.93,0.93,frame,chargeKi:0.93/0.93,below-blue:0.93h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,chargeKi,63,false,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,chargeKi:0.94/0.94,below-blue:0.94h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,chargeKi,64,false,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,chargeKi:0.94/0.94,below-blue:0.94h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,130,true,0.95,0.95,0.95,0.95,0.015,0.95,idleW,0.903,0.903,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|seq-area-low:0.36
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,131,true,2.781,0.95,2.781,0.95,0.031,2.781,idleW,2.642,2.642,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:2.78x-idleW|high-area:2.64
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,132,true,2.51,0.98,2.51,0.98,0.033,2.51,idleW,2.46,2.46,0.98,0.98,frame,cmd:1+2:0.98/0.98,too-wide:2.51x-idleW|high-area:2.46
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,134,true,1.315,0.95,1.315,0.95,0.092,1.315,idleW,1.249,1.249,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|feet-above-ground:0.09
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,130,true,1,1,1,1,0.016,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,seq-area-low:0.33
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,131,true,2.927,1,2.927,1,0.033,2.927,idleW,2.927,2.927,1,1,frame,cmd:1+2:1/1,too-wide:2.93x-idleW|high-area:2.93
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,132,true,2.561,1,2.561,1,0.033,2.561,idleW,2.561,2.561,1,1,frame,cmd:1+2:1/1,too-wide:2.56x-idleW|high-area:2.56
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+2,134,true,1.384,1,1.384,1,0.097,1.384,idleW,1.384,1.384,1,1,frame,cmd:1+2:1/1,feet-above-ground:0.10
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+3,98,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.05/1.05,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+3,99,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:1+3,100,true,1.43,1,1.43,1,0.017,1.43,idleW,1.43,1.43,1,1,default,kickleft:0.98/0.98,same-source-scaled:kickleft
@@ -207,11 +204,11 @@ bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:2+3,100,true,1.43,1,1.43,1,0.017,1.43,id
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:2+3,101,true,1.453,1,1.453,1,0.017,1.453,idleW,1.453,1.453,1,1,default,kickleft:1.01/1.01,high-area:1.45|same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:2+3,102,true,1,1,1,1,0.017,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:2+3,103,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.03/1.03|win:1.03/1.03,same-source-scaled:kickleft/win
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,123,true,0.98,0.98,0.98,0.98,0.048,0.98,idleW,0.96,0.96,0.98,0.98,frame,cmd:3+4:0.98/0.98,seq-area-low:0.40
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,124,true,1.434,0.95,1.434,0.95,0.022,1.434,idleW,1.363,1.363,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,125,true,1.927,0.95,1.927,0.95,0.022,1.927,idleW,1.83,1.83,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.93x-idleW|high-area:1.83
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,126,true,1.927,0.95,1.927,0.95,0.022,1.927,idleW,1.83,1.83,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h|too-wide:1.93x-idleW|high-area:1.83
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,127,true,1.434,0.95,1.434,0.95,0.022,1.434,idleW,1.363,1.363,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,123,true,1,1,1,1,0.049,1,idleW,1,1,1,1,frame,cmd:3+4:1/1,seq-area-low:0.51
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,124,true,1.51,1,1.51,1,0.023,1.51,idleW,1.51,1.51,1,1,frame,cmd:3+4:1/1,high-area:1.51
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,125,true,2.028,1,2.028,1,0.023,2.028,idleW,2.028,2.028,1,1,frame,cmd:3+4:1/1,too-wide:2.03x-idleW|high-area:2.03
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,126,true,2.028,1,2.028,1,0.023,2.028,idleW,2.028,2.028,1,1,frame,cmd:3+4:1/1,too-wide:2.03x-idleW|high-area:2.03
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:3+4,127,true,1.51,1,1.51,1,0.023,1.51,idleW,1.51,1.51,1,1,frame,cmd:3+4:1/1,high-area:1.51
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d/f+3,98,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.05/1.05,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d/f+3,99,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d/f+3,100,true,1.43,1,1.43,1,0.017,1.43,idleW,1.43,1.43,1,1,default,kickleft:0.98/0.98,same-source-scaled:kickleft
@@ -220,15 +217,14 @@ bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d/f+3,102,true,1,1,1,1,0.017,1,idleW,1,1
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d/f+3,103,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.03/1.03|win:1.03/1.03,same-source-scaled:kickleft/win
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+1,68,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.09/1.09,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+1,69,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.02/1.02,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:0.95/0.95,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:0.97/0.97,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:1/1,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:1/1,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+3,98,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.05/1.05,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+3,99,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+3,100,true,1.43,1,1.43,1,0.017,1.43,idleW,1.43,1.43,1,1,default,kickleft:0.98/0.98,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+3,101,true,1.453,1,1.453,1,0.017,1.453,idleW,1.453,1.453,1,1,default,kickleft:1.01/1.01,high-area:1.45|same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+3,102,true,1,1,1,1,0.017,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:d+3,103,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.03/1.03|win:1.03/1.03,same-source-scaled:kickleft/win
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:f+1,318,true,0.95,0.95,0.95,0.95,0.034,0.95,idleW,0.903,0.903,0.95,0.95,frame,cmd:f+1:0.95/0.95,below-blue:0.95h
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:f+1,319,true,1,1,1,0.983,0.169,1,idleW,1,0.983,1,1,default,,feet-above-ground:0.17
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:f+1,320,true,1,1,1,1,0.3,1,idleW,1,1,1,1,default,,feet-above-ground:0.30
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:f+1,321,true,1,1,0.989,0.983,0.19,1,idleW,1,0.972,1,1,default,,feet-above-ground:0.19
@@ -241,30 +237,28 @@ bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:f+3,102,true,1,1,1,1,0.017,1,idleW,1,1,1
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:f+3,103,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.03/1.03|win:1.03/1.03,same-source-scaled:kickleft/win
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:FC+1,68,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.09/1.09,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:FC+1,69,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.02/1.02,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:FC+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:0.95/0.95,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:FC+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:0.97/0.97,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:FC+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:1/1,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:FC+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:1/1,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+1,68,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.09/1.09,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+1,69,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.02/1.02,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:0.95/0.95,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:0.97/0.97,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:1/1,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:1/1,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+2,163,true,1,1,1,1,0.136,1,idleW,1,1,1,1,default,,feet-above-ground:0.14
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+2,164,true,1,1,1,1,0.138,1,idleW,1,1,1,1,default,,feet-above-ground:0.14
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:O+2,169,true,0.98,0.98,0.98,0.98,0.144,0.98,idleW,0.96,0.96,0.98,0.98,frame,cmd:O+2:0.98/0.98,feet-above-ground:0.14
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+1,68,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.09/1.09,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+1,69,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1.02/1.02,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:0.95/0.95,same-source-scaled:jableft
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:0.97/0.97,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+1,70,true,1.29,1,1.29,1,0.017,1.29,idleW,1.29,1.29,1,1,default,jableft:1/1,same-source-scaled:jableft
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+1,71,true,1.315,1,1.315,1,0.017,1.315,idleW,1.315,1.315,1,1,default,jableft:1/1,same-source-scaled:jableft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+3,98,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.05/1.05,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+3,99,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+3,100,true,1.43,1,1.43,1,0.017,1.43,idleW,1.43,1.43,1,1,default,kickleft:0.98/0.98,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+3,101,true,1.453,1,1.453,1,0.017,1.453,idleW,1.453,1.453,1,1,default,kickleft:1.01/1.01,high-area:1.45|same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+3,102,true,1,1,1,1,0.017,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+3,103,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.03/1.03|win:1.03/1.03,same-source-scaled:kickleft/win
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,394,true,0.95,0.95,0.95,0.95,0,0.95,idleW,0.903,0.903,0.95,0.95,frame,cmd:qcf+4:0.95/0.95,below-blue:0.95h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,395,true,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,cmd:qcf+4:0.94/0.94,below-blue:0.94h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,397,true,0.94,0.94,0.651,0.795,0.193,0.94,idleW,0.884,0.518,0.94,0.94,frame,cmd:qcf+4:0.94/0.94,below-blue:0.94h|body-below:0.80h|seq-body-dip:0.17|feet-above-ground:0.19
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,398,true,0.98,0.98,0.663,0.879,0.176,0.98,idleW,0.96,0.583,0.98,0.98,frame,cmd:qcf+4:0.98/0.98,body-below:0.88h|feet-above-ground:0.18
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,399,true,0.98,0.98,0.633,0.93,0.101,0.98,idleW,0.96,0.589,0.98,0.98,frame,cmd:qcf+4:0.98/0.98,feet-above-ground:0.10
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,397,true,1,1,0.692,0.846,0.205,1,idleW,1,0.586,1,1,frame,cmd:qcf+4:1/1,body-below:0.85h|seq-body-dip:0.13|feet-above-ground:0.21
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,398,true,1,1,0.677,0.897,0.179,1,idleW,1,0.607,1,1,frame,cmd:qcf+4:1/1,body-below:0.90h|feet-above-ground:0.18
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:qcf+4,399,true,1,1,0.646,0.949,0.103,1,idleW,1,0.613,1,1,frame,cmd:qcf+4:1/1,feet-above-ground:0.10
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:SS+3,98,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.05/1.05,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:SS+3,99,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:SS+3,100,true,1.43,1,1.43,1,0.017,1.43,idleW,1.43,1.43,1,1,default,kickleft:0.98/0.98,same-source-scaled:kickleft
@@ -272,104 +266,92 @@ bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:SS+3,101,true,1.453,1,1.453,1,0.017,1.45
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:SS+3,102,true,1,1,1,1,0.017,1,idleW,1,1,1,1,default,kickleft:1.01/1.01,same-source-scaled:kickleft
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,cmd:SS+3,103,true,1,1,1,1,0,1,idleW,1,1,1,1,default,kickleft:1.03/1.03|win:1.03/1.03,same-source-scaled:kickleft/win
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,crouch,23,false,0.98,0.72,0.98,0.72,0.013,0.98,idleW,0.706,0.706,0.98,0.72,frame,crouch:0.98/0.72,below-blue:0.72h|body-below:0.72h|low-area:0.71
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,32,false,1.272,0.5,1.272,0.5,0.041,0.919,idleH,0.636,0.636,0.5,0.5,frame,knockdown:0.5/0.5|getupStand:0.5/0.5|sprint:0.7/0.78,below-blue:0.50h|body-below:0.50h|low-area:0.64|seq-height-dip:0.50|seq-body-dip:0.46|same-source-scale-diff:0.28
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,33,false,1.551,0.56,1.551,0.56,0.048,1.12,idleH,0.868,0.868,0.56,0.56,frame,knockdown:0.56/0.56|getupStand:0.56/0.56|sprint:0.64/0.78,below-blue:0.56h|body-below:0.56h|seq-height-dip:0.44|seq-body-dip:0.40|same-source-scale-diff:0.22
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,34,false,1.284,0.53,1.284,0.53,0.053,0.928,idleH,0.681,0.681,0.53,0.53,frame,knockdown:0.53/0.53|getupStand:0.53/0.53|sprint:0.68/0.86,below-blue:0.53h|body-below:0.53h|low-area:0.68|seq-height-dip:0.47|seq-body-dip:0.43|same-source-scale-diff:0.33
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,49,false,0.92,0.92,0.92,0.92,0,0.665,idleH,0.846,0.846,0.92,0.92,frame,getupStand:0.92/0.92,below-blue:0.92h|body-below:0.92h|too-narrow:0.66x-idleH
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,50,false,0.92,0.92,0.92,0.92,0.031,0.665,idleH,0.846,0.846,0.92,0.92,frame,getupStand:0.92/0.92,below-blue:0.92h|body-below:0.92h|too-narrow:0.66x-idleH
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,32,false,1.272,0.5,1.272,0.5,0.041,0.919,idleH,0.636,0.636,0.5,0.5,frame,knockdown:0.5/0.5|getupStand:0.5/0.5|sprint:0.7/0.78,below-blue:0.50h|body-below:0.50h|low-area:0.64|seq-height-dip:0.50|seq-body-dip:0.50|seq-area-low:0.36|same-source-scale-diff:0.28
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,33,false,1.551,0.56,1.551,0.56,0.048,1.12,idleH,0.868,0.868,0.56,0.56,frame,knockdown:0.56/0.56|getupStand:0.56/0.56|sprint:0.64/0.78,below-blue:0.56h|body-below:0.56h|seq-height-dip:0.44|seq-body-dip:0.44|same-source-scale-diff:0.22
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,34,false,1.284,0.53,1.284,0.53,0.053,0.928,idleH,0.681,0.681,0.53,0.53,frame,knockdown:0.53/0.53|getupStand:0.53/0.53|sprint:0.68/0.86,below-blue:0.53h|body-below:0.53h|low-area:0.68|seq-height-dip:0.47|seq-body-dip:0.47|seq-area-low:0.32|same-source-scale-diff:0.33
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,49,false,1,1,1,1,0,0.722,idleH,1,1,1,1,frame,getupStand:1/1,too-narrow:0.72x-idleH
+bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,50,false,1,1,1,1,0.033,0.723,idleH,1,1,1,1,frame,getupStand:1/1,too-narrow:0.72x-idleH
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,51,false,1.07,1.07,1.07,1.07,0,0.773,idleH,1.145,1.145,1.07,1.07,frame,getupStand:1.07/1.07,too-narrow:0.77x-idleH
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,52,false,1.03,1.03,1.03,1.03,0,0.744,idleH,1.061,1.061,1.03,1.03,frame,getupStand:1.03/1.03,too-narrow:0.74x-idleH
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,getupStand,53,false,1,1,1,1,0,0.723,idleH,1,1,1,1,default,,too-narrow:0.72x-idleH
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,jableft,68,true,1.09,1.09,1.09,1.09,0,1.09,idleW,1.188,1.188,1.09,1.09,frame,jableft:1.09/1.09,above-blue:1.09h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,jableft,70,true,1.226,0.95,1.226,0.95,0.016,1.226,idleW,1.164,1.164,0.95,0.95,frame,jableft:0.95/0.95,below-blue:0.95h
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,juggle,27,false,1.09,1.09,1.09,1.09,0.07,0.788,idleH,1.188,1.188,1.09,1.09,frame,juggle:1.09/1.09,above-blue:1.09h|too-narrow:0.79x-idleH
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,juggle,28,false,1.04,1.04,1.04,1.04,0,0.751,idleH,1.082,1.082,1.04,1.04,frame,juggle:1.04/1.04,too-narrow:0.75x-idleH
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,jump,19,false,0.97,0.97,0.97,0.97,0.103,0.97,idleW,0.941,0.941,0.97,0.97,frame,jump:0.97/0.97,below-blue:0.97h
-bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,jump,20,false,0.97,0.97,0.97,0.97,0.118,0.97,idleW,0.941,0.941,0.97,0.97,frame,jump:0.97/0.97,below-blue:0.97h
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,kickleft,101,true,1.468,1.01,1.468,1.01,0.017,1.468,idleW,1.483,1.483,1.01,1.01,frame,kickleft:1.01/1.01,high-area:1.48
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,knockdown,31,false,1.279,0.53,1.279,0.53,0.041,0.924,idleH,0.678,0.678,0.53,0.53,frame,knockdown:0.53/0.53|sprint:0.68/0.86,below-blue:0.53h|body-below:0.53h|low-area:0.68|same-source-scale-diff:0.33
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,knockdown,32,false,1.272,0.5,1.272,0.5,0.041,0.919,idleH,0.636,0.636,0.5,0.5,frame,knockdown:0.5/0.5|getupStand:0.5/0.5|sprint:0.7/0.78,below-blue:0.50h|body-below:0.50h|low-area:0.64|same-source-scale-diff:0.28
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,knockdown,33,false,1.551,0.56,1.551,0.56,0.048,1.12,idleH,0.868,0.868,0.56,0.56,frame,knockdown:0.56/0.56|getupStand:0.56/0.56|sprint:0.64/0.78,below-blue:0.56h|body-below:0.56h|same-source-scale-diff:0.22
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,knockdown,34,false,1.284,0.53,1.284,0.53,0.053,0.928,idleH,0.681,0.681,0.53,0.53,frame,knockdown:0.53/0.53|getupStand:0.53/0.53|sprint:0.68/0.86,below-blue:0.53h|body-below:0.53h|low-area:0.68|same-source-scale-diff:0.33
 bobobo-bo-bo-bobo,Bobobo-bo Bo-bobo,lose,29,false,1,1,1,1,0,0.723,idleH,1,1,1,1,default,,too-narrow:0.72x-idleH
-dio,DIO,backflip,42,false,1,1,1,1,0.113,1,idleW,1,1,1,1,default,sidestepLeft:0.94/0.94|sidestepRight:0.94/0.94,same-source-scaled:sidestepLeft/sidestepRight
+dio,DIO,backflip,42,false,1,1,1,1,0.113,1,idleW,1,1,1,1,default,sidestepLeft:1/1|sidestepRight:1/1,same-source-scaled:sidestepLeft/sidestepRight
 dio,DIO,backflip,45,false,1.09,1.09,1.09,1.09,0,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
 dio,DIO,backflip,46,false,1.09,1.09,1.09,1.09,0,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
 dio,DIO,backflip,47,false,1.09,1.09,1.09,1.09,0.075,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
 dio,DIO,backflip,48,false,1.09,1.09,1.09,1.09,0.056,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
-dio,DIO,chargeKi,54,false,0.97,0.97,0.97,0.97,0,0.97,idleW,0.941,0.941,0.97,0.97,frame,getupStand:0.97/0.97|chargeKi:0.97/0.97,below-blue:0.97h
-dio,DIO,chargeKi,55,false,0.92,0.92,0.92,0.92,0,0.92,idleW,0.846,0.846,0.92,0.92,frame,chargeKi:0.92/0.92,below-blue:0.92h
-dio,DIO,chargeKi,60,false,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,chargeKi:0.94/0.94,below-blue:0.94h
-dio,DIO,chargeKi,61,false,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,chargeKi:0.94/0.94,below-blue:0.94h
-dio,DIO,chargeKi,62,false,0.97,0.97,0.97,0.97,0,0.97,idleW,0.941,0.941,0.97,0.97,frame,chargeKi:0.97/0.97,below-blue:0.97h
-dio,DIO,chargeKi,63,false,0.94,0.94,0.94,0.94,0,0.94,idleW,0.884,0.884,0.94,0.94,frame,chargeKi:0.94/0.94,below-blue:0.94h
-dio,DIO,cmd:1+2,160,true,0.98,0.98,0.98,0.98,0,0.98,idleW,0.96,0.96,0.98,0.98,frame,cmd:1+2:0.98/0.98,seq-area-low:0.70
-dio,DIO,cmd:1+2,161,true,0.98,0.98,0.98,0.98,0,0.98,idleW,0.96,0.96,0.98,0.98,frame,cmd:1+2:0.98/0.98,seq-area-low:0.70
-dio,DIO,cmd:1+2,162,true,2.034,0.95,2.034,0.95,0,2.034,idleW,1.932,1.932,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:2.03x-idleW|high-area:1.93
-dio,DIO,cmd:1+2,163,true,1.683,0.95,1.683,0.95,0,1.683,idleW,1.599,1.599,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.68x-idleW|high-area:1.60
-dio,DIO,cmd:1+2,164,true,1.808,0.95,1.808,0.95,0,1.808,idleW,1.717,1.717,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.81x-idleW|high-area:1.72
-dio,DIO,cmd:1+2,165,true,1.842,0.95,1.842,0.95,0,1.842,idleW,1.75,1.75,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.84x-idleW|high-area:1.75
-dio,DIO,cmd:1+2,166,true,1.654,0.95,1.654,0.95,0,1.654,idleW,1.572,1.572,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:1.65x-idleW|high-area:1.57
-dio,DIO,cmd:1+2,167,true,3.279,0.98,3.279,0.98,0.023,3.279,idleW,3.214,3.214,0.98,0.98,frame,cmd:1+2:0.98/0.98,too-wide:3.28x-idleW|high-area:3.21
-dio,DIO,cmd:1+2,168,true,3.078,0.98,3.078,0.98,0.022,3.078,idleW,3.016,3.016,0.98,0.98,frame,cmd:1+2:0.98/0.98,too-wide:3.08x-idleW|high-area:3.02
-dio,DIO,cmd:1+2,169,true,2.034,0.95,2.034,0.95,0,2.034,idleW,1.932,1.932,0.95,0.95,frame,cmd:1+2:0.95/0.95,below-blue:0.95h|too-wide:2.03x-idleW|high-area:1.93
-dio,DIO,cmd:3+4,181,true,1.489,0.98,1.489,0.98,0.041,1.489,idleW,1.459,1.459,0.98,0.98,frame,cmd:3+4:0.98/0.98,high-area:1.46
-dio,DIO,cmd:3+4,182,true,1.489,0.98,1.489,0.98,0.041,1.489,idleW,1.459,1.459,0.98,0.98,frame,cmd:3+4:0.98/0.98,high-area:1.46
-dio,DIO,cmd:3+4,183,true,1.394,0.95,1.394,0.95,0,1.394,idleW,1.325,1.325,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h
-dio,DIO,cmd:3+4,184,true,1.334,0.95,1.334,0.95,0.015,1.334,idleW,1.268,1.268,0.95,0.95,frame,cmd:3+4:0.95/0.95,below-blue:0.95h
-dio,DIO,cmd:3+4,185,true,2.833,0.98,2.833,0.98,0,2.833,idleW,2.776,2.776,0.98,0.98,frame,cmd:3+4:0.98/0.98,too-wide:2.83x-idleW|high-area:2.78
-dio,DIO,cmd:d+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.95/0.95,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:d+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:0.98/0.98,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
-dio,DIO,cmd:d+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:0.98/0.98,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
-dio,DIO,cmd:d+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.98/0.98,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:f+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.95/0.95,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:f+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:0.98/0.98,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
-dio,DIO,cmd:f+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:0.98/0.98,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
-dio,DIO,cmd:f+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.98/0.98,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:FC+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.95/0.95,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:FC+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:0.98/0.98,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
-dio,DIO,cmd:FC+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:0.98/0.98,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
-dio,DIO,cmd:FC+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.98/0.98,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:O+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.95/0.95,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:O+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:0.98/0.98,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
-dio,DIO,cmd:O+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:0.98/0.98,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
-dio,DIO,cmd:O+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.98/0.98,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:qcf+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.95/0.95,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,cmd:qcf+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:0.98/0.98,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
-dio,DIO,cmd:qcf+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:0.98/0.98,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
-dio,DIO,cmd:qcf+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.98/0.98,seq-area-low:0.35|same-source-scaled:jableft
-dio,DIO,crouch,50,false,0.98,0.72,0.98,0.72,0,0.98,idleW,0.706,0.706,0.98,0.72,frame,getupStand:0.92/0.92|crouch:0.98/0.72,below-blue:0.72h|body-below:0.72h|low-area:0.71|same-source-scale-diff:0.20
-dio,DIO,getupStand,29,false,0.97,0.97,0.97,0.97,0.108,0.378,idleH,0.941,0.941,0.97,0.97,frame,knockdown:0.97/0.97|getupStand:0.97/0.97,below-blue:0.97h|too-narrow:0.38x-idleH
-dio,DIO,getupStand,30,false,2.467,0.608,2.467,0.608,0.112,0.96,idleH,1.5,1.5,0.608,0.608,frame,knockdown:0.608/0.608|getupStand:0.608/0.608|sprint:0.47/0.8,below-blue:0.61h|body-below:0.61h|high-area:1.50|seq-height-dip:0.35|seq-body-dip:0.34|same-source-scale-diff:0.19
-dio,DIO,getupStand,31,false,2.212,0.46,2.212,0.46,0.045,0.861,idleH,1.017,1.017,0.46,0.46,frame,knockdown:0.46/0.46|getupStand:0.46/0.46|sprint:0.4/0.8,below-blue:0.46h|body-below:0.46h|seq-height-dip:0.50|seq-body-dip:0.49|same-source-scale-diff:0.34
-dio,DIO,getupStand,32,false,2.274,0.45,2.274,0.45,0.045,0.885,idleH,1.023,1.023,0.45,0.45,frame,knockdown:0.45/0.45|getupStand:0.45/0.45|sprint:0.38/0.8,below-blue:0.45h|body-below:0.45h|seq-height-dip:0.51|seq-body-dip:0.50|same-source-scale-diff:0.35
-dio,DIO,getupStand,50,false,0.92,0.92,0.92,0.92,0,0.358,idleH,0.846,0.846,0.92,0.92,frame,getupStand:0.92/0.92|crouch:0.98/0.72,below-blue:0.92h|too-narrow:0.36x-idleH|same-source-scale-diff:0.20
+dio,DIO,cmd:1+2,160,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,seq-area-low:0.76
+dio,DIO,cmd:1+2,161,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,cmd:1+2:1/1,seq-area-low:0.76
+dio,DIO,cmd:1+2,162,true,2.141,1,2.141,1,0,2.141,idleW,2.141,2.141,1,1,frame,cmd:1+2:1/1,too-wide:2.14x-idleW|high-area:2.14
+dio,DIO,cmd:1+2,163,true,1.772,1,1.772,1,0,1.772,idleW,1.772,1.772,1,1,frame,cmd:1+2:1/1,too-wide:1.77x-idleW|high-area:1.77
+dio,DIO,cmd:1+2,164,true,1.903,1,1.903,1,0,1.903,idleW,1.903,1.903,1,1,frame,cmd:1+2:1/1,too-wide:1.90x-idleW|high-area:1.90
+dio,DIO,cmd:1+2,165,true,1.939,1,1.939,1,0,1.939,idleW,1.939,1.939,1,1,frame,cmd:1+2:1/1,too-wide:1.94x-idleW|high-area:1.94
+dio,DIO,cmd:1+2,166,true,1.742,1,1.742,1,0,1.742,idleW,1.742,1.742,1,1,frame,cmd:1+2:1/1,too-wide:1.74x-idleW|high-area:1.74
+dio,DIO,cmd:1+2,167,true,3.346,1,3.346,1,0.023,3.346,idleW,3.346,3.346,1,1,frame,cmd:1+2:1/1,too-wide:3.35x-idleW|high-area:3.35
+dio,DIO,cmd:1+2,168,true,3.14,1,3.14,1,0.022,3.14,idleW,3.14,3.14,1,1,frame,cmd:1+2:1/1,too-wide:3.14x-idleW|high-area:3.14
+dio,DIO,cmd:1+2,169,true,2.141,1,2.141,1,0,2.141,idleW,2.141,2.141,1,1,frame,cmd:1+2:1/1,too-wide:2.14x-idleW|high-area:2.14
+dio,DIO,cmd:3+4,181,true,1.519,1,1.519,1,0.042,1.519,idleW,1.519,1.519,1,1,frame,cmd:3+4:1/1,high-area:1.52
+dio,DIO,cmd:3+4,182,true,1.519,1,1.519,1,0.042,1.519,idleW,1.519,1.519,1,1,frame,cmd:3+4:1/1,high-area:1.52
+dio,DIO,cmd:3+4,183,true,1.468,1,1.468,1,0,1.468,idleW,1.468,1.468,1,1,frame,cmd:3+4:1/1,high-area:1.47
+dio,DIO,cmd:3+4,185,true,2.89,1,2.89,1,0,2.89,idleW,2.89,2.89,1,1,frame,cmd:3+4:1/1,too-wide:2.89x-idleW|high-area:2.89
+dio,DIO,cmd:d+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:d+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:1/1,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
+dio,DIO,cmd:d+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:1/1,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
+dio,DIO,cmd:d+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:f+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:f+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:1/1,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
+dio,DIO,cmd:f+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:1/1,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
+dio,DIO,cmd:f+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:FC+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:FC+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:1/1,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
+dio,DIO,cmd:FC+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:1/1,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
+dio,DIO,cmd:FC+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:O+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:O+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:1/1,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
+dio,DIO,cmd:O+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:1/1,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
+dio,DIO,cmd:O+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:qcf+1,75,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,cmd:qcf+1,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,default,jableft:1/1,too-wide:1.73x-idleW|high-area:1.73|same-source-scaled:jableft
+dio,DIO,cmd:qcf+1,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,default,jableft:1/1,too-wide:1.70x-idleW|high-area:1.70|same-source-scaled:jableft
+dio,DIO,cmd:qcf+1,78,true,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,seq-area-low:0.35|same-source-scaled:jableft
+dio,DIO,crouch,50,false,0.98,0.72,0.98,0.72,0,0.98,idleW,0.706,0.706,0.98,0.72,frame,getupStand:1/1|crouch:0.98/0.72,below-blue:0.72h|body-below:0.72h|low-area:0.71|same-source-scale-diff:0.28
+dio,DIO,getupStand,29,false,1,1,1,1,0.111,0.389,idleH,1,1,1,1,frame,knockdown:1/1|getupStand:1/1,too-narrow:0.39x-idleH
+dio,DIO,getupStand,30,false,2.467,0.608,2.467,0.608,0.112,0.96,idleH,1.5,1.5,0.608,0.608,frame,knockdown:0.608/0.608|getupStand:0.608/0.608|sprint:0.47/0.8,below-blue:0.61h|body-below:0.61h|high-area:1.50|seq-height-dip:0.39|seq-body-dip:0.39|same-source-scale-diff:0.19
+dio,DIO,getupStand,31,false,2.212,0.46,2.212,0.46,0.045,0.861,idleH,1.017,1.017,0.46,0.46,frame,knockdown:0.46/0.46|getupStand:0.46/0.46|sprint:0.4/0.8,below-blue:0.46h|body-below:0.46h|seq-height-dip:0.54|seq-body-dip:0.54|same-source-scale-diff:0.34
+dio,DIO,getupStand,32,false,2.274,0.45,2.274,0.45,0.045,0.885,idleH,1.023,1.023,0.45,0.45,frame,knockdown:0.45/0.45|getupStand:0.45/0.45|sprint:0.38/0.8,below-blue:0.45h|body-below:0.45h|seq-height-dip:0.55|seq-body-dip:0.55|same-source-scale-diff:0.35
+dio,DIO,getupStand,50,false,1,1,1,1,0,0.389,idleH,1,1,1,1,frame,getupStand:1/1|crouch:0.98/0.72,too-narrow:0.39x-idleH|same-source-scale-diff:0.28
 dio,DIO,getupStand,51,false,1.04,1.04,1.04,1.04,0,0.405,idleH,1.082,1.082,1.04,1.04,frame,getupStand:1.04/1.04,too-narrow:0.40x-idleH
-dio,DIO,getupStand,52,false,0.9,0.9,0.9,0.9,0,0.35,idleH,0.81,0.81,0.9,0.9,frame,getupStand:0.9/0.9,below-blue:0.90h|body-below:0.90h|too-narrow:0.35x-idleH
-dio,DIO,getupStand,53,false,0.95,0.95,0.95,0.95,0,0.37,idleH,0.902,0.902,0.95,0.95,frame,getupStand:0.95/0.95,below-blue:0.95h|too-narrow:0.37x-idleH
-dio,DIO,getupStand,54,false,0.97,0.97,0.97,0.97,0,0.378,idleH,0.941,0.941,0.97,0.97,frame,getupStand:0.97/0.97|chargeKi:0.97/0.97,below-blue:0.97h|too-narrow:0.38x-idleH
-dio,DIO,hitLight,23,false,0.91,0.91,0.91,0.91,0.017,0.91,idleW,0.828,0.828,0.91,0.91,frame,hitLight:0.91/0.91,below-blue:0.91h|body-below:0.91h
-dio,DIO,jableft,75,true,0.95,0.95,0.95,0.95,0,0.95,idleW,0.903,0.903,0.95,0.95,frame,jableft:0.95/0.95,below-blue:0.95h|seq-area-low:0.39
-dio,DIO,jableft,76,true,1.692,0.98,1.692,0.98,0.016,1.692,idleW,1.658,1.658,0.98,0.98,frame,jableft:0.98/0.98,too-wide:1.69x-idleW|high-area:1.66
-dio,DIO,jableft,77,true,1.665,0.98,1.665,0.98,0,1.665,idleW,1.631,1.631,0.98,0.98,frame,jableft:0.98/0.98,too-wide:1.66x-idleW|high-area:1.63
-dio,DIO,jableft,78,true,0.98,0.98,0.98,0.98,0,0.98,idleW,0.96,0.96,0.98,0.98,frame,jableft:0.98/0.98,seq-area-low:0.34
-dio,DIO,juggle,26,false,0.93,0.93,0.93,0.93,0.097,0.362,idleH,0.865,0.865,0.93,0.93,frame,juggle:0.93/0.93,below-blue:0.93h|too-narrow:0.36x-idleH
+dio,DIO,getupStand,52,false,1,1,1,1,0,0.389,idleH,1,1,1,1,frame,getupStand:1/1,too-narrow:0.39x-idleH
+dio,DIO,getupStand,53,false,1,1,1,1,0,0.389,idleH,1,1,1,1,frame,getupStand:1/1,too-narrow:0.39x-idleH
+dio,DIO,getupStand,54,false,1,1,1,1,0,0.389,idleH,1,1,1,1,frame,getupStand:1/1|chargeKi:1/1,too-narrow:0.39x-idleH
+dio,DIO,jableft,75,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,jableft:1/1,seq-area-low:0.35
+dio,DIO,jableft,76,true,1.727,1,1.727,1,0.016,1.727,idleW,1.727,1.727,1,1,frame,jableft:1/1,too-wide:1.73x-idleW|high-area:1.73
+dio,DIO,jableft,77,true,1.699,1,1.699,1,0,1.699,idleW,1.699,1.699,1,1,frame,jableft:1/1,too-wide:1.70x-idleW|high-area:1.70
+dio,DIO,jableft,78,true,1,1,1,1,0,1,idleW,1,1,1,1,frame,jableft:1/1,seq-area-low:0.35
+dio,DIO,juggle,26,false,1,1,1,1,0.104,0.389,idleH,1,1,1,1,frame,juggle:1/1,too-narrow:0.39x-idleH
 dio,DIO,juggle,27,false,1.02,1.02,1.02,1.02,0,0.397,idleH,1.04,1.04,1.02,1.02,frame,juggle:1.02/1.02,too-narrow:0.40x-idleH
-dio,DIO,jump,21,false,0.91,0.91,0.91,0.91,0.343,0.91,idleW,0.828,0.828,0.91,0.91,frame,jump:0.91/0.91,below-blue:0.91h|body-below:0.91h
-dio,DIO,knockdown,29,false,0.97,0.97,0.97,0.97,0.108,0.378,idleH,0.941,0.941,0.97,0.97,frame,knockdown:0.97/0.97|getupStand:0.97/0.97,below-blue:0.97h|too-narrow:0.38x-idleH
-dio,DIO,knockdown,30,false,2.467,0.608,2.467,0.608,0.112,0.96,idleH,1.5,1.5,0.608,0.608,frame,knockdown:0.608/0.608|getupStand:0.608/0.608|sprint:0.47/0.8,below-blue:0.61h|body-below:0.61h|high-area:1.50|seq-height-dip:0.36|seq-body-dip:0.18|same-source-scale-diff:0.19
-dio,DIO,knockdown,31,false,2.212,0.46,2.212,0.46,0.045,0.861,idleH,1.017,1.017,0.46,0.46,frame,knockdown:0.46/0.46|getupStand:0.46/0.46|sprint:0.4/0.8,below-blue:0.46h|body-below:0.46h|seq-height-dip:0.51|seq-body-dip:0.33|same-source-scale-diff:0.34
-dio,DIO,knockdown,32,false,2.274,0.45,2.274,0.45,0.045,0.885,idleH,1.023,1.023,0.45,0.45,frame,knockdown:0.45/0.45|getupStand:0.45/0.45|sprint:0.38/0.8,below-blue:0.45h|body-below:0.45h|seq-height-dip:0.52|seq-body-dip:0.34|same-source-scale-diff:0.35
+dio,DIO,knockdown,29,false,1,1,1,1,0.111,0.389,idleH,1,1,1,1,frame,knockdown:1/1|getupStand:1/1,too-narrow:0.39x-idleH
+dio,DIO,knockdown,30,false,2.467,0.608,2.467,0.608,0.112,0.96,idleH,1.5,1.5,0.608,0.608,frame,knockdown:0.608/0.608|getupStand:0.608/0.608|sprint:0.47/0.8,below-blue:0.61h|body-below:0.61h|high-area:1.50|seq-height-dip:0.39|seq-body-dip:0.20|same-source-scale-diff:0.19
+dio,DIO,knockdown,31,false,2.212,0.46,2.212,0.46,0.045,0.861,idleH,1.017,1.017,0.46,0.46,frame,knockdown:0.46/0.46|getupStand:0.46/0.46|sprint:0.4/0.8,below-blue:0.46h|body-below:0.46h|seq-height-dip:0.54|seq-body-dip:0.34|same-source-scale-diff:0.34
+dio,DIO,knockdown,32,false,2.274,0.45,2.274,0.45,0.045,0.885,idleH,1.023,1.023,0.45,0.45,frame,knockdown:0.45/0.45|getupStand:0.45/0.45|sprint:0.38/0.8,below-blue:0.45h|body-below:0.45h|seq-height-dip:0.55|seq-body-dip:0.35|same-source-scale-diff:0.35
 dio,DIO,lose,28,false,1,1,1,1,0,0.389,idleH,1,1,1,1,default,,too-narrow:0.39x-idleH
-dio,DIO,sidestepLeft,42,false,0.94,0.94,0.94,0.94,0.106,0.94,idleW,0.884,0.884,0.94,0.94,frame,sidestepLeft:0.94/0.94|sidestepRight:0.94/0.94,below-blue:0.94h|feet-above-ground:0.11
-dio,DIO,sidestepRight,42,false,0.94,0.94,0.94,0.94,0.106,0.94,idleW,0.884,0.884,0.94,0.94,frame,sidestepLeft:0.94/0.94|sidestepRight:0.94/0.94,below-blue:0.94h|feet-above-ground:0.11
-dio,DIO,sprint,6,false,1,1,1,1,0.089,1,idleW,1,1,1,1,default,walkForward:0.93/0.93,feet-above-ground:0.09|same-source-scaled:walkForward
-dio,DIO,sprint,7,false,1,1,1,1,0.116,1,idleW,1,1,1,1,default,walkForward:0.91/0.91,feet-above-ground:0.12|same-source-scaled:walkForward
-dio,DIO,walkForward,4,false,0.93,0.93,0.93,0.93,0.106,0.93,idleW,0.865,0.865,0.93,0.93,frame,walkForward:0.93/0.93,below-blue:0.93h|feet-above-ground:0.11
-dio,DIO,walkForward,5,false,0.94,0.94,0.94,0.94,0.107,0.94,idleW,0.884,0.884,0.94,0.94,frame,walkForward:0.94/0.94,below-blue:0.94h|feet-above-ground:0.11
-dio,DIO,walkForward,6,false,0.93,0.93,0.93,0.93,0.083,0.93,idleW,0.865,0.865,0.93,0.93,frame,walkForward:0.93/0.93,below-blue:0.93h|feet-above-ground:0.08
-dio,DIO,walkForward,7,false,0.91,0.91,0.91,0.91,0.106,0.91,idleW,0.828,0.828,0.91,0.91,frame,walkForward:0.91/0.91,below-blue:0.91h|body-below:0.91h|feet-above-ground:0.11
-dio,DIO,win,78,false,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:0.98/0.98,same-source-scaled:jableft
+dio,DIO,sidestepLeft,42,false,1,1,1,1,0.113,1,idleW,1,1,1,1,frame,sidestepLeft:1/1|sidestepRight:1/1,feet-above-ground:0.11
+dio,DIO,sidestepRight,42,false,1,1,1,1,0.113,1,idleW,1,1,1,1,frame,sidestepLeft:1/1|sidestepRight:1/1,feet-above-ground:0.11
+dio,DIO,sprint,6,false,1,1,1,1,0.089,1,idleW,1,1,1,1,default,walkForward:1/1,feet-above-ground:0.09|same-source-scaled:walkForward
+dio,DIO,sprint,7,false,1,1,1,1,0.116,1,idleW,1,1,1,1,default,walkForward:1/1,feet-above-ground:0.12|same-source-scaled:walkForward
+dio,DIO,walkForward,4,false,1,1,1,1,0.114,1,idleW,1,1,1,1,frame,walkForward:1/1,feet-above-ground:0.11
+dio,DIO,walkForward,5,false,1,1,1,1,0.114,1,idleW,1,1,1,1,frame,walkForward:1/1,feet-above-ground:0.11
+dio,DIO,walkForward,6,false,1,1,1,1,0.089,1,idleW,1,1,1,1,frame,walkForward:1/1,feet-above-ground:0.09
+dio,DIO,walkForward,7,false,1,1,1,1,0.116,1,idleW,1,1,1,1,frame,walkForward:1/1,feet-above-ground:0.12
+dio,DIO,win,78,false,1,1,1,1,0,1,idleW,1,1,1,1,default,jableft:1/1,same-source-scaled:jableft
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,40,false,1.09,1.09,1.09,1.09,0.073,1.09,idleW,1.188,1.188,1.09,1.09,frame,backflip:1.09/1.09,above-blue:1.09h
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,41,false,0.95,0.95,0.95,0.95,0.054,0.95,idleW,0.903,0.903,0.95,0.95,frame,backflip:0.95/0.95,below-blue:0.95h
 don-patch-poppa-rocks,Don Patch _ Poppa Rocks,backflip,42,false,0.95,0.95,0.95,0.95,0.052,0.95,idleW,0.903,0.903,0.95,0.95,frame,backflip:0.95/0.95,below-blue:0.95h
