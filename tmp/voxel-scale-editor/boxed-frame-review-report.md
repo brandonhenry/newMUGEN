@@ -25,7 +25,7 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | # | Character | Status |
 |---:|---|---|
 | 1 | Allen Walker (`allen-walker`) | Complete after strict individual-PNG pass; 108/108 frames logged and corrected where needed. |
-| 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; individual PNG pass started after Allen. |
+| 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; restarted under strict head-top/head-width/head-volume rule after frame 086 correction. |
 
 ## Strict Frame Checklist
 
