@@ -1,0 +1,668 @@
+[
+  {
+    "key": "idle",
+    "frame": 0,
+    "sequenceIndex": 0,
+    "file": "idle/0001-idle-frame-000.png"
+  },
+  {
+    "key": "idle",
+    "frame": 1,
+    "sequenceIndex": 1,
+    "file": "idle/0002-idle-frame-001.png"
+  },
+  {
+    "key": "idle",
+    "frame": 2,
+    "sequenceIndex": 2,
+    "file": "idle/0003-idle-frame-002.png"
+  },
+  {
+    "key": "idle",
+    "frame": 3,
+    "sequenceIndex": 3,
+    "file": "idle/0004-idle-frame-003.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 4,
+    "sequenceIndex": 0,
+    "file": "walkForward/0005-walkForward-frame-004.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 5,
+    "sequenceIndex": 1,
+    "file": "walkForward/0006-walkForward-frame-005.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 6,
+    "sequenceIndex": 2,
+    "file": "walkForward/0007-walkForward-frame-006.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 7,
+    "sequenceIndex": 3,
+    "file": "walkForward/0008-walkForward-frame-007.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 8,
+    "sequenceIndex": 4,
+    "file": "walkForward/0009-walkForward-frame-008.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 9,
+    "sequenceIndex": 5,
+    "file": "walkForward/0010-walkForward-frame-009.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 10,
+    "sequenceIndex": 6,
+    "file": "walkForward/0011-walkForward-frame-010.png"
+  },
+  {
+    "key": "walkForward",
+    "frame": 11,
+    "sequenceIndex": 7,
+    "file": "walkForward/0012-walkForward-frame-011.png"
+  },
+  {
+    "key": "walkBack",
+    "frame": 83,
+    "sequenceIndex": 0,
+    "file": "walkBack/0013-walkBack-frame-083.png"
+  },
+  {
+    "key": "sprint",
+    "frame": 12,
+    "sequenceIndex": 0,
+    "file": "sprint/0014-sprint-frame-012.png"
+  },
+  {
+    "key": "sprint",
+    "frame": 13,
+    "sequenceIndex": 1,
+    "file": "sprint/0015-sprint-frame-013.png"
+  },
+  {
+    "key": "sprint",
+    "frame": 14,
+    "sequenceIndex": 2,
+    "file": "sprint/0016-sprint-frame-014.png"
+  },
+  {
+    "key": "sprint",
+    "frame": 15,
+    "sequenceIndex": 3,
+    "file": "sprint/0017-sprint-frame-015.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 40,
+    "sequenceIndex": 0,
+    "file": "backflip/0018-backflip-frame-040.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 41,
+    "sequenceIndex": 1,
+    "file": "backflip/0019-backflip-frame-041.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 42,
+    "sequenceIndex": 2,
+    "file": "backflip/0020-backflip-frame-042.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 43,
+    "sequenceIndex": 3,
+    "file": "backflip/0021-backflip-frame-043.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 45,
+    "sequenceIndex": 4,
+    "file": "backflip/0022-backflip-frame-045.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 46,
+    "sequenceIndex": 5,
+    "file": "backflip/0023-backflip-frame-046.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 47,
+    "sequenceIndex": 6,
+    "file": "backflip/0024-backflip-frame-047.png"
+  },
+  {
+    "key": "backflip",
+    "frame": 48,
+    "sequenceIndex": 7,
+    "file": "backflip/0025-backflip-frame-048.png"
+  },
+  {
+    "key": "sidestepLeft",
+    "frame": 40,
+    "sequenceIndex": 0,
+    "file": "sidestepLeft/0026-sidestepLeft-frame-040.png"
+  },
+  {
+    "key": "sidestepRight",
+    "frame": 40,
+    "sequenceIndex": 0,
+    "file": "sidestepRight/0027-sidestepRight-frame-040.png"
+  },
+  {
+    "key": "jump",
+    "frame": 19,
+    "sequenceIndex": 0,
+    "file": "jump/0028-jump-frame-019.png"
+  },
+  {
+    "key": "jump",
+    "frame": 20,
+    "sequenceIndex": 1,
+    "file": "jump/0029-jump-frame-020.png"
+  },
+  {
+    "key": "jump",
+    "frame": 21,
+    "sequenceIndex": 2,
+    "file": "jump/0030-jump-frame-021.png"
+  },
+  {
+    "key": "crouch",
+    "frame": 62,
+    "sequenceIndex": 0,
+    "file": "crouch/0031-crouch-frame-062.png"
+  },
+  {
+    "key": "block",
+    "frame": 83,
+    "sequenceIndex": 0,
+    "file": "block/0032-block-frame-083.png"
+  },
+  {
+    "key": "chargeKi",
+    "frame": 38,
+    "sequenceIndex": 0,
+    "file": "chargeKi/0033-chargeKi-frame-038.png"
+  },
+  {
+    "key": "jableft",
+    "frame": 86,
+    "sequenceIndex": 0,
+    "file": "jableft/0034-jableft-frame-086.png"
+  },
+  {
+    "key": "jableft",
+    "frame": 87,
+    "sequenceIndex": 1,
+    "file": "jableft/0035-jableft-frame-087.png"
+  },
+  {
+    "key": "jableft",
+    "frame": 88,
+    "sequenceIndex": 2,
+    "file": "jableft/0036-jableft-frame-088.png"
+  },
+  {
+    "key": "jabright",
+    "frame": 127,
+    "sequenceIndex": 0,
+    "file": "jabright/0037-jabright-frame-127.png"
+  },
+  {
+    "key": "jabright",
+    "frame": 128,
+    "sequenceIndex": 1,
+    "file": "jabright/0038-jabright-frame-128.png"
+  },
+  {
+    "key": "jabright",
+    "frame": 129,
+    "sequenceIndex": 2,
+    "file": "jabright/0039-jabright-frame-129.png"
+  },
+  {
+    "key": "jabright",
+    "frame": 130,
+    "sequenceIndex": 3,
+    "file": "jabright/0040-jabright-frame-130.png"
+  },
+  {
+    "key": "jabright",
+    "frame": 131,
+    "sequenceIndex": 4,
+    "file": "jabright/0041-jabright-frame-131.png"
+  },
+  {
+    "key": "hitLight",
+    "frame": 26,
+    "sequenceIndex": 0,
+    "file": "hitLight/0042-hitLight-frame-026.png"
+  },
+  {
+    "key": "juggle",
+    "frame": 29,
+    "sequenceIndex": 0,
+    "file": "juggle/0043-juggle-frame-029.png"
+  },
+  {
+    "key": "juggle",
+    "frame": 30,
+    "sequenceIndex": 1,
+    "file": "juggle/0044-juggle-frame-030.png"
+  },
+  {
+    "key": "knockdown",
+    "frame": 38,
+    "sequenceIndex": 0,
+    "file": "knockdown/0045-knockdown-frame-038.png"
+  },
+  {
+    "key": "knockdown",
+    "frame": 39,
+    "sequenceIndex": 1,
+    "file": "knockdown/0046-knockdown-frame-039.png"
+  },
+  {
+    "key": "knockdown",
+    "frame": 40,
+    "sequenceIndex": 2,
+    "file": "knockdown/0047-knockdown-frame-040.png"
+  },
+  {
+    "key": "knockdown",
+    "frame": 41,
+    "sequenceIndex": 3,
+    "file": "knockdown/0048-knockdown-frame-041.png"
+  },
+  {
+    "key": "knockdown",
+    "frame": 42,
+    "sequenceIndex": 4,
+    "file": "knockdown/0049-knockdown-frame-042.png"
+  },
+  {
+    "key": "getupStand",
+    "frame": 31,
+    "sequenceIndex": 0,
+    "file": "getupStand/0050-getupStand-frame-031.png"
+  },
+  {
+    "key": "getupStand",
+    "frame": 57,
+    "sequenceIndex": 1,
+    "file": "getupStand/0051-getupStand-frame-057.png"
+  },
+  {
+    "key": "getupStand",
+    "frame": 59,
+    "sequenceIndex": 2,
+    "file": "getupStand/0052-getupStand-frame-059.png"
+  },
+  {
+    "key": "getupStand",
+    "frame": 60,
+    "sequenceIndex": 3,
+    "file": "getupStand/0053-getupStand-frame-060.png"
+  },
+  {
+    "key": "win",
+    "frame": 131,
+    "sequenceIndex": 0,
+    "file": "win/0054-win-frame-131.png"
+  },
+  {
+    "key": "lose",
+    "frame": 31,
+    "sequenceIndex": 0,
+    "file": "lose/0055-lose-frame-031.png"
+  },
+  {
+    "key": "cmd:1+2",
+    "frame": 102,
+    "sequenceIndex": 0,
+    "file": "cmd_1_2/0056-cmd_1_2-frame-102.png"
+  },
+  {
+    "key": "cmd:1+2",
+    "frame": 103,
+    "sequenceIndex": 1,
+    "file": "cmd_1_2/0057-cmd_1_2-frame-103.png"
+  },
+  {
+    "key": "cmd:1+2",
+    "frame": 104,
+    "sequenceIndex": 2,
+    "file": "cmd_1_2/0058-cmd_1_2-frame-104.png"
+  },
+  {
+    "key": "cmd:1+2",
+    "frame": 105,
+    "sequenceIndex": 3,
+    "file": "cmd_1_2/0059-cmd_1_2-frame-105.png"
+  },
+  {
+    "key": "cmd:1+2",
+    "frame": 106,
+    "sequenceIndex": 4,
+    "file": "cmd_1_2/0060-cmd_1_2-frame-106.png"
+  },
+  {
+    "key": "cmd:1+2",
+    "frame": 107,
+    "sequenceIndex": 5,
+    "file": "cmd_1_2/0061-cmd_1_2-frame-107.png"
+  },
+  {
+    "key": "cmd:3+4",
+    "frame": 108,
+    "sequenceIndex": 0,
+    "file": "cmd_3_4/0062-cmd_3_4-frame-108.png"
+  },
+  {
+    "key": "cmd:3+4",
+    "frame": 109,
+    "sequenceIndex": 1,
+    "file": "cmd_3_4/0063-cmd_3_4-frame-109.png"
+  },
+  {
+    "key": "cmd:3+4",
+    "frame": 110,
+    "sequenceIndex": 2,
+    "file": "cmd_3_4/0064-cmd_3_4-frame-110.png"
+  },
+  {
+    "key": "cmd:3+4",
+    "frame": 111,
+    "sequenceIndex": 3,
+    "file": "cmd_3_4/0065-cmd_3_4-frame-111.png"
+  },
+  {
+    "key": "cmd:3+4",
+    "frame": 112,
+    "sequenceIndex": 4,
+    "file": "cmd_3_4/0066-cmd_3_4-frame-112.png"
+  },
+  {
+    "key": "cmd:d/f+2",
+    "frame": 127,
+    "sequenceIndex": 0,
+    "file": "cmd_d_f_2/0067-cmd_d_f_2-frame-127.png"
+  },
+  {
+    "key": "cmd:d/f+2",
+    "frame": 128,
+    "sequenceIndex": 1,
+    "file": "cmd_d_f_2/0068-cmd_d_f_2-frame-128.png"
+  },
+  {
+    "key": "cmd:d/f+2",
+    "frame": 129,
+    "sequenceIndex": 2,
+    "file": "cmd_d_f_2/0069-cmd_d_f_2-frame-129.png"
+  },
+  {
+    "key": "cmd:d/f+2",
+    "frame": 130,
+    "sequenceIndex": 3,
+    "file": "cmd_d_f_2/0070-cmd_d_f_2-frame-130.png"
+  },
+  {
+    "key": "cmd:d/f+2",
+    "frame": 131,
+    "sequenceIndex": 4,
+    "file": "cmd_d_f_2/0071-cmd_d_f_2-frame-131.png"
+  },
+  {
+    "key": "cmd:d+1",
+    "frame": 86,
+    "sequenceIndex": 0,
+    "file": "cmd_d_1/0072-cmd_d_1-frame-086.png"
+  },
+  {
+    "key": "cmd:d+1",
+    "frame": 87,
+    "sequenceIndex": 1,
+    "file": "cmd_d_1/0073-cmd_d_1-frame-087.png"
+  },
+  {
+    "key": "cmd:d+1",
+    "frame": 88,
+    "sequenceIndex": 2,
+    "file": "cmd_d_1/0074-cmd_d_1-frame-088.png"
+  },
+  {
+    "key": "cmd:f+1",
+    "frame": 86,
+    "sequenceIndex": 0,
+    "file": "cmd_f_1/0075-cmd_f_1-frame-086.png"
+  },
+  {
+    "key": "cmd:f+1",
+    "frame": 87,
+    "sequenceIndex": 1,
+    "file": "cmd_f_1/0076-cmd_f_1-frame-087.png"
+  },
+  {
+    "key": "cmd:f+1",
+    "frame": 88,
+    "sequenceIndex": 2,
+    "file": "cmd_f_1/0077-cmd_f_1-frame-088.png"
+  },
+  {
+    "key": "cmd:f+2",
+    "frame": 127,
+    "sequenceIndex": 0,
+    "file": "cmd_f_2/0078-cmd_f_2-frame-127.png"
+  },
+  {
+    "key": "cmd:f+2",
+    "frame": 128,
+    "sequenceIndex": 1,
+    "file": "cmd_f_2/0079-cmd_f_2-frame-128.png"
+  },
+  {
+    "key": "cmd:f+2",
+    "frame": 129,
+    "sequenceIndex": 2,
+    "file": "cmd_f_2/0080-cmd_f_2-frame-129.png"
+  },
+  {
+    "key": "cmd:f+2",
+    "frame": 130,
+    "sequenceIndex": 3,
+    "file": "cmd_f_2/0081-cmd_f_2-frame-130.png"
+  },
+  {
+    "key": "cmd:f+2",
+    "frame": 131,
+    "sequenceIndex": 4,
+    "file": "cmd_f_2/0082-cmd_f_2-frame-131.png"
+  },
+  {
+    "key": "cmd:FC+1",
+    "frame": 86,
+    "sequenceIndex": 0,
+    "file": "cmd_FC_1/0083-cmd_FC_1-frame-086.png"
+  },
+  {
+    "key": "cmd:FC+1",
+    "frame": 87,
+    "sequenceIndex": 1,
+    "file": "cmd_FC_1/0084-cmd_FC_1-frame-087.png"
+  },
+  {
+    "key": "cmd:FC+1",
+    "frame": 88,
+    "sequenceIndex": 2,
+    "file": "cmd_FC_1/0085-cmd_FC_1-frame-088.png"
+  },
+  {
+    "key": "cmd:FC+2",
+    "frame": 127,
+    "sequenceIndex": 0,
+    "file": "cmd_FC_2/0086-cmd_FC_2-frame-127.png"
+  },
+  {
+    "key": "cmd:FC+2",
+    "frame": 128,
+    "sequenceIndex": 1,
+    "file": "cmd_FC_2/0087-cmd_FC_2-frame-128.png"
+  },
+  {
+    "key": "cmd:FC+2",
+    "frame": 129,
+    "sequenceIndex": 2,
+    "file": "cmd_FC_2/0088-cmd_FC_2-frame-129.png"
+  },
+  {
+    "key": "cmd:FC+2",
+    "frame": 130,
+    "sequenceIndex": 3,
+    "file": "cmd_FC_2/0089-cmd_FC_2-frame-130.png"
+  },
+  {
+    "key": "cmd:FC+2",
+    "frame": 131,
+    "sequenceIndex": 4,
+    "file": "cmd_FC_2/0090-cmd_FC_2-frame-131.png"
+  },
+  {
+    "key": "cmd:O+1",
+    "frame": 86,
+    "sequenceIndex": 0,
+    "file": "cmd_O_1/0091-cmd_O_1-frame-086.png"
+  },
+  {
+    "key": "cmd:O+1",
+    "frame": 87,
+    "sequenceIndex": 1,
+    "file": "cmd_O_1/0092-cmd_O_1-frame-087.png"
+  },
+  {
+    "key": "cmd:O+1",
+    "frame": 88,
+    "sequenceIndex": 2,
+    "file": "cmd_O_1/0093-cmd_O_1-frame-088.png"
+  },
+  {
+    "key": "cmd:qcf+1",
+    "frame": 86,
+    "sequenceIndex": 0,
+    "file": "cmd_qcf_1/0094-cmd_qcf_1-frame-086.png"
+  },
+  {
+    "key": "cmd:qcf+1",
+    "frame": 87,
+    "sequenceIndex": 1,
+    "file": "cmd_qcf_1/0095-cmd_qcf_1-frame-087.png"
+  },
+  {
+    "key": "cmd:qcf+1",
+    "frame": 88,
+    "sequenceIndex": 2,
+    "file": "cmd_qcf_1/0096-cmd_qcf_1-frame-088.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 173,
+    "sequenceIndex": 0,
+    "file": "cmd_qcf_4/0097-cmd_qcf_4-frame-173.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 174,
+    "sequenceIndex": 1,
+    "file": "cmd_qcf_4/0098-cmd_qcf_4-frame-174.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 175,
+    "sequenceIndex": 2,
+    "file": "cmd_qcf_4/0099-cmd_qcf_4-frame-175.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 176,
+    "sequenceIndex": 3,
+    "file": "cmd_qcf_4/0100-cmd_qcf_4-frame-176.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 177,
+    "sequenceIndex": 4,
+    "file": "cmd_qcf_4/0101-cmd_qcf_4-frame-177.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 178,
+    "sequenceIndex": 5,
+    "file": "cmd_qcf_4/0102-cmd_qcf_4-frame-178.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 179,
+    "sequenceIndex": 6,
+    "file": "cmd_qcf_4/0103-cmd_qcf_4-frame-179.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 180,
+    "sequenceIndex": 7,
+    "file": "cmd_qcf_4/0104-cmd_qcf_4-frame-180.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 181,
+    "sequenceIndex": 8,
+    "file": "cmd_qcf_4/0105-cmd_qcf_4-frame-181.png"
+  },
+  {
+    "key": "cmd:qcf+4",
+    "frame": 182,
+    "sequenceIndex": 9,
+    "file": "cmd_qcf_4/0106-cmd_qcf_4-frame-182.png"
+  },
+  {
+    "key": "cmd:WS+2",
+    "frame": 127,
+    "sequenceIndex": 0,
+    "file": "cmd_WS_2/0107-cmd_WS_2-frame-127.png"
+  },
+  {
+    "key": "cmd:WS+2",
+    "frame": 128,
+    "sequenceIndex": 1,
+    "file": "cmd_WS_2/0108-cmd_WS_2-frame-128.png"
+  },
+  {
+    "key": "cmd:WS+2",
+    "frame": 129,
+    "sequenceIndex": 2,
+    "file": "cmd_WS_2/0109-cmd_WS_2-frame-129.png"
+  },
+  {
+    "key": "cmd:WS+2",
+    "frame": 130,
+    "sequenceIndex": 3,
+    "file": "cmd_WS_2/0110-cmd_WS_2-frame-130.png"
+  },
+  {
+    "key": "cmd:WS+2",
+    "frame": 131,
+    "sequenceIndex": 4,
+    "file": "cmd_WS_2/0111-cmd_WS_2-frame-131.png"
+  }
+]
