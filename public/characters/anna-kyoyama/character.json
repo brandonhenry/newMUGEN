@@ -65,6 +65,16 @@
     "block": [
       "/characters/anna-kyoyama/frames/frame-015.png"
     ],
+    "crouchBlock": [
+      "/characters/anna-kyoyama/frames/frame-090.png",
+      "/characters/anna-kyoyama/frames/frame-091.png",
+      "/characters/anna-kyoyama/frames/frame-092.png",
+      "/characters/anna-kyoyama/frames/frame-093.png",
+      "/characters/anna-kyoyama/frames/frame-095.png",
+      "/characters/anna-kyoyama/frames/frame-096.png",
+      "/characters/anna-kyoyama/frames/frame-097.png",
+      "/characters/anna-kyoyama/frames/frame-098.png"
+    ],
     "chargeKi": [
       "/characters/anna-kyoyama/frames/frame-016.png"
     ],
@@ -956,6 +966,48 @@
     "height": 0.92
   },
   "animationFrameScales": {
+    "crouchBlock": {
+      "90": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      }
+    },
     "knockdown": {
       "34": {
         "width": 0.58,
