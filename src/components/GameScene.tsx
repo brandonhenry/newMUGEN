@@ -35,7 +35,7 @@ import { debugLogThrottled } from '../lib/debugLogger';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
-import { getKeyboardBindingsForEvent } from '../hooks/useControls';
+import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 
 type GameSceneProps = {
@@ -1431,6 +1431,8 @@ function StagePreviewKeyboardControls({
   const controls = useThree((state) => state.controls as { target?: THREE.Vector3; update?: () => void } | undefined);
   const flyKeysRef = useRef(new Set<string>());
   const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
+  const inputQueueRef = useRef<QueuedInputPress[]>([]);
+  const inputSequenceRef = useRef(0);
 
   useEffect(() => {
     if (!active) return undefined;
@@ -1448,6 +1450,7 @@ function StagePreviewKeyboardControls({
         captureStagePreviewKey(event);
         bindings.forEach((binding) => {
           inputRefs.current[binding.player - 1][binding.action] = pressed;
+          if (pressed && !event.repeat) enqueueInputPress(inputQueueRef.current, inputSequenceRef, (binding.player - 1) as 0 | 1, binding.action);
         });
       }
     };
@@ -1460,6 +1463,7 @@ function StagePreviewKeyboardControls({
       window.removeEventListener('keyup', handleKeyUp, true);
       flyKeysRef.current.clear();
       inputRefs.current = [emptyInputFrame(), emptyInputFrame()];
+      inputQueueRef.current = [];
     };
   }, [active, previewMode]);
 
@@ -1471,7 +1475,12 @@ function StagePreviewKeyboardControls({
     }
     if (previewMode === 'play' && match) {
       const frameDelta = Math.min(delta, 1 / 30);
-      onMatchChange((current) => current ? stepMatch(current, inputRefs.current[0], inputRefs.current[1], frameDelta) : current);
+      const inputs: [InputFrame, InputFrame] = [
+        { ...inputRefs.current[0] },
+        { ...inputRefs.current[1] }
+      ];
+      applyQueuedPressesToInputs(inputs, inputQueueRef.current, true);
+      onMatchChange((current) => current ? stepMatch(current, inputs[0], inputs[1], frameDelta) : current);
     }
   });
 
@@ -2246,6 +2255,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     comboDamage: 0,
     bufferedMoveInput: null,
     bufferedMoveFrames: 0,
+    bufferedMoveIntent: null,
     aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,

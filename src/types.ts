@@ -719,6 +719,20 @@ export type StagePropLibraryManifest = {
 
 export type InputFrame = Record<ActionName, boolean>;
 
+export type InputFrameMetadata = {
+  __pressedActions?: ActionName[];
+  __pressSequences?: Partial<Record<ActionName, number>>;
+};
+
+export type InputFrameWithMetadata = InputFrame & InputFrameMetadata;
+
+export type BufferedMoveIntent = {
+  moveInput: MoveInput;
+  inputSnapshot: InputFrame;
+  framesRemaining: number;
+  sequence: number;
+};
+
 export type MatchMode = 'ai' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'online' | 'private';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
@@ -858,6 +872,7 @@ export type FighterRuntime = {
   comboDamage: number;
   bufferedMoveInput: MoveInput | null;
   bufferedMoveFrames: number;
+  bufferedMoveIntent: BufferedMoveIntent | null;
   aiRecentComboKeys: string[];
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;

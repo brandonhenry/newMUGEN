@@ -2454,7 +2454,7 @@ export default function App() {
   const innerMenuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const audioUnlockedRef = useRef(false);
   const menuHoverLastPlayedAtRef = useRef(0);
-  const { readInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
+  const { readInputsForStep, peekInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
   const isDevHost = isLocalDevHost();
   const effectiveUnlockedCharacterIds = useMemo(
     () => (isDevHost ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
@@ -3259,7 +3259,8 @@ export default function App() {
             mode={mode}
             cpuDifficulty={cpuDifficulty}
             settings={settings}
-            readInputs={readInputs}
+            readInputsForStep={readInputsForStep}
+            peekInputs={peekInputs}
             setVirtualAction={setVirtualAction}
             clearMenuInputs={clearMenuInputs}
             getLastInput={getLastInput}
@@ -13174,7 +13175,8 @@ function FightScreen({
   mode,
   cpuDifficulty,
   settings,
-  readInputs,
+  readInputsForStep,
+  peekInputs,
   setVirtualAction,
   clearMenuInputs,
   getLastInput,
@@ -13193,7 +13195,8 @@ function FightScreen({
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   settings: GameSettings;
-  readInputs: () => [InputFrame, InputFrame];
+  readInputsForStep: () => [InputFrame, InputFrame];
+  peekInputs: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
   getLastInput: () => string;
@@ -14016,33 +14019,32 @@ function FightScreen({
     const tick = (now: number) => {
       const delta = Math.min(0.2, (now - previous) / 1000);
       previous = now;
-      const [p1Input, p2Input] = readInputs();
+      const [peekP1Input, peekP2Input] = peekInputs();
       frameInputRef.current =
-        p1Input.right ? 'p1:right' :
-        p1Input.left ? 'p1:left' :
-        p1Input.up ? 'p1:up' :
-        p1Input.down ? 'p1:down' :
-        p1Input.sidestepUp ? 'p1:sidestepUp' :
-        p1Input.sidestepDown ? 'p1:sidestepDown' :
-        p1Input.sidewalkUp ? 'p1:sidewalkUp' :
-        p1Input.sidewalkDown ? 'p1:sidewalkDown' :
-        p1Input.jab ? 'p1:jab' :
-        p1Input.kick ? 'p1:kick' :
-        p1Input.heavy ? 'p1:heavy' :
-        p1Input.special ? 'p1:special' :
-        p2Input.right ? 'p2:right' :
-        p2Input.left ? 'p2:left' :
-        p2Input.up ? 'p2:up' :
-        p2Input.down ? 'p2:down' :
-        p2Input.sidestepUp ? 'p2:sidestepUp' :
-        p2Input.sidestepDown ? 'p2:sidestepDown' :
-        p2Input.sidewalkUp ? 'p2:sidewalkUp' :
-        p2Input.sidewalkDown ? 'p2:sidewalkDown' :
-        p2Input.jab ? 'p2:jab' :
+        peekP1Input.right ? 'p1:right' :
+        peekP1Input.left ? 'p1:left' :
+        peekP1Input.up ? 'p1:up' :
+        peekP1Input.down ? 'p1:down' :
+        peekP1Input.sidestepUp ? 'p1:sidestepUp' :
+        peekP1Input.sidestepDown ? 'p1:sidestepDown' :
+        peekP1Input.sidewalkUp ? 'p1:sidewalkUp' :
+        peekP1Input.sidewalkDown ? 'p1:sidewalkDown' :
+        peekP1Input.jab ? 'p1:jab' :
+        peekP1Input.kick ? 'p1:kick' :
+        peekP1Input.heavy ? 'p1:heavy' :
+        peekP1Input.special ? 'p1:special' :
+        peekP2Input.right ? 'p2:right' :
+        peekP2Input.left ? 'p2:left' :
+        peekP2Input.up ? 'p2:up' :
+        peekP2Input.down ? 'p2:down' :
+        peekP2Input.sidestepUp ? 'p2:sidestepUp' :
+        peekP2Input.sidestepDown ? 'p2:sidestepDown' :
+        peekP2Input.sidewalkUp ? 'p2:sidewalkUp' :
+        peekP2Input.sidewalkDown ? 'p2:sidewalkDown' :
+        peekP2Input.jab ? 'p2:jab' :
         'none';
-      const localOnlineInput = mergeInputFrames(p1Input, p2Input);
       const canOpenPauseMenu = !isOnline || onlineStateRef.current !== 'connected';
-      if (canOpenPauseMenu && (p1Input.pause || p2Input.pause)) {
+      if (canOpenPauseMenu && (peekP1Input.pause || peekP2Input.pause)) {
         if (!pauseLatch.current) {
           setPaused((value) => !value);
           pauseLatch.current = true;
@@ -14053,7 +14055,7 @@ function FightScreen({
       }
 
       if (paused && pauseMenuView === 'movelist') {
-        const tabDirection = (p1Input.right || p2Input.right) ? 1 : (p1Input.left || p2Input.left) ? -1 : 0;
+        const tabDirection = (peekP1Input.right || peekP2Input.right) ? 1 : (peekP1Input.left || peekP2Input.left) ? -1 : 0;
         if (tabDirection) {
           if (!moveListTabLatch.current) {
             cycleMoveListTab(tabDirection);
@@ -14069,6 +14071,8 @@ function FightScreen({
       if (!paused) {
         accumulator += delta;
         while (accumulator >= fixedStep) {
+          const [p1Input, p2Input] = readInputsForStep();
+          const localOnlineInput = mergeInputFrames(p1Input, p2Input);
           if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'guest') {
             onlineSessionRef.current?.send({ type: 'input', sequence: onlineInputSequenceRef.current += 1, frame: encodeInputFrame(localOnlineInput) });
             const clash = matchRef.current.clashState;
@@ -14110,7 +14114,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, p1, p2, pauseMenuView, paused, publishOnlineSnapshot, readInputs, recordOnlineMatchWin, stage]);
+  }, [clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage]);
 
   const requestOnlineRematch = () => {
     if (!isOnline || onlineStateRef.current !== 'connected') {
@@ -14190,14 +14194,6 @@ function FightScreen({
     captureFightAnalytics('mobile_controls_used', { action });
   }, [captureFightAnalytics]);
 
-  const handleSurfaceKey = (event: ReactKeyboardEvent<HTMLDivElement>, pressed: boolean) => {
-    if (event.defaultPrevented) return;
-    const binding = getSurfaceKeyBinding(event.nativeEvent, mode, settings.controls);
-    if (!binding) return;
-    setVirtualAction(binding.player, binding.action, pressed);
-    event.preventDefault();
-  };
-
   const winnerFighter = match.winnerSlot ? match.fighters[match.winnerSlot - 1] : null;
 
   return (
@@ -14206,8 +14202,6 @@ function FightScreen({
       ref={screenRef}
       tabIndex={-1}
       onPointerDown={() => screenRef.current?.focus()}
-      onKeyDown={(event) => handleSurfaceKey(event, true)}
-      onKeyUp={(event) => handleSurfaceKey(event, false)}
     >
       <GameScene
         match={match}
@@ -14421,10 +14415,6 @@ function ConfiguredMoveList({
       </div>
     </div>
   );
-}
-
-function getSurfaceKeyBinding(event: KeyboardEvent, mode: MatchMode, controls: GameSettings['controls']): { player: 1 | 2; action: ActionName } | null {
-  return getKeyboardBindingsForEvent(event, mode, controls)[0] ?? null;
 }
 
 function mergeInputFrames(primary: InputFrame, secondary: InputFrame): InputFrame {

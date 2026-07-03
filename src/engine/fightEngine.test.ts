@@ -5,11 +5,13 @@ import { normalizeCharacter, normalizeMove, validateCharacter } from '../lib/cha
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from '../lib/gameSettings';
 import {
   applyHorizontalTap,
+  applyQueuedPressesToInputs,
   applyVerticalTap,
   consumeVerticalTapAfterRead,
   consumeHorizontalTapAfterRead,
   createHorizontalTapState,
   createVerticalTapState,
+  enqueueInputPress,
   getKeyboardBindingsForEvent,
   prepareVerticalTapForRead
 } from '../hooks/useControls';
@@ -897,6 +899,53 @@ describe('character manifests', () => {
     expect(input.left).toBe(true);
     expect(input.right).toBe(false);
     expect(input.dashForward).toBe(true);
+  });
+
+  it('preserves a press-and-release between simulation reads for exactly one step', () => {
+    const queue: Parameters<typeof applyQueuedPressesToInputs>[1] = [];
+    const sequenceRef = { current: 0 };
+    enqueueInputPress(queue, sequenceRef, 0, 'jab', 100);
+
+    const inputs: [ReturnType<typeof emptyInputFrame>, ReturnType<typeof emptyInputFrame>] = [emptyInputFrame(), emptyInputFrame()];
+    applyQueuedPressesToInputs(inputs, queue, true);
+
+    expect(inputs[0].jab).toBe(true);
+    expect((inputs[0] as { __pressedActions?: unknown }).__pressedActions).toEqual(['jab']);
+    expect(queue).toHaveLength(0);
+
+    const nextInputs: [ReturnType<typeof emptyInputFrame>, ReturnType<typeof emptyInputFrame>] = [emptyInputFrame(), emptyInputFrame()];
+    applyQueuedPressesToInputs(nextInputs, queue, true);
+    expect(nextInputs[0].jab).toBe(false);
+  });
+
+  it('does not queue continuous movement presses as latched pulses', () => {
+    const queue: Parameters<typeof applyQueuedPressesToInputs>[1] = [];
+    const sequenceRef = { current: 0 };
+    enqueueInputPress(queue, sequenceRef, 0, 'right', 100);
+    enqueueInputPress(queue, sequenceRef, 0, 'left', 101);
+
+    const inputs: [ReturnType<typeof emptyInputFrame>, ReturnType<typeof emptyInputFrame>] = [emptyInputFrame(), emptyInputFrame()];
+    applyQueuedPressesToInputs(inputs, queue, true);
+
+    expect(queue).toHaveLength(0);
+    expect(inputs[0].right).toBe(false);
+    expect(inputs[0].left).toBe(false);
+  });
+
+  it('does not consume queued gameplay presses during a non-consuming peek', () => {
+    const queue: Parameters<typeof applyQueuedPressesToInputs>[1] = [];
+    const sequenceRef = { current: 0 };
+    enqueueInputPress(queue, sequenceRef, 0, 'heavy', 100);
+
+    const peekInputs: [ReturnType<typeof emptyInputFrame>, ReturnType<typeof emptyInputFrame>] = [emptyInputFrame(), emptyInputFrame()];
+    applyQueuedPressesToInputs(peekInputs, queue, false);
+    expect(peekInputs[0].heavy).toBe(true);
+    expect(queue).toHaveLength(1);
+
+    const stepInputs: [ReturnType<typeof emptyInputFrame>, ReturnType<typeof emptyInputFrame>] = [emptyInputFrame(), emptyInputFrame()];
+    applyQueuedPressesToInputs(stepInputs, queue, true);
+    expect(stepInputs[0].heavy).toBe(true);
+    expect(queue).toHaveLength(0);
   });
 
   it('keeps vertical tap gestures isolated from horizontal holds and double taps', () => {
@@ -3062,7 +3111,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('crouchBlock');
   });
 
-  it('does not fall back to standing attacks when crouch moves are not configured', () => {
+  it('falls back to a base attack when crouch command moves are not configured', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -3076,8 +3125,9 @@ describe('fight engine', () => {
     crouchJab.jab = true;
     match = stepMatch(match, crouchJab, emptyInputFrame(), 1 / 60);
 
-    expect(match.fighters[0].state).toBe('crouch');
-    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].currentMove?.command).toBeUndefined();
   });
 
   it('starts configured FC attacks while crouching and applies their overrides', () => {
@@ -3255,7 +3305,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.damage).toBe(8);
   });
 
-  it('ignores early player attack inputs during non-cancelable recovery after a confirmed hit', () => {
+  it('buffers early player attack inputs during non-cancelable recovery after a confirmed hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -3278,7 +3328,7 @@ describe('fight engine', () => {
     match = stepMatch(match, three, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.input).toBe('jab');
-    expect(match.fighters[0].bufferedMoveInput).toBeNull();
+    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
   });
 
   it('does not buffer early attack inputs if no chain window opens', () => {
@@ -3294,7 +3344,7 @@ describe('fight engine', () => {
     const earlyKick = emptyInputFrame();
     earlyKick.kick = true;
     match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].bufferedMoveInput).toBeNull();
+    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
 
     for (let i = 0; i < 20; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -3304,7 +3354,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
 
-  it('starts a follow-up only when a non-cancelable attacker presses after full recovery', () => {
+  it('starts a buffered follow-up after non-cancelable recovery when hit advantage remains', () => {
     const plusCharacter: CharacterDefinition = {
       ...starterCharacters[0],
       moves: starterCharacters[0].moves.map((move) =>
@@ -3341,10 +3391,9 @@ describe('fight engine', () => {
     match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('jab');
 
-    match = stepUntilFighterActionable(match, 0);
-    const timedKick = emptyInputFrame();
-    timedKick.kick = true;
-    match = stepMatch(match, timedKick, emptyInputFrame(), 1 / 60);
+    for (let i = 0; i < 20 && match.fighters[0].currentMove?.input !== 'kick'; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
     expect(match.fighters[0].currentMove?.input).toBe('kick');
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
   });
@@ -3577,7 +3626,7 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:kick');
-    expect(match.fighters[0].bufferedMoveInput).toBeNull();
+    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
   });
 
   it('allows the same attack again after recovery when hit advantage keeps the defender stuck', () => {
@@ -4173,7 +4222,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.comboKey).toContain('heavy');
   });
 
-  it('does not start an unauthored full-movelist command slot', () => {
+  it('falls back to a base attack for an unauthored full-movelist command slot', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -4185,8 +4234,9 @@ describe('fight engine', () => {
     missingForwardKick.kick = true;
     match = stepMatch(match, missingForwardKick, emptyInputFrame(), 1 / 60);
 
-    expect(match.fighters[0].state).not.toBe('attack');
-    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].currentMove?.command).toBeUndefined();
   });
 
   it('uses configured Tekken-style command moves when their frame slot exists', () => {
@@ -4204,6 +4254,51 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.command).toBe('f+1');
     expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:f+1');
     expect(match.fighters[0].currentMove?.comboKey).toBe('f+1:jab');
+  });
+
+  it('uses the latest queued button press when multiple independent attacks land in one step', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.9;
+    match.fighters[1].position.x = 0.9;
+    const queue: Parameters<typeof applyQueuedPressesToInputs>[1] = [];
+    const sequenceRef = { current: 0 };
+    enqueueInputPress(queue, sequenceRef, 0, 'jab', 100);
+    enqueueInputPress(queue, sequenceRef, 0, 'heavy', 101);
+    const inputs: [ReturnType<typeof emptyInputFrame>, ReturnType<typeof emptyInputFrame>] = [emptyInputFrame(), emptyInputFrame()];
+    applyQueuedPressesToInputs(inputs, queue, true);
+
+    match = stepMatch(match, inputs[0], emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.input).toBe('heavy');
+  });
+
+  it('preserves a buffered command snapshot after the player releases before recovery ends', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -5;
+    match.fighters[1].position.x = 5;
+
+    match = stepMatch(match, { ...emptyInputFrame(), kick: true }, emptyInputFrame(), 1 / 60);
+    while (match.fighters[0].actionFramesRemaining > 8) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[0].hitConfirmed).toBe(false);
+    expect(match.fighters[0].actionFramesRemaining).toBeGreaterThan(0);
+
+    const forwardOne = { ...emptyInputFrame(), right: true, jab: true };
+    match = stepMatch(match, forwardOne, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].bufferedMoveIntent?.inputSnapshot.right).toBe(true);
+    expect(match.fighters[0].bufferedMoveIntent?.inputSnapshot.jab).toBe(true);
+
+    for (let frame = 0; frame < 40 && match.fighters[0].currentMove?.command !== 'f+1'; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].currentMove?.command).toBe('f+1');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:f+1');
   });
 
   it('applies frame data overrides for configured command moves', () => {

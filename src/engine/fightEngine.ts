@@ -1,10 +1,12 @@
 import type {
   BoxSpec,
+  ActionName,
   CharacterDefinition,
   ClashState,
   CpuDifficulty,
   FighterRuntime,
   InputFrame,
+  InputFrameWithMetadata,
   MatchMode,
   MatchOptions,
   MatchSnapshot,
@@ -475,6 +477,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     comboDamage: 0,
     bufferedMoveInput: null,
     bufferedMoveFrames: 0,
+    bufferedMoveIntent: null,
     aiRecentComboKeys: [],
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
@@ -530,8 +533,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.hitFlash = 0;
   updateShadowClone(fighter, dt);
   updateTransformRuntime(fighter, dt);
-  fighter.bufferedMoveFrames = Math.max(0, fighter.bufferedMoveFrames - frameDelta);
-  if (fighter.bufferedMoveFrames === 0) fighter.bufferedMoveInput = null;
+  tickBufferedMoveIntent(fighter, frameDelta);
   fighter.comboTimer = Math.max(0, fighter.comboTimer - dt);
   if (fighter.comboTimer === 0 && fighter.state !== 'attack') {
     fighter.comboStep = 0;
@@ -567,8 +569,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
-  const freshMoveInput = transformDestination ? null : getFreshMoveInput(fighter, input);
-  if (freshMoveInput && canBufferFreshMoveInput(fighter)) bufferMoveInput(fighter, freshMoveInput);
+  const freshMoveIntent = transformDestination ? null : getFreshMoveIntent(fighter, input);
+  const freshMoveInput = freshMoveIntent?.moveInput ?? null;
+  if (freshMoveIntent && canBufferFreshMoveInput(fighter)) bufferMoveIntent(fighter, freshMoveIntent);
 
   if (
     fighter.state === 'chargeKi' &&
@@ -579,7 +582,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.chargePhase !== 'recovery'
   ) {
     clearKiChargeState(fighter);
-    startComboAttack(fighter, opponent, input, freshMoveInput, 'neutral');
+    if (startComboAttack(fighter, opponent, input, freshMoveInput, 'neutral')) clearBufferedMoveInput(fighter);
     applyGravity(fighter, dt);
     finishFighterStep();
     return;
@@ -671,10 +674,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.state === 'attack' && (fighter.actionFramesRemaining > 0 || fighter.actionTimer > 0)) {
-    const cancelMove = freshMoveInput;
-    if (cancelMove && shouldDropSameMoveRecoveryBuffer(fighter, opponent, input, cancelMove)) {
-      clearBufferedMoveInput(fighter);
-    } else if (cancelMove && canComboCancel(fighter) && startComboAttack(fighter, opponent, input, cancelMove, 'cancel')) {
+    const cancelMove = freshMoveIntent;
+    if (cancelMove && shouldDropSameMoveRecoveryBuffer(fighter, opponent, cancelMove.inputSnapshot, cancelMove.moveInput)) {
+      // Keep the stored intent for the first actionable frame; just do not direct-cancel now.
+    } else if (cancelMove && canComboCancel(fighter) && startComboAttack(fighter, opponent, cancelMove.inputSnapshot, cancelMove.moveInput, 'cancel')) {
       clearBufferedMoveInput(fighter);
       applyGravity(fighter, dt);
       finishFighterStep();
@@ -701,10 +704,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
   if (input.down) fighter.forcedCrouchFrames = 0;
 
-  const moveInput = fighter.bufferedMoveInput ?? freshMoveInput;
-  if (moveInput) {
+  const moveIntent = fighter.bufferedMoveIntent ?? freshMoveIntent;
+  if (moveIntent) {
+    const moveInput = moveIntent.moveInput;
+    const moveInputSnapshot = moveIntent.inputSnapshot;
     const chainMode = fighter.comboTimer > 0 && canLinkAfterHit(fighter, opponent) ? 'link' : 'neutral';
-    if (startComboAttack(fighter, opponent, input, moveInput, chainMode)) {
+    if (startComboAttack(fighter, opponent, moveInputSnapshot, moveInput, chainMode)) {
       clearBufferedMoveInput(fighter);
     }
     applyGravity(fighter, dt);
@@ -843,7 +848,12 @@ function handleThrowCaptureStep(match: MatchSnapshot, fighter: FighterRuntime, o
 }
 
 function countFreshAttackPresses(fighter: FighterRuntime, input: InputFrame) {
-  return moveInputs.reduce((count, action) => count + (input[action] && !fighter.previousAttackInputs[action] ? 1 : 0), 0);
+  return moveInputs.reduce((count, action) => count + (isFreshAttackPress(fighter, input, action) ? 1 : 0), 0);
+}
+
+function isFreshAttackPress(fighter: FighterRuntime, input: InputFrame, action: MoveInput) {
+  const inputMeta = input as InputFrameWithMetadata;
+  return Boolean(input[action] && ((inputMeta.__pressedActions?.includes(action) ?? false) || !fighter.previousAttackInputs[action]));
 }
 
 function startThrowHoldJab(attacker: FighterRuntime) {
@@ -1051,20 +1061,51 @@ function clearThrowRuntime(fighter: FighterRuntime) {
   fighter.throwShakeFrames = 0;
 }
 
-function bufferMoveInput(fighter: FighterRuntime, moveInput: MoveInput) {
-  fighter.bufferedMoveInput = moveInput;
+function bufferMoveIntent(fighter: FighterRuntime, intent: NonNullable<FighterRuntime['bufferedMoveIntent']>) {
+  fighter.bufferedMoveIntent = {
+    moveInput: intent.moveInput,
+    inputSnapshot: cloneInputFrame(intent.inputSnapshot),
+    framesRemaining: ATTACK_BUFFER_FRAMES,
+    sequence: intent.sequence
+  };
+  fighter.bufferedMoveInput = intent.moveInput;
   fighter.bufferedMoveFrames = ATTACK_BUFFER_FRAMES;
+}
+
+function tickBufferedMoveIntent(fighter: FighterRuntime, frameDelta: number) {
+  if (!fighter.bufferedMoveIntent) {
+    fighter.bufferedMoveInput = null;
+    fighter.bufferedMoveFrames = 0;
+    return;
+  }
+  fighter.bufferedMoveIntent.framesRemaining = Math.max(0, fighter.bufferedMoveIntent.framesRemaining - frameDelta);
+  fighter.bufferedMoveFrames = fighter.bufferedMoveIntent.framesRemaining;
+  fighter.bufferedMoveInput = fighter.bufferedMoveIntent.moveInput;
+  if (fighter.bufferedMoveIntent.framesRemaining === 0) clearBufferedMoveInput(fighter);
 }
 
 function clearBufferedMoveInput(fighter: FighterRuntime) {
   fighter.bufferedMoveInput = null;
   fighter.bufferedMoveFrames = 0;
+  fighter.bufferedMoveIntent = null;
 }
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
-  if (fighter.state === 'attack') return false;
-  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.state === 'chargeKi' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
-  return fighter.stunFramesRemaining === 0 && fighter.blockstunFramesRemaining === 0 && fighter.actionFramesRemaining === 0;
+  if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
+  if (fighter.state === 'chargeKi' && (fighter.chargePhase === 'startup' || fighter.chargePhase === 'recovery')) return false;
+  return true;
+}
+
+function cloneInputFrame(input: InputFrame): InputFrame {
+  const clone = emptyInputFrame();
+  for (const action of Object.keys(clone) as ActionName[]) {
+    clone[action] = input[action];
+  }
+  const inputMeta = input as InputFrameWithMetadata;
+  const cloneMeta = clone as InputFrameWithMetadata;
+  if (inputMeta.__pressedActions) cloneMeta.__pressedActions = [...inputMeta.__pressedActions];
+  if (inputMeta.__pressSequences) cloneMeta.__pressSequences = { ...inputMeta.__pressSequences };
+  return clone;
 }
 
 function isAllLimbInput(input: InputFrame) {
@@ -1479,8 +1520,23 @@ function mirrorShadowCloneHit(fighter: FighterRuntime, move: MoveDefinition, for
   }
 }
 
-function getFreshMoveInput(fighter: FighterRuntime, input: InputFrame): MoveInput | null {
-  return moveInputs.find((action) => input[action] && !fighter.previousAttackInputs[action]) ?? null;
+function getFreshMoveIntent(fighter: FighterRuntime, input: InputFrame): FighterRuntime['bufferedMoveIntent'] {
+  const inputMeta = input as InputFrameWithMetadata;
+  const pressedMoveInputs = (inputMeta.__pressedActions ?? [])
+    .filter((action): action is MoveInput => isMoveInput(action) && input[action])
+    .sort((a, b) => (inputMeta.__pressSequences?.[b] ?? 0) - (inputMeta.__pressSequences?.[a] ?? 0));
+  const moveInput = pressedMoveInputs[0] ?? moveInputs.find((action) => input[action] && !fighter.previousAttackInputs[action]) ?? null;
+  if (!moveInput) return null;
+  return {
+    moveInput,
+    inputSnapshot: cloneInputFrame(input),
+    framesRemaining: ATTACK_BUFFER_FRAMES,
+    sequence: inputMeta.__pressSequences?.[moveInput] ?? 0
+  };
+}
+
+function isMoveInput(action: ActionName): action is MoveInput {
+  return action === 'jab' || action === 'kick' || action === 'heavy' || action === 'special';
 }
 
 function updateAttackInputMemory(fighter: FighterRuntime, input: InputFrame) {
@@ -1572,11 +1628,8 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const continuing = cancelingCurrentAttack || chainMode === 'link';
   const comboStep = continuing ? Math.min(MAX_COMBO_STEPS, fighter.comboStep + 1) : 1;
   const sequence = continuing ? [...fighter.comboSequence, moveInput].slice(-6) : [moveInput];
-  const crouchCommandRequired = Boolean(getCrouchCommandNotation(fighter, opponent, input, moveInput));
   const command = findConfiguredCommand(fighter, opponent, input, moveInput);
-  if (crouchCommandRequired && !command) return false;
   if (continuing && !canChainInto(fighter, chainMode)) return false;
-  if (!command && hasCommandInputIntent(fighter, opponent, input, moveInput)) return false;
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, comboStep, sequence, command);
   if (continuing && chainMode === 'cancel' && isSameInputRepeat(sequence) && !isAuthoredChain(fighter.character, move, route, sequence, command)) {
     if (fighter.bufferedMoveInput === moveInput) clearBufferedMoveInput(fighter);
@@ -4913,6 +4966,12 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       comboUsedKeys: [...fighter.comboUsedKeys],
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
       previousAttackInputs: { ...fighter.previousAttackInputs },
+      bufferedMoveIntent: fighter.bufferedMoveIntent
+        ? {
+            ...fighter.bufferedMoveIntent,
+            inputSnapshot: cloneInputFrame(fighter.bufferedMoveIntent.inputSnapshot)
+          }
+        : null,
       shadowClone: fighter.shadowClone
         ? {
             ...fighter.shadowClone,

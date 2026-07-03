@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import type { ActionName, ControlBindingMap, InputFrame, MatchMode, PlayerControlBindings } from '../types';
+import type { ActionName, ControlBindingMap, InputFrame, InputFrameWithMetadata, MatchMode, PlayerControlBindings } from '../types';
 import { emptyInputFrame } from '../types';
 import { keybindableButtonComboDefinitions } from '../lib/buttonCombos';
 import { defaultGameSettings } from '../lib/gameSettings';
@@ -12,6 +12,18 @@ const aiModeArrowKeys: Record<string, ActionName> = {
 };
 
 type VerticalInputSource = 'keyboard' | 'virtual' | 'gamepad';
+type InputSource = 'keyboard' | 'virtual' | 'gamepad';
+type InputDebugWindow = Window & {
+  __koreInputDebugLog?: Array<{ event: string; payload: Record<string, unknown>; timestamp: number }>;
+};
+
+export type QueuedInputPress = {
+  player: 0 | 1;
+  action: ActionName;
+  source: InputSource;
+  sequence: number;
+  timestamp: number;
+};
 
 export type VerticalTapState = {
   lastUpTap: number;
@@ -34,6 +46,25 @@ export type HorizontalTapState = {
 
 const DOUBLE_TAP_MS = 460;
 const VERTICAL_HOLD_MS = 185;
+const menuQueuedActions = new Set<ActionName>(['confirm', 'pause']);
+const queuedPulseActions = new Set<ActionName>(['jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back']);
+
+function inputDebugEnabled() {
+  return Boolean(
+    typeof window !== 'undefined' &&
+      (window.location.search.includes('inputDebug=1') || window.localStorage?.getItem('kore:input-debug') === '1')
+  );
+}
+
+function logInputDebug(event: string, payload: Record<string, unknown>) {
+  if (!inputDebugEnabled()) return;
+  const debugWindow = window as InputDebugWindow;
+  const debugLog = debugWindow.__koreInputDebugLog ?? [];
+  debugLog.push({ event, payload, timestamp: performance.now() });
+  if (debugLog.length > 240) debugLog.splice(0, debugLog.length - 240);
+  debugWindow.__koreInputDebugLog = debugLog;
+  console.info(`[KORE input-debug] ${event} ${JSON.stringify(payload)}`);
+}
 
 export function createVerticalTapState(): VerticalTapState {
   return {
@@ -61,11 +92,16 @@ export function createHorizontalTapState(): HorizontalTapState {
 export function useControls(mode: MatchMode, controls: ControlBindingMap = defaultGameSettings.controls) {
   const inputRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const virtualRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
+  const gamepadRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const keyboardVerticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
   const virtualVerticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
   const keyboardHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
   const virtualHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
   const gamepadHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
+  const gamepadInitializedRefs = useRef<[boolean, boolean]>([false, false]);
+  const inputQueueRef = useRef<QueuedInputPress[]>([]);
+  const inputSequenceRef = useRef(0);
+  const processedKeyboardEventsRef = useRef(new WeakSet<KeyboardEvent>());
   const lastInputRef = useRef('none');
   const modeRef = useRef(mode);
   const controlsRef = useRef(controls);
@@ -80,7 +116,10 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent, pressed: boolean) => {
+      if (processedKeyboardEventsRef.current.has(event)) return;
+      processedKeyboardEventsRef.current.add(event);
       if (isTextEntryTarget(event.target)) return;
+      if (pressed && event.repeat) return;
       const bindings = getKeyboardBindingsForEvent(event, modeRef.current, controlsRef.current);
       for (const binding of bindings) {
         const playerIndex = binding.player - 1;
@@ -90,7 +129,20 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
         ) {
           inputRefs.current[playerIndex][binding.action] = pressed;
         }
-        if (pressed) lastInputRef.current = `p${binding.player}:${binding.action}`;
+        if (pressed) {
+          enqueuePress(inputQueueRef.current, inputSequenceRef, playerIndex as 0 | 1, binding.action, 'keyboard');
+          lastInputRef.current = `p${binding.player}:${binding.action}`;
+        }
+        logInputDebug('key', {
+          pressed,
+          repeat: event.repeat,
+          code: event.code,
+          key: event.key,
+          player: binding.player,
+          action: binding.action,
+          held: pickInputDebugState(inputRefs.current[playerIndex]),
+          queue: formatInputQueueForDebug(inputQueueRef.current)
+        });
         event.preventDefault();
       }
     };
@@ -109,48 +161,50 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
     };
   }, []);
 
-  const readInputs = useCallback((): [InputFrame, InputFrame] => {
-    const pads = navigator.getGamepads?.() ?? [];
-    const merged: [InputFrame, InputFrame] = [emptyInputFrame(), emptyInputFrame()];
+  const peekInputs = useCallback((): [InputFrame, InputFrame] => {
+    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
+    return mergeInputsForRead(
+      inputRefs.current,
+      virtualRefs.current,
+      gamepadRefs.current,
+      inputQueueRef.current,
+      keyboardVerticalTapRefs.current,
+      virtualVerticalTapRefs.current,
+      false
+    );
+  }, []);
+
+  const readInputsForStep = useCallback((): [InputFrame, InputFrame] => {
+    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
+    const merged = mergeInputsForRead(
+      inputRefs.current,
+      virtualRefs.current,
+      gamepadRefs.current,
+      inputQueueRef.current,
+      keyboardVerticalTapRefs.current,
+      virtualVerticalTapRefs.current,
+      true
+    );
+    if (inputDebugHasSignal(merged, inputQueueRef.current)) {
+      logInputDebug('step-read', {
+        p1: pickInputDebugState(merged[0]),
+        p2: pickInputDebugState(merged[1]),
+        p1Pressed: (merged[0] as InputFrameWithMetadata).__pressedActions ?? [],
+        p2Pressed: (merged[1] as InputFrameWithMetadata).__pressedActions ?? [],
+        queueRemaining: formatInputQueueForDebug(inputQueueRef.current)
+      });
+    }
     for (let player = 0; player < 2; player += 1) {
-      const now = performance.now();
-      prepareVerticalTapForRead(inputRefs.current[player], keyboardVerticalTapRefs.current[player], 'keyboard', now);
-      prepareVerticalTapForRead(virtualRefs.current[player], virtualVerticalTapRefs.current[player], 'virtual', now);
-      for (const action of Object.keys(merged[player]) as ActionName[]) {
-        merged[player][action] = inputRefs.current[player][action] || virtualRefs.current[player][action];
-      }
       consumeVerticalTapAfterRead(inputRefs.current[player], keyboardVerticalTapRefs.current[player], 'keyboard');
       consumeVerticalTapAfterRead(virtualRefs.current[player], virtualVerticalTapRefs.current[player], 'virtual');
       consumeHorizontalTapAfterRead(inputRefs.current[player], keyboardHorizontalTapRefs.current[player], 'keyboard');
       consumeHorizontalTapAfterRead(virtualRefs.current[player], virtualHorizontalTapRefs.current[player], 'virtual');
-      const pad = pads[player];
-      if (pad) {
-        const horizontal = pad.axes[0] ?? 0;
-        const vertical = pad.axes[1] ?? 0;
-        const gamepadInput = emptyInputFrame();
-        applyHorizontalTap(gamepadInput, gamepadHorizontalTapRefs.current[player], 'left', horizontal < -0.35, 'gamepad', now);
-        applyHorizontalTap(gamepadInput, gamepadHorizontalTapRefs.current[player], 'right', horizontal > 0.35, 'gamepad', now);
-        gamepadInput.up = vertical < -0.35;
-        gamepadInput.down = vertical > 0.35;
-        const gamepadBindings = controlsRef.current.gamepad[player];
-        for (const action of Object.keys(gamepadBindings) as ActionName[]) {
-          if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) gamepadInput[action] = true;
-        }
-        const comboBindings = controlsRef.current.gamepadCombos[player];
-        for (const combo of keybindableButtonComboDefinitions) {
-          if (!comboBindings[combo.id]?.some((index) => pad.buttons[index]?.pressed)) continue;
-          combo.actions.forEach((action) => {
-            gamepadInput[action] = true;
-          });
-        }
-        for (const action of Object.keys(merged[player]) as ActionName[]) {
-          merged[player][action] ||= gamepadInput[action];
-        }
-        consumeHorizontalTapAfterRead(gamepadInput, gamepadHorizontalTapRefs.current[player], 'gamepad');
-      }
+      consumeHorizontalTapAfterRead(gamepadRefs.current[player], gamepadHorizontalTapRefs.current[player], 'gamepad');
     }
     return merged;
   }, []);
+
+  const readInputs = readInputsForStep;
 
   const setVirtualAction = useCallback((player: 1 | 2, action: ActionName, pressed: boolean) => {
     if (
@@ -159,7 +213,10 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
     ) {
       virtualRefs.current[player - 1][action] = pressed;
     }
-    if (pressed) lastInputRef.current = `p${player}:${action}`;
+    if (pressed) {
+      enqueuePress(inputQueueRef.current, inputSequenceRef, (player - 1) as 0 | 1, action, 'virtual');
+      lastInputRef.current = `p${player}:${action}`;
+    }
   }, []);
 
   const clearMenuInputs = useCallback(() => {
@@ -167,11 +224,195 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
     inputRefs.current[0].pause = false;
     inputRefs.current[1].confirm = false;
     inputRefs.current[1].pause = false;
+    virtualRefs.current[0].confirm = false;
+    virtualRefs.current[0].pause = false;
+    virtualRefs.current[1].confirm = false;
+    virtualRefs.current[1].pause = false;
+    gamepadRefs.current[0].confirm = false;
+    gamepadRefs.current[0].pause = false;
+    gamepadRefs.current[1].confirm = false;
+    gamepadRefs.current[1].pause = false;
+    inputQueueRef.current = inputQueueRef.current.filter((entry) => entry.action !== 'confirm' && entry.action !== 'pause');
   }, []);
 
   const getLastInput = useCallback(() => lastInputRef.current, []);
 
-  return { readInputs, setVirtualAction, clearMenuInputs, getLastInput };
+  return { readInputs, readInputsForStep, peekInputs, setVirtualAction, clearMenuInputs, getLastInput };
+}
+
+function enqueuePress(
+  queue: QueuedInputPress[],
+  sequenceRef: { current: number },
+  player: 0 | 1,
+  action: ActionName,
+  source: InputSource,
+  now = performance.now()
+) {
+  if (!queuedPulseActions.has(action)) return;
+  sequenceRef.current += 1;
+  const entry = { player, action, source, sequence: sequenceRef.current, timestamp: now };
+  queue.push(entry);
+  logInputDebug('enqueue', {
+    player: player + 1,
+    action,
+    source,
+    sequence: entry.sequence,
+    queue: formatInputQueueForDebug(queue)
+  });
+}
+
+function pickInputDebugState(input: InputFrame) {
+  return {
+    left: input.left,
+    right: input.right,
+    up: input.up,
+    down: input.down,
+    jab: input.jab,
+    heavy: input.heavy,
+    kick: input.kick,
+    special: input.special,
+    dashForward: input.dashForward,
+    sidestepUp: input.sidestepUp,
+    sidestepDown: input.sidestepDown,
+    pause: input.pause
+  };
+}
+
+function inputDebugHasSignal(inputs: [InputFrame, InputFrame], queue: QueuedInputPress[]) {
+  if (queue.length > 0) return true;
+  return inputs.some((input) =>
+    input.left ||
+    input.right ||
+    input.up ||
+    input.down ||
+    input.jab ||
+    input.heavy ||
+    input.kick ||
+    input.special ||
+    input.dashForward ||
+    input.sidestepUp ||
+    input.sidestepDown ||
+    input.pause ||
+    ((input as InputFrameWithMetadata).__pressedActions?.length ?? 0) > 0
+  );
+}
+
+export function enqueueInputPress(
+  queue: QueuedInputPress[],
+  sequenceRef: { current: number },
+  player: 0 | 1,
+  action: ActionName,
+  now = performance.now()
+) {
+  enqueuePress(queue, sequenceRef, player, action, 'keyboard', now);
+}
+
+function mergeInputsForRead(
+  keyboardInputs: [InputFrame, InputFrame],
+  virtualInputs: [InputFrame, InputFrame],
+  gamepadInputs: [InputFrame, InputFrame],
+  queue: QueuedInputPress[],
+  keyboardVerticalTapStates: [VerticalTapState, VerticalTapState],
+  virtualVerticalTapStates: [VerticalTapState, VerticalTapState],
+  consumeQueuedPresses: boolean
+): [InputFrame, InputFrame] {
+  const merged: [InputFrame, InputFrame] = [emptyInputFrame(), emptyInputFrame()];
+  const now = performance.now();
+  for (let player = 0; player < 2; player += 1) {
+    prepareVerticalTapForRead(keyboardInputs[player], keyboardVerticalTapStates[player], 'keyboard', now);
+    prepareVerticalTapForRead(virtualInputs[player], virtualVerticalTapStates[player], 'virtual', now);
+    for (const action of Object.keys(merged[player]) as ActionName[]) {
+      merged[player][action] = keyboardInputs[player][action] || virtualInputs[player][action] || gamepadInputs[player][action];
+    }
+  }
+  applyQueuedPressesToInputs(merged, queue, consumeQueuedPresses, consumeQueuedPresses ? undefined : menuQueuedActions);
+  return merged;
+}
+
+export function applyQueuedPressesToInputs(
+  inputs: [InputFrame, InputFrame],
+  queue: QueuedInputPress[],
+  consumeQueuedPresses: boolean,
+  actionFilter?: ReadonlySet<ActionName>
+) {
+  const consumed = new Set<number>();
+  const consumedEntries: QueuedInputPress[] = [];
+  for (let index = 0; index < queue.length; index += 1) {
+    const entry = queue[index];
+    if (actionFilter && !actionFilter.has(entry.action)) continue;
+    const input = inputs[entry.player];
+    input[entry.action] = true;
+    const inputMeta = input as InputFrameWithMetadata;
+    const pressedActions = inputMeta.__pressedActions ?? [];
+    if (!pressedActions.includes(entry.action)) pressedActions.push(entry.action);
+    inputMeta.__pressedActions = pressedActions;
+    inputMeta.__pressSequences = {
+      ...(inputMeta.__pressSequences ?? {}),
+      [entry.action]: Math.max(inputMeta.__pressSequences?.[entry.action] ?? 0, entry.sequence)
+    };
+    consumed.add(index);
+    consumedEntries.push(entry);
+  }
+  if (consumeQueuedPresses && consumed.size > 0) {
+    for (let index = queue.length - 1; index >= 0; index -= 1) {
+      if (consumed.has(index)) queue.splice(index, 1);
+    }
+    logInputDebug('consume', {
+      consumed: consumedEntries.map((entry) => `${entry.player + 1}:${entry.action}:${entry.source}:${entry.sequence}`),
+      queue: formatInputQueueForDebug(queue)
+    });
+  }
+}
+
+function refreshGamepadInputs(
+  gamepadInputs: [InputFrame, InputFrame],
+  horizontalTapStates: [HorizontalTapState, HorizontalTapState],
+  initialized: [boolean, boolean],
+  queue: QueuedInputPress[],
+  sequenceRef: { current: number },
+  controls: ControlBindingMap
+) {
+  const pads = navigator.getGamepads?.() ?? [];
+  const now = performance.now();
+  for (let player = 0; player < 2; player += 1) {
+    const previous = gamepadInputs[player];
+    const next = emptyInputFrame();
+    const pad = pads[player];
+    if (pad) {
+      const horizontal = pad.axes[0] ?? 0;
+      const vertical = pad.axes[1] ?? 0;
+      applyHorizontalTap(next, horizontalTapStates[player], 'left', horizontal < -0.35, 'gamepad', now);
+      applyHorizontalTap(next, horizontalTapStates[player], 'right', horizontal > 0.35, 'gamepad', now);
+      next.up = vertical < -0.35;
+      next.down = vertical > 0.35;
+      const gamepadBindings = controls.gamepad[player];
+      for (const action of Object.keys(gamepadBindings) as ActionName[]) {
+        if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) next[action] = true;
+      }
+      const comboBindings = controls.gamepadCombos[player];
+      for (const combo of keybindableButtonComboDefinitions) {
+        if (!comboBindings[combo.id]?.some((index) => pad.buttons[index]?.pressed)) continue;
+        combo.actions.forEach((action) => {
+          next[action] = true;
+        });
+      }
+    } else {
+      applyHorizontalTap(next, horizontalTapStates[player], 'left', false, 'gamepad', now);
+      applyHorizontalTap(next, horizontalTapStates[player], 'right', false, 'gamepad', now);
+    }
+    if (!initialized[player]) {
+      initialized[player] = true;
+    } else {
+      for (const action of Object.keys(next) as ActionName[]) {
+        if (next[action] && !previous[action]) enqueuePress(queue, sequenceRef, player as 0 | 1, action, 'gamepad', now);
+      }
+    }
+    gamepadInputs[player] = next;
+  }
+}
+
+function formatInputQueueForDebug(queue: QueuedInputPress[]) {
+  return queue.map((entry) => `${entry.player + 1}:${entry.action}:${entry.source}:${entry.sequence}`);
 }
 
 function isTextEntryTarget(target: EventTarget | null) {
