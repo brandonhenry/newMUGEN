@@ -852,6 +852,9 @@
       "range": 1.58,
       "label": "Frieza Low Feint",
       "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.6,
+      "moveJumpGravity": 26,
       "forwardForce": 1.79,
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 32

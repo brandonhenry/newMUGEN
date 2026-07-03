@@ -811,6 +811,10 @@
       "label": "Heihachi Edajima Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
       "forwardForce": 3.14,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20

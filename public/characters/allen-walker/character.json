@@ -582,6 +582,9 @@
       "label": "Allen Walker Burst",
       "hitLevel": "mid",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.4,
+      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 44,
       "forwardForceEndFrame": 55

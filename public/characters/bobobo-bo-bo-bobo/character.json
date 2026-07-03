@@ -661,6 +661,9 @@
       "label": "Bobobo-bo Bo-bobo Burst",
       "hitLevel": "mid",
       "knockdown": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.6,
+      "moveJumpGravity": 24,
       "forwardForce": 3.86,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21
@@ -738,6 +741,9 @@
       "range": 1.72,
       "label": "Bobobo-bo Bo-bobo Twin Assault",
       "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.35,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25

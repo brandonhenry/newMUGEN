@@ -832,6 +832,9 @@
       "range": 1.58,
       "label": "Gon Freecss Low Feint",
       "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.4,
+      "moveJumpGravity": 26,
       "forwardForce": 1.04,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12
@@ -850,6 +853,10 @@
       "label": "Gon Freecss Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
       "forwardForce": 2.79,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 9

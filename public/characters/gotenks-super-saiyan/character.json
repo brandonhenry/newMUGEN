@@ -704,6 +704,9 @@
       "range": 1.58,
       "label": "Gotenks (Super Saiyan) Low Feint",
       "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.4,
+      "moveJumpGravity": 26,
       "forwardForce": 1.55,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21

@@ -788,6 +788,9 @@
       "launchHeight": 2.2,
       "label": "Franky Cross Launcher",
       "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.4,
+      "moveJumpGravity": 24,
       "forwardForce": 2.66,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 21
@@ -841,6 +844,7 @@
       "label": "Franky Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
       "forwardForce": 3.15,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 10
@@ -1652,13 +1656,13 @@
     },
     "backflip": {
       "40": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "41": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "43": {

@@ -651,6 +651,8 @@
       "hitLevel": "mid",
       "knockdown": true,
       "jumpBeforeMove": true,
+      "moveJumpForce": 9.8,
+      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 32
@@ -743,6 +745,9 @@
       "comboKey": "1+2:link",
       "route": "multi:frame-link",
       "counterHit": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
       "cancelable": false,
       "forwardForce": 2.35,
       "forwardForceStartFrame": 6,
@@ -815,6 +820,7 @@
       "label": "Eve Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
+      "tornado": true,
       "forwardForce": 3.19,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 27
@@ -1416,13 +1422,13 @@
         "offsetX": 0
       },
       "54": {
-        "width": 0.92,
-        "height": 0.92,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "55": {
-        "width": 0.92,
-        "height": 0.92,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "56": {
@@ -1431,8 +1437,8 @@
         "offsetX": 0
       },
       "57": {
-        "width": 0.92,
-        "height": 0.92,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1559,13 +1565,13 @@
         "offsetX": 0
       },
       "90": {
-        "width": 0.98,
-        "height": 0.98,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "91": {
-        "width": 0.99,
-        "height": 0.99,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1586,8 +1592,8 @@
         "offsetX": 0
       },
       "10": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "11": {
@@ -1605,23 +1611,23 @@
     },
     "backflip": {
       "40": {
-        "width": 0.91,
-        "height": 0.91,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "41": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "42": {
-        "width": 0.95,
-        "height": 0.95,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "43": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "47": {
@@ -1651,13 +1657,13 @@
     },
     "jump": {
       "17": {
-        "width": 0.86,
-        "height": 0.86,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "18": {
-        "width": 0.86,
-        "height": 0.86,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "22": {
@@ -1675,32 +1681,32 @@
     },
     "block": {
       "15": {
-        "width": 0.93,
-        "height": 0.93,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
     "chargeKi": {
       "111": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "112": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       },
       "115": {
-        "width": 0.94,
-        "height": 0.94,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
     "hitLight": {
       "28": {
-        "width": 0.96,
-        "height": 0.96,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -1713,8 +1719,8 @@
     },
     "win": {
       "91": {
-        "width": 0.99,
-        "height": 0.99,
+        "width": 1,
+        "height": 1,
         "offsetX": 0
       }
     },

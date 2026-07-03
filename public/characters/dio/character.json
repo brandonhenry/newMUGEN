@@ -716,6 +716,10 @@
       "hitLevel": "mid",
       "knockdown": true,
       "endsInCrouch": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
       "forwardForce": 3.26,
       "forwardForceStartFrame": 45,
       "forwardForceEndFrame": 56
