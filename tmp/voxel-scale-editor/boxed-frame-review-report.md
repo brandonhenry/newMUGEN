@@ -24,7 +24,7 @@ Values: `pass`, `fail`, or `n/a: reason`.
 
 | # | Character | Status |
 |---:|---|---|
-| 1 | Allen Walker (`allen-walker`) | Complete after strict individual-PNG pass; 108/108 frames logged and corrected where needed. |
+| 1 | Allen Walker (`allen-walker`) | Restarted again under height-first/head-top lock rule; rechecking all 108 frames from the top. |
 | 2 | Anna Kyoyama (`anna-kyoyama`) | In progress; restarted under strict head-top/head-width/head-volume rule after frame 086 correction. |
 
 ## Strict Frame Checklist
@@ -63,8 +63,8 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `block` | 015 | pass | n/a: guard pose/hair covers top | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | No edit. |
 | Allen Walker | `chargeKi` | 060 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | No edit. |
 | Allen Walker | `chargeKi` | 061 | fixed: head/face mass no longer pops | pass | pass | n/a: not laying | n/a: not ball | pass | n/a: no effect | pass | Reduced to `1.03w/1.03h`; verified individual PNG. |
-| Allen Walker | `chargeKi` | 062 | fixed: arm-over-head interference; head now tall enough while width stays controlled | pass: upright charge pose/head top matches idle band better | pass | n/a: not laying | n/a: not ball | pass | pass: raised arm ignored for body scale | pass | Non-uniform fix to `0.88w/1.04h`; verified individual PNG after strict head-height check. |
-| Allen Walker | `chargeKi` | 063 | fixed: uniform shrink made head top too low; height restored separately from width | pass: upright charge pose/head top matches idle band better | pass | n/a: not laying | n/a: not ball | pass | pass: raised arm ignored for body scale | pass | Non-uniform fix to `0.88w/1.08h`; verified individual PNG after strict head-height check. |
+| Allen Walker | `chargeKi` | 062 | fixed: arm-over-head interference; ruler shows actual head now reaches idle guide while width stays controlled | pass: upright charge pose/head top matches ruler guide | pass | n/a: not laying | n/a: not ball | pass | pass: raised arm ignored for body scale | pass | Non-uniform ruler fix to `0.88w/1.08h`; verified individual PNG with foot-to-head ruler. |
+| Allen Walker | `chargeKi` | 063 | fixed: uniform shrink made head top too low; ruler confirmed height needed to be restored separately from width | pass: upright charge pose/head top matches ruler guide | pass | n/a: not laying | n/a: not ball | pass | pass: raised arm ignored for body scale | pass | Non-uniform ruler fix to `0.88w/1.12h`; verified individual PNG with foot-to-head ruler. |
 | Allen Walker | `jableft` | 074 | pass | n/a: forward attack lean | pass | n/a: not laying | n/a: not ball | pass | pass: claw/hair ignored | pass | No edit; reused source checked against aliases. |
 | Allen Walker | `jableft` | 075 | pass | n/a: attack lean/hair extension | pass | n/a: not laying | n/a: not ball | pass | pass: hair/claw ignored | pass | No edit; body core stays idle-sized. |
 | Allen Walker | `jableft` | 076 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: claw ignored | pass | No edit; width belongs to weapon/claw, not body. |
@@ -110,10 +110,10 @@ Values: `pass`, `fail`, or `n/a: reason`.
 | Allen Walker | `cmd:1+2` | 092 | pass | pass | pass | n/a: not laying | n/a: not ball | pass | pass: red arm ignored | pass | Existing `1.02w/1.02h` verified. |
 | Allen Walker | `cmd:1+2` | 093 | fixed: body core slightly too small beside idle | pass | pass | n/a: not laying | n/a: not ball | pass | pass: red arm ignored | pass | Increased to `1.04w/1.04h`; verified. |
 | Allen Walker | `cmd:1+2` | 094 | pass | n/a: forward attack lean | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored | pass | No edit. |
-| Allen Walker | `cmd:1+2` | 095 | fixed: extension hid skinny side-on body | n/a: side-on extension pose | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Increased to `1.25w/1.10h`; verified. |
-| Allen Walker | `cmd:1+2` | 096 | fixed: extension hid skinny side-on body | n/a: side-on extension pose | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Increased to `1.25w/1.10h`; verified. |
-| Allen Walker | `cmd:1+2` | 097 | fixed: extension hid skinny side-on body | n/a: side-on extension pose | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Added `1.25w/1.10h`; verified. |
-| Allen Walker | `cmd:1+2` | 098 | fixed: extension hid skinny side-on body | n/a: side-on extension pose | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Added `1.25w/1.10h`; verified. |
+| Allen Walker | `cmd:1+2` | 095 | fixed: extension hid skinny/short side-on body; multi-line ruler tuned height to idle head guide | pass: side-on attack head now sits on guide | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Final `1.25w/1.16h`; verified with multi-line ruler. |
+| Allen Walker | `cmd:1+2` | 096 | fixed: extension hid skinny/short side-on body; multi-line ruler tuned height to idle head guide | pass: side-on attack head now sits on guide | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Final `1.25w/1.16h`; verified with multi-line ruler. |
+| Allen Walker | `cmd:1+2` | 097 | fixed: extension hid skinny/short side-on body; multi-line ruler tuned height to idle head guide | pass: side-on attack head now reaches guide | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Final `1.25w/1.18h`; verified with multi-line ruler. |
+| Allen Walker | `cmd:1+2` | 098 | fixed: extension hid skinny/short side-on body; multi-line ruler tuned height to idle head guide | pass: side-on attack head now reaches guide | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored after body fix | pass | Final `1.25w/1.18h`; verified with multi-line ruler. |
 | Allen Walker | `cmd:1+2` | 099 | pass | n/a: low lunge lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored | pass | Existing `0.99w/0.99h` verified. |
 | Allen Walker | `cmd:1+2` | 100 | pass | n/a: low lunge lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored | pass | Existing `0.99w/0.99h` verified. |
 | Allen Walker | `cmd:1+2` | 101 | pass | n/a: low lunge lowers head | pass | n/a: not laying | n/a: not ball | pass | pass: gray arm ignored | pass | Existing `0.99w/0.99h` verified. |

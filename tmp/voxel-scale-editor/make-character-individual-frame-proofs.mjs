@@ -143,6 +143,96 @@ function svgText(text, x, y, size = 14, color = '#f5f5f5') {
   return `<text x="${x}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="${size}" fill="${color}">${escaped}</text>`;
 }
 
+function svgRuler(x, yTop, yBottom, label, color = '#f59e0b') {
+  const height = Math.max(0, Math.round(yBottom - yTop));
+  let svg = `<line x1="${x}" y1="${yTop}" x2="${x}" y2="${yBottom}" stroke="${color}" stroke-width="2"/>`;
+  svg += `<line x1="${x - 6}" y1="${yTop}" x2="${x + 6}" y2="${yTop}" stroke="${color}" stroke-width="2"/>`;
+  svg += `<line x1="${x - 6}" y1="${yBottom}" x2="${x + 6}" y2="${yBottom}" stroke="${color}" stroke-width="2"/>`;
+  for (let y = yBottom - 20; y > yTop; y -= 20) {
+    svg += `<line x1="${x - 4}" y1="${y}" x2="${x + 4}" y2="${y}" stroke="${color}" stroke-width="1" opacity="0.75"/>`;
+  }
+  svg += svgText(`${label} ${height}px`, x + 8, yTop + 12, 11, color);
+  return svg;
+}
+
+function colorDistance(a, b) {
+  const dr = a[0] - b[0];
+  const dg = a[1] - b[1];
+  const db = a[2] - b[2];
+  return dr * dr + dg * dg + db * db;
+}
+
+async function buildHeadPalette(buffer) {
+  const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const maxY = Math.max(1, Math.min(info.height, Math.round(info.height * 0.42)));
+  const counts = new Map();
+  for (let y = 0; y < maxY; y += 1) {
+    for (let x = 0; x < info.width; x += 1) {
+      const offset = (y * info.width + x) * 4;
+      if (data[offset + 3] <= 24) continue;
+      const r = data[offset];
+      const g = data[offset + 1];
+      const b = data[offset + 2];
+      if (r + g + b < 90) continue;
+      const key = `${Math.round(r / 16) * 16},${Math.round(g / 16) * 16},${Math.round(b / 16) * 16}`;
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 16)
+    .map(([key]) => key.split(',').map(Number));
+}
+
+async function detectHeadColorTop(buffer, palette) {
+  if (!palette.length) return null;
+  const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const rowScores = Array.from({ length: info.height }, () => 0);
+  const threshold = 52 * 52;
+  for (let y = 0; y < info.height; y += 1) {
+    for (let x = 0; x < info.width; x += 1) {
+      const offset = (y * info.width + x) * 4;
+      if (data[offset + 3] <= 24) continue;
+      const rgb = [data[offset], data[offset + 1], data[offset + 2]];
+      if (palette.some((color) => colorDistance(rgb, color) <= threshold)) rowScores[y] += 1;
+    }
+  }
+  const minWindowScore = Math.max(12, Math.round(info.width * 0.12));
+  for (let y = 0; y < info.height; y += 1) {
+    let windowScore = 0;
+    for (let yy = y; yy < Math.min(info.height, y + 6); yy += 1) windowScore += rowScores[yy];
+    if (windowScore >= minWindowScore) return y;
+  }
+  return null;
+}
+
+function svgGuideGrid(width, height, baseline, idleHeadGuide, targetLeft, targetWidth, detectedHeadY) {
+  const top = Math.max(0, idleHeadGuide - 50);
+  const bottom = Math.min(height, idleHeadGuide + 50);
+  let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
+  svg += `<line x1="0" y1="${baseline}" x2="${width}" y2="${baseline}" stroke="#3a3f48" stroke-width="2" opacity="0.9"/>`;
+  for (let y = top; y <= bottom; y += 10) {
+    const delta = Math.round(y - idleHeadGuide);
+    const isIdle = Math.abs(delta) < 1;
+    const color = isIdle ? '#f59e0b' : delta < 0 ? '#ef4444' : '#38bdf8';
+    const opacity = isIdle ? 0.95 : 0.35;
+    const dash = isIdle ? '6 4' : '2 6';
+    svg += `<line x1="${targetLeft - 8}" y1="${y}" x2="${targetLeft + targetWidth + 8}" y2="${y}" stroke="${color}" stroke-width="${isIdle ? 2 : 1}" stroke-dasharray="${dash}" opacity="${opacity}"/>`;
+    if (delta % 20 === 0) {
+      const label = isIdle ? 'idle 0' : `${delta < 0 ? '+' : '-'}${Math.abs(delta)}px`;
+      svg += svgText(label, targetLeft + targetWidth + 12, y + 4, 10, color);
+    }
+  }
+  svg += svgText('too tall', targetLeft + targetWidth + 12, top + 4, 10, '#ef4444');
+  svg += svgText('too short', targetLeft + targetWidth + 12, bottom + 4, 10, '#38bdf8');
+  if (Number.isFinite(detectedHeadY)) {
+    svg += `<line x1="${targetLeft - 8}" y1="${detectedHeadY}" x2="${targetLeft + targetWidth + 8}" y2="${detectedHeadY}" stroke="#ec4899" stroke-width="2" stroke-dasharray="10 3" opacity="0.95"/>`;
+    svg += svgText('auto head color', targetLeft + targetWidth + 12, detectedHeadY + 4, 10, '#ec4899');
+  }
+  svg += '</svg>';
+  return Buffer.from(svg);
+}
+
 async function renderFrame(characterId, frameIndex, renderWidth, renderHeight, pixelsPerUnit) {
   const source = await cropBuffer(path.join(charactersRoot, characterId, 'frames', `frame-${String(frameIndex).padStart(3, '0')}.png`));
   const width = Math.max(1, Math.round(renderWidth * pixelsPerUnit));
@@ -175,6 +265,7 @@ const idleHeight = median(idleMetrics.map((item) => item.renderHeight)) || 1;
 const idleFrame = idleMetrics[0];
 const pixelsPerUnit = 220 / idleHeight;
 const idleRendered = await renderFrame(characterId, idleFrame.frame, idleFrame.renderWidth, idleFrame.renderHeight, pixelsPerUnit);
+const idleHeadPalette = await buildHeadPalette(idleRendered.buffer);
 
 const outDir = path.join(outRoot, characterId);
 await fs.rm(outDir, { recursive: true, force: true });
@@ -193,14 +284,19 @@ for (const key of animationKeys) {
     const renderWidth = bounds.width * scale.effectiveWidth;
     const renderHeight = bounds.height * scale.effectiveHeight;
     const target = await renderFrame(characterId, frame, renderWidth, renderHeight, pixelsPerUnit);
+    const detectedHeadTop = await detectHeadColorTop(target.buffer, idleHeadPalette);
     const pad = 22;
     const gap = 34;
     const baselinePad = 34;
     const labelH = 44;
+    const guideLabelW = 78;
     const baseline = labelH + Math.max(idleRendered.height, target.height) + pad;
-    const width = pad * 2 + idleRendered.width + gap + target.width;
+    const width = pad * 2 + idleRendered.width + gap + target.width + guideLabelW;
     const height = baseline + baselinePad;
     const targetLeft = pad + idleRendered.width + gap;
+    const idleTop = baseline - idleRendered.height;
+    const targetTop = baseline - target.height;
+    const idleHeadGuide = idleTop;
     let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
     svg += '<rect width="100%" height="100%" fill="#080808"/>';
     svg += `<rect x="${pad - 8}" y="${baseline - idleRendered.height - 8}" width="${idleRendered.width + 16}" height="${idleRendered.height + 16}" fill="#101010" stroke="#3a3f48"/>`;
@@ -209,12 +305,17 @@ for (const key of animationKeys) {
     svg += svgText(`${key} frame ${String(frame).padStart(3, '0')}`, targetLeft - 8, 22, 14, '#f8fafc');
     svg += svgText(`${(renderWidth / idleWidth).toFixed(2)}w ${(renderHeight / idleHeight).toFixed(2)}h scale ${scale.width.toFixed(2)} ${scale.height.toFixed(2)}`, targetLeft - 8, 40, 12, '#a7b0bd');
     svg += `<line x1="0" y1="${baseline}" x2="${width}" y2="${baseline}" stroke="#3a3f48" stroke-width="2"/>`;
+    svg += `<line x1="0" y1="${idleHeadGuide}" x2="${width}" y2="${idleHeadGuide}" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4" opacity="0.9"/>`;
+    svg += svgText('idle head height', Math.max(4, targetLeft - 8), idleHeadGuide - 6, 11, '#f59e0b');
+    svg += svgRuler(pad - 16, idleTop, baseline, 'idle foot-head', '#f59e0b');
+    svg += svgRuler(targetLeft - 16, targetTop, baseline, 'target box', '#60a5fa');
     svg += '</svg>';
     const file = path.join(keyDir, `${String(++ordinal).padStart(4, '0')}-${safeName(key)}-frame-${String(frame).padStart(3, '0')}.png`);
     await sharp(Buffer.from(svg), { limitInputPixels: false })
       .composite([
         { input: idleRendered.buffer, left: pad, top: Math.round(baseline - idleRendered.height) },
-        { input: target.buffer, left: targetLeft, top: Math.round(baseline - target.height) }
+        { input: target.buffer, left: targetLeft, top: Math.round(baseline - target.height) },
+        { input: svgGuideGrid(width, height, baseline, idleHeadGuide, targetLeft, target.width, Number.isFinite(detectedHeadTop) ? Math.round(targetTop + detectedHeadTop) : null), left: 0, top: 0 }
       ])
       .png()
       .toFile(file);
