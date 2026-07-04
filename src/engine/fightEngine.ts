@@ -772,10 +772,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   if (sidestepTap !== 0 && fighter.sidestepTimer === 0) {
     fighter.sidestepTimer = 0.18;
     fighter.sidestepDirection = sidestepTap;
-    fighter.sidestepOrbitSign = getBaseSidestepOrbitSign(fighter);
+    fighter.sidestepOrbitSign = getCurrentSidestepOrbitSign(fighter, opponent);
   } else if (laneWalk !== 0 && fighter.sidestepTimer === 0 && fighter.sidestepDirection !== laneWalk) {
     fighter.sidestepDirection = laneWalk;
-    fighter.sidestepOrbitSign = getBaseSidestepOrbitSign(fighter);
+    fighter.sidestepOrbitSign = getCurrentSidestepOrbitSign(fighter, opponent);
   } else if (laneWalk === 0 && fighter.sidestepTimer === 0) {
     fighter.sidestepDirection = 0;
   }
@@ -1371,7 +1371,7 @@ function maybeSpawnShadowCloneFromCharge(fighter: FighterRuntime, opponent: Figh
   if (fighter.state !== 'chargeKi' || fighter.chargePhase === 'startup' || fighter.chargePhase === 'recovery') return;
   if (fighter.ki < SHADOW_CLONE_KI_THRESHOLD) return;
 
-  const sideSign = fighter.slot === 1 ? -1 : 1;
+  const sideSign = -getOpponentSideSign(fighter, opponent);
   const dx = opponent.position.x - fighter.position.x;
   const dz = opponent.position.z - fighter.position.z;
   const distance = Math.hypot(dx, dz) || 1;
@@ -4153,8 +4153,8 @@ function getOpponentSideSign(fighter: FighterRuntime, opponent: FighterRuntime) 
   return fighter.facing || 1;
 }
 
-function getBaseSidestepOrbitSign(fighter: FighterRuntime): 1 | -1 {
-  return fighter.slot === 1 ? 1 : -1;
+function getCurrentSidestepOrbitSign(fighter: FighterRuntime, opponent: FighterRuntime): 1 | -1 {
+  return getOpponentSideSign(fighter, opponent);
 }
 
 function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, arcDistance: number) {
