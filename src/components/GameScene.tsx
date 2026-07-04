@@ -32,6 +32,7 @@ import { emptyInputFrame } from '../types';
 import { activeMoveProgress, createMatch, stepMatch } from '../engine/fightEngine';
 import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
+import { findCameraSightlineBlockers, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
@@ -46,8 +47,23 @@ type GameSceneProps = {
   reducedMotion?: boolean;
 };
 
+type StageCameraMaterialState = {
+  material: THREE.Material & { opacity?: number };
+  transparent: boolean;
+  opacity: number;
+  depthWrite: boolean;
+};
+
+type StageCameraColliderEntry = CameraSafetyCollider & {
+  id: string;
+  mesh: THREE.Mesh;
+  materials: StageCameraMaterialState[];
+  fade: number;
+};
+
 type StageCameraCollisionRegistry = {
-  colliders: Set<THREE.Box3>;
+  colliders: Set<StageCameraColliderEntry>;
+  occluders: Set<StageCameraColliderEntry>;
 };
 
 const StageCameraCollisionContext = createContext<StageCameraCollisionRegistry | null>(null);
@@ -498,7 +514,7 @@ const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
-  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<THREE.Box3>() }), [match.stage.id]);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
@@ -509,6 +525,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
         <CameraRig match={match} settings={cameraSettings} />
         <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
+        <StageCameraOcclusionFader />
         <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
         <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
         <TransformEffectLayer fighter={match.fighters[0]} />
@@ -836,15 +853,15 @@ function ImpactSpark({
   reducedMotion: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const ringRef = useRef<THREE.Mesh>(null);
+  const ringRef = useRef<THREE.Group>(null);
   const ageRef = useRef(0);
-  const baseColor = event.kind === 'block' ? settings.blockColor : event.kind === 'counterHit' ? '#ffe96a' : settings.hitColor;
   const isBlock = event.kind === 'block';
-  const isPunish = event.kind === 'punish' || event.kind === 'whiffPunish';
-  const isCounterHit = event.kind === 'counterHit';
-  const duration = reducedMotion ? 0.32 : 0.48;
-  const particleCount = reducedMotion ? (isBlock ? 4 : isCounterHit ? 9 : 7) : isBlock ? 8 : isCounterHit ? 22 : isPunish ? 18 : 14;
-  const directions = useMemo(() => makeSparkDirections(event.id, particleCount), [event.id, particleCount]);
+  const isLauncher = Boolean(event.launched || event.juggled || event.tornado);
+  const isClash = event.kind === 'clash';
+  const colors = useMemo(() => resolveImpactSparkColors(event, settings), [event, settings]);
+  const profile = useMemo(() => resolveImpactSparkProfile(event), [event]);
+  const duration = reducedMotion ? profile.reducedDuration : profile.duration;
+  const showRings = settings.shape === 'burst' || settings.shape === 'ring' || isBlock || isLauncher || isClash;
 
   useFrame(({ camera }, delta) => {
     ageRef.current += delta;
@@ -853,49 +870,142 @@ function ImpactSpark({
     if (!root) return;
     root.visible = progress < 1;
     root.lookAt(camera.position);
-    const expansion = reducedMotion ? 1 + progress * 0.45 : 1 + progress * (isBlock ? 0.85 : isCounterHit ? 1.95 : 1.65);
-    const baseScale = settings.size * (isBlock ? 0.58 : isCounterHit ? 1.42 : isPunish ? 1.28 : 1);
+    const expansion = 1 + progress * (reducedMotion ? 0.42 : profile.expansion);
+    const baseScale = settings.size * profile.scale;
     root.scale.setScalar(baseScale * expansion);
-    root.children.forEach((child, index) => {
+    root.traverse((child) => {
       const mesh = child as THREE.Mesh;
-      const material = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
-      if (material && 'opacity' in material) {
-        material.opacity = Math.max(0, (1 - progress) * settings.intensity * (index === 0 ? 0.9 : 1));
-      }
+      const materials = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
+      materials.forEach((rawMaterial) => {
+        if (!('opacity' in rawMaterial)) return;
+        const material = rawMaterial as THREE.Material & { opacity: number; userData: { baseOpacity?: number; fadeBias?: number } };
+        if (material.userData.baseOpacity === undefined) material.userData.baseOpacity = material.opacity;
+        const fadeBias = material.userData.fadeBias ?? 1;
+        material.opacity = THREE.MathUtils.clamp(material.userData.baseOpacity * Math.pow(1 - progress, fadeBias) * settings.intensity, 0, 1);
+      });
     });
-    if (ringRef.current) ringRef.current.rotation.z += delta * (isBlock ? 2.2 : isCounterHit ? 7.4 : 5.8);
+    if (ringRef.current) ringRef.current.rotation.z += delta * profile.spin;
   });
-
-  const showRing = settings.shape === 'burst' || settings.shape === 'ring' || isBlock;
-  const showShards = settings.shape === 'burst' || settings.shape === 'shards';
 
   return (
     <group ref={groupRef} position={event.position}>
-      {showRing && (
-        <mesh ref={ringRef} renderOrder={30}>
-          <torusGeometry args={[isCounterHit ? 0.31 : 0.26, isBlock ? 0.022 : isCounterHit ? 0.04 : 0.032, 8, 36]} />
-          <meshBasicMaterial color={baseColor} transparent opacity={0.82 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
-        </mesh>
-      )}
-      {showShards &&
-        directions.map((direction, index) => (
-          <mesh
-            key={`${event.id}-shard-${index}`}
-            position={[direction[0] * 0.18, direction[1] * 0.18, direction[2] * 0.02]}
-            rotation={[0, 0, direction[3]]}
-            scale={[direction[4] * (isBlock ? 0.55 : isCounterHit ? 1.18 : 1), 0.035, 0.035]}
-            renderOrder={31}
-          >
-            <boxGeometry args={[0.34, 0.08, 0.08]} />
-            <meshBasicMaterial color={baseColor} transparent opacity={0.96 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
-          </mesh>
-        ))}
-      <mesh scale={isBlock ? 0.11 : isCounterHit ? 0.22 : isPunish ? 0.18 : 0.15} renderOrder={32}>
-        <sphereGeometry args={[1, 12, 8]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.74 * settings.intensity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      {showRings && <ImpactEnergyRings refGroup={ringRef} event={event} colors={colors} profile={profile} ringOnly={settings.shape === 'ring'} />}
+      <ImpactCore colors={colors} profile={profile} />
+    </group>
+  );
+}
+
+type ImpactSparkColors = {
+  base: string;
+  edge: string;
+};
+
+type ImpactSparkProfile = {
+  duration: number;
+  reducedDuration: number;
+  scale: number;
+  expansion: number;
+  spin: number;
+  ringX: number;
+  ringY: number;
+  coreScale: number;
+};
+
+function ImpactCore({ colors, profile }: { colors: ImpactSparkColors; profile: ImpactSparkProfile }) {
+  return (
+    <group renderOrder={34}>
+      <mesh scale={[profile.coreScale * 1.45, profile.coreScale * 1.05, 1]}>
+        <torusGeometry args={[0.64, 0.055, 8, 36]} />
+        <meshBasicMaterial color={colors.base} transparent opacity={0.34} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+      <mesh scale={[profile.coreScale * 2.1, profile.coreScale * 1.45, 1]}>
+        <torusGeometry args={[0.66, 0.025, 8, 44]} />
+        <meshBasicMaterial color={colors.edge} transparent opacity={0.16} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
     </group>
   );
+}
+
+function ImpactEnergyRings({
+  refGroup,
+  event,
+  colors,
+  profile,
+  ringOnly
+}: {
+  refGroup: RefObject<THREE.Group>;
+  event: ImpactSparkEvent;
+  colors: ImpactSparkColors;
+  profile: ImpactSparkProfile;
+  ringOnly: boolean;
+}) {
+  const isBlock = event.kind === 'block';
+  const isLauncher = Boolean(event.launched || event.juggled || event.tornado);
+  const isClash = event.kind === 'clash';
+  return (
+    <group ref={refGroup} renderOrder={30} rotation={[isLauncher ? -0.12 : isBlock ? 0.08 : 0, 0, isBlock ? 0.18 : 0]}>
+      <mesh scale={[profile.ringX, profile.ringY, 1]}>
+        <torusGeometry args={[isClash ? 0.36 : isLauncher ? 0.34 : isBlock ? 0.28 : 0.3, isBlock ? 0.018 : ringOnly ? 0.026 : 0.034, 8, 64]} />
+        <meshBasicMaterial color={colors.base} transparent opacity={ringOnly ? 0.72 : isLauncher ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+      {!ringOnly && (
+        <mesh scale={[profile.ringX * 1.25, profile.ringY * 1.18, 1]}>
+          <torusGeometry args={[isLauncher ? 0.36 : 0.32, 0.012, 8, 64]} />
+          <meshBasicMaterial color={colors.edge} transparent opacity={isBlock ? 0.24 : isLauncher ? 0.22 : 0.32} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        </mesh>
+      )}
+    </group>
+  );
+}
+
+function resolveImpactSparkColors(event: ImpactSparkEvent, settings: GameSettings['display']['impactSparks']): ImpactSparkColors {
+  if (event.kind === 'block') {
+    return {
+      base: settings.blockColor,
+      edge: '#dff8ff'
+    };
+  }
+  if (event.kind === 'clash' || event.kiBurst) {
+    return {
+      base: '#7fdfff',
+      edge: settings.hitColor
+    };
+  }
+  if (event.kind === 'counterHit') {
+    return {
+      base: '#ffe96a',
+      edge: settings.hitColor
+    };
+  }
+  if (event.kind === 'punish' || event.kind === 'whiffPunish') {
+    return {
+      base: settings.hitColor,
+      edge: '#ff5f45'
+    };
+  }
+  return {
+    base: settings.hitColor,
+    edge: '#ffd875'
+  };
+}
+
+function resolveImpactSparkProfile(event: ImpactSparkEvent): ImpactSparkProfile {
+  const isBlock = event.kind === 'block';
+  const isLauncher = Boolean(event.launched || event.juggled || event.tornado);
+  const isCounterHit = event.kind === 'counterHit';
+  const isPunish = event.kind === 'punish' || event.kind === 'whiffPunish';
+  const isClash = event.kind === 'clash';
+  const isPowerHit = isCounterHit || isPunish || event.kiBurst || isClash;
+  return {
+    duration: isClash ? 0.64 : isLauncher ? 0.5 : isBlock ? 0.38 : 0.44,
+    reducedDuration: isLauncher ? 0.28 : 0.24,
+    scale: isClash ? 1.3 : isLauncher ? 1.04 : isCounterHit ? 1.18 : isPunish ? 1.1 : isBlock ? 0.62 : 0.92,
+    expansion: isBlock ? 0.58 : isLauncher ? 0.9 : isPowerHit ? 1.32 : 1.02,
+    spin: isBlock ? 2.3 : isLauncher ? 5.4 : isPowerHit ? 7.1 : 5.6,
+    ringX: isBlock ? 0.68 : isLauncher ? 0.72 : 0.92,
+    ringY: isBlock ? 1.24 : isLauncher ? 1.2 : isPowerHit ? 1.08 : 0.96,
+    coreScale: isClash ? 0.18 : isCounterHit ? 0.16 : isPunish ? 0.14 : isLauncher ? 0.12 : isBlock ? 0.1 : 0.12
+  };
 }
 
 function makeSparkDirections(seed: number, count: number) {
@@ -1356,7 +1466,7 @@ export function StagePreviewCanvas({
   const controlTarget = useMemo(() => previewMode === 'fly'
     ? stage.fightPlane?.center ?? stage.model?.focus ?? stage.camera?.previewTarget ?? FIXED_STAGE_PREVIEW_TARGET
     : FIXED_STAGE_PREVIEW_TARGET, [previewMode, stage.camera?.previewTarget, stage.id, stage.model?.focus]);
-  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<THREE.Box3>() }), [stage.id]);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [stage.id]);
   useEffect(() => {
     logStageModelDebug('H9 StagePreviewCanvas classified stage', {
       stageId: stage.id,
@@ -1399,6 +1509,7 @@ export function StagePreviewCanvas({
           />
           {interactive && previewMode === 'edit' && showPlayableBounds && <StagePlayableBoundsMarkers stage={stage} />}
         </group>
+        <StageCameraOcclusionFader />
         {previewFighters?.map((fighter) => <FighterRig key={`stage-preview-fighter-${fighter.slot}`} fighter={fighter} stage={stage} />)}
         {previewFighters ? <ContactShadows position={[0, (stage.fightPlane?.y ?? stage.world?.floorY ?? 0) - 0.01, 0]} opacity={0.34} scale={14} blur={2.4} far={3} /> : null}
         {interactive && previewMode !== 'play' && (
@@ -1613,7 +1724,7 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
   );
 }
 
-export function MenuAttractScene({ match }: GameSceneProps) {
+export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
   return (
     <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
@@ -1629,7 +1740,8 @@ export function MenuAttractScene({ match }: GameSceneProps) {
         <TransformEffectLayer fighter={match.fighters[1]} />
         <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
         <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
-        <EffectLayer match={match} reducedMotion={false} />
+        <EffectLayer match={match} reducedMotion={reducedMotion} />
+        <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       </group>
       <ContactShadows position={[0, -0.01, 1.75]} opacity={0.32} scale={10} blur={3} far={3.5} />
     </Canvas>
@@ -2386,7 +2498,7 @@ function enforceCameraHorizontalDistance(camera: THREE.Camera, focus: THREE.Vect
 function resolveCameraModelCollision(
   focus: THREE.Vector3,
   desired: THREE.Vector3,
-  colliders: Set<THREE.Box3> | undefined,
+  colliders: Set<StageCameraColliderEntry> | undefined,
   output: THREE.Vector3
 ) {
   output.copy(desired);
@@ -2401,7 +2513,8 @@ function resolveCameraModelCollision(
   const hitPoint = new THREE.Vector3();
   let closestDistance = Number.POSITIVE_INFINITY;
 
-  colliders.forEach((box) => {
+  colliders.forEach((entry) => {
+    const box = entry.box;
     if (box.containsPoint(focus)) return;
     const hit = ray.intersectBox(box, hitPoint);
     if (!hit) return;
@@ -2420,6 +2533,76 @@ function resolveCameraModelCollision(
   return true;
 }
 
+function updateCameraStageOccluders(
+  registry: StageCameraCollisionRegistry | null,
+  cameraPosition: THREE.Vector3,
+  visibilityPoints: THREE.Vector3[]
+) {
+  if (!registry) return;
+  registry.occluders.clear();
+  if (!registry.colliders.size || visibilityPoints.length === 0) return;
+  const blockers = findCameraSightlineBlockers(cameraPosition, visibilityPoints, registry.colliders);
+  blockers.forEach((entry) => registry.occluders.add(entry));
+}
+
+function fillCameraVisibilityPoints(
+  points: THREE.Vector3[],
+  p1: FighterRuntime,
+  p2: FighterRuntime,
+  fallbackFocus: THREE.Vector3
+) {
+  const p1x = finiteOr(p1.position.x, fallbackFocus.x - 0.65);
+  const p1y = finiteOr(p1.position.y, 0);
+  const p1z = finiteOr(p1.position.z, fallbackFocus.z);
+  const p2x = finiteOr(p2.position.x, fallbackFocus.x + 0.65);
+  const p2y = finiteOr(p2.position.y, 0);
+  const p2z = finiteOr(p2.position.z, fallbackFocus.z);
+  const midX = (p1x + p2x) / 2;
+  const midZ = (p1z + p2z) / 2;
+  points[0].set(midX, Math.max(0.95, fallbackFocus.y), midZ);
+  points[1].set(p1x, 1.04 + p1y * 0.22, p1z);
+  points[2].set(p1x, 1.78 + p1y * 0.18, p1z);
+  points[3].set(p2x, 1.04 + p2y * 0.22, p2z);
+  points[4].set(p2x, 1.78 + p2y * 0.18, p2z);
+  return points;
+}
+
+function StageCameraOcclusionFader() {
+  const registry = useContext(StageCameraCollisionContext);
+  useFrame((_, delta) => {
+    if (!registry?.colliders.size) return;
+    registry.colliders.forEach((entry) => {
+      const target = registry.occluders.has(entry) ? 1 : 0;
+      const speed = target > entry.fade ? 14 : 5.8;
+      entry.fade = THREE.MathUtils.lerp(entry.fade, target, cameraDamp(delta, speed));
+      applyStageCameraFade(entry);
+    });
+  });
+  return null;
+}
+
+function applyStageCameraFade(entry: StageCameraColliderEntry) {
+  const fade = THREE.MathUtils.clamp(entry.fade, 0, 1);
+  entry.materials.forEach((state) => {
+    const targetOpacity = Math.min(state.opacity, 0.24);
+    if (fade <= 0.002) {
+      if (state.material.transparent !== state.transparent || state.material.depthWrite !== state.depthWrite) {
+        state.material.transparent = state.transparent;
+        state.material.depthWrite = state.depthWrite;
+        state.material.needsUpdate = true;
+      }
+      state.material.opacity = state.opacity;
+      return;
+    }
+    if (!state.material.transparent || state.material.depthWrite) {
+      state.material.transparent = true;
+      state.material.depthWrite = false;
+      state.material.needsUpdate = true;
+    }
+    state.material.opacity = THREE.MathUtils.lerp(state.opacity, targetOpacity, fade);
+  });
+}
+
 function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
   const { camera, size } = useThree();
   const cameraCollisionRegistry = useContext(StageCameraCollisionContext);
@@ -2432,10 +2615,17 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   const rawLookFocus = useMemo(() => new THREE.Vector3(), []);
   const rawSide = useMemo(() => new THREE.Vector3(), []);
   const desired = useMemo(() => new THREE.Vector3(), []);
+  const boundaryAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
   const collisionAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
+  const visibilityPoints = useMemo(() => Array.from({ length: 5 }, () => new THREE.Vector3()), []);
   const initializedRef = useRef(false);
   const cameraDistanceRef = useRef(6.4);
   const cameraHeightRef = useRef(2.8);
+  useEffect(() => {
+    return () => {
+      cameraCollisionRegistry?.occluders.clear();
+    };
+  }, [cameraCollisionRegistry]);
   useFrame((_, delta) => {
     camera.near = 0.05;
     camera.far = modelStageCamera ? 1400 : 300;
@@ -2496,11 +2686,13 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
         cameraHeightRef.current,
         focus.z + side.z * cameraDistanceRef.current
       );
-      const collided = resolveCameraModelCollision(lookFocus, desired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+      resolveCameraBoundaryNudge(match.stage, lookFocus, desired, boundaryAdjustedDesired);
+      const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
       camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 6.2 * smoothing));
       const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
       camera.lookAt(lookFocus);
+      updateCameraStageOccluders(cameraCollisionRegistry, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
       return;
     }
     if (match.clashState?.status !== 'none') {
@@ -2526,11 +2718,13 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       );
       desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
       target.set(contactX, Math.max(1.12, contactY), contactZ);
-      const collided = resolveCameraModelCollision(target, desired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+      resolveCameraBoundaryNudge(match.stage, target, desired, boundaryAdjustedDesired);
+      const collided = resolveCameraModelCollision(target, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
       camera.position.lerp(collisionAdjustedDesired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
       const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
+      updateCameraStageOccluders(cameraCollisionRegistry, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, target));
       return;
     }
     const p1x = finiteOr(p1.position.x, focus.x - 0.65);
@@ -2595,11 +2789,13 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       cameraHeightRef.current,
       focus.z + side.z * cameraDistanceRef.current
     );
-    const collided = resolveCameraModelCollision(lookFocus, desired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+    resolveCameraBoundaryNudge(match.stage, lookFocus, desired, boundaryAdjustedDesired);
+    const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
     camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
     const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
     if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
+    updateCameraStageOccluders(cameraCollisionRegistry, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
   });
   return null;
 }
@@ -3163,7 +3359,7 @@ function StageModelCameraColliders({
     if (!registry || collisionMode === 'none') return undefined;
     const modelGroup = modelGroupRef.current;
     if (!modelGroup) return undefined;
-    const boxes: THREE.Box3[] = [];
+    const entries: StageCameraColliderEntry[] = [];
     modelGroup.updateWorldMatrix(true, true);
     modelGroup.traverse((object) => {
       const mesh = object as THREE.Mesh;
@@ -3171,19 +3367,43 @@ function StageModelCameraColliders({
       if (getStageModelMeshHideReason(mesh, stageId, false)) return;
       const box = new THREE.Box3().setFromObject(mesh);
       if (!isUsableStageCameraColliderBox(box, floorY)) return;
-      boxes.push(box);
-      registry.colliders.add(box);
+      const entry: StageCameraColliderEntry = {
+        id: mesh.uuid,
+        mesh,
+        box,
+        materials: captureStageCameraMaterialStates(mesh),
+        fade: 0
+      };
+      entries.push(entry);
+      registry.colliders.add(entry);
     });
     logStageModelDebug('H70 camera model colliders registered', {
       stageId,
-      colliderCount: boxes.length,
+      colliderCount: entries.length,
       collisionMode: collisionMode ?? 'box'
     });
     return () => {
-      boxes.forEach((box) => registry.colliders.delete(box));
+      entries.forEach((entry) => {
+        entry.fade = 0;
+        applyStageCameraFade(entry);
+        registry.occluders.delete(entry);
+        registry.colliders.delete(entry);
+      });
     };
   }, [collisionMode, floorY, modelGroupRef, registry, stageId]);
   return null;
+}
+
+function captureStageCameraMaterialStates(mesh: THREE.Mesh): StageCameraMaterialState[] {
+  return meshMaterials(mesh).map((rawMaterial) => {
+    const material = rawMaterial as THREE.Material & { opacity?: number };
+    return {
+      material,
+      transparent: material.transparent,
+      opacity: material.opacity ?? 1,
+      depthWrite: material.depthWrite
+    };
+  });
 }
 
 function isUsableStageCameraColliderBox(box: THREE.Box3, floorY: number) {

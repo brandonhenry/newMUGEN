@@ -3063,6 +3063,8 @@ export default function App() {
             roster={roster}
             stages={playableStageRoster}
             unlockedCharacterIds={effectiveUnlockedCharacterIds}
+            sparkSettings={settings.display.impactSparks}
+            reducedMotion={settings.display.reducedMotion}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
@@ -3821,6 +3823,8 @@ function MenuScreen({
   roster,
   stages: stageRoster,
   unlockedCharacterIds,
+  sparkSettings,
+  reducedMotion,
   onMenuSelect,
   onMenuHover,
   onArcade,
@@ -3835,6 +3839,8 @@ function MenuScreen({
   roster: CharacterDefinition[];
   stages: StageDefinition[];
   unlockedCharacterIds: Set<string>;
+  sparkSettings: GameSettings['display']['impactSparks'];
+  reducedMotion: boolean;
   onMenuSelect: () => void;
   onMenuHover: () => void;
   onArcade: () => void;
@@ -4069,7 +4075,7 @@ function MenuScreen({
     >
       {attractMatch && (
         <div className="menu-attract-background" aria-hidden="true">
-          <MenuAttractScene match={attractMatch} />
+          <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} />
         </div>
       )}
       <div className="menu-vignette" />
