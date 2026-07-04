@@ -1724,7 +1724,8 @@ export function CharacterPreviewCanvas({
   previewEffectFrame,
   rotationTurn,
   zoom,
-  preserveCameraFrame = false
+  preserveCameraFrame = false,
+  showIdleGhost = false
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
@@ -1736,6 +1737,7 @@ export function CharacterPreviewCanvas({
   rotationTurn: number;
   zoom: number;
   preserveCameraFrame?: boolean;
+  showIdleGhost?: boolean;
 }) {
   const frameFit = useMemo(() => getPreviewFrameFit(character, animationKey), [animationKey, character]);
   const initialFrameFit = useRef<PreviewFrameFit | null>(null);
@@ -1761,6 +1763,17 @@ export function CharacterPreviewCanvas({
       <pointLight position={[-2, 1.8, 2]} color={character.colors.primary} intensity={6} distance={5} />
       <pointLight position={[2.2, 1.2, -2.2]} color={character.colors.accent} intensity={4} distance={5} />
       <PreviewFloor color={character.colors.primary} />
+      {showIdleGhost && (
+        <PreviewFighter
+          key={`${character.id}-idle-ghost`}
+          character={character}
+          pose="idle"
+          animationKey="idle"
+          frameTimeOverride={0}
+          rotationTurn={rotationTurn}
+          renderStyle={IDLE_GHOST_RENDER_STYLE}
+        />
+      )}
       <PreviewFighter
         key={character.id}
         character={character}
@@ -2057,6 +2070,37 @@ function PreviewFloor({ color }: { color: string }) {
   );
 }
 
+type FighterRenderStyle = {
+  opacity: number;
+  tint: string;
+  depthWrite: boolean;
+  renderOrder: number;
+  castShadow: boolean;
+  receiveShadow: boolean;
+};
+
+const DEFAULT_FIGHTER_RENDER_STYLE: FighterRenderStyle = {
+  opacity: 1,
+  tint: '#ffffff',
+  depthWrite: true,
+  renderOrder: 0,
+  castShadow: true,
+  receiveShadow: true
+};
+
+const IDLE_GHOST_RENDER_STYLE: FighterRenderStyle = {
+  opacity: 0.28,
+  tint: '#d8fbff',
+  depthWrite: false,
+  renderOrder: -6,
+  castShadow: false,
+  receiveShadow: false
+};
+
+function withDefaultRenderStyle(renderStyle?: Partial<FighterRenderStyle>): FighterRenderStyle {
+  return { ...DEFAULT_FIGHTER_RENDER_STYLE, ...(renderStyle ?? {}) };
+}
+
 function PreviewFighter({
   character,
   pose,
@@ -2065,7 +2109,9 @@ function PreviewFighter({
   previewEffects,
   previewEffectInstances,
   previewEffectFrame,
-  rotationTurn
+  rotationTurn,
+  frameTimeOverride,
+  renderStyle
 }: {
   character: CharacterDefinition;
   pose: PreviewPose;
@@ -2075,6 +2121,8 @@ function PreviewFighter({
   previewEffectInstances?: MoveEffectInstance[];
   previewEffectFrame?: number;
   rotationTurn: number;
+  frameTimeOverride?: number;
+  renderStyle?: Partial<FighterRenderStyle>;
 }) {
   const fighter = useRef(createPreviewFighter(character));
   const rotator = useRef<THREE.Group>(null);
@@ -2082,6 +2130,7 @@ function PreviewFighter({
   const previewFrameTime = previewEffectFrame === undefined
     ? undefined
     : previewEffectFrame / Math.max(1, character.animationFrameRates?.[animationKey ?? ''] ?? character.animationFps ?? 8);
+  const effectiveFrameTime = frameTimeOverride ?? previewFrameTime;
 
   useEffect(() => {
     fighter.current = createPreviewFighter(character);
@@ -2118,7 +2167,7 @@ function PreviewFighter({
     } else {
       runtime.state = pose;
       runtime.sidestepDirection = animationKey === 'sidestepLeft' ? -1 : animationKey === 'sidestepRight' ? 1 : 0;
-      const previewTime = previewFrameTime ?? t;
+      const previewTime = effectiveFrameTime ?? t;
       runtime.position.y = pose === 'jump' ? Math.abs(Math.sin(previewTime * 2.4)) * 0.95 : pose === 'juggle' ? 1.35 + Math.sin(previewTime * 2.2) * 0.18 : 0;
       if (pose === 'getup') {
         runtime.getupAction = animationKey === 'getupRollUp'
@@ -2155,7 +2204,7 @@ function PreviewFighter({
 
   return (
     <group ref={rotator} position={[0, 0, 0]}>
-      <FighterRig fighter={fighter.current} frameTimeOverride={previewFrameTime} />
+      <FighterRig fighter={fighter.current} frameTimeOverride={effectiveFrameTime} renderStyle={renderStyle} />
       {(previewEffectInstances ?? []).map((instance) => {
         const effect = (previewEffects ?? []).find((candidate) => candidate.id === instance.effectId);
         if (!effect || !effectIsVisibleAt(instance, fighter.current.moveFrame, previewMove ? previewMove.startupFrames + previewMove.activeFrames + previewMove.recoveryFrames : 30)) return null;
@@ -3645,12 +3694,14 @@ function FighterRig({
   fighter,
   timeScale = 1,
   frameTimeOverride,
-  stage
+  stage,
+  renderStyle
 }: {
   fighter: FighterRuntime;
   timeScale?: number;
   frameTimeOverride?: number;
   stage?: StageDefinition;
+  renderStyle?: Partial<FighterRenderStyle>;
 }) {
   const group = useRef<THREE.Group>(null);
   const scaledTime = useRef(0);
@@ -3679,19 +3730,21 @@ function FighterRig({
   const color = fighter.character.colors.primary;
   const globalScale = getCharacterGlobalScale(fighter.character);
   const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
+  const materialStyle = useMemo(() => withDefaultRenderStyle(renderStyle), [renderStyle]);
+  const effectiveOutlineStyle = materialStyle.opacity < 1 ? undefined : outlineStyle;
   return (
     <group ref={group} scale={[globalScale.width, globalScale.height, globalScale.width]}>
       <Bounds fit={false}>
         {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
           fighter.character.voxelProfile === 'image-source' || fighter.character.voxelProfile === 'hd-image-source' ? (
-            <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={outlineStyle} />
+            <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={effectiveOutlineStyle} renderStyle={materialStyle} />
           ) : (
-            <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={outlineStyle} />
+            <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={effectiveOutlineStyle} renderStyle={materialStyle} />
           )
         ) : fighter.character.modelPath.startsWith('builtin://') ? (
-          <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={outlineStyle} />
+          <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={effectiveOutlineStyle} renderStyle={materialStyle} />
         ) : (
-          <ExternalFighter fighter={fighter} url={fighter.character.modelPath} timeScale={timeScale} />
+          <ExternalFighter fighter={fighter} url={fighter.character.modelPath} timeScale={timeScale} renderStyle={materialStyle} />
         )}
       </Bounds>
     </group>
@@ -3771,13 +3824,15 @@ function ImageVoxelFighter({
   progress,
   timeScale = 1,
   frameTimeOverride,
-  outlineStyle
+  outlineStyle,
+  renderStyle
 }: {
   fighter: FighterRuntime;
   progress: number;
   timeScale?: number;
   frameTimeOverride?: number;
   outlineStyle?: FighterOutlineStyle;
+  renderStyle: FighterRenderStyle;
 }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
@@ -3871,17 +3926,17 @@ function ImageVoxelFighter({
   });
 
   if (voxels.length === 0) {
-    return <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={outlineStyle} />;
+    return <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={outlineStyle} renderStyle={renderStyle} />;
   }
 
   return (
     <group ref={root} rotation={[0, -Math.PI / 2, 0]}>
-      <ImageVoxelPartGroup part={parts.head} groupRef={head} outlineStyle={outlineStyle} />
-      <ImageVoxelPartGroup part={parts.torso} groupRef={torso} outlineStyle={outlineStyle} />
-      <ImageVoxelPartGroup part={parts.leadArm} groupRef={leadArm} outlineStyle={outlineStyle} />
-      <ImageVoxelPartGroup part={parts.rearArm} groupRef={rearArm} outlineStyle={outlineStyle} />
-      <ImageVoxelPartGroup part={parts.leadLeg} groupRef={leadLeg} outlineStyle={outlineStyle} />
-      <ImageVoxelPartGroup part={parts.rearLeg} groupRef={rearLeg} outlineStyle={outlineStyle} />
+      <ImageVoxelPartGroup part={parts.head} groupRef={head} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.torso} groupRef={torso} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadArm} groupRef={leadArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearArm} groupRef={rearArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadLeg} groupRef={leadLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearLeg} groupRef={rearLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
     </group>
   );
 }
@@ -4089,13 +4144,15 @@ function hashSpriteEditSignature(value: string) {
 function ImageVoxelPartGroup({
   part,
   groupRef,
-  outlineStyle
+  outlineStyle,
+  renderStyle
 }: {
   part: { anchor: [number, number, number]; voxels: ImageVoxel[] };
   groupRef: React.RefObject<THREE.Group>;
   outlineStyle?: FighterOutlineStyle;
+  renderStyle: FighterRenderStyle;
 }) {
-  const mesh = useMemo(() => buildInstancedVoxelMesh(part), [part]);
+  const mesh = useMemo(() => buildInstancedVoxelMesh(part, renderStyle), [part, renderStyle]);
   const outlineMesh = useMemo(() => buildInstancedVoxelOutlineMesh(part, outlineStyle), [part, outlineStyle]);
 
   useEffect(() => {
@@ -4174,7 +4231,7 @@ function buildInstancedVoxelOutlineMesh(part: { anchor: [number, number, number]
   return outline;
 }
 
-function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }) {
+function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }, renderStyle: FighterRenderStyle) {
   if (part.voxels.length === 0) return null;
   const baseGeometry = new THREE.BoxGeometry(1, 1, 1);
   const geometries = part.voxels.map((voxel) => {
@@ -4211,13 +4268,17 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
   geometries.forEach((entry) => entry.dispose());
   if (!geometry) return null;
   const material = new THREE.MeshBasicMaterial({
-    color: '#ffffff',
+    color: renderStyle.tint,
     vertexColors: true,
+    transparent: renderStyle.opacity < 1,
+    opacity: renderStyle.opacity,
+    depthWrite: renderStyle.depthWrite,
     toneMapped: false
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+  mesh.castShadow = renderStyle.castShadow;
+  mesh.receiveShadow = renderStyle.receiveShadow;
+  mesh.renderOrder = renderStyle.renderOrder;
   return mesh;
 }
 
@@ -4494,13 +4555,15 @@ function VoxelSpriteFighter({
   progress,
   timeScale = 1,
   frameTimeOverride,
-  outlineStyle
+  outlineStyle,
+  renderStyle
 }: {
   fighter: FighterRuntime;
   progress: number;
   timeScale?: number;
   frameTimeOverride?: number;
   outlineStyle?: FighterOutlineStyle;
+  renderStyle: FighterRenderStyle;
 }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
@@ -4561,35 +4624,35 @@ function VoxelSpriteFighter({
   return (
     <group ref={root}>
       <group ref={head} position={[0, 1.63, 0]}>
-        <VoxelBox outlineStyle={outlineStyle} position={[0, 0, 0]} size={[0.36, 0.28, 0.3]} color={palette.skin} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, 0.18, -0.02]} size={[0.44, 0.16, 0.34]} color={palette.hair} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, 0.07, 0.17]} size={[0.42, 0.06, 0.04]} color={palette.headband} />
-        <VoxelBox outlineStyle={outlineStyle} position={[-0.24, 0.12, 0]} size={[0.08, 0.08, 0.22]} color={palette.hair} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0.24, 0.12, 0]} size={[0.08, 0.08, 0.22]} color={palette.hair} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, 0, 0]} size={[0.36, 0.28, 0.3]} color={palette.skin} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, 0.18, -0.02]} size={[0.44, 0.16, 0.34]} color={palette.hair} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, 0.07, 0.17]} size={[0.42, 0.06, 0.04]} color={palette.headband} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[-0.24, 0.12, 0]} size={[0.08, 0.08, 0.22]} color={palette.hair} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0.24, 0.12, 0]} size={[0.08, 0.08, 0.22]} color={palette.hair} />
       </group>
       <group ref={torso} position={[0, 1.12, 0]}>
-        <VoxelBox outlineStyle={outlineStyle} position={[0, 0.08, 0]} size={[0.5, 0.46, 0.32]} color={palette.jacket} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, 0.12, 0.18]} size={[0.42, 0.12, 0.04]} color={palette.trim} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.2, 0]} size={[0.42, 0.16, 0.3]} color={palette.belt} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, 0.34, 0]} size={[0.56, 0.1, 0.34]} color={palette.shoulder} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, 0.08, 0]} size={[0.5, 0.46, 0.32]} color={palette.jacket} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, 0.12, 0.18]} size={[0.42, 0.12, 0.04]} color={palette.trim} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.2, 0]} size={[0.42, 0.16, 0.3]} color={palette.belt} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, 0.34, 0]} size={[0.56, 0.1, 0.34]} color={palette.shoulder} />
       </group>
       <group ref={leadArm} position={[0.34, 1.24, 0.08]}>
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.16, 0]} size={[0.16, 0.34, 0.16]} color={palette.sleeve} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.42, 0.02]} size={[0.14, 0.3, 0.14]} color={palette.skin} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.6, 0.05]} size={[0.16, 0.1, 0.16]} color={palette.glove} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.16, 0]} size={[0.16, 0.34, 0.16]} color={palette.sleeve} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.42, 0.02]} size={[0.14, 0.3, 0.14]} color={palette.skin} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.6, 0.05]} size={[0.16, 0.1, 0.16]} color={palette.glove} />
       </group>
       <group ref={rearArm} position={[-0.34, 1.22, -0.06]}>
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.16, 0]} size={[0.16, 0.34, 0.16]} color={palette.sleeve} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.42, 0]} size={[0.14, 0.3, 0.14]} color={palette.skin} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.6, 0.02]} size={[0.16, 0.1, 0.16]} color={palette.glove} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.16, 0]} size={[0.16, 0.34, 0.16]} color={palette.sleeve} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.42, 0]} size={[0.14, 0.3, 0.14]} color={palette.skin} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.6, 0.02]} size={[0.16, 0.1, 0.16]} color={palette.glove} />
       </group>
       <group ref={leadLeg} position={[0.16, 0.78, 0.04]}>
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.24, 0]} size={[0.18, 0.5, 0.18]} color={palette.pants} />
-        <VoxelBox outlineStyle={outlineStyle} position={[0.02, -0.56, 0.08]} size={[0.22, 0.12, 0.28]} color={palette.boot} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.24, 0]} size={[0.18, 0.5, 0.18]} color={palette.pants} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0.02, -0.56, 0.08]} size={[0.22, 0.12, 0.28]} color={palette.boot} />
       </group>
       <group ref={rearLeg} position={[-0.16, 0.78, -0.04]}>
-        <VoxelBox outlineStyle={outlineStyle} position={[0, -0.24, 0]} size={[0.18, 0.5, 0.18]} color={palette.pants} />
-        <VoxelBox outlineStyle={outlineStyle} position={[-0.02, -0.56, 0.06]} size={[0.22, 0.12, 0.28]} color={palette.boot} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[0, -0.24, 0]} size={[0.18, 0.5, 0.18]} color={palette.pants} />
+        <VoxelBox outlineStyle={outlineStyle} renderStyle={renderStyle} position={[-0.02, -0.56, 0.06]} size={[0.22, 0.12, 0.28]} color={palette.boot} />
       </group>
     </group>
   );
@@ -4599,15 +4662,18 @@ function VoxelBox({
   position,
   size,
   color,
-  outlineStyle
+  outlineStyle,
+  renderStyle
 }: {
   position: [number, number, number];
   size: [number, number, number];
   color: string;
   outlineStyle?: FighterOutlineStyle;
+  renderStyle: FighterRenderStyle;
 }) {
   const outlineColor = useMemo(() => outlineColorForVoxel(color), [color]);
   const showOutline = outlineStyle?.enabled && shouldRenderVoxelOutline(color);
+  const materialColor = renderStyle.opacity < 1 ? renderStyle.tint : color;
   return (
     <group position={position}>
       {showOutline && (
@@ -4616,9 +4682,9 @@ function VoxelBox({
           <meshBasicMaterial color={outlineColor} transparent opacity={outlineStyle.opacity} side={THREE.BackSide} depthWrite={false} toneMapped={false} />
         </mesh>
       )}
-      <mesh castShadow receiveShadow>
+      <mesh castShadow={renderStyle.castShadow} receiveShadow={renderStyle.receiveShadow} renderOrder={renderStyle.renderOrder}>
         <boxGeometry args={size} />
-        <meshToonMaterial color={color} />
+        <meshToonMaterial color={materialColor} transparent={renderStyle.opacity < 1} opacity={renderStyle.opacity} depthWrite={renderStyle.depthWrite} />
       </mesh>
     </group>
   );
@@ -4657,9 +4723,30 @@ function getVoxelPalette(character: CharacterDefinition) {
   };
 }
 
-function ExternalFighter({ fighter, url, timeScale = 1 }: { fighter: FighterRuntime; url: string; timeScale?: number }) {
+function ExternalFighter({ fighter, url, timeScale = 1, renderStyle }: { fighter: FighterRuntime; url: string; timeScale?: number; renderStyle: FighterRenderStyle }) {
   const gltf = useGLTF(url);
-  const model = useMemo(() => clone(gltf.scene), [gltf.scene]);
+  const model = useMemo(() => {
+    const cloned = clone(gltf.scene);
+    cloned.traverse((object) => {
+      if (!(object instanceof THREE.Mesh)) return;
+      object.castShadow = renderStyle.castShadow;
+      object.receiveShadow = renderStyle.receiveShadow;
+      object.renderOrder = renderStyle.renderOrder;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      const styledMaterials = materials.map((material) => {
+        const styled = material.clone();
+        styled.transparent = renderStyle.opacity < 1 || styled.transparent;
+        styled.opacity = renderStyle.opacity;
+        styled.depthWrite = renderStyle.depthWrite;
+        if ('color' in styled && styled.color instanceof THREE.Color && renderStyle.opacity < 1) {
+          styled.color.set(renderStyle.tint);
+        }
+        return styled;
+      });
+      object.material = Array.isArray(object.material) ? styledMaterials : styledMaterials[0];
+    });
+    return cloned;
+  }, [gltf.scene, renderStyle]);
   const wrapper = useRef<THREE.Group>(null);
   const { actions, names } = useAnimations(gltf.animations, model);
   const desiredClip = chooseClip(names, fighter);
@@ -4732,13 +4819,15 @@ function ProceduralFighter({
   color,
   timeScale = 1,
   frameTimeOverride,
-  outlineStyle: _outlineStyle
+  outlineStyle: _outlineStyle,
+  renderStyle
 }: {
   fighter: FighterRuntime;
   color: string;
   timeScale?: number;
   frameTimeOverride?: number;
   outlineStyle?: FighterOutlineStyle;
+  renderStyle: FighterRenderStyle;
 }) {
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Mesh>(null);
@@ -4751,6 +4840,17 @@ function ProceduralFighter({
   const accent = fighter.character.colors.accent;
   const bulk = fighter.character.id === 'dax' ? 1.12 : 0.95;
   const scaledTime = useRef(0);
+  const materialProps = {
+    transparent: renderStyle.opacity < 1,
+    opacity: renderStyle.opacity,
+    depthWrite: renderStyle.depthWrite
+  };
+  const styledColor = (source: string) => renderStyle.opacity < 1 ? renderStyle.tint : source;
+  const meshShadowProps = {
+    castShadow: renderStyle.castShadow,
+    receiveShadow: renderStyle.receiveShadow,
+    renderOrder: renderStyle.renderOrder
+  };
 
   useFrame((_, delta) => {
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
@@ -4801,36 +4901,36 @@ function ProceduralFighter({
 
   return (
     <group ref={root}>
-      <mesh ref={head} castShadow position={[0, 1.72, 0]}>
+      <mesh ref={head} {...meshShadowProps} position={[0, 1.72, 0]}>
         <sphereGeometry args={[0.24 * bulk, 20, 16]} />
-        <meshToonMaterial color={color} emissive={color} emissiveIntensity={0.05} />
+        <meshToonMaterial color={styledColor(color)} emissive={styledColor(color)} emissiveIntensity={0.05} {...materialProps} />
       </mesh>
-      <mesh ref={torso} castShadow position={[0, 1.22, 0]}>
+      <mesh ref={torso} {...meshShadowProps} position={[0, 1.22, 0]}>
         <capsuleGeometry args={[0.28 * bulk, 0.72, 8, 18]} />
-        <meshToonMaterial color={secondary} />
+        <meshToonMaterial color={styledColor(secondary)} {...materialProps} />
       </mesh>
       <group ref={leadArm} position={[0.23, 1.22, 0.08]}>
-        <mesh castShadow position={[0, -0.22, 0]}>
+        <mesh {...meshShadowProps} position={[0, -0.22, 0]}>
           <capsuleGeometry args={[0.07, 0.62, 6, 12]} />
-          <meshToonMaterial color={accent} />
+          <meshToonMaterial color={styledColor(accent)} {...materialProps} />
         </mesh>
       </group>
       <group ref={rearArm} position={[-0.23, 1.22, -0.05]}>
-        <mesh castShadow position={[0, -0.2, 0]}>
+        <mesh {...meshShadowProps} position={[0, -0.2, 0]}>
           <capsuleGeometry args={[0.07, 0.58, 6, 12]} />
-          <meshToonMaterial color={color} />
+          <meshToonMaterial color={styledColor(color)} {...materialProps} />
         </mesh>
       </group>
       <group ref={leadLeg} position={[0.15, 0.78, 0.04]}>
-        <mesh castShadow position={[0, -0.3, 0]}>
+        <mesh {...meshShadowProps} position={[0, -0.3, 0]}>
           <capsuleGeometry args={[0.09, 0.76, 6, 12]} />
-          <meshToonMaterial color={color} />
+          <meshToonMaterial color={styledColor(color)} {...materialProps} />
         </mesh>
       </group>
       <group ref={rearLeg} position={[-0.15, 0.78, -0.04]}>
-        <mesh castShadow position={[0, -0.3, 0]}>
+        <mesh {...meshShadowProps} position={[0, -0.3, 0]}>
           <capsuleGeometry args={[0.09, 0.76, 6, 12]} />
-          <meshToonMaterial color={accent} />
+          <meshToonMaterial color={styledColor(accent)} {...materialProps} />
         </mesh>
       </group>
     </group>

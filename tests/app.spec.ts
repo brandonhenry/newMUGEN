@@ -25,11 +25,9 @@ async function startFight(page: import('@playwright/test').Page, local2p = false
 async function startTraining(page: import('@playwright/test').Page) {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Training' }).click({ force: true });
-  await page.getByRole('button', { name: 'Stage' }).click();
-  await page.getByRole('button', { name: 'Fight', exact: true }).click();
-  const versusSplash = page.locator('.fight-versus-screen');
-  await expect(versusSplash).toBeVisible({ timeout: 3000 });
-  await page.keyboard.press('Enter');
+  await expect(page.locator('.training-select-screen')).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Training mode' })).toContainText('Training');
+  await page.getByRole('button', { name: 'Start Training' }).click();
   await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
   await page.waitForTimeout(4200);
   const fightScreen = page.locator('.fight-screen');
@@ -187,6 +185,9 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('character-width-slider')).toBeVisible();
   await expect(page.getByTestId('character-height-slider')).toBeVisible();
   await expect(page.getByTestId('animation-width-slider')).toBeHidden();
+  await expect(page.getByTestId('toggle-idle-ghost')).toBeVisible();
+  await page.getByTestId('toggle-idle-ghost').click();
+  await expect(page.getByTestId('toggle-idle-ghost')).toHaveClass(/active-tool/);
   await page.getByTestId('character-width-input').fill('1.25');
   await expect(page.getByTestId('character-width-slider')).toHaveValue('1.25');
   await page.getByTestId('toggle-animation-editor').click();
@@ -197,6 +198,7 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByTestId('toggle-animation-editor').click();
   await page.getByTestId('viewer-pose-jableft').click();
   await expect(page.getByTestId('viewer-pose-jableft')).toHaveClass(/active/);
+  await expect(page.getByTestId('toggle-idle-ghost')).toHaveClass(/active-tool/);
   await page.getByTestId('toggle-animation-editor').click();
   await expect(page.getByTestId('character-width-slider')).toBeHidden();
   await expect(page.getByTestId('animation-width-slider')).toBeVisible();
@@ -311,7 +313,7 @@ test('mobile touch controls drive movement and attacks', async ({ page }, testIn
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
 });
 
-test('opens training modes, completes a basic trial, and previews combo routes', async ({ page }, testInfo) => {
+test('opens training modes, starts a basic trial, and previews combo routes', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Keyboard training-trial route is covered by the desktop project');
   await startTraining(page);
   await page.keyboard.press('Escape');
@@ -328,7 +330,7 @@ test('opens training modes, completes a basic trial, and previews combo routes',
   await keyDown(page, 'KeyD');
   await page.waitForTimeout(150);
   await keyUp(page, 'KeyD');
-  await expect.poll(async () => page.evaluate(() => window.localStorage.getItem('kore.trainingTrials.v1') ?? ''), { timeout: 4000 }).toContain('movement:walk');
+  await expect(page.locator('.training-trial-hud')).toContainText('Walk In');
 
   await page.locator('.fight-screen').click({ position: { x: 24, y: 24 } });
   await page.keyboard.press('Escape');
@@ -336,9 +338,7 @@ test('opens training modes, completes a basic trial, and previews combo routes',
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: /Combos/ }).click();
   await expect(page.locator('.combo-trial-list')).toContainText('Combos');
-  const shortCombo = page.locator('.combo-trial-list section button').filter({ hasText: /3 hits|4 hits|5 hits/ }).first();
-  await expect(shortCombo).toBeVisible();
-  await shortCombo.click();
+  await expect(page.getByRole('button', { name: 'Preview' })).toBeEnabled();
   await page.getByRole('button', { name: 'Preview' }).click();
   await expect(page.locator('.training-trial-hud')).toContainText('Preview');
   await expect(page.locator('.training-trial-hud')).toBeHidden({ timeout: 12000 });

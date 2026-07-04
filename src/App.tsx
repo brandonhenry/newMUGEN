@@ -130,7 +130,7 @@ import {
   type VoxelBodyNormalization
 } from './lib/voxelBodyNormalization';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
@@ -2466,6 +2466,7 @@ export default function App() {
   const [randomCharacterSlots, setRandomCharacterSlots] = useState<RandomCharacterSlots>({ 1: true, 2: true });
   const [randomStageSelected, setRandomStageSelected] = useState(true);
   const [mode, setMode] = useState<MatchMode>('ai');
+  const [selectedTrainingMode, setSelectedTrainingMode] = useState<TrainingTrialMode>('free');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
@@ -3067,10 +3068,11 @@ export default function App() {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'training' });
               resetRandomSelections();
               setMode('training');
+              setSelectedTrainingMode('free');
               const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
               if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
-              setScreen('select');
+              setScreen('training');
             }}
             onOnline={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'online' });
@@ -3119,6 +3121,38 @@ export default function App() {
               setScreen('versus');
             }}
             onBack={() => setScreen('select')}
+          />
+        )}
+        {screen === 'training' && (
+          <TrainingSelect
+            roster={roster}
+            p1Id={p1Id}
+            p2Id={p2Id}
+            unlockedCharacterIds={effectiveUnlockedCharacterIds}
+            trainingMode={selectedTrainingMode}
+            setP1Id={setP1Id}
+            setP2Id={setP2Id}
+            setTrainingMode={setSelectedTrainingMode}
+            onBack={() => setScreen('menu')}
+            onStart={() => {
+              const fightStage = resolveRandomStageSelection();
+              if (!fightStage) return;
+              const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+              if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+              if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+              setMode('training');
+              captureAppAnalytics('character_selected', {
+                p1_character_id: trainingCharacters.p1?.id ?? p1Id,
+                p2_character_id: trainingCharacters.p2?.id ?? p2Id,
+                training_submode: selectedTrainingMode
+              });
+              captureAppAnalytics('stage_selected', {
+                stage_id: fightStage.id,
+                stage_random: randomStageSelected,
+                training_submode: selectedTrainingMode
+              });
+              setScreen('fight');
+            }}
           />
         )}
         {screen === 'select' && (
@@ -3180,7 +3214,7 @@ export default function App() {
             randomSelected={randomStageSelected}
             setSelected={setStageId}
             setRandomSelected={setRandomStageSelected}
-            onBack={() => setScreen('select')}
+            onBack={() => setScreen(mode === 'training' ? 'training' : 'select')}
             onFight={() => {
               const fightStage = resolveRandomStageSelection();
               if (!fightStage) return;
@@ -3201,7 +3235,7 @@ export default function App() {
                 if (opponent) setP2Id(opponent.id);
               }
               setVersusReturnScreen('stage');
-              setScreen('versus');
+              setScreen(mode === 'training' ? 'fight' : 'versus');
             }}
           />
         )}
@@ -3275,7 +3309,7 @@ export default function App() {
         )}
         {screen === 'fight' && (
           <FightScreen
-            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${cpuDifficulty}`}
+            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${cpuDifficulty}-${selectedTrainingMode}`}
             p1={p1}
             p2={p2}
             stage={selectedStage}
@@ -3293,7 +3327,8 @@ export default function App() {
             privateRoomIntent={privateRoomIntent}
             onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
-            onCharacterSelect={() => setScreen('select')}
+            initialTrainingMode={selectedTrainingMode}
+            onCharacterSelect={() => setScreen(mode === 'training' ? 'training' : 'select')}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
               const defeatedCharacter = roster.find((character) => character.id === defeatedCharacterId);
@@ -4374,11 +4409,323 @@ function ArcadeNameCard({
   );
 }
 
+function TrainingSelect({
+  roster,
+  p1Id,
+  p2Id,
+  unlockedCharacterIds,
+  trainingMode,
+  setP1Id,
+  setP2Id,
+  setTrainingMode,
+  onBack,
+  onStart
+}: {
+  roster: CharacterDefinition[];
+  p1Id: string;
+  p2Id: string;
+  unlockedCharacterIds: Set<string>;
+  trainingMode: TrainingTrialMode;
+  setP1Id: (id: string) => void;
+  setP2Id: (id: string) => void;
+  setTrainingMode: (mode: TrainingTrialMode) => void;
+  onBack: () => void;
+  onStart: () => void;
+}) {
+  const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
+  const [hoveredBaseId, setHoveredBaseId] = useState('');
+  const [rosterPage, setRosterPage] = useState(0);
+  const pageGamepadStateRef = useRef({ previous: false, next: false });
+  const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
+  const p2Character = roster.find((character) => character.id === p2Id) ?? roster.find((character) => character.id !== p1Character?.id) ?? roster[1] ?? p1Character;
+  const basicCount = p1Character ? generateBasicTrainingTrials(p1Character, roster).length : 0;
+  const comboCount = p1Character ? generateComboTrainingTrials(p1Character).length : 0;
+  const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
+  const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
+  const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
+  const pagedBaseRoster = baseRoster.slice(
+    visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE,
+    visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE + CHARACTER_SELECT_PAGE_SIZE
+  );
+  const canStart = Boolean(
+    p1Character &&
+    p2Character &&
+    isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
+    isCharacterUnlocked(p2Character, unlockedCharacterIds)
+  );
+  const assignCharacter = (id: string) => {
+    const character = roster.find((item) => item.id === id);
+    if (!character || !isCharacterUnlocked(character, unlockedCharacterIds)) return;
+    if (selectTarget === 1) {
+      setP1Id(id);
+      return;
+    }
+    setP2Id(id);
+  };
+  const cycleRosterPage = useCallback((direction: -1 | 1) => {
+    setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
+  }, [totalRosterPages]);
+  const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
+    const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+    if (family.length <= 1) return;
+    const currentId = selectTarget === 1 ? p1Id : p2Id;
+    const currentIndex = Math.max(0, family.findIndex((character) => character.id === currentId));
+    const next = family[(currentIndex + direction + family.length) % family.length];
+    if (next) assignCharacter(next.id);
+  }, [p1Id, p2Id, roster, selectTarget, unlockedCharacterIds]);
+
+  useEffect(() => {
+    setRosterPage((page) => Math.min(page, totalRosterPages - 1));
+  }, [totalRosterPages]);
+
+  useEffect(() => {
+    const selected = selectTarget === 1 ? p1Character : p2Character;
+    const selectedBaseId = getCharacterBaseId(selected);
+    const selectedIndex = Math.max(0, baseRoster.findIndex((character) => character.id === selectedBaseId));
+    setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / CHARACTER_SELECT_PAGE_SIZE)));
+  }, [baseRoster, p1Character, p2Character, selectTarget, totalRosterPages]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
+      if (event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (event.code === 'KeyL' || key === 'l') {
+        event.preventDefault();
+        cycleRosterPage(-1);
+        return;
+      }
+      if (event.code === 'Semicolon' || key === ';') {
+        event.preventDefault();
+        cycleRosterPage(1);
+        return;
+      }
+      if (key !== 'o' && key !== 'p') return;
+      const selected = selectTarget === 1 ? p1Character : p2Character;
+      const baseId = hoveredBaseId || getCharacterBaseId(selected);
+      if (!baseId) return;
+      event.preventDefault();
+      cycleVariantForBase(baseId, key === 'o' ? -1 : 1);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [cycleRosterPage, cycleVariantForBase, hoveredBaseId, p1Character, p2Character, selectTarget]);
+
+  useEffect(() => {
+    let frame = 0;
+    const tick = () => {
+      const pad = getPrimaryMenuGamepad();
+      if (!pad || isTextEntryElement(document.activeElement)) {
+        pageGamepadStateRef.current = { previous: false, next: false };
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const current = {
+        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
+        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
+      };
+      const previous = pageGamepadStateRef.current;
+      if (current.previous && !previous.previous) cycleRosterPage(-1);
+      if (current.next && !previous.next) cycleRosterPage(1);
+      pageGamepadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleRosterPage]);
+
+  if (!p1Character || !p2Character) {
+    return (
+      <div className="select-screen">
+        <section className="versus-roster-panel">
+          <h2>Training</h2>
+          <p>No training setup is available.</p>
+          <FooterActions onBack={onBack} onNext={onBack} nextLabel="Back" />
+        </section>
+      </div>
+    );
+  }
+
+  return (
+    <div className="select-screen versus-select-screen training-select-screen">
+      <button
+        type="button"
+        className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''}`}
+        style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
+        onClick={() => setSelectTarget(1)}
+      >
+        <span className="versus-player-kicker">Player 1</span>
+        <AnimatedCharacterSprite character={p1Character} />
+        <span className="versus-hero-name">{p1Character.displayName}</span>
+      </button>
+
+      <section className="versus-roster-panel" aria-label="Training character select">
+        <div className="versus-select-top">
+          <div>
+            <span>Character Select</span>
+            <h2>{selectTarget === 1 ? 'PLAYER 1' : 'DUMMY'}</h2>
+          </div>
+          <div className="mode-stack">
+            <TrainingModeCarousel
+              value={trainingMode}
+              basicsCount={basicCount}
+              combosCount={comboCount}
+              setValue={setTrainingMode}
+            />
+          </div>
+        </div>
+
+        <div className="versus-target-tabs" aria-label="Choose training selection target">
+          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => setSelectTarget(1)}>
+            P1
+          </button>
+          <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
+            Dummy
+          </button>
+        </div>
+
+        <div className="versus-roster-pager" aria-label="Character roster pages">
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => cycleRosterPage(-1)}
+            disabled={totalRosterPages <= 1}
+          >
+            <ChevronLeft size={18} />
+            Prev
+          </button>
+          <span className="versus-page-indicator">
+            Page {visibleRosterPage + 1} / {totalRosterPages}
+          </span>
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => cycleRosterPage(1)}
+            disabled={totalRosterPages <= 1}
+          >
+            Next
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
+        <div className="versus-roster-grid">
+          {pagedBaseRoster.map((character) => {
+            const baseId = character.id;
+            const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+            const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
+            const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
+            const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
+            const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
+            const isP1 = getCharacterBaseId(p1Character) === baseId;
+            const isP2 = getCharacterBaseId(p2Character) === baseId;
+            const isLocked = family.length === 0;
+            const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
+            return (
+              <button
+                key={character.id}
+                type="button"
+                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
+                onClick={() => assignCharacter(assignId)}
+                onMouseEnter={() => setHoveredBaseId(baseId)}
+                onFocus={() => setHoveredBaseId(baseId)}
+                aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
+                aria-disabled={isLocked}
+              >
+                <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                {isLocked && <em className="character-lock-badge">Locked</em>}
+                {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
+                <span>{displayedCharacter.displayName}</span>
+                <small>{isP1 ? 'P1' : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? 'Dummy' : ''}</small>
+              </button>
+            );
+          })}
+        </div>
+
+        <FooterActions
+          onBack={onBack}
+          onNext={onStart}
+          nextLabel={trainingMode === 'free' ? 'Start Training' : trainingMode === 'basics' ? 'Start Basics' : 'Start Combos'}
+          nextDisabled={!canStart}
+        />
+      </section>
+
+      <button
+        type="button"
+        className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''}`}
+        style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
+        onClick={() => setSelectTarget(2)}
+        aria-label={`Select ${p2Character.displayName}`}
+      >
+        <span className="versus-player-kicker">Dummy</span>
+        <AnimatedCharacterSprite character={p2Character} />
+        <span className="versus-hero-name">{p2Character.displayName}</span>
+      </button>
+      <div className="versus-floor-glow" aria-hidden="true" />
+    </div>
+  );
+}
+
+function TrainingModeCarousel({
+  value,
+  basicsCount,
+  combosCount,
+  setValue
+}: {
+  value: TrainingTrialMode;
+  basicsCount: number;
+  combosCount: number;
+  setValue: (mode: TrainingTrialMode) => void;
+}) {
+  const options: Array<{ mode: TrainingTrialMode; label: string; icon: ReactNode; count?: number }> = [
+    { mode: 'free', label: 'Training', icon: <Target size={18} /> },
+    { mode: 'basics', label: 'Basics', icon: <List size={18} />, count: basicsCount },
+    { mode: 'combos', label: 'Combos', icon: <Swords size={18} />, count: combosCount }
+  ];
+  const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));
+  const activeOption = options[activeIndex] ?? options[0];
+  const cycleMode = (direction: -1 | 1) => {
+    const next = options[(activeIndex + direction + options.length) % options.length];
+    if (next) setValue(next.mode);
+  };
+
+  return (
+    <div
+      className="mode-carousel"
+      role="group"
+      aria-label="Training mode"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          cycleMode(-1);
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          cycleMode(1);
+        }
+      }}
+    >
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1)} aria-label="Previous training mode">
+        <ChevronLeft size={26} />
+      </button>
+      <div className="mode-carousel-current" aria-live="polite">
+        {activeOption.icon}
+        <strong>{activeOption.label}</strong>
+        {activeOption.count !== undefined && <small>{activeOption.count} trials</small>}
+      </div>
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(1)} aria-label="Next training mode">
+        <ChevronRight size={26} />
+      </button>
+    </div>
+  );
+}
+
 const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode }> = [
   { mode: 'ai', label: 'Arcade', icon: <Gamepad2 size={18} /> },
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
   { mode: 'versusCpu', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
-  { mode: 'training', label: 'Training', icon: <Target size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
   { mode: 'private', label: 'Private', icon: <KeyRound size={18} /> },
   { mode: 'cpu', label: 'CPU vs CPU', icon: <Swords size={18} /> }
@@ -8407,6 +8754,7 @@ function CharacterViewer({
   const [effectTimelineFrame, setEffectTimelineFrame] = useState(0);
   const [animationPreviewPlaying, setAnimationPreviewPlaying] = useState(false);
   const [animationPreviewFrame, setAnimationPreviewFrame] = useState(0);
+  const [showIdleGhost, setShowIdleGhost] = useState(false);
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -8468,6 +8816,7 @@ function CharacterViewer({
   const selectedAnimationPreviewStepRate = getAnimationPreviewStepRate(selectedSlot, selectedMove, selectedSpeed);
   const maxAnimationPreviewFrame = Math.max(0, selectedAnimationPreviewTotalFrames - 1);
   const clampedAnimationPreviewFrame = Math.min(maxAnimationPreviewFrame, Math.max(0, animationPreviewFrame));
+  const hasIdleGhostFrame = (active.animationFrames?.idle?.length ?? 0) > 0;
   const activeAnimationSequenceIndex = selectedPreviewFrames.length > 0
     ? Math.min(selectedPreviewFrames.length - 1, Math.floor((clampedAnimationPreviewFrame / Math.max(1, selectedAnimationPreviewTotalFrames)) * selectedPreviewFrames.length))
     : -1;
@@ -9381,6 +9730,16 @@ function CharacterViewer({
         Add Effects
       </button>
       <button
+        className={`secondary-button ${showIdleGhost && hasIdleGhostFrame ? 'active-tool' : ''}`}
+        onClick={() => setShowIdleGhost((current) => !current)}
+        disabled={!hasIdleGhostFrame}
+        data-testid="toggle-idle-ghost"
+        title={hasIdleGhostFrame ? 'Overlay the first idle frame behind the current preview' : 'No idle frames available'}
+      >
+        <Eye size={18} />
+        {showIdleGhost && hasIdleGhostFrame ? 'Idle Ghost On' : 'Idle Ghost'}
+      </button>
+      <button
         className={`secondary-button ${previewHdVoxels ? 'active-tool' : ''}`}
         onClick={() => setPreviewHdVoxels((current) => !current)}
         data-testid="toggle-hd-voxel-preview"
@@ -9478,6 +9837,7 @@ function CharacterViewer({
                     rotationTurn={rotationTurn}
                     zoom={zoom}
                     preserveCameraFrame={isLocalDev}
+                    showIdleGhost={showIdleGhost && hasIdleGhostFrame}
                   />
                 ) : (
                   <NoFrameDataPreview />
@@ -13209,6 +13569,7 @@ function FightScreen({
   getLastInput,
   onlineProfile,
   privateRoomIntent,
+  initialTrainingMode = 'free',
   onPausedChange,
   onMenu,
   onCharacterSelect,
@@ -13229,6 +13590,7 @@ function FightScreen({
   getLastInput: () => string;
   onlineProfile: OnlinePlayerProfile | null;
   privateRoomIntent: PrivateRoomIntent | null;
+  initialTrainingMode?: TrainingTrialMode;
   onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onCharacterSelect: () => void;
@@ -13237,7 +13599,7 @@ function FightScreen({
   const [paused, setPaused] = useState(false);
   const [pauseMenuView, setPauseMenuView] = useState<'menu' | 'movelist' | 'trainingTrials'>('menu');
   const [activeMoveListTab, setActiveMoveListTab] = useState<MoveListTab>('raw');
-  const [trainingMode, setTrainingMode] = useState<TrainingTrialMode>('free');
+  const [trainingMode, setTrainingMode] = useState<TrainingTrialMode>(initialTrainingMode);
   const basicTrainingTrials = useMemo(() => generateBasicTrainingTrials(p1, roster), [p1, roster]);
   const comboTrainingTrials = useMemo(() => generateComboTrainingTrials(p1), [p1]);
   const activeTrainingTrials = trainingMode === 'basics' ? basicTrainingTrials : trainingMode === 'combos' ? comboTrainingTrials : [];
