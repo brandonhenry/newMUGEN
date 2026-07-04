@@ -4,4 +4,4 @@ Fresh restart requested July 3, 2026. Old notes cleared.
 
 Current queue starts at Allen Walker and proceeds through playable characters in manifest order. Each frame must be visually checked with the full strict checklist before it is logged as done.
 
-Completed through Gohan Super Saiyan. Next character: Gohan Super Saiyan 2.
+Completed through Gohan Super Saiyan 2. Next character: Goku.
