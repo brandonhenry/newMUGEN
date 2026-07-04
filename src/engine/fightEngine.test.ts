@@ -6527,6 +6527,7 @@ describe('fight engine', () => {
     let match = createMatch(makeHeldJabCharacter(), starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 771 });
     startActiveThrowHit(match);
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match.fighters[1].throwEscapeGoal = 999;
     expect(match.fighters[0].state).toBe('throwHold');
     expect(match.fighters[1].state).toBe('throwHeld');
     const capturedHp = match.fighters[1].hp;
@@ -6548,6 +6549,29 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('throwHold');
     expect(match.fighters[1].state).toBe('throwHeld');
     expect(match.fighters[1].hp).toBe(capturedHp - 14);
+  });
+
+  it('makes CPU held defenders mash out instead of taking repeated held jabs', () => {
+    let match = createMatch(makeHeldJabCharacter(), starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 883 });
+    startActiveThrowHit(match);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('throwHold');
+    expect(match.fighters[1].state).toBe('throwHeld');
+    const capturedHp = match.fighters[1].hp;
+    const escapeGoal = match.fighters[1].throwEscapeGoal;
+
+    let maxEscapeProgress = 0;
+    for (let frame = 0; frame < 36 && match.fighters[1].state === 'throwHeld'; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      maxEscapeProgress = Math.max(maxEscapeProgress, match.fighters[1].throwEscapeProgress);
+    }
+
+    expect(maxEscapeProgress).toBeGreaterThan(0);
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].state).toBe('idle');
+    expect(match.fighters[1].throwCaptorSlot).toBeNull();
+    expect(match.fighters[1].hp).toBeGreaterThan(capturedHp - 14);
+    expect(escapeGoal).toBeGreaterThan(0);
   });
 
   it('scales throw mash escape by defender health and shows shake on fresh presses', () => {
