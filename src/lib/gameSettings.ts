@@ -4,12 +4,12 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 4;
+const settingsVersion = 5;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
 const p1Keyboard: PlayerControlBindings = {
-  up: ['KeyW'],
+  up: ['KeyW', 'Space'],
   down: ['KeyS'],
   left: ['KeyA'],
   right: ['KeyD'],
@@ -45,7 +45,7 @@ const p2Keyboard: PlayerControlBindings = {
   special: ['Numpad4', 'Digit4'],
   charge: ['Numpad6', 'Digit6'],
   block: ['Numpad5', 'Digit5', 'ShiftRight'],
-  confirm: ['Space'],
+  confirm: [],
   back: [],
   pause: ['Escape']
 };
@@ -239,7 +239,7 @@ function migrateStoredSettings(settings: unknown, version: number) {
   if (version >= settingsVersion) return settings;
   const game = isRecord(settings.game) ? settings.game : {};
   const display = isRecord(settings.display) ? settings.display : {};
-  return {
+  const migrated = {
     ...settings,
     game: game.maxHealth === 100
       ? {
@@ -254,13 +254,40 @@ function migrateStoredSettings(settings: unknown, version: number) {
         }
       : display
   };
+  return version < 5 ? migrateKeyboardSpaceJump(migrated) : migrated;
+}
+
+function migrateKeyboardSpaceJump(settings: Record<string, unknown>) {
+  const controls = isRecord(settings.controls) ? settings.controls : {};
+  const keyboard = Array.isArray(controls.keyboard) ? controls.keyboard : [];
+  const p1KeyboardSettings = isRecord(keyboard[0]) ? keyboard[0] : {};
+  const p2KeyboardSettings = isRecord(keyboard[1]) ? keyboard[1] : {};
+  const p1Up = Array.isArray(p1KeyboardSettings.up) ? p1KeyboardSettings.up.filter(isNonEmptyString) : undefined;
+  const p2Confirm = Array.isArray(p2KeyboardSettings.confirm) ? p2KeyboardSettings.confirm.filter(isNonEmptyString) : undefined;
+
+  return {
+    ...settings,
+    controls: {
+      ...controls,
+      keyboard: [
+        {
+          ...p1KeyboardSettings,
+          up: p1Up ? (p1Up.includes('Space') ? p1Up : [...p1Up, 'Space']) : defaultGameSettings.controls.keyboard[0].up
+        },
+        {
+          ...p2KeyboardSettings,
+          confirm: p2Confirm?.filter((value) => value !== 'Space') ?? p2KeyboardSettings.confirm
+        }
+      ]
+    }
+  };
 }
 
 function sanitizeKeyboardBindings(raw: unknown, fallback: PlayerControlBindings): PlayerControlBindings {
   const source = isRecord(raw) ? raw : {};
   return actions.reduce((bindings, action) => {
     const values = Array.isArray(source[action]) ? source[action] : fallback[action];
-    bindings[action] = values.filter((value): value is string => typeof value === 'string' && value.length > 0);
+    bindings[action] = values.filter(isNonEmptyString);
     return bindings;
   }, {} as PlayerControlBindings);
 }
@@ -356,4 +383,8 @@ function sanitizeHexColor(value: unknown, fallback: string) {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.length > 0;
 }

@@ -94,6 +94,8 @@ const MAX_COMBO_STEPS = 30;
 const COMBO_SEQUENCE_MEMORY = 30;
 const SIDESTEP_TAP_SCALE = 1.45;
 const SIDEWALK_SCALE = 1.15;
+const SIDESTEP_REPEAT_GRACE_FRAMES = 30;
+const CONTROL_SIDE_SWITCH_DISTANCE = 0.86;
 const DEFAULT_DASH_FORWARD_DISTANCE = 0.78;
 const DEFAULT_STAGE_BOUND_WIDTH = 96;
 const DEFAULT_STAGE_BOUND_DEPTH = 42;
@@ -251,11 +253,13 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     constrainFightersToStageBounds(next);
     return next;
   }
+  updateControlSideSigns(next);
   applyFighterStep(next, 0, input1, dt);
   applyFighterStep(next, 1, input2, dt);
   resolveFacing(next);
   resolveBodyCollision(next);
   constrainFightersToStageBounds(next);
+  updateControlSideSigns(next);
   resolveHits(next);
   constrainFightersToStageBounds(next);
 
@@ -463,10 +467,12 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     velocityY: 0,
     facing: slot === 1 ? 1 : -1,
     facingYaw: slot === 1 ? Math.PI / 2 : -Math.PI / 2,
+    controlSideSign: slot === 1 ? 1 : -1,
     state: 'idle',
     sidestepTimer: 0,
     sidestepDirection: 0,
     sidestepOrbitSign: slot === 1 ? 1 : -1,
+    sidestepRepeatGraceFrames: 0,
     dashForwardFrames: 0,
     dashForwardCooldownFrames: 0,
     walkDirection: 0,
@@ -562,6 +568,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.aiActiveComboRouteId = null;
   }
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
+  fighter.sidestepRepeatGraceFrames = Math.max(0, fighter.sidestepRepeatGraceFrames - frameDelta);
   fighter.dashForwardFrames = Math.max(0, fighter.dashForwardFrames - frameDelta);
   fighter.dashForwardCooldownFrames = Math.max(0, fighter.dashForwardCooldownFrames - frameDelta);
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
@@ -769,15 +776,26 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.dashForwardCooldownFrames = DASH_FORWARD_COOLDOWN_FRAMES;
   }
 
+  const laneInputActive = sidestepTap !== 0 || laneWalk !== 0;
+  if (!laneInputActive && forward !== 0 && fighter.sidestepTimer === 0) {
+    fighter.sidestepDirection = 0;
+    fighter.sidestepRepeatGraceFrames = 0;
+  }
+
+  const chooseSidestepOrbit = (direction: -1 | 1) => {
+    const continuingSameLaneSequence = fighter.sidestepDirection === direction && fighter.sidestepRepeatGraceFrames > 0;
+    if (!continuingSameLaneSequence) {
+      fighter.sidestepOrbitSign = getFreshSidestepOrbitSign(fighter, opponent);
+    }
+    fighter.sidestepDirection = direction;
+    fighter.sidestepRepeatGraceFrames = SIDESTEP_REPEAT_GRACE_FRAMES;
+  };
+
   if (sidestepTap !== 0 && fighter.sidestepTimer === 0) {
     fighter.sidestepTimer = 0.18;
-    fighter.sidestepDirection = sidestepTap;
-    fighter.sidestepOrbitSign = getCurrentSidestepOrbitSign(fighter, opponent);
-  } else if (laneWalk !== 0 && fighter.sidestepTimer === 0 && fighter.sidestepDirection !== laneWalk) {
-    fighter.sidestepDirection = laneWalk;
-    fighter.sidestepOrbitSign = getCurrentSidestepOrbitSign(fighter, opponent);
-  } else if (laneWalk === 0 && fighter.sidestepTimer === 0) {
-    fighter.sidestepDirection = 0;
+    chooseSidestepOrbit(sidestepTap);
+  } else if (laneWalk !== 0 && fighter.sidestepTimer === 0) {
+    chooseSidestepOrbit(laneWalk);
   }
 
   const sidestep = fighter.sidestepTimer > 0 ? fighter.sidestepDirection : laneWalk;
@@ -806,7 +824,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
   if (sidestep !== 0) {
     const sidestepScale = fighter.sidestepTimer > 0 ? SIDESTEP_TAP_SCALE : SIDEWALK_SCALE;
-    const sideSign = fighter.sidestepOrbitSign || getOpponentSideSign(fighter, opponent);
+    const sideSign = fighter.sidestepOrbitSign || getFreshSidestepOrbitSign(fighter, opponent);
     orbitAroundOpponent(fighter, opponent, -sidestep * sideSign * fighter.character.stats.sidestepSpeed * sidestepScale * speedScale * dt);
   }
 
@@ -3334,6 +3352,10 @@ function isAirborne(fighter: FighterRuntime) {
   return fighter.position.y > 0 || fighter.velocityY !== 0;
 }
 
+function isGrounded(fighter: FighterRuntime) {
+  return fighter.position.y <= 0 && fighter.velocityY === 0;
+}
+
 function getJuggleVelocity(move: MoveDefinition, wasAirborne: boolean, comboHits = 1) {
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
   if (wasAirborne && Number.isFinite(move.juggleRefloatVelocity)) {
@@ -3956,6 +3978,17 @@ function resolveFacing(match: MatchSnapshot) {
   p2.facingYaw = Math.atan2(p1.position.x - p2.position.x, p1.position.z - p2.position.z);
 }
 
+function updateControlSideSigns(match: MatchSnapshot) {
+  const [p1, p2] = match.fighters;
+  updateControlSideSign(p1, p2);
+  updateControlSideSign(p2, p1);
+}
+
+function updateControlSideSign(fighter: FighterRuntime, opponent: FighterRuntime) {
+  if (!canSwitchControlSide(fighter, opponent)) return;
+  fighter.controlSideSign = getPositionSideSign(fighter, opponent) ?? fighter.controlSideSign;
+}
+
 function resolveBodyCollision(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
   if (p1.state === 'throwHold' || p1.state === 'throwHeld' || p2.state === 'throwHold' || p2.state === 'throwHeld') return;
@@ -4139,7 +4172,7 @@ function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, 
 
 function resolveHorizontalIntent(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): HorizontalControlIntent {
   if (input.left === input.right) return { direction: 0, forward: false, back: false, neutral: true };
-  const sideSign = getOpponentSideSign(fighter, opponent);
+  const sideSign = getControlSideSign(fighter, opponent);
   const forward = sideSign > 0 ? input.right : input.left;
   const back = sideSign > 0 ? input.left : input.right;
   if (forward) return { direction: 1, forward: true, back: false, neutral: false };
@@ -4148,13 +4181,24 @@ function resolveHorizontalIntent(fighter: FighterRuntime, opponent: FighterRunti
 }
 
 function getOpponentSideSign(fighter: FighterRuntime, opponent: FighterRuntime) {
-  const dx = opponent.position.x - fighter.position.x;
-  if (Math.abs(dx) > 0.001) return dx > 0 ? 1 : -1;
+  const sideSign = getPositionSideSign(fighter, opponent);
+  if (sideSign) return sideSign;
   return fighter.facing || 1;
 }
 
-function getCurrentSidestepOrbitSign(fighter: FighterRuntime, opponent: FighterRuntime): 1 | -1 {
-  return getOpponentSideSign(fighter, opponent);
+function getPositionSideSign(fighter: FighterRuntime, opponent: FighterRuntime): 1 | -1 | null {
+  const dx = opponent.position.x - fighter.position.x;
+  if (Math.abs(dx) > 0.001) return dx > 0 ? 1 : -1;
+  return null;
+}
+
+function getControlSideSign(fighter: FighterRuntime, opponent: FighterRuntime): 1 | -1 {
+  return fighter.controlSideSign || getOpponentSideSign(fighter, opponent);
+}
+
+function canSwitchControlSide(fighter: FighterRuntime, opponent: FighterRuntime) {
+  if (!isGrounded(fighter) || !isGrounded(opponent)) return false;
+  return Math.abs(opponent.position.x - fighter.position.x) >= CONTROL_SIDE_SWITCH_DISTANCE;
 }
 
 function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, arcDistance: number) {
@@ -4165,6 +4209,10 @@ function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, 
   const nextAngle = angle + arcDistance / radius;
   fighter.position.x = opponent.position.x + Math.cos(nextAngle) * radius;
   fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
+}
+
+function getFreshSidestepOrbitSign(fighter: FighterRuntime, opponent: FighterRuntime): 1 | -1 {
+  return getControlSideSign(fighter, opponent);
 }
 
 function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {

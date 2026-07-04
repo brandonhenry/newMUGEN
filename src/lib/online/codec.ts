@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 4;
+export const ONLINE_PROTOCOL_VERSION = 6;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -38,10 +38,12 @@ export type CompactFighterSnapshot = {
   velocityY: number;
   facing: 1 | -1;
   facingYaw: number;
+  controlSideSign: 1 | -1;
   state: FighterRuntime['state'];
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
   sidestepOrbitSign: 1 | -1;
+  sidestepRepeatGraceFrames: number;
   dashForwardFrames: number;
   dashForwardCooldownFrames: number;
   walkDirection: -1 | 0 | 1;
@@ -228,10 +230,12 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     velocityY: fighter.velocityY,
     facing: fighter.facing,
     facingYaw: fighter.facingYaw,
+    controlSideSign: fighter.controlSideSign,
     state: fighter.state,
     sidestepTimer: fighter.sidestepTimer,
     sidestepDirection: fighter.sidestepDirection,
     sidestepOrbitSign: fighter.sidestepOrbitSign,
+    sidestepRepeatGraceFrames: fighter.sidestepRepeatGraceFrames,
     dashForwardFrames: fighter.dashForwardFrames,
     dashForwardCooldownFrames: fighter.dashForwardCooldownFrames,
     walkDirection: fighter.walkDirection,
@@ -306,10 +310,12 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     velocityY: snapshot.velocityY,
     facing: snapshot.facing,
     facingYaw: snapshot.facingYaw,
+    controlSideSign: snapshot.controlSideSign ?? base.controlSideSign,
     state: snapshot.state,
     sidestepTimer: snapshot.sidestepTimer,
     sidestepDirection: snapshot.sidestepDirection,
     sidestepOrbitSign: snapshot.sidestepOrbitSign ?? base.sidestepOrbitSign,
+    sidestepRepeatGraceFrames: snapshot.sidestepRepeatGraceFrames ?? base.sidestepRepeatGraceFrames,
     dashForwardFrames: snapshot.dashForwardFrames ?? base.dashForwardFrames,
     dashForwardCooldownFrames: snapshot.dashForwardCooldownFrames ?? base.dashForwardCooldownFrames,
     walkDirection: snapshot.walkDirection ?? base.walkDirection,

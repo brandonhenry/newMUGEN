@@ -823,6 +823,7 @@ export type ShadowCloneRuntime = {
   velocityY: number;
   facing: 1 | -1;
   facingYaw: number;
+  controlSideSign: 1 | -1;
   state: FighterState;
   currentMove: MoveDefinition | null;
   moveInstanceId: number;
@@ -864,6 +865,7 @@ export type FighterRuntime = {
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
   sidestepOrbitSign: 1 | -1;
+  sidestepRepeatGraceFrames: number;
   dashForwardFrames: number;
   dashForwardCooldownFrames: number;
   walkDirection: -1 | 0 | 1;
