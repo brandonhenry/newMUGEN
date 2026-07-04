@@ -103,6 +103,22 @@ describe('training trial catalog', () => {
     expect(trials.some((trial) => trial.steps.length > 3)).toBe(true);
   });
 
+  it('keeps grounded launcher trial previews free of jump inputs', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute?.launchRouteStyle === 'grounded')
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateComboTrainingTrials(character).find((candidate) => candidate.sourceComboRoute?.launchRouteStyle === 'grounded');
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.title).toContain('Grounded Launcher');
+    expect(trial.steps.every((step) => !step.actions.includes('up')), `${character.id}:${trial.id}`).toBe(true);
+    expect(trial.previewScript.every((frame) => !frame.actions.includes('up')), `${character.id}:${trial.id}`).toBe(true);
+  });
+
   it('stores completion by character and trial id', () => {
     expect(readTrainingTrialCompletion('naruto')).toEqual(new Set());
     writeTrainingTrialCompletion('naruto', new Set(['basic:naruto:movement:walk', 'combo:naruto:test']));

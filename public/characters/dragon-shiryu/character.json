@@ -647,7 +647,12 @@
       "label": "Dragon Shiryū Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 12,
@@ -666,7 +671,12 @@
       "label": "Dragon Shiryū Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 22,
@@ -685,7 +695,12 @@
       "label": "Dragon Shiryū Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 24,
@@ -704,7 +719,12 @@
       "label": "Dragon Shiryū Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -712,9 +732,9 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
@@ -722,7 +742,12 @@
       "forwardForceEndFrame": 25,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -730,9 +755,9 @@
       "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 27,
-      "onCounterHitFrames": 37,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 33,
       "range": 1.68,
       "forwardForce": 2.2,
@@ -744,7 +769,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -752,9 +782,9 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -13,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 36,
       "range": 2.05,
       "forwardForce": 2.55,
@@ -763,7 +793,12 @@
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -771,9 +806,9 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "forwardForce": 1.42,
@@ -781,7 +816,12 @@
       "forwardForceEndFrame": 26,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -789,9 +829,9 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
       "forwardForce": 1.09,
@@ -799,7 +839,12 @@
       "forwardForceEndFrame": 16,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -807,9 +852,9 @@
       "recoveryFrames": 27,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 27,
-      "onCounterHitFrames": 37,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 33,
       "range": 1.48,
       "forwardForce": 2.11,
@@ -818,7 +863,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -827,8 +877,8 @@
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 1.9,
@@ -836,7 +886,12 @@
       "forwardForceEndFrame": 45,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -844,9 +899,9 @@
       "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 27,
-      "onCounterHitFrames": 37,
+      "onBlockFrames": -6,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "range": 1.65,
       "forwardForce": 1.36,
@@ -855,7 +910,12 @@
       "launchHeight": 2.2,
       "label": "1+3 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -863,9 +923,9 @@
       "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
       "forwardForce": 0.97,
@@ -873,7 +933,12 @@
       "forwardForceEndFrame": 23,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -881,9 +946,9 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 7,
       "range": 1.74,
       "forwardForce": 1.69,
@@ -892,7 +957,12 @@
       "label": "2+4 Frame Link",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -900,9 +970,9 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 7,
       "range": 1.9,
       "forwardForce": 1.69,
@@ -911,7 +981,12 @@
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -929,7 +1004,12 @@
       "forwardForceEndFrame": 60,
       "label": "Dragon Shiryū Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -945,7 +1025,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Second Beat"
+      "label": "Dragon Shiryū Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -961,7 +1046,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Body Blow"
+      "label": "Dragon Shiryū Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -977,7 +1067,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Low Changeup"
+      "label": "Dragon Shiryū Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -993,7 +1088,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Pressure Feint"
+      "label": "Dragon Shiryū Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1009,7 +1109,12 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Drive"
+      "label": "Dragon Shiryū Drive",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1025,7 +1130,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Barrage"
+      "label": "Dragon Shiryū Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1041,7 +1151,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Finisher"
+      "label": "Dragon Shiryū Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1057,7 +1172,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Dragon Shiryū Step Kick"
+      "label": "Dragon Shiryū Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1073,7 +1193,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Palm String"
+      "label": "Dragon Shiryū Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1089,7 +1214,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Rising Chain"
+      "label": "Dragon Shiryū Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1105,7 +1235,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Special Setup"
+      "label": "Dragon Shiryū Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1121,7 +1256,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Break Art"
+      "label": "Dragon Shiryū Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1137,7 +1277,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Check Hook"
+      "label": "Dragon Shiryū Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1153,7 +1298,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Heavy Break"
+      "label": "Dragon Shiryū Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1169,7 +1319,12 @@
       "forwardForce": 1.95,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Charged Follow"
+      "label": "Dragon Shiryū Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1185,7 +1340,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Dragon Shiryū Drop Kick"
+      "label": "Dragon Shiryū Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1201,7 +1361,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Arc Finisher"
+      "label": "Dragon Shiryū Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1217,7 +1382,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Focus Stance"
+      "label": "Dragon Shiryū Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1233,7 +1403,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Mode Shift"
+      "label": "Dragon Shiryū Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1249,7 +1424,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Heel Feint"
+      "label": "Dragon Shiryū Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1265,7 +1445,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Summon Strike"
+      "label": "Dragon Shiryū Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1281,7 +1466,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Guard Snare"
+      "label": "Dragon Shiryū Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1297,7 +1487,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Armor Break"
+      "label": "Dragon Shiryū Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1313,7 +1508,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Power Setup"
+      "label": "Dragon Shiryū Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1329,7 +1529,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Switch Strike"
+      "label": "Dragon Shiryū Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1345,7 +1550,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Spark Jab"
+      "label": "Dragon Shiryū Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1361,7 +1571,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Binding Blow"
+      "label": "Dragon Shiryū Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1377,7 +1592,12 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Dragon Shiryū Heavy Draw"
+      "label": "Dragon Shiryū Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1393,150 +1613,220 @@
       "forwardForce": 0.75,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Dragon Shiryū Kick Ender"
+      "label": "Dragon Shiryū Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:1+4": {
-      "onBlockFrames": -8,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -10,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 30,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.81,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 34,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+3": {
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.03,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "forwardForce": 0.75,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 0.75,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+3": {
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.03,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:qcf+1": {
-      "onBlockFrames": -11,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.61,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+3": {
-      "onBlockFrames": -11,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.61,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:WS+2": {
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.87,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 34,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:SS+3": {
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.09,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:SS+4": {
-      "onBlockFrames": -9,
-      "onHitFrames": 21,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -10,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 8,
       "forwardForce": 1.57,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 30,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:O+1": {
-      "onBlockFrames": -11,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.67,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
-      "onBlockFrames": -12,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -10,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.15,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 30,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     }
   },
   "effects": [],

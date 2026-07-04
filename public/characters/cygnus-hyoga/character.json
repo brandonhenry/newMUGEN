@@ -689,7 +689,12 @@
       "label": "Cygnus Hyōga Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 12,
@@ -708,7 +713,12 @@
       "label": "Cygnus Hyōga Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 25,
@@ -727,7 +737,12 @@
       "label": "Cygnus Hyōga Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 22,
@@ -746,7 +761,12 @@
       "label": "Cygnus Hyōga Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -754,9 +774,9 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
@@ -764,7 +784,12 @@
       "forwardForceEndFrame": 44,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -772,9 +797,9 @@
       "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 27,
-      "onCounterHitFrames": 37,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 33,
       "range": 1.68,
       "forwardForce": 2.03,
@@ -786,7 +811,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -794,9 +824,9 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -13,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 38,
       "range": 2.05,
       "forwardForce": 3.65,
@@ -805,7 +835,12 @@
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 16,
@@ -813,9 +848,9 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 27,
       "range": 1.62,
       "forwardForce": 2.52,
@@ -823,7 +858,12 @@
       "forwardForceEndFrame": 23,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -831,9 +871,9 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
       "forwardForce": 1.49,
@@ -841,7 +881,12 @@
       "forwardForceEndFrame": 29,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -849,9 +894,9 @@
       "recoveryFrames": 27,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 27,
-      "onCounterHitFrames": 37,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "range": 1.48,
       "forwardForce": 1.94,
@@ -860,7 +905,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -869,8 +919,8 @@
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 1.73,
@@ -878,7 +928,12 @@
       "forwardForceEndFrame": 33,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -886,9 +941,9 @@
       "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 27,
-      "onCounterHitFrames": 37,
+      "onBlockFrames": -6,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "range": 1.65,
       "forwardForce": 1.9,
@@ -897,7 +952,12 @@
       "launchHeight": 2.2,
       "label": "1+3 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -905,9 +965,9 @@
       "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "range": 1.58,
       "forwardForce": 1.51,
@@ -915,7 +975,12 @@
       "forwardForceEndFrame": 32,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -923,9 +988,9 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 33,
       "range": 1.74,
       "forwardForce": 2.79,
@@ -934,7 +999,12 @@
       "label": "2+4 Frame Link",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -942,9 +1012,9 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 38,
       "range": 1.9,
       "forwardForce": 2.79,
@@ -953,7 +1023,12 @@
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -971,7 +1046,12 @@
       "forwardForceEndFrame": 44,
       "label": "Cygnus Hyōga Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -987,7 +1067,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Second Beat"
+      "label": "Cygnus Hyōga Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -1003,7 +1088,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Body Blow"
+      "label": "Cygnus Hyōga Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1019,7 +1109,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Low Changeup"
+      "label": "Cygnus Hyōga Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1035,7 +1130,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Pressure Feint"
+      "label": "Cygnus Hyōga Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1051,7 +1151,12 @@
       "forwardForce": 1.43,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Drive"
+      "label": "Cygnus Hyōga Drive",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1067,7 +1172,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Barrage"
+      "label": "Cygnus Hyōga Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1083,7 +1193,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Finisher"
+      "label": "Cygnus Hyōga Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1099,7 +1214,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 43,
-      "label": "Cygnus Hyōga Step Kick"
+      "label": "Cygnus Hyōga Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1115,7 +1235,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Palm String"
+      "label": "Cygnus Hyōga Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1131,7 +1256,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Rising Chain"
+      "label": "Cygnus Hyōga Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1147,7 +1277,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Special Setup"
+      "label": "Cygnus Hyōga Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1163,7 +1298,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Break Art"
+      "label": "Cygnus Hyōga Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1179,7 +1319,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Check Hook"
+      "label": "Cygnus Hyōga Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1195,7 +1340,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Heavy Break"
+      "label": "Cygnus Hyōga Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1211,7 +1361,12 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Charged Follow"
+      "label": "Cygnus Hyōga Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1227,7 +1382,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 43,
-      "label": "Cygnus Hyōga Drop Kick"
+      "label": "Cygnus Hyōga Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1243,7 +1403,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Arc Finisher"
+      "label": "Cygnus Hyōga Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1259,7 +1424,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Focus Stance"
+      "label": "Cygnus Hyōga Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1275,7 +1445,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Mode Shift"
+      "label": "Cygnus Hyōga Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1291,7 +1466,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Heel Feint"
+      "label": "Cygnus Hyōga Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1307,7 +1487,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Summon Strike"
+      "label": "Cygnus Hyōga Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1323,7 +1508,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Guard Snare"
+      "label": "Cygnus Hyōga Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1339,7 +1529,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Armor Break"
+      "label": "Cygnus Hyōga Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1355,7 +1550,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Power Setup"
+      "label": "Cygnus Hyōga Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1371,7 +1571,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Switch Strike"
+      "label": "Cygnus Hyōga Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1387,7 +1592,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Spark Jab"
+      "label": "Cygnus Hyōga Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1403,7 +1613,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Binding Blow"
+      "label": "Cygnus Hyōga Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1419,7 +1634,12 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 39,
-      "label": "Cygnus Hyōga Heavy Draw"
+      "label": "Cygnus Hyōga Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1435,150 +1655,220 @@
       "forwardForce": 1.15,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 43,
-      "label": "Cygnus Hyōga Kick Ender"
+      "label": "Cygnus Hyōga Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:1+4": {
-      "onBlockFrames": -7,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.64,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 25,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+3": {
-      "onBlockFrames": -7,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.72,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
-      "onBlockFrames": -6,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.15,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 30,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
-      "onBlockFrames": -7,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.44,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+3": {
-      "onBlockFrames": -7,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.72,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:qcf+1": {
-      "onBlockFrames": -11,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.01,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 30,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+3": {
-      "onBlockFrames": -12,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.3,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:WS+2": {
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.7,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 25,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:SS+3": {
-      "onBlockFrames": -9,
-      "onHitFrames": 21,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -6,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 8,
       "forwardForce": 1.78,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:SS+4": {
-      "onBlockFrames": -8,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 29,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.67,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:O+1": {
-      "onBlockFrames": -11,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.07,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 30,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
-      "onBlockFrames": -11,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 31,
       "forwardForce": 3.25,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     }
   },
   "effects": [],

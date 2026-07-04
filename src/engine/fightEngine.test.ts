@@ -103,6 +103,14 @@ function startKiClashMatch() {
   return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 }
 
+function stepQuiet(match: MatchSnapshot, frames: number) {
+  let next = match;
+  for (let frame = 0; frame < frames; frame += 1) {
+    next = stepMatch(next, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+  }
+  return next;
+}
+
 function createPreparedClashMatch(p1KiBurst = true, p2KiBurst = true) {
   const match = createMatch(makeKiClashCharacter(starterCharacters[0], p1KiBurst), makeKiClashCharacter(starterCharacters[1], p2KiBurst), stages[0], 'local2p');
   match.phase = 'fighting';
@@ -786,7 +794,7 @@ describe('character manifests', () => {
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
     expect(match.phase).toBe('roundOver');
-    expect(match.message).toBe('K.O.');
+    expect(match.message).toBe('PERFECT');
     expect(match.fighters[0].roundsWon).toBe(1);
   });
 
@@ -1161,6 +1169,100 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove).toBeNull();
   });
 
+  it('does not trigger the idle flourish before forty five quiet seconds', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+
+    match = stepQuiet(match, 45 * 60 - 6);
+
+    expect(match.idleQuietFrames).toBe(45 * 60 - 6);
+    expect(match.fighters[0].idleFlourishFramesRemaining).toBe(0);
+    expect(match.fighters[1].idleFlourishFramesRemaining).toBe(0);
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].state).toBe('idle');
+  });
+
+  it('starts a one-shot win flourish after forty five quiet idle seconds', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+
+    match = stepQuiet(match, 45 * 60);
+
+    expect(match.idleQuietFrames).toBe(0);
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].state).toBe('idle');
+    expect(match.fighters[0].idleFlourishFramesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[1].idleFlourishFramesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[0].idleFlourishTotalFrames).toBe(match.fighters[0].idleFlourishFramesRemaining);
+    expect(match.fighters[1].idleFlourishTotalFrames).toBe(match.fighters[1].idleFlourishFramesRemaining);
+  });
+
+  it('resets the idle quiet timer when either player inputs an action', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const move = emptyInputFrame();
+    move.right = true;
+
+    match = stepQuiet(match, 30 * 60);
+    expect(match.idleQuietFrames).toBe(30 * 60);
+
+    match = stepMatch(match, move, emptyInputFrame(), 1 / 60);
+
+    expect(match.idleQuietFrames).toBe(0);
+    expect(match.fighters[0].idleFlourishFramesRemaining).toBe(0);
+    expect(match.fighters[1].idleFlourishFramesRemaining).toBe(0);
+  });
+
+  it('does not advance the idle quiet timer while a fighter is not idle', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.fighters[0].state = 'hit';
+    match.fighters[0].stunFramesRemaining = 45 * 60 + 10;
+    match.fighters[0].actionFramesRemaining = 45 * 60 + 10;
+    match.fighters[0].stunTimer = (45 * 60 + 10) / 60;
+    match.fighters[0].actionTimer = (45 * 60 + 10) / 60;
+
+    match = stepQuiet(match, 45 * 60);
+
+    expect(match.idleQuietFrames).toBe(0);
+    expect(match.fighters[0].idleFlourishFramesRemaining).toBe(0);
+    expect(match.fighters[1].idleFlourishFramesRemaining).toBe(0);
+  });
+
+  it('returns to idle after the flourish and requires a fresh quiet window before retriggering', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { roundTime: 0 });
+
+    match = stepQuiet(match, 45 * 60);
+    const firstDuration = Math.max(match.fighters[0].idleFlourishFramesRemaining, match.fighters[1].idleFlourishFramesRemaining);
+    expect(firstDuration).toBeGreaterThan(0);
+
+    match = stepQuiet(match, firstDuration);
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[1].state).toBe('idle');
+    expect(match.fighters[0].idleFlourishFramesRemaining).toBe(0);
+    expect(match.fighters[1].idleFlourishFramesRemaining).toBe(0);
+    expect(match.idleQuietFrames).toBe(0);
+
+    match = stepQuiet(match, 10);
+    expect(match.fighters[0].idleFlourishFramesRemaining).toBe(0);
+
+    let retriggered = false;
+    for (let frame = 0; frame < 45 * 60 + 120 && !retriggered; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      retriggered = match.fighters.some((fighter) => fighter.idleFlourishFramesRemaining > 0);
+    }
+    expect(retriggered).toBe(true);
+  });
+
+  it('tracks idle quiet time in training and online modes', () => {
+    let training = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training');
+    let online = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online');
+
+    training = stepQuiet(training, 45 * 60);
+    online = stepQuiet(online, 45 * 60);
+
+    expect(training.fighters[0].idleFlourishFramesRemaining).toBeGreaterThan(0);
+    expect(training.fighters[1].idleFlourishFramesRemaining).toBeGreaterThan(0);
+    expect(online.fighters[0].idleFlourishFramesRemaining).toBeGreaterThan(0);
+    expect(online.fighters[1].idleFlourishFramesRemaining).toBeGreaterThan(0);
+  });
+
   it('starts round two with intro while preserving round wins', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { playIntro: true });
     match.phase = 'roundOver';
@@ -1520,7 +1622,7 @@ describe('fight engine', () => {
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
     expect(match.phase).toBe('roundOver');
-    expect(match.message).toBe('K.O.');
+    expect(match.message).toBe('PERFECT');
     expect(match.visualTimeScale).toBeLessThan(1);
     expect(match.fighters[1].hp).toBe(0);
   });
@@ -2301,8 +2403,8 @@ describe('fight engine', () => {
     expect(usedHoming).toBe(true);
   });
 
-  it('lets CPU jump to chase an opponent after launch', () => {
-    const airChaseCharacter: CharacterDefinition = {
+  it('keeps CPU grounded for non-air-chase juggle followups after launch', () => {
+    const groundedChaseCharacter: CharacterDefinition = {
       ...starterCharacters[0],
       aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 0 },
       moves: starterCharacters[0].moves
@@ -2314,6 +2416,50 @@ describe('fight engine', () => {
           recoveryFrames: 10,
           range: 2.4,
           tracking: 'none' as const
+        }))
+    };
+    let match = createMatch(groundedChaseCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 19 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 1.25;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].stunFramesRemaining = 160;
+    match.fighters[1].actionFramesRemaining = 160;
+    match.fighters[1].stunTimer = 160 / 60;
+    match.fighters[1].actionTimer = 160 / 60;
+    let jumpFrames = 0;
+    let attackedGrounded = false;
+
+    for (let i = 0; i < 180; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[0].state === 'jump') jumpFrames += 1;
+      attackedGrounded = attackedGrounded || (match.fighters[0].state === 'attack' && match.fighters[0].position.y === 0);
+      if (attackedGrounded && jumpFrames > 0) break;
+    }
+
+    expect(attackedGrounded).toBe(true);
+    expect(jumpFrames).toBe(0);
+  });
+
+  it('lets CPU jump to chase an opponent after launch with an air-chase move', () => {
+    const airChaseCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 0 },
+      moves: starterCharacters[0].moves
+        .filter((move) => move.input === 'jab')
+        .map((move) => ({
+          ...move,
+          startupFrames: 3,
+          activeFrames: 5,
+          recoveryFrames: 10,
+          range: 2.4,
+          tracking: 'homing' as const,
+          homingSpeed: 12
         }))
     };
     let match = createMatch(airChaseCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 19 });
@@ -5082,13 +5228,34 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
     expect(match.phase).toBe('roundOver');
-    expect(match.message).toBe('K.O.');
+    expect(match.message).toBe('PERFECT');
     expect(match.visualTimeScale).toBeLessThan(1);
     expect(match.fighters[0].roundsWon).toBe(1);
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.9);
     expect(match.phase).toBe('roundOver');
     expect(match.visualTimeScale).toBe(1);
+  });
+
+  it('keeps K.O. when the round winner took damage first', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.fighters[0].hp = Math.max(1, match.fighters[0].hp - 1);
+    match.fighters[0].tookDamageThisRound = true;
+    match.fighters[1].hp = 1;
+    match.fighters[0].position.x = -0.5;
+    match.fighters[1].position.x = 0.5;
+    const attack = emptyInputFrame();
+    attack.heavy = true;
+    for (let i = 0; i < 40; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.heavy = false;
+    }
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
+    expect(match.phase).toBe('roundOver');
+    expect(match.message).toBe('K.O.');
+    expect(match.fighters[0].roundsWon).toBe(1);
   });
 
   it('keeps nonlethal direct hits in the fighting phase', () => {

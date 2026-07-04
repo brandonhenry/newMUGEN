@@ -529,7 +529,12 @@
       "label": "Neuro Nogami Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -546,7 +551,12 @@
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
       "label": "Neuro Nogami Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 18,
@@ -563,7 +573,12 @@
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 45,
       "label": "Neuro Nogami Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 19,
@@ -580,7 +595,12 @@
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 46,
       "label": "Neuro Nogami Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 10,
@@ -601,7 +621,12 @@
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -622,7 +647,12 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Neuro Nogami Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -640,7 +670,12 @@
       "forwardForceEndFrame": 55,
       "label": "Neuro Nogami Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -657,7 +692,12 @@
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 42,
       "label": "Neuro Nogami Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -675,7 +715,12 @@
       "forwardForceEndFrame": 23,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -693,7 +738,12 @@
       "forwardForceEndFrame": 47,
       "launchHeight": 2,
       "label": "Neuro Nogami Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -713,7 +763,12 @@
       "moveJumpGravity": 24,
       "label": "Neuro Nogami Twin Assault",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -731,7 +786,12 @@
       "forwardForceEndFrame": 34,
       "launchHeight": 2.2,
       "label": "Neuro Nogami Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -748,7 +808,12 @@
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 43,
       "label": "Neuro Nogami Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -770,7 +835,12 @@
       "hitLevel": "low",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -791,7 +861,12 @@
       "label": "Neuro Nogami Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -809,7 +884,12 @@
       "forwardForceEndFrame": 60,
       "label": "Neuro Nogami Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -825,7 +905,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Second Beat"
+      "label": "Neuro Nogami Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -841,7 +926,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Body Blow"
+      "label": "Neuro Nogami Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -857,7 +947,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Low Changeup"
+      "label": "Neuro Nogami Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -873,7 +968,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Pressure Feint"
+      "label": "Neuro Nogami Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -889,7 +989,12 @@
       "forwardForce": 1.11,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Drive"
+      "label": "Neuro Nogami Drive",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -905,7 +1010,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Barrage"
+      "label": "Neuro Nogami Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -921,7 +1031,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Finisher"
+      "label": "Neuro Nogami Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -937,7 +1052,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 34,
-      "label": "Neuro Nogami Step Kick"
+      "label": "Neuro Nogami Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -953,7 +1073,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Palm String"
+      "label": "Neuro Nogami Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -969,7 +1094,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Rising Chain"
+      "label": "Neuro Nogami Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -985,7 +1115,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Special Setup"
+      "label": "Neuro Nogami Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1001,7 +1136,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Break Art"
+      "label": "Neuro Nogami Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1017,7 +1157,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Check Hook"
+      "label": "Neuro Nogami Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1033,7 +1178,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Heavy Break"
+      "label": "Neuro Nogami Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1049,7 +1199,12 @@
       "forwardForce": 2.03,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Charged Follow"
+      "label": "Neuro Nogami Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1065,7 +1220,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 34,
-      "label": "Neuro Nogami Drop Kick"
+      "label": "Neuro Nogami Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1081,7 +1241,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Arc Finisher"
+      "label": "Neuro Nogami Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1097,7 +1262,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Focus Stance"
+      "label": "Neuro Nogami Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1113,7 +1283,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Mode Shift"
+      "label": "Neuro Nogami Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1129,7 +1304,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Heel Feint"
+      "label": "Neuro Nogami Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1145,7 +1325,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Summon Strike"
+      "label": "Neuro Nogami Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1161,7 +1346,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Guard Snare"
+      "label": "Neuro Nogami Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1177,7 +1367,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Armor Break"
+      "label": "Neuro Nogami Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1193,7 +1388,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Power Setup"
+      "label": "Neuro Nogami Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1209,7 +1409,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Switch Strike"
+      "label": "Neuro Nogami Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1225,7 +1430,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Spark Jab"
+      "label": "Neuro Nogami Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1241,7 +1451,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Binding Blow"
+      "label": "Neuro Nogami Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1257,7 +1472,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
-      "label": "Neuro Nogami Heavy Draw"
+      "label": "Neuro Nogami Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1273,7 +1493,12 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 34,
-      "label": "Neuro Nogami Kick Ender"
+      "label": "Neuro Nogami Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1284,7 +1509,12 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1295,7 +1525,12 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1306,7 +1541,12 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],

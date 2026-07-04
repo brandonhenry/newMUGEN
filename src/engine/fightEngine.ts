@@ -42,6 +42,8 @@ const ROUND_ANNOUNCER_TIMINGS = [
 ] as const;
 const COMBO_WINDOW = 0.58;
 const FRAMES_PER_SECOND = 60;
+const IDLE_FLOURISH_TRIGGER_FRAMES = 45 * FRAMES_PER_SECOND;
+const IDLE_FLOURISH_DEFAULT_FRAMES = 120;
 const KNOCKDOWN_MIN_FRAMES = 34;
 const GETUP_FRAMES = 24;
 const GETUP_INVULNERABLE_FRAMES = 20;
@@ -189,7 +191,9 @@ export function createMatch(
     clashState: createEmptyClashState(),
     roundFinisher: null,
     visualTimeScale: 1,
-    cameraShake: 0
+    cameraShake: 0,
+    idleQuietFrames: 0,
+    idleQuietLockFrames: 0
   };
   if (match.introEnabled) beginRoundIntro(match);
   return match;
@@ -198,6 +202,7 @@ export function createMatch(
 export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: InputFrame, dt: number): MatchSnapshot {
   const next = cloneMatch(match);
   next.cameraShake = 0;
+  const frameDelta = secondsToFrames(dt);
 
   if (next.phase === 'matchOver') return next;
 
@@ -207,10 +212,13 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     if (next.countdown <= 0) {
       next.phase = 'fighting';
       next.message = '';
+      next.idleQuietFrames = 0;
+      next.idleQuietLockFrames = 0;
       next.fighters.forEach((fighter) => {
         fighter.state = 'idle';
         fighter.actionTimer = 0;
         fighter.actionFramesRemaining = 0;
+        clearIdleFlourish(fighter);
       });
     } else {
       updateRoundIntro(next);
@@ -224,13 +232,16 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     if (next.countdown <= 0) {
       const winner = next.fighters.find((fighter) => fighter.roundsWon >= ROUNDS_TO_WIN);
       if (winner) {
-        next.phase = 'matchOver';
-        next.winnerSlot = winner.slot;
-        next.message = `${winner.character.displayName} wins`;
-        next.visualTimeScale = 1;
-        next.fighters.forEach((fighter) => {
-          fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
-        });
+          next.phase = 'matchOver';
+          next.winnerSlot = winner.slot;
+          next.message = `${winner.character.displayName} wins`;
+          next.visualTimeScale = 1;
+          next.idleQuietFrames = 0;
+          next.idleQuietLockFrames = 0;
+          next.fighters.forEach((fighter) => {
+            fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
+            clearIdleFlourish(fighter);
+          });
       } else {
         resetRound(next);
       }
@@ -255,6 +266,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     const clashInput2 = next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu' ? makeAiClashInput(next, 2) : input2;
     handleClashStep(next, clashInput1, clashInput2, dt);
     constrainFightersToStageBounds(next);
+    resetIdleQuietState(next);
     return next;
   }
   updateControlSideSigns(next);
@@ -267,7 +279,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   resolveHits(next);
   constrainFightersToStageBounds(next);
 
-  if (next.roundFinisher) return next;
+  if (next.roundFinisher) {
+    resetIdleQuietState(next);
+    return next;
+  }
+
+  updateIdleQuietState(next, input1, input2, frameDelta);
 
   const infiniteTimer = isInfiniteRoundTime(next.roundTime);
   next.timer = infiniteTimer || (next.mode === 'training' && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
@@ -461,6 +478,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     baseCharacter,
     hp: maxHp,
     maxHp,
+    tookDamageThisRound: false,
     ki: 0,
     transformOvercharge: 0,
     transformReadyTimer: 0,
@@ -486,6 +504,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     actionTimer: 0,
     actionFramesRemaining: 0,
     moveFrame: 0,
+    idleFlourishFramesRemaining: 0,
+    idleFlourishTotalFrames: 0,
     chargePhase: 'none',
     chargeFrame: 0,
     chargeCommitted: false,
@@ -549,6 +569,100 @@ function createEmptyVisualHitstop() {
     animationKey: null,
     progress: 0
   };
+}
+
+function clearIdleFlourish(fighter: FighterRuntime) {
+  fighter.idleFlourishFramesRemaining = 0;
+  fighter.idleFlourishTotalFrames = 0;
+}
+
+function resetIdleQuietState(match: MatchSnapshot) {
+  match.idleQuietFrames = 0;
+  match.idleQuietLockFrames = 0;
+  match.fighters.forEach(clearIdleFlourish);
+}
+
+function updateIdleFlourishTimers(match: MatchSnapshot, frameDelta: number) {
+  match.fighters.forEach((fighter) => {
+    fighter.idleFlourishFramesRemaining = Math.max(0, fighter.idleFlourishFramesRemaining - frameDelta);
+    if (fighter.idleFlourishFramesRemaining === 0) fighter.idleFlourishTotalFrames = 0;
+  });
+}
+
+function updateIdleQuietState(match: MatchSnapshot, input1: InputFrame, input2: InputFrame, frameDelta: number) {
+  const hadActiveFlourish = match.fighters.some(isIdleFlourishActive);
+  updateIdleFlourishTimers(match, frameDelta);
+  if (hadActiveFlourish) {
+    if (!canAdvanceIdleQuietTimer(match, input1, input2)) {
+      match.fighters.forEach(clearIdleFlourish);
+      match.idleQuietLockFrames = IDLE_FLOURISH_TRIGGER_FRAMES;
+    }
+    match.idleQuietFrames = 0;
+    return;
+  }
+  if (!canAdvanceIdleQuietTimer(match, input1, input2)) {
+    match.idleQuietFrames = 0;
+    match.idleQuietLockFrames = IDLE_FLOURISH_TRIGGER_FRAMES;
+    return;
+  }
+  if (match.idleQuietLockFrames > 0) {
+    match.idleQuietLockFrames = Math.max(0, match.idleQuietLockFrames - frameDelta);
+    match.idleQuietFrames = 0;
+    return;
+  }
+  match.idleQuietFrames += frameDelta;
+  if (match.idleQuietFrames < IDLE_FLOURISH_TRIGGER_FRAMES) return;
+  match.fighters.forEach(startIdleFlourish);
+  match.idleQuietFrames = 0;
+}
+
+function canAdvanceIdleQuietTimer(match: MatchSnapshot, input1: InputFrame, input2: InputFrame) {
+  return (
+    match.phase === 'fighting' &&
+    !match.roundFinisher &&
+    !isClashActive(match.clashState) &&
+    isInputFrameEmpty(input1) &&
+    isInputFrameEmpty(input2) &&
+    match.fighters.every(isFighterQuietIdle)
+  );
+}
+
+function isInputFrameEmpty(input: InputFrame) {
+  return !(Object.keys(emptyInputFrame()) as ActionName[]).some((action) => input[action]);
+}
+
+function isFighterQuietIdle(fighter: FighterRuntime) {
+  return (
+    fighter.state === 'idle' &&
+    fighter.position.y === 0 &&
+    fighter.velocityY === 0 &&
+    fighter.currentMove === null &&
+    fighter.actionFramesRemaining === 0 &&
+    fighter.actionTimer === 0 &&
+    fighter.stunFramesRemaining === 0 &&
+    fighter.blockstunFramesRemaining === 0 &&
+    fighter.stunTimer === 0 &&
+    fighter.visualHitstop.framesRemaining === 0 &&
+    fighter.throwOpponentSlot === null &&
+    fighter.throwCaptorSlot === null
+  );
+}
+
+function isIdleFlourishActive(fighter: FighterRuntime) {
+  return fighter.idleFlourishFramesRemaining > 0 && fighter.idleFlourishTotalFrames > 0;
+}
+
+function startIdleFlourish(fighter: FighterRuntime) {
+  const duration = getIdleFlourishDurationFrames(fighter.character);
+  fighter.idleFlourishFramesRemaining = duration;
+  fighter.idleFlourishTotalFrames = duration;
+}
+
+function getIdleFlourishDurationFrames(character: CharacterDefinition) {
+  const frameCount = character.animationFrames?.win?.length ?? 0;
+  if (frameCount <= 0) return IDLE_FLOURISH_DEFAULT_FRAMES;
+  const fps = character.animationFrameRates?.win ?? character.animationFps ?? 8;
+  return Math.max(1, Math.round((frameCount / Math.max(1, fps)) * FRAMES_PER_SECOND));
 }
 
 function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: InputFrame, dt: number) {
@@ -961,7 +1075,7 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-COMBO_SEQUENCE_MEMORY);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
-  defender.hp = Math.max(0, defender.hp - move.damage);
+  applyFighterDamage(defender, move.damage);
   defender.hitFlash = Math.max(defender.hitFlash, 0.12);
   defender.throwShakeFrames = Math.max(defender.throwShakeFrames, THROW_SHAKE_FRAMES);
   const impactId = nextHitEventId(match);
@@ -2807,7 +2921,7 @@ function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
   const damage = Math.max(CLASH_MIN_DAMAGE, Math.round(baseDamage * CLASH_DAMAGE_MULTIPLIER));
   clash.damage = damage;
   match.message = clashParticipantHasPerfect(clash, winnerSlot) ? 'CLASH PERFECT' : 'CLASH WIN';
-  loser.hp = Math.max(0, loser.hp - damage);
+  applyFighterDamage(loser, damage);
 
   const pushX = loser.position.x - winner.position.x;
   const pushZ = loser.position.z - winner.position.z;
@@ -2961,7 +3075,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
       attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
     }
     defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
-    defender.hp = Math.max(0, defender.hp - move.blockDamage);
+    applyFighterDamage(defender, move.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(move);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
     const defenderAdvantageFrames = Math.max(0, attackerRemaining - defender.blockstunFramesRemaining);
@@ -3022,7 +3136,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     ? juggleDamageContribution
     : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + juggleDamageContribution;
   const forceKnockdown = move.knockdown || (!tornadoExtendsJuggle && juggleSequenceDamage >= JUGGLE_DAMAGE_LIMIT);
-  defender.hp = Math.max(0, defender.hp - move.damage);
+  applyFighterDamage(defender, move.damage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -3111,7 +3225,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
       attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_BLOCK_GAIN * 0.5)), 0, KI_MAX);
     }
     defender.ki = clamp(defender.ki + Math.max(1, Math.round(KI_DEFENDER_BLOCK_GAIN * 0.6)), 0, KI_MAX);
-    defender.hp = Math.max(0, defender.hp - weakMove.blockDamage);
+    applyFighterDamage(defender, weakMove.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(weakMove);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
     defender.stunFramesRemaining = 0;
@@ -3143,7 +3257,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     repeatCount: 1
   });
   const stunFrames = Math.max(8, attackerRemaining + cloneAdvantage);
-  defender.hp = Math.max(0, defender.hp - weakMove.damage);
+  applyFighterDamage(defender, weakMove.damage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -3858,16 +3972,30 @@ function isCounterHit(move: MoveDefinition, defender: FighterRuntime) {
   return defender.moveFrame <= defender.currentMove.startupFrames + defender.currentMove.activeFrames;
 }
 
+function applyFighterDamage(fighter: FighterRuntime, damage: number) {
+  if (damage <= 0) return;
+  const previousHp = fighter.hp;
+  fighter.hp = Math.max(0, fighter.hp - damage);
+  if (fighter.hp < previousHp) fighter.tookDamageThisRound = true;
+}
+
+function getRoundFinishMessage(winner: FighterRuntime, loser: FighterRuntime) {
+  return loser.hp <= 0 && winner.hp > 0 && !winner.tookDamageThisRound ? 'PERFECT' : 'K.O.';
+}
+
 function finishRound(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
   const winner = p1.hp === p2.hp ? (p1.slot === 1 ? p1 : p2) : p1.hp > p2.hp ? p1 : p2;
+  const loser = winner.slot === p1.slot ? p2 : p1;
   winner.roundsWon += 1;
   match.phase = 'roundOver';
   match.countdown = ROUND_OVER_DELAY;
-  match.message = 'K.O.';
+  match.message = getRoundFinishMessage(winner, loser);
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
   match.visualTimeScale = KO_SLOWMO_TIME_SCALE;
+  match.idleQuietFrames = 0;
+  match.idleQuietLockFrames = 0;
   match.fighters.forEach((fighter) => {
     fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
     fighter.currentMove = null;
@@ -3887,6 +4015,7 @@ function finishRound(match: MatchSnapshot) {
     fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
+    clearIdleFlourish(fighter);
     clearThrowRuntime(fighter);
   });
 }
@@ -3904,6 +4033,9 @@ function beginRoundFinisher(
   match.countdown = ROUND_FINISHER_SECONDS;
   match.message = '';
   match.clashState = createEmptyClashState();
+  match.idleQuietFrames = 0;
+  match.idleQuietLockFrames = 0;
+  match.fighters.forEach(clearIdleFlourish);
   match.roundFinisher = {
     attackerSlot: attacker.slot,
     defenderSlot: defender.slot,
@@ -3954,8 +4086,12 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.roundFinisher = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
+  match.idleQuietFrames = 0;
+  match.idleQuietLockFrames = 0;
+  match.fighters.forEach(clearIdleFlourish);
   defeated.forEach((fighter) => {
     fighter.hp = fighter.maxHp;
+    fighter.tookDamageThisRound = false;
     fighter.visualHitstop = createEmptyVisualHitstop();
   });
 }
@@ -3969,6 +4105,8 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.roundFinisher = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
+  match.idleQuietFrames = 0;
+  match.idleQuietLockFrames = 0;
   match.fighters.forEach((fighter) => {
     fighter.state = 'entry';
     fighter.currentMove = null;
@@ -3995,6 +4133,7 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
+    clearIdleFlourish(fighter);
   });
 }
 
@@ -4047,6 +4186,8 @@ function resetRound(match: MatchSnapshot) {
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
   match.visualTimeScale = 1;
+  match.idleQuietFrames = 0;
+  match.idleQuietLockFrames = 0;
   if (match.introEnabled) beginRoundIntro(match);
 }
 
@@ -4507,7 +4648,13 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
       input.sidewalkDown = false;
       return input;
     }
-    if (!pressureCrouchInput && shouldAiJumpBeforeAttack(ai, opponent, pressureMove, opening.kind === 'hitstun' && opponent.state === 'juggle')) {
+    const pressureCatalogLaunchStyle = pressureCatalogStep ? catalogRoute?.route.launchRouteStyle : undefined;
+    const pressureShouldAirChase =
+      opening.kind === 'hitstun' &&
+      opponent.state === 'juggle' &&
+      pressureCatalogLaunchStyle !== 'grounded' &&
+      Boolean(pressureCatalogStep && pressureCatalogLaunchStyle);
+    if (!pressureCrouchInput && shouldAiJumpBeforeAttack(ai, opponent, pressureMove, pressureShouldAirChase)) {
       applyAiJumpTakeoff(input, towardKey, awayKey);
       return input;
     }
@@ -4616,7 +4763,12 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
         return input;
       }
       const attackMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? selectedMove;
-      if (shouldAiJumpBeforeAttack(ai, opponent, attackMove, shouldContinueCombo && opponent.state === 'juggle')) {
+      const neutralShouldAirChase =
+        shouldContinueCombo &&
+        opponent.state === 'juggle' &&
+        neutralCatalogRoute?.route.launchRouteStyle !== 'grounded' &&
+        Boolean(neutralCatalogRoute?.route.launchRouteStyle);
+      if (shouldAiJumpBeforeAttack(ai, opponent, attackMove, neutralShouldAirChase)) {
         applyAiJumpTakeoff(input, towardKey, awayKey);
         return input;
       }

@@ -685,7 +685,12 @@
       "label": "Caramelman J Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 12,
@@ -704,7 +709,12 @@
       "label": "Caramelman J Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 25,
@@ -723,7 +733,12 @@
       "label": "Caramelman J Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 24,
@@ -742,7 +757,12 @@
       "label": "Caramelman J Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -760,7 +780,12 @@
       "forwardForceEndFrame": 16,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -782,7 +807,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -801,7 +831,12 @@
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -819,7 +854,12 @@
       "forwardForceEndFrame": 42,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -837,7 +877,12 @@
       "forwardForceEndFrame": 10,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -856,7 +901,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -874,7 +924,12 @@
       "forwardForceEndFrame": 33,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -893,7 +948,12 @@
       "launchHeight": 2.2,
       "label": "1+3 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -911,7 +971,12 @@
       "forwardForceEndFrame": 43,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -930,7 +995,12 @@
       "label": "2+4 Frame Link",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -949,7 +1019,12 @@
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -967,7 +1042,12 @@
       "forwardForceEndFrame": 44,
       "label": "Caramelman J Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -983,7 +1063,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Second Beat"
+      "label": "Caramelman J Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -999,7 +1084,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Body Blow"
+      "label": "Caramelman J Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1015,7 +1105,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Low Changeup"
+      "label": "Caramelman J Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1031,7 +1126,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Pressure Feint"
+      "label": "Caramelman J Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1047,7 +1147,12 @@
       "forwardForce": 1.46,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Drive"
+      "label": "Caramelman J Drive",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1063,7 +1168,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Barrage"
+      "label": "Caramelman J Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1079,7 +1189,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Finisher"
+      "label": "Caramelman J Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1095,7 +1210,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Caramelman J Step Kick"
+      "label": "Caramelman J Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1111,7 +1231,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Palm String"
+      "label": "Caramelman J Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1127,7 +1252,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Rising Chain"
+      "label": "Caramelman J Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1143,7 +1273,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Special Setup"
+      "label": "Caramelman J Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1159,7 +1294,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Break Art"
+      "label": "Caramelman J Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1175,7 +1315,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Check Hook"
+      "label": "Caramelman J Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1191,7 +1336,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Heavy Break"
+      "label": "Caramelman J Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1207,7 +1357,12 @@
       "forwardForce": 2.38,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Charged Follow"
+      "label": "Caramelman J Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1223,7 +1378,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Caramelman J Drop Kick"
+      "label": "Caramelman J Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1239,7 +1399,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Arc Finisher"
+      "label": "Caramelman J Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1255,7 +1420,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Focus Stance"
+      "label": "Caramelman J Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1271,7 +1441,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Mode Shift"
+      "label": "Caramelman J Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1287,7 +1462,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Heel Feint"
+      "label": "Caramelman J Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1303,7 +1483,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Summon Strike"
+      "label": "Caramelman J Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1319,7 +1504,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Guard Snare"
+      "label": "Caramelman J Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1335,7 +1525,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Armor Break"
+      "label": "Caramelman J Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1351,7 +1546,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Power Setup"
+      "label": "Caramelman J Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1367,7 +1567,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Switch Strike"
+      "label": "Caramelman J Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1383,7 +1588,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Spark Jab"
+      "label": "Caramelman J Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1399,7 +1609,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Binding Blow"
+      "label": "Caramelman J Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1415,7 +1630,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "Caramelman J Heavy Draw"
+      "label": "Caramelman J Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1431,7 +1651,12 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Caramelman J Kick Ender"
+      "label": "Caramelman J Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:1+4": {
       "onBlockFrames": -10,
@@ -1442,7 +1667,12 @@
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 49,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1453,7 +1683,12 @@
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 25,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1464,7 +1699,12 @@
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 48,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1475,7 +1715,12 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1486,7 +1731,12 @@
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 48,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1497,7 +1747,12 @@
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 48,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1508,7 +1763,12 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1519,7 +1779,12 @@
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 48,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1530,7 +1795,12 @@
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 25,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1541,7 +1811,12 @@
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 48,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1552,7 +1827,12 @@
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 49,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1563,7 +1843,12 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1574,7 +1859,12 @@
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 49,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     }
   },
   "effects": [],

@@ -35,6 +35,19 @@ function stepFamily(step: { command?: string; input: string }) {
   return `${prefix.replace(/[1-4]/g, '#')}:${step.input}`;
 }
 
+function stepRequiresAirChase(character: CharacterDefinition, step: { command?: string; input: string; notation?: string[] }) {
+  const move = moveForStep(character, step);
+  return Boolean(
+    move?.jumpBeforeMove ||
+    move?.tracking === 'homing' ||
+    step.notation?.some((token) => {
+      const normalized = token.toLowerCase();
+      return normalized === 'u' || normalized.includes('u/') || normalized.includes('/u');
+    }) ||
+    (step.command && /(^|[+,_])u([+,_]|$)|(^|[+,_])u\/[bf]([+,_]|$)/.test(step.command.toLowerCase()))
+  );
+}
+
 describe('combo route catalog', () => {
   it('builds route catalogs from real character animations', () => {
     const characters = readRosterCharacters();
@@ -151,6 +164,35 @@ describe('combo route catalog', () => {
     }
   });
 
+  it('generates grounded launcher routes without jump-chase followups', () => {
+    const groundedLauncherRoutes = readRosterCharacters().flatMap((character) =>
+      generateCharacterComboRoutes(character)
+        .filter((route) => route.category === 'launcher' && route.launchRouteStyle === 'grounded')
+        .map((route) => ({ character, route }))
+    );
+    expect(groundedLauncherRoutes.length).toBeGreaterThan(0);
+
+    for (const { character, route } of groundedLauncherRoutes) {
+      expect(route.title, `${character.id}:${route.id}`).toContain('Grounded Launcher');
+      expect(route.reason, `${character.id}:${route.id}`).toContain('Grounded Launch');
+      expect(moveForStep(character, route.steps[0])?.launchHeight ?? 0, `${character.id}:${route.id}`).toBeGreaterThan(0);
+      expect(route.steps.some((step) => stepRequiresAirChase(character, step)), `${character.id}:${route.id}`).toBe(false);
+    }
+  });
+
+  it('keeps authored air-chase launcher routes available when jump-capable followups exist', () => {
+    const airChaseCapable = readRosterCharacters().filter((character) => {
+      const routes = resolveMoveRoutes(character);
+      return routes.some((route) => (route.move.launchHeight ?? 0) > 0) &&
+        routes.some((route) => route.move.jumpBeforeMove || route.move.tracking === 'homing' || route.notation.some((token) => token === 'u' || token.includes('u/')));
+    });
+    const airChaseRoutes = airChaseCapable.flatMap((character) =>
+      generateCharacterComboRoutes(character).filter((route) => route.category === 'launcher' && route.launchRouteStyle === 'airChase')
+    );
+    expect(airChaseCapable.length).toBeGreaterThan(0);
+    expect(airChaseRoutes.length).toBeGreaterThan(0);
+  });
+
   it('does not fake routes for characters without real attack animation frames', () => {
     const byId = new Map(readRosterCharacters().map((character) => [character.id, character]));
     for (const id of ['astra', 'dax', 'taizo-momote']) {
@@ -224,6 +266,33 @@ describe('combo route catalog', () => {
     expect(collect(2).every((route) => route.tier === 'short')).toBe(true);
     expect(collect(3).every((route) => route.tier !== 'long' && route.tier !== 'marathon')).toBe(true);
     expect(collect(4).every((route) => route.tier !== 'marathon')).toBe(true);
+  });
+
+  it('prefers grounded launcher recommendations over air chase after a juggle opening', () => {
+    const character = readRosterCharacters().find((candidate) => {
+      const routes = generateCharacterComboRoutes(candidate);
+      return routes.some((route) => route.category === 'launcher' && route.launchRouteStyle === 'grounded') &&
+        routes.some((route) => route.category === 'launcher' && route.launchRouteStyle === 'airChase');
+    });
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    let grounded = 0;
+    let airChase = 0;
+    for (let index = 0; index < 120; index += 1) {
+      const recommendation = recommendCpuComboRoute(character, {
+        difficulty: 5,
+        opening: 'juggle',
+        remainingFrames: 34,
+        comboStep: 1,
+        selector: index * 7,
+        routeRoll: index * 17
+      });
+      if (recommendation?.route.launchRouteStyle === 'grounded') grounded += 1;
+      if (recommendation?.route.launchRouteStyle === 'airChase') airChase += 1;
+    }
+
+    expect(grounded).toBeGreaterThan(airChase);
   });
 
   it('keeps committed high-difficulty CPU recommendations on the active route step order', () => {

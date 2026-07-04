@@ -488,7 +488,12 @@
       "label": "Arale Norimaki Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 11,
@@ -507,7 +512,12 @@
       "label": "Arale Norimaki Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 16,
@@ -524,7 +534,12 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "Arale Norimaki Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 19,
@@ -541,7 +556,12 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
       "label": "Arale Norimaki Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -559,7 +579,12 @@
       "forwardForceEndFrame": 30,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -581,7 +606,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 10,
@@ -599,7 +629,12 @@
       "forwardForceEndFrame": 49,
       "label": "Arale Norimaki Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -616,7 +651,12 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Arale Norimaki Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -634,7 +674,12 @@
       "forwardForceEndFrame": 27,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -653,7 +698,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -671,7 +721,12 @@
       "forwardForceEndFrame": 22,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -689,7 +744,12 @@
       "forwardForceEndFrame": 23,
       "launchHeight": 2.2,
       "label": "Arale Norimaki Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -706,7 +766,12 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Arale Norimaki Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -724,7 +789,12 @@
       "forwardForceEndFrame": 25,
       "label": "Arale Norimaki Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -742,7 +812,12 @@
       "forwardForceEndFrame": 33,
       "label": "Arale Norimaki Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -760,7 +835,12 @@
       "forwardForceEndFrame": 35,
       "label": "Arale Norimaki Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -776,7 +856,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Second Beat"
+      "label": "Arale Norimaki Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -792,7 +877,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Body Blow"
+      "label": "Arale Norimaki Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -808,7 +898,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Low Changeup"
+      "label": "Arale Norimaki Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -824,7 +919,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Pressure Feint"
+      "label": "Arale Norimaki Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -840,7 +940,12 @@
       "forwardForce": 1.17,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Drive"
+      "label": "Arale Norimaki Drive",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -856,7 +961,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Barrage"
+      "label": "Arale Norimaki Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -872,7 +982,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Finisher"
+      "label": "Arale Norimaki Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -888,7 +1003,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Step Kick"
+      "label": "Arale Norimaki Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -904,7 +1024,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Palm String"
+      "label": "Arale Norimaki Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -920,7 +1045,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Rising Chain"
+      "label": "Arale Norimaki Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -936,7 +1066,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Special Setup"
+      "label": "Arale Norimaki Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -952,7 +1087,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Break Art"
+      "label": "Arale Norimaki Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -968,7 +1108,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Check Hook"
+      "label": "Arale Norimaki Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -984,7 +1129,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Heavy Break"
+      "label": "Arale Norimaki Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1000,7 +1150,12 @@
       "forwardForce": 2.09,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Charged Follow"
+      "label": "Arale Norimaki Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1016,7 +1171,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Drop Kick"
+      "label": "Arale Norimaki Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1032,7 +1192,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Arc Finisher"
+      "label": "Arale Norimaki Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1048,7 +1213,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Focus Stance"
+      "label": "Arale Norimaki Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1064,7 +1234,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Mode Shift"
+      "label": "Arale Norimaki Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1080,7 +1255,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Heel Feint"
+      "label": "Arale Norimaki Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1096,7 +1276,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Summon Strike"
+      "label": "Arale Norimaki Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1112,7 +1297,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Guard Snare"
+      "label": "Arale Norimaki Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1128,7 +1318,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Armor Break"
+      "label": "Arale Norimaki Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1144,7 +1339,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Power Setup"
+      "label": "Arale Norimaki Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1160,7 +1360,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Switch Strike"
+      "label": "Arale Norimaki Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1176,7 +1381,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Spark Jab"
+      "label": "Arale Norimaki Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1192,7 +1402,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Binding Blow"
+      "label": "Arale Norimaki Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1208,7 +1423,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Heavy Draw"
+      "label": "Arale Norimaki Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1224,7 +1444,12 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Arale Norimaki Kick Ender"
+      "label": "Arale Norimaki Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1235,7 +1460,12 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1246,7 +1476,12 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1257,7 +1492,12 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1268,7 +1508,12 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1279,7 +1524,12 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],

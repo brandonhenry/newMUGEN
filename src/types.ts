@@ -857,6 +857,7 @@ export type FighterRuntime = {
   baseCharacter: CharacterDefinition;
   hp: number;
   maxHp: number;
+  tookDamageThisRound: boolean;
   ki: number;
   transformOvercharge: number;
   transformReadyTimer: number;
@@ -882,6 +883,8 @@ export type FighterRuntime = {
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;
+  idleFlourishFramesRemaining: number;
+  idleFlourishTotalFrames: number;
   chargePhase: 'none' | 'startup' | 'active' | 'hold' | 'recovery';
   chargeFrame: number;
   chargeCommitted: boolean;
@@ -965,6 +968,8 @@ export type MatchSnapshot = {
   roundFinisher: RoundFinisherState | null;
   visualTimeScale: number;
   cameraShake: number;
+  idleQuietFrames: number;
+  idleQuietLockFrames: number;
 };
 
 export const emptyInputFrame = (): InputFrame => ({

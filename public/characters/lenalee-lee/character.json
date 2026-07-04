@@ -601,7 +601,12 @@
       "label": "Lenalee Lee Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -618,7 +623,12 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 20,
       "label": "Lenalee Lee Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 23,
@@ -637,7 +647,12 @@
       "label": "Lenalee Lee Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 24,
@@ -656,7 +671,12 @@
       "label": "Lenalee Lee Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -674,7 +694,12 @@
       "forwardForceEndFrame": 44,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -695,7 +720,12 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Lenalee Lee Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -718,7 +748,12 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:WS+4": {
       "startupFrames": 9,
@@ -739,7 +774,12 @@
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -757,7 +797,12 @@
       "forwardForceEndFrame": 29,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -775,7 +820,12 @@
       "forwardForceEndFrame": 31,
       "launchHeight": 2,
       "label": "Lenalee Lee Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -795,7 +845,12 @@
       "moveJumpGravity": 24,
       "label": "Lenalee Lee Twin Assault",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -817,7 +872,12 @@
       "label": "1+3 Frame Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -835,7 +895,12 @@
       "forwardForceEndFrame": 43,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -857,7 +922,12 @@
       "hitLevel": "low",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 13,
@@ -880,7 +950,12 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 12,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -898,7 +973,12 @@
       "forwardForceEndFrame": 39,
       "label": "Lenalee Lee Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -914,7 +994,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Second Beat"
+      "label": "Lenalee Lee Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -930,7 +1015,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Body Blow"
+      "label": "Lenalee Lee Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -946,7 +1036,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Low Changeup"
+      "label": "Lenalee Lee Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -962,7 +1057,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Pressure Feint"
+      "label": "Lenalee Lee Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -978,7 +1078,12 @@
       "forwardForce": 0.93,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Drive"
+      "label": "Lenalee Lee Drive",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -994,7 +1099,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Barrage"
+      "label": "Lenalee Lee Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1010,7 +1120,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Finisher"
+      "label": "Lenalee Lee Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1026,7 +1141,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
-      "label": "Lenalee Lee Step Kick"
+      "label": "Lenalee Lee Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1042,7 +1162,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Palm String"
+      "label": "Lenalee Lee Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1058,7 +1183,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Rising Chain"
+      "label": "Lenalee Lee Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1074,7 +1204,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Special Setup"
+      "label": "Lenalee Lee Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1090,7 +1225,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Break Art"
+      "label": "Lenalee Lee Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1106,7 +1246,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Check Hook"
+      "label": "Lenalee Lee Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1122,7 +1267,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Heavy Break"
+      "label": "Lenalee Lee Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1138,7 +1288,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Charged Follow"
+      "label": "Lenalee Lee Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1154,7 +1309,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
-      "label": "Lenalee Lee Drop Kick"
+      "label": "Lenalee Lee Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1170,7 +1330,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Arc Finisher"
+      "label": "Lenalee Lee Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1186,7 +1351,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Focus Stance"
+      "label": "Lenalee Lee Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1202,7 +1372,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Mode Shift"
+      "label": "Lenalee Lee Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1218,7 +1393,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Heel Feint"
+      "label": "Lenalee Lee Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1234,7 +1414,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Summon Strike"
+      "label": "Lenalee Lee Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1250,7 +1435,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Guard Snare"
+      "label": "Lenalee Lee Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1266,7 +1456,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Armor Break"
+      "label": "Lenalee Lee Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1282,7 +1477,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Power Setup"
+      "label": "Lenalee Lee Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1298,7 +1498,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Switch Strike"
+      "label": "Lenalee Lee Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1314,7 +1519,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Spark Jab"
+      "label": "Lenalee Lee Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1330,7 +1540,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Binding Blow"
+      "label": "Lenalee Lee Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1346,7 +1561,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Heavy Draw"
+      "label": "Lenalee Lee Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1362,7 +1582,12 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
-      "label": "Lenalee Lee Kick Ender"
+      "label": "Lenalee Lee Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:1+4": {
       "onBlockFrames": -10,
@@ -1377,7 +1602,12 @@
       "label": "1+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1391,7 +1621,12 @@
       "moveJumpGravity": 24,
       "label": "f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1402,7 +1637,12 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1416,7 +1656,12 @@
       "moveJumpGravity": 26,
       "label": "d+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1430,7 +1675,12 @@
       "moveJumpGravity": 24,
       "label": "d/f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1441,7 +1691,12 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1455,7 +1710,12 @@
       "moveJumpGravity": 24,
       "label": "qcf+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1469,7 +1729,12 @@
       "moveJumpGravity": 24,
       "label": "SS+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1484,7 +1749,12 @@
       "label": "SS+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1495,7 +1765,12 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1510,7 +1785,12 @@
       "label": "O+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 20,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     }
   },
   "effects": [],

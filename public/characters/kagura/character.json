@@ -629,7 +629,12 @@
       "label": "Kagura Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 11,
@@ -648,7 +653,12 @@
       "label": "Kagura Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 24,
@@ -667,7 +677,12 @@
       "label": "Kagura Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 19,
@@ -684,7 +699,12 @@
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 34,
       "label": "Kagura Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -702,7 +722,12 @@
       "forwardForceEndFrame": 17,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -724,7 +749,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -742,7 +772,12 @@
       "forwardForceEndFrame": 41,
       "label": "Kagura Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -759,7 +794,12 @@
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
       "label": "Kagura Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -777,7 +817,12 @@
       "forwardForceEndFrame": 11,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -796,7 +841,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -814,7 +864,12 @@
       "forwardForceEndFrame": 22,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -837,7 +892,12 @@
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 12,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -855,7 +915,12 @@
       "forwardForceEndFrame": 37,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -876,7 +941,12 @@
       "label": "Kagura Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -899,7 +969,12 @@
       "tracking": "homing",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 12,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -917,7 +992,12 @@
       "forwardForceEndFrame": 35,
       "label": "Kagura Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -933,7 +1013,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Second Beat"
+      "label": "Kagura Second Beat",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -949,7 +1034,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Body Blow"
+      "label": "Kagura Body Blow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -965,7 +1055,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Low Changeup"
+      "label": "Kagura Low Changeup",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -981,7 +1076,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Pressure Feint"
+      "label": "Kagura Pressure Feint",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -997,7 +1097,12 @@
       "forwardForce": 2.13,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Drive"
+      "label": "Kagura Drive",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1013,7 +1118,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Barrage"
+      "label": "Kagura Barrage",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1029,7 +1139,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Finisher"
+      "label": "Kagura Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1045,7 +1160,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "label": "Kagura Step Kick"
+      "label": "Kagura Step Kick",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1061,7 +1181,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Palm String"
+      "label": "Kagura Palm String",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1077,7 +1202,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Rising Chain"
+      "label": "Kagura Rising Chain",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1093,7 +1223,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Special Setup"
+      "label": "Kagura Special Setup",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1109,7 +1244,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Break Art"
+      "label": "Kagura Break Art",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1125,7 +1265,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Check Hook"
+      "label": "Kagura Check Hook",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1141,7 +1286,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Heavy Break"
+      "label": "Kagura Heavy Break",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1157,7 +1307,12 @@
       "forwardForce": 3.05,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Charged Follow"
+      "label": "Kagura Charged Follow",
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1173,7 +1328,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "label": "Kagura Drop Kick"
+      "label": "Kagura Drop Kick",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1189,7 +1349,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Arc Finisher"
+      "label": "Kagura Arc Finisher",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1205,7 +1370,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Focus Stance"
+      "label": "Kagura Focus Stance",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1221,7 +1391,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Mode Shift"
+      "label": "Kagura Mode Shift",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1237,7 +1412,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Heel Feint"
+      "label": "Kagura Heel Feint",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1253,7 +1433,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Summon Strike"
+      "label": "Kagura Summon Strike",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1269,7 +1454,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Guard Snare"
+      "label": "Kagura Guard Snare",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1285,7 +1475,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Armor Break"
+      "label": "Kagura Armor Break",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1301,7 +1496,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Power Setup"
+      "label": "Kagura Power Setup",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1317,7 +1517,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Switch Strike"
+      "label": "Kagura Switch Strike",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1333,7 +1538,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Spark Jab"
+      "label": "Kagura Spark Jab",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1349,7 +1559,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Binding Blow"
+      "label": "Kagura Binding Blow",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1365,7 +1580,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 15,
-      "label": "Kagura Heavy Draw"
+      "label": "Kagura Heavy Draw",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1381,7 +1601,12 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "label": "Kagura Kick Ender"
+      "label": "Kagura Kick Ender",
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1392,7 +1617,12 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1403,7 +1633,12 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1414,7 +1649,12 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1425,7 +1665,12 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1436,7 +1681,12 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1447,7 +1697,12 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1458,7 +1713,12 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1469,7 +1729,12 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1480,7 +1745,12 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1491,7 +1761,12 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],

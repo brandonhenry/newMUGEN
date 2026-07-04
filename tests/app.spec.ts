@@ -175,7 +175,19 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByRole('button', { name: 'Back' }).click();
   await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  await expect(page.getByTestId('generate-height-sheet')).toBeVisible();
+  const heightSheetPopupPromise = page.waitForEvent('popup');
+  await page.getByTestId('generate-height-sheet').click();
+  const heightSheetPopup = await heightSheetPopupPromise;
+  await expect(heightSheetPopup.getByRole('heading', { name: 'Character Height Sheet' })).toBeVisible({ timeout: 30000 });
+  await expect(heightSheetPopup.getByTestId('height-sheet-card').first()).toBeVisible();
+  await expect(heightSheetPopup.getByTestId('height-sheet-dimensions').filter({ hasText: /px/ }).first()).toBeVisible({ timeout: 30000 });
+  await expect(heightSheetPopup.getByTestId('height-sheet-voxel-dimensions').filter({ hasText: /w x .*h/ }).first()).toBeVisible({ timeout: 30000 });
+  await heightSheetPopup.close();
+  await expect(page.getByTestId('generate-height-sheet')).toBeEnabled();
+  let manifestSaveCount = 0;
   await page.route('**/__kore/dev/save-character-manifest', async (route) => {
+    manifestSaveCount += 1;
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -210,6 +222,22 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('character-width-slider')).toBeHidden();
   await expect(page.getByTestId('animation-width-slider')).toBeVisible();
   await expect(page.getByTestId('animation-height-slider')).toBeVisible();
+  await page.getByLabel('Frame mode').check();
+  await expect(page.getByTestId('animation-scale-ratio-lock')).toBeChecked();
+  await page.getByTestId('animation-width-input').fill('1.17');
+  await expect(page.getByTestId('animation-width-input')).toHaveValue('1.17');
+  await expect(page.getByTestId('animation-height-input')).toHaveValue('1.17');
+  const savesBeforeUnlock = manifestSaveCount;
+  await page.getByTestId('animation-scale-ratio-lock').uncheck();
+  await expect(page.getByTestId('animation-scale-ratio-lock')).not.toBeChecked();
+  await expect.poll(() => manifestSaveCount).toBeGreaterThan(savesBeforeUnlock);
+  await expect(page.getByTestId('save-character-manifest')).toBeEnabled();
+  await expect(page.getByTestId('animation-scale-ratio-lock')).not.toBeChecked();
+  const unlockedHeight = await page.getByTestId('animation-height-input').inputValue();
+  const unlockedWidth = unlockedHeight === '1.22' ? '1.31' : '1.22';
+  await page.getByTestId('animation-width-input').fill(unlockedWidth);
+  await expect(page.getByTestId('animation-width-input')).toHaveValue(unlockedWidth);
+  await expect(page.getByTestId('animation-height-input')).toHaveValue(unlockedHeight);
   await page.getByTestId('toggle-animation-editor').click();
   await page.getByRole('button', { name: 'Rotate' }).click();
   await page.getByTestId('viewer-zoom-in').click();
@@ -345,9 +373,13 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: /Combos/ }).click();
   await expect(page.locator('.combo-trial-list')).toContainText('Combos');
+  const groundedLauncherTrial = page.getByRole('button', { name: /Grounded Launcher/i }).first();
+  await expect(groundedLauncherTrial).toBeVisible();
+  await groundedLauncherTrial.click();
   await expect(page.getByRole('button', { name: 'Preview' })).toBeEnabled();
   await page.getByRole('button', { name: 'Preview' }).click();
   await expect(page.locator('.training-trial-hud')).toContainText('Preview');
+  await expect(page.locator('.training-trial-hud')).not.toContainText('↑');
   await expect(page.locator('.training-trial-hud')).toBeHidden({ timeout: 12000 });
 });
 

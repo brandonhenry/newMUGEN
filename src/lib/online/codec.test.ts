@@ -30,6 +30,8 @@ describe('online codec', () => {
     match.fighters[0].dashForwardFrames = 11;
     match.fighters[0].dashForwardCooldownFrames = 7;
     match.fighters[0].walkDirection = 1;
+    match.fighters[0].idleFlourishFramesRemaining = 54;
+    match.fighters[0].idleFlourishTotalFrames = 72;
     match.fighters[0].juggleDamage = 31;
     match.fighters[0].juggleSequenceDamage = 9;
     match.fighters[0].juggleTornadoCount = 2;
@@ -47,6 +49,8 @@ describe('online codec', () => {
     match.fighters[1].throwEscapeGoal = 12;
     match.fighters[1].throwShakeFrames = 8;
     match.fighters[1].visualHitstop = { framesRemaining: 3, animationKey: 'hitLight', progress: 0 };
+    match.fighters[1].idleFlourishFramesRemaining = 22;
+    match.fighters[1].idleFlourishTotalFrames = 48;
     match.fighters[0].shadowClone = {
       phase: 'active',
       position: { x: 0.4, y: 0.2, z: -0.5 },
@@ -66,6 +70,7 @@ describe('online codec', () => {
       vanishSmokeFrames: 0
     };
     match.fighters[1].roundsWon = 1;
+    match.idleQuietFrames = 1234;
     match.phase = 'roundFinisher';
     match.message = '';
     match.roundFinisher = {
@@ -112,6 +117,8 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].dashForwardFrames).toBe(11);
     expect(hydrated.fighters[0].dashForwardCooldownFrames).toBe(7);
     expect(hydrated.fighters[0].walkDirection).toBe(1);
+    expect(hydrated.fighters[0].idleFlourishFramesRemaining).toBe(54);
+    expect(hydrated.fighters[0].idleFlourishTotalFrames).toBe(72);
     expect(hydrated.fighters[0].juggleDamage).toBe(31);
     expect(hydrated.fighters[0].juggleSequenceDamage).toBe(9);
     expect(hydrated.fighters[0].juggleTornadoCount).toBe(2);
@@ -128,12 +135,15 @@ describe('online codec', () => {
     expect(hydrated.fighters[1].throwEscapeGoal).toBe(12);
     expect(hydrated.fighters[1].throwShakeFrames).toBe(8);
     expect(hydrated.fighters[1].visualHitstop).toEqual({ framesRemaining: 3, animationKey: 'hitLight', progress: 0 });
+    expect(hydrated.fighters[1].idleFlourishFramesRemaining).toBe(22);
+    expect(hydrated.fighters[1].idleFlourishTotalFrames).toBe(48);
     expect(hydrated.fighters[0].shadowClone?.position).toEqual({ x: 0.4, y: 0.2, z: -0.5 });
     expect(hydrated.fighters[0].shadowClone?.currentMove?.input).toBe('jab');
     expect(hydrated.fighters[0].shadowClone?.visualHitstop).toEqual({ framesRemaining: 5, animationKey: 'jabright', progress: 0.38 });
     expect(hydrated.fighters[1].roundsWon).toBe(1);
     expect(hydrated.aiSeed).toBe(match.aiSeed);
     expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);
+    expect(hydrated.idleQuietFrames).toBe(1234);
     expect(hydrated.clashState.status).toBe('input');
     expect(hydrated.clashState.sequence).toEqual(['jab', 'heavy', 'special']);
     expect(hydrated.clashState.p1.progress).toBe(1);

@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 7;
+export const ONLINE_PROTOCOL_VERSION = 9;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -28,6 +28,7 @@ export type CompactFighterSnapshot = {
   baseCharacterId: string;
   hp: number;
   maxHp: number;
+  tookDamageThisRound: boolean;
   ki: number;
   transformOvercharge: number;
   transformReadyTimer: number;
@@ -53,6 +54,8 @@ export type CompactFighterSnapshot = {
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;
+  idleFlourishFramesRemaining: number;
+  idleFlourishTotalFrames: number;
   chargePhase: FighterRuntime['chargePhase'];
   chargeFrame: number;
   chargeCommitted: boolean;
@@ -128,6 +131,8 @@ export type CompactMatchSnapshot = {
   roundFinisher: MatchSnapshot['roundFinisher'];
   visualTimeScale: number;
   cameraShake: number;
+  idleQuietFrames: number;
+  idleQuietLockFrames?: number;
   fighters: [CompactFighterSnapshot, CompactFighterSnapshot];
 };
 
@@ -178,6 +183,8 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
       : null,
     visualTimeScale: match.visualTimeScale,
     cameraShake: match.cameraShake,
+    idleQuietFrames: match.idleQuietFrames,
+    idleQuietLockFrames: match.idleQuietLockFrames,
     fighters: [compactFighter(match.fighters[0]), compactFighter(match.fighters[1])]
   };
 }
@@ -211,6 +218,8 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
       : null,
     visualTimeScale: snapshot.visualTimeScale,
     cameraShake: snapshot.cameraShake,
+    idleQuietFrames: snapshot.idleQuietFrames ?? base.idleQuietFrames,
+    idleQuietLockFrames: snapshot.idleQuietLockFrames ?? base.idleQuietLockFrames,
     fighters: [hydrateFighter(base.fighters[0], snapshot.fighters[0], base.roster), hydrateFighter(base.fighters[1], snapshot.fighters[1], base.roster)]
   };
 }
@@ -221,6 +230,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     baseCharacterId: fighter.baseCharacter.id,
     hp: fighter.hp,
     maxHp: fighter.maxHp,
+    tookDamageThisRound: fighter.tookDamageThisRound,
     ki: fighter.ki,
     transformOvercharge: fighter.transformOvercharge,
     transformReadyTimer: fighter.transformReadyTimer,
@@ -246,6 +256,8 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     actionTimer: fighter.actionTimer,
     actionFramesRemaining: fighter.actionFramesRemaining,
     moveFrame: fighter.moveFrame,
+    idleFlourishFramesRemaining: fighter.idleFlourishFramesRemaining,
+    idleFlourishTotalFrames: fighter.idleFlourishTotalFrames,
     chargePhase: fighter.chargePhase,
     chargeFrame: fighter.chargeFrame,
     chargeCommitted: fighter.chargeCommitted,
@@ -308,6 +320,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     baseCharacter,
     hp: snapshot.hp,
     maxHp: snapshot.maxHp ?? base.maxHp,
+    tookDamageThisRound: snapshot.tookDamageThisRound ?? base.tookDamageThisRound,
     ki: snapshot.ki,
     transformOvercharge: snapshot.transformOvercharge ?? base.transformOvercharge,
     transformReadyTimer: snapshot.transformReadyTimer ?? base.transformReadyTimer,
@@ -333,6 +346,8 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     actionTimer: snapshot.actionTimer,
     actionFramesRemaining: snapshot.actionFramesRemaining,
     moveFrame: snapshot.moveFrame,
+    idleFlourishFramesRemaining: snapshot.idleFlourishFramesRemaining ?? base.idleFlourishFramesRemaining,
+    idleFlourishTotalFrames: snapshot.idleFlourishTotalFrames ?? base.idleFlourishTotalFrames,
     chargePhase: snapshot.chargePhase ?? base.chargePhase,
     chargeFrame: snapshot.chargeFrame ?? base.chargeFrame,
     chargeCommitted: snapshot.chargeCommitted ?? base.chargeCommitted,

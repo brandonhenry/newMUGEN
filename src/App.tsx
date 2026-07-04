@@ -8757,6 +8757,8 @@ function CharacterViewer({
   const [animationPreviewFrame, setAnimationPreviewFrame] = useState(0);
   const [showIdleGhost, setShowIdleGhost] = useState(false);
   const [showIdleGhostSideView, setShowIdleGhostSideView] = useState(false);
+  const [unlockedScaleRatioKeys, setUnlockedScaleRatioKeys] = useState<Set<string>>(() => new Set());
+  const [heightSheetStatus, setHeightSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -8798,6 +8800,9 @@ function CharacterViewer({
     active.animationFrameScales?.[selectedSlotDataKey]?.[String(selectedSpriteFrameIndex)] ?? selectedAnimationScale
   );
   const selectedSizeScale = frameScaleMode ? selectedAnimationFrameScale : selectedAnimationScale;
+  const selectedScaleRatioKey = `${active.id}:${selectedSlotDataKey}:${frameScaleMode ? selectedSpriteFrameIndex : 'animation'}`;
+  const selectedScaleRatiosMatch = Math.abs(selectedSizeScale.width - selectedSizeScale.height) < 0.005;
+  const selectedScaleRatioLocked = frameScaleMode && selectedScaleRatiosMatch && !unlockedScaleRatioKeys.has(selectedScaleRatioKey);
   const selectedCharacterScale = getCharacterGlobalScale(active);
   const defaultCharacterScale = normalizeCharacterModelScale(undefined, sourceActive.scale ?? active.scale);
   const selectedFrameSet = new Set(selectedFrames);
@@ -9043,6 +9048,14 @@ function CharacterViewer({
       ...selectedAnimationScale,
       ...patch
     }));
+  };
+
+  const updateSelectedAnimationScaleAxis = (axis: 'width' | 'height', value: number) => {
+    if (selectedScaleRatioLocked) {
+      updateSelectedAnimationScale({ width: value, height: value });
+      return;
+    }
+    updateSelectedAnimationScale(axis === 'width' ? { width: value } : { height: value });
   };
 
   const resetSelectedAnimationScale = () => {
@@ -9381,6 +9394,23 @@ function CharacterViewer({
     }
   };
 
+  const toggleSelectedScaleRatioLock = (locked: boolean) => {
+    setUnlockedScaleRatioKeys((current) => {
+      const next = new Set(current);
+      if (locked) next.delete(selectedScaleRatioKey);
+      else next.add(selectedScaleRatioKey);
+      return next;
+    });
+    if (locked) {
+      updateSelectedAnimationScale({
+        width: selectedSizeScale.width,
+        height: selectedSizeScale.width
+      });
+      return;
+    }
+    void saveActiveManifest();
+  };
+
   const saveActiveMetadata = async (
     patch: CharacterMetadataPatch,
     failureLabel: string
@@ -9485,6 +9515,44 @@ function CharacterViewer({
     } catch (error) {
       console.error('Failed to rebuild HD voxels', error);
       setHdVoxelStatus('error');
+    }
+  };
+
+  const generateHeightSheet = async () => {
+    if (!isLocalDev || heightSheetStatus === 'generating') return;
+    const popup = window.open('', '_blank');
+    if (popup) {
+      popup.document.title = 'Generating Height Sheet';
+      popup.document.body.style.margin = '0';
+      popup.document.body.style.background = '#07090c';
+      popup.document.body.style.color = '#f7f7f2';
+      popup.document.body.style.fontFamily = 'system-ui, sans-serif';
+      popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center"><strong>Generating height sheet...</strong></main>';
+    }
+    setHeightSheetStatus('generating');
+    try {
+      const entries = roster.map((character) => {
+        const frame = character.animationFrames?.idle?.[0] ?? framePath(character, 0);
+        return {
+          characterId: character.id,
+          displayName: character.displayName,
+          frame: new URL(frame, window.location.href).href,
+          frameIndex: getFrameIndex(frame)
+        };
+      });
+      const html = buildHeightSheetHtml(entries);
+      const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+      if (popup && !popup.closed) popup.location.href = url;
+      else window.open(url, '_blank');
+      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setHeightSheetStatus('idle');
+    } catch (error) {
+      console.error('Failed to generate character height sheet', error);
+      if (popup && !popup.closed) {
+        popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center;color:#ffb9b9;background:#07090c;font-family:system-ui,sans-serif"><strong>Height sheet failed.</strong></main>';
+      }
+      setHeightSheetStatus('error');
+      window.setTimeout(() => setHeightSheetStatus('idle'), 2200);
     }
   };
 
@@ -10047,7 +10115,7 @@ function CharacterViewer({
                           max="2.5"
                           step="0.01"
                           value={selectedSizeScale.width}
-                          onChange={(event) => updateSelectedAnimationScale({ width: Number(event.target.value) })}
+                          onChange={(event) => updateSelectedAnimationScaleAxis('width', Number(event.target.value))}
                           data-testid="animation-width-slider"
                         />
                         <input
@@ -10057,7 +10125,7 @@ function CharacterViewer({
                           max="2.5"
                           step="0.01"
                           value={selectedSizeScale.width}
-                          onChange={(event) => updateSelectedAnimationScale({ width: Number(event.target.value) })}
+                          onChange={(event) => updateSelectedAnimationScaleAxis('width', Number(event.target.value))}
                           data-testid="animation-width-input"
                         />
                       </label>
@@ -10070,7 +10138,7 @@ function CharacterViewer({
                           max="2.5"
                           step="0.01"
                           value={selectedSizeScale.height}
-                          onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
+                          onChange={(event) => updateSelectedAnimationScaleAxis('height', Number(event.target.value))}
                           data-testid="animation-height-slider"
                         />
                         <input
@@ -10080,10 +10148,21 @@ function CharacterViewer({
                           max="2.5"
                           step="0.01"
                           value={selectedSizeScale.height}
-                          onChange={(event) => updateSelectedAnimationScale({ height: Number(event.target.value) })}
+                          onChange={(event) => updateSelectedAnimationScaleAxis('height', Number(event.target.value))}
                           data-testid="animation-height-input"
                         />
                       </label>
+                      {frameScaleMode ? (
+                        <label className="sprite-sheet-toggle frame-ratio-toggle">
+                          <input
+                            type="checkbox"
+                            checked={selectedScaleRatioLocked}
+                            onChange={(event) => toggleSelectedScaleRatioLock(event.target.checked)}
+                            data-testid="animation-scale-ratio-lock"
+                          />
+                          <span>Lock W/H</span>
+                        </label>
+                      ) : null}
                       <label className="speed-control">
                         <span>Position</span>
                         <input
@@ -10364,6 +10443,17 @@ function CharacterViewer({
           </div>
         </article>
       </div>
+      {isLocalDev && (
+        <button
+          className="secondary-button"
+          onClick={() => void generateHeightSheet()}
+          disabled={heightSheetStatus === 'generating'}
+          data-testid="generate-height-sheet"
+        >
+          <Ruler size={18} />
+          {heightSheetStatus === 'generating' ? 'Generating Height Sheet' : 'Generate Height Sheet'}
+        </button>
+      )}
       <button className="secondary-button" onClick={onBack}>
         <Home size={18} />
         Back
@@ -10382,6 +10472,13 @@ type FrameComparisonMetrics = {
     width: number;
     height: number;
   };
+};
+
+type HeightSheetEntry = {
+  characterId: string;
+  displayName: string;
+  frame: string;
+  frameIndex: number;
 };
 
 function useFrameComparisonMetrics(src: string) {
@@ -10544,6 +10641,446 @@ function IdleGhostSideViewComparison({
       </section>
     </div>
   );
+}
+
+function buildHeightSheetHtml(entries: HeightSheetEntry[]) {
+  const generatedAt = new Date().toLocaleString();
+  const entriesJson = JSON.stringify(entries).replace(/</g, '\\u003c');
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character Height Sheet</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --sprite-stage-height: 188px;
+      --voxel-stage-height: 188px;
+      --guide-step: 60px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #07090c;
+      color: #f7f7f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      background: #07090c;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      display: grid;
+      gap: 16px;
+    }
+    .sheet-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1;
+      text-wrap: balance;
+    }
+    .sheet-header p {
+      margin: 6px 0 0;
+      color: rgba(247, 247, 242, 0.64);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .height-row {
+      display: flex;
+      align-items: stretch;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 2px 0 18px;
+    }
+    .height-card {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-rows: auto auto auto;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.09) inset,
+        0 14px 30px rgba(0, 0, 0, 0.18);
+    }
+    .height-card header,
+    .height-card footer {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+    .height-card strong,
+    .height-card b {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 1.15;
+    }
+    .height-card span,
+    .height-card small,
+    .metric-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: rgba(247, 247, 242, 0.58);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+    .comparison-stack {
+      display: grid;
+      gap: 8px;
+    }
+    .metric-block {
+      display: grid;
+      gap: 5px;
+    }
+    .metric-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(247, 247, 242, 0.76);
+    }
+    .frame-stage {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px 4px 12px;
+      overflow: hidden;
+      border-radius: 6px;
+      background:
+        repeating-linear-gradient(
+          to top,
+          rgba(46, 230, 255, 0.16) 0,
+          rgba(46, 230, 255, 0.16) 1px,
+          transparent 1px,
+          transparent var(--guide-step)
+        ),
+        rgba(0, 0, 0, 0.26);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    }
+    .sprite-stage {
+      height: var(--sprite-stage-height);
+    }
+    .voxel-stage {
+      height: var(--voxel-stage-height);
+      background:
+        repeating-linear-gradient(
+          to top,
+          rgba(255, 176, 0, 0.12) 0,
+          rgba(255, 176, 0, 0.12) 1px,
+          transparent 1px,
+          transparent var(--guide-step)
+        ),
+        rgba(6, 12, 14, 0.44);
+    }
+    .frame-stage img {
+      display: block;
+      height: auto;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      position: relative;
+      z-index: 1;
+    }
+    .frame-stage canvas {
+      display: block;
+      position: relative;
+      z-index: 1;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    .baseline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 12px;
+      height: 2px;
+      background: #ffb000;
+      box-shadow: 0 0 12px rgba(255, 176, 0, 0.4);
+    }
+    .missing-frame {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      color: #ffb9b9;
+      background: rgba(210, 57, 68, 0.14);
+      font-size: 11px;
+      line-height: 1.35;
+      text-align: center;
+    }
+  </style>
+</head>
+<body data-testid="height-sheet-page">
+  <main>
+    <section class="sheet-header">
+      <div>
+        <h1>Character Height Sheet</h1>
+        <p>${entries.length} characters &middot; visible first idle frame pixels &middot; generated ${escapeHtml(generatedAt)}</p>
+      </div>
+      <p>Scale 3x &middot; guide 20px</p>
+    </section>
+    <section class="height-row" aria-label="Character idle height comparison" id="height-row"></section>
+  </main>
+  <script>
+    const characters = ${entriesJson};
+    const SCALE = 3;
+    const VOXEL_SCALE = 72;
+    let maxSpriteHeight = 1;
+    let maxVoxelHeight = 1;
+    const row = document.getElementById('height-row');
+
+    function updateStageHeight() {
+      document.documentElement.style.setProperty('--sprite-stage-height', Math.max(140, maxSpriteHeight * SCALE + 48) + 'px');
+      document.documentElement.style.setProperty('--voxel-stage-height', Math.max(140, maxVoxelHeight * VOXEL_SCALE + 48) + 'px');
+      document.documentElement.style.setProperty('--guide-step', (20 * SCALE) + 'px');
+    }
+
+    function getOpaqueImageBounds(image) {
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, image.naturalWidth || image.width || 1);
+      canvas.height = Math.max(1, image.naturalHeight || image.height || 1);
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      if (!context) return { left: 0, top: 0, width: canvas.width, height: canvas.height };
+      context.drawImage(image, 0, 0);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      let left = imageData.width;
+      let right = -1;
+      let top = imageData.height;
+      let bottom = -1;
+      for (let y = 0; y < imageData.height; y += 1) {
+        for (let x = 0; x < imageData.width; x += 1) {
+          if (data[(y * imageData.width + x) * 4 + 3] <= 8) continue;
+          left = Math.min(left, x);
+          right = Math.max(right, x);
+          top = Math.min(top, y);
+          bottom = Math.max(bottom, y);
+        }
+      }
+      if (right < left || bottom < top) return { left: 0, top: 0, width: imageData.width, height: imageData.height };
+      return { left, top, width: right - left + 1, height: bottom - top + 1 };
+    }
+
+    function getVoxelPath(frame, directory) {
+      const url = new URL(frame);
+      url.pathname = url.pathname.replace('/frames/', '/' + directory + '/').replace(/\\.png$/, '.json');
+      return url.href;
+    }
+
+    async function fetchVoxelPayload(character) {
+      const hdResponse = await fetch(getVoxelPath(character.frame, 'voxels-hd'));
+      if (hdResponse.ok) return hdResponse.json();
+      const response = await fetch(getVoxelPath(character.frame, 'voxels'));
+      if (!response.ok) throw new Error('Voxel JSON missing');
+      return response.json();
+    }
+
+    function normalizeVoxelPayload(payload) {
+      if (Array.isArray(payload)) {
+        return payload
+          .filter((voxel) => Array.isArray(voxel.position) && Array.isArray(voxel.size))
+          .map((voxel) => ({
+            x: Number(voxel.position[0]) || 0,
+            y: Number(voxel.position[1]) || 0,
+            w: Math.max(0.001, Number(voxel.size[0]) || 0.001),
+            h: Math.max(0.001, Number(voxel.size[1]) || 0.001),
+            color: typeof voxel.color === 'string' ? voxel.color : '#ffffff'
+          }));
+      }
+      const palette = Array.isArray(payload?.palette) ? payload.palette : [];
+      return Array.isArray(payload?.voxels)
+        ? payload.voxels.map((voxel) => ({
+            x: Number(voxel.x) || 0,
+            y: Number(voxel.y) || 0,
+            w: Math.max(0.001, Number(voxel.w) || 0.001),
+            h: Math.max(0.001, Number(voxel.h) || 0.001),
+            color: palette[Math.max(0, Math.round(Number(voxel.c) || 0))] || '#ffffff'
+          }))
+        : [];
+    }
+
+    function getVoxelBounds(voxels) {
+      return voxels.reduce(
+        (bounds, voxel) => ({
+          minX: Math.min(bounds.minX, voxel.x - voxel.w / 2),
+          minY: Math.min(bounds.minY, voxel.y - voxel.h / 2),
+          maxX: Math.max(bounds.maxX, voxel.x + voxel.w / 2),
+          maxY: Math.max(bounds.maxY, voxel.y + voxel.h / 2)
+        }),
+        { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+      );
+    }
+
+    function renderVoxelCanvas(voxels, bounds) {
+      const widthUnits = Math.max(0.001, bounds.maxX - bounds.minX);
+      const heightUnits = Math.max(0.001, bounds.maxY - bounds.minY);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.ceil(widthUnits * VOXEL_SCALE));
+      canvas.height = Math.max(1, Math.ceil(heightUnits * VOXEL_SCALE));
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Canvas unavailable');
+      context.imageSmoothingEnabled = false;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      for (const voxel of voxels) {
+        const x = Math.round((voxel.x - voxel.w / 2 - bounds.minX) * VOXEL_SCALE);
+        const y = Math.round((bounds.maxY - (voxel.y + voxel.h / 2)) * VOXEL_SCALE);
+        const width = Math.max(1, Math.ceil(voxel.w * VOXEL_SCALE));
+        const height = Math.max(1, Math.ceil(voxel.h * VOXEL_SCALE));
+        context.fillStyle = voxel.color;
+        context.fillRect(x, y, width, height);
+      }
+      return { canvas, widthUnits, heightUnits };
+    }
+
+    function createCard(character) {
+      const card = document.createElement('article');
+      card.className = 'height-card';
+      card.style.width = '172px';
+      card.setAttribute('data-testid', 'height-sheet-card');
+
+      const header = document.createElement('header');
+      const name = document.createElement('strong');
+      name.textContent = character.displayName;
+      const id = document.createElement('span');
+      id.textContent = character.characterId;
+      header.append(name, id);
+
+      const stack = document.createElement('div');
+      stack.className = 'comparison-stack';
+
+      const spriteBlock = document.createElement('section');
+      spriteBlock.className = 'metric-block';
+      const spriteLabel = document.createElement('div');
+      spriteLabel.className = 'metric-label';
+      const spriteTitle = document.createElement('span');
+      spriteTitle.textContent = 'Sprite';
+      const spriteDimensions = document.createElement('b');
+      spriteDimensions.setAttribute('data-testid', 'height-sheet-dimensions');
+      spriteDimensions.textContent = 'measuring';
+      spriteLabel.append(spriteTitle, spriteDimensions);
+      const spriteStage = document.createElement('div');
+      spriteStage.className = 'frame-stage sprite-stage';
+      const spriteBaseline = document.createElement('span');
+      spriteBaseline.className = 'baseline';
+      spriteBaseline.setAttribute('aria-hidden', 'true');
+      const spriteLoading = document.createElement('div');
+      spriteLoading.className = 'missing-frame';
+      spriteLoading.textContent = 'Measuring';
+      spriteStage.append(spriteBaseline, spriteLoading);
+      spriteBlock.append(spriteLabel, spriteStage);
+
+      const voxelBlock = document.createElement('section');
+      voxelBlock.className = 'metric-block';
+      const voxelLabel = document.createElement('div');
+      voxelLabel.className = 'metric-label';
+      const voxelTitle = document.createElement('span');
+      voxelTitle.textContent = 'Voxel';
+      const voxelDimensions = document.createElement('b');
+      voxelDimensions.setAttribute('data-testid', 'height-sheet-voxel-dimensions');
+      voxelDimensions.textContent = 'measuring';
+      voxelLabel.append(voxelTitle, voxelDimensions);
+      const voxelStage = document.createElement('div');
+      voxelStage.className = 'frame-stage voxel-stage';
+      const voxelBaseline = document.createElement('span');
+      voxelBaseline.className = 'baseline';
+      voxelBaseline.setAttribute('aria-hidden', 'true');
+      const voxelLoading = document.createElement('div');
+      voxelLoading.className = 'missing-frame';
+      voxelLoading.textContent = 'Measuring';
+      voxelStage.append(voxelBaseline, voxelLoading);
+      voxelBlock.append(voxelLabel, voxelStage);
+
+      stack.append(spriteBlock, voxelBlock);
+
+      const footer = document.createElement('footer');
+      const frame = document.createElement('small');
+      frame.title = character.frame;
+      frame.textContent = character.frameIndex >= 0 ? 'frame ' + String(character.frameIndex).padStart(3, '0') : 'frame --';
+      footer.append(frame);
+
+      card.append(header, stack, footer);
+      row.append(card);
+
+      const source = new Image();
+      source.onload = () => {
+        const bounds = getOpaqueImageBounds(source);
+        const width = Math.max(1, Math.round(bounds.width));
+        const height = Math.max(1, Math.round(bounds.height));
+        maxSpriteHeight = Math.max(maxSpriteHeight, height);
+        updateStageHeight();
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext('2d');
+        if (!context) throw new Error('Canvas unavailable');
+        context.imageSmoothingEnabled = false;
+        context.drawImage(source, bounds.left, bounds.top, bounds.width, bounds.height, 0, 0, width, height);
+
+        const image = new Image();
+        image.alt = character.displayName + ' idle frame';
+        image.width = width * SCALE;
+        image.height = height * SCALE;
+        image.src = canvas.toDataURL('image/png');
+        spriteLoading.remove();
+        spriteStage.append(image);
+        card.style.width = Math.max(172, width * SCALE + 28) + 'px';
+        spriteDimensions.innerHTML = width + ' &times; ' + height + ' px';
+      };
+      source.onerror = () => {
+        spriteLoading.innerHTML = 'Missing<br>Image failed to load';
+        spriteDimensions.textContent = 'missing';
+      };
+      source.src = character.frame;
+
+      fetchVoxelPayload(character)
+        .then((payload) => {
+          const voxels = normalizeVoxelPayload(payload);
+          if (voxels.length === 0) throw new Error('No voxels');
+          const bounds = getVoxelBounds(voxels);
+          if (!Number.isFinite(bounds.minX) || !Number.isFinite(bounds.minY)) throw new Error('No voxel bounds');
+          const { canvas, widthUnits, heightUnits } = renderVoxelCanvas(voxels, bounds);
+          maxVoxelHeight = Math.max(maxVoxelHeight, heightUnits);
+          updateStageHeight();
+          voxelLoading.remove();
+          voxelStage.append(canvas);
+          card.style.width = Math.max(Number.parseFloat(card.style.width) || 172, canvas.width + 28) + 'px';
+          voxelDimensions.textContent = widthUnits.toFixed(2) + 'w x ' + heightUnits.toFixed(2) + 'h';
+        })
+        .catch((error) => {
+          voxelLoading.innerHTML = 'Missing<br>' + (error instanceof Error ? error.message : 'Voxel failed');
+          voxelDimensions.textContent = 'missing';
+        });
+    }
+
+    updateStageHeight();
+    characters.forEach(createCard);
+  </script>
+</body>
+</html>`;
+}
+
+function escapeHtml(value: string | number) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function AnimationFrameColorStrip({

@@ -4,6 +4,7 @@ import { contextualComboFrameData, contextualHitAdvantage, type ComboHitContext 
 export type ComboRouteCategory = 'basic' | 'advanced' | 'crouch' | 'launcher' | 'tornado' | 'counterHit';
 export type ComboRouteState = 'standing' | 'crouch' | 'whileStanding' | 'juggle';
 export type ComboRouteTier = 'short' | 'medium' | 'long' | 'marathon';
+export type LaunchRouteStyle = 'grounded' | 'airChase' | 'hybrid';
 
 export type ResolvedMoveRoute = {
   id: string;
@@ -40,6 +41,7 @@ export type GeneratedComboRoute = {
   id: string;
   title: string;
   category: ComboRouteCategory;
+  launchRouteStyle?: LaunchRouteStyle;
   tier: ComboRouteTier;
   level: number;
   estimatedHits: number;
@@ -183,9 +185,14 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     .sort((a, b) => routeRewardScore(b) - routeRewardScore(a));
   for (const starter of launchers) {
     const advantage = Math.max(contextualHitAdvantage(starter.move, { context: 'neutral' }), 24);
-    const targets = findBestLinks(routes, advantage, starter, { allowStates: ['standing'], preferJuggle: true }, 2);
-    for (const target of targets) {
-      pushTrial(makeRouteTrial('launcher', starter, [target], `Launch +${advantage} -> i${target.move.startupFrames} juggle`, { launched: true }));
+    const starterRequiresAirChase = routeRequiresAirChase(starter);
+    const groundedTargets = starterRequiresAirChase ? [] : findBestLinks(routes, advantage, starter, { allowStates: ['standing'], preferJuggle: true, groundedOnly: true }, 2);
+    for (const target of groundedTargets) {
+      pushTrial(makeRouteTrial('launcher', starter, [target], `Grounded Launch +${advantage} -> i${target.move.startupFrames} juggle`, { launched: true }, undefined, 'grounded'));
+    }
+    const airTargets = findBestLinks(routes, advantage, starter, { allowStates: ['standing'], preferJuggle: true, airChaseOnly: true }, 1);
+    for (const target of airTargets) {
+      pushTrial(makeRouteTrial('launcher', starter, [target], `Air Chase Launch +${advantage} -> i${target.move.startupFrames} juggle`, { launched: true }, undefined, 'airChase'));
     }
   }
 
@@ -339,7 +346,7 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
         step,
         stepIndex,
         input: step.input,
-        score: 10 + routeCategoryCpuWeight(activeRoute.category, context) + routeTierCpuWeight(activeRoute.tier, context)
+        score: 10 + routeCategoryCpuWeight(activeRoute.category, context) + routeTierCpuWeight(activeRoute.tier, context) + launchRouteStyleCpuWeight(activeRoute, context)
       };
     }
   }
@@ -363,7 +370,7 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
         step,
         stepIndex,
         input: step.input,
-        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + freshness + difficultyBonus + closeoutPenalty + timing + variety + wave * 0.18
+        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + launchRouteStyleCpuWeight(route, context) + freshness + difficultyBonus + closeoutPenalty + timing + variety + wave * 0.18
       };
     })
     .filter((candidate) => candidate.score > 0 && isCpuRouteStepFreshEnough(candidate.step, usedKeys, context, false));
@@ -382,6 +389,7 @@ type RoutePlannerState = {
   routeState: ComboRouteState;
   identities: string[];
   families: string[];
+  launchRouteStyle: LaunchRouteStyle;
 };
 
 function startersForCategory(routes: ResolvedMoveRoute[], category: ComboRouteCategory) {
@@ -439,7 +447,8 @@ function initialPlannerState(category: ComboRouteCategory, starter: ResolvedMove
     launcherCount: launches ? 1 : 0,
     routeState: starter.move.endsInCrouch ? 'crouch' : 'standing',
     identities: [routeIdentity(starter)],
-    families: [routeFamily(starter)]
+    families: [routeFamily(starter)],
+    launchRouteStyle: launches && routeRequiresAirChase(starter) ? 'airChase' : 'grounded'
   };
 }
 
@@ -496,6 +505,7 @@ function advancePlannerState(state: RoutePlannerState, route: ResolvedMoveRoute)
   state.routeState = route.move.endsInCrouch ? 'crouch' : 'standing';
   state.identities = nextIdentities.slice(-MAX_ROUTE_HITS);
   state.families = nextFamilies.slice(-MAX_ROUTE_HITS);
+  state.launchRouteStyle = combineLaunchRouteStyle(state.launchRouteStyle, routeRequiresAirChase(route), state.comboHits);
 }
 
 function allowedFollowupStates(state: RoutePlannerState): ComboRouteState[] {
@@ -528,7 +538,7 @@ function nextRouteScore(route: ResolvedMoveRoute, state: RoutePlannerState, targ
     (route.move.tornado && state.context === 'juggle' ? (needsTornado ? 20 : 6) : 0) +
     ((route.move.launchHeight ?? 0) > 0 ? -8 : 0) +
     (route.move.knockdown ? -6 : 0) +
-    (state.context === 'juggle' ? juggleScore(route) * 0.35 + lightFiller : routeRewardScore(route) * 0.08)
+    (state.context === 'juggle' ? juggleScore(route) * 0.35 + lightFiller + groundedJuggleRouteBonus(route, state) : routeRewardScore(route) * 0.08)
   );
 }
 
@@ -567,7 +577,10 @@ function routeReasonForSequence(category: ComboRouteCategory, sequence: Resolved
   const actualHits = sequence.length;
   const parts = [`${actualHits}/${targetHits} hits`];
   if (category === 'counterHit') parts.push(`CH +${counterHitAdvantage(sequence[0].move)}`);
-  if ((sequence[0].move.launchHeight ?? 0) > 0) parts.push('Launch');
+  if ((sequence[0].move.launchHeight ?? 0) > 0) {
+    const style = launchRouteStyleForSequence(sequence);
+    parts.push(style === 'grounded' ? 'Grounded Launch' : style === 'airChase' ? 'Air Chase Launch' : 'Hybrid Launch');
+  }
   if (sequence.some((route) => route.move.tornado)) parts.push('Tornado');
   if (sequence.some((route) => route.move.endsInCrouch || route.state === 'crouch' || route.state === 'whileStanding')) parts.push('FC/WS');
   return parts.join(' -> ');
@@ -596,10 +609,12 @@ function makeRouteTrialFromSequence(
   }
 
   const estimatedHits = Math.min(MAX_ROUTE_HITS, steps.length);
+  const launchRouteStyle = (sequence[0].move.launchHeight ?? 0) > 0 ? launchRouteStyleForSequence(sequence) : undefined;
   return {
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${estimatedHits}:${targetHits}`,
-    title: `${sequence[0].command ?? sequence[0].label} ${estimatedHits}-Hit Route`,
+    title: routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
     category,
+    launchRouteStyle,
     tier: routeTier(estimatedHits),
     level: routeLevel(category, sequence[0], sequence.slice(1), estimatedHits),
     estimatedHits,
@@ -615,17 +630,21 @@ function makeRouteTrial(
   followups: ResolvedMoveRoute[],
   reason: string,
   starterExpectation?: ComboTrialStepExpectation,
-  firstFollowupExpectation?: ComboTrialStepExpectation
+  firstFollowupExpectation?: ComboTrialStepExpectation,
+  explicitLaunchRouteStyle?: LaunchRouteStyle
 ): GeneratedComboRoute {
   const steps = [
     routeToStep(starter, category === 'counterHit' || starterExpectation?.counterHit, reasonForStarter(starter, category), starterExpectation),
     ...followups.map((route, index) => routeToStep(route, false, reasonForFollowup(route), index === 0 ? firstFollowupExpectation : undefined))
   ];
   const estimatedHits = Math.min(MAX_ROUTE_HITS, steps.length);
+  const sequence = [starter, ...followups];
+  const launchRouteStyle = explicitLaunchRouteStyle ?? ((starter.move.launchHeight ?? 0) > 0 ? launchRouteStyleForSequence(sequence) : undefined);
   return {
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${reason}`,
-    title: category === 'counterHit' ? `${starter.command ?? starter.label} Counter Hit` : `${starter.command ?? starter.label} Route`,
+    title: category === 'counterHit' ? `${starter.command ?? starter.label} Counter Hit` : routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
     category,
+    launchRouteStyle,
     tier: routeTier(estimatedHits),
     level: routeLevel(category, starter, followups, estimatedHits),
     estimatedHits,
@@ -648,11 +667,53 @@ function routeToStep(route: ResolvedMoveRoute, counterHit = false, reason?: stri
   };
 }
 
+function routeTitleForSequence(category: ComboRouteCategory, sequence: ResolvedMoveRoute[], estimatedHits: number, launchRouteStyle?: LaunchRouteStyle) {
+  const starterName = sequence[0].command ?? sequence[0].label;
+  if (category === 'launcher' || launchRouteStyle) {
+    const label = launchRouteStyle === 'airChase' ? 'Air Chase Launcher' : launchRouteStyle === 'hybrid' ? 'Hybrid Launcher' : 'Grounded Launcher';
+    return estimatedHits > 2 ? `${starterName} ${label} ${estimatedHits}-Hit Route` : `${starterName} ${label} Route`;
+  }
+  return `${starterName} ${estimatedHits}-Hit Route`;
+}
+
+function launchRouteStyleForSequence(sequence: ResolvedMoveRoute[]): LaunchRouteStyle {
+  const followups = sequence.slice(1);
+  const firstAirIndex = followups.findIndex(routeRequiresAirChase);
+  if (routeRequiresAirChase(sequence[0]) || firstAirIndex === 0) return 'airChase';
+  if (firstAirIndex > 0) return 'hybrid';
+  return 'grounded';
+}
+
+function combineLaunchRouteStyle(current: LaunchRouteStyle, nextRequiresAirChase: boolean, comboHitsAfterAdvance: number): LaunchRouteStyle {
+  if (!nextRequiresAirChase) return current;
+  if (current === 'airChase' || comboHitsAfterAdvance <= 2) return 'airChase';
+  return 'hybrid';
+}
+
+function routeRequiresAirChase(route: ResolvedMoveRoute) {
+  return Boolean(route.move.jumpBeforeMove || route.move.tracking === 'homing' || routeUsesJumpNotation(route));
+}
+
+function routeUsesJumpNotation(route: ResolvedMoveRoute) {
+  return route.notation.some((token) => {
+    const normalized = token.toLowerCase();
+    return normalized === 'u' || normalized.includes('u/') || normalized.includes('/u');
+  }) ||
+    Boolean(route.command && /(^|[+,_])u([+,_]|$)|(^|[+,_])u\/[bf]([+,_]|$)/.test(route.command.toLowerCase()));
+}
+
+function groundedJuggleRouteBonus(route: ResolvedMoveRoute, state: RoutePlannerState) {
+  if (state.context !== 'juggle') return 0;
+  return routeRequiresAirChase(route)
+    ? (state.comboHits <= 3 ? -8 : -2.5)
+    : (state.comboHits <= 5 ? 7 : 2.5);
+}
+
 function findBestLink(
   routes: ResolvedMoveRoute[],
   advantage: number,
   starter: ResolvedMoveRoute,
-  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean; disallowLaunchers?: boolean }
+  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean; disallowLaunchers?: boolean; groundedOnly?: boolean; airChaseOnly?: boolean }
 ) {
   return findBestLinks(routes, advantage, starter, options, 1)[0] ?? null;
 }
@@ -661,13 +722,15 @@ function findBestLinks(
   routes: ResolvedMoveRoute[],
   advantage: number,
   starter: ResolvedMoveRoute,
-  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean; disallowLaunchers?: boolean },
+  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean; disallowLaunchers?: boolean; groundedOnly?: boolean; airChaseOnly?: boolean },
   limit: number
 ) {
   return routes
     .filter((route) => route.id !== starter.id)
     .filter((route) => options.allowStates.includes(route.state))
     .filter((route) => !(options.disallowLaunchers && (route.move.launchHeight ?? 0) > 0))
+    .filter((route) => !options.groundedOnly || !routeRequiresAirChase(route))
+    .filter((route) => !options.airChaseOnly || routeRequiresAirChase(route))
     .filter((route) => !(options.preferJuggle && (starter.move.launchHeight ?? 0) > 0 && (route.move.launchHeight ?? 0) > 0))
     .filter((route) => route.move.startupFrames <= advantage)
     .filter((route) => route.move.damage > 0)
@@ -907,6 +970,14 @@ function routeTierCpuWeight(tier: ComboRouteTier, context: CpuRouteContext) {
   if (tier === 'medium') return context.difficulty >= 4 ? 0.08 : -0.08;
   if (tier === 'long') return context.difficulty >= 5 && context.opening !== 'neutral' ? 0.04 : -0.24;
   return context.difficulty >= 5 && context.opening === 'juggle' ? -0.02 : -0.5;
+}
+
+function launchRouteStyleCpuWeight(route: GeneratedComboRoute, context: CpuRouteContext) {
+  if (!route.launchRouteStyle || (route.category !== 'launcher' && route.category !== 'tornado')) return 0;
+  if (context.opening !== 'juggle' && context.opening !== 'hitstun') return 0;
+  if (route.launchRouteStyle === 'grounded') return context.difficulty >= 4 ? 0.72 : 0.38;
+  if (route.launchRouteStyle === 'hybrid') return context.difficulty >= 4 ? 0.16 : 0.04;
+  return context.difficulty >= 5 ? -0.32 : -0.58;
 }
 
 function cpuRouteKnowledgeChance(difficulty: CpuRouteContext['difficulty'], opening: CpuRouteContext['opening'], leaderCloseout?: boolean) {
