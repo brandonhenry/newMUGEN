@@ -1,6 +1,6 @@
 {
   "source": "Nami (Perfect Clima-Tact).png",
-  "count": 177,
+  "count": 185,
   "sheets": [
     {
       "id": "main",
@@ -2842,6 +2842,206 @@
       "width": 157,
       "height": 62,
       "row": 18
+    },
+    {
+      "index": 177,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-177.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 46,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        46,
+        38
+      ],
+      "width": 46,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 178,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-178.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        46,
+        38
+      ],
+      "width": 46,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-073.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-073.png"
+      }
+    },
+    {
+      "index": 179,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-179.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 54,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        54,
+        38
+      ],
+      "width": 54,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-074.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-074.png"
+      }
+    },
+    {
+      "index": 180,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-180.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 53,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        53,
+        38
+      ],
+      "width": 53,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 181,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-181.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 53,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        53,
+        38
+      ],
+      "width": 53,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 182,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-182.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 53,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        53,
+        38
+      ],
+      "width": 53,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 183,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-183.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        46,
+        38
+      ],
+      "width": 46,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-078.png"
+      }
+    },
+    {
+      "index": 184,
+      "path": "/characters/nami-perfect-clima-tact/frames/frame-184.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        46,
+        38
+      ],
+      "width": 46,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nami-perfect-clima-tact/frames/frame-021.png|upper=/characters/nami-perfect-clima-tact/frames/frame-079.png",
+      "generatedSources": {
+        "crouch": "/characters/nami-perfect-clima-tact/frames/frame-021.png",
+        "upper": "/characters/nami-perfect-clima-tact/frames/frame-079.png"
+      }
     }
   ]
 }

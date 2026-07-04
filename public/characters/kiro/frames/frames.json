@@ -4,7 +4,7 @@
     145,
     231
   ],
-  "count": 522,
+  "count": 528,
   "frames": [
     {
       "index": 0,
@@ -9714,6 +9714,156 @@
       "height": 75,
       "row": 14,
       "sourceMode": "sheet"
+    },
+    {
+      "index": 522,
+      "path": "/characters/kiro/frames/frame-522.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 26,
+      "replacementHeight": 30,
+      "box": [
+        0,
+        0,
+        26,
+        30
+      ],
+      "width": 26,
+      "height": 30,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kiro/frames/frame-124.png|upper=/characters/kiro/frames/frame-016.png",
+      "generatedSources": {
+        "crouch": "/characters/kiro/frames/frame-124.png",
+        "upper": "/characters/kiro/frames/frame-016.png"
+      }
+    },
+    {
+      "index": 523,
+      "path": "/characters/kiro/frames/frame-523.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 26,
+      "replacementHeight": 30,
+      "box": [
+        0,
+        0,
+        26,
+        30
+      ],
+      "width": 26,
+      "height": 30,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kiro/frames/frame-124.png|upper=/characters/kiro/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/kiro/frames/frame-124.png",
+        "upper": "/characters/kiro/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 524,
+      "path": "/characters/kiro/frames/frame-524.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 26,
+      "replacementHeight": 30,
+      "box": [
+        0,
+        0,
+        26,
+        30
+      ],
+      "width": 26,
+      "height": 30,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kiro/frames/frame-124.png|upper=/characters/kiro/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/kiro/frames/frame-124.png",
+        "upper": "/characters/kiro/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 525,
+      "path": "/characters/kiro/frames/frame-525.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 29,
+      "replacementHeight": 30,
+      "box": [
+        0,
+        0,
+        29,
+        30
+      ],
+      "width": 29,
+      "height": 30,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kiro/frames/frame-124.png|upper=/characters/kiro/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/kiro/frames/frame-124.png",
+        "upper": "/characters/kiro/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 526,
+      "path": "/characters/kiro/frames/frame-526.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 26,
+      "replacementHeight": 30,
+      "box": [
+        0,
+        0,
+        26,
+        30
+      ],
+      "width": 26,
+      "height": 30,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kiro/frames/frame-124.png|upper=/characters/kiro/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/kiro/frames/frame-124.png",
+        "upper": "/characters/kiro/frames/frame-078.png"
+      }
+    },
+    {
+      "index": 527,
+      "path": "/characters/kiro/frames/frame-527.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 26,
+      "replacementHeight": 30,
+      "box": [
+        0,
+        0,
+        26,
+        30
+      ],
+      "width": 26,
+      "height": 30,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kiro/frames/frame-124.png|upper=/characters/kiro/frames/frame-079.png",
+      "generatedSources": {
+        "crouch": "/characters/kiro/frames/frame-124.png",
+        "upper": "/characters/kiro/frames/frame-079.png"
+      }
     }
   ],
   "sheets": [

@@ -17,7 +17,7 @@
       "frameCount": 230
     }
   ],
-  "spriteFrameCount": 230,
+  "spriteFrameCount": 234,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -129,9 +129,9 @@
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
     "cmd:FC+1": [
-      "/characters/monkey-d-luffy-2nd-gear/frames/frame-077.png",
-      "/characters/monkey-d-luffy-2nd-gear/frames/frame-078.png",
-      "/characters/monkey-d-luffy-2nd-gear/frames/frame-079.png"
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-231.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-232.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-233.png"
     ],
     "cmd:FC+2": [
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-089.png",
@@ -205,6 +205,9 @@
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-077.png",
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-078.png",
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-079.png"
+    ],
+    "crouchBlock": [
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-230.png"
     ]
   },
   "animationFrameRates": {
@@ -247,7 +250,8 @@
     "cmd:d+1": 10,
     "cmd:qcf+1": 10,
     "cmd:WS+2": 10,
-    "cmd:O+1": 10
+    "cmd:O+1": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1649,7 +1653,7 @@
     "sprint": {
       "12": {
         "width": 1.11,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "13": {
@@ -1811,8 +1815,8 @@
         "offsetX": 0
       },
       "85": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "86": {
@@ -2095,22 +2099,22 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "2": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "3": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.96,
         "offsetX": 0
       }
@@ -2156,6 +2160,21 @@
       "79": {
         "width": 0.79,
         "height": 0.79,
+        "offsetX": 0
+      },
+      "231": {
+        "width": 0.59,
+        "height": 0.62,
+        "offsetX": 0
+      },
+      "232": {
+        "width": 0.75,
+        "height": 0.62,
+        "offsetX": 0
+      },
+      "233": {
+        "width": 0.59,
+        "height": 0.62,
         "offsetX": 0
       }
     },
@@ -2288,6 +2307,21 @@
       "79": {
         "width": 0.79,
         "height": 0.79,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {},
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:2+3": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "230": {
+        "width": 0.62,
+        "height": 0.62,
         "offsetX": 0
       }
     }

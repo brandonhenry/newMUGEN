@@ -1,6 +1,6 @@
 {
   "source": "Renji Abarai.png",
-  "count": 197,
+  "count": 203,
   "sheets": [
     {
       "id": "main",
@@ -3162,6 +3162,156 @@
       "width": 158,
       "height": 76,
       "row": 19
+    },
+    {
+      "index": 197,
+      "path": "/characters/renji-abarai/frames/frame-197.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 46,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        46,
+        40
+      ],
+      "width": 46,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/renji-abarai/frames/frame-022.png|upper=/characters/renji-abarai/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/renji-abarai/frames/frame-022.png",
+        "upper": "/characters/renji-abarai/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 198,
+      "path": "/characters/renji-abarai/frames/frame-198.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        46,
+        40
+      ],
+      "width": 46,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/renji-abarai/frames/frame-022.png|upper=/characters/renji-abarai/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/renji-abarai/frames/frame-022.png",
+        "upper": "/characters/renji-abarai/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 199,
+      "path": "/characters/renji-abarai/frames/frame-199.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 67,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        67,
+        40
+      ],
+      "width": 67,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/renji-abarai/frames/frame-022.png|upper=/characters/renji-abarai/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/renji-abarai/frames/frame-022.png",
+        "upper": "/characters/renji-abarai/frames/frame-084.png"
+      }
+    },
+    {
+      "index": 200,
+      "path": "/characters/renji-abarai/frames/frame-200.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        46,
+        40
+      ],
+      "width": 46,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/renji-abarai/frames/frame-022.png|upper=/characters/renji-abarai/frames/frame-085.png",
+      "generatedSources": {
+        "crouch": "/characters/renji-abarai/frames/frame-022.png",
+        "upper": "/characters/renji-abarai/frames/frame-085.png"
+      }
+    },
+    {
+      "index": 201,
+      "path": "/characters/renji-abarai/frames/frame-201.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        46,
+        40
+      ],
+      "width": 46,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/renji-abarai/frames/frame-022.png|upper=/characters/renji-abarai/frames/frame-086.png",
+      "generatedSources": {
+        "crouch": "/characters/renji-abarai/frames/frame-022.png",
+        "upper": "/characters/renji-abarai/frames/frame-086.png"
+      }
+    },
+    {
+      "index": 202,
+      "path": "/characters/renji-abarai/frames/frame-202.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        46,
+        40
+      ],
+      "width": 46,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/renji-abarai/frames/frame-022.png|upper=/characters/renji-abarai/frames/frame-087.png",
+      "generatedSources": {
+        "crouch": "/characters/renji-abarai/frames/frame-022.png",
+        "upper": "/characters/renji-abarai/frames/frame-087.png"
+      }
     }
   ]
 }

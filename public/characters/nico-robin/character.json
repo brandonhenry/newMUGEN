@@ -16,7 +16,7 @@
       "frameCount": 255
     }
   ],
-  "spriteFrameCount": 255,
+  "spriteFrameCount": 263,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -126,13 +126,13 @@
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
     "cmd:FC+1": [
-      "/characters/nico-robin/frames/frame-056.png",
-      "/characters/nico-robin/frames/frame-075.png",
-      "/characters/nico-robin/frames/frame-076.png",
-      "/characters/nico-robin/frames/frame-077.png",
-      "/characters/nico-robin/frames/frame-078.png",
-      "/characters/nico-robin/frames/frame-079.png",
-      "/characters/nico-robin/frames/frame-080.png"
+      "/characters/nico-robin/frames/frame-256.png",
+      "/characters/nico-robin/frames/frame-257.png",
+      "/characters/nico-robin/frames/frame-258.png",
+      "/characters/nico-robin/frames/frame-259.png",
+      "/characters/nico-robin/frames/frame-260.png",
+      "/characters/nico-robin/frames/frame-261.png",
+      "/characters/nico-robin/frames/frame-262.png"
     ],
     "cmd:FC+2": [],
     "cmd:1+2": [
@@ -258,6 +258,9 @@
       "/characters/nico-robin/frames/frame-078.png",
       "/characters/nico-robin/frames/frame-079.png",
       "/characters/nico-robin/frames/frame-080.png"
+    ],
+    "crouchBlock": [
+      "/characters/nico-robin/frames/frame-255.png"
     ]
   },
   "animationFrameRates": {
@@ -298,7 +301,8 @@
     "cmd:O+2": 8,
     "cmd:d+1": 10,
     "cmd:qcf+1": 10,
-    "cmd:O+1": 10
+    "cmd:O+1": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1693,7 +1697,7 @@
     "cmd:1+3": {
       "101": {
         "width": 0.91,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "102": {
@@ -1790,12 +1794,12 @@
     "jableft": {
       "56": {
         "width": 0.95,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "75": {
         "width": 1.17,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "76": {
@@ -1827,7 +1831,7 @@
     "cmd:1+2": {
       "93": {
         "width": 1.26,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "94": {
@@ -1856,18 +1860,18 @@
         "offsetX": 0
       },
       "99": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "100": {
         "width": 0.98,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "101": {
         "width": 0.91,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -1878,7 +1882,7 @@
         "offsetX": 0
       },
       "165": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
@@ -1925,7 +1929,7 @@
         "offsetX": 0
       },
       "6": {
-        "width": 2,
+        "width": 2.0,
         "height": 0.82,
         "offsetX": 0
       },
@@ -2104,7 +2108,7 @@
       },
       "56": {
         "width": 0.95,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -2185,7 +2189,7 @@
     "cmd:3+4": {
       "231": {
         "width": 1.04,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "232": {
@@ -2242,7 +2246,7 @@
     "cmd:1+4": {
       "120": {
         "width": 0.98,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "121": {
@@ -2252,31 +2256,31 @@
       },
       "122": {
         "width": 0.98,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "123": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "124": {
         "width": 0.98,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "125": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "126": {
         "width": 0.98,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "127": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
@@ -2355,22 +2359,22 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "2": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "3": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       }
@@ -2378,7 +2382,7 @@
     "block": {
       "15": {
         "width": 1.52,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -2409,12 +2413,12 @@
     "cmd:f+1": {
       "56": {
         "width": 0.95,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "75": {
         "width": 1.17,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "76": {
@@ -2478,17 +2482,52 @@
         "width": 0.92,
         "height": 0.94,
         "offsetX": 0
+      },
+      "256": {
+        "width": 0.61,
+        "height": 0.78,
+        "offsetX": 0
+      },
+      "257": {
+        "width": 0.71,
+        "height": 0.78,
+        "offsetX": 0
+      },
+      "258": {
+        "width": 0.77,
+        "height": 0.78,
+        "offsetX": 0
+      },
+      "259": {
+        "width": 0.77,
+        "height": 0.78,
+        "offsetX": 0
+      },
+      "260": {
+        "width": 0.77,
+        "height": 0.78,
+        "offsetX": 0
+      },
+      "261": {
+        "width": 0.77,
+        "height": 0.78,
+        "offsetX": 0
+      },
+      "262": {
+        "width": 0.77,
+        "height": 0.78,
+        "offsetX": 0
       }
     },
     "cmd:d+1": {
       "56": {
         "width": 0.95,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "75": {
         "width": 1.17,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "76": {
@@ -2520,12 +2559,12 @@
     "cmd:qcf+1": {
       "56": {
         "width": 0.95,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "75": {
         "width": 1.17,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "76": {
@@ -2557,12 +2596,12 @@
     "cmd:O+1": {
       "56": {
         "width": 0.95,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "75": {
         "width": 1.17,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "76": {
@@ -2588,6 +2627,23 @@
       "80": {
         "width": 0.92,
         "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "jabright": {},
+    "kickleft": {},
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:d/f+2": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:FC+2": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "255": {
+        "width": 0.77,
+        "height": 0.78,
         "offsetX": 0
       }
     }

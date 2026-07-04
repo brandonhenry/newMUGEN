@@ -1,6 +1,6 @@
 {
   "source": "Kinnikuman.png",
-  "count": 303,
+  "count": 309,
   "sheets": [
     {
       "id": "main",
@@ -4858,6 +4858,156 @@
       "width": 157,
       "height": 62,
       "row": 31
+    },
+    {
+      "index": 303,
+      "path": "/characters/kinnikuman/frames/frame-303.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kinnikuman/frames/frame-022.png|upper=/characters/kinnikuman/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/kinnikuman/frames/frame-022.png",
+        "upper": "/characters/kinnikuman/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 304,
+      "path": "/characters/kinnikuman/frames/frame-304.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kinnikuman/frames/frame-022.png|upper=/characters/kinnikuman/frames/frame-073.png",
+      "generatedSources": {
+        "crouch": "/characters/kinnikuman/frames/frame-022.png",
+        "upper": "/characters/kinnikuman/frames/frame-073.png"
+      }
+    },
+    {
+      "index": 305,
+      "path": "/characters/kinnikuman/frames/frame-305.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kinnikuman/frames/frame-022.png|upper=/characters/kinnikuman/frames/frame-074.png",
+      "generatedSources": {
+        "crouch": "/characters/kinnikuman/frames/frame-022.png",
+        "upper": "/characters/kinnikuman/frames/frame-074.png"
+      }
+    },
+    {
+      "index": 306,
+      "path": "/characters/kinnikuman/frames/frame-306.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 49,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        49,
+        40
+      ],
+      "width": 49,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kinnikuman/frames/frame-022.png|upper=/characters/kinnikuman/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/kinnikuman/frames/frame-022.png",
+        "upper": "/characters/kinnikuman/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 307,
+      "path": "/characters/kinnikuman/frames/frame-307.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 51,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        51,
+        40
+      ],
+      "width": 51,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kinnikuman/frames/frame-022.png|upper=/characters/kinnikuman/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/kinnikuman/frames/frame-022.png",
+        "upper": "/characters/kinnikuman/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 308,
+      "path": "/characters/kinnikuman/frames/frame-308.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kinnikuman/frames/frame-022.png|upper=/characters/kinnikuman/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/kinnikuman/frames/frame-022.png",
+        "upper": "/characters/kinnikuman/frames/frame-077.png"
+      }
     }
   ]
 }

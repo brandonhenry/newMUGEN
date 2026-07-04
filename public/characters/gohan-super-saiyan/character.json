@@ -16,7 +16,7 @@
       "frameCount": 150
     }
   ],
-  "spriteFrameCount": 150,
+  "spriteFrameCount": 154,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -125,9 +125,9 @@
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
     "cmd:FC+1": [
-      "/characters/gohan-super-saiyan/frames/frame-084.png",
-      "/characters/gohan-super-saiyan/frames/frame-085.png",
-      "/characters/gohan-super-saiyan/frames/frame-086.png"
+      "/characters/gohan-super-saiyan/frames/frame-151.png",
+      "/characters/gohan-super-saiyan/frames/frame-152.png",
+      "/characters/gohan-super-saiyan/frames/frame-153.png"
     ],
     "cmd:FC+2": [
       "/characters/gohan-super-saiyan/frames/frame-079.png",
@@ -242,6 +242,9 @@
       "/characters/gohan-super-saiyan/frames/frame-084.png",
       "/characters/gohan-super-saiyan/frames/frame-085.png",
       "/characters/gohan-super-saiyan/frames/frame-086.png"
+    ],
+    "crouchBlock": [
+      "/characters/gohan-super-saiyan/frames/frame-150.png"
     ]
   },
   "animationFrameRates": {
@@ -289,7 +292,8 @@
     "cmd:qcf+3": 9,
     "cmd:WS+2": 10,
     "cmd:SS+3": 9,
-    "cmd:O+1": 10
+    "cmd:O+1": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1741,13 +1745,13 @@
         "offsetX": 0
       },
       "30": {
-        "width": 0.47,
-        "height": 0.47,
+        "width": 0.61,
+        "height": 0.68,
         "offsetX": 0
       },
       "31": {
-        "width": 0.43,
-        "height": 0.43,
+        "width": 0.56,
+        "height": 0.63,
         "offsetX": 0
       }
     },
@@ -1763,13 +1767,13 @@
         "offsetX": 0
       },
       "30": {
-        "width": 0.47,
-        "height": 0.47,
+        "width": 0.61,
+        "height": 0.68,
         "offsetX": 0
       },
       "31": {
-        "width": 0.43,
-        "height": 0.43,
+        "width": 0.56,
+        "height": 0.63,
         "offsetX": 0
       },
       "46": {
@@ -1873,7 +1877,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -1949,7 +1953,7 @@
     "block": {
       "11": {
         "width": 0.9,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -1973,7 +1977,7 @@
     "jabright": {
       "79": {
         "width": 0.85,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2028,7 +2032,7 @@
     "cmd:1+2": {
       "79": {
         "width": 0.85,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2080,7 +2084,7 @@
       },
       "114": {
         "width": 0.97,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "115": {
@@ -2141,6 +2145,21 @@
         "width": 0.97,
         "height": 0.91,
         "offsetX": 0
+      },
+      "151": {
+        "width": 0.73,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.73,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.71,
+        "height": 0.79,
+        "offsetX": 0
       }
     },
     "cmd:d+1": {
@@ -2197,7 +2216,7 @@
     "cmd:d/f+2": {
       "79": {
         "width": 0.85,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2224,7 +2243,7 @@
     "cmd:FC+2": {
       "79": {
         "width": 0.85,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2251,7 +2270,7 @@
     "cmd:f+2": {
       "79": {
         "width": 0.85,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2278,7 +2297,7 @@
     "cmd:WS+2": {
       "79": {
         "width": 0.85,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2325,7 +2344,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2357,7 +2376,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2389,7 +2408,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2421,7 +2440,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2453,7 +2472,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2485,7 +2504,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2517,7 +2536,7 @@
       },
       "129": {
         "width": 0.92,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "130": {
@@ -2528,8 +2547,8 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
@@ -2556,12 +2575,26 @@
       },
       "93": {
         "width": 0.75,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "94": {
         "width": 0.72,
         "height": 0.93,
+        "offsetX": 0
+      }
+    },
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:2+4": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "150": {
+        "width": 0.71,
+        "height": 0.79,
         "offsetX": 0
       }
     }

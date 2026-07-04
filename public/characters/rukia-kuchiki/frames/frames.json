@@ -1,6 +1,6 @@
 {
   "source": "Rukia Kuchiki.png",
-  "count": 214,
+  "count": 222,
   "sheets": [
     {
       "id": "main",
@@ -3434,6 +3434,206 @@
       "width": 158,
       "height": 71,
       "row": 21
+    },
+    {
+      "index": 214,
+      "path": "/characters/rukia-kuchiki/frames/frame-214.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 35,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        35,
+        35
+      ],
+      "width": 35,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 215,
+      "path": "/characters/rukia-kuchiki/frames/frame-215.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        35,
+        35
+      ],
+      "width": 35,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-080.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-080.png"
+      }
+    },
+    {
+      "index": 216,
+      "path": "/characters/rukia-kuchiki/frames/frame-216.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        35,
+        35
+      ],
+      "width": 35,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-081.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-081.png"
+      }
+    },
+    {
+      "index": 217,
+      "path": "/characters/rukia-kuchiki/frames/frame-217.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        35,
+        35
+      ],
+      "width": 35,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-082.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-082.png"
+      }
+    },
+    {
+      "index": 218,
+      "path": "/characters/rukia-kuchiki/frames/frame-218.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        42,
+        35
+      ],
+      "width": 42,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 219,
+      "path": "/characters/rukia-kuchiki/frames/frame-219.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 43,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        43,
+        35
+      ],
+      "width": 43,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-084.png"
+      }
+    },
+    {
+      "index": 220,
+      "path": "/characters/rukia-kuchiki/frames/frame-220.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        35,
+        35
+      ],
+      "width": 35,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-085.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-085.png"
+      }
+    },
+    {
+      "index": 221,
+      "path": "/characters/rukia-kuchiki/frames/frame-221.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        35,
+        35
+      ],
+      "width": 35,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/rukia-kuchiki/frames/frame-022.png|upper=/characters/rukia-kuchiki/frames/frame-086.png",
+      "generatedSources": {
+        "crouch": "/characters/rukia-kuchiki/frames/frame-022.png",
+        "upper": "/characters/rukia-kuchiki/frames/frame-086.png"
+      }
     }
   ]
 }

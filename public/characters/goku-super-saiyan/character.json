@@ -17,7 +17,7 @@
       "frameCount": 191
     }
   ],
-  "spriteFrameCount": 191,
+  "spriteFrameCount": 198,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -165,12 +165,12 @@
       "/characters/goku-super-saiyan/frames/frame-104.png"
     ],
     "cmd:FC+1": [
-      "/characters/goku-super-saiyan/frames/frame-079.png",
-      "/characters/goku-super-saiyan/frames/frame-080.png",
-      "/characters/goku-super-saiyan/frames/frame-081.png",
-      "/characters/goku-super-saiyan/frames/frame-082.png",
-      "/characters/goku-super-saiyan/frames/frame-083.png",
-      "/characters/goku-super-saiyan/frames/frame-084.png"
+      "/characters/goku-super-saiyan/frames/frame-192.png",
+      "/characters/goku-super-saiyan/frames/frame-193.png",
+      "/characters/goku-super-saiyan/frames/frame-194.png",
+      "/characters/goku-super-saiyan/frames/frame-195.png",
+      "/characters/goku-super-saiyan/frames/frame-196.png",
+      "/characters/goku-super-saiyan/frames/frame-197.png"
     ],
     "cmd:FC+2": [
       "/characters/goku-super-saiyan/frames/frame-065.png",
@@ -357,6 +357,9 @@
       "/characters/goku-super-saiyan/frames/frame-102.png",
       "/characters/goku-super-saiyan/frames/frame-103.png",
       "/characters/goku-super-saiyan/frames/frame-104.png"
+    ],
+    "crouchBlock": [
+      "/characters/goku-super-saiyan/frames/frame-191.png"
     ]
   },
   "animationFrameRates": {
@@ -407,7 +410,8 @@
     "cmd:SS+3": 9,
     "cmd:SS+4": 9,
     "cmd:O+1": 10,
-    "cmd:O+4": 9
+    "cmd:O+4": 9,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1948,18 +1952,18 @@
         "offsetX": 0
       },
       "30": {
-        "width": 0.44,
-        "height": 0.44,
+        "width": 0.52,
+        "height": 0.5,
         "offsetX": 0
       },
       "31": {
-        "width": 0.42,
-        "height": 0.42,
+        "width": 0.5,
+        "height": 0.48,
         "offsetX": 0
       },
       "32": {
-        "width": 0.51,
-        "height": 0.51,
+        "width": 0.6,
+        "height": 0.58,
         "offsetX": 0
       }
     },
@@ -1970,18 +1974,18 @@
         "offsetX": 0
       },
       "30": {
-        "width": 0.44,
-        "height": 0.44,
+        "width": 0.52,
+        "height": 0.5,
         "offsetX": 0
       },
       "31": {
-        "width": 0.42,
-        "height": 0.42,
+        "width": 0.5,
+        "height": 0.48,
         "offsetX": 0
       },
       "32": {
-        "width": 0.51,
-        "height": 0.51,
+        "width": 0.6,
+        "height": 0.58,
         "offsetX": 0
       },
       "47": {
@@ -2419,8 +2423,8 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
@@ -2462,7 +2466,7 @@
     },
     "lose": {
       "24": {
-        "width": 2,
+        "width": 2.0,
         "height": 0.32,
         "offsetX": 0
       }
@@ -2607,6 +2611,36 @@
       "84": {
         "width": 0.87,
         "height": 0.84,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 0.65,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "193": {
+        "width": 0.65,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 0.65,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "195": {
+        "width": 0.65,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "196": {
+        "width": 0.65,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 0.65,
+        "height": 0.63,
         "offsetX": 0
       }
     },
@@ -3281,6 +3315,16 @@
       "104": {
         "width": 0.8,
         "height": 0.78,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "191": {
+        "width": 0.65,
+        "height": 0.63,
         "offsetX": 0
       }
     }

@@ -20,6 +20,8 @@ from typing import Any
 
 from PIL import Image
 
+from synthesize_crouch_composites import synthesize_character
+
 
 SOURCE_ROOT = Path("/Users/brandonhenry/Documents/Kore/Characters/sprite-sheets")
 PROTECTED_IDS = {"kiro", "riven"}
@@ -1067,6 +1069,7 @@ def import_character(repo: Path, source_dir: Path, character_id: str) -> dict[st
     animation_frames, animation_rates = animation_frame_map(character_id, frames)
     manifest = manifest_for(character_id, source_dir.name, len(frames), animation_frames, animation_rates)
     (character_dir / "character.json").write_text(json.dumps(remove_none(manifest), indent=2, ensure_ascii=False) + "\n")
+    synthesize_character(repo, character_id, apply=True)
     return {"id": character_id, "name": source_dir.name, "frames": len(frames), "source": str(source_png)}
 
 

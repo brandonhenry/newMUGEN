@@ -1,6 +1,6 @@
 {
   "source": "Yoh Asakura (Power Sword).png",
-  "count": 163,
+  "count": 170,
   "sheets": [
     {
       "id": "main",
@@ -2618,6 +2618,181 @@
       "width": 157,
       "height": 62,
       "row": 16
+    },
+    {
+      "index": 163,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-163.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 63,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        63,
+        47
+      ],
+      "width": 63,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 164,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-164.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+2.png",
+      "replacementWidth": 67,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        67,
+        47
+      ],
+      "width": 67,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+2",
+      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-142.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-142.png"
+      }
+    },
+    {
+      "index": 165,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-165.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+2.png",
+      "replacementWidth": 118,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        118,
+        47
+      ],
+      "width": 118,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+2",
+      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-143.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-143.png"
+      }
+    },
+    {
+      "index": 166,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-166.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+2.png",
+      "replacementWidth": 121,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        121,
+        47
+      ],
+      "width": 121,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+2",
+      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-144.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-144.png"
+      }
+    },
+    {
+      "index": 167,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-167.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+2.png",
+      "replacementWidth": 98,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        98,
+        47
+      ],
+      "width": 98,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+2",
+      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-145.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-145.png"
+      }
+    },
+    {
+      "index": 168,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-168.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+2.png",
+      "replacementWidth": 83,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        83,
+        47
+      ],
+      "width": 83,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+2",
+      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-146.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-146.png"
+      }
+    },
+    {
+      "index": 169,
+      "path": "/characters/yoh-asakura-power-sword/frames/frame-169.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+2.png",
+      "replacementWidth": 63,
+      "replacementHeight": 47,
+      "box": [
+        0,
+        0,
+        63,
+        47
+      ],
+      "width": 63,
+      "height": 47,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+2",
+      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura-power-sword/frames/frame-022.png|upper=/characters/yoh-asakura-power-sword/frames/frame-147.png",
+      "generatedSources": {
+        "crouch": "/characters/yoh-asakura-power-sword/frames/frame-022.png",
+        "upper": "/characters/yoh-asakura-power-sword/frames/frame-147.png"
+      }
     }
   ]
 }

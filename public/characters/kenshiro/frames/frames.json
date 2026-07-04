@@ -1,6 +1,6 @@
 {
   "source": "Kenshiro.png",
-  "count": 282,
+  "count": 291,
   "sheets": [
     {
       "id": "main",
@@ -4522,6 +4522,231 @@
       "width": 157,
       "height": 62,
       "row": 30
+    },
+    {
+      "index": 282,
+      "path": "/characters/kenshiro/frames/frame-282.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 38,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        38,
+        46
+      ],
+      "width": 38,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-018.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-018.png"
+      }
+    },
+    {
+      "index": 283,
+      "path": "/characters/kenshiro/frames/frame-283.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        38,
+        46
+      ],
+      "width": 38,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-082.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-082.png"
+      }
+    },
+    {
+      "index": 284,
+      "path": "/characters/kenshiro/frames/frame-284.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        38,
+        46
+      ],
+      "width": 38,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 285,
+      "path": "/characters/kenshiro/frames/frame-285.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 45,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        45,
+        46
+      ],
+      "width": 45,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-084.png"
+      }
+    },
+    {
+      "index": 286,
+      "path": "/characters/kenshiro/frames/frame-286.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        46,
+        46
+      ],
+      "width": 46,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-085.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-085.png"
+      }
+    },
+    {
+      "index": 287,
+      "path": "/characters/kenshiro/frames/frame-287.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 46,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        46,
+        46
+      ],
+      "width": 46,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-086.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-086.png"
+      }
+    },
+    {
+      "index": 288,
+      "path": "/characters/kenshiro/frames/frame-288.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        38,
+        46
+      ],
+      "width": 38,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-087.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-087.png"
+      }
+    },
+    {
+      "index": 289,
+      "path": "/characters/kenshiro/frames/frame-289.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        38,
+        46
+      ],
+      "width": 38,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-088.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-088.png"
+      }
+    },
+    {
+      "index": 290,
+      "path": "/characters/kenshiro/frames/frame-290.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 46,
+      "box": [
+        0,
+        0,
+        38,
+        46
+      ],
+      "width": 38,
+      "height": 46,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshiro/frames/frame-025.png|upper=/characters/kenshiro/frames/frame-089.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshiro/frames/frame-025.png",
+        "upper": "/characters/kenshiro/frames/frame-089.png"
+      }
     }
   ]
 }

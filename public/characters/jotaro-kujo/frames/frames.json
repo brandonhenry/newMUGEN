@@ -1,6 +1,6 @@
 {
   "source": "Jotaro Kujo.png",
-  "count": 194,
+  "count": 196,
   "sheets": [
     {
       "id": "main",
@@ -3114,6 +3114,56 @@
       "width": 157,
       "height": 62,
       "row": 20
+    },
+    {
+      "index": 194,
+      "path": "/characters/jotaro-kujo/frames/frame-194.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 37,
+      "replacementHeight": 41,
+      "box": [
+        0,
+        0,
+        37,
+        41
+      ],
+      "width": 37,
+      "height": 41,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/jotaro-kujo/frames/frame-024.png|upper=/characters/jotaro-kujo/frames/frame-017.png",
+      "generatedSources": {
+        "crouch": "/characters/jotaro-kujo/frames/frame-024.png",
+        "upper": "/characters/jotaro-kujo/frames/frame-017.png"
+      }
+    },
+    {
+      "index": 195,
+      "path": "/characters/jotaro-kujo/frames/frame-195.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 41,
+      "box": [
+        0,
+        0,
+        37,
+        41
+      ],
+      "width": 37,
+      "height": 41,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jotaro-kujo/frames/frame-024.png|upper=/characters/jotaro-kujo/frames/frame-128.png",
+      "generatedSources": {
+        "crouch": "/characters/jotaro-kujo/frames/frame-024.png",
+        "upper": "/characters/jotaro-kujo/frames/frame-128.png"
+      }
     }
   ]
 }

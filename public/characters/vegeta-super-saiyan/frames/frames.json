@@ -1,6 +1,6 @@
 {
   "source": "Vegeta (Super Saiyan).png",
-  "count": 185,
+  "count": 190,
   "sheets": [
     {
       "id": "main",
@@ -2970,6 +2970,131 @@
       "width": 157,
       "height": 62,
       "row": 19
+    },
+    {
+      "index": 185,
+      "path": "/characters/vegeta-super-saiyan/frames/frame-185.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 36,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        36,
+        42
+      ],
+      "width": 36,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/vegeta-super-saiyan/frames/frame-017.png|upper=/characters/vegeta-super-saiyan/frames/frame-011.png",
+      "generatedSources": {
+        "crouch": "/characters/vegeta-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/vegeta-super-saiyan/frames/frame-011.png"
+      }
+    },
+    {
+      "index": 186,
+      "path": "/characters/vegeta-super-saiyan/frames/frame-186.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 36,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        36,
+        42
+      ],
+      "width": 36,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta-super-saiyan/frames/frame-017.png|upper=/characters/vegeta-super-saiyan/frames/frame-065.png",
+      "generatedSources": {
+        "crouch": "/characters/vegeta-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/vegeta-super-saiyan/frames/frame-065.png"
+      }
+    },
+    {
+      "index": 187,
+      "path": "/characters/vegeta-super-saiyan/frames/frame-187.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        47,
+        42
+      ],
+      "width": 47,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta-super-saiyan/frames/frame-017.png|upper=/characters/vegeta-super-saiyan/frames/frame-066.png",
+      "generatedSources": {
+        "crouch": "/characters/vegeta-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/vegeta-super-saiyan/frames/frame-066.png"
+      }
+    },
+    {
+      "index": 188,
+      "path": "/characters/vegeta-super-saiyan/frames/frame-188.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 36,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        36,
+        42
+      ],
+      "width": 36,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta-super-saiyan/frames/frame-017.png|upper=/characters/vegeta-super-saiyan/frames/frame-067.png",
+      "generatedSources": {
+        "crouch": "/characters/vegeta-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/vegeta-super-saiyan/frames/frame-067.png"
+      }
+    },
+    {
+      "index": 189,
+      "path": "/characters/vegeta-super-saiyan/frames/frame-189.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 36,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        36,
+        42
+      ],
+      "width": 36,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta-super-saiyan/frames/frame-017.png|upper=/characters/vegeta-super-saiyan/frames/frame-068.png",
+      "generatedSources": {
+        "crouch": "/characters/vegeta-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/vegeta-super-saiyan/frames/frame-068.png"
+      }
     }
   ]
 }

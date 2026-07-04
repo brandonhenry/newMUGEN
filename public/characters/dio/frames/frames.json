@@ -1,6 +1,6 @@
 {
   "source": "DIO.png",
-  "count": 209,
+  "count": 214,
   "sheets": [
     {
       "id": "main",
@@ -3354,6 +3354,131 @@
       "width": 157,
       "height": 62,
       "row": 21
+    },
+    {
+      "index": 209,
+      "path": "/characters/dio/frames/frame-209.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 42,
+      "replacementHeight": 20,
+      "box": [
+        0,
+        0,
+        42,
+        20
+      ],
+      "width": 42,
+      "height": 20,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/dio/frames/frame-050.png|upper=/characters/dio/frames/frame-013.png",
+      "generatedSources": {
+        "crouch": "/characters/dio/frames/frame-050.png",
+        "upper": "/characters/dio/frames/frame-013.png"
+      }
+    },
+    {
+      "index": 210,
+      "path": "/characters/dio/frames/frame-210.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 20,
+      "box": [
+        0,
+        0,
+        42,
+        20
+      ],
+      "width": 42,
+      "height": 20,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/dio/frames/frame-050.png|upper=/characters/dio/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/dio/frames/frame-050.png",
+        "upper": "/characters/dio/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 211,
+      "path": "/characters/dio/frames/frame-211.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 20,
+      "box": [
+        0,
+        0,
+        42,
+        20
+      ],
+      "width": 42,
+      "height": 20,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/dio/frames/frame-050.png|upper=/characters/dio/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/dio/frames/frame-050.png",
+        "upper": "/characters/dio/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 212,
+      "path": "/characters/dio/frames/frame-212.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 20,
+      "box": [
+        0,
+        0,
+        42,
+        20
+      ],
+      "width": 42,
+      "height": 20,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/dio/frames/frame-050.png|upper=/characters/dio/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/dio/frames/frame-050.png",
+        "upper": "/characters/dio/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 213,
+      "path": "/characters/dio/frames/frame-213.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 20,
+      "box": [
+        0,
+        0,
+        42,
+        20
+      ],
+      "width": 42,
+      "height": 20,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/dio/frames/frame-050.png|upper=/characters/dio/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/dio/frames/frame-050.png",
+        "upper": "/characters/dio/frames/frame-078.png"
+      }
     }
   ]
 }

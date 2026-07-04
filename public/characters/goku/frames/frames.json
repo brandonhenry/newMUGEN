@@ -1,6 +1,6 @@
 {
   "source": "Goku.png",
-  "count": 222,
+  "count": 227,
   "sheets": [
     {
       "id": "main",
@@ -3562,6 +3562,131 @@
       "width": 157,
       "height": 62,
       "row": 23
+    },
+    {
+      "index": 222,
+      "path": "/characters/goku/frames/frame-222.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 47,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        47,
+        35
+      ],
+      "width": 47,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/goku/frames/frame-017.png|upper=/characters/goku/frames/frame-011.png",
+      "generatedSources": {
+        "crouch": "/characters/goku/frames/frame-017.png",
+        "upper": "/characters/goku/frames/frame-011.png"
+      }
+    },
+    {
+      "index": 223,
+      "path": "/characters/goku/frames/frame-223.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        47,
+        35
+      ],
+      "width": 47,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku/frames/frame-017.png|upper=/characters/goku/frames/frame-209.png",
+      "generatedSources": {
+        "crouch": "/characters/goku/frames/frame-017.png",
+        "upper": "/characters/goku/frames/frame-209.png"
+      }
+    },
+    {
+      "index": 224,
+      "path": "/characters/goku/frames/frame-224.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        47,
+        35
+      ],
+      "width": 47,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku/frames/frame-017.png|upper=/characters/goku/frames/frame-210.png",
+      "generatedSources": {
+        "crouch": "/characters/goku/frames/frame-017.png",
+        "upper": "/characters/goku/frames/frame-210.png"
+      }
+    },
+    {
+      "index": 225,
+      "path": "/characters/goku/frames/frame-225.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        47,
+        35
+      ],
+      "width": 47,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku/frames/frame-017.png|upper=/characters/goku/frames/frame-211.png",
+      "generatedSources": {
+        "crouch": "/characters/goku/frames/frame-017.png",
+        "upper": "/characters/goku/frames/frame-211.png"
+      }
+    },
+    {
+      "index": 226,
+      "path": "/characters/goku/frames/frame-226.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        47,
+        35
+      ],
+      "width": 47,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku/frames/frame-017.png|upper=/characters/goku/frames/frame-212.png",
+      "generatedSources": {
+        "crouch": "/characters/goku/frames/frame-017.png",
+        "upper": "/characters/goku/frames/frame-212.png"
+      }
     }
   ]
 }

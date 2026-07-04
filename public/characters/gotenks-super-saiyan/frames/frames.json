@@ -1,6 +1,6 @@
 {
   "source": "Gotenks (Super Saiyan).png",
-  "count": 183,
+  "count": 185,
   "sheets": [
     {
       "id": "main",
@@ -2938,6 +2938,56 @@
       "width": 157,
       "height": 62,
       "row": 18
+    },
+    {
+      "index": 183,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-183.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 28,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        28,
+        42
+      ],
+      "width": 28,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/gotenks-super-saiyan/frames/frame-015.png|upper=/characters/gotenks-super-saiyan/frames/frame-011.png",
+      "generatedSources": {
+        "crouch": "/characters/gotenks-super-saiyan/frames/frame-015.png",
+        "upper": "/characters/gotenks-super-saiyan/frames/frame-011.png"
+      }
+    },
+    {
+      "index": 184,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-184.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        47,
+        42
+      ],
+      "width": 47,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gotenks-super-saiyan/frames/frame-015.png|upper=/characters/gotenks-super-saiyan/frames/frame-071.png",
+      "generatedSources": {
+        "crouch": "/characters/gotenks-super-saiyan/frames/frame-015.png",
+        "upper": "/characters/gotenks-super-saiyan/frames/frame-071.png"
+      }
     }
   ]
 }

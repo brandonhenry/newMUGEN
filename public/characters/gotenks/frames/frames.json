@@ -1,6 +1,6 @@
 {
   "source": "Gotenks.png",
-  "count": 209,
+  "count": 211,
   "sheets": [
     {
       "id": "main",
@@ -3354,6 +3354,56 @@
       "width": 157,
       "height": 113,
       "row": 20
+    },
+    {
+      "index": 209,
+      "path": "/characters/gotenks/frames/frame-209.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 28,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        28,
+        42
+      ],
+      "width": 28,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/gotenks/frames/frame-015.png|upper=/characters/gotenks/frames/frame-011.png",
+      "generatedSources": {
+        "crouch": "/characters/gotenks/frames/frame-015.png",
+        "upper": "/characters/gotenks/frames/frame-011.png"
+      }
+    },
+    {
+      "index": 210,
+      "path": "/characters/gotenks/frames/frame-210.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 48,
+      "replacementHeight": 42,
+      "box": [
+        0,
+        0,
+        48,
+        42
+      ],
+      "width": 48,
+      "height": 42,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gotenks/frames/frame-015.png|upper=/characters/gotenks/frames/frame-071.png",
+      "generatedSources": {
+        "crouch": "/characters/gotenks/frames/frame-015.png",
+        "upper": "/characters/gotenks/frames/frame-071.png"
+      }
     }
   ]
 }

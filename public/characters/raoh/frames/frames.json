@@ -1,6 +1,6 @@
 {
   "source": "Raoh.png",
-  "count": 198,
+  "count": 207,
   "sheets": [
     {
       "id": "main",
@@ -3259,6 +3259,231 @@
       "width": 157,
       "height": 62,
       "row": 20
+    },
+    {
+      "index": 198,
+      "path": "/characters/raoh/frames/frame-198.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 199,
+      "path": "/characters/raoh/frames/frame-199.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-113.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-113.png"
+      }
+    },
+    {
+      "index": 200,
+      "path": "/characters/raoh/frames/frame-200.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-114.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-114.png"
+      }
+    },
+    {
+      "index": 201,
+      "path": "/characters/raoh/frames/frame-201.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-115.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-115.png"
+      }
+    },
+    {
+      "index": 202,
+      "path": "/characters/raoh/frames/frame-202.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-116.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-116.png"
+      }
+    },
+    {
+      "index": 203,
+      "path": "/characters/raoh/frames/frame-203.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-117.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-117.png"
+      }
+    },
+    {
+      "index": 204,
+      "path": "/characters/raoh/frames/frame-204.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-118.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-118.png"
+      }
+    },
+    {
+      "index": 205,
+      "path": "/characters/raoh/frames/frame-205.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-119.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-119.png"
+      }
+    },
+    {
+      "index": 206,
+      "path": "/characters/raoh/frames/frame-206.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 37,
+      "replacementHeight": 35,
+      "box": [
+        0,
+        0,
+        37,
+        35
+      ],
+      "width": 37,
+      "height": 35,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/raoh/frames/frame-043.png|upper=/characters/raoh/frames/frame-120.png",
+      "generatedSources": {
+        "crouch": "/characters/raoh/frames/frame-043.png",
+        "upper": "/characters/raoh/frames/frame-120.png"
+      }
     }
   ]
 }

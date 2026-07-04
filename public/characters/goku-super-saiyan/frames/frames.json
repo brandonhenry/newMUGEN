@@ -1,6 +1,6 @@
 {
   "source": "Goku (Super Saiyan).png",
-  "count": 191,
+  "count": 198,
   "sheets": [
     {
       "id": "main",
@@ -3066,6 +3066,181 @@
       "width": 184,
       "height": 161,
       "row": 19
+    },
+    {
+      "index": 191,
+      "path": "/characters/goku-super-saiyan/frames/frame-191.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-011.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-011.png"
+      }
+    },
+    {
+      "index": 192,
+      "path": "/characters/goku-super-saiyan/frames/frame-192.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-079.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-079.png"
+      }
+    },
+    {
+      "index": 193,
+      "path": "/characters/goku-super-saiyan/frames/frame-193.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-080.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-080.png"
+      }
+    },
+    {
+      "index": 194,
+      "path": "/characters/goku-super-saiyan/frames/frame-194.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-081.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-081.png"
+      }
+    },
+    {
+      "index": 195,
+      "path": "/characters/goku-super-saiyan/frames/frame-195.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-082.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-082.png"
+      }
+    },
+    {
+      "index": 196,
+      "path": "/characters/goku-super-saiyan/frames/frame-196.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 197,
+      "path": "/characters/goku-super-saiyan/frames/frame-197.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        47,
+        39
+      ],
+      "width": 47,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/goku-super-saiyan/frames/frame-017.png|upper=/characters/goku-super-saiyan/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/goku-super-saiyan/frames/frame-017.png",
+        "upper": "/characters/goku-super-saiyan/frames/frame-084.png"
+      }
     }
   ]
 }

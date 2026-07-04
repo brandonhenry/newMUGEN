@@ -1,6 +1,6 @@
 {
   "source": "Arale Norimaki.png",
-  "count": 184,
+  "count": 188,
   "sheets": [
     {
       "id": "main",
@@ -2954,6 +2954,106 @@
       "width": 157,
       "height": 61,
       "row": 19
+    },
+    {
+      "index": 184,
+      "path": "/characters/arale-norimaki/frames/frame-184.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 27,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        27,
+        32
+      ],
+      "width": 27,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/arale-norimaki/frames/frame-062.png|upper=/characters/arale-norimaki/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/arale-norimaki/frames/frame-062.png",
+        "upper": "/characters/arale-norimaki/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 185,
+      "path": "/characters/arale-norimaki/frames/frame-185.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 26,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        26,
+        32
+      ],
+      "width": 26,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/arale-norimaki/frames/frame-062.png|upper=/characters/arale-norimaki/frames/frame-086.png",
+      "generatedSources": {
+        "crouch": "/characters/arale-norimaki/frames/frame-062.png",
+        "upper": "/characters/arale-norimaki/frames/frame-086.png"
+      }
+    },
+    {
+      "index": 186,
+      "path": "/characters/arale-norimaki/frames/frame-186.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 28,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        28,
+        32
+      ],
+      "width": 28,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/arale-norimaki/frames/frame-062.png|upper=/characters/arale-norimaki/frames/frame-087.png",
+      "generatedSources": {
+        "crouch": "/characters/arale-norimaki/frames/frame-062.png",
+        "upper": "/characters/arale-norimaki/frames/frame-087.png"
+      }
+    },
+    {
+      "index": 187,
+      "path": "/characters/arale-norimaki/frames/frame-187.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 29,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        29,
+        32
+      ],
+      "width": 29,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/arale-norimaki/frames/frame-062.png|upper=/characters/arale-norimaki/frames/frame-088.png",
+      "generatedSources": {
+        "crouch": "/characters/arale-norimaki/frames/frame-062.png",
+        "upper": "/characters/arale-norimaki/frames/frame-088.png"
+      }
     }
   ]
 }

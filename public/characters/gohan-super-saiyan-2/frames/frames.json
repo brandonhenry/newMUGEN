@@ -1,6 +1,6 @@
 {
   "source": "Gohan (Super Saiyan 2).png",
-  "count": 157,
+  "count": 161,
   "sheets": [
     {
       "id": "main",
@@ -2522,6 +2522,106 @@
       "width": 157,
       "height": 62,
       "row": 16
+    },
+    {
+      "index": 157,
+      "path": "/characters/gohan-super-saiyan-2/frames/frame-157.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 36,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        36,
+        39
+      ],
+      "width": 36,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/gohan-super-saiyan-2/frames/frame-017.png|upper=/characters/gohan-super-saiyan-2/frames/frame-011.png",
+      "generatedSources": {
+        "crouch": "/characters/gohan-super-saiyan-2/frames/frame-017.png",
+        "upper": "/characters/gohan-super-saiyan-2/frames/frame-011.png"
+      }
+    },
+    {
+      "index": 158,
+      "path": "/characters/gohan-super-saiyan-2/frames/frame-158.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 39,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        39,
+        39
+      ],
+      "width": 39,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gohan-super-saiyan-2/frames/frame-017.png|upper=/characters/gohan-super-saiyan-2/frames/frame-090.png",
+      "generatedSources": {
+        "crouch": "/characters/gohan-super-saiyan-2/frames/frame-017.png",
+        "upper": "/characters/gohan-super-saiyan-2/frames/frame-090.png"
+      }
+    },
+    {
+      "index": 159,
+      "path": "/characters/gohan-super-saiyan-2/frames/frame-159.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        42,
+        39
+      ],
+      "width": 42,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gohan-super-saiyan-2/frames/frame-017.png|upper=/characters/gohan-super-saiyan-2/frames/frame-091.png",
+      "generatedSources": {
+        "crouch": "/characters/gohan-super-saiyan-2/frames/frame-017.png",
+        "upper": "/characters/gohan-super-saiyan-2/frames/frame-091.png"
+      }
+    },
+    {
+      "index": 160,
+      "path": "/characters/gohan-super-saiyan-2/frames/frame-160.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 39,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        39,
+        39
+      ],
+      "width": 39,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gohan-super-saiyan-2/frames/frame-017.png|upper=/characters/gohan-super-saiyan-2/frames/frame-092.png",
+      "generatedSources": {
+        "crouch": "/characters/gohan-super-saiyan-2/frames/frame-017.png",
+        "upper": "/characters/gohan-super-saiyan-2/frames/frame-092.png"
+      }
     }
   ]
 }

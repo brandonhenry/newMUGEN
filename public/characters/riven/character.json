@@ -233,7 +233,7 @@
   },
   "renderMode": "spriteVoxel",
   "spriteSheetPath": "/characters/riven/animation-sheet.png",
-  "spriteFrameCount": 209,
+  "spriteFrameCount": 213,
   "voxelProfile": "hd-image-source",
   "voxelFidelity": {
     "resolutionScale": 2,
@@ -281,8 +281,7 @@
       "/characters/riven/frames/frame-120.png"
     ],
     "crouchBlock": [
-      "/characters/riven/frames/frame-120.png",
-      "/characters/riven/frames/frame-015.png"
+      "/characters/riven/frames/frame-209.png"
     ],
     "jump": [
       "/characters/riven/frames/frame-017.png",
@@ -454,10 +453,9 @@
     ],
     "backflip": [],
     "cmd:FC+1": [
-      "/characters/riven/frames/frame-120.png",
-      "/characters/riven/frames/frame-022.png",
-      "/characters/riven/frames/frame-079.png",
-      "/characters/riven/frames/frame-080.png"
+      "/characters/riven/frames/frame-210.png",
+      "/characters/riven/frames/frame-211.png",
+      "/characters/riven/frames/frame-212.png"
     ],
     "cmd:FC+2": [
       "/characters/riven/frames/frame-120.png",
@@ -2415,6 +2413,21 @@
         "width": 1.79,
         "height": 0.7,
         "offsetX": 0
+      },
+      "210": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.7,
+        "height": 0.68,
+        "offsetX": 0
       }
     },
     "cmd:FC+3": {
@@ -2461,8 +2474,8 @@
         "offsetX": 0
       },
       "151": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "152": {
@@ -2471,8 +2484,8 @@
         "offsetX": 0
       },
       "153": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "154": {
@@ -2552,8 +2565,8 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -2652,6 +2665,11 @@
       },
       "120": {
         "width": 1.79,
+        "height": 0.7,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 0.7,
         "height": 0.7,
         "offsetX": 0
       }
@@ -2841,8 +2859,8 @@
         "offsetX": 0
       },
       "151": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "152": {
@@ -2851,8 +2869,8 @@
         "offsetX": 0
       },
       "153": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "154": {
@@ -2939,8 +2957,8 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -2961,8 +2979,8 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3064,8 +3082,8 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3081,23 +3099,23 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.98,
         "offsetX": 0
       },
       "2": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "3": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -3130,8 +3148,8 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -3169,8 +3187,8 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -3223,8 +3241,8 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -3262,8 +3280,8 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3346,8 +3364,8 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3398,8 +3416,8 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -3420,8 +3438,8 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "131": {

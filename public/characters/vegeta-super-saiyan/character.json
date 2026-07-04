@@ -17,7 +17,7 @@
       "frameCount": 185
     }
   ],
-  "spriteFrameCount": 185,
+  "spriteFrameCount": 190,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -158,10 +158,10 @@
       "/characters/vegeta-super-saiyan/frames/frame-078.png"
     ],
     "cmd:FC+1": [
-      "/characters/vegeta-super-saiyan/frames/frame-065.png",
-      "/characters/vegeta-super-saiyan/frames/frame-066.png",
-      "/characters/vegeta-super-saiyan/frames/frame-067.png",
-      "/characters/vegeta-super-saiyan/frames/frame-068.png"
+      "/characters/vegeta-super-saiyan/frames/frame-186.png",
+      "/characters/vegeta-super-saiyan/frames/frame-187.png",
+      "/characters/vegeta-super-saiyan/frames/frame-188.png",
+      "/characters/vegeta-super-saiyan/frames/frame-189.png"
     ],
     "cmd:FC+2": [
       "/characters/vegeta-super-saiyan/frames/frame-000.png",
@@ -303,6 +303,9 @@
       "/characters/vegeta-super-saiyan/frames/frame-076.png",
       "/characters/vegeta-super-saiyan/frames/frame-077.png",
       "/characters/vegeta-super-saiyan/frames/frame-078.png"
+    ],
+    "crouchBlock": [
+      "/characters/vegeta-super-saiyan/frames/frame-185.png"
     ]
   },
   "animationFrameRates": {
@@ -353,7 +356,8 @@
     "cmd:SS+3": 9,
     "cmd:SS+4": 9,
     "cmd:O+1": 10,
-    "cmd:O+4": 9
+    "cmd:O+4": 9,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1891,8 +1895,8 @@
         "offsetX": 0
       },
       "32": {
-        "width": 0.42,
-        "height": 0.42,
+        "width": 0.5,
+        "height": 0.5,
         "offsetX": 0
       }
     },
@@ -1913,8 +1917,8 @@
         "offsetX": 0
       },
       "32": {
-        "width": 0.42,
-        "height": 0.42,
+        "width": 0.5,
+        "height": 0.5,
         "offsetX": 0
       },
       "47": {
@@ -1997,8 +2001,8 @@
     },
     "jabright": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2217,7 +2221,7 @@
     "chargeKi": {
       "51": {
         "width": 1.11,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "52": {
@@ -2292,12 +2296,12 @@
       },
       "175": {
         "width": 0.78,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "176": {
         "width": 0.78,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "177": {
@@ -2338,22 +2342,22 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "2": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "3": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       }
@@ -2389,8 +2393,8 @@
     },
     "cmd:d/f+2": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2466,12 +2470,32 @@
         "width": 0.81,
         "height": 0.81,
         "offsetX": 0
+      },
+      "186": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "187": {
+        "width": 0.88,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
       }
     },
     "cmd:FC+2": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2497,8 +2521,8 @@
     },
     "cmd:1+2": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2652,8 +2676,8 @@
     },
     "cmd:f+2": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2851,8 +2875,8 @@
     },
     "cmd:WS+2": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2991,6 +3015,16 @@
       "78": {
         "width": 0.95,
         "height": 0.95,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "185": {
+        "width": 0.71,
+        "height": 0.71,
         "offsetX": 0
       }
     }

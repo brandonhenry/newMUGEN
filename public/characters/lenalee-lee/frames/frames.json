@@ -1,6 +1,6 @@
 {
   "source": "Lenalee Lee.png",
-  "count": 247,
+  "count": 252,
   "sheets": [
     {
       "id": "main",
@@ -3962,6 +3962,131 @@
       "width": 157,
       "height": 62,
       "row": 25
+    },
+    {
+      "index": 247,
+      "path": "/characters/lenalee-lee/frames/frame-247.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 28,
+      "replacementHeight": 31,
+      "box": [
+        0,
+        0,
+        28,
+        31
+      ],
+      "width": 28,
+      "height": 31,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/lenalee-lee/frames/frame-023.png|upper=/characters/lenalee-lee/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/lenalee-lee/frames/frame-023.png",
+        "upper": "/characters/lenalee-lee/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 248,
+      "path": "/characters/lenalee-lee/frames/frame-248.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 31,
+      "box": [
+        0,
+        0,
+        38,
+        31
+      ],
+      "width": 38,
+      "height": 31,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/lenalee-lee/frames/frame-023.png|upper=/characters/lenalee-lee/frames/frame-082.png",
+      "generatedSources": {
+        "crouch": "/characters/lenalee-lee/frames/frame-023.png",
+        "upper": "/characters/lenalee-lee/frames/frame-082.png"
+      }
+    },
+    {
+      "index": 249,
+      "path": "/characters/lenalee-lee/frames/frame-249.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 28,
+      "replacementHeight": 31,
+      "box": [
+        0,
+        0,
+        28,
+        31
+      ],
+      "width": 28,
+      "height": 31,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/lenalee-lee/frames/frame-023.png|upper=/characters/lenalee-lee/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/lenalee-lee/frames/frame-023.png",
+        "upper": "/characters/lenalee-lee/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 250,
+      "path": "/characters/lenalee-lee/frames/frame-250.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 28,
+      "replacementHeight": 31,
+      "box": [
+        0,
+        0,
+        28,
+        31
+      ],
+      "width": 28,
+      "height": 31,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/lenalee-lee/frames/frame-023.png|upper=/characters/lenalee-lee/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/lenalee-lee/frames/frame-023.png",
+        "upper": "/characters/lenalee-lee/frames/frame-084.png"
+      }
+    },
+    {
+      "index": 251,
+      "path": "/characters/lenalee-lee/frames/frame-251.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 28,
+      "replacementHeight": 31,
+      "box": [
+        0,
+        0,
+        28,
+        31
+      ],
+      "width": 28,
+      "height": 31,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/lenalee-lee/frames/frame-023.png|upper=/characters/lenalee-lee/frames/frame-085.png",
+      "generatedSources": {
+        "crouch": "/characters/lenalee-lee/frames/frame-023.png",
+        "upper": "/characters/lenalee-lee/frames/frame-085.png"
+      }
     }
   ]
 }

@@ -16,7 +16,7 @@
       "frameCount": 449
     }
   ],
-  "spriteFrameCount": 449,
+  "spriteFrameCount": 455,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -140,11 +140,11 @@
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
     "cmd:FC+1": [
-      "/characters/kakashi-hatake/frames/frame-074.png",
-      "/characters/kakashi-hatake/frames/frame-075.png",
-      "/characters/kakashi-hatake/frames/frame-076.png",
-      "/characters/kakashi-hatake/frames/frame-077.png",
-      "/characters/kakashi-hatake/frames/frame-078.png"
+      "/characters/kakashi-hatake/frames/frame-450.png",
+      "/characters/kakashi-hatake/frames/frame-451.png",
+      "/characters/kakashi-hatake/frames/frame-452.png",
+      "/characters/kakashi-hatake/frames/frame-453.png",
+      "/characters/kakashi-hatake/frames/frame-454.png"
     ],
     "cmd:FC+2": [
       "/characters/kakashi-hatake/frames/frame-119.png",
@@ -267,6 +267,9 @@
       "/characters/kakashi-hatake/frames/frame-076.png",
       "/characters/kakashi-hatake/frames/frame-077.png",
       "/characters/kakashi-hatake/frames/frame-078.png"
+    ],
+    "crouchBlock": [
+      "/characters/kakashi-hatake/frames/frame-449.png"
     ]
   },
   "animationFrameRates": {
@@ -314,7 +317,8 @@
     "cmd:qcf+3": 9,
     "cmd:WS+2": 10,
     "cmd:SS+3": 9,
-    "cmd:O+1": 10
+    "cmd:O+1": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -2239,7 +2243,7 @@
     "cmd:2+3": {
       "142": {
         "width": 0.93,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "143": {
@@ -2430,6 +2434,31 @@
       "78": {
         "width": 0.78,
         "height": 0.76,
+        "offsetX": 0
+      },
+      "450": {
+        "width": 0.65,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "451": {
+        "width": 0.65,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "452": {
+        "width": 0.65,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "453": {
+        "width": 0.65,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "454": {
+        "width": 0.66,
+        "height": 0.67,
         "offsetX": 0
       }
     },
@@ -2742,6 +2771,20 @@
       "78": {
         "width": 0.78,
         "height": 0.76,
+        "offsetX": 0
+      }
+    },
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:3+4": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "449": {
+        "width": 0.65,
+        "height": 0.67,
         "offsetX": 0
       }
     }

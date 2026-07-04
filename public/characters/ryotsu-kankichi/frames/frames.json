@@ -1,6 +1,6 @@
 {
   "source": "Ryotsu Kankichi.png",
-  "count": 214,
+  "count": 219,
   "sheets": [
     {
       "id": "main",
@@ -3434,6 +3434,131 @@
       "width": 157,
       "height": 62,
       "row": 21
+    },
+    {
+      "index": 214,
+      "path": "/characters/ryotsu-kankichi/frames/frame-214.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 38,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        38,
+        38
+      ],
+      "width": 38,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/ryotsu-kankichi/frames/frame-021.png|upper=/characters/ryotsu-kankichi/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/ryotsu-kankichi/frames/frame-021.png",
+        "upper": "/characters/ryotsu-kankichi/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 215,
+      "path": "/characters/ryotsu-kankichi/frames/frame-215.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        38,
+        38
+      ],
+      "width": 38,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/ryotsu-kankichi/frames/frame-021.png|upper=/characters/ryotsu-kankichi/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/ryotsu-kankichi/frames/frame-021.png",
+        "upper": "/characters/ryotsu-kankichi/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 216,
+      "path": "/characters/ryotsu-kankichi/frames/frame-216.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        38,
+        38
+      ],
+      "width": 38,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/ryotsu-kankichi/frames/frame-021.png|upper=/characters/ryotsu-kankichi/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/ryotsu-kankichi/frames/frame-021.png",
+        "upper": "/characters/ryotsu-kankichi/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 217,
+      "path": "/characters/ryotsu-kankichi/frames/frame-217.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 43,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        43,
+        38
+      ],
+      "width": 43,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/ryotsu-kankichi/frames/frame-021.png|upper=/characters/ryotsu-kankichi/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/ryotsu-kankichi/frames/frame-021.png",
+        "upper": "/characters/ryotsu-kankichi/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 218,
+      "path": "/characters/ryotsu-kankichi/frames/frame-218.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        38,
+        38
+      ],
+      "width": 38,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/ryotsu-kankichi/frames/frame-021.png|upper=/characters/ryotsu-kankichi/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/ryotsu-kankichi/frames/frame-021.png",
+        "upper": "/characters/ryotsu-kankichi/frames/frame-078.png"
+      }
     }
   ]
 }

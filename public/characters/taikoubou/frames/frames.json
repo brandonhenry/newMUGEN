@@ -1,6 +1,6 @@
 {
   "source": "Taikoubou.png",
-  "count": 210,
+  "count": 216,
   "sheets": [
     {
       "id": "main",
@@ -3370,6 +3370,156 @@
       "width": 157,
       "height": 62,
       "row": 22
+    },
+    {
+      "index": 210,
+      "path": "/characters/taikoubou/frames/frame-210.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 68,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        68,
+        39
+      ],
+      "width": 68,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/taikoubou/frames/frame-022.png|upper=/characters/taikoubou/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/taikoubou/frames/frame-022.png",
+        "upper": "/characters/taikoubou/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 211,
+      "path": "/characters/taikoubou/frames/frame-211.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 68,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        68,
+        39
+      ],
+      "width": 68,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/taikoubou/frames/frame-022.png|upper=/characters/taikoubou/frames/frame-174.png",
+      "generatedSources": {
+        "crouch": "/characters/taikoubou/frames/frame-022.png",
+        "upper": "/characters/taikoubou/frames/frame-174.png"
+      }
+    },
+    {
+      "index": 212,
+      "path": "/characters/taikoubou/frames/frame-212.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 68,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        68,
+        39
+      ],
+      "width": 68,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/taikoubou/frames/frame-022.png|upper=/characters/taikoubou/frames/frame-175.png",
+      "generatedSources": {
+        "crouch": "/characters/taikoubou/frames/frame-022.png",
+        "upper": "/characters/taikoubou/frames/frame-175.png"
+      }
+    },
+    {
+      "index": 213,
+      "path": "/characters/taikoubou/frames/frame-213.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 68,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        68,
+        39
+      ],
+      "width": 68,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/taikoubou/frames/frame-022.png|upper=/characters/taikoubou/frames/frame-176.png",
+      "generatedSources": {
+        "crouch": "/characters/taikoubou/frames/frame-022.png",
+        "upper": "/characters/taikoubou/frames/frame-176.png"
+      }
+    },
+    {
+      "index": 214,
+      "path": "/characters/taikoubou/frames/frame-214.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 68,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        68,
+        39
+      ],
+      "width": 68,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/taikoubou/frames/frame-022.png|upper=/characters/taikoubou/frames/frame-177.png",
+      "generatedSources": {
+        "crouch": "/characters/taikoubou/frames/frame-022.png",
+        "upper": "/characters/taikoubou/frames/frame-177.png"
+      }
+    },
+    {
+      "index": 215,
+      "path": "/characters/taikoubou/frames/frame-215.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 68,
+      "replacementHeight": 39,
+      "box": [
+        0,
+        0,
+        68,
+        39
+      ],
+      "width": 68,
+      "height": 39,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/taikoubou/frames/frame-022.png|upper=/characters/taikoubou/frames/frame-178.png",
+      "generatedSources": {
+        "crouch": "/characters/taikoubou/frames/frame-022.png",
+        "upper": "/characters/taikoubou/frames/frame-178.png"
+      }
     }
   ]
 }

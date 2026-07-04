@@ -1,6 +1,6 @@
 {
   "source": "Piccolo.png",
-  "count": 162,
+  "count": 166,
   "sheets": [
     {
       "id": "main",
@@ -2683,6 +2683,106 @@
       "width": 157,
       "height": 62,
       "row": 16
+    },
+    {
+      "index": 162,
+      "path": "/characters/piccolo/frames/frame-162.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 43,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        43,
+        43
+      ],
+      "width": 43,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/piccolo/frames/frame-053.png|upper=/characters/piccolo/frames/frame-010.png",
+      "generatedSources": {
+        "crouch": "/characters/piccolo/frames/frame-053.png",
+        "upper": "/characters/piccolo/frames/frame-010.png"
+      }
+    },
+    {
+      "index": 163,
+      "path": "/characters/piccolo/frames/frame-163.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 43,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        43,
+        43
+      ],
+      "width": 43,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/piccolo/frames/frame-053.png|upper=/characters/piccolo/frames/frame-057.png",
+      "generatedSources": {
+        "crouch": "/characters/piccolo/frames/frame-053.png",
+        "upper": "/characters/piccolo/frames/frame-057.png"
+      }
+    },
+    {
+      "index": 164,
+      "path": "/characters/piccolo/frames/frame-164.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 69,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        69,
+        43
+      ],
+      "width": 69,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/piccolo/frames/frame-053.png|upper=/characters/piccolo/frames/frame-058.png",
+      "generatedSources": {
+        "crouch": "/characters/piccolo/frames/frame-053.png",
+        "upper": "/characters/piccolo/frames/frame-058.png"
+      }
+    },
+    {
+      "index": 165,
+      "path": "/characters/piccolo/frames/frame-165.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        47,
+        43
+      ],
+      "width": 47,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/piccolo/frames/frame-053.png|upper=/characters/piccolo/frames/frame-059.png",
+      "generatedSources": {
+        "crouch": "/characters/piccolo/frames/frame-053.png",
+        "upper": "/characters/piccolo/frames/frame-059.png"
+      }
     }
   ]
 }

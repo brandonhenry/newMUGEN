@@ -1,6 +1,6 @@
 {
   "source": "Sanji Vinsmoke.png",
-  "count": 593,
+  "count": 594,
   "sheets": [
     {
       "id": "main",
@@ -9498,6 +9498,31 @@
       "width": 157,
       "height": 62,
       "row": 60
+    },
+    {
+      "index": 593,
+      "path": "/characters/sanji-vinsmoke/frames/frame-593.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 27,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        27,
+        36
+      ],
+      "width": 27,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/sanji-vinsmoke/frames/frame-021.png|upper=/characters/sanji-vinsmoke/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/sanji-vinsmoke/frames/frame-021.png",
+        "upper": "/characters/sanji-vinsmoke/frames/frame-015.png"
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "source": "Kurama.png",
-  "count": 219,
+  "count": 226,
   "sheets": [
     {
       "id": "main",
@@ -3514,6 +3514,181 @@
       "width": 157,
       "height": 62,
       "row": 22
+    },
+    {
+      "index": 219,
+      "path": "/characters/kurama/frames/frame-219.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 27,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        27,
+        36
+      ],
+      "width": 27,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-016.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-016.png"
+      }
+    },
+    {
+      "index": 220,
+      "path": "/characters/kurama/frames/frame-220.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 27,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        27,
+        36
+      ],
+      "width": 27,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-129.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-129.png"
+      }
+    },
+    {
+      "index": 221,
+      "path": "/characters/kurama/frames/frame-221.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 27,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        27,
+        36
+      ],
+      "width": 27,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-130.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-130.png"
+      }
+    },
+    {
+      "index": 222,
+      "path": "/characters/kurama/frames/frame-222.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 29,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        29,
+        36
+      ],
+      "width": 29,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-131.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-131.png"
+      }
+    },
+    {
+      "index": 223,
+      "path": "/characters/kurama/frames/frame-223.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 30,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        30,
+        36
+      ],
+      "width": 30,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-132.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-132.png"
+      }
+    },
+    {
+      "index": 224,
+      "path": "/characters/kurama/frames/frame-224.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 31,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        31,
+        36
+      ],
+      "width": 31,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-133.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-133.png"
+      }
+    },
+    {
+      "index": 225,
+      "path": "/characters/kurama/frames/frame-225.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 27,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        27,
+        36
+      ],
+      "width": 27,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kurama/frames/frame-023.png|upper=/characters/kurama/frames/frame-134.png",
+      "generatedSources": {
+        "crouch": "/characters/kurama/frames/frame-023.png",
+        "upper": "/characters/kurama/frames/frame-134.png"
+      }
     }
   ]
 }

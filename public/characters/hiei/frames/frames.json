@@ -1,6 +1,6 @@
 {
   "source": "Hiei.png",
-  "count": 179,
+  "count": 184,
   "sheets": [
     {
       "id": "main",
@@ -2874,6 +2874,131 @@
       "width": 157,
       "height": 62,
       "row": 19
+    },
+    {
+      "index": 179,
+      "path": "/characters/hiei/frames/frame-179.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 31,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        31,
+        34
+      ],
+      "width": 31,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/hiei/frames/frame-021.png|upper=/characters/hiei/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/hiei/frames/frame-021.png",
+        "upper": "/characters/hiei/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 180,
+      "path": "/characters/hiei/frames/frame-180.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 31,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        31,
+        34
+      ],
+      "width": 31,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/hiei/frames/frame-021.png|upper=/characters/hiei/frames/frame-082.png",
+      "generatedSources": {
+        "crouch": "/characters/hiei/frames/frame-021.png",
+        "upper": "/characters/hiei/frames/frame-082.png"
+      }
+    },
+    {
+      "index": 181,
+      "path": "/characters/hiei/frames/frame-181.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 55,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        55,
+        34
+      ],
+      "width": 55,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/hiei/frames/frame-021.png|upper=/characters/hiei/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/hiei/frames/frame-021.png",
+        "upper": "/characters/hiei/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 182,
+      "path": "/characters/hiei/frames/frame-182.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 49,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        49,
+        34
+      ],
+      "width": 49,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/hiei/frames/frame-021.png|upper=/characters/hiei/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/hiei/frames/frame-021.png",
+        "upper": "/characters/hiei/frames/frame-084.png"
+      }
+    },
+    {
+      "index": 183,
+      "path": "/characters/hiei/frames/frame-183.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 31,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        31,
+        34
+      ],
+      "width": 31,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/hiei/frames/frame-021.png|upper=/characters/hiei/frames/frame-085.png",
+      "generatedSources": {
+        "crouch": "/characters/hiei/frames/frame-021.png",
+        "upper": "/characters/hiei/frames/frame-085.png"
+      }
     }
   ]
 }

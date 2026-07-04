@@ -1,6 +1,6 @@
 {
   "source": "Kakashi Hatake.png",
-  "count": 449,
+  "count": 455,
   "sheets": [
     {
       "id": "main",
@@ -7194,6 +7194,156 @@
       "width": 157,
       "height": 62,
       "row": 46
+    },
+    {
+      "index": 449,
+      "path": "/characters/kakashi-hatake/frames/frame-449.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 35,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        35,
+        38
+      ],
+      "width": 35,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kakashi-hatake/frames/frame-021.png|upper=/characters/kakashi-hatake/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/kakashi-hatake/frames/frame-021.png",
+        "upper": "/characters/kakashi-hatake/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 450,
+      "path": "/characters/kakashi-hatake/frames/frame-450.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        35,
+        38
+      ],
+      "width": 35,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kakashi-hatake/frames/frame-021.png|upper=/characters/kakashi-hatake/frames/frame-074.png",
+      "generatedSources": {
+        "crouch": "/characters/kakashi-hatake/frames/frame-021.png",
+        "upper": "/characters/kakashi-hatake/frames/frame-074.png"
+      }
+    },
+    {
+      "index": 451,
+      "path": "/characters/kakashi-hatake/frames/frame-451.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        35,
+        38
+      ],
+      "width": 35,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kakashi-hatake/frames/frame-021.png|upper=/characters/kakashi-hatake/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/kakashi-hatake/frames/frame-021.png",
+        "upper": "/characters/kakashi-hatake/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 452,
+      "path": "/characters/kakashi-hatake/frames/frame-452.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        47,
+        38
+      ],
+      "width": 47,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kakashi-hatake/frames/frame-021.png|upper=/characters/kakashi-hatake/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/kakashi-hatake/frames/frame-021.png",
+        "upper": "/characters/kakashi-hatake/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 453,
+      "path": "/characters/kakashi-hatake/frames/frame-453.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 35,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        35,
+        38
+      ],
+      "width": 35,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kakashi-hatake/frames/frame-021.png|upper=/characters/kakashi-hatake/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/kakashi-hatake/frames/frame-021.png",
+        "upper": "/characters/kakashi-hatake/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 454,
+      "path": "/characters/kakashi-hatake/frames/frame-454.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 36,
+      "replacementHeight": 38,
+      "box": [
+        0,
+        0,
+        36,
+        38
+      ],
+      "width": 36,
+      "height": 38,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kakashi-hatake/frames/frame-021.png|upper=/characters/kakashi-hatake/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/kakashi-hatake/frames/frame-021.png",
+        "upper": "/characters/kakashi-hatake/frames/frame-078.png"
+      }
     }
   ]
 }

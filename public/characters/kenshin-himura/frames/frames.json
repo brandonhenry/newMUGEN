@@ -1,6 +1,6 @@
 {
   "source": "Kenshin Himura.png",
-  "count": 466,
+  "count": 471,
   "sheets": [
     {
       "id": "main",
@@ -7466,6 +7466,131 @@
       "width": 44,
       "height": 129,
       "row": 47
+    },
+    {
+      "index": 466,
+      "path": "/characters/kenshin-himura/frames/frame-466.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 38,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        38,
+        36
+      ],
+      "width": 38,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kenshin-himura/frames/frame-022.png|upper=/characters/kenshin-himura/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshin-himura/frames/frame-022.png",
+        "upper": "/characters/kenshin-himura/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 467,
+      "path": "/characters/kenshin-himura/frames/frame-467.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        38,
+        36
+      ],
+      "width": 38,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshin-himura/frames/frame-022.png|upper=/characters/kenshin-himura/frames/frame-073.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshin-himura/frames/frame-022.png",
+        "upper": "/characters/kenshin-himura/frames/frame-073.png"
+      }
+    },
+    {
+      "index": 468,
+      "path": "/characters/kenshin-himura/frames/frame-468.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        38,
+        36
+      ],
+      "width": 38,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshin-himura/frames/frame-022.png|upper=/characters/kenshin-himura/frames/frame-074.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshin-himura/frames/frame-022.png",
+        "upper": "/characters/kenshin-himura/frames/frame-074.png"
+      }
+    },
+    {
+      "index": 469,
+      "path": "/characters/kenshin-himura/frames/frame-469.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 47,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        47,
+        36
+      ],
+      "width": 47,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshin-himura/frames/frame-022.png|upper=/characters/kenshin-himura/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshin-himura/frames/frame-022.png",
+        "upper": "/characters/kenshin-himura/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 470,
+      "path": "/characters/kenshin-himura/frames/frame-470.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 38,
+      "replacementHeight": 36,
+      "box": [
+        0,
+        0,
+        38,
+        36
+      ],
+      "width": 38,
+      "height": 36,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kenshin-himura/frames/frame-022.png|upper=/characters/kenshin-himura/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/kenshin-himura/frames/frame-022.png",
+        "upper": "/characters/kenshin-himura/frames/frame-076.png"
+      }
     }
   ]
 }

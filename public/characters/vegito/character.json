@@ -16,7 +16,7 @@
       "frameCount": 176
     }
   ],
-  "spriteFrameCount": 176,
+  "spriteFrameCount": 182,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -166,11 +166,11 @@
     ],
     "cmd:FC+1": [],
     "cmd:FC+2": [
-      "/characters/vegito/frames/frame-065.png",
-      "/characters/vegito/frames/frame-066.png",
-      "/characters/vegito/frames/frame-067.png",
-      "/characters/vegito/frames/frame-068.png",
-      "/characters/vegito/frames/frame-069.png"
+      "/characters/vegito/frames/frame-177.png",
+      "/characters/vegito/frames/frame-178.png",
+      "/characters/vegito/frames/frame-179.png",
+      "/characters/vegito/frames/frame-180.png",
+      "/characters/vegito/frames/frame-181.png"
     ],
     "cmd:1+2": [
       "/characters/vegito/frames/frame-065.png",
@@ -317,6 +317,9 @@
       "/characters/vegito/frames/frame-102.png",
       "/characters/vegito/frames/frame-103.png",
       "/characters/vegito/frames/frame-104.png"
+    ],
+    "crouchBlock": [
+      "/characters/vegito/frames/frame-176.png"
     ]
   },
   "animationFrameRates": {
@@ -364,7 +367,8 @@
     "cmd:WS+2": 10,
     "cmd:SS+3": 9,
     "cmd:SS+4": 9,
-    "cmd:O+4": 9
+    "cmd:O+4": 9,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -2108,7 +2112,7 @@
     },
     "jump": {
       "14": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.68,
         "offsetX": 0
       },
@@ -2127,8 +2131,8 @@
     },
     "chargeKi": {
       "53": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "54": {
@@ -2259,7 +2263,7 @@
     },
     "cmd:f+1": {
       "166": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2269,13 +2273,13 @@
         "offsetX": 0
       },
       "168": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "169": {
         "width": 0.94,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "170": {
@@ -2289,7 +2293,7 @@
         "offsetX": 0
       },
       "172": {
-        "width": 2,
+        "width": 2.0,
         "height": 0.74,
         "offsetX": 0
       },
@@ -2338,8 +2342,8 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
@@ -2524,6 +2528,31 @@
       "69": {
         "width": 0.77,
         "height": 0.74,
+        "offsetX": 0
+      },
+      "177": {
+        "width": 0.6,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "178": {
+        "width": 0.6,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "179": {
+        "width": 0.62,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "180": {
+        "width": 0.61,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "181": {
+        "width": 0.6,
+        "height": 0.58,
         "offsetX": 0
       }
     },
@@ -3028,6 +3057,19 @@
       "104": {
         "width": 0.78,
         "height": 0.75,
+        "offsetX": 0
+      }
+    },
+    "backflip": {},
+    "jableft": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:FC+1": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "176": {
+        "width": 0.6,
+        "height": 0.58,
         "offsetX": 0
       }
     }

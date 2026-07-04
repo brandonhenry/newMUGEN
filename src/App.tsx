@@ -1377,6 +1377,8 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
     })
   });
   if (!response.ok) throw new Error(await response.text());
+  const payload = await response.json().catch(() => null) as { manifestPath?: string } | null;
+  return { shouldRefresh: payload?.manifestPath !== 'playwright-stub' };
 }
 
 function getFrameIndex(path: string) {
@@ -2613,7 +2615,7 @@ export default function App() {
     const timeout = window.setTimeout(async () => {
       try {
         const sourceById = new Map(sourceRoster.map((character) => [character.id, character]));
-        await Promise.all(
+        const saveResults = await Promise.all(
           characterIds.map((characterId) => {
             const sourceCharacter = sourceById.get(characterId);
             if (!sourceCharacter) return Promise.resolve();
@@ -2621,9 +2623,11 @@ export default function App() {
             return saveCharacterManifestToDev(effectiveCharacter);
           })
         );
-        const result = await loadCharacterRoster();
-        setRosterResult(result);
-        setAnimationOverrides((current) => removeCharacterOverride(current, characterIds));
+        if (saveResults.some((result) => result?.shouldRefresh !== false)) {
+          const result = await loadCharacterRoster();
+          setRosterResult(result);
+          setAnimationOverrides((current) => removeCharacterOverride(current, characterIds));
+        }
         debugLog(4, 'dev animation edits persisted to manifests', { characterIds });
       } catch (error) {
         console.error('Failed to auto-save character manifest edits', error);
@@ -9403,8 +9407,8 @@ function CharacterViewer({
   const saveActiveManifest = async () => {
     setManifestSaveStatus('saving');
     try {
-      await saveCharacterManifestToDev(active);
-      await onImportComplete(active.id);
+      const result = await saveCharacterManifestToDev(active);
+      if (result.shouldRefresh) await onImportComplete(active.id);
       setManifestSaveStatus('saved');
       window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
     } catch (error) {
@@ -9438,8 +9442,8 @@ function CharacterViewer({
     if (!isLocalDev) return;
     setManifestSaveStatus('saving');
     try {
-      await saveCharacterManifestToDev({ ...active, ...patch });
-      await onImportComplete(active.id);
+      const result = await saveCharacterManifestToDev({ ...active, ...patch });
+      if (result.shouldRefresh) await onImportComplete(active.id);
       setManifestSaveStatus('saved');
       window.setTimeout(() => setManifestSaveStatus('idle'), 1800);
     } catch (error) {

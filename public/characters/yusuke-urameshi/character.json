@@ -16,7 +16,7 @@
       "frameCount": 226
     }
   ],
-  "spriteFrameCount": 226,
+  "spriteFrameCount": 233,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -119,12 +119,12 @@
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [
-      "/characters/yusuke-urameshi/frames/frame-076.png",
-      "/characters/yusuke-urameshi/frames/frame-077.png",
-      "/characters/yusuke-urameshi/frames/frame-078.png",
-      "/characters/yusuke-urameshi/frames/frame-079.png",
-      "/characters/yusuke-urameshi/frames/frame-080.png",
-      "/characters/yusuke-urameshi/frames/frame-081.png"
+      "/characters/yusuke-urameshi/frames/frame-227.png",
+      "/characters/yusuke-urameshi/frames/frame-228.png",
+      "/characters/yusuke-urameshi/frames/frame-229.png",
+      "/characters/yusuke-urameshi/frames/frame-230.png",
+      "/characters/yusuke-urameshi/frames/frame-231.png",
+      "/characters/yusuke-urameshi/frames/frame-232.png"
     ],
     "cmd:1+2": [
       "/characters/yusuke-urameshi/frames/frame-090.png",
@@ -200,6 +200,9 @@
       "/characters/yusuke-urameshi/frames/frame-079.png",
       "/characters/yusuke-urameshi/frames/frame-080.png",
       "/characters/yusuke-urameshi/frames/frame-081.png"
+    ],
+    "crouchBlock": [
+      "/characters/yusuke-urameshi/frames/frame-226.png"
     ]
   },
   "animationFrameRates": {
@@ -239,7 +242,8 @@
     "cmd:3+4": 8,
     "cmd:O+2": 8,
     "cmd:f+2": 10,
-    "cmd:WS+2": 10
+    "cmd:WS+2": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1545,8 +1549,8 @@
         "offsetX": 0
       },
       "31": {
-        "width": 0.6,
-        "height": 0.6,
+        "width": 0.7,
+        "height": 0.71,
         "offsetX": 0
       }
     },
@@ -1567,8 +1571,8 @@
         "offsetX": 0
       },
       "31": {
-        "width": 0.6,
-        "height": 0.6,
+        "width": 0.7,
+        "height": 0.71,
         "offsetX": 0
       },
       "50": {
@@ -1587,7 +1591,7 @@
         "offsetX": 0
       },
       "53": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.89,
         "offsetX": 0
       }
@@ -1681,8 +1685,8 @@
         "offsetX": 0
       },
       "119": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -1789,7 +1793,7 @@
     "jump": {
       "17": {
         "width": 1.51,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "18": {
@@ -1836,7 +1840,7 @@
     },
     "jabright": {
       "76": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       },
@@ -1861,7 +1865,7 @@
         "offsetX": 0
       },
       "81": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       }
@@ -1882,25 +1886,25 @@
     },
     "win": {
       "81": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:1+2": {
       "90": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "91": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "92": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "93": {
@@ -1941,7 +1945,7 @@
     },
     "cmd:1+3": {
       "108": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       },
@@ -1978,8 +1982,8 @@
     },
     "cmd:2+3": {
       "119": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "120": {
@@ -2050,8 +2054,8 @@
         "offsetX": 0
       },
       "138": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -2094,22 +2098,22 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "2": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
       "3": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       }
@@ -2123,7 +2127,7 @@
     },
     "cmd:d/f+2": {
       "76": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2148,7 +2152,7 @@
         "offsetX": 0
       },
       "81": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       }
@@ -2183,11 +2187,41 @@
         "width": 1,
         "height": 0.95,
         "offsetX": 0
+      },
+      "227": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "228": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "229": {
+        "width": 0.79,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "230": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "231": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "232": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
       }
     },
     "cmd:f+2": {
       "76": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2212,14 +2246,14 @@
         "offsetX": 0
       },
       "81": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:WS+2": {
       "76": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2244,8 +2278,26 @@
         "offsetX": 0
       },
       "81": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.95,
+        "offsetX": 0
+      }
+    },
+    "jableft": {},
+    "kickleft": {},
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:f+1": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:FC+1": {},
+    "cmd:3+4": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "226": {
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0
       }
     }

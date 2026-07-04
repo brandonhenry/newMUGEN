@@ -16,7 +16,7 @@
       "frameCount": 207
     }
   ],
-  "spriteFrameCount": 207,
+  "spriteFrameCount": 213,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -138,11 +138,11 @@
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
     "cmd:FC+1": [
-      "/characters/roronoa-zoro/frames/frame-074.png",
-      "/characters/roronoa-zoro/frames/frame-075.png",
-      "/characters/roronoa-zoro/frames/frame-076.png",
-      "/characters/roronoa-zoro/frames/frame-077.png",
-      "/characters/roronoa-zoro/frames/frame-078.png"
+      "/characters/roronoa-zoro/frames/frame-208.png",
+      "/characters/roronoa-zoro/frames/frame-209.png",
+      "/characters/roronoa-zoro/frames/frame-210.png",
+      "/characters/roronoa-zoro/frames/frame-211.png",
+      "/characters/roronoa-zoro/frames/frame-212.png"
     ],
     "cmd:FC+2": [
       "/characters/roronoa-zoro/frames/frame-079.png",
@@ -274,6 +274,9 @@
       "/characters/roronoa-zoro/frames/frame-076.png",
       "/characters/roronoa-zoro/frames/frame-077.png",
       "/characters/roronoa-zoro/frames/frame-078.png"
+    ],
+    "crouchBlock": [
+      "/characters/roronoa-zoro/frames/frame-207.png"
     ]
   },
   "animationFrameRates": {
@@ -316,7 +319,8 @@
     "cmd:d+1": 10,
     "cmd:qcf+1": 10,
     "cmd:WS+2": 10,
-    "cmd:O+1": 10
+    "cmd:O+1": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1977,18 +1981,18 @@
     "jump": {
       "17": {
         "width": 1.38,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "18": {
         "width": 1.38,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       }
     },
     "crouch": {
       "21": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.62,
         "offsetX": 0
       }
@@ -2033,7 +2037,7 @@
     "jabright": {
       "79": {
         "width": 1.05,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2153,7 +2157,7 @@
       },
       "96": {
         "width": 1.29,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "97": {
@@ -2377,17 +2381,17 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "2": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.02,
         "offsetX": 0
       },
@@ -2462,7 +2466,7 @@
     "cmd:d/f+2": {
       "79": {
         "width": 1.05,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2526,12 +2530,37 @@
         "width": 0.85,
         "height": 0.9,
         "offsetX": 0
+      },
+      "208": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      },
+      "210": {
+        "width": 0.82,
+        "height": 0.68,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0
       }
     },
     "cmd:FC+2": {
       "79": {
         "width": 1.05,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2573,7 +2602,7 @@
     "cmd:f+2": {
       "79": {
         "width": 1.05,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2669,7 +2698,7 @@
     "cmd:WS+2": {
       "79": {
         "width": 1.05,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       },
       "80": {
@@ -2732,6 +2761,20 @@
       "78": {
         "width": 0.85,
         "height": 0.9,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {},
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "207": {
+        "width": 0.68,
+        "height": 0.68,
         "offsetX": 0
       }
     }

@@ -1,6 +1,6 @@
 {
   "source": "Nico Robin.png",
-  "count": 255,
+  "count": 263,
   "sheets": [
     {
       "id": "main",
@@ -4090,6 +4090,206 @@
       "width": 157,
       "height": 62,
       "row": 27
+    },
+    {
+      "index": 255,
+      "path": "/characters/nico-robin/frames/frame-255.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 256,
+      "path": "/characters/nico-robin/frames/frame-256.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-056.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-056.png"
+      }
+    },
+    {
+      "index": 257,
+      "path": "/characters/nico-robin/frames/frame-257.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 258,
+      "path": "/characters/nico-robin/frames/frame-258.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "width": 40,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 259,
+      "path": "/characters/nico-robin/frames/frame-259.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 50,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        50,
+        40
+      ],
+      "width": 50,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 260,
+      "path": "/characters/nico-robin/frames/frame-260.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 67,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        67,
+        40
+      ],
+      "width": 67,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-078.png"
+      }
+    },
+    {
+      "index": 261,
+      "path": "/characters/nico-robin/frames/frame-261.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 56,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        56,
+        40
+      ],
+      "width": 56,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-079.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-079.png"
+      }
+    },
+    {
+      "index": 262,
+      "path": "/characters/nico-robin/frames/frame-262.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 42,
+      "replacementHeight": 40,
+      "box": [
+        0,
+        0,
+        42,
+        40
+      ],
+      "width": 42,
+      "height": 40,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/nico-robin/frames/frame-021.png|upper=/characters/nico-robin/frames/frame-080.png",
+      "generatedSources": {
+        "crouch": "/characters/nico-robin/frames/frame-021.png",
+        "upper": "/characters/nico-robin/frames/frame-080.png"
+      }
     }
   ]
 }

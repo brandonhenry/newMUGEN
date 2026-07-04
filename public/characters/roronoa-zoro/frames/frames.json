@@ -1,6 +1,6 @@
 {
   "source": "Roronoa Zoro.png",
-  "count": 207,
+  "count": 213,
   "sheets": [
     {
       "id": "main",
@@ -3322,6 +3322,156 @@
       "width": 157,
       "height": 62,
       "row": 21
+    },
+    {
+      "index": 207,
+      "path": "/characters/roronoa-zoro/frames/frame-207.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 45,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        45,
+        32
+      ],
+      "width": 45,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/roronoa-zoro/frames/frame-021.png|upper=/characters/roronoa-zoro/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/roronoa-zoro/frames/frame-021.png",
+        "upper": "/characters/roronoa-zoro/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 208,
+      "path": "/characters/roronoa-zoro/frames/frame-208.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 45,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        45,
+        32
+      ],
+      "width": 45,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/roronoa-zoro/frames/frame-021.png|upper=/characters/roronoa-zoro/frames/frame-074.png",
+      "generatedSources": {
+        "crouch": "/characters/roronoa-zoro/frames/frame-021.png",
+        "upper": "/characters/roronoa-zoro/frames/frame-074.png"
+      }
+    },
+    {
+      "index": 209,
+      "path": "/characters/roronoa-zoro/frames/frame-209.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 45,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        45,
+        32
+      ],
+      "width": 45,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/roronoa-zoro/frames/frame-021.png|upper=/characters/roronoa-zoro/frames/frame-075.png",
+      "generatedSources": {
+        "crouch": "/characters/roronoa-zoro/frames/frame-021.png",
+        "upper": "/characters/roronoa-zoro/frames/frame-075.png"
+      }
+    },
+    {
+      "index": 210,
+      "path": "/characters/roronoa-zoro/frames/frame-210.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 54,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        54,
+        32
+      ],
+      "width": 54,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/roronoa-zoro/frames/frame-021.png|upper=/characters/roronoa-zoro/frames/frame-076.png",
+      "generatedSources": {
+        "crouch": "/characters/roronoa-zoro/frames/frame-021.png",
+        "upper": "/characters/roronoa-zoro/frames/frame-076.png"
+      }
+    },
+    {
+      "index": 211,
+      "path": "/characters/roronoa-zoro/frames/frame-211.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 45,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        45,
+        32
+      ],
+      "width": 45,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/roronoa-zoro/frames/frame-021.png|upper=/characters/roronoa-zoro/frames/frame-077.png",
+      "generatedSources": {
+        "crouch": "/characters/roronoa-zoro/frames/frame-021.png",
+        "upper": "/characters/roronoa-zoro/frames/frame-077.png"
+      }
+    },
+    {
+      "index": 212,
+      "path": "/characters/roronoa-zoro/frames/frame-212.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 45,
+      "replacementHeight": 32,
+      "box": [
+        0,
+        0,
+        45,
+        32
+      ],
+      "width": 45,
+      "height": 32,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/roronoa-zoro/frames/frame-021.png|upper=/characters/roronoa-zoro/frames/frame-078.png",
+      "generatedSources": {
+        "crouch": "/characters/roronoa-zoro/frames/frame-021.png",
+        "upper": "/characters/roronoa-zoro/frames/frame-078.png"
+      }
     }
   ]
 }

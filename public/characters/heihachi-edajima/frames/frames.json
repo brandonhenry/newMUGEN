@@ -1,6 +1,6 @@
 {
   "source": "Heihachi Edajima.png",
-  "count": 188,
+  "count": 193,
   "sheets": [
     {
       "id": "main",
@@ -3018,6 +3018,131 @@
       "width": 157,
       "height": 62,
       "row": 18
+    },
+    {
+      "index": 188,
+      "path": "/characters/heihachi-edajima/frames/frame-188.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 53,
+      "replacementHeight": 37,
+      "box": [
+        0,
+        0,
+        53,
+        37
+      ],
+      "width": 53,
+      "height": 37,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/heihachi-edajima/frames/frame-022.png|upper=/characters/heihachi-edajima/frames/frame-108.png",
+      "generatedSources": {
+        "crouch": "/characters/heihachi-edajima/frames/frame-022.png",
+        "upper": "/characters/heihachi-edajima/frames/frame-108.png"
+      }
+    },
+    {
+      "index": 189,
+      "path": "/characters/heihachi-edajima/frames/frame-189.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 53,
+      "replacementHeight": 37,
+      "box": [
+        0,
+        0,
+        53,
+        37
+      ],
+      "width": 53,
+      "height": 37,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/heihachi-edajima/frames/frame-022.png|upper=/characters/heihachi-edajima/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/heihachi-edajima/frames/frame-022.png",
+        "upper": "/characters/heihachi-edajima/frames/frame-083.png"
+      }
+    },
+    {
+      "index": 190,
+      "path": "/characters/heihachi-edajima/frames/frame-190.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 53,
+      "replacementHeight": 37,
+      "box": [
+        0,
+        0,
+        53,
+        37
+      ],
+      "width": 53,
+      "height": 37,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/heihachi-edajima/frames/frame-022.png|upper=/characters/heihachi-edajima/frames/frame-084.png",
+      "generatedSources": {
+        "crouch": "/characters/heihachi-edajima/frames/frame-022.png",
+        "upper": "/characters/heihachi-edajima/frames/frame-084.png"
+      }
+    },
+    {
+      "index": 191,
+      "path": "/characters/heihachi-edajima/frames/frame-191.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 53,
+      "replacementHeight": 37,
+      "box": [
+        0,
+        0,
+        53,
+        37
+      ],
+      "width": 53,
+      "height": 37,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/heihachi-edajima/frames/frame-022.png|upper=/characters/heihachi-edajima/frames/frame-085.png",
+      "generatedSources": {
+        "crouch": "/characters/heihachi-edajima/frames/frame-022.png",
+        "upper": "/characters/heihachi-edajima/frames/frame-085.png"
+      }
+    },
+    {
+      "index": 192,
+      "path": "/characters/heihachi-edajima/frames/frame-192.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 54,
+      "replacementHeight": 37,
+      "box": [
+        0,
+        0,
+        54,
+        37
+      ],
+      "width": 54,
+      "height": 37,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/heihachi-edajima/frames/frame-022.png|upper=/characters/heihachi-edajima/frames/frame-086.png",
+      "generatedSources": {
+        "crouch": "/characters/heihachi-edajima/frames/frame-022.png",
+        "upper": "/characters/heihachi-edajima/frames/frame-086.png"
+      }
     }
   ]
 }

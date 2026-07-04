@@ -1,6 +1,6 @@
 {
   "source": "Kazuki Muto.png",
-  "count": 321,
+  "count": 328,
   "sheets": [
     {
       "id": "main",
@@ -5170,6 +5170,181 @@
       "width": 62,
       "height": 47,
       "row": 30
+    },
+    {
+      "index": 321,
+      "path": "/characters/kazuki-muto/frames/frame-321.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 57,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        57,
+        66
+      ],
+      "width": 57,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-017.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-017.png"
+      }
+    },
+    {
+      "index": 322,
+      "path": "/characters/kazuki-muto/frames/frame-322.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 74,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        74,
+        66
+      ],
+      "width": 74,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-100.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-100.png"
+      }
+    },
+    {
+      "index": 323,
+      "path": "/characters/kazuki-muto/frames/frame-323.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 56,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        56,
+        66
+      ],
+      "width": 56,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-101.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-101.png"
+      }
+    },
+    {
+      "index": 324,
+      "path": "/characters/kazuki-muto/frames/frame-324.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 56,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        56,
+        66
+      ],
+      "width": 56,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-102.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-102.png"
+      }
+    },
+    {
+      "index": 325,
+      "path": "/characters/kazuki-muto/frames/frame-325.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 103,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        103,
+        66
+      ],
+      "width": 103,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-103.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-103.png"
+      }
+    },
+    {
+      "index": 326,
+      "path": "/characters/kazuki-muto/frames/frame-326.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 54,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        54,
+        66
+      ],
+      "width": 54,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-104.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-104.png"
+      }
+    },
+    {
+      "index": 327,
+      "path": "/characters/kazuki-muto/frames/frame-327.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 80,
+      "replacementHeight": 66,
+      "box": [
+        0,
+        0,
+        80,
+        66
+      ],
+      "width": 80,
+      "height": 66,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kazuki-muto/frames/frame-021.png|upper=/characters/kazuki-muto/frames/frame-105.png",
+      "generatedSources": {
+        "crouch": "/characters/kazuki-muto/frames/frame-021.png",
+        "upper": "/characters/kazuki-muto/frames/frame-105.png"
+      }
     }
   ]
 }

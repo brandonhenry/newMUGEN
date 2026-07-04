@@ -16,7 +16,7 @@
       "frameCount": 198
     }
   ],
-  "spriteFrameCount": 198,
+  "spriteFrameCount": 207,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -139,14 +139,14 @@
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
     "cmd:FC+1": [
-      "/characters/raoh/frames/frame-113.png",
-      "/characters/raoh/frames/frame-114.png",
-      "/characters/raoh/frames/frame-115.png",
-      "/characters/raoh/frames/frame-116.png",
-      "/characters/raoh/frames/frame-117.png",
-      "/characters/raoh/frames/frame-118.png",
-      "/characters/raoh/frames/frame-119.png",
-      "/characters/raoh/frames/frame-120.png"
+      "/characters/raoh/frames/frame-199.png",
+      "/characters/raoh/frames/frame-200.png",
+      "/characters/raoh/frames/frame-201.png",
+      "/characters/raoh/frames/frame-202.png",
+      "/characters/raoh/frames/frame-203.png",
+      "/characters/raoh/frames/frame-204.png",
+      "/characters/raoh/frames/frame-205.png",
+      "/characters/raoh/frames/frame-206.png"
     ],
     "cmd:FC+2": [],
     "cmd:1+2": [
@@ -273,6 +273,9 @@
       "/characters/raoh/frames/frame-118.png",
       "/characters/raoh/frames/frame-119.png",
       "/characters/raoh/frames/frame-120.png"
+    ],
+    "crouchBlock": [
+      "/characters/raoh/frames/frame-198.png"
     ]
   },
   "animationFrameRates": {
@@ -318,7 +321,8 @@
     "cmd:qcf+1": 10,
     "cmd:qcf+3": 9,
     "cmd:SS+3": 9,
-    "cmd:O+1": 10
+    "cmd:O+1": 10,
+    "crouchBlock": 5
   },
   "animationFps": 6,
   "scale": 1.08,
@@ -1958,45 +1962,45 @@
   "animationFrameScales": {
     "knockdown": {
       "30": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.71,
+        "height": 0.66,
         "offsetX": 0
       },
       "31": {
-        "width": 0.62,
-        "height": 0.62,
+        "width": 0.78,
+        "height": 0.73,
         "offsetX": 0
       },
       "32": {
-        "width": 0.39,
-        "height": 0.39,
+        "width": 0.49,
+        "height": 0.46,
         "offsetX": 0
       },
       "33": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.71,
+        "height": 0.66,
         "offsetX": 0
       }
     },
     "getupStand": {
       "30": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.71,
+        "height": 0.66,
         "offsetX": 0
       },
       "31": {
-        "width": 0.62,
-        "height": 0.62,
+        "width": 0.78,
+        "height": 0.73,
         "offsetX": 0
       },
       "32": {
-        "width": 0.39,
-        "height": 0.39,
+        "width": 0.49,
+        "height": 0.46,
         "offsetX": 0
       },
       "33": {
-        "width": 0.55,
-        "height": 0.55,
+        "width": 0.71,
+        "height": 0.66,
         "offsetX": 0
       },
       "42": {
@@ -2127,7 +2131,7 @@
     "walkBack": {
       "14": {
         "width": 1.07,
-        "height": 1,
+        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -2262,7 +2266,7 @@
         "offsetX": 0
       },
       "114": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.03,
         "offsetX": 0
       },
@@ -2511,7 +2515,7 @@
         "offsetX": 0
       },
       "189": {
-        "width": 1,
+        "width": 1.0,
         "height": 0.98,
         "offsetX": 0
       },
@@ -2585,8 +2589,8 @@
     },
     "idle": {
       "0": {
-        "width": 1,
-        "height": 1,
+        "width": 1.0,
+        "height": 1.0,
         "offsetX": 0
       },
       "1": {
@@ -2619,7 +2623,7 @@
         "offsetX": 0
       },
       "114": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.03,
         "offsetX": 0
       },
@@ -2694,6 +2698,46 @@
         "width": 1.03,
         "height": 1.01,
         "offsetX": 0
+      },
+      "199": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "200": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "201": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "202": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "204": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "205": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 0.67,
+        "height": 0.63,
+        "offsetX": 0
       }
     },
     "cmd:f+3": {
@@ -2735,7 +2779,7 @@
         "offsetX": 0
       },
       "114": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.03,
         "offsetX": 0
       },
@@ -2841,7 +2885,7 @@
         "offsetX": 0
       },
       "114": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.03,
         "offsetX": 0
       },
@@ -2947,7 +2991,7 @@
         "offsetX": 0
       },
       "114": {
-        "width": 1,
+        "width": 1.0,
         "height": 1.03,
         "offsetX": 0
       },
@@ -2979,6 +3023,24 @@
       "120": {
         "width": 1.03,
         "height": 1.01,
+        "offsetX": 0
+      }
+    },
+    "jabright": {},
+    "kickright": {},
+    "hitHeavy": {},
+    "getupRollUp": {},
+    "cmd:d/f+2": {},
+    "cmd:qcf+4": {},
+    "cmd:WS+4": {},
+    "cmd:FC+2": {},
+    "cmd:2+4": {},
+    "cmd:3+4": {},
+    "cmd:O+2": {},
+    "crouchBlock": {
+      "198": {
+        "width": 0.67,
+        "height": 0.63,
         "offsetX": 0
       }
     }

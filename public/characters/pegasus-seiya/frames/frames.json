@@ -1,6 +1,6 @@
 {
   "source": "Pegasus Seiya.png",
-  "count": 380,
+  "count": 385,
   "sheets": [
     {
       "id": "main",
@@ -6090,6 +6090,131 @@
       "width": 157,
       "height": 62,
       "row": 42
+    },
+    {
+      "index": 380,
+      "path": "/characters/pegasus-seiya/frames/frame-380.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 40,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        40,
+        34
+      ],
+      "width": 40,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/pegasus-seiya/frames/frame-022.png|upper=/characters/pegasus-seiya/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/pegasus-seiya/frames/frame-022.png",
+        "upper": "/characters/pegasus-seiya/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 381,
+      "path": "/characters/pegasus-seiya/frames/frame-381.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        40,
+        34
+      ],
+      "width": 40,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/pegasus-seiya/frames/frame-022.png|upper=/characters/pegasus-seiya/frames/frame-080.png",
+      "generatedSources": {
+        "crouch": "/characters/pegasus-seiya/frames/frame-022.png",
+        "upper": "/characters/pegasus-seiya/frames/frame-080.png"
+      }
+    },
+    {
+      "index": 382,
+      "path": "/characters/pegasus-seiya/frames/frame-382.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        40,
+        34
+      ],
+      "width": 40,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/pegasus-seiya/frames/frame-022.png|upper=/characters/pegasus-seiya/frames/frame-081.png",
+      "generatedSources": {
+        "crouch": "/characters/pegasus-seiya/frames/frame-022.png",
+        "upper": "/characters/pegasus-seiya/frames/frame-081.png"
+      }
+    },
+    {
+      "index": 383,
+      "path": "/characters/pegasus-seiya/frames/frame-383.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        40,
+        34
+      ],
+      "width": 40,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/pegasus-seiya/frames/frame-022.png|upper=/characters/pegasus-seiya/frames/frame-082.png",
+      "generatedSources": {
+        "crouch": "/characters/pegasus-seiya/frames/frame-022.png",
+        "upper": "/characters/pegasus-seiya/frames/frame-082.png"
+      }
+    },
+    {
+      "index": 384,
+      "path": "/characters/pegasus-seiya/frames/frame-384.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 40,
+      "replacementHeight": 34,
+      "box": [
+        0,
+        0,
+        40,
+        34
+      ],
+      "width": 40,
+      "height": 34,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/pegasus-seiya/frames/frame-022.png|upper=/characters/pegasus-seiya/frames/frame-083.png",
+      "generatedSources": {
+        "crouch": "/characters/pegasus-seiya/frames/frame-022.png",
+        "upper": "/characters/pegasus-seiya/frames/frame-083.png"
+      }
     }
   ]
 }

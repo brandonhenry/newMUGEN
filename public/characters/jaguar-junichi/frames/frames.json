@@ -1,6 +1,6 @@
 {
   "source": "Jaguar Junichi.png",
-  "count": 242,
+  "count": 248,
   "sheets": [
     {
       "id": "main",
@@ -3882,6 +3882,156 @@
       "width": 157,
       "height": 62,
       "row": 25
+    },
+    {
+      "index": 242,
+      "path": "/characters/jaguar-junichi/frames/frame-242.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 41,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        41,
+        43
+      ],
+      "width": 41,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/jaguar-junichi/frames/frame-022.png|upper=/characters/jaguar-junichi/frames/frame-015.png",
+      "generatedSources": {
+        "crouch": "/characters/jaguar-junichi/frames/frame-022.png",
+        "upper": "/characters/jaguar-junichi/frames/frame-015.png"
+      }
+    },
+    {
+      "index": 243,
+      "path": "/characters/jaguar-junichi/frames/frame-243.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 41,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        41,
+        43
+      ],
+      "width": 41,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jaguar-junichi/frames/frame-022.png|upper=/characters/jaguar-junichi/frames/frame-101.png",
+      "generatedSources": {
+        "crouch": "/characters/jaguar-junichi/frames/frame-022.png",
+        "upper": "/characters/jaguar-junichi/frames/frame-101.png"
+      }
+    },
+    {
+      "index": 244,
+      "path": "/characters/jaguar-junichi/frames/frame-244.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 41,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        41,
+        43
+      ],
+      "width": 41,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jaguar-junichi/frames/frame-022.png|upper=/characters/jaguar-junichi/frames/frame-102.png",
+      "generatedSources": {
+        "crouch": "/characters/jaguar-junichi/frames/frame-022.png",
+        "upper": "/characters/jaguar-junichi/frames/frame-102.png"
+      }
+    },
+    {
+      "index": 245,
+      "path": "/characters/jaguar-junichi/frames/frame-245.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 41,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        41,
+        43
+      ],
+      "width": 41,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jaguar-junichi/frames/frame-022.png|upper=/characters/jaguar-junichi/frames/frame-103.png",
+      "generatedSources": {
+        "crouch": "/characters/jaguar-junichi/frames/frame-022.png",
+        "upper": "/characters/jaguar-junichi/frames/frame-103.png"
+      }
+    },
+    {
+      "index": 246,
+      "path": "/characters/jaguar-junichi/frames/frame-246.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 41,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        41,
+        43
+      ],
+      "width": 41,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jaguar-junichi/frames/frame-022.png|upper=/characters/jaguar-junichi/frames/frame-104.png",
+      "generatedSources": {
+        "crouch": "/characters/jaguar-junichi/frames/frame-022.png",
+        "upper": "/characters/jaguar-junichi/frames/frame-104.png"
+      }
+    },
+    {
+      "index": 247,
+      "path": "/characters/jaguar-junichi/frames/frame-247.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "cmd:FC+1.png",
+      "replacementWidth": 41,
+      "replacementHeight": 43,
+      "box": [
+        0,
+        0,
+        41,
+        43
+      ],
+      "width": 41,
+      "height": 43,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "cmd:FC+1",
+      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jaguar-junichi/frames/frame-022.png|upper=/characters/jaguar-junichi/frames/frame-105.png",
+      "generatedSources": {
+        "crouch": "/characters/jaguar-junichi/frames/frame-022.png",
+        "upper": "/characters/jaguar-junichi/frames/frame-105.png"
+      }
     }
   ]
 }
