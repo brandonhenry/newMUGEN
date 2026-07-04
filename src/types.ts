@@ -180,6 +180,16 @@ export type ImpactSparkEvent = {
   kiBurst?: boolean;
 };
 
+export type RoundFinisherState = {
+  attackerSlot: 1 | 2;
+  defenderSlot: 1 | 2;
+  impactId: number;
+  impactPosition: Vec3Tuple;
+  duration: number;
+  elapsed: number;
+  cameraZoomScale: number;
+};
+
 export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {
   id?: string;
   input?: MoveInput;
@@ -936,12 +946,13 @@ export type MatchSnapshot = {
   round: number;
   countdown: number;
   winnerSlot: 1 | 2 | null;
-  phase: 'intro' | 'fighting' | 'roundOver' | 'matchOver';
+  phase: 'intro' | 'fighting' | 'roundFinisher' | 'roundOver' | 'matchOver';
   message: string;
   lastHitId: number;
   combatEvents: CombatPopupEvent[];
   impactEvents: ImpactSparkEvent[];
   clashState: ClashState;
+  roundFinisher: RoundFinisherState | null;
   visualTimeScale: number;
   cameraShake: number;
 };

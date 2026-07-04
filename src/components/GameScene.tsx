@@ -2434,6 +2434,68 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     camera.far = modelStageCamera ? 1400 : 300;
     camera.updateProjectionMatrix();
     const [p1, p2] = match.fighters;
+    if (match.roundFinisher) {
+      const [impactX, impactY, impactZ] = match.roundFinisher.impactPosition;
+      const p1x = finiteOr(p1.position.x, impactX - 0.65);
+      const p1y = finiteOr(p1.position.y, 0);
+      const p1z = finiteOr(p1.position.z, impactZ);
+      const p2x = finiteOr(p2.position.x, impactX + 0.65);
+      const p2y = finiteOr(p2.position.y, 0);
+      const p2z = finiteOr(p2.position.z, impactZ);
+      const dx = p2x - p1x;
+      const dz = p2z - p1z;
+      const distance = Math.hypot(dx, dz);
+      const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
+      rawSide.set(cameraX, 0, cameraZ).normalize();
+      if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
+      if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
+
+      const perspective = camera as THREE.PerspectiveCamera;
+      const aspect = size.width / Math.max(1, size.height);
+      const verticalFov = THREE.MathUtils.degToRad(perspective.fov);
+      const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * aspect);
+      const horizontalFit = (distance * 0.5 + 1.2) / Math.tan(horizontalFov / 2);
+      const verticalSpan = 2.15 + Math.max(p1y, p2y, finiteOr(impactY, 1.1)) * 0.34;
+      const verticalFit = verticalSpan / Math.tan(verticalFov / 2);
+      const distanceScale = settings.distance * settings.zoomBias * match.roundFinisher.cameraZoomScale;
+      const cameraDistance = THREE.MathUtils.clamp(
+        Math.max(horizontalFit, verticalFit, 4.35) * distanceScale,
+        MIN_FIGHT_CAMERA_DISTANCE,
+        16
+      );
+      const cameraHeight = THREE.MathUtils.clamp(
+        (2.08 + cameraDistance * 0.1 + Math.max(p1y, p2y) * 0.16) * settings.height,
+        1.9,
+        5.2
+      );
+      rawFocus.set(finiteOr(impactX, (p1x + p2x) / 2), 0, finiteOr(impactZ, (p1z + p2z) / 2));
+      rawLookFocus.set(rawFocus.x, Math.max(1.02, finiteOr(impactY, 1.05)), rawFocus.z);
+      if (!initializedRef.current) {
+        initializedRef.current = true;
+        focus.copy(rawFocus);
+        lookFocus.copy(rawLookFocus);
+        side.copy(rawSide);
+        cameraDistanceRef.current = cameraDistance;
+        cameraHeightRef.current = cameraHeight;
+      }
+      const smoothing = Math.max(0.35, settings.smoothing);
+      focus.lerp(rawFocus, cameraDamp(delta, 7.2 * smoothing));
+      lookFocus.lerp(rawLookFocus, cameraDamp(delta, 8.4 * smoothing));
+      side.lerp(rawSide, cameraDamp(delta, 4.8 * smoothing)).normalize();
+      cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 5.6 * smoothing));
+      cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 5.2 * smoothing));
+      desired.set(
+        focus.x + side.x * cameraDistanceRef.current,
+        cameraHeightRef.current,
+        focus.z + side.z * cameraDistanceRef.current
+      );
+      const collided = resolveCameraModelCollision(lookFocus, desired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+      camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 6.2 * smoothing));
+      const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
+      if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+      camera.lookAt(lookFocus);
+      return;
+    }
     if (match.clashState?.status !== 'none') {
       const [x, y, z] = match.clashState.contactPoint;
       const contactX = finiteOr(x, focus.x);

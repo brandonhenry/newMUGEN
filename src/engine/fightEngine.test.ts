@@ -745,6 +745,37 @@ describe('character manifests', () => {
     expect(match.combatEvents[match.combatEvents.length - 1]?.kind).toMatch(/clash/);
   });
 
+  it('starts a round finisher when a clash win is lethal', () => {
+    let match = startKiClashMatch();
+    match.fighters[1].hp = 1;
+    for (let frame = 0; frame < 45; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    const sequence = match.clashState.sequence;
+    const wrong = clashWrongButton(sequence[0]);
+    const p2Wrong = emptyInputFrame();
+    p2Wrong[wrong] = true;
+    match = stepMatch(match, emptyInputFrame(), p2Wrong, 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    for (const button of sequence) {
+      const input = emptyInputFrame();
+      input[button] = true;
+      match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.phase).toBe('roundFinisher');
+    expect(match.message).toBe('');
+    expect(match.roundFinisher?.attackerSlot).toBe(1);
+    expect(match.roundFinisher?.defenderSlot).toBe(2);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
+    expect(match.phase).toBe('roundOver');
+    expect(match.message).toBe('K.O.');
+    expect(match.fighters[0].roundsWon).toBe(1);
+  });
+
   it('resolves a clash draw when both players complete on the same frame', () => {
     let match = startKiClashMatch();
     for (let frame = 0; frame < 45; frame += 1) {
@@ -1418,6 +1449,28 @@ describe('fight engine', () => {
     expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
     expect(match.timer).toBe(60);
+  });
+
+  it('refills a lethal direct training hit without starting a round finisher', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].hp = 1;
+    match.fighters[0].position.x = -0.5;
+    match.fighters[1].position.x = 0.5;
+    const attack = emptyInputFrame();
+    attack.heavy = true;
+
+    for (let i = 0; i < 40 && !match.fighters[0].hitConnected; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.heavy = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.phase).toBe('fighting');
+    expect(match.roundFinisher).toBeNull();
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+    expect(match.fighters[0].roundsWon).toBe(0);
   });
 
   it('allows training health reset to be disabled', () => {
@@ -4084,6 +4137,55 @@ describe('fight engine', () => {
     expect(match.fighters[0].shadowClone).toBeNull();
   });
 
+  it('starts a round finisher when a shadow clone hit is lethal', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const sourceMove: MoveDefinition = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 8,
+      recoveryFrames: 12,
+      damage: 9,
+      range: 2.5,
+      hitbox: {
+        offset: [0, 1.05, 0.7],
+        size: [1, 1.2, 1.5]
+      }
+    };
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.75;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].hp = 1;
+    match.fighters[0].shadowClone = {
+      phase: 'active',
+      position: { x: -0.35, y: 0, z: 0 },
+      velocityY: 0,
+      facing: 1,
+      facingYaw: Math.PI / 2,
+      state: 'attack',
+      currentMove: sourceMove,
+      moveInstanceId: 2,
+      moveFrame: 1,
+      actionFramesRemaining: 10,
+      hitConnected: false,
+      attackConsumed: true,
+      vanishOnLanding: false,
+      spawnSmokeFrames: 0,
+      vanishSmokeFrames: 0
+    };
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('roundFinisher');
+    expect(match.message).toBe('');
+    expect(match.roundFinisher?.attackerSlot).toBe(1);
+    expect(match.roundFinisher?.defenderSlot).toBe(2);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
+    expect(match.phase).toBe('roundOver');
+    expect(match.fighters[0].roundsWon).toBe(1);
+  });
+
   it('keeps a spawned shadow clone offset instead of teleporting it onto Naruto before attack', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -4762,6 +4864,15 @@ describe('fight engine', () => {
       match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
       attack.heavy = false;
     }
+    expect(match.phase).toBe('roundFinisher');
+    expect(match.message).toBe('');
+    expect(match.roundFinisher?.attackerSlot).toBe(1);
+    expect(match.roundFinisher?.defenderSlot).toBe(2);
+    expect(match.roundFinisher?.impactPosition[1]).toBeGreaterThan(0);
+    expect(match.visualTimeScale).toBeLessThan(1);
+    expect(match.fighters[0].roundsWon).toBe(0);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
     expect(match.phase).toBe('roundOver');
     expect(match.message).toBe('K.O.');
     expect(match.visualTimeScale).toBeLessThan(1);
@@ -4770,6 +4881,25 @@ describe('fight engine', () => {
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.9);
     expect(match.phase).toBe('roundOver');
     expect(match.visualTimeScale).toBe(1);
+  });
+
+  it('keeps nonlethal direct hits in the fighting phase', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.fighters[1].hp = 60;
+    match.fighters[0].position.x = -0.5;
+    match.fighters[1].position.x = 0.5;
+    const attack = emptyInputFrame();
+    attack.heavy = true;
+    for (let i = 0; i < 40 && !match.fighters[0].hitConnected; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.heavy = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.phase).toBe('fighting');
+    expect(match.roundFinisher).toBeNull();
+    expect(match.fighters[0].roundsWon).toBe(0);
   });
 
   it('emits a combo popup event on multi-hit combos', () => {

@@ -62,8 +62,17 @@ describe('online codec', () => {
       vanishSmokeFrames: 0
     };
     match.fighters[1].roundsWon = 1;
-    match.phase = 'roundOver';
-    match.message = 'K.O.';
+    match.phase = 'roundFinisher';
+    match.message = '';
+    match.roundFinisher = {
+      attackerSlot: 1,
+      defenderSlot: 2,
+      impactId: 14,
+      impactPosition: [0.35, 1.2, -0.15],
+      duration: 0.72,
+      elapsed: 0.24,
+      cameraZoomScale: 0.78
+    };
     match.clashState = {
       id: 4,
       status: 'input',
@@ -83,8 +92,14 @@ describe('online codec', () => {
     const base = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online');
     const hydrated = hydrateMatchSnapshot(base, snapshot);
 
-    expect(hydrated.phase).toBe('roundOver');
-    expect(hydrated.message).toBe('K.O.');
+    expect(hydrated.phase).toBe('roundFinisher');
+    expect(hydrated.message).toBe('');
+    expect(hydrated.roundFinisher?.attackerSlot).toBe(1);
+    expect(hydrated.roundFinisher?.defenderSlot).toBe(2);
+    expect(hydrated.roundFinisher?.impactId).toBe(14);
+    expect(hydrated.roundFinisher?.impactPosition).toEqual([0.35, 1.2, -0.15]);
+    expect(hydrated.roundFinisher?.elapsed).toBe(0.24);
+    expect(hydrated.roundFinisher?.cameraZoomScale).toBe(0.78);
     expect(hydrated.fighters[0].hp).toBe(42);
     expect(hydrated.fighters[0].ki).toBe(78);
     expect(hydrated.fighters[0].position.x).toBe(1.25);

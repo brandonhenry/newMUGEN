@@ -27,6 +27,9 @@ const ROUND_TIME = 60;
 const INFINITE_HEALTH_VALUE = 999_999;
 const START_DISTANCE = 2.6;
 const ROUND_OVER_DELAY = 2.1;
+const ROUND_FINISHER_SECONDS = 0.72;
+const ROUND_FINISHER_TIME_SCALE = 0.28;
+const ROUND_FINISHER_CAMERA_ZOOM_SCALE = 0.78;
 const KO_SLOWMO_SECONDS = 0.8;
 const KO_SLOWMO_TIME_SCALE = 0.24;
 const ROUND_INTRO_ENTRY_SECONDS = 1.2;
@@ -178,6 +181,7 @@ export function createMatch(
     combatEvents: [],
     impactEvents: [],
     clashState: createEmptyClashState(),
+    roundFinisher: null,
     visualTimeScale: 1,
     cameraShake: 0
   };
@@ -228,6 +232,11 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
+  if (next.phase === 'roundFinisher') {
+    updateRoundFinisher(next, dt);
+    return next;
+  }
+
   const input1 = next.mode === 'cpu' ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
@@ -249,6 +258,8 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   constrainFightersToStageBounds(next);
   resolveHits(next);
   constrainFightersToStageBounds(next);
+
+  if (next.roundFinisher) return next;
 
   const infiniteTimer = isInfiniteRoundTime(next.roundTime);
   next.timer = infiniteTimer || (next.mode === 'training' && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
@@ -938,6 +949,7 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   });
   if (defender.hp <= 0) {
     releaseThrowCapture(attacker, defender);
+    beginRoundFinisher(match, attacker, defender, impactId, impactPosition);
   }
 }
 
@@ -2662,8 +2674,11 @@ function resolveHits(match: MatchSnapshot) {
   const [a, b] = match.fighters;
   if (tryStartKiClash(match, a, b)) return;
   tryHit(match, a, b);
+  if (match.roundFinisher) return;
   tryHit(match, b, a);
+  if (match.roundFinisher) return;
   tryShadowCloneHit(match, a, b);
+  if (match.roundFinisher) return;
   tryShadowCloneHit(match, b, a);
 }
 
@@ -2824,6 +2839,7 @@ function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
     ...match.impactEvents,
     clashSpark
   ].slice(-12);
+  if (loser.hp <= 0) beginRoundFinisher(match, winner, loser, popupId, clash.contactPoint);
 }
 
 function applyClashDraw(match: MatchSnapshot) {
@@ -2925,6 +2941,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     defender.position.x += pushX * move.blockPushback * 0.14;
     defender.position.z += pushZ * move.blockPushback * 0.14;
+    if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
     return;
   }
 
@@ -3017,6 +3034,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
   defender.position.x += pushX * move.pushback * 0.28;
   defender.position.z += pushZ * move.pushback * 0.28;
+  if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
 
 function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
@@ -3105,6 +3123,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   }
   defender.position.x += pushX * weakMove.pushback * 0.18;
   defender.position.z += pushZ * weakMove.pushback * 0.18;
+  if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
 
 function buildShadowCloneMove(move: MoveDefinition): MoveDefinition {
@@ -3748,6 +3767,7 @@ function finishRound(match: MatchSnapshot) {
   match.countdown = ROUND_OVER_DELAY;
   match.message = 'K.O.';
   match.clashState = createEmptyClashState();
+  match.roundFinisher = null;
   match.visualTimeScale = KO_SLOWMO_TIME_SCALE;
   match.fighters.forEach((fighter) => {
     fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
@@ -3771,6 +3791,55 @@ function finishRound(match: MatchSnapshot) {
   });
 }
 
+function beginRoundFinisher(
+  match: MatchSnapshot,
+  attacker: FighterRuntime,
+  defender: FighterRuntime,
+  impactId: number,
+  impactPosition: [number, number, number]
+) {
+  if (match.mode === 'training' && match.trainingInfiniteHealth) return false;
+  if (match.phase === 'roundFinisher' || match.phase === 'roundOver' || match.phase === 'matchOver') return false;
+  match.phase = 'roundFinisher';
+  match.countdown = ROUND_FINISHER_SECONDS;
+  match.message = '';
+  match.clashState = createEmptyClashState();
+  match.roundFinisher = {
+    attackerSlot: attacker.slot,
+    defenderSlot: defender.slot,
+    impactId,
+    impactPosition: [...impactPosition],
+    duration: ROUND_FINISHER_SECONDS,
+    elapsed: 0,
+    cameraZoomScale: ROUND_FINISHER_CAMERA_ZOOM_SCALE
+  };
+  match.visualTimeScale = ROUND_FINISHER_TIME_SCALE;
+  return true;
+}
+
+function updateRoundFinisher(match: MatchSnapshot, dt: number) {
+  const finisher = match.roundFinisher;
+  if (!finisher) {
+    finishRound(match);
+    return;
+  }
+  finisher.elapsed = Math.min(finisher.duration, finisher.elapsed + dt);
+  match.countdown = Math.max(0, finisher.duration - finisher.elapsed);
+  match.message = '';
+  match.visualTimeScale = ROUND_FINISHER_TIME_SCALE;
+
+  const scaledDt = dt * ROUND_FINISHER_TIME_SCALE;
+  applyFighterStep(match, 0, emptyInputFrame(), scaledDt);
+  applyFighterStep(match, 1, emptyInputFrame(), scaledDt);
+  resolveFacing(match);
+  resolveBodyCollision(match);
+  constrainFightersToStageBounds(match);
+
+  if (finisher.elapsed >= finisher.duration) {
+    finishRound(match);
+  }
+}
+
 function refillTrainingHealth(match: MatchSnapshot) {
   const defeated = match.fighters.filter((fighter) => fighter.hp <= 0);
   match.fighters.forEach((fighter) => {
@@ -3782,6 +3851,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.countdown = 0;
   match.message = '';
   match.clashState = createEmptyClashState();
+  match.roundFinisher = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   defeated.forEach((fighter) => {
@@ -3795,6 +3865,7 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.countdown = totalIntroSeconds;
   match.message = `ROUND ${match.round}`;
   match.clashState = createEmptyClashState();
+  match.roundFinisher = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.fighters.forEach((fighter) => {
@@ -3872,6 +3943,7 @@ function resetRound(match: MatchSnapshot) {
   match.combatEvents = [];
   match.impactEvents = [];
   match.clashState = createEmptyClashState();
+  match.roundFinisher = null;
   match.visualTimeScale = 1;
   if (match.introEnabled) beginRoundIntro(match);
 }
@@ -5207,6 +5279,12 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
     combatEvents: [...match.combatEvents],
     impactEvents: [...match.impactEvents],
     clashState: cloneClashState(match.clashState),
+    roundFinisher: match.roundFinisher
+      ? {
+          ...match.roundFinisher,
+          impactPosition: [...match.roundFinisher.impactPosition]
+        }
+      : null,
     fighters: match.fighters.map((fighter) => ({
       ...fighter,
       character: fighter.character,
