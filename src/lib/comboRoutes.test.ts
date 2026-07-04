@@ -268,6 +268,63 @@ describe('combo route catalog', () => {
     expect(collect(4).every((route) => route.tier !== 'marathon')).toBe(true);
   });
 
+  it('keeps KORE marathon route recommendations rare during ordinary juggle openings', () => {
+    const character = readRosterCharacters().find((candidate) => {
+      const routes = generateCharacterComboRoutes(candidate);
+      return routes.some((route) => route.tier === 'marathon') && routes.some((route) => route.tier === 'short' || route.tier === 'medium');
+    });
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    let total = 0;
+    let marathon = 0;
+    let shortOrMedium = 0;
+    for (let index = 0; index < 300; index += 1) {
+      const recommendation = recommendCpuComboRoute(character, {
+        difficulty: 5,
+        opening: 'juggle',
+        remainingFrames: 38,
+        comboStep: 1,
+        selector: index * 7,
+        routeRoll: index * 17
+      });
+      if (!recommendation) continue;
+      total += 1;
+      if (recommendation.route.tier === 'marathon') marathon += 1;
+      if (recommendation.route.tier === 'short' || recommendation.route.tier === 'medium') shortOrMedium += 1;
+    }
+
+    expect(total).toBeGreaterThan(60);
+    expect(shortOrMedium).toBeGreaterThan(marathon * 3);
+    expect(marathon).toBeLessThanOrEqual(Math.max(4, Math.floor(total * 0.16)));
+  });
+
+  it('continues a committed KORE marathon route instead of re-rolling ambition mid-route', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateCharacterComboRoutes(candidate).some((route) => route.tier === 'marathon' && route.steps.length >= 4)
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const route = generateCharacterComboRoutes(character).find((candidate) => candidate.tier === 'marathon' && candidate.steps.length >= 4);
+    expect(route).toBeTruthy();
+    if (!route) return;
+
+    const recommendation = recommendCpuComboRoute(character, {
+      difficulty: 5,
+      opening: 'juggle',
+      remainingFrames: 48,
+      comboStep: 2,
+      activeRouteId: route.id,
+      usedKeys: route.steps.slice(0, 2).map(stepIdentity),
+      selector: 99,
+      routeRoll: 99
+    });
+
+    expect(recommendation?.route.id).toBe(route.id);
+    expect(recommendation?.stepIndex).toBe(2);
+  });
+
   it('prefers grounded launcher recommendations over air chase after a juggle opening', () => {
     const character = readRosterCharacters().find((candidate) => {
       const routes = generateCharacterComboRoutes(candidate);

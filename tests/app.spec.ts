@@ -224,16 +224,20 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('animation-width-slider')).toBeVisible();
   await expect(page.getByTestId('animation-height-slider')).toBeVisible();
   await page.getByLabel('Frame mode').check();
-  await expect(page.getByTestId('animation-scale-ratio-lock')).toBeChecked();
+  const ratioLock = page.getByTestId('animation-scale-ratio-lock');
+  if (!(await ratioLock.isChecked())) {
+    await page.getByTestId('animation-width-input').fill(await page.getByTestId('animation-height-input').inputValue());
+  }
+  await expect(ratioLock).toBeChecked();
   await page.getByTestId('animation-width-input').fill('1.17');
   await expect(page.getByTestId('animation-width-input')).toHaveValue('1.17');
   await expect(page.getByTestId('animation-height-input')).toHaveValue('1.17');
   const savesBeforeUnlock = manifestSaveCount;
-  await page.getByTestId('animation-scale-ratio-lock').uncheck();
-  await expect(page.getByTestId('animation-scale-ratio-lock')).not.toBeChecked();
+  await ratioLock.uncheck();
+  await expect(ratioLock).not.toBeChecked();
   await expect.poll(() => manifestSaveCount).toBeGreaterThan(savesBeforeUnlock);
   await expect(page.getByTestId('save-character-manifest')).toBeEnabled();
-  await expect(page.getByTestId('animation-scale-ratio-lock')).not.toBeChecked();
+  await expect(ratioLock).not.toBeChecked();
   const unlockedHeight = await page.getByTestId('animation-height-input').inputValue();
   const unlockedWidth = unlockedHeight === '1.22' ? '1.31' : '1.22';
   await page.getByTestId('animation-width-input').fill(unlockedWidth);

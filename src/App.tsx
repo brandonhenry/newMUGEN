@@ -931,8 +931,8 @@ function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, An
 
 function normalizeAnimationScale(size?: AnimationScale): Required<AnimationScale> {
   return {
-    width: Number(clamp(Number(size?.width) || 1, 0.25, 2.5).toFixed(2)),
-    height: Number(clamp(Number(size?.height) || 1, 0.25, 2.5).toFixed(2)),
+    width: Number(clamp(Number(size?.width) || 1, 0.25, 5).toFixed(2)),
+    height: Number(clamp(Number(size?.height) || 1, 0.25, 5).toFixed(2)),
     offsetX: Number(clamp(Number(size?.offsetX) || 0, -6, 6).toFixed(2))
   };
 }
@@ -10215,7 +10215,7 @@ function CharacterViewer({
                           aria-label={`${selectedSlot.label} animation width scale`}
                           type="range"
                           min="0.25"
-                          max="2.5"
+                          max="5"
                           step="0.01"
                           value={selectedSizeScale.width}
                           onChange={(event) => updateSelectedAnimationScaleAxis('width', Number(event.target.value))}
@@ -10225,7 +10225,7 @@ function CharacterViewer({
                           aria-label={`${selectedSlot.label} animation width scale value`}
                           type="number"
                           min="0.25"
-                          max="2.5"
+                          max="5"
                           step="0.01"
                           value={selectedSizeScale.width}
                           onChange={(event) => updateSelectedAnimationScaleAxis('width', Number(event.target.value))}
@@ -10238,7 +10238,7 @@ function CharacterViewer({
                           aria-label={`${selectedSlot.label} animation height scale`}
                           type="range"
                           min="0.25"
-                          max="2.5"
+                          max="5"
                           step="0.01"
                           value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScaleAxis('height', Number(event.target.value))}
@@ -10248,7 +10248,7 @@ function CharacterViewer({
                           aria-label={`${selectedSlot.label} animation height scale value`}
                           type="number"
                           min="0.25"
-                          max="2.5"
+                          max="5"
                           step="0.01"
                           value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScaleAxis('height', Number(event.target.value))}

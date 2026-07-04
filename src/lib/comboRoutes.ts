@@ -949,6 +949,7 @@ function routeFitsCpuContext(route: GeneratedComboRoute, context: CpuRouteContex
   if (context.difficulty <= 2 && route.tier !== 'short') return false;
   if (context.difficulty === 3 && (route.tier === 'long' || route.tier === 'marathon')) return false;
   if (context.difficulty === 4 && route.tier === 'marathon') return false;
+  if (!routeTierAllowedForCpuMoment(route, context)) return false;
   if (context.difficulty <= 1 && route.category !== 'basic') return false;
   if (context.difficulty === 2 && route.level > 4) return false;
   if (context.difficulty === 3 && route.level > 6) return false;
@@ -966,10 +967,10 @@ function routeCategoryCpuWeight(category: ComboRouteCategory, context: CpuRouteC
 }
 
 function routeTierCpuWeight(tier: ComboRouteTier, context: CpuRouteContext) {
-  if (tier === 'short') return 0.12;
-  if (tier === 'medium') return context.difficulty >= 4 ? 0.08 : -0.08;
-  if (tier === 'long') return context.difficulty >= 5 && context.opening !== 'neutral' ? 0.04 : -0.24;
-  return context.difficulty >= 5 && context.opening === 'juggle' ? -0.02 : -0.5;
+  if (tier === 'short') return 0.18;
+  if (tier === 'medium') return context.difficulty >= 4 ? 0.14 : -0.08;
+  if (tier === 'long') return context.difficulty >= 5 && context.opening !== 'neutral' ? -0.18 : -0.34;
+  return context.difficulty >= 5 && context.opening === 'juggle' ? -0.92 : -1.25;
 }
 
 function launchRouteStyleCpuWeight(route: GeneratedComboRoute, context: CpuRouteContext) {
@@ -984,6 +985,55 @@ function cpuRouteKnowledgeChance(difficulty: CpuRouteContext['difficulty'], open
   const base = difficulty <= 1 ? 0.08 : difficulty === 2 ? 0.22 : difficulty === 3 ? 0.42 : difficulty === 4 ? 0.68 : 0.84;
   const openingBonus = opening === 'neutral' ? 0 : opening === 'whiff' ? 0.08 : 0.14;
   return clamp(base + openingBonus - (leaderCloseout ? 0.18 : 0), 0.02, 0.92);
+}
+
+function routeTierAllowedForCpuMoment(route: GeneratedComboRoute, context: CpuRouteContext) {
+  if (route.tier === 'short' || route.tier === 'medium') return true;
+  if (context.activeRouteId === route.id) return true;
+  if (context.leaderCloseout) return false;
+
+  const momentRoll = cpuRouteAmbitionMomentRoll(context);
+  const roll = cpuRouteAmbitionRoll(route, context);
+  if (route.tier === 'long') return momentRoll < longRouteChance(context) && roll < 0.7;
+  return momentRoll < marathonRouteChance(route, context) && roll < 0.36;
+}
+
+function longRouteChance(context: CpuRouteContext) {
+  if (context.difficulty < 4) return 0;
+  const base =
+    context.opening === 'juggle' ? 0.3 :
+    context.opening === 'whiff' ? 0.26 :
+    context.opening === 'hitstun' ? 0.22 :
+    0.08;
+  const difficultyBonus = context.difficulty >= 5 ? 0.12 : 0;
+  const lateComboPenalty = context.comboStep >= 10 ? 0.18 : context.comboStep >= 6 ? 0.1 : 0;
+  return clamp(base + difficultyBonus - lateComboPenalty, 0, 0.5);
+}
+
+function marathonRouteChance(route: GeneratedComboRoute, context: CpuRouteContext) {
+  if (context.difficulty < 5) return 0;
+  if (context.opening === 'neutral') return 0;
+  if (context.comboStep >= 12) return 0;
+  const base =
+    context.opening === 'juggle' ? 0.08 :
+    context.opening === 'whiff' ? 0.05 :
+    0.035;
+  const lateComboPenalty = context.comboStep >= 8 ? 0.06 : context.comboStep >= 4 ? 0.03 : 0;
+  const veryLongPenalty = Math.max(0, route.estimatedHits - 22) * 0.008;
+  const diversityCredit = routeDiversityScore(route) >= 0.9 ? 0.012 : 0;
+  return clamp(base + diversityCredit - lateComboPenalty - veryLongPenalty, 0, 0.09);
+}
+
+function cpuRouteAmbitionMomentRoll(context: CpuRouteContext) {
+  const selector = context.selector ?? 0;
+  const routeRoll = context.routeRoll ?? 0;
+  return positiveModulo(selector * 29 + routeRoll * 31 + context.comboStep * 17 + context.remainingFrames * 3, 100) / 100;
+}
+
+function cpuRouteAmbitionRoll(route: GeneratedComboRoute, context: CpuRouteContext) {
+  const selector = context.selector ?? 0;
+  const routeRoll = context.routeRoll ?? 0;
+  return positiveModulo(selector * 19 + routeRoll * 23 + route.id.length * 7 + context.comboStep * 11 + route.estimatedHits * 5, 100) / 100;
 }
 
 function routeStepStartup(step: ComboTrialStep) {
