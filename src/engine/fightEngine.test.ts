@@ -2321,7 +2321,7 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('block');
   });
 
-  it('keeps movement directions tied to player side even after fighters cross physical sides', () => {
+  it('keeps horizontal controls relative to the opponent after fighters cross physical sides', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -2329,19 +2329,30 @@ describe('fight engine', () => {
     match.fighters[1].position.x = -1.3;
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].facing).toBe(1);
-    expect(match.fighters[1].facing).toBe(-1);
+    expect(match.fighters[0].facing).toBe(-1);
+    expect(match.fighters[1].facing).toBe(1);
 
     const toward = emptyInputFrame();
-    toward.right = true;
+    toward.left = true;
     const towardResult = stepMatch(match, toward, emptyInputFrame(), 1 / 60);
     expect(towardResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
 
     const away = emptyInputFrame();
-    away.left = true;
+    away.right = true;
     const awayResult = stepMatch(match, away, emptyInputFrame(), 1 / 60);
     expect(awayResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
     expect(awayResult.fighters[0].state).toBe('block');
+
+    const p2Toward = emptyInputFrame();
+    p2Toward.right = true;
+    const p2TowardResult = stepMatch(match, emptyInputFrame(), p2Toward, 1 / 60);
+    expect(p2TowardResult.fighters[1].position.x).toBeGreaterThan(match.fighters[1].position.x);
+
+    const p2Away = emptyInputFrame();
+    p2Away.left = true;
+    const p2AwayResult = stepMatch(match, emptyInputFrame(), p2Away, 1 / 60);
+    expect(p2AwayResult.fighters[1].position.x).toBeLessThan(match.fighters[1].position.x);
+    expect(p2AwayResult.fighters[1].state).toBe('block');
 
     const laneUp = emptyInputFrame();
     laneUp.sidewalkUp = true;
@@ -2366,7 +2377,7 @@ describe('fight engine', () => {
     expect(unwrappedAngleDelta(laneDownAngle, laneAngleBefore)).toBeLessThan(0);
   });
 
-  it('keeps stable-slot horizontal controls after repeated up-up sidesteps', () => {
+  it('keeps side-relative horizontal controls after repeated up-up sidesteps', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -2400,12 +2411,12 @@ describe('fight engine', () => {
     match.fighters[1].position.x = -1.3;
     match.fighters[1].position.z = 0;
     const crossedForward = emptyInputFrame();
-    crossedForward.right = true;
+    crossedForward.left = true;
     const crossedForwardResult = stepMatch(match, crossedForward, emptyInputFrame(), 1 / 60);
     expect(crossedForwardResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
 
     const crossedBack = emptyInputFrame();
-    crossedBack.left = true;
+    crossedBack.right = true;
     const crossedBackResult = stepMatch(match, crossedBack, emptyInputFrame(), 1 / 60);
     expect(crossedBackResult.fighters[0].state).toBe('block');
     expect(crossedBackResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
@@ -2528,6 +2539,19 @@ describe('fight engine', () => {
     expect(p2Match.fighters[1].position.x).toBeLessThan(p2Before - 0.8);
     expect(p2Match.fighters[1].dashForwardFrames).toBeGreaterThan(0);
     expect(p2Match.fighters[1].walkDirection).toBe(1);
+
+    let crossedMatch = createMatch({ ...starterCharacters[0], stats: { ...starterCharacters[0].stats, dashDistance: 0.95 } }, starterCharacters[1], stages[0], 'local2p');
+    crossedMatch.phase = 'fighting';
+    crossedMatch.countdown = 0;
+    crossedMatch.fighters[0].position.x = 1.3;
+    crossedMatch.fighters[1].position.x = -1.3;
+    crossedMatch = stepMatch(crossedMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const crossedBefore = crossedMatch.fighters[0].position.x;
+    crossedMatch = stepMatch(crossedMatch, { ...emptyInputFrame(), left: true, dashForward: true }, emptyInputFrame(), 1 / 60);
+
+    expect(crossedMatch.fighters[0].position.x).toBeLessThan(crossedBefore - 0.8);
+    expect(crossedMatch.fighters[0].dashForwardFrames).toBeGreaterThan(0);
+    expect(crossedMatch.fighters[0].walkDirection).toBe(1);
   });
 
   it('keeps continuous lane walking orbiting around the opponent without reversing at side crossover', () => {
@@ -2649,6 +2673,26 @@ describe('fight engine', () => {
     const attack = emptyInputFrame();
     attack.jab = true;
 
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].damage);
+  });
+
+  it('projects attack hitboxes toward the opponent after a side swap', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = 0.45;
+    match.fighters[1].position.x = -0.45;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].facing).toBe(-1);
+    expect(match.fighters[1].facing).toBe(1);
+
+    const attack = emptyInputFrame();
+    attack.jab = true;
     for (let i = 0; i < 12; i += 1) {
       match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
       attack.jab = false;
@@ -3273,7 +3317,7 @@ describe('fight engine', () => {
     expect(match.fighters[1].currentMove).toBeNull();
   });
 
-  it('blocks while holding stable player-side back even after physical side crossover', () => {
+  it('blocks while holding side-relative back after physical side crossover', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -3286,12 +3330,12 @@ describe('fight engine', () => {
     match.fighters[0].position.x = 1.3;
     match.fighters[1].position.x = -1.3;
     const p1BackAfterSwap = emptyInputFrame();
-    p1BackAfterSwap.left = true;
+    p1BackAfterSwap.right = true;
     match = stepMatch(match, p1BackAfterSwap, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('block');
 
     const crouchBlock = emptyInputFrame();
-    crouchBlock.left = true;
+    crouchBlock.right = true;
     crouchBlock.down = true;
     match = stepMatch(match, crouchBlock, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('crouchBlock');

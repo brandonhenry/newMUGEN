@@ -7920,12 +7920,12 @@ button {
 .training-trial-hud {
   position: absolute;
   z-index: 28;
-  top: 82px;
+  top: clamp(340px, 38vh, 390px);
   left: 18px;
   display: grid;
   gap: 8px;
   width: min(330px, calc(100vw - 36px));
-  max-height: min(58vh, 520px);
+  max-height: min(46vh, 420px);
   overflow: hidden;
   border-radius: 8px;
   padding: 10px;
@@ -8095,12 +8095,20 @@ button {
   }
 
   .training-trial-hud {
-    top: 74px;
+    top: clamp(226px, 34vh, 280px);
     left: 10px;
     width: min(300px, calc(100vw - 20px));
-    max-height: 42vh;
+    max-height: 38vh;
   }
 
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .training-trial-hud {
+    top: clamp(224px, 42vh, 270px);
+    width: min(292px, 36vw);
+    max-height: 50vh;
+  }
 }
 
 .touch-controls {

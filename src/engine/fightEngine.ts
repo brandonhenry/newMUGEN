@@ -744,7 +744,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
-  const horizontalIntent = resolveHorizontalIntent(fighter, input);
+  const horizontalIntent = resolveHorizontalIntent(fighter, opponent, input);
   const forward = horizontalIntent.direction;
   fighter.walkDirection = 0;
   const holdingBack = horizontalIntent.back;
@@ -3950,8 +3950,8 @@ function resetRound(match: MatchSnapshot) {
 
 function resolveFacing(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
-  p1.facing = 1;
-  p2.facing = -1;
+  p1.facing = getOpponentSideSign(p1, p2);
+  p2.facing = getOpponentSideSign(p2, p1);
   p1.facingYaw = Math.atan2(p2.position.x - p1.position.x, p2.position.z - p1.position.z);
   p2.facingYaw = Math.atan2(p1.position.x - p2.position.x, p1.position.z - p2.position.z);
 }
@@ -4133,22 +4133,18 @@ type HorizontalControlIntent = {
   neutral: boolean;
 };
 
-function resolveForwardInput(fighter: FighterRuntime, _opponent: FighterRuntime, input: InputFrame) {
-  return resolveHorizontalIntent(fighter, input).direction;
+function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
+  return resolveHorizontalIntent(fighter, opponent, input).direction;
 }
 
-function resolveHorizontalIntent(fighter: FighterRuntime, input: InputFrame): HorizontalControlIntent {
+function resolveHorizontalIntent(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): HorizontalControlIntent {
   if (input.left === input.right) return { direction: 0, forward: false, back: false, neutral: true };
-  const sideSign = getStableControlSideSign(fighter);
+  const sideSign = getOpponentSideSign(fighter, opponent);
   const forward = sideSign > 0 ? input.right : input.left;
   const back = sideSign > 0 ? input.left : input.right;
   if (forward) return { direction: 1, forward: true, back: false, neutral: false };
   if (back) return { direction: -1, forward: false, back: true, neutral: false };
   return { direction: 0, forward: false, back: false, neutral: true };
-}
-
-function getStableControlSideSign(fighter: FighterRuntime): 1 | -1 {
-  return fighter.slot === 1 ? 1 : -1;
 }
 
 function getOpponentSideSign(fighter: FighterRuntime, opponent: FighterRuntime) {
