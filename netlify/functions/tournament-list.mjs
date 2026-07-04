@@ -1,7 +1,9 @@
 import {
+  getOrCreatePaidTournament,
   getOrCreateFreeTournament,
   getTournamentStore,
   json,
+  paidEnabled,
   paidDisabledSummary,
   toSummary
 } from './_tournament-store.mjs';
@@ -11,7 +13,8 @@ export async function handler(event) {
   try {
     const store = getTournamentStore(event);
     const free = await getOrCreateFreeTournament(store);
-    return json(200, { tournaments: [toSummary(free), paidDisabledSummary()] });
+    const paid = paidEnabled() ? toSummary(await getOrCreatePaidTournament(store)) : paidDisabledSummary();
+    return json(200, { tournaments: [toSummary(free), paid] });
   } catch (error) {
     return json(500, { error: 'tournament_list_failed', message: error instanceof Error ? error.message : String(error) });
   }

@@ -13,6 +13,8 @@ export type TournamentPaymentState =
   | 'invoicePending'
   | 'paid'
   | 'entryLocked'
+  | 'expired'
+  | 'invalid'
   | 'rewardPending'
   | 'rewardSent'
   | 'payoutBlocked';
@@ -26,6 +28,14 @@ export type TournamentEntry = {
   isCpu?: boolean;
   isLocalPlayer?: boolean;
   paymentState: TournamentPaymentState;
+  paymentProvider?: 'btcpay';
+  paymentInvoiceId?: string;
+  checkoutUrl?: string;
+  paidAt?: number;
+  payoutState?: TournamentPaymentState;
+  payoutAmountUsd?: number;
+  payoutInvoice?: string;
+  payoutId?: string;
   joinedAt: number;
 };
 
@@ -78,6 +88,14 @@ export type TournamentSummary = {
   startsLabel: string;
 };
 
+export type TournamentPaymentSummary = {
+  state: TournamentPaymentState;
+  checkoutUrl?: string;
+  provider?: 'btcpay';
+  invoiceId?: string;
+  paidAt?: number;
+};
+
 export type TournamentEnterRequest = {
   tournamentId?: string;
   kind: TournamentKind;
@@ -89,6 +107,7 @@ export type TournamentEnterRequest = {
 export type TournamentEnterResult = {
   bracket: TournamentBracket;
   entry: TournamentEntry;
+  checkoutUrl?: string;
   paidDisabledReason?: string;
 };
 
@@ -96,6 +115,7 @@ export type TournamentStatusResult = {
   bracket: TournamentBracket;
   entry?: TournamentEntry;
   assignedMatch?: TournamentMatch;
+  payment?: TournamentPaymentSummary;
   statusText: string;
 };
 

@@ -161,7 +161,7 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type RandomCharacterSlots = Record<1 | 2, boolean>;
-type TournamentSelectMode = 'free' | 'online';
+type TournamentSelectMode = 'free' | 'online' | 'paid';
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
 
 type CharacterAnimationOverride = {
@@ -2589,21 +2589,36 @@ export default function App() {
     setScreen('tournamentBracket');
   }, [effectiveUnlockedCharacterIds, resolveRandomStageSelection, roster]);
 
-  const enterOnlineTournament = useCallback(async (characterId: string) => {
+  const enterOnlineTournament = useCallback(async (characterId: string, tournamentMode: Extract<TournamentSelectMode, 'online' | 'paid'>) => {
     const profile = onlineProfile ?? writeOnlineProfile({ displayName: 'PLAYER' });
     if (!onlineProfile) setOnlineProfile(profile);
-    setTournamentStatusText('Entering free online tournament');
+    const paid = tournamentMode === 'paid';
+    setTournamentStatusText(paid ? 'Creating BTCPay invoice' : 'Entering free online tournament');
     const result = await enterTournament({
-      kind: 'freeOnline',
+      kind: paid ? 'paidOnline' : 'freeOnline',
       playerId: profile.playerId,
       displayName: profile.displayName,
       characterId
     });
+    const payment = result.entry.paymentState === 'invoicePending'
+      ? {
+        state: result.entry.paymentState,
+        checkoutUrl: result.checkoutUrl ?? result.entry.checkoutUrl,
+        provider: result.entry.paymentProvider,
+        invoiceId: result.entry.paymentInvoiceId,
+        paidAt: result.entry.paidAt
+      }
+      : undefined;
     const status: TournamentStatusResult = {
       bracket: result.bracket,
       entry: result.entry,
       assignedMatch: getAssignedTournamentMatch(result.bracket, result.entry.id),
-      statusText: result.bracket.status === 'open' ? `${result.bracket.entries.length} / ${result.bracket.minEntries} entered` : 'Tournament ready'
+      payment,
+      statusText: paid && payment?.state === 'invoicePending'
+        ? 'Waiting for BTCPay payment'
+        : result.bracket.status === 'open'
+          ? `${confirmedTournamentEntryCount(result.bracket)} / ${result.bracket.minEntries} entered`
+          : 'Tournament ready'
     };
     setP1Id(characterId);
     setOnlineTournamentStatus(status);
@@ -2611,6 +2626,9 @@ export default function App() {
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
     setTournamentStatusText(status.statusText);
     setScreen('tournamentLobby');
+    if (paid && payment?.checkoutUrl) {
+      window.open(payment.checkoutUrl, '_blank', 'noopener,noreferrer');
+    }
   }, [onlineProfile]);
 
   const refreshOnlineTournament = useCallback(async () => {
@@ -3285,7 +3303,7 @@ export default function App() {
                 startLocalTournament(characterId);
                 return;
               }
-              void enterOnlineTournament(characterId).catch((error) => {
+              void enterOnlineTournament(characterId, tournamentMode === 'paid' ? 'paid' : 'online').catch((error) => {
                 console.error('Failed to enter tournament', error);
                 setTournamentStatusText(error instanceof Error ? error.message : 'Tournament unavailable');
                 setOnlineTournamentStatus(null);
@@ -4949,7 +4967,10 @@ function TournamentSelect({
   );
   const freeOnlineSummary = summaries.find((summary) => summary.kind === 'freeOnline');
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
+  const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
   const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Pay $2 BTC' : 'Enter Online';
+  const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled);
 
   useEffect(() => {
     let cancelled = false;
@@ -5100,14 +5121,19 @@ function TournamentSelect({
             <span>{summaryStatus === 'loading' ? 'Loading tourneys' : freeOnlineSummary ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entered` : 'Free bracket queue'}</span>
             <small>Free entry</small>
           </button>
-          <button type="button" className="tournament-entry-option is-disabled" disabled>
+          <button
+            type="button"
+            className={`tournament-entry-option ${tournamentMode === 'paid' ? 'is-selected' : ''} ${paidEnabled ? '' : 'is-disabled'}`}
+            onClick={() => paidEnabled && setTournamentMode('paid')}
+            disabled={!paidEnabled}
+          >
             <strong>{paidSummary?.entryFeeLabel ?? '$2 BTC'}</strong>
-            <span>Paid beta unavailable</span>
+            <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} paid` : 'Paid beta unavailable'}</span>
             <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 BTC'}</small>
           </button>
         </div>
 
-        {tournamentMode === 'online' && !onlineProfile && (
+        {(tournamentMode === 'online' || tournamentMode === 'paid') && !onlineProfile && (
           <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} autoFocus />
         )}
 
@@ -5172,15 +5198,15 @@ function TournamentSelect({
         <FooterActions
           onBack={onBack}
           onNext={() => onStart(p1Character.id, tournamentMode)}
-          nextLabel={tournamentMode === 'free' ? 'Start Free' : 'Enter Online'}
-          nextDisabled={!canStart}
+          nextLabel={nextLabel}
+          nextDisabled={nextDisabled}
         />
       </section>
 
       <section className="versus-hero versus-hero-right tournament-preview-hero" aria-label="Tournament preview">
         <span className="versus-player-kicker">Bracket</span>
         <TournamentPreviewBracket />
-        <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : 'ONLINE'}</span>
+        <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : tournamentMode === 'paid' ? 'PAID' : 'ONLINE'}</span>
       </section>
       <div className="versus-floor-glow" aria-hidden="true" />
     </div>
@@ -5196,7 +5222,8 @@ function TournamentModeCarousel({
 }) {
   const options: Array<{ mode: TournamentSelectMode; label: string; icon: ReactNode }> = [
     { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
-    { mode: 'online', label: 'Online', icon: <Wifi size={18} /> }
+    { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
+    { mode: 'paid', label: '$2 BTC', icon: <Trophy size={18} /> }
   ];
   const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));
   const activeOption = options[activeIndex] ?? options[0];
@@ -5257,10 +5284,15 @@ function TournamentLobbyScreen({
 }) {
   const bracket = onlineStatus?.bracket ?? localBracket;
   const assignedMatch = onlineStatus?.assignedMatch;
-  const title = bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
-  const winner = bracket?.matches.find((match) => match.round === 3 && match.winnerEntryId)?.winnerEntryId;
+  const payment = onlineStatus?.payment;
+  const title = bracket?.kind === 'paidOnline' ? 'Paid BTC Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
+  const finalRound = getTournamentTotalRounds(bracket);
+  const confirmedEntries = confirmedTournamentEntryCount(bracket);
+  const winner = bracket?.matches.find((match) => match.round === finalRound && match.winnerEntryId)?.winnerEntryId;
   const winnerEntry = getTournamentEntry(bracket ?? null, winner);
   const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry);
+  const paymentConfirmed = payment?.state === 'paid' || payment?.state === 'entryLocked' || onlineStatus?.entry?.paymentState === 'paid' || onlineStatus?.entry?.paymentState === 'entryLocked';
+  const checkoutUrl = payment?.checkoutUrl ?? onlineStatus?.entry?.checkoutUrl;
 
   return (
     <div className="leaderboard-screen tournament-lobby-screen">
@@ -5268,7 +5300,7 @@ function TournamentLobbyScreen({
         <div>
           <span>Tournament</span>
           <h2>{title}</h2>
-          <p>{statusText || (bracket ? `${bracket.entries.length} / ${bracket.minEntries} entered` : 'Choose a tournament to enter')}</p>
+          <p>{statusText || (bracket ? `${confirmedEntries} / ${bracket.minEntries} entered` : 'Choose a tournament to enter')}</p>
         </div>
         <Trophy size={42} />
       </header>
@@ -5278,9 +5310,20 @@ function TournamentLobbyScreen({
           <>
             <div className="tournament-lobby-summary">
               <TournamentStat label="Status" value={bracket.status} />
-              <TournamentStat label="Players" value={`${bracket.entries.length}/${bracket.capacity}`} />
+              <TournamentStat label="Players" value={`${confirmedEntries}/${bracket.capacity}`} />
               <TournamentStat label="Reward" value={bracket.reward?.label ?? 'Profile trophy'} />
             </div>
+            {payment?.state === 'invoicePending' && (
+              <div className="tournament-payment-strip">
+                <span>Waiting for BTCPay payment</span>
+                {checkoutUrl && (
+                  <button type="button" className="primary-button" onClick={() => window.open(checkoutUrl, '_blank', 'noopener,noreferrer')}>
+                    Pay Now
+                  </button>
+                )}
+              </div>
+            )}
+            {paymentConfirmed && <div className="tournament-status-strip">Payment confirmed. Tournament starts at {bracket.minEntries} paid players.</div>}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
               <div className="tournament-status-strip">
@@ -5366,9 +5409,9 @@ function TournamentBracketIntroScreen({
       }}
     >
       <div className="fight-versus-stage">
-        <span>{match ? getTournamentRoundLabel(match.round) : 'Tournament'}</span>
+        <span>{match ? getTournamentRoundLabel(match.round, getTournamentTotalRounds(bracket)) : 'Tournament'}</span>
         <strong>Winner Advances</strong>
-        <small>{bracket?.kind === 'freeOnline' ? 'Online bracket match' : 'Local bracket match'}</small>
+        <small>{bracket?.kind === 'paidOnline' ? 'Paid BTC bracket match' : bracket?.kind === 'freeOnline' ? 'Online bracket match' : 'Local bracket match'}</small>
       </div>
 
       <section className="tournament-intro-grid" aria-label="Tournament match bracket">
@@ -5420,12 +5463,15 @@ function TournamentBracketBoard({
   focusMatchId?: string;
   compact?: boolean;
 }) {
-  const rounds = [1, 2, 3];
+  const totalRounds = getTournamentTotalRounds(bracket);
+  const rounds = bracket.matches.length
+    ? [...new Set(bracket.matches.map((match) => match.round))].sort((a, b) => a - b)
+    : Array.from({ length: totalRounds }, (_, index) => index + 1);
   return (
-    <div className={`tournament-bracket-board ${compact ? 'is-compact' : ''}`}>
+    <div className={`tournament-bracket-board ${compact ? 'is-compact' : ''}`} style={{ '--tournament-rounds': rounds.length } as CSSProperties}>
       {rounds.map((round) => (
         <section key={round} className="tournament-bracket-round">
-          <h3>{getTournamentRoundLabel(round)}</h3>
+          <h3>{getTournamentRoundLabel(round, totalRounds)}</h3>
           {bracket.matches.filter((match) => match.round === round).map((match) => (
             <TournamentMatchCard
               key={match.id}
@@ -5495,10 +5541,29 @@ function tournamentEntryCharacter(roster: CharacterDefinition[], entry?: Tournam
   return roster.find((character) => character.id === entry.characterId);
 }
 
-function getTournamentRoundLabel(round: number) {
-  if (round === 1) return 'Quarterfinal';
-  if (round === 2) return 'Semifinal';
-  if (round === 3) return 'Final';
+function confirmedTournamentEntryCount(bracket: TournamentBracket | null | undefined) {
+  if (!bracket) return 0;
+  if (bracket.kind !== 'paidOnline') return bracket.entries.filter((entry) => entry.paymentState !== 'expired' && entry.paymentState !== 'invalid').length;
+  return bracket.entries.filter((entry) => entry.paymentState === 'paid' || entry.paymentState === 'entryLocked').length;
+}
+
+function isPaidTournamentUiEnabled(summary?: TournamentSummary) {
+  return import.meta.env.VITE_TOURNAMENT_PAID_ENABLED === 'true' && Boolean(summary?.paidEnabled);
+}
+
+function getTournamentTotalRounds(bracket: TournamentBracket | null | undefined) {
+  if (!bracket) return 3;
+  if (bracket.matches.length) return Math.max(1, ...bracket.matches.map((match) => match.round));
+  return Math.max(1, Math.ceil(Math.log2(Math.max(2, bracket.capacity))));
+}
+
+function getTournamentRoundLabel(round: number, totalRounds = 3) {
+  const roundsUntilFinal = totalRounds - round;
+  if (roundsUntilFinal === 0) return 'Final';
+  if (roundsUntilFinal === 1) return 'Semifinal';
+  if (roundsUntilFinal === 2) return 'Quarterfinal';
+  if (totalRounds === 5 && round === 1) return 'Round of 32';
+  if (totalRounds === 5 && round === 2) return 'Round of 16';
   return `Round ${round}`;
 }
 

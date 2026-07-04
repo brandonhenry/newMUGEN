@@ -2063,6 +2063,26 @@ button {
   text-transform: uppercase;
 }
 
+.tournament-payment-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  border-radius: 7px;
+  padding: 8px 10px 8px 12px;
+  color: #101114;
+  background: #f7d45a;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.tournament-payment-strip .primary-button {
+  min-height: 34px;
+  padding: 0 12px;
+}
+
 .tournament-preview-hero {
   cursor: default;
 }
@@ -2149,8 +2169,10 @@ button {
 
 .tournament-bracket-board {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 0.82fr;
+  grid-template-columns: repeat(var(--tournament-rounds, 3), minmax(150px, 1fr));
   gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 
 .tournament-bracket-board.is-compact {

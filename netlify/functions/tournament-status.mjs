@@ -4,6 +4,7 @@ import {
   errorJson,
   getTournamentStore,
   json,
+  paymentSummary,
   readTournament,
   statusText
 } from './_tournament-store.mjs';
@@ -23,6 +24,7 @@ export async function handler(event) {
       bracket,
       entry: assignment.entry,
       assignedMatch: assignment.match,
+      payment: paymentSummary(assignment.entry),
       statusText: statusText(bracket, assignment.match)
     });
   } catch (error) {

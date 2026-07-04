@@ -85,7 +85,7 @@ function localTournamentList() {
         startsLabel: 'Starts when full'
       },
       {
-        id: 'paid-btc-disabled',
+        id: 'paid-btc-daily',
         kind: 'paidOnline' as const,
         status: 'cancelled' as const,
         entryFeeUsd: 2,
