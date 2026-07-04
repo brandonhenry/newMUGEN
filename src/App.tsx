@@ -9533,11 +9533,21 @@ function CharacterViewer({
     try {
       const entries = roster.map((character) => {
         const frame = character.animationFrames?.idle?.[0] ?? framePath(character, 0);
+        const frameIndex = getFrameIndex(frame);
+        const globalScale = getCharacterGlobalScale(character);
+        const idleScale = normalizeAnimationScale(
+          character.animationFrameScales?.idle?.[String(frameIndex)] ??
+          character.animationScales?.idle
+        );
         return {
           characterId: character.id,
           displayName: character.displayName,
           frame: new URL(frame, window.location.href).href,
-          frameIndex: getFrameIndex(frame)
+          frameIndex,
+          renderScale: {
+            width: Number((globalScale.width * idleScale.width).toFixed(4)),
+            height: Number((globalScale.height * idleScale.height).toFixed(4))
+          }
         };
       });
       const html = buildHeightSheetHtml(entries);
@@ -10479,6 +10489,10 @@ type HeightSheetEntry = {
   displayName: string;
   frame: string;
   frameIndex: number;
+  renderScale: {
+    width: number;
+    height: number;
+  };
 };
 
 function useFrameComparisonMetrics(src: string) {
@@ -10838,14 +10852,15 @@ function buildHeightSheetHtml(entries: HeightSheetEntry[]) {
   <script>
     const characters = ${entriesJson};
     const SCALE = 3;
-    const VOXEL_SCALE = 72;
+    const WORLD_PX_PER_UNIT = 23.804193890891682;
+    const VOXEL_SCALE = SCALE * WORLD_PX_PER_UNIT;
     let maxSpriteHeight = 1;
     let maxVoxelHeight = 1;
     const row = document.getElementById('height-row');
 
     function updateStageHeight() {
       document.documentElement.style.setProperty('--sprite-stage-height', Math.max(140, maxSpriteHeight * SCALE + 48) + 'px');
-      document.documentElement.style.setProperty('--voxel-stage-height', Math.max(140, maxVoxelHeight * VOXEL_SCALE + 48) + 'px');
+      document.documentElement.style.setProperty('--voxel-stage-height', Math.max(140, maxVoxelHeight * SCALE + 48) + 'px');
       document.documentElement.style.setProperty('--guide-step', (20 * SCALE) + 'px');
     }
 
@@ -11049,17 +11064,26 @@ function buildHeightSheetHtml(entries: HeightSheetEntry[]) {
 
       fetchVoxelPayload(character)
         .then((payload) => {
-          const voxels = normalizeVoxelPayload(payload);
+          const renderScale = character.renderScale || { width: 1, height: 1 };
+          const voxels = normalizeVoxelPayload(payload).map((voxel) => ({
+            ...voxel,
+            x: voxel.x * renderScale.width,
+            y: voxel.y * renderScale.height,
+            w: voxel.w * renderScale.width,
+            h: voxel.h * renderScale.height
+          }));
           if (voxels.length === 0) throw new Error('No voxels');
           const bounds = getVoxelBounds(voxels);
           if (!Number.isFinite(bounds.minX) || !Number.isFinite(bounds.minY)) throw new Error('No voxel bounds');
           const { canvas, widthUnits, heightUnits } = renderVoxelCanvas(voxels, bounds);
-          maxVoxelHeight = Math.max(maxVoxelHeight, heightUnits);
+          const widthPixels = Math.round(widthUnits * WORLD_PX_PER_UNIT);
+          const heightPixels = Math.round(heightUnits * WORLD_PX_PER_UNIT);
+          maxVoxelHeight = Math.max(maxVoxelHeight, heightPixels);
           updateStageHeight();
           voxelLoading.remove();
           voxelStage.append(canvas);
           card.style.width = Math.max(Number.parseFloat(card.style.width) || 172, canvas.width + 28) + 'px';
-          voxelDimensions.textContent = widthUnits.toFixed(2) + 'w x ' + heightUnits.toFixed(2) + 'h';
+          voxelDimensions.textContent = widthPixels + ' x ' + heightPixels + ' px · ' + widthUnits.toFixed(2) + 'w x ' + heightUnits.toFixed(2) + 'h';
         })
         .catch((error) => {
           voxelLoading.innerHTML = 'Missing<br>' + (error instanceof Error ? error.message : 'Voxel failed');
