@@ -42,6 +42,7 @@ import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
 import { KORE_CURSOR_OPTIONS, getKoreCursorOption, isKoreCursorId, type KoreCursorOption, type KoreCursorScale, type KoreCursorStyle } from './data/cursors';
 import { createMatch, stepMatch } from './engine/fightEngine';
+import { useAnyInputActivation } from './hooks/useAnyInputActivation';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
@@ -3738,24 +3739,24 @@ function useMenuNavigation(screen: Screen) {
     const repeatDelayMs = 170;
 
     const tick = () => {
-      if (isMenuNavigationActive(screenRef.current)) {
-        const pad = getPrimaryMenuGamepad();
-        if (pad) {
-          const now = performance.now();
-          const current = readMenuGamepadState(pad, screenRef.current);
-          const previous = previousPadStateRef.current;
-          const edge = {
-            up: current.up && !previous.up,
-            down: current.down && !previous.down,
-            left: current.left && !previous.left,
-            right: current.right && !previous.right,
-            confirm: current.confirm && !previous.confirm,
-            back: current.back && !previous.back,
-            select: current.select && !previous.select
-          };
-          const repeatedMove = now - lastMoveAt > repeatDelayMs;
-          const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
+      const pad = getPrimaryMenuGamepad();
+      if (pad) {
+        const now = performance.now();
+        const current = readMenuGamepadState(pad, screenRef.current);
+        const previous = previousPadStateRef.current;
+        const edge = {
+          up: current.up && !previous.up,
+          down: current.down && !previous.down,
+          left: current.left && !previous.left,
+          right: current.right && !previous.right,
+          confirm: current.confirm && !previous.confirm,
+          back: current.back && !previous.back,
+          select: current.select && !previous.select
+        };
+        const repeatedMove = now - lastMoveAt > repeatDelayMs;
+        const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
 
+        if (isMenuNavigationActive(screenRef.current)) {
           if (screenRef.current === 'menu' && edge.select) {
             lastDeviceRef.current = 'gamepad';
             window.dispatchEvent(new CustomEvent(MAIN_MENU_CHROME_TOGGLE_EVENT));
@@ -3773,10 +3774,10 @@ function useMenuNavigation(screen: Screen) {
               lastMoveAt = now;
             }
           }
-          previousPadStateRef.current = current;
-        } else {
-          previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false };
         }
+        previousPadStateRef.current = current;
+      } else {
+        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false };
       }
       frame = window.requestAnimationFrame(tick);
     };
@@ -3809,6 +3810,7 @@ function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
 
 function isMenuNavigationActive(screen: Screen) {
   if (screen === 'boot') return false;
+  if (screen === 'title' || screen === 'versus' || screen === 'unlockReveal') return false;
   if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
   if (screen === 'stageEditor') return false;
   return true;
@@ -3984,22 +3986,36 @@ function activateBackMenuElement() {
   window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true }));
 }
 
+function handleLocalAnyInputKeyDown(event: ReactKeyboardEvent<HTMLElement>, accept: (event?: Event) => void, onBack?: () => void) {
+  if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+  if (isTextEntryElement(event.target)) return;
+  if (event.key === 'Tab') return;
+  if (event.key === 'Escape' && onBack) {
+    event.preventDefault();
+    event.stopPropagation();
+    onBack();
+    return;
+  }
+  accept(event.nativeEvent);
+}
+
 function TitleScreen({ onStart }: { onStart: () => void }) {
   const titleRef = useRef<HTMLDivElement>(null);
+  const acceptTitleInput = useAnyInputActivation({ onAccept: onStart });
 
   useEffect(() => {
     titleRef.current?.focus();
   }, []);
 
-  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    if (event.metaKey || event.ctrlKey || event.altKey) return;
-    event.preventDefault();
-    onStart();
-  };
-
   return (
-    <div ref={titleRef} className="title-screen" tabIndex={0} onClick={onStart} onKeyDown={handleKeyDown} aria-label="KORE title screen. Press any key.">
-      <img className="title-logo" src="/brand/kore-logo-generated.png" alt="KORE" />
+    <div
+      ref={titleRef}
+      className="title-screen any-input-screen"
+      tabIndex={0}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptTitleInput)}
+      aria-label="KORE title screen. Press any key."
+    >
+      <img className="title-logo" src="/brand/kore-logo-generated.png" alt="KORE" draggable={false} />
       <span className="press-any-key">PRESS ANY KEY</span>
     </div>
   );
@@ -4017,7 +4033,6 @@ function UnlockRevealScreen({
   const [ready, setReady] = useState(false);
   const screenRef = useRef<HTMLDivElement>(null);
   const continuedRef = useRef(false);
-  const gamepadPressedRef = useRef(false);
 
   const continueIfReady = useCallback(() => {
     if (!ready || continuedRef.current) return;
@@ -4025,10 +4040,11 @@ function UnlockRevealScreen({
     onContinue();
   }, [onContinue, ready]);
 
+  const acceptUnlockInput = useAnyInputActivation({ enabled: ready, ready, onAccept: continueIfReady });
+
   useEffect(() => {
     setReady(false);
     continuedRef.current = false;
-    gamepadPressedRef.current = false;
     const timeout = window.setTimeout(() => setReady(true), UNLOCK_REVEAL_SEQUENCE_SECONDS * 1000);
     const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
     return () => {
@@ -4037,35 +4053,12 @@ function UnlockRevealScreen({
     };
   }, [character.id]);
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (!ready) return;
-      event.preventDefault();
-      continueIfReady();
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [continueIfReady, ready]);
-
-  useEffect(() => {
-    let frame = 0;
-    const tick = () => {
-      const pads = typeof navigator !== 'undefined' && navigator.getGamepads ? Array.from(navigator.getGamepads()) : [];
-      const pressed = pads.some((pad) => pad?.buttons.some((button) => button.pressed));
-      if (ready && pressed && !gamepadPressedRef.current) continueIfReady();
-      gamepadPressedRef.current = pressed;
-      frame = window.requestAnimationFrame(tick);
-    };
-    frame = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frame);
-  }, [continueIfReady, ready]);
-
   return (
     <div
       ref={screenRef}
-      className={`unlock-reveal-screen ${ready ? 'is-ready' : ''}`}
+      className={`unlock-reveal-screen any-input-screen ${ready ? 'is-ready' : ''}`}
       tabIndex={0}
-      onPointerDown={continueIfReady}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptUnlockInput)}
       aria-label={`${character.displayName} unlocked`}
       style={{
         '--unlock-primary': character.colors.primary,
@@ -5405,35 +5398,33 @@ function TournamentBracketIntroScreen({
   onReady: () => void;
 }) {
   const screenRef = useRef<HTMLDivElement | null>(null);
+  const advancedRef = useRef(false);
   const match = bracket?.matches.find((candidate) => candidate.id === matchId);
   const entry = getTournamentEntry(bracket, localEntryId);
   const opponent = getTournamentOpponentEntry(bracket, match, localEntryId);
   const entryCharacter = tournamentEntryCharacter(roster, entry);
   const opponentCharacter = tournamentEntryCharacter(roster, opponent);
+  const advance = useCallback(() => {
+    if (advancedRef.current) return;
+    advancedRef.current = true;
+    onReady();
+  }, [onReady]);
+
+  const acceptTournamentIntroInput = useAnyInputActivation({ onAccept: advance, onBack });
 
   useEffect(() => {
     screenRef.current?.focus();
-    const timeout = window.setTimeout(onReady, VERSUS_SPLASH_DURATION_MS);
+    const timeout = window.setTimeout(advance, VERSUS_SPLASH_DURATION_MS);
     return () => window.clearTimeout(timeout);
-  }, [onReady]);
+  }, [advance]);
 
   return (
     <div
       ref={screenRef}
-      className="fight-versus-screen tournament-bracket-intro"
+      className="fight-versus-screen tournament-bracket-intro any-input-screen"
       tabIndex={-1}
-      onClick={onReady}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          event.stopPropagation();
-          onBack();
-          return;
-        }
-        if (event.key !== 'Tab') {
-          event.preventDefault();
-          onReady();
-        }
-      }}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptTournamentIntroInput, onBack)}
+      aria-label="Tournament match intro. Press any key to fight."
     >
       <div className="fight-versus-stage">
         <span>{match ? getTournamentRoundLabel(match.round, getTournamentTotalRounds(bracket)) : 'Tournament'}</span>
@@ -6380,6 +6371,7 @@ function VersusSplashScreen({
     advancedRef.current = true;
     onReady();
   }, [onReady]);
+  const acceptVersusInput = useAnyInputActivation({ onAccept: advance, onBack });
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -6437,21 +6429,10 @@ function VersusSplashScreen({
   return (
     <div
       ref={screenRef}
-      className="fight-versus-screen"
+      className="fight-versus-screen any-input-screen"
       tabIndex={-1}
-      onClick={advance}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          event.stopPropagation();
-          onBack();
-          return;
-        }
-        if (event.key !== 'Tab') {
-          event.preventDefault();
-          advance();
-        }
-      }}
-      aria-label={`${p1.displayName} versus ${p2.displayName}`}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptVersusInput, onBack)}
+      aria-label={`${p1.displayName} versus ${p2.displayName}. Press any key to skip.`}
     >
       <div className="fight-versus-stage">
         <span>{battleKicker}</span>
@@ -16291,19 +16272,10 @@ function FightScreen({
     }
   }, [match.fighters, match.phase, match.round, match.winnerSlot, settings.audio]);
 
-  useEffect(() => {
-    if (!rankedPlayerResult?.promoted || rankedPromotionAccepted) return undefined;
-    const accept = (event: KeyboardEvent | PointerEvent) => {
-      event.preventDefault();
-      setRankedPromotionAccepted(true);
-    };
-    window.addEventListener('keydown', accept, true);
-    window.addEventListener('pointerdown', accept, true);
-    return () => {
-      window.removeEventListener('keydown', accept, true);
-      window.removeEventListener('pointerdown', accept, true);
-    };
-  }, [rankedPlayerResult, rankedPromotionAccepted]);
+  useAnyInputActivation({
+    enabled: Boolean(rankedPlayerResult?.promoted && !rankedPromotionAccepted),
+    onAccept: () => setRankedPromotionAccepted(true)
+  });
 
   useEffect(() => {
     const previousActiveBySlot = previousShadowCloneActiveBySlotRef.current;

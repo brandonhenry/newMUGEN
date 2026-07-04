@@ -1,9 +1,60 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
+async function gotoTitle(page: Page) {
+  await page.goto('/');
+  await expect(page.locator('.title-screen')).toBeVisible({ timeout: 5000 });
+}
+
 async function startFromSplash(page: import('@playwright/test').Page) {
   await page.goto('/');
   await page.locator('.title-screen').click();
+}
+
+async function expectMainMenu(page: Page) {
+  await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 5000 });
+}
+
+async function dispatchRawTouch(page: Page, selector: string) {
+  await page.locator(selector).dispatchEvent('touchstart', { bubbles: true, cancelable: true });
+  await page.dispatchEvent('body', 'touchend', { bubbles: true, cancelable: true });
+}
+
+async function dispatchTouchPointer(page: Page, selector: string) {
+  await page.locator(selector).dispatchEvent('pointerdown', {
+    pointerId: 1,
+    pointerType: 'touch',
+    isPrimary: true,
+    bubbles: true,
+    cancelable: true
+  });
+  await page.dispatchEvent('body', 'pointerup', {
+    pointerId: 1,
+    pointerType: 'touch',
+    isPrimary: true,
+    bubbles: true,
+    cancelable: true
+  });
+}
+
+async function installMockGamepad(page: Page) {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'getGamepads', {
+      configurable: true,
+      value: () => {
+        const state = (window as unknown as { __koreMockGamepadPressed?: boolean }).__koreMockGamepadPressed;
+        return state
+          ? [{ connected: true, buttons: [{ pressed: true }], axes: [0, 0] }]
+          : [];
+      }
+    });
+  });
+}
+
+async function setMockGamepadPressed(page: Page, pressed: boolean) {
+  await page.evaluate((nextPressed) => {
+    (window as unknown as { __koreMockGamepadPressed?: boolean }).__koreMockGamepadPressed = nextPressed;
+  }, pressed);
 }
 
 async function startFight(page: import('@playwright/test').Page, local2p = false) {
@@ -123,6 +174,60 @@ function keysForCounterHitTrialName(name: string) {
   for (const button of command.match(/[1-4]/g) ?? ['1', '2']) keys.add(keyByButton[button]);
   return [...keys].filter(Boolean);
 }
+
+test('title splash accepts click, touch pointer, and raw touch input', async ({ page }) => {
+  const scenarios: Array<[string, () => Promise<void>]> = [
+    ['click', async () => page.locator('.title-screen').click()],
+    ['touch pointer', async () => dispatchTouchPointer(page, '.title-screen')],
+    ['raw touchstart', async () => dispatchRawTouch(page, '.title-screen')]
+  ];
+
+  for (const [name, activate] of scenarios) {
+    await test.step(name, async () => {
+      await gotoTitle(page);
+      await activate();
+      await expectMainMenu(page);
+    });
+  }
+});
+
+test('title splash accepts keyboard input', async ({ page }) => {
+  await gotoTitle(page);
+  await page.locator('.title-screen').press('Enter');
+  await expectMainMenu(page);
+});
+
+test('title splash accepts browser gamepad input', async ({ page }) => {
+  await installMockGamepad(page);
+  await gotoTitle(page);
+  await setMockGamepadPressed(page, true);
+  await expectMainMenu(page);
+});
+
+test('versus splash accepts touch input to skip into the fight', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 3000 });
+
+  await dispatchRawTouch(page, '.fight-versus-screen');
+
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
+});
+
+test('versus splash accepts browser gamepad input to skip into the fight', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 3000 });
+
+  await setMockGamepadPressed(page, true);
+
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
+});
 
 test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
