@@ -38,6 +38,13 @@ function fighterOrbitRadius(match: MatchSnapshot, fighterIndex: 0 | 1) {
   return Math.hypot(fighter.position.x - opponent.position.x, fighter.position.z - opponent.position.z);
 }
 
+const visualFamilyByInput: Record<MoveInput, string> = {
+  jab: 'visual:jableft',
+  heavy: 'visual:jabright',
+  kick: 'visual:kickleft',
+  special: 'visual:kickright'
+};
+
 function boundsLocalPosition(stage: StageDefinition, position: { x: number; z: number }) {
   const center = stage.fightPlane?.center ?? [0, 0, 0];
   const rotationY = stage.fightPlane?.rotationY ?? 0;
@@ -2008,6 +2015,146 @@ describe('fight engine', () => {
 
     expect(attackStarts).toBeGreaterThan(2);
     expect(repeatedStarts).toBe(0);
+  });
+
+  it('drops CPU juggle continuations once its juggle budget is spent', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 991 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[0].comboTimer = 0.5;
+    match.fighters[0].comboStep = 12;
+    match.fighters[0].comboHits = 12;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 1.3;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].stunFramesRemaining = 180;
+    match.fighters[1].actionFramesRemaining = 180;
+    match.fighters[1].stunTimer = 3;
+    match.fighters[1].actionTimer = 3;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).not.toBe('attack');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].aiJuggleLockoutFrames).toBeGreaterThan(0);
+  });
+
+  it('drops stale visual-family juggle followups instead of changing command on the same button', () => {
+    const jabVariantCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 0 },
+      animationFrames: {
+        ...(starterCharacters[0].animationFrames ?? {}),
+        'cmd:f+1': starterCharacters[0].animationFrames?.jableft ?? starterCharacters[0].animationFrames?.jab ?? [],
+        'cmd:qcf+1': starterCharacters[0].animationFrames?.jableft ?? starterCharacters[0].animationFrames?.jab ?? []
+      },
+      moves: starterCharacters[0].moves
+        .filter((move) => move.input === 'jab')
+        .map((move) => ({
+          ...move,
+          startupFrames: 3,
+          activeFrames: 5,
+          recoveryFrames: 10,
+          range: 2.4,
+          damage: 5,
+          launchHeight: undefined,
+          knockdown: false
+        }))
+    };
+    let match = createMatch(jabVariantCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 992 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[0].comboTimer = 0.5;
+    match.fighters[0].comboStep = 1;
+    match.fighters[0].comboHits = 1;
+    match.fighters[0].comboSequence = ['jab'];
+    match.fighters[0].comboIdentitySequence = ['neutral:jab'];
+    match.fighters[0].comboFamilySequence = ['neutral:jab'];
+    match.fighters[0].comboVisualFamilySequence = [visualFamilyByInput.jab];
+    match.fighters[0].comboUsedKeys = ['neutral:jab'];
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 1.25;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].stunFramesRemaining = 180;
+    match.fighters[1].actionFramesRemaining = 180;
+    match.fighters[1].stunTimer = 3;
+    match.fighters[1].actionTimer = 3;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).not.toBe('attack');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].aiJuggleLockoutFrames).toBeGreaterThan(0);
+  });
+
+  it('lets high difficulty CPU use varied visual families before ending a juggle route', () => {
+    const variedJuggleCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      aiProfile: { ...starterCharacters[0].aiProfile, aggression: 1, specialChance: 0.35 },
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 3,
+        activeFrames: 5,
+        recoveryFrames: 10,
+        range: 2.5,
+        damage: 3,
+        onHitFrames: 48,
+        onComboHitFrames: 48,
+        onJuggleHitFrames: 48,
+        launchHeight: undefined,
+        knockdown: false
+      }))
+    };
+    let match = createMatch(variedJuggleCharacter, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 993 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.55;
+    match.fighters[1].position.x = 0.55;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 1.25;
+    match.fighters[1].velocityY = 0.1;
+    match.fighters[1].stunFramesRemaining = 240;
+    match.fighters[1].actionFramesRemaining = 240;
+    match.fighters[1].stunTimer = 4;
+    match.fighters[1].actionTimer = 4;
+
+    const seenInCombo = new Set<string>();
+    const allSeen = new Set<string>();
+    let repeatedVisualStarts = 0;
+    let attackStarts = 0;
+    let maxComboStep = 0;
+    let wasAttacking = false;
+
+    for (let i = 0; i < 300; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const fighter = match.fighters[0];
+      maxComboStep = Math.max(maxComboStep, fighter.comboStep);
+      const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
+      if (isAttacking && !wasAttacking && fighter.currentMove) {
+        attackStarts += 1;
+        if (fighter.comboStep <= 1) seenInCombo.clear();
+        const visualFamily = visualFamilyByInput[fighter.currentMove.input];
+        if (seenInCombo.has(visualFamily)) repeatedVisualStarts += 1;
+        seenInCombo.add(visualFamily);
+        allSeen.add(visualFamily);
+      }
+      wasAttacking = isAttacking;
+    }
+
+    expect(attackStarts).toBeGreaterThanOrEqual(2);
+    expect(allSeen.size).toBeGreaterThanOrEqual(2);
+    expect(repeatedVisualStarts).toBe(0);
+    expect(maxComboStep).toBeLessThan(30);
   });
 
   it('CPU-watch metric reports zero repeated exact identities inside active combos', () => {

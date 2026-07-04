@@ -2,7 +2,13 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { CharacterDefinition } from '../types';
-import { generateCharacterComboRoutes, recommendCpuComboRoute, resolveMoveRoutes } from './comboRoutes';
+import {
+  cpuMoveFamilyKeyFromStep,
+  cpuMoveVisualFamilyKeyFromStep,
+  generateCharacterComboRoutes,
+  recommendCpuComboRoute,
+  resolveMoveRoutes
+} from './comboRoutes';
 
 const repoRoot = process.cwd();
 
@@ -407,5 +413,33 @@ describe('combo route catalog', () => {
     });
 
     expect(recommendation?.route.id).not.toBe(route.id);
+  });
+
+  it('rejects stale CPU juggle recommendations by family and visual family', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateCharacterComboRoutes(candidate).some((route) => route.steps.length >= 2 && route.steps[1].expect?.juggled)
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const route = generateCharacterComboRoutes(character).find((candidate) => candidate.steps.length >= 2 && candidate.steps[1].expect?.juggled);
+    expect(route).toBeTruthy();
+    if (!route) return;
+
+    const staleStep = route.steps[1];
+    const recommendation = recommendCpuComboRoute(character, {
+      difficulty: 5,
+      opening: 'juggle',
+      remainingFrames: 48,
+      comboStep: 1,
+      activeRouteId: route.id,
+      usedFamilies: [cpuMoveFamilyKeyFromStep(staleStep)],
+      usedVisualFamilies: [cpuMoveVisualFamilyKeyFromStep(staleStep)],
+      selector: 0,
+      routeRoll: 0
+    });
+
+    expect(recommendation?.route.id).not.toBe(route.id);
+    expect(recommendation && cpuMoveVisualFamilyKeyFromStep(recommendation.step)).not.toBe(cpuMoveVisualFamilyKeyFromStep(staleStep));
   });
 });
