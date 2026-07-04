@@ -3232,16 +3232,16 @@ export default function App() {
     playableStageRoster.find((stage) => stage.id === 'the-chamber') ??
     stages.find((stage) => stage.id === 'the-chamber') ??
     selectedStage;
-	  const activeBgmSource = useMemo(() => {
-	    if (!musicStarted || screen === 'boot') return null;
-	    if (screen === 'fight') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
-	    if (screen === 'miniGame' && activeArcadeMiniGame) return stageBgmSource(activeArcadeMiniGame.stage);
-	    if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
-	    if (!settings.audio.menuMusic) return null;
-	    if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
-	    if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
-	    return KORE_MENU_BGM_SOURCE;
-	  }, [activeArcadeMiniGame, fightPaused, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
+  const activeBgmSource = useMemo(() => {
+    if (!musicStarted || screen === 'boot') return null;
+    if (screen === 'fight' && mode !== 'cpu') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
+    if (screen === 'miniGame' && activeArcadeMiniGame) return stageBgmSource(activeArcadeMiniGame.stage);
+    if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
+    if (!settings.audio.menuMusic) return null;
+    if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
+    if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
+    return KORE_MENU_BGM_SOURCE;
+  }, [activeArcadeMiniGame, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -16002,6 +16002,7 @@ function FightScreen({
   const isRanked = mode === 'ranked';
   const isOnline = mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'tournamentOnline';
   const isPrivate = mode === 'private';
+  const gameplayAudioEnabled = mode !== 'cpu';
   const matchOptions = useMemo(
     () => ({
       roundTime: isOnline ? 60 : settings.game.roundTimer,
@@ -16144,7 +16145,7 @@ function FightScreen({
   }, [settings.audio]);
 
   useEffect(() => {
-    if (match.phase !== 'fighting' || paused) {
+    if (!gameplayAudioEnabled || match.phase !== 'fighting' || paused) {
       previousFloorAudioBySlotRef.current = [
         makeStageFloorAudioSnapshot(match.fighters[0]),
         makeStageFloorAudioSnapshot(match.fighters[1])
@@ -16178,7 +16179,7 @@ function FightScreen({
       }
     });
     previousFloorAudioBySlotRef.current = nextSnapshots;
-  }, [match, paused, settings.audio]);
+  }, [gameplayAudioEnabled, match, paused, settings.audio]);
 
   useEffect(() => {
     return () => onPausedChange(false);
@@ -16283,6 +16284,7 @@ function FightScreen({
     match.impactEvents.forEach((event) => {
       if (!seenImpactAudioEventIds.current.has(event.id)) {
         seenImpactAudioEventIds.current.add(event.id);
+        if (!gameplayAudioEnabled) return;
         playHitSfx(event, settings.audio);
         playCharacterAttackVoiceSfx(match.fighters[event.attackerSlot - 1].character, event, settings.audio);
         playCharacterHurtVoiceSfx(match.fighters[event.defenderSlot - 1].character, event, settings.audio);
@@ -16298,7 +16300,7 @@ function FightScreen({
       const index = event.attackerSlot - 1;
       onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.attackerSlot);
     });
-  }, [match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
+  }, [gameplayAudioEnabled, match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
 
   useEffect(() => {
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress || previewPlayback) return;
@@ -16324,6 +16326,10 @@ function FightScreen({
   }, [activeTrainingTrial, match.impactEvents, mode, p1.id, previewPlayback, trainingTrialProgress]);
 
   useEffect(() => {
+    if (!gameplayAudioEnabled) {
+      playedRoundAnnouncerKeyRef.current = null;
+      return;
+    }
     const expectedRoundMessage = `ROUND ${match.round}`;
     if (match.phase !== 'intro' || match.message !== expectedRoundMessage) {
       if (match.phase !== 'intro') playedRoundAnnouncerKeyRef.current = null;
@@ -16334,9 +16340,13 @@ function FightScreen({
     if (playRoundAnnouncerSfx(match.round, settings.audio)) {
       playedRoundAnnouncerKeyRef.current = announcerKey;
     }
-  }, [match.message, match.phase, match.round, settings.audio]);
+  }, [gameplayAudioEnabled, match.message, match.phase, match.round, settings.audio]);
 
   useEffect(() => {
+    if (!gameplayAudioEnabled) {
+      playedWinVoiceKeyRef.current = null;
+      return;
+    }
     if (match.phase !== 'matchOver' || !match.winnerSlot) {
       playedWinVoiceKeyRef.current = null;
       return;
@@ -16347,7 +16357,7 @@ function FightScreen({
     if (playCharacterWinVoiceSfx(winner, settings.audio)) {
       playedWinVoiceKeyRef.current = voiceKey;
     }
-  }, [match.fighters, match.phase, match.round, match.winnerSlot, settings.audio]);
+  }, [gameplayAudioEnabled, match.fighters, match.phase, match.round, match.winnerSlot, settings.audio]);
 
   useAnyInputActivation({
     enabled: Boolean(rankedPlayerResult?.promoted && !rankedPromotionAccepted),
@@ -16357,18 +16367,38 @@ function FightScreen({
   useEffect(() => {
     const previousActiveBySlot = previousShadowCloneActiveBySlotRef.current;
     const currentActiveBySlot: [boolean, boolean] = [Boolean(match.fighters[0].shadowClone), Boolean(match.fighters[1].shadowClone)];
+    if (!gameplayAudioEnabled) {
+      previousShadowCloneActiveBySlotRef.current = currentActiveBySlot;
+      return;
+    }
     match.fighters.forEach((fighter, index) => {
       if (!previousActiveBySlot[index] && currentActiveBySlot[index]) {
         playNarutoShadowCloneVoiceSfx(fighter.character, settings.audio);
       }
     });
     previousShadowCloneActiveBySlotRef.current = currentActiveBySlot;
-  }, [match.fighters, settings.audio]);
+  }, [gameplayAudioEnabled, match.fighters, settings.audio]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const previousKiBySlot = previousKiBySlotRef.current;
     const currentKiBySlot: [number, number] = [match.fighters[0].ki, match.fighters[1].ki];
+    if (!gameplayAudioEnabled) {
+      previousKiBySlotRef.current = currentKiBySlot;
+      const chargeAudio = kiChargeAudioRef.current;
+      if (chargeAudio) {
+        chargeAudio.pause();
+        chargeAudio.currentTime = 0;
+      }
+      const maxChargeAudio = kiMaxChargeAudioRef.current;
+      if (maxChargeAudio) {
+        maxChargeAudio.pause();
+        maxChargeAudio.currentTime = 0;
+        maxChargeAudio.onended = null;
+      }
+      kiChargeCutawayPlayingRef.current = false;
+      return;
+    }
     const reachedMaxCharge = match.phase === 'fighting' && !paused && match.fighters.some((fighter, index) => (
       fighter.state === 'chargeKi' &&
       previousKiBySlot[index] < KI_MAX_VALUE &&
@@ -16413,10 +16443,25 @@ function FightScreen({
     void maxChargeAudio.play().catch(() => {
       resumeChargeLoop();
     });
-  }, [match.fighters, match.phase, paused, settings.audio]);
+  }, [gameplayAudioEnabled, match.fighters, match.phase, paused, settings.audio]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!gameplayAudioEnabled) {
+      const chargeAudio = kiChargeAudioRef.current;
+      if (chargeAudio) {
+        chargeAudio.pause();
+        chargeAudio.currentTime = 0;
+      }
+      const maxChargeAudio = kiMaxChargeAudioRef.current;
+      if (maxChargeAudio) {
+        maxChargeAudio.pause();
+        maxChargeAudio.currentTime = 0;
+        maxChargeAudio.onended = null;
+      }
+      kiChargeCutawayPlayingRef.current = false;
+      return;
+    }
     const charging = !paused && match.phase === 'fighting' && match.fighters.some((fighter) => fighter.state === 'chargeKi');
     const volume = getKiChargeSfxVolume(settings.audio);
     let audio = kiChargeAudioRef.current;
@@ -16449,7 +16494,7 @@ function FightScreen({
     }
     if (!audio.paused) audio.pause();
     audio.currentTime = 0;
-  }, [match.fighters, match.phase, paused, settings.audio]);
+  }, [gameplayAudioEnabled, match.fighters, match.phase, paused, settings.audio]);
 
   useEffect(() => {
     return () => {
@@ -17299,7 +17344,7 @@ function FightScreen({
         match={match}
         cameraSettings={settings.camera}
         sparkSettings={settings.display.impactSparks}
-        audioSettings={settings.audio}
+        audioSettings={gameplayAudioEnabled ? settings.audio : undefined}
         reducedMotion={settings.display.reducedMotion}
       />
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
