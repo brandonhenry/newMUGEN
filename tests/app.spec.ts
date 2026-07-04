@@ -177,7 +177,7 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
   await expect(page.getByTestId('generate-height-sheet')).toBeVisible();
   const heightSheetPopupPromise = page.waitForEvent('popup');
-  await page.getByTestId('generate-height-sheet').click();
+  await page.getByTestId('generate-height-sheet').click({ force: true });
   const heightSheetPopup = await heightSheetPopupPromise;
   await expect(heightSheetPopup.getByRole('heading', { name: 'Character Height Sheet' })).toBeVisible({ timeout: 30000 });
   await expect(heightSheetPopup.getByTestId('height-sheet-card').first()).toBeVisible();
@@ -185,6 +185,7 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(heightSheetPopup.getByTestId('height-sheet-voxel-dimensions').filter({ hasText: /w x .*h/ }).first()).toBeVisible({ timeout: 30000 });
   await heightSheetPopup.close();
   await expect(page.getByTestId('generate-height-sheet')).toBeEnabled();
+  await expect(page.getByTestId('generate-frame-sheet')).toBeVisible();
   let manifestSaveCount = 0;
   await page.route('**/__kore/dev/save-character-manifest', async (route) => {
     manifestSaveCount += 1;

@@ -742,6 +742,11 @@ const cpuDifficultyLabels: Record<CpuDifficulty, string> = {
   4: 'Hard',
   5: 'KORE'
 };
+const KORE_CPU_DIFFICULTY: CpuDifficulty = 5;
+
+function getEffectiveCpuDifficulty(mode: MatchMode, cpuDifficulty: CpuDifficulty) {
+  return mode === 'cpu' ? KORE_CPU_DIFFICULTY : cpuDifficulty;
+}
 
 function buildAnimationSlots(): AnimationSlot[] {
   const commandSlots: AnimationSlot[] = [];
@@ -2494,7 +2499,7 @@ export default function App() {
       stage_id: stageId,
       p1_character_id: p1Id,
       p2_character_id: p2Id,
-      cpu_difficulty: cpuDifficulty,
+      cpu_difficulty: getEffectiveCpuDifficulty(mode, cpuDifficulty),
       screen,
       ...properties
     });
@@ -2506,6 +2511,12 @@ export default function App() {
   const setRandomCharacterSlot = useCallback((slot: 1 | 2, selected: boolean) => {
     setRandomCharacterSlots((current) => ({ ...current, [slot]: selected }));
   }, []);
+  const setMatchMode = useCallback((nextMode: MatchMode) => {
+    setMode(nextMode);
+  }, []);
+  const setModeScopedCpuDifficulty = useCallback((difficulty: CpuDifficulty) => {
+    if (mode !== 'cpu') setCpuDifficulty(difficulty);
+  }, [mode]);
   const resolveRandomCharacterSelection = useCallback((targetMode: MatchMode = mode) => {
     let nextP1Id = p1Id;
     let nextP2Id = p2Id;
@@ -2993,6 +3004,7 @@ export default function App() {
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
+  const effectiveCpuDifficulty = getEffectiveCpuDifficulty(mode, cpuDifficulty);
   const unlockRevealCharacter = roster.find((character) => character.id === pendingUnlockCharacterId) ?? null;
   const unlockRevealStage =
     stageRoster.find((stage) => stage.id === 'the-chamber') ??
@@ -3163,13 +3175,13 @@ export default function App() {
             p2Id={p2Id}
             unlockedCharacterIds={effectiveUnlockedCharacterIds}
             mode={mode}
-            cpuDifficulty={cpuDifficulty}
+            cpuDifficulty={effectiveCpuDifficulty}
             setP1Id={setP1Id}
             setP2Id={setP2Id}
             randomCharacterSlots={randomCharacterSlots}
             setRandomCharacterSlot={setRandomCharacterSlot}
-            setMode={setMode}
-            setCpuDifficulty={setCpuDifficulty}
+            setMode={setMatchMode}
+            setCpuDifficulty={setModeScopedCpuDifficulty}
             onlineProfile={onlineProfile}
             onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onLeaderboards={() => setScreen('leaderboard')}
@@ -3275,9 +3287,9 @@ export default function App() {
         {screen === 'settings' && (
           <SettingsScreen
             mode={mode}
-            setMode={setMode}
-            cpuDifficulty={cpuDifficulty}
-            setCpuDifficulty={setCpuDifficulty}
+            setMode={setMatchMode}
+            cpuDifficulty={effectiveCpuDifficulty}
+            setCpuDifficulty={setModeScopedCpuDifficulty}
             settings={settings}
             setSettings={setSettings}
             selectedStageName={selectedStage.name}
@@ -3310,14 +3322,14 @@ export default function App() {
         )}
         {screen === 'fight' && (
           <FightScreen
-            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${cpuDifficulty}-${selectedTrainingMode}`}
+            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${effectiveCpuDifficulty}-${selectedTrainingMode}`}
             p1={p1}
             p2={p2}
             stage={selectedStage}
             roster={roster}
             stages={playableStageRoster}
             mode={mode}
-            cpuDifficulty={cpuDifficulty}
+            cpuDifficulty={effectiveCpuDifficulty}
             settings={settings}
             readInputsForStep={readInputsForStep}
             peekInputs={peekInputs}
@@ -3837,7 +3849,7 @@ function MenuScreen({
   const [attractIds] = useState(() => pickAttractCharacterIds(roster, unlockedCharacterIds));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster }) : null));
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(1);
   const [menuChromeHidden, setMenuChromeHidden] = useState(false);
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
@@ -3891,7 +3903,7 @@ function MenuScreen({
 
   useEffect(() => {
     if (!p1 || !p2) return;
-    const fresh = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster });
+    const fresh = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster });
     matchRef.current = fresh;
     setAttractMatch(fresh);
   }, [p1, p2, roster, stageRoster]);
@@ -3907,9 +3919,9 @@ function MenuScreen({
       accumulator += Math.min(0.05, (now - last) / 1000);
       last = now;
       while (accumulator >= fixedStep) {
-        const current = matchRef.current ?? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster });
+        const current = matchRef.current ?? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster });
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', 4, { aiSeed: freshAiSeed(), roster });
+          matchRef.current = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster });
         } else {
           matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
         }
@@ -8759,6 +8771,7 @@ function CharacterViewer({
   const [showIdleGhostSideView, setShowIdleGhostSideView] = useState(false);
   const [unlockedScaleRatioKeys, setUnlockedScaleRatioKeys] = useState<Set<string>>(() => new Set());
   const [heightSheetStatus, setHeightSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
+  const [frameSheetStatus, setFrameSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -9563,6 +9576,86 @@ function CharacterViewer({
       }
       setHeightSheetStatus('error');
       window.setTimeout(() => setHeightSheetStatus('idle'), 2200);
+    }
+  };
+
+  const buildFrameSheetCharacters = () => roster
+    .filter((character) => !character.unplayable)
+    .map((character) => {
+      const characterFrameCount =
+        character.spriteFrameCount ??
+        Math.max(0, ...Object.values(character.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
+      const globalScale = getCharacterGlobalScale(character);
+      const animationEntries = Object.entries(character.animationFrames ?? {});
+      const frames = Array.from({ length: characterFrameCount }, (_, frameIndex) => {
+        const frame = framePath(character, frameIndex);
+        const uses = animationEntries
+          .filter(([, animationFrames]) => animationFrames.some((animationFrame) => getFrameIndex(animationFrame) === frameIndex))
+          .map(([animationKey]) => animationKey);
+        const scaleOptions = (uses.length ? uses : ['']).map((animationKey) => {
+          const scale = normalizeAnimationScale(
+            animationKey
+              ? character.animationFrameScales?.[animationKey]?.[String(frameIndex)] ?? character.animationScales?.[animationKey]
+              : undefined
+          );
+          return {
+            animationKey: animationKey || 'unassigned',
+            width: scale.width,
+            height: scale.height,
+            source: animationKey && character.animationFrameScales?.[animationKey]?.[String(frameIndex)]
+              ? 'frame'
+              : animationKey && character.animationScales?.[animationKey]
+                ? 'animation'
+                : 'global'
+          };
+        });
+        const selectedScale = scaleOptions.find((scale) => scale.source === 'frame') ??
+          scaleOptions.find((scale) => scale.source === 'animation') ??
+          scaleOptions[0] ?? { animationKey: 'unassigned', width: 1, height: 1, source: 'global' };
+        const uniqueScales = new Set(scaleOptions.map((scale) => `${scale.width}:${scale.height}:${scale.source}`));
+        return {
+          frameIndex,
+          frame: new URL(frame, window.location.href).href,
+          renderScale: {
+            width: Number((globalScale.width * selectedScale.width).toFixed(4)),
+            height: Number((globalScale.height * selectedScale.height).toFixed(4))
+          },
+          scaleLabel: `${selectedScale.animationKey} ${selectedScale.source}${uniqueScales.size > 1 ? ` +${uniqueScales.size - 1}` : ''}`
+        };
+      });
+      return {
+        characterId: character.id,
+        displayName: character.displayName,
+        frames
+      };
+    });
+
+  const generateFrameComparisonSheet = async () => {
+    if (!isLocalDev || frameSheetStatus === 'generating') return;
+    const popup = window.open('', '_blank');
+    if (popup) {
+      popup.document.title = 'Generating Frame Comparison Sheet';
+      popup.document.body.style.margin = '0';
+      popup.document.body.style.background = '#07090c';
+      popup.document.body.style.color = '#f7f7f2';
+      popup.document.body.style.fontFamily = 'system-ui, sans-serif';
+      popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center"><strong>Generating frame comparison sheet...</strong></main>';
+    }
+    setFrameSheetStatus('generating');
+    try {
+      const html = buildFrameComparisonSheetHtml(buildFrameSheetCharacters());
+      const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+      if (popup && !popup.closed) popup.location.href = url;
+      else window.open(url, '_blank');
+      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setFrameSheetStatus('idle');
+    } catch (error) {
+      console.error('Failed to generate frame comparison sheet', error);
+      if (popup && !popup.closed) {
+        popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center;color:#ffb9b9;background:#07090c;font-family:system-ui,sans-serif"><strong>Frame comparison sheet failed.</strong></main>';
+      }
+      setFrameSheetStatus('error');
+      window.setTimeout(() => setFrameSheetStatus('idle'), 2200);
     }
   };
 
@@ -10454,15 +10547,26 @@ function CharacterViewer({
         </article>
       </div>
       {isLocalDev && (
-        <button
-          className="secondary-button"
-          onClick={() => void generateHeightSheet()}
-          disabled={heightSheetStatus === 'generating'}
-          data-testid="generate-height-sheet"
-        >
-          <Ruler size={18} />
-          {heightSheetStatus === 'generating' ? 'Generating Height Sheet' : 'Generate Height Sheet'}
-        </button>
+        <>
+          <button
+            className="secondary-button"
+            onClick={() => void generateHeightSheet()}
+            disabled={heightSheetStatus === 'generating'}
+            data-testid="generate-height-sheet"
+          >
+            <Ruler size={18} />
+            {heightSheetStatus === 'generating' ? 'Generating Height Sheet' : 'Generate Height Sheet'}
+          </button>
+          <button
+            className="secondary-button"
+            onClick={() => void generateFrameComparisonSheet()}
+            disabled={frameSheetStatus === 'generating'}
+            data-testid="generate-frame-sheet"
+          >
+            <List size={18} />
+            {frameSheetStatus === 'generating' ? 'Generating Frame Sheet' : 'Generate Frame Sheet'}
+          </button>
+        </>
       )}
       <button className="secondary-button" onClick={onBack}>
         <Home size={18} />
@@ -10493,6 +10597,20 @@ type HeightSheetEntry = {
     width: number;
     height: number;
   };
+};
+
+type FrameSheetCharacterEntry = {
+  characterId: string;
+  displayName: string;
+  frames: Array<{
+    frameIndex: number;
+    frame: string;
+    renderScale: {
+      width: number;
+      height: number;
+    };
+    scaleLabel: string;
+  }>;
 };
 
 function useFrameComparisonMetrics(src: string) {
@@ -11093,6 +11211,380 @@ function buildHeightSheetHtml(entries: HeightSheetEntry[]) {
 
     updateStageHeight();
     characters.forEach(createCard);
+  </script>
+</body>
+</html>`;
+}
+
+function buildFrameComparisonSheetHtml(characters: FrameSheetCharacterEntry[]) {
+  const generatedAt = new Date().toLocaleString();
+  const charactersJson = JSON.stringify(characters).replace(/</g, '\\u003c');
+  const frameTotal = characters.reduce((sum, character) => sum + character.frames.length, 0);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character Frame Comparison Sheet</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #07090c;
+      color: #f7f7f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 18px;
+      background: #07090c;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      display: grid;
+      gap: 18px;
+    }
+    .sheet-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 0 12px;
+      background: linear-gradient(#07090c 78%, rgba(7, 9, 12, 0));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    h1, h2 {
+      margin: 0;
+      line-height: 1;
+      text-wrap: balance;
+    }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; }
+    p, small {
+      margin: 0;
+      color: rgba(247, 247, 242, 0.64);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .character-sheet {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 14px 30px rgba(0, 0, 0, 0.16);
+    }
+    .character-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .strip-stack {
+      display: grid;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      border-radius: 6px;
+      background: #0a0f13;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    }
+  </style>
+</head>
+<body data-testid="frame-sheet-page">
+  <main>
+    <section class="sheet-header">
+      <div>
+        <h1>Character Frame Comparison Sheet</h1>
+        <p>${characters.length} playable characters &middot; ${frameTotal} frames &middot; generated ${escapeHtml(generatedAt)}</p>
+      </div>
+      <p>Base PNG over in-game scaled voxel</p>
+    </section>
+    <section id="sheet-root"></section>
+  </main>
+  <script>
+    const characters = ${charactersJson};
+    const WORLD_PX_PER_UNIT = 23.804193890891682;
+    const CELL_WIDTH = 184;
+    const CELL_HEIGHT = 372;
+    const STRIP_FRAMES = 36;
+    const DEFAULT_DRAW_SCALE = 2;
+    const BASE_BASELINE = 168;
+    const GAME_BASELINE = 330;
+    const root = document.getElementById('sheet-root');
+    const tasks = [];
+
+    function getVoxelPath(frame, directory) {
+      const url = new URL(frame);
+      url.pathname = url.pathname.replace('/frames/', '/' + directory + '/').replace(/\\.png$/, '.json');
+      return url.href;
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('Image failed'));
+        image.src = src;
+      });
+    }
+
+    async function fetchVoxelPayload(frame) {
+      const hdResponse = await fetch(getVoxelPath(frame, 'voxels-hd'));
+      if (hdResponse.ok) return hdResponse.json();
+      const response = await fetch(getVoxelPath(frame, 'voxels'));
+      if (!response.ok) throw new Error('Voxel missing');
+      return response.json();
+    }
+
+    function getOpaqueImageBounds(image) {
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, image.naturalWidth || image.width || 1);
+      canvas.height = Math.max(1, image.naturalHeight || image.height || 1);
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      if (!context) return { left: 0, top: 0, width: canvas.width, height: canvas.height };
+      context.drawImage(image, 0, 0);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      let left = imageData.width;
+      let right = -1;
+      let top = imageData.height;
+      let bottom = -1;
+      for (let y = 0; y < imageData.height; y += 1) {
+        for (let x = 0; x < imageData.width; x += 1) {
+          if (data[(y * imageData.width + x) * 4 + 3] <= 8) continue;
+          left = Math.min(left, x);
+          right = Math.max(right, x);
+          top = Math.min(top, y);
+          bottom = Math.max(bottom, y);
+        }
+      }
+      if (right < left || bottom < top) return { left: 0, top: 0, width: imageData.width, height: imageData.height };
+      return { left, top, width: right - left + 1, height: bottom - top + 1 };
+    }
+
+    function cropSprite(image) {
+      const bounds = getOpaqueImageBounds(image);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(bounds.width));
+      canvas.height = Math.max(1, Math.round(bounds.height));
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Canvas unavailable');
+      context.imageSmoothingEnabled = false;
+      context.drawImage(image, bounds.left, bounds.top, bounds.width, bounds.height, 0, 0, canvas.width, canvas.height);
+      return canvas;
+    }
+
+    function normalizeVoxelPayload(payload, renderScale) {
+      const source = Array.isArray(payload)
+        ? payload
+            .filter((voxel) => Array.isArray(voxel.position) && Array.isArray(voxel.size))
+            .map((voxel) => ({
+              x: Number(voxel.position[0]) || 0,
+              y: Number(voxel.position[1]) || 0,
+              w: Math.max(0.001, Number(voxel.size[0]) || 0.001),
+              h: Math.max(0.001, Number(voxel.size[1]) || 0.001),
+              color: typeof voxel.color === 'string' ? voxel.color : '#ffffff'
+            }))
+        : Array.isArray(payload?.voxels)
+          ? payload.voxels.map((voxel) => {
+              const palette = Array.isArray(payload.palette) ? payload.palette : [];
+              return {
+                x: Number(voxel.x) || 0,
+                y: Number(voxel.y) || 0,
+                w: Math.max(0.001, Number(voxel.w) || 0.001),
+                h: Math.max(0.001, Number(voxel.h) || 0.001),
+                color: palette[Math.max(0, Math.round(Number(voxel.c) || 0))] || '#ffffff'
+              };
+            })
+          : [];
+      return source.map((voxel) => ({
+        ...voxel,
+        x: voxel.x * renderScale.width,
+        y: voxel.y * renderScale.height,
+        w: voxel.w * renderScale.width,
+        h: voxel.h * renderScale.height
+      }));
+    }
+
+    function getVoxelBounds(voxels) {
+      return voxels.reduce(
+        (bounds, voxel) => ({
+          minX: Math.min(bounds.minX, voxel.x - voxel.w / 2),
+          minY: Math.min(bounds.minY, voxel.y - voxel.h / 2),
+          maxX: Math.max(bounds.maxX, voxel.x + voxel.w / 2),
+          maxY: Math.max(bounds.maxY, voxel.y + voxel.h / 2)
+        }),
+        { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+      );
+    }
+
+    function renderVoxelCanvas(payload, renderScale) {
+      const voxels = normalizeVoxelPayload(payload, renderScale);
+      if (!voxels.length) throw new Error('No voxels');
+      const bounds = getVoxelBounds(voxels);
+      if (!Number.isFinite(bounds.minX) || !Number.isFinite(bounds.minY)) throw new Error('No voxel bounds');
+      const widthPx = Math.max(1, Math.round((bounds.maxX - bounds.minX) * WORLD_PX_PER_UNIT));
+      const heightPx = Math.max(1, Math.round((bounds.maxY - bounds.minY) * WORLD_PX_PER_UNIT));
+      const canvas = document.createElement('canvas');
+      canvas.width = widthPx;
+      canvas.height = heightPx;
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Canvas unavailable');
+      context.imageSmoothingEnabled = false;
+      for (const voxel of voxels) {
+        const x = Math.round((voxel.x - voxel.w / 2 - bounds.minX) * WORLD_PX_PER_UNIT);
+        const y = Math.round((bounds.maxY - (voxel.y + voxel.h / 2)) * WORLD_PX_PER_UNIT);
+        const width = Math.max(1, Math.ceil(voxel.w * WORLD_PX_PER_UNIT));
+        const height = Math.max(1, Math.ceil(voxel.h * WORLD_PX_PER_UNIT));
+        context.fillStyle = voxel.color;
+        context.fillRect(x, y, width, height);
+      }
+      return canvas;
+    }
+
+    function drawCellBase(context, column, frame) {
+      const x = column * CELL_WIDTH;
+      context.fillStyle = column % 2 === 0 ? '#10161d' : '#0d1319';
+      context.fillRect(x, 0, CELL_WIDTH - 4, CELL_HEIGHT);
+      context.strokeStyle = 'rgba(255,255,255,0.08)';
+      context.strokeRect(x + 0.5, 0.5, CELL_WIDTH - 5, CELL_HEIGHT - 1);
+      context.fillStyle = '#f7f7f2';
+      context.font = '700 12px ui-sans-serif, system-ui';
+      context.fillText('frame ' + String(frame.frameIndex).padStart(3, '0'), x + 8, 18);
+      context.fillStyle = 'rgba(247,247,242,0.56)';
+      context.font = '700 9px ui-sans-serif, system-ui';
+      context.fillText(frame.scaleLabel.slice(0, 28), x + 8, 34);
+      context.strokeStyle = '#2ee6ff';
+      context.beginPath();
+      context.moveTo(x + 8, BASE_BASELINE + 0.5);
+      context.lineTo(x + CELL_WIDTH - 12, BASE_BASELINE + 0.5);
+      context.stroke();
+      context.strokeStyle = '#ffb000';
+      context.beginPath();
+      context.moveTo(x + 8, GAME_BASELINE + 0.5);
+      context.lineTo(x + CELL_WIDTH - 12, GAME_BASELINE + 0.5);
+      context.stroke();
+      context.fillStyle = 'rgba(247,247,242,0.5)';
+      context.fillText('base png', x + 8, 52);
+      context.fillText('in game voxel', x + 8, BASE_BASELINE + 28);
+    }
+
+    function drawCentered(context, canvas, x, baseline, scale) {
+      const width = canvas.width * scale;
+      const height = canvas.height * scale;
+      context.imageSmoothingEnabled = false;
+      context.drawImage(canvas, x + (CELL_WIDTH - 4 - width) / 2, baseline - height, width, height);
+    }
+
+    function drawResult(canvas, column, frame, spriteCanvas, voxelCanvas) {
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      drawCellBase(context, column, frame);
+      const maxSourceWidth = Math.max(spriteCanvas.width, voxelCanvas.width);
+      const maxSourceHeight = Math.max(spriteCanvas.height, voxelCanvas.height);
+      const drawScale = Math.min(DEFAULT_DRAW_SCALE, (CELL_WIDTH - 22) / Math.max(1, maxSourceWidth), 116 / Math.max(1, maxSourceHeight));
+      const x = column * CELL_WIDTH;
+      drawCentered(context, spriteCanvas, x, BASE_BASELINE, drawScale);
+      drawCentered(context, voxelCanvas, x, GAME_BASELINE, drawScale);
+      const deltaW = voxelCanvas.width - spriteCanvas.width;
+      const deltaH = voxelCanvas.height - spriteCanvas.height;
+      const matched = Math.abs(deltaW) <= 1 && Math.abs(deltaH) <= 1;
+      context.fillStyle = matched ? '#8fffc1' : Math.max(Math.abs(deltaW), Math.abs(deltaH)) <= 6 ? '#ffd37a' : '#ff8f8f';
+      context.font = '800 10px ui-sans-serif, system-ui';
+      context.fillText(spriteCanvas.width + 'x' + spriteCanvas.height + 'px', x + 8, BASE_BASELINE + 15);
+      context.fillText(voxelCanvas.width + 'x' + voxelCanvas.height + 'px', x + 8, GAME_BASELINE + 15);
+      context.fillText((deltaW >= 0 ? '+' : '') + deltaW + 'w ' + (deltaH >= 0 ? '+' : '') + deltaH + 'h', x + 8, GAME_BASELINE + 30);
+    }
+
+    function drawFailure(canvas, column, frame, message) {
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      drawCellBase(context, column, frame);
+      const x = column * CELL_WIDTH;
+      context.fillStyle = '#ffb9b9';
+      context.font = '800 11px ui-sans-serif, system-ui';
+      context.fillText(message.slice(0, 26), x + 8, 92);
+    }
+
+    function createCharacterSection(character) {
+      const section = document.createElement('section');
+      section.className = 'character-sheet';
+      section.setAttribute('data-testid', 'frame-sheet-character');
+      const header = document.createElement('div');
+      header.className = 'character-header';
+      const title = document.createElement('h2');
+      title.textContent = character.displayName;
+      const progress = document.createElement('small');
+      progress.setAttribute('data-testid', 'frame-sheet-summary');
+      progress.textContent = '0/' + character.frames.length + ' frames';
+      header.append(title, progress);
+      const stack = document.createElement('div');
+      stack.className = 'strip-stack';
+      section.append(header, stack);
+      root.append(section);
+
+      let done = 0;
+      character.frames.forEach((frame, index) => {
+        const stripIndex = Math.floor(index / STRIP_FRAMES);
+        const column = index % STRIP_FRAMES;
+        let canvas = stack.querySelector('[data-strip="' + stripIndex + '"]');
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          const framesInStrip = Math.min(STRIP_FRAMES, character.frames.length - stripIndex * STRIP_FRAMES);
+          canvas.width = framesInStrip * CELL_WIDTH;
+          canvas.height = CELL_HEIGHT;
+          canvas.dataset.strip = String(stripIndex);
+          canvas.setAttribute('data-testid', 'frame-sheet-canvas');
+          stack.append(canvas);
+          const context = canvas.getContext('2d');
+          for (let placeholder = 0; placeholder < framesInStrip; placeholder += 1) {
+            drawCellBase(context, placeholder, character.frames[stripIndex * STRIP_FRAMES + placeholder]);
+          }
+        }
+        tasks.push(async () => {
+          try {
+            const image = await loadImage(frame.frame);
+            const spriteCanvas = cropSprite(image);
+            const voxelCanvas = renderVoxelCanvas(await fetchVoxelPayload(frame.frame), frame.renderScale);
+            drawResult(canvas, column, frame, spriteCanvas, voxelCanvas);
+          } catch (error) {
+            drawFailure(canvas, column, frame, error instanceof Error ? error.message : 'failed');
+          } finally {
+            done += 1;
+            progress.textContent = done + '/' + character.frames.length + ' frames';
+          }
+        });
+      });
+    }
+
+    async function runQueue(concurrency = 8) {
+      let cursor = 0;
+      const workers = Array.from({ length: concurrency }, async () => {
+        while (cursor < tasks.length) {
+          const task = tasks[cursor];
+          cursor += 1;
+          await task();
+          await new Promise((resolve) => window.setTimeout(resolve, 0));
+        }
+      });
+      await Promise.all(workers);
+    }
+
+    characters.forEach(createCharacterSection);
+    void runQueue();
   </script>
 </body>
 </html>`;
