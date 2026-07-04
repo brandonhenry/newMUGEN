@@ -3844,6 +3844,59 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('juggle');
   });
 
+  it('lets a varied low-damage juggle route reach a long 20-plus hit combo', () => {
+    const longRouteCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moveOverrides: {},
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 2,
+        activeFrames: 2,
+        recoveryFrames: 2,
+        damage: 1,
+        range: 8,
+        pushback: 0,
+        launchHeight: move.input === 'jab' ? 2.4 : undefined,
+        knockdown: false,
+        onHitFrames: move.input === 'jab' ? 32 : 24,
+        onCounterHitFrames: move.input === 'jab' ? 34 : 26,
+        onComboHitFrames: 24,
+        onJuggleHitFrames: move.input === 'jab' ? 4 : 22,
+        comboRepeatPenaltyFrames: move.input === 'jab' ? 8 : 2,
+        juggleRepeatPenaltyFrames: move.input === 'jab' ? 16 : 2,
+        cancelable: true,
+        comboKey: `neutral:${move.input}`,
+        hitbox: { offset: [0, 5, 0.72], size: [8, 20, 8] }
+      }))
+    };
+    let match = createMatch(longRouteCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+
+    const sequence: MoveInput[] = ['jab'];
+    const filler: MoveInput[] = ['heavy', 'special'];
+    while (sequence.length < 24) sequence.push(filler[(sequence.length - 1) % filler.length]);
+
+    for (const [index, inputName] of sequence.entries()) {
+      const input = emptyInputFrame();
+      input[inputName] = true;
+      for (let frame = 0; frame < 12 && match.fighters[0].currentMove && (!match.fighters[0].hitConfirmed || match.fighters[0].moveFrame < match.fighters[0].currentMove.startupFrames + match.fighters[0].currentMove.activeFrames); frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+      if (index === 0) match = stepUntilFighterActionable(match, 0);
+      match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      for (let frame = 0; frame < 36 && match.fighters[0].comboHits < index + 1; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+      expect(match.fighters[0].comboHits, `hit ${index + 1}`).toBeGreaterThanOrEqual(index + 1);
+    }
+
+    expect(match.fighters[0].comboHits).toBeGreaterThanOrEqual(24);
+    expect(match.fighters[0].comboStep).toBeLessThanOrEqual(30);
+  });
+
   it('charges ki while holding the charge input in neutral', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -5125,7 +5178,7 @@ describe('fight engine', () => {
       match.fighters[1].velocityY = -0.35;
       match.fighters[1].state = 'juggle';
       match.fighters[1].juggleDamage = 28;
-      match.fighters[1].juggleSequenceDamage = 40;
+      match.fighters[1].juggleSequenceDamage = tornadoCount >= 2 ? 86 : 40;
       match.fighters[1].juggleTornadoCount = tornadoCount;
       match.fighters[0].state = 'attack';
       match.fighters[0].currentMove = {
@@ -5153,14 +5206,14 @@ describe('fight engine', () => {
     const first = runTornadoHit(0);
     expect(first.fighters[1].state).toBe('juggle');
     expect(first.fighters[1].juggleTornadoCount).toBe(1);
-    expect(first.fighters[1].juggleSequenceDamage).toBe(6);
+    expect(first.fighters[1].juggleSequenceDamage).toBe(3);
     expect(first.fighters[1].position.y).toBeGreaterThanOrEqual(1.26);
     expect(first.fighters[1].velocityY).toBeGreaterThan(4.2);
 
     const second = runTornadoHit(1);
     expect(second.fighters[1].state).toBe('juggle');
     expect(second.fighters[1].juggleTornadoCount).toBe(2);
-    expect(second.fighters[1].juggleSequenceDamage).toBe(6);
+    expect(second.fighters[1].juggleSequenceDamage).toBe(3);
 
     const third = runTornadoHit(2);
     expect(third.fighters[1].state).toBe('knockdown');
@@ -5176,8 +5229,8 @@ describe('fight engine', () => {
     match.fighters[1].position.y = 0.5;
     match.fighters[1].velocityY = 0.2;
     match.fighters[1].state = 'juggle';
-    match.fighters[1].juggleDamage = 42;
-    match.fighters[1].juggleSequenceDamage = 42;
+    match.fighters[1].juggleDamage = 88;
+    match.fighters[1].juggleSequenceDamage = 88;
     match.fighters[0].state = 'attack';
     match.fighters[0].currentMove = {
       ...starterCharacters[0].moves[0],

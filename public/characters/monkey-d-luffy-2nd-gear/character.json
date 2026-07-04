@@ -91,8 +91,7 @@
     ],
     "hitHeavy": [],
     "juggle": [
-      "/characters/monkey-d-luffy-2nd-gear/frames/frame-028.png",
-      "/characters/monkey-d-luffy-2nd-gear/frames/frame-029.png"
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-028.png"
     ],
     "knockdown": [
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-031.png",
@@ -507,17 +506,13 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 3,
       "range": 1.41,
-      "label": "Monkey D. Luffy (2nd Gear) Left Check",
-      "hitLevel": "high",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Monkey D. Luffy (2nd Gear) Left Check",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -530,17 +525,13 @@
       "onCounterHitFrames": 10,
       "whiffRecoveryFrames": 5,
       "range": 1.53,
-      "label": "Monkey D. Luffy (2nd Gear) Right Check",
-      "hitLevel": "mid",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Monkey D. Luffy (2nd Gear) Right Check",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -553,15 +544,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Monkey D. Luffy (2nd Gear) Left Kick",
-      "hitLevel": "low",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 19,
@@ -574,15 +561,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Monkey D. Luffy (2nd Gear) Right Kick",
-      "hitLevel": "mid",
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -596,22 +579,11 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "f+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "f+1",
-      "notation": "f+1",
-      "animationKey": "cmd:f+1",
-      "comboKey": "f+1:link",
-      "route": "direction:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 26,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -624,27 +596,16 @@
       "onCounterHitFrames": 35,
       "whiffRecoveryFrames": 10,
       "range": 1.68,
+      "forwardForce": 1.93,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "input": "heavy",
-      "command": "d/f+2",
-      "notation": "d/f+2",
-      "animationKey": "cmd:d/f+2",
-      "comboKey": "d/f+2:link",
-      "route": "launcher:frame-link",
-      "counterHit": true,
-      "cancelable": false,
-      "forwardForce": 1.93,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 19,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 10
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -657,16 +618,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 37,
       "range": 2.05,
-      "label": "Monkey D. Luffy (2nd Gear) Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Monkey D. Luffy (2nd Gear) Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -679,15 +636,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Monkey D. Luffy (2nd Gear) Rising Strike",
-      "hitLevel": "mid",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -700,23 +653,12 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "FC+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "FC+1",
-      "notation": "FC+1",
-      "animationKey": "cmd:FC+1",
-      "comboKey": "FC+1:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.56,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -729,24 +671,13 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 7,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
-      "hitLevel": "mid",
-      "input": "heavy",
-      "command": "FC+2",
-      "notation": "FC+2",
-      "animationKey": "cmd:FC+2",
-      "comboKey": "FC+2:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.84,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "launchHeight": 2,
+      "label": "FC+2 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -759,23 +690,12 @@
       "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 13,
       "range": 1.72,
-      "label": "1+2 Frame Link",
-      "hitLevel": "mid",
-      "input": "heavy",
-      "command": "1+2",
-      "notation": "1+2",
-      "animationKey": "cmd:1+2",
-      "comboKey": "1+2:link",
-      "route": "multi:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 2.35,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "1+2 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -788,16 +708,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 32,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Monkey D. Luffy (2nd Gear) Cross Launcher",
-      "hitLevel": "mid",
       "forwardForce": 2.55,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "launchHeight": 2.2,
+      "label": "Monkey D. Luffy (2nd Gear) Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -810,15 +726,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Monkey D. Luffy (2nd Gear) Low Feint",
-      "hitLevel": "low",
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -831,16 +743,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Monkey D. Luffy (2nd Gear) Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
       "forwardForce": 2.09,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Monkey D. Luffy (2nd Gear) Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -853,16 +761,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 31,
       "range": 1.9,
-      "label": "Monkey D. Luffy (2nd Gear) Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.99,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "label": "Monkey D. Luffy (2nd Gear) Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -875,16 +779,12 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 40,
       "range": 2.1,
-      "label": "Monkey D. Luffy (2nd Gear) Aura Drive",
-      "hitLevel": "special",
-      "knockdown": true,
       "forwardForce": 3.07,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "label": "Monkey D. Luffy (2nd Gear) Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -894,14 +794,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Second Beat",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -911,14 +807,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Body Blow",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -928,14 +820,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Low Changeup",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -945,14 +833,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Pressure Feint",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -962,14 +846,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Drive",
       "forwardForce": 1.5,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -979,14 +859,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Barrage",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -996,14 +872,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Finisher",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1014,14 +886,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Step Kick",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1031,14 +899,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Palm String",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1048,14 +912,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Rising Chain",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1065,14 +925,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Special Setup",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1082,14 +938,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Break Art",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1099,14 +951,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Check Hook",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1116,14 +964,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Heavy Break",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1133,14 +977,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Charged Follow",
       "forwardForce": 2.42,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1151,14 +991,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Drop Kick",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1168,14 +1004,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Arc Finisher",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1185,14 +1017,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Focus Stance",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1202,14 +1030,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Mode Shift",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1219,14 +1043,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Heel Feint",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1236,14 +1056,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Summon Strike",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1253,14 +1069,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Guard Snare",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1270,14 +1082,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Armor Break",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1287,14 +1095,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Power Setup",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1304,14 +1108,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Switch Strike",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1321,14 +1121,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Spark Jab",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1338,14 +1134,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Binding Blow",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1355,14 +1147,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Heavy Draw",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1373,126 +1161,65 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Monkey D. Luffy (2nd Gear) Kick Ender",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Monkey D. Luffy (2nd Gear) Kick Ender"
     },
     "cmd:f+2": {
-      "input": "heavy",
-      "command": "f+2",
-      "notation": "f+2",
-      "animationKey": "cmd:f+2",
-      "comboKey": "f+2:link",
-      "label": "f+2 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "f+2 Frame Link",
+      "cancelable": false
     },
     "cmd:d+1": {
-      "input": "jab",
-      "command": "d+1",
-      "notation": "d+1",
-      "animationKey": "cmd:d+1",
-      "comboKey": "d+1:link",
-      "label": "d+1 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.22,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "d+1 Frame Link",
+      "cancelable": false
     },
     "cmd:qcf+1": {
-      "input": "jab",
-      "command": "qcf+1",
-      "notation": "qcf+1",
-      "animationKey": "cmd:qcf+1",
-      "comboKey": "qcf+1:link",
-      "label": "qcf+1 Frame Link",
-      "route": "motion:frame-link",
       "onBlockFrames": -11,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 17,
-      "cancelable": false,
       "forwardForce": 2.08,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "qcf+1 Frame Link",
+      "cancelable": false
     },
     "cmd:WS+2": {
-      "input": "heavy",
-      "command": "WS+2",
-      "notation": "WS+2",
-      "animationKey": "cmd:WS+2",
-      "comboKey": "WS+2:link",
-      "label": "WS+2 Frame Link",
-      "route": "state:frame-link",
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false,
       "forwardForce": 1.6,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "WS+2 Frame Link",
+      "cancelable": false
     },
     "cmd:O+1": {
-      "input": "jab",
-      "command": "O+1",
-      "notation": "O+1",
-      "animationKey": "cmd:O+1",
-      "comboKey": "O+1:link",
-      "label": "O+1 Frame Link",
-      "route": "special:frame-link",
       "onBlockFrames": -12,
       "onHitFrames": 21,
       "onCounterHitFrames": 31,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 17,
-      "cancelable": false,
       "forwardForce": 2.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "O+1 Frame Link",
+      "cancelable": false
     }
   },
   "effects": [],

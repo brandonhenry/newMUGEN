@@ -101,14 +101,26 @@ import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/cha
 import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
 import {
-  comboTrialCategories,
   comboTrialCategoryLabels,
-  comboTrialStepMatchesImpact,
-  generateCharacterComboRoutes,
-  generateComboTrials,
-  type ComboTrialStep,
-  type GeneratedComboRoute as ComboTrial
+  generateCharacterComboRoutes
 } from './lib/comboRoutes';
+import {
+  advanceTrainingTrialWithImpact,
+  advanceTrainingTrialWithInput,
+  generateBasicTrainingTrials,
+  generateComboTrainingTrials,
+  makePreviewInput,
+  makeTrainingTrialProgress,
+  makeTrialDummyInput,
+  previewScriptLength,
+  readTrainingTrialCompletion,
+  trainingTrialCategoryLabels,
+  trainingTrialModes,
+  writeTrainingTrialCompletion,
+  type TrainingTrialDefinition,
+  type TrainingTrialMode,
+  type TrainingTrialProgress
+} from './lib/trainingTrials';
 import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
@@ -173,7 +185,6 @@ const MEMORY_CARD_SAVE_KEYS = [
 ] as const;
 type CursorStyleVars = CSSProperties & { '--kore-cursor-default': string };
 type NotationToken = string;
-type TrialStepStatus = 'pending' | 'current' | 'correct' | 'missed';
 type AnimationSlot = {
   key: string;
   label: string;
@@ -183,11 +194,6 @@ type AnimationSlot = {
   command?: string;
 };
 type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special' | 'combo';
-type ComboTrialProgress = {
-  stepIndex: number;
-  statuses: TrialStepStatus[];
-  completed: boolean;
-};
 const CHARACTER_SELECT_PAGE_SIZE = 12;
 const CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON = 6;
 const CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON = 7;
@@ -13229,17 +13235,23 @@ function FightScreen({
   onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string }) => void;
 }) {
   const [paused, setPaused] = useState(false);
-  const [pauseMenuView, setPauseMenuView] = useState<'menu' | 'movelist' | 'comboTrials'>('menu');
+  const [pauseMenuView, setPauseMenuView] = useState<'menu' | 'movelist' | 'trainingTrials'>('menu');
   const [activeMoveListTab, setActiveMoveListTab] = useState<MoveListTab>('raw');
-  const comboTrials = useMemo(() => generateComboTrials(p1), [p1]);
-  const [activeComboTrialId, setActiveComboTrialId] = useState<string | null>(() => comboTrials[0]?.id ?? null);
-  const activeComboTrial = useMemo(
-    () => comboTrials.find((trial) => trial.id === activeComboTrialId) ?? comboTrials[0] ?? null,
-    [activeComboTrialId, comboTrials]
+  const [trainingMode, setTrainingMode] = useState<TrainingTrialMode>('free');
+  const basicTrainingTrials = useMemo(() => generateBasicTrainingTrials(p1, roster), [p1, roster]);
+  const comboTrainingTrials = useMemo(() => generateComboTrainingTrials(p1), [p1]);
+  const activeTrainingTrials = trainingMode === 'basics' ? basicTrainingTrials : trainingMode === 'combos' ? comboTrainingTrials : [];
+  const [activeTrainingTrialId, setActiveTrainingTrialId] = useState<string | null>(() => activeTrainingTrials[0]?.id ?? null);
+  const activeTrainingTrial = useMemo(
+    () => activeTrainingTrials.find((trial) => trial.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null,
+    [activeTrainingTrialId, activeTrainingTrials]
   );
-  const [comboTrialProgress, setComboTrialProgress] = useState<ComboTrialProgress | null>(() => makeComboTrialProgress(activeComboTrial));
-  const activeComboTrialRef = useRef<ComboTrial | null>(activeComboTrial);
-  const comboTrialProgressRef = useRef<ComboTrialProgress | null>(comboTrialProgress);
+  const [trainingTrialProgress, setTrainingTrialProgress] = useState<TrainingTrialProgress | null>(() => makeTrainingTrialProgress(activeTrainingTrial));
+  const [completedTrainingTrialIds, setCompletedTrainingTrialIds] = useState<Set<string>>(() => readTrainingTrialCompletion(p1.id));
+  const [previewPlayback, setPreviewPlayback] = useState<{ trialId: string; frame: number } | null>(null);
+  const activeTrainingTrialRef = useRef<TrainingTrialDefinition | null>(activeTrainingTrial);
+  const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
+  const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
   const isOnline = mode === 'online' || mode === 'private';
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
@@ -13334,22 +13346,30 @@ function FightScreen({
   }, [match]);
 
   useEffect(() => {
-    const nextTrial = comboTrials.find((trial) => trial.id === activeComboTrialId) ?? comboTrials[0] ?? null;
-    const nextProgress = makeComboTrialProgress(nextTrial);
-    setActiveComboTrialId(nextTrial?.id ?? null);
-    activeComboTrialRef.current = nextTrial;
-    comboTrialProgressRef.current = nextProgress;
-    setComboTrialProgress(nextProgress);
+    setCompletedTrainingTrialIds(readTrainingTrialCompletion(p1.id));
+  }, [p1.id]);
+
+  useEffect(() => {
+    const nextTrial = activeTrainingTrials.find((trial) => trial.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null;
+    const nextProgress = makeTrainingTrialProgress(nextTrial);
+    setActiveTrainingTrialId(nextTrial?.id ?? null);
+    activeTrainingTrialRef.current = nextTrial;
+    trainingTrialProgressRef.current = nextProgress;
+    setTrainingTrialProgress(nextProgress);
     seenTrialImpactEventIds.current.clear();
-  }, [comboTrials, activeComboTrialId]);
+  }, [activeTrainingTrials, activeTrainingTrialId]);
 
   useEffect(() => {
-    activeComboTrialRef.current = activeComboTrial;
-  }, [activeComboTrial]);
+    activeTrainingTrialRef.current = activeTrainingTrial;
+  }, [activeTrainingTrial]);
 
   useEffect(() => {
-    comboTrialProgressRef.current = comboTrialProgress;
-  }, [comboTrialProgress]);
+    trainingTrialProgressRef.current = trainingTrialProgress;
+  }, [trainingTrialProgress]);
+
+  useEffect(() => {
+    previewPlaybackRef.current = previewPlayback;
+  }, [previewPlayback]);
 
   useEffect(() => {
     const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
@@ -13521,18 +13541,27 @@ function FightScreen({
   }, [match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
 
   useEffect(() => {
-    if (mode !== 'training' || !activeComboTrial || !comboTrialProgress) return;
+    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress || previewPlayback) return;
     match.impactEvents.forEach((event) => {
       if (seenTrialImpactEventIds.current.has(event.id)) return;
       seenTrialImpactEventIds.current.add(event.id);
       if (event.attackerSlot !== 1 || event.kind === 'block' || event.kind === 'clash') return;
-      setComboTrialProgress((current) => {
-        const next = current ? advanceComboTrialProgress(current, activeComboTrial, event) : current;
-        comboTrialProgressRef.current = next;
+      setTrainingTrialProgress((current) => {
+        const next = current ? advanceTrainingTrialWithImpact(current, activeTrainingTrial, event) : current;
+        trainingTrialProgressRef.current = next;
+        if (next?.completed) {
+          setCompletedTrainingTrialIds((completed) => {
+            if (completed.has(activeTrainingTrial.id)) return completed;
+            const updated = new Set(completed);
+            updated.add(activeTrainingTrial.id);
+            writeTrainingTrialCompletion(p1.id, updated);
+            return updated;
+          });
+        }
         return next;
       });
     });
-  }, [activeComboTrial, comboTrialProgress, match.impactEvents, mode]);
+  }, [activeTrainingTrial, match.impactEvents, mode, p1.id, previewPlayback, trainingTrialProgress]);
 
   useEffect(() => {
     const expectedRoundMessage = `ROUND ${match.round}`;
@@ -14168,18 +14197,51 @@ function FightScreen({
               : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
           } else {
             if (mode === 'training') {
-              const currentTrial = activeComboTrialRef.current;
-              const currentProgress = comboTrialProgressRef.current;
-              const currentStep = currentTrial && currentProgress && !currentProgress.completed
-                ? currentTrial.steps[currentProgress.stepIndex]
-                : null;
-              if (currentStep?.counterHit) primeCounterHitTrialDummy(matchRef.current);
+              const currentTrial = activeTrainingTrialRef.current;
+              if (currentTrial?.setup.dummyScript === 'counterHit') primeCounterHitTrialDummy(matchRef.current);
               matchRef.current = {
                 ...matchRef.current,
-                trainingDummyInput: currentStep?.counterHit ? makeCounterHitTrialDummyInput(matchRef.current.fighters[1], matchRef.current.fighters[0]) : null
+                trainingDummyInput: makeTrialDummyInput(currentTrial, matchRef.current)
               };
             }
-            matchRef.current = stepMatch(matchRef.current, p1Input, p2Input, fixedStep);
+            const currentTrial = mode === 'training' ? activeTrainingTrialRef.current : null;
+            const currentPreview = mode === 'training' ? previewPlaybackRef.current : null;
+            const trialInput = currentTrial && currentPreview?.trialId === currentTrial.id
+              ? makePreviewInput(currentTrial.previewScript, currentPreview.frame)
+              : p1Input;
+            matchRef.current = stepMatch(matchRef.current, trialInput, p2Input, fixedStep);
+            if (mode === 'training' && currentTrial) {
+              const currentProgress = trainingTrialProgressRef.current;
+              if (currentProgress && !currentProgress.completed) {
+                const nextProgress = advanceTrainingTrialWithInput(currentProgress, currentTrial, trialInput, matchRef.current);
+                trainingTrialProgressRef.current = nextProgress;
+                setTrainingTrialProgress(nextProgress);
+                if (!currentPreview && nextProgress.completed) {
+                  setCompletedTrainingTrialIds((completed) => {
+                    if (completed.has(currentTrial.id)) return completed;
+                    const updated = new Set(completed);
+                    updated.add(currentTrial.id);
+                    writeTrainingTrialCompletion(p1.id, updated);
+                    return updated;
+                  });
+                }
+              }
+              if (currentPreview?.trialId === currentTrial.id) {
+                const nextFrame = currentPreview.frame + 1;
+                if (nextFrame > previewScriptLength(currentTrial.previewScript) + 24) {
+                  const progress = makeTrainingTrialProgress(currentTrial);
+                  trainingTrialProgressRef.current = progress;
+                  setTrainingTrialProgress(progress);
+                  previewPlaybackRef.current = null;
+                  setPreviewPlayback(null);
+                  setPaused(true);
+                } else {
+                  const nextPreview = { ...currentPreview, frame: nextFrame };
+                  previewPlaybackRef.current = nextPreview;
+                  setPreviewPlayback(nextPreview);
+                }
+              }
+            }
           }
           accumulator -= fixedStep;
         }
@@ -14190,7 +14252,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeComboTrial, clearMenuInputs, comboTrialProgress, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trainingTrialProgress]);
 
   const requestOnlineRematch = () => {
     if (!isOnline || onlineStateRef.current !== 'connected') {
@@ -14235,62 +14297,84 @@ function FightScreen({
     setPaused(false);
   };
 
-  const prepareComboTrialMatch = useCallback((fresh: MatchSnapshot, trial: ComboTrial | null) => {
+  const prepareTrainingTrialMatch = useCallback((fresh: MatchSnapshot, trial: TrainingTrialDefinition | null) => {
     if (!trial) return fresh;
+    const setup = trial.setup;
     const fighters: MatchSnapshot['fighters'] = [
       {
         ...fresh.fighters[0],
-        position: { ...fresh.fighters[0].position, x: -0.45, z: 0 },
+        position: { ...fresh.fighters[0].position, x: setup.p1Position?.x ?? -0.45, z: setup.p1Position?.z ?? 0 },
         facing: 1,
         facingYaw: Math.PI / 2,
-        commandHistory: []
+        commandHistory: [],
+        ki: setup.p1Ki ?? fresh.fighters[0].ki
       },
       {
         ...fresh.fighters[1],
-        position: { ...fresh.fighters[1].position, x: 0.45, z: 0 },
+        position: { ...fresh.fighters[1].position, x: setup.p2Position?.x ?? 0.45, z: setup.p2Position?.z ?? 0 },
         facing: -1,
         facingYaw: -Math.PI / 2,
-        commandHistory: []
+        commandHistory: [],
+        ki: setup.p2Ki ?? fresh.fighters[1].ki
       }
     ];
     const prepared: MatchSnapshot = {
       ...fresh,
       fighters,
-      trainingDummyInput: trial.steps[0]?.counterHit ? emptyInputFrame() : null
+      trainingDummyInput: makeTrialDummyInput(trial, { ...fresh, fighters })
     };
     return prepared;
   }, []);
 
-  const restartTrainingTrial = useCallback((trial = activeComboTrial) => {
+  const makeTrialMatch = useCallback((trial: TrainingTrialDefinition) => {
+    const trialStage = stages.find((item) => item.id === trial.stageId || item.id === trial.setup.stageId) ?? stage;
+    const dummyCharacter = trial.dummyCharacterId
+      ? roster.find((character) => character.id === trial.dummyCharacterId) ?? p2
+      : p2;
+    return createMatch(p1, dummyCharacter, trialStage, mode, cpuDifficulty, withFreshAiSeed({ ...matchOptions, playIntro: false }));
+  }, [cpuDifficulty, matchOptions, mode, p1, p2, roster, stage, stages]);
+
+  const restartTrainingTrial = useCallback((trial = activeTrainingTrialRef.current ?? activeTrainingTrial, preview = false) => {
     if (!trial) return;
-    const fresh = prepareComboTrialMatch(createMatch(p1, p2, stage, mode, cpuDifficulty, withFreshAiSeed({ ...matchOptions, playIntro: false })), trial);
+    const fresh = prepareTrainingTrialMatch(makeTrialMatch(trial), trial);
     resetTrackedMatchAnalytics(fresh);
     seenTrialImpactEventIds.current.clear();
     matchRef.current = fresh;
     setMatch(fresh);
-    const progress = makeComboTrialProgress(trial);
-    activeComboTrialRef.current = trial;
-    comboTrialProgressRef.current = progress;
-    setComboTrialProgress(progress);
-  }, [activeComboTrial, cpuDifficulty, matchOptions, mode, p1, p2, prepareComboTrialMatch, resetTrackedMatchAnalytics, stage]);
+    const progress = makeTrainingTrialProgress(trial, preview);
+    activeTrainingTrialRef.current = trial;
+    trainingTrialProgressRef.current = progress;
+    setTrainingTrialProgress(progress);
+    const playback = preview ? { trialId: trial.id, frame: 0 } : null;
+    previewPlaybackRef.current = playback;
+    setPreviewPlayback(playback);
+  }, [activeTrainingTrial, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
 
-  const selectComboTrial = useCallback((trial: ComboTrial) => {
-    const progress = makeComboTrialProgress(trial);
-    setActiveComboTrialId(trial.id);
-    activeComboTrialRef.current = trial;
-    comboTrialProgressRef.current = progress;
-    setComboTrialProgress(progress);
+  const selectTrainingTrial = useCallback((trial: TrainingTrialDefinition) => {
+    const progress = makeTrainingTrialProgress(trial);
+    setTrainingMode(trial.mode);
+    setActiveTrainingTrialId(trial.id);
+    activeTrainingTrialRef.current = trial;
+    trainingTrialProgressRef.current = progress;
+    previewPlaybackRef.current = null;
+    setPreviewPlayback(null);
+    setTrainingTrialProgress(progress);
     seenTrialImpactEventIds.current.clear();
-    const fresh = prepareComboTrialMatch(createMatch(p1, p2, stage, mode, cpuDifficulty, withFreshAiSeed({ ...matchOptions, playIntro: false })), trial);
+    const fresh = prepareTrainingTrialMatch(makeTrialMatch(trial), trial);
     resetTrackedMatchAnalytics(fresh);
     matchRef.current = fresh;
     setMatch(fresh);
-  }, [cpuDifficulty, matchOptions, mode, p1, p2, prepareComboTrialMatch, resetTrackedMatchAnalytics, stage]);
+  }, [makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
 
-  const trainActiveComboTrial = useCallback(() => {
-    restartTrainingTrial(activeComboTrialRef.current ?? activeComboTrial ?? undefined);
+  const trainActiveTrainingTrial = useCallback(() => {
+    restartTrainingTrial(activeTrainingTrialRef.current ?? activeTrainingTrial ?? undefined, false);
     setPaused(false);
-  }, [activeComboTrial, restartTrainingTrial]);
+  }, [activeTrainingTrial, restartTrainingTrial]);
+
+  const previewActiveTrainingTrial = useCallback(() => {
+    restartTrainingTrial(activeTrainingTrialRef.current ?? activeTrainingTrial ?? undefined, true);
+    setPaused(false);
+  }, [activeTrainingTrial, restartTrainingTrial]);
 
   const leaveToMenu = () => {
     cleanupOnline(true);
@@ -14377,8 +14461,15 @@ function FightScreen({
           {onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE
         </div>
       )}
+      {mode === 'training' && trainingMode !== 'free' && activeTrainingTrial && trainingTrialProgress && !paused && (
+        <TrainingTrialHud
+          trial={activeTrainingTrial}
+          progress={trainingTrialProgress}
+          previewing={Boolean(previewPlayback)}
+        />
+      )}
       {paused && (
-        <div className={`pause-overlay ${pauseMenuView === 'movelist' || pauseMenuView === 'comboTrials' ? 'pause-movelist-overlay' : ''}`}>
+        <div className={`pause-overlay ${pauseMenuView === 'movelist' || pauseMenuView === 'trainingTrials' ? 'pause-movelist-overlay' : ''}`}>
           {pauseMenuView === 'movelist' ? (
             <>
               <List size={32} />
@@ -14399,20 +14490,36 @@ function FightScreen({
                 </button>
               </div>
             </>
-          ) : pauseMenuView === 'comboTrials' ? (
+          ) : pauseMenuView === 'trainingTrials' ? (
             <>
               <Target size={32} />
-              <h2>Combo Trials</h2>
-              <ComboTrialPanel
+              <h2>Training Mode</h2>
+              <TrainingTrialPanel
                 character={p1}
-                trials={comboTrials}
-                activeTrial={activeComboTrial}
-                progress={comboTrialProgress}
+                mode={trainingMode}
+                modes={trainingTrialModes}
+                basicsCount={basicTrainingTrials.length}
+                combosCount={comboTrainingTrials.length}
+                trials={activeTrainingTrials}
+                activeTrial={activeTrainingTrial}
+                progress={trainingTrialProgress}
+                completedTrialIds={completedTrainingTrialIds}
                 match={match}
-                onSelectTrial={selectComboTrial}
+                previewing={Boolean(previewPlayback)}
+                onModeChange={(nextMode) => {
+                  setTrainingMode(nextMode);
+                  if (nextMode === 'free') {
+                    setPreviewPlayback(null);
+                    previewPlaybackRef.current = null;
+                    setTrainingTrialProgress(null);
+                    trainingTrialProgressRef.current = null;
+                  }
+                }}
+                onSelectTrial={selectTrainingTrial}
                 onRetry={() => restartTrainingTrial()}
+                onPreview={previewActiveTrainingTrial}
                 onBack={() => setPauseMenuView('menu')}
-                onResume={trainActiveComboTrial}
+                onResume={trainActiveTrainingTrial}
               />
             </>
           ) : (
@@ -14429,9 +14536,9 @@ function FightScreen({
                   Move List
                 </button>
                 {mode === 'training' && (
-                  <button className="secondary-button" onClick={() => setPauseMenuView('comboTrials')}>
+                  <button className="secondary-button" onClick={() => setPauseMenuView('trainingTrials')}>
                     <Target size={18} />
-                    Combo Trials
+                    Training Mode
                   </button>
                 )}
                 {mode !== 'ai' && (
@@ -14560,7 +14667,7 @@ function ConfiguredMoveList({
                   <span key={route.id}>
                     <NotationGroup tokens={route.steps.flatMap((step, index) => index === 0 ? step.notation : ['>', ...step.notation])} />
                     {route.title}
-                    <small>{comboTrialCategoryLabels[route.category]} Lv {route.level} | {route.reason}</small>
+                    <small>{comboTrialCategoryLabels[route.category]} Lv {route.level} | {route.estimatedHits} hits | {route.tier} | {route.reason}</small>
                   </span>
                 ))}
               </div>
@@ -14587,46 +14694,142 @@ function ConfiguredMoveList({
   );
 }
 
-function ComboTrialPanel({
+function TrainingTrialHud({
+  trial,
+  progress,
+  previewing
+}: {
+  trial: TrainingTrialDefinition;
+  progress: TrainingTrialProgress;
+  previewing: boolean;
+}) {
+  return (
+    <aside className="training-trial-hud" aria-live="polite">
+      <header>
+        <span>{previewing ? 'Preview' : 'Try'}</span>
+        <strong>{trial.title}</strong>
+      </header>
+      <div className="training-trial-hud-steps">
+        {trial.steps.map((step, index) => {
+          const status = progress.statuses[index] ?? 'pending';
+          const rating = progress.ratings[index] ?? 'Ready';
+          return (
+            <div key={`${trial.id}:hud:${index}`} className={`training-trial-hud-step ${status}`}>
+              <NotationGroup tokens={step.notation} />
+              <span>{step.label}</span>
+              <small>{status === 'current' ? progress.lastFeedback : rating}</small>
+            </div>
+          );
+        })}
+      </div>
+    </aside>
+  );
+}
+
+function TrainingTrialPanel({
   character,
+  mode,
+  modes,
+  basicsCount,
+  combosCount,
   trials,
   activeTrial,
   progress,
+  completedTrialIds,
   match,
+  previewing,
+  onModeChange,
   onSelectTrial,
   onRetry,
+  onPreview,
   onBack,
   onResume
 }: {
   character: CharacterDefinition;
-  trials: ComboTrial[];
-  activeTrial: ComboTrial | null;
-  progress: ComboTrialProgress | null;
+  mode: TrainingTrialMode;
+  modes: TrainingTrialMode[];
+  basicsCount: number;
+  combosCount: number;
+  trials: TrainingTrialDefinition[];
+  activeTrial: TrainingTrialDefinition | null;
+  progress: TrainingTrialProgress | null;
+  completedTrialIds: Set<string>;
   match: MatchSnapshot;
-  onSelectTrial: (trial: ComboTrial) => void;
+  previewing: boolean;
+  onModeChange: (mode: TrainingTrialMode) => void;
+  onSelectTrial: (trial: TrainingTrialDefinition) => void;
   onRetry: () => void;
+  onPreview: () => void;
   onBack: () => void;
   onResume: () => void;
 }) {
-  const groupedTrials = comboTrialCategories.map((category) => ({
+  const categoryOrder: TrainingTrialDefinition['category'][] = [
+    'movement',
+    'defense',
+    'punish',
+    'jumpIn',
+    'corner',
+    'crouch',
+    'ki',
+    'launcher',
+    'tornado',
+    'oki',
+    'combo'
+  ];
+  const groupedTrials = categoryOrder.map((category) => ({
     category,
     trials: trials.filter((trial) => trial.category === category)
   })).filter((group) => group.trials.length > 0);
+  const modeLabels: Record<TrainingTrialMode, string> = {
+    free: 'Free Training',
+    basics: 'Basics',
+    combos: 'Combos'
+  };
+  const modeCounts: Record<TrainingTrialMode, number | null> = {
+    free: null,
+    basics: basicsCount,
+    combos: combosCount
+  };
 
   return (
     <div className="combo-trial-panel">
       <aside className="combo-trial-list" aria-label="Combo trials">
         <h3>{character.displayName}</h3>
+        <div className="training-mode-switch" role="tablist" aria-label="Training mode">
+          {modes.map((item) => (
+            <button
+              key={item}
+              type="button"
+              className={mode === item ? 'active' : ''}
+              onClick={() => onModeChange(item)}
+            >
+              <span>{modeLabels[item]}</span>
+              {modeCounts[item] !== null && <small>{modeCounts[item]} trials</small>}
+            </button>
+          ))}
+        </div>
+        {mode === 'free' && (
+          <section>
+            <strong>Free Training</strong>
+            <p>Use the arena freely. Pick Basics for fundamentals or Combos for route drills.</p>
+          </section>
+        )}
         {groupedTrials.map((group) => (
           <section key={group.category}>
-            <strong>{comboTrialCategoryLabels[group.category]}</strong>
+            <strong>{trainingTrialCategoryLabels[group.category]}</strong>
             {group.trials.map((trial) => (
               <button
                 key={trial.id}
                 className={activeTrial?.id === trial.id ? 'active' : ''}
                 onClick={() => onSelectTrial(trial)}
               >
-                <span>Lv {trial.level}</span>
+                <span>
+                  <span className={`trial-complete-mark ${completedTrialIds.has(trial.id) ? 'done' : ''}`} aria-hidden="true">
+                    {completedTrialIds.has(trial.id) ? '✓' : '○'}
+                  </span>
+                  Lv {trial.difficulty}
+                  {trial.sourceComboRoute ? ` | ${trial.sourceComboRoute.estimatedHits} hits` : ''}
+                </span>
                 {trial.title}
               </button>
             ))}
@@ -14637,13 +14840,21 @@ function ComboTrialPanel({
         {activeTrial ? (
           <>
             <header>
-              <span>{comboTrialCategoryLabels[activeTrial.category]} Lv {activeTrial.level}</span>
+              <span>
+                {trainingTrialCategoryLabels[activeTrial.category]} Lv {activeTrial.difficulty}
+                {activeTrial.sourceComboRoute ? ` | ${activeTrial.sourceComboRoute.estimatedHits} hits` : ''}
+              </span>
               <h3>{activeTrial.title}</h3>
-              <small>{activeTrial.reason}</small>
+              <small>{activeTrial.lesson}</small>
             </header>
+            <div className="zoro-trainer-callout">
+              <img src="/characters/roronoa-zoro/face-card.png" alt="" />
+              <p><strong>Zoro</strong>{activeTrial.zoroLine}</p>
+            </div>
             <div className="combo-trial-sequence">
               {activeTrial.steps.map((step, index) => {
                 const status = progress?.statuses[index] ?? (index === 0 ? 'current' : 'pending');
+                const rating = progress?.ratings[index] ?? 'Ready';
                 return (
                   <div key={`${activeTrial.id}-${index}`} className={`combo-trial-step ${status}`}>
                     <NotationGroup tokens={step.notation} />
@@ -14651,6 +14862,7 @@ function ComboTrialPanel({
                       <strong>{step.counterHit ? 'CH ' : ''}{step.label}</strong>
                       {step.reason && <small>{step.reason}</small>}
                     </div>
+                    <span className="trial-feedback-pill">{status === 'current' ? progress?.lastFeedback ?? rating : rating}</span>
                   </div>
                 );
               })}
@@ -14658,11 +14870,12 @@ function ComboTrialPanel({
             <div className="combo-trial-stats">
               <span>{match.fighters[0].comboHits} hits</span>
               <span>{Math.round(match.fighters[0].comboDamage)} damage</span>
-              <span>{progress?.completed ? 'Complete' : 'Training'}</span>
+              <span>{progress?.completed ? 'Complete' : previewing ? 'Preview' : 'Training'}</span>
+              <span>{progress?.lastFeedback ?? 'Ready'}</span>
             </div>
           </>
         ) : (
-          <p>No frame-link combo trials are available for this character.</p>
+          <p>{mode === 'free' ? 'Free Training is active.' : 'No trials are available for this character yet.'}</p>
         )}
       </section>
       <div className="overlay-actions pause-menu-actions pause-movelist-actions combo-trial-actions">
@@ -14674,62 +14887,17 @@ function ComboTrialPanel({
           <RotateCcw size={18} />
           Retry
         </button>
+        <button className="secondary-button" onClick={onPreview} disabled={!activeTrial}>
+          <Play size={18} />
+          Preview
+        </button>
         <button className="primary-button" onClick={onResume}>
           <Play size={18} />
-          Train
+          Try
         </button>
       </div>
     </div>
   );
-}
-
-function makeComboTrialProgress(trial: ComboTrial | null): ComboTrialProgress | null {
-  if (!trial) return null;
-  return {
-    stepIndex: 0,
-    statuses: trial.steps.map((_, index) => index === 0 ? 'current' : 'pending'),
-    completed: false
-  };
-}
-
-function advanceComboTrialProgress(progress: ComboTrialProgress, trial: ComboTrial, event: ImpactSparkEvent): ComboTrialProgress {
-  if (progress.completed) return progress;
-  const expected = trial.steps[progress.stepIndex];
-  if (!expected) return progress;
-  const matches = comboTrialStepMatchesImpact(expected, event);
-  const statuses = [...progress.statuses];
-  if (!matches) {
-    statuses[progress.stepIndex] = 'missed';
-    return { ...progress, statuses };
-  }
-  statuses[progress.stepIndex] = 'correct';
-  const nextIndex = progress.stepIndex + 1;
-  if (nextIndex >= trial.steps.length) {
-    return { stepIndex: progress.stepIndex, statuses, completed: true };
-  }
-  statuses[nextIndex] = 'current';
-  return { stepIndex: nextIndex, statuses, completed: false };
-}
-
-function makeCounterHitTrialDummyInput(dummy: FighterRuntime, attacker?: FighterRuntime): InputFrame {
-  const input = emptyInputFrame();
-  if (dummy.state === 'hit' || dummy.state === 'juggle' || dummy.state === 'knockdown' || dummy.state === 'getup') return input;
-  if (dummy.state === 'attack' && dummy.currentMove && dummy.moveFrame <= dummy.currentMove.startupFrames + dummy.currentMove.activeFrames) {
-    input[dummy.currentMove.input] = true;
-    return input;
-  }
-  if (dummy.state === 'attack') return input;
-  const challengeMove = [...dummy.character.moves]
-    .filter((move) => move.damage > 0)
-    .sort((a, b) => b.startupFrames - a.startupFrames)[0];
-  const challengeInput = challengeMove?.input ?? 'special';
-  if (attacker) {
-    if (attacker.state !== 'attack' || !attacker.currentMove) return input;
-    const triggerFrame = Math.max(1, attacker.currentMove.startupFrames - (challengeMove?.startupFrames ?? 18) + 2);
-    if (attacker.moveFrame < triggerFrame) return input;
-  }
-  input[challengeInput] = true;
-  return input;
 }
 
 function primeCounterHitTrialDummy(match: MatchSnapshot) {

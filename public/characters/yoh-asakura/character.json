@@ -89,7 +89,6 @@
     ],
     "hitHeavy": [],
     "juggle": [
-      "/characters/yoh-asakura/frames/frame-027.png",
       "/characters/yoh-asakura/frames/frame-028.png"
     ],
     "knockdown": [
@@ -502,15 +501,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Yoh Asakura Left Check",
-      "hitLevel": "high",
       "forwardForce": 0.35,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Yoh Asakura Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 11,
@@ -523,17 +518,13 @@
       "onCounterHitFrames": 10,
       "whiffRecoveryFrames": 6,
       "range": 1.55,
-      "label": "Yoh Asakura Right Check",
-      "hitLevel": "mid",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.76,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Yoh Asakura Right Check",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -546,15 +537,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Yoh Asakura Left Kick",
-      "hitLevel": "low",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 16,
@@ -567,15 +554,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Yoh Asakura Right Kick",
-      "hitLevel": "mid",
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -589,14 +572,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Yoh Asakura Rush",
-      "hitLevel": "mid",
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -609,27 +588,16 @@
       "onCounterHitFrames": 35,
       "whiffRecoveryFrames": 10,
       "range": 1.68,
+      "forwardForce": 1.63,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "input": "heavy",
-      "command": "d/f+2",
-      "notation": "d/f+2",
-      "animationKey": "cmd:d/f+2",
-      "comboKey": "d/f+2:link",
-      "route": "launcher:frame-link",
-      "counterHit": true,
-      "cancelable": false,
-      "forwardForce": 1.63,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 16,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 10
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -642,16 +610,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 14,
       "range": 2.05,
-      "label": "Yoh Asakura Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.6,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Yoh Asakura Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -664,15 +628,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Yoh Asakura Rising Strike",
-      "hitLevel": "mid",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -685,15 +645,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Yoh Asakura Crouch Jab",
-      "hitLevel": "mid",
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Yoh Asakura Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -706,24 +662,13 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 7,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
-      "hitLevel": "mid",
-      "input": "heavy",
-      "command": "FC+2",
-      "notation": "FC+2",
-      "animationKey": "cmd:FC+2",
-      "comboKey": "FC+2:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "launchHeight": 2,
+      "label": "FC+2 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -736,25 +681,14 @@
       "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 14,
       "range": 1.72,
-      "label": "1+2 Frame Link",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "input": "heavy",
-      "command": "1+2",
-      "notation": "1+2",
-      "animationKey": "cmd:1+2",
-      "comboKey": "1+2:link",
-      "route": "multi:frame-link",
-      "counterHit": true,
-      "cancelable": false,
-      "endsInCrouch": true,
       "forwardForce": 2.12,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "1+2 Frame Link",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "endsInCrouch": true,
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -767,16 +701,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 14,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Yoh Asakura Cross Launcher",
-      "hitLevel": "mid",
       "forwardForce": 2.35,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "launchHeight": 2.2,
+      "label": "Yoh Asakura Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -789,15 +719,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Yoh Asakura Low Feint",
-      "hitLevel": "low",
       "forwardForce": 1.8,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -810,19 +736,15 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 13,
       "range": 1.74,
-      "label": "Yoh Asakura Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "jumpBeforeMove": true,
-      "moveJumpForce": 8.8,
-      "moveJumpGravity": 24,
       "forwardForce": 2.4,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
+      "label": "Yoh Asakura Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true,
+      "jumpBeforeMove": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -835,16 +757,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 29,
       "range": 1.9,
-      "label": "Yoh Asakura Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.12,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "label": "Yoh Asakura Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -857,16 +775,12 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 39,
       "range": 2.1,
-      "label": "Yoh Asakura Aura Drive",
-      "hitLevel": "special",
-      "knockdown": true,
       "forwardForce": 2.77,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "label": "Yoh Asakura Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -876,14 +790,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Second Beat",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -893,14 +803,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Body Blow",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -910,14 +816,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Low Changeup",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -927,14 +829,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Pressure Feint",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -944,14 +842,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Drive",
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -961,14 +855,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Barrage",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -978,14 +868,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Finisher",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -996,14 +882,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Step Kick",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1013,14 +895,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Palm String",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1030,14 +908,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Rising Chain",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1047,14 +921,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Special Setup",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1064,14 +934,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Break Art",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1081,14 +947,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Check Hook",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1098,14 +960,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Heavy Break",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1115,14 +973,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Charged Follow",
       "forwardForce": 1.75,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1133,14 +987,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Drop Kick",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1150,14 +1000,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Arc Finisher",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1167,14 +1013,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Focus Stance",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1184,14 +1026,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Mode Shift",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1201,14 +1039,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Heel Feint",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1218,14 +1052,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Summon Strike",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1235,14 +1065,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Guard Snare",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1252,14 +1078,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Armor Break",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1269,14 +1091,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Power Setup",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1286,14 +1104,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Switch Strike",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1303,14 +1117,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Spark Jab",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1320,14 +1130,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Binding Blow",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1337,14 +1143,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Heavy Draw",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1355,58 +1157,32 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Yoh Asakura Kick Ender",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Yoh Asakura Kick Ender"
     },
     "cmd:f+2": {
-      "input": "heavy",
-      "command": "f+2",
-      "notation": "f+2",
-      "animationKey": "cmd:f+2",
-      "comboKey": "f+2:link",
-      "label": "f+2 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.24,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "f+2 Frame Link",
+      "cancelable": false
     },
     "cmd:WS+2": {
-      "input": "heavy",
-      "command": "WS+2",
-      "notation": "WS+2",
-      "animationKey": "cmd:WS+2",
-      "comboKey": "WS+2:link",
-      "label": "WS+2 Frame Link",
-      "route": "state:frame-link",
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "WS+2 Frame Link",
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1446,45 +1222,45 @@
   "animationFrameScales": {
     "knockdown": {
       "31": {
-        "width": 0.539,
-        "height": 0.539,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0
       },
       "32": {
-        "width": 0.401,
-        "height": 0.401,
+        "width": 0.4,
+        "height": 0.4,
         "offsetX": 0
       },
       "33": {
-        "width": 0.488,
-        "height": 0.488,
+        "width": 0.49,
+        "height": 0.49,
         "offsetX": 0
       },
       "34": {
-        "width": 0.446,
-        "height": 0.446,
+        "width": 0.45,
+        "height": 0.45,
         "offsetX": 0
       }
     },
     "getupStand": {
       "31": {
-        "width": 0.539,
-        "height": 0.539,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0
       },
       "32": {
-        "width": 0.401,
-        "height": 0.401,
+        "width": 0.4,
+        "height": 0.4,
         "offsetX": 0
       },
       "33": {
-        "width": 0.488,
-        "height": 0.488,
+        "width": 0.49,
+        "height": 0.49,
         "offsetX": 0
       },
       "34": {
-        "width": 0.446,
-        "height": 0.446,
+        "width": 0.45,
+        "height": 0.45,
         "offsetX": 0
       },
       "53": {

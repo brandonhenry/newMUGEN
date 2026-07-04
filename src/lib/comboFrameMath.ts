@@ -92,7 +92,7 @@ function repeatPenaltyFrames(move: MoveDefinition, context: ComboHitContext) {
 function comboLengthPenaltyFrames(context: ComboHitContext, comboHits: number) {
   if (comboHits <= 1) return 0;
   const extraHits = comboHits - 1;
-  if (context === 'juggle') return Math.min(14, Math.floor(extraHits * 1.8));
+  if (context === 'juggle') return Math.min(10, Math.floor(extraHits * 1.2));
   if (context === 'combo') return Math.min(8, Math.floor(extraHits * 1.1));
   return 0;
 }
@@ -109,7 +109,7 @@ function routeVarietyCreditFrames(move: MoveDefinition, context: ComboAdvantageC
   const commandCredit = move.command && !isPlainNeutralCommand(move.command) ? 1 : 0;
   const stanceCredit = move.command && /^(FC|WS|SS|SSL|SSR|WR|iWS|iWR|qcf|qcb|hcf|hcb|dp|rdp|cd|\w\.)/.test(move.command) ? 1 : 0;
   const tornadoCredit = context.context === 'juggle' && move.tornado ? 2 : 0;
-  return Math.min(4, explicit + commandCredit + stanceCredit + tornadoCredit);
+  return Math.min(12, explicit + commandCredit + stanceCredit + tornadoCredit);
 }
 
 function isPlainNeutralCommand(command: string) {

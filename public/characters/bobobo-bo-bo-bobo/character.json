@@ -100,8 +100,7 @@
     ],
     "hitHeavy": [],
     "juggle": [
-      "/characters/bobobo-bo-bo-bobo/frames/frame-027.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-028.png"
+      "/characters/bobobo-bo-bo-bobo/frames/frame-027.png"
     ],
     "knockdown": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-031.png",
@@ -556,17 +555,13 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Bobobo-bo Bo-bobo Left Check",
-      "hitLevel": "high",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Bobobo-bo Bo-bobo Left Check",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 13,
@@ -579,15 +574,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Bobobo-bo Bo-bobo Right Check",
-      "hitLevel": "mid",
       "forwardForce": 0.61,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Bobobo-bo Bo-bobo Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 23,
@@ -600,17 +591,13 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Bobobo-bo Bo-bobo Left Kick",
-      "hitLevel": "low",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Left Kick",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false
     },
     "kickright": {
       "startupFrames": 19,
@@ -623,15 +610,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Bobobo-bo Bo-bobo Right Kick",
-      "hitLevel": "mid",
       "forwardForce": 0.96,
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 38,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -645,22 +628,11 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "f+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "f+1",
-      "notation": "f+1",
-      "animationKey": "cmd:f+1",
-      "comboKey": "f+1:link",
-      "route": "direction:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -673,19 +645,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.48,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 41,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Bobobo-bo Bo-bobo Launcher",
-      "hitLevel": "mid",
-      "forwardForce": 1.48,
-      "forwardForceStartFrame": 34,
-      "forwardForceEndFrame": 41,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 5,
@@ -698,19 +666,15 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 14,
       "range": 2.05,
-      "label": "Bobobo-bo Bo-bobo Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "jumpBeforeMove": true,
-      "moveJumpForce": 9.6,
-      "moveJumpGravity": 24,
       "forwardForce": 3.86,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "moveJumpForce": 9.6,
+      "moveJumpGravity": 24,
+      "label": "Bobobo-bo Bo-bobo Burst",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -723,15 +687,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Bobobo-bo Bo-bobo Rising Strike",
-      "hitLevel": "mid",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 34,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -744,23 +704,12 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "FC+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "FC+1",
-      "notation": "FC+1",
-      "animationKey": "cmd:FC+1",
-      "comboKey": "FC+1:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.69,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -773,16 +722,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Bobobo-bo Bo-bobo Crouch Launcher",
-      "hitLevel": "mid",
       "forwardForce": 1.39,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 39,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "launchHeight": 2,
+      "label": "Bobobo-bo Bo-bobo Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -795,18 +740,14 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 13,
       "range": 1.72,
-      "label": "Bobobo-bo Bo-bobo Twin Assault",
-      "hitLevel": "mid",
-      "jumpBeforeMove": true,
-      "moveJumpForce": 8.8,
-      "moveJumpGravity": 24,
       "forwardForce": 2.35,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
+      "label": "Bobobo-bo Bo-bobo Twin Assault",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -819,24 +760,13 @@
       "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 6,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
-      "hitLevel": "mid",
-      "input": "kick",
-      "command": "1+3",
-      "notation": "1+3",
-      "animationKey": "cmd:1+3",
-      "comboKey": "1+3:link",
-      "route": "multi:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.99,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 10
+      "launchHeight": 2.2,
+      "label": "1+3 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -849,23 +779,12 @@
       "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
-      "label": "2+3 Frame Link",
-      "hitLevel": "low",
-      "input": "kick",
-      "command": "2+3",
-      "notation": "2+3",
-      "animationKey": "cmd:2+3",
-      "comboKey": "2+3:link",
-      "route": "multi:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.6,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "2+3 Frame Link",
+      "hitLevel": "low",
+      "cancelable": false
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -878,16 +797,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Bobobo-bo Bo-bobo Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
       "forwardForce": 1.62,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 39,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Bobobo-bo Bo-bobo Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -900,16 +815,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 30,
       "range": 1.9,
-      "label": "Bobobo-bo Bo-bobo Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.4,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 33,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "label": "Bobobo-bo Bo-bobo Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -922,16 +833,12 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 15,
       "range": 2.1,
-      "label": "Bobobo-bo Bo-bobo Aura Drive",
-      "hitLevel": "special",
-      "knockdown": true,
       "forwardForce": 3.08,
       "forwardForceStartFrame": 48,
       "forwardForceEndFrame": 60,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "label": "Bobobo-bo Bo-bobo Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -941,14 +848,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Second Beat",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -958,14 +861,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Body Blow",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -975,14 +874,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Low Changeup",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -992,14 +887,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Pressure Feint",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1009,14 +900,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Drive",
       "forwardForce": 1.63,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1026,14 +913,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Barrage",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1043,14 +926,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Finisher",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1061,14 +940,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Step Kick",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 32,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1078,14 +953,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Palm String",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1095,14 +966,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Rising Chain",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1112,14 +979,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Special Setup",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1129,14 +992,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Break Art",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1146,14 +1005,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Check Hook",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1163,14 +1018,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Heavy Break",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1180,14 +1031,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Charged Follow",
       "forwardForce": 2.55,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1198,14 +1045,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Drop Kick",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 32,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1215,14 +1058,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Arc Finisher",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1232,14 +1071,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Focus Stance",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1249,14 +1084,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Mode Shift",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1266,14 +1097,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Heel Feint",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1283,14 +1110,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Summon Strike",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1300,14 +1123,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Guard Snare",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1317,14 +1136,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Armor Break",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1334,14 +1149,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Power Setup",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1351,14 +1162,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Switch Strike",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1368,14 +1175,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Spark Jab",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1385,14 +1188,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Binding Blow",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1402,14 +1201,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Heavy Draw",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1420,193 +1215,98 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Bobobo-bo Bo-bobo Kick Ender",
       "forwardForce": 1.35,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 32,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Bobobo-bo Bo-bobo Kick Ender"
     },
     "cmd:f+3": {
-      "input": "kick",
-      "command": "f+3",
-      "notation": "f+3",
-      "animationKey": "cmd:f+3",
-      "comboKey": "f+3:link",
-      "label": "f+3 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -7,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.66,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "f+3 Frame Link",
+      "cancelable": false
     },
     "cmd:d+1": {
-      "input": "jab",
-      "command": "d+1",
-      "notation": "d+1",
-      "animationKey": "cmd:d+1",
-      "comboKey": "d+1:link",
-      "label": "d+1 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.35,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "d+1 Frame Link",
+      "cancelable": false
     },
     "cmd:d+3": {
-      "input": "kick",
-      "command": "d+3",
-      "notation": "d+3",
-      "animationKey": "cmd:d+3",
-      "comboKey": "d+3:link",
-      "label": "d+3 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -7,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.38,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "d+3 Frame Link",
+      "cancelable": false
     },
     "cmd:d/f+3": {
-      "input": "kick",
-      "command": "d/f+3",
-      "notation": "d/f+3",
-      "animationKey": "cmd:d/f+3",
-      "comboKey": "d/f+3:link",
-      "label": "d/f+3 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -7,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.66,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "d/f+3 Frame Link",
+      "cancelable": false
     },
     "cmd:qcf+1": {
-      "input": "jab",
-      "command": "qcf+1",
-      "notation": "qcf+1",
-      "animationKey": "cmd:qcf+1",
-      "comboKey": "qcf+1:link",
-      "label": "qcf+1 Frame Link",
-      "route": "motion:frame-link",
       "onBlockFrames": -11,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 18,
-      "cancelable": false,
       "forwardForce": 2.21,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "qcf+1 Frame Link",
+      "cancelable": false
     },
     "cmd:qcf+3": {
-      "input": "kick",
-      "command": "qcf+3",
-      "notation": "qcf+3",
-      "animationKey": "cmd:qcf+3",
-      "comboKey": "qcf+3:link",
-      "label": "qcf+3 Frame Link",
-      "route": "motion:frame-link",
       "onBlockFrames": -10,
       "onHitFrames": 21,
       "onCounterHitFrames": 30,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 28,
-      "cancelable": false,
       "forwardForce": 2.24,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "qcf+3 Frame Link",
+      "cancelable": false
     },
     "cmd:SS+3": {
-      "input": "kick",
-      "command": "SS+3",
-      "notation": "SS+3",
-      "animationKey": "cmd:SS+3",
-      "comboKey": "SS+3:link",
-      "label": "SS+3 Frame Link",
-      "route": "state:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "counterHit": true,
       "whiffRecoveryFrames": 7,
-      "cancelable": false,
       "forwardForce": 1.72,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "SS+3 Frame Link",
+      "cancelable": false
     },
     "cmd:O+1": {
-      "input": "jab",
-      "command": "O+1",
-      "notation": "O+1",
-      "animationKey": "cmd:O+1",
-      "comboKey": "O+1:link",
-      "label": "O+1 Frame Link",
-      "route": "special:frame-link",
       "onBlockFrames": -12,
       "onHitFrames": 21,
       "onCounterHitFrames": 31,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 19,
-      "cancelable": false,
       "forwardForce": 2.27,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "O+1 Frame Link",
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1680,16 +1380,6 @@
       "34": {
         "width": 0.53,
         "height": 0.53,
-        "offsetX": 0
-      },
-      "49": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "50": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       },
       "51": {
@@ -1766,29 +1456,9 @@
         "height": 0.98,
         "offsetX": 0
       },
-      "130": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "131": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "132": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "133": {
         "width": 0.98,
         "height": 0.98,
-        "offsetX": 0
-      },
-      "134": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -1865,16 +1535,6 @@
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0
-      },
-      "19": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "20": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
       }
     },
     "crouch": {
@@ -1901,21 +1561,6 @@
         "width": 1.01,
         "height": 1.01,
         "offsetX": 0
-      },
-      "62": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "63": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "64": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
       }
     },
     "jableft": {
@@ -1927,16 +1572,6 @@
       "69": {
         "width": 1.02,
         "height": 1.02,
-        "offsetX": 0
-      },
-      "70": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "71": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -2023,11 +1658,6 @@
         "width": 0.99,
         "height": 0.99,
         "offsetX": 0
-      },
-      "318": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
       }
     },
     "cmd:qcf+4": {
@@ -2036,34 +1666,9 @@
         "height": 0.98,
         "offsetX": 0
       },
-      "394": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "395": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "396": {
         "width": 0.98,
         "height": 0.98,
-        "offsetX": 0
-      },
-      "397": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "398": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "399": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       },
       "400": {
@@ -2079,33 +1684,6 @@
       "402": {
         "width": 1.01,
         "height": 1.01,
-        "offsetX": 0
-      }
-    },
-    "cmd:3+4": {
-      "123": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "124": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "125": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "126": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "127": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },

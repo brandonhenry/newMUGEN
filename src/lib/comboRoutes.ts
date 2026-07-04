@@ -1,8 +1,9 @@
 import type { CharacterDefinition, ImpactSparkEvent, MoveDefinition, MoveInput, MoveOverride } from '../types';
-import { contextualComboFrameData, contextualHitAdvantage } from './comboFrameMath';
+import { contextualComboFrameData, contextualHitAdvantage, type ComboHitContext } from './comboFrameMath';
 
 export type ComboRouteCategory = 'basic' | 'advanced' | 'crouch' | 'launcher' | 'tornado' | 'counterHit';
 export type ComboRouteState = 'standing' | 'crouch' | 'whileStanding' | 'juggle';
+export type ComboRouteTier = 'short' | 'medium' | 'long' | 'marathon';
 
 export type ResolvedMoveRoute = {
   id: string;
@@ -39,7 +40,10 @@ export type GeneratedComboRoute = {
   id: string;
   title: string;
   category: ComboRouteCategory;
+  tier: ComboRouteTier;
   level: number;
+  estimatedHits: number;
+  targetHits: number;
   steps: ComboTrialStep[];
   reason: string;
 };
@@ -90,13 +94,28 @@ const rawButtonCommandToBaseKey: Record<string, string> = {
   '4': 'kickright'
 };
 
+const MAX_ROUTE_HITS = 30;
+const FRAME_LINK_GRACE = 2;
+const MAX_MOVE_IDENTITY_USES = 8;
+const MAX_LAUNCHERS_PER_ROUTE = 1;
+const MAX_TORNADOES_PER_ROUTE = 2;
+
 const categoryLimits: Record<ComboRouteCategory, number> = {
-  basic: 5,
-  advanced: 7,
-  crouch: 5,
-  launcher: 6,
-  tornado: 5,
-  counterHit: 5
+  basic: 12,
+  advanced: 16,
+  crouch: 14,
+  launcher: 16,
+  tornado: 14,
+  counterHit: 12
+};
+
+const multiHitTargets: Record<ComboRouteCategory, number[]> = {
+  basic: [4, 7],
+  advanced: [5, 9, 14],
+  crouch: [6, 10, 16],
+  launcher: [8, 14, 22, 30],
+  tornado: [10, 18, 30],
+  counterHit: [5, 9, 16]
 };
 
 export const comboTrialCategories: ComboRouteCategory[] = ['basic', 'advanced', 'crouch', 'launcher', 'tornado', 'counterHit'];
@@ -176,7 +195,7 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     const tornado = findBestLink(tornadoes, launcherAdvantage, launcher, { allowStates: ['standing'], preferJuggle: true });
     if (!tornado) continue;
     const tornadoFrameData = contextualComboFrameData(tornado.move, { context: 'juggle', comboHits: 2 });
-    const finisher = findBestLink(routes, Math.max(tornadoFrameData.effectiveAdvantage, 16), tornado, { allowStates: ['standing'], preferJuggle: true });
+    const finisher = findBestLink(routes, Math.max(tornadoFrameData.effectiveAdvantage, 16), tornado, { allowStates: ['standing'], preferJuggle: true, disallowLaunchers: true });
     pushTrial(makeRouteTrial('tornado', launcher, finisher ? [tornado, finisher] : [tornado], `Launch +${launcherAdvantage} -> ${tornado.command ?? tornado.notation.join('+')} | Juggle +${tornadoFrameData.effectiveAdvantage}`, { launched: true }, { tornado: true, juggled: true }));
   }
 
@@ -188,6 +207,19 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     const target = findBestLink(routes, advantage, starter, { allowStates: starter.move.endsInCrouch ? ['crouch', 'whileStanding', 'standing'] : ['standing'] });
     if (!target) continue;
     pushTrial(makeRouteTrial('counterHit', starter, [target], `CH +${advantage} -> i${target.move.startupFrames} link`, { counterHit: true }));
+  }
+
+  for (const category of comboTrialCategories) {
+    const starters = startersForCategory(routes, category);
+    const limits = multiHitTargets[category];
+    for (const [starterIndex, starter] of starters.entries()) {
+      for (const targetHits of limits) {
+        if (targetHits >= 21 && starterIndex > 1) continue;
+        const route = buildMultiHitTrial(routes, category, starter, targetHits);
+        if (!route) continue;
+        pushTrial(route);
+      }
+    }
   }
 
   return comboTrialCategories.flatMap((category) =>
@@ -248,6 +280,7 @@ export function resolveMoveRoutes(character: CharacterDefinition): ResolvedMoveR
       base.id,
       base.input,
       command,
+      `cmd:${command}`,
       key
     ]);
     const commandMove: MoveDefinition = {
@@ -308,13 +341,233 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
         route,
         step,
         input: step.input,
-        score: routeCategoryCpuWeight(route.category, context) + freshness + difficultyBonus + closeoutPenalty + timing + wave * 0.18
+        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + freshness + difficultyBonus + closeoutPenalty + timing + wave * 0.18
       };
     })
     .filter((candidate) => candidate.score > 0);
 
   routes.sort((a, b) => b.score - a.score);
   return routes[0] ?? null;
+}
+
+type RoutePlannerState = {
+  category: ComboRouteCategory;
+  context: ComboHitContext;
+  advantage: number;
+  comboHits: number;
+  tornadoCount: number;
+  launcherCount: number;
+  routeState: ComboRouteState;
+  identities: string[];
+};
+
+function startersForCategory(routes: ResolvedMoveRoute[], category: ComboRouteCategory) {
+  const starterRoutes = routes
+    .filter((route) => route.move.damage > 0)
+    .filter((route) => {
+      if (category === 'basic') return route.category === 'basic';
+      if (category === 'advanced') return route.category === 'advanced';
+      if (category === 'crouch') return route.move.endsInCrouch;
+      if (category === 'launcher') return (route.move.launchHeight ?? 0) > 0;
+      if (category === 'tornado') return (route.move.launchHeight ?? 0) > 0;
+      return route.move.counterHit && !isPlainNeutralRoute(route);
+    })
+    .sort((a, b) => starterScore(b, category) - starterScore(a, category));
+  return starterRoutes.slice(0, 8);
+}
+
+function buildMultiHitTrial(
+  routes: ResolvedMoveRoute[],
+  category: ComboRouteCategory,
+  starter: ResolvedMoveRoute,
+  targetHits: number
+) {
+  const state = initialPlannerState(category, starter);
+  const sequence = [starter];
+  while (sequence.length < Math.min(MAX_ROUTE_HITS, targetHits)) {
+    const next = chooseNextRoute(routes, state, targetHits);
+    if (!next) break;
+    sequence.push(next);
+    advancePlannerState(state, next);
+  }
+
+  if (sequence.length < minimumRouteHits(targetHits)) return null;
+  if (category === 'tornado' && !sequence.slice(1).some((route) => route.move.tornado)) return null;
+  if (category === 'crouch' && !sequence.slice(1).some((route) => route.state === 'crouch' || route.state === 'whileStanding')) return null;
+
+  const reason = routeReasonForSequence(category, sequence, targetHits);
+  return makeRouteTrialFromSequence(category, sequence, reason, targetHits);
+}
+
+function initialPlannerState(category: ComboRouteCategory, starter: ResolvedMoveRoute): RoutePlannerState {
+  const isCounterHit = category === 'counterHit';
+  const launches = (starter.move.launchHeight ?? 0) > 0;
+  const advantage = launches
+    ? Math.max(contextualHitAdvantage(starter.move, { context: 'neutral', counterHit: isCounterHit }), 28)
+    : isCounterHit
+      ? counterHitAdvantage(starter.move)
+      : contextualHitAdvantage(starter.move, { context: 'neutral' });
+  return {
+    category,
+    context: launches ? 'juggle' : 'combo',
+    advantage,
+    comboHits: 1,
+    tornadoCount: 0,
+    launcherCount: launches ? 1 : 0,
+    routeState: starter.move.endsInCrouch ? 'crouch' : 'standing',
+    identities: [routeIdentity(starter)]
+  };
+}
+
+function chooseNextRoute(routes: ResolvedMoveRoute[], state: RoutePlannerState, targetHits: number) {
+  const allowedStates = allowedFollowupStates(state);
+  return routes
+    .filter((route) => isValidNextRoute(route, state, allowedStates))
+    .sort((a, b) => nextRouteScore(b, state, targetHits) - nextRouteScore(a, state, targetHits))
+    [0] ?? null;
+}
+
+function isValidNextRoute(route: ResolvedMoveRoute, state: RoutePlannerState, allowedStates: ComboRouteState[]) {
+  if (route.move.damage <= 0) return false;
+  if (!allowedStates.includes(route.state)) return false;
+  if (route.move.startupFrames > state.advantage + FRAME_LINK_GRACE) return false;
+
+  const identity = routeIdentity(route);
+  const previousIdentity = state.identities[state.identities.length - 1];
+  if (identity === previousIdentity) return false;
+  if (identityUseCount(state.identities, identity) >= MAX_MOVE_IDENTITY_USES) return false;
+  if ((route.move.launchHeight ?? 0) > 0 && state.launcherCount >= MAX_LAUNCHERS_PER_ROUTE) return false;
+  if (route.move.tornado && state.context !== 'juggle') return false;
+  if (route.move.tornado && state.tornadoCount >= MAX_TORNADOES_PER_ROUTE) return false;
+  return true;
+}
+
+function advancePlannerState(state: RoutePlannerState, route: ResolvedMoveRoute) {
+  const identity = routeIdentity(route);
+  const nextIdentities = [...state.identities, identity];
+  const repeatCount = countTrailingRouteIdentities(nextIdentities, identity);
+  const hitContext = state.context === 'juggle' ? 'juggle' : 'combo';
+  const frameData = contextualComboFrameData(route.move, {
+    context: hitContext,
+    comboHits: state.comboHits + 1,
+    repeatCount,
+    routeVarietyCredit: routeVarietyCredit(route, state)
+  });
+  const tornadoExtends = Boolean(route.move.tornado) && state.context === 'juggle' && state.tornadoCount < MAX_TORNADOES_PER_ROUTE;
+  const launches = (route.move.launchHeight ?? 0) > 0 && state.context !== 'juggle';
+  state.advantage = Math.max(
+    frameData.effectiveAdvantage,
+    tornadoExtends ? 30 : launches ? 28 : variedJuggleAdvantageFloor(route.move, state.comboHits + 1, repeatCount, state.context) ?? frameData.effectiveAdvantage
+  );
+  state.context = state.context === 'juggle' || (route.move.launchHeight ?? 0) > 0 ? 'juggle' : 'combo';
+  state.comboHits = Math.min(MAX_ROUTE_HITS, state.comboHits + 1);
+  state.tornadoCount += tornadoExtends ? 1 : 0;
+  state.launcherCount += (route.move.launchHeight ?? 0) > 0 ? 1 : 0;
+  state.routeState = route.move.endsInCrouch ? 'crouch' : 'standing';
+  state.identities = nextIdentities.slice(-MAX_ROUTE_HITS);
+}
+
+function allowedFollowupStates(state: RoutePlannerState): ComboRouteState[] {
+  if (state.routeState === 'crouch') return ['crouch', 'whileStanding', 'standing'];
+  if (state.routeState === 'whileStanding') return ['standing'];
+  return ['standing'];
+}
+
+function nextRouteScore(route: ResolvedMoveRoute, state: RoutePlannerState, targetHits: number) {
+  const identity = routeIdentity(route);
+  const uses = identityUseCount(state.identities, identity);
+  const needsTornado = state.context === 'juggle' && state.tornadoCount < MAX_TORNADOES_PER_ROUTE && state.comboHits >= Math.max(4, Math.floor(targetHits * 0.36));
+  const needsCrouchBranch = state.routeState === 'crouch' && (route.state === 'crouch' || route.state === 'whileStanding');
+  const lightFiller = state.context === 'juggle' ? clamp((14 - route.move.damage) / 8, -1, 1.2) : 0;
+  return (
+    10 -
+    route.move.startupFrames * 0.18 -
+    uses * 4 +
+    (route.command ? 2 : 0) +
+    (needsCrouchBranch ? 8 : 0) +
+    (route.state === 'whileStanding' ? 2 : 0) +
+    (route.move.endsInCrouch ? 2 : 0) +
+    (route.move.tornado && state.context === 'juggle' ? (needsTornado ? 20 : 6) : 0) +
+    ((route.move.launchHeight ?? 0) > 0 ? -8 : 0) +
+    (route.move.knockdown ? -6 : 0) +
+    (state.context === 'juggle' ? juggleScore(route) * 0.35 + lightFiller : routeRewardScore(route) * 0.08)
+  );
+}
+
+function routeVarietyCredit(route: ResolvedMoveRoute, state: RoutePlannerState) {
+  let credit = route.command ? 1 : 0;
+  if (state.routeState === 'crouch' && (route.state === 'crouch' || route.state === 'whileStanding')) credit += 2;
+  if (route.move.tornado && state.context === 'juggle') credit += 3;
+  if (!state.identities.includes(routeIdentity(route))) credit += 1;
+  if (state.context === 'juggle' && state.comboHits >= 6) credit += 3;
+  if (state.context === 'juggle' && state.comboHits >= 12) credit += 3;
+  if (state.context === 'juggle' && state.comboHits >= 20) credit += 2;
+  return credit;
+}
+
+function variedJuggleAdvantageFloor(move: MoveDefinition, comboHits: number, repeatCount: number, context: ComboHitContext) {
+  if (context !== 'juggle' || repeatCount > 1 || move.launchHeight || move.knockdown) return null;
+  if (comboHits >= 18) return 30;
+  if (comboHits >= 10) return 26;
+  if (comboHits >= 6) return 22;
+  return null;
+}
+
+function starterScore(route: ResolvedMoveRoute, category: ComboRouteCategory) {
+  return routeRewardScore(route) + (category === 'counterHit' ? counterHitAdvantage(route.move) : 0) + (category === 'tornado' && (route.move.launchHeight ?? 0) > 0 ? 12 : 0);
+}
+
+function minimumRouteHits(targetHits: number) {
+  if (targetHits >= 21) return 12;
+  if (targetHits >= 11) return 8;
+  if (targetHits >= 6) return 5;
+  return 3;
+}
+
+function routeReasonForSequence(category: ComboRouteCategory, sequence: ResolvedMoveRoute[], targetHits: number) {
+  const actualHits = sequence.length;
+  const parts = [`${actualHits}/${targetHits} hits`];
+  if (category === 'counterHit') parts.push(`CH +${counterHitAdvantage(sequence[0].move)}`);
+  if ((sequence[0].move.launchHeight ?? 0) > 0) parts.push('Launch');
+  if (sequence.some((route) => route.move.tornado)) parts.push('Tornado');
+  if (sequence.some((route) => route.move.endsInCrouch || route.state === 'crouch' || route.state === 'whileStanding')) parts.push('FC/WS');
+  return parts.join(' -> ');
+}
+
+function makeRouteTrialFromSequence(
+  category: ComboRouteCategory,
+  sequence: ResolvedMoveRoute[],
+  reason: string,
+  targetHits: number
+): GeneratedComboRoute {
+  const steps: ComboTrialStep[] = [];
+  let context: ComboHitContext = 'neutral';
+  for (const [index, route] of sequence.entries()) {
+    const expect: ComboTrialStepExpectation = {};
+    const counterHit = index === 0 && category === 'counterHit';
+    if (counterHit) expect.counterHit = true;
+    if ((route.move.launchHeight ?? 0) > 0 && (index === 0 || context !== 'juggle')) expect.launched = true;
+    if (context === 'juggle') expect.juggled = true;
+    if (route.move.tornado && context === 'juggle') {
+      expect.juggled = true;
+      expect.tornado = true;
+    }
+    steps.push(routeToStep(route, counterHit, index === 0 ? reasonForStarter(route, category) : reasonForFollowup(route), Object.keys(expect).length > 0 ? expect : undefined));
+    context = context === 'juggle' || (route.move.launchHeight ?? 0) > 0 ? 'juggle' : 'combo';
+  }
+
+  const estimatedHits = Math.min(MAX_ROUTE_HITS, steps.length);
+  return {
+    id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${estimatedHits}:${targetHits}`,
+    title: `${sequence[0].command ?? sequence[0].label} ${estimatedHits}-Hit Route`,
+    category,
+    tier: routeTier(estimatedHits),
+    level: routeLevel(category, sequence[0], sequence.slice(1), estimatedHits),
+    estimatedHits,
+    targetHits,
+    steps,
+    reason
+  };
 }
 
 function makeRouteTrial(
@@ -329,11 +582,15 @@ function makeRouteTrial(
     routeToStep(starter, category === 'counterHit' || starterExpectation?.counterHit, reasonForStarter(starter, category), starterExpectation),
     ...followups.map((route, index) => routeToStep(route, false, reasonForFollowup(route), index === 0 ? firstFollowupExpectation : undefined))
   ];
+  const estimatedHits = Math.min(MAX_ROUTE_HITS, steps.length);
   return {
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${reason}`,
     title: category === 'counterHit' ? `${starter.command ?? starter.label} Counter Hit` : `${starter.command ?? starter.label} Route`,
     category,
-    level: routeLevel(category, starter, followups),
+    tier: routeTier(estimatedHits),
+    level: routeLevel(category, starter, followups, estimatedHits),
+    estimatedHits,
+    targetHits: estimatedHits,
     steps,
     reason
   };
@@ -356,7 +613,7 @@ function findBestLink(
   routes: ResolvedMoveRoute[],
   advantage: number,
   starter: ResolvedMoveRoute,
-  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean }
+  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean; disallowLaunchers?: boolean }
 ) {
   return findBestLinks(routes, advantage, starter, options, 1)[0] ?? null;
 }
@@ -365,12 +622,14 @@ function findBestLinks(
   routes: ResolvedMoveRoute[],
   advantage: number,
   starter: ResolvedMoveRoute,
-  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean },
+  options: { allowStates: ComboRouteState[]; preferJuggle?: boolean; disallowLaunchers?: boolean },
   limit: number
 ) {
   return routes
     .filter((route) => route.id !== starter.id)
     .filter((route) => options.allowStates.includes(route.state))
+    .filter((route) => !(options.disallowLaunchers && (route.move.launchHeight ?? 0) > 0))
+    .filter((route) => !(options.preferJuggle && (starter.move.launchHeight ?? 0) > 0 && (route.move.launchHeight ?? 0) > 0))
     .filter((route) => route.move.startupFrames <= advantage)
     .filter((route) => route.move.damage > 0)
     .sort((a, b) => {
@@ -467,10 +726,34 @@ function juggleScore(route: ResolvedMoveRoute) {
   return (route.move.tornado ? 8 : 0) + (route.move.knockdown ? 3 : 0) + route.move.damage * 0.25 - route.move.startupFrames * 0.08;
 }
 
-function routeLevel(category: ComboRouteCategory, starter: ResolvedMoveRoute, followups: ResolvedMoveRoute[]) {
+function routeLevel(category: ComboRouteCategory, starter: ResolvedMoveRoute, followups: ResolvedMoveRoute[], estimatedHits = followups.length + 1) {
   const complexity = starter.complexity + followups.reduce((sum, route) => sum + route.complexity, 0);
   const categoryBonus = category === 'basic' ? 0 : category === 'advanced' ? 2 : category === 'crouch' ? 3 : category === 'launcher' ? 4 : category === 'tornado' ? 5 : 4;
-  return clamp(Math.round(1 + complexity * 0.45 + categoryBonus + Math.max(0, followups.length - 1)), 1, 10);
+  const lengthBonus = estimatedHits >= 21 ? 5 : estimatedHits >= 11 ? 3 : estimatedHits >= 6 ? 2 : Math.max(0, followups.length - 1);
+  return clamp(Math.round(1 + complexity * 0.28 + categoryBonus + lengthBonus), 1, 10);
+}
+
+function routeTier(estimatedHits: number): ComboRouteTier {
+  if (estimatedHits >= 21) return 'marathon';
+  if (estimatedHits >= 11) return 'long';
+  if (estimatedHits >= 6) return 'medium';
+  return 'short';
+}
+
+function routeIdentity(route: ResolvedMoveRoute) {
+  return route.move.comboKey ?? route.command ?? route.id;
+}
+
+function identityUseCount(identities: string[], identity: string) {
+  return identities.filter((candidate) => candidate === identity).length;
+}
+
+function countTrailingRouteIdentities(identities: string[], identity: string) {
+  let count = 0;
+  for (let index = identities.length - 1; index >= 0 && identities[index] === identity; index -= 1) {
+    count += 1;
+  }
+  return Math.max(1, count);
 }
 
 function reasonForStarter(route: ResolvedMoveRoute, category: ComboRouteCategory) {
@@ -490,6 +773,9 @@ function reasonForFollowup(route: ResolvedMoveRoute) {
 
 function routeFitsCpuContext(route: GeneratedComboRoute, context: CpuRouteContext) {
   if (context.leaderCloseout && (route.category === 'launcher' || route.category === 'tornado' || route.level > 5)) return false;
+  if (context.difficulty <= 2 && route.tier !== 'short') return false;
+  if (context.difficulty === 3 && (route.tier === 'long' || route.tier === 'marathon')) return false;
+  if (context.difficulty === 4 && route.tier === 'marathon') return false;
   if (context.difficulty <= 1 && route.category !== 'basic') return false;
   if (context.difficulty === 2 && route.level > 4) return false;
   if (context.difficulty === 3 && route.level > 6) return false;
@@ -504,6 +790,13 @@ function routeCategoryCpuWeight(category: ComboRouteCategory, context: CpuRouteC
   if (context.opening === 'hitstun') return category === 'basic' ? 0.6 : category === 'advanced' ? 0.78 : category === 'crouch' ? 0.86 : category === 'launcher' ? 0.74 : 0.58;
   if (context.opening === 'whiff') return category === 'launcher' ? 0.95 : category === 'advanced' ? 0.7 : category === 'counterHit' ? 0.64 : 0.4;
   return category === 'basic' ? 0.46 : category === 'advanced' ? 0.5 : category === 'crouch' ? 0.42 : 0.22;
+}
+
+function routeTierCpuWeight(tier: ComboRouteTier, context: CpuRouteContext) {
+  if (tier === 'short') return 0.12;
+  if (tier === 'medium') return context.difficulty >= 4 ? 0.08 : -0.08;
+  if (tier === 'long') return context.difficulty >= 5 && context.opening !== 'neutral' ? 0.04 : -0.24;
+  return context.difficulty >= 5 && context.opening === 'juggle' ? -0.02 : -0.5;
 }
 
 function cpuRouteKnowledgeChance(difficulty: CpuRouteContext['difficulty'], opening: CpuRouteContext['opening'], leaderCloseout?: boolean) {

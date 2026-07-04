@@ -72,6 +72,52 @@ describe('combo route catalog', () => {
     }
   });
 
+  it('generates bounded multi-hit routes without exceeding the 30-hit ceiling', () => {
+    const allRoutes = readRosterCharacters().flatMap((character) =>
+      generateCharacterComboRoutes(character).map((route) => ({ character, route }))
+    );
+    expect(allRoutes.some(({ route }) => route.steps.length > 3)).toBe(true);
+    expect(allRoutes.some(({ route }) => route.tier === 'marathon' && route.estimatedHits === 30)).toBe(true);
+
+    for (const { character, route } of allRoutes) {
+      expect(route.steps.length, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
+      expect(route.estimatedHits, `${character.id}:${route.id}`).toBe(route.steps.length);
+      expect(route.targetHits, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
+      for (let index = 1; index < route.steps.length; index += 1) {
+        const previous = route.steps[index - 1];
+        const current = route.steps[index];
+        expect(current.command ?? current.input, `${character.id}:${route.id}:step-${index}`).not.toBe(previous.command ?? previous.input);
+      }
+    }
+  });
+
+  it('keeps launcher marathon routes varied instead of repeating launchers', () => {
+    const launcherRoutes = readRosterCharacters().flatMap((character) =>
+      generateCharacterComboRoutes(character)
+        .filter((route) => route.category === 'launcher' || route.category === 'tornado')
+        .map((route) => ({ character, route }))
+    );
+    expect(launcherRoutes.some(({ route }) => route.estimatedHits >= 21)).toBe(true);
+
+    for (const { character, route } of launcherRoutes) {
+      const launchSteps = route.steps.filter((step) => (moveForStep(character, step)?.launchHeight ?? 0) > 0);
+      expect(launchSteps.length, `${character.id}:${route.id}`).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it('does not fake routes for characters without real attack animation frames', () => {
+    const byId = new Map(readRosterCharacters().map((character) => [character.id, character]));
+    for (const id of ['astra', 'dax', 'taizo-momote']) {
+      const character = byId.get(id);
+      expect(character, id).toBeTruthy();
+      if (!character) continue;
+      expect(resolveMoveRoutes(character), id).toHaveLength(0);
+      const attackFrameCounts = ['jableft', 'jabright', 'kickleft', 'kickright']
+        .map((key) => character.animationFrames?.[key]?.length ?? 0);
+      expect(attackFrameCounts.every((count) => count === 0), id).toBe(true);
+    }
+  });
+
   it('only creates crouch routes from real FC or WS command steps', () => {
     const crouchTrials = readRosterCharacters().flatMap((character) =>
       generateCharacterComboRoutes(character)
@@ -103,5 +149,34 @@ describe('combo route catalog', () => {
     }
 
     expect(koreUses).toBeGreaterThan(easyUses);
+  });
+
+  it('gates CPU route tiers by difficulty', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateCharacterComboRoutes(candidate).some((route) => route.tier === 'marathon')
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const collect = (difficulty: 1 | 2 | 3 | 4 | 5) => {
+      const recommendations = [];
+      for (let index = 0; index < 80; index += 1) {
+        const recommendation = recommendCpuComboRoute(character, {
+          difficulty,
+          opening: 'juggle',
+          remainingFrames: 32,
+          comboStep: 8,
+          selector: index * 9,
+          routeRoll: index * 13
+        });
+        if (recommendation) recommendations.push(recommendation.route);
+      }
+      return recommendations;
+    };
+
+    expect(collect(1).every((route) => route.tier === 'short')).toBe(true);
+    expect(collect(2).every((route) => route.tier === 'short')).toBe(true);
+    expect(collect(3).every((route) => route.tier !== 'long' && route.tier !== 'marathon')).toBe(true);
+    expect(collect(4).every((route) => route.tier !== 'marathon')).toBe(true);
   });
 });

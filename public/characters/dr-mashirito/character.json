@@ -98,8 +98,7 @@
     ],
     "hitHeavy": [],
     "juggle": [
-      "/characters/dr-mashirito/frames/frame-024.png",
-      "/characters/dr-mashirito/frames/frame-025.png"
+      "/characters/dr-mashirito/frames/frame-024.png"
     ],
     "knockdown": [
       "/characters/dr-mashirito/frames/frame-028.png",
@@ -552,17 +551,13 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.45,
-      "label": "Dr. Mashirito Left Check",
-      "hitLevel": "high",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Dr. Mashirito Left Check",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -575,15 +570,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Dr. Mashirito Right Check",
-      "hitLevel": "mid",
       "forwardForce": 0.85,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Dr. Mashirito Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 18,
@@ -596,15 +587,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Dr. Mashirito Left Kick",
-      "hitLevel": "low",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 19,
@@ -617,15 +604,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Dr. Mashirito Right Kick",
-      "hitLevel": "mid",
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -639,22 +622,11 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "f+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "f+1",
-      "notation": "f+1",
-      "animationKey": "cmd:f+1",
-      "comboKey": "f+1:link",
-      "route": "direction:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -667,27 +639,16 @@
       "onCounterHitFrames": 35,
       "whiffRecoveryFrames": 34,
       "range": 1.68,
+      "forwardForce": 2.65,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 19,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "input": "heavy",
-      "command": "d/f+2",
-      "notation": "d/f+2",
-      "animationKey": "cmd:d/f+2",
-      "comboKey": "d/f+2:link",
-      "route": "launcher:frame-link",
-      "counterHit": true,
-      "cancelable": false,
-      "forwardForce": 2.65,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 19,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 10
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -700,16 +661,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 14,
       "range": 2.05,
-      "label": "Dr. Mashirito Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Dr. Mashirito Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -722,15 +679,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Dr. Mashirito Rising Strike",
-      "hitLevel": "mid",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -743,23 +696,12 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "FC+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "FC+1",
-      "notation": "FC+1",
-      "animationKey": "cmd:FC+1",
-      "comboKey": "FC+1:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 1.48,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 19,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -772,24 +714,13 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 34,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
-      "hitLevel": "mid",
-      "input": "heavy",
-      "command": "FC+2",
-      "notation": "FC+2",
-      "animationKey": "cmd:FC+2",
-      "comboKey": "FC+2:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 2.56,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 18,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "launchHeight": 2,
+      "label": "FC+2 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -802,23 +733,12 @@
       "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 13,
       "range": 1.72,
-      "label": "1+2 Frame Link",
-      "hitLevel": "mid",
-      "input": "heavy",
-      "command": "1+2",
-      "notation": "1+2",
-      "animationKey": "cmd:1+2",
-      "comboKey": "1+2:link",
-      "route": "multi:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 2.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "1+2 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -831,16 +751,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Dr. Mashirito Cross Launcher",
-      "hitLevel": "mid",
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "launchHeight": 2.2,
+      "label": "Dr. Mashirito Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -853,15 +769,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Dr. Mashirito Low Feint",
-      "hitLevel": "low",
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -874,16 +786,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Dr. Mashirito Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Dr. Mashirito Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -896,16 +804,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 30,
       "range": 1.9,
-      "label": "Dr. Mashirito Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 3.35,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "label": "Dr. Mashirito Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -918,16 +822,12 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 41,
       "range": 2.1,
-      "label": "Dr. Mashirito Aura Drive",
-      "hitLevel": "special",
-      "knockdown": true,
       "forwardForce": 3.79,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "label": "Dr. Mashirito Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -937,14 +837,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Second Beat",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -954,14 +850,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Body Blow",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -971,14 +863,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Low Changeup",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -988,14 +876,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Pressure Feint",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1005,14 +889,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Drive",
       "forwardForce": 1.42,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1022,14 +902,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Barrage",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1039,14 +915,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Finisher",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1057,14 +929,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Step Kick",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1074,14 +942,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Palm String",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1091,14 +955,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Rising Chain",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1108,14 +968,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Special Setup",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1125,14 +981,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Break Art",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1142,14 +994,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Check Hook",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1159,14 +1007,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Heavy Break",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1176,14 +1020,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 25,
       "range": 1.55,
-      "label": "Dr. Mashirito Charged Follow",
       "forwardForce": 2.34,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1194,14 +1034,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Drop Kick",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1211,14 +1047,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Arc Finisher",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1228,14 +1060,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Focus Stance",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1245,14 +1073,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Mode Shift",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1262,14 +1086,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Heel Feint",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1279,14 +1099,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Summon Strike",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1296,14 +1112,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Guard Snare",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1313,14 +1125,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Armor Break",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1330,14 +1138,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Power Setup",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1347,14 +1151,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Switch Strike",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1364,14 +1164,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Spark Jab",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1381,14 +1177,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Binding Blow",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1398,14 +1190,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Heavy Draw",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1416,126 +1204,65 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Dr. Mashirito Kick Ender",
       "forwardForce": 1.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Dr. Mashirito Kick Ender"
     },
     "cmd:f+2": {
-      "input": "heavy",
-      "command": "f+2",
-      "notation": "f+2",
-      "animationKey": "cmd:f+2",
-      "comboKey": "f+2:link",
-      "label": "f+2 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 22,
-      "cancelable": false,
       "forwardForce": 2.26,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "f+2 Frame Link",
+      "cancelable": false
     },
     "cmd:d+1": {
-      "input": "jab",
-      "command": "d+1",
-      "notation": "d+1",
-      "animationKey": "cmd:d+1",
-      "comboKey": "d+1:link",
-      "label": "d+1 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "d+1 Frame Link",
+      "cancelable": false
     },
     "cmd:qcf+1": {
-      "input": "jab",
-      "command": "qcf+1",
-      "notation": "qcf+1",
-      "animationKey": "cmd:qcf+1",
-      "comboKey": "qcf+1:link",
-      "label": "qcf+1 Frame Link",
-      "route": "motion:frame-link",
       "onBlockFrames": -11,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 19,
-      "cancelable": false,
       "forwardForce": 2,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "qcf+1 Frame Link",
+      "cancelable": false
     },
     "cmd:WS+2": {
-      "input": "heavy",
-      "command": "WS+2",
-      "notation": "WS+2",
-      "animationKey": "cmd:WS+2",
-      "comboKey": "WS+2:link",
-      "label": "WS+2 Frame Link",
-      "route": "state:frame-link",
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 27,
-      "counterHit": true,
       "whiffRecoveryFrames": 22,
-      "cancelable": false,
       "forwardForce": 2.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "WS+2 Frame Link",
+      "cancelable": false
     },
     "cmd:O+1": {
-      "input": "jab",
-      "command": "O+1",
-      "notation": "O+1",
-      "animationKey": "cmd:O+1",
-      "comboKey": "O+1:link",
-      "label": "O+1 Frame Link",
-      "route": "special:frame-link",
       "onBlockFrames": -12,
       "onHitFrames": 21,
       "onCounterHitFrames": 31,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 19,
-      "cancelable": false,
       "forwardForce": 2.06,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "O+1 Frame Link",
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1825,21 +1552,6 @@
   },
   "animationFrameScales": {
     "getupStand": {
-      "18": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "28": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "29": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "30": {
         "width": 0.45,
         "height": 0.45,
@@ -1848,16 +1560,6 @@
       "31": {
         "width": 0.57,
         "height": 0.57,
-        "offsetX": 0
-      },
-      "49": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "50": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       },
       "51": {
@@ -1919,16 +1621,6 @@
       }
     },
     "knockdown": {
-      "28": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "29": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "30": {
         "width": 0.45,
         "height": 0.45,
@@ -1946,73 +1638,9 @@
         "height": 1.01,
         "offsetX": 0
       },
-      "136": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "137": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "138": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "139": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "140": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "142": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "144": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "145": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "147": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "148": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "159": {
         "width": 1.01,
         "height": 1.01,
-        "offsetX": 0
-      }
-    },
-    "walkForward": {
-      "5": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      }
-    },
-    "walkBack": {
-      "12": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -2025,31 +1653,6 @@
       "41": {
         "width": 1.03,
         "height": 1.03,
-        "offsetX": 0
-      },
-      "43": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "45": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "46": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "47": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "48": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -2068,19 +1671,9 @@
       }
     },
     "jump": {
-      "18": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "19": {
         "width": 1.01,
         "height": 1.01,
-        "offsetX": 0
-      },
-      "20": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -2088,13 +1681,6 @@
       "19": {
         "width": 0.98,
         "height": 0.72,
-        "offsetX": 0
-      }
-    },
-    "block": {
-      "162": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -2115,79 +1701,12 @@
         "width": 1.02,
         "height": 1.02,
         "offsetX": 0
-      },
-      "71": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "72": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "73": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "74": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
       }
     },
     "jabright": {
-      "180": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "183": {
         "width": 1.01,
         "height": 1.01,
-        "offsetX": 0
-      },
-      "186": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "212": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "213": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "214": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "215": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "216": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      }
-    },
-    "hitLight": {
-      "21": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -2203,101 +1722,66 @@
         "offsetX": 0
       }
     },
-    "win": {
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      }
-    },
     "cmd:f+1": {
       "223": {
         "width": 1.01,
         "height": 1.01,
         "offsetX": 0
-      },
-      "224": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "225": {
-        "width": 1,
-        "height": 1,
+      }
+    },
+    "cmd:FC+1": {
+      "70": {
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
-    "cmd:qcf+4": {
-      "169": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "170": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "171": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "172": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "173": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "175": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "176": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "177": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "178": {
-        "width": 1,
-        "height": 1,
+    "cmd:d+1": {
+      "70": {
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
-    "cmd:3+4": {
-      "60": {
-        "width": 1,
-        "height": 1,
+    "cmd:qcf+1": {
+      "70": {
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
-      },
-      "61": {
-        "width": 1,
-        "height": 1,
+      }
+    },
+    "cmd:O+1": {
+      "70": {
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
-      },
-      "62": {
-        "width": 1,
-        "height": 1,
+      }
+    },
+    "cmd:d/f+2": {
+      "183": {
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0
-      },
-      "63": {
-        "width": 1,
-        "height": 1,
+      }
+    },
+    "cmd:FC+2": {
+      "183": {
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0
-      },
-      "64": {
-        "width": 1,
-        "height": 1,
+      }
+    },
+    "cmd:f+2": {
+      "183": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+2": {
+      "183": {
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0
       }
     }
