@@ -587,12 +587,7 @@
       "label": "Kurama Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 13,
@@ -611,12 +606,7 @@
       "label": "Kurama Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -633,12 +623,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Kurama Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 19,
@@ -655,12 +640,7 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
       "label": "Kurama Right Kick",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -678,12 +658,7 @@
       "forwardForceEndFrame": 21,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -705,12 +680,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -728,12 +698,7 @@
       "forwardForceEndFrame": 28,
       "label": "Kurama Burst",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -750,12 +715,7 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Kurama Rising Strike",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -773,12 +733,7 @@
       "forwardForceEndFrame": 14,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -797,12 +752,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -820,12 +770,7 @@
       "forwardForceEndFrame": 22,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -843,12 +788,7 @@
       "forwardForceEndFrame": 13,
       "launchHeight": 2.2,
       "label": "Kurama Cross Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 31,
@@ -865,12 +805,7 @@
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 29,
       "label": "Kurama Low Feint",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -888,12 +823,7 @@
       "forwardForceEndFrame": 25,
       "label": "Kurama Driving Kick",
       "hitLevel": "low",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -911,12 +841,7 @@
       "forwardForceEndFrame": 28,
       "label": "Kurama Power Crush",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 13
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -934,12 +859,7 @@
       "forwardForceEndFrame": 29,
       "label": "Kurama Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -947,20 +867,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Second Beat",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -968,20 +883,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Body Blow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -989,20 +899,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Low Changeup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1010,20 +915,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Pressure Feint",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1031,20 +931,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.42,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Drive",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1052,20 +947,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Barrage",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1073,20 +963,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Finisher",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1095,19 +980,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "Kurama Step Kick",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1115,20 +995,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Palm String",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1136,20 +1011,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Rising Chain",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1157,20 +1027,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Special Setup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1178,20 +1043,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Break Art",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1199,20 +1059,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Check Hook",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1220,20 +1075,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Heavy Break",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1241,20 +1091,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 25,
       "range": 1.55,
       "forwardForce": 2.34,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Charged Follow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1263,19 +1108,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "Kurama Drop Kick",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1283,20 +1123,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Arc Finisher",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1304,20 +1139,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Focus Stance",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1325,20 +1155,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Mode Shift",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1346,20 +1171,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Heel Feint",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1367,20 +1187,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Summon Strike",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1388,20 +1203,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Guard Snare",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1409,20 +1219,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Armor Break",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1430,20 +1235,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Power Setup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1451,20 +1251,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Switch Strike",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1472,20 +1267,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Spark Jab",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1493,20 +1283,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Binding Blow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1514,20 +1299,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Kurama Heavy Draw",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1536,19 +1316,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "Kurama Kick Ender",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kurama Kick Ender"
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1559,12 +1334,7 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1575,12 +1345,7 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1591,12 +1356,7 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1607,12 +1367,7 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1623,12 +1378,7 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1791,8 +1541,8 @@
     },
     "juggle": {
       "29": {
-        "width": 0.97,
-        "height": 0.97,
+        "width": 1.32,
+        "height": 0.82,
         "offsetX": 0
       }
     },

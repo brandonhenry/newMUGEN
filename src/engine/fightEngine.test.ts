@@ -1817,6 +1817,47 @@ describe('fight engine', () => {
     expect(repeatedStarts).toBe(0);
   });
 
+  it('CPU-watch metric reports zero repeated exact identities inside active combos', () => {
+    const reports = starterCharacters.slice(0, 10).map((character, index) => {
+      let match = createMatch(character, starterCharacters[(index + 1) % starterCharacters.length] ?? starterCharacters[0], stages[0], 'cpu', 5, { aiSeed: 1200 + index * 17 });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].hp = 999;
+      match.fighters[1].hp = 999;
+      match.fighters[0].position.x = -0.72;
+      match.fighters[1].position.x = 0.72;
+      match.fighters[1].state = 'hit';
+      match.fighters[1].stunFramesRemaining = 240;
+      match.fighters[1].actionFramesRemaining = 240;
+      match.fighters[1].stunTimer = 4;
+      match.fighters[1].actionTimer = 4;
+
+      const seenInCombo = new Set<string>();
+      let attackStarts = 0;
+      let repeatedStarts = 0;
+      let wasAttacking = false;
+
+      for (let i = 0; i < 240; i += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        const fighter = match.fighters[0];
+        const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
+        if (isAttacking && !wasAttacking && fighter.currentMove) {
+          if (fighter.comboStep <= 1) seenInCombo.clear();
+          const key = fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`;
+          if (seenInCombo.has(key)) repeatedStarts += 1;
+          seenInCombo.add(key);
+          attackStarts += 1;
+        }
+        wasAttacking = isAttacking;
+      }
+
+      return `${character.id}:${attackStarts}:${repeatedStarts}`;
+    });
+
+    expect(reports.some((report) => Number(report.split(':')[1]) > 1)).toBe(true);
+    expect(reports.filter((report) => Number(report.split(':')[2]) > 0)).toEqual([]);
+  });
+
   it('makes high difficulty CPU take hitstun pressure openings more often than easy CPU', () => {
     const stepOpening = (difficulty: 1 | 5) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);
