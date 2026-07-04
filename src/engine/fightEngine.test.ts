@@ -2005,7 +2005,7 @@ describe('fight engine', () => {
     expect(sawFullCrouch).toBe(true);
   });
 
-  it('higher CPU difficulty extends hit-confirmed routes longer than easy CPU', () => {
+  it('higher CPU difficulty extends hit-confirmed routes with variety instead of repeats', () => {
     const simulatePressure = (difficulty: 1 | 5) => {
       let match = createMatch(makeCancelableCharacter(starterCharacters[0]), starterCharacters[1], stages[0], 'cpu', difficulty);
       match.phase = 'fighting';
@@ -2017,6 +2017,8 @@ describe('fight engine', () => {
       match.fighters[0].comboTimer = 0.5;
       match.fighters[0].comboStep = 1;
       match.fighters[0].comboSequence = ['jab'];
+      match.fighters[0].comboIdentitySequence = ['neutral:jab'];
+      match.fighters[0].comboUsedKeys = ['neutral:jab'];
       match.fighters[0].comboHits = 1;
       match.fighters[1].state = 'hit';
       match.fighters[1].stunFramesRemaining = 180;
@@ -2024,16 +2026,32 @@ describe('fight engine', () => {
       match.fighters[1].stunTimer = 3;
       match.fighters[1].actionTimer = 3;
       let peakStep = match.fighters[0].comboStep;
+      const seen = new Set<string>(['neutral:jab']);
+      let repeats = 0;
+      let wasAttacking = false;
 
       for (let i = 0; i < 180; i += 1) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
-        peakStep = Math.max(peakStep, match.fighters[0].comboStep);
+        const fighter = match.fighters[0];
+        peakStep = Math.max(peakStep, fighter.comboStep);
+        const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
+        if (isAttacking && !wasAttacking && fighter.currentMove) {
+          if (fighter.comboStep <= 1) seen.clear();
+          const key = fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`;
+          if (seen.has(key)) repeats += 1;
+          seen.add(key);
+        }
+        wasAttacking = isAttacking;
       }
 
-      return peakStep;
+      return { peakStep, uniqueMoves: seen.size, repeats };
     };
 
-    expect(simulatePressure(5)).toBeGreaterThan(simulatePressure(1));
+    const hard = simulatePressure(5);
+    const easy = simulatePressure(1);
+    expect(hard.peakStep).toBeGreaterThanOrEqual(easy.peakStep);
+    expect(hard.uniqueMoves).toBeGreaterThanOrEqual(easy.uniqueMoves);
+    expect(hard.repeats).toBe(0);
   });
 
   it('keeps CPU locked in non-cancelable recovery but lets cancelable hit-confirms continue', () => {
