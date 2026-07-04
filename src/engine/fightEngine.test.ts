@@ -3402,6 +3402,30 @@ describe('fight engine', () => {
     expect(orbitSteps).toBeGreaterThan(360);
   });
 
+  it('keeps sidestep-orbit side locks through camera-lag idle gaps until horizontal movement', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const startingControlSide = match.fighters[0].controlSideSign;
+
+    for (let tap = 0; tap < 84; tap += 1) {
+      match = stepMatch(match, { ...emptyInputFrame(), sidestepUp: true }, emptyInputFrame(), 1 / 60);
+      for (let frame = 0; frame < 11; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+    }
+
+    match.fighters[0].position.x = 1.3;
+    match.fighters[1].position.x = -1.3;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].controlSideSign).toBe(startingControlSide);
+
+    const forward = emptyInputFrame();
+    forward.right = true;
+    match = stepMatch(match, forward, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].controlSideSign).toBe(-startingControlSide);
+  });
+
   it('immediately flips horizontal controls while jumping over the opponent head', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

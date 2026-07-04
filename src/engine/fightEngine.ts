@@ -4293,7 +4293,7 @@ function updateControlSideSign(stage: StageDefinition, fighter: FighterRuntime, 
 }
 
 function isLaneOrbitActive(fighter: FighterRuntime) {
-  return fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0;
+  return fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
 }
 
 function resolveBodyCollision(match: MatchSnapshot) {

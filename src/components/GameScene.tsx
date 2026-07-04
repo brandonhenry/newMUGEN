@@ -2630,6 +2630,10 @@ function cameraDamp(delta: number, speed: number) {
   return THREE.MathUtils.clamp(1 - Math.exp(-Math.max(0, delta) * speed), 0, 1);
 }
 
+function isFighterLaneOrbitCameraActive(fighter: FighterRuntime) {
+  return fighter.state === 'sidestep' || fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
+}
+
 const MIN_FIGHT_CAMERA_DISTANCE = 4.85;
 const MIN_CLASH_CAMERA_DISTANCE = 4.85;
 const MODEL_CAMERA_COLLISION_PADDING = 0.38;
@@ -2953,9 +2957,9 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     }
 
     const smoothing = Math.max(0.35, settings.smoothing);
-    const sidestepping = p1.state === 'sidestep' || p2.state === 'sidestep' || p1.sidestepTimer > 0 || p2.sidestepTimer > 0;
-    const sidestepCameraBoost = sidestepping ? 2.75 : 1;
-    const sidestepRigBoost = sidestepping ? 1.55 : 1;
+    const sidestepping = isFighterLaneOrbitCameraActive(p1) || isFighterLaneOrbitCameraActive(p2);
+    const sidestepCameraBoost = sidestepping ? 4.5 : 1;
+    const sidestepRigBoost = sidestepping ? 2.4 : 1;
     focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));
     lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing * sidestepCameraBoost));
     side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sidestepCameraBoost)).normalize();
