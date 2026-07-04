@@ -32,7 +32,7 @@ import { emptyInputFrame } from '../types';
 import { activeMoveProgress, createMatch, stepMatch } from '../engine/fightEngine';
 import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
-import { findCameraSightlineBlockers, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
+import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
@@ -2540,12 +2540,22 @@ function resolveCameraModelCollision(
 
 function updateCameraStageOccluders(
   registry: StageCameraCollisionRegistry | null,
+  stage: StageDefinition,
   cameraPosition: THREE.Vector3,
   visibilityPoints: THREE.Vector3[]
 ) {
   if (!registry) return;
   registry.occluders.clear();
-  if (!registry.colliders.size || visibilityPoints.length === 0) return;
+  if (!registry.colliders.size) return;
+  if (isCameraOutsideStageSafetyEnvelope(stage, cameraPosition)) {
+    registry.colliders.forEach((entry) => {
+      registry.occluders.add(entry);
+      entry.fade = 1;
+      applyStageCameraFade(entry);
+    });
+    return;
+  }
+  if (visibilityPoints.length === 0) return;
   const blockers = findCameraSightlineBlockers(cameraPosition, visibilityPoints, registry.colliders);
   blockers.forEach((entry) => registry.occluders.add(entry));
 }
@@ -2697,7 +2707,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
       camera.lookAt(lookFocus);
-      updateCameraStageOccluders(cameraCollisionRegistry, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
+      updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
       return;
     }
     if (match.clashState?.status !== 'none') {
@@ -2729,7 +2739,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
-      updateCameraStageOccluders(cameraCollisionRegistry, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, target));
+      updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, target));
       return;
     }
     const p1x = finiteOr(p1.position.x, focus.x - 0.65);
@@ -2800,7 +2810,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
     if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
-    updateCameraStageOccluders(cameraCollisionRegistry, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
+    updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
   });
   return null;
 }

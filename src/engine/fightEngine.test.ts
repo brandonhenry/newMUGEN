@@ -6167,6 +6167,33 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(capturedHp - 14);
   });
 
+  it('makes CPU grabbers light-attack held defenders during a throw capture', () => {
+    let match = createMatch(makeHeldJabCharacter(), starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 771 });
+    startActiveThrowHit(match);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('throwHold');
+    expect(match.fighters[1].state).toBe('throwHeld');
+    const capturedHp = match.fighters[1].hp;
+
+    let firstJabStarted = false;
+    for (let frame = 0; frame < 8; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      firstJabStarted = firstJabStarted || match.fighters[0].throwJabActive;
+      if (match.fighters[1].hp < capturedHp) break;
+    }
+
+    expect(firstJabStarted).toBe(true);
+    expect(match.fighters[1].hp).toBe(capturedHp - 7);
+
+    for (let frame = 0; frame < 16 && match.fighters[1].hp > capturedHp - 14; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].state).toBe('throwHold');
+    expect(match.fighters[1].state).toBe('throwHeld');
+    expect(match.fighters[1].hp).toBe(capturedHp - 14);
+  });
+
   it('scales throw mash escape by defender health and shows shake on fresh presses', () => {
     let highHp = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     startActiveThrowHit(highHp);

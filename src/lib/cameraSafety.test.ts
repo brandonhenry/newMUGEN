@@ -4,6 +4,7 @@ import type { StageDefinition } from '../types';
 import {
   cameraBoundsLocalToWorld,
   findCameraSightlineBlockers,
+  isCameraOutsideStageSafetyEnvelope,
   resolveCameraBoundaryNudge,
   resolveCameraStageBounds,
   worldToCameraBoundsLocal
@@ -86,5 +87,16 @@ describe('cameraSafety', () => {
     expect(blockers.has(near)).toBe(true);
     expect(blockers.has(far)).toBe(true);
     expect(blockers.has(offAxis)).toBe(false);
+  });
+
+  it('detects camera escape outside the expanded stage safety envelope', () => {
+    const stage: StageDefinition = {
+      ...baseStage,
+      fightPlane: { center: [0, 0, 0], width: 10, depth: 7, y: 0, rotationY: 0 },
+      playableBounds: { shape: 'box', width: 10, depth: 7 }
+    };
+
+    expect(isCameraOutsideStageSafetyEnvelope(stage, { x: 0, z: 7.5 })).toBe(false);
+    expect(isCameraOutsideStageSafetyEnvelope(stage, { x: 0, z: 9.8 })).toBe(true);
   });
 });

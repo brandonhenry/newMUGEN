@@ -78,14 +78,7 @@ export function resolveCameraBoundaryNudge(
   output: THREE.Vector3
 ) {
   output.copy(desired);
-  const baseBounds = resolveCameraStageBounds(stage);
-  const authoredMin = Math.min(stage.playableBounds?.width ?? 0, stage.playableBounds?.depth ?? 0);
-  const extra = Math.max(2.4, authoredMin > 0 ? authoredMin * CAMERA_BOUNDS_EXTRA_SCALE : 0);
-  const bounds: CameraStageBounds = {
-    ...baseBounds,
-    halfWidth: baseBounds.halfWidth + extra,
-    halfDepth: baseBounds.halfDepth + extra
-  };
+  const bounds = resolveCameraSafetyEnvelope(stage);
   const localDesired = worldToCameraBoundsLocal(desired, bounds);
   const constrained = constrainLocalToBounds(localDesired, bounds);
   if (!constrained) return false;
@@ -100,6 +93,17 @@ export function resolveCameraBoundaryNudge(
   output.x = world.x;
   output.z = world.z;
   return true;
+}
+
+export function isCameraOutsideStageSafetyEnvelope(stage: StageDefinition, position: { x: number; z: number }, tolerance = 0.25) {
+  const bounds = resolveCameraSafetyEnvelope(stage);
+  const local = worldToCameraBoundsLocal(position, bounds);
+  if (bounds.shape === 'ellipse') {
+    const xRadius = bounds.halfWidth + tolerance;
+    const zRadius = bounds.halfDepth + tolerance;
+    return (local.x * local.x) / (xRadius * xRadius) + (local.z * local.z) / (zRadius * zRadius) > 1;
+  }
+  return Math.abs(local.x) > bounds.halfWidth + tolerance || Math.abs(local.z) > bounds.halfDepth + tolerance;
 }
 
 export function findCameraSightlineBlockers<T extends CameraSafetyCollider>(
@@ -147,6 +151,17 @@ function constrainLocalToBounds(position: { x: number; z: number }, bounds: Came
   const z = THREE.MathUtils.clamp(position.z, -bounds.halfDepth, bounds.halfDepth);
   if (x === position.x && z === position.z) return null;
   return { x, z };
+}
+
+function resolveCameraSafetyEnvelope(stage: StageDefinition): CameraStageBounds {
+  const baseBounds = resolveCameraStageBounds(stage);
+  const authoredMin = Math.min(stage.playableBounds?.width ?? 0, stage.playableBounds?.depth ?? 0);
+  const extra = Math.max(2.4, authoredMin > 0 ? authoredMin * CAMERA_BOUNDS_EXTRA_SCALE : 0);
+  return {
+    ...baseBounds,
+    halfWidth: baseBounds.halfWidth + extra,
+    halfDepth: baseBounds.halfDepth + extra
+  };
 }
 
 function constrainLocalToEllipse(position: { x: number; z: number }, bounds: CameraStageBounds) {

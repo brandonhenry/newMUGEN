@@ -1023,7 +1023,7 @@ function handleThrowCaptureStep(match: MatchSnapshot, fighter: FighterRuntime, o
     handleThrowHoldJabStep(match, fighter, defender, frameDelta);
   } else {
     restoreThrowAnchorPose(fighter);
-    if (fighter.throwJabCooldownFrames === 0 && input.jab && !fighter.previousAttackInputs.jab) {
+    if (fighter.throwJabCooldownFrames === 0 && isFreshAttackPress(fighter, input, 'jab')) {
       startThrowHoldJab(fighter);
     }
   }
@@ -4510,6 +4510,14 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const comboPhase = positiveModulo(elapsed + ai.slot * 0.11 + style.comboPhaseOffset + roundStyle.comboPhaseOffset * 0.75, comboCycle);
   const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp) + style.selectorJitter + roundStyle.selectorJitter, 100);
   const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp) + style.routeJitter + roundStyle.routeJitter, 100);
+  if (ai.state === 'throwHold') {
+    if (!ai.throwJabActive && ai.throwJabCooldownFrames === 0) {
+      input.jab = true;
+      (input as InputFrameWithMetadata).__pressedActions = ['jab'];
+    }
+    return input;
+  }
+  if (ai.state === 'throwHeld') return input;
   if (ai.state === 'getup') return input;
   if (ai.state === 'knockdown') {
     if (ai.actionFramesRemaining > 0 || ai.stunFramesRemaining > 0 || ai.actionTimer > 0 || ai.stunTimer > 0 || isAirborne(ai)) return input;
