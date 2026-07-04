@@ -915,7 +915,7 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
   const identity = getMoveIdentity(move);
   if (!attacker.comboUsedKeys.includes(identity)) {
-    attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
+    attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-COMBO_SEQUENCE_MEMORY);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
   defender.hp = Math.max(0, defender.hp - move.damage);
@@ -1922,6 +1922,10 @@ function countTrailingIdentityRepeats(sequence: string[], identity: string) {
   return Math.max(1, count);
 }
 
+function countIdentityOccurrences(sequence: string[], identity: string) {
+  return sequence.reduce((count, candidate) => count + (candidate === identity ? 1 : 0), 0);
+}
+
 function getEngineRouteVarietyCredit(move: MoveDefinition, attacker: FighterRuntime, identity: string, context: 'neutral' | 'combo' | 'juggle', repeatCount: number) {
   if (context === 'neutral' || repeatCount > 1) return 0;
   const recentIdentities = attacker.comboIdentitySequence.slice(0, -1);
@@ -2055,7 +2059,7 @@ function getMoveIdentity(move: MoveDefinition) {
 }
 
 function addRecentComboKey(keys: string[], key: string) {
-  return [...keys.filter((candidate) => candidate !== key), key].slice(-AI_RECENT_MEMORY_LIMIT);
+  return [...keys, key].slice(-AI_RECENT_MEMORY_LIMIT);
 }
 
 const inputToButton: Record<MoveInput, string> = {
@@ -2881,13 +2885,16 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const counterHit = isCounterHit(move, defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
+  const identity = getMoveIdentity(move);
+  const identityUsesInCombo = countIdentityOccurrences(attacker.comboIdentitySequence, identity);
+  const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT && identityUsesInCombo <= 1;
   const impactId = nextHitEventId(match);
   const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
   pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
     comboHits,
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
-    tornado: Boolean(move.tornado) && wasJuggled,
+    tornado: tornadoExtendsJuggle,
     kiBurst: Boolean(move.kiBurst)
   }, collision.position);
   attacker.hitConnected = true;
@@ -2928,15 +2935,14 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   attacker.comboHits = Math.max(1, attacker.comboHits + 1);
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
   attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
-  const identity = getMoveIdentity(move);
   if (!attacker.comboUsedKeys.includes(identity)) {
-    attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-8);
+    attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-COMBO_SEQUENCE_MEMORY);
   }
   attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
   pushCombatPopupEvent(match, impactId, attacker, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
-    tornado: Boolean(move.tornado) && wasJuggled,
+    tornado: tornadoExtendsJuggle,
     kiBurst: Boolean(move.kiBurst)
   });
 
@@ -2954,7 +2960,6 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     getEngineVariedJuggleAdvantageFloor(move, attacker.comboHits, repeatCount, hitContext) ?? frameData.effectiveAdvantage
   );
   const stunFrames = Math.max(1, attackerRemaining + advantage);
-  const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const entersJuggle = launchHeight > 0 || wasJuggled;
   const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
   const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, repeatCount, tornadoExtendsJuggle);
@@ -4655,7 +4660,7 @@ function chooseAiTornadoPressureInput(
   const viable = tornadoMoves.filter((move) => opening.frames <= 0 || move.startupFrames <= opening.frames + (difficulty >= 4 ? 7 : 2));
   if (viable.length === 0) return null;
   const fresh = viable.find((move) => !inputAlreadyUsedInCombo(ai, move.input) && !inputRecentlyUsed(ai, move.input));
-  return (fresh ?? viable[positiveModulo(selector + routeRoll + ai.slot, viable.length)]).input;
+  return fresh?.input ?? null;
 }
 
 type AiKiBurstContext = 'neutral' | 'pressure' | 'punish' | 'whiff';
@@ -4961,7 +4966,7 @@ function isAiCatalogStepSpendable(ai: FighterRuntime, step: ComboTrialStep) {
 function isAiCatalogStepStaleInCombo(ai: FighterRuntime, step: ComboTrialStep) {
   if (ai.comboTimer <= 0 && ai.comboHits <= 0 && ai.comboStep <= 0) return false;
   const identity = step.command ?? `neutral:${step.input}`;
-  return ai.comboUsedKeys.includes(identity) || ai.comboIdentitySequence.includes(identity) || inputAlreadyUsedInCombo(ai, step.input);
+  return ai.comboUsedKeys.includes(identity) || ai.comboIdentitySequence.includes(identity);
 }
 
 function isAiComboContinuationInputStale(ai: FighterRuntime, input: MoveInput) {

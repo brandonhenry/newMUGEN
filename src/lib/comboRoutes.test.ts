@@ -93,12 +93,14 @@ describe('combo route catalog', () => {
       generateCharacterComboRoutes(character).map((route) => ({ character, route }))
     );
     expect(allRoutes.some(({ route }) => route.steps.length > 3)).toBe(true);
-    expect(allRoutes.some(({ route }) => route.tier === 'marathon' && route.estimatedHits === 30)).toBe(true);
+    expect(allRoutes.some(({ route }) => route.tier === 'marathon' && route.estimatedHits >= 21)).toBe(true);
 
     for (const { character, route } of allRoutes) {
+      const identities = route.steps.map(stepIdentity);
       expect(route.steps.length, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
       expect(route.estimatedHits, `${character.id}:${route.id}`).toBe(route.steps.length);
       expect(route.targetHits, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
+      expect(new Set(identities).size, `${character.id}:${route.id}:exact-identities`).toBe(identities.length);
       for (let index = 1; index < route.steps.length; index += 1) {
         const previous = route.steps[index - 1];
         const current = route.steps[index];
@@ -141,7 +143,11 @@ describe('combo route catalog', () => {
 
     for (const { character, route } of launcherRoutes) {
       const launchSteps = route.steps.filter((step) => (moveForStep(character, step)?.launchHeight ?? 0) > 0);
+      const tornadoIdentities = route.steps
+        .filter((step) => moveForStep(character, step)?.tornado)
+        .map(stepIdentity);
       expect(launchSteps.length, `${character.id}:${route.id}`).toBeLessThanOrEqual(1);
+      expect(new Set(tornadoIdentities).size, `${character.id}:${route.id}:tornado-identities`).toBe(tornadoIdentities.length);
     }
   });
 

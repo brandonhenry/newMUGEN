@@ -98,8 +98,7 @@ const rawButtonCommandToBaseKey: Record<string, string> = {
 
 const MAX_ROUTE_HITS = 30;
 const FRAME_LINK_GRACE = 2;
-const MAX_SHORT_ROUTE_IDENTITY_USES = 3;
-const MAX_LONG_ROUTE_IDENTITY_USES = 2;
+const MAX_ROUTE_IDENTITY_USES = 1;
 const MAX_LAUNCHERS_PER_ROUTE = 1;
 const MAX_TORNADOES_PER_ROUTE = 2;
 
@@ -797,7 +796,7 @@ function routeFamily(route: ResolvedMoveRoute) {
 }
 
 function maxIdentityUsesForRoute(routeHits: number) {
-  return routeHits >= 11 ? MAX_LONG_ROUTE_IDENTITY_USES : MAX_SHORT_ROUTE_IDENTITY_USES;
+  return MAX_ROUTE_IDENTITY_USES;
 }
 
 function maxFamilyUsesForRoute(routeHits: number) {

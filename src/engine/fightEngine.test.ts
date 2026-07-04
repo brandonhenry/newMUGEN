@@ -5222,8 +5222,8 @@ describe('fight engine', () => {
     expect(match.fighters[1].juggleTornadoCount).toBe(0);
   });
 
-  it('extends a juggle with tornado twice, then stops resetting the juggle limit', () => {
-    const runTornadoHit = (tornadoCount: number) => {
+  it('extends a juggle with two different tornado identities, then stops resetting the juggle limit', () => {
+    const runTornadoHit = (tornadoCount: number, command: string, comboIdentitySequence: string[], sequenceDamage = tornadoCount >= 2 ? 86 : 40) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
       match.phase = 'fighting';
       match.countdown = 0;
@@ -5233,11 +5233,13 @@ describe('fight engine', () => {
       match.fighters[1].velocityY = -0.35;
       match.fighters[1].state = 'juggle';
       match.fighters[1].juggleDamage = 28;
-      match.fighters[1].juggleSequenceDamage = tornadoCount >= 2 ? 86 : 40;
+      match.fighters[1].juggleSequenceDamage = sequenceDamage;
       match.fighters[1].juggleTornadoCount = tornadoCount;
+      match.fighters[0].comboIdentitySequence = comboIdentitySequence;
       match.fighters[0].state = 'attack';
       match.fighters[0].currentMove = {
         ...starterCharacters[0].moves[0],
+        command,
         startupFrames: 0,
         activeFrames: 3,
         recoveryFrames: 12,
@@ -5258,19 +5260,23 @@ describe('fight engine', () => {
       return stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     };
 
-    const first = runTornadoHit(0);
+    const first = runTornadoHit(0, '1+2', ['1+2']);
     expect(first.fighters[1].state).toBe('juggle');
     expect(first.fighters[1].juggleTornadoCount).toBe(1);
     expect(first.fighters[1].juggleSequenceDamage).toBe(3);
     expect(first.fighters[1].position.y).toBeGreaterThanOrEqual(1.26);
     expect(first.fighters[1].velocityY).toBeGreaterThan(4.2);
 
-    const second = runTornadoHit(1);
+    const second = runTornadoHit(1, '3+4', ['1+2', '3+4']);
     expect(second.fighters[1].state).toBe('juggle');
     expect(second.fighters[1].juggleTornadoCount).toBe(2);
     expect(second.fighters[1].juggleSequenceDamage).toBe(3);
 
-    const third = runTornadoHit(2);
+    const repeated = runTornadoHit(1, '1+2', ['1+2', '1+2'], 86);
+    expect(repeated.fighters[1].state).toBe('knockdown');
+    expect(repeated.fighters[1].juggleTornadoCount).toBe(0);
+
+    const third = runTornadoHit(2, 'O+4', ['1+2', '3+4', 'O+4']);
     expect(third.fighters[1].state).toBe('knockdown');
     expect(third.fighters[1].juggleTornadoCount).toBe(0);
   });
