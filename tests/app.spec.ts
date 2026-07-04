@@ -192,9 +192,10 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByTestId('toggle-idle-ghost-side-view').click();
   await expect(page.getByTestId('toggle-idle-ghost-side-view')).toHaveClass(/active-tool/);
   await expect(page.getByTestId('idle-ghost-side-view')).toBeVisible();
+  await page.getByTestId('character-width-input').fill('1.25');
+  await expect(page.getByTestId('idle-ghost-side-view')).toContainText('1.25w');
   await page.getByTestId('toggle-idle-ghost-side-view').click();
   await expect(page.getByTestId('toggle-idle-ghost-side-view')).not.toHaveClass(/active-tool/);
-  await page.getByTestId('character-width-input').fill('1.25');
   await expect(page.getByTestId('character-width-slider')).toHaveValue('1.25');
   await page.getByTestId('toggle-animation-editor').click();
   const timingEditor = page.getByLabel('Animation timing editor');

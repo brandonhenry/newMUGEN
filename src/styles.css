@@ -3377,7 +3377,7 @@ button {
 
 .idle-ghost-side-panel {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 8px;
   min-width: 0;
 }
@@ -3438,7 +3438,7 @@ button {
     #0c0e11;
 }
 
-.side-frame-ruler img {
+.side-frame-sprite {
   position: relative;
   z-index: 2;
   display: block;

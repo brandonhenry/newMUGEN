@@ -8830,6 +8830,14 @@ function CharacterViewer({
     active.animationScales?.[selectedPreviewAnimationKey] ??
     active.animationScales?.[selectedSlotDataKey]
   );
+  const sideViewIdleScale = {
+    width: selectedCharacterScale.width,
+    height: selectedCharacterScale.height
+  };
+  const sideViewCurrentRenderScale = {
+    width: selectedCharacterScale.width * (sideViewCurrentScale.width ?? 1),
+    height: selectedCharacterScale.height * (sideViewCurrentScale.height ?? 1)
+  };
   const isIdleGhostSideView = showIdleGhost && showIdleGhostSideView && hasIdleGhostFrame && Boolean(idleGhostFrame && sideViewCurrentFrame);
   const variantBaseOptions = roster.filter((character) => character.id !== active.id && !isCharacterVariant(character));
   const activeVariantBase = variantBaseOptions.find((character) => character.id === active.variantOf) ?? variantBaseOptions[0] ?? null;
@@ -9858,7 +9866,8 @@ function CharacterViewer({
                     idleFrame={idleGhostFrame}
                     currentFrame={sideViewCurrentFrame}
                     currentLabel={selectedSlot.label}
-                    currentScale={sideViewCurrentScale}
+                    idleScale={sideViewIdleScale}
+                    currentScale={sideViewCurrentRenderScale}
                   />
                 ) : (
                   <CharacterPreviewCanvas
@@ -10364,6 +10373,7 @@ function CharacterViewer({
 }
 
 type FrameComparisonMetrics = {
+  image: HTMLImageElement;
   naturalWidth: number;
   naturalHeight: number;
   bounds: {
@@ -10385,6 +10395,7 @@ function useFrameComparisonMetrics(src: string) {
       .then((image) => {
         if (cancelled) return;
         setMetrics({
+          image,
           naturalWidth: image.naturalWidth || image.width || 1,
           naturalHeight: image.naturalHeight || image.height || 1,
           bounds: getOpaqueImageBounds(image)
@@ -10405,23 +10416,77 @@ function formatSignedPixels(value: number) {
   return value > 0 ? `+${value}px` : `${value}px`;
 }
 
+function CroppedComparisonFrame({
+  metrics,
+  alt,
+  scale
+}: {
+  metrics: FrameComparisonMetrics | null;
+  alt: string;
+  scale: { width: number; height: number };
+}) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const width = Math.max(1, Math.round(metrics?.bounds.width ?? 1));
+  const height = Math.max(1, Math.round(metrics?.bounds.height ?? 1));
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !metrics) return;
+    const context = canvas.getContext('2d');
+    if (!context) return;
+    const { image, bounds } = metrics;
+    context.clearRect(0, 0, width, height);
+    context.imageSmoothingEnabled = false;
+    context.drawImage(
+      image,
+      bounds.left,
+      bounds.top,
+      bounds.width,
+      bounds.height,
+      0,
+      0,
+      width,
+      height
+    );
+  }, [height, metrics, width]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="side-frame-sprite"
+      width={width}
+      height={height}
+      aria-label={alt}
+      role="img"
+      style={{
+        '--frame-scale-x': scale.width,
+        '--frame-scale-y': scale.height
+      } as CSSProperties}
+    />
+  );
+}
+
 function IdleGhostSideViewComparison({
   idleFrame,
   currentFrame,
   currentLabel,
+  idleScale,
   currentScale
 }: {
   idleFrame: string;
   currentFrame: string;
   currentLabel: string;
-  currentScale: AnimationScale;
+  idleScale: { width: number; height: number };
+  currentScale: { width: number; height: number };
 }) {
   const idleMetrics = useFrameComparisonMetrics(idleFrame);
   const currentMetrics = useFrameComparisonMetrics(currentFrame);
+  const idleWidthScale = idleScale.width ?? 1;
+  const idleHeightScale = idleScale.height ?? 1;
   const widthScale = currentScale.width ?? 1;
   const heightScale = currentScale.height ?? 1;
-  const idleHeight = Math.round(idleMetrics?.bounds.height ?? 0);
-  const idleWidth = Math.round(idleMetrics?.bounds.width ?? 0);
+  const idleHeight = Math.round((idleMetrics?.bounds.height ?? 0) * idleHeightScale);
+  const idleWidth = Math.round((idleMetrics?.bounds.width ?? 0) * idleWidthScale);
   const currentHeight = Math.round((currentMetrics?.bounds.height ?? 0) * heightScale);
   const currentWidth = Math.round((currentMetrics?.bounds.width ?? 0) * widthScale);
   const targetHeight = idleHeight || currentHeight;
@@ -10440,8 +10505,17 @@ function IdleGhostSideViewComparison({
           <div className="side-ruler side-ruler-idle" aria-hidden="true" />
           <span className="side-ruler-label side-ruler-label-idle">{idleHeight ? `idle foot-head ${idleHeight}px` : 'idle foot-head'}</span>
           <span className="side-baseline" aria-hidden="true" />
-          <img src={idleFrame} alt="Idle reference frame" />
+          <CroppedComparisonFrame
+            metrics={idleMetrics}
+            alt="Idle reference frame"
+            scale={{ width: idleWidthScale, height: idleHeightScale }}
+          />
         </div>
+        <footer>
+          <span>{idleWidth || '--'}px wide</span>
+          <span>{idleHeight || '--'}px foot-head</span>
+          <span>{idleWidthScale.toFixed(2)}w {idleHeightScale.toFixed(2)}h scale</span>
+        </footer>
       </section>
 
       <section className="idle-ghost-side-panel current-frame-panel" aria-label="Current animation frame">
@@ -10456,13 +10530,10 @@ function IdleGhostSideViewComparison({
             {currentHeight ? `${formatSignedPixels(heightDelta)} ${heightState}` : 'measuring current'}
           </span>
           <span className="side-baseline" aria-hidden="true" />
-          <img
-            src={currentFrame}
+          <CroppedComparisonFrame
+            metrics={currentMetrics}
             alt={`${currentLabel} comparison frame`}
-            style={{
-              '--frame-scale-x': widthScale,
-              '--frame-scale-y': heightScale
-            } as CSSProperties}
+            scale={{ width: widthScale, height: heightScale }}
           />
         </div>
         <footer>
