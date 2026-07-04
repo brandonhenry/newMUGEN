@@ -3234,6 +3234,7 @@ export default function App() {
     selectedStage;
   const activeBgmSource = useMemo(() => {
     if (!musicStarted || screen === 'boot') return null;
+    if (screen === 'fight' && mode === 'cpu') return settings.audio.menuMusic ? fixedBgmSource('cpu-attract:local-bgm', KORE_MENU_BGM_TRACK) : null;
     if (screen === 'fight' && mode !== 'cpu') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
     if (screen === 'miniGame' && activeArcadeMiniGame) return stageBgmSource(activeArcadeMiniGame.stage);
     if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
