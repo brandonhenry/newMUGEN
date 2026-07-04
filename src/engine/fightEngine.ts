@@ -4518,7 +4518,10 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     }
     return input;
   }
-  if (ai.state === 'throwHeld') return input;
+  if (ai.state === 'throwHeld') {
+    applyAiThrowEscapeInput(input, ai, opponent, difficulty, elapsed, roundAiSeed);
+    return input;
+  }
   if (ai.state === 'getup') return input;
   if (ai.state === 'knockdown') {
     if (ai.actionFramesRemaining > 0 || ai.stunFramesRemaining > 0 || ai.actionTimer > 0 || ai.stunTimer > 0 || isAirborne(ai)) return input;
@@ -4948,6 +4951,30 @@ function applyAiJumpTakeoff(input: InputFrame, towardKey: 'left' | 'right', away
   for (const moveInput of moveInputs) {
     input[moveInput] = false;
   }
+}
+
+function applyAiThrowEscapeInput(input: InputFrame, ai: FighterRuntime, opponent: FighterRuntime, difficulty: CpuDifficulty, elapsed: number, roundAiSeed: number) {
+  if (ai.throwEscapeGoal <= 0 || ai.throwEscapeProgress >= ai.throwEscapeGoal) return;
+  const progressRatio = clamp(ai.throwEscapeProgress / Math.max(1, ai.throwEscapeGoal), 0, 1);
+  const urgency = opponent.throwJabActive || opponent.throwJabCooldownFrames > 0 ? 0.18 : 0;
+  const comeback = progressRatio < 0.35 ? 0.08 : 0;
+  const chance = difficulty <= 1
+    ? 0.24
+    : difficulty === 2
+      ? 0.38
+      : difficulty === 3
+        ? 0.58
+        : difficulty === 4
+          ? 0.76
+          : 0.94;
+  const escapeRoll = aiDecisionRoll(ai, opponent, elapsed, 31 + ai.throwEscapeProgress, roundAiSeed);
+  if (escapeRoll >= Math.min(0.98, chance + urgency + comeback)) return;
+
+  const buttons: MoveInput[] = ['jab', 'kick', 'heavy', 'special'];
+  const index = positiveModulo(Math.floor(elapsed * 60) + ai.slot * 5 + ai.throwEscapeProgress * 2 + Math.floor(ai.hp), buttons.length);
+  const button = buttons[index];
+  input[button] = true;
+  (input as InputFrameWithMetadata).__pressedActions = [button];
 }
 
 type AiAntiAirThreat = {
