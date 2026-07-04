@@ -898,6 +898,8 @@ export type FighterRuntime = {
   comboStep: number;
   comboSequence: MoveInput[];
   comboIdentitySequence: string[];
+  comboFamilySequence: string[];
+  comboVisualFamilySequence: string[];
   comboUsedKeys: string[];
   comboHits: number;
   comboDamage: number;
@@ -905,7 +907,10 @@ export type FighterRuntime = {
   bufferedMoveFrames: number;
   bufferedMoveIntent: BufferedMoveIntent | null;
   aiRecentComboKeys: string[];
+  aiRecentComboFamilies: string[];
+  aiRecentComboVisualFamilies: string[];
   aiActiveComboRouteId: string | null;
+  aiJuggleLockoutFrames: number;
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;
   roundsWon: number;

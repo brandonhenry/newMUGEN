@@ -20,7 +20,17 @@ import type {
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale } from '../lib/characterScale';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
-import { recommendCpuComboRoute, type ComboTrialStep, type CpuRouteRecommendation } from '../lib/comboRoutes';
+import {
+  cpuMoveFamilyKeyFromMove,
+  cpuMoveFamilyKeyFromStep,
+  cpuMoveIdentityKeyFromMove,
+  cpuMoveIdentityKeyFromStep,
+  cpuMoveVisualFamilyKeyFromMove,
+  cpuMoveVisualFamilyKeyFromStep,
+  recommendCpuComboRoute,
+  type ComboTrialStep,
+  type CpuRouteRecommendation
+} from '../lib/comboRoutes';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
@@ -71,6 +81,7 @@ const LOW_HURTBOX_FORWARD_EXTENSION = 0.34;
 const LOW_HURTBOX_MAX_HEIGHT = 0.62;
 const LOW_HURTBOX_MIN_HEIGHT = 0.34;
 const AI_RECENT_MEMORY_LIMIT = 12;
+const AI_JUGGLE_LOCKOUT_FRAMES = 24;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const FORCED_CROUCH_EXIT_FRAMES = 8;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
@@ -518,6 +529,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     comboStep: 0,
     comboSequence: [],
     comboIdentitySequence: [],
+    comboFamilySequence: [],
+    comboVisualFamilySequence: [],
     comboUsedKeys: [],
     comboHits: 0,
     comboDamage: 0,
@@ -525,7 +538,10 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     bufferedMoveFrames: 0,
     bufferedMoveIntent: null,
     aiRecentComboKeys: [],
+    aiRecentComboFamilies: [],
+    aiRecentComboVisualFamilies: [],
     aiActiveComboRouteId: null,
+    aiJuggleLockoutFrames: 0,
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
     roundsWon: 0,
@@ -690,11 +706,15 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.comboStep = 0;
     fighter.comboSequence = [];
     fighter.comboIdentitySequence = [];
+    fighter.comboFamilySequence = [];
+    fighter.comboVisualFamilySequence = [];
     fighter.comboUsedKeys = [];
     fighter.comboHits = 0;
     fighter.comboDamage = 0;
     fighter.aiActiveComboRouteId = null;
   }
+  fighter.aiJuggleLockoutFrames = Math.max(0, fighter.aiJuggleLockoutFrames - frameDelta);
+  if (opponent.state !== 'juggle' && !isAirborne(opponent)) fighter.aiJuggleLockoutFrames = 0;
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
   fighter.sidestepRepeatGraceFrames = Math.max(0, fighter.sidestepRepeatGraceFrames - frameDelta);
   fighter.dashForwardFrames = Math.max(0, fighter.dashForwardFrames - frameDelta);
@@ -1071,10 +1091,14 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
   attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
   const identity = getMoveIdentity(move);
+  const family = getMoveFamily(move);
+  const visualFamily = getMoveVisualFamily(move);
   if (!attacker.comboUsedKeys.includes(identity)) {
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-COMBO_SEQUENCE_MEMORY);
   }
-  attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
+  attacker.aiRecentComboKeys = addRecentAiMemoryKey(attacker.aiRecentComboKeys, identity);
+  attacker.aiRecentComboFamilies = addRecentAiMemoryKey(attacker.aiRecentComboFamilies, family);
+  attacker.aiRecentComboVisualFamilies = addRecentAiMemoryKey(attacker.aiRecentComboVisualFamilies, visualFamily);
   applyFighterDamage(defender, move.damage);
   defender.hitFlash = Math.max(defender.hitFlash, 0.12);
   defender.throwShakeFrames = Math.max(defender.throwShakeFrames, THROW_SHAKE_FRAMES);
@@ -1370,11 +1394,16 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.comboStep = 0;
   fighter.comboSequence = [];
   fighter.comboIdentitySequence = [];
+  fighter.comboFamilySequence = [];
+  fighter.comboVisualFamilySequence = [];
   fighter.comboUsedKeys = [];
   fighter.comboHits = 0;
   fighter.comboDamage = 0;
   fighter.aiRecentComboKeys = [];
+  fighter.aiRecentComboFamilies = [];
+  fighter.aiRecentComboVisualFamilies = [];
   fighter.aiActiveComboRouteId = null;
+  fighter.aiJuggleLockoutFrames = 0;
   resetTransformCharge(fighter);
 }
 
@@ -1821,7 +1850,11 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   const charged = chargedIntent;
   const resolvedMove = charged ? buildKiBurstMove(move, kiCost) : move;
   const identity = getMoveIdentity(move);
-  fighter.aiRecentComboKeys = addRecentComboKey(fighter.aiRecentComboKeys, identity);
+  const family = getMoveFamily(move);
+  const visualFamily = getMoveVisualFamily(move);
+  fighter.aiRecentComboKeys = addRecentAiMemoryKey(fighter.aiRecentComboKeys, identity);
+  fighter.aiRecentComboFamilies = addRecentAiMemoryKey(fighter.aiRecentComboFamilies, family);
+  fighter.aiRecentComboVisualFamilies = addRecentAiMemoryKey(fighter.aiRecentComboVisualFamilies, visualFamily);
   if (spendsKi) {
     fighter.ki = clamp(fighter.ki - kiCost, 0, KI_MAX);
     clearTransformOverchargeIfKiBelowFull(fighter);
@@ -1843,7 +1876,12 @@ function startComboAttack(fighter: FighterRuntime, opponent: FighterRuntime, inp
   fighter.comboStep = comboStep;
   fighter.comboSequence = sequence;
   fighter.comboIdentitySequence = continuing ? [...fighter.comboIdentitySequence, identity].slice(-COMBO_SEQUENCE_MEMORY) : [identity];
-  if (!continuing) fighter.comboUsedKeys = [];
+  fighter.comboFamilySequence = continuing ? [...fighter.comboFamilySequence, family].slice(-COMBO_SEQUENCE_MEMORY) : [family];
+  fighter.comboVisualFamilySequence = continuing ? [...fighter.comboVisualFamilySequence, visualFamily].slice(-COMBO_SEQUENCE_MEMORY) : [visualFamily];
+  if (!continuing) {
+    fighter.comboUsedKeys = [];
+    fighter.aiJuggleLockoutFrames = 0;
+  }
 
   const forwardNudge = route.toward ? 0.18 : route.away ? -0.08 : continuing ? 0.16 : 0;
   const specialNudge = moveInput === 'special' ? 0.18 : 0;
@@ -2216,10 +2254,18 @@ function buttonSequenceKey(sequence: MoveInput[]) {
 }
 
 function getMoveIdentity(move: MoveDefinition) {
-  return move.command ?? `${move.route ?? 'neutral'}:${move.input}`;
+  return cpuMoveIdentityKeyFromMove(move);
 }
 
-function addRecentComboKey(keys: string[], key: string) {
+function getMoveFamily(move: MoveDefinition) {
+  return cpuMoveFamilyKeyFromMove(move);
+}
+
+function getMoveVisualFamily(move: MoveDefinition) {
+  return cpuMoveVisualFamilyKeyFromMove(move);
+}
+
+function addRecentAiMemoryKey(keys: string[], key: string) {
   return [...keys, key].slice(-AI_RECENT_MEMORY_LIMIT);
 }
 
@@ -3053,6 +3099,8 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
   const identity = getMoveIdentity(move);
+  const family = getMoveFamily(move);
+  const visualFamily = getMoveVisualFamily(move);
   const identityUsesInCombo = countIdentityOccurrences(attacker.comboIdentitySequence, identity);
   const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT && identityUsesInCombo <= 1;
   const impactId = nextHitEventId(match);
@@ -3107,7 +3155,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   if (!attacker.comboUsedKeys.includes(identity)) {
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-COMBO_SEQUENCE_MEMORY);
   }
-  attacker.aiRecentComboKeys = addRecentComboKey(attacker.aiRecentComboKeys, identity);
+  attacker.aiRecentComboKeys = addRecentAiMemoryKey(attacker.aiRecentComboKeys, identity);
+  attacker.aiRecentComboFamilies = addRecentAiMemoryKey(attacker.aiRecentComboFamilies, family);
+  attacker.aiRecentComboVisualFamilies = addRecentAiMemoryKey(attacker.aiRecentComboVisualFamilies, visualFamily);
   pushCombatPopupEvent(match, impactId, attacker, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
@@ -4593,6 +4643,13 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
 
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
   const routeOpening = opening.kind === 'hitstun' && opponent.state === 'juggle' ? 'juggle' : opening.kind;
+  if (routeOpening === 'juggle' && shouldCpuDropJuggle(ai, opponent, difficulty)) {
+    beginAiJuggleLockout(ai);
+    input.block = false;
+    input.charge = false;
+    for (const moveInput of moveInputs) input[moveInput] = false;
+    return input;
+  }
   const catalogRoute = routeOpening === 'none'
     ? null
     : recommendCpuComboRoute(ai.character, {
@@ -4602,6 +4659,8 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
         comboStep: ai.comboStep,
         leaderCloseout,
         usedKeys: ai.aiRecentComboKeys,
+        usedFamilies: ai.aiRecentComboFamilies,
+        usedVisualFamilies: ai.aiRecentComboVisualFamilies,
         activeRouteId: ai.aiActiveComboRouteId,
         selector,
         routeRoll
@@ -4636,9 +4695,10 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
     if (
       (pressureCatalogStep && isAiCatalogStepStaleInCombo(ai, pressureCatalogStep)) ||
-      (!pressureCatalogStep && isAiComboContinuationInputStale(ai, pressureMoveInput))
+      isAiComboContinuationInputStale(ai, pressureMoveInput)
     ) {
-      ai.aiActiveComboRouteId = null;
+      if (opponent.state === 'juggle') beginAiJuggleLockout(ai);
+      else ai.aiActiveComboRouteId = null;
       input.block = false;
       input[awayKey] = false;
       input[towardKey] = distance > pressureReach * 0.78;
@@ -4730,6 +4790,8 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
           comboStep: ai.comboStep,
           leaderCloseout,
           usedKeys: ai.aiRecentComboKeys,
+          usedFamilies: ai.aiRecentComboFamilies,
+          usedVisualFamilies: ai.aiRecentComboVisualFamilies,
           activeRouteId: ai.aiActiveComboRouteId,
           selector: selector + 41,
           routeRoll: routeRoll + 29
@@ -4745,7 +4807,8 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     const crouchInput = leaderCloseout ? null : chooseAiFullCrouchMoveInput(ai, selectedMoveInput, difficulty, selector + 47, routeRoll + 53, shouldContinueCombo ? 'pressure' : 'neutral');
     if (crouchInput) {
       if (isAiComboContinuationInputStale(ai, crouchInput)) {
-        ai.aiActiveComboRouteId = null;
+        if (opponent.state === 'juggle') beginAiJuggleLockout(ai);
+        else ai.aiActiveComboRouteId = null;
         input[towardKey] = distance > selectedMoveReach * 0.78;
         input[awayKey] = false;
         return input;
@@ -4755,9 +4818,10 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     } else {
       if (
         (neutralCatalogRoute && isAiCatalogStepStaleInCombo(ai, neutralCatalogRoute.step)) ||
-        (!neutralCatalogRoute && shouldContinueCombo && isAiComboContinuationInputStale(ai, selectedMoveInput))
+        (shouldContinueCombo && isAiComboContinuationInputStale(ai, selectedMoveInput))
       ) {
-        ai.aiActiveComboRouteId = null;
+        if (opponent.state === 'juggle') beginAiJuggleLockout(ai);
+        else ai.aiActiveComboRouteId = null;
         input[towardKey] = distance > selectedMoveReach * 0.78;
         input[awayKey] = false;
         return input;
@@ -5313,8 +5377,15 @@ function isAiCatalogStepSpendable(ai: FighterRuntime, step: ComboTrialStep) {
 
 function isAiCatalogStepStaleInCombo(ai: FighterRuntime, step: ComboTrialStep) {
   if (ai.comboTimer <= 0 && ai.comboHits <= 0 && ai.comboStep <= 0) return false;
-  const identity = step.command ?? `neutral:${step.input}`;
-  return ai.comboUsedKeys.includes(identity) || ai.comboIdentitySequence.includes(identity);
+  const identity = cpuMoveIdentityKeyFromStep(step);
+  const family = cpuMoveFamilyKeyFromStep(step);
+  const visualFamily = cpuMoveVisualFamilyKeyFromStep(step);
+  return (
+    ai.comboUsedKeys.includes(identity) ||
+    ai.comboIdentitySequence.includes(identity) ||
+    ai.comboFamilySequence.includes(family) ||
+    ai.comboVisualFamilySequence.includes(visualFamily)
+  );
 }
 
 function isAiComboContinuationInputStale(ai: FighterRuntime, input: MoveInput) {
@@ -5323,15 +5394,47 @@ function isAiComboContinuationInputStale(ai: FighterRuntime, input: MoveInput) {
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {
-  return ai.comboUsedKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
+  const family = cpuMoveFamilyKeyFromMove({ input });
+  const visualFamily = cpuMoveVisualFamilyKeyFromMove({ input });
+  return (
+    ai.comboFamilySequence.includes(family) ||
+    ai.comboVisualFamilySequence.includes(visualFamily) ||
+    ai.comboUsedKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`))
+  );
 }
 
 function inputRecentlyUsed(ai: FighterRuntime, input: MoveInput) {
-  return ai.aiRecentComboKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`));
+  const family = cpuMoveFamilyKeyFromMove({ input });
+  const visualFamily = cpuMoveVisualFamilyKeyFromMove({ input });
+  return (
+    ai.aiRecentComboFamilies.includes(family) ||
+    ai.aiRecentComboVisualFamilies.includes(visualFamily) ||
+    ai.aiRecentComboKeys.some((key) => key.endsWith(`:${input}`) || key.includes(`:${input}-`) || key.endsWith(`+${inputToButton[input]}`))
+  );
 }
 
 function routeRecentlyUsed(ai: FighterRuntime, route: string) {
   return ai.aiRecentComboKeys.some((key) => key.startsWith(`${route}:`) || key.startsWith(`${route}-`) || key.includes(`cmd:${route}`));
+}
+
+function getCpuJuggleStepBudget(difficulty: CpuDifficulty) {
+  if (difficulty <= 1) return 3;
+  if (difficulty === 2) return 4;
+  if (difficulty === 3) return 7;
+  if (difficulty === 4) return 10;
+  return 12;
+}
+
+function shouldCpuDropJuggle(ai: FighterRuntime, opponent: FighterRuntime, difficulty: CpuDifficulty) {
+  if (opponent.state !== 'juggle') return false;
+  if (ai.aiJuggleLockoutFrames > 0) return true;
+  const budget = getCpuJuggleStepBudget(difficulty);
+  return ai.comboStep >= budget || ai.comboHits >= budget;
+}
+
+function beginAiJuggleLockout(ai: FighterRuntime) {
+  ai.aiActiveComboRouteId = null;
+  ai.aiJuggleLockoutFrames = Math.max(ai.aiJuggleLockoutFrames, AI_JUGGLE_LOCKOUT_FRAMES);
 }
 
 function getAdjustedPressureResponse(ai: FighterRuntime, opening: AiOpening, settings: ReturnType<typeof getCpuDifficultySettings>, pressureRoll: number) {
@@ -5570,9 +5673,14 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       commandHistory: fighter.commandHistory.map((entry) => ({ ...entry })),
       comboSequence: [...fighter.comboSequence],
       comboIdentitySequence: [...fighter.comboIdentitySequence],
+      comboFamilySequence: [...fighter.comboFamilySequence],
+      comboVisualFamilySequence: [...fighter.comboVisualFamilySequence],
       comboUsedKeys: [...fighter.comboUsedKeys],
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
+      aiRecentComboFamilies: [...fighter.aiRecentComboFamilies],
+      aiRecentComboVisualFamilies: [...fighter.aiRecentComboVisualFamilies],
       aiActiveComboRouteId: fighter.aiActiveComboRouteId,
+      aiJuggleLockoutFrames: fighter.aiJuggleLockoutFrames,
       previousAttackInputs: { ...fighter.previousAttackInputs },
       visualHitstop: { ...fighter.visualHitstop },
       bufferedMoveIntent: fighter.bufferedMoveIntent

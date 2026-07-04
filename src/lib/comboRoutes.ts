@@ -65,6 +65,8 @@ export type CpuRouteContext = {
   comboStep: number;
   leaderCloseout?: boolean;
   usedKeys?: string[];
+  usedFamilies?: string[];
+  usedVisualFamilies?: string[];
   activeRouteId?: string | null;
   selector?: number;
   routeRoll?: number;
@@ -335,12 +337,14 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
   if (roll > knowledgeChance) return null;
 
   const usedKeys = context.usedKeys ?? [];
+  const usedFamilies = context.usedFamilies ?? [];
+  const usedVisualFamilies = context.usedVisualFamilies ?? [];
   const eligibleRoutes = generateCharacterComboRoutes(character).filter((route) => routeFitsCpuContext(route, context));
   const activeRoute = eligibleRoutes.find((route) => route.id === context.activeRouteId);
   if (activeRoute) {
     const stepIndex = cpuRouteStepIndex(activeRoute, context);
     const step = activeRoute.steps[stepIndex] ?? activeRoute.steps[activeRoute.steps.length - 1] ?? activeRoute.steps[0];
-    if (step && isCpuRouteStepFreshEnough(step, usedKeys, context, true)) {
+    if (step && isCpuRouteStepFreshEnough(step, usedKeys, usedFamilies, usedVisualFamilies, context, true)) {
       return {
         route: activeRoute,
         step,
@@ -357,9 +361,11 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
       const step = route.steps[stepIndex] ?? route.steps[0];
       const key = stepIdentityKey(step);
       const family = stepFamilyKey(step);
+      const visualFamily = stepVisualFamilyKey(step);
       const sameKeyUses = usedKeys.filter((used) => keyMatchesMoveIdentity(used, key)).length;
-      const sameFamilyUses = usedKeys.filter((used) => keyMatchesMoveFamily(used, family, step.input)).length;
-      const freshness = -sameKeyUses * 0.85 - sameFamilyUses * 0.32;
+      const sameFamilyUses = countFamilyUses(usedKeys, usedFamilies, family, step.input);
+      const sameVisualFamilyUses = countVisualFamilyUses(usedVisualFamilies, visualFamily);
+      const freshness = -sameKeyUses * 0.85 - sameFamilyUses * 0.32 - sameVisualFamilyUses * (context.opening === 'juggle' ? 0.72 : 0.2);
       const difficultyBonus = route.level <= context.difficulty + 2 ? 0.18 : -0.12;
       const closeoutPenalty = context.leaderCloseout && (route.category === 'launcher' || route.category === 'tornado') ? -1.2 : 0;
       const timing = context.remainingFrames > 0 ? clamp((context.remainingFrames - routeStepStartup(step)) / 18, -0.5, 0.5) : 0;
@@ -373,7 +379,7 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
         score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + launchRouteStyleCpuWeight(route, context) + freshness + difficultyBonus + closeoutPenalty + timing + variety + wave * 0.18
       };
     })
-    .filter((candidate) => candidate.score > 0 && isCpuRouteStepFreshEnough(candidate.step, usedKeys, context, false));
+    .filter((candidate) => candidate.score > 0 && isCpuRouteStepFreshEnough(candidate.step, usedKeys, usedFamilies, usedVisualFamilies, context, false));
 
   routes.sort((a, b) => b.score - a.score);
   return routes[0] ?? null;
@@ -879,30 +885,72 @@ function cpuRouteStepIndex(route: GeneratedComboRoute, context: CpuRouteContext)
   return Math.min(route.steps.length - 1, Math.max(1, context.comboStep));
 }
 
-function stepIdentityKey(step: ComboTrialStep) {
+export function cpuMoveIdentityKeyFromStep(step: Pick<ComboTrialStep, 'command' | 'input'>) {
   return step.command ?? `neutral:${step.input}`;
 }
 
-function stepFamilyKey(step: ComboTrialStep) {
-  if (!step.command) return `neutral:${step.input}`;
-  if (step.command.startsWith('FC+')) return `FC:${step.input}`;
-  if (step.command.startsWith('WS+')) return `WS:${step.input}`;
-  if (step.command.startsWith('SS+') || step.command.startsWith('SSL+') || step.command.startsWith('SSR+')) return `SS:${step.input}`;
-  if (step.command.startsWith('O+')) return `ki:${step.input}`;
-  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(step.command)) return `motion:${step.input}`;
-  if (/^[1-4]\+[1-4]/.test(step.command)) return `chord:${step.input}`;
-  const prefix = step.command.split('+').slice(0, -1).join('+') || 'command';
-  return `${prefix.replace(/[1-4]/g, '#')}:${step.input}`;
+export function cpuMoveFamilyKeyFromStep(step: Pick<ComboTrialStep, 'command' | 'input'>) {
+  return commandFamilyKey(step.command, step.input);
 }
 
-function isCpuRouteStepFreshEnough(step: ComboTrialStep, usedKeys: string[], context: CpuRouteContext, committedRoute: boolean) {
+export function cpuMoveVisualFamilyKeyFromStep(step: Pick<ComboTrialStep, 'input'>) {
+  return `visual:${baseInputToAnimationKey[step.input]}`;
+}
+
+export function cpuMoveIdentityKeyFromMove(move: Pick<MoveDefinition, 'command' | 'route' | 'input'>) {
+  return move.command ?? `${move.route ?? 'neutral'}:${move.input}`;
+}
+
+export function cpuMoveFamilyKeyFromMove(move: Pick<MoveDefinition, 'command' | 'input'>) {
+  return commandFamilyKey(move.command, move.input);
+}
+
+export function cpuMoveVisualFamilyKeyFromMove(move: Pick<MoveDefinition, 'input'>) {
+  return `visual:${baseInputToAnimationKey[move.input]}`;
+}
+
+function stepIdentityKey(step: ComboTrialStep) {
+  return cpuMoveIdentityKeyFromStep(step);
+}
+
+function stepFamilyKey(step: ComboTrialStep) {
+  return cpuMoveFamilyKeyFromStep(step);
+}
+
+function stepVisualFamilyKey(step: ComboTrialStep) {
+  return cpuMoveVisualFamilyKeyFromStep(step);
+}
+
+function commandFamilyKey(command: string | undefined, input: MoveInput) {
+  if (!command) return `neutral:${input}`;
+  if (command.startsWith('FC+')) return `FC:${input}`;
+  if (command.startsWith('WS+')) return `WS:${input}`;
+  if (command.startsWith('SS+') || command.startsWith('SSL+') || command.startsWith('SSR+')) return `SS:${input}`;
+  if (command.startsWith('O+')) return `ki:${input}`;
+  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(command)) return `motion:${input}`;
+  if (/^[1-4]\+[1-4]/.test(command)) return `chord:${input}`;
+  const prefix = command.split('+').slice(0, -1).join('+') || 'command';
+  return `${prefix.replace(/[1-4]/g, '#')}:${input}`;
+}
+
+function isCpuRouteStepFreshEnough(
+  step: ComboTrialStep,
+  usedKeys: string[],
+  usedFamilies: string[],
+  usedVisualFamilies: string[],
+  context: CpuRouteContext,
+  committedRoute: boolean
+) {
   const identity = stepIdentityKey(step);
   const family = stepFamilyKey(step);
+  const visualFamily = stepVisualFamilyKey(step);
   const identityUses = usedKeys.filter((used) => keyMatchesMoveIdentity(used, identity)).length;
-  const familyUses = usedKeys.filter((used) => keyMatchesMoveFamily(used, family, step.input)).length;
+  const familyUses = countFamilyUses(usedKeys, usedFamilies, family, step.input);
+  const visualFamilyUses = countVisualFamilyUses(usedVisualFamilies, visualFamily);
   const identityLimit = 1;
   const familyLimit = committedRoute && context.difficulty >= 4 ? 3 : context.difficulty >= 4 ? 2 : 1;
-  return identityUses < identityLimit && familyUses < familyLimit;
+  const visualFamilyLimit = context.opening === 'juggle' ? 1 : familyLimit;
+  return identityUses < identityLimit && familyUses < familyLimit && visualFamilyUses < visualFamilyLimit;
 }
 
 function keyMatchesMoveIdentity(usedKey: string, identity: string) {
@@ -915,6 +963,16 @@ function keyMatchesMoveFamily(usedKey: string, family: string, input: MoveInput)
     return family.endsWith(`:${input}`);
   }
   return false;
+}
+
+function countFamilyUses(usedKeys: string[], usedFamilies: string[], family: string, input: MoveInput) {
+  const keyMatches = usedKeys.filter((used) => keyMatchesMoveFamily(used, family, input)).length;
+  const familyMatches = usedFamilies.filter((used) => used === family).length;
+  return Math.max(keyMatches, familyMatches);
+}
+
+function countVisualFamilyUses(usedVisualFamilies: string[], visualFamily: string) {
+  return usedVisualFamilies.filter((used) => used === visualFamily).length;
 }
 
 function identityUseCount(identities: string[], identity: string) {
