@@ -19,6 +19,22 @@ function moveForStep(character: CharacterDefinition, step: { command?: string; i
   return routes.find((route) => step.command ? route.command === step.command : !route.command && route.input === step.input)?.move ?? null;
 }
 
+function stepIdentity(step: { command?: string; input: string }) {
+  return step.command ?? `neutral:${step.input}`;
+}
+
+function stepFamily(step: { command?: string; input: string }) {
+  if (!step.command) return `neutral:${step.input}`;
+  if (step.command.startsWith('FC+')) return `FC:${step.input}`;
+  if (step.command.startsWith('WS+')) return `WS:${step.input}`;
+  if (step.command.startsWith('SS+') || step.command.startsWith('SSL+') || step.command.startsWith('SSR+')) return `SS:${step.input}`;
+  if (step.command.startsWith('O+')) return `ki:${step.input}`;
+  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(step.command)) return `motion:${step.input}`;
+  if (/^[1-4]\+[1-4]/.test(step.command)) return `chord:${step.input}`;
+  const prefix = step.command.split('+').slice(0, -1).join('+') || 'command';
+  return `${prefix.replace(/[1-4]/g, '#')}:${step.input}`;
+}
+
 describe('combo route catalog', () => {
   it('builds route catalogs from real character animations', () => {
     const characters = readRosterCharacters();
@@ -87,6 +103,30 @@ describe('combo route catalog', () => {
         const previous = route.steps[index - 1];
         const current = route.steps[index];
         expect(current.command ?? current.input, `${character.id}:${route.id}:step-${index}`).not.toBe(previous.command ?? previous.input);
+      }
+    }
+  });
+
+  it('keeps long routes diverse by move identity and command family', () => {
+    const longRoutes = readRosterCharacters().flatMap((character) =>
+      generateCharacterComboRoutes(character)
+        .filter((route) => route.tier === 'long' || route.tier === 'marathon')
+        .map((route) => ({ character, route }))
+    );
+    expect(longRoutes.length).toBeGreaterThan(0);
+
+    for (const { character, route } of longRoutes) {
+      const identities = route.steps.map(stepIdentity);
+      const families = route.steps.map(stepFamily);
+      const uniqueIdentities = new Set(identities);
+      const uniqueFamilies = new Set(families);
+      const minimumUniqueIdentities = route.tier === 'marathon' ? Math.min(12, Math.ceil(route.steps.length * 0.52)) : Math.min(8, Math.ceil(route.steps.length * 0.6));
+      const minimumUniqueFamilies = route.tier === 'marathon' ? Math.min(6, route.steps.length) : Math.min(5, route.steps.length);
+
+      expect(uniqueIdentities.size, `${character.id}:${route.id}`).toBeGreaterThanOrEqual(minimumUniqueIdentities);
+      expect(uniqueFamilies.size, `${character.id}:${route.id}`).toBeGreaterThanOrEqual(minimumUniqueFamilies);
+      for (let index = 1; index < route.steps.length; index += 1) {
+        expect(families[index], `${character.id}:${route.id}:family-${index}`).not.toBe(families[index - 1]);
       }
     }
   });
@@ -178,5 +218,62 @@ describe('combo route catalog', () => {
     expect(collect(2).every((route) => route.tier === 'short')).toBe(true);
     expect(collect(3).every((route) => route.tier !== 'long' && route.tier !== 'marathon')).toBe(true);
     expect(collect(4).every((route) => route.tier !== 'marathon')).toBe(true);
+  });
+
+  it('keeps committed high-difficulty CPU recommendations on the active route step order', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateCharacterComboRoutes(candidate).some((route) => route.steps.length >= 4)
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const route = generateCharacterComboRoutes(character).find((candidate) =>
+      candidate.steps.length >= 4 &&
+      new Set(candidate.steps.slice(0, 3).map(stepIdentity)).size === 3 &&
+      new Set(candidate.steps.slice(0, 3).map(stepFamily)).size === 3
+    );
+    expect(route).toBeTruthy();
+    if (!route) return;
+
+    const recommendation = recommendCpuComboRoute(character, {
+      difficulty: 5,
+      opening: 'hitstun',
+      remainingFrames: 40,
+      comboStep: 2,
+      activeRouteId: route.id,
+      usedKeys: route.steps.slice(0, 2).map(stepIdentity),
+      selector: 0,
+      routeRoll: 0
+    });
+
+    expect(recommendation?.route.id).toBe(route.id);
+    expect(recommendation?.stepIndex).toBe(2);
+    expect(stepIdentity(recommendation!.step)).toBe(stepIdentity(route.steps[2]));
+  });
+
+  it('drops stale CPU catalog route steps instead of repeating a move identity', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateCharacterComboRoutes(candidate).some((route) => route.steps.length >= 3)
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const route = generateCharacterComboRoutes(character).find((candidate) => candidate.steps.length >= 3);
+    expect(route).toBeTruthy();
+    if (!route) return;
+
+    const repeatedStep = route.steps[1];
+    const recommendation = recommendCpuComboRoute(character, {
+      difficulty: 5,
+      opening: 'hitstun',
+      remainingFrames: 40,
+      comboStep: 1,
+      activeRouteId: route.id,
+      usedKeys: [stepIdentity(repeatedStep)],
+      selector: 0,
+      routeRoll: 0
+    });
+
+    expect(recommendation?.route.id).not.toBe(route.id);
   });
 });

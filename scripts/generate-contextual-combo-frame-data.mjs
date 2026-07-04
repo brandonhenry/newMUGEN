@@ -14,6 +14,14 @@ function isPlainNeutralCommand(command) {
   return command === '1' || command === '2' || command === '3' || command === '4';
 }
 
+function resolvedCommandForMove(move) {
+  return move.command ?? move.notation;
+}
+
+function isAdvancedCommand(command) {
+  return Boolean(command && !isPlainNeutralCommand(command));
+}
+
 function commandInput(command) {
   const matches = [...String(command).matchAll(/[1-4]/g)];
   const button = matches[matches.length - 1]?.[0] ?? '1';
@@ -21,50 +29,112 @@ function commandInput(command) {
 }
 
 function defaultOnComboHitFrames(move) {
-  const command = move.command ?? move.notation;
-  const commitmentCredit = command && !isPlainNeutralCommand(command) ? 2 : 0;
+  const command = resolvedCommandForMove(move);
+  const commitmentCredit = isAdvancedCommand(command) ? 4 : 0;
   const risk =
-    (move.launchHeight ? 3 : 0) +
-    (move.tornado ? 2 : 0) +
+    (move.launchHeight ? 4 : 0) +
+    (move.tornado ? 3 : 0) +
     (move.knockdown ? 2 : 0) +
     Math.max(0, Math.round(((move.damage ?? 0) - 12) / 4)) +
     Math.max(0, (move.activeFrames ?? 2) - 3) +
     Math.max(0, Math.round(((move.forwardForce ?? 0) - 1.4) * 1.5));
   const lowCredit = move.hitLevel === 'low' ? 1 : 0;
-  return clamp(Math.round((move.onHitFrames ?? 8) * 0.84) + 1 + commitmentCredit + lowCredit - risk, 5, Math.max(5, (move.onHitFrames ?? 8) + 2));
+  return clamp(Math.round((move.onHitFrames ?? 8) * 0.88) + 1 + commitmentCredit + lowCredit - risk, 5, Math.max(5, (move.onHitFrames ?? 8) + 4));
 }
 
 function defaultOnJuggleHitFrames(move) {
-  const command = move.command ?? move.notation;
-  const explicitJuggleCredit = move.tornado ? 11 : move.juggleRefloatVelocity ? 6 : 0;
-  const commandCredit = command && !isPlainNeutralCommand(command) ? 2 : 0;
+  const command = resolvedCommandForMove(move);
+  const explicitJuggleCredit = move.tornado ? 13 : move.juggleRefloatVelocity ? 7 : 0;
+  const commandCredit = isAdvancedCommand(command) ? 4 : 0;
   const propertyRisk =
-    (move.launchHeight ? 5 : 0) +
+    (move.launchHeight ? 7 : 0) +
     (move.knockdown ? 4 : 0) +
     Math.max(0, Math.round(((move.damage ?? 0) - 10) / 3)) +
     Math.max(0, (move.activeFrames ?? 2) - 3) +
     Math.max(0, Math.round(((move.forwardForce ?? 0) - 1) * 1.4));
-  return clamp(Math.round((move.onHitFrames ?? 8) * 0.62) + 1 + explicitJuggleCredit + commandCredit - propertyRisk, 4, move.tornado ? 30 : 20);
+  return clamp(Math.round((move.onHitFrames ?? 8) * 0.68) + 1 + explicitJuggleCredit + commandCredit - propertyRisk, 4, move.tornado ? 30 : 24);
 }
 
 function defaultComboRepeatPenaltyFrames(move) {
-  const command = move.command ?? move.notation;
-  const commandRelief = command && !isPlainNeutralCommand(command) ? -1 : 0;
-  return clamp(3 + commandRelief + Math.max(0, Math.round(((move.damage ?? 0) - 10) / 5)) + (move.launchHeight ? 2 : 0) + (move.tornado ? 2 : 0) + (move.knockdown ? 1 : 0), 2, 10);
+  const command = resolvedCommandForMove(move);
+  const commandRelief = isAdvancedCommand(command) ? -1 : 1;
+  return clamp(4 + commandRelief + Math.max(0, Math.round(((move.damage ?? 0) - 10) / 5)) + (move.launchHeight ? 3 : 0) + (move.tornado ? 3 : 0) + (move.knockdown ? 2 : 0), 3, 12);
 }
 
 function defaultJuggleRepeatPenaltyFrames(move) {
-  const command = move.command ?? move.notation;
-  const commandRelief = command && !isPlainNeutralCommand(command) ? -1 : 0;
-  return clamp(5 + commandRelief + Math.max(0, Math.round(((move.damage ?? 0) - 8) / 4)) + (move.launchHeight ? 4 : 0) + (move.tornado ? 5 : 0) + (move.knockdown ? 2 : 0), 4, 16);
+  const command = resolvedCommandForMove(move);
+  const commandRelief = isAdvancedCommand(command) ? -1 : 1;
+  return clamp(6 + commandRelief + Math.max(0, Math.round(((move.damage ?? 0) - 8) / 4)) + (move.launchHeight ? 6 : 0) + (move.tornado ? 6 : 0) + (move.knockdown ? 3 : 0), 5, 18);
 }
 
-function contextualFields(move) {
+function neutralAdvantageFields(move) {
+  const activePenalty = Math.max(0, (move.activeFrames ?? 2) - 2);
+  const damage = move.damage ?? 8;
+  if (move.input === 'jab') {
+    return {
+      onBlockFrames: clamp(1 - activePenalty, -2, 1),
+      onHitFrames: clamp(14 - activePenalty, 10, 15),
+      onCounterHitFrames: clamp(18 - activePenalty, 14, 20),
+      counterHit: false
+    };
+  }
+  if (move.input === 'heavy') {
+    return {
+      onBlockFrames: clamp(-5 - activePenalty - (damage > 11 ? 1 : 0), -11, -3),
+      onHitFrames: clamp(16 - activePenalty, 11, 18),
+      onCounterHitFrames: clamp(21 - activePenalty, 16, 24),
+      counterHit: false
+    };
+  }
+  if (move.input === 'kick') {
+    return {
+      onBlockFrames: clamp(-4 - activePenalty - (damage > 12 ? 1 : 0), -10, -2),
+      onHitFrames: clamp(17 - activePenalty, 11, 19),
+      onCounterHitFrames: clamp(22 - activePenalty, 16, 25),
+      counterHit: false
+    };
+  }
   return {
-    onComboHitFrames: defaultOnComboHitFrames(move),
-    onJuggleHitFrames: defaultOnJuggleHitFrames(move),
-    comboRepeatPenaltyFrames: defaultComboRepeatPenaltyFrames(move),
-    juggleRepeatPenaltyFrames: defaultJuggleRepeatPenaltyFrames(move)
+    onBlockFrames: clamp(-8 - activePenalty - (damage > 15 ? 1 : 0), -15, -5),
+    onHitFrames: clamp(19 - activePenalty, 12, 22),
+    onCounterHitFrames: clamp(26 - activePenalty, 18, 30),
+    counterHit: false
+  };
+}
+
+function commandAdvantageFields(move) {
+  const command = resolvedCommandForMove(move);
+  if (!isAdvancedCommand(command)) return neutralAdvantageFields(move);
+  const activePenalty = Math.max(0, (move.activeFrames ?? 2) - 3);
+  const damage = move.damage ?? 9;
+  const isLauncher = Boolean(move.launchHeight);
+  const isTornado = Boolean(move.tornado);
+  const isSpecial = /^O\+|^H\.|^R\.|qcf|qcb|hcf|hcb|dp|rdp|cd/.test(command);
+  const isState = /^(FC|WS|SS|SSL|SSR|BT)/.test(command);
+  const isChord = /^[1-4]\+[1-4]/.test(command);
+  const reward = isLauncher ? 27 : isTornado ? 24 : isSpecial ? 23 : isState ? 22 : isChord ? 20 : 19;
+  const risk = isLauncher ? -15 : isTornado ? -13 : isSpecial ? -11 : isState ? -8 : isChord ? -7 : -6;
+  return {
+    onBlockFrames: clamp(risk - activePenalty - (damage >= 16 ? 1 : 0), -22, 1),
+    onHitFrames: clamp(reward - activePenalty, 12, isLauncher ? 30 : 26),
+    onCounterHitFrames: clamp(reward + (isLauncher ? 10 : isTornado ? 9 : isSpecial ? 8 : 7) - Math.floor(activePenalty / 2), 18, 40),
+    counterHit: true
+  };
+}
+
+function contextualFields(move, { tuneAdvantage = true } = {}) {
+  const advantage = tuneAdvantage
+    ? isAdvancedCommand(resolvedCommandForMove(move))
+      ? commandAdvantageFields(move)
+      : neutralAdvantageFields(move)
+    : {};
+  const tunedMove = { ...move, ...advantage };
+  return {
+    ...advantage,
+    onComboHitFrames: defaultOnComboHitFrames(tunedMove),
+    onJuggleHitFrames: defaultOnJuggleHitFrames(tunedMove),
+    comboRepeatPenaltyFrames: defaultComboRepeatPenaltyFrames(tunedMove),
+    juggleRepeatPenaltyFrames: defaultJuggleRepeatPenaltyFrames(tunedMove)
   };
 }
 

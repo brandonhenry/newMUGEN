@@ -420,8 +420,8 @@
       "blockDamage": 1,
       "hitLevel": "high",
       "onBlockFrames": 1,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 16,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "pushback": 0.93,
@@ -445,10 +445,10 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     {
       "id": "kick",
@@ -461,8 +461,8 @@
       "blockDamage": 1,
       "hitLevel": "low",
       "onBlockFrames": -5,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "pushback": 0.96,
@@ -486,10 +486,10 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     {
       "id": "heavy",
@@ -502,8 +502,8 @@
       "blockDamage": 1,
       "hitLevel": "mid",
       "onBlockFrames": -5,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 5,
       "range": 1.53,
       "pushback": 0.94,
@@ -527,10 +527,10 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     {
       "id": "special",
@@ -543,8 +543,8 @@
       "blockDamage": 1,
       "hitLevel": "mid",
       "onBlockFrames": -9,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 22,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 9,
       "range": 1.71,
       "pushback": 0.98,
@@ -568,10 +568,10 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 8
     }
   ],
   "hurtboxes": [
@@ -607,9 +607,9 @@
       "recoveryFrames": 20,
       "damage": 6,
       "blockDamage": 1,
-      "onBlockFrames": -1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.5,
@@ -618,7 +618,12 @@
       "label": "Vegeta (Super Saiyan) Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 11,
@@ -626,9 +631,9 @@
       "recoveryFrames": 15,
       "damage": 8,
       "blockDamage": 1,
-      "onBlockFrames": -3,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 10,
+      "onBlockFrames": -1,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 5,
       "range": 1.53,
       "forwardForce": 0.85,
@@ -637,7 +642,12 @@
       "label": "Vegeta (Super Saiyan) Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 23,
@@ -645,9 +655,9 @@
       "recoveryFrames": 12,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -2,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "forwardForce": 0.95,
@@ -656,7 +666,12 @@
       "label": "Vegeta (Super Saiyan) Left Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 22,
@@ -664,9 +679,9 @@
       "recoveryFrames": 12,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -7,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 12,
+      "onBlockFrames": -2,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 9,
       "range": 1.71,
       "forwardForce": 1.2,
@@ -675,7 +690,12 @@
       "label": "Vegeta (Super Saiyan) Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -683,9 +703,9 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
@@ -693,7 +713,12 @@
       "forwardForceEndFrame": 21,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -701,9 +726,9 @@
       "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 35,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 34,
       "range": 1.68,
       "forwardForce": 2.52,
@@ -715,7 +740,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 15,
@@ -723,9 +753,9 @@
       "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 21,
-      "onCounterHitFrames": 30,
+      "onBlockFrames": -15,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 13,
       "range": 2.05,
       "forwardForce": 3.31,
@@ -738,7 +768,12 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -746,9 +781,9 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 27,
       "range": 1.62,
       "forwardForce": 2.52,
@@ -760,7 +795,12 @@
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -768,9 +808,9 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
       "forwardForce": 1.66,
@@ -778,7 +818,12 @@
       "forwardForceEndFrame": 14,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -786,9 +831,9 @@
       "recoveryFrames": 27,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 34,
       "range": 1.48,
       "forwardForce": 2.43,
@@ -797,7 +842,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -805,9 +855,9 @@
       "recoveryFrames": 24,
       "damage": 14,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 22,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 28,
       "range": 1.72,
       "forwardForce": 2.22,
@@ -815,7 +865,12 @@
       "forwardForceEndFrame": 17,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -823,9 +878,9 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -5,
-      "onHitFrames": 15,
-      "onCounterHitFrames": 22,
+      "onBlockFrames": -10,
+      "onHitFrames": 11,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 32,
       "range": 1.65,
       "forwardForce": 2.66,
@@ -837,7 +892,12 @@
       "label": "1+3 Frame Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -846,8 +906,8 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,
-      "onHitFrames": 15,
-      "onCounterHitFrames": 22,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
       "forwardForce": 1.59,
@@ -858,7 +918,12 @@
       "label": "2+3 Frame Link",
       "hitLevel": "low",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -866,9 +931,9 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -5,
-      "onHitFrames": 15,
-      "onCounterHitFrames": 22,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 33,
       "range": 1.74,
       "forwardForce": 2.79,
@@ -880,7 +945,12 @@
       "hitLevel": "low",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -888,9 +958,9 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -5,
-      "onHitFrames": 15,
-      "onCounterHitFrames": 22,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 38,
       "range": 1.9,
       "forwardForce": 2.79,
@@ -903,7 +973,12 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 12,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -911,9 +986,9 @@
       "recoveryFrames": 32,
       "damage": 22,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 32,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 19,
       "whiffRecoveryFrames": 41,
       "range": 2.1,
       "forwardForce": 3.66,
@@ -921,7 +996,12 @@
       "forwardForceEndFrame": 23,
       "label": "Vegeta (Super Saiyan) Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -934,7 +1014,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Second Beat"
+      "label": "Vegeta (Super Saiyan) Second Beat",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -947,7 +1035,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Body Blow"
+      "label": "Vegeta (Super Saiyan) Body Blow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -960,7 +1056,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Low Changeup"
+      "label": "Vegeta (Super Saiyan) Low Changeup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -973,7 +1077,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Pressure Feint"
+      "label": "Vegeta (Super Saiyan) Pressure Feint",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -986,7 +1098,15 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Drive"
+      "label": "Vegeta (Super Saiyan) Drive",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -999,7 +1119,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Barrage"
+      "label": "Vegeta (Super Saiyan) Barrage",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1012,7 +1140,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Finisher"
+      "label": "Vegeta (Super Saiyan) Finisher",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1020,13 +1156,20 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.32,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "Vegeta (Super Saiyan) Step Kick"
+      "label": "Vegeta (Super Saiyan) Step Kick",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1039,7 +1182,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Palm String"
+      "label": "Vegeta (Super Saiyan) Palm String",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1052,7 +1203,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Rising Chain"
+      "label": "Vegeta (Super Saiyan) Rising Chain",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1065,7 +1224,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Special Setup"
+      "label": "Vegeta (Super Saiyan) Special Setup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1078,7 +1245,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Break Art"
+      "label": "Vegeta (Super Saiyan) Break Art",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1091,7 +1266,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Check Hook"
+      "label": "Vegeta (Super Saiyan) Check Hook",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1104,7 +1287,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Heavy Break"
+      "label": "Vegeta (Super Saiyan) Heavy Break",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1117,7 +1308,15 @@
       "forwardForce": 2.52,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Charged Follow"
+      "label": "Vegeta (Super Saiyan) Charged Follow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1125,13 +1324,20 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.32,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "Vegeta (Super Saiyan) Drop Kick"
+      "label": "Vegeta (Super Saiyan) Drop Kick",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1144,7 +1350,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Arc Finisher"
+      "label": "Vegeta (Super Saiyan) Arc Finisher",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1157,7 +1371,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Focus Stance"
+      "label": "Vegeta (Super Saiyan) Focus Stance",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1170,7 +1392,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Mode Shift"
+      "label": "Vegeta (Super Saiyan) Mode Shift",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1183,7 +1413,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Heel Feint"
+      "label": "Vegeta (Super Saiyan) Heel Feint",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1196,7 +1434,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Summon Strike"
+      "label": "Vegeta (Super Saiyan) Summon Strike",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1209,7 +1455,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Guard Snare"
+      "label": "Vegeta (Super Saiyan) Guard Snare",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1222,7 +1476,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Armor Break"
+      "label": "Vegeta (Super Saiyan) Armor Break",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1235,7 +1497,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Power Setup"
+      "label": "Vegeta (Super Saiyan) Power Setup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1248,7 +1518,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Switch Strike"
+      "label": "Vegeta (Super Saiyan) Switch Strike",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1261,7 +1539,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Spark Jab"
+      "label": "Vegeta (Super Saiyan) Spark Jab",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1274,7 +1560,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Binding Blow"
+      "label": "Vegeta (Super Saiyan) Binding Blow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1287,7 +1581,15 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Vegeta (Super Saiyan) Heavy Draw"
+      "label": "Vegeta (Super Saiyan) Heavy Draw",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1295,18 +1597,25 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.32,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "Vegeta (Super Saiyan) Kick Ender"
+      "label": "Vegeta (Super Saiyan) Kick Ender",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:1+4": {
-      "onBlockFrames": -5,
-      "onHitFrames": 15,
-      "onCounterHitFrames": 22,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 29,
       "forwardForce": 2.55,
       "forwardForceStartFrame": 15,
@@ -1316,23 +1625,33 @@
       "label": "1+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:f+2": {
-      "onBlockFrames": -8,
+      "onBlockFrames": -5,
       "onHitFrames": 16,
-      "onCounterHitFrames": 24,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.13,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+3": {
-      "onBlockFrames": -7,
-      "onHitFrames": 17,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.65,
       "forwardForceStartFrame": 15,
@@ -1341,23 +1660,33 @@
       "moveJumpGravity": 24,
       "label": "f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
-      "onBlockFrames": -8,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.32,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
-      "onBlockFrames": -7,
-      "onHitFrames": 17,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.37,
       "forwardForceStartFrame": 15,
@@ -1366,12 +1695,17 @@
       "moveJumpGravity": 26,
       "label": "d+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+3": {
-      "onBlockFrames": -7,
-      "onHitFrames": 17,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.65,
       "forwardForceStartFrame": 15,
@@ -1380,23 +1714,33 @@
       "moveJumpGravity": 24,
       "label": "d/f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:qcf+1": {
-      "onBlockFrames": -11,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 30,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 18,
       "forwardForce": 2.18,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+3": {
-      "onBlockFrames": -10,
-      "onHitFrames": 21,
-      "onCounterHitFrames": 30,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 28,
       "forwardForce": 2.23,
       "forwardForceStartFrame": 15,
@@ -1405,23 +1749,33 @@
       "moveJumpGravity": 24,
       "label": "qcf+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:WS+2": {
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.19,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:SS+3": {
-      "onBlockFrames": -8,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.71,
       "forwardForceStartFrame": 15,
@@ -1430,12 +1784,17 @@
       "moveJumpGravity": 24,
       "label": "SS+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:SS+4": {
-      "onBlockFrames": -8,
-      "onHitFrames": 19,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 29,
       "forwardForce": 2.67,
       "forwardForceStartFrame": 15,
@@ -1445,23 +1804,33 @@
       "label": "SS+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:O+1": {
-      "onBlockFrames": -12,
-      "onHitFrames": 21,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 19,
       "forwardForce": 2.24,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
-      "onBlockFrames": -11,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 30,
       "forwardForce": 3.25,
       "forwardForceStartFrame": 15,
@@ -1471,7 +1840,12 @@
       "label": "O+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 22,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     }
   },
   "effects": [],

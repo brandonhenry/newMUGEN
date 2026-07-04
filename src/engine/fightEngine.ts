@@ -20,7 +20,7 @@ import type {
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale } from '../lib/characterScale';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
-import { recommendCpuComboRoute, type ComboTrialStep } from '../lib/comboRoutes';
+import { recommendCpuComboRoute, type ComboTrialStep, type CpuRouteRecommendation } from '../lib/comboRoutes';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
@@ -484,6 +484,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     bufferedMoveFrames: 0,
     bufferedMoveIntent: null,
     aiRecentComboKeys: [],
+    aiActiveComboRouteId: null,
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
     roundsWon: 0,
@@ -547,6 +548,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.comboUsedKeys = [];
     fighter.comboHits = 0;
     fighter.comboDamage = 0;
+    fighter.aiActiveComboRouteId = null;
   }
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
   fighter.dashForwardFrames = Math.max(0, fighter.dashForwardFrames - frameDelta);
@@ -1213,6 +1215,7 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.comboHits = 0;
   fighter.comboDamage = 0;
   fighter.aiRecentComboKeys = [];
+  fighter.aiActiveComboRouteId = null;
   resetTransformCharge(fighter);
 }
 
@@ -4257,9 +4260,11 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
         comboStep: ai.comboStep,
         leaderCloseout,
         usedKeys: ai.aiRecentComboKeys,
+        activeRouteId: ai.aiActiveComboRouteId,
         selector,
         routeRoll
       });
+  rememberAiCatalogRecommendation(ai, catalogRoute, routeOpening !== 'none');
   const pressureRoll = positiveModulo(selector * 3 + routeRoll + ai.slot * 19 + Math.floor(opponent.hp), 100) / 100;
   const pressureDropped = aiDecisionRoll(ai, opponent, elapsed, 4, roundAiSeed) < settings.pressureDropRate * style.imperfectionScale;
   const pressureAccepted =
@@ -4287,6 +4292,20 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
   if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
+    if (
+      (pressureCatalogStep && isAiCatalogStepStaleInCombo(ai, pressureCatalogStep)) ||
+      (!pressureCatalogStep && isAiComboContinuationInputStale(ai, pressureMoveInput))
+    ) {
+      ai.aiActiveComboRouteId = null;
+      input.block = false;
+      input[awayKey] = false;
+      input[towardKey] = distance > pressureReach * 0.78;
+      input.sidestepUp = false;
+      input.sidestepDown = false;
+      input.sidewalkUp = false;
+      input.sidewalkDown = false;
+      return input;
+    }
     if (!pressureCrouchInput && shouldAiJumpBeforeAttack(ai, opponent, pressureMove, opening.kind === 'hitstun' && opponent.state === 'juggle')) {
       applyAiJumpTakeoff(input, towardKey, awayKey);
       return input;
@@ -4363,11 +4382,13 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
           comboStep: ai.comboStep,
           leaderCloseout,
           usedKeys: ai.aiRecentComboKeys,
+          activeRouteId: ai.aiActiveComboRouteId,
           selector: selector + 41,
           routeRoll: routeRoll + 29
         })
       : null;
     const neutralCatalogRoute = neutralCatalogCandidate && isAiCatalogStepSpendable(ai, neutralCatalogCandidate.step) ? neutralCatalogCandidate : null;
+    rememberAiCatalogRecommendation(ai, neutralCatalogRoute, Boolean(neutralCatalogCandidate));
     if (neutralCatalogRoute) selectedMoveInput = neutralCatalogRoute.input;
     if (!leaderCloseout && !neutralCatalogRoute) {
       applyAiRoute(ai, input, towardKey, awayKey, difficulty, ai.comboStep, selector, routeRoll);
@@ -4375,9 +4396,24 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     selectedMoveInput = chooseAiKiBurstMoveInput(ai, selectedMoveInput, difficulty, selector + 31, routeRoll + 37);
     const crouchInput = leaderCloseout ? null : chooseAiFullCrouchMoveInput(ai, selectedMoveInput, difficulty, selector + 47, routeRoll + 53, shouldContinueCombo ? 'pressure' : 'neutral');
     if (crouchInput) {
+      if (isAiComboContinuationInputStale(ai, crouchInput)) {
+        ai.aiActiveComboRouteId = null;
+        input[towardKey] = distance > selectedMoveReach * 0.78;
+        input[awayKey] = false;
+        return input;
+      }
       selectedMoveInput = crouchInput;
       applyAiFullCrouchAttack(input, selectedMoveInput, towardKey, awayKey);
     } else {
+      if (
+        (neutralCatalogRoute && isAiCatalogStepStaleInCombo(ai, neutralCatalogRoute.step)) ||
+        (!neutralCatalogRoute && shouldContinueCombo && isAiComboContinuationInputStale(ai, selectedMoveInput))
+      ) {
+        ai.aiActiveComboRouteId = null;
+        input[towardKey] = distance > selectedMoveReach * 0.78;
+        input[awayKey] = false;
+        return input;
+      }
       const attackMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? selectedMove;
       if (shouldAiJumpBeforeAttack(ai, opponent, attackMove, shouldContinueCombo && opponent.state === 'juggle')) {
         applyAiJumpTakeoff(input, towardKey, awayKey);
@@ -4473,7 +4509,7 @@ function chooseAiMoveInput(
             ? settings.heavyPreference
             : Math.min(0.9, profile.specialChance * settings.specialScale + 0.16);
     const recentPenalty = isRecent ? settings.recentPenalty : 0;
-    const comboPenalty = comboRepeat ? 1.2 : 0;
+    const comboPenalty = comboRepeat ? 1.8 : 0;
     return {
       input,
       score: base + wave * settings.varietyRoll - recentPenalty - comboPenalty
@@ -4580,8 +4616,8 @@ function chooseAiPressureMoveInput(
     return sorted[choiceIndex]?.input ?? sorted[0]?.input ?? 'jab';
   }
 
-  const fresh = sorted.find((move) => !inputRecentlyUsed(ai, move.input));
-  return fresh?.input ?? sorted[0]?.input ?? 'jab';
+  const fresh = sorted.find((move) => !inputRecentlyUsed(ai, move.input) && !inputAlreadyUsedInCombo(ai, move.input));
+  return fresh?.input ?? sorted.find((move) => !inputRecentlyUsed(ai, move.input))?.input ?? sorted[0]?.input ?? 'jab';
 }
 
 function chooseAiTornadoPressureInput(
@@ -4636,8 +4672,8 @@ function chooseAiKiBurstMoveInput(ai: FighterRuntime, preferred: MoveInput, diff
     const move = ai.character.moves.find((candidate) => candidate.input === input);
     const authoredBonus = hasConfiguredKiCommand(ai, input) ? 0.42 : 0;
     const powerBonus = move ? clamp((move.damage - 8) / 22, 0, 0.5) + (move.launchHeight ? 0.16 : 0) + (move.tornado ? 0.12 : 0) : 0;
-    const freshness = inputRecentlyUsed(ai, input) ? -0.22 : 0;
-    const repeatPenalty = inputAlreadyUsedInCombo(ai, input) ? -0.5 : 0;
+    const freshness = inputRecentlyUsed(ai, input) ? -0.42 : 0;
+    const repeatPenalty = inputAlreadyUsedInCombo(ai, input) ? -0.9 : 0;
     const preferredBonus = input === preferred ? 0.18 : 0;
     const lowDifficultyCaution = difficulty <= 2 && (move?.input === 'special' || (move?.damage ?? 0) >= 16) ? -0.18 : 0;
     const wave = positiveModulo(selector + routeRoll * (index + 3) + input.length * 23 + ai.slot * 31, 100) / 100;
@@ -4841,8 +4877,8 @@ function chooseAiFullCrouchMoveInput(
   const scored = candidates.map((input, index) => {
     const move = ai.character.moves.find((candidate) => candidate.input === input);
     const preferredBonus = input === preferred ? 0.16 : 0;
-    const stalePenalty = inputRecentlyUsed(ai, input) ? 0.32 : 0;
-    const comboPenalty = inputAlreadyUsedInCombo(ai, input) ? 0.58 : 0;
+    const stalePenalty = inputRecentlyUsed(ai, input) ? 0.48 : 0;
+    const comboPenalty = inputAlreadyUsedInCombo(ai, input) ? 0.9 : 0;
     const lowPressureBonus = context === 'pressure' && (move?.hitLevel === 'low' || move?.hitLevel === 'mid') ? 0.18 : 0;
     const speedBonus = move ? clamp((18 - move.startupFrames) / 24, -0.16, 0.22) : 0;
     const wave = positiveModulo(selector + routeRoll * (index + 4) + input.length * 19 + ai.slot * 7, 100) / 100;
@@ -4910,8 +4946,27 @@ function applyAiCatalogRouteStep(input: InputFrame, step: ComboTrialStep, toward
   }
 }
 
+function rememberAiCatalogRecommendation(ai: FighterRuntime, recommendation: CpuRouteRecommendation | null, routeWindowOpen: boolean) {
+  if (recommendation) {
+    ai.aiActiveComboRouteId = recommendation.route.id;
+  } else if (routeWindowOpen) {
+    ai.aiActiveComboRouteId = null;
+  }
+}
+
 function isAiCatalogStepSpendable(ai: FighterRuntime, step: ComboTrialStep) {
   return !step.command?.startsWith('O+') || ai.ki >= KI_BURST_COST;
+}
+
+function isAiCatalogStepStaleInCombo(ai: FighterRuntime, step: ComboTrialStep) {
+  if (ai.comboTimer <= 0 && ai.comboHits <= 0 && ai.comboStep <= 0) return false;
+  const identity = step.command ?? `neutral:${step.input}`;
+  return ai.comboUsedKeys.includes(identity) || ai.comboIdentitySequence.includes(identity) || inputAlreadyUsedInCombo(ai, step.input);
+}
+
+function isAiComboContinuationInputStale(ai: FighterRuntime, input: MoveInput) {
+  if (ai.comboTimer <= 0 && ai.comboHits <= 0 && ai.comboStep <= 0) return false;
+  return inputAlreadyUsedInCombo(ai, input) || ai.comboSequence.includes(input);
 }
 
 function inputAlreadyUsedInCombo(ai: FighterRuntime, input: MoveInput) {
@@ -5158,6 +5213,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       comboIdentitySequence: [...fighter.comboIdentitySequence],
       comboUsedKeys: [...fighter.comboUsedKeys],
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
+      aiActiveComboRouteId: fighter.aiActiveComboRouteId,
       previousAttackInputs: { ...fighter.previousAttackInputs },
       bufferedMoveIntent: fighter.bufferedMoveIntent
         ? {

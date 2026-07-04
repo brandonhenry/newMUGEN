@@ -51,6 +51,7 @@ export type GeneratedComboRoute = {
 export type CpuRouteRecommendation = {
   route: GeneratedComboRoute;
   step: ComboTrialStep;
+  stepIndex: number;
   input: MoveInput;
   score: number;
 };
@@ -62,6 +63,7 @@ export type CpuRouteContext = {
   comboStep: number;
   leaderCloseout?: boolean;
   usedKeys?: string[];
+  activeRouteId?: string | null;
   selector?: number;
   routeRoll?: number;
 };
@@ -96,7 +98,8 @@ const rawButtonCommandToBaseKey: Record<string, string> = {
 
 const MAX_ROUTE_HITS = 30;
 const FRAME_LINK_GRACE = 2;
-const MAX_MOVE_IDENTITY_USES = 8;
+const MAX_SHORT_ROUTE_IDENTITY_USES = 3;
+const MAX_LONG_ROUTE_IDENTITY_USES = 2;
 const MAX_LAUNCHERS_PER_ROUTE = 1;
 const MAX_TORNADOES_PER_ROUTE = 2;
 
@@ -325,26 +328,46 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
   const roll = positiveModulo(selector * 13 + routeRoll * 17 + context.comboStep * 31, 100) / 100;
   if (roll > knowledgeChance) return null;
 
-  const used = new Set(context.usedKeys ?? []);
-  const routes = generateCharacterComboRoutes(character)
-    .filter((route) => routeFitsCpuContext(route, context))
+  const usedKeys = context.usedKeys ?? [];
+  const eligibleRoutes = generateCharacterComboRoutes(character).filter((route) => routeFitsCpuContext(route, context));
+  const activeRoute = eligibleRoutes.find((route) => route.id === context.activeRouteId);
+  if (activeRoute) {
+    const stepIndex = cpuRouteStepIndex(activeRoute, context);
+    const step = activeRoute.steps[stepIndex] ?? activeRoute.steps[activeRoute.steps.length - 1] ?? activeRoute.steps[0];
+    if (step && isCpuRouteStepFreshEnough(step, usedKeys, context, true)) {
+      return {
+        route: activeRoute,
+        step,
+        stepIndex,
+        input: step.input,
+        score: 10 + routeCategoryCpuWeight(activeRoute.category, context) + routeTierCpuWeight(activeRoute.tier, context)
+      };
+    }
+  }
+
+  const routes = eligibleRoutes
     .map((route, index) => {
-      const stepIndex = context.opening === 'neutral' || context.comboStep <= 0 ? 0 : Math.min(route.steps.length - 1, Math.max(1, context.comboStep));
+      const stepIndex = cpuRouteStepIndex(route, context);
       const step = route.steps[stepIndex] ?? route.steps[0];
-      const key = step.command ?? step.input;
-      const freshness = used.has(key) ? -0.42 : 0;
+      const key = stepIdentityKey(step);
+      const family = stepFamilyKey(step);
+      const sameKeyUses = usedKeys.filter((used) => keyMatchesMoveIdentity(used, key)).length;
+      const sameFamilyUses = usedKeys.filter((used) => keyMatchesMoveFamily(used, family, step.input)).length;
+      const freshness = -sameKeyUses * 0.85 - sameFamilyUses * 0.32;
       const difficultyBonus = route.level <= context.difficulty + 2 ? 0.18 : -0.12;
       const closeoutPenalty = context.leaderCloseout && (route.category === 'launcher' || route.category === 'tornado') ? -1.2 : 0;
       const timing = context.remainingFrames > 0 ? clamp((context.remainingFrames - routeStepStartup(step)) / 18, -0.5, 0.5) : 0;
       const wave = positiveModulo(selector + routeRoll * (index + 3) + route.id.length * 7, 100) / 100;
+      const variety = routeDiversityScore(route) * (context.difficulty >= 4 ? 0.08 : 0.03);
       return {
         route,
         step,
+        stepIndex,
         input: step.input,
-        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + freshness + difficultyBonus + closeoutPenalty + timing + wave * 0.18
+        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + freshness + difficultyBonus + closeoutPenalty + timing + variety + wave * 0.18
       };
     })
-    .filter((candidate) => candidate.score > 0);
+    .filter((candidate) => candidate.score > 0 && isCpuRouteStepFreshEnough(candidate.step, usedKeys, context, false));
 
   routes.sort((a, b) => b.score - a.score);
   return routes[0] ?? null;
@@ -359,6 +382,7 @@ type RoutePlannerState = {
   launcherCount: number;
   routeState: ComboRouteState;
   identities: string[];
+  families: string[];
 };
 
 function startersForCategory(routes: ResolvedMoveRoute[], category: ComboRouteCategory) {
@@ -415,7 +439,8 @@ function initialPlannerState(category: ComboRouteCategory, starter: ResolvedMove
     tornadoCount: 0,
     launcherCount: launches ? 1 : 0,
     routeState: starter.move.endsInCrouch ? 'crouch' : 'standing',
-    identities: [routeIdentity(starter)]
+    identities: [routeIdentity(starter)],
+    families: [routeFamily(starter)]
   };
 }
 
@@ -433,9 +458,13 @@ function isValidNextRoute(route: ResolvedMoveRoute, state: RoutePlannerState, al
   if (route.move.startupFrames > state.advantage + FRAME_LINK_GRACE) return false;
 
   const identity = routeIdentity(route);
+  const family = routeFamily(route);
   const previousIdentity = state.identities[state.identities.length - 1];
+  const previousFamily = state.families[state.families.length - 1];
   if (identity === previousIdentity) return false;
-  if (identityUseCount(state.identities, identity) >= MAX_MOVE_IDENTITY_USES) return false;
+  if (family === previousFamily && state.comboHits >= 2) return false;
+  if (identityUseCount(state.identities, identity) >= maxIdentityUsesForRoute(state.comboHits + 1)) return false;
+  if (identityUseCount(state.families, family) >= maxFamilyUsesForRoute(state.comboHits + 1)) return false;
   if ((route.move.launchHeight ?? 0) > 0 && state.launcherCount >= MAX_LAUNCHERS_PER_ROUTE) return false;
   if (route.move.tornado && state.context !== 'juggle') return false;
   if (route.move.tornado && state.tornadoCount >= MAX_TORNADOES_PER_ROUTE) return false;
@@ -444,7 +473,9 @@ function isValidNextRoute(route: ResolvedMoveRoute, state: RoutePlannerState, al
 
 function advancePlannerState(state: RoutePlannerState, route: ResolvedMoveRoute) {
   const identity = routeIdentity(route);
+  const family = routeFamily(route);
   const nextIdentities = [...state.identities, identity];
+  const nextFamilies = [...state.families, family];
   const repeatCount = countTrailingRouteIdentities(nextIdentities, identity);
   const hitContext = state.context === 'juggle' ? 'juggle' : 'combo';
   const frameData = contextualComboFrameData(route.move, {
@@ -465,6 +496,7 @@ function advancePlannerState(state: RoutePlannerState, route: ResolvedMoveRoute)
   state.launcherCount += (route.move.launchHeight ?? 0) > 0 ? 1 : 0;
   state.routeState = route.move.endsInCrouch ? 'crouch' : 'standing';
   state.identities = nextIdentities.slice(-MAX_ROUTE_HITS);
+  state.families = nextFamilies.slice(-MAX_ROUTE_HITS);
 }
 
 function allowedFollowupStates(state: RoutePlannerState): ComboRouteState[] {
@@ -476,14 +508,21 @@ function allowedFollowupStates(state: RoutePlannerState): ComboRouteState[] {
 function nextRouteScore(route: ResolvedMoveRoute, state: RoutePlannerState, targetHits: number) {
   const identity = routeIdentity(route);
   const uses = identityUseCount(state.identities, identity);
+  const family = routeFamily(route);
+  const familyUses = identityUseCount(state.families, family);
+  const isNewIdentity = !state.identities.includes(identity);
+  const isNewFamily = !state.families.includes(family);
   const needsTornado = state.context === 'juggle' && state.tornadoCount < MAX_TORNADOES_PER_ROUTE && state.comboHits >= Math.max(4, Math.floor(targetHits * 0.36));
   const needsCrouchBranch = state.routeState === 'crouch' && (route.state === 'crouch' || route.state === 'whileStanding');
   const lightFiller = state.context === 'juggle' ? clamp((14 - route.move.damage) / 8, -1, 1.2) : 0;
   return (
     10 -
     route.move.startupFrames * 0.18 -
-    uses * 4 +
-    (route.command ? 2 : 0) +
+    uses * 8 -
+    familyUses * 3 +
+    (isNewIdentity ? 5 : 0) +
+    (isNewFamily ? 3 : 0) +
+    (route.command ? 3 : 0) +
     (needsCrouchBranch ? 8 : 0) +
     (route.state === 'whileStanding' ? 2 : 0) +
     (route.move.endsInCrouch ? 2 : 0) +
@@ -499,6 +538,7 @@ function routeVarietyCredit(route: ResolvedMoveRoute, state: RoutePlannerState) 
   if (state.routeState === 'crouch' && (route.state === 'crouch' || route.state === 'whileStanding')) credit += 2;
   if (route.move.tornado && state.context === 'juggle') credit += 3;
   if (!state.identities.includes(routeIdentity(route))) credit += 1;
+  if (!state.families.includes(routeFamily(route))) credit += 2;
   if (state.context === 'juggle' && state.comboHits >= 6) credit += 3;
   if (state.context === 'juggle' && state.comboHits >= 12) credit += 3;
   if (state.context === 'juggle' && state.comboHits >= 20) credit += 2;
@@ -742,6 +782,77 @@ function routeTier(estimatedHits: number): ComboRouteTier {
 
 function routeIdentity(route: ResolvedMoveRoute) {
   return route.move.comboKey ?? route.command ?? route.id;
+}
+
+function routeFamily(route: ResolvedMoveRoute) {
+  if (!route.command) return `neutral:${route.input}`;
+  if (route.command.startsWith('FC+')) return `FC:${route.input}`;
+  if (route.command.startsWith('WS+')) return `WS:${route.input}`;
+  if (route.command.startsWith('SS+') || route.command.startsWith('SSL+') || route.command.startsWith('SSR+')) return `SS:${route.input}`;
+  if (route.command.startsWith('O+')) return `ki:${route.input}`;
+  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(route.command)) return `motion:${route.input}`;
+  if (/^[1-4]\+[1-4]/.test(route.command)) return `chord:${route.input}`;
+  const prefix = route.command.split('+').slice(0, -1).join('+') || 'command';
+  return `${prefix.replace(/[1-4]/g, '#')}:${route.input}`;
+}
+
+function maxIdentityUsesForRoute(routeHits: number) {
+  return routeHits >= 11 ? MAX_LONG_ROUTE_IDENTITY_USES : MAX_SHORT_ROUTE_IDENTITY_USES;
+}
+
+function maxFamilyUsesForRoute(routeHits: number) {
+  if (routeHits >= 21) return 4;
+  if (routeHits >= 11) return 3;
+  return 2;
+}
+
+function routeDiversityScore(route: GeneratedComboRoute) {
+  const identities = new Set(route.steps.map((step) => stepIdentityKey(step)));
+  const families = new Set(route.steps.map((step) => stepFamilyKey(step)));
+  return identities.size + families.size * 0.65;
+}
+
+function cpuRouteStepIndex(route: GeneratedComboRoute, context: CpuRouteContext) {
+  if (context.opening === 'neutral' || context.comboStep <= 0) return 0;
+  return Math.min(route.steps.length - 1, Math.max(1, context.comboStep));
+}
+
+function stepIdentityKey(step: ComboTrialStep) {
+  return step.command ?? `neutral:${step.input}`;
+}
+
+function stepFamilyKey(step: ComboTrialStep) {
+  if (!step.command) return `neutral:${step.input}`;
+  if (step.command.startsWith('FC+')) return `FC:${step.input}`;
+  if (step.command.startsWith('WS+')) return `WS:${step.input}`;
+  if (step.command.startsWith('SS+') || step.command.startsWith('SSL+') || step.command.startsWith('SSR+')) return `SS:${step.input}`;
+  if (step.command.startsWith('O+')) return `ki:${step.input}`;
+  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(step.command)) return `motion:${step.input}`;
+  if (/^[1-4]\+[1-4]/.test(step.command)) return `chord:${step.input}`;
+  const prefix = step.command.split('+').slice(0, -1).join('+') || 'command';
+  return `${prefix.replace(/[1-4]/g, '#')}:${step.input}`;
+}
+
+function isCpuRouteStepFreshEnough(step: ComboTrialStep, usedKeys: string[], context: CpuRouteContext, committedRoute: boolean) {
+  const identity = stepIdentityKey(step);
+  const family = stepFamilyKey(step);
+  const identityUses = usedKeys.filter((used) => keyMatchesMoveIdentity(used, identity)).length;
+  const familyUses = usedKeys.filter((used) => keyMatchesMoveFamily(used, family, step.input)).length;
+  const identityLimit = 1;
+  const familyLimit = committedRoute && context.difficulty >= 4 ? 3 : context.difficulty >= 4 ? 2 : 1;
+  return identityUses < identityLimit && familyUses < familyLimit;
+}
+
+function keyMatchesMoveIdentity(usedKey: string, identity: string) {
+  return usedKey === identity || usedKey.endsWith(`:${identity}`) || identity.endsWith(`:${usedKey}`);
+}
+
+function keyMatchesMoveFamily(usedKey: string, family: string, input: MoveInput) {
+  if (usedKey === family) return true;
+  if (usedKey === `neutral:${input}` || usedKey.endsWith(`:${input}`) || usedKey.endsWith(`+${inputToButton[input]}`)) {
+    return family.endsWith(`:${input}`);
+  }
+  return false;
 }
 
 function identityUseCount(identities: string[], identity: string) {

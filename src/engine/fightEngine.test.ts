@@ -1780,6 +1780,43 @@ describe('fight engine', () => {
     expect(topCount / Math.max(1, attackStarts)).toBeLessThan(0.7);
   });
 
+  it('drops CPU combo continuations instead of repeating the same move identity', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 909 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].hp = 999;
+    match.fighters[1].hp = 999;
+    match.fighters[0].position.x = -0.72;
+    match.fighters[1].position.x = 0.72;
+    match.fighters[1].state = 'hit';
+    match.fighters[1].stunFramesRemaining = 240;
+    match.fighters[1].actionFramesRemaining = 240;
+    match.fighters[1].stunTimer = 4;
+    match.fighters[1].actionTimer = 4;
+
+    const seenInCombo = new Set<string>();
+    let attackStarts = 0;
+    let repeatedStarts = 0;
+    let wasAttacking = false;
+
+    for (let i = 0; i < 240; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const fighter = match.fighters[0];
+      const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
+      if (isAttacking && !wasAttacking && fighter.currentMove) {
+        attackStarts += 1;
+        if (fighter.comboStep <= 1) seenInCombo.clear();
+        const key = fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`;
+        if (seenInCombo.has(key)) repeatedStarts += 1;
+        seenInCombo.add(key);
+      }
+      wasAttacking = isAttacking;
+    }
+
+    expect(attackStarts).toBeGreaterThan(2);
+    expect(repeatedStarts).toBe(0);
+  });
+
   it('makes high difficulty CPU take hitstun pressure openings more often than easy CPU', () => {
     const stepOpening = (difficulty: 1 | 5) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', difficulty);

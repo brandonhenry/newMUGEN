@@ -271,8 +271,8 @@
       "blockDamage": 1,
       "hitLevel": "high",
       "onBlockFrames": 1,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 16,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "pushback": 0.93,
@@ -296,10 +296,10 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     {
       "id": "kick",
@@ -312,8 +312,8 @@
       "blockDamage": 0,
       "hitLevel": "low",
       "onBlockFrames": -5,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "pushback": 0.96,
@@ -337,10 +337,10 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     {
       "id": "heavy",
@@ -353,8 +353,8 @@
       "blockDamage": 0,
       "hitLevel": "mid",
       "onBlockFrames": -5,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "range": 1.5,
       "pushback": 0.94,
@@ -378,10 +378,10 @@
       "forwardForce": 0.58,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     {
       "id": "special",
@@ -394,8 +394,8 @@
       "blockDamage": 0,
       "hitLevel": "mid",
       "onBlockFrames": -9,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 22,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 7,
       "range": 1.72,
       "pushback": 0.98,
@@ -419,10 +419,10 @@
       "forwardForce": 0.93,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     }
   ],
   "hurtboxes": [
@@ -458,9 +458,9 @@
       "recoveryFrames": 20,
       "damage": 6,
       "blockDamage": 1,
-      "onBlockFrames": -1,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.5,
@@ -469,7 +469,12 @@
       "label": "DIO Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -477,16 +482,21 @@
       "recoveryFrames": 16,
       "damage": 8,
       "blockDamage": 1,
-      "onBlockFrames": -5,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 9,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "forwardForce": 0.58,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "DIO Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 18,
@@ -494,16 +504,21 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "forwardForce": 0.65,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "DIO Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 19,
@@ -511,16 +526,21 @@
       "recoveryFrames": 24,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 13,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "forwardForce": 0.93,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 22,
       "label": "DIO Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -528,9 +548,9 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
@@ -538,7 +558,12 @@
       "forwardForceEndFrame": 21,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -546,9 +571,9 @@
       "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -13,
-      "onHitFrames": 25,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
       "forwardForce": 1.45,
@@ -559,7 +584,12 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "DIO Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -567,9 +597,9 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 38,
       "range": 2.05,
       "forwardForce": 3.37,
@@ -577,7 +607,12 @@
       "forwardForceEndFrame": 27,
       "label": "DIO Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -585,7 +620,7 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -10,
+      "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
@@ -594,7 +629,12 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 20,
       "label": "DIO Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -602,9 +642,9 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
       "forwardForce": 1.64,
@@ -612,7 +652,12 @@
       "forwardForceEndFrame": 14,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -620,9 +665,9 @@
       "recoveryFrames": 27,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -13,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 30,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
       "forwardForce": 1.36,
@@ -630,7 +675,12 @@
       "forwardForceEndFrame": 23,
       "launchHeight": 2,
       "label": "DIO Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -638,8 +688,8 @@
       "recoveryFrames": 8,
       "damage": 14,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 10,
+      "onBlockFrames": -11,
+      "onHitFrames": 11,
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
@@ -647,7 +697,12 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
       "label": "DIO Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -655,9 +710,9 @@
       "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -14,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -6,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
       "forwardForce": 1.46,
@@ -665,7 +720,12 @@
       "forwardForceEndFrame": 24,
       "launchHeight": 2.2,
       "label": "DIO Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -673,16 +733,21 @@
       "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "forwardForce": 1.07,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
       "label": "DIO Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -690,9 +755,9 @@
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -16,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 14,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
       "forwardForce": 1.59,
@@ -700,7 +765,12 @@
       "forwardForceEndFrame": 23,
       "label": "DIO Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -708,9 +778,9 @@
       "recoveryFrames": 21,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -15,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 29,
       "range": 1.9,
       "forwardForce": 3.26,
@@ -723,7 +793,12 @@
       "knockdown": true,
       "tornado": true,
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 12,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -731,9 +806,9 @@
       "recoveryFrames": 32,
       "damage": 22,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 32,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 19,
       "whiffRecoveryFrames": 39,
       "range": 2.1,
       "forwardForce": 2.59,
@@ -741,7 +816,12 @@
       "forwardForceEndFrame": 29,
       "label": "DIO Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -754,7 +834,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Second Beat"
+      "label": "DIO Second Beat",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -767,7 +855,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Body Blow"
+      "label": "DIO Body Blow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -780,7 +876,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Low Changeup"
+      "label": "DIO Low Changeup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -793,7 +897,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Pressure Feint"
+      "label": "DIO Pressure Feint",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -806,7 +918,15 @@
       "forwardForce": 1.58,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Drive"
+      "label": "DIO Drive",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -819,7 +939,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Barrage"
+      "label": "DIO Barrage",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -832,7 +960,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Finisher"
+      "label": "DIO Finisher",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -840,13 +976,20 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "DIO Step Kick"
+      "label": "DIO Step Kick",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -859,7 +1002,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Palm String"
+      "label": "DIO Palm String",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -872,7 +1023,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Rising Chain"
+      "label": "DIO Rising Chain",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -885,7 +1044,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Special Setup"
+      "label": "DIO Special Setup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -898,7 +1065,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Break Art"
+      "label": "DIO Break Art",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -911,7 +1086,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Check Hook"
+      "label": "DIO Check Hook",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -924,7 +1107,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Heavy Break"
+      "label": "DIO Heavy Break",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -937,7 +1128,15 @@
       "forwardForce": 2.5,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Charged Follow"
+      "label": "DIO Charged Follow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -945,13 +1144,20 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "DIO Drop Kick"
+      "label": "DIO Drop Kick",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -964,7 +1170,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Arc Finisher"
+      "label": "DIO Arc Finisher",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -977,7 +1191,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Focus Stance"
+      "label": "DIO Focus Stance",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -990,7 +1212,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Mode Shift"
+      "label": "DIO Mode Shift",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1003,7 +1233,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Heel Feint"
+      "label": "DIO Heel Feint",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1016,7 +1254,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Summon Strike"
+      "label": "DIO Summon Strike",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1029,7 +1275,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Guard Snare"
+      "label": "DIO Guard Snare",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1042,7 +1296,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Armor Break"
+      "label": "DIO Armor Break",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1055,7 +1317,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Power Setup"
+      "label": "DIO Power Setup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1068,7 +1338,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Switch Strike"
+      "label": "DIO Switch Strike",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1081,7 +1359,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Spark Jab"
+      "label": "DIO Spark Jab",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1094,7 +1380,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Binding Blow"
+      "label": "DIO Binding Blow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1107,7 +1401,15 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "DIO Heavy Draw"
+      "label": "DIO Heavy Draw",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1115,46 +1417,68 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "DIO Kick Ender"
+      "label": "DIO Kick Ender",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d+1": {
-      "onBlockFrames": -8,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 24,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+1": {
-      "onBlockFrames": -11,
-      "onHitFrames": 20,
-      "onCounterHitFrames": 30,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 18,
       "forwardForce": 2.16,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+1": {
-      "onBlockFrames": -12,
-      "onHitFrames": 21,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 18,
       "forwardForce": 2.22,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],
@@ -1188,8 +1512,8 @@
   "unplayable": false,
   "hasTransform": false,
   "modelScale": {
-    "width": 1.13,
-    "height": 1.13
+    "width": 1.25,
+    "height": 1.16
   },
   "animationFrameScales": {
     "knockdown": {

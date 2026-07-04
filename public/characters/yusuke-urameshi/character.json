@@ -306,8 +306,8 @@
       "blockDamage": 0,
       "hitLevel": "high",
       "onBlockFrames": 1,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 16,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 5,
       "range": 1.42,
       "pushback": 0.93,
@@ -331,10 +331,10 @@
       "forwardForce": 0.35,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 13,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     {
       "id": "kick",
@@ -347,8 +347,8 @@
       "blockDamage": 0,
       "hitLevel": "low",
       "onBlockFrames": -5,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "pushback": 0.96,
@@ -372,10 +372,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     {
       "id": "heavy",
@@ -388,8 +388,8 @@
       "blockDamage": 1,
       "hitLevel": "mid",
       "onBlockFrames": -5,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "range": 1.55,
       "pushback": 0.94,
@@ -413,10 +413,10 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     {
       "id": "special",
@@ -429,8 +429,8 @@
       "blockDamage": 0,
       "hitLevel": "mid",
       "onBlockFrames": -9,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 22,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 7,
       "range": 1.72,
       "pushback": 0.98,
@@ -454,10 +454,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     }
   ],
   "hurtboxes": [
@@ -493,16 +493,21 @@
       "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
-      "onBlockFrames": -2,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.35,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
       "label": "Yusuke Urameshi Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 11,
@@ -510,9 +515,9 @@
       "recoveryFrames": 16,
       "damage": 9,
       "blockDamage": 1,
-      "onBlockFrames": -4,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 10,
+      "onBlockFrames": -1,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 6,
       "range": 1.55,
       "forwardForce": 0.85,
@@ -521,7 +526,12 @@
       "label": "Yusuke Urameshi Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 18,
@@ -529,16 +539,21 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Yusuke Urameshi Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "kickright": {
       "startupFrames": 16,
@@ -546,16 +561,21 @@
       "recoveryFrames": 24,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 8,
-      "onCounterHitFrames": 13,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "Yusuke Urameshi Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -563,16 +583,21 @@
       "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 7,
-      "onCounterHitFrames": 11,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
       "label": "Yusuke Urameshi Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -580,9 +605,9 @@
       "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 23,
-      "onCounterHitFrames": 35,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 33,
       "range": 1.68,
       "forwardForce": 2.1,
@@ -594,7 +619,12 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -602,9 +632,9 @@
       "recoveryFrames": 29,
       "damage": 17,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 37,
       "range": 2.05,
       "forwardForce": 3.27,
@@ -612,7 +642,12 @@
       "forwardForceEndFrame": 28,
       "label": "Yusuke Urameshi Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -620,7 +655,7 @@
       "recoveryFrames": 22,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -10,
+      "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
@@ -629,7 +664,12 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Yusuke Urameshi Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -637,16 +677,21 @@
       "recoveryFrames": 15,
       "damage": 7,
       "blockDamage": 1,
-      "onBlockFrames": -4,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 9,
+      "onBlockFrames": 1,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 15,
       "label": "Yusuke Urameshi Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -654,9 +699,9 @@
       "recoveryFrames": 27,
       "damage": 13,
       "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 33,
       "range": 1.48,
       "forwardForce": 2.01,
@@ -665,7 +710,12 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -673,9 +723,9 @@
       "recoveryFrames": 8,
       "damage": 14,
       "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 22,
+      "onBlockFrames": -11,
+      "onHitFrames": 11,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 1.59,
@@ -686,7 +736,12 @@
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -694,9 +749,9 @@
       "recoveryFrames": 7,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -14,
-      "onHitFrames": 24,
-      "onCounterHitFrames": 31,
+      "onBlockFrames": -10,
+      "onHitFrames": 11,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
       "forwardForce": 2.01,
@@ -704,7 +759,12 @@
       "forwardForceEndFrame": 27,
       "launchHeight": 2.2,
       "label": "Yusuke Urameshi Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 15
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -712,16 +772,21 @@
       "recoveryFrames": 4,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 4,
-      "onCounterHitFrames": 8,
+      "onBlockFrames": -10,
+      "onHitFrames": 11,
+      "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "forwardForce": 1.46,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 32,
       "label": "Yusuke Urameshi Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -729,9 +794,9 @@
       "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
-      "onBlockFrames": -16,
-      "onHitFrames": 6,
-      "onCounterHitFrames": 14,
+      "onBlockFrames": -15,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 13,
       "range": 1.74,
       "forwardForce": 2.67,
@@ -742,7 +807,12 @@
       "label": "Yusuke Urameshi Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -750,9 +820,9 @@
       "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 26,
+      "onBlockFrames": -11,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 37,
       "range": 1.9,
       "forwardForce": 2.69,
@@ -760,7 +830,12 @@
       "forwardForceEndFrame": 28,
       "label": "Yusuke Urameshi Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -768,9 +843,9 @@
       "recoveryFrames": 32,
       "damage": 22,
       "blockDamage": 1,
-      "onBlockFrames": -12,
-      "onHitFrames": 22,
-      "onCounterHitFrames": 32,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 19,
       "whiffRecoveryFrames": 40,
       "range": 2.1,
       "forwardForce": 3.24,
@@ -778,7 +853,12 @@
       "forwardForceEndFrame": 29,
       "label": "Yusuke Urameshi Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "counterHit": false,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -791,7 +871,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Second Beat"
+      "label": "Yusuke Urameshi Second Beat",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -804,7 +892,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Body Blow"
+      "label": "Yusuke Urameshi Body Blow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -817,7 +913,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Low Changeup"
+      "label": "Yusuke Urameshi Low Changeup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -830,7 +934,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Pressure Feint"
+      "label": "Yusuke Urameshi Pressure Feint",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -843,7 +955,15 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Drive"
+      "label": "Yusuke Urameshi Drive",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -856,7 +976,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Barrage"
+      "label": "Yusuke Urameshi Barrage",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -869,7 +997,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Finisher"
+      "label": "Yusuke Urameshi Finisher",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -877,13 +1013,20 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Step Kick"
+      "label": "Yusuke Urameshi Step Kick",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -896,7 +1039,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Palm String"
+      "label": "Yusuke Urameshi Palm String",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -909,7 +1060,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Rising Chain"
+      "label": "Yusuke Urameshi Rising Chain",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -922,7 +1081,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Special Setup"
+      "label": "Yusuke Urameshi Special Setup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -935,7 +1102,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Break Art"
+      "label": "Yusuke Urameshi Break Art",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -948,7 +1123,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Check Hook"
+      "label": "Yusuke Urameshi Check Hook",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -961,7 +1144,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Heavy Break"
+      "label": "Yusuke Urameshi Heavy Break",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -974,7 +1165,15 @@
       "forwardForce": 1.75,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Charged Follow"
+      "label": "Yusuke Urameshi Charged Follow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -982,13 +1181,20 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Drop Kick"
+      "label": "Yusuke Urameshi Drop Kick",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1001,7 +1207,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Arc Finisher"
+      "label": "Yusuke Urameshi Arc Finisher",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1014,7 +1228,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Focus Stance"
+      "label": "Yusuke Urameshi Focus Stance",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1027,7 +1249,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Mode Shift"
+      "label": "Yusuke Urameshi Mode Shift",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1040,7 +1270,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Heel Feint"
+      "label": "Yusuke Urameshi Heel Feint",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1053,7 +1291,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Summon Strike"
+      "label": "Yusuke Urameshi Summon Strike",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1066,7 +1312,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Guard Snare"
+      "label": "Yusuke Urameshi Guard Snare",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1079,7 +1333,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Armor Break"
+      "label": "Yusuke Urameshi Armor Break",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1092,7 +1354,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Power Setup"
+      "label": "Yusuke Urameshi Power Setup",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1105,7 +1375,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Switch Strike"
+      "label": "Yusuke Urameshi Switch Strike",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1118,7 +1396,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Spark Jab"
+      "label": "Yusuke Urameshi Spark Jab",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1131,7 +1417,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Binding Blow"
+      "label": "Yusuke Urameshi Binding Blow",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1144,7 +1438,15 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Heavy Draw"
+      "label": "Yusuke Urameshi Heavy Draw",
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1152,35 +1454,52 @@
       "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": 0,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yusuke Urameshi Kick Ender"
+      "label": "Yusuke Urameshi Kick Ender",
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
+      "counterHit": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+2": {
-      "onBlockFrames": -8,
+      "onBlockFrames": -5,
       "onHitFrames": 16,
-      "onCounterHitFrames": 24,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.71,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:WS+2": {
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 27,
+      "onBlockFrames": -5,
+      "onHitFrames": 16,
+      "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.77,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "counterHit": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],

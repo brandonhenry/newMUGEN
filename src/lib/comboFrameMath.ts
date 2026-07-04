@@ -42,38 +42,38 @@ export function contextualHitAdvantage(move: MoveDefinition, context: ComboAdvan
 }
 
 export function defaultOnComboHitFrames(move: Pick<MoveDefinition, 'onHitFrames' | 'activeFrames' | 'damage' | 'launchHeight' | 'tornado' | 'knockdown' | 'forwardForce' | 'command' | 'hitLevel'>) {
-  const commitmentCredit = move.command && !isPlainNeutralCommand(move.command) ? 2 : 0;
+  const commitmentCredit = move.command && !isPlainNeutralCommand(move.command) ? 4 : 0;
   const risk =
-    (move.launchHeight ? 3 : 0) +
-    (move.tornado ? 2 : 0) +
+    (move.launchHeight ? 4 : 0) +
+    (move.tornado ? 3 : 0) +
     (move.knockdown ? 2 : 0) +
     Math.max(0, Math.round((move.damage - 12) / 4)) +
     Math.max(0, move.activeFrames - 3) +
     Math.max(0, Math.round(((move.forwardForce ?? 0) - 1.4) * 1.5));
   const lowCredit = move.hitLevel === 'low' ? 1 : 0;
-  return clamp(Math.round(move.onHitFrames * 0.84) + 1 + commitmentCredit + lowCredit - risk, 5, Math.max(5, move.onHitFrames + 2));
+  return clamp(Math.round(move.onHitFrames * 0.88) + 1 + commitmentCredit + lowCredit - risk, 5, Math.max(5, move.onHitFrames + 4));
 }
 
 export function defaultOnJuggleHitFrames(move: Pick<MoveDefinition, 'onHitFrames' | 'activeFrames' | 'damage' | 'launchHeight' | 'tornado' | 'knockdown' | 'forwardForce' | 'command' | 'juggleRefloatVelocity'>) {
-  const explicitJuggleCredit = move.tornado ? 11 : move.juggleRefloatVelocity ? 6 : 0;
-  const commandCredit = move.command && !isPlainNeutralCommand(move.command) ? 2 : 0;
+  const explicitJuggleCredit = move.tornado ? 13 : move.juggleRefloatVelocity ? 7 : 0;
+  const commandCredit = move.command && !isPlainNeutralCommand(move.command) ? 4 : 0;
   const propertyRisk =
-    (move.launchHeight ? 5 : 0) +
+    (move.launchHeight ? 7 : 0) +
     (move.knockdown ? 4 : 0) +
     Math.max(0, Math.round((move.damage - 10) / 3)) +
     Math.max(0, move.activeFrames - 3) +
     Math.max(0, Math.round(((move.forwardForce ?? 0) - 1) * 1.4));
-  return clamp(Math.round(move.onHitFrames * 0.62) + 1 + explicitJuggleCredit + commandCredit - propertyRisk, 4, move.tornado ? 30 : 20);
+  return clamp(Math.round(move.onHitFrames * 0.68) + 1 + explicitJuggleCredit + commandCredit - propertyRisk, 4, move.tornado ? 30 : 24);
 }
 
 export function defaultComboRepeatPenaltyFrames(move: Pick<MoveDefinition, 'damage' | 'launchHeight' | 'tornado' | 'knockdown' | 'command'>) {
-  const commandRelief = move.command && !isPlainNeutralCommand(move.command) ? -1 : 0;
-  return clamp(3 + commandRelief + Math.max(0, Math.round((move.damage - 10) / 5)) + (move.launchHeight ? 2 : 0) + (move.tornado ? 2 : 0) + (move.knockdown ? 1 : 0), 2, 10);
+  const commandRelief = move.command && !isPlainNeutralCommand(move.command) ? -1 : 1;
+  return clamp(4 + commandRelief + Math.max(0, Math.round((move.damage - 10) / 5)) + (move.launchHeight ? 3 : 0) + (move.tornado ? 3 : 0) + (move.knockdown ? 2 : 0), 3, 12);
 }
 
 export function defaultJuggleRepeatPenaltyFrames(move: Pick<MoveDefinition, 'damage' | 'launchHeight' | 'tornado' | 'knockdown' | 'command'>) {
-  const commandRelief = move.command && !isPlainNeutralCommand(move.command) ? -1 : 0;
-  return clamp(5 + commandRelief + Math.max(0, Math.round((move.damage - 8) / 4)) + (move.launchHeight ? 4 : 0) + (move.tornado ? 5 : 0) + (move.knockdown ? 2 : 0), 4, 16);
+  const commandRelief = move.command && !isPlainNeutralCommand(move.command) ? -1 : 1;
+  return clamp(6 + commandRelief + Math.max(0, Math.round((move.damage - 8) / 4)) + (move.launchHeight ? 6 : 0) + (move.tornado ? 6 : 0) + (move.knockdown ? 3 : 0), 5, 18);
 }
 
 function baseContextualAdvantage(move: MoveDefinition, context: ComboAdvantageContext) {

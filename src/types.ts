@@ -883,6 +883,7 @@ export type FighterRuntime = {
   bufferedMoveFrames: number;
   bufferedMoveIntent: BufferedMoveIntent | null;
   aiRecentComboKeys: string[];
+  aiActiveComboRouteId: string | null;
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;
   roundsWon: number;
