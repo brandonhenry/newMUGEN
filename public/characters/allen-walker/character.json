@@ -479,17 +479,13 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.44,
-      "label": "Allen Walker Left Check",
-      "hitLevel": "high",
-      "tracking": "medium",
-      "knockdown": false,
       "forwardForce": 0.42,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Allen Walker Left Check",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 13,
@@ -502,15 +498,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Allen Walker Right Check",
-      "hitLevel": "mid",
       "forwardForce": 0.48,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "Allen Walker Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 18,
@@ -523,15 +515,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Allen Walker Left Kick",
-      "hitLevel": "low",
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 19,
@@ -544,15 +532,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Allen Walker Right Kick",
-      "hitLevel": "mid",
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -566,22 +550,11 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "f+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "f+1",
-      "notation": "f+1",
-      "animationKey": "cmd:f+1",
-      "comboKey": "f+1:link",
-      "route": "direction:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 44,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 5
+      "label": "f+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -594,19 +567,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Allen Walker Launcher",
-      "hitLevel": "mid",
-      "forwardForce": 1.35,
-      "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 25,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -619,19 +588,15 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 15,
       "range": 2.05,
-      "label": "Allen Walker Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "jumpBeforeMove": true,
-      "moveJumpForce": 9.4,
-      "moveJumpGravity": 24,
       "forwardForce": 4,
       "forwardForceStartFrame": 44,
       "forwardForceEndFrame": 55,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "moveJumpForce": 9.4,
+      "moveJumpGravity": 24,
+      "label": "Allen Walker Burst",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -644,15 +609,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Allen Walker Rising Strike",
-      "hitLevel": "mid",
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -665,23 +626,12 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 7,
       "range": 1.34,
-      "label": "FC+1 Frame Link",
-      "hitLevel": "mid",
-      "input": "jab",
-      "command": "FC+1",
-      "notation": "FC+1",
-      "animationKey": "cmd:FC+1",
-      "comboKey": "FC+1:link",
-      "route": "state:frame-link",
-      "counterHit": true,
-      "cancelable": false,
       "forwardForce": 0.96,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "FC+1 Frame Link",
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -694,16 +644,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Allen Walker Crouch Launcher",
-      "hitLevel": "mid",
       "forwardForce": 1.26,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "launchHeight": 2,
+      "label": "Allen Walker Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -716,15 +662,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Allen Walker Twin Assault",
-      "hitLevel": "mid",
       "forwardForce": 1.58,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7
+      "label": "Allen Walker Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -737,16 +679,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Allen Walker Cross Launcher",
-      "hitLevel": "mid",
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "launchHeight": 2.2,
+      "label": "Allen Walker Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -759,15 +697,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Allen Walker Low Feint",
-      "hitLevel": "low",
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -780,16 +714,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Allen Walker Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
+      "label": "Allen Walker Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -802,16 +732,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 37,
       "range": 1.9,
-      "label": "Allen Walker Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "label": "Allen Walker Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -824,16 +750,12 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 39,
       "range": 2.1,
-      "label": "Allen Walker Aura Drive",
-      "hitLevel": "special",
-      "knockdown": true,
       "forwardForce": 2.49,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 11
+      "label": "Allen Walker Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -843,14 +765,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Second Beat",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -860,14 +778,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Body Blow",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -877,14 +791,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Low Changeup",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -894,14 +804,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Pressure Feint",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -911,14 +817,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Drive",
       "forwardForce": 0.9,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -928,14 +830,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Barrage",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -945,14 +843,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Finisher",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -963,14 +857,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Step Kick",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -980,14 +870,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Palm String",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -997,14 +883,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Rising Chain",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1014,14 +896,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Special Setup",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1031,14 +909,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Break Art",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1048,14 +922,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Check Hook",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1065,14 +935,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Heavy Break",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1082,14 +948,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Charged Follow",
       "forwardForce": 1.82,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1100,14 +962,10 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Drop Kick",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1117,14 +975,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Arc Finisher",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1134,14 +988,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Focus Stance",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1151,14 +1001,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Mode Shift",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1168,14 +1014,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Heel Feint",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1185,14 +1027,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Summon Strike",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1202,14 +1040,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Guard Snare",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1219,14 +1053,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Armor Break",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1236,14 +1066,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Power Setup",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1253,14 +1079,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Switch Strike",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1270,14 +1092,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Spark Jab",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1287,14 +1105,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Binding Blow",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1304,14 +1118,10 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Heavy Draw",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1322,82 +1132,43 @@
       "onBlockFrames": -8,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Allen Walker Kick Ender",
       "forwardForce": 0.62,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "label": "Allen Walker Kick Ender"
     },
     "cmd:d+1": {
-      "input": "jab",
-      "command": "d+1",
-      "notation": "d+1",
-      "animationKey": "cmd:d+1",
-      "comboKey": "d+1:link",
-      "label": "d+1 Frame Link",
-      "route": "direction:frame-link",
       "onBlockFrames": -8,
       "onHitFrames": 16,
       "onCounterHitFrames": 24,
-      "counterHit": true,
       "whiffRecoveryFrames": 6,
-      "cancelable": false,
       "forwardForce": 0.62,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "d+1 Frame Link",
+      "cancelable": false
     },
     "cmd:qcf+1": {
-      "input": "jab",
-      "command": "qcf+1",
-      "notation": "qcf+1",
-      "animationKey": "cmd:qcf+1",
-      "comboKey": "qcf+1:link",
-      "label": "qcf+1 Frame Link",
-      "route": "motion:frame-link",
       "onBlockFrames": -11,
       "onHitFrames": 20,
       "onCounterHitFrames": 30,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false,
       "forwardForce": 1.48,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "qcf+1 Frame Link",
+      "cancelable": false
     },
     "cmd:O+1": {
-      "input": "jab",
-      "command": "O+1",
-      "notation": "O+1",
-      "animationKey": "cmd:O+1",
-      "comboKey": "O+1:link",
-      "label": "O+1 Frame Link",
-      "route": "special:frame-link",
       "onBlockFrames": -12,
       "onHitFrames": 21,
       "onCounterHitFrames": 31,
-      "counterHit": true,
-      "counterHitStunBonusFrames": 2,
       "whiffRecoveryFrames": 9,
-      "cancelable": false,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 2,
-      "juggleRepeatPenaltyFrames": 4
+      "label": "O+1 Frame Link",
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1451,11 +1222,6 @@
         "height": 1.04,
         "offsetX": 0
       },
-      "94": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "95": {
         "width": 1.25,
         "height": 1.16,
@@ -1489,16 +1255,6 @@
       "101": {
         "width": 0.99,
         "height": 0.99,
-        "offsetX": 0
-      },
-      "102": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "103": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       }
     },
@@ -1594,16 +1350,6 @@
       }
     },
     "jableft": {
-      "74": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "76": {
         "width": 0.92,
         "height": 1,
@@ -1621,16 +1367,6 @@
       }
     },
     "knockdown": {
-      "31": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "32": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "33": {
         "width": 0.9,
         "height": 0.9,
@@ -1643,11 +1379,6 @@
       }
     },
     "getupStand": {
-      "32": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "33": {
         "width": 0.9,
         "height": 0.9,
@@ -1672,11 +1403,6 @@
         "width": 0.9,
         "height": 0.9,
         "offsetX": 0
-      },
-      "56": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
       }
     },
     "win": {
@@ -1694,16 +1420,6 @@
       }
     },
     "cmd:f+1": {
-      "251": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "252": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "253": {
         "width": 1.31,
         "height": 1.31,
@@ -1712,11 +1428,6 @@
       "254": {
         "width": 1.14,
         "height": 1.38,
-        "offsetX": 0
-      },
-      "255": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       },
       "256": {
@@ -1746,16 +1457,6 @@
       }
     },
     "cmd:qcf+4": {
-      "80": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "81": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "82": {
         "width": 1.31,
         "height": 1.31,
@@ -1764,11 +1465,6 @@
       "83": {
         "width": 1.14,
         "height": 1.38,
-        "offsetX": 0
-      },
-      "84": {
-        "width": 1,
-        "height": 1,
         "offsetX": 0
       },
       "85": {
@@ -1798,16 +1494,6 @@
       }
     },
     "cmd:FC+1": {
-      "74": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "76": {
         "width": 0.92,
         "height": 1,
@@ -1825,16 +1511,6 @@
       }
     },
     "cmd:d+1": {
-      "74": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "76": {
         "width": 0.92,
         "height": 1,
@@ -1852,16 +1528,6 @@
       }
     },
     "cmd:qcf+1": {
-      "74": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "76": {
         "width": 0.92,
         "height": 1,
@@ -1879,16 +1545,6 @@
       }
     },
     "cmd:O+1": {
-      "74": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0
-      },
       "76": {
         "width": 0.92,
         "height": 1,
@@ -1902,6 +1558,13 @@
       "78": {
         "width": 1.03,
         "height": 1.03,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "28": {
+        "width": 1.32,
+        "height": 0.8,
         "offsetX": 0
       }
     }

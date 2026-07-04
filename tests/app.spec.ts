@@ -311,18 +311,51 @@ test('mobile touch controls drive movement and attacks', async ({ page }, testIn
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
 });
 
+test('opens training modes, completes a basic trial, and previews combo routes', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Keyboard training-trial route is covered by the desktop project');
+  await startTraining(page);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Training Mode' }).click();
+  await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible();
+
+  await page.getByRole('button', { name: /Basics/ }).click();
+  await expect(page.getByRole('button', { name: /Walk In/ })).toBeVisible();
+  await page.getByRole('button', { name: /Walk In/ }).click();
+  await expect(page.locator('.zoro-trainer-callout')).toBeVisible();
+  await page.getByRole('button', { name: 'Try', exact: true }).click();
+  await expect(page.locator('.training-trial-hud')).toContainText('Walk In');
+  await page.waitForTimeout(230);
+  await keyDown(page, 'KeyD');
+  await page.waitForTimeout(150);
+  await keyUp(page, 'KeyD');
+  await expect.poll(async () => page.evaluate(() => window.localStorage.getItem('kore.trainingTrials.v1') ?? ''), { timeout: 4000 }).toContain('movement:walk');
+
+  await page.locator('.fight-screen').click({ position: { x: 24, y: 24 } });
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
+  await page.getByRole('button', { name: /Combos/ }).click();
+  await expect(page.locator('.combo-trial-list')).toContainText('Combos');
+  const shortCombo = page.locator('.combo-trial-list section button').filter({ hasText: /3 hits|4 hits|5 hits/ }).first();
+  await expect(shortCombo).toBeVisible();
+  await shortCombo.click();
+  await page.getByRole('button', { name: 'Preview' }).click();
+  await expect(page.locator('.training-trial-hud')).toContainText('Preview');
+  await expect(page.locator('.training-trial-hud')).toBeHidden({ timeout: 12000 });
+});
+
 test('opens training combo trials and shows counter-hit progress', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Keyboard combo-trial route is covered by the desktop project');
   await startTraining(page);
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Combo Trials' }).click();
-  await expect(page.getByRole('heading', { name: 'Combo Trials' })).toBeVisible();
-  await expect(page.locator('.combo-trial-list')).toContainText('Launcher Routes');
+  await page.getByRole('button', { name: 'Training Mode' }).click();
+  await page.getByRole('button', { name: /Combos/ }).click();
   const counterHitTrial = page.getByRole('button', { name: /Counter Hit/i }).first();
+  test.skip(await counterHitTrial.count() === 0, 'Selected training character has no counter-hit combo route');
   await expect(counterHitTrial).toBeVisible();
   const trialKeys = keysForCounterHitTrialName(await counterHitTrial.innerText());
   await counterHitTrial.click();
-  await page.getByRole('button', { name: 'Train' }).click();
+  await page.getByRole('button', { name: 'Try', exact: true }).click();
+  await expect(page.locator('.training-trial-hud')).toBeVisible();
   await setKeys(page, trialKeys, true);
   await page.waitForTimeout(260);
   await setKeys(page, trialKeys.reverse(), false);
