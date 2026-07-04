@@ -1,11 +1,12 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { CharacterDefinition, FighterRuntime, MatchSnapshot } from '../types';
+import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, MatchSnapshot } from '../types';
 import { emptyInputFrame } from '../types';
 import { resolveMoveRoutes } from './comboRoutes';
 import {
   TRAINING_TRIAL_STORAGE_KEY,
+  advanceTrainingTrialWithImpact,
   advanceTrainingTrialWithInput,
   generateBasicTrainingTrials,
   generateComboTrainingTrials,
@@ -39,6 +40,29 @@ function mockMatch(playerState: FighterRuntime['state'] = 'idle', dummyState: Fi
       { state: dummyState } as FighterRuntime
     ]
   } as MatchSnapshot;
+}
+
+function mockImpact(overrides: Partial<ImpactSparkEvent> = {}): ImpactSparkEvent {
+  return {
+    id: 1,
+    kind: 'hit',
+    position: [0, 1, 0],
+    attackerSlot: 1,
+    defenderSlot: 2,
+    hitLevel: 'mid',
+    damage: 10,
+    moveLabel: 'Test Hit',
+    moveInput: 'jab',
+    ...overrides
+  };
+}
+
+function progressAtImpactFrame(trial: ReturnType<typeof generateBasicTrainingTrials>[number], frame = trial.steps[0]?.targetFrame ?? 18) {
+  let progress = makeTrainingTrialProgress(trial)!;
+  for (let index = 0; index < frame; index += 1) {
+    progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
+  }
+  return progress;
 }
 
 describe('training trial catalog', () => {
@@ -111,11 +135,90 @@ describe('training trial catalog', () => {
           expect(trial.steps[0].command, `${character.id}:${trial.id}`).toMatch(/^(FC|WS)\+/);
         }
         if (trial.category === 'ki') {
+          if (trial.id.endsWith('ki:perfect-block')) continue;
           const step = trial.steps[0];
           const route = routes.find((item) => item.command === step.command || (!step.command && item.input === step.input));
           expect(Boolean(route?.command?.startsWith('O+') || route?.move.usesKi || route?.move.kiBurst), `${character.id}:${trial.id}`).toBe(true);
         }
       }
+    }
+  });
+
+  it('adds basics for ki block, whiff punish, anti-air, and counter-hit fundamentals', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const byId = (suffix: string) => trials.find((trial) => trial.id.endsWith(suffix));
+
+    expect(byId('ki:perfect-block')?.steps[0]).toMatchObject({
+      expectImpactKinds: ['block'],
+      expectImpactAttackerSlot: 2,
+      expectImpactDefenderSlot: 1,
+      requireImpactKiBurst: true
+    });
+    expect(byId('punish:whiff')?.steps[0].expectImpactKinds).toEqual(['whiffPunish']);
+    expect(byId('defense:anti-air')?.steps[0]).toMatchObject({
+      expectImpactKinds: ['hit', 'counterHit'],
+      requireAirborneDefender: true
+    });
+    expect(byId('punish:counter-hit')?.steps[0].expectImpactKinds).toEqual(['counterHit']);
+  });
+
+  it('grades a timed ki block from a blocked ki impact', () => {
+    const character = readRosterCharacters().find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+    const trial = generateBasicTrainingTrials(character, readRosterCharacters()).find((item) => item.id.endsWith('ki:perfect-block'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    let progress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 20; frame += 1) {
+      progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
+    }
+    progress = advanceTrainingTrialWithImpact(progress, trial, mockImpact({ kind: 'block', attackerSlot: 2, defenderSlot: 1, kiBurst: true, moveInput: 'special' }));
+
+    expect(progress.completed).toBe(true);
+    expect(progress.statuses[0]).toBe('perfect');
+  });
+
+  it('requires whiff punish, airborne anti-air, and counter-hit impacts for their basics drills', () => {
+    const character = readRosterCharacters().find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+    const trials = generateBasicTrainingTrials(character, readRosterCharacters());
+
+    const whiff = trials.find((item) => item.id.endsWith('punish:whiff'));
+    expect(whiff).toBeTruthy();
+    if (whiff) {
+      const wrong = advanceTrainingTrialWithImpact(makeTrainingTrialProgress(whiff)!, whiff, mockImpact({ kind: 'hit' }));
+      expect(wrong.completed).toBe(false);
+      expect(wrong.statuses[0]).toBe('missed');
+      const right = advanceTrainingTrialWithImpact(progressAtImpactFrame(whiff), whiff, mockImpact({ kind: 'whiffPunish', moveInput: whiff.steps[0].input }));
+      expect(right.completed).toBe(true);
+    }
+
+    const antiAir = trials.find((item) => item.id.endsWith('defense:anti-air'));
+    expect(antiAir).toBeTruthy();
+    if (antiAir) {
+      const grounded = advanceTrainingTrialWithImpact(makeTrainingTrialProgress(antiAir)!, antiAir, mockImpact({ kind: 'hit', moveInput: antiAir.steps[0].input, juggled: false }));
+      expect(grounded.completed).toBe(false);
+      expect(grounded.statuses[0]).toBe('missed');
+      const airborneCounter = advanceTrainingTrialWithImpact(progressAtImpactFrame(antiAir), antiAir, mockImpact({ kind: 'counterHit', moveInput: antiAir.steps[0].input, moveCommand: antiAir.steps[0].command, juggled: true }));
+      expect(airborneCounter.completed).toBe(true);
+    }
+
+    const counter = trials.find((item) => item.id.endsWith('punish:counter-hit'));
+    expect(counter).toBeTruthy();
+    if (counter) {
+      const normal = advanceTrainingTrialWithImpact(makeTrainingTrialProgress(counter)!, counter, mockImpact({ kind: 'hit', moveInput: counter.steps[0].input, moveCommand: counter.steps[0].command }));
+      expect(normal.completed).toBe(false);
+      expect(normal.statuses[0]).toBe('missed');
+      const counterHit = advanceTrainingTrialWithImpact(progressAtImpactFrame(counter), counter, mockImpact({ kind: 'counterHit', moveInput: counter.steps[0].input, moveCommand: counter.steps[0].command }));
+      expect(counterHit.completed).toBe(true);
     }
   });
 

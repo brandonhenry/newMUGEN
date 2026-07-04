@@ -1,5 +1,6 @@
 import type { CompactMatchSnapshot } from './codec';
 import type { OnlinePlayerProfile } from './leaderboard';
+import type { RankedSubmitResult } from './ranked';
 import type { MoveInput } from '../../types';
 
 export type OnlineRole = 'host' | 'guest';
@@ -62,6 +63,11 @@ export type OnlineErrorMessage = {
   message: string;
 };
 
+export type OnlineRankedResultMessage = {
+  type: 'rankedResult';
+  result: RankedSubmitResult;
+};
+
 export type OnlineMessage =
   | OnlineHelloMessage
   | OnlineInputMessage
@@ -72,7 +78,8 @@ export type OnlineMessage =
   | OnlineLeaveMessage
   | OnlinePingMessage
   | OnlinePongMessage
-  | OnlineErrorMessage;
+  | OnlineErrorMessage
+  | OnlineRankedResultMessage;
 
 export function isOnlineMessage(value: unknown): value is OnlineMessage {
   if (!value || typeof value !== 'object' || !('type' in value)) return false;
@@ -87,6 +94,7 @@ export function isOnlineMessage(value: unknown): value is OnlineMessage {
     type === 'leave' ||
     type === 'ping' ||
     type === 'pong' ||
-    type === 'error'
+    type === 'error' ||
+    type === 'rankedResult'
   );
 }

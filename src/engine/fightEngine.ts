@@ -85,6 +85,7 @@ const AI_JUGGLE_LOCKOUT_FRAMES = 24;
 const DEFAULT_WHIFF_RECOVERY_FRAMES = 4;
 const FORCED_CROUCH_EXIT_FRAMES = 8;
 const BLOCK_PUNISH_BUFFER_FRAMES = 12;
+const UNIVERSAL_COUNTER_HIT_STUN_BONUS_FRAMES = 8;
 const PRESSURE_LANE_TOLERANCE = 0.82;
 const AI_DECISION_BUCKETS_PER_SECOND = 4;
 const AI_SEED_MODULUS = 1_000_000;
@@ -3095,7 +3096,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const wasAirborne = isAirborne(defender) || wasJuggled;
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
   const blocked = canDefenderBlockMove(defender, attacker, move);
-  const counterHit = isCounterHit(move, defender);
+  const counterHit = isCounterHit(defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
   const identity = getMoveIdentity(move);
@@ -3169,7 +3170,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const hitContext = wasAirborne ? 'juggle' : defender.state === 'hit' && defender.stunFramesRemaining > 0 ? 'combo' : 'neutral';
   const frameData = contextualComboFrameData(move, {
     context: hitContext,
-    counterHit,
+    counterHit: counterHit && Boolean(move.counterHit),
     comboHits: attacker.comboHits,
     repeatCount,
     routeVarietyCredit: getEngineRouteVarietyCredit(move, attacker, identity, hitContext, repeatCount)
@@ -3178,7 +3179,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     frameData.effectiveAdvantage,
     getEngineVariedJuggleAdvantageFloor(move, attacker.comboHits, repeatCount, hitContext) ?? frameData.effectiveAdvantage
   );
-  const stunFrames = Math.max(1, attackerRemaining + advantage);
+  const stunFrames = Math.max(1, attackerRemaining + advantage + (counterHit ? UNIVERSAL_COUNTER_HIT_STUN_BONUS_FRAMES : 0));
   const entersJuggle = launchHeight > 0 || wasJuggled;
   const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
   const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, repeatCount, tornadoExtendsJuggle);
@@ -4016,8 +4017,7 @@ function applyPoseToHurtbox(fighter: FighterRuntime, box: BoxSpec): BoxSpec {
   return box;
 }
 
-function isCounterHit(move: MoveDefinition, defender: FighterRuntime) {
-  if (!move.counterHit) return false;
+function isCounterHit(defender: FighterRuntime) {
   if (defender.state !== 'attack' || !defender.currentMove) return false;
   return defender.moveFrame <= defender.currentMove.startupFrames + defender.currentMove.activeFrames;
 }
@@ -4546,6 +4546,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const selectedMove = ai.character.moves.find((move) => move.input === selectedMoveInput) ?? ai.character.moves[0] ?? null;
   const maxComboSteps = leaderCloseout ? Math.max(2, Math.min(settings.maxComboSteps, leaderBrake > 0.72 ? 2 : 3)) : settings.maxComboSteps;
   const shouldContinueCombo = ai.comboTimer > 0 && ai.comboStep < maxComboSteps;
+  const closeoutComboCapped = leaderCloseout && ai.comboTimer > 0 && ai.comboStep >= maxComboSteps;
   const selectedMoveReach = (selectedMove?.range ?? 1.35) + settings.rangeBuffer + (shouldContinueCombo ? 0.26 : 0);
 
   const opponentSide = getOpponentSideSign(ai, opponent);
@@ -4651,6 +4652,39 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     return input;
   }
 
+  const antiAirThreat = getAiAntiAirThreat(opponent, distance, laneDiff);
+  if (antiAirThreat && canStartAction && canAct) {
+    const antiAirMoveInput = chooseAiAntiAirMoveInput(ai, difficulty, antiAirThreat, selector, routeRoll);
+    const antiAirMove = ai.character.moves.find((move) => move.input === antiAirMoveInput) ?? selectedMove;
+    const antiAirReach = (antiAirMove?.range ?? 1.25) + settings.rangeBuffer + 0.38;
+    const antiAirAccepted = shouldAiAntiAir(ai, opponent, difficulty, antiAirThreat, elapsed, selector, routeRoll, roundAiSeed);
+    const antiAirInRange = distance <= antiAirReach && Math.abs(laneDiff) <= antiAirReach * 0.82;
+    if (antiAirAccepted && antiAirInRange && !tooClose) {
+      input.block = false;
+      input.charge = false;
+      input.down = false;
+      input.up = false;
+      input[awayKey] = false;
+      input[towardKey] = distance > antiAirReach * 0.72;
+      input.sidestepUp = false;
+      input.sidestepDown = false;
+      input.sidewalkUp = false;
+      input.sidewalkDown = false;
+      input[antiAirMoveInput] = true;
+      return input;
+    }
+    if (antiAirAccepted && distance < antiAirReach + 0.7) {
+      input.block = false;
+      input[awayKey] = false;
+      input[towardKey] = distance > antiAirReach * 0.62;
+      input.sidestepUp = false;
+      input.sidestepDown = false;
+      input.sidewalkUp = false;
+      input.sidewalkDown = false;
+      return input;
+    }
+  }
+
   const opening = getAiOpening(ai, opponent, distance, laneDiff);
   const routeOpening = opening.kind === 'hitstun' && opponent.state === 'juggle' ? 'juggle' : opening.kind;
   if (routeOpening === 'juggle' && shouldCpuDropJuggle(ai, opponent, difficulty)) {
@@ -4682,7 +4716,9 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     !pressureDropped &&
     pressureRoll < Math.max(0.04, getAdjustedPressureResponse(ai, opening, settings, pressureRoll) - settings.leaderPressurePenalty * leaderBrake * 0.55);
   let pressureMoveInput = chooseAiPressureMoveInput(ai, opponent, difficulty, opening, selector, routeRoll);
-  const pressureCatalogStep = catalogRoute && opening.kind !== 'none' && isAiCatalogStepSpendable(ai, catalogRoute.step) ? catalogRoute.step : null;
+  const pressureCatalogCandidate = catalogRoute && opening.kind !== 'none' && isAiCatalogStepSpendable(ai, catalogRoute.step) ? catalogRoute.step : null;
+  const pressureCatalogStep = pressureCatalogCandidate && !isAiCatalogStepStaleInCombo(ai, pressureCatalogCandidate) ? pressureCatalogCandidate : null;
+  if (pressureCatalogCandidate && !pressureCatalogStep) ai.aiActiveComboRouteId = null;
   if (pressureCatalogStep) pressureMoveInput = pressureCatalogStep.input;
   pressureMoveInput = chooseAiKiBurstMoveInput(ai, pressureMoveInput, difficulty, selector + 17, routeRoll + 9);
   if (leaderCloseout && opening.kind !== 'none') {
@@ -4702,9 +4738,8 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (pressureKiBurst ? 0.18 : 0) + (opening.kind === 'hitstun' ? 0.36 + settings.hitstunReachBonus : 0);
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
-  if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
+  if (!closeoutComboCapped && opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
     if (
-      (pressureCatalogStep && isAiCatalogStepStaleInCombo(ai, pressureCatalogStep)) ||
       isAiComboContinuationInputStale(ai, pressureMoveInput)
     ) {
       if (opponent.state === 'juggle') beginAiJuggleLockout(ai);
@@ -4745,7 +4780,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     }
     return input;
   }
-  if (opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && distance < pressureReach + 0.88) {
+  if (!closeoutComboCapped && opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && distance < pressureReach + 0.88) {
     input.block = false;
     input[awayKey] = false;
     input[towardKey] = true;
@@ -4780,7 +4815,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
   const attackHesitation = canMakeAiDecisionMistake(ai) && aiDecisionRoll(ai, opponent, elapsed, 5, roundAiSeed) < settings.attackHesitationRate * style.imperfectionScale;
-  const canPressure = !missedKnownOpening && !attackHesitation && !input.block && canAct && inStrikeRange && !tooClose;
+  const canPressure = !closeoutComboCapped && !missedKnownOpening && !attackHesitation && !input.block && canAct && inStrikeRange && !tooClose;
   if (
     !input.block &&
     canStartAction &&
@@ -4913,6 +4948,81 @@ function applyAiJumpTakeoff(input: InputFrame, towardKey: 'left' | 'right', away
   for (const moveInput of moveInputs) {
     input[moveInput] = false;
   }
+}
+
+type AiAntiAirThreat = {
+  activeAttack: boolean;
+  airborneHeight: number;
+  pressureFrames: number;
+};
+
+function getAiAntiAirThreat(opponent: FighterRuntime, distance: number, laneDiff: number): AiAntiAirThreat | null {
+  if (opponent.state === 'hit' || opponent.state === 'juggle' || opponent.state === 'knockdown' || opponent.state === 'getup') return null;
+  if (opponent.stunFramesRemaining > 0 || opponent.blockstunFramesRemaining > 0 || opponent.getupInvulnerableFrames > 0) return null;
+  if (!isAirborne(opponent)) return null;
+  if (distance > 2.55 || Math.abs(laneDiff) > 1.05) return null;
+  const activeAttack = opponent.state === 'attack' && Boolean(opponent.currentMove);
+  if (opponent.state !== 'jump' && !activeAttack) return null;
+  const pressureFrames = activeAttack && opponent.currentMove
+    ? Math.max(0, opponent.currentMove.startupFrames + opponent.currentMove.activeFrames - opponent.moveFrame)
+    : Math.max(0, Math.round((opponent.position.y + Math.max(0, opponent.velocityY)) * 10));
+  return {
+    activeAttack,
+    airborneHeight: Math.max(0, opponent.position.y),
+    pressureFrames
+  };
+}
+
+function chooseAiAntiAirMoveInput(ai: FighterRuntime, difficulty: CpuDifficulty, threat: AiAntiAirThreat, selector: number, routeRoll: number): MoveInput {
+  const moves = ai.character.moves
+    .filter((move, index, allMoves) => move.damage > 0 && allMoves.findIndex((candidate) => candidate.input === move.input) === index);
+  const candidates = moves.filter((move) => move.hitLevel !== 'low');
+  const pool = candidates.length > 0 ? candidates : moves;
+  if (pool.length === 0) return 'jab';
+  const scored = pool.map((move, index) => {
+    const verticalReach = move.hitbox.offset[1] + move.hitbox.size[1] * 0.5;
+    const activeBonus = threat.activeAttack && move.counterHit ? (difficulty >= 4 ? 1.15 : 0.52) : 0;
+    const launchBonus = (move.launchHeight ?? 0) > 0 ? (difficulty >= 4 ? 0.7 : 0.34) : 0;
+    const knockdownBonus = move.knockdown ? 0.34 : 0;
+    const freshness = inputRecentlyUsed(ai, move.input) ? -0.35 : 0;
+    const wave = positiveModulo(selector + routeRoll * (index + 5) + ai.slot * 19 + move.input.length * 13, 100) / 100;
+    return {
+      input: move.input,
+      score:
+        activeBonus +
+        launchBonus +
+        knockdownBonus +
+        Math.min(1.1, verticalReach * 0.48) +
+        Math.min(0.65, move.range * 0.16) -
+        move.startupFrames * 0.032 +
+        freshness +
+        wave * 0.18
+    };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored[0]?.input ?? pool[0]?.input ?? 'jab';
+}
+
+function shouldAiAntiAir(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  threat: AiAntiAirThreat,
+  elapsed: number,
+  selector: number,
+  routeRoll: number,
+  roundAiSeed: number
+) {
+  const baseChance = difficulty <= 1 ? 0.1 : difficulty === 2 ? 0.22 : difficulty === 3 ? 0.42 : difficulty === 4 ? 0.68 : 0.86;
+  const activeBonus = threat.activeAttack ? 0.1 : 0;
+  const heightBonus = clamp((threat.airborneHeight - 0.25) / 1.3, 0, 0.1);
+  const urgencyBonus = threat.pressureFrames > 0 && threat.pressureFrames <= 18 ? 0.06 : 0;
+  const chance = clamp(baseChance + activeBonus + heightBonus + urgencyBonus, 0.05, 0.94);
+  const roll = positiveModulo(
+    Math.floor(aiDecisionRoll(ai, opponent, elapsed, 14, roundAiSeed) * 1000) + selector * 3 + routeRoll * 5 + ai.slot * 11,
+    100
+  ) / 100;
+  return roll < chance;
 }
 
 function chooseAiMoveInput(

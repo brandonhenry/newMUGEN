@@ -3,11 +3,14 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  Award,
+  BarChart3,
   Download,
   Eye,
   EyeOff,
   Gamepad2,
   Home,
+  History,
   KeyRound,
   List,
   Maximize2,
@@ -53,8 +56,9 @@ import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encode
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
-import { addCombatPopupEventToOnlineStats, addImpactEventToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair } from './lib/online/performanceScoring';
+import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
+import { fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import {
   ROUNDS_TO_WIN,
@@ -2501,6 +2505,7 @@ export default function App() {
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
+  const [rankedProfile, setRankedProfile] = useState<RankedProfile | null>(null);
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
@@ -3140,6 +3145,25 @@ export default function App() {
     setOnlineProfile(readOnlineProfile());
   }, []);
 
+  useEffect(() => {
+    if (!onlineProfile) {
+      setRankedProfile(null);
+      return undefined;
+    }
+    let cancelled = false;
+    void fetchRankedProfile(onlineProfile)
+      .then((profile) => {
+        if (!cancelled) setRankedProfile(profile);
+      })
+      .catch((error) => {
+        console.error('Failed to load ranked profile', error);
+        if (!cancelled) setRankedProfile(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [onlineProfile]);
+
   const reloadRoster = async (preferredCharacterId?: string) => {
     const result = await loadCharacterRoster();
     setRosterResult(result);
@@ -3424,6 +3448,7 @@ export default function App() {
             setMode={setMatchMode}
             setCpuDifficulty={setModeScopedCpuDifficulty}
             onlineProfile={onlineProfile}
+            rankedProfile={rankedProfile}
             onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onLeaderboards={() => setScreen('leaderboard')}
             onPrivateRooms={() => {
@@ -3578,6 +3603,8 @@ export default function App() {
             clearMenuInputs={clearMenuInputs}
             getLastInput={getLastInput}
             onlineProfile={onlineProfile}
+            rankedProfile={rankedProfile}
+            onRankedProfileChange={setRankedProfile}
             privateRoomIntent={privateRoomIntent}
             onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
@@ -5627,6 +5654,7 @@ const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: 
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
   { mode: 'versusCpu', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
+  { mode: 'ranked', label: 'Ranked', icon: <Award size={18} /> },
   { mode: 'private', label: 'Private', icon: <KeyRound size={18} /> },
   { mode: 'cpu', label: 'CPU vs CPU', icon: <Swords size={18} /> }
 ];
@@ -5645,6 +5673,7 @@ function CharacterSelect({
   setMode,
   setCpuDifficulty,
   onlineProfile,
+  rankedProfile,
   onOnlineProfileChange,
   onLeaderboards,
   onPrivateRooms,
@@ -5665,6 +5694,7 @@ function CharacterSelect({
   setMode: (mode: MatchMode) => void;
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   onlineProfile?: OnlinePlayerProfile | null;
+  rankedProfile?: RankedProfile | null;
   onOnlineProfileChange?: (profile: Partial<OnlinePlayerProfile>) => void;
   onLeaderboards?: () => void;
   onPrivateRooms?: () => void;
@@ -5673,6 +5703,7 @@ function CharacterSelect({
   onNext: () => void;
 }) {
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
+  const [rankedProfileOpen, setRankedProfileOpen] = useState(false);
   const [hoveredBaseId, setHoveredBaseId] = useState('');
   const [rosterPage, setRosterPage] = useState(0);
   const pageGamepadStateRef = useRef({ previous: false, next: false });
@@ -5928,14 +5959,24 @@ function CharacterSelect({
           })}
         </div>
 
-        {mode === 'online' && !onlineProfile && onOnlineProfileChange && (
+        {(mode === 'online' || mode === 'ranked') && !onlineProfile && onOnlineProfileChange && (
           <ArcadeNameCard profile={onlineProfile ?? null} onProfileChange={onOnlineProfileChange} autoFocus />
+        )}
+
+        {mode === 'ranked' && onlineProfile && rankedProfileOpen && (
+          <RankedProfileCard profile={rankedProfile ?? null} onlineProfile={onlineProfile} onClose={() => setRankedProfileOpen(false)} />
         )}
 
         <FooterActions
           onBack={onBack}
           middleAction={
-            mode === 'online' && onLeaderboards
+            mode === 'ranked' && onlineProfile
+              ? {
+                label: 'Profile Card',
+                icon: <BarChart3 size={18} />,
+                onClick: () => setRankedProfileOpen((open) => !open)
+              }
+              : mode === 'online' && onLeaderboards
               ? {
                 label: 'Leaderboards',
                 icon: <Trophy size={18} />,
@@ -5951,7 +5992,7 @@ function CharacterSelect({
           }
           onNext={onNext}
           nextLabel="Stage"
-          nextDisabled={(mode === 'online' && !onlineProfile) || trainingSelectionLocked}
+          nextDisabled={((mode === 'online' || mode === 'ranked') && !onlineProfile) || trainingSelectionLocked}
         />
       </section>
 
@@ -5977,6 +6018,99 @@ function CharacterSelect({
       </button>
       <div className="versus-floor-glow" aria-hidden="true" />
     </div>
+  );
+}
+
+function RankedProfileCard({
+  profile,
+  onlineProfile,
+  onClose
+}: {
+  profile: RankedProfile | null;
+  onlineProfile: OnlinePlayerProfile;
+  onClose: () => void;
+}) {
+  const [tab, setTab] = useState<'stats' | 'history'>('stats');
+  const ranked = profile;
+  const matches = ranked?.totals.matches ?? 0;
+  const wins = ranked?.totals.wins ?? 0;
+  const winRate = matches > 0 ? Math.round((wins / matches) * 100) : 0;
+  const hitRate = ranked && ranked.totals.attacksAttempted > 0 ? Math.round((ranked.totals.cleanHits / ranked.totals.attacksAttempted) * 100) : 0;
+  const averageDamage = matches > 0 ? Math.round((ranked?.totals.damageDealt ?? 0) / matches) : 0;
+  const recentTrend = ranked && ranked.history.length > 0
+    ? ranked.history.slice(0, 5).reduce((sum, item) => sum + item.kpDelta, 0)
+    : 0;
+
+  return (
+    <section className="ranked-profile-card" aria-label="Ranked profile card">
+      <header className="ranked-profile-header">
+        <div className="ranked-badge-mark" data-rank={ranked?.rank.id ?? 'unranked'}>
+          <Award size={28} />
+        </div>
+        <div>
+          <span>Ranked Profile</span>
+          <h3>{onlineProfile.displayName}</h3>
+          <p>{ranked ? `${ranked.kp.toLocaleString()} KP - ${ranked.rank.name}` : 'Loading KP'}</p>
+        </div>
+        <button className="secondary-button compact-button" type="button" onClick={onClose}>
+          <ChevronDown size={18} />
+          Close
+        </button>
+      </header>
+      <div className="ranked-profile-tabs" role="tablist" aria-label="Ranked profile tabs">
+        <button className={tab === 'stats' ? 'active' : ''} type="button" onClick={() => setTab('stats')}>
+          <BarChart3 size={16} />
+          Stats
+        </button>
+        <button className={tab === 'history' ? 'active' : ''} type="button" onClick={() => setTab('history')}>
+          <History size={16} />
+          History
+        </button>
+      </div>
+      {tab === 'stats' ? (
+        <div className="ranked-stats-grid">
+          <div className="ranked-stat-tile"><span>Win Rate</span><strong>{winRate}%</strong></div>
+          <div className="ranked-stat-tile"><span>Hit Rate</span><strong>{hitRate}%</strong></div>
+          <div className="ranked-stat-tile"><span>Avg DMG</span><strong>{averageDamage}</strong></div>
+          <div className="ranked-stat-tile"><span>Trend</span><strong>{recentTrend >= 0 ? '+' : ''}{recentTrend} KP</strong></div>
+          <div className="ranked-kr-list">
+            {rankedKrKeys.map((key) => {
+              const value = ranked?.kr[key] ?? 50;
+              return (
+                <div className="ranked-kr-row" key={key}>
+                  <span>{rankedKrLabels[key]}</span>
+                  <div className="ranked-kr-meter" aria-hidden="true"><i style={{ width: `${value}%` }} /></div>
+                  <strong>{value} KR</strong>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="ranked-history-list">
+          {(!ranked || ranked.history.length === 0) && <div className="ranked-history-empty">No ranked matches yet.</div>}
+          {ranked?.history.map((entry) => (
+            <article className={`ranked-history-row is-${entry.result}`} key={entry.id}>
+              <div className="ranked-history-player">
+                <span>You</span>
+                <strong>{entry.left.displayName}</strong>
+                <small>{entry.left.rankName} - {entry.left.kp} KP</small>
+              </div>
+              <div className="ranked-history-mid">
+                <strong>{entry.result === 'win' ? 'WIN' : 'LOSS'}</strong>
+                <span>{entry.kpDelta >= 0 ? '+' : ''}{entry.kpDelta} KP</span>
+                <small>{entry.left.roundsWon} - {entry.right.roundsWon}</small>
+              </div>
+              <div className="ranked-history-player is-right">
+                <span>Opponent</span>
+                <strong>{entry.right.displayName}</strong>
+                <small>{entry.right.rankName} - {entry.right.kp} KP</small>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -6195,6 +6329,7 @@ function CpuDifficultyControl({
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
+  if (mode === 'ranked') return slot === 1 ? 'You' : 'Ranked Opponent';
   if (mode === 'tournamentOnline') return slot === 1 ? 'You' : 'Tournament Opponent';
   if (mode === 'tournamentLocal') return slot === 1 ? 'You' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'You' : 'Private Guest';
@@ -6206,6 +6341,7 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
+  if (mode === 'ranked') return slot === 1 ? 'YOU' : 'RANKED';
   if (mode === 'tournamentOnline') return slot === 1 ? 'YOU' : 'BRACKET';
   if (mode === 'tournamentLocal') return slot === 1 ? 'YOU' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'YOU' : 'GUEST';
@@ -6254,6 +6390,8 @@ function VersusSplashScreen({
   const p1Label = getSlotLabel(mode, 1);
   const p2Label = mode === 'online'
     ? 'Matchmaking Opponent'
+    : mode === 'ranked'
+      ? 'Ranked Opponent'
     : mode === 'tournamentOnline'
       ? 'Tournament Opponent'
     : mode === 'private' && privateRoomIntent?.kind === 'host'
@@ -6264,6 +6402,8 @@ function VersusSplashScreen({
   const p1Short = getSlotShortLabel(mode, 1);
   const p2Short = mode === 'online'
     ? 'ONLINE'
+    : mode === 'ranked'
+      ? 'RANKED'
     : mode === 'tournamentOnline'
       ? 'BRACKET'
     : mode === 'private' && privateRoomIntent?.kind === 'guest'
@@ -6271,6 +6411,8 @@ function VersusSplashScreen({
       : getSlotShortLabel(mode, 2);
   const battleKicker = mode === 'online'
     ? 'Online Search'
+    : mode === 'ranked'
+      ? 'Ranked Search'
     : mode === 'tournamentOnline'
       ? 'Tournament Match'
       : mode === 'tournamentLocal'
@@ -6280,6 +6422,8 @@ function VersusSplashScreen({
       : 'Next Battle';
   const battleHint = mode === 'online'
     ? 'Looking for match after splash'
+    : mode === 'ranked'
+      ? 'KP-based match after splash'
     : mode === 'tournamentOnline'
       ? 'Connecting tournament bracket'
       : mode === 'tournamentLocal'
@@ -8553,7 +8697,7 @@ function SettingsScreen({
 
   const renderEditor = () => {
     if (activeTab === 'game') {
-      const usesOnlineStandardRules = mode === 'online' || mode === 'private';
+      const usesOnlineStandardRules = mode === 'online' || mode === 'ranked' || mode === 'private';
       const visibleRoundTimer = usesOnlineStandardRules ? 60 : settings.game.roundTimer;
       const visibleMaxHealth = usesOnlineStandardRules ? defaultGameSettings.game.maxHealth : settings.game.maxHealth;
       return (
@@ -9337,6 +9481,7 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
   if (mode === 'online') return 'Online';
+  if (mode === 'ranked') return 'Ranked';
   if (mode === 'private') return 'Private';
   if (mode === 'tournamentLocal') return 'Tournament';
   if (mode === 'tournamentOnline') return 'Online Tournament';
@@ -15744,6 +15889,8 @@ function FightScreen({
   clearMenuInputs,
   getLastInput,
   onlineProfile,
+  rankedProfile,
+  onRankedProfileChange,
   privateRoomIntent,
   initialTrainingMode = 'free',
   onPausedChange,
@@ -15766,6 +15913,8 @@ function FightScreen({
   clearMenuInputs: () => void;
   getLastInput: () => string;
   onlineProfile: OnlinePlayerProfile | null;
+  rankedProfile: RankedProfile | null;
+  onRankedProfileChange: (profile: RankedProfile) => void;
   privateRoomIntent: PrivateRoomIntent | null;
   initialTrainingMode?: TrainingTrialMode;
   onPausedChange: (paused: boolean) => void;
@@ -15792,7 +15941,8 @@ function FightScreen({
   const activeTrainingTrialRef = useRef<TrainingTrialDefinition | null>(activeTrainingTrial);
   const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
   const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
-  const isOnline = mode === 'online' || mode === 'private' || mode === 'tournamentOnline';
+  const isRanked = mode === 'ranked';
+  const isOnline = mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'tournamentOnline';
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
     () => ({
@@ -15831,7 +15981,7 @@ function FightScreen({
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
-  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : 'LOOKING FOR MATCH') : '');
+  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH') : '');
   const [privateRoomPassword, setPrivateRoomPassword] = useState('');
   const [privateRoomName, setPrivateRoomName] = useState('');
   const [onlineWins, setOnlineWins] = useState<OnlineWins>([0, 0]);
@@ -15851,6 +16001,14 @@ function FightScreen({
   const onlineLocalProfileRef = useRef<OnlinePlayerProfile | null>(onlineProfile);
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
+  const rankedProfileRef = useRef<RankedProfile | null>(rankedProfile);
+  const rankedSubmitResultRef = useRef<RankedSubmitResult | null>(null);
+  const [rankedPlayerResult, setRankedPlayerResult] = useState<RankedPlayerResult | null>(null);
+  const [rankedPromotionAccepted, setRankedPromotionAccepted] = useState(false);
+  const onlineAttackTrackerRef = useRef([
+    { attacking: false, hitConnected: false },
+    { attacking: false, hitConnected: false }
+  ]);
   const onlineLastClashInputRef = useRef<{ clashId: number; button: MoveInput | null }>({ clashId: 0, button: null });
   const arcadeAdvanceRef = useRef(false);
   const fightAnalyticsStateRef = useRef(createFightAnalyticsState());
@@ -16038,6 +16196,10 @@ function FightScreen({
   }, [onlineProfile]);
 
   useEffect(() => {
+    rankedProfileRef.current = rankedProfile;
+  }, [rankedProfile]);
+
+  useEffect(() => {
     if (match.lastHitId < lastCombatEventId.current) {
       seenCombatEventIds.current.clear();
       setCombatPopups([]);
@@ -16049,7 +16211,7 @@ function FightScreen({
     match.combatEvents.forEach((event) => {
       if (seenCombatEventIds.current.has(event.id)) return;
       seenCombatEventIds.current.add(event.id);
-      if (mode === 'online' && onlineRoleRef.current === 'host' && onlineStateRef.current === 'connected') {
+      if ((mode === 'online' || mode === 'ranked') && onlineRoleRef.current === 'host' && onlineStateRef.current === 'connected') {
         const index = event.slot - 1;
         onlinePerformanceRef.current[index] = addCombatPopupEventToOnlineStats(onlinePerformanceRef.current[index], event);
       }
@@ -16069,7 +16231,7 @@ function FightScreen({
       }
       if (seenImpactScoreEventIds.current.has(event.id)) return;
       seenImpactScoreEventIds.current.add(event.id);
-      if (mode !== 'online' || onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
+      if ((mode !== 'online' && mode !== 'ranked') || onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
       if (event.kind === 'block') {
         const index = event.defenderSlot - 1;
         onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.defenderSlot);
@@ -16085,7 +16247,7 @@ function FightScreen({
     match.impactEvents.forEach((event) => {
       if (seenTrialImpactEventIds.current.has(event.id)) return;
       seenTrialImpactEventIds.current.add(event.id);
-      if (event.attackerSlot !== 1 || event.kind === 'block' || event.kind === 'clash') return;
+      if (event.kind === 'clash') return;
       setTrainingTrialProgress((current) => {
         const next = current ? advanceTrainingTrialWithImpact(current, activeTrainingTrial, event) : current;
         trainingTrialProgressRef.current = next;
@@ -16128,6 +16290,20 @@ function FightScreen({
       playedWinVoiceKeyRef.current = voiceKey;
     }
   }, [match.fighters, match.phase, match.round, match.winnerSlot, settings.audio]);
+
+  useEffect(() => {
+    if (!rankedPlayerResult?.promoted || rankedPromotionAccepted) return undefined;
+    const accept = (event: KeyboardEvent | PointerEvent) => {
+      event.preventDefault();
+      setRankedPromotionAccepted(true);
+    };
+    window.addEventListener('keydown', accept, true);
+    window.addEventListener('pointerdown', accept, true);
+    return () => {
+      window.removeEventListener('keydown', accept, true);
+      window.removeEventListener('pointerdown', accept, true);
+    };
+  }, [rankedPlayerResult, rankedPromotionAccepted]);
 
   useEffect(() => {
     const previousActiveBySlot = previousShadowCloneActiveBySlotRef.current;
@@ -16276,6 +16452,13 @@ function FightScreen({
     setMatch(fresh);
     onlineWinnerRecordedRef.current = false;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    rankedSubmitResultRef.current = null;
+    setRankedPlayerResult(null);
+    setRankedPromotionAccepted(false);
+    onlineAttackTrackerRef.current = [
+      { attacking: false, hitConnected: false },
+      { attacking: false, hitConnected: false }
+    ];
     seenCombatEventIds.current.clear();
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
@@ -16285,6 +16468,28 @@ function FightScreen({
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
     publishOnlineSnapshot(true);
   }, [makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics]);
+
+  const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
+    if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
+    const trackers = onlineAttackTrackerRef.current;
+    candidate.fighters.forEach((fighter, index) => {
+      const opponent = candidate.fighters[index === 0 ? 1 : 0];
+      const tracker = trackers[index];
+      const attacking = fighter.state === 'attack';
+      let stats = onlinePerformanceRef.current[index];
+      stats = addMatchDurationToOnlineStats(stats);
+      const closeEnough = Math.hypot(fighter.position.x - opponent.position.x, fighter.position.z - opponent.position.z) < 3.2;
+      if (closeEnough && (fighter.state === 'walk' || fighter.state === 'sidestep' || fighter.state === 'attack' || fighter.dashForwardFrames > 0)) {
+        stats = addFramePressureToOnlineStats(stats);
+      }
+      if (attacking && !tracker.attacking) stats = addAttackAttemptToOnlineStats(stats);
+      if (tracker.attacking && !attacking && !tracker.hitConnected) stats = addWhiffToOnlineStats(stats);
+      tracker.attacking = attacking;
+      tracker.hitConnected = attacking ? tracker.hitConnected || fighter.hitConnected : false;
+      stats = setOnlinePerformanceRoundsWon(stats, fighter.roundsWon);
+      onlinePerformanceRef.current[index] = stats;
+    });
+  }, []);
 
   const markOnlineDisconnected = useCallback((message = 'Opponent disconnected') => {
     onlineClosingRef.current = true;
@@ -16302,6 +16507,9 @@ function FightScreen({
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    rankedSubmitResultRef.current = null;
+    setRankedPlayerResult(null);
+    setRankedPromotionAccepted(false);
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
     setOnlineState('disconnected');
@@ -16338,6 +16546,9 @@ function FightScreen({
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    rankedSubmitResultRef.current = null;
+    setRankedPlayerResult(null);
+    setRankedPromotionAccepted(false);
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
     if (room || session?.peerId) {
@@ -16373,8 +16584,49 @@ function FightScreen({
         });
       }
     }
+    if (mode === 'ranked' && onlineRoleRef.current === 'host' && !rankedSubmitResultRef.current) {
+      const localProfile = onlineLocalProfileRef.current;
+      const remoteProfile = onlineRemoteProfileRef.current;
+      const room = onlineRoomRef.current;
+      if (localProfile && remoteProfile && room) {
+        const [p1Stats, p2Stats] = onlinePerformanceRef.current;
+        const report: RankedMatchReport = {
+          reportId: `${room.roomId}:${candidate.winnerSlot}:${localProfile.playerId}:${remoteProfile.playerId}`,
+          roomId: room.roomId,
+          stageId: candidate.stage.id,
+          winnerPlayerId: candidate.winnerSlot === 1 ? localProfile.playerId : remoteProfile.playerId,
+          submittedAt: Date.now(),
+          players: [
+            {
+              profile: localProfile,
+              characterId: candidate.fighters[0].baseCharacter.id,
+              stats: setOnlinePerformanceRoundsWon(p1Stats, candidate.fighters[0].roundsWon),
+              roundsWon: candidate.fighters[0].roundsWon
+            },
+            {
+              profile: remoteProfile,
+              characterId: candidate.fighters[1].baseCharacter.id,
+              stats: setOnlinePerformanceRoundsWon(p2Stats, candidate.fighters[1].roundsWon),
+              roundsWon: candidate.fighters[1].roundsWon
+            }
+          ]
+        };
+        void submitRankedMatchReport(report).then((result) => {
+          rankedSubmitResultRef.current = result;
+          const localResult = result.players.find((player) => player.playerId === localProfile.playerId) ?? null;
+          if (localResult) {
+            setRankedPlayerResult(localResult);
+            setRankedPromotionAccepted(!localResult.promoted);
+            onRankedProfileChange(localResult.profile);
+          }
+          onlineSessionRef.current?.send({ type: 'rankedResult', result });
+        }).catch((error) => {
+          console.error('Failed to submit ranked result', error);
+        });
+      }
+    }
     publishOnlineSnapshot(true);
-  }, [mode, publishOnlineSnapshot]);
+  }, [mode, onRankedProfileChange, publishOnlineSnapshot]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
     if (message.type === 'hello') {
@@ -16458,8 +16710,21 @@ function FightScreen({
     }
     if (message.type === 'error') {
       markOnlineDisconnected(message.message);
+      return;
     }
-  }, [makeOnlineMatch, markOnlineDisconnected, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch]);
+    if (message.type === 'rankedResult') {
+      rankedSubmitResultRef.current = message.result;
+      const localProfile = onlineLocalProfileRef.current;
+      const localResult = localProfile
+        ? message.result.players.find((player) => player.playerId === localProfile.playerId) ?? null
+        : null;
+      if (localResult) {
+        setRankedPlayerResult(localResult);
+        setRankedPromotionAccepted(!localResult.promoted);
+        onRankedProfileChange(localResult.profile);
+      }
+    }
+  }, [makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -16476,6 +16741,13 @@ function FightScreen({
     onlineLatestSnapshotRef.current = -1;
     onlineSnapshotSequenceRef.current = 0;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    rankedSubmitResultRef.current = null;
+    setRankedPlayerResult(null);
+    setRankedPromotionAccepted(false);
+    onlineAttackTrackerRef.current = [
+      { attacking: false, hitConnected: false },
+      { attacking: false, hitConnected: false }
+    ];
     seenCombatEventIds.current.clear();
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
@@ -16483,7 +16755,7 @@ function FightScreen({
     setOnlineState('searching');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
-    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : 'LOOKING FOR MATCH');
+    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
     setPrivateRoomPassword('');
     setPrivateRoomName('');
 
@@ -16504,7 +16776,7 @@ function FightScreen({
             if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'connecting') {
               markOnlineDisconnected(error.message || 'Online connection error');
             } else {
-              setOnlineStatusText('LOOKING FOR MATCH');
+              setOnlineStatusText(isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
             }
           }
         });
@@ -16577,6 +16849,8 @@ function FightScreen({
             peerId: session.peerId,
             characterId: p1.id,
             stageId: stage.id,
+            queue: isRanked ? 'ranked' : 'casual',
+            kp: isRanked ? rankedProfileRef.current?.kp ?? 1200 : undefined,
             roomId: currentRoom?.role === 'host' ? currentRoom.roomId : undefined,
             ownerToken: currentRoom?.role === 'host' ? currentRoom.ownerToken : undefined
           });
@@ -16592,7 +16866,7 @@ function FightScreen({
           } else {
             onlineStateRef.current = 'searching';
             setOnlineState('searching');
-            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : 'LOOKING FOR MATCH');
+            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
           }
         };
 
@@ -16617,7 +16891,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [cleanupOnline, handleOnlineMessage, isOnline, isPrivate, markOnlineDisconnected, p1.displayName, p1.id, privateRoomIntent, stage.id]);
+  }, [cleanupOnline, handleOnlineMessage, isOnline, isPrivate, isRanked, markOnlineDisconnected, p1.displayName, p1.id, privateRoomIntent, stage.id]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -16726,6 +17000,7 @@ function FightScreen({
             }
           } else if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'host') {
             matchRef.current = stepMatch(matchRef.current, localOnlineInput, remoteInputRef.current, fixedStep);
+            trackOnlinePerformanceFrame(matchRef.current);
             recordOnlineMatchWin(matchRef.current);
             publishOnlineSnapshot(matchRef.current.phase !== 'fighting');
           } else if (isOnline) {
@@ -16792,7 +17067,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trainingTrialProgress]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
 
   const requestOnlineRematch = () => {
     if (!isOnline || onlineStateRef.current !== 'connected') {
@@ -17129,42 +17404,46 @@ function FightScreen({
       )}
       {match.phase === 'matchOver' && mode !== 'ai' && (!isOnline || onlineState === 'connected') && winnerFighter && (
         <div
-          className="pause-overlay results-overlay"
+          className={`pause-overlay results-overlay ${isRanked ? 'ranked-results-overlay' : ''} ${rankedPlayerResult?.didWin ? 'is-ranked-win' : 'is-ranked-loss'}`}
           style={{
             '--winner-primary': winnerFighter.character.colors.primary,
             '--winner-accent': winnerFighter.character.colors.accent
           } as CSSProperties}
         >
-          <section className="results-panel" aria-label="Match result">
-            <div className="results-winner-stage" aria-hidden="true">
-              <CharacterPreviewCanvas
-                key={`${match.round}-${winnerFighter.character.id}`}
-                character={winnerFighter.character}
-                pose="win"
-                animationKey="win"
-                rotationTurn={0}
-                zoom={1.08}
-              />
-            </div>
-            <div className="results-copy">
-              <span className="results-eyebrow">
-                <Trophy size={18} />
-                Winner
-              </span>
-              <h2>{match.message}</h2>
-              <p>{winnerFighter.character.displayName}</p>
-            </div>
-          </section>
+          {isRanked && rankedPlayerResult ? (
+            <RankedResultPanel result={rankedPlayerResult} accepted={rankedPromotionAccepted} />
+          ) : (
+            <section className="results-panel" aria-label="Match result">
+              <div className="results-winner-stage" aria-hidden="true">
+                <CharacterPreviewCanvas
+                  key={`${match.round}-${winnerFighter.character.id}`}
+                  character={winnerFighter.character}
+                  pose="win"
+                  animationKey="win"
+                  rotationTurn={0}
+                  zoom={1.08}
+                />
+              </div>
+              <div className="results-copy">
+                <span className="results-eyebrow">
+                  <Trophy size={18} />
+                  Winner
+                </span>
+                <h2>{match.message}</h2>
+                <p>{winnerFighter.character.displayName}</p>
+              </div>
+            </section>
+          )}
           <div className="overlay-actions pause-menu-actions results-actions">
-            <button className="primary-button" onClick={reset}>
+            <button className="primary-button" onClick={reset} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
               <RotateCcw size={18} />
               {isOnline && onlineRematchReadyRef.current.local ? 'Waiting' : 'Rematch'}
             </button>
-            <button className="secondary-button" onClick={leaveToCharacterSelect}>
+            <button className="secondary-button" onClick={leaveToCharacterSelect} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
               <Users size={18} />
               Character Select
             </button>
-            <button className="secondary-button" onClick={leaveToMenu}>
+            <button className="secondary-button" onClick={leaveToMenu} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
               <Home size={18} />
               Menu
             </button>
@@ -17172,6 +17451,57 @@ function FightScreen({
         </div>
       )}
     </div>
+  );
+}
+
+function RankedResultPanel({ result, accepted }: { result: RankedPlayerResult; accepted: boolean }) {
+  const title = result.didWin ? 'VICTORY' : 'DEFEAT';
+  return (
+    <section className="results-panel ranked-results-panel" aria-label="Ranked match result">
+      <div className="ranked-result-hero">
+        <span className="results-eyebrow">
+          <Award size={18} />
+          Ranked Battle
+        </span>
+        <h2>{title}</h2>
+        <div className={`ranked-kp-delta ${result.kpDelta >= 0 ? 'is-positive' : 'is-negative'}`}>
+          {result.kpDelta >= 0 ? '+' : ''}{result.kpDelta} KP
+        </div>
+        <p>{result.beforeKp.toLocaleString()} KP {'->'} {result.afterKp.toLocaleString()} KP</p>
+      </div>
+      <div className={`ranked-rank-morph ${result.promoted ? 'is-promoted' : result.demoted ? 'is-demoted' : ''}`}>
+        <div className="ranked-badge-mark" data-rank={result.beforeRank.id}>
+          <Award size={28} />
+        </div>
+        <ChevronRight size={24} />
+        <div className="ranked-badge-mark is-after" data-rank={result.afterRank.id}>
+          <Award size={34} />
+        </div>
+        <div>
+          <span>{result.beforeRank.name}</span>
+          <strong>{result.afterRank.name}</strong>
+        </div>
+      </div>
+      <div className="ranked-result-kr">
+        {rankedKrKeys.map((key) => {
+          const value = result.afterKr[key];
+          const delta = result.krDelta[key];
+          return (
+            <div className="ranked-kr-row" key={key}>
+              <span>{rankedKrLabels[key]}</span>
+              <div className="ranked-kr-meter" aria-hidden="true"><i style={{ width: `${value}%` }} /></div>
+              <strong>{value} <small>{delta >= 0 ? '+' : ''}{delta}</small></strong>
+            </div>
+          );
+        })}
+      </div>
+      {result.promoted && !accepted && (
+        <div className="ranked-promotion-confirm">
+          <strong>Rank Promotion</strong>
+          <span>Press any key to accept the new rank</span>
+        </div>
+      )}
+    </section>
   );
 }
 

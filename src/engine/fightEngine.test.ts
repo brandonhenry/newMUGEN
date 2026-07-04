@@ -97,6 +97,43 @@ function makeCancelableCharacter(character: CharacterDefinition, inputs?: MoveIn
   };
 }
 
+function makeAntiAirCharacter(character: CharacterDefinition): CharacterDefinition {
+  return {
+    ...character,
+    moves: character.moves
+      .filter((move) => move.input === 'jab' || move.input === 'special')
+      .map((move) =>
+        move.input === 'special'
+          ? {
+              ...move,
+              label: 'Counter Upper',
+              startupFrames: 5,
+              activeFrames: 7,
+              recoveryFrames: 16,
+              damage: 14,
+              range: 1.72,
+              hitLevel: 'mid' as const,
+              launchHeight: 1.1,
+              counterHit: true,
+              counterHitStunBonusFrames: 6,
+              hitbox: { offset: [0.6, 1.42, 0], size: [1.0, 1.3, 0.68] }
+            }
+          : {
+              ...move,
+              startupFrames: 4,
+              activeFrames: 4,
+              recoveryFrames: 14,
+              damage: 6,
+              range: 1.2,
+              hitLevel: 'mid' as const,
+              launchHeight: undefined,
+              counterHit: false,
+              hitbox: { offset: [0.48, 0.82, 0], size: [0.9, 0.55, 0.56] }
+            }
+      )
+  };
+}
+
 function stepUntilFighterActionable(match: MatchSnapshot, fighterIndex: 0 | 1, maxFrames = 90): MatchSnapshot {
   let next = match;
   for (let i = 0; i < maxFrames && (next.fighters[fighterIndex].actionFramesRemaining > 0 || next.fighters[fighterIndex].actionTimer > 0); i += 1) {
@@ -116,6 +153,28 @@ function stepQuiet(match: MatchSnapshot, frames: number) {
     next = stepMatch(next, emptyInputFrame(), emptyInputFrame(), 1 / 60);
   }
   return next;
+}
+
+function primeAirborneAttack(match: MatchSnapshot, fighterIndex: 0 | 1) {
+  const fighter = match.fighters[fighterIndex];
+  const move: MoveDefinition = {
+    ...fighter.character.moves[0],
+    startupFrames: 1,
+    activeFrames: 28,
+    recoveryFrames: 16,
+    damage: 8,
+    range: 0.72,
+    hitbox: { offset: [0.42, 1.05, 0], size: [0.74, 0.7, 0.54] }
+  };
+  fighter.state = 'attack';
+  fighter.currentMove = move;
+  fighter.moveFrame = 1;
+  fighter.position.y = 0.86;
+  fighter.velocityY = -0.2;
+  fighter.actionFramesRemaining = 36;
+  fighter.actionTimer = 36 / 60;
+  fighter.hitConnected = false;
+  fighter.hitConfirmed = false;
 }
 
 function createPreparedClashMatch(p1KiBurst = true, p2KiBurst = true) {
@@ -2409,20 +2468,20 @@ describe('fight engine', () => {
       let peakStep = match.fighters[0].comboStep;
       const seen = new Set<string>(['neutral:jab']);
       let repeats = 0;
-      let wasAttacking = false;
+      let lastMoveInstanceId = match.fighters[0].moveInstanceId;
 
       for (let i = 0; i < 180; i += 1) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
         const fighter = match.fighters[0];
         peakStep = Math.max(peakStep, fighter.comboStep);
         const isAttacking = fighter.state === 'attack' && Boolean(fighter.currentMove);
-        if (isAttacking && !wasAttacking && fighter.currentMove) {
+        if (isAttacking && fighter.currentMove && fighter.moveInstanceId !== lastMoveInstanceId) {
           if (fighter.comboStep <= 1) seen.clear();
           const key = fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`;
           if (seen.has(key)) repeats += 1;
           seen.add(key);
         }
-        wasAttacking = isAttacking;
+        lastMoveInstanceId = fighter.moveInstanceId;
       }
 
       return { peakStep, uniqueMoves: seen.size, repeats };
@@ -2650,6 +2709,76 @@ describe('fight engine', () => {
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
     expect(match.fighters[1].state).toBe('block');
+  });
+
+  it('lets high difficulty CPU anti-air incoming airborne attacks', () => {
+    let antiAirStarts = 0;
+    let specialStarts = 0;
+    for (let index = 0; index < 36; index += 1) {
+      let match = createMatch(starterCharacters[0], makeAntiAirCharacter(starterCharacters[1]), stages[0], 'versusCpu', 5, { aiSeed: 3000 + index });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.timer = 60 - index * 0.031;
+      match.fighters[0].position.x = -0.62;
+      match.fighters[1].position.x = 0.62;
+      match.fighters[0].position.z = 0;
+      match.fighters[1].position.z = 0;
+      primeAirborneAttack(match, 0);
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[1].state === 'attack' && match.fighters[1].currentMove) {
+        antiAirStarts += 1;
+        if (match.fighters[1].currentMove.input === 'special') specialStarts += 1;
+      }
+    }
+
+    expect(antiAirStarts).toBeGreaterThan(20);
+    expect(specialStarts).toBeGreaterThan(antiAirStarts * 0.7);
+  });
+
+  it('makes easy CPU miss more anti-air chances than high difficulty CPU', () => {
+    const sample = (difficulty: 1 | 5) => {
+      let starts = 0;
+      for (let index = 0; index < 48; index += 1) {
+        let match = createMatch(starterCharacters[0], makeAntiAirCharacter(starterCharacters[1]), stages[0], 'versusCpu', difficulty, { aiSeed: 3400 + index });
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.timer = 60 - index * 0.029;
+        match.fighters[0].position.x = -0.62;
+        match.fighters[1].position.x = 0.62;
+        match.fighters[0].position.z = 0;
+        match.fighters[1].position.z = 0;
+        primeAirborneAttack(match, 0);
+
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        if (match.fighters[1].state === 'attack' && match.fighters[1].currentMove) starts += 1;
+      }
+      return starts;
+    };
+
+    expect(sample(5)).toBeGreaterThan(sample(1) + 12);
+  });
+
+  it('does not treat juggled opponents as neutral anti-air threats', () => {
+    let match = createMatch(starterCharacters[0], makeAntiAirCharacter(starterCharacters[1]), stages[0], 'versusCpu', 5, { aiSeed: 3777 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -1.32;
+    match.fighters[1].position.x = 1.32;
+    match.fighters[0].position.z = 0;
+    match.fighters[1].position.z = 0;
+    match.fighters[0].state = 'juggle';
+    match.fighters[0].position.y = 1.1;
+    match.fighters[0].velocityY = -0.1;
+    match.fighters[0].stunFramesRemaining = 0;
+    match.fighters[0].actionFramesRemaining = 0;
+    match.fighters[0].stunTimer = 0;
+    match.fighters[0].actionTimer = 0;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).not.toBe('attack');
+    expect(match.fighters[1].currentMove).toBeNull();
   });
 
   it('lets KORE CPU sidestep incoming linear pressure as defense', () => {
@@ -5827,12 +5956,12 @@ describe('fight engine', () => {
 
     expect(match.impactEvents[0]).toMatchObject({ kind: 'counterHit', attackerSlot: 1, defenderSlot: 2, moveLabel: 'Counter Hit Test' });
     expect(match.combatEvents[0]).toMatchObject({ kind: 'counterHit', slot: 1, moveLabel: 'Counter Hit Test' });
-    expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(30);
+    expect(match.fighters[1].stunFramesRemaining).toBe(match.fighters[0].actionFramesRemaining + 30 + 4 + 8);
     expect(match.fighters[0].visualHitstop.framesRemaining).toBe(5);
     expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 5, animationKey: 'hitLight' });
   });
 
-  it('does not counter hit during startup when the attacking move is not counter-hit eligible', () => {
+  it('emits counter hit feedback for any move while only eligible moves use counter-hit advantage', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -5864,9 +5993,10 @@ describe('fight engine', () => {
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
-    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2 });
-    expect(match.combatEvents).toHaveLength(0);
-    expect(match.fighters[1].stunFramesRemaining).toBeLessThan(20);
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'counterHit', attackerSlot: 1, defenderSlot: 2 });
+    expect(match.combatEvents[0]).toMatchObject({ kind: 'counterHit', slot: 1 });
+    expect(match.fighters[1].stunFramesRemaining).toBe(match.fighters[0].actionFramesRemaining + 2 + 8);
+    expect(match.fighters[1].stunFramesRemaining).toBeLessThan(match.fighters[0].actionFramesRemaining + 30);
   });
 
   it('keeps gameplay timing active while visual hitstop only holds the rendered pose', () => {

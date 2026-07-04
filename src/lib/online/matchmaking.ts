@@ -4,6 +4,8 @@ export type OnlineMatchRequest = {
   peerId: string;
   characterId: string;
   stageId: string;
+  queue?: 'casual' | 'ranked';
+  kp?: number;
   roomId?: string;
   ownerToken?: string;
 };
@@ -18,6 +20,9 @@ export type OnlineMatchResult = {
   hostCharacterId: string;
   guestCharacterId?: string;
   stageId: string;
+  queue?: 'casual' | 'ranked';
+  hostKp?: number;
+  guestKp?: number;
 };
 
 export type OnlineLeaveRequest = {
@@ -28,6 +33,11 @@ export type OnlineLeaveRequest = {
 
 const LOCAL_ROOMS_KEY = 'kore.online.localRooms';
 const LOCAL_ROOM_TTL_MS = 12_000;
+const LOCAL_RANKED_ROOM_TTL_MS = 64_000;
+const RANKED_INITIAL_RANGE = 150;
+const RANKED_RANGE_STEP = 50;
+const RANKED_RANGE_STEP_MS = 8_000;
+const RANKED_MAX_RANGE = 450;
 
 export async function matchmakeOnline(request: OnlineMatchRequest): Promise<OnlineMatchResult> {
   const response = await postJson<OnlineMatchResult>('/.netlify/functions/online-matchmake', request).catch((error) => {
@@ -70,13 +80,18 @@ type LocalRoom = {
   guestPeerId?: string;
   guestCharacterId?: string;
   stageId: string;
+  queue: 'casual' | 'ranked';
+  hostKp?: number;
+  guestKp?: number;
+  createdAt: number;
   status: 'waiting' | 'matched';
   updatedAt: number;
 };
 
 function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
   const now = Date.now();
-  const rooms = readLocalRooms().filter((room) => now - room.updatedAt <= LOCAL_ROOM_TTL_MS);
+  const queue = request.queue === 'ranked' ? 'ranked' : 'casual';
+  const rooms = readLocalRooms().filter((room) => now - room.updatedAt <= localRoomTtlMs(room));
   const existing = request.roomId ? rooms.find((room) => room.roomId === request.roomId && room.ownerToken === request.ownerToken) : undefined;
   if (existing) {
     existing.updatedAt = now;
@@ -84,11 +99,17 @@ function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
     return roomToResult(existing, existing.guestPeerId ? 'host' : 'host');
   }
 
-  const waitingRoom = rooms.find((room) => room.status === 'waiting' && room.hostPeerId !== request.peerId);
+  const waitingRoom = rooms.find((room) => (
+    room.status === 'waiting' &&
+    room.hostPeerId !== request.peerId &&
+    room.queue === queue &&
+    rankedKpMatches(room, request, now)
+  ));
   if (waitingRoom) {
     waitingRoom.status = 'matched';
     waitingRoom.guestPeerId = request.peerId;
     waitingRoom.guestCharacterId = request.characterId;
+    waitingRoom.guestKp = normalizeKp(request.kp);
     waitingRoom.updatedAt = now;
     writeLocalRooms(rooms);
     return roomToResult(waitingRoom, 'guest');
@@ -100,6 +121,9 @@ function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
     hostPeerId: request.peerId,
     hostCharacterId: request.characterId,
     stageId: request.stageId,
+    queue,
+    hostKp: normalizeKp(request.kp),
+    createdAt: now,
     status: 'waiting',
     updatedAt: now
   };
@@ -138,6 +162,26 @@ function roomToResult(room: LocalRoom, role: OnlineRole): OnlineMatchResult {
     guestPeerId: room.guestPeerId,
     hostCharacterId: room.hostCharacterId,
     guestCharacterId: room.guestCharacterId,
-    stageId: room.stageId
+    stageId: room.stageId,
+    queue: room.queue,
+    hostKp: room.hostKp,
+    guestKp: room.guestKp
   };
+}
+
+function rankedKpMatches(room: LocalRoom, request: OnlineMatchRequest, now: number) {
+  if (room.queue !== 'ranked') return true;
+  const hostKp = normalizeKp(room.hostKp);
+  const guestKp = normalizeKp(request.kp);
+  const ageMs = Math.max(0, now - (room.createdAt || room.updatedAt));
+  const range = Math.min(RANKED_MAX_RANGE, RANKED_INITIAL_RANGE + Math.floor(ageMs / RANKED_RANGE_STEP_MS) * RANKED_RANGE_STEP);
+  return Math.abs(hostKp - guestKp) <= range;
+}
+
+function normalizeKp(value: unknown) {
+  return Math.max(0, Math.round(Number(value) || 0));
+}
+
+function localRoomTtlMs(room: LocalRoom) {
+  return room.queue === 'ranked' ? LOCAL_RANKED_ROOM_TTL_MS : LOCAL_ROOM_TTL_MS;
 }

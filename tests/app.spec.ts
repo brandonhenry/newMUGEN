@@ -168,6 +168,24 @@ test('defaults character and stage select to random slots', async ({ page }) => 
   await expect(page.locator('.stage-hero-label strong')).toHaveText(firstStageName);
 });
 
+test('shows ranked mode and ranked profile card from character select', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'ranked-test-player', displayName: 'RANKTEST' }));
+  });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Online' }).click({ force: true });
+  await page.getByRole('button', { name: 'Next match mode' }).click();
+
+  await expect(page.getByRole('group', { name: 'Match mode' })).toContainText('Ranked');
+  await expect(page.getByRole('button', { name: 'Profile Card' })).toBeVisible();
+  await page.getByRole('button', { name: 'Profile Card' }).click();
+  await expect(page.getByRole('heading', { name: 'RANKTEST' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Stats' })).toBeVisible();
+  await expect(page.getByText(/1,200 KP - Unranked/)).toBeVisible();
+  await page.getByRole('button', { name: 'History' }).click();
+  await expect(page.getByText('No ranked matches yet.')).toBeVisible();
+});
+
 test('opens controls and character viewer', async ({ page }) => {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Options' }).click();

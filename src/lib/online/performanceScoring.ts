@@ -2,8 +2,12 @@ import type { CombatPopupEvent, ImpactSparkEvent } from '../../types';
 
 export type OnlinePerformanceStats = {
   damageDealt: number;
+  damageTaken: number;
   cleanHits: number;
   blockedHits: number;
+  attacksAttempted: number;
+  whiffs: number;
+  blocks: number;
   maxComboHits: number;
   punishes: number;
   whiffPunishes: number;
@@ -12,13 +16,20 @@ export type OnlinePerformanceStats = {
   juggleHits: number;
   tornadoes: number;
   kiBursts: number;
+  forwardPressureFrames: number;
+  matchDurationFrames: number;
+  roundsWon: number;
 };
 
 export function emptyOnlinePerformanceStats(): OnlinePerformanceStats {
   return {
     damageDealt: 0,
+    damageTaken: 0,
     cleanHits: 0,
     blockedHits: 0,
+    attacksAttempted: 0,
+    whiffs: 0,
+    blocks: 0,
     maxComboHits: 0,
     punishes: 0,
     whiffPunishes: 0,
@@ -26,7 +37,10 @@ export function emptyOnlinePerformanceStats(): OnlinePerformanceStats {
     launchers: 0,
     juggleHits: 0,
     tornadoes: 0,
-    kiBursts: 0
+    kiBursts: 0,
+    forwardPressureFrames: 0,
+    matchDurationFrames: 0,
+    roundsWon: 0
   };
 }
 
@@ -36,14 +50,22 @@ export function emptyOnlinePerformancePair(): [OnlinePerformanceStats, OnlinePer
 
 export function addImpactEventToOnlineStats(stats: OnlinePerformanceStats, event: ImpactSparkEvent, perspectiveSlot: 1 | 2): OnlinePerformanceStats {
   if (event.kind === 'block') {
-    if (event.defenderSlot !== perspectiveSlot) return stats;
-    return { ...stats, blockedHits: stats.blockedHits + 1 };
+    if (event.defenderSlot === perspectiveSlot) return { ...stats, blockedHits: stats.blockedHits + 1, blocks: stats.blocks + 1 };
+    if (event.attackerSlot === perspectiveSlot) return { ...stats, attacksAttempted: stats.attacksAttempted + 1 };
+    return stats;
+  }
+  if (event.defenderSlot === perspectiveSlot) {
+    return {
+      ...stats,
+      damageTaken: stats.damageTaken + Math.max(0, event.damage)
+    };
   }
   if (event.attackerSlot !== perspectiveSlot) return stats;
   return {
     ...stats,
     damageDealt: stats.damageDealt + Math.max(0, event.damage),
     cleanHits: stats.cleanHits + 1,
+    attacksAttempted: stats.attacksAttempted + 1,
     punishes: stats.punishes + (event.kind === 'punish' ? 1 : 0),
     whiffPunishes: stats.whiffPunishes + (event.kind === 'whiffPunish' ? 1 : 0),
     specials: stats.specials + (event.moveInput === 'special' ? 1 : 0),
@@ -58,6 +80,41 @@ export function addCombatPopupEventToOnlineStats(stats: OnlinePerformanceStats, 
   return {
     ...stats,
     maxComboHits: Math.max(stats.maxComboHits, Math.max(0, event.hits))
+  };
+}
+
+export function addFramePressureToOnlineStats(stats: OnlinePerformanceStats, frames = 1): OnlinePerformanceStats {
+  return {
+    ...stats,
+    forwardPressureFrames: stats.forwardPressureFrames + Math.max(0, Math.round(frames))
+  };
+}
+
+export function addMatchDurationToOnlineStats(stats: OnlinePerformanceStats, frames = 1): OnlinePerformanceStats {
+  return {
+    ...stats,
+    matchDurationFrames: stats.matchDurationFrames + Math.max(0, Math.round(frames))
+  };
+}
+
+export function addAttackAttemptToOnlineStats(stats: OnlinePerformanceStats): OnlinePerformanceStats {
+  return {
+    ...stats,
+    attacksAttempted: stats.attacksAttempted + 1
+  };
+}
+
+export function addWhiffToOnlineStats(stats: OnlinePerformanceStats): OnlinePerformanceStats {
+  return {
+    ...stats,
+    whiffs: stats.whiffs + 1
+  };
+}
+
+export function setOnlinePerformanceRoundsWon(stats: OnlinePerformanceStats, roundsWon: number): OnlinePerformanceStats {
+  return {
+    ...stats,
+    roundsWon: Math.max(0, Math.round(roundsWon))
   };
 }
 

@@ -9702,3 +9702,330 @@ button {
 .app-shell button:not(:disabled):not([aria-disabled='true']):active {
   translate: 0 1px;
 }
+
+.ranked-profile-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 214, 91, 0.13), rgba(45, 227, 255, 0.08)),
+    rgba(7, 11, 18, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 16px 44px rgba(0, 0, 0, 0.32);
+}
+
+.ranked-profile-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.ranked-profile-header h3,
+.ranked-profile-header p {
+  margin: 0;
+}
+
+.ranked-profile-header span,
+.ranked-stat-tile span,
+.ranked-kr-row span,
+.ranked-history-player span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.ranked-badge-mark {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  color: #101318;
+  background: linear-gradient(135deg, #ffe071, #2de3ff);
+  box-shadow: 0 0 26px rgba(255, 224, 113, 0.35);
+}
+
+.ranked-profile-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ranked-profile-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f7f7f2;
+  font-weight: 900;
+}
+
+.ranked-profile-tabs button.active {
+  border-color: rgba(45, 227, 255, 0.55);
+  background: rgba(45, 227, 255, 0.16);
+}
+
+.ranked-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ranked-stat-tile {
+  display: grid;
+  gap: 4px;
+  min-height: 66px;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ranked-stat-tile strong {
+  color: #fff8c7;
+  font-size: 1.1rem;
+}
+
+.ranked-kr-list,
+.ranked-result-kr {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+}
+
+.ranked-kr-row {
+  display: grid;
+  grid-template-columns: minmax(92px, 0.9fr) minmax(100px, 1.4fr) minmax(58px, auto);
+  align-items: center;
+  gap: 10px;
+}
+
+.ranked-kr-meter {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ranked-kr-meter i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2de3ff, #ffe071);
+}
+
+.ranked-history-list {
+  display: grid;
+  gap: 8px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.ranked-history-empty {
+  padding: 18px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.68);
+  text-align: center;
+}
+
+.ranked-history-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ranked-history-row.is-win {
+  box-shadow: 0 0 0 1px rgba(45, 227, 255, 0.2) inset;
+}
+
+.ranked-history-row.is-loss {
+  box-shadow: 0 0 0 1px rgba(255, 82, 109, 0.24) inset;
+}
+
+.ranked-history-player,
+.ranked-history-mid {
+  display: grid;
+  gap: 2px;
+}
+
+.ranked-history-player.is-right {
+  text-align: right;
+}
+
+.ranked-history-mid {
+  min-width: 86px;
+  justify-items: center;
+  color: #fff8c7;
+}
+
+.ranked-results-overlay.is-ranked-win {
+  background:
+    linear-gradient(135deg, rgba(255, 224, 113, 0.18), rgba(45, 227, 255, 0.16)),
+    rgba(6, 8, 14, 0.82);
+}
+
+.ranked-results-overlay.is-ranked-loss {
+  background:
+    linear-gradient(135deg, rgba(255, 82, 109, 0.19), rgba(145, 159, 181, 0.14)),
+    rgba(7, 9, 14, 0.86);
+}
+
+.ranked-results-panel {
+  grid-template-columns: minmax(260px, 0.9fr) minmax(280px, 1.1fr);
+  min-height: min(560px, calc(100dvh - 200px));
+}
+
+.ranked-result-hero {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  color: #f7f7f2;
+}
+
+.ranked-result-hero h2 {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.4rem);
+  line-height: 0.9;
+}
+
+.ranked-result-hero p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 850;
+}
+
+.ranked-kp-delta {
+  width: max-content;
+  min-width: 154px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  font-weight: 950;
+  animation: rankedKpPop 720ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.ranked-kp-delta.is-positive {
+  color: #101318;
+  background: linear-gradient(135deg, #ffe071, #2de3ff);
+}
+
+.ranked-kp-delta.is-negative {
+  color: #fff;
+  background: linear-gradient(135deg, #ff526d, #7d899c);
+}
+
+.ranked-rank-morph {
+  display: grid;
+  grid-template-columns: auto auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ranked-rank-morph.is-promoted .is-after {
+  animation: rankedBadgePromote 1100ms ease both infinite alternate;
+}
+
+.ranked-rank-morph span,
+.ranked-rank-morph strong {
+  display: block;
+}
+
+.ranked-rank-morph span {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.85rem;
+  font-weight: 850;
+}
+
+.ranked-rank-morph strong {
+  color: #fff8c7;
+  font-size: 1.2rem;
+}
+
+.ranked-result-kr {
+  align-content: center;
+}
+
+.ranked-result-kr .ranked-kr-row {
+  grid-template-columns: minmax(98px, 0.8fr) minmax(120px, 1.4fr) minmax(72px, auto);
+}
+
+.ranked-result-kr small {
+  color: #ffe071;
+}
+
+.ranked-promotion-confirm {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 224, 113, 0.14);
+  color: #fff8c7;
+  animation: rankedConfirmPulse 900ms ease-in-out infinite alternate;
+}
+
+.compact-button {
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+@keyframes rankedKpPop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes rankedBadgePromote {
+  from {
+    transform: scale(1);
+    box-shadow: 0 0 24px rgba(255, 224, 113, 0.3);
+  }
+  to {
+    transform: scale(1.08);
+    box-shadow: 0 0 42px rgba(45, 227, 255, 0.44);
+  }
+}
+
+@keyframes rankedConfirmPulse {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 760px) {
+  .ranked-profile-header,
+  .ranked-stats-grid,
+  .ranked-results-panel,
+  .ranked-rank-morph,
+  .ranked-history-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ranked-history-player.is-right {
+    text-align: left;
+  }
+}

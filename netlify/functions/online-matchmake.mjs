@@ -3,6 +3,11 @@ import { getBlobStore } from './_blob-store.mjs';
 const STORE_NAME = 'kore-online-rooms';
 const ROOM_PREFIX = 'rooms/';
 const ROOM_TTL_MS = 12_000;
+const RANKED_ROOM_TTL_MS = 64_000;
+const RANKED_INITIAL_RANGE = 150;
+const RANKED_RANGE_STEP = 50;
+const RANKED_RANGE_STEP_MS = 8_000;
+const RANKED_MAX_RANGE = 450;
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -14,6 +19,8 @@ export async function handler(event) {
     const stageId = cleanId(body.stageId);
     const roomId = cleanId(body.roomId);
     const ownerToken = cleanToken(body.ownerToken);
+    const queue = body.queue === 'ranked' ? 'ranked' : 'casual';
+    const kp = cleanKp(body.kp);
     if (!peerId || !characterId || !stageId) return json(400, { error: 'missing_fields' });
 
     const store = getBlobStore(STORE_NAME, event);
@@ -23,20 +30,27 @@ export async function handler(event) {
 
     if (roomId && ownerToken) {
       const existing = rooms.find((room) => room.roomId === roomId && room.ownerToken === ownerToken);
-      if (existing && now - existing.updatedAt <= ROOM_TTL_MS) {
+      if (existing && now - existing.updatedAt <= roomTtlMs(existing)) {
         const updated = { ...existing, updatedAt: now };
         await store.setJSON(roomKey(updated.roomId), updated);
         return json(200, roomResult(updated, 'host'));
       }
     }
 
-    const waiting = rooms.find((room) => room.status === 'waiting' && room.hostPeerId !== peerId && now - room.updatedAt <= ROOM_TTL_MS);
+    const waiting = rooms.find((room) => (
+      room.status === 'waiting' &&
+      room.hostPeerId !== peerId &&
+      room.queue === queue &&
+      now - room.updatedAt <= roomTtlMs(room) &&
+      rankedKpMatches(room, kp, now)
+    ));
     if (waiting) {
       const matched = {
         ...waiting,
         status: 'matched',
         guestPeerId: peerId,
         guestCharacterId: characterId,
+        guestKp: kp,
         updatedAt: now
       };
       await store.setJSON(roomKey(matched.roomId), matched);
@@ -49,6 +63,8 @@ export async function handler(event) {
       hostPeerId: peerId,
       hostCharacterId: characterId,
       stageId,
+      queue,
+      hostKp: kp,
       status: 'waiting',
       createdAt: now,
       updatedAt: now
@@ -75,7 +91,7 @@ async function listRooms(store) {
 async function pruneExpiredRooms(store, rooms, now) {
   await Promise.all(
     rooms
-      .filter((room) => now - room.updatedAt > ROOM_TTL_MS)
+      .filter((room) => now - room.updatedAt > roomTtlMs(room))
       .map((room) => store.delete(roomKey(room.roomId)).catch(() => undefined))
   );
 }
@@ -90,7 +106,10 @@ function roomResult(room, role) {
     guestPeerId: room.guestPeerId,
     hostCharacterId: room.hostCharacterId,
     guestCharacterId: room.guestCharacterId,
-    stageId: room.stageId
+    stageId: room.stageId,
+    queue: room.queue,
+    hostKp: room.hostKp,
+    guestKp: room.guestKp
   };
 }
 
@@ -106,6 +125,22 @@ function cleanId(value) {
 function cleanToken(value) {
   if (typeof value !== 'string') return '';
   return value.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 128);
+}
+
+function cleanKp(value) {
+  return Math.max(0, Math.round(Number(value) || 0));
+}
+
+function rankedKpMatches(room, guestKp, now) {
+  if (room.queue !== 'ranked') return true;
+  const hostKp = cleanKp(room.hostKp);
+  const ageMs = Math.max(0, now - (room.createdAt || room.updatedAt));
+  const range = Math.min(RANKED_MAX_RANGE, RANKED_INITIAL_RANGE + Math.floor(ageMs / RANKED_RANGE_STEP_MS) * RANKED_RANGE_STEP);
+  return Math.abs(hostKp - guestKp) <= range;
+}
+
+function roomTtlMs(room) {
+  return room.queue === 'ranked' ? RANKED_ROOM_TTL_MS : ROOM_TTL_MS;
 }
 
 function json(statusCode, payload) {
