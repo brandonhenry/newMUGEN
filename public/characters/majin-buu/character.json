@@ -38,16 +38,7 @@
       "/characters/majin-buu/frames/frame-008.png",
       "/characters/majin-buu/frames/frame-009.png"
     ],
-    "backflip": [
-      "/characters/majin-buu/frames/frame-040.png",
-      "/characters/majin-buu/frames/frame-041.png",
-      "/characters/majin-buu/frames/frame-042.png",
-      "/characters/majin-buu/frames/frame-043.png",
-      "/characters/majin-buu/frames/frame-045.png",
-      "/characters/majin-buu/frames/frame-046.png",
-      "/characters/majin-buu/frames/frame-047.png",
-      "/characters/majin-buu/frames/frame-048.png"
-    ],
+    "backflip": [],
     "sidestepLeft": [
       "/characters/majin-buu/frames/frame-064.png",
       "/characters/majin-buu/frames/frame-065.png",
@@ -604,12 +595,7 @@
       "label": "Majin Buu Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 10,
@@ -628,12 +614,7 @@
       "label": "Majin Buu Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -650,12 +631,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Majin Buu Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 24,
@@ -674,12 +650,7 @@
       "label": "Majin Buu Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "knockdown": false
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -697,12 +668,7 @@
       "forwardForceEndFrame": 29,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -724,12 +690,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 4,
@@ -751,12 +712,7 @@
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -774,12 +730,7 @@
       "forwardForceEndFrame": 20,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -797,12 +748,7 @@
       "forwardForceEndFrame": 19,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -821,12 +767,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -844,12 +785,7 @@
       "forwardForceEndFrame": 22,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -867,12 +803,7 @@
       "forwardForceEndFrame": 23,
       "launchHeight": 2.2,
       "label": "Majin Buu Cross Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -889,12 +820,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Majin Buu Low Feint",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -916,12 +842,7 @@
       "hitLevel": "low",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "jumpBeforeMove": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -940,12 +861,7 @@
       "label": "3+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 13
+      "cancelable": false
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -967,12 +883,7 @@
       "hitLevel": "special",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 12,
-      "juggleRepeatPenaltyFrames": 18
+      "jumpBeforeMove": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -980,20 +891,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Second Beat",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -1001,20 +907,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Body Blow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1022,20 +923,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Low Changeup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1043,20 +939,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Pressure Feint",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1064,20 +955,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.75,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Drive",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1085,20 +971,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Barrage",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1106,20 +987,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Finisher",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1128,19 +1004,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Majin Buu Step Kick",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1148,20 +1019,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Palm String",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1169,20 +1035,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Rising Chain",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1190,20 +1051,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Special Setup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1211,20 +1067,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Break Art",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1232,20 +1083,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Check Hook",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1253,20 +1099,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Heavy Break",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1274,20 +1115,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 25,
       "range": 1.55,
       "forwardForce": 2.67,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Charged Follow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1296,19 +1132,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Majin Buu Drop Kick",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1316,20 +1147,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Arc Finisher",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1337,20 +1163,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Focus Stance",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1358,20 +1179,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Mode Shift",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1379,20 +1195,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Heel Feint",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1400,20 +1211,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Summon Strike",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1421,20 +1227,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Guard Snare",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1442,20 +1243,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Armor Break",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1463,20 +1259,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Power Setup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1484,20 +1275,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Switch Strike",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1505,20 +1291,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Spark Jab",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1526,20 +1307,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Binding Blow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1547,20 +1323,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Majin Buu Heavy Draw",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1569,19 +1340,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 28,
-      "label": "Majin Buu Kick Ender",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Majin Buu Kick Ender"
     },
     "cmd:1+4": {
       "onBlockFrames": -10,
@@ -1596,12 +1362,7 @@
       "label": "1+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 21,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1612,12 +1373,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1628,12 +1384,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1644,12 +1395,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1660,12 +1406,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1680,12 +1421,7 @@
       "label": "SS+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 21,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1696,12 +1432,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1716,12 +1447,7 @@
       "label": "O+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 20,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     }
   },
   "effects": [],

@@ -43,16 +43,7 @@
       "/characters/nami-perfect-clima-tact/frames/frame-012.png",
       "/characters/nami-perfect-clima-tact/frames/frame-013.png"
     ],
-    "backflip": [
-      "/characters/nami-perfect-clima-tact/frames/frame-040.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-041.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-042.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-043.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-045.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-046.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-047.png",
-      "/characters/nami-perfect-clima-tact/frames/frame-048.png"
-    ],
+    "backflip": [],
     "sidestepLeft": [
       "/characters/nami-perfect-clima-tact/frames/frame-042.png"
     ],
@@ -554,12 +545,7 @@
       "label": "Nami (Perfect Clima-Tact) Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -578,12 +564,7 @@
       "label": "Nami (Perfect Clima-Tact) Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -600,12 +581,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Nami (Perfect Clima-Tact) Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 16,
@@ -622,12 +598,7 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "Nami (Perfect Clima-Tact) Right Kick",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -645,12 +616,7 @@
       "forwardForceEndFrame": 18,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -672,12 +638,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -695,12 +656,7 @@
       "forwardForceEndFrame": 28,
       "label": "Nami (Perfect Clima-Tact) Burst",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -717,12 +673,7 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Nami (Perfect Clima-Tact) Rising Strike",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -740,12 +691,7 @@
       "forwardForceEndFrame": 12,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -764,12 +710,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 12,
@@ -788,12 +729,7 @@
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
       "tornado": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -811,12 +747,7 @@
       "forwardForceEndFrame": 16,
       "launchHeight": 2.2,
       "label": "Nami (Perfect Clima-Tact) Cross Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -833,12 +764,7 @@
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 30,
       "label": "Nami (Perfect Clima-Tact) Low Feint",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -856,12 +782,7 @@
       "forwardForceEndFrame": 39,
       "label": "Nami (Perfect Clima-Tact) Driving Kick",
       "hitLevel": "low",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -880,12 +801,7 @@
       "label": "Nami (Perfect Clima-Tact) Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
-      "tornado": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 12,
-      "juggleRepeatPenaltyFrames": 18
+      "tornado": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -903,12 +819,7 @@
       "forwardForceEndFrame": 23,
       "label": "Nami (Perfect Clima-Tact) Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -916,20 +827,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Second Beat",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -937,20 +843,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Body Blow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -958,20 +859,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Low Changeup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -979,20 +875,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Pressure Feint",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1000,20 +891,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.73,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Drive",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1021,20 +907,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Barrage",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1042,20 +923,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Finisher",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1064,19 +940,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "Nami (Perfect Clima-Tact) Step Kick",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1084,20 +955,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Palm String",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1105,20 +971,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Rising Chain",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1126,20 +987,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Special Setup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1147,20 +1003,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Break Art",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1168,20 +1019,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Check Hook",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1189,20 +1035,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Heavy Break",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1210,20 +1051,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 25,
       "range": 1.55,
       "forwardForce": 2.65,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Charged Follow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1232,19 +1068,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "Nami (Perfect Clima-Tact) Drop Kick",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1252,20 +1083,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Arc Finisher",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1273,20 +1099,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Focus Stance",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1294,20 +1115,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Mode Shift",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1315,20 +1131,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Heel Feint",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1336,20 +1147,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Summon Strike",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1357,20 +1163,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Guard Snare",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1378,20 +1179,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Armor Break",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1399,20 +1195,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Power Setup",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1420,20 +1211,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Switch Strike",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1441,20 +1227,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Spark Jab",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1462,20 +1243,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Binding Blow",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1483,20 +1259,15 @@
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
+      "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Nami (Perfect Clima-Tact) Heavy Draw",
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1505,19 +1276,14 @@
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.45,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "Nami (Perfect Clima-Tact) Kick Ender",
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Nami (Perfect Clima-Tact) Kick Ender"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1528,12 +1294,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1544,12 +1305,7 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1560,12 +1316,7 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1576,12 +1327,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1592,12 +1338,7 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     }
   },
   "effects": [],

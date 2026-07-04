@@ -16,6 +16,7 @@ import {
   Play,
   Rotate3D,
   RotateCcw,
+  Ruler,
   Save,
   Settings,
   Shuffle,
@@ -8755,6 +8756,7 @@ function CharacterViewer({
   const [animationPreviewPlaying, setAnimationPreviewPlaying] = useState(false);
   const [animationPreviewFrame, setAnimationPreviewFrame] = useState(0);
   const [showIdleGhost, setShowIdleGhost] = useState(false);
+  const [showIdleGhostSideView, setShowIdleGhostSideView] = useState(false);
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -8820,6 +8822,15 @@ function CharacterViewer({
   const activeAnimationSequenceIndex = selectedPreviewFrames.length > 0
     ? Math.min(selectedPreviewFrames.length - 1, Math.floor((clampedAnimationPreviewFrame / Math.max(1, selectedAnimationPreviewTotalFrames)) * selectedPreviewFrames.length))
     : -1;
+  const idleGhostFrame = active.animationFrames?.idle?.[0] ?? '';
+  const sideViewCurrentFrame = selectedPreviewFrames[activeAnimationSequenceIndex] ?? selectedPreviewFrames[0] ?? selectedFrames[0] ?? '';
+  const sideViewCurrentFrameIndex = getFrameIndex(sideViewCurrentFrame);
+  const sideViewCurrentScale = normalizeAnimationScale(
+    (sideViewCurrentFrameIndex >= 0 ? active.animationFrameScales?.[selectedPreviewAnimationKey]?.[String(sideViewCurrentFrameIndex)] : undefined) ??
+    active.animationScales?.[selectedPreviewAnimationKey] ??
+    active.animationScales?.[selectedSlotDataKey]
+  );
+  const isIdleGhostSideView = showIdleGhost && showIdleGhostSideView && hasIdleGhostFrame && Boolean(idleGhostFrame && sideViewCurrentFrame);
   const variantBaseOptions = roster.filter((character) => character.id !== active.id && !isCharacterVariant(character));
   const activeVariantBase = variantBaseOptions.find((character) => character.id === active.variantOf) ?? variantBaseOptions[0] ?? null;
   const transformTargetOptions = roster.filter((character) => character.id !== active.id);
@@ -8831,6 +8842,9 @@ function CharacterViewer({
   useEffect(() => {
     setAnimationPreviewFrame((frame) => Math.min(maxAnimationPreviewFrame, Math.max(0, frame)));
   }, [maxAnimationPreviewFrame]);
+  useEffect(() => {
+    if (!showIdleGhost || !hasIdleGhostFrame) setShowIdleGhostSideView(false);
+  }, [hasIdleGhostFrame, showIdleGhost]);
   useEffect(() => {
     if (!isEditingAnimation || !animationPreviewPlaying) return undefined;
     const timer = window.setInterval(() => {
@@ -9731,7 +9745,10 @@ function CharacterViewer({
       </button>
       <button
         className={`secondary-button ${showIdleGhost && hasIdleGhostFrame ? 'active-tool' : ''}`}
-        onClick={() => setShowIdleGhost((current) => !current)}
+        onClick={() => {
+          setShowIdleGhost((current) => !current);
+          if (showIdleGhost) setShowIdleGhostSideView(false);
+        }}
         disabled={!hasIdleGhostFrame}
         data-testid="toggle-idle-ghost"
         title={hasIdleGhostFrame ? 'Overlay the first idle frame behind the current preview' : 'No idle frames available'}
@@ -9739,6 +9756,17 @@ function CharacterViewer({
         <Eye size={18} />
         {showIdleGhost && hasIdleGhostFrame ? 'Idle Ghost On' : 'Idle Ghost'}
       </button>
+      {showIdleGhost && hasIdleGhostFrame && (
+        <button
+          className={`secondary-button ${showIdleGhostSideView ? 'active-tool' : ''}`}
+          onClick={() => setShowIdleGhostSideView((current) => !current)}
+          data-testid="toggle-idle-ghost-side-view"
+          title="Show static idle/current frame comparison with pixel rulers"
+        >
+          <Ruler size={18} />
+          {showIdleGhostSideView ? 'Side View On' : 'Side View'}
+        </button>
+      )}
       <button
         className={`secondary-button ${previewHdVoxels ? 'active-tool' : ''}`}
         onClick={() => setPreviewHdVoxels((current) => !current)}
@@ -9824,8 +9852,15 @@ function CharacterViewer({
         <article className={`model-viewer-panel ${isLocalDev && !isEditingSpriteSheet ? 'is-dev-sticky' : ''} ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
             <div className="model-viewer-preview-column">
-              <div className={`model-viewer-stage ${hasSelectedFrameData ? '' : 'is-empty-preview'}`}>
-                {hasSelectedFrameData ? (
+              <div className={`model-viewer-stage ${hasSelectedFrameData ? '' : 'is-empty-preview'} ${isIdleGhostSideView ? 'is-side-view' : ''}`}>
+                {hasSelectedFrameData ? isIdleGhostSideView ? (
+                  <IdleGhostSideViewComparison
+                    idleFrame={idleGhostFrame}
+                    currentFrame={sideViewCurrentFrame}
+                    currentLabel={selectedSlot.label}
+                    currentScale={sideViewCurrentScale}
+                  />
+                ) : (
                   <CharacterPreviewCanvas
                     character={previewCharacter}
                     pose={selectedSlot.pose}
@@ -9847,7 +9882,7 @@ function CharacterViewer({
                 <div className="viewer-actions model-viewer-preview-actions">
                   <div className="viewer-action-row">
                     {devPreviewActionControls}
-                    {zoomActionControls}
+                    {!isIdleGhostSideView && zoomActionControls}
                   </div>
                 </div>
               )}
@@ -10324,6 +10359,118 @@ function CharacterViewer({
         <Home size={18} />
         Back
       </button>
+    </div>
+  );
+}
+
+type FrameComparisonMetrics = {
+  naturalWidth: number;
+  naturalHeight: number;
+  bounds: {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  };
+};
+
+function useFrameComparisonMetrics(src: string) {
+  const [metrics, setMetrics] = useState<FrameComparisonMetrics | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setMetrics(null);
+    if (!src) return undefined;
+    void loadImage(src)
+      .then((image) => {
+        if (cancelled) return;
+        setMetrics({
+          naturalWidth: image.naturalWidth || image.width || 1,
+          naturalHeight: image.naturalHeight || image.height || 1,
+          bounds: getOpaqueImageBounds(image)
+        });
+      })
+      .catch(() => {
+        if (!cancelled) setMetrics(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [src]);
+
+  return metrics;
+}
+
+function formatSignedPixels(value: number) {
+  return value > 0 ? `+${value}px` : `${value}px`;
+}
+
+function IdleGhostSideViewComparison({
+  idleFrame,
+  currentFrame,
+  currentLabel,
+  currentScale
+}: {
+  idleFrame: string;
+  currentFrame: string;
+  currentLabel: string;
+  currentScale: AnimationScale;
+}) {
+  const idleMetrics = useFrameComparisonMetrics(idleFrame);
+  const currentMetrics = useFrameComparisonMetrics(currentFrame);
+  const widthScale = currentScale.width ?? 1;
+  const heightScale = currentScale.height ?? 1;
+  const idleHeight = Math.round(idleMetrics?.bounds.height ?? 0);
+  const idleWidth = Math.round(idleMetrics?.bounds.width ?? 0);
+  const currentHeight = Math.round((currentMetrics?.bounds.height ?? 0) * heightScale);
+  const currentWidth = Math.round((currentMetrics?.bounds.width ?? 0) * widthScale);
+  const targetHeight = idleHeight || currentHeight;
+  const heightDelta = currentHeight && targetHeight ? currentHeight - targetHeight : 0;
+  const frameIndex = getFrameIndex(currentFrame);
+  const heightState = heightDelta > 0 ? 'too tall' : heightDelta < 0 ? 'too short' : 'matched';
+
+  return (
+    <div className="idle-ghost-side-view" data-testid="idle-ghost-side-view">
+      <section className="idle-ghost-side-panel idle-reference-panel" aria-label="Idle reference frame">
+        <header>
+          <span>idle ref</span>
+          <small>{idleHeight ? `idle foot-head ${idleHeight}px` : 'measuring idle'}</small>
+        </header>
+        <div className="side-frame-ruler">
+          <div className="side-ruler side-ruler-idle" aria-hidden="true" />
+          <span className="side-ruler-label side-ruler-label-idle">{idleHeight ? `idle foot-head ${idleHeight}px` : 'idle foot-head'}</span>
+          <span className="side-baseline" aria-hidden="true" />
+          <img src={idleFrame} alt="Idle reference frame" />
+        </div>
+      </section>
+
+      <section className="idle-ghost-side-panel current-frame-panel" aria-label="Current animation frame">
+        <header>
+          <span>{currentLabel} frame {frameIndex >= 0 ? frameIndex.toString().padStart(3, '0') : '--'}</span>
+          <small>{widthScale.toFixed(2)}w {heightScale.toFixed(2)}h scale</small>
+        </header>
+        <div className="side-frame-ruler">
+          <div className="side-ruler side-ruler-current" aria-hidden="true" />
+          <span className="side-ruler-label side-ruler-label-target">target box {targetHeight || '--'}px</span>
+          <span className="side-ruler-label side-ruler-label-current">
+            {currentHeight ? `${formatSignedPixels(heightDelta)} ${heightState}` : 'measuring current'}
+          </span>
+          <span className="side-baseline" aria-hidden="true" />
+          <img
+            src={currentFrame}
+            alt={`${currentLabel} comparison frame`}
+            style={{
+              '--frame-scale-x': widthScale,
+              '--frame-scale-y': heightScale
+            } as CSSProperties}
+          />
+        </div>
+        <footer>
+          <span>{currentWidth || '--'}px wide</span>
+          <span>{currentHeight || '--'}px foot-head</span>
+          <span>idle {idleWidth || '--'}px wide</span>
+        </footer>
+      </section>
     </div>
   );
 }

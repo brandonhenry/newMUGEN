@@ -3342,11 +3342,17 @@ button {
   cursor: default;
 }
 
+.model-viewer-stage.is-side-view {
+  cursor: default;
+  touch-action: pan-y;
+}
+
 .model-viewer-stage:active {
   cursor: grabbing;
 }
 
-.model-viewer-stage.is-empty-preview:active {
+.model-viewer-stage.is-empty-preview:active,
+.model-viewer-stage.is-side-view:active {
   cursor: default;
 }
 
@@ -3354,6 +3360,169 @@ button {
   width: 100% !important;
   height: 100% !important;
   min-height: inherit;
+}
+
+.idle-ghost-side-view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(14px, 2.5vw, 26px);
+  min-height: inherit;
+  height: 100%;
+  padding: clamp(14px, 2.2vw, 22px);
+  background:
+    linear-gradient(90deg, rgba(255, 176, 25, 0.08), transparent 44%, rgba(46, 230, 255, 0.08)),
+    #050607;
+}
+
+.idle-ghost-side-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+}
+
+.idle-ghost-side-panel header,
+.idle-ghost-side-panel footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: rgba(247, 247, 242, 0.78);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.idle-ghost-side-panel header span {
+  color: #f7f7f2;
+  font-weight: 850;
+}
+
+.idle-ghost-side-panel header small,
+.idle-ghost-side-panel footer span {
+  color: rgba(247, 247, 242, 0.62);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.idle-ghost-side-panel footer {
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 8px;
+}
+
+.side-frame-ruler {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 330px;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 34px 18px 18px 22px;
+  background:
+    radial-gradient(circle, rgba(54, 115, 145, 0.72) 0 1px, transparent 1px) 0 0 / 10px 10px,
+    linear-gradient(180deg, transparent 0 23%, rgba(255, 180, 77, 0.78) 23% calc(23% + 2px), transparent calc(23% + 2px)),
+    linear-gradient(180deg, transparent 0 31%, rgba(46, 230, 255, 0.78) 31% calc(31% + 2px), transparent calc(31% + 2px)),
+    #0c0e11;
+  box-shadow:
+    0 0 0 1px rgba(184, 205, 226, 0.24) inset,
+    0 20px 36px rgba(0, 0, 0, 0.28);
+}
+
+.idle-reference-panel .side-frame-ruler {
+  background:
+    radial-gradient(circle, rgba(255, 176, 25, 0.44) 0 1px, transparent 1px) 0 0 / 10px 10px,
+    linear-gradient(180deg, transparent 0 24%, rgba(255, 176, 25, 0.88) 24% calc(24% + 2px), transparent calc(24% + 2px)),
+    #0c0e11;
+}
+
+.side-frame-ruler img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: auto;
+  height: 48%;
+  min-height: 96px;
+  max-width: 92%;
+  max-height: 250px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transform: scale(var(--frame-scale-x, 1), var(--frame-scale-y, 1));
+  transform-origin: center bottom;
+}
+
+.side-ruler {
+  position: absolute;
+  z-index: 3;
+  left: 9px;
+  top: 14px;
+  bottom: 18px;
+  width: 9px;
+  border-left: 2px solid currentColor;
+  color: #ffb44d;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      currentColor 0 1px,
+      transparent 1px 20px
+    );
+  pointer-events: none;
+}
+
+.side-ruler-current {
+  color: #2ee6ff;
+}
+
+.side-baseline {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  height: 2px;
+  background: rgba(123, 176, 218, 0.58);
+}
+
+.side-ruler-label {
+  position: absolute;
+  z-index: 4;
+  left: 14px;
+  max-width: calc(100% - 28px);
+  color: #ffb44d;
+  font-size: 11px;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 #050607;
+}
+
+.side-ruler-label-idle {
+  top: 27%;
+}
+
+.side-ruler-label-target {
+  top: 32%;
+  color: #2ee6ff;
+}
+
+.side-ruler-label-current {
+  right: 12px;
+  left: auto;
+  top: 16px;
+  color: #ff6a55;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .idle-ghost-side-view {
+    grid-template-columns: 1fr;
+  }
+
+  .side-frame-ruler {
+    min-height: 260px;
+  }
 }
 
 .no-frame-data-preview {
