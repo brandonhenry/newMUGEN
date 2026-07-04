@@ -36,7 +36,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -81,11 +81,14 @@ import {
   type GetupAction,
   type GetupFrameOverrides,
   type GameSettings,
+  type BreakTargetMiniGameSnapshot,
   type HitLevel,
   type ImpactSparkEvent,
   type InputFrame,
   type MatchMode,
   type MatchSnapshot,
+  type MiniGameKind,
+  type MiniGameResult,
   type MoveDefinition,
   type MoveEffectInstance,
   type MoveInput,
@@ -128,6 +131,15 @@ import {
   type TrainingTrialProgress
 } from './lib/trainingTrials';
 import {
+  BREAK_TARGET_GAME_ID,
+  createBreakTargetMiniGame,
+  makeBreakTargetMiniGameResult,
+  readMiniGameHighScore,
+  shouldStartArcadeMiniGame,
+  stepBreakTargetMiniGame,
+  writeMiniGameHighScore
+} from './lib/arcadeMiniGames';
+import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
   measureVoxelBodyMetrics,
@@ -153,7 +165,7 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
@@ -168,6 +180,11 @@ type OnlineWins = [number, number];
 type RandomCharacterSlots = Record<1 | 2, boolean>;
 type TournamentSelectMode = 'free' | 'online' | 'paid';
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
+type ArcadeMiniGameLaunch = {
+  kind: MiniGameKind;
+  stage: StageDefinition;
+  seed: number;
+};
 
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
@@ -2510,6 +2527,8 @@ export default function App() {
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
+  const [activeArcadeMiniGame, setActiveArcadeMiniGame] = useState<ArcadeMiniGameLaunch | null>(null);
+  const [lastMiniGameResult, setLastMiniGameResult] = useState<MiniGameResult | null>(null);
   const [musicStarted, setMusicStarted] = useState(true);
   const [fightPaused, setFightPaused] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -3213,15 +3232,16 @@ export default function App() {
     playableStageRoster.find((stage) => stage.id === 'the-chamber') ??
     stages.find((stage) => stage.id === 'the-chamber') ??
     selectedStage;
-  const activeBgmSource = useMemo(() => {
-    if (!musicStarted || screen === 'boot') return null;
-    if (screen === 'fight') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
-    if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
-    if (!settings.audio.menuMusic) return null;
-    if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
-    if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
-    return KORE_MENU_BGM_SOURCE;
-  }, [fightPaused, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
+	  const activeBgmSource = useMemo(() => {
+	    if (!musicStarted || screen === 'boot') return null;
+	    if (screen === 'fight') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
+	    if (screen === 'miniGame' && activeArcadeMiniGame) return stageBgmSource(activeArcadeMiniGame.stage);
+	    if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
+	    if (!settings.audio.menuMusic) return null;
+	    if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
+	    if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
+	    return KORE_MENU_BGM_SOURCE;
+	  }, [activeArcadeMiniGame, fightPaused, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -3231,10 +3251,42 @@ export default function App() {
       event.stopPropagation();
     }
   }, [screen]);
-  const appCursorStyle = useMemo(
-    () => createCursorStyle(getKoreCursorOption(settings.display.cursorId)),
-    [settings.display.cursorId]
-  );
+	  const appCursorStyle = useMemo(
+	    () => createCursorStyle(getKoreCursorOption(settings.display.cursorId)),
+	    [settings.display.cursorId]
+	  );
+	  const makeArcadeMiniGameLaunch = useCallback((): ArcadeMiniGameLaunch | null => {
+	    if (!shouldStartArcadeMiniGame()) return null;
+	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
+	    return {
+	      kind: BREAK_TARGET_GAME_ID,
+	      stage: miniGameStage,
+	      seed: freshAiSeed()
+	    };
+	  }, [playableStageRoster, selectedStage]);
+	  const continueAfterArcadeUnlock = useCallback(() => {
+	    setPendingUnlockCharacterId('');
+	    setVersusReturnScreen('stage');
+	    setScreen(activeArcadeMiniGame ? 'miniGame' : 'versus');
+	  }, [activeArcadeMiniGame]);
+	  const continueAfterMiniGameResult = useCallback(() => {
+	    setActiveArcadeMiniGame(null);
+	    setLastMiniGameResult(null);
+	    setVersusReturnScreen('stage');
+	    setScreen('versus');
+	  }, []);
+	  const debugMiniGameStartedRef = useRef(false);
+	  useEffect(() => {
+	    if (debugMiniGameStartedRef.current || screen === 'boot' || typeof window === 'undefined' || !p1) return;
+	    const params = new URLSearchParams(window.location.search);
+	    if (params.get('debugMiniGame') !== '1') return;
+	    debugMiniGameStartedRef.current = true;
+	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
+	    setMode('ai');
+	    setActiveArcadeMiniGame({ kind: BREAK_TARGET_GAME_ID, stage: miniGameStage, seed: freshAiSeed() });
+	    setLastMiniGameResult(null);
+	    setScreen('miniGame');
+	  }, [p1, playableStageRoster, screen, selectedStage]);
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -3534,11 +3586,33 @@ export default function App() {
           <UnlockRevealScreen
             character={unlockRevealCharacter}
             stage={unlockRevealStage}
-            onContinue={() => {
-              setPendingUnlockCharacterId('');
-              setVersusReturnScreen('stage');
-              setScreen('versus');
+            onContinue={continueAfterArcadeUnlock}
+          />
+        )}
+        {screen === 'miniGame' && activeArcadeMiniGame && (
+          <BreakTargetMiniGameScreen
+            key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
+            character={p1}
+            launch={activeArcadeMiniGame}
+            settings={settings}
+            readInputsForStep={readInputsForStep}
+            setVirtualAction={setVirtualAction}
+            clearMenuInputs={clearMenuInputs}
+            onMenu={() => {
+              setActiveArcadeMiniGame(null);
+              setLastMiniGameResult(null);
+              setScreen('menu');
             }}
+            onComplete={(result) => {
+              setLastMiniGameResult(result);
+              setScreen('miniGameResult');
+            }}
+          />
+        )}
+        {screen === 'miniGameResult' && lastMiniGameResult && (
+          <MiniGameResultScreen
+            result={lastMiniGameResult}
+            onContinue={continueAfterMiniGameResult}
           />
         )}
         {screen === 'stageEditor' && (
@@ -3624,13 +3698,16 @@ export default function App() {
               }
               const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlocks, cpuDifficulty);
               if (nextOpponent) setP2Id(nextOpponent.id);
+              const nextMiniGame = winnerSlot === 1 ? makeArcadeMiniGameLaunch() : null;
+              setActiveArcadeMiniGame(nextMiniGame);
+              setLastMiniGameResult(null);
               setVersusReturnScreen('stage');
               if (shouldRevealUnlock) {
                 setPendingUnlockCharacterId(defeatedCharacterId);
                 setScreen('unlockReveal');
                 return;
               }
-              setScreen('versus');
+              setScreen(nextMiniGame ? 'miniGame' : 'versus');
             }}
           />
         )}
@@ -17802,6 +17879,210 @@ function clashButtonInputFrame(button: MoveInput): InputFrame {
   const frame = emptyInputFrame();
   frame[button] = true;
   return frame;
+}
+
+function BreakTargetMiniGameScreen({
+  character,
+  launch,
+  settings,
+  readInputsForStep,
+  setVirtualAction,
+  clearMenuInputs,
+  onMenu,
+  onComplete
+}: {
+  character: CharacterDefinition;
+  launch: ArcadeMiniGameLaunch;
+  settings: GameSettings;
+  readInputsForStep: () => [InputFrame, InputFrame];
+  setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
+  clearMenuInputs: () => void;
+  onMenu: () => void;
+  onComplete: (result: MiniGameResult) => void;
+}) {
+  const [snapshot, setSnapshot] = useState<BreakTargetMiniGameSnapshot>(() => createBreakTargetMiniGame(character, launch.stage, launch.seed));
+  const [paused, setPaused] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const snapshotRef = useRef(snapshot);
+  const pausedRef = useRef(paused);
+  const pauseLatchRef = useRef(false);
+  const completedRef = useRef(false);
+  const mobileControlsTrackedRef = useRef(false);
+
+  useEffect(() => {
+    const fresh = createBreakTargetMiniGame(character, launch.stage, launch.seed);
+    snapshotRef.current = fresh;
+    setSnapshot(fresh);
+    setPaused(false);
+    pausedRef.current = false;
+    completedRef.current = false;
+    pauseLatchRef.current = false;
+    const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [character, launch.stage, launch.seed]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
+
+  useEffect(() => {
+    snapshotRef.current = snapshot;
+  }, [snapshot]);
+
+  useEffect(() => {
+    let frame = 0;
+    let last = performance.now();
+    let accumulator = 0;
+    const fixedStep = 1 / 60;
+    const tick = (now: number) => {
+      const delta = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const [p1Input] = readInputsForStep();
+      if (p1Input.pause) {
+        if (!pauseLatchRef.current) {
+          pauseLatchRef.current = true;
+          setPaused((current) => {
+            pausedRef.current = !current;
+            return !current;
+          });
+          clearMenuInputs();
+        }
+      } else {
+        pauseLatchRef.current = false;
+      }
+      if (!pausedRef.current && !completedRef.current) {
+        accumulator += delta;
+        while (accumulator >= fixedStep) {
+          snapshotRef.current = stepBreakTargetMiniGame(snapshotRef.current, p1Input, fixedStep);
+          accumulator -= fixedStep;
+        }
+        setSnapshot(snapshotRef.current);
+        if (snapshotRef.current.phase === 'complete') {
+          completedRef.current = true;
+          const previousHighScore = readMiniGameHighScore({ gameId: snapshotRef.current.gameId, stageId: snapshotRef.current.stage.id });
+          const result = makeBreakTargetMiniGameResult(snapshotRef.current, previousHighScore);
+          const highScore = writeMiniGameHighScore({ gameId: result.gameId, stageId: result.stageId }, result.score);
+          onComplete({ ...result, highScore, newHighScore: result.score > previousHighScore });
+          return;
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [clearMenuInputs, onComplete, readInputsForStep]);
+
+  const trackMobileControlsUsed = useCallback(() => {
+    mobileControlsTrackedRef.current = true;
+  }, []);
+
+  return (
+    <div
+      className="fight-screen mini-game-screen"
+      ref={screenRef}
+      tabIndex={-1}
+      onPointerDown={() => screenRef.current?.focus()}
+    >
+      <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
+      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} />}
+      {paused && (
+        <div className="pause-overlay">
+          <div className="pause-panel">
+            <h2>Mini Game Paused</h2>
+            <div className="pause-menu-actions">
+              <button className="primary-button" onClick={() => setPaused(false)}>
+                <Play size={18} />
+                Resume
+              </button>
+              <button className="secondary-button" onClick={onMenu}>
+                <Home size={18} />
+                Menu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MiniGameHud({ snapshot, hudScale }: { snapshot: BreakTargetMiniGameSnapshot; hudScale: number }) {
+  const remaining = snapshot.targets.filter((target) => !target.destroyed).length;
+  return (
+    <div className="mini-game-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
+      <div className="mini-game-hud-card">
+        <span>Targets</span>
+        <strong>{remaining}/{snapshot.targets.length}</strong>
+      </div>
+      <div className="mini-game-hud-card timer">
+        <Timer size={18} />
+        <strong>{Math.ceil(snapshot.timer)}</strong>
+      </div>
+      <div className="mini-game-hud-card score">
+        <span>Points</span>
+        <strong>{Math.round(snapshot.score)}</strong>
+      </div>
+    </div>
+  );
+}
+
+function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; onContinue: () => void }) {
+  const [displayScore, setDisplayScore] = useState(0);
+  const [ready, setReady] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const continuedRef = useRef(false);
+  const continueIfReady = useCallback(() => {
+    if (!ready || continuedRef.current) return;
+    continuedRef.current = true;
+    onContinue();
+  }, [onContinue, ready]);
+  const acceptInput = useAnyInputActivation({ enabled: ready, ready, onAccept: continueIfReady });
+
+  useEffect(() => {
+    let frame = 0;
+    const started = performance.now();
+    const duration = 1200;
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayScore(Math.round(result.score * eased));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+      else setReady(true);
+    };
+    const focusFrame = requestAnimationFrame(() => screenRef.current?.focus());
+    frame = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(frame);
+      cancelAnimationFrame(focusFrame);
+    };
+  }, [result.score]);
+
+  return (
+    <div
+      ref={screenRef}
+      className={`mini-game-result-screen any-input-screen ${ready ? 'is-ready' : ''}`}
+      tabIndex={0}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptInput)}
+      aria-label="Mini game result"
+    >
+      <div className="mini-game-result-vignette" />
+      <section className="mini-game-result-copy" aria-live="polite">
+        <span>Break The Target</span>
+        <h1>{displayScore}</h1>
+        <p>{result.stageName}</p>
+        <div className="mini-game-result-stats">
+          <strong>{result.targetsDestroyed}/{result.totalTargets}</strong>
+          <span>Targets</span>
+          <strong>{Math.ceil(result.timeRemaining)}</strong>
+          <span>Seconds</span>
+          <strong>{result.highScore}</strong>
+          <span>{result.newHighScore ? 'New Best' : 'Best'}</span>
+        </div>
+        {ready && <small>Press any key to continue</small>}
+      </section>
+    </div>
+  );
 }
 
 function FightDebug({

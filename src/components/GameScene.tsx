@@ -11,6 +11,8 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import type {
   CharacterDefinition,
   CharacterEffectDefinition,
+  BreakTargetMiniGameSnapshot,
+  BreakTargetRuntime,
   EffectSoundCue,
   EffectTransform,
   FighterRuntime,
@@ -538,6 +540,157 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <StagePostProcessing stage={match.stage} reducedMotion={reducedMotion} />
       </StageCameraCollisionContext.Provider>
     </Canvas>
+  );
+}
+
+export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: BreakTargetMiniGameSnapshot; reducedMotion?: boolean }) {
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [snapshot.stage.id]);
+  return (
+    <Canvas shadows dpr={[1, 1.75]} camera={{ position: [snapshot.player.position.x, 3.3, snapshot.player.position.z + 6.8], fov: 46 }} data-testid="mini-game-canvas">
+      <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+        <Suspense fallback={null}>
+          <Environment preset="city" />
+        </Suspense>
+        {!isModelStage(snapshot.stage) && <DefaultSkybox imagePath={snapshot.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+        <StageVisualStyleRig stage={snapshot.stage} fighters={[snapshot.player, snapshot.player] as [FighterRuntime, FighterRuntime]} />
+        <MiniGameCameraRig snapshot={snapshot} />
+        <Arena stage={snapshot.stage} fighters={[snapshot.player, snapshot.player] as [FighterRuntime, FighterRuntime]} impactEvents={[]} />
+        <StageCameraOcclusionFader />
+        <BreakTargetLayer targets={snapshot.targets} explosions={snapshot.explosions} reducedMotion={reducedMotion} />
+        <FighterRig fighter={snapshot.player} timeScale={1} stage={snapshot.stage} />
+        <ContactShadows position={[0, -0.01, 0]} opacity={0.38} scale={18} blur={2.4} far={3} />
+        <StagePostProcessing stage={snapshot.stage} reducedMotion={reducedMotion} />
+      </StageCameraCollisionContext.Provider>
+    </Canvas>
+  );
+}
+
+function MiniGameCameraRig({ snapshot }: { snapshot: BreakTargetMiniGameSnapshot }) {
+  const { camera } = useThree();
+  const smoothedTarget = useRef(new THREE.Vector3(snapshot.player.position.x, 1.1, snapshot.player.position.z));
+  useFrame((_, delta) => {
+    const aliveTargets = snapshot.targets.filter((target) => !target.destroyed);
+    const targetCenter = aliveTargets.reduce(
+      (sum, target) => sum.add(new THREE.Vector3(target.position.x, Math.max(1, target.position.y), target.position.z)),
+      new THREE.Vector3(snapshot.player.position.x, 1.1, snapshot.player.position.z)
+    );
+    if (aliveTargets.length > 0) targetCenter.multiplyScalar(1 / (aliveTargets.length + 1));
+    const player = new THREE.Vector3(snapshot.player.position.x, 1.08, snapshot.player.position.z);
+    const focus = player.lerp(targetCenter, 0.38);
+    smoothedTarget.current.lerp(focus, 1 - Math.pow(0.001, delta));
+    const desired = new THREE.Vector3(smoothedTarget.current.x, smoothedTarget.current.y + 2.35, smoothedTarget.current.z + 6.8);
+    camera.position.lerp(desired, 1 - Math.pow(0.002, delta));
+    camera.lookAt(smoothedTarget.current);
+  });
+  return null;
+}
+
+function BreakTargetLayer({
+  targets,
+  explosions,
+  reducedMotion
+}: {
+  targets: BreakTargetMiniGameSnapshot['targets'];
+  explosions: BreakTargetMiniGameSnapshot['explosions'];
+  reducedMotion: boolean;
+}) {
+  return (
+    <group>
+      {targets.map((target) => (
+        <BreakTargetVoxelTarget key={target.id} target={target} />
+      ))}
+      {explosions.map((explosion) => (
+        <BreakTargetExplosion key={explosion.id} explosion={explosion} reducedMotion={reducedMotion} />
+      ))}
+    </group>
+  );
+}
+
+const breakTargetAssetByTier: Record<BreakTargetRuntime['tier'], string> = {
+  10: '/minigames/break-target/target-10hp.png',
+  20: '/minigames/break-target/target-20hp.png',
+  30: '/minigames/break-target/target-30hp.png'
+};
+
+const BREAK_TARGET_EXPLOSION_SHEET = '/minigames/break-target/target-explosion-sheet.png';
+const TARGET_VOXEL_SOURCE_CHARACTER = { voxelProfile: 'image-source' } as CharacterDefinition;
+
+function BreakTargetVoxelTarget({ target }: { target: BreakTargetRuntime }) {
+  const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
+  const groupRef = useRef<THREE.Group>(null);
+  const source = breakTargetAssetByTier[target.tier];
+  useEffect(() => {
+    let canceled = false;
+    getCachedImageVoxels(source, TARGET_VOXEL_SOURCE_CHARACTER).then((nextVoxels) => {
+      if (!canceled) setVoxels(nextVoxels);
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [source]);
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const pulse = target.hitFlash > 0 ? Math.sin(state.clock.elapsedTime * 80) * 0.035 : 0;
+    groupRef.current.scale.setScalar((target.destroyed ? 0.001 : target.radius * 0.92) + pulse);
+    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.85 + target.position.x) * 0.18;
+  });
+  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 700 ? 2 : 1), [voxels]);
+  const outlineStyle = useMemo<FighterOutlineStyle>(() => ({
+    enabled: true,
+    color: '#111318',
+    opacity: 0.34,
+    scale: 1.045
+  }), []);
+  const renderStyle = useMemo(() => withDefaultRenderStyle({ castShadow: true, receiveShadow: true }), []);
+  if (target.destroyed) return null;
+  return (
+    <group ref={groupRef} position={[target.position.x, target.position.y - target.height * 0.42, target.position.z]} rotation={[0, Math.PI / 2, 0]}>
+      <ImageVoxelPartGroup part={parts.head} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.torso} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadArm} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearArm} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadLeg} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearLeg} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+    </group>
+  );
+}
+
+function BreakTargetExplosion({ explosion, reducedMotion }: { explosion: BreakTargetMiniGameSnapshot['explosions'][number]; reducedMotion: boolean }) {
+  const texture = useLoader(THREE.TextureLoader, BREAK_TARGET_EXPLOSION_SHEET);
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const { camera } = useThree();
+  useEffect(() => {
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    texture.repeat.set(1 / 6, 1);
+    texture.needsUpdate = true;
+  }, [texture]);
+  useFrame(() => {
+    groupRef.current?.lookAt(camera.position);
+    if (!materialRef.current) return;
+    const progress = THREE.MathUtils.clamp(explosion.age / Math.max(0.001, explosion.duration), 0, 0.999);
+    texture.offset.x = Math.floor(progress * 6) / 6;
+    materialRef.current.opacity = reducedMotion ? 0.72 : Math.max(0, 1 - progress * 0.35);
+  });
+  const progress = THREE.MathUtils.clamp(explosion.age / Math.max(0.001, explosion.duration), 0, 1);
+  return (
+    <group ref={groupRef} position={[explosion.position.x, explosion.position.y, explosion.position.z + 0.05]} scale={[1.35 + progress * 0.75, 1.35 + progress * 0.75, 1]}>
+      <mesh renderOrder={52}>
+        <planeGeometry args={[1.8, 1.8]} />
+        <meshBasicMaterial
+          ref={materialRef}
+          map={texture}
+          transparent
+          alphaTest={0.04}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
+    </group>
   );
 }
 
@@ -4477,7 +4630,7 @@ function ImageVoxelPartGroup({
   renderStyle
 }: {
   part: { anchor: [number, number, number]; voxels: ImageVoxel[] };
-  groupRef: React.RefObject<THREE.Group>;
+  groupRef?: React.RefObject<THREE.Group>;
   outlineStyle?: FighterOutlineStyle;
   renderStyle: FighterRenderStyle;
 }) {

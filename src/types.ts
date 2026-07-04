@@ -744,6 +744,65 @@ export type InputFrameMetadata = {
 
 export type InputFrameWithMetadata = InputFrame & InputFrameMetadata;
 
+export type MiniGameKind = 'break-target';
+export type BreakTargetTier = 10 | 20 | 30;
+
+export type MiniGameHighScoreKey = {
+  gameId: MiniGameKind;
+  stageId: string;
+};
+
+export type BreakTargetRuntime = {
+  id: string;
+  tier: BreakTargetTier;
+  hp: number;
+  maxHp: number;
+  position: { x: number; y: number; z: number };
+  radius: number;
+  height: number;
+  points: number;
+  destroyed: boolean;
+  hitFlash: number;
+};
+
+export type BreakTargetExplosionRuntime = {
+  id: string;
+  position: { x: number; y: number; z: number };
+  age: number;
+  duration: number;
+};
+
+export type BreakTargetMiniGameSnapshot = {
+  kind: 'break-target';
+  gameId: MiniGameKind;
+  stage: StageDefinition;
+  player: FighterRuntime;
+  seed: number;
+  roundTime: number;
+  timer: number;
+  score: number;
+  targets: BreakTargetRuntime[];
+  explosions: BreakTargetExplosionRuntime[];
+  phase: 'playing' | 'complete';
+  completedReason: 'all-clear' | 'time-up' | null;
+};
+
+export type MiniGameResult = {
+  kind: MiniGameKind;
+  gameId: MiniGameKind;
+  stageId: string;
+  stageName: string;
+  score: number;
+  previousHighScore: number;
+  highScore: number;
+  newHighScore: boolean;
+  targetsDestroyed: number;
+  totalTargets: number;
+  timeRemaining: number;
+  allClear: boolean;
+  completedReason: 'all-clear' | 'time-up';
+};
+
 export type BufferedMoveIntent = {
   moveInput: MoveInput;
   inputSnapshot: InputFrame;
