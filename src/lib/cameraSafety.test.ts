@@ -4,6 +4,7 @@ import type { StageDefinition } from '../types';
 import {
   cameraBoundsLocalToWorld,
   findCameraSightlineBlockers,
+  isCameraNearStageSafetyEnvelope,
   isCameraOutsideStageSafetyEnvelope,
   resolveCameraBoundaryNudge,
   resolveCameraStageBounds,
@@ -98,5 +99,17 @@ describe('cameraSafety', () => {
 
     expect(isCameraOutsideStageSafetyEnvelope(stage, { x: 0, z: 7.5 })).toBe(false);
     expect(isCameraOutsideStageSafetyEnvelope(stage, { x: 0, z: 9.8 })).toBe(true);
+  });
+
+  it('detects camera positions approaching the safety envelope before crossing it', () => {
+    const stage: StageDefinition = {
+      ...baseStage,
+      fightPlane: { center: [0, 0, 0], width: 10, depth: 7, y: 0, rotationY: 0 },
+      playableBounds: { shape: 'box', width: 10, depth: 7 }
+    };
+
+    expect(isCameraNearStageSafetyEnvelope(stage, { x: 0, z: 6.4 })).toBe(false);
+    expect(isCameraNearStageSafetyEnvelope(stage, { x: 0, z: 7.4 })).toBe(true);
+    expect(isCameraOutsideStageSafetyEnvelope(stage, { x: 0, z: 7.4 })).toBe(false);
   });
 });

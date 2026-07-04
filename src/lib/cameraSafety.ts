@@ -106,6 +106,18 @@ export function isCameraOutsideStageSafetyEnvelope(stage: StageDefinition, posit
   return Math.abs(local.x) > bounds.halfWidth + tolerance || Math.abs(local.z) > bounds.halfDepth + tolerance;
 }
 
+export function isCameraNearStageSafetyEnvelope(stage: StageDefinition, position: { x: number; z: number }, warningDistance = 1.2) {
+  const bounds = resolveCameraSafetyEnvelope(stage);
+  const local = worldToCameraBoundsLocal(position, bounds);
+  if (bounds.shape === 'ellipse') {
+    const innerHalfWidth = Math.max(0.1, bounds.halfWidth - warningDistance);
+    const innerHalfDepth = Math.max(0.1, bounds.halfDepth - warningDistance);
+    return (local.x * local.x) / (innerHalfWidth * innerHalfWidth) + (local.z * local.z) / (innerHalfDepth * innerHalfDepth) >= 1;
+  }
+  return Math.abs(local.x) >= Math.max(0.1, bounds.halfWidth - warningDistance)
+    || Math.abs(local.z) >= Math.max(0.1, bounds.halfDepth - warningDistance);
+}
+
 export function findCameraSightlineBlockers<T extends CameraSafetyCollider>(
   cameraPosition: THREE.Vector3,
   visibilityPoints: THREE.Vector3[],

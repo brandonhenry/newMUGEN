@@ -34,7 +34,7 @@ import { emptyInputFrame } from '../types';
 import { activeMoveProgress, createMatch, stepMatch } from '../engine/fightEngine';
 import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
-import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
+import { findCameraSightlineBlockers, isCameraNearStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
@@ -60,6 +60,7 @@ type StageCameraColliderEntry = CameraSafetyCollider & {
   id: string;
   mesh: THREE.Mesh;
   materials: StageCameraMaterialState[];
+  boundaryFade: boolean;
   fade: number;
 };
 
@@ -2644,30 +2645,36 @@ function stableFightCameraSide(dx: number, dz: number) {
 }
 
 function enforceCameraHorizontalDistance(camera: THREE.Camera, focus: THREE.Vector3, fallbackSide: THREE.Vector3, minDistance: number) {
-  const dx = camera.position.x - focus.x;
-  const dz = camera.position.z - focus.z;
+  enforceVectorHorizontalDistance(camera.position, focus, fallbackSide, minDistance);
+}
+
+function enforceVectorHorizontalDistance(position: THREE.Vector3, focus: THREE.Vector3, fallbackSide: THREE.Vector3, minDistance: number) {
+  const dx = position.x - focus.x;
+  const dz = position.z - focus.z;
   const distance = Math.hypot(dx, dz);
   if (distance >= minDistance) return;
 
   const fallbackLength = Math.hypot(fallbackSide.x, fallbackSide.z);
   const directionX = distance > 0.001 ? dx / distance : fallbackLength > 0.001 ? fallbackSide.x / fallbackLength : 0;
   const directionZ = distance > 0.001 ? dz / distance : fallbackLength > 0.001 ? fallbackSide.z / fallbackLength : 1;
-  camera.position.x = focus.x + directionX * minDistance;
-  camera.position.z = focus.z + directionZ * minDistance;
+  position.x = focus.x + directionX * minDistance;
+  position.z = focus.z + directionZ * minDistance;
 }
 
 function resolveCameraModelCollision(
   focus: THREE.Vector3,
   desired: THREE.Vector3,
   colliders: Set<StageCameraColliderEntry> | undefined,
-  output: THREE.Vector3
+  output: THREE.Vector3,
+  minResolvedDistance = MODEL_CAMERA_COLLISION_MIN_DISTANCE
 ) {
   output.copy(desired);
   if (!colliders?.size) return false;
 
   const path = desired.clone().sub(focus);
   const totalDistance = path.length();
-  if (totalDistance <= MODEL_CAMERA_COLLISION_MIN_DISTANCE) return false;
+  const minimumDistance = Math.max(MODEL_CAMERA_COLLISION_MIN_DISTANCE, minResolvedDistance);
+  if (totalDistance <= minimumDistance) return false;
 
   const direction = path.multiplyScalar(1 / totalDistance);
   const ray = new THREE.Ray(focus, direction);
@@ -2680,16 +2687,13 @@ function resolveCameraModelCollision(
     const hit = ray.intersectBox(box, hitPoint);
     if (!hit) return;
     const hitDistance = focus.distanceTo(hit);
-    if (hitDistance <= MODEL_CAMERA_COLLISION_MIN_DISTANCE || hitDistance >= totalDistance) return;
+    if (hitDistance <= minimumDistance || hitDistance >= totalDistance) return;
     closestDistance = Math.min(closestDistance, hitDistance);
   });
 
   if (!Number.isFinite(closestDistance)) return false;
-  const resolvedDistance = THREE.MathUtils.clamp(
-    closestDistance - MODEL_CAMERA_COLLISION_PADDING,
-    MODEL_CAMERA_COLLISION_MIN_DISTANCE,
-    totalDistance
-  );
+  const resolvedDistance = closestDistance - MODEL_CAMERA_COLLISION_PADDING;
+  if (resolvedDistance < minimumDistance) return false;
   output.copy(focus).addScaledVector(direction, resolvedDistance);
   return true;
 }
@@ -2703,8 +2707,9 @@ function updateCameraStageOccluders(
   if (!registry) return;
   registry.occluders.clear();
   if (!registry.colliders.size) return;
-  if (isCameraOutsideStageSafetyEnvelope(stage, cameraPosition)) {
+  if (isCameraNearStageSafetyEnvelope(stage, cameraPosition)) {
     registry.colliders.forEach((entry) => {
+      if (!entry.boundaryFade) return;
       registry.occluders.add(entry);
       entry.fade = 1;
       applyStageCameraFade(entry);
@@ -2858,9 +2863,10 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
         focus.z + side.z * cameraDistanceRef.current
       );
       resolveCameraBoundaryNudge(match.stage, lookFocus, desired, boundaryAdjustedDesired);
-      const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+      enforceVectorHorizontalDistance(boundaryAdjustedDesired, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+      const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_FIGHT_CAMERA_DISTANCE);
       camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 6.2 * smoothing));
-      const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
+      const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_FIGHT_CAMERA_DISTANCE);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
       camera.lookAt(lookFocus);
       updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
@@ -2890,9 +2896,10 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
       target.set(contactX, Math.max(1.12, contactY), contactZ);
       resolveCameraBoundaryNudge(match.stage, target, desired, boundaryAdjustedDesired);
-      const collided = resolveCameraModelCollision(target, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+      enforceVectorHorizontalDistance(boundaryAdjustedDesired, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
+      const collided = resolveCameraModelCollision(target, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_CLASH_CAMERA_DISTANCE);
       camera.position.lerp(collisionAdjustedDesired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
-      const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position);
+      const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_CLASH_CAMERA_DISTANCE);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
       updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, target));
@@ -2961,9 +2968,10 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       focus.z + side.z * cameraDistanceRef.current
     );
     resolveCameraBoundaryNudge(match.stage, lookFocus, desired, boundaryAdjustedDesired);
-    const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired);
+    enforceVectorHorizontalDistance(boundaryAdjustedDesired, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+    const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_FIGHT_CAMERA_DISTANCE);
     camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
-    const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position);
+    const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_FIGHT_CAMERA_DISTANCE);
     if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
     updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
@@ -3543,6 +3551,7 @@ function StageModelCameraColliders({
         mesh,
         box,
         materials: captureStageCameraMaterialStates(mesh),
+        boundaryFade: isStageCameraBoundaryFadeBox(box),
         fade: 0
       };
       entries.push(entry);
@@ -3583,8 +3592,24 @@ function isUsableStageCameraColliderBox(box: THREE.Box3, floorY: number) {
   box.getSize(size);
   const maxSize = Math.max(size.x, size.y, size.z);
   if (!Number.isFinite(maxSize) || maxSize < 0.05 || maxSize > 900) return false;
-  const lowFlatFloor = size.y < 0.35 && size.x > 4 && size.z > 4 && box.max.y <= floorY + 0.55;
-  return !lowFlatFloor;
+  return !isStageCameraFloorLikeBox(box, floorY);
+}
+
+function isStageCameraBoundaryFadeBox(box: THREE.Box3) {
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  const horizontalMin = Math.min(size.x, size.z);
+  return size.y > 0.75 && (horizontalMin < 1.8 || size.y > horizontalMin * 0.65);
+}
+
+function isStageCameraFloorLikeBox(box: THREE.Box3, floorY: number) {
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  const broad = size.x > 3.5 && size.z > 3.5;
+  if (!broad) return false;
+  const shallow = size.y < 0.9 || size.y < Math.min(size.x, size.z) * 0.16;
+  const nearFloor = box.min.y <= floorY + 0.55 && box.max.y <= floorY + 1.35;
+  return shallow && nearFloor;
 }
 
 function StageModelFlattenedMeshes({ meshes }: { meshes: FlattenedStageModelMesh[] }) {
