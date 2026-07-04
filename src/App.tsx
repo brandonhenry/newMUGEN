@@ -698,7 +698,7 @@ const baseAnimationSlots: AnimationSlot[] = [
   { key: 'walkForward', label: 'Forward', pose: 'walk', notation: ['f'], category: 'stance' },
   { key: 'walkBack', label: 'Back', pose: 'walk', notation: ['b'], category: 'stance' },
   { key: 'sprint', label: 'Forward Sprint', pose: 'walk', notation: ['f,f'], category: 'stance' },
-  { key: 'backflip', label: 'Backflip', pose: 'jump', notation: ['b,b'], category: 'stance' },
+  { key: 'backHop', label: 'Back Hop', pose: 'jump', notation: ['b,b'], category: 'stance' },
   { key: 'sidestepLeft', label: 'Side Up', pose: 'sidestep', notation: ['↑↑'], category: 'stance' },
   { key: 'sidestepRight', label: 'Side Down', pose: 'sidestep', notation: ['↓↓'], category: 'stance' },
   { key: 'jump', label: 'Jump', pose: 'jump', notation: ['u'], category: 'stance' },
@@ -1919,7 +1919,7 @@ function isWideVisualAnimationKey(animationKey: string) {
 function getWideVisualCandidateFrames(character: CharacterDefinition) {
   const eligibleIndices = new Set<number>();
   const protectedIndices = new Set<number>();
-  const protectedKeys = new Set(['crouch', 'crouchBlock', 'jump', 'backflip', 'chargeKi']);
+  const protectedKeys = new Set(['crouch', 'crouchBlock', 'jump', 'backHop', 'chargeKi']);
   Object.entries(character.animationFrames ?? {}).forEach(([animationKey, paths]) => {
     paths.forEach((path) => {
       const frameIndex = getFrameIndex(path);
@@ -8602,6 +8602,7 @@ const actionLabels: Record<ActionName, string> = {
   left: 'Left',
   right: 'Right',
   dashForward: 'Dash Forward',
+  dashBack: 'Back Hop',
   sidestepUp: 'Sidestep Up',
   sidestepDown: 'Sidestep Down',
   sidewalkUp: 'Sidewalk Up',
@@ -15562,6 +15563,7 @@ function inferImportedAnimationFrameMap(count: number): Record<string, number[]>
     idle: pick([0, 1, 2, 3]),
     walkForward: pick([4, 5, 6, 7, 8, 9]),
     walkBack: pick([9, 8, 7, 6, 5, 4]),
+    backHop: pick([9, 8, 7, 6, 5, 4]),
     sidestepLeft: pick([10, 11, 12]),
     sidestepRight: pick([13, 14, 15]),
     crouch: pick([16, 17]),
@@ -15611,6 +15613,7 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
       idle: 5,
       walkForward: 10,
       walkBack: 8,
+      backHop: 8,
       sidestepLeft: 10,
       sidestepRight: 10,
       crouch: 5,
@@ -15642,6 +15645,7 @@ function buildImportedCharacterManifest(draft: ImportDraft, frameCount: number, 
       idle: 'idle',
       walkForward: 'walkForward',
       walkBack: 'walkBack',
+      backHop: 'backHop',
       sidestepLeft: 'sidestepLeft',
       sidestepRight: 'sidestepRight',
       crouch: 'crouch',
@@ -17023,6 +17027,8 @@ function FightScreen({
       previous = now;
       const [peekP1Input, peekP2Input] = peekInputs();
       frameInputRef.current =
+        peekP1Input.dashForward ? 'p1:dashForward' :
+        peekP1Input.dashBack ? 'p1:dashBack' :
         peekP1Input.right ? 'p1:right' :
         peekP1Input.left ? 'p1:left' :
         peekP1Input.up ? 'p1:up' :
@@ -17035,6 +17041,8 @@ function FightScreen({
         peekP1Input.kick ? 'p1:kick' :
         peekP1Input.heavy ? 'p1:heavy' :
         peekP1Input.special ? 'p1:special' :
+        peekP2Input.dashForward ? 'p2:dashForward' :
+        peekP2Input.dashBack ? 'p2:dashBack' :
         peekP2Input.right ? 'p2:right' :
         peekP2Input.left ? 'p2:left' :
         peekP2Input.up ? 'p2:up' :

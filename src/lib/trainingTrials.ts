@@ -96,6 +96,7 @@ const actionToNotation: Partial<Record<ActionName, string>> = {
   left: 'b',
   right: 'f',
   dashForward: 'F',
+  dashBack: 'b,b',
   sidestepUp: 'SSL',
   sidestepDown: 'SSR',
   sidewalkUp: 'SSL',
@@ -153,6 +154,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const trials: TrainingTrialDefinition[] = [
     makeSimpleTrial(character, dummy, 'movement', 'movement:walk', 'Walk In', ['f'], ['right'], 'Close space without swinging.', 'First, take the space. No wasted cuts.', 'Step forward and hold your ground.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:dash', 'Dash In', ['F'], ['dashForward'], 'Dash to punish distance quickly.', 'When the opening is far, move first.', 'Dash forward cleanly.', { requireState: 'walk' }),
+    makeSimpleTrial(character, dummy, 'movement', 'movement:back-hop', 'Back Hop', ['b,b'], ['dashBack'], 'Back-back is a quick retreat, but it is unsafe if the enemy reads it or hits you during startup or airtime.', 'Retreat with care. Air has no guard.', 'Back hop complete.', { requireState: 'jump' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line to move or defend against linear pressure.', "Don't stand where the blade is falling.", 'Sidestep once.'),
     makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Standing guard is your default answer to high, special, and unknown pressure.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
     makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block low pressure; standing guard loses to lows.', 'Low strikes need low guard. Simple.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' }),

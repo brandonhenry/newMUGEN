@@ -538,7 +538,7 @@ def wide_visual_candidate_frames(character_manifest: dict) -> set[int]:
         return set()
     eligible_indices: set[int] = set()
     protected_indices: set[int] = set()
-    protected_keys = {"crouch", "crouchBlock", "jump", "backflip", "chargeKi"}
+    protected_keys = {"crouch", "crouchBlock", "jump", "backHop", "chargeKi"}
     for animation_key, paths in animation_frames.items():
         if not isinstance(animation_key, str) or not isinstance(paths, list):
             continue

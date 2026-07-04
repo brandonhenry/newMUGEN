@@ -79,6 +79,7 @@ describe('training trial catalog', () => {
       const trials = generateBasicTrainingTrials(character, roster);
       expect(trials.length, character.id).toBeGreaterThanOrEqual(8);
       expect(trials.filter((trial) => trial.category === 'movement' || trial.category === 'defense').length, character.id).toBeGreaterThanOrEqual(5);
+      expect(trials.some((trial) => trial.id.endsWith('movement:back-hop')), character.id).toBe(true);
       for (const trial of trials) {
         expect(trial.characterId).toBe(character.id);
         expect(trial.stageId).toBeTruthy();
@@ -86,6 +87,29 @@ describe('training trial catalog', () => {
         expect(trial.previewScript.length, trial.id).toBeGreaterThan(0);
       }
     }
+  });
+
+  it('teaches unsafe back hop in the basic movement list', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('movement:back-hop'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.title).toBe('Back Hop');
+    expect(trial.steps[0]).toMatchObject({
+      notation: ['b,b'],
+      actions: ['dashBack'],
+      requireState: 'jump'
+    });
+    expect(trial.lesson.toLowerCase()).toContain('unsafe');
+    expect(trial.lesson.toLowerCase()).toContain('airtime');
+
+    const previewInput = makePreviewInput(trial.previewScript, trial.previewScript[0].frame);
+    expect(previewInput.dashBack).toBe(true);
   });
 
   it('teaches blocking fundamentals in the basic defense list', () => {

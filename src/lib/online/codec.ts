@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 9;
+export const ONLINE_PROTOCOL_VERSION = 10;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -8,6 +8,7 @@ export const inputActions: ActionName[] = [
   'left',
   'right',
   'dashForward',
+  'dashBack',
   'sidestepUp',
   'sidestepDown',
   'sidewalkUp',
@@ -47,6 +48,9 @@ export type CompactFighterSnapshot = {
   sidestepRepeatGraceFrames: number;
   dashForwardFrames: number;
   dashForwardCooldownFrames: number;
+  backHopFrames: number;
+  backHopTotalFrames: number;
+  backHopCooldownFrames: number;
   walkDirection: -1 | 0 | 1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
@@ -249,6 +253,9 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     sidestepRepeatGraceFrames: fighter.sidestepRepeatGraceFrames,
     dashForwardFrames: fighter.dashForwardFrames,
     dashForwardCooldownFrames: fighter.dashForwardCooldownFrames,
+    backHopFrames: fighter.backHopFrames,
+    backHopTotalFrames: fighter.backHopTotalFrames,
+    backHopCooldownFrames: fighter.backHopCooldownFrames,
     walkDirection: fighter.walkDirection,
     jumpInputHeld: fighter.jumpInputHeld,
     currentMove: fighter.currentMove,
@@ -339,6 +346,9 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     sidestepRepeatGraceFrames: snapshot.sidestepRepeatGraceFrames ?? base.sidestepRepeatGraceFrames,
     dashForwardFrames: snapshot.dashForwardFrames ?? base.dashForwardFrames,
     dashForwardCooldownFrames: snapshot.dashForwardCooldownFrames ?? base.dashForwardCooldownFrames,
+    backHopFrames: snapshot.backHopFrames ?? base.backHopFrames,
+    backHopTotalFrames: snapshot.backHopTotalFrames ?? base.backHopTotalFrames,
+    backHopCooldownFrames: snapshot.backHopCooldownFrames ?? base.backHopCooldownFrames,
     walkDirection: snapshot.walkDirection ?? base.walkDirection,
     jumpInputHeld: snapshot.jumpInputHeld,
     currentMove: snapshot.currentMove,

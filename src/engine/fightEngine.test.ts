@@ -17,7 +17,7 @@ import {
 } from '../hooks/useControls';
 import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
 import { emptyInputFrame, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput, type StageDefinition } from '../types';
-import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, stepMatch } from './fightEngine';
+import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, getFighterAnimationFrameSource, stepMatch } from './fightEngine';
 
 function unwrappedAngleDelta(next: number, previous: number) {
   let delta = next - previous;
@@ -515,6 +515,41 @@ describe('character manifests', () => {
     expect(normalized.moveOverrides?.kickleft?.damage).toBe(8);
     expect(normalized.moveOverrides?.kick).toBeUndefined();
     expect(normalized.moveOverrides?.['cmd:3']).toBeUndefined();
+  });
+
+  it('migrates legacy backflip animation data to canonical backHop keys', () => {
+    const normalized = normalizeCharacter({
+      ...starterCharacters[0],
+      animationFrames: {
+        backflip: ['/legacy-backflip.png']
+      },
+      animationFrameRates: {
+        backflip: 10
+      },
+      animationScales: {
+        backflip: { width: 1.1, height: 1.2, offsetX: 0.1 }
+      },
+      animationFrameScales: {
+        backflip: {
+          0: { width: 1.05, height: 1.05, offsetX: 0 }
+        }
+      },
+      animations: {
+        ...starterCharacters[0].animations,
+        backflip: 'backflip'
+      }
+    });
+
+    expect(normalized.animationFrames?.backHop).toEqual(['/legacy-backflip.png']);
+    expect(normalized.animationFrames?.backflip).toBeUndefined();
+    expect(normalized.animationFrameRates?.backHop).toBe(10);
+    expect(normalized.animationFrameRates?.backflip).toBeUndefined();
+    expect(normalized.animationScales?.backHop?.width).toBe(1.1);
+    expect(normalized.animationScales?.backflip).toBeUndefined();
+    expect(normalized.animationFrameScales?.backHop?.[0]?.width).toBe(1.05);
+    expect(normalized.animationFrameScales?.backflip).toBeUndefined();
+    expect(normalized.animations.backHop).toBe('backHop');
+    expect(normalized.animations.backflip).toBeUndefined();
   });
 
   it('drives attack animation progress from startup active and recovery frames', () => {
@@ -1055,21 +1090,24 @@ describe('character manifests', () => {
     expect(input.sidewalkDown).toBe(false);
   });
 
-  it('turns double tap left or right into a one-frame dash-forward flag while preserving hold movement', () => {
+  it('turns double tap left or right into one-frame dash flags while preserving hold movement', () => {
     const input = emptyInputFrame();
     const state = createHorizontalTapState();
 
     applyHorizontalTap(input, state, 'right', true, 'keyboard', 100);
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(false);
+    expect(input.dashBack).toBe(false);
     applyHorizontalTap(input, state, 'right', false, 'keyboard', 130);
 
     applyHorizontalTap(input, state, 'right', true, 'keyboard', 210);
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(true);
+    expect(input.dashBack).toBe(true);
     consumeHorizontalTapAfterRead(input, state, 'keyboard');
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(false);
+    expect(input.dashBack).toBe(false);
 
     applyHorizontalTap(input, state, 'right', false, 'keyboard', 240);
     applyHorizontalTap(input, state, 'left', true, 'keyboard', 330);
@@ -1078,6 +1116,7 @@ describe('character manifests', () => {
     expect(input.left).toBe(true);
     expect(input.right).toBe(false);
     expect(input.dashForward).toBe(true);
+    expect(input.dashBack).toBe(true);
   });
 
   it('preserves a press-and-release between simulation reads for exactly one step', () => {
@@ -1147,11 +1186,13 @@ describe('character manifests', () => {
     consumeHorizontalTapAfterRead(input, horizontalState, 'keyboard');
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(false);
+    expect(input.dashBack).toBe(false);
 
     applyHorizontalTap(input, horizontalState, 'right', false, 'keyboard', 250);
     applyHorizontalTap(input, horizontalState, 'right', true, 'keyboard', 310);
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(true);
+    expect(input.dashBack).toBe(true);
   });
 
   it('does not promote the held second vertical tap into continuous lane walking', () => {
@@ -3050,6 +3091,187 @@ describe('fight engine', () => {
     laneDown.sidewalkDown = true;
     const laneDownResult = stepMatch(match, laneDown, emptyInputFrame(), 10 / 60);
     expect(laneDownResult.fighters[0].position.z).toBeGreaterThan(laneZBefore + 0.35);
+  });
+
+  it('uses back-back as an unsafe airborne retreat for both sides', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const p1X = match.fighters[0].position.x;
+    const p1Back = { ...emptyInputFrame(), left: true, dashBack: true, dashForward: true };
+
+    match = stepMatch(match, p1Back, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].position.x).toBeLessThan(p1X);
+    expect(match.fighters[0].position.y).toBeGreaterThan(0);
+    expect(match.fighters[0].velocityY).toBeGreaterThan(0);
+    expect(match.fighters[0].state).toBe('jump');
+    expect(match.fighters[0].backHopTotalFrames).toBeGreaterThan(0);
+    expect(match.fighters[0].state).not.toBe('block');
+
+    let p2Match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    p2Match.phase = 'fighting';
+    p2Match.countdown = 0;
+    const p2X = p2Match.fighters[1].position.x;
+    const p2Back = { ...emptyInputFrame(), right: true, dashBack: true, dashForward: true };
+
+    p2Match = stepMatch(p2Match, emptyInputFrame(), p2Back, 1 / 60);
+
+    expect(p2Match.fighters[1].position.x).toBeGreaterThan(p2X);
+    expect(p2Match.fighters[1].position.y).toBeGreaterThan(0);
+    expect(p2Match.fighters[1].state).toBe('jump');
+    expect(p2Match.fighters[1].backHopTotalFrames).toBeGreaterThan(0);
+    expect(p2Match.fighters[1].state).not.toBe('block');
+  });
+
+  it('keeps forward double-tap sprint behavior separate from back hop', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const p1X = match.fighters[0].position.x;
+    const forwardDash = { ...emptyInputFrame(), right: true, dashForward: true, dashBack: true };
+
+    const next = stepMatch(match, forwardDash, emptyInputFrame(), 1 / 60);
+
+    expect(next.fighters[0].position.x).toBeGreaterThan(p1X);
+    expect(next.fighters[0].dashForwardFrames).toBeGreaterThan(0);
+    expect(next.fighters[0].backHopTotalFrames).toBe(0);
+    expect(next.fighters[0].state).toBe('walk');
+  });
+
+  it('does not start back hop from locked or invalid states', () => {
+    const cases: Array<{ name: string; setup: (match: MatchSnapshot) => ReturnType<typeof emptyInputFrame> }> = [
+      { name: 'crouching', setup: () => ({ ...emptyInputFrame(), left: true, down: true, dashBack: true }) },
+      {
+        name: 'airborne',
+        setup: (match) => {
+          match.fighters[0].state = 'jump';
+          match.fighters[0].position.y = 0.6;
+          match.fighters[0].velocityY = 0.2;
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'attacking',
+        setup: (match) => {
+          match.fighters[0].state = 'attack';
+          match.fighters[0].currentMove = match.fighters[0].character.moves[0];
+          match.fighters[0].actionFramesRemaining = 8;
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'hitstun',
+        setup: (match) => {
+          match.fighters[0].state = 'hit';
+          match.fighters[0].stunFramesRemaining = 8;
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'blockstun',
+        setup: (match) => {
+          match.fighters[0].state = 'block';
+          match.fighters[0].blockstunFramesRemaining = 8;
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'knockdown',
+        setup: (match) => {
+          match.fighters[0].state = 'knockdown';
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'getup',
+        setup: (match) => {
+          match.fighters[0].state = 'getup';
+          match.fighters[0].actionFramesRemaining = 8;
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'throw hold',
+        setup: (match) => {
+          match.fighters[0].state = 'throwHold';
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'throw held',
+        setup: (match) => {
+          match.fighters[0].state = 'throwHeld';
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'transform',
+        setup: (match) => {
+          match.fighters[0].state = 'transform';
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'charge startup',
+        setup: (match) => {
+          match.fighters[0].state = 'chargeKi';
+          match.fighters[0].chargePhase = 'startup';
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      },
+      {
+        name: 'charge recovery',
+        setup: (match) => {
+          match.fighters[0].state = 'chargeKi';
+          match.fighters[0].chargePhase = 'recovery';
+          return { ...emptyInputFrame(), left: true, dashBack: true };
+        }
+      }
+    ];
+
+    for (const item of cases) {
+      const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+      const input = item.setup(match);
+      const next = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      expect(next.fighters[0].backHopTotalFrames, item.name).toBe(0);
+    }
+  });
+
+  it('gives smaller characters quicker back hops than larger characters', () => {
+    const small: CharacterDefinition = {
+      ...starterCharacters[0],
+      id: 'small-back-hop-test',
+      modelScale: { width: 0.65, height: 0.65 }
+    };
+    const large: CharacterDefinition = {
+      ...starterCharacters[0],
+      id: 'large-back-hop-test',
+      modelScale: { width: 1.45, height: 1.45 }
+    };
+    const opponent = starterCharacters[1];
+    const input = { ...emptyInputFrame(), left: true, dashBack: true };
+
+    const smallMatch = stepMatch(createMatch(small, opponent, stages[0], 'local2p'), input, emptyInputFrame(), 1 / 60);
+    const largeMatch = stepMatch(createMatch(large, opponent, stages[0], 'local2p'), input, emptyInputFrame(), 1 / 60);
+
+    expect(smallMatch.fighters[0].backHopTotalFrames).toBeLessThan(largeMatch.fighters[0].backHopTotalFrames);
+  });
+
+  it('resolves back-hop animation through walk back, jump, canonical backHop, then legacy backflip', () => {
+    const base = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p').fighters[0];
+    const makeFighter = (animationFrames: CharacterDefinition['animationFrames']) => ({
+      ...base,
+      state: 'jump' as const,
+      backHopTotalFrames: 6,
+      character: {
+        ...base.character,
+        animationFrames
+      }
+    });
+
+    expect(getFighterAnimationFrameSource(makeFighter({ walkBack: ['walk-back.png'], jump: ['jump.png'], backHop: ['back-hop.png'], idle: ['idle.png'] }))?.key).toBe('walkBack');
+    expect(getFighterAnimationFrameSource(makeFighter({ jump: ['jump.png'], backHop: ['back-hop.png'], idle: ['idle.png'] }))?.key).toBe('jump');
+    expect(getFighterAnimationFrameSource(makeFighter({ backHop: ['back-hop.png'], idle: ['idle.png'] }))?.key).toBe('backHop');
+    expect(getFighterAnimationFrameSource(makeFighter({ backflip: ['legacy-backflip.png'], idle: ['idle.png'] }))?.key).toBe('backflip');
   });
 
   it('keeps double-tap up and down sidesteps physically stable after side swaps', () => {
@@ -6073,7 +6295,8 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].position.y).toBeGreaterThan(0.6);
-    expect(match.fighters[1].velocityY).toBeGreaterThan(3.9);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(3.4);
+    expect(match.fighters[1].velocityY).toBeLessThan(3.9);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(0);
 
     let apex = match.fighters[1].position.y;

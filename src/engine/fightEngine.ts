@@ -18,7 +18,7 @@ import type {
   StageDefinition
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
-import { getCharacterCombatScale } from '../lib/characterScale';
+import { getCharacterCombatScale, getCharacterGlobalScale } from '../lib/characterScale';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
 import {
   cpuMoveFamilyKeyFromMove,
@@ -64,6 +64,8 @@ const JUGGLE_INITIAL_VELOCITY = 5.95;
 const JUGGLE_REFLOAT_VELOCITY = 4.35;
 const TORNADO_REFLOAT_VELOCITY = 4.85;
 const JUGGLE_GRAVITY_SCALE = 0.52;
+const JUGGLE_FALL_SPEED_MULTIPLIER = 1.2;
+const JUGGLE_EFFECTIVE_GRAVITY_SCALE_MAX = 1.5;
 const JUGGLE_MIN_START_HEIGHT = 0.72;
 const JUGGLE_REFLOAT_MIN_HEIGHT = 1.12;
 const TORNADO_REFLOAT_MIN_HEIGHT = 1.26;
@@ -119,6 +121,9 @@ const MIN_WALL_RADIUS = 0.34;
 const MAX_WALL_RADIUS = 1.05;
 const DASH_FORWARD_ANIMATION_FRAMES = 18;
 const DASH_FORWARD_COOLDOWN_FRAMES = 14;
+const BACK_HOP_COOLDOWN_FRAMES = 18;
+const BACK_HOP_MIN_SIZE = 0.65;
+const BACK_HOP_MAX_SIZE = 1.45;
 const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
 const KI_CHARGE_DEFAULT_ACTIVE_FRAMES = 18;
 const KI_CHARGE_DEFAULT_RECOVERY_FRAMES = 16;
@@ -509,6 +514,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     sidestepRepeatGraceFrames: 0,
     dashForwardFrames: 0,
     dashForwardCooldownFrames: 0,
+    backHopFrames: 0,
+    backHopTotalFrames: 0,
+    backHopCooldownFrames: 0,
     walkDirection: 0,
     jumpInputHeld: false,
     currentMove: null,
@@ -720,6 +728,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.sidestepRepeatGraceFrames = Math.max(0, fighter.sidestepRepeatGraceFrames - frameDelta);
   fighter.dashForwardFrames = Math.max(0, fighter.dashForwardFrames - frameDelta);
   fighter.dashForwardCooldownFrames = Math.max(0, fighter.dashForwardCooldownFrames - frameDelta);
+  fighter.backHopCooldownFrames = Math.max(0, fighter.backHopCooldownFrames - frameDelta);
+  if (fighter.state !== 'jump' && fighter.backHopTotalFrames > 0) {
+    clearBackHop(fighter);
+  }
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
   if (fighter.state === 'throwHold' || fighter.state === 'throwHeld') {
@@ -869,6 +881,15 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
+  if (fighter.backHopTotalFrames > 0) {
+    applyBackHopMovement(fighter, opponent, frameDelta);
+    fighter.state = 'jump';
+    const landed = applyGravity(fighter, dt);
+    if (landed) clearBackHop(fighter);
+    finishFighterStep();
+    return;
+  }
+
   if (fighter.forcedCrouchFrames > 0 && !input.down && fighter.position.y === 0 && fighter.velocityY === 0) {
     fighter.forcedCrouchFrames = Math.max(0, fighter.forcedCrouchFrames - frameDelta);
     fighter.state = 'crouch';
@@ -904,12 +925,13 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const forward = horizontalIntent.direction;
   fighter.walkDirection = 0;
   const holdingBack = horizontalIntent.back;
-  const blocking = input.block || holdingBack;
   const laneWalk = input.sidewalkUp ? -1 : input.sidewalkDown ? 1 : 0;
   const sidestepTap = input.sidestepUp ? -1 : input.sidestepDown ? 1 : 0;
   const grounded = fighter.position.y === 0 && fighter.velocityY === 0;
   const crouching = input.down && grounded;
   const jumping = isAirborne(fighter);
+  const backHopRequested = input.dashBack && holdingBack && grounded && !crouching && !jumping && fighter.backHopCooldownFrames === 0;
+  const blocking = input.block || (holdingBack && !backHopRequested);
   const speedScale = blocking ? 0.42 : crouching ? 0.18 : 1;
   const dashForwardRequested = input.dashForward && forward > 0 && grounded && !blocking && !crouching && !jumping && fighter.dashForwardCooldownFrames === 0;
 
@@ -923,6 +945,14 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     moveAlongOpponentAxis(fighter, opponent, getDashForwardDistance(fighter));
     fighter.dashForwardFrames = DASH_FORWARD_ANIMATION_FRAMES;
     fighter.dashForwardCooldownFrames = DASH_FORWARD_COOLDOWN_FRAMES;
+  }
+
+  if (backHopRequested) {
+    startBackHop(fighter);
+    applyBackHopMovement(fighter, opponent, frameDelta);
+    applyGravity(fighter, dt);
+    finishFighterStep();
+    return;
   }
 
   const laneInputActive = sidestepTap !== 0 || laneWalk !== 0;
@@ -2856,7 +2886,7 @@ function getComboRoute(fighter: FighterRuntime, opponent: FighterRuntime, input:
   const launcher = input.up || isAirborne(fighter);
 
   if (launcher && toward) return { key: 'up-forward', label: 'Rising Step', toward, away, low: false, launcher };
-  if (launcher && away) return { key: 'up-back', label: 'Backflip', toward, away, low: false, launcher };
+  if (launcher && away) return { key: 'up-back', label: 'Back Hop', toward, away, low: false, launcher };
   if (low && toward) return { key: 'down-forward', label: 'Low Drive', toward, away, low, launcher: false };
   if (low && away) return { key: 'down-back', label: 'Guard Low', toward, away, low, launcher: false };
   if (launcher) return { key: 'up', label: 'Rising', toward, away, low: false, launcher };
@@ -3645,7 +3675,7 @@ function getMoveJuggleGravityScale(move: MoveDefinition) {
 }
 
 function getFighterJuggleGravityScale(fighter: FighterRuntime) {
-  return clamp(fighter.juggleGravityScale || JUGGLE_GRAVITY_SCALE, 0.28, 1.2);
+  return clamp((fighter.juggleGravityScale || JUGGLE_GRAVITY_SCALE) * JUGGLE_FALL_SPEED_MULTIPLIER, 0.28, JUGGLE_EFFECTIVE_GRAVITY_SCALE_MAX);
 }
 
 function applyJuggleLandingRecovery(fighter: FighterRuntime) {
@@ -3875,7 +3905,7 @@ function getFighterAnimationOffsetX(fighter: FighterRuntime) {
   return clamp(Number(size?.offsetX) || 0, -6, 6);
 }
 
-function getFighterAnimationFrameSource(fighter: FighterRuntime) {
+export function getFighterAnimationFrameSource(fighter: FighterRuntime) {
   const frames = fighter.character.animationFrames;
   if (!frames) return null;
   const key = getFighterAnimationKey(fighter);
@@ -3888,6 +3918,12 @@ function resolveAnimationFrameSequence(frames: NonNullable<CharacterDefinition['
   const fallbackKeys = [
     key,
     key === 'sprint' ? 'walkForward' : undefined,
+    key === 'backHopMovement' ? 'walkBack' : undefined,
+    key === 'backHopMovement' ? 'jump' : undefined,
+    key === 'backHopMovement' ? 'backHop' : undefined,
+    key === 'backHopMovement' ? 'backflip' : undefined,
+    key === 'backHop' ? 'backflip' : undefined,
+    key === 'backflip' ? 'backHop' : undefined,
     key === 'backflip' ? 'jump' : undefined,
     key === 'backflip' ? 'walkBack' : undefined,
     key === 'crouchBlock' ? 'block' : undefined,
@@ -3937,6 +3973,7 @@ function getFighterGetupProgress(fighter: FighterRuntime) {
 
 function getFighterAnimationKey(fighter: FighterRuntime) {
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
+  if (fighter.state === 'jump' && fighter.backHopTotalFrames > 0) return 'backHopMovement';
   if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? resolveBaseAttackAnimationKey(fighter.character, fighter.currentMove?.input ?? 'jab');
   if (fighter.state === 'walk') {
     if (fighter.dashForwardFrames > 0 && fighter.character.animationFrames?.sprint?.length) return 'sprint';
@@ -4387,6 +4424,43 @@ function getFighterWallRadius(fighter: FighterRuntime) {
 
 function getDashForwardDistance(fighter: FighterRuntime) {
   return clamp(fighter.character.stats.dashDistance ?? DEFAULT_DASH_FORWARD_DISTANCE, 0, 2.4);
+}
+
+function getBackHopTuning(fighter: FighterRuntime) {
+  const globalScale = getCharacterGlobalScale(fighter.character);
+  const size = clamp((globalScale.width + globalScale.height) / 2, BACK_HOP_MIN_SIZE, BACK_HOP_MAX_SIZE);
+  const sizeRatio = (size - BACK_HOP_MIN_SIZE) / (BACK_HOP_MAX_SIZE - BACK_HOP_MIN_SIZE);
+  const durationFrames = Math.max(1, Math.round(lerp(9, 15, sizeRatio)));
+  return {
+    durationFrames,
+    distance: clamp(0.52 / Math.sqrt(size), 0.36, 0.68),
+    jumpForce: fighter.character.stats.jumpForce * clamp(0.34 + size * 0.06, 0.36, 0.44)
+  };
+}
+
+function startBackHop(fighter: FighterRuntime) {
+  const tuning = getBackHopTuning(fighter);
+  fighter.velocityY = tuning.jumpForce;
+  fighter.position.y = Math.max(fighter.position.y, 0.12);
+  fighter.state = 'jump';
+  fighter.walkDirection = -1;
+  fighter.backHopFrames = tuning.durationFrames;
+  fighter.backHopTotalFrames = tuning.durationFrames;
+  fighter.backHopCooldownFrames = BACK_HOP_COOLDOWN_FRAMES;
+}
+
+function applyBackHopMovement(fighter: FighterRuntime, opponent: FighterRuntime, frameDelta: number) {
+  if (fighter.backHopFrames <= 0) return;
+  const overlapFrames = Math.min(fighter.backHopFrames, Math.max(0, frameDelta));
+  if (overlapFrames <= 0) return;
+  const tuning = getBackHopTuning(fighter);
+  moveAlongOpponentAxis(fighter, opponent, -(tuning.distance * overlapFrames) / tuning.durationFrames);
+  fighter.backHopFrames = Math.max(0, fighter.backHopFrames - overlapFrames);
+}
+
+function clearBackHop(fighter: FighterRuntime) {
+  fighter.backHopFrames = 0;
+  fighter.backHopTotalFrames = 0;
 }
 
 function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime, amount: number) {
@@ -5880,6 +5954,7 @@ function applyGravity(fighter: FighterRuntime, dt: number, gravityScale = 1) {
     if (fighter.position.y <= 0) {
       fighter.position.y = 0;
       fighter.velocityY = 0;
+      if (fighter.backHopTotalFrames > 0) clearBackHop(fighter);
       if (fighter.state === 'jump') fighter.state = 'idle';
       return wasAirborne;
     }

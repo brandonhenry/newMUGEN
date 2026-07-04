@@ -476,7 +476,9 @@
       "/characters/kiro/frames/frame-141.png",
       "/characters/kiro/frames/frame-142.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/kiro/frames/frame-020.png"
+    ],
     "cmd:FC+3+4": [
       "/characters/kiro/frames/frame-180.png",
       "/characters/kiro/frames/frame-181.png",
@@ -10233,7 +10235,7 @@
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "43": {
         "width": 1.09,
         "height": 1.09,

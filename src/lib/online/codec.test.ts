@@ -10,6 +10,7 @@ describe('online codec', () => {
     const input = emptyInputFrame();
     input.right = true;
     input.dashForward = true;
+    input.dashBack = true;
     input.jab = true;
     input.block = true;
     input.charge = true;
@@ -29,6 +30,9 @@ describe('online codec', () => {
     match.fighters[0].moveInstanceId = 12;
     match.fighters[0].dashForwardFrames = 11;
     match.fighters[0].dashForwardCooldownFrames = 7;
+    match.fighters[0].backHopFrames = 6;
+    match.fighters[0].backHopTotalFrames = 12;
+    match.fighters[0].backHopCooldownFrames = 5;
     match.fighters[0].walkDirection = 1;
     match.fighters[0].idleFlourishFramesRemaining = 54;
     match.fighters[0].idleFlourishTotalFrames = 72;
@@ -116,6 +120,9 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].moveInstanceId).toBe(12);
     expect(hydrated.fighters[0].dashForwardFrames).toBe(11);
     expect(hydrated.fighters[0].dashForwardCooldownFrames).toBe(7);
+    expect(hydrated.fighters[0].backHopFrames).toBe(6);
+    expect(hydrated.fighters[0].backHopTotalFrames).toBe(12);
+    expect(hydrated.fighters[0].backHopCooldownFrames).toBe(5);
     expect(hydrated.fighters[0].walkDirection).toBe(1);
     expect(hydrated.fighters[0].idleFlourishFramesRemaining).toBe(54);
     expect(hydrated.fighters[0].idleFlourishTotalFrames).toBe(72);

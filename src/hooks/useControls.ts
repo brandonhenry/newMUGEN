@@ -272,6 +272,7 @@ function pickInputDebugState(input: InputFrame) {
     kick: input.kick,
     special: input.special,
     dashForward: input.dashForward,
+    dashBack: input.dashBack,
     sidestepUp: input.sidestepUp,
     sidestepDown: input.sidestepDown,
     pause: input.pause
@@ -290,6 +291,7 @@ function inputDebugHasSignal(inputs: [InputFrame, InputFrame], queue: QueuedInpu
     input.kick ||
     input.special ||
     input.dashForward ||
+    input.dashBack ||
     input.sidestepUp ||
     input.sidestepDown ||
     input.pause ||
@@ -546,6 +548,7 @@ export function applyHorizontalTap(
     if (state.heldAction === action) return true;
     if (now - state[lastTapKey] <= DOUBLE_TAP_MS) {
       input.dashForward = true;
+      input.dashBack = true;
       state[lastTapKey] = Number.NEGATIVE_INFINITY;
     }
     state.heldAction = action;
@@ -561,6 +564,7 @@ export function applyHorizontalTap(
 
 export function consumeHorizontalTapAfterRead(input: InputFrame, _state: HorizontalTapState, _source: VerticalInputSource) {
   input.dashForward = false;
+  input.dashBack = false;
 }
 
 export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, _source: VerticalInputSource, now = performance.now()) {

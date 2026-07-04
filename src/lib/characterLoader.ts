@@ -58,6 +58,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
     animationFrameScales: sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {}),
+    animations: canonicalizeAnimationNameRecord(character.animations ?? {}),
     modelScale: normalizeCharacterModelScale(character.modelScale, character.scale),
     moves: (character.moves ?? []).map(normalizeMove),
     moveOverrides: sanitizeMoveOverrides(character.moveOverrides ?? {}),
@@ -207,6 +208,8 @@ function sanitizeGetupFrameOverrides(overrides: CharacterDefinition['getupFrameO
 
 function canonicalizeBaseButtonRecord<T>(record: Record<string, T> = {}) {
   const next = { ...record };
+  if (next.backHop === undefined && next.backflip !== undefined) next.backHop = next.backflip;
+  delete next.backflip;
   Object.entries(baseInputToAnimationKey).forEach(([legacyKey, baseKey]) => {
     if (next[baseKey] === undefined && next[legacyKey] !== undefined) next[baseKey] = next[legacyKey];
     delete next[legacyKey];
@@ -216,6 +219,12 @@ function canonicalizeBaseButtonRecord<T>(record: Record<string, T> = {}) {
     if (next[baseKey] === undefined && next[legacyCommandKey] !== undefined) next[baseKey] = next[legacyCommandKey];
     delete next[legacyCommandKey];
   });
+  return next;
+}
+
+function canonicalizeAnimationNameRecord(record: Record<string, string> = {}) {
+  const next = canonicalizeBaseButtonRecord(record);
+  if (next.backHop === 'backflip') next.backHop = 'backHop';
   return next;
 }
 

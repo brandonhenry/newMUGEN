@@ -451,7 +451,9 @@
       "/characters/riven/frames/frame-012.png",
       "/characters/riven/frames/frame-013.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/riven/frames/frame-021.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [
       "/characters/riven/frames/frame-120.png",
@@ -2826,7 +2828,7 @@
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "44": {
         "width": 1.08,
         "height": 1.08,

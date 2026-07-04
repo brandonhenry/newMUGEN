@@ -47,7 +47,7 @@
       "/characters/cygnus-hyoga/frames/frame-033.png",
       "/characters/cygnus-hyoga/frames/frame-034.png"
     ],
-    "backflip": [
+    "backHop": [
       "/characters/cygnus-hyoga/frames/frame-006.png"
     ],
     "sidestepLeft": [
@@ -390,7 +390,7 @@
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -454,7 +454,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",

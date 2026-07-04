@@ -44,7 +44,7 @@
       "/characters/seto-kaiba/frames/frame-014.png"
     ],
     "sprint": [],
-    "backflip": [],
+    "backHop": [],
     "sidestepLeft": [
       "/characters/seto-kaiba/frames/frame-040.png",
       "/characters/seto-kaiba/frames/frame-041.png",
@@ -184,7 +184,7 @@
     "walkForward": 10,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -238,7 +238,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",

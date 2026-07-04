@@ -32,6 +32,7 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
     "idle": "idle",
     "walkForward": "walkForward",
     "walkBack": "walkBack",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
@@ -77,7 +78,7 @@ Characters live in `public/characters/{characterId}/` and are discovered from `p
 
 `image-source` characters can also define:
 
-- `animationFrames`: A map of animation keys to local frame image paths. Supported keys match the standard animation names: `idle`, `walkForward`, `walkBack`, `sidestepLeft`, `sidestepRight`, `crouch`, `jump`, `block`, `jab`, `kick`, `heavy`, `special`, `hitLight`, `hitHeavy`, `knockdown`, `win`, and `lose`.
+- `animationFrames`: A map of animation keys to local frame image paths. Supported keys match the standard animation names: `idle`, `walkForward`, `walkBack`, `backHop`, `sidestepLeft`, `sidestepRight`, `crouch`, `jump`, `block`, `jab`, `kick`, `heavy`, `special`, `hitLight`, `hitHeavy`, `knockdown`, `win`, and `lose`.
 - `animationFps`: Playback speed for looping frame sets. Attack frames are selected from move progress instead of looping.
 
 ## Move Timing
@@ -114,7 +115,7 @@ Hitboxes are authored in character-local coordinates:
 
 External GLB/GLTF characters should include clips named:
 
-`idle`, `walkForward`, `walkBack`, `sidestepLeft`, `sidestepRight`, `crouch`, `jump`, `block`, `jab`, `kick`, `heavy`, `special`, `hitLight`, `hitHeavy`, `knockdown`, `win`, `lose`.
+`idle`, `walkForward`, `walkBack`, `backHop`, `sidestepLeft`, `sidestepRight`, `crouch`, `jump`, `block`, `jab`, `kick`, `heavy`, `special`, `hitLight`, `hitHeavy`, `knockdown`, `win`, `lose`.
 
 If a clip is missing, the game falls back to a safe default pose and the character viewer reports a loader warning. This lets roster work continue before every animation is final.
 

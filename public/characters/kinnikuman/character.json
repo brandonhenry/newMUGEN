@@ -42,7 +42,9 @@
       "/characters/kinnikuman/frames/frame-012.png",
       "/characters/kinnikuman/frames/frame-013.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/kinnikuman/frames/frame-018.png"
+    ],
     "sidestepLeft": [
       "/characters/kinnikuman/frames/frame-058.png",
       "/characters/kinnikuman/frames/frame-059.png"
@@ -256,7 +258,7 @@
     "walkForward": 11.5,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -312,7 +314,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
@@ -547,12 +549,7 @@
       "label": "Kinnikuman Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -571,12 +568,7 @@
       "label": "Kinnikuman Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -593,12 +585,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Kinnikuman Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 19,
@@ -615,12 +602,7 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
       "label": "Kinnikuman Right Kick",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -638,12 +620,7 @@
       "forwardForceEndFrame": 46,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -665,12 +642,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -688,12 +660,7 @@
       "forwardForceEndFrame": 28,
       "label": "Kinnikuman Burst",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -710,12 +677,7 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Kinnikuman Rising Strike",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -733,12 +695,7 @@
       "forwardForceEndFrame": 25,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -757,12 +714,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -780,12 +732,7 @@
       "forwardForceEndFrame": 10,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -806,12 +753,7 @@
       "launchHeight": 2.2,
       "label": "Kinnikuman Cross Launcher",
       "hitLevel": "mid",
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     },
     "cmd:2+3": {
       "startupFrames": 24,
@@ -836,12 +778,7 @@
       "label": "Kinnikuman Low Feint",
       "hitLevel": "low",
       "endsInCrouch": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 14
+      "jumpBeforeMove": true
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -867,12 +804,7 @@
       "hitLevel": "low",
       "knockdown": false,
       "tornado": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 12,
-      "juggleRepeatPenaltyFrames": 18
+      "jumpBeforeMove": true
     },
     "cmd:3+4": {
       "startupFrames": 17,
@@ -894,12 +826,7 @@
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 12,
-      "juggleRepeatPenaltyFrames": 18
+      "jumpBeforeMove": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -917,12 +844,7 @@
       "forwardForceEndFrame": 35,
       "label": "Kinnikuman Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -938,12 +860,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Second Beat",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -959,12 +876,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Body Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -980,12 +892,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Low Changeup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1001,12 +908,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Pressure Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1022,12 +924,7 @@
       "forwardForce": 1.31,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Drive",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1043,12 +940,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Barrage",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1064,12 +956,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1085,12 +972,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Step Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1106,12 +988,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Palm String",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1127,12 +1004,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Rising Chain",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1148,12 +1020,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Special Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1169,12 +1036,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Break Art",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1190,12 +1052,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Check Hook",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1211,12 +1068,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Heavy Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1232,12 +1084,7 @@
       "forwardForce": 2.23,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Charged Follow",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1253,12 +1100,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Drop Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1274,12 +1116,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Arc Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1295,12 +1132,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Focus Stance",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1316,12 +1148,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Mode Shift",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1337,12 +1164,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Heel Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1358,12 +1180,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Summon Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1379,12 +1196,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Guard Snare",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1400,12 +1212,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Armor Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1421,12 +1228,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Power Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1442,12 +1244,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Switch Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1463,12 +1260,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Spark Jab",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1484,12 +1276,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Binding Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1505,12 +1292,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Heavy Draw",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1526,12 +1308,7 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Kinnikuman Kick Ender",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Kinnikuman Kick Ender"
     },
     "cmd:1+4": {
       "startupFrames": 9,
@@ -1542,12 +1319,7 @@
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.62,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16,
-      "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "forwardForceEndFrame": 16
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1558,12 +1330,7 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1574,12 +1341,7 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1590,12 +1352,7 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1606,12 +1363,7 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1622,12 +1374,7 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1719,7 +1466,7 @@
         "offsetX": 0
       },
       "54": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.72,
         "offsetX": 0
       }
@@ -1911,7 +1658,7 @@
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "40": {
         "width": 0.97,
         "height": 0.97,
@@ -2195,7 +1942,7 @@
       },
       "148": {
         "width": 1.18,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "149": {
@@ -2318,7 +2065,7 @@
         "offsetX": 0
       },
       "83": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.88,
         "offsetX": 0
       }
@@ -2331,23 +2078,18 @@
       }
     },
     "idle": {
-      "0": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "1": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.98,
         "offsetX": 0
       },
       "2": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
       "3": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.98,
         "offsetX": 0
       }
@@ -2379,7 +2121,6 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {},
     "cmd:FC+2": {
       "85": {
         "width": 0.88,
@@ -2542,13 +2283,6 @@
         "offsetX": 0
       }
     },
-    "kickleft": {},
-    "kickright": {},
-    "hitHeavy": {},
-    "getupRollUp": {},
-    "cmd:qcf+4": {},
-    "cmd:WS+4": {},
-    "cmd:O+2": {},
     "crouchBlock": {
       "303": {
         "width": 0.71,

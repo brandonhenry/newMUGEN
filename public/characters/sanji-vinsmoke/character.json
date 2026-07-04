@@ -45,7 +45,9 @@
       "/characters/sanji-vinsmoke/frames/frame-012.png",
       "/characters/sanji-vinsmoke/frames/frame-013.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/sanji-vinsmoke/frames/frame-017.png"
+    ],
     "sidestepLeft": [
       "/characters/sanji-vinsmoke/frames/frame-060.png",
       "/characters/sanji-vinsmoke/frames/frame-061.png",
@@ -283,7 +285,7 @@
     "walkForward": 12.5,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -343,7 +345,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
@@ -576,12 +578,7 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 14,
       "label": "Sanji Vinsmoke Left Check",
-      "hitLevel": "high",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 13,
@@ -598,12 +595,7 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "Sanji Vinsmoke Right Check",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 25,
@@ -622,12 +614,7 @@
       "label": "Sanji Vinsmoke Left Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "knockdown": false
     },
     "kickright": {
       "startupFrames": 22,
@@ -646,12 +633,7 @@
       "label": "Sanji Vinsmoke Right Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "knockdown": false
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -668,12 +650,7 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 25,
       "label": "Sanji Vinsmoke Rush",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -694,12 +671,7 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Sanji Vinsmoke Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -721,12 +693,7 @@
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -747,12 +714,7 @@
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "jumpBeforeMove": true
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -769,12 +731,7 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "Sanji Vinsmoke Crouch Jab",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -792,12 +749,7 @@
       "forwardForceEndFrame": 26,
       "launchHeight": 2,
       "label": "Sanji Vinsmoke Crouch Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -818,12 +770,7 @@
       "label": "Sanji Vinsmoke Twin Assault",
       "hitLevel": "mid",
       "tornado": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -842,12 +789,7 @@
       "launchHeight": 2.2,
       "label": "1+3 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -867,12 +809,7 @@
       "hitLevel": "low",
       "tornado": true,
       "endsInCrouch": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:2+4": {
       "startupFrames": 12,
@@ -898,12 +835,7 @@
       "hitLevel": "low",
       "knockdown": false,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -926,12 +858,7 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 12,
-      "juggleRepeatPenaltyFrames": 18
+      "jumpBeforeMove": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -949,12 +876,7 @@
       "forwardForceEndFrame": 34,
       "label": "Sanji Vinsmoke Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -970,12 +892,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Second Beat",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -991,12 +908,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Body Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1012,12 +924,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Low Changeup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1033,12 +940,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Pressure Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1054,12 +956,7 @@
       "forwardForce": 0.92,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Drive",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1075,12 +972,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Barrage",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1096,12 +988,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1117,12 +1004,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Sanji Vinsmoke Step Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1138,12 +1020,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Palm String",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1159,12 +1036,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Rising Chain",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1180,12 +1052,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Special Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1201,12 +1068,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Break Art",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1222,12 +1084,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Check Hook",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1243,12 +1100,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Heavy Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1264,12 +1116,7 @@
       "forwardForce": 1.84,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Charged Follow",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1285,12 +1132,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Sanji Vinsmoke Drop Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1306,12 +1148,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Arc Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1327,12 +1164,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Focus Stance",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1348,12 +1180,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Mode Shift",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1369,12 +1196,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Heel Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1390,12 +1212,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Summon Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1411,12 +1228,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Guard Snare",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1432,12 +1244,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Armor Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1453,12 +1260,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Power Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1474,12 +1276,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Switch Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1495,12 +1292,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Spark Jab",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1516,12 +1308,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Binding Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1537,12 +1324,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "Sanji Vinsmoke Heavy Draw",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1558,12 +1340,7 @@
       "forwardForce": 0.64,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Sanji Vinsmoke Kick Ender",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Sanji Vinsmoke Kick Ender"
     },
     "cmd:1+4": {
       "onBlockFrames": -9,
@@ -1578,12 +1355,7 @@
       "label": "1+4 Frame Link",
       "endsInCrouch": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "jumpBeforeMove": true
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1594,12 +1366,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "f+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1610,12 +1377,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "d+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1626,12 +1388,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "d/f+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1642,12 +1399,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "qcf+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1658,12 +1410,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "SS+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1677,12 +1424,7 @@
       "moveJumpGravity": 24,
       "label": "SS+4 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "jumpBeforeMove": true
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1696,12 +1438,7 @@
       "moveJumpGravity": 24,
       "label": "O+4 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "jumpBeforeMove": true
     }
   },
   "effects": [],
@@ -1783,7 +1520,7 @@
         "offsetX": 0
       },
       "53": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.59,
         "offsetX": 0
       },
@@ -1873,11 +1610,6 @@
       }
     },
     "kickleft": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -1889,7 +1621,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2114,7 +1846,7 @@
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "40": {
         "width": 1.01,
         "height": 1.01,
@@ -2344,7 +2076,7 @@
       },
       "115": {
         "width": 1.19,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "116": {
@@ -2369,24 +2101,9 @@
       }
     },
     "idle": {
-      "0": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
-      "1": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
-      "2": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "3": {
         "width": 1.05,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2398,7 +2115,7 @@
       },
       "58": {
         "width": 1.76,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2467,11 +2184,6 @@
       }
     },
     "cmd:1+3": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -2483,7 +2195,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2509,11 +2221,6 @@
       }
     },
     "cmd:f+3": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -2525,7 +2232,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2551,11 +2258,6 @@
       }
     },
     "cmd:d+3": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -2567,7 +2269,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2593,11 +2295,6 @@
       }
     },
     "cmd:d/f+3": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -2609,7 +2306,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2635,11 +2332,6 @@
       }
     },
     "cmd:qcf+3": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -2651,7 +2343,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2677,11 +2369,6 @@
       }
     },
     "cmd:SS+3": {
-      "93": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "94": {
         "width": 0.94,
         "height": 0.94,
@@ -2693,7 +2380,7 @@
         "offsetX": 0
       },
       "96": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.86,
         "offsetX": 0
       },
@@ -2782,15 +2469,6 @@
         "offsetX": 0
       }
     },
-    "jableft": {},
-    "jabright": {},
-    "hitHeavy": {},
-    "getupRollUp": {},
-    "cmd:f+1": {},
-    "cmd:d/f+2": {},
-    "cmd:FC+1": {},
-    "cmd:FC+2": {},
-    "cmd:O+2": {},
     "crouchBlock": {
       "593": {
         "width": 0.71,

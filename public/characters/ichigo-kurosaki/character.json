@@ -50,7 +50,9 @@
       "/characters/ichigo-kurosaki/frames/frame-012.png",
       "/characters/ichigo-kurosaki/frames/frame-013.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/ichigo-kurosaki/frames/frame-017.png"
+    ],
     "sidestepLeft": [
       "/characters/ichigo-kurosaki/frames/frame-013.png"
     ],
@@ -258,7 +260,7 @@
     "walkForward": 16.5,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -314,7 +316,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
@@ -549,12 +551,7 @@
       "label": "Ichigo Kurosaki Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -573,12 +570,7 @@
       "label": "Ichigo Kurosaki Right Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -595,12 +587,7 @@
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 33,
       "label": "Ichigo Kurosaki Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 19,
@@ -617,12 +604,7 @@
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 34,
       "label": "Ichigo Kurosaki Right Kick",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -640,12 +622,7 @@
       "forwardForceEndFrame": 41,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 5,
@@ -667,12 +644,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 15,
@@ -693,12 +665,7 @@
       "label": "Ichigo Kurosaki Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -715,12 +682,7 @@
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 32,
       "label": "Ichigo Kurosaki Rising Strike",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -738,12 +700,7 @@
       "forwardForceEndFrame": 27,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -762,12 +719,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 40,
@@ -786,12 +738,7 @@
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
       "tornado": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -809,12 +756,7 @@
       "forwardForceEndFrame": 40,
       "launchHeight": 2.2,
       "label": "Ichigo Kurosaki Cross Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 10,
@@ -834,12 +776,7 @@
       "moveJumpGravity": 26,
       "label": "Ichigo Kurosaki Low Feint",
       "hitLevel": "low",
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "jumpBeforeMove": true
     },
     "cmd:2+4": {
       "startupFrames": 17,
@@ -860,12 +797,7 @@
       "label": "Ichigo Kurosaki Driving Kick",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "jumpBeforeMove": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -883,12 +815,7 @@
       "forwardForceEndFrame": 41,
       "label": "Ichigo Kurosaki Power Crush",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 13
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -906,12 +833,7 @@
       "forwardForceEndFrame": 60,
       "label": "Ichigo Kurosaki Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -927,12 +849,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Second Beat",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -948,12 +865,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Body Blow",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -969,12 +881,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Low Changeup",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -990,12 +897,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Pressure Feint",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1011,12 +913,7 @@
       "forwardForce": 2.13,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Drive",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1032,12 +929,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Barrage",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1053,12 +945,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1074,12 +961,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Step Kick",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1095,12 +977,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Palm String",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1116,12 +993,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Rising Chain",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1137,12 +1009,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Special Setup",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1158,12 +1025,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Break Art",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1179,12 +1041,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Check Hook",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1200,12 +1057,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Heavy Break",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1221,12 +1073,7 @@
       "forwardForce": 3.05,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Charged Follow",
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1242,12 +1089,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Drop Kick",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1263,12 +1105,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Arc Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1284,12 +1121,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Focus Stance",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1305,12 +1137,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Mode Shift",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1326,12 +1153,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Heel Feint",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1347,12 +1169,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Summon Strike",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1368,12 +1185,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Guard Snare",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1389,12 +1201,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Armor Break",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1410,12 +1217,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Power Setup",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1431,12 +1233,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Switch Strike",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1452,12 +1249,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Spark Jab",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1473,12 +1265,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Binding Blow",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1494,12 +1281,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Heavy Draw",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1515,12 +1297,7 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "Ichigo Kurosaki Kick Ender",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Ichigo Kurosaki Kick Ender"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1531,12 +1308,7 @@
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 30,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1547,12 +1319,7 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1563,12 +1330,7 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1579,12 +1341,7 @@
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 30,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1595,12 +1352,7 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1825,7 +1577,7 @@
         "offsetX": 0
       },
       "11": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.84,
         "offsetX": 0
       }
@@ -1837,7 +1589,7 @@
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "40": {
         "width": 0.97,
         "height": 0.97,
@@ -2123,7 +1875,7 @@
     "cmd:qcf+4": {
       "160": {
         "width": 0.97,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "161": {
@@ -2194,7 +1946,7 @@
         "offsetX": 0
       },
       "86": {
-        "width": 1.0,
+        "width": 1,
         "height": 1.28,
         "offsetX": 0
       },
@@ -2367,7 +2119,6 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {},
     "cmd:FC+2": {
       "77": {
         "width": 0.46,
@@ -2530,13 +2281,6 @@
         "offsetX": 0
       }
     },
-    "kickleft": {},
-    "kickright": {},
-    "hitHeavy": {},
-    "getupRollUp": {},
-    "cmd:WS+4": {},
-    "cmd:3+4": {},
-    "cmd:O+2": {},
     "crouchBlock": {
       "436": {
         "width": 0.74,

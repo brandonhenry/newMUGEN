@@ -42,7 +42,9 @@
       "/characters/yugi-mutou/frames/frame-012.png",
       "/characters/yugi-mutou/frames/frame-013.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/yugi-mutou/frames/frame-017.png"
+    ],
     "sidestepLeft": [
       "/characters/yugi-mutou/frames/frame-017.png"
     ],
@@ -259,7 +261,7 @@
     "walkForward": 13.5,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -315,7 +317,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
@@ -550,12 +552,7 @@
       "label": "Yugi Mutou Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 13,
@@ -574,12 +571,7 @@
       "label": "Yugi Mutou Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -596,12 +588,7 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 33,
       "label": "Yugi Mutou Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 16,
@@ -618,12 +605,7 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 32,
       "label": "Yugi Mutou Right Kick",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -641,12 +623,7 @@
       "forwardForceEndFrame": 18,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -668,12 +645,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -691,12 +663,7 @@
       "forwardForceEndFrame": 41,
       "label": "Yugi Mutou Burst",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -713,12 +680,7 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 31,
       "label": "Yugi Mutou Rising Strike",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -736,12 +698,7 @@
       "forwardForceEndFrame": 12,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -760,12 +717,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -783,12 +735,7 @@
       "forwardForceEndFrame": 14,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -806,12 +753,7 @@
       "forwardForceEndFrame": 29,
       "launchHeight": 2.2,
       "label": "Yugi Mutou Cross Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -828,12 +770,7 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
       "label": "Yugi Mutou Low Feint",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -851,12 +788,7 @@
       "forwardForceEndFrame": 35,
       "label": "Yugi Mutou Driving Kick",
       "hitLevel": "low",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -874,12 +806,7 @@
       "forwardForceEndFrame": 12,
       "label": "Yugi Mutou Power Crush",
       "hitLevel": "mid",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 13
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -897,12 +824,7 @@
       "forwardForceEndFrame": 17,
       "label": "Yugi Mutou Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -918,12 +840,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Second Beat",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -939,12 +856,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Body Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -960,12 +872,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Low Changeup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -981,12 +888,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Pressure Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1002,12 +904,7 @@
       "forwardForce": 1.25,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Drive",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1023,12 +920,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Barrage",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1044,12 +936,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1065,12 +952,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 18,
-      "label": "Yugi Mutou Step Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1086,12 +968,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Palm String",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1107,12 +984,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Rising Chain",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1128,12 +1000,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Special Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1149,12 +1016,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Break Art",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1170,12 +1032,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Check Hook",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1191,12 +1048,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Heavy Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1212,12 +1064,7 @@
       "forwardForce": 2.17,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Charged Follow",
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1233,12 +1080,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 18,
-      "label": "Yugi Mutou Drop Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1254,12 +1096,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Arc Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1275,12 +1112,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Focus Stance",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1296,12 +1128,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Mode Shift",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1317,12 +1144,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Heel Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1338,12 +1160,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Summon Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1359,12 +1176,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Guard Snare",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1380,12 +1192,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Armor Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1401,12 +1208,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Power Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1422,12 +1224,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Switch Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1443,12 +1240,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Spark Jab",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1464,12 +1256,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Binding Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1485,12 +1272,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "Yugi Mutou Heavy Draw",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1506,12 +1288,7 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 18,
-      "label": "Yugi Mutou Kick Ender",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Yugi Mutou Kick Ender"
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1522,12 +1299,7 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 10,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1538,12 +1310,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1554,12 +1321,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1570,12 +1332,7 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 10,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1586,12 +1343,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1807,11 +1559,11 @@
     "walkBack": {
       "16": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "40": {
         "width": 1.01,
         "height": 1.01,
@@ -1921,17 +1673,17 @@
       },
       "58": {
         "width": 1.33,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "59": {
         "width": 1.22,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "60": {
         "width": 1.33,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "61": {
@@ -1980,7 +1732,7 @@
     "jabright": {
       "73": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "74": {
@@ -1990,17 +1742,17 @@
       },
       "75": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "76": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "77": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "78": {
@@ -2010,17 +1762,17 @@
       },
       "79": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "80": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "81": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "82": {
@@ -2058,7 +1810,7 @@
     "cmd:1+2": {
       "81": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "82": {
@@ -2078,19 +1830,19 @@
       },
       "85": {
         "width": 1.19,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "86": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
     "cmd:1+3": {
       "86": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "87": {
@@ -2100,17 +1852,17 @@
       },
       "88": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "89": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "90": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2122,17 +1874,17 @@
       },
       "97": {
         "width": 1.52,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "98": {
         "width": 1.52,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "99": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2176,7 +1928,7 @@
     "cmd:1+4": {
       "90": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "91": {
@@ -2196,21 +1948,16 @@
       },
       "94": {
         "width": 1.19,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "95": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
     "idle": {
-      "0": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "1": {
         "width": 1.07,
         "height": 0.98,
@@ -2222,7 +1969,7 @@
         "offsetX": 0
       },
       "3": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.98,
         "offsetX": 0
       }
@@ -2267,7 +2014,7 @@
     "cmd:d/f+2": {
       "73": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "74": {
@@ -2277,17 +2024,17 @@
       },
       "75": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "76": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "77": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "78": {
@@ -2297,17 +2044,17 @@
       },
       "79": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "80": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "81": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "82": {
@@ -2316,11 +2063,10 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {},
     "cmd:FC+2": {
       "73": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "74": {
@@ -2330,17 +2076,17 @@
       },
       "75": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "76": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "77": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "78": {
@@ -2350,17 +2096,17 @@
       },
       "79": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "80": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "81": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "82": {
@@ -2372,7 +2118,7 @@
     "cmd:f+2": {
       "73": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "74": {
@@ -2382,17 +2128,17 @@
       },
       "75": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "76": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "77": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "78": {
@@ -2402,17 +2148,17 @@
       },
       "79": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "80": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "81": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "82": {
@@ -2498,7 +2244,7 @@
     "cmd:WS+2": {
       "73": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "74": {
@@ -2508,17 +2254,17 @@
       },
       "75": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "76": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "77": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "78": {
@@ -2528,17 +2274,17 @@
       },
       "79": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "80": {
         "width": 1.06,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "81": {
         "width": 1.15,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "82": {
@@ -2584,14 +2330,6 @@
         "offsetX": 0
       }
     },
-    "kickleft": {},
-    "kickright": {},
-    "hitHeavy": {},
-    "getupRollUp": {},
-    "cmd:qcf+4": {},
-    "cmd:WS+4": {},
-    "cmd:2+4": {},
-    "cmd:O+2": {},
     "crouchBlock": {
       "150": {
         "width": 0.78,

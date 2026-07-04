@@ -42,7 +42,9 @@
       "/characters/fuusuke/frames/frame-012.png",
       "/characters/fuusuke/frames/frame-013.png"
     ],
-    "backflip": [],
+    "backHop": [
+      "/characters/fuusuke/frames/frame-023.png"
+    ],
     "sidestepLeft": [
       "/characters/fuusuke/frames/frame-111.png",
       "/characters/fuusuke/frames/frame-112.png"
@@ -298,7 +300,7 @@
     "walkForward": 11.5,
     "walkBack": 8,
     "sprint": 12,
-    "backflip": 10,
+    "backHop": 10,
     "sidestepLeft": 10,
     "sidestepRight": 10,
     "jump": 8,
@@ -357,7 +359,7 @@
     "walkForward": "walkForward",
     "walkBack": "walkBack",
     "sprint": "sprint",
-    "backflip": "backflip",
+    "backHop": "backHop",
     "sidestepLeft": "sidestepLeft",
     "sidestepRight": "sidestepRight",
     "crouch": "crouch",
@@ -592,12 +594,7 @@
       "label": "Fuusuke Left Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 12,
@@ -616,12 +613,7 @@
       "label": "Fuusuke Right Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -638,12 +630,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Fuusuke Left Kick",
-      "hitLevel": "low",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 24,
@@ -662,12 +649,7 @@
       "label": "Fuusuke Right Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "knockdown": false
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -685,12 +667,7 @@
       "forwardForceEndFrame": 32,
       "label": "f+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -712,12 +689,7 @@
       "juggleGravityScale": 0.54,
       "label": "d/f+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -736,12 +708,7 @@
       "label": "qcf+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -759,12 +726,7 @@
       "forwardForceEndFrame": 23,
       "label": "WS+4 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -782,12 +744,7 @@
       "forwardForceEndFrame": 21,
       "label": "FC+1 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -806,12 +763,7 @@
       "launchHeight": 2,
       "label": "FC+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -829,12 +781,7 @@
       "forwardForceEndFrame": 25,
       "label": "1+2 Frame Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -852,12 +799,7 @@
       "forwardForceEndFrame": 23,
       "launchHeight": 2.2,
       "label": "Fuusuke Cross Launcher",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 16,
@@ -877,12 +819,7 @@
       "hitLevel": "low",
       "tracking": "homing",
       "knockdown": true,
-      "endsInCrouch": true,
-      "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11
+      "endsInCrouch": true
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -901,12 +838,7 @@
       "label": "2+4 Frame Link",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -929,12 +861,7 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 12,
-      "juggleRepeatPenaltyFrames": 18
+      "jumpBeforeMove": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -952,12 +879,7 @@
       "forwardForceEndFrame": 37,
       "label": "Fuusuke Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -973,12 +895,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Second Beat",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Second Beat"
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
@@ -994,12 +911,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Body Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Body Blow"
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
@@ -1015,12 +927,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Low Changeup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Low Changeup"
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
@@ -1036,12 +943,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Pressure Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Pressure Feint"
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
@@ -1057,12 +959,7 @@
       "forwardForce": 1.51,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Drive",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Drive"
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
@@ -1078,12 +975,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Barrage",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Barrage"
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
@@ -1099,12 +991,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Finisher"
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
@@ -1120,12 +1007,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 32,
-      "label": "Fuusuke Step Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Step Kick"
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
@@ -1141,12 +1023,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Palm String",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Palm String"
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
@@ -1162,12 +1039,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Rising Chain",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Rising Chain"
     },
     "neutral:jab-special": {
       "startupFrames": 16,
@@ -1183,12 +1055,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Special Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Special Setup"
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
@@ -1204,12 +1071,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Break Art",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Break Art"
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
@@ -1225,12 +1087,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Check Hook",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Check Hook"
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
@@ -1246,12 +1103,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Heavy Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Heavy Break"
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
@@ -1267,12 +1119,7 @@
       "forwardForce": 2.43,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Charged Follow",
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Charged Follow"
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
@@ -1288,12 +1135,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 32,
-      "label": "Fuusuke Drop Kick",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Drop Kick"
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
@@ -1309,12 +1151,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Arc Finisher",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Arc Finisher"
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
@@ -1330,12 +1167,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Focus Stance",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Focus Stance"
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
@@ -1351,12 +1183,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Mode Shift",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Mode Shift"
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
@@ -1372,12 +1199,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Heel Feint",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Heel Feint"
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
@@ -1393,12 +1215,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Summon Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Summon Strike"
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
@@ -1414,12 +1231,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Guard Snare",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Guard Snare"
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
@@ -1435,12 +1247,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Armor Break",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Armor Break"
     },
     "neutral:kick-special": {
       "startupFrames": 16,
@@ -1456,12 +1263,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Power Setup",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Power Setup"
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
@@ -1477,12 +1279,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Switch Strike",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Switch Strike"
     },
     "neutral:special-jab": {
       "startupFrames": 16,
@@ -1498,12 +1295,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Spark Jab",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Spark Jab"
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
@@ -1519,12 +1311,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Binding Blow",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Binding Blow"
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
@@ -1540,12 +1327,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "Fuusuke Heavy Draw",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Heavy Draw"
     },
     "neutral:special-kick": {
       "startupFrames": 16,
@@ -1561,12 +1343,7 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 32,
-      "label": "Fuusuke Kick Ender",
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "label": "Fuusuke Kick Ender"
     },
     "cmd:1+4": {
       "onBlockFrames": -10,
@@ -1577,12 +1354,7 @@
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 27,
       "label": "1+4 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1593,12 +1365,7 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
       "label": "f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1609,12 +1376,7 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1625,12 +1387,7 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1641,12 +1398,7 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1657,12 +1409,7 @@
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 27,
       "label": "SS+4 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1673,12 +1420,7 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
       "label": "O+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1689,12 +1431,7 @@
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 27,
       "label": "O+4 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1863,11 +1600,6 @@
         "width": 1.21,
         "height": 0.85,
         "offsetX": 0
-      },
-      "56": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
       }
     },
     "cmd:3+4": {
@@ -1944,7 +1676,7 @@
         "offsetX": 0
       }
     },
-    "backflip": {
+    "backHop": {
       "42": {
         "width": 1.11,
         "height": 1.11,
@@ -2014,7 +1746,7 @@
         "offsetX": 0
       },
       "127": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2036,7 +1768,7 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2109,7 +1841,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2169,7 +1901,7 @@
         "offsetX": 0
       },
       "127": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2184,7 +1916,6 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {},
     "cmd:d+1": {
       "126": {
         "width": 1.12,
@@ -2192,7 +1923,7 @@
         "offsetX": 0
       },
       "127": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2214,7 +1945,7 @@
         "offsetX": 0
       },
       "127": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2236,7 +1967,7 @@
         "offsetX": 0
       },
       "127": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.95,
         "offsetX": 0
       },
@@ -2258,7 +1989,7 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2300,7 +2031,7 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2342,7 +2073,7 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2384,7 +2115,7 @@
         "offsetX": 0
       },
       "130": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2457,7 +2188,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2504,7 +2235,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2551,7 +2282,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2598,7 +2329,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2645,7 +2376,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2692,7 +2423,7 @@
       },
       "83": {
         "width": 0.96,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "84": {
@@ -2702,23 +2433,13 @@
       }
     },
     "idle": {
-      "0": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "1": {
-        "width": 1.0,
+        "width": 1,
         "height": 1.02,
         "offsetX": 0
       },
-      "2": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "3": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       }
@@ -2755,21 +2476,6 @@
       }
     },
     "chargeKi": {
-      "56": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
-      "57": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
-      "58": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "59": {
         "width": 1.21,
         "height": 0.95,
@@ -2797,7 +2503,7 @@
     },
     "cmd:1+2": {
       "115": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.97,
         "offsetX": 0
       },
@@ -2818,25 +2524,15 @@
       },
       "119": {
         "width": 1.16,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "120": {
         "width": 1.04,
-        "height": 1.0,
-        "offsetX": 0
-      },
-      "121": {
-        "width": 1.0,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
-    "kickleft": {},
-    "hitHeavy": {},
-    "getupRollUp": {},
-    "cmd:1+3": {},
-    "cmd:O+2": {},
     "crouchBlock": {
       "211": {
         "width": 0.66,

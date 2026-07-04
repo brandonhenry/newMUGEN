@@ -8,6 +8,7 @@ export type ActionName =
   | 'left'
   | 'right'
   | 'dashForward'
+  | 'dashBack'
   | 'sidestepUp'
   | 'sidestepDown'
   | 'sidewalkUp'
@@ -935,6 +936,9 @@ export type FighterRuntime = {
   sidestepRepeatGraceFrames: number;
   dashForwardFrames: number;
   dashForwardCooldownFrames: number;
+  backHopFrames: number;
+  backHopTotalFrames: number;
+  backHopCooldownFrames: number;
   walkDirection: -1 | 0 | 1;
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
@@ -1042,6 +1046,7 @@ export const emptyInputFrame = (): InputFrame => ({
   left: false,
   right: false,
   dashForward: false,
+  dashBack: false,
   sidestepUp: false,
   sidestepDown: false,
   sidewalkUp: false,
