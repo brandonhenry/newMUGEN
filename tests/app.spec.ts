@@ -332,6 +332,7 @@ test('opens training modes, completes a basic trial, and previews combo routes',
 
   await page.locator('.fight-screen').click({ position: { x: 24, y: 24 } });
   await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Training Mode' }).click();
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: /Combos/ }).click();
   await expect(page.locator('.combo-trial-list')).toContainText('Combos');
