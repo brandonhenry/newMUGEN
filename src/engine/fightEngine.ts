@@ -126,6 +126,10 @@ const CLASH_LOSER_HITSTUN_FRAMES = 36;
 const CLASH_DAMAGE_MULTIPLIER = 1.65;
 const CLASH_MIN_DAMAGE = 12;
 const CLASH_PUSHBACK = 1.15;
+const VISUAL_HITSTOP_BLOCK_FRAMES = 3;
+const VISUAL_HITSTOP_LIGHT_FRAMES = 3;
+const VISUAL_HITSTOP_NORMAL_FRAMES = 4;
+const VISUAL_HITSTOP_HEAVY_FRAMES = 5;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const clashInputOrder: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
@@ -533,8 +537,17 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     throwShakeFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
+    visualHitstop: createEmptyVisualHitstop(),
     shadowClone: null,
     shadowCloneChargeConsumed: false
+  };
+}
+
+function createEmptyVisualHitstop() {
+  return {
+    framesRemaining: 0,
+    animationKey: null,
+    progress: 0
   };
 }
 
@@ -554,6 +567,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   fighter.jumpInputHeld = input.up;
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
+  tickVisualHitstop(fighter, frameDelta);
   updateShadowClone(fighter, dt);
   updateTransformRuntime(fighter, dt);
   tickBufferedMoveIntent(fighter, frameDelta);
@@ -959,6 +973,7 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
     tornado: false,
     kiBurst: Boolean(move.kiBurst)
   }, impactPosition);
+  applyVisualHitstop(attacker, defender, move, 'hit');
   pushCombatPopupEvent(match, impactId, attacker, move, attacker.comboHits >= 2 ? 'combo' : null, {
     launched: false,
     juggled: false,
@@ -1415,6 +1430,7 @@ function maybeSpawnShadowCloneFromCharge(fighter: FighterRuntime, opponent: Figh
     hitConnected: false,
     attackConsumed: false,
     vanishOnLanding: false,
+    visualHitstop: createEmptyVisualHitstop(),
     spawnSmokeFrames: SHADOW_CLONE_SPAWN_SMOKE_FRAMES,
     vanishSmokeFrames: 0
   };
@@ -1488,6 +1504,7 @@ function updateShadowClone(fighter: FighterRuntime, dt: number) {
   const frameDelta = secondsToFrames(dt);
   clone.spawnSmokeFrames = Math.max(0, clone.spawnSmokeFrames - frameDelta);
   clone.vanishSmokeFrames = Math.max(0, clone.vanishSmokeFrames - frameDelta);
+  tickVisualHitstop(clone, frameDelta);
 
   if (clone.phase === 'vanishing') {
     if (clone.vanishSmokeFrames === 0) fighter.shadowClone = null;
@@ -2797,6 +2814,7 @@ function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
   const pushDistance = Math.hypot(pushX, pushZ) || 1;
   loser.position.x += (pushX / pushDistance) * CLASH_PUSHBACK;
   loser.position.z += (pushZ / pushDistance) * CLASH_PUSHBACK;
+  applyVisualHitstop(winner, loser, winnerMove, 'clash');
 
   winner.currentMove = null;
   winner.state = 'idle';
@@ -2872,6 +2890,7 @@ function applyClashDraw(match: MatchSnapshot) {
   p1.position.z -= (dz / distance) * (CLASH_PUSHBACK * 0.55);
   p2.position.x += (dx / distance) * (CLASH_PUSHBACK * 0.55);
   p2.position.z += (dz / distance) * (CLASH_PUSHBACK * 0.55);
+  applyVisualHitstop(p1, p2, p1Move ?? p2Move, 'clash');
   [p1, p2].forEach((fighter) => {
     fighter.currentMove = null;
     fighter.moveFrame = 0;
@@ -2959,6 +2978,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     defender.position.x += pushX * move.blockPushback * 0.14;
     defender.position.z += pushZ * move.blockPushback * 0.14;
+    applyVisualHitstop(attacker, defender, move, 'block');
     if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
     return;
   }
@@ -3013,6 +3033,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   if (move.throwCapture && defender.hp > 0) {
     startThrowCapture(attacker, defender, move);
+    applyVisualHitstop(attacker, defender, move, 'hit');
     return;
   }
 
@@ -3052,6 +3073,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
   defender.position.x += pushX * move.pushback * 0.28;
   defender.position.z += pushZ * move.pushback * 0.28;
+  applyVisualHitstop(attacker, defender, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
 
@@ -3098,6 +3120,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     defender.forcedCrouchFrames = 0;
     defender.position.x += pushX * weakMove.blockPushback * 0.12;
     defender.position.z += pushZ * weakMove.blockPushback * 0.12;
+    applyShadowCloneVisualHitstop(attacker, defender, weakMove, 'block');
     return;
   }
 
@@ -3141,6 +3164,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   }
   defender.position.x += pushX * weakMove.pushback * 0.18;
   defender.position.z += pushZ * weakMove.pushback * 0.18;
+  applyShadowCloneVisualHitstop(attacker, defender, weakMove, 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
 
@@ -3166,6 +3190,58 @@ function buildShadowCloneMove(move: MoveDefinition): MoveDefinition {
   };
 }
 
+function tickVisualHitstop(actor: Pick<FighterRuntime, 'visualHitstop'> | NonNullable<FighterRuntime['shadowClone']>, frameDelta: number) {
+  const hitstop = actor.visualHitstop;
+  if (hitstop.framesRemaining <= 0) return;
+  hitstop.framesRemaining = Math.max(0, hitstop.framesRemaining - frameDelta);
+  if (hitstop.framesRemaining === 0) {
+    hitstop.animationKey = null;
+    hitstop.progress = 0;
+  }
+}
+
+function applyVisualHitstop(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition | null | undefined, kind: ImpactSparkKind) {
+  const frames = getVisualHitstopFrames(move, kind);
+  if (frames <= 0) return;
+  setVisualHitstop(attacker, move, frames);
+  setVisualHitstop(defender, null, frames);
+}
+
+function applyShadowCloneVisualHitstop(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition | null | undefined, kind: ImpactSparkKind) {
+  const frames = getVisualHitstopFrames(move, kind);
+  if (frames <= 0) return;
+  const clone = attacker.shadowClone;
+  if (clone?.phase === 'active') {
+    clone.visualHitstop = {
+      framesRemaining: Math.max(clone.visualHitstop.framesRemaining, frames),
+      animationKey: clone.currentMove?.animationKey ?? clone.currentMove?.input ?? getFighterAnimationKey(attacker),
+      progress: clone.currentMove ? clamp(getMoveProgress(clone.moveFrame, clone.currentMove), 0, 1) : 0
+    };
+  }
+  setVisualHitstop(defender, null, frames);
+}
+
+function setVisualHitstop(fighter: FighterRuntime, move: MoveDefinition | null | undefined, frames: number) {
+  fighter.visualHitstop = {
+    framesRemaining: Math.max(fighter.visualHitstop.framesRemaining, frames),
+    animationKey: move?.animationKey ?? getFighterAnimationKey(fighter),
+    progress: move ? clamp(getMoveProgress(fighter.moveFrame, move), 0, 1) : activeMoveProgress(fighter)
+  };
+}
+
+function getVisualHitstopFrames(move: MoveDefinition | null | undefined, kind: ImpactSparkKind) {
+  if (kind === 'block') return VISUAL_HITSTOP_BLOCK_FRAMES;
+  if (kind === 'counterHit' || kind === 'punish' || kind === 'whiffPunish' || kind === 'clash' || Boolean(move?.kiBurst) || (move?.launchHeight ?? 0) > 0) {
+    return VISUAL_HITSTOP_HEAVY_FRAMES;
+  }
+  if (!move || move.damage <= 4) return VISUAL_HITSTOP_LIGHT_FRAMES;
+  return VISUAL_HITSTOP_NORMAL_FRAMES;
+}
+
+function getMoveProgress(moveFrame: number, move: MoveDefinition) {
+  return moveFrame / Math.max(1, totalMoveFrames(move));
+}
+
 function makeShadowCloneFighter(source: FighterRuntime, clone: NonNullable<FighterRuntime['shadowClone']>): FighterRuntime {
   return {
     ...source,
@@ -3183,6 +3259,7 @@ function makeShadowCloneFighter(source: FighterRuntime, clone: NonNullable<Fight
     hitConfirmed: false,
     blockFlash: 0,
     hitFlash: 0,
+    visualHitstop: { ...clone.visualHitstop },
     shadowClone: null,
     shadowCloneChargeConsumed: true
   };
@@ -3807,6 +3884,7 @@ function finishRound(match: MatchSnapshot) {
     fighter.getupStarted = false;
     fighter.getupAction = 'none';
     fighter.getupTotalFrames = 0;
+    fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
     clearThrowRuntime(fighter);
@@ -3878,6 +3956,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.winnerSlot = null;
   defeated.forEach((fighter) => {
     fighter.hp = fighter.maxHp;
+    fighter.visualHitstop = createEmptyVisualHitstop();
   });
 }
 
@@ -3913,6 +3992,7 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.getupTotalFrames = 0;
     fighter.velocityY = 0;
     fighter.position.y = 0;
+    fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
   });
@@ -5342,6 +5422,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
       aiActiveComboRouteId: fighter.aiActiveComboRouteId,
       previousAttackInputs: { ...fighter.previousAttackInputs },
+      visualHitstop: { ...fighter.visualHitstop },
       bufferedMoveIntent: fighter.bufferedMoveIntent
         ? {
             ...fighter.bufferedMoveIntent,
@@ -5352,6 +5433,7 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
         ? {
             ...fighter.shadowClone,
             position: { ...fighter.shadowClone.position },
+            visualHitstop: { ...fighter.shadowClone.visualHitstop },
             currentMove: fighter.shadowClone.currentMove
           }
         : null

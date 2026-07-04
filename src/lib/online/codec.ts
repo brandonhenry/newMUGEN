@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 6;
+export const ONLINE_PROTOCOL_VERSION = 7;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -94,6 +94,7 @@ export type CompactFighterSnapshot = {
   throwShakeFrames: number;
   blockFlash: number;
   hitFlash: number;
+  visualHitstop?: FighterRuntime['visualHitstop'];
   shadowClone: FighterRuntime['shadowClone'];
   shadowCloneChargeConsumed: boolean;
 };
@@ -286,7 +287,14 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     throwShakeFrames: fighter.throwShakeFrames,
     blockFlash: fighter.blockFlash,
     hitFlash: fighter.hitFlash,
-    shadowClone: fighter.shadowClone,
+    visualHitstop: { ...fighter.visualHitstop },
+    shadowClone: fighter.shadowClone
+      ? {
+          ...fighter.shadowClone,
+          position: { ...fighter.shadowClone.position },
+          visualHitstop: { ...fighter.shadowClone.visualHitstop }
+        }
+      : null,
     shadowCloneChargeConsumed: fighter.shadowCloneChargeConsumed
   };
 }
@@ -366,7 +374,14 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     throwShakeFrames: snapshot.throwShakeFrames ?? base.throwShakeFrames,
     blockFlash: snapshot.blockFlash,
     hitFlash: snapshot.hitFlash,
-    shadowClone: snapshot.shadowClone ?? null,
+    visualHitstop: snapshot.visualHitstop ? { ...snapshot.visualHitstop } : { ...base.visualHitstop },
+    shadowClone: snapshot.shadowClone
+      ? {
+          ...snapshot.shadowClone,
+          position: { ...snapshot.shadowClone.position },
+          visualHitstop: snapshot.shadowClone.visualHitstop ? { ...snapshot.shadowClone.visualHitstop } : { framesRemaining: 0, animationKey: null, progress: 0 }
+        }
+      : null,
     shadowCloneChargeConsumed: snapshot.shadowCloneChargeConsumed ?? base.shadowCloneChargeConsumed
   };
 }

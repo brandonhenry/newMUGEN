@@ -761,6 +761,7 @@ function makeShadowCloneRenderFighter(fighter: FighterRuntime): FighterRuntime |
     hitConfirmed: false,
     blockFlash: 0,
     hitFlash: 0,
+    visualHitstop: { ...clone.visualHitstop },
     shadowClone: null,
     shadowCloneChargeConsumed: true
   };
@@ -2342,6 +2343,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     throwShakeFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
+    visualHitstop: { framesRemaining: 0, animationKey: null, progress: 0 },
     shadowClone: null,
     shadowCloneChargeConsumed: false
   };
@@ -3770,13 +3772,13 @@ function FighterRig({
 }) {
   const group = useRef<THREE.Group>(null);
   const scaledTime = useRef(0);
-  const progress = activeMoveProgress(fighter);
+  const progress = getFighterRenderProgress(fighter);
   useFrame((_, delta) => {
     if (!group.current) return;
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
     else scaledTime.current = frameTimeOverride;
     const renderTime = scaledTime.current;
-    const liveProgress = activeMoveProgress(fighter);
+    const liveProgress = getFighterRenderProgress(fighter);
     const blockBreath = fighter.state === 'block' || fighter.state === 'crouchBlock' ? Math.sin(renderTime * 3.2 + fighter.slot * 0.7) : 0;
     const bob = fighter.state === 'idle' ? Math.sin(renderTime * 4 + fighter.slot) * 0.025 : blockBreath * 0.018;
     const hitLean = fighter.state === 'hit' || fighter.state === 'throwHeld' ? -fighter.facing * 0.16 : 0;
@@ -3934,7 +3936,7 @@ function ImageVoxelFighter({
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
     else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
-    const liveProgress = activeMoveProgress(fighter);
+    const liveProgress = getFighterRenderProgress(fighter);
     const nextFrameSelection = getImageVoxelFrameSelection(fighter, liveProgress, t);
     const nextFrameSrc = nextFrameSelection.frameSource;
     const animationScale = getCharacterAnimationScale(fighter.character, loadedFrameSelection.animationKey, loadedFrameSelection.frameSource);
@@ -4022,6 +4024,14 @@ function getFighterRenderOffsetX(fighter: FighterRuntime, progress: number, elap
   return getCharacterAnimationScale(fighter.character, frameSelection.animationKey, frameSelection.frameSource).offsetX;
 }
 
+function hasVisualHitstop(fighter: FighterRuntime) {
+  return fighter.visualHitstop.framesRemaining > 0 && fighter.visualHitstop.animationKey !== null;
+}
+
+function getFighterRenderProgress(fighter: FighterRuntime) {
+  return hasVisualHitstop(fighter) ? fighter.visualHitstop.progress : activeMoveProgress(fighter);
+}
+
 function getCachedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[]> {
   const cacheKey = `${character.id}:${character.voxelProfile ?? 'image-source'}:${src}`;
   const cached = imageVoxelCache.get(cacheKey);
@@ -4043,14 +4053,15 @@ function getImageVoxelFrameSelection(fighter: FighterRuntime, progress: number, 
   if (!resolved) return { animationKey: requestedKey, frameSource: fighter.character.spriteSheetPath };
   const { key: resolvedKey, sequence } = resolved;
   const fps = fighter.character.animationFrameRates?.[resolvedKey] ?? fighter.character.animationFrameRates?.[requestedKey] ?? fighter.character.animationFps ?? 8;
-  const frameIndex =
-    fighter.state === 'chargeKi'
-      ? getChargeKiFrameIndex(fighter, sequence.length)
-    : fighter.state === 'attack' || fighter.state === 'throwHold'
-      ? Math.min(sequence.length - 1, Math.floor(progress * sequence.length))
-    : fighter.state === 'getup'
-      ? Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length))
-    : Math.floor(elapsedTime * fps) % sequence.length;
+  const visualHitstopActive = hasVisualHitstop(fighter);
+  let frameIndex = Math.floor(elapsedTime * fps) % sequence.length;
+  if (visualHitstopActive || fighter.state === 'attack' || fighter.state === 'throwHold') {
+    frameIndex = Math.min(sequence.length - 1, Math.floor(progress * sequence.length));
+  } else if (fighter.state === 'chargeKi') {
+    frameIndex = getChargeKiFrameIndex(fighter, sequence.length);
+  } else if (fighter.state === 'getup') {
+    frameIndex = Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length));
+  }
   debugLogThrottled(9, 'voxel animation key resolved', {
     characterId: fighter.character.id,
     slot: fighter.slot,
@@ -4118,6 +4129,7 @@ function getChargeKiFrameIndex(fighter: FighterRuntime, sequenceLength: number) 
 }
 
 function getImageVoxelAnimationKey(fighter: FighterRuntime) {
+  if (hasVisualHitstop(fighter) && fighter.visualHitstop.animationKey) return fighter.visualHitstop.animationKey;
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
   if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
   if (fighter.state === 'walk') {
@@ -4644,7 +4656,7 @@ function VoxelSpriteFighter({
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
     else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
-    const liveProgress = activeMoveProgress(fighter);
+    const liveProgress = getFighterRenderProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 12) : 0;
     const attack = fighter.state === 'attack' || fighter.state === 'throwHold' ? Math.sin(liveProgress * Math.PI) : 0;
@@ -4830,10 +4842,10 @@ function ExternalFighter({ fighter, url, timeScale = 1, renderStyle }: { fighter
 
   useFrame((_, delta) => {
     if (!wrapper.current) return;
-    const liveProgress = activeMoveProgress(fighter);
+    const liveProgress = getFighterRenderProgress(fighter);
     Object.entries(actions).forEach(([name, action]) => {
       if (!action) return;
-      if (fighter.state === 'attack' && name === desiredClip) {
+      if ((fighter.state === 'attack' || hasVisualHitstop(fighter)) && name === desiredClip) {
         const clipDuration = action.getClip().duration || 1;
         action.timeScale = 0;
         action.time = THREE.MathUtils.clamp(liveProgress, 0, 0.999) * clipDuration;
@@ -4865,6 +4877,11 @@ function chooseClip(names: string[], fighter: FighterRuntime) {
   const normalized = names.map((name) => ({ name, key: name.toLowerCase() }));
   const find = (...needles: string[]) =>
     normalized.find((clip) => needles.some((needle) => clip.key.includes(needle)))?.name;
+  if (hasVisualHitstop(fighter)) {
+    const key = fighter.visualHitstop.animationKey?.toLowerCase() ?? '';
+    const token = key.split(':').pop()?.replace(/[^a-z]/g, '') ?? '';
+    return normalized.find((clip) => (token && clip.key.includes(token)) || clip.key.includes(key))?.name ?? find('punch', 'attack', 'wave') ?? names[0];
+  }
   if (fighter.state === 'attack' || fighter.state === 'throwHold') return find('punch', 'attack', 'wave') ?? names[0];
   if (fighter.state === 'walk' || fighter.state === 'sidestep') return find('walk', 'run', 'animation') ?? names[0];
   if (fighter.state === 'jump') return find('jump', 'walk', 'run', 'idle') ?? names[0];
@@ -4921,7 +4938,7 @@ function ProceduralFighter({
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
     else scaledTime.current = frameTimeOverride;
     const t = scaledTime.current;
-    const liveProgress = activeMoveProgress(fighter);
+    const liveProgress = getFighterRenderProgress(fighter);
     const moving = fighter.state === 'walk' || fighter.state === 'sidestep';
     const walk = moving ? Math.sin(t * 11) : 0;
     const side = fighter.state === 'sidestep' ? Math.sin(t * 13) * 0.16 : 0;

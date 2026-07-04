@@ -40,11 +40,13 @@ describe('online codec', () => {
     match.fighters[0].throwJabActive = true;
     match.fighters[0].throwJabCooldownFrames = 9;
     match.fighters[0].throwJabHitConnected = true;
+    match.fighters[0].visualHitstop = { framesRemaining: 4, animationKey: 'jableft', progress: 0.45 };
     match.fighters[1].state = 'throwHeld';
     match.fighters[1].throwCaptorSlot = 1;
     match.fighters[1].throwEscapeProgress = 3;
     match.fighters[1].throwEscapeGoal = 12;
     match.fighters[1].throwShakeFrames = 8;
+    match.fighters[1].visualHitstop = { framesRemaining: 3, animationKey: 'hitLight', progress: 0 };
     match.fighters[0].shadowClone = {
       phase: 'active',
       position: { x: 0.4, y: 0.2, z: -0.5 },
@@ -59,6 +61,7 @@ describe('online codec', () => {
       hitConnected: false,
       attackConsumed: true,
       vanishOnLanding: false,
+      visualHitstop: { framesRemaining: 5, animationKey: 'jabright', progress: 0.38 },
       spawnSmokeFrames: 12,
       vanishSmokeFrames: 0
     };
@@ -118,13 +121,16 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].throwJabActive).toBe(true);
     expect(hydrated.fighters[0].throwJabCooldownFrames).toBe(9);
     expect(hydrated.fighters[0].throwJabHitConnected).toBe(true);
+    expect(hydrated.fighters[0].visualHitstop).toEqual({ framesRemaining: 4, animationKey: 'jableft', progress: 0.45 });
     expect(hydrated.fighters[1].state).toBe('throwHeld');
     expect(hydrated.fighters[1].throwCaptorSlot).toBe(1);
     expect(hydrated.fighters[1].throwEscapeProgress).toBe(3);
     expect(hydrated.fighters[1].throwEscapeGoal).toBe(12);
     expect(hydrated.fighters[1].throwShakeFrames).toBe(8);
+    expect(hydrated.fighters[1].visualHitstop).toEqual({ framesRemaining: 3, animationKey: 'hitLight', progress: 0 });
     expect(hydrated.fighters[0].shadowClone?.position).toEqual({ x: 0.4, y: 0.2, z: -0.5 });
     expect(hydrated.fighters[0].shadowClone?.currentMove?.input).toBe('jab');
+    expect(hydrated.fighters[0].shadowClone?.visualHitstop).toEqual({ framesRemaining: 5, animationKey: 'jabright', progress: 0.38 });
     expect(hydrated.fighters[1].roundsWon).toBe(1);
     expect(hydrated.aiSeed).toBe(match.aiSeed);
     expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);

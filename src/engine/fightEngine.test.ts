@@ -781,6 +781,8 @@ describe('character manifests', () => {
     expect(match.message).toBe('');
     expect(match.roundFinisher?.attackerSlot).toBe(1);
     expect(match.roundFinisher?.defenderSlot).toBe(2);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBe(5);
+    expect(match.fighters[1].visualHitstop.framesRemaining).toBe(5);
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
     expect(match.phase).toBe('roundOver');
@@ -1326,6 +1328,7 @@ describe('fight engine', () => {
       hitConnected: false,
       attackConsumed: true,
       vanishOnLanding: false,
+      visualHitstop: { framesRemaining: 0, animationKey: null, progress: 0 },
       spawnSmokeFrames: 0,
       vanishSmokeFrames: 0
     };
@@ -4372,6 +4375,7 @@ describe('fight engine', () => {
       hitConnected: false,
       attackConsumed: true,
       vanishOnLanding: false,
+      visualHitstop: { framesRemaining: 0, animationKey: null, progress: 0 },
       spawnSmokeFrames: 0,
       vanishSmokeFrames: 0
     };
@@ -4382,6 +4386,8 @@ describe('fight engine', () => {
     expect(match.message).toBe('');
     expect(match.roundFinisher?.attackerSlot).toBe(1);
     expect(match.roundFinisher?.defenderSlot).toBe(2);
+    expect(match.fighters[0].shadowClone?.visualHitstop).toMatchObject({ framesRemaining: 3, animationKey: sourceMove.animationKey ?? sourceMove.input });
+    expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 3, animationKey: 'hitLight' });
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 0.8);
     expect(match.phase).toBe('roundOver');
@@ -5131,9 +5137,13 @@ describe('fight engine', () => {
     expect(match.impactEvents).toHaveLength(1);
     expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2, comboHits: 2, moveLabel: match.fighters[0].currentMove?.label });
     expect(match.impactEvents[0].position[1]).toBeGreaterThan(0);
+    expect(match.fighters[0].visualHitstop).toMatchObject({ framesRemaining: 4, animationKey: match.fighters[0].currentMove?.animationKey ?? match.fighters[0].currentMove?.input });
+    expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 4, animationKey: 'hitLight' });
 
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(match.combatEvents[0]).toMatchObject({ slot: 1, kind: 'combo', hits: 2 });
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBe(3);
+    expect(match.fighters[0].moveFrame).toBeGreaterThan(match.fighters[0].visualHitstop.progress * (match.fighters[0].currentMove ? match.fighters[0].currentMove.startupFrames + match.fighters[0].currentMove.activeFrames + match.fighters[0].currentMove.recoveryFrames : 1));
   });
 
   it('emits a punish popup event when a block punish lands', () => {
@@ -5215,6 +5225,9 @@ describe('fight engine', () => {
     expect(match.impactEvents).toHaveLength(1);
     expect(match.impactEvents[0]).toMatchObject({ kind: 'block', attackerSlot: 1, defenderSlot: 2, comboHits: 0 });
     expect(match.combatEvents).toHaveLength(0);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBeLessThanOrEqual(3);
+    expect(match.fighters[1].visualHitstop).toMatchObject({ animationKey: 'block' });
 
     let whiff = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     whiff.phase = 'fighting';
@@ -5275,6 +5288,8 @@ describe('fight engine', () => {
     expect(match.impactEvents[0]).toMatchObject({ kind: 'counterHit', attackerSlot: 1, defenderSlot: 2, moveLabel: 'Counter Hit Test' });
     expect(match.combatEvents[0]).toMatchObject({ kind: 'counterHit', slot: 1, moveLabel: 'Counter Hit Test' });
     expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(30);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBe(5);
+    expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 5, animationKey: 'hitLight' });
   });
 
   it('does not counter hit during startup when the attacking move is not counter-hit eligible', () => {
@@ -5314,7 +5329,7 @@ describe('fight engine', () => {
     expect(match.fighters[1].stunFramesRemaining).toBeLessThan(20);
   });
 
-  it('keeps the fight phase active without hit-stop and accepts movement after hitstun', () => {
+  it('keeps gameplay timing active while visual hitstop only holds the rendered pose', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -5329,14 +5344,21 @@ describe('fight engine', () => {
     expect(match.cameraShake).toBe(0);
     expect(match.impactEvents).toHaveLength(1);
     expect(match.fighters[1].hitFlash).toBe(0);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[1].visualHitstop.framesRemaining).toBeGreaterThan(0);
     expect(match.fighters[1].state).toBe('hit');
     expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(0);
     expect(match.fighters[1].actionFramesRemaining).toBeGreaterThan(0);
+    const defenderStunAfterImpact = match.fighters[1].stunFramesRemaining;
     const zBefore = match.fighters[1].position.z;
     const xBefore = match.fighters[1].position.x;
     for (let i = 0; i < 32; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBe(0);
+    expect(match.fighters[1].visualHitstop.framesRemaining).toBe(0);
+    expect(match.fighters[0].actionFramesRemaining).toBeLessThanOrEqual(0);
+    expect(match.fighters[1].stunFramesRemaining).toBeLessThan(defenderStunAfterImpact);
     const moveAfterHit = emptyInputFrame();
     moveAfterHit.sidewalkUp = true;
     match = stepMatch(match, emptyInputFrame(), moveAfterHit, 1 / 60);
@@ -5424,6 +5446,8 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].velocityY).toBeCloseTo(4.05, 2);
     expect(match.fighters[1].juggleGravityScale).toBeCloseTo(1.08, 2);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBe(5);
+    expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 5, animationKey: 'hitHeavy' });
   });
 
   it('lets different juggle fall speeds create different airborne arcs', () => {
@@ -5696,6 +5720,8 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - 10);
     expect(match.fighters[0].moveFrame).toBe(match.fighters[0].currentMove!.startupFrames + match.fighters[0].currentMove!.activeFrames + match.fighters[0].currentMove!.recoveryFrames);
     expect(match.fighters[1].throwEscapeGoal).toBe(9);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBe(4);
+    expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 4, animationKey: 'hitLight' });
   });
 
   it('does not capture on blocked or whiffed throw-capture moves', () => {
@@ -5781,6 +5807,8 @@ describe('fight engine', () => {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
     expect(match.fighters[1].hp).toBe(defenderHp - 7);
+    expect(match.fighters[0].visualHitstop.framesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[1].visualHitstop).toMatchObject({ animationKey: 'hitLight' });
 
     for (let frame = 0; frame < 8; frame += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);

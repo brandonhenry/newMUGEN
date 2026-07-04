@@ -831,8 +831,15 @@ export type ShadowCloneRuntime = {
   hitConnected: boolean;
   attackConsumed: boolean;
   vanishOnLanding: boolean;
+  visualHitstop: VisualHitstopRuntime;
   spawnSmokeFrames: number;
   vanishSmokeFrames: number;
+};
+
+export type VisualHitstopRuntime = {
+  framesRemaining: number;
+  animationKey: string | null;
+  progress: number;
 };
 
 export type MatchOptions = {
@@ -927,6 +934,7 @@ export type FighterRuntime = {
   throwShakeFrames: number;
   blockFlash: number;
   hitFlash: number;
+  visualHitstop: VisualHitstopRuntime;
   shadowClone: ShadowCloneRuntime | null;
   shadowCloneChargeConsumed: boolean;
 };
