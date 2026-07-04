@@ -16,7 +16,7 @@
       "frameCount": 255
     }
   ],
-  "spriteFrameCount": 263,
+  "spriteFrameCount": 256,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -125,15 +125,7 @@
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
-    "cmd:FC+1": [
-      "/characters/nico-robin/frames/frame-256.png",
-      "/characters/nico-robin/frames/frame-257.png",
-      "/characters/nico-robin/frames/frame-258.png",
-      "/characters/nico-robin/frames/frame-259.png",
-      "/characters/nico-robin/frames/frame-260.png",
-      "/characters/nico-robin/frames/frame-261.png",
-      "/characters/nico-robin/frames/frame-262.png"
-    ],
+    "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [
       "/characters/nico-robin/frames/frame-093.png",
@@ -291,7 +283,6 @@
     "cmd:d/f+2": 9,
     "cmd:qcf+4": 9,
     "cmd:WS+4": 9,
-    "cmd:FC+1": 8,
     "cmd:FC+2": 8,
     "cmd:1+2": 8,
     "cmd:1+3": 8,
@@ -2057,7 +2048,7 @@
     "crouch": {
       "21": {
         "width": 1.74,
-        "height": 0.77,
+        "height": 0.81,
         "offsetX": 0
       }
     },
@@ -2447,78 +2438,7 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {
-      "56": {
-        "width": 0.95,
-        "height": 1,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 1.17,
-        "height": 1,
-        "offsetX": 0
-      },
-      "76": {
-        "width": 0.92,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "77": {
-        "width": 0.92,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "78": {
-        "width": 0.92,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "79": {
-        "width": 0.92,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "80": {
-        "width": 0.92,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "256": {
-        "width": 0.61,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "257": {
-        "width": 0.71,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "258": {
-        "width": 0.77,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "259": {
-        "width": 0.77,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "260": {
-        "width": 0.77,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "261": {
-        "width": 0.77,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "262": {
-        "width": 0.77,
-        "height": 0.78,
-        "offsetX": 0
-      }
-    },
+    "cmd:FC+1": {},
     "cmd:d+1": {
       "56": {
         "width": 0.95,
@@ -2643,7 +2563,7 @@
     "crouchBlock": {
       "255": {
         "width": 0.77,
-        "height": 0.78,
+        "height": 0.82,
         "offsetX": 0
       }
     }

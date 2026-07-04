@@ -251,6 +251,39 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.28');
 });
 
+test('opens tournament mode above characters and shows paid beta disabled', async ({ page }) => {
+  await startFromSplash(page);
+  const tournamentButton = page.getByRole('button', { name: 'Tournament' });
+  const charactersButton = page.getByRole('button', { name: 'Characters' });
+  await expect(tournamentButton).toBeVisible();
+  await expect(charactersButton).toBeVisible();
+  expect((await tournamentButton.boundingBox())!.y).toBeLessThan((await charactersButton.boundingBox())!.y);
+
+  await tournamentButton.click();
+  await expect(page.locator('.tournament-select-screen')).toBeVisible();
+  await expect(page.getByRole('button', { name: /\$2 BTC/i })).toBeDisabled();
+  await expect(page.getByText('Paid beta unavailable')).toBeVisible();
+});
+
+test('starts a free local tournament with bracket intro', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: 'Start Free' }).click();
+  await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
+  await expect(page.getByText('Winner Advances')).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-mode')).toHaveText('tournamentLocal', { timeout: 12000 });
+});
+
+test('enters a free online tournament lobby', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await page.getByRole('button', { name: 'Enter Online' }).click();
+  await expect(page.locator('.tournament-lobby-screen')).toBeVisible({ timeout: 5000 });
+  await expect(page.getByText(/entered|Choose a tournament|Tournament unavailable/i)).toBeVisible();
+});
+
 test('moves player one forward and back with keyboard', async ({ page }) => {
   await startFight(page, true);
   const before = xFromPosition(await page.getByTestId('p1-position').innerText());

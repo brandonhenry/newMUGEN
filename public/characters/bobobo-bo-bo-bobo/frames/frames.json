@@ -1,6 +1,6 @@
 {
   "source": "Bobobo-bo Bo-bobo.png",
-  "count": 409,
+  "count": 405,
   "sheets": [
     {
       "id": "main",
@@ -6481,123 +6481,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 43,
-      "replacementHeight": 54,
+      "replacementWidth": 45,
+      "replacementHeight": 55,
       "box": [
         0,
         0,
-        43,
-        54
+        45,
+        55
       ],
-      "width": 43,
-      "height": 54,
+      "width": 45,
+      "height": 55,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/bobobo-bo-bo-bobo/frames/frame-023.png|upper=/characters/bobobo-bo-bo-bobo/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/bobobo-bo-bo-bobo/frames/frame-023.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/bobobo-bo-bo-bobo/frames/frame-023.png",
-        "upper": "/characters/bobobo-bo-bo-bobo/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 405,
-      "path": "/characters/bobobo-bo-bo-bobo/frames/frame-405.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 43,
-      "replacementHeight": 54,
-      "box": [
-        0,
-        0,
-        43,
-        54
-      ],
-      "width": 43,
-      "height": 54,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/bobobo-bo-bo-bobo/frames/frame-023.png|upper=/characters/bobobo-bo-bo-bobo/frames/frame-068.png",
-      "generatedSources": {
-        "crouch": "/characters/bobobo-bo-bo-bobo/frames/frame-023.png",
-        "upper": "/characters/bobobo-bo-bo-bobo/frames/frame-068.png"
-      }
-    },
-    {
-      "index": 406,
-      "path": "/characters/bobobo-bo-bo-bobo/frames/frame-406.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 43,
-      "replacementHeight": 54,
-      "box": [
-        0,
-        0,
-        43,
-        54
-      ],
-      "width": 43,
-      "height": 54,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/bobobo-bo-bo-bobo/frames/frame-023.png|upper=/characters/bobobo-bo-bo-bobo/frames/frame-069.png",
-      "generatedSources": {
-        "crouch": "/characters/bobobo-bo-bo-bobo/frames/frame-023.png",
-        "upper": "/characters/bobobo-bo-bo-bobo/frames/frame-069.png"
-      }
-    },
-    {
-      "index": 407,
-      "path": "/characters/bobobo-bo-bo-bobo/frames/frame-407.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 50,
-      "replacementHeight": 54,
-      "box": [
-        0,
-        0,
-        50,
-        54
-      ],
-      "width": 50,
-      "height": 54,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/bobobo-bo-bo-bobo/frames/frame-023.png|upper=/characters/bobobo-bo-bo-bobo/frames/frame-070.png",
-      "generatedSources": {
-        "crouch": "/characters/bobobo-bo-bo-bobo/frames/frame-023.png",
-        "upper": "/characters/bobobo-bo-bo-bobo/frames/frame-070.png"
-      }
-    },
-    {
-      "index": 408,
-      "path": "/characters/bobobo-bo-bo-bobo/frames/frame-408.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 51,
-      "replacementHeight": 54,
-      "box": [
-        0,
-        0,
-        51,
-        54
-      ],
-      "width": 51,
-      "height": 54,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/bobobo-bo-bo-bobo/frames/frame-023.png|upper=/characters/bobobo-bo-bo-bobo/frames/frame-071.png",
-      "generatedSources": {
-        "crouch": "/characters/bobobo-bo-bo-bobo/frames/frame-023.png",
-        "upper": "/characters/bobobo-bo-bo-bobo/frames/frame-071.png"
+        "crouch": "/characters/bobobo-bo-bo-bobo/frames/frame-023.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

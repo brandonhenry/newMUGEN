@@ -1,6 +1,6 @@
 {
   "source": "Don Patch _ Poppa Rocks.png",
-  "count": 387,
+  "count": 382,
   "sheets": [
     {
       "id": "main",
@@ -6113,148 +6113,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 32,
-      "replacementHeight": 36,
+      "replacementWidth": 33,
+      "replacementHeight": 37,
       "box": [
         0,
         0,
-        32,
-        36
+        33,
+        37
       ],
-      "width": 32,
-      "height": 36,
+      "width": 33,
+      "height": 37,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|upper=/characters/don-patch-poppa-rocks/frames/frame-017.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png",
-        "upper": "/characters/don-patch-poppa-rocks/frames/frame-017.png"
-      }
-    },
-    {
-      "index": 382,
-      "path": "/characters/don-patch-poppa-rocks/frames/frame-382.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 32,
-      "replacementHeight": 36,
-      "box": [
-        0,
-        0,
-        32,
-        36
-      ],
-      "width": 32,
-      "height": 36,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|upper=/characters/don-patch-poppa-rocks/frames/frame-076.png",
-      "generatedSources": {
-        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png",
-        "upper": "/characters/don-patch-poppa-rocks/frames/frame-076.png"
-      }
-    },
-    {
-      "index": 383,
-      "path": "/characters/don-patch-poppa-rocks/frames/frame-383.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 53,
-      "replacementHeight": 36,
-      "box": [
-        0,
-        0,
-        53,
-        36
-      ],
-      "width": 53,
-      "height": 36,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|upper=/characters/don-patch-poppa-rocks/frames/frame-077.png",
-      "generatedSources": {
-        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png",
-        "upper": "/characters/don-patch-poppa-rocks/frames/frame-077.png"
-      }
-    },
-    {
-      "index": 384,
-      "path": "/characters/don-patch-poppa-rocks/frames/frame-384.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 32,
-      "replacementHeight": 36,
-      "box": [
-        0,
-        0,
-        32,
-        36
-      ],
-      "width": 32,
-      "height": 36,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|upper=/characters/don-patch-poppa-rocks/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png",
-        "upper": "/characters/don-patch-poppa-rocks/frames/frame-078.png"
-      }
-    },
-    {
-      "index": 385,
-      "path": "/characters/don-patch-poppa-rocks/frames/frame-385.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 36,
-      "box": [
-        0,
-        0,
-        40,
-        36
-      ],
-      "width": 40,
-      "height": 36,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|upper=/characters/don-patch-poppa-rocks/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png",
-        "upper": "/characters/don-patch-poppa-rocks/frames/frame-079.png"
-      }
-    },
-    {
-      "index": 386,
-      "path": "/characters/don-patch-poppa-rocks/frames/frame-386.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 32,
-      "replacementHeight": 36,
-      "box": [
-        0,
-        0,
-        32,
-        36
-      ],
-      "width": 32,
-      "height": 36,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/don-patch-poppa-rocks/frames/frame-056.png|upper=/characters/don-patch-poppa-rocks/frames/frame-080.png",
-      "generatedSources": {
-        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png",
-        "upper": "/characters/don-patch-poppa-rocks/frames/frame-080.png"
+        "crouch": "/characters/don-patch-poppa-rocks/frames/frame-056.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

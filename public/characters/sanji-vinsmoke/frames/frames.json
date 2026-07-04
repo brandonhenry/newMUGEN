@@ -9505,23 +9505,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 27,
-      "replacementHeight": 36,
+      "replacementWidth": 29,
+      "replacementHeight": 38,
       "box": [
         0,
         0,
-        27,
-        36
+        29,
+        38
       ],
-      "width": 27,
-      "height": 36,
+      "width": 29,
+      "height": 38,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/sanji-vinsmoke/frames/frame-021.png|upper=/characters/sanji-vinsmoke/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/sanji-vinsmoke/frames/frame-021.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/sanji-vinsmoke/frames/frame-021.png",
-        "upper": "/characters/sanji-vinsmoke/frames/frame-015.png"
+        "crouch": "/characters/sanji-vinsmoke/frames/frame-021.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

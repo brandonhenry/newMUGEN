@@ -751,7 +751,7 @@ export type BufferedMoveIntent = {
   sequence: number;
 };
 
-export type MatchMode = 'ai' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'online' | 'private';
+export type MatchMode = 'ai' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'online' | 'private' | 'tournamentLocal' | 'tournamentOnline';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 
 export type PlayerControlBindings = Record<ActionName, string[]>;

@@ -1,6 +1,6 @@
 {
   "source": "Gotenks (Super Saiyan).png",
-  "count": 185,
+  "count": 184,
   "sheets": [
     {
       "id": "main",
@@ -2945,48 +2945,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 28,
-      "replacementHeight": 42,
+      "replacementWidth": 30,
+      "replacementHeight": 44,
       "box": [
         0,
         0,
-        28,
-        42
+        30,
+        44
       ],
-      "width": 28,
-      "height": 42,
+      "width": 30,
+      "height": 44,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/gotenks-super-saiyan/frames/frame-015.png|upper=/characters/gotenks-super-saiyan/frames/frame-011.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/gotenks-super-saiyan/frames/frame-015.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/gotenks-super-saiyan/frames/frame-015.png",
-        "upper": "/characters/gotenks-super-saiyan/frames/frame-011.png"
-      }
-    },
-    {
-      "index": 184,
-      "path": "/characters/gotenks-super-saiyan/frames/frame-184.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 47,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        47,
-        42
-      ],
-      "width": 47,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gotenks-super-saiyan/frames/frame-015.png|upper=/characters/gotenks-super-saiyan/frames/frame-071.png",
-      "generatedSources": {
-        "crouch": "/characters/gotenks-super-saiyan/frames/frame-015.png",
-        "upper": "/characters/gotenks-super-saiyan/frames/frame-071.png"
+        "crouch": "/characters/gotenks-super-saiyan/frames/frame-015.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

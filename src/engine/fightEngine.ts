@@ -4504,6 +4504,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const roundPhase = style.phase + roundStyle.phase * 0.35;
   const beat = Math.sin(timer * (2.45 + (style.tempo + roundStyle.tempo * 0.28) * 0.48) + ai.hp * 0.03 + ai.slot * 0.9 + roundPhase);
   const blockRoll = (Math.sin(elapsed * (6.4 + (style.guardTempo + roundStyle.guardTempo * 0.25) * 1.5) + ai.slot * 1.7 + ai.hp * 0.02 + roundPhase * 0.7) + 1) / 2;
+  const evadeRoll = (Math.sin(elapsed * (5.2 + style.tempo * 0.9 + roundStyle.tempo * 0.35) + ai.slot * 2.3 + opponent.hp * 0.015 + roundPhase * 0.55) + 1) / 2;
   const attackCycle = Math.max(0.12, (settings.attackCycle - profile.aggression * settings.aggressionCycleBonus) * style.attackCycleScale);
   const comboCycle = Math.max(0.1, settings.comboCycle * style.comboCycleScale);
   const attackPhase = positiveModulo(elapsed + ai.slot * 0.18 + style.attackPhaseOffset + roundStyle.attackPhaseOffset * 0.65, attackCycle);
@@ -4590,7 +4591,8 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const canAct = (canStartAction || canAttemptCancel) && ai.stunFramesRemaining === 0 && ai.blockstunFramesRemaining === 0;
   const punishRoll = positiveModulo(selector + routeRoll + ai.slot * 11 + Math.floor(ai.blockPunishWindowFrames * 3), 100) / 100;
   const punishDropped = aiDecisionRoll(ai, opponent, elapsed, 3, roundAiSeed) < settings.punishDropRate * style.imperfectionScale;
-  const punishAccepted = punishRoll < settings.punishResponse && !punishDropped;
+  const punishRhythmDrop = difficulty >= 5 && positiveModulo(selector + routeRoll * 3 + ai.slot * 17, 100) < 6;
+  const punishAccepted = punishRoll < settings.punishResponse && !punishDropped && !punishRhythmDrop;
   if (
     isShadowCloneCharacter(ai) &&
     !ai.shadowClone &&
@@ -4751,10 +4753,29 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   }
   const missedKnownOpening = opening.kind !== 'none' && canStartAction && canAct && !pressureAccepted;
 
-  input.block = danger && (difficulty >= 3 || isIncomingSoon) && blockRoll < Math.min(0.9, Math.max(0.05, profile.guard + settings.guardBonus + style.guardBias + leaderBrake * 0.04));
-  if (input.block) {
-    input[awayKey] = true;
+  const defensiveSidestep = chooseAiDefensiveSidestep(ai, opponent, difficulty, danger, isIncomingSoon, distance, laneDiff, evadeRoll);
+  if (defensiveSidestep !== 'none' && canStartAction && canAct) {
+    input.block = false;
+    input.down = false;
+    input[awayKey] = false;
     input[towardKey] = false;
+    input.sidestepUp = defensiveSidestep === 'sidestepUp';
+    input.sidestepDown = defensiveSidestep === 'sidestepDown';
+    input.sidewalkUp = false;
+    input.sidewalkDown = false;
+    return input;
+  }
+
+  const guardPosture = chooseAiGuardPosture(ai, opponent, difficulty, danger, isIncomingSoon, blockRoll, profile.guard + settings.guardBonus + style.guardBias + leaderBrake * 0.04);
+  if (guardPosture !== 'none') {
+    input.block = guardPosture === 'standBlock' || guardPosture === 'crouchBlock';
+    input.down = guardPosture === 'crouchBlock' || guardPosture === 'duck';
+    input[awayKey] = guardPosture === 'standBlock' || guardPosture === 'crouchBlock';
+    input[towardKey] = false;
+    input.sidestepUp = false;
+    input.sidestepDown = false;
+    input.sidewalkUp = false;
+    input.sidewalkDown = false;
   }
 
   const inStrikeRange = distance <= selectedMoveReach && Math.abs(laneDiff) <= selectedMoveReach * 0.82;
@@ -5443,6 +5464,78 @@ function shouldCpuDropJuggle(ai: FighterRuntime, opponent: FighterRuntime, diffi
 function beginAiJuggleLockout(ai: FighterRuntime) {
   ai.aiActiveComboRouteId = null;
   ai.aiJuggleLockoutFrames = Math.max(ai.aiJuggleLockoutFrames, AI_JUGGLE_LOCKOUT_FRAMES);
+}
+
+type AiGuardPosture = 'standBlock' | 'crouchBlock' | 'duck' | 'none';
+type AiDefensiveSidestep = 'sidestepUp' | 'sidestepDown' | 'none';
+
+function chooseAiDefensiveSidestep(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  danger: boolean,
+  isIncomingSoon: boolean,
+  distance: number,
+  laneDiff: number,
+  evadeRoll: number
+): AiDefensiveSidestep {
+  if (!danger || difficulty <= 1) return 'none';
+  if (!isIncomingSoon && difficulty < 4) return 'none';
+  if (Math.abs(laneDiff) > 0.34) return 'none';
+  const move = opponent.currentMove;
+  if (!move) return 'none';
+  if (move.hitLevel === 'low') return 'none';
+  if (move.tracking === 'homing' || move.tracking === 'strong') return 'none';
+
+  const trackingScale = move.tracking === 'none'
+    ? 1
+    : move.tracking === 'weakLeft' || move.tracking === 'weakRight'
+      ? 0.66
+      : 0.28;
+  const hitLevelScale = move.hitLevel === 'mid' || move.hitLevel === 'high'
+    ? 1
+    : move.hitLevel === 'throw'
+      ? 0.82
+      : 0.58;
+  const timingScale = isIncomingSoon ? 1 : 0.62;
+  const rangeScale = distance <= (move.range ?? 1.4) + 0.42 ? 1 : 0.72;
+  const difficultyChance = difficulty === 2 ? 0.18 : difficulty === 3 ? 0.3 : difficulty === 4 ? 0.44 : 0.58;
+  const sidestepChance = difficultyChance * trackingScale * hitLevelScale * timingScale * rangeScale;
+  if (evadeRoll >= sidestepChance) return 'none';
+
+  if (move.tracking === 'weakLeft') return 'sidestepUp';
+  if (move.tracking === 'weakRight') return 'sidestepDown';
+  const directionRoll = positiveModulo(Math.floor(evadeRoll * 1000) + ai.slot * 31 + opponent.moveFrame * 7 + Math.floor(opponent.hp), 100);
+  return directionRoll < 50 ? 'sidestepUp' : 'sidestepDown';
+}
+
+function chooseAiGuardPosture(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  danger: boolean,
+  isIncomingSoon: boolean,
+  guardRoll: number,
+  guardChanceBase: number
+): AiGuardPosture {
+  if (!danger) return 'none';
+  if (difficulty < 3 && !isIncomingSoon) return 'none';
+  const guardChance = Math.min(0.9, Math.max(0.05, guardChanceBase));
+  if (guardRoll >= guardChance) return 'none';
+
+  const move = opponent.currentMove;
+  const hitLevel = move?.hitLevel ?? 'mid';
+  const postureRoll = positiveModulo(Math.floor(guardRoll * 1000) + ai.slot * 23 + opponent.moveFrame * 17 + Math.floor(ai.hp), 100) / 100;
+  const lowGuardChance = difficulty <= 1 ? 0.18 : difficulty === 2 ? 0.32 : difficulty === 3 ? 0.55 : difficulty === 4 ? 0.74 : 0.86;
+  const specialLowGuardChance = difficulty <= 1 ? 0.12 : difficulty === 2 ? 0.24 : difficulty === 3 ? 0.42 : difficulty === 4 ? 0.62 : 0.72;
+  const highDuckChance = difficulty <= 1 ? 0.02 : difficulty === 2 ? 0.08 : difficulty === 3 ? 0.16 : difficulty === 4 ? 0.28 : 0.38;
+  const throwDuckChance = difficulty <= 1 ? 0.06 : difficulty === 2 ? 0.14 : difficulty === 3 ? 0.28 : difficulty === 4 ? 0.44 : 0.58;
+
+  if (hitLevel === 'low') return postureRoll < lowGuardChance ? 'crouchBlock' : 'standBlock';
+  if (hitLevel === 'special') return postureRoll < specialLowGuardChance ? 'crouchBlock' : 'standBlock';
+  if (hitLevel === 'high') return postureRoll < highDuckChance ? 'duck' : 'standBlock';
+  if (hitLevel === 'throw') return postureRoll < throwDuckChance ? 'duck' : 'standBlock';
+  return 'standBlock';
 }
 
 function getAdjustedPressureResponse(ai: FighterRuntime, opening: AiOpening, settings: ReturnType<typeof getCpuDifficultySettings>, pressureRoll: number) {

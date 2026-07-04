@@ -1,6 +1,6 @@
 {
   "source": "Allen Walker.png",
-  "count": 471,
+  "count": 466,
   "sheets": [
     {
       "id": "main",
@@ -7457,148 +7457,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 38,
-      "replacementHeight": 34,
+      "replacementWidth": 40,
+      "replacementHeight": 35,
       "box": [
         0,
         0,
-        38,
-        34
+        40,
+        35
       ],
-      "width": 38,
-      "height": 34,
+      "width": 40,
+      "height": 35,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/allen-walker/frames/frame-022.png|upper=/characters/allen-walker/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/allen-walker/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/allen-walker/frames/frame-022.png",
-        "upper": "/characters/allen-walker/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 466,
-      "path": "/characters/allen-walker/frames/frame-466.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 38,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        38,
-        34
-      ],
-      "width": 38,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/allen-walker/frames/frame-022.png|upper=/characters/allen-walker/frames/frame-074.png",
-      "generatedSources": {
-        "crouch": "/characters/allen-walker/frames/frame-022.png",
-        "upper": "/characters/allen-walker/frames/frame-074.png"
-      }
-    },
-    {
-      "index": 467,
-      "path": "/characters/allen-walker/frames/frame-467.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 38,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        38,
-        34
-      ],
-      "width": 38,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/allen-walker/frames/frame-022.png|upper=/characters/allen-walker/frames/frame-075.png",
-      "generatedSources": {
-        "crouch": "/characters/allen-walker/frames/frame-022.png",
-        "upper": "/characters/allen-walker/frames/frame-075.png"
-      }
-    },
-    {
-      "index": 468,
-      "path": "/characters/allen-walker/frames/frame-468.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 38,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        38,
-        34
-      ],
-      "width": 38,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/allen-walker/frames/frame-022.png|upper=/characters/allen-walker/frames/frame-076.png",
-      "generatedSources": {
-        "crouch": "/characters/allen-walker/frames/frame-022.png",
-        "upper": "/characters/allen-walker/frames/frame-076.png"
-      }
-    },
-    {
-      "index": 469,
-      "path": "/characters/allen-walker/frames/frame-469.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 38,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        38,
-        34
-      ],
-      "width": 38,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/allen-walker/frames/frame-022.png|upper=/characters/allen-walker/frames/frame-077.png",
-      "generatedSources": {
-        "crouch": "/characters/allen-walker/frames/frame-022.png",
-        "upper": "/characters/allen-walker/frames/frame-077.png"
-      }
-    },
-    {
-      "index": 470,
-      "path": "/characters/allen-walker/frames/frame-470.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 38,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        38,
-        34
-      ],
-      "width": 38,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/allen-walker/frames/frame-022.png|upper=/characters/allen-walker/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/allen-walker/frames/frame-022.png",
-        "upper": "/characters/allen-walker/frames/frame-078.png"
+        "crouch": "/characters/allen-walker/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

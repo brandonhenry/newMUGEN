@@ -1,6 +1,6 @@
 {
   "source": "Monkey D. Luffy.png",
-  "count": 195,
+  "count": 189,
   "sheets": [
     {
       "id": "main",
@@ -3025,173 +3025,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 36,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        36,
-        34
-      ],
-      "width": 36,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-015.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 189,
-      "path": "/characters/monkey-d-luffy/frames/frame-189.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        34,
-        34
-      ],
-      "width": 34,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-073.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-073.png"
-      }
-    },
-    {
-      "index": 190,
-      "path": "/characters/monkey-d-luffy/frames/frame-190.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 73,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        73,
-        34
-      ],
-      "width": 73,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-074.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-074.png"
-      }
-    },
-    {
-      "index": 191,
-      "path": "/characters/monkey-d-luffy/frames/frame-191.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 100,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        100,
-        34
-      ],
-      "width": 100,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-075.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-075.png"
-      }
-    },
-    {
-      "index": 192,
-      "path": "/characters/monkey-d-luffy/frames/frame-192.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
       "replacementWidth": 35,
-      "replacementHeight": 34,
+      "replacementHeight": 35,
       "box": [
         0,
         0,
         35,
-        34
+        35
       ],
       "width": 35,
-      "height": 34,
+      "height": 35,
       "row": -1,
       "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-076.png",
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/monkey-d-luffy/frames/frame-020.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-076.png"
-      }
-    },
-    {
-      "index": 193,
-      "path": "/characters/monkey-d-luffy/frames/frame-193.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 65,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        65,
-        34
-      ],
-      "width": 65,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-078.png"
-      }
-    },
-    {
-      "index": 194,
-      "path": "/characters/monkey-d-luffy/frames/frame-194.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        41,
-        34
-      ],
-      "width": 41,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy/frames/frame-020.png|upper=/characters/monkey-d-luffy/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png",
-        "upper": "/characters/monkey-d-luffy/frames/frame-079.png"
+        "crouch": "/characters/monkey-d-luffy/frames/frame-020.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

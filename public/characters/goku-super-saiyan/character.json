@@ -17,7 +17,7 @@
       "frameCount": 191
     }
   ],
-  "spriteFrameCount": 198,
+  "spriteFrameCount": 192,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -164,14 +164,7 @@
       "/characters/goku-super-saiyan/frames/frame-103.png",
       "/characters/goku-super-saiyan/frames/frame-104.png"
     ],
-    "cmd:FC+1": [
-      "/characters/goku-super-saiyan/frames/frame-192.png",
-      "/characters/goku-super-saiyan/frames/frame-193.png",
-      "/characters/goku-super-saiyan/frames/frame-194.png",
-      "/characters/goku-super-saiyan/frames/frame-195.png",
-      "/characters/goku-super-saiyan/frames/frame-196.png",
-      "/characters/goku-super-saiyan/frames/frame-197.png"
-    ],
+    "cmd:FC+1": [],
     "cmd:FC+2": [
       "/characters/goku-super-saiyan/frames/frame-065.png",
       "/characters/goku-super-saiyan/frames/frame-066.png",
@@ -390,7 +383,6 @@
     "cmd:d/f+2": 9,
     "cmd:qcf+4": 9,
     "cmd:WS+4": 9,
-    "cmd:FC+1": 8,
     "cmd:FC+2": 8,
     "cmd:1+2": 8,
     "cmd:1+3": 8,
@@ -2164,7 +2156,7 @@
     "crouch": {
       "17": {
         "width": 1.38,
-        "height": 0.63,
+        "height": 0.65,
         "offsetX": 0
       }
     },
@@ -2582,68 +2574,7 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {
-      "79": {
-        "width": 0.89,
-        "height": 0.86,
-        "offsetX": 0
-      },
-      "80": {
-        "width": 0.83,
-        "height": 0.81,
-        "offsetX": 0
-      },
-      "81": {
-        "width": 0.77,
-        "height": 0.74,
-        "offsetX": 0
-      },
-      "82": {
-        "width": 0.8,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "83": {
-        "width": 0.88,
-        "height": 0.86,
-        "offsetX": 0
-      },
-      "84": {
-        "width": 0.87,
-        "height": 0.84,
-        "offsetX": 0
-      },
-      "192": {
-        "width": 0.65,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "193": {
-        "width": 0.65,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "194": {
-        "width": 0.65,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "195": {
-        "width": 0.65,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "196": {
-        "width": 0.65,
-        "height": 0.63,
-        "offsetX": 0
-      },
-      "197": {
-        "width": 0.65,
-        "height": 0.63,
-        "offsetX": 0
-      }
-    },
+    "cmd:FC+1": {},
     "cmd:FC+2": {
       "65": {
         "width": 0.89,
@@ -3324,7 +3255,7 @@
     "crouchBlock": {
       "191": {
         "width": 0.65,
-        "height": 0.63,
+        "height": 0.65,
         "offsetX": 0
       }
     }

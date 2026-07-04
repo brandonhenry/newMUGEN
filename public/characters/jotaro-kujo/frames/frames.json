@@ -1,6 +1,6 @@
 {
   "source": "Jotaro Kujo.png",
-  "count": 196,
+  "count": 195,
   "sheets": [
     {
       "id": "main",
@@ -3121,48 +3121,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 37,
-      "replacementHeight": 41,
+      "replacementWidth": 39,
+      "replacementHeight": 43,
       "box": [
         0,
         0,
-        37,
-        41
+        39,
+        43
       ],
-      "width": 37,
-      "height": 41,
+      "width": 39,
+      "height": 43,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/jotaro-kujo/frames/frame-024.png|upper=/characters/jotaro-kujo/frames/frame-017.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/jotaro-kujo/frames/frame-024.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/jotaro-kujo/frames/frame-024.png",
-        "upper": "/characters/jotaro-kujo/frames/frame-017.png"
-      }
-    },
-    {
-      "index": 195,
-      "path": "/characters/jotaro-kujo/frames/frame-195.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 37,
-      "replacementHeight": 41,
-      "box": [
-        0,
-        0,
-        37,
-        41
-      ],
-      "width": 37,
-      "height": 41,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/jotaro-kujo/frames/frame-024.png|upper=/characters/jotaro-kujo/frames/frame-128.png",
-      "generatedSources": {
-        "crouch": "/characters/jotaro-kujo/frames/frame-024.png",
-        "upper": "/characters/jotaro-kujo/frames/frame-128.png"
+        "crouch": "/characters/jotaro-kujo/frames/frame-024.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "source": "Monkey D. Luffy (2nd Gear).png",
-  "count": 234,
+  "count": 231,
   "sheets": [
     {
       "id": "main",
@@ -3697,98 +3697,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 35,
-      "replacementHeight": 33,
+      "replacementWidth": 36,
+      "replacementHeight": 35,
       "box": [
         0,
         0,
-        35,
-        33
+        36,
+        35
       ],
-      "width": 35,
-      "height": 33,
+      "width": 36,
+      "height": 35,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png|upper=/characters/monkey-d-luffy-2nd-gear/frames/frame-016.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png",
-        "upper": "/characters/monkey-d-luffy-2nd-gear/frames/frame-016.png"
-      }
-    },
-    {
-      "index": 231,
-      "path": "/characters/monkey-d-luffy-2nd-gear/frames/frame-231.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        34,
-        33
-      ],
-      "width": 34,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png|upper=/characters/monkey-d-luffy-2nd-gear/frames/frame-077.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png",
-        "upper": "/characters/monkey-d-luffy-2nd-gear/frames/frame-077.png"
-      }
-    },
-    {
-      "index": 232,
-      "path": "/characters/monkey-d-luffy-2nd-gear/frames/frame-232.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 49,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        49,
-        33
-      ],
-      "width": 49,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png|upper=/characters/monkey-d-luffy-2nd-gear/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png",
-        "upper": "/characters/monkey-d-luffy-2nd-gear/frames/frame-078.png"
-      }
-    },
-    {
-      "index": 233,
-      "path": "/characters/monkey-d-luffy-2nd-gear/frames/frame-233.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        34,
-        33
-      ],
-      "width": 34,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png|upper=/characters/monkey-d-luffy-2nd-gear/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png",
-        "upper": "/characters/monkey-d-luffy-2nd-gear/frames/frame-079.png"
+        "crouch": "/characters/monkey-d-luffy-2nd-gear/frames/frame-021.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

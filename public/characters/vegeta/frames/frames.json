@@ -1,6 +1,6 @@
 {
   "source": "Vegeta.png",
-  "count": 152,
+  "count": 148,
   "sheets": [
     {
       "id": "main",
@@ -2369,123 +2369,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 34,
-      "replacementHeight": 39,
+      "replacementWidth": 36,
+      "replacementHeight": 41,
       "box": [
         0,
         0,
-        34,
-        39
+        36,
+        41
       ],
-      "width": 34,
-      "height": 39,
+      "width": 36,
+      "height": 41,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/vegeta/frames/frame-017.png|upper=/characters/vegeta/frames/frame-011.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/vegeta/frames/frame-017.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/vegeta/frames/frame-017.png",
-        "upper": "/characters/vegeta/frames/frame-011.png"
-      }
-    },
-    {
-      "index": 148,
-      "path": "/characters/vegeta/frames/frame-148.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        34,
-        39
-      ],
-      "width": 34,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta/frames/frame-017.png|upper=/characters/vegeta/frames/frame-065.png",
-      "generatedSources": {
-        "crouch": "/characters/vegeta/frames/frame-017.png",
-        "upper": "/characters/vegeta/frames/frame-065.png"
-      }
-    },
-    {
-      "index": 149,
-      "path": "/characters/vegeta/frames/frame-149.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        44,
-        39
-      ],
-      "width": 44,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta/frames/frame-017.png|upper=/characters/vegeta/frames/frame-066.png",
-      "generatedSources": {
-        "crouch": "/characters/vegeta/frames/frame-017.png",
-        "upper": "/characters/vegeta/frames/frame-066.png"
-      }
-    },
-    {
-      "index": 150,
-      "path": "/characters/vegeta/frames/frame-150.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        34,
-        39
-      ],
-      "width": 34,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta/frames/frame-017.png|upper=/characters/vegeta/frames/frame-067.png",
-      "generatedSources": {
-        "crouch": "/characters/vegeta/frames/frame-017.png",
-        "upper": "/characters/vegeta/frames/frame-067.png"
-      }
-    },
-    {
-      "index": 151,
-      "path": "/characters/vegeta/frames/frame-151.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        34,
-        39
-      ],
-      "width": 34,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/vegeta/frames/frame-017.png|upper=/characters/vegeta/frames/frame-068.png",
-      "generatedSources": {
-        "crouch": "/characters/vegeta/frames/frame-017.png",
-        "upper": "/characters/vegeta/frames/frame-068.png"
+        "crouch": "/characters/vegeta/frames/frame-017.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

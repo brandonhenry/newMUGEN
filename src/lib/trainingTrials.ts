@@ -147,9 +147,40 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const trials: TrainingTrialDefinition[] = [
     makeSimpleTrial(character, dummy, 'movement', 'movement:walk', 'Walk In', ['f'], ['right'], 'Close space without swinging.', 'First, take the space. No wasted cuts.', 'Step forward and hold your ground.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:dash', 'Dash In', ['F'], ['dashForward'], 'Dash to punish distance quickly.', 'When the opening is far, move first.', 'Dash forward cleanly.', { requireState: 'walk' }),
-    makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line before attacking.', "Don't stand where the blade is falling.", 'Sidestep once.'),
-    makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Block high and mid pressure before you answer.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
-    makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block low pressure.', 'Low strikes need low guard. Simple.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' })
+    makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line to move or defend against linear pressure.', "Don't stand where the blade is falling.", 'Sidestep once.'),
+    makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Standing guard is your default answer to high, special, and unknown pressure.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
+    makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block low pressure; standing guard loses to lows.', 'Low strikes need low guard. Simple.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' }),
+    makeSimpleTrial(character, dummy, 'defense', 'defense:duck-high', 'Duck Highs', ['d'], ['down'], 'Crouch without blocking to duck high strikes and throw-like pressure.', 'Some attacks pass over a low stance.', 'Duck under the high threat.', { dummyScript: 'attack', requireState: 'crouch' }),
+    makeSimpleTrial(character, dummy, 'defense', 'defense:sidestep-linear', 'Sidestep Linear', ['SSL'], ['sidestepUp'], 'Sidestep is defense against straight, non-tracking attacks; homing pressure must be guarded instead.', 'A straight cut can miss if you leave the line.', 'Sidestep the linear threat.', { dummyScript: 'attack', requireState: 'sidestep' }),
+    makeSequenceTrial(
+      character,
+      dummy,
+      'defense',
+      'defense:guard-switch',
+      'Guard Switch',
+      [
+        {
+          id: 'stand',
+          notation: ['B'],
+          label: 'Stand Guard',
+          actions: ['block'],
+          requireState: 'block',
+          reason: 'Stand block covers high, special, and unknown pressure.'
+        },
+        {
+          id: 'low',
+          notation: ['d', 'B'],
+          label: 'Low Guard',
+          actions: ['down', 'block'],
+          requireState: 'crouchBlock',
+          reason: 'Switch to crouch block when the threat is low.'
+        }
+      ],
+      'Blocking is a read: stand guard for highs or unknowns, crouch block lows, and crouch without block to duck highs or throws.',
+      'High blade, high guard. Low blade, low guard.',
+      'Guard switch complete.',
+      { dummyScript: 'attack' }
+    )
   ];
 
   const fastest = [...character.moves].filter((move) => move.damage > 0).sort((a, b) => a.startupFrames - b.startupFrames)[0];
@@ -391,6 +422,58 @@ function makeSimpleTrial(
     zoroLine,
     successText,
     previewScript: makePreviewScript([{ actions, targetFrame: 10 } as TrainingTrialStep])
+  };
+}
+
+function makeSequenceTrial(
+  character: CharacterDefinition,
+  dummy: CharacterDefinition | undefined,
+  category: TrainingTrialCategory,
+  id: string,
+  title: string,
+  stepInputs: Array<{
+    id: string;
+    notation: string[];
+    label: string;
+    actions: ActionName[];
+    requireState?: FighterRuntime['state'];
+    requireDummyState?: FighterRuntime['state'];
+    reason: string;
+  }>,
+  lesson: string,
+  zoroLine: string,
+  successText: string,
+  options: { dummyScript?: TrainingDummyScript; setup?: Partial<TrainingTrialSetup> } = {}
+): TrainingTrialDefinition {
+  const setup = makeSetup(dummy, options.dummyScript ?? options.setup?.dummyScript ?? 'idle', options.setup);
+  const steps: TrainingTrialStep[] = stepInputs.map((step, index) => ({
+    id: `${id}:${step.id}`,
+    notation: step.notation,
+    label: step.label,
+    actions: step.actions,
+    kind: 'state',
+    targetFrame: index === 0 ? 14 : 18,
+    windowBefore: 8,
+    windowAfter: 20,
+    requireState: step.requireState,
+    requireDummyState: step.requireDummyState,
+    reason: step.reason
+  }));
+  return {
+    id: `basic:${character.id}:${id}`,
+    title,
+    characterId: character.id,
+    category,
+    mode: 'basics',
+    difficulty: category === 'movement' || category === 'defense' ? 1 : 2,
+    stageId: setup.stageId,
+    dummyCharacterId: dummy?.id,
+    setup,
+    steps,
+    lesson,
+    zoroLine,
+    successText,
+    previewScript: makePreviewScript(steps)
   };
 }
 

@@ -1,6 +1,6 @@
 {
   "source": "Gon Freecss.png",
-  "count": 207,
+  "count": 203,
   "sheets": [
     {
       "id": "main",
@@ -3249,123 +3249,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 37,
-      "replacementHeight": 35,
+      "replacementWidth": 39,
+      "replacementHeight": 37,
       "box": [
         0,
         0,
-        37,
-        35
+        39,
+        37
       ],
-      "width": 37,
-      "height": 35,
+      "width": 39,
+      "height": 37,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/gon-freecss/frames/frame-022.png|upper=/characters/gon-freecss/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/gon-freecss/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/gon-freecss/frames/frame-022.png",
-        "upper": "/characters/gon-freecss/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 203,
-      "path": "/characters/gon-freecss/frames/frame-203.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gon-freecss/frames/frame-022.png|upper=/characters/gon-freecss/frames/frame-129.png",
-      "generatedSources": {
-        "crouch": "/characters/gon-freecss/frames/frame-022.png",
-        "upper": "/characters/gon-freecss/frames/frame-129.png"
-      }
-    },
-    {
-      "index": 204,
-      "path": "/characters/gon-freecss/frames/frame-204.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 51,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        51,
-        35
-      ],
-      "width": 51,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gon-freecss/frames/frame-022.png|upper=/characters/gon-freecss/frames/frame-130.png",
-      "generatedSources": {
-        "crouch": "/characters/gon-freecss/frames/frame-022.png",
-        "upper": "/characters/gon-freecss/frames/frame-130.png"
-      }
-    },
-    {
-      "index": 205,
-      "path": "/characters/gon-freecss/frames/frame-205.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gon-freecss/frames/frame-022.png|upper=/characters/gon-freecss/frames/frame-131.png",
-      "generatedSources": {
-        "crouch": "/characters/gon-freecss/frames/frame-022.png",
-        "upper": "/characters/gon-freecss/frames/frame-131.png"
-      }
-    },
-    {
-      "index": 206,
-      "path": "/characters/gon-freecss/frames/frame-206.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 54,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        54,
-        35
-      ],
-      "width": 54,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/gon-freecss/frames/frame-022.png|upper=/characters/gon-freecss/frames/frame-132.png",
-      "generatedSources": {
-        "crouch": "/characters/gon-freecss/frames/frame-022.png",
-        "upper": "/characters/gon-freecss/frames/frame-132.png"
+        "crouch": "/characters/gon-freecss/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

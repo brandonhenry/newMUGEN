@@ -1,6 +1,6 @@
 {
   "source": "Sakura Haruno.png",
-  "count": 218,
+  "count": 207,
   "sheets": [
     {
       "id": "main",
@@ -3313,298 +3313,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
+      "replacementWidth": 32,
+      "replacementHeight": 39,
       "box": [
         0,
         0,
-        30,
-        37
+        32,
+        39
       ],
-      "width": 30,
-      "height": 37,
+      "width": 32,
+      "height": 39,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/sakura-haruno/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 207,
-      "path": "/characters/sakura-haruno/frames/frame-207.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-119.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-119.png"
-      }
-    },
-    {
-      "index": 208,
-      "path": "/characters/sakura-haruno/frames/frame-208.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-120.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-120.png"
-      }
-    },
-    {
-      "index": 209,
-      "path": "/characters/sakura-haruno/frames/frame-209.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-121.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-121.png"
-      }
-    },
-    {
-      "index": 210,
-      "path": "/characters/sakura-haruno/frames/frame-210.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-122.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-122.png"
-      }
-    },
-    {
-      "index": 211,
-      "path": "/characters/sakura-haruno/frames/frame-211.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-123.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-123.png"
-      }
-    },
-    {
-      "index": 212,
-      "path": "/characters/sakura-haruno/frames/frame-212.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-124.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-124.png"
-      }
-    },
-    {
-      "index": 213,
-      "path": "/characters/sakura-haruno/frames/frame-213.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 35,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        35,
-        37
-      ],
-      "width": 35,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-125.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-125.png"
-      }
-    },
-    {
-      "index": 214,
-      "path": "/characters/sakura-haruno/frames/frame-214.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 47,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        47,
-        37
-      ],
-      "width": 47,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-126.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-126.png"
-      }
-    },
-    {
-      "index": 215,
-      "path": "/characters/sakura-haruno/frames/frame-215.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 43,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        43,
-        37
-      ],
-      "width": 43,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-127.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-127.png"
-      }
-    },
-    {
-      "index": 216,
-      "path": "/characters/sakura-haruno/frames/frame-216.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-128.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-128.png"
-      }
-    },
-    {
-      "index": 217,
-      "path": "/characters/sakura-haruno/frames/frame-217.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 30,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        30,
-        37
-      ],
-      "width": 30,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/sakura-haruno/frames/frame-022.png|upper=/characters/sakura-haruno/frames/frame-129.png",
-      "generatedSources": {
-        "crouch": "/characters/sakura-haruno/frames/frame-022.png",
-        "upper": "/characters/sakura-haruno/frames/frame-129.png"
+        "crouch": "/characters/sakura-haruno/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

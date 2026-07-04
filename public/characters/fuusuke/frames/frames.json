@@ -1,6 +1,6 @@
 {
   "source": "Fuusuke.png",
-  "count": 216,
+  "count": 212,
   "sheets": [
     {
       "id": "main",
@@ -3393,123 +3393,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 29,
-      "replacementHeight": 26,
+      "replacementWidth": 31,
+      "replacementHeight": 28,
       "box": [
         0,
         0,
-        29,
-        26
+        31,
+        28
       ],
-      "width": 29,
-      "height": 26,
+      "width": 31,
+      "height": 28,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/fuusuke/frames/frame-022.png|upper=/characters/fuusuke/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/fuusuke/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/fuusuke/frames/frame-022.png",
-        "upper": "/characters/fuusuke/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 212,
-      "path": "/characters/fuusuke/frames/frame-212.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 29,
-      "replacementHeight": 26,
-      "box": [
-        0,
-        0,
-        29,
-        26
-      ],
-      "width": 29,
-      "height": 26,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/fuusuke/frames/frame-022.png|upper=/characters/fuusuke/frames/frame-126.png",
-      "generatedSources": {
-        "crouch": "/characters/fuusuke/frames/frame-022.png",
-        "upper": "/characters/fuusuke/frames/frame-126.png"
-      }
-    },
-    {
-      "index": 213,
-      "path": "/characters/fuusuke/frames/frame-213.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 29,
-      "replacementHeight": 26,
-      "box": [
-        0,
-        0,
-        29,
-        26
-      ],
-      "width": 29,
-      "height": 26,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/fuusuke/frames/frame-022.png|upper=/characters/fuusuke/frames/frame-127.png",
-      "generatedSources": {
-        "crouch": "/characters/fuusuke/frames/frame-022.png",
-        "upper": "/characters/fuusuke/frames/frame-127.png"
-      }
-    },
-    {
-      "index": 214,
-      "path": "/characters/fuusuke/frames/frame-214.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 29,
-      "replacementHeight": 26,
-      "box": [
-        0,
-        0,
-        29,
-        26
-      ],
-      "width": 29,
-      "height": 26,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/fuusuke/frames/frame-022.png|upper=/characters/fuusuke/frames/frame-128.png",
-      "generatedSources": {
-        "crouch": "/characters/fuusuke/frames/frame-022.png",
-        "upper": "/characters/fuusuke/frames/frame-128.png"
-      }
-    },
-    {
-      "index": 215,
-      "path": "/characters/fuusuke/frames/frame-215.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 29,
-      "replacementHeight": 26,
-      "box": [
-        0,
-        0,
-        29,
-        26
-      ],
-      "width": 29,
-      "height": 26,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/fuusuke/frames/frame-022.png|upper=/characters/fuusuke/frames/frame-129.png",
-      "generatedSources": {
-        "crouch": "/characters/fuusuke/frames/frame-022.png",
-        "upper": "/characters/fuusuke/frames/frame-129.png"
+        "crouch": "/characters/fuusuke/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

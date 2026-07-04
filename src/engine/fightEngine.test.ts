@@ -2652,6 +2652,232 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('block');
   });
 
+  it('lets KORE CPU sidestep incoming linear pressure as defense', () => {
+    let sidesteps = 0;
+    let blocks = 0;
+    for (let index = 0; index < 60; index += 1) {
+      const attacker: CharacterDefinition = {
+        ...starterCharacters[0],
+        moves: starterCharacters[0].moves.map((move) =>
+          move.input === 'jab'
+            ? {
+                ...move,
+                startupFrames: 3,
+                activeFrames: 18,
+                recoveryFrames: 18,
+                hitLevel: 'mid' as const,
+                tracking: 'none' as const,
+                range: 2.6
+              }
+            : move
+        )
+      };
+      let match = createMatch(attacker, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 960 + index });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.timer = 60 - index * 0.047;
+      match.fighters[0].position.x = -0.72;
+      match.fighters[1].position.x = 0.72;
+      match.fighters[0].position.z = 0;
+      match.fighters[1].position.z = 0;
+      const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = move;
+      match.fighters[0].moveFrame = move.startupFrames;
+      match.fighters[0].actionFramesRemaining = 24;
+      match.fighters[0].actionTimer = 24 / 60;
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[1].state === 'sidestep') sidesteps += 1;
+      if (match.fighters[1].state === 'block') blocks += 1;
+    }
+
+    expect(sidesteps).toBeGreaterThan(0);
+    expect(blocks).toBeGreaterThan(0);
+  });
+
+  it('does not make KORE CPU sidestep homing pressure like linear pressure', () => {
+    const sample = (tracking: 'none' | 'homing') => {
+      let sidesteps = 0;
+      let blocks = 0;
+      for (let index = 0; index < 60; index += 1) {
+        const attacker: CharacterDefinition = {
+          ...starterCharacters[0],
+          moves: starterCharacters[0].moves.map((move) =>
+            move.input === 'jab'
+              ? {
+                  ...move,
+                  startupFrames: 3,
+                  activeFrames: 18,
+                  recoveryFrames: 18,
+                  hitLevel: 'mid' as const,
+                  tracking,
+                  homingSpeed: tracking === 'homing' ? 12 : undefined,
+                  range: 2.6
+                }
+              : move
+          )
+        };
+        let match = createMatch(attacker, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 1040 + index });
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.timer = 60 - index * 0.047;
+        match.fighters[0].position.x = -0.72;
+        match.fighters[1].position.x = 0.72;
+        match.fighters[0].position.z = 0;
+        match.fighters[1].position.z = 0;
+        const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+        match.fighters[0].state = 'attack';
+        match.fighters[0].currentMove = move;
+        match.fighters[0].moveFrame = move.startupFrames;
+        match.fighters[0].actionFramesRemaining = 24;
+        match.fighters[0].actionTimer = 24 / 60;
+
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        if (match.fighters[1].state === 'sidestep') sidesteps += 1;
+        if (match.fighters[1].state === 'block') blocks += 1;
+      }
+      return { sidesteps, blocks };
+    };
+
+    const linear = sample('none');
+    const homing = sample('homing');
+    expect(linear.sidesteps).toBeGreaterThan(homing.sidesteps);
+    expect(homing.blocks).toBeGreaterThan(homing.sidesteps);
+  });
+
+  it('makes KORE CPU crouch-block incoming lows more often than easy CPU', () => {
+    const sample = (difficulty: 1 | 5) => {
+      let crouchBlocks = 0;
+      let standBlocks = 0;
+      for (let index = 0; index < 36; index += 1) {
+        const attacker: CharacterDefinition = {
+          ...starterCharacters[0],
+          moves: starterCharacters[0].moves.map((move) =>
+            move.input === 'jab'
+              ? {
+                  ...move,
+                  startupFrames: 3,
+                  activeFrames: 18,
+                  recoveryFrames: 18,
+                  hitLevel: 'low' as const,
+                  range: 2.6
+                }
+              : move
+          )
+        };
+        let match = createMatch(attacker, starterCharacters[1], stages[0], 'cpu', difficulty, { aiSeed: 700 + index });
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.timer = 60 - index * 0.07;
+        match.fighters[0].position.x = -0.72;
+        match.fighters[1].position.x = 0.72;
+        const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+        match.fighters[0].state = 'attack';
+        match.fighters[0].currentMove = move;
+        match.fighters[0].moveFrame = move.startupFrames;
+        match.fighters[0].actionFramesRemaining = 24;
+        match.fighters[0].actionTimer = 24 / 60;
+
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        if (match.fighters[1].state === 'crouchBlock') crouchBlocks += 1;
+        if (match.fighters[1].state === 'block') standBlocks += 1;
+      }
+      return { crouchBlocks, standBlocks };
+    };
+
+    const easy = sample(1);
+    const kore = sample(5);
+    expect(kore.crouchBlocks).toBeGreaterThan(kore.standBlocks);
+    expect(kore.crouchBlocks).toBeGreaterThan(easy.crouchBlocks);
+  });
+
+  it('keeps CPU standing-blocking mids instead of over-crouching unknown pressure', () => {
+    let standBlocks = 0;
+    let crouchBlocks = 0;
+    for (let index = 0; index < 24; index += 1) {
+      const attacker: CharacterDefinition = {
+        ...starterCharacters[0],
+        moves: starterCharacters[0].moves.map((move) =>
+          move.input === 'jab'
+            ? {
+                ...move,
+                startupFrames: 3,
+                activeFrames: 18,
+                recoveryFrames: 18,
+                hitLevel: 'mid' as const,
+                range: 2.6
+              }
+            : move
+        )
+      };
+      let match = createMatch(attacker, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 800 + index });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.timer = 60 - index * 0.07;
+      match.fighters[0].position.x = -0.72;
+      match.fighters[1].position.x = 0.72;
+      const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = move;
+      match.fighters[0].moveFrame = move.startupFrames;
+      match.fighters[0].actionFramesRemaining = 24;
+      match.fighters[0].actionTimer = 24 / 60;
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[1].state === 'block') standBlocks += 1;
+      if (match.fighters[1].state === 'crouchBlock') crouchBlocks += 1;
+    }
+
+    expect(standBlocks).toBeGreaterThan(0);
+    expect(crouchBlocks).toBe(0);
+  });
+
+  it('lets high difficulty CPU duck some incoming high attacks', () => {
+    let ducks = 0;
+    let standBlocks = 0;
+    for (let index = 0; index < 60; index += 1) {
+      const attacker: CharacterDefinition = {
+        ...starterCharacters[0],
+        moves: starterCharacters[0].moves.map((move) =>
+          move.input === 'jab'
+            ? {
+                ...move,
+                startupFrames: 3,
+                activeFrames: 18,
+                recoveryFrames: 18,
+                hitLevel: 'high' as const,
+                range: 2.6,
+                hitbox: {
+                  offset: [0.62, 1.55, 0],
+                  size: [1.1, 0.34, 0.7]
+                }
+              }
+            : move
+        )
+      };
+      let match = createMatch(attacker, starterCharacters[1], stages[0], 'cpu', 5, { aiSeed: 900 + index });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.timer = 60 - index * 0.05;
+      match.fighters[0].position.x = -0.72;
+      match.fighters[1].position.x = 0.72;
+      const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = move;
+      match.fighters[0].moveFrame = move.startupFrames;
+      match.fighters[0].actionFramesRemaining = 24;
+      match.fighters[0].actionTimer = 24 / 60;
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (match.fighters[1].state === 'crouch') ducks += 1;
+      if (match.fighters[1].state === 'block') standBlocks += 1;
+    }
+
+    expect(ducks).toBeGreaterThan(0);
+    expect(standBlocks).toBeGreaterThan(ducks);
+  });
+
   it('keeps horizontal controls relative to the opponent after fighters cross physical sides', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

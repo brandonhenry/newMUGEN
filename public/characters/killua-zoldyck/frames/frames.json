@@ -1,6 +1,6 @@
 {
   "source": "Killua Zoldyck.png",
-  "count": 236,
+  "count": 232,
   "sheets": [
     {
       "id": "main",
@@ -3713,123 +3713,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 35,
-      "replacementHeight": 33,
+      "replacementWidth": 37,
+      "replacementHeight": 34,
       "box": [
         0,
         0,
-        35,
-        33
+        37,
+        34
       ],
-      "width": 35,
-      "height": 33,
+      "width": 37,
+      "height": 34,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/killua-zoldyck/frames/frame-022.png|upper=/characters/killua-zoldyck/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/killua-zoldyck/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/killua-zoldyck/frames/frame-022.png",
-        "upper": "/characters/killua-zoldyck/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 232,
-      "path": "/characters/killua-zoldyck/frames/frame-232.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 35,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        35,
-        33
-      ],
-      "width": 35,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/killua-zoldyck/frames/frame-022.png|upper=/characters/killua-zoldyck/frames/frame-081.png",
-      "generatedSources": {
-        "crouch": "/characters/killua-zoldyck/frames/frame-022.png",
-        "upper": "/characters/killua-zoldyck/frames/frame-081.png"
-      }
-    },
-    {
-      "index": 233,
-      "path": "/characters/killua-zoldyck/frames/frame-233.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 35,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        35,
-        33
-      ],
-      "width": 35,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/killua-zoldyck/frames/frame-022.png|upper=/characters/killua-zoldyck/frames/frame-082.png",
-      "generatedSources": {
-        "crouch": "/characters/killua-zoldyck/frames/frame-022.png",
-        "upper": "/characters/killua-zoldyck/frames/frame-082.png"
-      }
-    },
-    {
-      "index": 234,
-      "path": "/characters/killua-zoldyck/frames/frame-234.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 35,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        35,
-        33
-      ],
-      "width": 35,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/killua-zoldyck/frames/frame-022.png|upper=/characters/killua-zoldyck/frames/frame-083.png",
-      "generatedSources": {
-        "crouch": "/characters/killua-zoldyck/frames/frame-022.png",
-        "upper": "/characters/killua-zoldyck/frames/frame-083.png"
-      }
-    },
-    {
-      "index": 235,
-      "path": "/characters/killua-zoldyck/frames/frame-235.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 35,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        35,
-        33
-      ],
-      "width": 35,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/killua-zoldyck/frames/frame-022.png|upper=/characters/killua-zoldyck/frames/frame-084.png",
-      "generatedSources": {
-        "crouch": "/characters/killua-zoldyck/frames/frame-022.png",
-        "upper": "/characters/killua-zoldyck/frames/frame-084.png"
+        "crouch": "/characters/killua-zoldyck/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

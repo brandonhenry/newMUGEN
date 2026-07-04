@@ -130,8 +130,25 @@ import {
   type VoxelBodyMetrics,
   type VoxelBodyNormalization
 } from './lib/voxelBodyNormalization';
+import {
+  advanceTournamentBracket,
+  createLocalTournamentBracket,
+  enterTournament,
+  fetchTournamentList,
+  fetchTournamentStatus,
+  getAssignedTournamentMatch,
+  getTournamentEntry,
+  getTournamentOpponentEntry,
+  reportTournamentMatch,
+  simulateCpuTournamentMatches,
+  type TournamentBracket,
+  type TournamentEntry,
+  type TournamentMatch,
+  type TournamentStatusResult,
+  type TournamentSummary
+} from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
@@ -144,6 +161,7 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
 type RandomCharacterSlots = Record<1 | 2, boolean>;
+type TournamentSelectMode = 'free' | 'online';
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
 
 type CharacterAnimationOverride = {
@@ -2475,6 +2493,11 @@ export default function App() {
   const [randomStageSelected, setRandomStageSelected] = useState(true);
   const [mode, setMode] = useState<MatchMode>('ai');
   const [selectedTrainingMode, setSelectedTrainingMode] = useState<TrainingTrialMode>('free');
+  const [selectedTournamentMode, setSelectedTournamentMode] = useState<TournamentSelectMode>('free');
+  const [localTournamentBracket, setLocalTournamentBracket] = useState<TournamentBracket | null>(null);
+  const [onlineTournamentStatus, setOnlineTournamentStatus] = useState<TournamentStatusResult | null>(null);
+  const [activeTournamentMatchId, setActiveTournamentMatchId] = useState('');
+  const [tournamentStatusText, setTournamentStatusText] = useState('');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
@@ -2540,6 +2563,138 @@ export default function App() {
     if (nextStage && nextStage.id !== stageId) setStageId(nextStage.id);
     return nextStage;
   }, [playableStageRoster, randomStageSelected, stageId]);
+
+  const startLocalTournament = useCallback((characterId: string) => {
+    const selected = roster.find((character) => character.id === characterId) ?? roster[0];
+    if (!selected) return;
+    const bracket = simulateCpuTournamentMatches(createLocalTournamentBracket(
+      { id: selected.id, displayName: selected.displayName },
+      roster
+        .filter((character) => isCharacterUnlocked(character, effectiveUnlockedCharacterIds))
+        .map((character) => ({ id: character.id, displayName: character.displayName }))
+    ));
+    const match = getAssignedTournamentMatch(bracket, 'local-player');
+    const opponent = getTournamentOpponentEntry(bracket, match, 'local-player');
+    if (!match || !opponent) return;
+    const opponentCharacter = roster.find((character) => character.id === opponent.characterId);
+    const fightStage = resolveRandomStageSelection();
+    if (!opponentCharacter || !fightStage) return;
+    setP1Id(selected.id);
+    setP2Id(opponentCharacter.id);
+    setLocalTournamentBracket(bracket);
+    setOnlineTournamentStatus(null);
+    setActiveTournamentMatchId(match.id);
+    setTournamentStatusText('Quarterfinal match ready');
+    setMode('tournamentLocal');
+    setScreen('tournamentBracket');
+  }, [effectiveUnlockedCharacterIds, resolveRandomStageSelection, roster]);
+
+  const enterOnlineTournament = useCallback(async (characterId: string) => {
+    const profile = onlineProfile ?? writeOnlineProfile({ displayName: 'PLAYER' });
+    if (!onlineProfile) setOnlineProfile(profile);
+    setTournamentStatusText('Entering free online tournament');
+    const result = await enterTournament({
+      kind: 'freeOnline',
+      playerId: profile.playerId,
+      displayName: profile.displayName,
+      characterId
+    });
+    const status: TournamentStatusResult = {
+      bracket: result.bracket,
+      entry: result.entry,
+      assignedMatch: getAssignedTournamentMatch(result.bracket, result.entry.id),
+      statusText: result.bracket.status === 'open' ? `${result.bracket.entries.length} / ${result.bracket.minEntries} entered` : 'Tournament ready'
+    };
+    setP1Id(characterId);
+    setOnlineTournamentStatus(status);
+    setLocalTournamentBracket(null);
+    setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+    setTournamentStatusText(status.statusText);
+    setScreen('tournamentLobby');
+  }, [onlineProfile]);
+
+  const refreshOnlineTournament = useCallback(async () => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    if (!current || !profile) return;
+    const status = await fetchTournamentStatus(current.bracket.id, profile.playerId);
+    setOnlineTournamentStatus(status);
+    setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+    setTournamentStatusText(status.statusText);
+  }, [onlineProfile, onlineTournamentStatus]);
+
+  const startOnlineTournamentMatch = useCallback(() => {
+    const status = onlineTournamentStatus;
+    const profile = onlineProfile;
+    const match = status?.assignedMatch;
+    const entry = status?.entry;
+    if (!status || !profile || !match || !entry) return;
+    const opponent = getTournamentOpponentEntry(status.bracket, match, entry.id);
+    if (!opponent) return;
+    const opponentCharacter = roster.find((character) => character.id === opponent.characterId) ?? roster[0];
+    const fightStage = resolveRandomStageSelection();
+    if (!opponentCharacter || !fightStage) return;
+    setP2Id(opponentCharacter.id);
+    setActiveTournamentMatchId(match.id);
+    setMode('tournamentOnline');
+    setScreen('tournamentBracket');
+  }, [onlineProfile, onlineTournamentStatus, resolveRandomStageSelection, roster]);
+
+  const handleTournamentMatchComplete = useCallback((result: { winnerSlot: 1 | 2 }) => {
+    if (!activeTournamentMatchId) return;
+    if (mode === 'tournamentLocal' && localTournamentBracket) {
+      const match = localTournamentBracket.matches.find((candidate) => candidate.id === activeTournamentMatchId);
+      if (!match) return;
+      const winnerEntryId = result.winnerSlot === 1
+        ? 'local-player'
+        : match.entryAId === 'local-player'
+          ? match.entryBId
+          : match.entryAId;
+      if (!winnerEntryId) return;
+      const advanced = simulateCpuTournamentMatches(advanceTournamentBracket(localTournamentBracket, activeTournamentMatchId, winnerEntryId));
+      setLocalTournamentBracket(advanced);
+      if (advanced.status === 'completed' || winnerEntryId !== 'local-player') {
+        setTournamentStatusText(winnerEntryId === 'local-player' ? 'Tournament won' : 'Eliminated');
+        setScreen('tournamentLobby');
+        return;
+      }
+      const nextMatch = getAssignedTournamentMatch(advanced, 'local-player');
+      const opponent = getTournamentOpponentEntry(advanced, nextMatch, 'local-player');
+      const opponentCharacter = opponent ? roster.find((character) => character.id === opponent.characterId) : null;
+      if (!nextMatch || !opponentCharacter) {
+        setTournamentStatusText('Waiting for bracket');
+        setScreen('tournamentLobby');
+        return;
+      }
+      setP2Id(opponentCharacter.id);
+      setActiveTournamentMatchId(nextMatch.id);
+      setTournamentStatusText(nextMatch.round === 2 ? 'Semifinal match ready' : 'Final match ready');
+      setScreen('tournamentBracket');
+      return;
+    }
+    if (mode === 'tournamentOnline' && onlineTournamentStatus && onlineProfile) {
+      const match = onlineTournamentStatus.assignedMatch;
+      const entry = onlineTournamentStatus.entry;
+      if (!match || !entry) return;
+      const opponentEntryId = match.entryAId === entry.id ? match.entryBId : match.entryAId;
+      const winnerEntryId = result.winnerSlot === 1 ? entry.id : opponentEntryId;
+      if (!winnerEntryId) return;
+      void reportTournamentMatch({
+        tournamentId: onlineTournamentStatus.bracket.id,
+        matchId: activeTournamentMatchId,
+        reporterPlayerId: onlineProfile.playerId,
+        winnerEntryId
+      }).then((status) => {
+        setOnlineTournamentStatus(status);
+        setTournamentStatusText(status.statusText);
+        setScreen('tournamentLobby');
+      }).catch((error) => {
+        console.error('Failed to report tournament match', error);
+        setTournamentStatusText('Tournament report failed');
+        setScreen('tournamentLobby');
+      });
+    }
+  }, [activeTournamentMatchId, localTournamentBracket, mode, onlineProfile, onlineTournamentStatus, roster]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -3093,6 +3248,13 @@ export default function App() {
               if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
               setScreen('training');
             }}
+            onTournament={() => {
+              captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'tournament' });
+              resetRandomSelections();
+              setMode('tournamentLocal');
+              setSelectedTournamentMode('free');
+              setScreen('tournament');
+            }}
             onOnline={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'online' });
               resetRandomSelections();
@@ -3104,6 +3266,61 @@ export default function App() {
             onViewer={() => setScreen('viewer')}
             onStages={() => setScreen('stageEditor')}
             onExit={() => setScreen('title')}
+          />
+        )}
+        {screen === 'tournament' && (
+          <TournamentSelect
+            roster={roster}
+            p1Id={p1Id}
+            unlockedCharacterIds={effectiveUnlockedCharacterIds}
+            tournamentMode={selectedTournamentMode}
+            setP1Id={setP1Id}
+            setTournamentMode={setSelectedTournamentMode}
+            onlineProfile={onlineProfile}
+            onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
+            onBack={() => setScreen('menu')}
+            onStart={(characterId, tournamentMode) => {
+              captureAppAnalytics('game_start_clicked', { source: 'tournament_select', selected_mode: tournamentMode });
+              if (tournamentMode === 'free') {
+                startLocalTournament(characterId);
+                return;
+              }
+              void enterOnlineTournament(characterId).catch((error) => {
+                console.error('Failed to enter tournament', error);
+                setTournamentStatusText(error instanceof Error ? error.message : 'Tournament unavailable');
+                setOnlineTournamentStatus(null);
+                setLocalTournamentBracket(null);
+                setScreen('tournamentLobby');
+              });
+            }}
+          />
+        )}
+        {screen === 'tournamentLobby' && (
+          <TournamentLobbyScreen
+            localBracket={localTournamentBracket}
+            onlineStatus={onlineTournamentStatus}
+            statusText={tournamentStatusText}
+            roster={roster}
+            onBack={() => setScreen('tournament')}
+            onMenu={() => setScreen('menu')}
+            onRefresh={() => void refreshOnlineTournament().catch((error) => {
+              console.error('Failed to refresh tournament', error);
+              setTournamentStatusText(error instanceof Error ? error.message : 'Tournament refresh failed');
+            })}
+            onStartOnlineMatch={startOnlineTournamentMatch}
+          />
+        )}
+        {screen === 'tournamentBracket' && (
+          <TournamentBracketIntroScreen
+            bracket={mode === 'tournamentOnline' ? onlineTournamentStatus?.bracket ?? null : localTournamentBracket}
+            matchId={activeTournamentMatchId}
+            localEntryId={mode === 'tournamentOnline' ? onlineTournamentStatus?.entry?.id : 'local-player'}
+            roster={roster}
+            onBack={() => setScreen('tournamentLobby')}
+            onReady={() => {
+              setVersusReturnScreen('stage');
+              setScreen(mode === 'tournamentOnline' ? 'versus' : 'fight');
+            }}
           />
         )}
         {screen === 'leaderboard' && (
@@ -3328,7 +3545,7 @@ export default function App() {
         )}
         {screen === 'fight' && (
           <FightScreen
-            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${effectiveCpuDifficulty}-${selectedTrainingMode}`}
+            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${effectiveCpuDifficulty}-${selectedTrainingMode}-${activeTournamentMatchId}`}
             p1={p1}
             p2={p2}
             stage={selectedStage}
@@ -3348,6 +3565,7 @@ export default function App() {
             onMenu={() => setScreen('menu')}
             initialTrainingMode={selectedTrainingMode}
             onCharacterSelect={() => setScreen(mode === 'training' ? 'training' : 'select')}
+            onTournamentMatchComplete={handleTournamentMatchComplete}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
               const defeatedCharacter = roster.find((character) => character.id === defeatedCharacterId);
@@ -3834,6 +4052,7 @@ function MenuScreen({
   onArcade,
   onVersus,
   onTraining,
+  onTournament,
   onOnline,
   onSettings,
   onViewer,
@@ -3850,6 +4069,7 @@ function MenuScreen({
   onArcade: () => void;
   onVersus: () => void;
   onTraining: () => void;
+  onTournament: () => void;
   onOnline: () => void;
   onSettings: () => void;
   onViewer: () => void;
@@ -4049,6 +4269,7 @@ function MenuScreen({
     { label: 'Versus', action: onVersus },
     { label: 'Training', action: onTraining },
     { label: 'Online', action: onOnline },
+    { label: 'Tournament', action: onTournament },
     { label: 'Characters', action: onViewer },
     ...(isLocalDevHost() ? [{ label: 'Stages', action: onStages }] : []),
     { label: 'Options', action: onSettings },
@@ -4690,6 +4911,597 @@ function TrainingSelect({
   );
 }
 
+function TournamentSelect({
+  roster,
+  p1Id,
+  unlockedCharacterIds,
+  tournamentMode,
+  setP1Id,
+  setTournamentMode,
+  onlineProfile,
+  onOnlineProfileChange,
+  onBack,
+  onStart
+}: {
+  roster: CharacterDefinition[];
+  p1Id: string;
+  unlockedCharacterIds: Set<string>;
+  tournamentMode: TournamentSelectMode;
+  setP1Id: (id: string) => void;
+  setTournamentMode: (mode: TournamentSelectMode) => void;
+  onlineProfile: OnlinePlayerProfile | null;
+  onOnlineProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
+  onBack: () => void;
+  onStart: (characterId: string, mode: TournamentSelectMode) => void;
+}) {
+  const [hoveredBaseId, setHoveredBaseId] = useState('');
+  const [rosterPage, setRosterPage] = useState(0);
+  const [summaries, setSummaries] = useState<TournamentSummary[]>([]);
+  const [summaryStatus, setSummaryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const pageGamepadStateRef = useRef({ previous: false, next: false });
+  const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
+  const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
+  const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
+  const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
+  const pagedBaseRoster = baseRoster.slice(
+    visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE,
+    visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE + CHARACTER_SELECT_PAGE_SIZE
+  );
+  const freeOnlineSummary = summaries.find((summary) => summary.kind === 'freeOnline');
+  const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
+  const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
+
+  useEffect(() => {
+    let cancelled = false;
+    setSummaryStatus('loading');
+    void fetchTournamentList()
+      .then((result) => {
+        if (cancelled) return;
+        setSummaries(result.tournaments);
+        setSummaryStatus('ready');
+      })
+      .catch((error) => {
+        console.error('Failed to load tournaments', error);
+        if (!cancelled) setSummaryStatus('error');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const assignCharacter = (id: string) => {
+    const character = roster.find((item) => item.id === id);
+    if (!character || !isCharacterUnlocked(character, unlockedCharacterIds)) return;
+    setP1Id(id);
+  };
+
+  const cycleRosterPage = useCallback((direction: -1 | 1) => {
+    setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
+  }, [totalRosterPages]);
+
+  const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
+    const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+    if (family.length <= 1) return;
+    const currentIndex = Math.max(0, family.findIndex((character) => character.id === p1Id));
+    const next = family[(currentIndex + direction + family.length) % family.length];
+    if (next) assignCharacter(next.id);
+  }, [p1Id, roster, unlockedCharacterIds]);
+
+  useEffect(() => {
+    setRosterPage((page) => Math.min(page, totalRosterPages - 1));
+  }, [totalRosterPages]);
+
+  useEffect(() => {
+    const selectedBaseId = getCharacterBaseId(p1Character);
+    const selectedIndex = Math.max(0, baseRoster.findIndex((character) => character.id === selectedBaseId));
+    setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / CHARACTER_SELECT_PAGE_SIZE)));
+  }, [baseRoster, p1Character, totalRosterPages]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
+      if (event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (event.code === 'KeyL' || key === 'l') {
+        event.preventDefault();
+        cycleRosterPage(-1);
+        return;
+      }
+      if (event.code === 'Semicolon' || key === ';') {
+        event.preventDefault();
+        cycleRosterPage(1);
+        return;
+      }
+      if (key !== 'o' && key !== 'p') return;
+      const baseId = hoveredBaseId || getCharacterBaseId(p1Character);
+      if (!baseId) return;
+      event.preventDefault();
+      cycleVariantForBase(baseId, key === 'o' ? -1 : 1);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [cycleRosterPage, cycleVariantForBase, hoveredBaseId, p1Character]);
+
+  useEffect(() => {
+    let frame = 0;
+    const tick = () => {
+      const pad = getPrimaryMenuGamepad();
+      if (!pad || isTextEntryElement(document.activeElement)) {
+        pageGamepadStateRef.current = { previous: false, next: false };
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const current = {
+        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
+        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
+      };
+      const previous = pageGamepadStateRef.current;
+      if (current.previous && !previous.previous) cycleRosterPage(-1);
+      if (current.next && !previous.next) cycleRosterPage(1);
+      pageGamepadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleRosterPage]);
+
+  if (!p1Character) {
+    return (
+      <div className="select-screen">
+        <section className="versus-roster-panel">
+          <h2>Tournament</h2>
+          <p>No tournament fighters are available.</p>
+          <FooterActions onBack={onBack} onNext={onBack} nextLabel="Back" />
+        </section>
+      </div>
+    );
+  }
+
+  return (
+    <div className="select-screen versus-select-screen tournament-select-screen">
+      <button
+        type="button"
+        className="versus-hero versus-hero-left is-picking"
+        style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
+      >
+        <span className="versus-player-kicker">Tournament Entry</span>
+        <AnimatedCharacterSprite character={p1Character} />
+        <span className="versus-hero-name">{p1Character.displayName}</span>
+      </button>
+
+      <section className="versus-roster-panel tournament-roster-panel" aria-label="Tournament character select">
+        <div className="versus-select-top">
+          <div>
+            <span>Character Select</span>
+            <h2>Tournament</h2>
+          </div>
+          <div className="mode-stack">
+            <TournamentModeCarousel value={tournamentMode} setValue={setTournamentMode} />
+          </div>
+        </div>
+
+        <div className="tournament-entry-options" aria-label="Tournament options">
+          <button
+            type="button"
+            className={`tournament-entry-option ${tournamentMode === 'free' ? 'is-selected' : ''}`}
+            onClick={() => setTournamentMode('free')}
+          >
+            <strong>FREE</strong>
+            <span>Local 1P vs CPU</span>
+            <small>8-player bracket</small>
+          </button>
+          <button
+            type="button"
+            className={`tournament-entry-option ${tournamentMode === 'online' ? 'is-selected' : ''}`}
+            onClick={() => setTournamentMode('online')}
+          >
+            <strong>ONLINE</strong>
+            <span>{summaryStatus === 'loading' ? 'Loading tourneys' : freeOnlineSummary ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entered` : 'Free bracket queue'}</span>
+            <small>Free entry</small>
+          </button>
+          <button type="button" className="tournament-entry-option is-disabled" disabled>
+            <strong>{paidSummary?.entryFeeLabel ?? '$2 BTC'}</strong>
+            <span>Paid beta unavailable</span>
+            <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 BTC'}</small>
+          </button>
+        </div>
+
+        {tournamentMode === 'online' && !onlineProfile && (
+          <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} autoFocus />
+        )}
+
+        {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}
+
+        <div className="versus-roster-pager" aria-label="Character roster pages">
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => cycleRosterPage(-1)}
+            disabled={totalRosterPages <= 1}
+          >
+            <ChevronLeft size={18} />
+            Prev
+          </button>
+          <span className="versus-page-indicator">
+            Page {visibleRosterPage + 1} / {totalRosterPages}
+          </span>
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => cycleRosterPage(1)}
+            disabled={totalRosterPages <= 1}
+          >
+            Next
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
+        <div className="versus-roster-grid">
+          {pagedBaseRoster.map((character) => {
+            const baseId = character.id;
+            const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+            const selectedTargetMember = getCharacterBaseId(p1Character) === baseId ? p1Character : null;
+            const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
+            const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
+            const isP1 = getCharacterBaseId(p1Character) === baseId;
+            const isLocked = family.length === 0;
+            const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
+            return (
+              <button
+                key={character.id}
+                type="button"
+                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
+                onClick={() => assignCharacter(assignId)}
+                onMouseEnter={() => setHoveredBaseId(baseId)}
+                onFocus={() => setHoveredBaseId(baseId)}
+                aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
+                aria-disabled={isLocked}
+              >
+                <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                {isLocked && <em className="character-lock-badge">Locked</em>}
+                {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
+                <span>{displayedCharacter.displayName}</span>
+                <small>{isP1 ? 'Entry' : ''}</small>
+              </button>
+            );
+          })}
+        </div>
+
+        <FooterActions
+          onBack={onBack}
+          onNext={() => onStart(p1Character.id, tournamentMode)}
+          nextLabel={tournamentMode === 'free' ? 'Start Free' : 'Enter Online'}
+          nextDisabled={!canStart}
+        />
+      </section>
+
+      <section className="versus-hero versus-hero-right tournament-preview-hero" aria-label="Tournament preview">
+        <span className="versus-player-kicker">Bracket</span>
+        <TournamentPreviewBracket />
+        <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : 'ONLINE'}</span>
+      </section>
+      <div className="versus-floor-glow" aria-hidden="true" />
+    </div>
+  );
+}
+
+function TournamentModeCarousel({
+  value,
+  setValue
+}: {
+  value: TournamentSelectMode;
+  setValue: (mode: TournamentSelectMode) => void;
+}) {
+  const options: Array<{ mode: TournamentSelectMode; label: string; icon: ReactNode }> = [
+    { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
+    { mode: 'online', label: 'Online', icon: <Wifi size={18} /> }
+  ];
+  const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));
+  const activeOption = options[activeIndex] ?? options[0];
+  const cycleMode = (direction: -1 | 1) => {
+    const next = options[(activeIndex + direction + options.length) % options.length];
+    if (next) setValue(next.mode);
+  };
+
+  return (
+    <div
+      className="mode-carousel"
+      role="group"
+      aria-label="Tournament mode"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          cycleMode(-1);
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          cycleMode(1);
+        }
+      }}
+    >
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1)} aria-label="Previous tournament mode">
+        <ChevronLeft size={26} />
+      </button>
+      <div className="mode-carousel-current" aria-live="polite">
+        {activeOption.icon}
+        <strong>{activeOption.label}</strong>
+      </div>
+      <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(1)} aria-label="Next tournament mode">
+        <ChevronRight size={26} />
+      </button>
+    </div>
+  );
+}
+
+function TournamentLobbyScreen({
+  localBracket,
+  onlineStatus,
+  statusText,
+  roster,
+  onBack,
+  onMenu,
+  onRefresh,
+  onStartOnlineMatch
+}: {
+  localBracket: TournamentBracket | null;
+  onlineStatus: TournamentStatusResult | null;
+  statusText: string;
+  roster: CharacterDefinition[];
+  onBack: () => void;
+  onMenu: () => void;
+  onRefresh: () => void;
+  onStartOnlineMatch: () => void;
+}) {
+  const bracket = onlineStatus?.bracket ?? localBracket;
+  const assignedMatch = onlineStatus?.assignedMatch;
+  const title = bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
+  const winner = bracket?.matches.find((match) => match.round === 3 && match.winnerEntryId)?.winnerEntryId;
+  const winnerEntry = getTournamentEntry(bracket ?? null, winner);
+  const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry);
+
+  return (
+    <div className="leaderboard-screen tournament-lobby-screen">
+      <header className="leaderboard-header tournament-lobby-header">
+        <div>
+          <span>Tournament</span>
+          <h2>{title}</h2>
+          <p>{statusText || (bracket ? `${bracket.entries.length} / ${bracket.minEntries} entered` : 'Choose a tournament to enter')}</p>
+        </div>
+        <Trophy size={42} />
+      </header>
+
+      <section className="tournament-lobby-board" aria-label="Tournament bracket">
+        {bracket ? (
+          <>
+            <div className="tournament-lobby-summary">
+              <TournamentStat label="Status" value={bracket.status} />
+              <TournamentStat label="Players" value={`${bracket.entries.length}/${bracket.capacity}`} />
+              <TournamentStat label="Reward" value={bracket.reward?.label ?? 'Profile trophy'} />
+            </div>
+            <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
+            {winnerEntry && (
+              <div className="tournament-status-strip">
+                Winner: {winnerEntry.displayName}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="leaderboard-empty">No tournament entry yet.</div>
+        )}
+      </section>
+
+      <div className="leaderboard-actions">
+        <button className="secondary-button" type="button" onClick={onBack}>
+          <ChevronLeft size={18} />
+          Back
+        </button>
+        {onlineStatus && (
+          <button className="secondary-button" type="button" onClick={onRefresh}>
+            <RotateCcw size={18} />
+            Refresh
+          </button>
+        )}
+        {onlineStatus && (
+          <button className="primary-button" type="button" onClick={onStartOnlineMatch} disabled={!canStartOnlineMatch}>
+            <Swords size={18} />
+            Start Match
+          </button>
+        )}
+        <button className="secondary-button" type="button" onClick={onMenu}>
+          <Home size={18} />
+          Menu
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function TournamentBracketIntroScreen({
+  bracket,
+  matchId,
+  localEntryId,
+  roster,
+  onBack,
+  onReady
+}: {
+  bracket: TournamentBracket | null;
+  matchId: string;
+  localEntryId?: string;
+  roster: CharacterDefinition[];
+  onBack: () => void;
+  onReady: () => void;
+}) {
+  const screenRef = useRef<HTMLDivElement | null>(null);
+  const match = bracket?.matches.find((candidate) => candidate.id === matchId);
+  const entry = getTournamentEntry(bracket, localEntryId);
+  const opponent = getTournamentOpponentEntry(bracket, match, localEntryId);
+  const entryCharacter = tournamentEntryCharacter(roster, entry);
+  const opponentCharacter = tournamentEntryCharacter(roster, opponent);
+
+  useEffect(() => {
+    screenRef.current?.focus();
+    const timeout = window.setTimeout(onReady, VERSUS_SPLASH_DURATION_MS);
+    return () => window.clearTimeout(timeout);
+  }, [onReady]);
+
+  return (
+    <div
+      ref={screenRef}
+      className="fight-versus-screen tournament-bracket-intro"
+      tabIndex={-1}
+      onClick={onReady}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          event.stopPropagation();
+          onBack();
+          return;
+        }
+        if (event.key !== 'Tab') {
+          event.preventDefault();
+          onReady();
+        }
+      }}
+    >
+      <div className="fight-versus-stage">
+        <span>{match ? getTournamentRoundLabel(match.round) : 'Tournament'}</span>
+        <strong>Winner Advances</strong>
+        <small>{bracket?.kind === 'freeOnline' ? 'Online bracket match' : 'Local bracket match'}</small>
+      </div>
+
+      <section className="tournament-intro-grid" aria-label="Tournament match bracket">
+        <article className="tournament-intro-card is-player">
+          {entryCharacter && <img src={characterPortraitPath(entryCharacter)} alt="" />}
+          <span>Seed {entry?.seed ?? 1}</span>
+          <strong>{entry?.displayName ?? 'YOU'}</strong>
+          <small>{entryCharacter?.displayName ?? 'Selected Fighter'}</small>
+        </article>
+        <div className="tournament-intro-lines" aria-hidden="true">
+          <span />
+          <strong>VS</strong>
+          <span />
+        </div>
+        <article className="tournament-intro-card is-opponent">
+          {opponentCharacter && <img src={characterPortraitPath(opponentCharacter)} alt="" />}
+          <span>Seed {opponent?.seed ?? 2}</span>
+          <strong>{opponent?.displayName ?? 'OPPONENT'}</strong>
+          <small>{opponentCharacter?.displayName ?? 'Bracket Fighter'}</small>
+        </article>
+      </section>
+
+      <div className="tournament-intro-bracket">
+        {bracket && <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={matchId} compact />}
+      </div>
+      <div className="fight-versus-hint">Press any key to fight</div>
+    </div>
+  );
+}
+
+function TournamentPreviewBracket() {
+  return (
+    <div className="tournament-preview-bracket" aria-hidden="true">
+      {Array.from({ length: 7 }, (_, index) => (
+        <span key={index} style={{ '--delay': `${index * 70}ms` } as CSSProperties} />
+      ))}
+    </div>
+  );
+}
+
+function TournamentBracketBoard({
+  bracket,
+  roster,
+  focusMatchId,
+  compact = false
+}: {
+  bracket: TournamentBracket;
+  roster: CharacterDefinition[];
+  focusMatchId?: string;
+  compact?: boolean;
+}) {
+  const rounds = [1, 2, 3];
+  return (
+    <div className={`tournament-bracket-board ${compact ? 'is-compact' : ''}`}>
+      {rounds.map((round) => (
+        <section key={round} className="tournament-bracket-round">
+          <h3>{getTournamentRoundLabel(round)}</h3>
+          {bracket.matches.filter((match) => match.round === round).map((match) => (
+            <TournamentMatchCard
+              key={match.id}
+              bracket={bracket}
+              match={match}
+              roster={roster}
+              focused={match.id === focusMatchId}
+            />
+          ))}
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function TournamentMatchCard({
+  bracket,
+  match,
+  roster,
+  focused
+}: {
+  bracket: TournamentBracket;
+  match: TournamentMatch;
+  roster: CharacterDefinition[];
+  focused?: boolean;
+}) {
+  const entryA = getTournamentEntry(bracket, match.entryAId);
+  const entryB = getTournamentEntry(bracket, match.entryBId);
+  return (
+    <article className={`tournament-match-card ${focused ? 'is-focused' : ''} ${match.status === 'completed' ? 'is-complete' : ''}`}>
+      <TournamentEntrantRow entry={entryA} roster={roster} winner={match.winnerEntryId === entryA?.id} />
+      <TournamentEntrantRow entry={entryB} roster={roster} winner={match.winnerEntryId === entryB?.id} />
+      <small>{match.status === 'ready' ? 'Ready' : match.status === 'completed' ? 'Complete' : 'Pending'}</small>
+    </article>
+  );
+}
+
+function TournamentEntrantRow({
+  entry,
+  roster,
+  winner
+}: {
+  entry?: TournamentEntry;
+  roster: CharacterDefinition[];
+  winner?: boolean;
+}) {
+  const character = tournamentEntryCharacter(roster, entry);
+  return (
+    <div className={`tournament-entrant-row ${winner ? 'is-winner' : ''}`}>
+      {character ? <img src={characterPortraitPath(character)} alt="" /> : <span className="tournament-empty-seed" />}
+      <strong>{entry?.displayName ?? 'TBD'}</strong>
+    </div>
+  );
+}
+
+function TournamentStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="tournament-stat">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function tournamentEntryCharacter(roster: CharacterDefinition[], entry?: TournamentEntry) {
+  if (!entry) return undefined;
+  return roster.find((character) => character.id === entry.characterId);
+}
+
+function getTournamentRoundLabel(round: number) {
+  if (round === 1) return 'Quarterfinal';
+  if (round === 2) return 'Semifinal';
+  if (round === 3) return 'Final';
+  return `Round ${round}`;
+}
+
 function TrainingModeCarousel({
   value,
   basicsCount,
@@ -5318,6 +6130,8 @@ function CpuDifficultyControl({
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
+  if (mode === 'tournamentOnline') return slot === 1 ? 'You' : 'Tournament Opponent';
+  if (mode === 'tournamentLocal') return slot === 1 ? 'You' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'You' : 'Private Guest';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && (mode === 'ai' || mode === 'versusCpu')) return 'CPU';
@@ -5327,6 +6141,8 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
+  if (mode === 'tournamentOnline') return slot === 1 ? 'YOU' : 'BRACKET';
+  if (mode === 'tournamentLocal') return slot === 1 ? 'YOU' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'YOU' : 'GUEST';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && (mode === 'ai' || mode === 'versusCpu')) return 'CPU';
@@ -5334,7 +6150,7 @@ function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
 }
 
 function usesCpuDifficulty(mode: MatchMode) {
-  return mode === 'ai' || mode === 'versusCpu' || mode === 'cpu';
+  return mode === 'ai' || mode === 'versusCpu' || mode === 'cpu' || mode === 'tournamentLocal';
 }
 
 const VERSUS_SPLASH_DURATION_MS = 2600;
@@ -5373,6 +6189,8 @@ function VersusSplashScreen({
   const p1Label = getSlotLabel(mode, 1);
   const p2Label = mode === 'online'
     ? 'Matchmaking Opponent'
+    : mode === 'tournamentOnline'
+      ? 'Tournament Opponent'
     : mode === 'private' && privateRoomIntent?.kind === 'host'
       ? 'Private Guest'
       : mode === 'private' && privateRoomIntent?.kind === 'guest'
@@ -5381,16 +6199,26 @@ function VersusSplashScreen({
   const p1Short = getSlotShortLabel(mode, 1);
   const p2Short = mode === 'online'
     ? 'ONLINE'
+    : mode === 'tournamentOnline'
+      ? 'BRACKET'
     : mode === 'private' && privateRoomIntent?.kind === 'guest'
       ? 'HOST'
       : getSlotShortLabel(mode, 2);
   const battleKicker = mode === 'online'
     ? 'Online Search'
+    : mode === 'tournamentOnline'
+      ? 'Tournament Match'
+      : mode === 'tournamentLocal'
+        ? 'Tournament Match'
     : mode === 'private'
       ? 'Private Match'
       : 'Next Battle';
   const battleHint = mode === 'online'
     ? 'Looking for match after splash'
+    : mode === 'tournamentOnline'
+      ? 'Connecting tournament bracket'
+      : mode === 'tournamentLocal'
+        ? 'Winner advances'
     : mode === 'private' && privateRoomIntent?.kind === 'host'
       ? `Room password ${privateRoomIntent.password}`
       : mode === 'private' && privateRoomIntent?.kind === 'guest'
@@ -8445,6 +9273,8 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'training') return 'Training';
   if (mode === 'online') return 'Online';
   if (mode === 'private') return 'Private';
+  if (mode === 'tournamentLocal') return 'Tournament';
+  if (mode === 'tournamentOnline') return 'Online Tournament';
   return 'CPU vs CPU';
 }
 
@@ -14854,6 +15684,7 @@ function FightScreen({
   onPausedChange,
   onMenu,
   onCharacterSelect,
+  onTournamentMatchComplete,
   onArcadeAdvance
 }: {
   p1: CharacterDefinition;
@@ -14875,6 +15706,7 @@ function FightScreen({
   onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onCharacterSelect: () => void;
+  onTournamentMatchComplete?: (result: { winnerSlot: 1 | 2 }) => void;
   onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string }) => void;
 }) {
   const [paused, setPaused] = useState(false);
@@ -14895,7 +15727,7 @@ function FightScreen({
   const activeTrainingTrialRef = useRef<TrainingTrialDefinition | null>(activeTrainingTrial);
   const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
   const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
-  const isOnline = mode === 'online' || mode === 'private';
+  const isOnline = mode === 'online' || mode === 'private' || mode === 'tournamentOnline';
   const isPrivate = mode === 'private';
   const matchOptions = useMemo(
     () => ({
@@ -15914,6 +16746,8 @@ function FightScreen({
   const arcadeMatchPhase = match.phase;
   const arcadeWinnerSlot = match.winnerSlot;
   const arcadeDefeatedCharacterId = match.fighters[1].character.id;
+  const tournamentMatchPhase = match.phase;
+  const tournamentWinnerSlot = match.winnerSlot;
 
   useEffect(() => {
     if (mode !== 'ai' || arcadeMatchPhase !== 'matchOver' || !arcadeWinnerSlot || arcadeAdvanceRef.current) return undefined;
@@ -15923,6 +16757,15 @@ function FightScreen({
     }, 1650);
     return () => window.clearTimeout(timeout);
   }, [arcadeDefeatedCharacterId, arcadeMatchPhase, arcadeWinnerSlot, mode, onArcadeAdvance]);
+
+  useEffect(() => {
+    if ((mode !== 'tournamentLocal' && mode !== 'tournamentOnline') || tournamentMatchPhase !== 'matchOver' || !tournamentWinnerSlot || arcadeAdvanceRef.current) return undefined;
+    arcadeAdvanceRef.current = true;
+    const timeout = window.setTimeout(() => {
+      onTournamentMatchComplete?.({ winnerSlot: tournamentWinnerSlot });
+    }, 1650);
+    return () => window.clearTimeout(timeout);
+  }, [mode, onTournamentMatchComplete, tournamentMatchPhase, tournamentWinnerSlot]);
 
   const reset = () => {
     captureFightAnalytics('rematch_clicked', {

@@ -16,7 +16,7 @@
       "frameCount": 226
     }
   ],
-  "spriteFrameCount": 237,
+  "spriteFrameCount": 227,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -150,18 +150,7 @@
     ],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
-    "cmd:FC+1": [
-      "/characters/toshiro-hitsugaya/frames/frame-227.png",
-      "/characters/toshiro-hitsugaya/frames/frame-228.png",
-      "/characters/toshiro-hitsugaya/frames/frame-229.png",
-      "/characters/toshiro-hitsugaya/frames/frame-230.png",
-      "/characters/toshiro-hitsugaya/frames/frame-231.png",
-      "/characters/toshiro-hitsugaya/frames/frame-232.png",
-      "/characters/toshiro-hitsugaya/frames/frame-233.png",
-      "/characters/toshiro-hitsugaya/frames/frame-234.png",
-      "/characters/toshiro-hitsugaya/frames/frame-235.png",
-      "/characters/toshiro-hitsugaya/frames/frame-236.png"
-    ],
+    "cmd:FC+1": [],
     "cmd:FC+2": [
       "/characters/toshiro-hitsugaya/frames/frame-142.png",
       "/characters/toshiro-hitsugaya/frames/frame-143.png",
@@ -317,7 +306,6 @@
     "cmd:d/f+2": 9,
     "cmd:qcf+4": 9,
     "cmd:WS+4": 9,
-    "cmd:FC+1": 8,
     "cmd:FC+2": 8,
     "cmd:1+2": 8,
     "cmd:1+3": 8,
@@ -1974,7 +1962,7 @@
     "crouch": {
       "22": {
         "width": 1.15,
-        "height": 0.87,
+        "height": 0.89,
         "offsetX": 0
       }
     },
@@ -2438,108 +2426,7 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {
-      "134": {
-        "width": 1.04,
-        "height": 1.07,
-        "offsetX": 0
-      },
-      "135": {
-        "width": 1.08,
-        "height": 1,
-        "offsetX": 0
-      },
-      "136": {
-        "width": 1.15,
-        "height": 1,
-        "offsetX": 0
-      },
-      "137": {
-        "width": 1.17,
-        "height": 1.13,
-        "offsetX": 0
-      },
-      "138": {
-        "width": 1.13,
-        "height": 1.2,
-        "offsetX": 0
-      },
-      "139": {
-        "width": 0.98,
-        "height": 0.96,
-        "offsetX": 0
-      },
-      "140": {
-        "width": 1.21,
-        "height": 1.33,
-        "offsetX": 0
-      },
-      "141": {
-        "width": 0.89,
-        "height": 1.2,
-        "offsetX": 0
-      },
-      "142": {
-        "width": 0.77,
-        "height": 1.02,
-        "offsetX": 0
-      },
-      "143": {
-        "width": 0.91,
-        "height": 0.98,
-        "offsetX": 0
-      },
-      "227": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "228": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "229": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "230": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "231": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "232": {
-        "width": 1.01,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "233": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "234": {
-        "width": 0.94,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "235": {
-        "width": 0.94,
-        "height": 0.9,
-        "offsetX": 0
-      },
-      "236": {
-        "width": 0.94,
-        "height": 0.9,
-        "offsetX": 0
-      }
-    },
+    "cmd:FC+1": {},
     "cmd:FC+2": {
       "142": {
         "width": 0.77,
@@ -2831,8 +2718,8 @@
     "cmd:O+2": {},
     "crouchBlock": {
       "226": {
-        "width": 0.94,
-        "height": 0.92,
+        "width": 0.87,
+        "height": 0.9,
         "offsetX": 0
       }
     }

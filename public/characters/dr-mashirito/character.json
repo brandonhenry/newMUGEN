@@ -16,7 +16,7 @@
       "frameCount": 280
     }
   ],
-  "spriteFrameCount": 287,
+  "spriteFrameCount": 281,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -152,14 +152,7 @@
       "/characters/dr-mashirito/frames/frame-178.png"
     ],
     "cmd:WS+4": [],
-    "cmd:FC+1": [
-      "/characters/dr-mashirito/frames/frame-281.png",
-      "/characters/dr-mashirito/frames/frame-282.png",
-      "/characters/dr-mashirito/frames/frame-283.png",
-      "/characters/dr-mashirito/frames/frame-284.png",
-      "/characters/dr-mashirito/frames/frame-285.png",
-      "/characters/dr-mashirito/frames/frame-286.png"
-    ],
+    "cmd:FC+1": [],
     "cmd:FC+2": [
       "/characters/dr-mashirito/frames/frame-181.png",
       "/characters/dr-mashirito/frames/frame-182.png",
@@ -283,7 +276,6 @@
     "cmd:d/f+2": 9,
     "cmd:qcf+4": 9,
     "cmd:WS+4": 9,
-    "cmd:FC+1": 8,
     "cmd:FC+2": 8,
     "cmd:1+2": 8,
     "cmd:1+3": 8,
@@ -2129,7 +2121,7 @@
     "crouch": {
       "19": {
         "width": 1.31,
-        "height": 0.71,
+        "height": 0.76,
         "offsetX": 0
       }
     },
@@ -2293,68 +2285,7 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {
-      "70": {
-        "width": 1,
-        "height": 0.98,
-        "offsetX": 0
-      },
-      "71": {
-        "width": 1.24,
-        "height": 0.98,
-        "offsetX": 0
-      },
-      "72": {
-        "width": 1.01,
-        "height": 0.98,
-        "offsetX": 0
-      },
-      "73": {
-        "width": 0.97,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "74": {
-        "width": 0.97,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "75": {
-        "width": 0.95,
-        "height": 0.92,
-        "offsetX": 0
-      },
-      "281": {
-        "width": 0.64,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "282": {
-        "width": 0.64,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "283": {
-        "width": 0.64,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "284": {
-        "width": 0.64,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "285": {
-        "width": 0.64,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "286": {
-        "width": 0.64,
-        "height": 0.7,
-        "offsetX": 0
-      }
-    },
+    "cmd:FC+1": {},
     "cmd:d+1": {
       "70": {
         "width": 1.0,
@@ -2829,7 +2760,7 @@
     "crouchBlock": {
       "280": {
         "width": 0.72,
-        "height": 0.7,
+        "height": 0.74,
         "offsetX": 0
       }
     }

@@ -64,6 +64,33 @@ describe('training trial catalog', () => {
     }
   });
 
+  it('teaches blocking fundamentals in the basic defense list', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const byId = (suffix: string) => trials.find((trial) => trial.id.endsWith(suffix));
+    const standing = byId('defense:block');
+    const low = byId('defense:crouch-block');
+    const duck = byId('defense:duck-high');
+    const sidestep = byId('defense:sidestep-linear');
+    const switchTrial = byId('defense:guard-switch');
+
+    expect(standing?.lesson.toLowerCase()).toContain('unknown');
+    expect(low?.lesson.toLowerCase()).toContain('lows');
+    expect(low?.steps[0].requireState).toBe('crouchBlock');
+    expect(duck?.lesson.toLowerCase()).toContain('duck');
+    expect(duck?.steps[0].actions).toEqual(['down']);
+    expect(sidestep?.lesson.toLowerCase()).toContain('non-tracking');
+    expect(sidestep?.steps[0].requireState).toBe('sidestep');
+    expect(sidestep?.steps[0].actions).toEqual(['sidestepUp']);
+    expect(switchTrial?.steps.map((step) => step.requireState)).toEqual(['block', 'crouchBlock']);
+    expect(switchTrial?.lesson.toLowerCase()).toContain('stand guard');
+    expect(switchTrial?.lesson.toLowerCase()).toContain('crouch block');
+  });
+
   it('skips character-specific fundamentals unless real route properties exist', () => {
     const roster = readRosterCharacters();
     for (const character of roster) {

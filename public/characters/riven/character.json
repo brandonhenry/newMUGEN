@@ -233,7 +233,7 @@
   },
   "renderMode": "spriteVoxel",
   "spriteSheetPath": "/characters/riven/animation-sheet.png",
-  "spriteFrameCount": 213,
+  "spriteFrameCount": 210,
   "voxelProfile": "hd-image-source",
   "voxelFidelity": {
     "resolutionScale": 2,
@@ -452,11 +452,7 @@
       "/characters/riven/frames/frame-013.png"
     ],
     "backflip": [],
-    "cmd:FC+1": [
-      "/characters/riven/frames/frame-210.png",
-      "/characters/riven/frames/frame-211.png",
-      "/characters/riven/frames/frame-212.png"
-    ],
+    "cmd:FC+1": [],
     "cmd:FC+2": [
       "/characters/riven/frames/frame-120.png",
       "/characters/riven/frames/frame-128.png",
@@ -615,7 +611,6 @@
     "kickleft": 10,
     "kickright": 11,
     "cmd:1+2": 13,
-    "cmd:FC+1": 5,
     "cmd:1+3": 10,
     "cmd:1+4": 11,
     "cmd:2+3": 10,
@@ -653,12 +648,7 @@
       "label": "f+2 Frame Link",
       "hitLevel": "mid",
       "knockdown": false,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "cmd:d/f+1": {
       "startupFrames": 13,
@@ -672,12 +662,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 31,
       "label": "Fire Release: Phoenix Sage Fire Technique",
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:qcf+3": {
       "startupFrames": 22,
@@ -698,12 +683,7 @@
       "hitLevel": "mid",
       "knockdown": false,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "jumpBeforeMove": true
     },
     "cmd:SS+4": {
       "startupFrames": 16,
@@ -721,12 +701,7 @@
       "label": "SS+4 Frame Link",
       "hitLevel": "mid",
       "knockdown": false,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "cancelable": false
     },
     "neutral:jab-jab": {
       "label": "Lion Combo: Second Fang"
@@ -831,12 +806,7 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "1+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 14
+      "cancelable": false
     },
     "kickleft": {
       "startupFrames": 5,
@@ -852,12 +822,7 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "hitLevel": "high",
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "hitLevel": "high"
     },
     "jableft": {
       "activeFrames": 3,
@@ -867,12 +832,7 @@
       "onCounterHitFrames": 17,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 16,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "forwardForceEndFrame": 16
     },
     "jabright": {
       "startupFrames": 11,
@@ -885,12 +845,7 @@
       "forwardForce": 2,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 23,
@@ -904,12 +859,7 @@
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 29,
       "label": "1+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -924,12 +874,7 @@
       "forwardForceEndFrame": 34,
       "label": "2+3 Frame Link",
       "hitLevel": "low",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:2+4": {
       "startupFrames": 14,
@@ -944,12 +889,7 @@
       "label": "2+4 Frame Link",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 11
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 20,
@@ -963,12 +903,7 @@
       "forwardForceEndFrame": 31,
       "label": "3+4 Frame Link",
       "endsInCrouch": true,
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:FC+2": {
       "onBlockFrames": -5,
@@ -983,12 +918,7 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "FC+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 13
+      "cancelable": false
     },
     "cmd:FC+4": {
       "onBlockFrames": -9,
@@ -998,12 +928,7 @@
       "forwardForce": 2.36,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 38,
-      "hitLevel": "mid",
-      "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "startupFrames": 24,
@@ -1032,12 +957,7 @@
           "pan": 0,
           "retrigger": false
         }
-      ],
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 11,
-      "juggleRepeatPenaltyFrames": 16
+      ]
     },
     "kickright": {
       "startupFrames": 9,
@@ -1049,12 +969,7 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 11,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "jumpBeforeMove": true
     },
     "cmd:1+4": {
       "startupFrames": 18,
@@ -1068,12 +983,7 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "label": "1+4 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:f+1": {
       "onBlockFrames": 1,
@@ -1084,12 +994,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
       "label": "f+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1100,12 +1005,7 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "label": "f+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1116,12 +1016,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
       "label": "d+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1132,12 +1027,7 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "label": "d+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "onBlockFrames": -5,
@@ -1148,12 +1038,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "d/f+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1164,12 +1049,7 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "label": "d/f+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1180,12 +1060,7 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
       "label": "qcf+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "onBlockFrames": -9,
@@ -1200,12 +1075,7 @@
       "label": "qcf+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 22,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "jumpBeforeMove": true
     },
     "cmd:FC+1": {
       "onBlockFrames": 1,
@@ -1216,12 +1086,7 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 25,
       "label": "FC+1 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1232,12 +1097,7 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "WS+2 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false
     },
     "cmd:WS+4": {
       "onBlockFrames": -9,
@@ -1252,12 +1112,7 @@
       "launchHeight": 2.1,
       "label": "WS+4 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "jumpBeforeMove": true
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1268,12 +1123,7 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "label": "SS+3 Frame Link",
-      "cancelable": false,
-      "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "cancelable": false
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1288,12 +1138,7 @@
       "label": "O+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 22,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "jumpBeforeMove": true
     }
   },
   "spriteFrameEdits": {
@@ -2183,17 +2028,17 @@
   "animationFrameScales": {
     "getupStand": {
       "32": {
-        "width": 2.66,
+        "width": 2.5,
         "height": 0.41,
         "offsetX": 0
       },
       "33": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.39,
         "offsetX": 0
       },
       "34": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.43,
         "offsetX": 0
       },
@@ -2393,43 +2238,6 @@
         "offsetX": 0
       }
     },
-    "cmd:FC+1": {
-      "22": {
-        "width": 0.79,
-        "height": 0.79,
-        "offsetX": 0
-      },
-      "79": {
-        "width": 0.93,
-        "height": 0.93,
-        "offsetX": 0
-      },
-      "80": {
-        "width": 0.91,
-        "height": 0.91,
-        "offsetX": 0
-      },
-      "120": {
-        "width": 1.79,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "210": {
-        "width": 0.7,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "211": {
-        "width": 0.7,
-        "height": 0.7,
-        "offsetX": 0
-      },
-      "212": {
-        "width": 0.7,
-        "height": 0.68,
-        "offsetX": 0
-      }
-    },
     "cmd:FC+3": {
       "120": {
         "width": 1.79,
@@ -2473,19 +2281,9 @@
         "height": 0.86,
         "offsetX": 0
       },
-      "151": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "152": {
         "width": 0.93,
         "height": 0.93,
-        "offsetX": 0
-      },
-      "153": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "154": {
@@ -2562,11 +2360,6 @@
       "123": {
         "width": 0.88,
         "height": 0.88,
-        "offsetX": 0
-      },
-      "124": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -2653,7 +2446,7 @@
     "crouch": {
       "120": {
         "width": 1.79,
-        "height": 0.7,
+        "height": 1.34,
         "offsetX": 0
       }
     },
@@ -2670,7 +2463,7 @@
       },
       "209": {
         "width": 0.7,
-        "height": 0.7,
+        "height": 1.34,
         "offsetX": 0
       }
     },
@@ -2702,49 +2495,49 @@
     },
     "hitHeavy": {
       "32": {
-        "width": 2.66,
+        "width": 2.5,
         "height": 0.41,
         "offsetX": 0
       },
       "33": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.39,
         "offsetX": 0
       },
       "34": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.43,
         "offsetX": 0
       },
       "35": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.36,
         "offsetX": 0
       }
     },
     "knockdown": {
       "31": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.27,
         "offsetX": 0
       },
       "32": {
-        "width": 2.66,
+        "width": 2.5,
         "height": 0.41,
         "offsetX": 0
       },
       "33": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.39,
         "offsetX": 0
       },
       "34": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.43,
         "offsetX": 0
       },
       "35": {
-        "width": 2.61,
+        "width": 2.5,
         "height": 0.36,
         "offsetX": 0
       }
@@ -2788,7 +2581,7 @@
     },
     "lose": {
       "31": {
-        "width": 2.57,
+        "width": 2.5,
         "height": 0.27,
         "offsetX": 0
       }
@@ -2858,19 +2651,9 @@
         "height": 0.86,
         "offsetX": 0
       },
-      "151": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "152": {
         "width": 0.93,
         "height": 0.93,
-        "offsetX": 0
-      },
-      "153": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "154": {
@@ -2956,11 +2739,6 @@
         "height": 1.05,
         "offsetX": 0
       },
-      "124": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "126": {
         "width": 1.13,
         "height": 0.97,
@@ -2976,11 +2754,6 @@
       "129": {
         "width": 0.93,
         "height": 0.93,
-        "offsetX": 0
-      },
-      "130": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3081,11 +2854,6 @@
         "height": 0.93,
         "offsetX": 0
       },
-      "130": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "131": {
         "width": 0.93,
         "height": 0.93,
@@ -3098,24 +2866,9 @@
       }
     },
     "idle": {
-      "0": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "1": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.98,
-        "offsetX": 0
-      },
-      "2": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
-      "3": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       }
     },
@@ -3145,11 +2898,6 @@
       "119": {
         "width": 1.06,
         "height": 1.05,
-        "offsetX": 0
-      },
-      "124": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -3184,11 +2932,6 @@
       "119": {
         "width": 1.06,
         "height": 1.05,
-        "offsetX": 0
-      },
-      "124": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "126": {
@@ -3240,11 +2983,6 @@
         "height": 1.05,
         "offsetX": 0
       },
-      "124": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "126": {
         "width": 1.13,
         "height": 0.97,
@@ -3277,11 +3015,6 @@
       "129": {
         "width": 0.93,
         "height": 0.93,
-        "offsetX": 0
-      },
-      "130": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3363,11 +3096,6 @@
         "height": 0.93,
         "offsetX": 0
       },
-      "130": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "131": {
         "width": 0.93,
         "height": 0.93,
@@ -3415,11 +3143,6 @@
         "height": 1.05,
         "offsetX": 0
       },
-      "124": {
-        "width": 1.0,
-        "height": 1.0,
-        "offsetX": 0
-      },
       "126": {
         "width": 1.13,
         "height": 0.97,
@@ -3435,11 +3158,6 @@
       "129": {
         "width": 0.93,
         "height": 0.93,
-        "offsetX": 0
-      },
-      "130": {
-        "width": 1.0,
-        "height": 1.0,
         "offsetX": 0
       },
       "131": {
@@ -3483,7 +3201,7 @@
   "unplayable": false,
   "hasTransform": false,
   "modelScale": {
-    "width": 1.13,
-    "height": 1.13
+    "width": 0.95,
+    "height": 0.61
   }
 }

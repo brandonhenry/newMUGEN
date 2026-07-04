@@ -1,6 +1,6 @@
 {
   "source": "Frieza.png",
-  "count": 186,
+  "count": 179,
   "sheets": [
     {
       "id": "main",
@@ -2902,197 +2902,24 @@
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
       "replacementWidth": 42,
-      "replacementHeight": 35,
+      "replacementHeight": 36,
       "box": [
         0,
         0,
         42,
-        35
+        36
       ],
       "width": 42,
-      "height": 35,
+      "height": 36,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-013.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/frieza/frames/frame-021.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-013.png"
-      }
-    },
-    {
-      "index": 179,
-      "path": "/characters/frieza/frames/frame-179.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-078.png"
-      }
-    },
-    {
-      "index": 180,
-      "path": "/characters/frieza/frames/frame-180.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-079.png"
-      }
-    },
-    {
-      "index": 181,
-      "path": "/characters/frieza/frames/frame-181.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 48,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        48,
-        35
-      ],
-      "width": 48,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-080.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-080.png"
-      }
-    },
-    {
-      "index": 182,
-      "path": "/characters/frieza/frames/frame-182.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        44,
-        35
-      ],
-      "width": 44,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-081.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-081.png"
-      }
-    },
-    {
-      "index": 183,
-      "path": "/characters/frieza/frames/frame-183.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-082.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-082.png"
-      }
-    },
-    {
-      "index": 184,
-      "path": "/characters/frieza/frames/frame-184.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-083.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-083.png"
-      }
-    },
-    {
-      "index": 185,
-      "path": "/characters/frieza/frames/frame-185.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 42,
-      "replacementHeight": 35,
-      "box": [
-        0,
-        0,
-        42,
-        35
-      ],
-      "width": 42,
-      "height": 35,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/frieza/frames/frame-021.png|upper=/characters/frieza/frames/frame-084.png",
-      "generatedSources": {
-        "crouch": "/characters/frieza/frames/frame-021.png",
-        "upper": "/characters/frieza/frames/frame-084.png"
+        "crouch": "/characters/frieza/frames/frame-021.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

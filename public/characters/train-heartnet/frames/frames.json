@@ -1,6 +1,6 @@
 {
   "source": "Train Heartnet.png",
-  "count": 227,
+  "count": 221,
   "sheets": [
     {
       "id": "main",
@@ -3537,173 +3537,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 34,
-      "replacementHeight": 37,
+      "replacementWidth": 36,
+      "replacementHeight": 39,
       "box": [
         0,
         0,
-        34,
-        37
+        36,
+        39
       ],
-      "width": 34,
-      "height": 37,
+      "width": 36,
+      "height": 39,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/train-heartnet/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 221,
-      "path": "/characters/train-heartnet/frames/frame-221.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        34,
-        37
-      ],
-      "width": 34,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-099.png",
-      "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-099.png"
-      }
-    },
-    {
-      "index": 222,
-      "path": "/characters/train-heartnet/frames/frame-222.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 36,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        36,
-        37
-      ],
-      "width": 36,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-100.png",
-      "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-100.png"
-      }
-    },
-    {
-      "index": 223,
-      "path": "/characters/train-heartnet/frames/frame-223.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        34,
-        37
-      ],
-      "width": 34,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-101.png",
-      "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-101.png"
-      }
-    },
-    {
-      "index": 224,
-      "path": "/characters/train-heartnet/frames/frame-224.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        34,
-        37
-      ],
-      "width": 34,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-102.png",
-      "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-102.png"
-      }
-    },
-    {
-      "index": 225,
-      "path": "/characters/train-heartnet/frames/frame-225.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 34,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        34,
-        37
-      ],
-      "width": 34,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-103.png",
-      "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-103.png"
-      }
-    },
-    {
-      "index": 226,
-      "path": "/characters/train-heartnet/frames/frame-226.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 36,
-      "replacementHeight": 37,
-      "box": [
-        0,
-        0,
-        36,
-        37
-      ],
-      "width": 36,
-      "height": 37,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/train-heartnet/frames/frame-022.png|upper=/characters/train-heartnet/frames/frame-104.png",
-      "generatedSources": {
-        "crouch": "/characters/train-heartnet/frames/frame-022.png",
-        "upper": "/characters/train-heartnet/frames/frame-104.png"
+        "crouch": "/characters/train-heartnet/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

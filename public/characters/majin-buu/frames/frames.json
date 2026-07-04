@@ -1,6 +1,6 @@
 {
   "source": "Majin Buu.png",
-  "count": 229,
+  "count": 223,
   "sheets": [
     {
       "id": "main",
@@ -3570,172 +3570,24 @@
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
       "replacementWidth": 40,
-      "replacementHeight": 33,
+      "replacementHeight": 34,
       "box": [
         0,
         0,
         40,
-        33
+        34
       ],
       "width": 40,
-      "height": 33,
+      "height": 34,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/majin-buu/frames/frame-018.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 223,
-      "path": "/characters/majin-buu/frames/frame-223.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        40,
-        33
-      ],
-      "width": 40,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-076.png",
-      "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-076.png"
-      }
-    },
-    {
-      "index": 224,
-      "path": "/characters/majin-buu/frames/frame-224.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        40,
-        33
-      ],
-      "width": 40,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-077.png",
-      "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-077.png"
-      }
-    },
-    {
-      "index": 225,
-      "path": "/characters/majin-buu/frames/frame-225.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        40,
-        33
-      ],
-      "width": 40,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-078.png"
-      }
-    },
-    {
-      "index": 226,
-      "path": "/characters/majin-buu/frames/frame-226.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        40,
-        33
-      ],
-      "width": 40,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-079.png"
-      }
-    },
-    {
-      "index": 227,
-      "path": "/characters/majin-buu/frames/frame-227.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        40,
-        33
-      ],
-      "width": 40,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-080.png",
-      "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-080.png"
-      }
-    },
-    {
-      "index": 228,
-      "path": "/characters/majin-buu/frames/frame-228.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 40,
-      "replacementHeight": 33,
-      "box": [
-        0,
-        0,
-        40,
-        33
-      ],
-      "width": 40,
-      "height": 33,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/majin-buu/frames/frame-018.png|upper=/characters/majin-buu/frames/frame-081.png",
-      "generatedSources": {
-        "crouch": "/characters/majin-buu/frames/frame-018.png",
-        "upper": "/characters/majin-buu/frames/frame-081.png"
+        "crouch": "/characters/majin-buu/frames/frame-018.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

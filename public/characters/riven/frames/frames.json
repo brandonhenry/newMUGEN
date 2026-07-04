@@ -4,7 +4,7 @@
     140,
     227
   ],
-  "count": 213,
+  "count": 210,
   "frames": [
     {
       "index": 0,
@@ -2975,98 +2975,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 41,
-      "replacementHeight": 39,
+      "replacementWidth": 77,
+      "replacementHeight": 75,
       "box": [
         0,
         0,
-        41,
-        39
+        77,
+        75
       ],
-      "width": 41,
-      "height": 39,
+      "width": 77,
+      "height": 75,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/riven/frames/frame-120.png|upper=/characters/riven/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/riven/frames/frame-120.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/riven/frames/frame-120.png",
-        "upper": "/characters/riven/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 210,
-      "path": "/characters/riven/frames/frame-210.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        41,
-        39
-      ],
-      "width": 41,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/riven/frames/frame-120.png|upper=/characters/riven/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/riven/frames/frame-120.png",
-        "upper": "/characters/riven/frames/frame-079.png"
-      }
-    },
-    {
-      "index": 211,
-      "path": "/characters/riven/frames/frame-211.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        41,
-        39
-      ],
-      "width": 41,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/riven/frames/frame-120.png|upper=/characters/riven/frames/frame-080.png",
-      "generatedSources": {
-        "crouch": "/characters/riven/frames/frame-120.png",
-        "upper": "/characters/riven/frames/frame-080.png"
-      }
-    },
-    {
-      "index": 212,
-      "path": "/characters/riven/frames/frame-212.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        41,
-        39
-      ],
-      "width": 41,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/riven/frames/frame-120.png|upper=/characters/riven/frames/frame-081.png",
-      "generatedSources": {
-        "crouch": "/characters/riven/frames/frame-120.png",
-        "upper": "/characters/riven/frames/frame-081.png"
+        "crouch": "/characters/riven/frames/frame-120.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

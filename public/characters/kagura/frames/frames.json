@@ -1,6 +1,6 @@
 {
   "source": "Kagura.png",
-  "count": 235,
+  "count": 225,
   "sheets": [
     {
       "id": "main",
@@ -3601,273 +3601,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 46,
-      "replacementHeight": 47,
+      "replacementWidth": 43,
+      "replacementHeight": 49,
       "box": [
         0,
         0,
-        46,
-        47
+        43,
+        49
       ],
-      "width": 46,
-      "height": 47,
+      "width": 43,
+      "height": 49,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/kagura/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 225,
-      "path": "/characters/kagura/frames/frame-225.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        41,
-        47
-      ],
-      "width": 41,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-103.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-103.png"
-      }
-    },
-    {
-      "index": 226,
-      "path": "/characters/kagura/frames/frame-226.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        41,
-        47
-      ],
-      "width": 41,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-104.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-104.png"
-      }
-    },
-    {
-      "index": 227,
-      "path": "/characters/kagura/frames/frame-227.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 51,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        51,
-        47
-      ],
-      "width": 51,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-105.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-105.png"
-      }
-    },
-    {
-      "index": 228,
-      "path": "/characters/kagura/frames/frame-228.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 56,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        56,
-        47
-      ],
-      "width": 56,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-106.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-106.png"
-      }
-    },
-    {
-      "index": 229,
-      "path": "/characters/kagura/frames/frame-229.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 70,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        70,
-        47
-      ],
-      "width": 70,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-107.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-107.png"
-      }
-    },
-    {
-      "index": 230,
-      "path": "/characters/kagura/frames/frame-230.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        41,
-        47
-      ],
-      "width": 41,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-108.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-108.png"
-      }
-    },
-    {
-      "index": 231,
-      "path": "/characters/kagura/frames/frame-231.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 52,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        52,
-        47
-      ],
-      "width": 52,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-109.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-109.png"
-      }
-    },
-    {
-      "index": 232,
-      "path": "/characters/kagura/frames/frame-232.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        41,
-        47
-      ],
-      "width": 41,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-110.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-110.png"
-      }
-    },
-    {
-      "index": 233,
-      "path": "/characters/kagura/frames/frame-233.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 41,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        41,
-        47
-      ],
-      "width": 41,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-111.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-111.png"
-      }
-    },
-    {
-      "index": 234,
-      "path": "/characters/kagura/frames/frame-234.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 64,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        64,
-        47
-      ],
-      "width": 64,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/kagura/frames/frame-022.png|upper=/characters/kagura/frames/frame-112.png",
-      "generatedSources": {
-        "crouch": "/characters/kagura/frames/frame-022.png",
-        "upper": "/characters/kagura/frames/frame-112.png"
+        "crouch": "/characters/kagura/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

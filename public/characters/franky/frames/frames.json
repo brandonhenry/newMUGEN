@@ -1,6 +1,6 @@
 {
   "source": "Franky.png",
-  "count": 252,
+  "count": 245,
   "sheets": [
     {
       "id": "main",
@@ -3921,198 +3921,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 46,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        46,
-        47
-      ],
-      "width": 46,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-015.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 245,
-      "path": "/characters/franky/frames/frame-245.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 46,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        46,
-        47
-      ],
-      "width": 46,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-104.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-104.png"
-      }
-    },
-    {
-      "index": 246,
-      "path": "/characters/franky/frames/frame-246.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 46,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        46,
-        47
-      ],
-      "width": 46,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-105.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-105.png"
-      }
-    },
-    {
-      "index": 247,
-      "path": "/characters/franky/frames/frame-247.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 46,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        46,
-        47
-      ],
-      "width": 46,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-106.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-106.png"
-      }
-    },
-    {
-      "index": 248,
-      "path": "/characters/franky/frames/frame-248.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 46,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        46,
-        47
-      ],
-      "width": 46,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-107.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-107.png"
-      }
-    },
-    {
-      "index": 249,
-      "path": "/characters/franky/frames/frame-249.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 60,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        60,
-        47
-      ],
-      "width": 60,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-108.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-108.png"
-      }
-    },
-    {
-      "index": 250,
-      "path": "/characters/franky/frames/frame-250.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 75,
-      "replacementHeight": 47,
-      "box": [
-        0,
-        0,
-        75,
-        47
-      ],
-      "width": 75,
-      "height": 47,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-109.png",
-      "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-109.png"
-      }
-    },
-    {
-      "index": 251,
-      "path": "/characters/franky/frames/frame-251.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
       "replacementWidth": 48,
-      "replacementHeight": 47,
+      "replacementHeight": 49,
       "box": [
         0,
         0,
         48,
-        47
+        49
       ],
       "width": 48,
-      "height": 47,
+      "height": 49,
       "row": -1,
       "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/franky/frames/frame-022.png|upper=/characters/franky/frames/frame-110.png",
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/franky/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/franky/frames/frame-022.png",
-        "upper": "/characters/franky/frames/frame-110.png"
+        "crouch": "/characters/franky/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

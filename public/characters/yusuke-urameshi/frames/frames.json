@@ -1,6 +1,6 @@
 {
   "source": "Yusuke Urameshi.png",
-  "count": 233,
+  "count": 227,
   "sheets": [
     {
       "id": "main",
@@ -3633,173 +3633,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 28,
-      "replacementHeight": 34,
+      "replacementWidth": 30,
+      "replacementHeight": 36,
       "box": [
         0,
         0,
-        28,
-        34
+        30,
+        36
       ],
-      "width": 28,
-      "height": 34,
+      "width": 30,
+      "height": 36,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/yusuke-urameshi/frames/frame-052.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 227,
-      "path": "/characters/yusuke-urameshi/frames/frame-227.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 28,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        28,
-        34
-      ],
-      "width": 28,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-076.png",
-      "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-076.png"
-      }
-    },
-    {
-      "index": 228,
-      "path": "/characters/yusuke-urameshi/frames/frame-228.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 28,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        28,
-        34
-      ],
-      "width": 28,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-077.png",
-      "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-077.png"
-      }
-    },
-    {
-      "index": 229,
-      "path": "/characters/yusuke-urameshi/frames/frame-229.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 36,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        36,
-        34
-      ],
-      "width": 36,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-078.png",
-      "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-078.png"
-      }
-    },
-    {
-      "index": 230,
-      "path": "/characters/yusuke-urameshi/frames/frame-230.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 28,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        28,
-        34
-      ],
-      "width": 28,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-079.png",
-      "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-079.png"
-      }
-    },
-    {
-      "index": 231,
-      "path": "/characters/yusuke-urameshi/frames/frame-231.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 28,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        28,
-        34
-      ],
-      "width": 28,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-080.png",
-      "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-080.png"
-      }
-    },
-    {
-      "index": 232,
-      "path": "/characters/yusuke-urameshi/frames/frame-232.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 28,
-      "replacementHeight": 34,
-      "box": [
-        0,
-        0,
-        28,
-        34
-      ],
-      "width": 28,
-      "height": 34,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yusuke-urameshi/frames/frame-052.png|upper=/characters/yusuke-urameshi/frames/frame-081.png",
-      "generatedSources": {
-        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png",
-        "upper": "/characters/yusuke-urameshi/frames/frame-081.png"
+        "crouch": "/characters/yusuke-urameshi/frames/frame-052.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "source": "Neuro Nogami.png",
-  "count": 226,
+  "count": 221,
   "sheets": [
     {
       "id": "main",
@@ -3537,148 +3537,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
+      "replacementWidth": 46,
+      "replacementHeight": 40,
       "box": [
         0,
         0,
-        44,
-        39
+        46,
+        40
       ],
-      "width": 44,
-      "height": 39,
+      "width": 46,
+      "height": 40,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/neuro-nogami/frames/frame-022.png|upper=/characters/neuro-nogami/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/neuro-nogami/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/neuro-nogami/frames/frame-022.png",
-        "upper": "/characters/neuro-nogami/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 221,
-      "path": "/characters/neuro-nogami/frames/frame-221.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        44,
-        39
-      ],
-      "width": 44,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/neuro-nogami/frames/frame-022.png|upper=/characters/neuro-nogami/frames/frame-171.png",
-      "generatedSources": {
-        "crouch": "/characters/neuro-nogami/frames/frame-022.png",
-        "upper": "/characters/neuro-nogami/frames/frame-171.png"
-      }
-    },
-    {
-      "index": 222,
-      "path": "/characters/neuro-nogami/frames/frame-222.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        44,
-        39
-      ],
-      "width": 44,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/neuro-nogami/frames/frame-022.png|upper=/characters/neuro-nogami/frames/frame-172.png",
-      "generatedSources": {
-        "crouch": "/characters/neuro-nogami/frames/frame-022.png",
-        "upper": "/characters/neuro-nogami/frames/frame-172.png"
-      }
-    },
-    {
-      "index": 223,
-      "path": "/characters/neuro-nogami/frames/frame-223.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        44,
-        39
-      ],
-      "width": 44,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/neuro-nogami/frames/frame-022.png|upper=/characters/neuro-nogami/frames/frame-173.png",
-      "generatedSources": {
-        "crouch": "/characters/neuro-nogami/frames/frame-022.png",
-        "upper": "/characters/neuro-nogami/frames/frame-173.png"
-      }
-    },
-    {
-      "index": 224,
-      "path": "/characters/neuro-nogami/frames/frame-224.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        44,
-        39
-      ],
-      "width": 44,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/neuro-nogami/frames/frame-022.png|upper=/characters/neuro-nogami/frames/frame-174.png",
-      "generatedSources": {
-        "crouch": "/characters/neuro-nogami/frames/frame-022.png",
-        "upper": "/characters/neuro-nogami/frames/frame-174.png"
-      }
-    },
-    {
-      "index": 225,
-      "path": "/characters/neuro-nogami/frames/frame-225.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+1.png",
-      "replacementWidth": 44,
-      "replacementHeight": 39,
-      "box": [
-        0,
-        0,
-        44,
-        39
-      ],
-      "width": 44,
-      "height": 39,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+1",
-      "generatedCompositeKey": "cmd:FC+1|crouch=/characters/neuro-nogami/frames/frame-022.png|upper=/characters/neuro-nogami/frames/frame-175.png",
-      "generatedSources": {
-        "crouch": "/characters/neuro-nogami/frames/frame-022.png",
-        "upper": "/characters/neuro-nogami/frames/frame-175.png"
+        "crouch": "/characters/neuro-nogami/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]

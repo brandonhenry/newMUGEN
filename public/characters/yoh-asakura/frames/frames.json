@@ -1,6 +1,6 @@
 {
   "source": "Yoh Asakura.png",
-  "count": 198,
+  "count": 192,
   "sheets": [
     {
       "id": "main",
@@ -3073,173 +3073,25 @@
       "sourceMode": "replacement",
       "sourceName": "Generated Crouch Composite",
       "replacementName": "crouchBlock.png",
-      "replacementWidth": 44,
-      "replacementHeight": 42,
+      "replacementWidth": 46,
+      "replacementHeight": 43,
       "box": [
         0,
         0,
-        44,
-        42
+        46,
+        43
       ],
-      "width": 44,
-      "height": 42,
+      "width": 46,
+      "height": 43,
       "row": -1,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
-      "generatedCompositeKey": "crouchBlock|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-015.png",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/yoh-asakura/frames/frame-022.png|widthScale=0.92",
       "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-015.png"
-      }
-    },
-    {
-      "index": 192,
-      "path": "/characters/yoh-asakura/frames/frame-192.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 54,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        54,
-        42
-      ],
-      "width": 54,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-144.png",
-      "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-144.png"
-      }
-    },
-    {
-      "index": 193,
-      "path": "/characters/yoh-asakura/frames/frame-193.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 72,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        72,
-        42
-      ],
-      "width": 72,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-145.png",
-      "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-145.png"
-      }
-    },
-    {
-      "index": 194,
-      "path": "/characters/yoh-asakura/frames/frame-194.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 74,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        74,
-        42
-      ],
-      "width": 74,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-146.png",
-      "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-146.png"
-      }
-    },
-    {
-      "index": 195,
-      "path": "/characters/yoh-asakura/frames/frame-195.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 70,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        70,
-        42
-      ],
-      "width": 70,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-147.png",
-      "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-147.png"
-      }
-    },
-    {
-      "index": 196,
-      "path": "/characters/yoh-asakura/frames/frame-196.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 48,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        48,
-        42
-      ],
-      "width": 48,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-148.png",
-      "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-148.png"
-      }
-    },
-    {
-      "index": 197,
-      "path": "/characters/yoh-asakura/frames/frame-197.png",
-      "sourceMode": "replacement",
-      "sourceName": "Generated Crouch Composite",
-      "replacementName": "cmd:FC+2.png",
-      "replacementWidth": 47,
-      "replacementHeight": 42,
-      "box": [
-        0,
-        0,
-        47,
-        42
-      ],
-      "width": 47,
-      "height": 42,
-      "row": -1,
-      "generatedComposite": true,
-      "generatedCompositeRole": "cmd:FC+2",
-      "generatedCompositeKey": "cmd:FC+2|crouch=/characters/yoh-asakura/frames/frame-022.png|upper=/characters/yoh-asakura/frames/frame-149.png",
-      "generatedSources": {
-        "crouch": "/characters/yoh-asakura/frames/frame-022.png",
-        "upper": "/characters/yoh-asakura/frames/frame-149.png"
+        "crouch": "/characters/yoh-asakura/frames/frame-022.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.92
       }
     }
   ]
