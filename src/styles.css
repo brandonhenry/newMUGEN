@@ -18,12 +18,22 @@
   box-sizing: border-box;
 }
 
+html,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 button {
@@ -36,7 +46,10 @@ button {
 .app-shell {
   position: relative;
   min-height: 100vh;
-  overflow: visible;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background:
     radial-gradient(circle at 18% 12%, rgba(46, 230, 255, 0.12), transparent 27%),
     radial-gradient(circle at 86% 72%, rgba(255, 176, 31, 0.12), transparent 25%),
@@ -58,8 +71,11 @@ button {
 .screen-panel {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  padding: clamp(16px, 2vw, 32px);
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(10px, 1.65vw, 28px);
 }
 
 .boot-shell {
@@ -409,8 +425,10 @@ button {
 .settings-screen,
 .viewer-screen {
   display: grid;
-  gap: 24px;
+  gap: clamp(10px, 1.8vh, 24px);
   width: 100%;
+  height: 100%;
+  min-height: 0;
   max-width: none;
   margin: 0 auto;
 }
@@ -1481,12 +1499,13 @@ button {
 .versus-select-screen {
   position: relative;
   isolation: isolate;
-  min-height: calc(100svh - clamp(32px, 4vw, 64px));
-  grid-template-columns: minmax(220px, 1fr) minmax(320px, 520px) minmax(220px, 1fr);
+  height: 100%;
+  min-height: 0;
+  grid-template-columns: minmax(180px, 1fr) minmax(300px, 520px) minmax(180px, 1fr);
   align-items: stretch;
-  gap: clamp(14px, 2vw, 28px);
+  gap: clamp(8px, min(1.55vw, 2vh), 24px);
   overflow: hidden;
-  padding: clamp(14px, 2vw, 28px);
+  padding: clamp(8px, min(1.45vw, 2vh), 22px);
   border-radius: 8px;
   background:
     linear-gradient(90deg, rgba(166, 19, 44, 0.64) 0%, rgba(78, 16, 31, 0.25) 34%, rgba(8, 9, 15, 0.68) 50%, rgba(12, 48, 112, 0.28) 66%, rgba(0, 112, 210, 0.58) 100%),
@@ -1543,9 +1562,10 @@ button {
   grid-template-rows: auto 1fr;
   justify-items: center;
   align-items: start;
-  min-height: min(720px, calc(100svh - 92px));
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
-  padding: clamp(18px, 2vw, 28px) clamp(18px, 2vw, 28px) clamp(72px, 9vh, 104px);
+  padding: clamp(14px, min(1.7vw, 2.5vh), 28px) clamp(14px, min(1.7vw, 2.5vh), 28px) clamp(58px, 8vh, 96px);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 32%),
     linear-gradient(135deg, color-mix(in srgb, var(--fighter-color) 32%, transparent), rgba(11, 12, 18, 0.66) 54%),
@@ -1615,8 +1635,8 @@ button {
   top: 48%;
   z-index: 1;
   display: block;
-  width: min(48%, 170px);
-  height: min(34vh, 240px);
+  width: min(46%, 160px);
+  height: min(30vh, 230px);
   object-fit: contain;
   image-rendering: pixelated;
   transform: translate(-50%, -50%) scale(2.25);
@@ -1678,12 +1698,12 @@ button {
 .versus-hero-name {
   position: absolute;
   left: 50%;
-  bottom: clamp(22px, 3.6vh, 42px);
+  bottom: clamp(18px, 3.2vh, 42px);
   z-index: 1;
   width: min(96%, 760px);
   margin: 0;
   transform: translateX(-50%);
-  font-size: clamp(34px, 4.5vw, 78px);
+  font-size: clamp(26px, min(4.5vw, 7.5vh), 78px);
   line-height: 0.92;
   font-weight: 950;
   text-transform: uppercase;
@@ -1697,9 +1717,11 @@ button {
   display: grid;
   grid-template-rows: auto auto auto 1fr auto;
   align-content: start;
-  gap: 14px;
-  min-height: 100%;
-  padding: clamp(16px, 2vw, 24px);
+  gap: clamp(7px, 1.25vh, 14px);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(10px, min(1.35vw, 2vh), 22px);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
     rgba(9, 10, 15, 0.72);
@@ -1709,7 +1731,7 @@ button {
 .versus-select-top {
   display: grid;
   justify-items: center;
-  gap: 12px;
+  gap: clamp(6px, 1.1vh, 12px);
   text-align: center;
 }
 
@@ -1724,7 +1746,7 @@ button {
 .versus-select-top h2 {
   margin: 4px 0 0;
   color: #f7d45a;
-  font-size: clamp(22px, 3.6vw, 38px);
+  font-size: clamp(20px, min(3.4vw, 5.8vh), 38px);
   line-height: 1;
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.48);
 }
@@ -1743,7 +1765,7 @@ button {
 }
 
 .versus-target-tabs button {
-  min-height: 42px;
+  min-height: clamp(34px, 5.6vh, 42px);
   border: 0;
   border-radius: 5px;
   color: rgba(247, 247, 242, 0.64);
@@ -1768,8 +1790,8 @@ button {
 }
 
 .versus-roster-pager .secondary-button {
-  min-height: 38px;
-  padding: 0 12px;
+  min-height: clamp(34px, 5.2vh, 38px);
+  padding: 0 clamp(8px, 1vw, 12px);
 }
 
 .versus-page-indicator {
@@ -1784,20 +1806,23 @@ button {
 
 .versus-roster-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(64px, 100%), 1fr));
+  grid-auto-rows: minmax(0, 1fr);
   align-content: start;
-  gap: 10px;
+  min-height: 0;
+  gap: clamp(6px, 1vh, 10px);
+  overflow: hidden;
 }
 
 .versus-roster-tile {
   position: relative;
   display: grid;
   justify-items: center;
-  gap: 6px;
-  min-height: 118px;
+  gap: clamp(3px, 0.65vh, 6px);
+  min-height: clamp(78px, 12vh, 118px);
   border: 0;
   border-radius: 7px;
-  padding: 10px 8px 8px;
+  padding: clamp(6px, 1vh, 10px) 6px clamp(5px, 0.9vh, 8px);
   color: #f7f7f2;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05)),
@@ -1859,8 +1884,8 @@ button {
 .versus-random-tile-icon {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 64px;
+  width: clamp(42px, 8vh, 56px);
+  height: clamp(42px, 8vh, 64px);
 }
 
 .versus-random-tile small {
@@ -1925,8 +1950,8 @@ button {
 
 .versus-roster-tile img {
   width: 100%;
-  max-width: 56px;
-  height: 64px;
+  max-width: clamp(42px, 8vh, 56px);
+  height: clamp(42px, 8vh, 64px);
   object-fit: contain;
   image-rendering: pixelated;
   filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.42));
@@ -1943,14 +1968,14 @@ button {
 }
 
 .versus-roster-tile span {
-  font-size: 12px;
+  font-size: clamp(10px, 1.65vh, 12px);
   font-weight: 900;
 }
 
 .versus-roster-tile small {
-  min-height: 14px;
+  min-height: clamp(10px, 1.8vh, 14px);
   color: #f7d45a;
-  font-size: 10px;
+  font-size: clamp(8px, 1.45vh, 10px);
   font-weight: 950;
   letter-spacing: 0.04em;
 }
@@ -1983,16 +2008,16 @@ button {
 .tournament-entry-options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
-  gap: 8px;
+  gap: clamp(6px, 1vh, 8px);
 }
 
 .tournament-entry-option {
   display: grid;
   align-content: center;
-  min-height: 86px;
+  min-height: clamp(60px, 9.8vh, 86px);
   border: 0;
   border-radius: 7px;
-  padding: 12px 10px;
+  padding: clamp(8px, 1.25vh, 12px) 10px;
   color: #f7f7f2;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05)),
@@ -2012,7 +2037,7 @@ button {
 
 .tournament-entry-option strong {
   color: #f7d45a;
-  font-size: 15px;
+  font-size: clamp(13px, 2.1vh, 15px);
   font-weight: 950;
   letter-spacing: 0.08em;
 }
@@ -2025,15 +2050,15 @@ button {
 }
 
 .tournament-entry-option span {
-  margin-top: 4px;
-  font-size: 12px;
+  margin-top: clamp(2px, 0.6vh, 4px);
+  font-size: clamp(10px, 1.65vh, 12px);
   font-weight: 850;
 }
 
 .tournament-entry-option small {
-  margin-top: 3px;
+  margin-top: clamp(2px, 0.45vh, 3px);
   color: rgba(247, 247, 242, 0.62);
-  font-size: 10px;
+  font-size: clamp(8px, 1.45vh, 10px);
   font-weight: 900;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -2879,10 +2904,10 @@ button {
 
 .mode-carousel {
   display: grid;
-  grid-template-columns: 54px minmax(190px, 280px) 54px;
+  grid-template-columns: clamp(42px, 7vh, 54px) minmax(170px, 280px) clamp(42px, 7vh, 54px);
   align-items: center;
-  gap: 8px;
-  padding: 7px;
+  gap: clamp(5px, 0.9vh, 8px);
+  padding: clamp(4px, 0.9vh, 7px);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow:
@@ -2897,7 +2922,7 @@ button {
 
 .mode-carousel-arrow,
 .mode-carousel-current {
-  min-height: 58px;
+  min-height: clamp(42px, 7.4vh, 58px);
   border: 0;
   border-radius: 7px;
 }
@@ -2926,8 +2951,8 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 13px;
-  padding: 0 22px;
+  gap: clamp(8px, 1.4vh, 13px);
+  padding: 0 clamp(14px, 2vh, 22px);
   color: #101114;
   background: #f7f7f2;
   box-shadow:
@@ -2936,14 +2961,14 @@ button {
 }
 
 .mode-carousel-current strong {
-  font-size: clamp(18px, 2.4vw, 28px);
+  font-size: clamp(16px, min(2.4vw, 4.1vh), 28px);
   font-weight: 900;
   letter-spacing: 0;
   white-space: nowrap;
 }
 
 .cpu-difficulty-carousel {
-  grid-template-columns: 54px minmax(190px, 280px) 54px;
+  grid-template-columns: clamp(42px, 7vh, 54px) minmax(170px, 280px) clamp(42px, 7vh, 54px);
 }
 
 .cpu-difficulty-carousel .mode-carousel-current {
@@ -2951,7 +2976,7 @@ button {
 }
 
 .cpu-difficulty-carousel .mode-carousel-current strong {
-  font-size: clamp(17px, 2.1vw, 24px);
+  font-size: clamp(15px, min(2.1vw, 3.7vh), 24px);
 }
 
 .cpu-difficulty {
@@ -3188,9 +3213,10 @@ button {
   align-content: center;
   justify-items: center;
   grid-template-rows: auto auto auto auto;
-  gap: 16px;
-  min-height: calc(100vh - clamp(32px, 4vw, 64px));
-  padding: 10px;
+  gap: clamp(8px, 1.8vh, 16px);
+  height: 100%;
+  min-height: 0;
+  padding: clamp(6px, 1.1vh, 10px);
   overflow: hidden;
   isolation: isolate;
 }
@@ -3224,7 +3250,7 @@ button {
 .stage-select-header {
   display: grid;
   place-items: center;
-  min-height: 66px;
+  min-height: clamp(42px, 7.6vh, 66px);
 }
 
 .stage-select-header h2 {
@@ -3233,7 +3259,7 @@ button {
   background: linear-gradient(180deg, #ffe2a6 0%, #ff9d35 46%, #c84a10 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 3.9rem;
+  font-size: clamp(2rem, min(5.4vw, 8vh), 3.9rem);
   font-weight: 950;
   line-height: 0.9;
   letter-spacing: 0;
@@ -3267,8 +3293,8 @@ button {
   position: relative;
   width: 100%;
   aspect-ratio: 21 / 8;
-  min-height: 400px;
-  height: min(58vh, 560px);
+  min-height: 0;
+  height: clamp(220px, 48vh, 560px);
   overflow: hidden;
   background: #020710;
   outline: 1px solid rgba(255, 255, 255, 0.1);
@@ -3306,7 +3332,7 @@ button {
 .stage-hero-label {
   position: absolute;
   left: 50%;
-  bottom: 32px;
+  bottom: clamp(16px, 3.4vh, 32px);
   z-index: 4;
   display: grid;
   justify-items: center;
@@ -3338,7 +3364,7 @@ button {
   z-index: 1;
   max-width: min(72vw, 560px);
   color: #ffb45f;
-  font-size: 2.35rem;
+  font-size: clamp(1.45rem, min(3.6vw, 5.6vh), 2.35rem);
   font-weight: 950;
   line-height: 1;
   text-transform: uppercase;
@@ -3352,12 +3378,12 @@ button {
 
 .stage-reel-shell {
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr) 54px;
+  grid-template-columns: clamp(42px, 7vh, 54px) minmax(0, 1fr) clamp(42px, 7vh, 54px);
   align-items: center;
   gap: 0;
   width: min(100%, 1560px);
   margin: -2px auto 0;
-  padding: 7px;
+  padding: clamp(4px, 0.9vh, 7px);
   background:
     linear-gradient(180deg, rgba(17, 166, 150, 0.98), rgba(5, 64, 85, 0.98)),
     #064055;
@@ -3371,7 +3397,7 @@ button {
   display: grid;
   place-items: center;
   min-width: 44px;
-  min-height: 86px;
+  min-height: clamp(56px, 10vh, 86px);
   border: 0;
   border-radius: 0;
   color: #d9fff2;
@@ -3414,9 +3440,9 @@ button {
 .stage-thumbnail {
   position: relative;
   display: grid;
-  flex: 0 0 140px;
-  width: 140px;
-  min-height: 86px;
+  flex: 0 0 clamp(92px, 11vw, 140px);
+  width: clamp(92px, 11vw, 140px);
+  min-height: clamp(56px, 10vh, 86px);
   padding: 0;
   overflow: hidden;
   border: 0;
@@ -3468,7 +3494,7 @@ button {
   grid-area: 1 / 1;
   display: grid;
   place-items: center;
-  min-height: 86px;
+  min-height: clamp(56px, 10vh, 86px);
   color: #101114;
   background:
     repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0 7px, transparent 7px 16px),
@@ -3499,7 +3525,7 @@ button {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 86px;
+  min-height: clamp(56px, 10vh, 86px);
   object-fit: cover;
   image-rendering: auto;
   outline: 1px solid rgba(255, 255, 255, 0.1);
@@ -3547,12 +3573,12 @@ button {
   gap: clamp(18px, 4vw, 54px);
   width: min(100%, 1180px);
   margin: 0 auto;
-  padding-top: 4px;
+  padding-top: clamp(0px, 0.6vh, 4px);
 }
 
 .stage-screen .footer-actions button {
   min-width: clamp(220px, 20vw, 310px);
-  min-height: clamp(62px, 7vh, 82px);
+  min-height: clamp(46px, 6.8vh, 82px);
   border-radius: 0;
   font-size: clamp(18px, 2vw, 26px);
   font-weight: 950;
@@ -3576,7 +3602,7 @@ button {
   width: min(100%, 560px);
   max-width: 100%;
   margin-inline: auto;
-  padding: 8px 0;
+  padding: clamp(4px, 0.9vh, 8px) 0;
   border-radius: 0;
   background: linear-gradient(180deg, rgba(10, 22, 70, 0.74), rgba(7, 11, 38, 0.82));
   box-shadow:
@@ -3591,13 +3617,13 @@ button {
 .stage-screen .arcade-footer-actions .secondary-button {
   width: 100%;
   min-width: 0;
-  min-height: 54px;
+  min-height: clamp(42px, 6.5vh, 54px);
   border-radius: 0;
-  padding: 0 22px;
+  padding: 0 clamp(14px, 2vh, 22px);
   color: rgba(247, 247, 242, 0.84);
   background: transparent;
   box-shadow: none;
-  font-size: clamp(16px, 2vw, 22px);
+  font-size: clamp(14px, min(2vw, 3vh), 22px);
   font-weight: 950;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -9440,12 +9466,14 @@ button {
 @media (max-width: 820px) {
   body {
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 
   .screen-panel {
-    min-height: 100svh;
-    padding: 18px;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    padding: 12px;
   }
 
   .section-header,
@@ -9455,19 +9483,20 @@ button {
   }
 
   .settings-screen {
-    height: auto;
-    min-height: calc(100svh - 36px);
+    height: 100%;
+    min-height: 0;
   }
 
   .versus-select-screen {
     grid-template-columns: 1fr;
-    min-height: auto;
+    grid-template-rows: minmax(0, 1fr);
+    height: 100%;
+    min-height: 0;
     padding: 12px;
   }
 
   .versus-hero {
-    min-height: 390px;
-    padding-bottom: 82px;
+    display: none;
   }
 
   .versus-hero-sprite {
@@ -9491,6 +9520,7 @@ button {
 
   .versus-roster-panel {
     order: -1;
+    height: 100%;
   }
 
   .versus-select-top {

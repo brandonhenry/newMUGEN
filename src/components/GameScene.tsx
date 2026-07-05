@@ -2098,9 +2098,6 @@ export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, 
   return (
     <Canvas frameloop="always" dpr={[0.85, 1]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        <Suspense fallback={null}>
-          <Environment preset="city" />
-        </Suspense>
         {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
         <MenuAttractCamera match={match} />
@@ -5061,24 +5058,8 @@ function ImageVoxelPartGroup({
 
   useEffect(() => {
     return () => {
-      if (outlineMesh && !outlineMesh.userData.koreCachedVoxelMesh) {
-        outlineMesh.geometry.dispose();
-        const outlineMaterial = outlineMesh.material;
-        if (Array.isArray(outlineMaterial)) {
-          outlineMaterial.forEach((entry) => entry.dispose());
-        } else {
-          outlineMaterial.dispose();
-        }
-      }
-      if (mesh && !mesh.userData.koreCachedVoxelMesh) {
-        mesh.geometry.dispose();
-        const material = mesh.material;
-        if (Array.isArray(material)) {
-          material.forEach((entry) => entry.dispose());
-        } else {
-          material.dispose();
-        }
-      }
+      disposeVoxelObject(outlineMesh);
+      disposeVoxelObject(mesh);
     };
   }, [mesh, outlineMesh]);
 
@@ -5088,6 +5069,20 @@ function ImageVoxelPartGroup({
       {mesh && <primitive object={mesh} />}
     </group>
   );
+}
+
+function disposeVoxelObject(object: THREE.Object3D | null) {
+  if (!object || object.userData.koreCachedVoxelMesh) return;
+  object.traverse((child) => {
+    if (child.userData.koreCachedVoxelMesh || !(child instanceof THREE.Mesh)) return;
+    child.geometry.dispose();
+    const material = child.material;
+    if (Array.isArray(material)) {
+      material.forEach((entry) => entry.dispose());
+    } else {
+      material.dispose();
+    }
+  });
 }
 
 function makeCachedVoxelMesh(
@@ -5176,42 +5171,49 @@ function buildInstancedVoxelOutlineMesh(part: ImageVoxelPartRender, outlineStyle
 
 function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
   if (part.voxels.length === 0) return null;
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial({
-    color: '#ffffff',
-    vertexColors: true,
-    transparent: renderStyle.opacity < 1,
-    opacity: renderStyle.opacity,
-    depthWrite: renderStyle.depthWrite,
-    toneMapped: false
-  });
-  const mesh = new THREE.InstancedMesh(geometry, material, part.voxels.length);
+  const groupedVoxels = new Map<string, ImageVoxel[]>();
+  for (const voxel of part.voxels) {
+    const renderVoxel = normalizeImageVoxelForRender(voxel);
+    const color = renderStyleColor(renderVoxel.color, renderStyle);
+    const group = groupedVoxels.get(color);
+    if (group) group.push(renderVoxel);
+    else groupedVoxels.set(color, [renderVoxel]);
+  }
+  const group = new THREE.Group();
   const matrix = new THREE.Matrix4();
   const position = new THREE.Vector3();
   const scale = new THREE.Vector3();
   const rotation = new THREE.Quaternion();
 
-  part.voxels.forEach((voxel, index) => {
-    const renderVoxel = normalizeImageVoxelForRender(voxel);
-    const color = new THREE.Color(renderStyleColor(renderVoxel.color, renderStyle));
-    position.set(
-      renderVoxel.position[0] - part.anchor[0],
-      renderVoxel.position[1] - part.anchor[1],
-      renderVoxel.position[2] - part.anchor[2]
-    );
-    scale.set(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2]);
-    matrix.compose(position, rotation, scale);
-    mesh.setMatrixAt(index, matrix);
-    mesh.setColorAt(index, color);
+  Array.from(groupedVoxels.entries()).forEach(([color, voxels]) => {
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({
+      color,
+      transparent: renderStyle.opacity < 1,
+      opacity: renderStyle.opacity,
+      depthWrite: renderStyle.depthWrite,
+      toneMapped: false
+    });
+    const mesh = new THREE.InstancedMesh(geometry, material, voxels.length);
+    voxels.forEach((renderVoxel, index) => {
+      position.set(
+        renderVoxel.position[0] - part.anchor[0],
+        renderVoxel.position[1] - part.anchor[1],
+        renderVoxel.position[2] - part.anchor[2]
+      );
+      scale.set(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2]);
+      matrix.compose(position, rotation, scale);
+      mesh.setMatrixAt(index, matrix);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.castShadow = renderStyle.castShadow;
+    mesh.receiveShadow = renderStyle.receiveShadow;
+    mesh.renderOrder = renderStyle.renderOrder;
+    mesh.frustumCulled = false;
+    group.add(mesh);
   });
 
-  mesh.instanceMatrix.needsUpdate = true;
-  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  mesh.castShadow = renderStyle.castShadow;
-  mesh.receiveShadow = renderStyle.receiveShadow;
-  mesh.renderOrder = renderStyle.renderOrder;
-  mesh.frustumCulled = false;
-  return mesh;
+  return group.children.length > 0 ? group : null;
 }
 
 function normalizeImageVoxelForRender(voxel: ImageVoxel): ImageVoxel {

@@ -63,7 +63,8 @@ async function enterMainMenu(page: Page) {
   const arcade = page.getByRole('button', { name: 'Arcade' });
   await expect(title.or(arcade).first()).toBeVisible({ timeout: 30_000 });
   if (await title.isVisible().catch(() => false)) {
-    await title.click();
+    await title.focus();
+    await page.keyboard.press('Enter');
   }
   await expect(arcade).toBeVisible({ timeout: 30_000 });
 }
