@@ -933,6 +933,7 @@ export type FighterRuntime = {
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
   sidestepOrbitSign: 1 | -1;
+  laneOrbitControlLocked: boolean;
   sidestepRepeatGraceFrames: number;
   dashForwardFrames: number;
   dashForwardCooldownFrames: number;

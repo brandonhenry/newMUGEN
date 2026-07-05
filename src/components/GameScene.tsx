@@ -2548,6 +2548,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     sidestepTimer: 0,
     sidestepDirection: 0,
     sidestepOrbitSign: 1,
+    laneOrbitControlLocked: false,
     sidestepRepeatGraceFrames: 0,
     dashForwardFrames: 0,
     dashForwardCooldownFrames: 0,
@@ -2631,7 +2632,7 @@ function cameraDamp(delta: number, speed: number) {
 }
 
 function isFighterLaneOrbitCameraActive(fighter: FighterRuntime) {
-  return fighter.state === 'sidestep' || fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
+  return fighter.laneOrbitControlLocked || fighter.state === 'sidestep' || fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
 }
 
 const MIN_FIGHT_CAMERA_DISTANCE = 4.85;

@@ -277,6 +277,7 @@ function createMiniGameFighter(character: CharacterDefinition, position: { x: nu
     sidestepTimer: 0,
     sidestepDirection: 0,
     sidestepOrbitSign: 1,
+    laneOrbitControlLocked: false,
     sidestepRepeatGraceFrames: 0,
     dashForwardFrames: 0,
     dashForwardCooldownFrames: 0,

@@ -3402,6 +3402,39 @@ describe('fight engine', () => {
     expect(orbitSteps).toBeGreaterThan(360);
   });
 
+  it('keeps real keyboard up-up spam from flipping the control reference', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const input = emptyInputFrame();
+    const verticalState = createVerticalTapState();
+    const startingControlSide = match.fighters[0].controlSideSign;
+    let now = 100;
+
+    const readFrame = () => {
+      prepareVerticalTapForRead(input, verticalState, 'keyboard', now);
+      expect(input.sidestepDown).toBe(false);
+      expect(input.sidewalkDown).toBe(false);
+      match = stepMatch(match, { ...input }, emptyInputFrame(), 1 / 60);
+      expect(match.fighters[0].controlSideSign).toBe(startingControlSide);
+      consumeVerticalTapAfterRead(input, verticalState, 'keyboard');
+      now += 1000 / 60;
+    };
+
+    for (let tap = 0; tap < 96; tap += 1) {
+      applyVerticalTap(input, verticalState, 'up', true, 'keyboard', now);
+      now += 24;
+      applyVerticalTap(input, verticalState, 'up', false, 'keyboard', now);
+      now += 46;
+      applyVerticalTap(input, verticalState, 'up', true, 'keyboard', now);
+      readFrame();
+      expect(match.fighters[0].laneOrbitControlLocked).toBe(true);
+      readFrame();
+      applyVerticalTap(input, verticalState, 'up', false, 'keyboard', now);
+      for (let frame = 0; frame < 5; frame += 1) readFrame();
+    }
+  });
+
   it('keeps sidestep-orbit side locks through camera-lag idle gaps until horizontal movement', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -3417,6 +3450,10 @@ describe('fight engine', () => {
 
     match.fighters[0].position.x = 1.3;
     match.fighters[1].position.x = -1.3;
+    match.fighters[0].sidestepTimer = 0;
+    match.fighters[0].sidestepDirection = 0;
+    match.fighters[0].sidestepRepeatGraceFrames = 0;
+    expect(match.fighters[0].laneOrbitControlLocked).toBe(true);
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].controlSideSign).toBe(startingControlSide);
 

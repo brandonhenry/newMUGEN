@@ -511,6 +511,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     sidestepTimer: 0,
     sidestepDirection: 0,
     sidestepOrbitSign: slot === 1 ? 1 : -1,
+    laneOrbitControlLocked: false,
     sidestepRepeatGraceFrames: 0,
     dashForwardFrames: 0,
     dashForwardCooldownFrames: 0,
@@ -960,11 +961,13 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   if (!laneInputActive && forward !== 0 && fighter.sidestepTimer === 0) {
     fighter.sidestepDirection = 0;
     fighter.sidestepRepeatGraceFrames = 0;
+    fighter.laneOrbitControlLocked = false;
   }
 
   const chooseSidestepOrbit = (direction: -1 | 1) => {
     fighter.sidestepDirection = direction;
     fighter.sidestepRepeatGraceFrames = SIDESTEP_REPEAT_GRACE_FRAMES;
+    fighter.laneOrbitControlLocked = true;
   };
 
   if (sidestepTap !== 0 && fighter.sidestepTimer === 0) {
@@ -4293,7 +4296,7 @@ function updateControlSideSign(stage: StageDefinition, fighter: FighterRuntime, 
 }
 
 function isLaneOrbitActive(fighter: FighterRuntime) {
-  return fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
+  return fighter.laneOrbitControlLocked || fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
 }
 
 function resolveBodyCollision(match: MatchSnapshot) {

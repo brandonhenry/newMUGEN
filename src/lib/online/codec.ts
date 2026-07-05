@@ -45,6 +45,7 @@ export type CompactFighterSnapshot = {
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;
   sidestepOrbitSign: 1 | -1;
+  laneOrbitControlLocked?: boolean;
   sidestepRepeatGraceFrames: number;
   dashForwardFrames: number;
   dashForwardCooldownFrames: number;
@@ -250,6 +251,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     sidestepTimer: fighter.sidestepTimer,
     sidestepDirection: fighter.sidestepDirection,
     sidestepOrbitSign: fighter.sidestepOrbitSign,
+    laneOrbitControlLocked: fighter.laneOrbitControlLocked,
     sidestepRepeatGraceFrames: fighter.sidestepRepeatGraceFrames,
     dashForwardFrames: fighter.dashForwardFrames,
     dashForwardCooldownFrames: fighter.dashForwardCooldownFrames,
@@ -343,6 +345,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     sidestepTimer: snapshot.sidestepTimer,
     sidestepDirection: snapshot.sidestepDirection,
     sidestepOrbitSign: snapshot.sidestepOrbitSign ?? base.sidestepOrbitSign,
+    laneOrbitControlLocked: snapshot.laneOrbitControlLocked ?? base.laneOrbitControlLocked,
     sidestepRepeatGraceFrames: snapshot.sidestepRepeatGraceFrames ?? base.sidestepRepeatGraceFrames,
     dashForwardFrames: snapshot.dashForwardFrames ?? base.dashForwardFrames,
     dashForwardCooldownFrames: snapshot.dashForwardCooldownFrames ?? base.dashForwardCooldownFrames,
