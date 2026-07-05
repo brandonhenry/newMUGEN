@@ -88,8 +88,28 @@
       "/characters/roronoa-zoro/frames/frame-085.png",
       "/characters/roronoa-zoro/frames/frame-086.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/roronoa-zoro/frames/frame-188.png",
+      "/characters/roronoa-zoro/frames/frame-189.png",
+      "/characters/roronoa-zoro/frames/frame-190.png",
+      "/characters/roronoa-zoro/frames/frame-191.png",
+      "/characters/roronoa-zoro/frames/frame-192.png",
+      "/characters/roronoa-zoro/frames/frame-193.png",
+      "/characters/roronoa-zoro/frames/frame-194.png",
+      "/characters/roronoa-zoro/frames/frame-195.png",
+      "/characters/roronoa-zoro/frames/frame-196.png",
+      "/characters/roronoa-zoro/frames/frame-197.png"
+    ],
+    "kickright": [
+      "/characters/roronoa-zoro/frames/frame-198.png",
+      "/characters/roronoa-zoro/frames/frame-199.png",
+      "/characters/roronoa-zoro/frames/frame-200.png",
+      "/characters/roronoa-zoro/frames/frame-201.png",
+      "/characters/roronoa-zoro/frames/frame-202.png",
+      "/characters/roronoa-zoro/frames/frame-203.png",
+      "/characters/roronoa-zoro/frames/frame-204.png",
+      "/characters/roronoa-zoro/frames/frame-205.png"
+    ],
     "hitLight": [
       "/characters/roronoa-zoro/frames/frame-023.png"
     ],
@@ -137,9 +157,35 @@
       "/characters/roronoa-zoro/frames/frame-085.png",
       "/characters/roronoa-zoro/frames/frame-086.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/roronoa-zoro/frames/frame-157.png",
+      "/characters/roronoa-zoro/frames/frame-158.png",
+      "/characters/roronoa-zoro/frames/frame-159.png",
+      "/characters/roronoa-zoro/frames/frame-160.png",
+      "/characters/roronoa-zoro/frames/frame-161.png",
+      "/characters/roronoa-zoro/frames/frame-162.png",
+      "/characters/roronoa-zoro/frames/frame-163.png",
+      "/characters/roronoa-zoro/frames/frame-164.png",
+      "/characters/roronoa-zoro/frames/frame-165.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/roronoa-zoro/frames/frame-140.png",
+      "/characters/roronoa-zoro/frames/frame-141.png",
+      "/characters/roronoa-zoro/frames/frame-142.png",
+      "/characters/roronoa-zoro/frames/frame-143.png",
+      "/characters/roronoa-zoro/frames/frame-144.png",
+      "/characters/roronoa-zoro/frames/frame-145.png",
+      "/characters/roronoa-zoro/frames/frame-146.png",
+      "/characters/roronoa-zoro/frames/frame-147.png",
+      "/characters/roronoa-zoro/frames/frame-148.png",
+      "/characters/roronoa-zoro/frames/frame-149.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/roronoa-zoro/frames/frame-070.png",
+      "/characters/roronoa-zoro/frames/frame-071.png",
+      "/characters/roronoa-zoro/frames/frame-072.png",
+      "/characters/roronoa-zoro/frames/frame-073.png"
+    ],
     "cmd:FC+2": [
       "/characters/roronoa-zoro/frames/frame-079.png",
       "/characters/roronoa-zoro/frames/frame-080.png",
@@ -206,7 +252,15 @@
       "/characters/roronoa-zoro/frames/frame-111.png",
       "/characters/roronoa-zoro/frames/frame-112.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/roronoa-zoro/frames/frame-113.png",
+      "/characters/roronoa-zoro/frames/frame-114.png",
+      "/characters/roronoa-zoro/frames/frame-115.png",
+      "/characters/roronoa-zoro/frames/frame-116.png",
+      "/characters/roronoa-zoro/frames/frame-117.png",
+      "/characters/roronoa-zoro/frames/frame-118.png",
+      "/characters/roronoa-zoro/frames/frame-119.png"
+    ],
     "cmd:1+4": [
       "/characters/roronoa-zoro/frames/frame-150.png",
       "/characters/roronoa-zoro/frames/frame-151.png",
@@ -593,9 +647,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 31,
+      "recoveryFrames": 9,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -610,9 +664,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 5,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -667,9 +721,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 7,
+      "activeFrames": 30,
+      "recoveryFrames": 18,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -685,9 +739,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 9,
+      "activeFrames": 29,
+      "recoveryFrames": 4,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -702,9 +756,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 8,
+      "activeFrames": 20,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -838,9 +892,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 26,
+      "activeFrames": 26,
+      "recoveryFrames": 8,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

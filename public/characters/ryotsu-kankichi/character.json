@@ -85,7 +85,22 @@
       "/characters/ryotsu-kankichi/frames/frame-082.png",
       "/characters/ryotsu-kankichi/frames/frame-083.png"
     ],
-    "kickleft": [],
+    "kickleft": [
+      "/characters/ryotsu-kankichi/frames/frame-198.png",
+      "/characters/ryotsu-kankichi/frames/frame-199.png",
+      "/characters/ryotsu-kankichi/frames/frame-200.png",
+      "/characters/ryotsu-kankichi/frames/frame-201.png",
+      "/characters/ryotsu-kankichi/frames/frame-202.png",
+      "/characters/ryotsu-kankichi/frames/frame-203.png",
+      "/characters/ryotsu-kankichi/frames/frame-204.png",
+      "/characters/ryotsu-kankichi/frames/frame-205.png",
+      "/characters/ryotsu-kankichi/frames/frame-206.png",
+      "/characters/ryotsu-kankichi/frames/frame-207.png",
+      "/characters/ryotsu-kankichi/frames/frame-208.png",
+      "/characters/ryotsu-kankichi/frames/frame-209.png",
+      "/characters/ryotsu-kankichi/frames/frame-210.png",
+      "/characters/ryotsu-kankichi/frames/frame-211.png"
+    ],
     "kickright": [
       "/characters/ryotsu-kankichi/frames/frame-101.png",
       "/characters/ryotsu-kankichi/frames/frame-102.png",
@@ -168,7 +183,18 @@
       "/characters/ryotsu-kankichi/frames/frame-105.png",
       "/characters/ryotsu-kankichi/frames/frame-106.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/ryotsu-kankichi/frames/frame-144.png",
+      "/characters/ryotsu-kankichi/frames/frame-145.png",
+      "/characters/ryotsu-kankichi/frames/frame-146.png",
+      "/characters/ryotsu-kankichi/frames/frame-147.png",
+      "/characters/ryotsu-kankichi/frames/frame-148.png",
+      "/characters/ryotsu-kankichi/frames/frame-149.png",
+      "/characters/ryotsu-kankichi/frames/frame-150.png",
+      "/characters/ryotsu-kankichi/frames/frame-151.png",
+      "/characters/ryotsu-kankichi/frames/frame-152.png",
+      "/characters/ryotsu-kankichi/frames/frame-153.png"
+    ],
     "cmd:FC+2": [
       "/characters/ryotsu-kankichi/frames/frame-079.png",
       "/characters/ryotsu-kankichi/frames/frame-080.png",
@@ -213,7 +239,18 @@
       "/characters/ryotsu-kankichi/frames/frame-126.png",
       "/characters/ryotsu-kankichi/frames/frame-127.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/ryotsu-kankichi/frames/frame-154.png",
+      "/characters/ryotsu-kankichi/frames/frame-155.png",
+      "/characters/ryotsu-kankichi/frames/frame-156.png",
+      "/characters/ryotsu-kankichi/frames/frame-157.png",
+      "/characters/ryotsu-kankichi/frames/frame-158.png",
+      "/characters/ryotsu-kankichi/frames/frame-159.png",
+      "/characters/ryotsu-kankichi/frames/frame-160.png",
+      "/characters/ryotsu-kankichi/frames/frame-161.png",
+      "/characters/ryotsu-kankichi/frames/frame-162.png",
+      "/characters/ryotsu-kankichi/frames/frame-163.png"
+    ],
     "cmd:1+4": [
       "/characters/ryotsu-kankichi/frames/frame-115.png",
       "/characters/ryotsu-kankichi/frames/frame-116.png",
@@ -597,9 +634,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 42,
+      "recoveryFrames": 3,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -718,9 +755,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 16,
-      "activeFrames": 2,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 26,
+      "recoveryFrames": 16,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -857,9 +894,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 12,
+      "activeFrames": 42,
+      "recoveryFrames": 6,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

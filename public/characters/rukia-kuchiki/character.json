@@ -173,7 +173,18 @@
       "/characters/rukia-kuchiki/frames/frame-099.png",
       "/characters/rukia-kuchiki/frames/frame-100.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/rukia-kuchiki/frames/frame-160.png",
+      "/characters/rukia-kuchiki/frames/frame-161.png",
+      "/characters/rukia-kuchiki/frames/frame-162.png",
+      "/characters/rukia-kuchiki/frames/frame-163.png",
+      "/characters/rukia-kuchiki/frames/frame-164.png",
+      "/characters/rukia-kuchiki/frames/frame-165.png",
+      "/characters/rukia-kuchiki/frames/frame-166.png",
+      "/characters/rukia-kuchiki/frames/frame-167.png",
+      "/characters/rukia-kuchiki/frames/frame-168.png",
+      "/characters/rukia-kuchiki/frames/frame-169.png"
+    ],
     "cmd:FC+2": [
       "/characters/rukia-kuchiki/frames/frame-108.png",
       "/characters/rukia-kuchiki/frames/frame-109.png",
@@ -228,7 +239,18 @@
       "/characters/rukia-kuchiki/frames/frame-099.png",
       "/characters/rukia-kuchiki/frames/frame-100.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/rukia-kuchiki/frames/frame-180.png",
+      "/characters/rukia-kuchiki/frames/frame-181.png",
+      "/characters/rukia-kuchiki/frames/frame-182.png",
+      "/characters/rukia-kuchiki/frames/frame-183.png",
+      "/characters/rukia-kuchiki/frames/frame-184.png",
+      "/characters/rukia-kuchiki/frames/frame-185.png",
+      "/characters/rukia-kuchiki/frames/frame-186.png",
+      "/characters/rukia-kuchiki/frames/frame-187.png",
+      "/characters/rukia-kuchiki/frames/frame-188.png",
+      "/characters/rukia-kuchiki/frames/frame-189.png"
+    ],
     "cmd:1+4": [
       "/characters/rukia-kuchiki/frames/frame-096.png",
       "/characters/rukia-kuchiki/frames/frame-097.png",
@@ -783,9 +805,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 16,
-      "activeFrames": 2,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 4,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -913,9 +935,9 @@
       "cancelable": false
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 6,
+      "activeFrames": 53,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

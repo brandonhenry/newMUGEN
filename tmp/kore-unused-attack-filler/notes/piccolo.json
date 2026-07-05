@@ -1,0 +1,80 @@
+[
+  {
+    "start": 11,
+    "end": 12,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 15,
+    "end": 17,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 19,
+    "end": 19,
+    "kind": "non-attack",
+    "reason": "idle, stance, hurt, getup, cape pose, recovery, or transition material without a clean attack release"
+  },
+  {
+    "start": 20,
+    "end": 20,
+    "kind": "non-attack",
+    "reason": "idle, stance, hurt, getup, cape pose, recovery, or transition material without a clean attack release"
+  },
+  {
+    "start": 26,
+    "end": 26,
+    "kind": "non-attack",
+    "reason": "idle, stance, hurt, getup, cape pose, recovery, or transition material without a clean attack release"
+  },
+  {
+    "start": 28,
+    "end": 29,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 34,
+    "end": 36,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 41,
+    "end": 49,
+    "kind": "non-attack",
+    "reason": "idle, stance, hurt, getup, cape pose, recovery, or transition material without a clean attack release"
+  },
+  {
+    "start": 50,
+    "end": 52,
+    "kind": "non-attack",
+    "reason": "idle, stance, hurt, getup, cape pose, recovery, or transition material without a clean attack release"
+  },
+  {
+    "start": 70,
+    "end": 79,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 93,
+    "end": 99,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 124,
+    "end": 128,
+    "kind": "ambiguous",
+    "reason": "short pose or movement fragment without a cleaner standalone attack sequence"
+  },
+  {
+    "start": 161,
+    "end": 161,
+    "kind": "bad-source",
+    "reason": "source text tail, not a clean attack sequence"
+  }
+]

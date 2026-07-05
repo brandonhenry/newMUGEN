@@ -145,8 +145,27 @@
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
+    "cmd:FC+1": [
+      "/characters/sakura-haruno/frames/frame-090.png",
+      "/characters/sakura-haruno/frames/frame-091.png",
+      "/characters/sakura-haruno/frames/frame-092.png",
+      "/characters/sakura-haruno/frames/frame-093.png",
+      "/characters/sakura-haruno/frames/frame-094.png",
+      "/characters/sakura-haruno/frames/frame-095.png",
+      "/characters/sakura-haruno/frames/frame-096.png",
+      "/characters/sakura-haruno/frames/frame-097.png",
+      "/characters/sakura-haruno/frames/frame-098.png",
+      "/characters/sakura-haruno/frames/frame-099.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/sakura-haruno/frames/frame-100.png",
+      "/characters/sakura-haruno/frames/frame-101.png",
+      "/characters/sakura-haruno/frames/frame-102.png",
+      "/characters/sakura-haruno/frames/frame-103.png",
+      "/characters/sakura-haruno/frames/frame-104.png",
+      "/characters/sakura-haruno/frames/frame-105.png",
+      "/characters/sakura-haruno/frames/frame-106.png"
+    ],
     "cmd:1+2": [
       "/characters/sakura-haruno/frames/frame-129.png",
       "/characters/sakura-haruno/frames/frame-130.png",
@@ -181,9 +200,37 @@
       "/characters/sakura-haruno/frames/frame-153.png",
       "/characters/sakura-haruno/frames/frame-154.png"
     ],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:2+4": [
+      "/characters/sakura-haruno/frames/frame-070.png",
+      "/characters/sakura-haruno/frames/frame-071.png",
+      "/characters/sakura-haruno/frames/frame-072.png",
+      "/characters/sakura-haruno/frames/frame-073.png",
+      "/characters/sakura-haruno/frames/frame-074.png",
+      "/characters/sakura-haruno/frames/frame-075.png",
+      "/characters/sakura-haruno/frames/frame-076.png",
+      "/characters/sakura-haruno/frames/frame-077.png",
+      "/characters/sakura-haruno/frames/frame-078.png",
+      "/characters/sakura-haruno/frames/frame-079.png"
+    ],
+    "cmd:3+4": [
+      "/characters/sakura-haruno/frames/frame-080.png",
+      "/characters/sakura-haruno/frames/frame-081.png",
+      "/characters/sakura-haruno/frames/frame-082.png",
+      "/characters/sakura-haruno/frames/frame-083.png",
+      "/characters/sakura-haruno/frames/frame-084.png",
+      "/characters/sakura-haruno/frames/frame-085.png",
+      "/characters/sakura-haruno/frames/frame-086.png",
+      "/characters/sakura-haruno/frames/frame-087.png",
+      "/characters/sakura-haruno/frames/frame-088.png",
+      "/characters/sakura-haruno/frames/frame-089.png"
+    ],
+    "cmd:O+2": [
+      "/characters/sakura-haruno/frames/frame-140.png",
+      "/characters/sakura-haruno/frames/frame-141.png",
+      "/characters/sakura-haruno/frames/frame-142.png",
+      "/characters/sakura-haruno/frames/frame-143.png",
+      "/characters/sakura-haruno/frames/frame-144.png"
+    ],
     "cmd:d+3+4": [
       "/characters/sakura-haruno/frames/frame-107.png",
       "/characters/sakura-haruno/frames/frame-108.png",
@@ -742,8 +789,8 @@
     },
     "cmd:FC+1": {
       "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 15,
+      "recoveryFrames": 2,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -759,9 +806,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 21,
+      "activeFrames": 20,
+      "recoveryFrames": 6,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -836,8 +883,8 @@
     },
     "cmd:2+4": {
       "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "activeFrames": 27,
+      "recoveryFrames": 1,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -853,9 +900,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 12,
+      "activeFrames": 39,
+      "recoveryFrames": 5,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -872,8 +919,8 @@
     },
     "cmd:O+2": {
       "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "activeFrames": 24,
+      "recoveryFrames": 12,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

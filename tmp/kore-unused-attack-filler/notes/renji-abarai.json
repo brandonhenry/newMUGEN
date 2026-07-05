@@ -1,0 +1,74 @@
+[
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "single idle/stance frame"
+  },
+  {
+    "start": 21,
+    "end": 21,
+    "kind": "non-attack",
+    "reason": "single stance frame"
+  },
+  {
+    "start": 24,
+    "end": 25,
+    "kind": "non-attack",
+    "reason": "crouch or movement transition without clear strike"
+  },
+  {
+    "start": 28,
+    "end": 28,
+    "kind": "non-attack",
+    "reason": "knockdown or fall frame"
+  },
+  {
+    "start": 30,
+    "end": 30,
+    "kind": "ambiguous",
+    "reason": "single weapon pose without enough sequence context"
+  },
+  {
+    "start": 35,
+    "end": 39,
+    "kind": "non-attack",
+    "reason": "run/fall/getup and idle transition frames"
+  },
+  {
+    "start": 40,
+    "end": 49,
+    "kind": "ambiguous",
+    "reason": "mixed aerial, fall, and recovery fragments; not a clean attack sequence"
+  },
+  {
+    "start": 50,
+    "end": 51,
+    "kind": "non-attack",
+    "reason": "grounded recovery frames"
+  },
+  {
+    "start": 57,
+    "end": 57,
+    "kind": "non-attack",
+    "reason": "single stance frame"
+  },
+  {
+    "start": 160,
+    "end": 165,
+    "kind": "ambiguous",
+    "reason": "short weapon poses without a clean full strike arc"
+  },
+  {
+    "start": 177,
+    "end": 179,
+    "kind": "non-attack",
+    "reason": "yellow outfit stance or transformation-like frames"
+  },
+  {
+    "start": 190,
+    "end": 196,
+    "kind": "bad-source",
+    "reason": "mixed yellow outfit pose, short duplicate slashes, and source text panel"
+  }
+]

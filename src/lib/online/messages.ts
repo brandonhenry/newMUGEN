@@ -25,8 +25,11 @@ export type OnlineInputBatchMessage = {
   startFrame: number;
   masks: number[];
   ackFrame: number;
+  currentFrame: number;
+  remoteFrame: number;
   checksum?: number;
   sentAt?: number;
+  disconnectRequested?: boolean;
 };
 
 export type OnlineClashInputMessage = {

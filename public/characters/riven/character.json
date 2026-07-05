@@ -454,7 +454,15 @@
     "backHop": [
       "/characters/riven/frames/frame-021.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/riven/frames/frame-162.png",
+      "/characters/riven/frames/frame-163.png",
+      "/characters/riven/frames/frame-164.png",
+      "/characters/riven/frames/frame-165.png",
+      "/characters/riven/frames/frame-166.png",
+      "/characters/riven/frames/frame-167.png",
+      "/characters/riven/frames/frame-168.png"
+    ],
     "cmd:FC+2": [
       "/characters/riven/frames/frame-120.png",
       "/characters/riven/frames/frame-128.png",
@@ -1088,7 +1096,10 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 25,
       "label": "FC+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 8,
+      "activeFrames": 16,
+      "recoveryFrames": 4
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,

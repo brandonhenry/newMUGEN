@@ -61,7 +61,7 @@ import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFra
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import { fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
-import { createRollbackController, type RollbackController } from './lib/online/rollback';
+import { createRollbackSession, type RollbackSession } from './lib/online/rollback';
 import {
   ROUNDS_TO_WIN,
   emptyInputFrame,
@@ -17313,7 +17313,8 @@ function FightScreen({
   const onlineRoomRef = useRef<OnlineMatchResult | null>(null);
   const onlineRoleRef = useRef<OnlineRole | null>(null);
   const onlineStateRef = useRef<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
-  const onlineRollbackRef = useRef<RollbackController | null>(null);
+  const onlineRollbackRef = useRef<RollbackSession | null>(null);
+  const onlineSuppressSideEffectsRef = useRef(false);
   const onlineWinsRef = useRef<OnlineWins>([0, 0]);
   const onlineRematchReadyRef = useRef({ local: false, remote: false });
   const onlineWinnerRecordedRef = useRef(false);
@@ -17594,6 +17595,17 @@ function FightScreen({
   }, [rankedProfile]);
 
   useEffect(() => {
+    if (onlineSuppressSideEffectsRef.current) {
+      onlineSuppressSideEffectsRef.current = false;
+      lastCombatEventId.current = match.lastHitId;
+      match.combatEvents.forEach((event) => seenCombatEventIds.current.add(event.id));
+      match.impactEvents.forEach((event) => {
+        seenImpactAudioEventIds.current.add(event.id);
+        seenImpactScoreEventIds.current.add(event.id);
+        seenTrialImpactEventIds.current.add(event.id);
+      });
+      return;
+    }
     if (match.lastHitId < lastCombatEventId.current) {
       seenCombatEventIds.current.clear();
       setCombatPopups([]);
@@ -17871,13 +17883,16 @@ function FightScreen({
       onlineRollbackRef.current = null;
       return;
     }
-    onlineRollbackRef.current = createRollbackController({
+    onlineRollbackRef.current = createRollbackSession({
       initialMatch: baseMatch,
       localPlayerIndex: role === 'host' ? 0 : 1,
       stepMatch,
       cloneMatch: cloneMatchSnapshot,
       encodeInput: encodeInputFrame,
-      decodeInput: decodeInputFrame
+      decodeInput: decodeInputFrame,
+      localFrameDelay: 0,
+      maxPredictionFrames: 12,
+      maxRollbackFrames: 12
     });
   }, []);
 
@@ -18129,16 +18144,20 @@ function FightScreen({
     if (message.type === 'inputBatch') {
       const rollback = onlineRollbackRef.current;
       if (!rollback) return;
-      rollback.receiveRemoteInputBatch({
+      const result = rollback.receiveRemoteInputBatch({
         startFrame: message.startFrame,
         masks: message.masks,
         ackFrame: message.ackFrame,
+        currentFrame: message.currentFrame,
+        remoteFrame: message.remoteFrame,
         checksum: message.checksum,
-        sentAt: message.sentAt
+        sentAt: message.sentAt,
+        disconnectRequested: message.disconnectRequested
       });
+      onlineSuppressSideEffectsRef.current = result.executionMode === 'rollback' && result.replayedFrames > 0;
       matchRef.current = rollback.getMatch();
       setMatch(matchRef.current);
-      const stats = rollback.getStats();
+      const stats = rollback.getNetworkStats();
       if (stats.needsResync) {
         setOnlineStatusText('SYNCING');
         if (onlineRoleRef.current === 'host') {
@@ -18488,21 +18507,27 @@ function FightScreen({
           if (isOnline && onlineStateRef.current === 'connected') {
             const rollback = onlineRollbackRef.current;
             if (rollback) {
-              matchRef.current = rollback.advance(localOnlineInput);
+              const localPlayerIndex = onlineRoleRef.current === 'guest' ? 1 : 0;
+              rollback.addLocalInput(localPlayerIndex, localOnlineInput);
+              const result = rollback.advanceFrame();
+              rollback.idle(1);
+              matchRef.current = result.match;
               const batch = rollback.makeInputBatch(ONLINE_INPUT_REDUNDANT_FRAMES, Date.now());
               onlineInputSequenceRef.current += 1;
               onlineSessionRef.current?.send({ type: 'inputBatch', ...batch });
-              const stats = rollback.getStats();
+              const stats = rollback.getNetworkStats();
               if (stats.needsResync) {
                 setOnlineStatusText('SYNCING');
                 if (onlineRoleRef.current === 'host') {
                   publishOnlineSnapshot(true, 'resync');
                   rollback.clearResyncRequest();
                 }
+              } else if (stats.disconnected) {
+                setOnlineStatusText('CONNECTION WARNING');
               } else if (onlineStatusTextRef.current !== 'CONNECTED') {
                 setOnlineStatusText('CONNECTED');
               }
-              if (onlineRoleRef.current === 'host') {
+              if (onlineRoleRef.current === 'host' && result.advanced && result.executionMode === 'normal') {
                 trackOnlinePerformanceFrame(matchRef.current);
                 recordOnlineMatchWin(matchRef.current);
               }
