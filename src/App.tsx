@@ -1321,8 +1321,19 @@ function pickRandomStage(stageRoster: StageDefinition[]) {
 }
 
 function pickMenuAttractStage(stageRoster: StageDefinition[]) {
-  const lightweightStages = stageRoster.filter((stage) => !stage.hidden && stage.renderMode !== 'model' && !stage.model?.path && !stage.model?.url);
-  if (lightweightStages.length > 0) return pickRandomStage(lightweightStages) ?? lightweightStages[0];
+  const visibleStages = stageRoster.filter((stage) => !stage.hidden);
+  const preferredModelStageIds = [
+    'naruto-naruto-slugfest-konohagakure-entrance',
+    'dbz-galactic-arena-stage',
+    'one-piece-opfp-wano-side-street',
+    'bleach-bleach-soul-reaper-karakura-town-intersection'
+  ];
+  const preferredModelStage = preferredModelStageIds
+    .map((id) => visibleStages.find((stage) => stage.id === id && (stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url))))
+    .find(Boolean);
+  if (preferredModelStage) return preferredModelStage;
+  const modelStages = visibleStages.filter((stage) => stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url));
+  if (modelStages.length > 0) return pickRandomStage(modelStages) ?? modelStages[0];
   return pickRandomStage(stageRoster) ?? stages[0];
 }
 
@@ -5647,7 +5658,7 @@ function TournamentSelect({
             onClick={() => paidEnabled && selectTournamentMode('paid')}
             disabled={!paidEnabled}
           >
-            <strong>{paidSummary?.entryFeeLabel ?? '$2 Via Cash App'}</strong>
+            <strong>Prizepool</strong>
             <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
             <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
           </button>
@@ -5759,7 +5770,7 @@ function TournamentModeCarousel({
   const options: Array<{ mode: TournamentSelectMode; label: string; icon: ReactNode }> = [
     { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
     { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
-    { mode: 'paid', label: '$2 Cash App', icon: <Trophy size={18} /> },
+    { mode: 'paid', label: 'Prizepool', icon: <Trophy size={18} /> },
     ...(isDevHost ? [{ mode: 'infinite' as const, label: 'Infinite', icon: <Swords size={18} /> }] : [])
   ];
   const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));

@@ -2094,35 +2094,26 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
 }
 
 export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   return (
     <Canvas frameloop="always" dpr={[1, 1.15]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
-      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
-      <MenuAttractCamera match={match} />
-      <MenuAttractArenaLite stage={match.stage} />
-      <group position={[0, 0, 1.75]} scale={0.82}>
-        <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
-        <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
-        <TransformEffectLayer fighter={match.fighters[0]} />
-        <TransformEffectLayer fighter={match.fighters[1]} />
-        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
-        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
-        <EffectLayer match={match} reducedMotion={reducedMotion} />
-        <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
-      </group>
+      <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+        <Suspense fallback={null}>
+          <Environment preset="city" />
+        </Suspense>
+        {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+        <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
+        <MenuAttractCamera match={match} />
+        <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
+        <StageCameraOcclusionFader />
+        <group scale={0.82}>
+          <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
+          <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
+          <EffectLayer match={match} reducedMotion={reducedMotion} />
+          <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
+        </group>
+      </StageCameraCollisionContext.Provider>
     </Canvas>
-  );
-}
-
-function MenuAttractArenaLite({ stage }: { stage: StageDefinition }) {
-  const style = resolveStageVisualStyle(stage);
-  return (
-    <group position={[0, 0, 1.75]}>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]}>
-        <planeGeometry args={[13, 8]} />
-        <meshBasicMaterial color={stage.floor} toneMapped={false} />
-      </mesh>
-      <gridHelper args={[13, 12, stage.rail, style.lighting.fogColor]} position={[0, -0.045, 0]} />
-    </group>
   );
 }
 
@@ -2132,7 +2123,7 @@ function MenuAttractCamera({ match }: { match: MatchSnapshot }) {
   useFrame((state, delta) => {
     const [p1, p2] = match.fighters;
     const midX = (p1.position.x + p2.position.x) / 2;
-    const midZ = (p1.position.z + p2.position.z) / 2 + 1.75;
+    const midZ = (p1.position.z + p2.position.z) / 2;
     const dx = p2.position.x - p1.position.x;
     const dz = p2.position.z - p1.position.z;
     const distance = Math.hypot(dx, dz);
