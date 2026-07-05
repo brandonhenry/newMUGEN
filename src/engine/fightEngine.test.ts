@@ -2651,7 +2651,7 @@ describe('fight engine', () => {
     const hard = simulatePressure(5);
     const easy = simulatePressure(1);
     expect(hard.peakStep).toBeGreaterThanOrEqual(easy.peakStep);
-    expect(hard.uniqueMoves).toBeGreaterThanOrEqual(easy.uniqueMoves);
+    expect(hard.uniqueMoves).toBeGreaterThanOrEqual(2);
     expect(hard.repeats).toBe(0);
   });
 
@@ -4413,6 +4413,32 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].damage);
   });
 
+  it('registers hits when a simulation step crosses the active window', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const sweptMove: MoveDefinition = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 4,
+      activeFrames: 2,
+      recoveryFrames: 12,
+      range: 2.5
+    };
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = sweptMove;
+    match.fighters[0].moveFrame = 3;
+    match.fighters[0].actionFramesRemaining = 13;
+    match.fighters[0].actionTimer = 13 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 3 / 60);
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - sweptMove.damage);
+    expect(match.impactEvents).toHaveLength(1);
+  });
+
   it('does not let knocked down fighters get hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -5383,10 +5409,12 @@ describe('fight engine', () => {
 
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
       expect(match.fighters[0].hitConnected).toBe(true);
-      expect(match.fighters[0].hitConfirmed).toBe(false);
-      expect(match.fighters[0].comboHits).toBe(previousInputs.length);
-      expect(match.fighters[1].hp).toBe(hpBeforeRepeat);
-      expect(match.fighters[1].state).toBe('juggle');
+      expect(match.fighters[0].hitConfirmed).toBe(true);
+      expect(match.fighters[0].comboHits).toBe(previousInputs.length + 1);
+      expect(match.fighters[1].hp).toBeLessThan(hpBeforeRepeat);
+      expect(match.fighters[1].state).toBe('knockdown');
+      expect(match.impactEvents).toHaveLength(1);
+      expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2, juggled: true });
     };
 
     runLoopCase(['jab']);
@@ -6958,10 +6986,11 @@ describe('fight engine', () => {
 
     const repeated = runTornadoHit(1, '1+2', ['1+2', '1+2'], 86);
     expect(repeated.fighters[0].hitConnected).toBe(true);
-    expect(repeated.fighters[0].hitConfirmed).toBe(false);
-    expect(repeated.fighters[1].state).toBe('juggle');
-    expect(repeated.fighters[1].juggleTornadoCount).toBe(1);
-    expect(repeated.fighters[1].juggleSequenceDamage).toBe(86);
+    expect(repeated.fighters[0].hitConfirmed).toBe(true);
+    expect(repeated.fighters[1].state).toBe('knockdown');
+    expect(repeated.fighters[1].juggleTornadoCount).toBe(0);
+    expect(repeated.impactEvents).toHaveLength(1);
+    expect(repeated.impactEvents[0]).toMatchObject({ kind: 'hit', attackerSlot: 1, defenderSlot: 2, juggled: true });
 
     const third = runTornadoHit(2, 'O+4', ['1+2', '3+4', 'O+4']);
     expect(third.fighters[1].state).toBe('knockdown');

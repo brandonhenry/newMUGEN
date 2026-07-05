@@ -111,6 +111,7 @@ const ATTACK_BUFFER_FRAMES = 16;
 const MAX_COMBO_STEPS = 30;
 const COMBO_SEQUENCE_MEMORY = 30;
 const JUGGLE_REPEAT_LOOP_UNIQUE_LIMIT = 3;
+const JUGGLE_LOOP_BREAKER_DAMAGE_SCALE = 0.35;
 const SIDESTEP_TAP_SCALE = 1.45;
 const SIDEWALK_SCALE = 1.15;
 const SIDESTEP_REPEAT_GRACE_FRAMES = 30;
@@ -298,7 +299,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   resolveBodyCollision(next);
   constrainFightersToStageBounds(next);
   updateControlSideSigns(next);
-  resolveHits(next);
+  resolveHits(next, frameDelta);
   constrainFightersToStageBounds(next);
 
   if (next.roundFinisher) {
@@ -2187,18 +2188,102 @@ function isStaleJuggleLoopKey(sequence: string[], key: string) {
   return loopKeys.size <= JUGGLE_REPEAT_LOOP_UNIQUE_LIMIT;
 }
 
-function forceJuggleRepeatDrop(attacker: FighterRuntime, move: MoveDefinition) {
-  const penaltyFrames = Math.max(
-    DEFAULT_WHIFF_RECOVERY_FRAMES,
-    move.comboRepeatPenaltyFrames ?? 0,
-    move.juggleRepeatPenaltyFrames ?? 0,
-    12
-  );
+function buildJuggleLoopBreakerMove(move: MoveDefinition): MoveDefinition {
+  return {
+    ...move,
+    damage: Math.max(1, Math.round(move.damage * JUGGLE_LOOP_BREAKER_DAMAGE_SCALE)),
+    launchHeight: undefined,
+    knockdown: true,
+    tornado: false
+  };
+}
+
+function applyJuggleLoopBreakerHit(
+  match: MatchSnapshot,
+  attacker: FighterRuntime,
+  defender: FighterRuntime,
+  move: MoveDefinition,
+  position: [number, number, number],
+  distance: number,
+  dx: number,
+  dz: number
+) {
+  const breakerMove = buildJuggleLoopBreakerMove(move);
+  const impactId = nextHitEventId(match);
+  const damage = breakerMove.damage;
+  pushImpactSparkEvent(match, impactId, attacker, defender, breakerMove, 'hit', {
+    comboHits: Math.max(1, attacker.comboHits + 1),
+    juggled: true,
+    kiBurst: Boolean(move.kiBurst)
+  }, position);
   attacker.hitConnected = true;
-  attacker.hitConfirmed = false;
-  attacker.whiffRecoveryApplied = true;
-  attacker.actionFramesRemaining = Math.max(attacker.actionFramesRemaining, totalMoveFrames(move) - attacker.moveFrame + penaltyFrames);
-  attacker.actionTimer = framesToSeconds(attacker.actionFramesRemaining);
+  attacker.hitConfirmed = true;
+  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + damage);
+  attacker.aiJuggleLockoutFrames = Math.max(attacker.aiJuggleLockoutFrames, AI_JUGGLE_LOCKOUT_FRAMES);
+  pushCombatPopupEvent(match, impactId, attacker, breakerMove, attacker.comboHits >= 2 ? 'combo' : null, {
+    juggled: true,
+    kiBurst: Boolean(move.kiBurst)
+  });
+  applyFighterDamage(defender, damage);
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  defender.blockstunFramesRemaining = 0;
+  defender.blockPunishWindowFrames = 0;
+  defender.forcedCrouchFrames = 0;
+  resetKiChargeRuntime(defender);
+  mirrorShadowCloneHit(defender, breakerMove, true, true);
+  enterKnockdown(defender, Math.max(KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES, breakerMove.onHitFrames + KNOCKDOWN_MIN_FRAMES));
+  const pushX = distance > 0 ? dx / distance : attacker.facing;
+  const pushZ = distance > 0 ? dz / distance : 0;
+  defender.position.x += pushX * Math.max(0.2, breakerMove.pushback) * 0.22;
+  defender.position.z += pushZ * Math.max(0.2, breakerMove.pushback) * 0.22;
+  applyVisualHitstop(attacker, defender, breakerMove, 'hit');
+  if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
+}
+
+function applyShadowCloneJuggleLoopBreakerHit(
+  match: MatchSnapshot,
+  attacker: FighterRuntime,
+  cloneFighter: FighterRuntime,
+  defender: FighterRuntime,
+  weakMove: MoveDefinition,
+  position: [number, number, number],
+  distance: number,
+  dx: number,
+  dz: number
+) {
+  const breakerMove = buildJuggleLoopBreakerMove(weakMove);
+  const impactId = nextHitEventId(match);
+  pushImpactSparkEvent(match, impactId, attacker, defender, breakerMove, 'hit', {
+    comboHits: Math.max(1, attacker.comboHits + 1),
+    juggled: true,
+    kiBurst: Boolean(weakMove.kiBurst)
+  }, position);
+  attacker.hitConfirmed = true;
+  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + breakerMove.damage);
+  attacker.aiJuggleLockoutFrames = Math.max(attacker.aiJuggleLockoutFrames, AI_JUGGLE_LOCKOUT_FRAMES);
+  pushCombatPopupEvent(match, impactId, attacker, breakerMove, attacker.comboHits >= 2 ? 'combo' : null, {
+    juggled: true,
+    kiBurst: Boolean(weakMove.kiBurst)
+  });
+  applyFighterDamage(defender, breakerMove.damage);
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  defender.blockstunFramesRemaining = 0;
+  defender.blockPunishWindowFrames = 0;
+  defender.forcedCrouchFrames = 0;
+  resetKiChargeRuntime(defender);
+  enterKnockdown(defender, Math.max(KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES, breakerMove.onHitFrames + KNOCKDOWN_MIN_FRAMES));
+  const pushX = distance > 0 ? dx / distance : cloneFighter.facing;
+  const pushZ = distance > 0 ? dz / distance : 0;
+  defender.position.x += pushX * Math.max(0.2, breakerMove.pushback) * 0.16;
+  defender.position.z += pushZ * Math.max(0.2, breakerMove.pushback) * 0.16;
+  applyShadowCloneVisualHitstop(attacker, defender, breakerMove, 'hit');
+  scheduleShadowCloneVanish(attacker);
+  if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
 }
 
 function getEngineRouteVarietyCredit(move: MoveDefinition, attacker: FighterRuntime, identity: string, context: 'neutral' | 'combo' | 'juggle', repeatCount: number) {
@@ -2941,19 +3026,19 @@ function getComboRoute(fighter: FighterRuntime, opponent: FighterRuntime, input:
   return { key: 'neutral', label: 'Neutral', toward, away, low, launcher: false };
 }
 
-function resolveHits(match: MatchSnapshot) {
+function resolveHits(match: MatchSnapshot, frameDelta = 1) {
   const [a, b] = match.fighters;
-  if (tryStartKiClash(match, a, b)) return;
-  tryHit(match, a, b);
+  if (tryStartKiClash(match, a, b, frameDelta)) return;
+  tryHit(match, a, b, frameDelta);
   if (match.roundFinisher) return;
-  tryHit(match, b, a);
+  tryHit(match, b, a, frameDelta);
   if (match.roundFinisher) return;
-  tryShadowCloneHit(match, a, b);
+  tryShadowCloneHit(match, a, b, frameDelta);
   if (match.roundFinisher) return;
-  tryShadowCloneHit(match, b, a);
+  tryShadowCloneHit(match, b, a, frameDelta);
 }
 
-function tryStartKiClash(match: MatchSnapshot, p1: FighterRuntime, p2: FighterRuntime) {
+function tryStartKiClash(match: MatchSnapshot, p1: FighterRuntime, p2: FighterRuntime, frameDelta: number) {
   if (isClashActive(match.clashState)) return false;
   const p1Move = p1.currentMove;
   const p2Move = p2.currentMove;
@@ -2961,8 +3046,10 @@ function tryStartKiClash(match: MatchSnapshot, p1: FighterRuntime, p2: FighterRu
   if (p1.state !== 'attack' || p2.state !== 'attack') return false;
   if (!p1Move.kiBurst || !p2Move.kiBurst) return false;
   if (p1.hitConnected || p2.hitConnected) return false;
-  if (!isActiveMoveFrame(p1Move, p1.moveFrame) || !isActiveMoveFrame(p2Move, p2.moveFrame)) return false;
-  const clashOverlap = findFirstBoxOverlap(getActiveAttackAabbs(p1, p1Move, true), getActiveAttackAabbs(p2, p2Move, true));
+  const p1ActiveFrame = getSweptActiveMoveFrame(p1Move, p1.moveFrame, frameDelta);
+  const p2ActiveFrame = getSweptActiveMoveFrame(p2Move, p2.moveFrame, frameDelta);
+  if (p1ActiveFrame === null || p2ActiveFrame === null) return false;
+  const clashOverlap = findFirstBoxOverlap(getActiveAttackAabbs(p1, p1Move, true, p1ActiveFrame), getActiveAttackAabbs(p2, p2Move, true, p2ActiveFrame));
   if (!clashOverlap) return false;
 
   const id = nextHitEventId(match);
@@ -3152,19 +3239,20 @@ function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
   return participant.mistakes === 0 && participant.completedFrame !== null && participant.inputs.length === clash.sequence.length;
 }
 
-function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
+function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack' || attacker.hitConnected) return;
   if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
   const moveFrame = attacker.moveFrame || secondsToFrames(totalMoveSeconds(move) - attacker.actionTimer);
-  if (!isActiveMoveFrame(move, moveFrame)) return;
+  const activeMoveFrame = getSweptActiveMoveFrame(move, moveFrame, frameDelta);
+  if (activeMoveFrame === null) return;
   const attackerPosition = getFighterCombatPosition(attacker);
   const defenderPosition = getFighterCombatPosition(defender);
   const dx = defenderPosition.x - attackerPosition.x;
   const dz = defenderPosition.z - attackerPosition.z;
   const distance = Math.hypot(dx, dz);
   const attackerScale = getCharacterCombatScale(attacker.character);
-  const collision = getAttackCollision(attacker, defender, move, distance <= move.range * attackerScale.width + UNIVERSAL_RANGE_BUFFER);
+  const collision = getAttackCollision(attacker, defender, move, distance <= move.range * attackerScale.width + UNIVERSAL_RANGE_BUFFER, activeMoveFrame);
   if (!collision) return;
 
   const wasJuggled = defender.state === 'juggle';
@@ -3180,7 +3268,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const identityUsesInCombo = countIdentityOccurrences(attacker.comboIdentitySequence, identity);
   const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT && identityUsesInCombo <= 1;
   if (!blocked && wasJuggled && shouldForceJuggleRepeatDrop(attacker, identity, family, visualFamily)) {
-    forceJuggleRepeatDrop(attacker, move);
+    applyJuggleLoopBreakerHit(match, attacker, defender, move, collision.position, distance, dx, dz);
     return;
   }
   const impactId = nextHitEventId(match);
@@ -3321,12 +3409,13 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
 
-function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime) {
+function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
   const clone = attacker.shadowClone;
   const sourceMove = clone?.currentMove;
   if (!clone || clone.phase !== 'active' || clone.state !== 'attack' || !sourceMove || clone.hitConnected) return;
   if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
-  if (!isActiveMoveFrame(sourceMove, clone.moveFrame)) return;
+  const activeMoveFrame = getSweptActiveMoveFrame(sourceMove, clone.moveFrame, frameDelta);
+  if (activeMoveFrame === null) return;
 
   const cloneFighter = makeShadowCloneFighter(attacker, clone);
   const clonePosition = getFighterCombatPosition(cloneFighter);
@@ -3335,7 +3424,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const dz = defenderPosition.z - clonePosition.z;
   const distance = Math.hypot(dx, dz);
   const weakMove = buildShadowCloneMove(sourceMove);
-  const collision = getAttackCollision(cloneFighter, defender, weakMove, distance <= weakMove.range + UNIVERSAL_RANGE_BUFFER);
+  const collision = getAttackCollision(cloneFighter, defender, weakMove, distance <= weakMove.range + UNIVERSAL_RANGE_BUFFER, activeMoveFrame);
   if (!collision) return;
 
   const blocked = canDefenderBlockMove(defender, cloneFighter, weakMove);
@@ -3344,6 +3433,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const visualFamily = getMoveVisualFamily(sourceMove);
   if (!blocked && defender.state === 'juggle' && shouldForceJuggleRepeatDrop(attacker, identity, family, visualFamily)) {
     clone.hitConnected = true;
+    applyShadowCloneJuggleLoopBreakerHit(match, attacker, cloneFighter, defender, weakMove, collision.position, distance, dx, dz);
     return;
   }
 
@@ -3642,8 +3732,14 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
 }
 
-function isActiveMoveFrame(move: MoveDefinition, moveFrame: number) {
-  return moveFrame >= move.startupFrames && moveFrame < move.startupFrames + move.activeFrames;
+function getSweptActiveMoveFrame(move: MoveDefinition, moveFrame: number, frameDelta: number) {
+  const startFrame = move.startupFrames;
+  const endFrame = move.startupFrames + move.activeFrames;
+  const previousFrame = Math.max(0, moveFrame - Math.max(0, frameDelta));
+  if (moveFrame >= startFrame && previousFrame < endFrame) {
+    return clamp(moveFrame, startFrame, Math.max(startFrame, endFrame - 1));
+  }
+  return null;
 }
 
 function completeActionLock(fighter: FighterRuntime, input: InputFrame) {
@@ -3804,8 +3900,8 @@ type Aabb = {
   maxZ: number;
 };
 
-function getAttackCollision(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean) {
-  const attackBoxes = getActiveAttackAabbs(attacker, move, includeBaseHitbox);
+function getAttackCollision(attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean, moveFrame = attacker.moveFrame) {
+  const attackBoxes = getActiveAttackAabbs(attacker, move, includeBaseHitbox, moveFrame);
   const hurtboxes = getCurrentHurtboxes(defender)
     .flatMap((hurtbox) => getHurtboxesForHitLevel(hurtbox, move.hitLevel))
     .map((hurtbox) => hurtboxToWorldAabb(defender, hurtbox));
@@ -3821,9 +3917,9 @@ function getImpactPosition(attacker: FighterRuntime, defender: FighterRuntime, m
   return getAttackCollision(attacker, defender, move, true)?.position ?? [defenderPosition.x, defenderPosition.y + 1.08, defenderPosition.z];
 }
 
-function getActiveAttackAabbs(attacker: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean) {
+function getActiveAttackAabbs(attacker: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean, moveFrame = attacker.moveFrame) {
   const boxes = includeBaseHitbox ? [moveHitboxToWorldAabb(attacker, move.hitbox)] : [];
-  return [...boxes, ...getActiveEffectHitboxes(attacker, move)];
+  return [...boxes, ...getActiveEffectHitboxes(attacker, move, moveFrame)];
 }
 
 function findFirstBoxOverlap(a: Aabb[], b: Aabb[]) {
@@ -3834,18 +3930,18 @@ function findFirstBoxOverlap(a: Aabb[], b: Aabb[]) {
   return null;
 }
 
-function getActiveEffectHitboxes(attacker: FighterRuntime, move: MoveDefinition) {
+function getActiveEffectHitboxes(attacker: FighterRuntime, move: MoveDefinition, moveFrame = attacker.moveFrame) {
   const effects = attacker.character.effects ?? [];
   const library = new Map(effects.map((effect) => [effect.id, effect]));
   const totalFrames = Math.max(1, move.startupFrames + move.activeFrames + move.recoveryFrames);
   return getEffectMoveKeys(attacker, move)
     .flatMap((moveKey) => attacker.character.moveEffects?.[moveKey] ?? [])
-    .filter((instance) => effectIsVisibleAt(instance, attacker.moveFrame, totalFrames))
+    .filter((instance) => effectIsVisibleAt(instance, moveFrame, totalFrames))
     .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index)
     .flatMap((instance) => {
       const effect = library.get(instance.effectId);
       if (!effect) return [];
-      const transform = effectTransformAt(effect, instance, attacker.moveFrame);
+      const transform = effectTransformAt(effect, instance, moveFrame);
       const anchor = instance.anchor ?? effect.anchor;
       return [effectHitboxToWorldAabb(attacker, transform, anchor, instance.hitbox)];
     });
