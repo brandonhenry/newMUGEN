@@ -1334,7 +1334,12 @@ function pickMenuAttractStage(stageRoster: StageDefinition[]) {
   if (preferredModelStage) return preferredModelStage;
   const modelStages = visibleStages.filter((stage) => stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url));
   if (modelStages.length > 0) return pickRandomStage(modelStages) ?? modelStages[0];
-  return pickRandomStage(stageRoster) ?? stages[0];
+  return (
+    visibleStages.find((stage) => stage.id === 'the-chamber') ??
+    stageRoster.find((stage) => stage.id === 'the-chamber') ??
+    pickRandomStage(stageRoster) ??
+    stages[0]
+  );
 }
 
 function resolveUnlockedTrainingCharacters(
