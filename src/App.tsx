@@ -4519,8 +4519,8 @@ function MenuAttractBackground({
     let last = performance.now();
     let lastPublish = last;
     let accumulator = 0;
-    const fixedStep = 1 / 30;
-    const publishStepMs = 1000 / 30;
+    const fixedStep = 1 / 60;
+    const publishStepMs = 1000 / 60;
 
     const tick = (now: number) => {
       accumulator += Math.min(0.05, (now - last) / 1000);
