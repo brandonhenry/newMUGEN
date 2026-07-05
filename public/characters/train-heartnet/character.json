@@ -2690,7 +2690,9 @@
   "projectiles": [
     {
       "id": "firearm-bullet-projectile",
-      "name": "WS+2 Frame Link Bullet",
+      "name": "Firearm Bullet",
+      "sourcePath": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/source/raw/65.png",
       "frames": [
         "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
         "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-001.png",
@@ -2715,9 +2717,9 @@
       "blendMode": "additive",
       "voxelProfile": "image-source",
       "defaultScale": [
-        0.32,
-        0.32,
-        0.32
+        0.28,
+        0.28,
+        0.28
       ],
       "defaultRotation": [
         0,
@@ -2730,10 +2732,10 @@
   "moveProjectiles": {
     "cmd:1+3": [
       {
-        "id": "cmd-1-3-shot",
+        "id": "cmd:1-3-shot",
         "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Cross Launcher Bullet",
-        "spawnFrame": 11,
+        "label": "Train Heartnet Cross Launcher Firearm Bullet",
+        "spawnFrame": 4,
         "spawnOffset": [
           0,
           1.08,
@@ -2748,8 +2750,8 @@
         "homingMode": "limited",
         "homingStrength": 1.8,
         "homingTurnRate": 2.4,
-        "homingEndFrame": 34,
-        "nearMissRadius": 0.46,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
         "hitbox": {
           "offset": [
             0,
@@ -2766,15 +2768,16 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": false
       }
     ],
     "cmd:O+2": [
       {
-        "id": "cmd-o-2-shot",
+        "id": "cmd:o-2-shot",
         "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Aura Drive Bullet",
-        "spawnFrame": 27,
+        "label": "Train Heartnet Aura Drive Firearm Bullet",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
           1.08,
@@ -2789,8 +2792,8 @@
         "homingMode": "limited",
         "homingStrength": 1.8,
         "homingTurnRate": 2.4,
-        "homingEndFrame": 34,
-        "nearMissRadius": 0.46,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
         "hitbox": {
           "offset": [
             0,
@@ -2807,15 +2810,16 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": false
       }
     ],
     "cmd:WS+4": [
       {
-        "id": "cmd-ws-4-shot",
+        "id": "cmd:ws-4-shot",
         "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Rising Strike Bullet",
-        "spawnFrame": 11,
+        "label": "Train Heartnet Rising Strike Firearm Bullet",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
           1.08,
@@ -2830,8 +2834,8 @@
         "homingMode": "limited",
         "homingStrength": 1.8,
         "homingTurnRate": 2.4,
-        "homingEndFrame": 34,
-        "nearMissRadius": 0.46,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
         "hitbox": {
           "offset": [
             0,
@@ -2848,15 +2852,16 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": false
       }
     ],
     "kickleft": [
       {
         "id": "kickleft-shot",
         "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Left Kick Bullet",
-        "spawnFrame": 13,
+        "label": "Train Heartnet Left Kick Firearm Bullet",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
           1.08,
@@ -2871,8 +2876,8 @@
         "homingMode": "limited",
         "homingStrength": 1.8,
         "homingTurnRate": 2.4,
-        "homingEndFrame": 34,
-        "nearMissRadius": 0.46,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
         "hitbox": {
           "offset": [
             0,
@@ -2889,15 +2894,16 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": false
       }
     ],
     "kickright": [
       {
         "id": "kickright-shot",
         "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Right Kick Bullet",
-        "spawnFrame": 13,
+        "label": "Train Heartnet Right Kick Firearm Bullet",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
           1.08,
@@ -2912,8 +2918,8 @@
         "homingMode": "limited",
         "homingStrength": 1.8,
         "homingTurnRate": 2.4,
-        "homingEndFrame": 34,
-        "nearMissRadius": 0.46,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
         "hitbox": {
           "offset": [
             0,
@@ -2930,7 +2936,218 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:O+1": [
+      {
+        "id": "cmd:o-1-shot",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "O+1 Frame Link Firearm Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingMode": "limited",
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:d+1": [
+      {
+        "id": "cmd:d-1-shot",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "d+1 Frame Link Firearm Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingMode": "limited",
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd:f-1-shot",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "f+1 Frame Link Firearm Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingMode": "limited",
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:qcf+1": [
+      {
+        "id": "cmd:qcf-1-shot",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "qcf+1 Frame Link Firearm Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingMode": "limited",
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "jableft": [
+      {
+        "id": "jableft-shot",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Train Heartnet Left Check Firearm Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingMode": "limited",
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 41,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": false
       }
     ]
   }

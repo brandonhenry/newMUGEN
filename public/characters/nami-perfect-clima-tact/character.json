@@ -2637,45 +2637,5 @@
         "offsetX": 0
       }
     }
-  },
-  "projectiles": [
-    {
-      "id": "weather-lightning-projectile",
-      "name": "Nami (Perfect Clima-Tact) Burst Weather Bolt",
-      "frames": [
-        "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-000.png",
-        "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-001.png",
-        "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-002.png"
-      ],
-      "animationFrames": {
-        "startup": [
-          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-000.png"
-        ],
-        "active": [
-          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-000.png",
-          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-001.png",
-          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-002.png"
-        ],
-        "recovery": [
-          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-002.png"
-        ]
-      },
-      "fps": 18,
-      "loop": true,
-      "billboard": false,
-      "blendMode": "additive",
-      "voxelProfile": "image-source",
-      "defaultScale": [
-        0.44,
-        0.44,
-        0.44
-      ],
-      "defaultRotation": [
-        0,
-        0,
-        0
-      ],
-      "color": "#fff06a"
-    }
-  ]
+  }
 }

@@ -2832,45 +2832,5 @@
         "offsetX": 0
       }
     }
-  },
-  "projectiles": [
-    {
-      "id": "ice-energy-projectile",
-      "name": "Tōshirō Hitsugaya Cross Launcher Ice Wave",
-      "frames": [
-        "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-000.png",
-        "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-001.png",
-        "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-002.png"
-      ],
-      "animationFrames": {
-        "startup": [
-          "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-000.png"
-        ],
-        "active": [
-          "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-000.png",
-          "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-001.png",
-          "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-002.png"
-        ],
-        "recovery": [
-          "/characters/toshiro-hitsugaya/projectiles/ice-energy-projectile/frames/frame-002.png"
-        ]
-      },
-      "fps": 18,
-      "loop": true,
-      "billboard": false,
-      "blendMode": "additive",
-      "voxelProfile": "image-source",
-      "defaultScale": [
-        0.5,
-        0.42,
-        0.5
-      ],
-      "defaultRotation": [
-        0,
-        0,
-        0
-      ],
-      "color": "#c8f7ff"
-    }
-  ]
+  }
 }

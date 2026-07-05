@@ -2559,7 +2559,9 @@
   "projectiles": [
     {
       "id": "card-magic-projectile",
-      "name": "Yugi Mutou Aura Drive Card Shot",
+      "name": "Targeted Duel Spell",
+      "sourcePath": "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/yugi-mutou/projectiles/card-magic-projectile/source/raw/magic_01.png",
       "frames": [
         "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png",
         "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-001.png",
@@ -2584,9 +2586,9 @@
       "blendMode": "additive",
       "voxelProfile": "image-source",
       "defaultScale": [
-        0.42,
-        0.42,
-        0.42
+        0.48,
+        0.48,
+        0.48
       ],
       "defaultRotation": [
         0,
@@ -2599,26 +2601,27 @@
   "moveProjectiles": {
     "cmd:O+2": [
       {
-        "id": "cmd-o-2-shot",
+        "id": "cmd:o-2-shot",
         "projectileId": "card-magic-projectile",
-        "label": "Yugi Mutou Aura Drive Card Shot",
-        "spawnFrame": 18,
+        "label": "Yugi Mutou Aura Drive Targeted Duel Spell",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
-          1.08,
-          0.94
+          1.02,
+          0
         ],
-        "startupFrames": 0,
-        "activeFrames": 96,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 108,
-        "speed": 9.5,
-        "forwardVelocity": 9.5,
-        "homingMode": "limited",
-        "homingStrength": 3.4,
-        "homingTurnRate": 3.8,
-        "homingEndFrame": 54,
-        "nearMissRadius": 0.58,
+        "startupFrames": 12,
+        "activeFrames": 18,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 42,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.45,
+        "targetMode": "targetLocation",
         "hitbox": {
           "offset": [
             0,
@@ -2627,15 +2630,16 @@
           ],
           "size": [
             0.48,
-            0.42,
-            0.54
+            0.5,
+            0.48
           ]
         },
         "damageScale": 1,
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": true
       }
     ]
   }

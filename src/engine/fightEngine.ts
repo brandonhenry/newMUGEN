@@ -3157,14 +3157,16 @@ function createProjectileRuntime(
   const facing = attacker.facing || getOpponentSideSign(attacker, opponent, match.stage);
   const attackerPosition = getFighterCombatPosition(attacker);
   const scale = getCharacterCombatScale(attacker.character);
-  const spawnX = attackerPosition.x + facing * instance.spawnOffset[2] * scale.width;
-  const spawnY = attackerPosition.y + instance.spawnOffset[1] * scale.height;
-  const spawnZ = attackerPosition.z + instance.spawnOffset[0] * scale.width;
+  const targetPosition = getFighterCombatPosition(opponent);
+  const targetMode = instance.targetMode ?? 'forward';
+  const spawnX = targetMode === 'targetLocation' ? targetPosition.x : attackerPosition.x + facing * instance.spawnOffset[2] * scale.width;
+  const spawnY = targetMode === 'targetLocation' ? targetPosition.y + instance.spawnOffset[1] * scale.height : attackerPosition.y + instance.spawnOffset[1] * scale.height;
+  const spawnZ = targetMode === 'targetLocation' ? targetPosition.z + instance.spawnOffset[0] * scale.width : attackerPosition.z + instance.spawnOffset[0] * scale.width;
   const forward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
   const velocity = {
-    x: forward.x * instance.forwardVelocity,
+    x: targetMode === 'targetLocation' ? 0 : forward.x * instance.forwardVelocity,
     y: 0,
-    z: forward.z * instance.forwardVelocity
+    z: targetMode === 'targetLocation' ? 0 : forward.z * instance.forwardVelocity
   };
   return {
     id: nextHitEventId(match),
@@ -3188,6 +3190,8 @@ function createProjectileRuntime(
     homingTurnRate: instance.homingTurnRate,
     homingEndFrame: instance.homingEndFrame,
     nearMissRadius: instance.nearMissRadius,
+    targetMode,
+    targetPoint: targetMode === 'targetLocation' ? { x: spawnX, y: spawnY, z: spawnZ } : undefined,
     hitbox: instance.hitbox,
     damageScale: instance.damageScale,
     blockDamageScale: instance.blockDamageScale,
@@ -3225,6 +3229,7 @@ function updateProjectiles(match: MatchSnapshot, frameDelta: number) {
 }
 
 function applyProjectileHoming(projectile: ProjectileRuntime, target: FighterRuntime, dt: number) {
+  if (projectile.targetMode === 'targetLocation') return;
   if (projectile.homingMode !== 'limited' || projectile.homingStrength <= 0) return;
   if (projectile.homingEndFrame !== undefined && projectile.ageFrames > projectile.homingEndFrame) return;
   const targetPosition = getFighterCombatPosition(target);
@@ -6899,6 +6904,7 @@ function cloneProjectileRuntime(projectile: ProjectileRuntime): ProjectileRuntim
     position: { ...projectile.position },
     previousPosition: { ...projectile.previousPosition },
     velocity: { ...projectile.velocity },
+    targetPoint: projectile.targetPoint ? { ...projectile.targetPoint } : undefined,
     hitbox: { offset: [...projectile.hitbox.offset], size: [...projectile.hitbox.size] }
   };
 }

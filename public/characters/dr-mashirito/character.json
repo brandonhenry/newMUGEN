@@ -1910,6 +1910,11 @@
       }
     },
     "backHop": {
+      "16": {
+        "width": 1.345,
+        "height": 1.102,
+        "offsetX": 0
+      },
       "40": {
         "width": 1.01,
         "height": 1.01,
@@ -1918,11 +1923,6 @@
       "41": {
         "width": 1.03,
         "height": 1.03,
-        "offsetX": 0
-      },
-      "16": {
-        "width": 1.345,
-        "height": 1.102,
         "offsetX": 0
       }
     },
@@ -2978,5 +2978,175 @@
         "offsetX": 0
       }
     }
+  },
+  "projectiles": [
+    {
+      "id": "robot-cannon-projectile",
+      "name": "Robot Cannon Bolt",
+      "sourcePath": "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/dr-mashirito/projectiles/robot-cannon-projectile/source/raw/55.png",
+      "frames": [
+        "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png",
+        "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-001.png",
+        "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png",
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-001.png",
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.44,
+        0.44,
+        0.44
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#9eeeff"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "cmd:o-2-shot",
+        "projectileId": "robot-cannon-projectile",
+        "label": "Dr. Mashirito Aura Drive Robot Cannon Bolt",
+        "spawnFrame": 5,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.44,
+            0.72
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd:f-1-shot",
+        "projectileId": "robot-cannon-projectile",
+        "label": "f+1 Frame Link Robot Cannon Bolt",
+        "spawnFrame": 5,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.44,
+            0.72
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ],
+    "kickleft": [
+      {
+        "id": "kickleft-shot",
+        "projectileId": "robot-cannon-projectile",
+        "label": "Dr. Mashirito Left Kick Robot Cannon Bolt",
+        "spawnFrame": 5,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.44,
+            0.72
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ]
   }
 }

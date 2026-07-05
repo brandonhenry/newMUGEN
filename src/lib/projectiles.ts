@@ -5,6 +5,7 @@ import type {
   MoveProjectileInstance,
   ProjectileAnimationFrames,
   ProjectileHomingMode,
+  ProjectileTargetMode,
   ProceduralEffectKind,
   Vec3Tuple,
   VoxelFidelitySettings
@@ -13,6 +14,7 @@ import { sanitizeSoundCues } from './effects';
 
 const blends = new Set<EffectBlendMode>(['normal', 'additive', 'screen']);
 const homingModes = new Set<ProjectileHomingMode>(['none', 'limited']);
+const targetModes = new Set<ProjectileTargetMode>(['forward', 'targetLocation']);
 const proceduralKinds = new Set<ProceduralEffectKind>(['lightning', 'wind', 'ring', 'glow', 'trail', 'shards']);
 
 export function defaultCharacterProjectile(id = 'projectile'): CharacterProjectileDefinition {
@@ -99,6 +101,7 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
     homingTurnRate: clampNumber(source.homingTurnRate, 0, 18, 5.5),
     homingEndFrame: source.homingEndFrame === undefined ? undefined : clampFrame(source.homingEndFrame, 0, 720, activeFrames),
     nearMissRadius: clampNumber(source.nearMissRadius, 0.05, 3, 0.62),
+    targetMode: targetModes.has(source.targetMode as ProjectileTargetMode) ? source.targetMode as ProjectileTargetMode : undefined,
     hitbox: sanitizeBox(source.hitbox, { offset: [0, 0, 0], size: [0.42, 0.42, 0.55] }),
     damageScale: clampNumber(source.damageScale, 0, 5, 1),
     blockDamageScale: clampNumber(source.blockDamageScale, 0, 5, 1),

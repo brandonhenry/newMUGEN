@@ -2804,7 +2804,9 @@
   "projectiles": [
     {
       "id": "mechanical-blaster-projectile",
-      "name": "Franky Right Kick Blaster Bolt",
+      "name": "Mechanical Blaster Bolt",
+      "sourcePath": "/characters/franky/projectiles/mechanical-blaster-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/franky/projectiles/mechanical-blaster-projectile/source/raw/55.png",
       "frames": [
         "/characters/franky/projectiles/mechanical-blaster-projectile/frames/frame-000.png",
         "/characters/franky/projectiles/mechanical-blaster-projectile/frames/frame-001.png",
@@ -2829,16 +2831,16 @@
       "blendMode": "additive",
       "voxelProfile": "image-source",
       "defaultScale": [
-        0.48,
-        0.48,
-        0.48
+        0.42,
+        0.42,
+        0.42
       ],
       "defaultRotation": [
         0,
         0,
         0
       ],
-      "color": "#9eeeff"
+      "color": "#7be8ff"
     }
   ],
   "moveProjectiles": {
@@ -2846,8 +2848,8 @@
       {
         "id": "kickleft-shot",
         "projectileId": "mechanical-blaster-projectile",
-        "label": "Franky Left Kick Blaster Bolt",
-        "spawnFrame": 12,
+        "label": "Franky Left Kick Mechanical Blaster Bolt",
+        "spawnFrame": 10,
         "spawnOffset": [
           0,
           1.08,
@@ -2857,8 +2859,8 @@
         "activeFrames": 96,
         "recoveryFrames": 6,
         "lifetimeFrames": 108,
-        "speed": 10.5,
-        "forwardVelocity": 10.5,
+        "speed": 11,
+        "forwardVelocity": 11,
         "homingMode": "limited",
         "homingStrength": 2.6,
         "homingTurnRate": 3.8,
@@ -2880,15 +2882,16 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": true
       }
     ],
     "kickright": [
       {
         "id": "kickright-shot",
         "projectileId": "mechanical-blaster-projectile",
-        "label": "Franky Right Kick Blaster Bolt",
-        "spawnFrame": 14,
+        "label": "Franky Right Kick Mechanical Blaster Bolt",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
           1.08,
@@ -2898,8 +2901,8 @@
         "activeFrames": 96,
         "recoveryFrames": 6,
         "lifetimeFrames": 108,
-        "speed": 10.5,
-        "forwardVelocity": 10.5,
+        "speed": 11,
+        "forwardVelocity": 11,
         "homingMode": "limited",
         "homingStrength": 2.6,
         "homingTurnRate": 3.8,
@@ -2921,7 +2924,92 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ],
+    "cmd:2+4": [
+      {
+        "id": "cmd:2-4-shot",
+        "projectileId": "mechanical-blaster-projectile",
+        "label": "Franky Driving Kick Mechanical Blaster Bolt",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.44,
+            0.72
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd:f-1-shot",
+        "projectileId": "mechanical-blaster-projectile",
+        "label": "f+1 Frame Link Mechanical Blaster Bolt",
+        "spawnFrame": 5,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.44,
+            0.72
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
       }
     ]
   }

@@ -164,8 +164,7 @@
       "/characters/yusuke-urameshi/frames/frame-144.png",
       "/characters/yusuke-urameshi/frames/frame-145.png",
       "/characters/yusuke-urameshi/frames/frame-146.png",
-      "/characters/yusuke-urameshi/frames/frame-147.png",
-      "/characters/yusuke-urameshi/frames/frame-148.png"
+      "/characters/yusuke-urameshi/frames/frame-147.png"
     ],
     "cmd:WS+4": [
       "/characters/yusuke-urameshi/frames/frame-100.png",
@@ -2507,7 +2506,9 @@
   "projectiles": [
     {
       "id": "spirit-energy-projectile",
-      "name": "Yusuke Urameshi Burst Spirit Shot",
+      "name": "Spirit Gun Shot",
+      "sourcePath": "/characters/yusuke-urameshi/projectiles/spirit-energy-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/yusuke-urameshi/projectiles/spirit-energy-projectile/source/raw/19.png",
       "frames": [
         "/characters/yusuke-urameshi/projectiles/spirit-energy-projectile/frames/frame-000.png",
         "/characters/yusuke-urameshi/projectiles/spirit-energy-projectile/frames/frame-001.png",
@@ -2532,9 +2533,9 @@
       "blendMode": "additive",
       "voxelProfile": "image-source",
       "defaultScale": [
-        0.38,
-        0.38,
-        0.38
+        0.34,
+        0.34,
+        0.34
       ],
       "defaultRotation": [
         0,
@@ -2547,10 +2548,10 @@
   "moveProjectiles": {
     "cmd:qcf+4": [
       {
-        "id": "cmd-qcf-4-shot",
+        "id": "cmd:qcf-4-shot",
         "projectileId": "spirit-energy-projectile",
-        "label": "Yusuke Urameshi Burst Spirit Shot",
-        "spawnFrame": 14,
+        "label": "Yusuke Urameshi Burst Spirit Gun Shot",
+        "spawnFrame": 4,
         "spawnOffset": [
           0,
           1.08,
@@ -2574,16 +2575,17 @@
             0
           ],
           "size": [
-            0.38,
-            0.34,
-            0.66
+            0.46,
+            0.42,
+            0.68
           ]
         },
         "damageScale": 1,
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": true
       }
     ]
   }

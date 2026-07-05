@@ -2770,5 +2770,91 @@
         "offsetX": 0
       }
     }
+  },
+  "projectiles": [
+    {
+      "id": "ki-energy-projectile",
+      "name": "Super Saiyan Ki Shot",
+      "sourcePath": "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/source/raw/18.png",
+      "frames": [
+        "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-000.png",
+        "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-001.png",
+        "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-000.png",
+          "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-001.png",
+          "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/gohan-super-saiyan-2/projectiles/ki-energy-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.42,
+        0.42,
+        0.42
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe06e"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:1+2": [
+      {
+        "id": "cmd:1-2-shot",
+        "projectileId": "ki-energy-projectile",
+        "label": "1+2 Frame Link Super Saiyan Ki Shot",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingMode": "limited",
+        "homingStrength": 4.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.42,
+            0.68
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ]
   }
 }

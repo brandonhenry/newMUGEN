@@ -319,6 +319,7 @@ export type CharacterProjectileDefinition = {
 };
 
 export type ProjectileHomingMode = 'none' | 'limited';
+export type ProjectileTargetMode = 'forward' | 'targetLocation';
 
 export type MoveProjectileInstance = {
   id: string;
@@ -337,6 +338,7 @@ export type MoveProjectileInstance = {
   homingTurnRate: number;
   homingEndFrame?: number;
   nearMissRadius: number;
+  targetMode?: ProjectileTargetMode;
   hitbox: BoxSpec;
   damageScale: number;
   blockDamageScale: number;
@@ -984,6 +986,8 @@ export type ProjectileRuntime = {
   homingTurnRate: number;
   homingEndFrame?: number;
   nearMissRadius: number;
+  targetMode?: ProjectileTargetMode;
+  targetPoint?: { x: number; y: number; z: number };
   hitbox: BoxSpec;
   damageScale: number;
   blockDamageScale: number;

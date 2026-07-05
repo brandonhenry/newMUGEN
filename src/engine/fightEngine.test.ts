@@ -7043,6 +7043,59 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
   });
 
+  it('lets target-location projectiles hit stationary defenders after startup', () => {
+    const shooter = makeProjectileCharacter('projectile-target-location-hit-test', {}, {
+      targetMode: 'targetLocation',
+      spawnOffset: [0, 1, 0],
+      startupFrames: 6,
+      activeFrames: 18,
+      recoveryFrames: 8,
+      lifetimeFrames: 32,
+      speed: 0,
+      forwardVelocity: 0,
+      homingMode: 'none',
+      homingStrength: 0,
+      homingTurnRate: 0,
+      hitbox: { offset: [0, 0, 0], size: [0.58, 0.58, 0.58] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 12);
+
+    expect(match.fighters[1].hp).toBeLessThan(match.fighters[1].maxHp);
+    expect(match.projectiles).toHaveLength(0);
+  });
+
+  it('lets sidesteps dodge target-location projectiles before they become active', () => {
+    const shooter = makeProjectileCharacter('projectile-target-location-dodge-test', {}, {
+      targetMode: 'targetLocation',
+      spawnOffset: [0, 1, 0],
+      startupFrames: 10,
+      activeFrames: 18,
+      recoveryFrames: 8,
+      lifetimeFrames: 36,
+      speed: 0,
+      forwardVelocity: 0,
+      homingMode: 'none',
+      homingStrength: 0,
+      homingTurnRate: 0,
+      hitbox: { offset: [0, 0, 0], size: [0.58, 0.58, 0.58] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.projectiles[0]?.targetMode).toBe('targetLocation');
+    match.fighters[1].position.z = 8;
+    match = stepFrames(match, 24);
+
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+  });
+
   it('expires projectile runtimes after their lifetime', () => {
     const shooter = makeProjectileCharacter('projectile-expiry-test');
     const defender = makeProjectileCharacter('projectile-expiry-defender');

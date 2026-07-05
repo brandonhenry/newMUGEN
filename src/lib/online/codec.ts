@@ -242,6 +242,7 @@ function compactProjectile(projectile: MatchSnapshot['projectiles'][number]): Ma
     position: { ...projectile.position },
     previousPosition: { ...projectile.previousPosition },
     velocity: { ...projectile.velocity },
+    targetPoint: projectile.targetPoint ? { ...projectile.targetPoint } : undefined,
     hitbox: { offset: [...projectile.hitbox.offset], size: [...projectile.hitbox.size] }
   };
 }

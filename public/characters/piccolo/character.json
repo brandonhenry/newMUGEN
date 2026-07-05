@@ -2806,7 +2806,9 @@
   "projectiles": [
     {
       "id": "ki-energy-projectile",
-      "name": "Piccolo Right Check Ki Shot",
+      "name": "Namekian Ki Beam",
+      "sourcePath": "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/piccolo/projectiles/ki-energy-projectile/source/raw/16.png",
       "frames": [
         "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-000.png",
         "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-001.png",
@@ -2831,9 +2833,9 @@
       "blendMode": "additive",
       "voxelProfile": "image-source",
       "defaultScale": [
-        0.46,
-        0.46,
-        0.46
+        0.42,
+        0.42,
+        0.42
       ],
       "defaultRotation": [
         0,
@@ -2846,10 +2848,10 @@
   "moveProjectiles": {
     "cmd:f+1": [
       {
-        "id": "cmd-f-1-shot",
+        "id": "cmd:f-1-shot",
         "projectileId": "ki-energy-projectile",
-        "label": "f+1 Frame Link Ki Shot",
-        "spawnFrame": 14,
+        "label": "f+1 Frame Link Namekian Ki Beam",
+        "spawnFrame": 5,
         "spawnOffset": [
           0,
           1.08,
@@ -2863,7 +2865,7 @@
         "forwardVelocity": 10,
         "homingMode": "limited",
         "homingStrength": 4.2,
-        "homingTurnRate": 4.6,
+        "homingTurnRate": 3.8,
         "homingEndFrame": 54,
         "nearMissRadius": 0.58,
         "hitbox": {
@@ -2873,8 +2875,8 @@
             0
           ],
           "size": [
-            0.48,
-            0.48,
+            0.46,
+            0.42,
             0.68
           ]
         },
@@ -2882,7 +2884,8 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "clash": true
       }
     ]
   }

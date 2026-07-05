@@ -2753,45 +2753,5 @@
         "offsetX": 0
       }
     }
-  },
-  "projectiles": [
-    {
-      "id": "ki-energy-projectile",
-      "name": "Majin Buu Left Kick Ki Shot",
-      "frames": [
-        "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-000.png",
-        "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-001.png",
-        "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-002.png"
-      ],
-      "animationFrames": {
-        "startup": [
-          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-000.png"
-        ],
-        "active": [
-          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-000.png",
-          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-001.png",
-          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-002.png"
-        ],
-        "recovery": [
-          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-002.png"
-        ]
-      },
-      "fps": 18,
-      "loop": true,
-      "billboard": false,
-      "blendMode": "additive",
-      "voxelProfile": "image-source",
-      "defaultScale": [
-        0.46,
-        0.46,
-        0.46
-      ],
-      "defaultRotation": [
-        0,
-        0,
-        0
-      ],
-      "color": "#ff8ce8"
-    }
-  ]
+  }
 }
