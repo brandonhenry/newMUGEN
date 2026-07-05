@@ -108,6 +108,7 @@ const KI_BURST_COST = 35;
 const ATTACK_BUFFER_FRAMES = 16;
 const MAX_COMBO_STEPS = 30;
 const COMBO_SEQUENCE_MEMORY = 30;
+const JUGGLE_REPEAT_LOOP_UNIQUE_LIMIT = 3;
 const SIDESTEP_TAP_SCALE = 1.45;
 const SIDEWALK_SCALE = 1.15;
 const SIDESTEP_REPEAT_GRACE_FRAMES = 30;
@@ -958,10 +959,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   const laneInputActive = sidestepTap !== 0 || laneWalk !== 0;
-  if (!laneInputActive && forward !== 0 && fighter.sidestepTimer === 0) {
+  const horizontalMovementEndsLaneOrbit = !laneInputActive && forward !== 0 && fighter.sidestepTimer === 0;
+  if (horizontalMovementEndsLaneOrbit) {
     fighter.sidestepDirection = 0;
     fighter.sidestepRepeatGraceFrames = 0;
-    fighter.laneOrbitControlLocked = false;
   }
 
   const chooseSidestepOrbit = (direction: -1 | 1) => {
@@ -998,8 +999,12 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (forward !== 0 && axisSpeedScale > 0) {
+    const sideBeforeHorizontalMove = getPositionSideSign(fighter, opponent, match.stage);
     fighter.walkDirection = forward > 0 ? 1 : -1;
     moveAlongOpponentAxis(fighter, opponent, forward * fighter.character.stats.speed * axisSpeedScale * dt);
+    if (horizontalMovementEndsLaneOrbit) {
+      maybeUnlockLaneOrbitControlAfterHorizontalCross(match.stage, fighter, opponent, sideBeforeHorizontalMove);
+    }
   }
   if (sidestep !== 0) {
     const sidestepScale = fighter.sidestepTimer > 0 ? SIDESTEP_TAP_SCALE : SIDEWALK_SCALE;
@@ -2155,6 +2160,35 @@ function countIdentityOccurrences(sequence: string[], identity: string) {
   return sequence.reduce((count, candidate) => count + (candidate === identity ? 1 : 0), 0);
 }
 
+function shouldForceJuggleRepeatDrop(attacker: FighterRuntime, identity: string, family: string, visualFamily: string) {
+  return (
+    isStaleJuggleLoopKey(attacker.comboIdentitySequence, identity) ||
+    isStaleJuggleLoopKey(attacker.comboFamilySequence, family) ||
+    isStaleJuggleLoopKey(attacker.comboVisualFamilySequence, visualFamily)
+  );
+}
+
+function isStaleJuggleLoopKey(sequence: string[], key: string) {
+  const previous = sequence[sequence.length - 1] === key ? sequence.slice(0, -1) : sequence;
+  if (!previous.includes(key)) return false;
+  const loopKeys = new Set([...previous, key]);
+  return loopKeys.size <= JUGGLE_REPEAT_LOOP_UNIQUE_LIMIT;
+}
+
+function forceJuggleRepeatDrop(attacker: FighterRuntime, move: MoveDefinition) {
+  const penaltyFrames = Math.max(
+    DEFAULT_WHIFF_RECOVERY_FRAMES,
+    move.comboRepeatPenaltyFrames ?? 0,
+    move.juggleRepeatPenaltyFrames ?? 0,
+    12
+  );
+  attacker.hitConnected = true;
+  attacker.hitConfirmed = false;
+  attacker.whiffRecoveryApplied = true;
+  attacker.actionFramesRemaining = Math.max(attacker.actionFramesRemaining, totalMoveFrames(move) - attacker.moveFrame + penaltyFrames);
+  attacker.actionTimer = framesToSeconds(attacker.actionFramesRemaining);
+}
+
 function getEngineRouteVarietyCredit(move: MoveDefinition, attacker: FighterRuntime, identity: string, context: 'neutral' | 'combo' | 'juggle', repeatCount: number) {
   if (context === 'neutral' || repeatCount > 1) return 0;
   const recentIdentities = attacker.comboIdentitySequence.slice(0, -1);
@@ -3133,6 +3167,10 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const visualFamily = getMoveVisualFamily(move);
   const identityUsesInCombo = countIdentityOccurrences(attacker.comboIdentitySequence, identity);
   const tornadoExtendsJuggle = Boolean(move.tornado) && wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT && identityUsesInCombo <= 1;
+  if (!blocked && wasJuggled && shouldForceJuggleRepeatDrop(attacker, identity, family, visualFamily)) {
+    forceJuggleRepeatDrop(attacker, move);
+    return;
+  }
   const impactId = nextHitEventId(match);
   const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
   pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
@@ -3288,8 +3326,16 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const collision = getAttackCollision(cloneFighter, defender, weakMove, distance <= weakMove.range + UNIVERSAL_RANGE_BUFFER);
   if (!collision) return;
 
-  clone.hitConnected = true;
   const blocked = canDefenderBlockMove(defender, cloneFighter, weakMove);
+  const identity = getMoveIdentity(sourceMove);
+  const family = getMoveFamily(sourceMove);
+  const visualFamily = getMoveVisualFamily(sourceMove);
+  if (!blocked && defender.state === 'juggle' && shouldForceJuggleRepeatDrop(attacker, identity, family, visualFamily)) {
+    clone.hitConnected = true;
+    return;
+  }
+
+  clone.hitConnected = true;
   const impactId = nextHitEventId(match);
   pushImpactSparkEvent(match, impactId, attacker, defender, weakMove, blocked ? 'block' : 'hit', {
     comboHits: blocked ? 0 : Math.max(1, attacker.comboHits + 1),
@@ -4298,6 +4344,19 @@ function updateControlSideSign(stage: StageDefinition, fighter: FighterRuntime, 
 
 function isLaneOrbitActive(fighter: FighterRuntime) {
   return fighter.laneOrbitControlLocked || fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
+}
+
+function maybeUnlockLaneOrbitControlAfterHorizontalCross(
+  stage: StageDefinition,
+  fighter: FighterRuntime,
+  opponent: FighterRuntime,
+  sideBeforeHorizontalMove: 1 | -1 | null
+) {
+  if (!fighter.laneOrbitControlLocked || sideBeforeHorizontalMove !== fighter.controlSideSign) return;
+  const sideAfterHorizontalMove = getPositionSideSign(fighter, opponent, stage);
+  if (sideAfterHorizontalMove !== null && sideAfterHorizontalMove !== fighter.controlSideSign) {
+    fighter.laneOrbitControlLocked = false;
+  }
 }
 
 function resolveBodyCollision(match: MatchSnapshot) {

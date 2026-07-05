@@ -3435,7 +3435,7 @@ describe('fight engine', () => {
     }
   });
 
-  it('keeps sidestep-orbit side locks through camera-lag idle gaps until horizontal movement', () => {
+  it('keeps sidestep-orbit side locks through sidestep-caused side crossings', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -3460,6 +3460,26 @@ describe('fight engine', () => {
     const forward = emptyInputFrame();
     forward.right = true;
     match = stepMatch(match, forward, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].controlSideSign).toBe(startingControlSide);
+    expect(match.fighters[0].laneOrbitControlLocked).toBe(true);
+  });
+
+  it('releases the sidestep side lock when horizontal movement actually crosses sides', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const startingControlSide = match.fighters[0].controlSideSign;
+    match.fighters[0].position.x = -0.02;
+    match.fighters[1].position.x = 0.02;
+    match.fighters[0].laneOrbitControlLocked = true;
+    match.fighters[0].sidestepTimer = 0;
+    match.fighters[0].sidestepDirection = 0;
+    match.fighters[0].sidestepRepeatGraceFrames = 0;
+
+    const forward = emptyInputFrame();
+    forward.right = true;
+    match = stepMatch(match, forward, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].laneOrbitControlLocked).toBe(false);
     expect(match.fighters[0].controlSideSign).toBe(-startingControlSide);
   });
 
@@ -5173,6 +5193,81 @@ describe('fight engine', () => {
     expect(match.fighters[1].state === 'juggle' && match.fighters[1].stunFramesRemaining > 0).toBe(false);
   });
 
+  it('forces player juggle loops to drop when repeating one, two, or three moves', () => {
+    const loopCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 2,
+        activeFrames: 2,
+        recoveryFrames: 3,
+        damage: 1,
+        range: 8,
+        pushback: 0,
+        launchHeight: move.input === 'jab' ? 2.4 : undefined,
+        knockdown: false,
+        onHitFrames: move.input === 'jab' ? 32 : 24,
+        onCounterHitFrames: move.input === 'jab' ? 34 : 26,
+        onComboHitFrames: 24,
+        onJuggleHitFrames: 28,
+        comboRepeatPenaltyFrames: 2,
+        juggleRepeatPenaltyFrames: 2,
+        cancelable: true,
+        comboKey: `neutral:${move.input}`,
+        hitbox: { offset: [0, 5, 0.72], size: [8, 20, 8] }
+      }))
+    };
+
+    const runLoopCase = (previousInputs: MoveInput[]) => {
+      const repeatedInput = previousInputs[0];
+      const repeatedMove = loopCharacter.moves.find((move) => move.input === repeatedInput);
+      expect(repeatedMove).toBeDefined();
+      let match = createMatch(loopCharacter, starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = {
+        ...repeatedMove!,
+        startupFrames: 0,
+        activeFrames: 3,
+        recoveryFrames: 12
+      };
+      match.fighters[0].actionFramesRemaining = 12;
+      match.fighters[0].actionTimer = 12 / 60;
+      match.fighters[0].moveFrame = 0;
+      match.fighters[0].hitConnected = false;
+      match.fighters[0].hitConfirmed = false;
+      match.fighters[0].comboTimer = 0.5;
+      match.fighters[0].comboStep = previousInputs.length + 1;
+      match.fighters[0].comboHits = previousInputs.length;
+      match.fighters[0].comboSequence = [...previousInputs, repeatedInput];
+      match.fighters[0].comboIdentitySequence = [...previousInputs, repeatedInput].map((inputName) => `neutral:${inputName}`);
+      match.fighters[0].comboFamilySequence = [...previousInputs, repeatedInput].map((inputName) => `neutral:${inputName}`);
+      match.fighters[0].comboVisualFamilySequence = [...previousInputs, repeatedInput].map((inputName) => visualFamilyByInput[inputName]);
+      match.fighters[1].state = 'juggle';
+      match.fighters[1].position.y = 1.25;
+      match.fighters[1].velocityY = 0.1;
+      match.fighters[1].stunFramesRemaining = 120;
+      match.fighters[1].actionFramesRemaining = 120;
+      match.fighters[1].stunTimer = 2;
+      match.fighters[1].actionTimer = 2;
+      const hpBeforeRepeat = match.fighters[1].hp;
+
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      expect(match.fighters[0].hitConnected).toBe(true);
+      expect(match.fighters[0].hitConfirmed).toBe(false);
+      expect(match.fighters[0].comboHits).toBe(previousInputs.length);
+      expect(match.fighters[1].hp).toBe(hpBeforeRepeat);
+      expect(match.fighters[1].state).toBe('juggle');
+    };
+
+    runLoopCase(['jab']);
+    runLoopCase(['jab', 'heavy']);
+    runLoopCase(['jab', 'heavy', 'kick']);
+  });
+
   it('keeps launcher into varied juggle followup viable', () => {
     const variedCharacter: CharacterDefinition = {
       ...starterCharacters[0],
@@ -5221,7 +5316,7 @@ describe('fight engine', () => {
     expect(match.fighters[1].state).toBe('juggle');
   });
 
-  it('lets a varied low-damage juggle route reach a long 20-plus hit combo', () => {
+  it('lets a varied four-move low-damage juggle route stay viable', () => {
     const longRouteCharacter: CharacterDefinition = {
       ...starterCharacters[0],
       moveOverrides: {},
@@ -5238,9 +5333,9 @@ describe('fight engine', () => {
         onHitFrames: move.input === 'jab' ? 32 : 24,
         onCounterHitFrames: move.input === 'jab' ? 34 : 26,
         onComboHitFrames: 24,
-        onJuggleHitFrames: move.input === 'jab' ? 4 : 22,
+        onJuggleHitFrames: 24,
         comboRepeatPenaltyFrames: move.input === 'jab' ? 8 : 2,
-        juggleRepeatPenaltyFrames: move.input === 'jab' ? 16 : 2,
+        juggleRepeatPenaltyFrames: 2,
         cancelable: true,
         comboKey: `neutral:${move.input}`,
         hitbox: { offset: [0, 5, 0.72], size: [8, 20, 8] }
@@ -5253,8 +5348,8 @@ describe('fight engine', () => {
     match.fighters[1].position.x = 0.45;
 
     const sequence: MoveInput[] = ['jab'];
-    const filler: MoveInput[] = ['heavy', 'special'];
-    while (sequence.length < 24) sequence.push(filler[(sequence.length - 1) % filler.length]);
+    const filler: MoveInput[] = ['heavy', 'kick', 'special', 'jab'];
+    while (sequence.length < 12) sequence.push(filler[(sequence.length - 1) % filler.length]);
 
     for (const [index, inputName] of sequence.entries()) {
       const input = emptyInputFrame();
@@ -5270,7 +5365,7 @@ describe('fight engine', () => {
       expect(match.fighters[0].comboHits, `hit ${index + 1}`).toBeGreaterThanOrEqual(index + 1);
     }
 
-    expect(match.fighters[0].comboHits).toBeGreaterThanOrEqual(24);
+    expect(match.fighters[0].comboHits).toBeGreaterThanOrEqual(12);
     expect(match.fighters[0].comboStep).toBeLessThanOrEqual(30);
   });
 
@@ -6736,8 +6831,11 @@ describe('fight engine', () => {
     expect(second.fighters[1].juggleSequenceDamage).toBe(3);
 
     const repeated = runTornadoHit(1, '1+2', ['1+2', '1+2'], 86);
-    expect(repeated.fighters[1].state).toBe('knockdown');
-    expect(repeated.fighters[1].juggleTornadoCount).toBe(0);
+    expect(repeated.fighters[0].hitConnected).toBe(true);
+    expect(repeated.fighters[0].hitConfirmed).toBe(false);
+    expect(repeated.fighters[1].state).toBe('juggle');
+    expect(repeated.fighters[1].juggleTornadoCount).toBe(1);
+    expect(repeated.fighters[1].juggleSequenceDamage).toBe(86);
 
     const third = runTornadoHit(2, 'O+4', ['1+2', '3+4', 'O+4']);
     expect(third.fighters[1].state).toBe('knockdown');

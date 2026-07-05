@@ -166,6 +166,7 @@ import {
 } from './lib/tournament';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
@@ -2554,6 +2555,24 @@ export default function App() {
       ...properties
     });
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
+  const screenAnalyticsRef = useRef<{ screen: Screen | null; enteredAt: number }>({ screen: null, enteredAt: performance.now() });
+
+  useEffect(() => {
+    const now = performance.now();
+    const previous = screenAnalyticsRef.current;
+    captureAnalyticsEvent('screen_viewed', {
+      app_version: KORE_APP_VERSION,
+      screen,
+      previous_screen: previous.screen,
+      mode,
+      stage_id: stageId,
+      p1_character_id: p1Id,
+      p2_character_id: p2Id,
+      cpu_difficulty: getEffectiveCpuDifficulty(mode, cpuDifficulty),
+      time_on_previous_screen_seconds: previous.screen === null ? 0 : Number(((now - previous.enteredAt) / 1000).toFixed(2))
+    });
+    screenAnalyticsRef.current = { screen, enteredAt: now };
+  }, [screen]);
   const resetRandomSelections = useCallback(() => {
     setRandomCharacterSlots({ 1: true, 2: true });
     setRandomStageSelected(true);
@@ -2612,7 +2631,13 @@ export default function App() {
     setTournamentStatusText('Quarterfinal match ready');
     setMode('tournamentLocal');
     setScreen('tournamentBracket');
-  }, [effectiveUnlockedCharacterIds, resolveRandomStageSelection, roster]);
+    captureAppAnalytics('tournament_entry_succeeded', {
+      tournament_mode: 'free',
+      character_id: selected.id,
+      opponent_character_id: opponentCharacter.id,
+      stage_id: fightStage.id
+    });
+  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, resolveRandomStageSelection, roster]);
 
   const enterOnlineTournament = useCallback(async (characterId: string, tournamentMode: Extract<TournamentSelectMode, 'online' | 'paid'>) => {
     const profile = onlineProfile ?? writeOnlineProfile({ displayName: 'PLAYER' });
@@ -2651,10 +2676,22 @@ export default function App() {
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
     setTournamentStatusText(status.statusText);
     setScreen('tournamentLobby');
+    captureAppAnalytics('tournament_entry_succeeded', {
+      tournament_mode: tournamentMode,
+      tournament_id: result.bracket.id,
+      entry_id: result.entry.id,
+      character_id: characterId,
+      payment_state: result.entry.paymentState
+    });
     if (paid && payment?.checkoutUrl) {
+      captureAppAnalytics('tournament_payment_opened', {
+        tournament_id: result.bracket.id,
+        entry_id: result.entry.id,
+        provider: payment.provider ?? null
+      });
       window.open(payment.checkoutUrl, '_blank', 'noopener,noreferrer');
     }
-  }, [onlineProfile]);
+  }, [captureAppAnalytics, onlineProfile]);
 
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
@@ -2664,7 +2701,12 @@ export default function App() {
     setOnlineTournamentStatus(status);
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
     setTournamentStatusText(status.statusText);
-  }, [onlineProfile, onlineTournamentStatus]);
+    captureAppAnalytics('tournament_lobby_refreshed', {
+      status: 'success',
+      tournament_id: status.bracket.id,
+      assigned_match: Boolean(status.assignedMatch)
+    });
+  }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus]);
 
   const startOnlineTournamentMatch = useCallback(() => {
     const status = onlineTournamentStatus;
@@ -2699,6 +2741,11 @@ export default function App() {
       if (advanced.status === 'completed' || winnerEntryId !== 'local-player') {
         setTournamentStatusText(winnerEntryId === 'local-player' ? 'Tournament won' : 'Eliminated');
         setScreen('tournamentLobby');
+        captureAppAnalytics('tournament_completed', {
+          tournament_mode: 'free',
+          result: winnerEntryId === 'local-player' ? 'won' : 'eliminated',
+          match_id: activeTournamentMatchId
+        });
         return;
       }
       const nextMatch = getAssignedTournamentMatch(advanced, 'local-player');
@@ -2731,13 +2778,30 @@ export default function App() {
         setOnlineTournamentStatus(status);
         setTournamentStatusText(status.statusText);
         setScreen('tournamentLobby');
+        captureAppAnalytics('tournament_match_reported', {
+          status: 'success',
+          tournament_id: onlineTournamentStatus.bracket.id,
+          match_id: activeTournamentMatchId
+        });
+        if (status.bracket.status === 'completed') {
+          captureAppAnalytics('tournament_completed', {
+            tournament_mode: status.bracket.kind,
+            result: 'completed',
+            tournament_id: status.bracket.id
+          });
+        }
       }).catch((error) => {
         console.error('Failed to report tournament match', error);
         setTournamentStatusText('Tournament report failed');
         setScreen('tournamentLobby');
+        captureAppAnalytics('tournament_match_reported', {
+          status: 'error',
+          tournament_id: onlineTournamentStatus.bracket.id,
+          match_id: activeTournamentMatchId
+        });
       });
     }
-  }, [activeTournamentMatchId, localTournamentBracket, mode, onlineProfile, onlineTournamentStatus, roster]);
+  }, [activeTournamentMatchId, captureAppAnalytics, localTournamentBracket, mode, onlineProfile, onlineTournamentStatus, roster]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -2999,6 +3063,7 @@ export default function App() {
   }, [captureAppAnalytics, playMenuSelectSound, unlockGameAudio]);
 
   const setCharacterAnimationFrames = (characterId: string, animationKey: string, frames: string[]) => {
+    captureAppAnalytics('viewer_action', { action: 'animation_frames_changed', character_id: characterId, animation_key: animationKey, frame_count: frames.length });
     debugLog(4, 'viewer frame override requested', {
       characterId,
       animationKey,
@@ -3017,6 +3082,7 @@ export default function App() {
   };
 
   const setCharacterAnimationSpeed = (characterId: string, animationKey: string, speed: number) => {
+    captureAppAnalytics('viewer_action', { action: 'animation_speed_changed', character_id: characterId, animation_key: animationKey, speed });
     debugLog(8, 'viewer speed override requested', { characterId, animationKey, speed });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3032,6 +3098,7 @@ export default function App() {
 
   const setCharacterAnimationScale = (characterId: string, animationKey: string, size: AnimationScale) => {
     const normalized = sanitizeAnimationScaleMap({ [animationKey]: size })[animationKey] ?? { width: 1, height: 1 };
+    captureAppAnalytics('viewer_action', { action: 'animation_scale_changed', character_id: characterId, animation_key: animationKey, width: normalized.width, height: normalized.height });
     debugLog(8, 'viewer size override requested', { characterId, animationKey, size: normalized });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3048,6 +3115,7 @@ export default function App() {
   const setCharacterAnimationFrameScale = (characterId: string, animationKey: string, frameIndex: number, size: AnimationScale) => {
     const normalized = sanitizeAnimationScaleMap({ [animationKey]: size })[animationKey] ?? { width: 1, height: 1 };
     const frameKey = String(Math.max(0, Math.round(frameIndex)));
+    captureAppAnalytics('viewer_action', { action: 'animation_frame_scale_changed', character_id: characterId, animation_key: animationKey, frame_index: frameKey, width: normalized.width, height: normalized.height });
     debugLog(8, 'viewer frame size override requested', { characterId, animationKey, frameIndex: frameKey, size: normalized });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3067,6 +3135,7 @@ export default function App() {
   const setCharacterModelScale = (characterId: string, size: CharacterModelScale) => {
     const sourceCharacter = sourceRoster.find((character) => character.id === characterId);
     const normalized = normalizeCharacterModelScale(size, sourceCharacter?.scale ?? 1);
+    captureAppAnalytics('viewer_action', { action: 'character_model_scale_changed', character_id: characterId, width: normalized.width, height: normalized.height });
     debugLog(8, 'viewer character size override requested', { characterId, size: normalized });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3078,6 +3147,7 @@ export default function App() {
   };
 
   const setCharacterMoveOverride = (characterId: string, moveKey: string, override: MoveOverride) => {
+    captureAppAnalytics('viewer_action', { action: 'move_override_changed', character_id: characterId, move_key: moveKey });
     debugLog(9, 'viewer frame data override requested', { characterId, moveKey, override });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3094,6 +3164,7 @@ export default function App() {
   const setCharacterGetupFrameOverride = (characterId: string, action: Exclude<GetupAction, 'none'>, frames: number) => {
     const normalized = sanitizeGetupFrameOverrides({ [action]: frames })[action];
     if (!normalized) return;
+    captureAppAnalytics('viewer_action', { action: 'getup_frames_changed', character_id: characterId, getup_action: action, frames: normalized });
     debugLog(9, 'viewer getup frame override requested', { characterId, action, frames: normalized });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3108,6 +3179,7 @@ export default function App() {
   };
 
   const setCharacterSpriteFrameEdit = (characterId: string, frameIndex: number, edit: SpriteFrameEdit) => {
+    captureAppAnalytics('viewer_action', { action: 'sprite_frame_edit_changed', character_id: characterId, frame_index: frameIndex });
     debugLog(10, 'viewer sprite frame edit requested', { characterId, frameIndex, edit });
     setAnimationOverrides((current) => ({
       ...current,
@@ -3122,6 +3194,7 @@ export default function App() {
   };
 
   const setCharacterEffects = (characterId: string, effects: CharacterEffectDefinition[], moveEffects: Record<string, MoveEffectInstance[]>) => {
+    captureAppAnalytics('viewer_action', { action: 'effects_changed', character_id: characterId, effect_count: effects.length, move_effect_count: Object.keys(moveEffects).length });
     debugLog(10, 'viewer effects override requested', {
       characterId,
       effectCount: effects.length,
@@ -3138,6 +3211,7 @@ export default function App() {
   };
 
   const setCharacterMetadata = (characterId: string, patch: CharacterMetadataPatch) => {
+    captureAppAnalytics('viewer_action', { action: 'metadata_changed', character_id: characterId, field_count: Object.keys(patch).length });
     setRosterResult((current) => {
       if (!current) return current;
       return {
@@ -3358,10 +3432,22 @@ export default function App() {
               setPrivateRoomIntent(null);
               setScreen('select');
             }}
-            onSettings={() => setScreen('settings')}
-            onViewer={() => setScreen('viewer')}
-            onStages={() => setScreen('stageEditor')}
-            onExit={() => setScreen('title')}
+            onSettings={() => {
+              captureAppAnalytics('menu_item_selected', { item: 'settings' });
+              setScreen('settings');
+            }}
+            onViewer={() => {
+              captureAppAnalytics('menu_item_selected', { item: 'viewer' });
+              setScreen('viewer');
+            }}
+            onStages={() => {
+              captureAppAnalytics('menu_item_selected', { item: 'stage_editor' });
+              setScreen('stageEditor');
+            }}
+            onExit={() => {
+              captureAppAnalytics('menu_item_selected', { item: 'exit_to_title' });
+              setScreen('title');
+            }}
           />
         )}
         {screen === 'tournament' && (
@@ -3377,18 +3463,27 @@ export default function App() {
             onBack={() => setScreen('menu')}
             onStart={(characterId, tournamentMode) => {
               captureAppAnalytics('game_start_clicked', { source: 'tournament_select', selected_mode: tournamentMode });
+              captureAppAnalytics('tournament_entry_started', {
+                tournament_mode: tournamentMode,
+                character_id: characterId
+              });
               if (tournamentMode === 'free') {
                 startLocalTournament(characterId);
                 return;
               }
               void enterOnlineTournament(characterId, tournamentMode === 'paid' ? 'paid' : 'online').catch((error) => {
                 console.error('Failed to enter tournament', error);
+                captureAppAnalytics('tournament_entry_failed', {
+                  tournament_mode: tournamentMode,
+                  character_id: characterId
+                });
                 setTournamentStatusText(error instanceof Error ? error.message : 'Tournament unavailable');
                 setOnlineTournamentStatus(null);
                 setLocalTournamentBracket(null);
                 setScreen('tournamentLobby');
               });
             }}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'tournamentLobby' && (
@@ -3400,10 +3495,17 @@ export default function App() {
             onBack={() => setScreen('tournament')}
             onMenu={() => setScreen('menu')}
             onRefresh={() => void refreshOnlineTournament().catch((error) => {
+              captureAppAnalytics('tournament_lobby_refreshed', { status: 'error' });
               console.error('Failed to refresh tournament', error);
               setTournamentStatusText(error instanceof Error ? error.message : 'Tournament refresh failed');
             })}
-            onStartOnlineMatch={startOnlineTournamentMatch}
+            onStartOnlineMatch={() => {
+              captureAppAnalytics('tournament_match_started', {
+                tournament_id: onlineTournamentStatus?.bracket.id ?? null,
+                match_id: onlineTournamentStatus?.assignedMatch?.id ?? null
+              });
+              startOnlineTournamentMatch();
+            }}
           />
         )}
         {screen === 'tournamentBracket' && (
@@ -3414,6 +3516,11 @@ export default function App() {
             roster={roster}
             onBack={() => setScreen('tournamentLobby')}
             onReady={() => {
+              captureAppAnalytics('tournament_match_started', {
+                tournament_id: mode === 'tournamentOnline' ? onlineTournamentStatus?.bracket.id ?? null : localTournamentBracket?.id ?? null,
+                match_id: activeTournamentMatchId,
+                tournament_mode: mode
+              });
               setVersusReturnScreen('stage');
               setScreen(mode === 'tournamentOnline' ? 'versus' : 'fight');
             }}
@@ -3422,7 +3529,15 @@ export default function App() {
         {screen === 'leaderboard' && (
           <LeaderboardScreen
             profile={onlineProfile}
-            onProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
+            onProfileChange={(profile) => {
+              const saved = writeOnlineProfile(profile);
+              setOnlineProfile(saved);
+              captureAppAnalytics('online_profile_saved', {
+                source: 'leaderboard',
+                player_id: saved.playerId,
+                had_existing_profile: Boolean(profile.playerId)
+              });
+            }}
             onFindMatch={() => {
               captureAppAnalytics('game_start_clicked', { source: 'leaderboard_find_match', selected_mode: 'online' });
               resetRandomSelections();
@@ -3430,6 +3545,7 @@ export default function App() {
               setScreen('select');
             }}
             onBack={() => setScreen('select')}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'privateRooms' && (
@@ -3453,6 +3569,7 @@ export default function App() {
               setScreen('versus');
             }}
             onBack={() => setScreen('select')}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'training' && (
@@ -3485,6 +3602,7 @@ export default function App() {
               });
               setScreen('fight');
             }}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'select' && (
@@ -3503,9 +3621,21 @@ export default function App() {
             setCpuDifficulty={setModeScopedCpuDifficulty}
             onlineProfile={onlineProfile}
             rankedProfile={rankedProfile}
-            onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
-            onLeaderboards={() => setScreen('leaderboard')}
+            onOnlineProfileChange={(profile) => {
+              const saved = writeOnlineProfile(profile);
+              setOnlineProfile(saved);
+              captureAppAnalytics('online_profile_saved', {
+                source: 'character_select',
+                player_id: saved.playerId,
+                had_existing_profile: Boolean(profile.playerId)
+              });
+            }}
+            onLeaderboards={() => {
+              captureAppAnalytics('navigation_clicked', { destination: 'leaderboard', source: 'character_select' });
+              setScreen('leaderboard');
+            }}
             onPrivateRooms={() => {
+              captureAppAnalytics('navigation_clicked', { destination: 'private_rooms', source: 'character_select' });
               resolveRandomCharacterSelection('private');
               resolveRandomStageSelection();
               setScreen('privateRooms');
@@ -3536,6 +3666,7 @@ export default function App() {
               if (mode !== 'private') setPrivateRoomIntent(null);
               setScreen('stage');
             }}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'stage' && (
@@ -3570,6 +3701,7 @@ export default function App() {
               setVersusReturnScreen('stage');
               setScreen(mode === 'training' ? 'fight' : 'versus');
             }}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'versus' && (
@@ -3600,6 +3732,7 @@ export default function App() {
             setVirtualAction={setVirtualAction}
             clearMenuInputs={clearMenuInputs}
             onMenu={() => {
+              captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
               setActiveArcadeMiniGame(null);
               setLastMiniGameResult(null);
               setScreen('menu');
@@ -3608,12 +3741,21 @@ export default function App() {
               setLastMiniGameResult(result);
               setScreen('miniGameResult');
             }}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'miniGameResult' && lastMiniGameResult && (
           <MiniGameResultScreen
             result={lastMiniGameResult}
-            onContinue={continueAfterMiniGameResult}
+            onContinue={() => {
+              captureAppAnalytics('minigame_result_continued', {
+                game_id: lastMiniGameResult.gameId,
+                stage_id: lastMiniGameResult.stageId,
+                score: lastMiniGameResult.score,
+                new_high_score: lastMiniGameResult.newHighScore
+              });
+              continueAfterMiniGameResult();
+            }}
           />
         )}
         {screen === 'stageEditor' && (
@@ -3624,6 +3766,7 @@ export default function App() {
             p2={p2}
             onReload={reloadStages}
             onBack={() => setScreen('menu')}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'settings' && (
@@ -3642,6 +3785,7 @@ export default function App() {
             onOptionsShortcut={playInnerMenuSelectSound}
             onMemoryCardLoaded={refreshMemoryCardState}
             onBack={() => setScreen('menu')}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'viewer' && (
@@ -3658,8 +3802,29 @@ export default function App() {
             onSpriteFrameEditChange={setCharacterSpriteFrameEdit}
             onEffectsChange={setCharacterEffects}
             onCharacterMetadataChange={setCharacterMetadata}
-            onImportComplete={reloadRoster}
+            onImportComplete={async (preferredCharacterId) => {
+              captureAppAnalytics('viewer_action', {
+                action: 'import_complete_reload_started',
+                character_id: preferredCharacterId ?? null
+              });
+              try {
+                await reloadRoster(preferredCharacterId);
+                captureAppAnalytics('viewer_action', {
+                  action: 'import_complete_reload_finished',
+                  character_id: preferredCharacterId ?? null,
+                  status: 'success'
+                });
+              } catch (error) {
+                captureAppAnalytics('viewer_action', {
+                  action: 'import_complete_reload_finished',
+                  character_id: preferredCharacterId ?? null,
+                  status: 'error'
+                });
+                throw error;
+              }
+            }}
             onBack={() => setScreen('menu')}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'fight' && (
@@ -4482,12 +4647,14 @@ function LeaderboardScreen({
   profile,
   onProfileChange,
   onFindMatch,
-  onBack
+  onBack,
+  onAnalytics
 }: {
   profile: OnlinePlayerProfile | null;
   onProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
   onFindMatch: () => void;
   onBack: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
@@ -4498,11 +4665,13 @@ function LeaderboardScreen({
       const result = await fetchLeaderboard();
       setEntries(result.entries);
       setStatus('ready');
+      onAnalytics('leaderboard_loaded', { status: 'success', entry_count: result.entries.length });
     } catch (error) {
       console.error('Failed to load leaderboard', error);
       setStatus('error');
+      onAnalytics('leaderboard_loaded', { status: 'error' });
     }
-  }, []);
+  }, [onAnalytics]);
 
   useEffect(() => {
     void load();
@@ -4517,7 +4686,10 @@ function LeaderboardScreen({
         </div>
       </header>
       <div className="leaderboard-actions">
-        <button className="secondary-button" onClick={load}>
+        <button className="secondary-button" onClick={() => {
+          onAnalytics('leaderboard_loaded', { action: 'refresh_clicked' });
+          void load();
+        }}>
           <RotateCcw size={18} />
           Refresh
         </button>
@@ -4525,7 +4697,10 @@ function LeaderboardScreen({
           <Wifi size={18} />
           Find Match
         </button>
-        <button className="secondary-button" onClick={onBack}>
+        <button className="secondary-button" onClick={() => {
+          onAnalytics('navigation_clicked', { destination: 'select', source: 'leaderboard_back' });
+          onBack();
+        }}>
           <Home size={18} />
           Back
         </button>
@@ -4561,7 +4736,8 @@ function PrivateRoomsScreen({
   stages,
   onCreate,
   onJoin,
-  onBack
+  onBack,
+  onAnalytics
 }: {
   p1: CharacterDefinition;
   stage: StageDefinition;
@@ -4570,6 +4746,7 @@ function PrivateRoomsScreen({
   onCreate: (intent: Extract<PrivateRoomIntent, { kind: 'host' }>) => void;
   onJoin: (intent: Extract<PrivateRoomIntent, { kind: 'guest' }>) => void;
   onBack: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [rooms, setRooms] = useState<PrivateRoomSummary[]>([]);
   const [roomName, setRoomName] = useState(`${p1.displayName} Room`.slice(0, 18));
@@ -4584,12 +4761,14 @@ function PrivateRoomsScreen({
       const result = await listPrivateRooms();
       setRooms(result);
       setStatus('ready');
+      onAnalytics('private_rooms_loaded', { status: 'success', room_count: result.length });
     } catch (error) {
       console.error('Failed to load private rooms', error);
       setStatus('error');
       setMessage(error instanceof Error ? error.message : 'Rooms unavailable');
+      onAnalytics('private_rooms_loaded', { status: 'error' });
     }
-  }, []);
+  }, [onAnalytics]);
 
   useEffect(() => {
     void load();
@@ -4598,6 +4777,10 @@ function PrivateRoomsScreen({
   }, [load]);
 
   const createRoom = () => {
+    onAnalytics('private_room_create_clicked', {
+      stage_id: stage.id,
+      p1_character_id: p1.id
+    });
     onCreate({
       kind: 'host',
       roomName: cleanPrivateRoomName(roomName || `${p1.displayName} Room`),
@@ -4609,8 +4792,10 @@ function PrivateRoomsScreen({
     const password = normalizePrivateRoomPassword(passwords[roomId] ?? '');
     if (!password) {
       setMessage('Enter that room password first');
+      onAnalytics('private_room_join_validation_failed', { reason: 'missing_password' });
       return;
     }
+    onAnalytics('private_room_join_clicked', { room_id: roomId });
     onJoin({ kind: 'guest', roomId, password });
   };
 
@@ -4646,11 +4831,17 @@ function PrivateRoomsScreen({
       </div>
 
       <div className="leaderboard-actions">
-        <button className="secondary-button" onClick={load}>
+        <button className="secondary-button" onClick={() => {
+          onAnalytics('private_rooms_loaded', { action: 'refresh_clicked' });
+          void load();
+        }}>
           <RotateCcw size={18} />
           Refresh
         </button>
-        <button className="secondary-button" onClick={onBack}>
+        <button className="secondary-button" onClick={() => {
+          onAnalytics('navigation_clicked', { destination: 'select', source: 'private_rooms_back' });
+          onBack();
+        }}>
           <Home size={18} />
           Back
         </button>
@@ -4779,7 +4970,8 @@ function TrainingSelect({
   setP2Id,
   setTrainingMode,
   onBack,
-  onStart
+  onStart,
+  onAnalytics
 }: {
   roster: CharacterDefinition[];
   p1Id: string;
@@ -4791,6 +4983,7 @@ function TrainingSelect({
   setTrainingMode: (mode: TrainingTrialMode) => void;
   onBack: () => void;
   onStart: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const [hoveredBaseId, setHoveredBaseId] = useState('');
@@ -4818,9 +5011,11 @@ function TrainingSelect({
     if (!character || !isCharacterUnlocked(character, unlockedCharacterIds)) return;
     if (selectTarget === 1) {
       setP1Id(id);
+      onAnalytics('character_target_changed', { source: 'training_select', slot: 1, character_id: id });
       return;
     }
     setP2Id(id);
+    onAnalytics('character_target_changed', { source: 'training_select', slot: 2, character_id: id });
   };
   const cycleRosterPage = useCallback((direction: -1 | 1) => {
     setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
@@ -4913,7 +5108,10 @@ function TrainingSelect({
         type="button"
         className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''}`}
         style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
-        onClick={() => setSelectTarget(1)}
+        onClick={() => {
+          setSelectTarget(1);
+          onAnalytics('character_target_changed', { source: 'character_select_target', slot: 1 });
+        }}
       >
         <span className="versus-player-kicker">Player 1</span>
         <AnimatedCharacterSprite character={p1Character} />
@@ -4931,16 +5129,25 @@ function TrainingSelect({
               value={trainingMode}
               basicsCount={basicCount}
               combosCount={comboCount}
-              setValue={setTrainingMode}
+              setValue={(nextMode) => {
+                setTrainingMode(nextMode);
+                onAnalytics('training_mode_changed', { source: 'training_select', training_submode: nextMode });
+              }}
             />
           </div>
         </div>
 
         <div className="versus-target-tabs" aria-label="Choose training selection target">
-          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => setSelectTarget(1)}>
+          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
+            setSelectTarget(1);
+            onAnalytics('character_target_changed', { source: 'training_select_target', slot: 1 });
+          }}>
             P1
           </button>
-          <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
+          <button className={selectTarget === 2 ? 'active' : ''} onClick={() => {
+            setSelectTarget(2);
+            onAnalytics('character_target_changed', { source: 'training_select_target', slot: 2 });
+          }}>
             Dummy
           </button>
         </div>
@@ -4949,7 +5156,10 @@ function TrainingSelect({
           <button
             type="button"
             className="secondary-button"
-            onClick={() => cycleRosterPage(-1)}
+            onClick={() => {
+              onAnalytics('roster_page_changed', { source: 'training_select', direction: -1, page: visibleRosterPage + 1 });
+              cycleRosterPage(-1);
+            }}
             disabled={totalRosterPages <= 1}
           >
             <ChevronLeft size={18} />
@@ -4961,7 +5171,10 @@ function TrainingSelect({
           <button
             type="button"
             className="secondary-button"
-            onClick={() => cycleRosterPage(1)}
+            onClick={() => {
+              onAnalytics('roster_page_changed', { source: 'training_select', direction: 1, page: visibleRosterPage + 1 });
+              cycleRosterPage(1);
+            }}
             disabled={totalRosterPages <= 1}
           >
             Next
@@ -5004,7 +5217,10 @@ function TrainingSelect({
         </div>
 
         <FooterActions
-          onBack={onBack}
+          onBack={() => {
+            onAnalytics('navigation_clicked', { destination: 'menu', source: 'training_select_back' });
+            onBack();
+          }}
           onNext={onStart}
           nextLabel={trainingMode === 'free' ? 'Start Training' : trainingMode === 'basics' ? 'Start Basics' : 'Start Combos'}
           nextDisabled={!canStart}
@@ -5037,7 +5253,8 @@ function TournamentSelect({
   onlineProfile,
   onOnlineProfileChange,
   onBack,
-  onStart
+  onStart,
+  onAnalytics
 }: {
   roster: CharacterDefinition[];
   p1Id: string;
@@ -5049,6 +5266,7 @@ function TournamentSelect({
   onOnlineProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
   onBack: () => void;
   onStart: (characterId: string, mode: TournamentSelectMode) => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [hoveredBaseId, setHoveredBaseId] = useState('');
   const [rosterPage, setRosterPage] = useState(0);
@@ -5078,20 +5296,35 @@ function TournamentSelect({
         if (cancelled) return;
         setSummaries(result.tournaments);
         setSummaryStatus('ready');
+        onAnalytics('tournament_list_loaded', {
+          status: 'success',
+          tournament_count: result.tournaments.length
+        });
       })
       .catch((error) => {
         console.error('Failed to load tournaments', error);
         if (!cancelled) setSummaryStatus('error');
+        onAnalytics('tournament_list_loaded', { status: 'error' });
       });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [onAnalytics]);
 
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
     if (!character || !isCharacterUnlocked(character, unlockedCharacterIds)) return;
     setP1Id(id);
+    onAnalytics('character_target_changed', {
+      source: 'tournament_select',
+      slot: 1,
+      character_id: id
+    });
+  };
+
+  const selectTournamentMode = (nextMode: TournamentSelectMode) => {
+    setTournamentMode(nextMode);
+    onAnalytics('tournament_mode_selected', { tournament_mode: nextMode });
   };
 
   const cycleRosterPage = useCallback((direction: -1 | 1) => {
@@ -5196,7 +5429,7 @@ function TournamentSelect({
             <h2>Tournament</h2>
           </div>
           <div className="mode-stack">
-            <TournamentModeCarousel value={tournamentMode} setValue={setTournamentMode} />
+            <TournamentModeCarousel value={tournamentMode} setValue={selectTournamentMode} />
           </div>
         </div>
 
@@ -5204,7 +5437,7 @@ function TournamentSelect({
           <button
             type="button"
             className={`tournament-entry-option ${tournamentMode === 'free' ? 'is-selected' : ''}`}
-            onClick={() => setTournamentMode('free')}
+            onClick={() => selectTournamentMode('free')}
           >
             <strong>FREE</strong>
             <span>Local 1P vs CPU</span>
@@ -5213,7 +5446,7 @@ function TournamentSelect({
           <button
             type="button"
             className={`tournament-entry-option ${tournamentMode === 'online' ? 'is-selected' : ''}`}
-            onClick={() => setTournamentMode('online')}
+            onClick={() => selectTournamentMode('online')}
           >
             <strong>ONLINE</strong>
             <span>{summaryStatus === 'loading' ? 'Loading tourneys' : freeOnlineSummary ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entered` : 'Free bracket queue'}</span>
@@ -5222,7 +5455,7 @@ function TournamentSelect({
           <button
             type="button"
             className={`tournament-entry-option ${tournamentMode === 'paid' ? 'is-selected' : ''} ${paidEnabled ? '' : 'is-disabled'}`}
-            onClick={() => paidEnabled && setTournamentMode('paid')}
+            onClick={() => paidEnabled && selectTournamentMode('paid')}
             disabled={!paidEnabled}
           >
             <strong>{paidSummary?.entryFeeLabel ?? '$2 BTC'}</strong>
@@ -5294,7 +5527,10 @@ function TournamentSelect({
         </div>
 
         <FooterActions
-          onBack={onBack}
+          onBack={() => {
+            onAnalytics('navigation_clicked', { destination: 'menu', source: 'tournament_select_back' });
+            onBack();
+          }}
           onNext={() => onStart(p1Character.id, tournamentMode)}
           nextLabel={nextLabel}
           nextDisabled={nextDisabled}
@@ -5748,7 +5984,8 @@ function CharacterSelect({
   onPrivateRooms,
   onUiNavigate,
   onBack,
-  onNext
+  onNext,
+  onAnalytics
 }: {
   roster: CharacterDefinition[];
   p1Id: string;
@@ -5770,6 +6007,7 @@ function CharacterSelect({
   onUiNavigate: () => void;
   onBack: () => void;
   onNext: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const [rankedProfileOpen, setRankedProfileOpen] = useState(false);
@@ -5792,17 +6030,20 @@ function CharacterSelect({
     if (selectTarget === 1) {
       setRandomCharacterSlot(1, false);
       setP1Id(id);
+      onAnalytics('character_target_changed', { source: 'character_select', slot: 1, character_id: id, random_selected: false });
       return;
     }
     if (isArcadeMode) return;
     setRandomCharacterSlot(2, false);
     setP2Id(id);
+    onAnalytics('character_target_changed', { source: 'character_select', slot: 2, character_id: id, random_selected: false });
   };
   const assignRandomCharacter = () => {
     if (selectTarget === 2 && isArcadeMode) return;
     setRandomCharacterSlot(selectTarget, true);
     setRosterPage(0);
     onUiNavigate();
+    onAnalytics('random_character_toggled', { slot: selectTarget, selected: true, mode });
   };
   const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
     const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
@@ -5819,7 +6060,8 @@ function CharacterSelect({
     if (totalRosterPages <= 1) return;
     setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
     onUiNavigate();
-  }, [onUiNavigate, totalRosterPages]);
+    onAnalytics('roster_page_changed', { source: 'character_select', direction, page: visibleRosterPage + 1 });
+  }, [onAnalytics, onUiNavigate, totalRosterPages, visibleRosterPage]);
 
   useEffect(() => {
     setRosterPage((page) => Math.min(page, totalRosterPages - 1));
@@ -5936,17 +6178,40 @@ function CharacterSelect({
             <h2>{targetLabel}</h2>
           </div>
           <div className="mode-stack">
-            <CharacterSelectModeCarousel value={mode} setValue={setMode} onNavigate={onUiNavigate} />
-            {usesCpuDifficulty(mode) && <CpuDifficultyControl value={cpuDifficulty} setValue={setCpuDifficulty} onNavigate={onUiNavigate} compact />}
+            <CharacterSelectModeCarousel
+              value={mode}
+              setValue={(nextMode) => {
+                setMode(nextMode);
+                onAnalytics('match_mode_changed', { source: 'character_select', selected_mode: nextMode });
+              }}
+              onNavigate={onUiNavigate}
+            />
+            {usesCpuDifficulty(mode) && (
+              <CpuDifficultyControl
+                value={cpuDifficulty}
+                setValue={(difficulty) => {
+                  setCpuDifficulty(difficulty);
+                  onAnalytics('cpu_difficulty_changed', { source: 'character_select', cpu_difficulty: difficulty });
+                }}
+                onNavigate={onUiNavigate}
+                compact
+              />
+            )}
           </div>
         </div>
 
         <div className={`versus-target-tabs ${isArcadeMode ? 'is-arcade-targets' : ''}`} aria-label="Choose selection target">
-          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => setSelectTarget(1)}>
+          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
+            setSelectTarget(1);
+            onAnalytics('character_target_changed', { source: 'character_select_target', slot: 1 });
+          }}>
             {getSlotShortLabel(mode, 1)}
           </button>
           {!isArcadeMode && (
-            <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
+            <button className={selectTarget === 2 ? 'active' : ''} onClick={() => {
+              setSelectTarget(2);
+              onAnalytics('character_target_changed', { source: 'character_select_target', slot: 2 });
+            }}>
               {getSlotShortLabel(mode, 2)}
             </button>
           )}
@@ -6037,13 +6302,19 @@ function CharacterSelect({
         )}
 
         <FooterActions
-          onBack={onBack}
+          onBack={() => {
+            onAnalytics('navigation_clicked', { destination: 'menu', source: 'character_select_back' });
+            onBack();
+          }}
           middleAction={
             mode === 'ranked' && onlineProfile
               ? {
                 label: 'Profile Card',
                 icon: <BarChart3 size={18} />,
-                onClick: () => setRankedProfileOpen((open) => !open)
+                onClick: () => {
+                  setRankedProfileOpen((open) => !open);
+                  onAnalytics('navigation_clicked', { destination: 'ranked_profile', source: 'character_select' });
+                }
               }
               : mode === 'online' && onLeaderboards
               ? {
@@ -6070,7 +6341,10 @@ function CharacterSelect({
         className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''} ${isArcadeMode ? 'is-random-opponent' : ''} ${!isArcadeMode && randomCharacterSlots[2] ? 'is-random-selection' : ''}`}
         style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
         onClick={() => {
-          if (!isArcadeMode) setSelectTarget(2);
+          if (!isArcadeMode) {
+            setSelectTarget(2);
+            onAnalytics('character_target_changed', { source: 'character_select_target', slot: 2 });
+          }
         }}
         aria-disabled={isArcadeMode}
         aria-label={isArcadeMode ? 'Random CPU opponent' : `Select ${p2Character.displayName}`}
@@ -6572,7 +6846,8 @@ function StageSelect({
   setSelected,
   setRandomSelected,
   onBack,
-  onFight
+  onFight,
+  onAnalytics
 }: {
   mode: MatchMode;
   controls: GameSettings['controls'];
@@ -6583,6 +6858,7 @@ function StageSelect({
   setRandomSelected: (selected: boolean) => void;
   onBack: () => void;
   onFight: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const stageGamepadStateRef = useRef({ previous: false, next: false });
   const selectedStage = stages.find((stage) => stage.id === selected) ?? stages[0];
@@ -6605,13 +6881,15 @@ function StageSelect({
     const nextIndex = (selectedStageIndex + direction + stageOptionCount) % stageOptionCount;
     if (nextIndex === 0) {
       setRandomSelected(true);
+      onAnalytics('random_stage_toggled', { selected: true, source: 'stage_cycle' });
       return;
     }
     const nextStage = stages[nextIndex - 1];
     if (!nextStage) return;
     setRandomSelected(false);
     setSelected(nextStage.id);
-  }, [selectedStageIndex, setRandomSelected, setSelected, stageOptionCount, stages]);
+    onAnalytics('stage_browsed', { stage_id: nextStage.id, source: 'stage_cycle' });
+  }, [onAnalytics, selectedStageIndex, setRandomSelected, setSelected, stageOptionCount, stages]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -6688,7 +6966,10 @@ function StageSelect({
             type="button"
             className={`stage-thumbnail stage-random-thumbnail ${randomSelected ? 'is-selected' : ''}`}
             style={{ '--stage-color': '#f7d45a', '--stage-floor': '#2ee6ff' } as CSSProperties}
-            onClick={() => setRandomSelected(true)}
+            onClick={() => {
+              setRandomSelected(true);
+              onAnalytics('random_stage_toggled', { selected: true, source: 'stage_thumbnail' });
+            }}
             aria-label="Select random stage"
             aria-pressed={randomSelected}
           >
@@ -6715,6 +6996,7 @@ function StageSelect({
                 });
                 setRandomSelected(false);
                 setSelected(stage.id);
+                onAnalytics('stage_browsed', { stage_id: stage.id, source: 'stage_thumbnail' });
               }}
               aria-label={`Select ${stage.name}`}
             >
@@ -6738,7 +7020,14 @@ function StageSelect({
         </button>
       </div>
 
-      <FooterActions onBack={onBack} onNext={onFight} nextLabel="Fight" />
+      <FooterActions
+        onBack={() => {
+          onAnalytics('navigation_clicked', { destination: mode === 'training' ? 'training' : 'select', source: 'stage_select_back' });
+          onBack();
+        }}
+        onNext={onFight}
+        nextLabel="Fight"
+      />
     </div>
   );
 }
@@ -6875,7 +7164,8 @@ function StageEditor({
   p1,
   p2,
   onReload,
-  onBack
+  onBack,
+  onAnalytics
 }: {
   stages: StageDefinition[];
   roster: CharacterDefinition[];
@@ -6883,6 +7173,7 @@ function StageEditor({
   p2?: CharacterDefinition;
   onReload: (preferredStageId?: string) => Promise<void>;
   onBack: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [mode, setMode] = useState<'edit' | 'import'>('edit');
   const [previewMode, setPreviewMode] = useState<StagePreviewMode>('edit');
@@ -7163,9 +7454,11 @@ function StageEditor({
       await reloadPropLibrary();
       setSelectedLibraryPropIds(new Set([result.prop.id]));
       setStatus('saved');
+      onAnalytics('stage_editor_action', { action: 'import_prop_asset', status: 'success' });
     } catch (error) {
       console.error('Failed to import individual prop', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'import_prop_asset', status: 'error' });
     }
   };
 
@@ -7187,9 +7480,11 @@ function StageEditor({
       if (!response.ok) throw new Error(await response.text());
       await reloadStageAssetLibrary();
       setStatus('saved');
+      onAnalytics('stage_editor_action', { action: 'import_environment_asset', asset_kind: kind, status: 'success' });
     } catch (error) {
       console.error('Failed to import stage environment asset', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'import_environment_asset', asset_kind: kind, status: 'error' });
     }
   };
 
@@ -7213,13 +7508,16 @@ function StageEditor({
       await reloadStageAssetLibrary();
       if (editableStage.floorAssetId === floorId && result.floor) applyFloorAsset(result.floor);
       setStatus('saved');
+      onAnalytics('stage_editor_action', { action: 'import_floor_sound', sound_key: soundKey, status: 'success' });
     } catch (error) {
       console.error('Failed to import floor sound', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'import_floor_sound', sound_key: soundKey, status: 'error' });
     }
   };
 
   const applyFloorAsset = (floor: StageFloorAssetDefinition) => {
+    onAnalytics('stage_editor_action', { action: 'apply_floor_asset', floor_asset_id: floor.id });
     setEditableStage((current) => ({
       ...current,
       floorAssetId: floor.id,
@@ -7231,6 +7529,7 @@ function StageEditor({
   };
 
   const applySkyAsset = (sky: StageSkyboxAssetDefinition) => {
+    onAnalytics('stage_editor_action', { action: 'apply_sky_asset', skybox_asset_id: sky.id });
     setEditableStage((current) => ({
       ...current,
       skyboxAssetId: sky.id,
@@ -7257,9 +7556,11 @@ function StageEditor({
       await reloadPropLibrary();
       setStatus('saved');
       window.setTimeout(() => setStatus('idle'), 1200);
+      onAnalytics('stage_editor_action', { action: 'delete_prop_asset', status: 'success' });
     } catch (error) {
       console.error('Failed to delete prop asset', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'delete_prop_asset', status: 'error' });
     }
   };
 
@@ -7278,9 +7579,11 @@ function StageEditor({
       if (editableStage.floorAssetId === floor.id) applyFloorAsset(result.floor);
       setStatus('saved');
       window.setTimeout(() => setStatus('idle'), 1000);
+      onAnalytics('stage_editor_action', { action: 'update_floor_effects', status: 'success' });
     } catch (error) {
       console.error('Failed to update floor effects', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'update_floor_effects', status: 'error' });
     }
   };
 
@@ -7318,9 +7621,11 @@ function StageEditor({
       if (selectedProp?.imagePath === asset.imagePath) setSelectedPropId('');
       setStatus('saved');
       window.setTimeout(() => setStatus('idle'), 1200);
+      onAnalytics('stage_editor_action', { action: 'convert_prop_asset', asset_kind: kind, status: 'success' });
     } catch (error) {
       console.error('Failed to convert prop asset', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'convert_prop_asset', asset_kind: kind, status: 'error' });
     }
   };
 
@@ -7341,9 +7646,11 @@ function StageEditor({
       setStatus('saved');
       await onReload(editableStage.id);
       window.setTimeout(() => setStatus('idle'), 1500);
+      onAnalytics('stage_editor_action', { action: 'save_stage', stage_id: editableStage.id, status: 'success' });
     } catch (error) {
       console.error('Failed to save stage', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'save_stage', stage_id: editableStage.id, status: 'error' });
     }
   };
 
@@ -7358,9 +7665,11 @@ function StageEditor({
       const nextStage = buildImportedStageDraft(draft, result.pieces, result.sourceDataUrl, true);
       setImportStage(nextStage);
       setStatus('ready');
+      onAnalytics('stage_editor_action', { action: 'import_stage_sheet', status: 'success', piece_count: result.pieces.length });
     } catch (error) {
       console.error('Failed to import stage sheet', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'import_stage_sheet', status: 'error' });
     }
   };
 
@@ -7394,9 +7703,11 @@ function StageEditor({
       await reloadPropLibrary();
       setPropPickerOpen(true);
       setMode('edit');
+      onAnalytics('stage_editor_action', { action: 'save_imported_stage_props', status: 'success', piece_count: pieces.length });
     } catch (error) {
       console.error('Failed to save imported stage', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'save_imported_stage_props', status: 'error' });
     }
   };
 
@@ -7426,9 +7737,16 @@ function StageEditor({
       setStatus(result.warnings?.length ? 'ready' : 'saved');
       setMode('edit');
       setPropPickerOpen(true);
+      onAnalytics('stage_editor_action', {
+        action: 'import_mugen_folder_files',
+        status: 'success',
+        prop_count: result.props.length,
+        warning_count: result.warnings?.length ?? 0
+      });
     } catch (error) {
       console.error('Failed to import MUGEN stage', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'import_mugen_folder_files', status: 'error' });
     }
   };
 
@@ -7454,9 +7772,16 @@ function StageEditor({
       setStatus(result.warnings?.length ? 'ready' : 'saved');
       setMode('edit');
       setPropPickerOpen(true);
+      onAnalytics('stage_editor_action', {
+        action: 'import_mugen_folder_path',
+        status: 'success',
+        prop_count: result.props.length,
+        warning_count: result.warnings?.length ?? 0
+      });
     } catch (error) {
       console.error('Failed to import MUGEN stage path', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'import_mugen_folder_path', status: 'error' });
     }
   };
 
@@ -7478,9 +7803,11 @@ function StageEditor({
       await onReload(nextStageId || undefined);
       setStatus('saved');
       window.setTimeout(() => setStatus('idle'), 1500);
+      onAnalytics('stage_editor_action', { action: 'delete_stage', status: 'success' });
     } catch (error) {
       console.error('Failed to delete stage', error);
       setStatus('error');
+      onAnalytics('stage_editor_action', { action: 'delete_stage', status: 'error' });
     }
   };
 
@@ -7491,8 +7818,14 @@ function StageEditor({
         <h2>Stages</h2>
       </header>
       <div className="stage-editor-tabs">
-        <button className={mode === 'edit' ? 'active' : ''} onClick={() => setMode('edit')}>Edit Existing</button>
-        <button className={mode === 'import' ? 'active' : ''} onClick={() => setMode('import')}>Import Props</button>
+        <button className={mode === 'edit' ? 'active' : ''} onClick={() => {
+          setMode('edit');
+          onAnalytics('stage_editor_action', { action: 'tab_changed', tab: 'edit' });
+        }}>Edit Existing</button>
+        <button className={mode === 'import' ? 'active' : ''} onClick={() => {
+          setMode('import');
+          onAnalytics('stage_editor_action', { action: 'tab_changed', tab: 'import' });
+        }}>Import Props</button>
       </div>
 
       {mode === 'edit' ? (
@@ -7788,7 +8121,10 @@ function StageEditor({
           </main>
         </section>
       )}
-      <button className="secondary-button" onClick={onBack}>
+      <button className="secondary-button" onClick={() => {
+        onAnalytics('navigation_clicked', { destination: 'menu', source: 'stage_editor_back' });
+        onBack();
+      }}>
         <Home size={18} />
         Back
       </button>
@@ -8595,6 +8931,54 @@ const sidebars: Record<SettingsTab, string[]> = {
   audio: ['Menu Music', 'Stage Music', 'Mix'],
   console: ['Terminal', 'Memory Card', 'About']
 };
+
+function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings): AnalyticsProperties[] {
+  const changes: AnalyticsProperties[] = [];
+  const add = (category: SettingsTab, settingKey: string, previousValue: string | number | boolean, nextValue: string | number | boolean) => {
+    if (previousValue === nextValue) return;
+    changes.push({
+      settings_tab: category,
+      setting_key: settingKey,
+      previous_value: previousValue,
+      value: nextValue
+    });
+  };
+
+  add('game', 'round_timer', previous.game.roundTimer, next.game.roundTimer);
+  add('game', 'max_health', previous.game.maxHealth, next.game.maxHealth);
+  add('game', 'training_infinite_health', previous.game.trainingInfiniteHealth, next.game.trainingInfiniteHealth);
+  add('game', 'input_assist', previous.game.inputAssist, next.game.inputAssist);
+  add('camera', 'distance', previous.camera.distance, next.camera.distance);
+  add('camera', 'height', previous.camera.height, next.camera.height);
+  add('camera', 'smoothing', previous.camera.smoothing, next.camera.smoothing);
+  add('camera', 'zoom_bias', previous.camera.zoomBias, next.camera.zoomBias);
+  add('display', 'hud_scale', previous.display.hudScale, next.display.hudScale);
+  add('display', 'impact_sparks_enabled', previous.display.impactSparks.enabled, next.display.impactSparks.enabled);
+  add('display', 'impact_sparks_shape', previous.display.impactSparks.shape, next.display.impactSparks.shape);
+  add('display', 'impact_sparks_size', previous.display.impactSparks.size, next.display.impactSparks.size);
+  add('display', 'impact_sparks_intensity', previous.display.impactSparks.intensity, next.display.impactSparks.intensity);
+  add('display', 'touch_controls', previous.display.touchControls, next.display.touchControls);
+  add('display', 'cursor_id', previous.display.cursorId, next.display.cursorId);
+  add('display', 'reduced_motion', previous.display.reducedMotion, next.display.reducedMotion);
+  add('display', 'debug_overlay', previous.display.debugOverlay, next.display.debugOverlay);
+  add('audio', 'menu_music', previous.audio.menuMusic, next.audio.menuMusic);
+  add('audio', 'bgm_track_index', previous.audio.bgmTrackIndex, next.audio.bgmTrackIndex);
+  add('audio', 'master', previous.audio.master, next.audio.master);
+  add('audio', 'music', previous.audio.music, next.audio.music);
+  add('audio', 'sfx', previous.audio.sfx, next.audio.sfx);
+  add('audio', 'hit_sfx', previous.audio.hitSfx, next.audio.hitSfx);
+  add('audio', 'muted', previous.audio.muted, next.audio.muted);
+
+  if (JSON.stringify(previous.controls) !== JSON.stringify(next.controls)) {
+    changes.push({
+      settings_tab: 'controls',
+      setting_key: 'controls_mapping',
+      value: true
+    });
+  }
+
+  return changes;
+}
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
 const actionLabels: Record<ActionName, string> = {
   up: 'Up / Jump',
@@ -8632,7 +9016,8 @@ function SettingsScreen({
   onMenuBgmTrackChange,
   onOptionsShortcut,
   onMemoryCardLoaded,
-  onBack
+  onBack,
+  onAnalytics
 }: {
   mode: MatchMode;
   setMode: (mode: MatchMode) => void;
@@ -8648,6 +9033,7 @@ function SettingsScreen({
   onOptionsShortcut: () => void;
   onMemoryCardLoaded: () => void;
   onBack: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
   const [activePlayer, setActivePlayer] = useState<1 | 2>(1);
@@ -8660,6 +9046,7 @@ function SettingsScreen({
   const [cursorStyleFilter, setCursorStyleFilter] = useState<KoreCursorStyle>(selectedCursor.style);
   const [cursorScaleFilter, setCursorScaleFilter] = useState<KoreCursorScale>(selectedCursor.scale);
   const editorRef = useRef<HTMLElement | null>(null);
+  const previousSettingsRef = useRef(settings);
   const activeSectionIndex = Math.min(activeSections[activeTab] ?? 0, sidebars[activeTab].length - 1);
   const visibleCursorOptions = useMemo(
     () => KORE_CURSOR_OPTIONS.filter((cursor) => cursor.style === cursorStyleFilter && cursor.scale === cursorScaleFilter),
@@ -8669,6 +9056,15 @@ function SettingsScreen({
   const updateSettings = (recipe: (current: GameSettings) => GameSettings) => {
     setSettings((current) => sanitizeGameSettings(recipe(cloneSettings(current))));
   };
+
+  useEffect(() => {
+    const previous = previousSettingsRef.current;
+    if (previous === settings) return;
+    collectTrackedSettingChanges(previous, settings).forEach((change) => {
+      onAnalytics('setting_changed', change);
+    });
+    previousSettingsRef.current = settings;
+  }, [onAnalytics, settings]);
 
   const selectCursorScale = (scale: KoreCursorScale) => {
     setCursorScaleFilter(scale);
@@ -8685,9 +9081,11 @@ function SettingsScreen({
   const cycleOptionsTab = useCallback((direction: -1 | 1) => {
     setActiveTab((current) => {
       const currentIndex = settingsTabs.indexOf(current);
-      return settingsTabs[(currentIndex + direction + settingsTabs.length) % settingsTabs.length] ?? current;
+      const nextTab = settingsTabs[(currentIndex + direction + settingsTabs.length) % settingsTabs.length] ?? current;
+      if (nextTab !== current) onAnalytics('navigation_clicked', { source: 'settings_tab_shortcut', destination: nextTab });
+      return nextTab;
     });
-  }, []);
+  }, [onAnalytics]);
 
   const scrollOptionsSectionIntoView = useCallback((index: number) => {
     window.requestAnimationFrame(() => {
@@ -8699,8 +9097,14 @@ function SettingsScreen({
 
   const selectSidebarSection = useCallback((index: number) => {
     setActiveSections((current) => ({ ...current, [activeTab]: index }));
+    onAnalytics('navigation_clicked', {
+      source: 'settings_section',
+      settings_tab: activeTab,
+      section_index: index,
+      section: sidebars[activeTab][index] ?? ''
+    });
     scrollOptionsSectionIntoView(index);
-  }, [activeTab, scrollOptionsSectionIntoView]);
+  }, [activeTab, onAnalytics, scrollOptionsSectionIntoView]);
 
   useEffect(() => {
     scrollOptionsSectionIntoView(activeSectionIndex);
@@ -8799,7 +9203,10 @@ function SettingsScreen({
             <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
           </SettingsSection>
           <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
-            <button className="secondary-button" onClick={() => updateSettings((current) => ({ ...current, game: cloneSettings(defaultGameSettings).game }))}>
+            <button className="secondary-button" onClick={() => {
+              onAnalytics('settings_reset_clicked', { settings_tab: 'game' });
+              updateSettings((current) => ({ ...current, game: cloneSettings(defaultGameSettings).game }));
+            }}>
               <RotateCcw size={16} />
               Reset Game Settings
             </button>
@@ -8902,7 +9309,10 @@ function SettingsScreen({
             </SettingRow>
           </SettingsSection>
           <SettingsSection index={5} title="Defaults" active={activeSectionIndex === 5}>
-            <button className="secondary-button" onClick={() => setSettings((current) => ({ ...current, controls: cloneSettings(defaultGameSettings).controls }))}>
+            <button className="secondary-button" onClick={() => {
+              onAnalytics('settings_reset_clicked', { settings_tab: 'controls' });
+              setSettings((current) => ({ ...current, controls: cloneSettings(defaultGameSettings).controls }));
+            }}>
               <RotateCcw size={16} />
               Reset Controls
             </button>
@@ -8925,7 +9335,10 @@ function SettingsScreen({
             <SettingSlider label="Zoom Bias" value={settings.camera.zoomBias} min={0.75} max={1.35} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, camera: { ...current.camera, zoomBias: value } }))} />
           </SettingsSection>
           <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
-            <button className="secondary-button" onClick={() => updateSettings((current) => ({ ...current, camera: cloneSettings(defaultGameSettings).camera }))}>
+            <button className="secondary-button" onClick={() => {
+              onAnalytics('settings_reset_clicked', { settings_tab: 'camera' });
+              updateSettings((current) => ({ ...current, camera: cloneSettings(defaultGameSettings).camera }));
+            }}>
               <RotateCcw size={16} />
               Reset Camera
             </button>
@@ -8986,7 +9399,7 @@ function SettingsScreen({
     }
 
     if (activeTab === 'console') {
-      return <OptionsConsole onMemoryCardLoaded={onMemoryCardLoaded} activeSectionIndex={activeSectionIndex} />;
+      return <OptionsConsole onMemoryCardLoaded={onMemoryCardLoaded} activeSectionIndex={activeSectionIndex} onAnalytics={onAnalytics} />;
     }
 
     return (
@@ -9038,7 +9451,10 @@ function SettingsScreen({
         <nav className="options-tabs" aria-label="Options tabs">
           <span>O</span>
           {settingsTabs.map((tab) => (
-            <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
+            <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => {
+              setActiveTab(tab);
+              onAnalytics('navigation_clicked', { source: 'settings_tab', destination: tab });
+            }}>
               {tabLabels[tab]}
             </button>
           ))}
@@ -9056,16 +9472,19 @@ function SettingsScreen({
         </section>
       </section>
       <footer className="settings-support-footer" aria-label="Community links">
-        <button className="secondary-button" onClick={onBack}>
+        <button className="secondary-button" onClick={() => {
+          onAnalytics('navigation_clicked', { destination: 'menu', source: 'settings_back' });
+          onBack();
+        }}>
           <Home size={18} />
           Back
         </button>
         <div className="support-actions">
-          <a className="support-button discord-button" href="https://discord.gg/yDcrFsmTx7" target="_blank" rel="noreferrer">
+          <a className="support-button discord-button" href="https://discord.gg/yDcrFsmTx7" target="_blank" rel="noreferrer" onClick={() => onAnalytics('external_link_clicked', { destination: 'discord', source: 'settings' })}>
             <span className="discord-mark" aria-hidden="true">Discord</span>
             <span>Join the Discord</span>
           </a>
-          <a className="support-button patreon-button" href="https://www.patreon.com/cw/playKORE" target="_blank" rel="noreferrer">
+          <a className="support-button patreon-button" href="https://www.patreon.com/cw/playKORE" target="_blank" rel="noreferrer" onClick={() => onAnalytics('external_link_clicked', { destination: 'patreon', source: 'settings' })}>
             <span className="patreon-mark" aria-hidden="true">p</span>
             <span>Become a patron</span>
           </a>
@@ -9095,7 +9514,15 @@ type ConsoleLine = {
 
 let consoleLineId = 0;
 
-function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCardLoaded: () => void; activeSectionIndex: number }) {
+function OptionsConsole({
+  onMemoryCardLoaded,
+  activeSectionIndex,
+  onAnalytics
+}: {
+  onMemoryCardLoaded: () => void;
+  activeSectionIndex: number;
+  onAnalytics: AnalyticsCapture;
+}) {
   const [command, setCommand] = useState('');
   const [lines, setLines] = useState<ConsoleLine[]>(() => [
     { id: ++consoleLineId, kind: 'system', text: 'KORE local console online.' },
@@ -9111,23 +9538,27 @@ function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCa
     const payload = importMemoryCard(source);
     onMemoryCardLoaded();
     appendLine('success', `Loaded memory card from KORE ${payload.appVersion}. ${formatMemoryCardSummary(payload)}`);
-  }, [appendLine, onMemoryCardLoaded]);
+    onAnalytics('memory_card_action', { action: 'import', status: 'success' });
+  }, [appendLine, onAnalytics, onMemoryCardLoaded]);
 
   const copyMemoryCard = useCallback(async () => {
     const serialized = serializeMemoryCard();
     if (!navigator.clipboard?.writeText) {
       appendLine('error', 'Clipboard is unavailable. Use /memorycard export to download a card file.');
+      onAnalytics('memory_card_action', { action: 'copy', status: 'error', reason: 'clipboard_unavailable' });
       return;
     }
     await navigator.clipboard.writeText(serialized);
     appendLine('success', `Copied memory card to clipboard. ${formatMemoryCardSummary(createMemoryCardPayload())}`);
-  }, [appendLine]);
+    onAnalytics('memory_card_action', { action: 'copy', status: 'success' });
+  }, [appendLine, onAnalytics]);
 
   const exportMemoryCard = useCallback(() => {
     const payload = createMemoryCardPayload();
     downloadMemoryCard();
     appendLine('success', `Exported memory card file. ${formatMemoryCardSummary(payload)}`);
-  }, [appendLine]);
+    onAnalytics('memory_card_action', { action: 'export', status: 'success' });
+  }, [appendLine, onAnalytics]);
 
   const runCommand = useCallback(async (rawCommand: string) => {
     const trimmed = rawCommand.trim();
@@ -9168,10 +9599,12 @@ function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCa
         }
       }
       appendLine('error', `Unknown command: ${head}. Type /help.`);
+      onAnalytics('memory_card_action', { action: 'console_command', status: 'unknown' });
     } catch (error) {
       appendLine('error', error instanceof Error ? error.message : 'Console command failed.');
+      onAnalytics('memory_card_action', { action: 'console_command', status: 'error' });
     }
-  }, [appendLine, copyMemoryCard, exportMemoryCard, importCardText]);
+  }, [appendLine, copyMemoryCard, exportMemoryCard, importCardText, onAnalytics]);
 
   const handleFile = async (file?: File | null) => {
     if (!file) return;
@@ -9180,6 +9613,7 @@ function OptionsConsole({ onMemoryCardLoaded, activeSectionIndex }: { onMemoryCa
       if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (error) {
       appendLine('error', error instanceof Error ? error.message : 'Memory card import failed.');
+      onAnalytics('memory_card_action', { action: 'import', status: 'error' });
     }
   };
 
@@ -9834,7 +10268,8 @@ function CharacterViewer({
   onEffectsChange,
   onCharacterMetadataChange,
   onImportComplete,
-  onBack
+  onBack,
+  onAnalytics
 }: {
   roster: CharacterDefinition[];
   sourceRoster: CharacterDefinition[];
@@ -9850,6 +10285,7 @@ function CharacterViewer({
   onCharacterMetadataChange: (characterId: string, patch: CharacterMetadataPatch) => void;
   onImportComplete: (preferredCharacterId?: string) => Promise<void>;
   onBack: () => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [activeId, setActiveId] = useState(roster[0]?.id ?? '');
   const [selectedAnimationKey, setSelectedAnimationKey] = useState(animationSlots[0].key);
@@ -11678,7 +12114,10 @@ function CharacterViewer({
           </button>
         </>
       )}
-      <button className="secondary-button" onClick={onBack}>
+      <button className="secondary-button" onClick={() => {
+        onAnalytics('navigation_clicked', { destination: 'menu', source: 'viewer_back' });
+        onBack();
+      }}>
         <Home size={18} />
         Back
       </button>
@@ -16078,6 +16517,11 @@ function FightScreen({
   const fightAnalyticsStateRef = useRef(createFightAnalyticsState());
   const matchStartedTrackedRef = useRef(false);
   const mobileControlsTrackedRef = useRef(false);
+  const onlineStatusAnalyticsRef = useRef('');
+  const pauseAnalyticsRef = useRef(paused);
+  const pauseViewAnalyticsRef = useRef('');
+  const moveListTabAnalyticsRef = useRef('');
+  const completedTrainingTrialAnalyticsRef = useRef<Set<string>>(new Set());
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const captureFightAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
@@ -16144,6 +16588,72 @@ function FightScreen({
     pausedRef.current = paused;
     onPausedChange(paused);
   }, [onPausedChange, paused]);
+
+  useEffect(() => {
+    if (pauseAnalyticsRef.current === paused) return;
+    pauseAnalyticsRef.current = paused;
+    captureFightAnalytics('pause_toggled', {
+      paused,
+      phase: matchRef.current.phase,
+      online_state: onlineStateRef.current
+    });
+  }, [captureFightAnalytics, paused]);
+
+  useEffect(() => {
+    if (!paused) {
+      pauseViewAnalyticsRef.current = '';
+      moveListTabAnalyticsRef.current = '';
+      return;
+    }
+    const viewKey = `${pauseMenuView}:${activeTrainingTrial?.id ?? 'none'}`;
+    if (pauseViewAnalyticsRef.current !== viewKey) {
+      pauseViewAnalyticsRef.current = viewKey;
+      if (pauseMenuView === 'movelist') captureFightAnalytics('move_list_opened', { active_tab: activeMoveListTab });
+      if (pauseMenuView === 'trainingTrials') {
+        captureFightAnalytics('training_panel_opened', {
+          training_submode: trainingMode,
+          trial_id: activeTrainingTrial?.id ?? null
+        });
+      }
+    }
+    if (pauseMenuView === 'movelist' && moveListTabAnalyticsRef.current !== activeMoveListTab) {
+      moveListTabAnalyticsRef.current = activeMoveListTab;
+      captureFightAnalytics('move_list_tab_changed', { active_tab: activeMoveListTab });
+    }
+  }, [activeMoveListTab, activeTrainingTrial?.id, captureFightAnalytics, pauseMenuView, paused, trainingMode]);
+
+  useEffect(() => {
+    if (!isOnline) return;
+    const statusKey = `${onlineState}:${onlineRole ?? 'none'}:${onlineStatusText}`;
+    if (onlineStatusAnalyticsRef.current === statusKey) return;
+    onlineStatusAnalyticsRef.current = statusKey;
+    captureFightAnalytics('online_status_changed', {
+      online_state: onlineState,
+      online_role: onlineRole,
+      status_text: onlineStatusText
+    });
+    if (onlineState === 'connected') {
+      captureFightAnalytics('online_connected', { online_role: onlineRole });
+    }
+    if (onlineState === 'disconnected' || onlineState === 'error') {
+      captureFightAnalytics('online_disconnected', {
+        online_state: onlineState,
+        status_text: onlineStatusText
+      });
+    }
+  }, [captureFightAnalytics, isOnline, onlineRole, onlineState, onlineStatusText]);
+
+  useEffect(() => {
+    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
+    if (completedTrainingTrialAnalyticsRef.current.has(activeTrainingTrial.id)) return;
+    completedTrainingTrialAnalyticsRef.current.add(activeTrainingTrial.id);
+    captureFightAnalytics('training_trial_completed', {
+      trial_id: activeTrainingTrial.id,
+      training_submode: activeTrainingTrial.mode,
+      trial_category: activeTrainingTrial.category,
+      trial_difficulty: activeTrainingTrial.difficulty
+    });
+  }, [activeTrainingTrial, captureFightAnalytics, mode, previewPlayback, trainingTrialProgress?.completed]);
 
   useEffect(() => {
     latestAudioSettingsRef.current = settings.audio;
@@ -16366,7 +16876,12 @@ function FightScreen({
 
   useAnyInputActivation({
     enabled: Boolean(rankedPlayerResult?.promoted && !rankedPromotionAccepted),
-    onAccept: () => setRankedPromotionAccepted(true)
+    onAccept: () => {
+      setRankedPromotionAccepted(true);
+      captureFightAnalytics('ranked_promotion_accepted', {
+        rank_id: rankedPlayerResult?.afterRank.id ?? null
+      });
+    }
   });
 
   useEffect(() => {
@@ -16547,6 +17062,11 @@ function FightScreen({
     const current = matchRef.current;
     const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
     resetTrackedMatchAnalytics(fresh);
+    captureFightAnalytics('online_rematch_started', {
+      online_role: onlineRoleRef.current,
+      p1_wins: onlineWinsRef.current[0],
+      p2_wins: onlineWinsRef.current[1]
+    });
     matchRef.current = fresh;
     setMatch(fresh);
     onlineWinnerRecordedRef.current = false;
@@ -16566,7 +17086,7 @@ function FightScreen({
     setOnlineStatusText('CONNECTED');
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
     publishOnlineSnapshot(true);
-  }, [makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics]);
+  }, [captureFightAnalytics, makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics]);
 
   const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
@@ -16678,8 +17198,15 @@ function FightScreen({
             { profile: localProfile, points: p1Points },
             { profile: remoteProfile, points: p2Points }
           ]
+        }).then(() => {
+          captureFightAnalytics('leaderboard_result_submitted', {
+            status: 'success',
+            p1_points: p1Points,
+            p2_points: p2Points
+          });
         }).catch((error) => {
           console.error('Failed to submit leaderboard result', error);
+          captureFightAnalytics('leaderboard_result_submitted', { status: 'error' });
         });
       }
     }
@@ -16711,21 +17238,29 @@ function FightScreen({
           ]
         };
         void submitRankedMatchReport(report).then((result) => {
+          captureFightAnalytics('ranked_report_submitted', { status: 'success' });
           rankedSubmitResultRef.current = result;
           const localResult = result.players.find((player) => player.playerId === localProfile.playerId) ?? null;
           if (localResult) {
             setRankedPlayerResult(localResult);
             setRankedPromotionAccepted(!localResult.promoted);
             onRankedProfileChange(localResult.profile);
+            captureFightAnalytics('ranked_result_received', {
+              did_win: localResult.didWin,
+              kp_delta: localResult.kpDelta,
+              promoted: localResult.promoted,
+              demoted: localResult.demoted
+            });
           }
           onlineSessionRef.current?.send({ type: 'rankedResult', result });
         }).catch((error) => {
           console.error('Failed to submit ranked result', error);
+          captureFightAnalytics('ranked_report_submitted', { status: 'error' });
         });
       }
     }
     publishOnlineSnapshot(true);
-  }, [mode, onRankedProfileChange, publishOnlineSnapshot]);
+  }, [captureFightAnalytics, mode, onRankedProfileChange, publishOnlineSnapshot]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
     if (message.type === 'hello') {
@@ -16821,9 +17356,15 @@ function FightScreen({
         setRankedPlayerResult(localResult);
         setRankedPromotionAccepted(!localResult.promoted);
         onRankedProfileChange(localResult.profile);
+        captureFightAnalytics('ranked_result_received', {
+          did_win: localResult.didWin,
+          kp_delta: localResult.kpDelta,
+          promoted: localResult.promoted,
+          demoted: localResult.demoted
+        });
       }
     }
-  }, [makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch]);
+  }, [captureFightAnalytics, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -16857,6 +17398,11 @@ function FightScreen({
     setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
     setPrivateRoomPassword('');
     setPrivateRoomName('');
+    captureFightAnalytics('online_search_started', {
+      online_mode: mode,
+      queue: isRanked ? 'ranked' : isPrivate ? 'private' : 'casual',
+      private_intent: privateRoomIntent?.kind ?? null
+    });
 
     const start = async () => {
       try {
@@ -16990,7 +17536,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [cleanupOnline, handleOnlineMessage, isOnline, isPrivate, isRanked, markOnlineDisconnected, p1.displayName, p1.id, privateRoomIntent, stage.id]);
+  }, [captureFightAnalytics, cleanupOnline, handleOnlineMessage, isOnline, isPrivate, isRanked, markOnlineDisconnected, mode, p1.displayName, p1.id, privateRoomIntent, stage.id]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -17173,6 +17719,10 @@ function FightScreen({
   }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
 
   const requestOnlineRematch = () => {
+    captureFightAnalytics('online_rematch_requested', {
+      online_state: onlineStateRef.current,
+      online_role: onlineRoleRef.current
+    });
     if (!isOnline || onlineStateRef.current !== 'connected') {
       const warmup = createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions));
       matchRef.current = warmup;
@@ -17280,6 +17830,12 @@ function FightScreen({
   }, [activeTrainingTrial, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
 
   const selectTrainingTrial = useCallback((trial: TrainingTrialDefinition) => {
+    captureFightAnalytics('training_trial_selected', {
+      trial_id: trial.id,
+      training_submode: trial.mode,
+      trial_category: trial.category,
+      trial_difficulty: trial.difficulty
+    });
     const progress = makeTrainingTrialProgress(trial);
     setTrainingMode(trial.mode);
     setActiveTrainingTrialId(trial.id);
@@ -17293,24 +17849,44 @@ function FightScreen({
     resetTrackedMatchAnalytics(fresh);
     matchRef.current = fresh;
     setMatch(fresh);
-  }, [makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
+  }, [captureFightAnalytics, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
 
   const trainActiveTrainingTrial = useCallback(() => {
+    const trial = activeTrainingTrialRef.current ?? activeTrainingTrial ?? null;
+    if (trial) {
+      captureFightAnalytics('training_trial_started', {
+        trial_id: trial.id,
+        training_submode: trial.mode,
+        trial_category: trial.category,
+        trial_difficulty: trial.difficulty
+      });
+    }
     restartTrainingTrial(activeTrainingTrialRef.current ?? activeTrainingTrial ?? undefined, false);
     setPaused(false);
-  }, [activeTrainingTrial, restartTrainingTrial]);
+  }, [activeTrainingTrial, captureFightAnalytics, restartTrainingTrial]);
 
   const previewActiveTrainingTrial = useCallback(() => {
-    restartTrainingTrial(activeTrainingTrialRef.current ?? activeTrainingTrial ?? undefined, true);
+    const trial = activeTrainingTrialRef.current ?? activeTrainingTrial ?? null;
+    if (trial) {
+      captureFightAnalytics('training_trial_previewed', {
+        trial_id: trial.id,
+        training_submode: trial.mode,
+        trial_category: trial.category,
+        trial_difficulty: trial.difficulty
+      });
+    }
+    restartTrainingTrial(trial ?? undefined, true);
     setPaused(false);
-  }, [activeTrainingTrial, restartTrainingTrial]);
+  }, [activeTrainingTrial, captureFightAnalytics, restartTrainingTrial]);
 
   const leaveToMenu = () => {
+    captureFightAnalytics('pause_menu_action_clicked', { action: 'menu', phase: matchRef.current.phase });
     cleanupOnline(true);
     onMenu();
   };
 
   const leaveToCharacterSelect = () => {
+    captureFightAnalytics('pause_menu_action_clicked', { action: 'character_select', phase: matchRef.current.phase });
     cleanupOnline(true);
     onCharacterSelect();
   };
@@ -17413,7 +17989,10 @@ function FightScreen({
                   <ChevronLeft size={18} />
                   Back
                 </button>
-                <button className="primary-button" onClick={() => setPaused(false)}>
+                <button className="primary-button" onClick={() => {
+                  captureFightAnalytics('pause_menu_action_clicked', { action: 'resume', phase: match.phase });
+                  setPaused(false);
+                }}>
                   <Play size={18} />
                   Resume
                 </button>
@@ -17437,6 +18016,7 @@ function FightScreen({
                 previewing={Boolean(previewPlayback)}
                 onModeChange={(nextMode) => {
                   setTrainingMode(nextMode);
+                  captureFightAnalytics('training_mode_changed', { source: 'pause_training_panel', training_submode: nextMode });
                   if (nextMode === 'free') {
                     setPreviewPlayback(null);
                     previewPlaybackRef.current = null;
@@ -17445,7 +18025,18 @@ function FightScreen({
                   }
                 }}
                 onSelectTrial={selectTrainingTrial}
-                onRetry={() => restartTrainingTrial()}
+                onRetry={() => {
+                  const trial = activeTrainingTrialRef.current ?? activeTrainingTrial;
+                  if (trial) {
+                    captureFightAnalytics('training_trial_retried', {
+                      trial_id: trial.id,
+                      training_submode: trial.mode,
+                      trial_category: trial.category,
+                      trial_difficulty: trial.difficulty
+                    });
+                  }
+                  restartTrainingTrial();
+                }}
                 onPreview={previewActiveTrainingTrial}
                 onBack={() => setPauseMenuView('menu')}
                 onResume={trainActiveTrainingTrial}
@@ -17456,22 +18047,34 @@ function FightScreen({
               <Pause size={32} />
               <h2>Paused</h2>
               <div className="overlay-actions pause-menu-actions">
-                <button className="primary-button" onClick={() => setPaused(false)}>
+                <button className="primary-button" onClick={() => {
+                  captureFightAnalytics('pause_menu_action_clicked', { action: 'resume', phase: match.phase });
+                  setPaused(false);
+                }}>
                   <Play size={18} />
                   Resume
                 </button>
-                <button className="secondary-button" onClick={() => setPauseMenuView('movelist')}>
+                <button className="secondary-button" onClick={() => {
+                  captureFightAnalytics('pause_menu_action_clicked', { action: 'move_list', phase: match.phase });
+                  setPauseMenuView('movelist');
+                }}>
                   <List size={18} />
                   Move List
                 </button>
                 {mode === 'training' && (
-                  <button className="secondary-button" onClick={() => setPauseMenuView('trainingTrials')}>
+                  <button className="secondary-button" onClick={() => {
+                    captureFightAnalytics('pause_menu_action_clicked', { action: 'training_trials', phase: match.phase });
+                    setPauseMenuView('trainingTrials');
+                  }}>
                     <Target size={18} />
                     Training Mode
                   </button>
                 )}
                 {mode !== 'ai' && (
-                  <button className="secondary-button" onClick={reset}>
+                  <button className="secondary-button" onClick={() => {
+                    captureFightAnalytics('pause_menu_action_clicked', { action: 'restart', phase: match.phase });
+                    reset();
+                  }}>
                     <RotateCcw size={18} />
                     Restart
                   </button>
@@ -17943,7 +18546,8 @@ function BreakTargetMiniGameScreen({
   setVirtualAction,
   clearMenuInputs,
   onMenu,
-  onComplete
+  onComplete,
+  onAnalytics
 }: {
   character: CharacterDefinition;
   launch: ArcadeMiniGameLaunch;
@@ -17953,6 +18557,7 @@ function BreakTargetMiniGameScreen({
   clearMenuInputs: () => void;
   onMenu: () => void;
   onComplete: (result: MiniGameResult) => void;
+  onAnalytics: AnalyticsCapture;
 }) {
   const [snapshot, setSnapshot] = useState<BreakTargetMiniGameSnapshot>(() => createBreakTargetMiniGame(character, launch.stage, launch.seed));
   const [paused, setPaused] = useState(false);
@@ -17971,9 +18576,16 @@ function BreakTargetMiniGameScreen({
     pausedRef.current = false;
     completedRef.current = false;
     pauseLatchRef.current = false;
+    mobileControlsTrackedRef.current = false;
+    onAnalytics('minigame_started', {
+      game_id: fresh.gameId,
+      stage_id: fresh.stage.id,
+      character_id: character.id,
+      seed: launch.seed
+    });
     const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
     return () => window.cancelAnimationFrame(focusFrame);
-  }, [character, launch.stage, launch.seed]);
+  }, [character, launch.stage, launch.seed, onAnalytics]);
 
   useEffect(() => {
     pausedRef.current = paused;
@@ -17997,6 +18609,11 @@ function BreakTargetMiniGameScreen({
           pauseLatchRef.current = true;
           setPaused((current) => {
             pausedRef.current = !current;
+            onAnalytics('minigame_paused', {
+              paused: !current,
+              game_id: snapshotRef.current.gameId,
+              stage_id: snapshotRef.current.stage.id
+            });
             return !current;
           });
           clearMenuInputs();
@@ -18016,6 +18633,16 @@ function BreakTargetMiniGameScreen({
           const previousHighScore = readMiniGameHighScore({ gameId: snapshotRef.current.gameId, stageId: snapshotRef.current.stage.id });
           const result = makeBreakTargetMiniGameResult(snapshotRef.current, previousHighScore);
           const highScore = writeMiniGameHighScore({ gameId: result.gameId, stageId: result.stageId }, result.score);
+          onAnalytics('minigame_completed', {
+            game_id: result.gameId,
+            stage_id: result.stageId,
+            score: Math.round(result.score),
+            high_score: highScore,
+            new_high_score: result.score > previousHighScore,
+            targets_destroyed: result.targetsDestroyed,
+            target_count: result.totalTargets,
+            time_remaining: Number(result.timeRemaining.toFixed(2))
+          });
           onComplete({ ...result, highScore, newHighScore: result.score > previousHighScore });
           return;
         }
@@ -18024,11 +18651,17 @@ function BreakTargetMiniGameScreen({
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [clearMenuInputs, onComplete, readInputsForStep]);
+  }, [clearMenuInputs, onAnalytics, onComplete, readInputsForStep]);
 
   const trackMobileControlsUsed = useCallback(() => {
+    if (mobileControlsTrackedRef.current) return;
     mobileControlsTrackedRef.current = true;
-  }, []);
+    onAnalytics('mobile_controls_used', {
+      source: 'minigame',
+      game_id: snapshotRef.current.gameId,
+      stage_id: snapshotRef.current.stage.id
+    });
+  }, [onAnalytics]);
 
   return (
     <div
@@ -18045,7 +18678,14 @@ function BreakTargetMiniGameScreen({
           <div className="pause-panel">
             <h2>Mini Game Paused</h2>
             <div className="pause-menu-actions">
-              <button className="primary-button" onClick={() => setPaused(false)}>
+              <button className="primary-button" onClick={() => {
+                onAnalytics('minigame_paused', {
+                  paused: false,
+                  game_id: snapshot.gameId,
+                  stage_id: snapshot.stage.id
+                });
+                setPaused(false);
+              }}>
                 <Play size={18} />
                 Resume
               </button>

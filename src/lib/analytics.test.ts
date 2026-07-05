@@ -52,6 +52,26 @@ describe('analytics', () => {
     });
   });
 
+  it('captures expanded explicit app events without undefined properties', async () => {
+    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
+    const analytics = await loadAnalytics();
+
+    analytics.captureAnalyticsEvent('screen_viewed', {
+      app_version: 'test',
+      screen: 'fight',
+      previous_screen: 'versus',
+      time_on_previous_screen_seconds: 2.4,
+      omitted: undefined
+    });
+
+    expect(posthogMock.capture).toHaveBeenCalledWith('screen_viewed', {
+      app_version: 'test',
+      screen: 'fight',
+      previous_screen: 'versus',
+      time_on_previous_screen_seconds: 2.4
+    });
+  });
+
   it('captures normalized errors', async () => {
     vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
     const analytics = await loadAnalytics();
