@@ -1975,13 +1975,7 @@ button {
 }
 
 .versus-roster-tile > span:not(.versus-random-tile-icon) {
-  position: absolute;
-  right: 6px;
-  bottom: clamp(6px, 0.9vh, 8px);
-  left: 6px;
-  font-size: clamp(10px, 1.65vh, 12px);
-  font-weight: 900;
-  line-height: 1.1;
+  display: none;
 }
 
 .versus-roster-tile small {
