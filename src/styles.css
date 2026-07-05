@@ -1824,7 +1824,7 @@ button {
   min-height: clamp(78px, 12vh, 118px);
   border: 0;
   border-radius: 7px;
-  padding: clamp(6px, 1vh, 10px) 6px clamp(24px, 3.3vh, 34px);
+  padding: clamp(14px, 2.2vh, 22px) clamp(10px, 1.2vw, 16px);
   overflow: hidden;
   color: #f7f7f2;
   background:
@@ -1888,9 +1888,8 @@ button {
   display: grid;
   place-items: center;
   align-self: center;
-  width: min(100%, clamp(86px, 16vh, 150px));
-  height: clamp(92px, 14vh, 170px);
-  transform: translateY(-6px) scale(1.14);
+  width: min(100%, clamp(58px, 10vh, 112px));
+  height: min(100%, clamp(58px, 10vh, 112px));
 }
 
 .versus-random-tile small {
@@ -1956,11 +1955,10 @@ button {
 .versus-roster-tile img {
   align-self: center;
   width: auto;
-  max-width: min(100%, clamp(86px, 16vh, 150px));
-  height: clamp(92px, 14vh, 170px);
+  max-width: min(100%, clamp(68px, 12vh, 132px));
+  height: min(100%, clamp(68px, 12vh, 132px));
   object-fit: contain;
   image-rendering: pixelated;
-  transform: translateY(-6px) scale(1.14);
   filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.42));
   outline: 0;
 }
@@ -9569,12 +9567,13 @@ button {
 
   .versus-roster-tile {
     min-height: clamp(64px, 9vh, 86px);
+    padding: clamp(10px, 1.5vh, 14px) 8px;
   }
 
   .versus-random-tile-icon,
   .versus-roster-tile img {
-    max-width: min(100%, clamp(48px, 7.5vh, 64px));
-    height: clamp(48px, 7.5vh, 64px);
+    max-width: min(100%, clamp(42px, 6.2vh, 58px));
+    height: min(100%, clamp(42px, 6.2vh, 58px));
   }
 
   .settings-strip {
