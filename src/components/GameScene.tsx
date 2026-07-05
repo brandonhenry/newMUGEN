@@ -62,15 +62,12 @@ type StageCameraColliderEntry = CameraSafetyCollider & {
   mesh: THREE.Mesh;
   materials: StageCameraMaterialState[];
   boundaryFade: boolean;
-  highViewFade: boolean;
-  fadeOpacity: number;
   fade: number;
 };
 
 type StageCameraCollisionRegistry = {
   colliders: Set<StageCameraColliderEntry>;
   occluders: Set<StageCameraColliderEntry>;
-  highViewOcclusionActive: boolean;
 };
 
 const StageCameraCollisionContext = createContext<StageCameraCollisionRegistry | null>(null);
@@ -564,7 +561,7 @@ const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
-  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>(), highViewOcclusionActive: false }), [match.stage.id]);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
@@ -592,7 +589,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
 }
 
 export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: BreakTargetMiniGameSnapshot; reducedMotion?: boolean }) {
-  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>(), highViewOcclusionActive: false }), [snapshot.stage.id]);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [snapshot.stage.id]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [snapshot.player.position.x, 3.3, snapshot.player.position.z + 6.8], fov: 46 }} data-testid="mini-game-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
@@ -1667,7 +1664,7 @@ export function StagePreviewCanvas({
   const controlTarget = useMemo(() => previewMode === 'fly'
     ? stage.fightPlane?.center ?? stage.model?.focus ?? stage.camera?.previewTarget ?? FIXED_STAGE_PREVIEW_TARGET
     : FIXED_STAGE_PREVIEW_TARGET, [previewMode, stage.camera?.previewTarget, stage.id, stage.model?.focus]);
-  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>(), highViewOcclusionActive: false }), [stage.id]);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [stage.id]);
   useEffect(() => {
     logStageModelDebug('H9 StagePreviewCanvas classified stage', {
       stageId: stage.id,
@@ -2769,7 +2766,7 @@ function updateCameraStageOccluders(
     return;
   }
   if (visibilityPoints.length === 0) return;
-  const blockers = findCameraSightlineBlockers(cameraPosition, visibilityPoints, registry.colliders);
+  const blockers = findCameraSightlineBlockers(cameraPosition, visibilityPoints, registry.colliders, { padding: 0.72, minDistanceFromPoint: 0.12 });
   blockers.forEach((entry) => registry.occluders.add(entry));
 }
 
@@ -2800,7 +2797,7 @@ function StageCameraOcclusionFader() {
   useFrame((_, delta) => {
     if (!registry?.colliders.size) return;
     registry.colliders.forEach((entry) => {
-      const target = registry.occluders.has(entry) || (registry.highViewOcclusionActive && entry.highViewFade) ? 1 : 0;
+      const target = registry.occluders.has(entry) ? 1 : 0;
       const speed = target > entry.fade ? 14 : 5.8;
       entry.fade = THREE.MathUtils.lerp(entry.fade, target, cameraDamp(delta, speed));
       applyStageCameraFade(entry);
@@ -2812,7 +2809,7 @@ function StageCameraOcclusionFader() {
 function applyStageCameraFade(entry: StageCameraColliderEntry) {
   const fade = THREE.MathUtils.clamp(entry.fade, 0, 1);
   entry.materials.forEach((state) => {
-    const targetOpacity = Math.min(state.opacity, entry.fadeOpacity);
+    const targetOpacity = Math.min(state.opacity, 0.24);
     if (fade <= 0.002) {
       if (state.material.transparent !== state.transparent || state.material.depthWrite !== state.depthWrite) {
         state.material.transparent = state.transparent;
@@ -2850,10 +2847,8 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   const cameraDistanceRef = useRef(6.4);
   const cameraHeightRef = useRef(2.8);
   useEffect(() => {
-    if (cameraCollisionRegistry) cameraCollisionRegistry.highViewOcclusionActive = true;
     return () => {
       if (!cameraCollisionRegistry) return;
-      cameraCollisionRegistry.highViewOcclusionActive = false;
       cameraCollisionRegistry.occluders.clear();
     };
   }, [cameraCollisionRegistry]);
@@ -3587,15 +3582,12 @@ function StageModelCameraColliders({
       if (getStageModelMeshHideReason(mesh, stageId, false)) return;
       const box = new THREE.Box3().setFromObject(mesh);
       if (!isUsableStageCameraColliderBox(box, floorY)) return;
-      const highViewFade = isStageCameraHighViewFadeBox(box, floorY);
       const entry: StageCameraColliderEntry = {
         id: mesh.uuid,
         mesh,
         box,
         materials: captureStageCameraMaterialStates(mesh),
         boundaryFade: isStageCameraBoundaryFadeBox(box),
-        highViewFade,
-        fadeOpacity: highViewFade ? 0.06 : 0.24,
         fade: 0
       };
       entries.push(entry);
@@ -3644,17 +3636,6 @@ function isStageCameraBoundaryFadeBox(box: THREE.Box3) {
   box.getSize(size);
   const horizontalMin = Math.min(size.x, size.z);
   return size.y > 0.75 && (horizontalMin < 1.8 || size.y > horizontalMin * 0.65);
-}
-
-function isStageCameraHighViewFadeBox(box: THREE.Box3, floorY: number) {
-  const size = new THREE.Vector3();
-  box.getSize(size);
-  if (isStageCameraFloorLikeBox(box, floorY)) return false;
-  const topAboveFightView = box.max.y >= floorY + 1.65;
-  const cameraHeightBand = box.max.y >= floorY + 2.35 || box.min.y >= floorY + 1.2;
-  const slenderVertical = size.y > 0.9 && Math.min(size.x, size.z) < 1.25;
-  const overheadOrTall = size.y > Math.max(1.1, Math.min(size.x, size.z) * 0.5);
-  return topAboveFightView && (cameraHeightBand || slenderVertical || overheadOrTall);
 }
 
 function isStageCameraFloorLikeBox(box: THREE.Box3, floorY: number) {
@@ -4552,6 +4533,8 @@ function getImageVoxelFrameSelection(fighter: FighterRuntime, progress: number, 
     frameIndex = Math.min(sequence.length - 1, Math.floor(getIdleFlourishProgress(fighter) * sequence.length));
   } else if (fighter.state === 'chargeKi') {
     frameIndex = getChargeKiFrameIndex(fighter, sequence.length);
+  } else if (fighter.state === 'knockdown') {
+    frameIndex = 0;
   } else if (fighter.state === 'getup') {
     frameIndex = Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length));
   }

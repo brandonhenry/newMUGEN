@@ -90,6 +90,24 @@ describe('cameraSafety', () => {
     expect(blockers.has(offAxis)).toBe(false);
   });
 
+  it('can use padding to catch skinny blockers near the sightline', () => {
+    const skinnyTree = { box: new THREE.Box3(new THREE.Vector3(0.5, 0, 4), new THREE.Vector3(0.62, 4, 4.25)) };
+    const defaultBlockers = findCameraSightlineBlockers(
+      new THREE.Vector3(0, 2, 0),
+      [new THREE.Vector3(0, 1.25, 8)],
+      [skinnyTree]
+    );
+    const paddedBlockers = findCameraSightlineBlockers(
+      new THREE.Vector3(0, 2, 0),
+      [new THREE.Vector3(0, 1.25, 8)],
+      [skinnyTree],
+      { padding: 0.72, minDistanceFromPoint: 0.12 }
+    );
+
+    expect(defaultBlockers.has(skinnyTree)).toBe(false);
+    expect(paddedBlockers.has(skinnyTree)).toBe(true);
+  });
+
   it('detects camera escape outside the expanded stage safety envelope', () => {
     const stage: StageDefinition = {
       ...baseStage,
