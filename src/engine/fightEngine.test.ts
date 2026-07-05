@@ -59,6 +59,10 @@ function boundsWorldPosition(stage: StageDefinition, local: { x: number; z: numb
   };
 }
 
+function stageSideDelta(stage: StageDefinition, fighter: { position: { x: number; z: number } }, opponent: { position: { x: number; z: number } }) {
+  return boundsLocalPosition(stage, opponent.position).x - boundsLocalPosition(stage, fighter.position).x;
+}
+
 function makeKiClashCharacter(character: CharacterDefinition, kiBurst = true): CharacterDefinition {
   return {
     ...character,
@@ -1685,6 +1689,49 @@ describe('fight engine', () => {
     expect(match.fighters[1].getupAction).toBe('rollBack');
     expect(match.fighters[1].getupTotalFrames).toBe(47);
     expect(match.fighters[1].actionFramesRemaining).toBe(47);
+  });
+
+  it('keeps getup lane rolls on the starting side until they recover to idle', () => {
+    const runRoll = (fighterIndex: 0 | 1, rollInput: ReturnType<typeof emptyInputFrame>) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = fighterIndex === 0 ? -0.06 : 0;
+      match.fighters[1].position.x = fighterIndex === 0 ? 0 : 0.06;
+      match.fighters[0].position.z = 0;
+      match.fighters[1].position.z = 0;
+      const opponentIndex = fighterIndex === 0 ? 1 : 0;
+      match.fighters[fighterIndex].state = 'knockdown';
+      match.fighters[fighterIndex].actionFramesRemaining = 0;
+      match.fighters[fighterIndex].actionTimer = 0;
+      match.fighters[fighterIndex].stunFramesRemaining = 0;
+      match.fighters[fighterIndex].stunTimer = 0;
+      const sideBefore = match.fighters[fighterIndex].controlSideSign;
+      const facingBefore = match.fighters[fighterIndex].facing;
+      const yawBefore = match.fighters[fighterIndex].facingYaw;
+      const zBefore = match.fighters[fighterIndex].position.z;
+
+      for (let frame = 0; frame < 42; frame += 1) {
+        const p1Input = fighterIndex === 0 && frame === 0 ? rollInput : emptyInputFrame();
+        const p2Input = fighterIndex === 1 && frame === 0 ? rollInput : emptyInputFrame();
+        match = stepMatch(match, p1Input, p2Input, 1 / 60);
+        const fighter = match.fighters[fighterIndex];
+        const opponent = match.fighters[opponentIndex];
+        expect(fighter.controlSideSign).toBe(sideBefore);
+        expect(fighter.facing).toBe(facingBefore);
+        expect(stageSideDelta(match.stage, fighter, opponent) * sideBefore).toBeGreaterThan(0.001);
+        if (fighter.state === 'getup') {
+          expect(fighter.facingYaw).toBeCloseTo(yawBefore, 6);
+        }
+      }
+
+      expect(match.fighters[fighterIndex].state).toBe('idle');
+      expect(match.fighters[fighterIndex].getupAction).toBe('none');
+      expect(Math.abs(match.fighters[fighterIndex].position.z - zBefore)).toBeGreaterThan(0.25);
+    };
+
+    runRoll(0, { ...emptyInputFrame(), sidewalkUp: true });
+    runRoll(1, { ...emptyInputFrame(), sidewalkDown: true });
   });
 
   it('keeps training mode infinite by refilling zero health without ending the round', () => {

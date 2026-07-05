@@ -60,6 +60,7 @@ const GETUP_FRAMES = 24;
 const GETUP_INVULNERABLE_FRAMES = 20;
 const GETUP_ROLL_SPEED = 2.25;
 const GETUP_LANE_SPEED = 2.7;
+const GETUP_SIDE_LOCK_MARGIN = 0.08;
 const JUGGLE_DAMAGE_LIMIT = 90;
 const JUGGLE_INITIAL_VELOCITY = 5.95;
 const JUGGLE_REFLOAT_VELOCITY = 4.35;
@@ -1787,12 +1788,19 @@ function handleKnockdownStep(stage: StageDefinition, fighter: FighterRuntime, op
   if (fighter.position.y > 0 || fighter.velocityY !== 0) return;
 
   if (fighter.state === 'getup' || fighter.getupStarted) {
+    const recoverySide = getControlSideSign(fighter, opponent, stage);
     if (fighter.getupForward !== 0) {
       moveAlongOpponentAxis(fighter, opponent, fighter.getupForward * fighter.character.stats.speed * GETUP_ROLL_SPEED * dt);
     }
     if (fighter.getupLane !== 0) {
-      orbitAroundOpponent(fighter, opponent, -fighter.getupLane * fighter.character.stats.sidestepSpeed * GETUP_LANE_SPEED * dt);
+      moveAlongOpponentLateralAxis(
+        fighter,
+        opponent,
+        fighter.getupLane,
+        fighter.character.stats.sidestepSpeed * GETUP_LANE_SPEED * dt
+      );
     }
+    keepFighterOnControlSide(stage, fighter, opponent, recoverySide);
     return;
   }
 
@@ -1814,6 +1822,7 @@ function handleKnockdownStep(stage: StageDefinition, fighter: FighterRuntime, op
   fighter.blockstunFramesRemaining = 0;
   fighter.blockPunishWindowFrames = 0;
   fighter.stunTimer = 0;
+  keepFighterOnControlSide(stage, fighter, opponent, getControlSideSign(fighter, opponent, stage));
 }
 
 function getRequestedGetupAction(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): FighterRuntime['getupAction'] {
@@ -4330,10 +4339,14 @@ function resetRound(match: MatchSnapshot) {
 
 function resolveFacing(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
-  p1.facing = getOpponentSideSign(p1, p2, match.stage);
-  p2.facing = getOpponentSideSign(p2, p1, match.stage);
-  p1.facingYaw = Math.atan2(p2.position.x - p1.position.x, p2.position.z - p1.position.z);
-  p2.facingYaw = Math.atan2(p1.position.x - p2.position.x, p1.position.z - p2.position.z);
+  resolveFighterFacing(match.stage, p1, p2);
+  resolveFighterFacing(match.stage, p2, p1);
+}
+
+function resolveFighterFacing(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime) {
+  if (isRecoverySideLocked(fighter)) return;
+  fighter.facing = getOpponentSideSign(fighter, opponent, stage);
+  fighter.facingYaw = Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
 }
 
 function updateControlSideSigns(match: MatchSnapshot) {
@@ -4343,12 +4356,17 @@ function updateControlSideSigns(match: MatchSnapshot) {
 }
 
 function updateControlSideSign(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime) {
+  if (isRecoverySideLocked(fighter)) return;
   if (isLaneOrbitActive(fighter)) return;
   fighter.controlSideSign = getPositionSideSign(fighter, opponent, stage) ?? fighter.controlSideSign;
 }
 
 function isLaneOrbitActive(fighter: FighterRuntime) {
   return fighter.laneOrbitControlLocked || fighter.sidestepTimer > 0 || fighter.sidestepRepeatGraceFrames > 0 || fighter.sidestepDirection !== 0;
+}
+
+function isRecoverySideLocked(fighter: FighterRuntime) {
+  return fighter.state === 'knockdown' || fighter.state === 'getup' || fighter.getupStarted;
 }
 
 function maybeUnlockLaneOrbitControlAfterHorizontalCross(
@@ -4620,6 +4638,37 @@ function getStageSideCoordinate(position: { x: number; z: number }, stage?: Stag
 
 function getControlSideSign(fighter: FighterRuntime, opponent: FighterRuntime, stage?: StageDefinition): 1 | -1 {
   return fighter.controlSideSign || getOpponentSideSign(fighter, opponent, stage);
+}
+
+function moveAlongOpponentLateralAxis(
+  fighter: FighterRuntime,
+  opponent: FighterRuntime,
+  laneDirection: -1 | 1,
+  distance: number
+) {
+  const dx = opponent.position.x - fighter.position.x;
+  const dz = opponent.position.z - fighter.position.z;
+  const length = Math.hypot(dx, dz);
+  const axisX = length > 0.001 ? dx / length : Math.sin(fighter.facingYaw);
+  const axisZ = length > 0.001 ? dz / length : Math.cos(fighter.facingYaw);
+  const signedDistance = -laneDirection * distance;
+  fighter.position.x += axisZ * signedDistance;
+  fighter.position.z -= axisX * signedDistance;
+}
+
+function keepFighterOnControlSide(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime, side: 1 | -1) {
+  const sideDelta = getPositionSideDelta(fighter, opponent, stage);
+  if (sideDelta * side >= GETUP_SIDE_LOCK_MARGIN) return;
+  const opponentSide = getStageSideCoordinate(opponent.position, stage);
+  const fighterSide = getStageSideCoordinate(fighter.position, stage);
+  const targetFighterSide = opponentSide - side * GETUP_SIDE_LOCK_MARGIN;
+  shiftPositionAlongStageSideAxis(fighter.position, stage, targetFighterSide - fighterSide);
+}
+
+function shiftPositionAlongStageSideAxis(position: { x: number; z: number }, stage: StageDefinition, delta: number) {
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  position.x += delta * Math.cos(rotationY);
+  position.z -= delta * Math.sin(rotationY);
 }
 
 function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, arcDistance: number) {
