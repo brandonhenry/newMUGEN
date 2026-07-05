@@ -253,42 +253,6 @@
   },
   {
     "type": "keep-swap",
-    "characterId": "train-heartnet",
-    "moveKey": "jabright",
-    "family": "firearm",
-    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
-    "projectileId": "firearm-bullet-projectile",
-    "flags": {},
-    "index": 7,
-    "displayName": "Train Heartnet",
-    "strip": "item-007/move.png",
-    "proposal": [
-      {
-        "url": "item-007/proposal-0.png",
-        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
-      },
-      {
-        "url": "item-007/proposal-1.png",
-        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
-      },
-      {
-        "url": "item-007/proposal-2.png",
-        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
-      }
-    ],
-    "source": {
-      "label": "firearm bullet / tracer",
-      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
-      "files": [
-        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
-        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
-        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
-      ]
-    },
-    "current": "firearm-bullet-projectile"
-  },
-  {
-    "type": "keep-swap",
     "characterId": "piccolo",
     "moveKey": "cmd:f+1",
     "family": "kiGreen",

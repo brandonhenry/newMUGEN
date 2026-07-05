@@ -2932,47 +2932,6 @@
         "blockPushbackScale": 1,
         "mirrorWithFacing": true
       }
-    ],
-    "jabright": [
-      {
-        "id": "jabright-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Right Check Bullet",
-        "spawnFrame": 1,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 34,
-        "nearMissRadius": 0.46,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true
-      }
     ]
   }
 }
