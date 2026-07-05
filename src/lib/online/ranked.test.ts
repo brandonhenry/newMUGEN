@@ -22,6 +22,7 @@ function installLocalRankedEnvironment() {
       removeItem: (key: string) => storage.delete(key)
     }
   });
+  return storage;
 }
 
 function stats(overrides = {}) {
@@ -118,5 +119,32 @@ describe('ranked local fallback', () => {
 
     expect(second.players[0].afterKp).toBe(first.players[0].afterKp);
     expect(profile.totals.matches).toBe(1);
+  });
+
+  it('caps ranked rewards against bots and does not persist bot profiles', async () => {
+    const storage = installLocalRankedEnvironment();
+    const result = await submitRankedMatchReport(report({
+      reportId: 'room-b:p1:bot',
+      roomId: 'room-b',
+      players: [
+        { profile: { playerId: 'p1', displayName: 'ONE' }, characterId: 'astra', stats: stats(), roundsWon: 3 },
+        {
+          profile: { playerId: 'bot-rival', displayName: 'MIRA KANE' },
+          characterId: 'dax',
+          stats: stats({ damageDealt: 38, damageTaken: 100, cleanHits: 3, roundsWon: 0 }),
+          roundsWon: 0,
+          isBot: true,
+          botKp: 1700,
+          botKr: { aggression: 60, defense: 60, combo: 60, punishment: 60, resource: 60, consistency: 60 }
+        }
+      ]
+    }));
+    const playerResult = result.players.find((player) => player.playerId === 'p1');
+    const saved = JSON.parse(storage.get('kore.online.rankedProfile') ?? '{}');
+
+    expect(playerResult?.kpDelta).toBeLessThanOrEqual(12);
+    expect(playerResult?.profile.history[0].right.displayName).toBe('MIRA KANE');
+    expect(saved.profiles['p1']).toBeTruthy();
+    expect(saved.profiles['bot-rival']).toBeUndefined();
   });
 });

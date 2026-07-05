@@ -1,4 +1,5 @@
 import { getBlobStore } from './_blob-store.mjs';
+import { TOURNAMENT_BOT_FILL_MS, cleanCharacterIds, cleanKrScores, createOnlineBotOpponent } from './_online-bots.mjs';
 
 export const TOURNAMENT_STORE_NAME = 'kore-tournaments';
 export const FREE_ONLINE_TOURNAMENT_ID = 'free-online-daily';
@@ -7,6 +8,7 @@ export const FREE_ONLINE_CAPACITY = 8;
 export const FREE_ONLINE_MIN_ENTRIES = 8;
 export const PAID_BTC_CAPACITY = 32;
 export const PAID_BTC_MIN_ENTRIES = 25;
+const DEFAULT_BOT_CHARACTER_IDS = ['kiro', 'riven'];
 
 export function getTournamentStore(event) {
   return getBlobStore(TOURNAMENT_STORE_NAME, event);
@@ -27,7 +29,13 @@ export async function writeTournament(store, bracket) {
 
 export async function getOrCreateFreeTournament(store, now = Date.now()) {
   const existing = await readTournament(store, FREE_ONLINE_TOURNAMENT_ID);
-  if (existing?.id) return sanitizeBracket(existing);
+  if (existing?.id) {
+    const bracket = maybeFillFreeTournamentWithBots(sanitizeBracket(existing), now);
+    if (bracket.updatedAt !== existing.updatedAt || bracket.entries.length !== existing.entries?.length || bracket.matches.length !== existing.matches?.length) {
+      await writeTournament(store, bracket);
+    }
+    return bracket;
+  }
   const bracket = makeOpenFreeTournament(now);
   await writeTournament(store, bracket);
   return bracket;
@@ -142,10 +150,15 @@ export function enterFreeTournament(bracket, entryRequest, now = Date.now()) {
   let next = {
     ...bracket,
     entries: [...bracket.entries, entry],
+    botCharacterIds: mergeCharacterIds(bracket.botCharacterIds, cleanCharacterIds(entryRequest.availableCharacterIds), [entry.characterId]),
+    botSeedKp: cleanKp(entryRequest.kp || bracket.botSeedKp || 1200),
+    botSeedKr: cleanKrScores(entryRequest.kr || bracket.botSeedKr),
     updatedAt: now
   };
   if (confirmedTournamentEntries(next).length >= next.minEntries) {
     next = generateOnlineBracket(next, now);
+  } else {
+    next = maybeFillFreeTournamentWithBots(next, now);
   }
   return { bracket: next, entry };
 }
@@ -240,13 +253,13 @@ export function generateOnlineBracket(bracket, now = Date.now()) {
   const entries = confirmedTournamentEntries(bracket).slice(0, bracket.capacity);
   const bracketSize = nextPowerOfTwo(Math.max(2, bracket.capacity));
   const matches = resolveAutomaticByes(makeEliminationMatches(entries, bracketSize));
-  return {
+  return resolveBotOnlyMatches({
     ...bracket,
     status: 'roundActive',
     matches,
     currentRound: 1,
     updatedAt: now
-  };
+  }, now);
 }
 
 export function assignedMatch(bracket, playerId) {
@@ -260,6 +273,10 @@ export function assignedMatch(bracket, playerId) {
 }
 
 export function reportWinner(bracket, matchId, winnerEntryId, now = Date.now()) {
+  return resolveBotOnlyMatches(applyReportedWinner(bracket, matchId, winnerEntryId, now), now);
+}
+
+function applyReportedWinner(bracket, matchId, winnerEntryId, now = Date.now()) {
   const source = bracket.matches.find((match) => match.id === matchId);
   if (!source) throw Object.assign(new Error('Match not found'), { statusCode: 404, code: 'match_not_found' });
   if (source.status === 'completed') return bracket;
@@ -271,7 +288,7 @@ export function reportWinner(bracket, matchId, winnerEntryId, now = Date.now()) 
       ? { ...match, winnerEntryId, status: 'completed', reportedAt: now }
       : match
   );
-  matches = applyWinnerToNextRound(matches, source, winnerEntryId);
+  matches = applyWinnerToNextRound(matches, { ...source, winnerEntryId, status: 'completed', reportedAt: now }, winnerEntryId);
   const finalRound = Math.max(1, ...matches.map((match) => match.round));
   const final = matches.find((match) => match.round === finalRound && match.status === 'completed');
   const entries = final && bracket.kind === 'paidOnline'
@@ -300,6 +317,9 @@ export function sanitizeBracket(value) {
     ...value,
     entries: Array.isArray(value.entries) ? value.entries : [],
     matches: Array.isArray(value.matches) ? value.matches : [],
+    botCharacterIds: cleanCharacterIds(value.botCharacterIds),
+    botSeedKp: cleanKp(value.botSeedKp || 1200),
+    botSeedKr: cleanKrScores(value.botSeedKr),
     capacity: Math.max(2, Math.round(Number(value.capacity) || FREE_ONLINE_CAPACITY)),
     minEntries: Math.max(2, Math.round(Number(value.minEntries) || FREE_ONLINE_MIN_ENTRIES)),
     paidEnabled: Boolean(value.paidEnabled)
@@ -335,6 +355,10 @@ export function cleanToken(value) {
 export function cleanName(value) {
   if (typeof value !== 'string') return 'PLAYER';
   return value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 12) || 'PLAYER';
+}
+
+function cleanKp(value) {
+  return Math.max(0, Math.round(Number(value) || 0));
 }
 
 export function json(statusCode, payload) {
@@ -408,9 +432,89 @@ function applyWinnerToNextRound(matches, source, winnerEntryId) {
     if (match[targetSlot] === winnerEntryId) return match;
     touched = true;
     const next = { ...match, [targetSlot]: winnerEntryId };
-    return next.entryAId && next.entryBId ? { ...next, status: 'ready' } : next.entryAId || next.entryBId ? { ...next, status: 'completed', winnerEntryId: next.entryAId || next.entryBId } : next;
+    if (next.entryAId && next.entryBId) return { ...next, status: 'ready' };
+    if (next.entryAId || next.entryBId) {
+      return source.reportedAt ? next : { ...next, status: 'completed', winnerEntryId: next.entryAId || next.entryBId };
+    }
+    return next;
   });
   return touched ? updated : matches;
+}
+
+function maybeFillFreeTournamentWithBots(bracket, now = Date.now()) {
+  if (bracket.kind !== 'freeOnline' || bracket.status !== 'open') return bracket;
+  const confirmed = confirmedTournamentEntries(bracket);
+  if (confirmed.length === 0 || confirmed.length >= bracket.minEntries || bracket.entries.some((entry) => entry.isBot)) return bracket;
+  const firstHumanJoin = Math.min(...confirmed.filter((entry) => !entry.isBot).map((entry) => entry.joinedAt || bracket.createdAt || now));
+  if (!Number.isFinite(firstHumanJoin) || now - firstHumanJoin < TOURNAMENT_BOT_FILL_MS) return bracket;
+  const missing = Math.max(0, bracket.minEntries - confirmed.length);
+  const characterIds = mergeCharacterIds(bracket.botCharacterIds, bracket.entries.map((entry) => entry.characterId), DEFAULT_BOT_CHARACTER_IDS);
+  const playerSeed = confirmed.find((entry) => !entry.isBot) || confirmed[0];
+  const bots = Array.from({ length: missing }, (_, index) => {
+    const bot = createOnlineBotOpponent({
+      seed: `${bracket.id}:slot-${confirmed.length + index + 1}`,
+      queue: 'tournament',
+      playerKp: bracket.botSeedKp || playerSeed?.botKp || 1200,
+      playerKr: bracket.botSeedKr || playerSeed?.botKr,
+      availableCharacterIds: characterIds,
+      fallbackCharacterId: playerSeed?.characterId
+    });
+    return {
+      id: `bot-${bracket.id}-${index + 1}`,
+      playerId: bot.playerId,
+      displayName: cleanName(bot.displayName),
+      characterId: bot.characterId,
+      seed: confirmed.length + index + 1,
+      isCpu: true,
+      isBot: true,
+      botKp: bot.kp,
+      botKr: bot.kr,
+      paymentState: 'notRequired',
+      joinedAt: now
+    };
+  });
+  const filled = {
+    ...bracket,
+    entries: [...bracket.entries, ...bots],
+    botCharacterIds: characterIds,
+    updatedAt: now
+  };
+  return confirmedTournamentEntries(filled).length >= filled.minEntries ? generateOnlineBracket(filled, now) : filled;
+}
+
+function resolveBotOnlyMatches(bracket, now = Date.now()) {
+  if (bracket.kind !== 'freeOnline') return bracket;
+  let next = bracket;
+  let changed = true;
+  while (changed && next.status !== 'completed') {
+    changed = false;
+    const ready = next.matches.find((match) => {
+      if (match.status !== 'ready' || !match.entryAId || !match.entryBId) return false;
+      const entryA = next.entries.find((entry) => entry.id === match.entryAId);
+      const entryB = next.entries.find((entry) => entry.id === match.entryBId);
+      return Boolean(entryA?.isBot && entryB?.isBot);
+    });
+    if (ready?.entryAId && ready.entryBId) {
+      const winnerEntryId = pickBotWinner(next, ready.entryAId, ready.entryBId);
+      next = applyReportedWinner(next, ready.id, winnerEntryId, now);
+      changed = true;
+    }
+  }
+  return next;
+}
+
+function pickBotWinner(bracket, entryAId, entryBId) {
+  const entryA = bracket.entries.find((entry) => entry.id === entryAId);
+  const entryB = bracket.entries.find((entry) => entry.id === entryBId);
+  if (!entryA || !entryB) return entryAId;
+  const strengthA = (entryA.botKp || 1200) + (entryA.seed ? Math.max(0, bracket.capacity - entryA.seed) : 0);
+  const strengthB = (entryB.botKp || 1200) + (entryB.seed ? Math.max(0, bracket.capacity - entryB.seed) : 0);
+  return strengthA >= strengthB ? entryAId : entryBId;
+}
+
+function mergeCharacterIds(...groups) {
+  const ids = groups.flatMap((group) => cleanCharacterIds(group));
+  return [...new Set(ids.length > 0 ? ids : DEFAULT_BOT_CHARACTER_IDS)];
 }
 
 function applyPaidRewardObligations(entries, matches, finalRound) {

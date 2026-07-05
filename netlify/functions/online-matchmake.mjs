@@ -1,4 +1,11 @@
 import { getBlobStore } from './_blob-store.mjs';
+import {
+  CASUAL_BOT_FALLBACK_MS,
+  RANKED_BOT_FALLBACK_MS,
+  cleanCharacterIds,
+  cleanKrScores,
+  createOnlineBotOpponent
+} from './_online-bots.mjs';
 
 const STORE_NAME = 'kore-online-rooms';
 const ROOM_PREFIX = 'rooms/';
@@ -19,8 +26,11 @@ export async function handler(event) {
     const stageId = cleanId(body.stageId);
     const roomId = cleanId(body.roomId);
     const ownerToken = cleanToken(body.ownerToken);
-    const queue = body.queue === 'ranked' ? 'ranked' : 'casual';
+    const queue = body.queue === 'ranked' ? 'ranked' : body.queue === 'training' ? 'training' : 'casual';
     const kp = cleanKp(body.kp);
+    const kr = cleanKrScores(body.kr);
+    const allowBotFallback = body.allowBotFallback !== false;
+    const availableCharacterIds = cleanCharacterIds(body.availableCharacterIds);
     if (!peerId || !characterId || !stageId) return json(400, { error: 'missing_fields' });
 
     const store = getBlobStore(STORE_NAME, event);
@@ -31,7 +41,7 @@ export async function handler(event) {
     if (roomId && ownerToken) {
       const existing = rooms.find((room) => room.roomId === roomId && room.ownerToken === ownerToken);
       if (existing && now - existing.updatedAt <= roomTtlMs(existing)) {
-        const updated = { ...existing, updatedAt: now };
+        const updated = maybeFillRoomWithBot({ ...existing, updatedAt: now }, allowBotFallback, now);
         await store.setJSON(roomKey(updated.roomId), updated);
         return json(200, roomResult(updated, 'host'));
       }
@@ -51,6 +61,8 @@ export async function handler(event) {
         guestPeerId: peerId,
         guestCharacterId: characterId,
         guestKp: kp,
+        guestKr: kr,
+        opponentKind: 'human',
         updatedAt: now
       };
       await store.setJSON(roomKey(matched.roomId), matched);
@@ -65,6 +77,8 @@ export async function handler(event) {
       stageId,
       queue,
       hostKp: kp,
+      hostKr: kr,
+      availableCharacterIds,
       status: 'waiting',
       createdAt: now,
       updatedAt: now
@@ -109,7 +123,9 @@ function roomResult(room, role) {
     stageId: room.stageId,
     queue: room.queue,
     hostKp: room.hostKp,
-    guestKp: room.guestKp
+    guestKp: room.guestKp,
+    opponentKind: room.opponentKind,
+    botOpponent: room.botOpponent
   };
 }
 
@@ -141,6 +157,32 @@ function rankedKpMatches(room, guestKp, now) {
 
 function roomTtlMs(room) {
   return room.queue === 'ranked' ? RANKED_ROOM_TTL_MS : ROOM_TTL_MS;
+}
+
+function maybeFillRoomWithBot(room, allowBotFallback, now) {
+  if (room.status !== 'waiting' || room.queue === 'training' || !allowBotFallback) return room;
+  const ageMs = Math.max(0, now - (room.createdAt || room.updatedAt));
+  const fallbackMs = room.queue === 'ranked' ? RANKED_BOT_FALLBACK_MS : CASUAL_BOT_FALLBACK_MS;
+  if (ageMs < fallbackMs) return room;
+  const bot = createOnlineBotOpponent({
+    seed: `${room.roomId}:${room.hostPeerId}:${room.queue}`,
+    queue: room.queue,
+    playerKp: room.hostKp,
+    playerKr: room.hostKr,
+    availableCharacterIds: room.availableCharacterIds,
+    fallbackCharacterId: room.hostCharacterId
+  });
+  return {
+    ...room,
+    status: 'matched',
+    guestPeerId: bot.playerId,
+    guestCharacterId: bot.characterId,
+    guestKp: bot.kp,
+    guestKr: bot.kr,
+    opponentKind: 'bot',
+    botOpponent: bot,
+    updatedAt: now
+  };
 }
 
 function json(statusCode, payload) {

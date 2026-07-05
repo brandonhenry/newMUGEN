@@ -1,3 +1,5 @@
+import type { RankedKrScores } from '../online/ranked';
+
 export type TournamentKind = 'freeLocal' | 'freeOnline' | 'paidOnline';
 
 export type TournamentStatus =
@@ -26,6 +28,9 @@ export type TournamentEntry = {
   characterId: string;
   seed: number;
   isCpu?: boolean;
+  isBot?: boolean;
+  botKp?: number;
+  botKr?: RankedKrScores;
   isLocalPlayer?: boolean;
   paymentState: TournamentPaymentState;
   paymentProvider?: 'btcpay';
@@ -102,6 +107,9 @@ export type TournamentEnterRequest = {
   playerId: string;
   displayName: string;
   characterId: string;
+  kp?: number;
+  kr?: Partial<RankedKrScores>;
+  availableCharacterIds?: string[];
 };
 
 export type TournamentEnterResult = {

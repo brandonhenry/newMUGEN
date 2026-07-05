@@ -147,12 +147,12 @@ describe('training trial catalog', () => {
       for (const trial of trials) {
         if (trial.category === 'launcher') {
           const step = trial.steps[0];
-          const route = routes.find((item) => item.command === step.command || (!step.command && item.input === step.input));
+          const route = routes.find((item) => step.routeKey ? item.routeKey === step.routeKey : item.command === step.command || (!step.command && item.input === step.input));
           expect(route?.move.launchHeight ?? 0, `${character.id}:${trial.id}`).toBeGreaterThan(0);
         }
         if (trial.category === 'tornado') {
           const step = trial.steps[0];
-          const route = routes.find((item) => item.command === step.command || (!step.command && item.input === step.input));
+          const route = routes.find((item) => step.routeKey ? item.routeKey === step.routeKey : item.command === step.command || (!step.command && item.input === step.input));
           expect(route?.move.tornado, `${character.id}:${trial.id}`).toBe(true);
         }
         if (trial.category === 'crouch') {
@@ -161,7 +161,7 @@ describe('training trial catalog', () => {
         if (trial.category === 'ki') {
           if (trial.id.endsWith('ki:perfect-block')) continue;
           const step = trial.steps[0];
-          const route = routes.find((item) => item.command === step.command || (!step.command && item.input === step.input));
+          const route = routes.find((item) => step.routeKey ? item.routeKey === step.routeKey : item.command === step.command || (!step.command && item.input === step.input));
           expect(Boolean(route?.command?.startsWith('O+') || route?.move.usesKi || route?.move.kiBurst), `${character.id}:${trial.id}`).toBe(true);
         }
       }
@@ -255,6 +255,26 @@ describe('training trial catalog', () => {
     expect(trials.length).toBeGreaterThan(0);
     expect(trials.every((trial) => trial.mode === 'combos' && trial.category === 'combo')).toBe(true);
     expect(trials.some((trial) => trial.steps.length > 3)).toBe(true);
+    expect(trials.every((trial) => trial.steps.every((step) => step.routeKey && step.animationKey))).toBe(true);
+  });
+
+  it('sets up ki and command-family combo trials with executable previews', () => {
+    const character = readRosterCharacters().find((candidate) =>
+      generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute?.requiresKi)
+    );
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateComboTrainingTrials(character);
+    const kiTrial = trials.find((trial) => trial.sourceComboRoute?.requiresKi);
+    expect(kiTrial?.setup.p1Ki).toBe(100);
+    expect(kiTrial?.previewScript.some((frame) => frame.actions.includes('charge'))).toBe(true);
+
+    const motionTrial = trials.find((trial) => trial.steps.some((step) => /^(qcf|qcb|hcf|hcb|dp|rdp|cd)\+/.test(step.command ?? '')));
+    if (motionTrial) {
+      expect(motionTrial.previewScript.some((frame) => frame.actions.includes('down'))).toBe(true);
+      expect(motionTrial.previewScript.some((frame) => frame.actions.includes('left') || frame.actions.includes('right'))).toBe(true);
+    }
   });
 
   it('keeps grounded launcher trial previews free of jump inputs', () => {

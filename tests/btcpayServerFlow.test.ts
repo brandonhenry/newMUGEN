@@ -149,6 +149,63 @@ describe('BTCPay paid tournament flow', () => {
   });
 });
 
+describe('free online tournament bot fill', () => {
+  it('does not fill free online brackets before the bot wait expires', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    let bracket = store.makeOpenFreeTournament(1000);
+    bracket = store.enterFreeTournament(bracket, {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro',
+      kp: 1500,
+      kr: { aggression: 60, defense: 55, combo: 50, punishment: 50, resource: 58, consistency: 54 },
+      availableCharacterIds: ['kiro', 'riven']
+    }, 1000).bracket;
+    bracket = store.enterFreeTournament(bracket, {
+      playerId: 'player-2',
+      displayName: 'P2',
+      characterId: 'riven',
+      availableCharacterIds: ['kiro', 'riven']
+    }, 60_500).bracket;
+
+    expect(bracket.status).toBe('open');
+    expect(bracket.entries).toHaveLength(2);
+    expect(bracket.entries.some((entry: { isBot?: boolean }) => entry.isBot)).toBe(false);
+  });
+
+  it('fills free online brackets with bots after the wait and resolves bot-only matches', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    let bracket = store.makeOpenFreeTournament(1000);
+    bracket = store.enterFreeTournament(bracket, {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro',
+      kp: 1500,
+      kr: { aggression: 60, defense: 55, combo: 50, punishment: 50, resource: 58, consistency: 54 },
+      availableCharacterIds: ['kiro', 'riven']
+    }, 1000).bracket;
+    bracket = store.enterFreeTournament(bracket, {
+      playerId: 'player-2',
+      displayName: 'P2',
+      characterId: 'riven',
+      availableCharacterIds: ['kiro', 'riven']
+    }, 61_001).bracket;
+
+    const botEntries = bracket.entries.filter((entry: { isBot?: boolean }) => entry.isBot);
+    const botOnlyReady = bracket.matches.filter((match: { status: string; entryAId?: string; entryBId?: string }) => {
+      const entryA = bracket.entries.find((entry: { id: string }) => entry.id === match.entryAId);
+      const entryB = bracket.entries.find((entry: { id: string }) => entry.id === match.entryBId);
+      return match.status === 'ready' && entryA?.isBot && entryB?.isBot;
+    });
+
+    expect(bracket.status).toBe('roundActive');
+    expect(bracket.entries).toHaveLength(8);
+    expect(botEntries).toHaveLength(6);
+    expect(botEntries.every((entry: { displayName?: string; botKp?: number; botKr?: object }) => entry.displayName && entry.botKp && entry.botKr)).toBe(true);
+    expect(botOnlyReady).toHaveLength(0);
+  });
+});
+
 describe('BTCPay webhook verification', () => {
   it('accepts a valid BTCPay-SIG and rejects an invalid one', async () => {
     const { verifyBtcpayWebhook } = await import('../netlify/functions/_btcpay.mjs');

@@ -1,11 +1,23 @@
 import type { OnlineRole } from './messages';
+import {
+  CASUAL_BOT_FALLBACK_MS,
+  RANKED_BOT_FALLBACK_MS,
+  createOnlineBotOpponent,
+  type OnlineBotOpponent
+} from './bots';
+import type { RankedKrScores } from './ranked';
+
+export type OnlineMatchQueue = 'casual' | 'ranked' | 'training';
 
 export type OnlineMatchRequest = {
   peerId: string;
   characterId: string;
   stageId: string;
-  queue?: 'casual' | 'ranked';
+  queue?: OnlineMatchQueue;
   kp?: number;
+  kr?: Partial<RankedKrScores>;
+  allowBotFallback?: boolean;
+  availableCharacterIds?: string[];
   roomId?: string;
   ownerToken?: string;
 };
@@ -20,9 +32,11 @@ export type OnlineMatchResult = {
   hostCharacterId: string;
   guestCharacterId?: string;
   stageId: string;
-  queue?: 'casual' | 'ranked';
+  queue?: OnlineMatchQueue;
   hostKp?: number;
   guestKp?: number;
+  opponentKind?: 'human' | 'bot';
+  botOpponent?: OnlineBotOpponent;
 };
 
 export type OnlineLeaveRequest = {
@@ -80,9 +94,14 @@ type LocalRoom = {
   guestPeerId?: string;
   guestCharacterId?: string;
   stageId: string;
-  queue: 'casual' | 'ranked';
+  queue: OnlineMatchQueue;
   hostKp?: number;
   guestKp?: number;
+  hostKr?: Partial<RankedKrScores>;
+  guestKr?: Partial<RankedKrScores>;
+  availableCharacterIds?: string[];
+  opponentKind?: 'human' | 'bot';
+  botOpponent?: OnlineBotOpponent;
   createdAt: number;
   status: 'waiting' | 'matched';
   updatedAt: number;
@@ -90,11 +109,12 @@ type LocalRoom = {
 
 function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
   const now = Date.now();
-  const queue = request.queue === 'ranked' ? 'ranked' : 'casual';
+  const queue = normalizeQueue(request.queue);
   const rooms = readLocalRooms().filter((room) => now - room.updatedAt <= localRoomTtlMs(room));
   const existing = request.roomId ? rooms.find((room) => room.roomId === request.roomId && room.ownerToken === request.ownerToken) : undefined;
   if (existing) {
     existing.updatedAt = now;
+    maybeFillLocalRoomWithBot(existing, request, now);
     writeLocalRooms(rooms);
     return roomToResult(existing, existing.guestPeerId ? 'host' : 'host');
   }
@@ -110,6 +130,8 @@ function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
     waitingRoom.guestPeerId = request.peerId;
     waitingRoom.guestCharacterId = request.characterId;
     waitingRoom.guestKp = normalizeKp(request.kp);
+    waitingRoom.guestKr = request.kr;
+    waitingRoom.opponentKind = 'human';
     waitingRoom.updatedAt = now;
     writeLocalRooms(rooms);
     return roomToResult(waitingRoom, 'guest');
@@ -123,6 +145,8 @@ function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
     stageId: request.stageId,
     queue,
     hostKp: normalizeKp(request.kp),
+    hostKr: request.kr,
+    availableCharacterIds: normalizeCharacterIds(request.availableCharacterIds),
     createdAt: now,
     status: 'waiting',
     updatedAt: now
@@ -165,7 +189,9 @@ function roomToResult(room: LocalRoom, role: OnlineRole): OnlineMatchResult {
     stageId: room.stageId,
     queue: room.queue,
     hostKp: room.hostKp,
-    guestKp: room.guestKp
+    guestKp: room.guestKp,
+    opponentKind: room.opponentKind,
+    botOpponent: room.botOpponent
   };
 }
 
@@ -184,4 +210,36 @@ function normalizeKp(value: unknown) {
 
 function localRoomTtlMs(room: LocalRoom) {
   return room.queue === 'ranked' ? LOCAL_RANKED_ROOM_TTL_MS : LOCAL_ROOM_TTL_MS;
+}
+
+function maybeFillLocalRoomWithBot(room: LocalRoom, request: OnlineMatchRequest, now: number) {
+  if (room.status !== 'waiting' || room.queue === 'training' || request.allowBotFallback === false) return;
+  const ageMs = Math.max(0, now - (room.createdAt || room.updatedAt));
+  const fallbackMs = room.queue === 'ranked' ? RANKED_BOT_FALLBACK_MS : CASUAL_BOT_FALLBACK_MS;
+  if (ageMs < fallbackMs) return;
+  const bot = createOnlineBotOpponent({
+    seed: `${room.roomId}:${room.hostPeerId}:${room.queue}`,
+    queue: room.queue,
+    playerKp: room.hostKp,
+    playerKr: room.hostKr,
+    availableCharacterIds: room.availableCharacterIds,
+    fallbackCharacterId: room.hostCharacterId
+  });
+  room.status = 'matched';
+  room.guestPeerId = bot.playerId;
+  room.guestCharacterId = bot.characterId;
+  room.guestKp = bot.kp;
+  room.guestKr = bot.kr;
+  room.opponentKind = 'bot';
+  room.botOpponent = bot;
+}
+
+function normalizeQueue(value: unknown): OnlineMatchQueue {
+  return value === 'ranked' || value === 'training' ? value : 'casual';
+}
+
+function normalizeCharacterIds(value: unknown) {
+  return Array.isArray(value)
+    ? value.map((item) => typeof item === 'string' ? item.replace(/[^a-zA-Z0-9:_-]/g, '').slice(0, 96) : '').filter(Boolean).slice(0, 128)
+    : [];
 }

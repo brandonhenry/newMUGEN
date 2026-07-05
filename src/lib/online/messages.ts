@@ -81,6 +81,14 @@ export type OnlineRankedResultMessage = {
   result: RankedSubmitResult;
 };
 
+export type OnlineChatMessage = {
+  type: 'chat';
+  id: string;
+  text: string;
+  sentAt: number;
+  senderName?: string;
+};
+
 export type OnlineMessage =
   | OnlineHelloMessage
   | OnlineInputMessage
@@ -93,11 +101,13 @@ export type OnlineMessage =
   | OnlinePingMessage
   | OnlinePongMessage
   | OnlineErrorMessage
-  | OnlineRankedResultMessage;
+  | OnlineRankedResultMessage
+  | OnlineChatMessage;
 
 export function isOnlineMessage(value: unknown): value is OnlineMessage {
   if (!value || typeof value !== 'object' || !('type' in value)) return false;
   const type = (value as { type?: unknown }).type;
+  if (type === 'chat') return isOnlineChatMessage(value);
   return (
     type === 'hello' ||
     type === 'input' ||
@@ -111,5 +121,22 @@ export function isOnlineMessage(value: unknown): value is OnlineMessage {
     type === 'pong' ||
     type === 'error' ||
     type === 'rankedResult'
+  );
+}
+
+function isOnlineChatMessage(value: unknown): value is OnlineChatMessage {
+  if (!value || typeof value !== 'object') return false;
+  const message = value as Partial<OnlineChatMessage>;
+  return (
+    message.type === 'chat' &&
+    typeof message.id === 'string' &&
+    message.id.length > 0 &&
+    message.id.length <= 96 &&
+    typeof message.text === 'string' &&
+    message.text.trim().length > 0 &&
+    message.text.length <= 160 &&
+    typeof message.sentAt === 'number' &&
+    Number.isFinite(message.sentAt) &&
+    (message.senderName === undefined || (typeof message.senderName === 'string' && message.senderName.length <= 24))
   );
 }

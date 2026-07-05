@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 11;
+export const ONLINE_PROTOCOL_VERSION = 12;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -115,7 +115,7 @@ export type CompactMatchSnapshot = {
   p1BaseCharacterId: string;
   p2BaseCharacterId: string;
   stageId: string;
-  mode: 'online';
+  mode: 'online' | 'trainingOnline';
   cpuDifficulty: MatchSnapshot['cpuDifficulty'];
   aiSeed: number;
   roundAiSeed: number;
@@ -162,7 +162,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     p1BaseCharacterId: match.fighters[0].baseCharacter.id,
     p2BaseCharacterId: match.fighters[1].baseCharacter.id,
     stageId: match.stage.id,
-    mode: 'online',
+    mode: match.mode === 'trainingOnline' ? 'trainingOnline' : 'online',
     cpuDifficulty: match.cpuDifficulty,
     aiSeed: match.aiSeed,
     roundAiSeed: match.roundAiSeed,
@@ -197,7 +197,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
 export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatchSnapshot): MatchSnapshot {
   return {
     ...base,
-    mode: 'online',
+    mode: snapshot.mode === 'trainingOnline' ? 'trainingOnline' : 'online',
     cpuDifficulty: snapshot.cpuDifficulty,
     aiSeed: snapshot.aiSeed ?? base.aiSeed,
     roundAiSeed: snapshot.roundAiSeed ?? base.roundAiSeed,

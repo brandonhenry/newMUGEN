@@ -91,8 +91,8 @@ function sanitizeAnimationScaleMap(scales: CharacterDefinition['animationScales'
       .map(([key, value]) => [
         key,
         {
-          width: clamp(finiteOr(value.width, 1), 0.25, 5),
-          height: clamp(finiteOr(value.height, 1), 0.25, 5),
+          width: clamp(finiteOr(value.width, 1), 0.1, 10),
+          height: clamp(finiteOr(value.height, 1), 0.1, 10),
           offsetX: clamp(finiteOr(value.offsetX, 0), -6, 6)
         }
       ])
@@ -111,8 +111,8 @@ function sanitizeAnimationFrameScaleMap(scales: CharacterDefinition['animationFr
             .map(([frameIndex, frameScale]) => [
               frameIndex,
               {
-                width: clamp(finiteOr(frameScale.width, 1), 0.25, 5),
-                height: clamp(finiteOr(frameScale.height, 1), 0.25, 5),
+                width: clamp(finiteOr(frameScale.width, 1), 0.1, 10),
+                height: clamp(finiteOr(frameScale.height, 1), 0.1, 10),
                 offsetX: clamp(finiteOr(frameScale.offsetX, 0), -6, 6)
               }
             ])

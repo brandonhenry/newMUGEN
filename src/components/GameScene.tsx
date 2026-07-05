@@ -4487,8 +4487,8 @@ function getCharacterAnimationScale(character: CharacterDefinition, animationKey
   const frameSize = animationKey && frameIndex ? character.animationFrameScales?.[animationKey]?.[String(Number(frameIndex))] : undefined;
   const size = frameSize ?? (animationKey ? character.animationScales?.[animationKey] : undefined);
   return {
-    width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.25, 5),
-    height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.25, 5),
+    width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.1, 10),
+    height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.1, 10),
     offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -6, 6)
   };
 }

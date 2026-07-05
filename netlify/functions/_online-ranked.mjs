@@ -95,7 +95,8 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
     const opponent = beforeProfiles[index === 0 ? 1 : 0];
     const didWin = player.profile.playerId === report.winnerPlayerId;
     const mechanicEdge = averageKr(perfScores[index]) - averageKr(perfScores[index === 0 ? 1 : 0]);
-    return calculateRankedKpDelta(beforeProfiles[index].kp, opponent.kp, didWin, mechanicEdge);
+    const rawDelta = calculateRankedKpDelta(beforeProfiles[index].kp, opponent.kp, didWin, mechanicEdge);
+    return report.players[index === 0 ? 1 : 0].isBot ? reduceBotKpDelta(rawDelta, didWin) : rawDelta;
   });
   const players = beforeProfiles.map((before, index) => {
     const playerReport = report.players[index];
@@ -105,7 +106,7 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
     const afterKp = Math.max(0, before.kp + deltas[index]);
     const beforeRank = getRankedTier(before.kp);
     const afterRank = getRankedTier(afterKp);
-    const afterKr = rollKrScores(before.kr, perfScores[index]);
+    const afterKr = rollKrScores(before.kr, perfScores[index], Boolean(opponentReport.isBot));
     const krDelta = diffKrScores(before.kr, afterKr);
     const historyEntry = {
       id: reportId,
@@ -199,6 +200,9 @@ function cleanPlayerReport(value) {
   return {
     profile,
     characterId,
+    isBot: Boolean(value?.isBot),
+    botKp: cleanKp(value?.botKp),
+    botKr: normalizeKrScores(value?.botKr),
     roundsWon: cleanCount(value?.roundsWon),
     stats: cleanStats(value?.stats)
   };
@@ -256,8 +260,21 @@ function normalizeKrScores(value) {
   return Object.fromEntries(rankedKrKeys.map((key) => [key, clampScore(value?.[key] ?? base[key])]));
 }
 
-function rollKrScores(current, matchScores) {
-  return Object.fromEntries(rankedKrKeys.map((key) => [key, clampScore(current[key] * 0.82 + matchScores[key] * 0.18)]));
+function rollKrScores(current, matchScores, reduced = false) {
+  return Object.fromEntries(rankedKrKeys.map((key) => {
+    const blended = reduced
+      ? current[key] * 0.92 + matchScores[key] * 0.08
+      : current[key] * 0.82 + matchScores[key] * 0.18;
+    const capped = reduced ? current[key] + clampNumber(blended - current[key], -4, 4) : blended;
+    return [key, clampScore(capped)];
+  }));
+}
+
+function reduceBotKpDelta(delta, didWin) {
+  const scaled = Math.round(delta * 0.5);
+  return didWin
+    ? clampNumber(Math.max(3, scaled), 3, 12)
+    : clampNumber(Math.min(-2, scaled), -10, -2);
 }
 
 function diffKrScores(before, after) {

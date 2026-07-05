@@ -19,12 +19,21 @@ export async function handler(event) {
     if (existing?.reportId) return json(200, existing);
 
     const profiles = await Promise.all(report.players.map(async (player) => {
+      if (player.isBot) {
+        return normalizeRankedProfile({
+          ...makeDefaultRankedProfile(player.profile),
+          kp: player.botKp,
+          kr: player.botKr
+        });
+      }
       const existingProfile = await store.get(profileKey(player.profile.playerId), { type: 'json' }).catch(() => null);
       return normalizeRankedProfile(existingProfile ? { ...existingProfile, displayName: player.profile.displayName } : makeDefaultRankedProfile(player.profile));
     }));
     const result = applyRankedMatchReport(profiles, report);
     await Promise.all([
-      ...result.players.map((player) => store.setJSON(profileKey(player.playerId), player.profile)),
+      ...result.players
+        .filter((player, index) => !report.players[index].isBot)
+        .map((player) => store.setJSON(profileKey(player.playerId), player.profile)),
       store.setJSON(reportKey(result.reportId), result)
     ]);
     return json(200, result);

@@ -42,6 +42,9 @@ export type RankedMatchPlayerReport = {
   characterId: string;
   stats: OnlinePerformanceStats;
   roundsWon: number;
+  isBot?: boolean;
+  botKp?: number;
+  botKr?: Partial<RankedKrScores>;
 };
 
 export type RankedMatchReport = {
@@ -203,7 +206,8 @@ export function applyRankedMatchReport(
     const opponent = beforeProfiles[index === 0 ? 1 : 0];
     const didWin = player.profile.playerId === report.winnerPlayerId;
     const mechanicEdge = averageKr(perfScores[index]) - averageKr(perfScores[index === 0 ? 1 : 0]);
-    return calculateRankedKpDelta(beforeProfiles[index].kp, opponent.kp, didWin, mechanicEdge);
+    const rawDelta = calculateRankedKpDelta(beforeProfiles[index].kp, opponent.kp, didWin, mechanicEdge);
+    return report.players[index === 0 ? 1 : 0].isBot ? reduceBotKpDelta(rawDelta, didWin) : rawDelta;
   }) as [number, number];
 
   const results = beforeProfiles.map((before, index) => {
@@ -214,7 +218,7 @@ export function applyRankedMatchReport(
     const afterKp = Math.max(0, before.kp + deltas[index]);
     const beforeRank = getRankedTier(before.kp);
     const afterRank = getRankedTier(afterKp);
-    const afterKr = rollKrScores(before.kr, perfScores[index]);
+    const afterKr = rollKrScores(before.kr, perfScores[index], Boolean(opponentReport.isBot));
     const krDelta = diffKrScores(before.kr, afterKr);
     const historyEntry: RankedMatchHistoryEntry = {
       id: reportId,
@@ -342,11 +346,24 @@ export function normalizeRankedProfile(value: Partial<RankedProfile> & OnlinePla
   };
 }
 
-function rollKrScores(current: RankedKrScores, matchScores: RankedKrScores): RankedKrScores {
+function rollKrScores(current: RankedKrScores, matchScores: RankedKrScores, reduced = false): RankedKrScores {
   return rankedKrKeys.reduce((next, key) => {
-    next[key] = clampRankedScore(current[key] * 0.82 + matchScores[key] * 0.18);
+    const blended = reduced
+      ? current[key] * 0.92 + matchScores[key] * 0.08
+      : current[key] * 0.82 + matchScores[key] * 0.18;
+    const capped = reduced
+      ? current[key] + clampNumber(blended - current[key], -4, 4)
+      : blended;
+    next[key] = clampRankedScore(capped);
     return next;
   }, {} as RankedKrScores);
+}
+
+function reduceBotKpDelta(delta: number, didWin: boolean) {
+  const scaled = Math.round(delta * 0.5);
+  return didWin
+    ? clampNumber(Math.max(3, scaled), 3, 12)
+    : clampNumber(Math.min(-2, scaled), -10, -2);
 }
 
 function diffKrScores(before: RankedKrScores, after: RankedKrScores): RankedKrScores {
@@ -404,13 +421,20 @@ function localSubmitRankedMatchReport(report: RankedMatchReport): RankedSubmitRe
   const reportId = normalizeReportId(report);
   if (store.reports[reportId]) return store.reports[reportId];
   const profiles = report.players.map((player) => (
+    player.isBot
+      ? normalizeRankedProfile({
+        ...makeDefaultRankedProfile(player.profile),
+        kp: player.botKp,
+        kr: normalizeKrScores(player.botKr)
+      })
+      :
     store.profiles[player.profile.playerId]
       ? normalizeRankedProfile({ ...store.profiles[player.profile.playerId], displayName: player.profile.displayName })
       : makeDefaultRankedProfile(player.profile)
   )) as [RankedProfile, RankedProfile];
   const result = applyRankedMatchReport(profiles, report);
-  result.players.forEach((player) => {
-    store.profiles[player.playerId] = player.profile;
+  result.players.forEach((player, index) => {
+    if (!report.players[index].isBot) store.profiles[player.playerId] = player.profile;
   });
   store.reports[reportId] = result;
   writeLocalRankedStore(store);

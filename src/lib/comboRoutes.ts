@@ -1,4 +1,17 @@
 import type { CharacterDefinition, ImpactSparkEvent, MoveDefinition, MoveInput, MoveOverride } from '../types';
+import {
+  baseInputToAnimationKey,
+  commandFamilyKey,
+  commandInput,
+  commandRequiresKi,
+  commandRouteFamily,
+  commandUsesJump,
+  inputToButton,
+  isPlainNeutralCommand,
+  parseNotationTokens,
+  rawButtonCommandToBaseKey,
+  type CommandRouteFamily
+} from './commandRoutes';
 import { contextualComboFrameData, contextualHitAdvantage, type ComboHitContext } from './comboFrameMath';
 
 export type ComboRouteCategory = 'basic' | 'advanced' | 'crouch' | 'launcher' | 'tornado' | 'counterHit';
@@ -8,6 +21,7 @@ export type LaunchRouteStyle = 'grounded' | 'airChase' | 'hybrid';
 
 export type ResolvedMoveRoute = {
   id: string;
+  routeKey: string;
   label: string;
   notation: string[];
   input: MoveInput;
@@ -16,6 +30,8 @@ export type ResolvedMoveRoute = {
   move: MoveDefinition;
   category: ComboRouteCategory;
   state: ComboRouteState;
+  family: CommandRouteFamily;
+  requiresKi: boolean;
   complexity: number;
 };
 
@@ -27,6 +43,9 @@ export type ComboTrialStepExpectation = {
 };
 
 export type ComboTrialStep = {
+  routeKey: string;
+  animationKey: string;
+  family: CommandRouteFamily;
   notation: string[];
   label: string;
   input: MoveInput;
@@ -41,6 +60,8 @@ export type GeneratedComboRoute = {
   id: string;
   title: string;
   category: ComboRouteCategory;
+  families: CommandRouteFamily[];
+  requiresKi: boolean;
   launchRouteStyle?: LaunchRouteStyle;
   tier: ComboRouteTier;
   level: number;
@@ -68,36 +89,9 @@ export type CpuRouteContext = {
   usedFamilies?: string[];
   usedVisualFamilies?: string[];
   activeRouteId?: string | null;
+  availableKi?: number;
   selector?: number;
   routeRoll?: number;
-};
-
-const buttonToInput: Record<string, MoveInput> = {
-  '1': 'jab',
-  '2': 'heavy',
-  '3': 'kick',
-  '4': 'special'
-};
-
-const inputToButton: Record<MoveInput, string> = {
-  jab: '1',
-  heavy: '2',
-  kick: '3',
-  special: '4'
-};
-
-const baseInputToAnimationKey: Record<MoveInput, string> = {
-  jab: 'jableft',
-  heavy: 'jabright',
-  kick: 'kickleft',
-  special: 'kickright'
-};
-
-const rawButtonCommandToBaseKey: Record<string, string> = {
-  '1': 'jableft',
-  '2': 'jabright',
-  '3': 'kickleft',
-  '4': 'kickright'
 };
 
 const MAX_ROUTE_HITS = 30;
@@ -107,12 +101,12 @@ const MAX_LAUNCHERS_PER_ROUTE = 1;
 const MAX_TORNADOES_PER_ROUTE = 2;
 
 const categoryLimits: Record<ComboRouteCategory, number> = {
-  basic: 12,
-  advanced: 16,
-  crouch: 14,
-  launcher: 16,
-  tornado: 14,
-  counterHit: 12
+  basic: 16,
+  advanced: 28,
+  crouch: 22,
+  launcher: 28,
+  tornado: 22,
+  counterHit: 18
 };
 
 const multiHitTargets: Record<ComboRouteCategory, number[]> = {
@@ -168,6 +162,33 @@ export function generateCharacterComboRoutes(character: CharacterDefinition): Ge
     const targets = findBestLinks(routes, advantage, starter, { allowStates: ['standing'] }, 2);
     for (const target of targets) {
       pushTrial(makeRouteTrial('advanced', starter, [target], `Neutral +${advantage} -> i${target.move.startupFrames} command link`));
+    }
+  }
+
+  const commandStarters = routes
+    .filter((route) => route.command && route.move.damage > 0 && route.category !== 'tornado')
+    .sort((a, b) => commandStarterScore(b) - commandStarterScore(a));
+  for (const starter of commandStarters) {
+    const advantage = starter.category === 'counterHit'
+      ? counterHitAdvantage(starter.move)
+      : Math.max(contextualHitAdvantage(starter.move, { context: 'neutral' }), starter.move.launchHeight ? 24 : 0);
+    const category = starter.category === 'basic' ? 'advanced' : starter.category;
+    const allowStates = starter.move.endsInCrouch ? ['crouch', 'whileStanding', 'standing'] as ComboRouteState[] : ['standing'] as ComboRouteState[];
+    const targets = findBestLinks(routes, advantage, starter, {
+      allowStates,
+      preferJuggle: (starter.move.launchHeight ?? 0) > 0,
+      disallowLaunchers: (starter.move.launchHeight ?? 0) > 0
+    }, 2);
+    for (const target of targets) {
+      const starterExpectation = starter.category === 'counterHit'
+        ? { counterHit: true }
+        : (starter.move.launchHeight ?? 0) > 0
+          ? { launched: true }
+          : undefined;
+      const reason = (starter.move.launchHeight ?? 0) > 0
+        ? `${routeRequiresAirChase(starter) ? 'Air Chase' : 'Grounded'} Launch +${advantage} -> i${target.move.startupFrames}`
+        : `${routeFamilyLabel(starter.family)} starter +${advantage} -> i${target.move.startupFrames}`;
+      pushTrial(makeRouteTrial(category, starter, [target], reason, starterExpectation));
     }
   }
 
@@ -260,6 +281,7 @@ export function resolveMoveRoutes(character: CharacterDefinition): ResolvedMoveR
     const move = applyMoveOverrides(character, base, [base.id, base.input, animationKey]);
     addRoute({
       id: `base:${base.input}`,
+      routeKey: `base:${animationKey}:${base.input}`,
       label: move.label,
       notation: [inputToButton[base.input]],
       input: base.input,
@@ -268,6 +290,8 @@ export function resolveMoveRoutes(character: CharacterDefinition): ResolvedMoveR
       move: { ...move, command: move.command },
       category: 'basic',
       state: 'standing',
+      family: 'neutral',
+      requiresKi: Boolean(move.usesKi || move.kiBurst),
       complexity: 1
     });
   }
@@ -304,6 +328,7 @@ export function resolveMoveRoutes(character: CharacterDefinition): ResolvedMoveR
     };
     addRoute({
       id: `cmd:${command}`,
+      routeKey: `cmd:${key}:${command}`,
       label: commandMove.label,
       notation: parseNotationTokens(command),
       input,
@@ -312,6 +337,8 @@ export function resolveMoveRoutes(character: CharacterDefinition): ResolvedMoveR
       move: commandMove,
       category: categorizeCommandRoute(commandMove, command),
       state: commandState(command),
+      family: commandRouteFamily(command),
+      requiresKi: commandRequiresKi(command) || Boolean(commandMove.usesKi || commandMove.kiBurst),
       complexity: commandComplexity(command)
     });
   }
@@ -429,6 +456,7 @@ function buildMultiHitTrial(
   }
 
   if (sequence.length < minimumRouteHits(targetHits)) return null;
+  if (!sequenceHasEnoughFamilyDiversity(sequence, targetHits)) return null;
   if (category === 'tornado' && !sequence.slice(1).some((route) => route.move.tornado)) return null;
   if (category === 'crouch' && !sequence.slice(1).some((route) => route.state === 'crouch' || route.state === 'whileStanding')) return null;
 
@@ -568,8 +596,20 @@ function variedJuggleAdvantageFloor(move: MoveDefinition, comboHits: number, rep
   return null;
 }
 
+function commandStarterScore(route: ResolvedMoveRoute) {
+  const familyBonus =
+    route.family === 'ki' ? 20 :
+    route.family === 'motion' ? 18 :
+    route.family === 'sidestep' ? 16 :
+    route.family === 'crouch' || route.family === 'whileStanding' ? 15 :
+    route.family === 'direction' ? 13 :
+    route.family === 'chord' ? 12 :
+    8;
+  return routeRewardScore(route) + familyBonus - route.move.startupFrames * 0.12;
+}
+
 function starterScore(route: ResolvedMoveRoute, category: ComboRouteCategory) {
-  return routeRewardScore(route) + (category === 'counterHit' ? counterHitAdvantage(route.move) : 0) + (category === 'tornado' && (route.move.launchHeight ?? 0) > 0 ? 12 : 0);
+  return routeRewardScore(route) + commandStarterScore(route) * 0.18 + (category === 'counterHit' ? counterHitAdvantage(route.move) : 0) + (category === 'tornado' && (route.move.launchHeight ?? 0) > 0 ? 12 : 0);
 }
 
 function minimumRouteHits(targetHits: number) {
@@ -589,7 +629,15 @@ function routeReasonForSequence(category: ComboRouteCategory, sequence: Resolved
   }
   if (sequence.some((route) => route.move.tornado)) parts.push('Tornado');
   if (sequence.some((route) => route.move.endsInCrouch || route.state === 'crouch' || route.state === 'whileStanding')) parts.push('FC/WS');
+  if (sequence.some((route) => route.requiresKi)) parts.push('Ki');
   return parts.join(' -> ');
+}
+
+function sequenceHasEnoughFamilyDiversity(sequence: ResolvedMoveRoute[], targetHits: number) {
+  if (targetHits < 11) return true;
+  const families = new Set(sequence.map(routeFamily));
+  const minimum = targetHits >= 21 ? 5 : 4;
+  return families.size >= Math.min(minimum, sequence.length);
 }
 
 function makeRouteTrialFromSequence(
@@ -620,6 +668,8 @@ function makeRouteTrialFromSequence(
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${estimatedHits}:${targetHits}`,
     title: routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
     category,
+    families: routeFamiliesForSequence(sequence),
+    requiresKi: sequence.some((route) => route.requiresKi),
     launchRouteStyle,
     tier: routeTier(estimatedHits),
     level: routeLevel(category, sequence[0], sequence.slice(1), estimatedHits),
@@ -650,6 +700,8 @@ function makeRouteTrial(
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${reason}`,
     title: category === 'counterHit' ? `${starter.command ?? starter.label} Counter Hit` : routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
     category,
+    families: routeFamiliesForSequence(sequence),
+    requiresKi: sequence.some((route) => route.requiresKi),
     launchRouteStyle,
     tier: routeTier(estimatedHits),
     level: routeLevel(category, starter, followups, estimatedHits),
@@ -662,6 +714,9 @@ function makeRouteTrial(
 
 function routeToStep(route: ResolvedMoveRoute, counterHit = false, reason?: string, expect?: ComboTrialStepExpectation): ComboTrialStep {
   return {
+    routeKey: route.routeKey,
+    animationKey: route.animationKey,
+    family: route.family,
     notation: route.notation,
     label: route.label,
     input: route.input,
@@ -680,6 +735,10 @@ function routeTitleForSequence(category: ComboRouteCategory, sequence: ResolvedM
     return estimatedHits > 2 ? `${starterName} ${label} ${estimatedHits}-Hit Route` : `${starterName} ${label} Route`;
   }
   return `${starterName} ${estimatedHits}-Hit Route`;
+}
+
+function routeFamiliesForSequence(sequence: ResolvedMoveRoute[]): CommandRouteFamily[] {
+  return [...new Set(sequence.map((route) => route.family))];
 }
 
 function launchRouteStyleForSequence(sequence: ResolvedMoveRoute[]): LaunchRouteStyle {
@@ -701,11 +760,7 @@ function routeRequiresAirChase(route: ResolvedMoveRoute) {
 }
 
 function routeUsesJumpNotation(route: ResolvedMoveRoute) {
-  return route.notation.some((token) => {
-    const normalized = token.toLowerCase();
-    return normalized === 'u' || normalized.includes('u/') || normalized.includes('/u');
-  }) ||
-    Boolean(route.command && /(^|[+,_])u([+,_]|$)|(^|[+,_])u\/[bf]([+,_]|$)/.test(route.command.toLowerCase()));
+  return commandUsesJump(route.command, route.notation);
 }
 
 function groundedJuggleRouteBonus(route: ResolvedMoveRoute, state: RoutePlannerState) {
@@ -796,26 +851,8 @@ function commandComplexity(command: string) {
   return score;
 }
 
-function commandInput(command: string): MoveInput {
-  const buttons = [...command.matchAll(/[1-4]/g)];
-  const button = buttons[buttons.length - 1]?.[0] ?? '1';
-  return buttonToInput[button] ?? 'jab';
-}
-
-function parseNotationTokens(command: string) {
-  return command
-    .replace(/^H\./, 'H.+')
-    .replace(/^R\./, 'R.+')
-    .split('+')
-    .filter(Boolean);
-}
-
 function hasAnimationFrames(character: CharacterDefinition, key: string) {
   return (character.animationFrames?.[key]?.length ?? 0) > 0;
-}
-
-function isPlainNeutralCommand(command: string) {
-  return command === '1' || command === '2' || command === '3' || command === '4';
 }
 
 function isPlainNeutralRoute(route: ResolvedMoveRoute) {
@@ -849,19 +886,11 @@ function routeTier(estimatedHits: number): ComboRouteTier {
 }
 
 function routeIdentity(route: ResolvedMoveRoute) {
-  return route.move.comboKey ?? route.command ?? route.id;
+  return route.routeKey;
 }
 
 function routeFamily(route: ResolvedMoveRoute) {
-  if (!route.command) return `neutral:${route.input}`;
-  if (route.command.startsWith('FC+')) return `FC:${route.input}`;
-  if (route.command.startsWith('WS+')) return `WS:${route.input}`;
-  if (route.command.startsWith('SS+') || route.command.startsWith('SSL+') || route.command.startsWith('SSR+')) return `SS:${route.input}`;
-  if (route.command.startsWith('O+')) return `ki:${route.input}`;
-  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(route.command)) return `motion:${route.input}`;
-  if (/^[1-4]\+[1-4]/.test(route.command)) return `chord:${route.input}`;
-  const prefix = route.command.split('+').slice(0, -1).join('+') || 'command';
-  return `${prefix.replace(/[1-4]/g, '#')}:${route.input}`;
+  return commandFamilyKey(route.command, route.input);
 }
 
 function maxIdentityUsesForRoute(routeHits: number) {
@@ -885,16 +914,16 @@ function cpuRouteStepIndex(route: GeneratedComboRoute, context: CpuRouteContext)
   return Math.min(route.steps.length - 1, Math.max(1, context.comboStep));
 }
 
-export function cpuMoveIdentityKeyFromStep(step: Pick<ComboTrialStep, 'command' | 'input'>) {
-  return step.command ?? `neutral:${step.input}`;
+export function cpuMoveIdentityKeyFromStep(step: Pick<ComboTrialStep, 'command' | 'input'> & Partial<Pick<ComboTrialStep, 'routeKey'>>) {
+  return step.routeKey ?? step.command ?? `neutral:${step.input}`;
 }
 
 export function cpuMoveFamilyKeyFromStep(step: Pick<ComboTrialStep, 'command' | 'input'>) {
   return commandFamilyKey(step.command, step.input);
 }
 
-export function cpuMoveVisualFamilyKeyFromStep(step: Pick<ComboTrialStep, 'input'>) {
-  return `visual:${baseInputToAnimationKey[step.input]}`;
+export function cpuMoveVisualFamilyKeyFromStep(step: Pick<ComboTrialStep, 'input'> & Partial<Pick<ComboTrialStep, 'animationKey'>>) {
+  return `visual:${step.animationKey || baseInputToAnimationKey[step.input]}`;
 }
 
 export function cpuMoveIdentityKeyFromMove(move: Pick<MoveDefinition, 'command' | 'route' | 'input'>) {
@@ -918,19 +947,7 @@ function stepFamilyKey(step: ComboTrialStep) {
 }
 
 function stepVisualFamilyKey(step: ComboTrialStep) {
-  return cpuMoveVisualFamilyKeyFromStep(step);
-}
-
-function commandFamilyKey(command: string | undefined, input: MoveInput) {
-  if (!command) return `neutral:${input}`;
-  if (command.startsWith('FC+')) return `FC:${input}`;
-  if (command.startsWith('WS+')) return `WS:${input}`;
-  if (command.startsWith('SS+') || command.startsWith('SSL+') || command.startsWith('SSR+')) return `SS:${input}`;
-  if (command.startsWith('O+')) return `ki:${input}`;
-  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(command)) return `motion:${input}`;
-  if (/^[1-4]\+[1-4]/.test(command)) return `chord:${input}`;
-  const prefix = command.split('+').slice(0, -1).join('+') || 'command';
-  return `${prefix.replace(/[1-4]/g, '#')}:${input}`;
+  return `visual:${step.animationKey || baseInputToAnimationKey[step.input]}`;
 }
 
 function isCpuRouteStepFreshEnough(
@@ -989,12 +1006,14 @@ function countTrailingRouteIdentities(identities: string[], identity: string) {
 
 function reasonForStarter(route: ResolvedMoveRoute, category: ComboRouteCategory) {
   if (category === 'counterHit') return `CH +${counterHitAdvantage(route.move)}`;
+  if (route.requiresKi) return 'Ki starter';
   if ((route.move.launchHeight ?? 0) > 0) return 'Launch';
   if (route.move.endsInCrouch) return 'Ends FC';
   return `+${route.move.onHitFrames}`;
 }
 
 function reasonForFollowup(route: ResolvedMoveRoute) {
+  if (route.requiresKi) return 'Ki spend';
   if (route.move.tornado) return 'Tornado';
   if (route.state === 'crouch') return 'FC link';
   if (route.state === 'whileStanding') return 'WS link';
@@ -1002,8 +1021,22 @@ function reasonForFollowup(route: ResolvedMoveRoute) {
   return `i${route.move.startupFrames}`;
 }
 
+function routeFamilyLabel(family: CommandRouteFamily) {
+  if (family === 'ki') return 'Ki';
+  if (family === 'motion') return 'Motion';
+  if (family === 'sidestep') return 'Sidestep';
+  if (family === 'crouch') return 'FC';
+  if (family === 'whileStanding') return 'WS';
+  if (family === 'direction') return 'Direction';
+  if (family === 'chord') return 'Chord';
+  if (family === 'jump') return 'Jump';
+  if (family === 'special') return 'Special';
+  return 'Command';
+}
+
 function routeFitsCpuContext(route: GeneratedComboRoute, context: CpuRouteContext) {
   if (context.leaderCloseout && (route.category === 'launcher' || route.category === 'tornado' || route.level > 5)) return false;
+  if (route.requiresKi && context.availableKi !== undefined && context.availableKi < 35) return false;
   if (context.difficulty <= 2 && route.tier !== 'short') return false;
   if (context.difficulty === 3 && (route.tier === 'long' || route.tier === 'marathon')) return false;
   if (context.difficulty === 4 && route.tier === 'marathon') return false;
@@ -1013,7 +1046,7 @@ function routeFitsCpuContext(route: GeneratedComboRoute, context: CpuRouteContex
   if (context.difficulty === 3 && route.level > 6) return false;
   if (context.opening === 'juggle') return route.category === 'launcher' || route.category === 'tornado' || route.steps.some((step) => step.expect?.juggled || step.expect?.tornado);
   if (context.opening === 'hitstun') return route.category !== 'counterHit' && route.steps.some((step) => routeStepStartup(step) <= Math.max(1, context.remainingFrames + (context.difficulty >= 4 ? 5 : 1)));
-  if (context.opening === 'whiff') return route.category === 'advanced' || route.category === 'launcher' || route.category === 'counterHit';
+  if (context.opening === 'whiff') return route.category === 'advanced' || route.category === 'launcher' || route.category === 'counterHit' || route.families.some((family) => family === 'motion' || family === 'ki');
   return route.category === 'basic' || route.category === 'advanced' || (context.difficulty >= 4 && route.category === 'crouch');
 }
 

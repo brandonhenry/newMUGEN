@@ -119,6 +119,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       if (processedKeyboardEventsRef.current.has(event)) return;
       processedKeyboardEventsRef.current.add(event);
       if (isTextEntryTarget(event.target)) return;
+      if (modeRef.current === 'trainingOnline' && event.key === 'Enter') return;
       if (pressed && event.repeat) return;
       const bindings = getKeyboardBindingsForEvent(event, modeRef.current, controlsRef.current);
       for (const binding of bindings) {

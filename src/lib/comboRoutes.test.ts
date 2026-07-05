@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import type { CharacterDefinition } from '../types';
+import type { CharacterDefinition, MoveInput } from '../types';
 import {
   cpuMoveFamilyKeyFromStep,
   cpuMoveVisualFamilyKeyFromStep,
@@ -9,6 +9,7 @@ import {
   recommendCpuComboRoute,
   resolveMoveRoutes
 } from './comboRoutes';
+import { commandFamilyKey } from './commandRoutes';
 
 const repoRoot = process.cwd();
 
@@ -20,25 +21,19 @@ function readRosterCharacters() {
     .map((path) => JSON.parse(readFileSync(path, 'utf8')) as CharacterDefinition);
 }
 
-function moveForStep(character: CharacterDefinition, step: { command?: string; input: string }) {
+function moveForStep(character: CharacterDefinition, step: { routeKey?: string; command?: string; input: string }) {
   const routes = resolveMoveRoutes(character);
-  return routes.find((route) => step.command ? route.command === step.command : !route.command && route.input === step.input)?.move ?? null;
+  return routes.find((route) =>
+    step.routeKey ? route.routeKey === step.routeKey : step.command ? route.command === step.command : !route.command && route.input === step.input
+  )?.move ?? null;
 }
 
-function stepIdentity(step: { command?: string; input: string }) {
-  return step.command ?? `neutral:${step.input}`;
+function stepIdentity(step: { routeKey?: string; command?: string; input: string }) {
+  return step.routeKey ?? step.command ?? `neutral:${step.input}`;
 }
 
-function stepFamily(step: { command?: string; input: string }) {
-  if (!step.command) return `neutral:${step.input}`;
-  if (step.command.startsWith('FC+')) return `FC:${step.input}`;
-  if (step.command.startsWith('WS+')) return `WS:${step.input}`;
-  if (step.command.startsWith('SS+') || step.command.startsWith('SSL+') || step.command.startsWith('SSR+')) return `SS:${step.input}`;
-  if (step.command.startsWith('O+')) return `ki:${step.input}`;
-  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd|WR|iWR|iWS)/.test(step.command)) return `motion:${step.input}`;
-  if (/^[1-4]\+[1-4]/.test(step.command)) return `chord:${step.input}`;
-  const prefix = step.command.split('+').slice(0, -1).join('+') || 'command';
-  return `${prefix.replace(/[1-4]/g, '#')}:${step.input}`;
+function stepFamily(step: { family?: string; command?: string; input: string }) {
+  return commandFamilyKey(step.command, step.input as MoveInput);
 }
 
 function stepRequiresAirChase(character: CharacterDefinition, step: { command?: string; input: string; notation?: string[] }) {
@@ -220,9 +215,27 @@ describe('combo route catalog', () => {
     );
     expect(crouchTrials.length).toBeGreaterThan(0);
     for (const { character, trial } of crouchTrials) {
-      const followup = trial.steps[1];
-      expect(followup.command, `${character.id}:${trial.id}`).toMatch(/^(FC|WS)\+/);
-      expect(character.animationFrames?.[`cmd:${followup.command}`]?.length, `${character.id}:${followup.command}`).toBeGreaterThan(0);
+      const stanceStep = trial.steps.find((step) => step.command?.match(/^(FC|WS)\+/));
+      expect(stanceStep?.command, `${character.id}:${trial.id}`).toMatch(/^(FC|WS)\+/);
+      expect(character.animationFrames?.[`cmd:${stanceStep?.command}`]?.length, `${character.id}:${stanceStep?.command}`).toBeGreaterThan(0);
+    }
+  });
+
+  it('covers the expanded command route families from real command frames', () => {
+    const familyCatalog = readRosterCharacters().flatMap((character) =>
+      resolveMoveRoutes(character)
+        .filter((route) => route.command)
+        .map((route) => ({ character, route }))
+    );
+    expect(familyCatalog.length).toBeGreaterThan(0);
+
+    const families = new Set(familyCatalog.map(({ route }) => route.family));
+    for (const family of ['direction', 'motion', 'sidestep', 'crouch', 'ki', 'chord']) {
+      expect(families.has(family as never), family).toBe(true);
+    }
+    for (const { character, route } of familyCatalog) {
+      expect(character.animationFrames?.[route.animationKey]?.length, `${character.id}:${route.animationKey}`).toBeGreaterThan(0);
+      expect(route.routeKey, `${character.id}:${route.id}`).toContain(route.animationKey);
     }
   });
 

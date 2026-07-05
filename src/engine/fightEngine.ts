@@ -31,6 +31,7 @@ import {
   type ComboTrialStep,
   type CpuRouteRecommendation
 } from '../lib/comboRoutes';
+import { commandRouteFamily } from '../lib/commandRoutes';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
 
 const ROUND_TIME = 60;
@@ -305,9 +306,9 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   updateIdleQuietState(next, input1, input2, frameDelta);
 
   const infiniteTimer = isInfiniteRoundTime(next.roundTime);
-  next.timer = infiniteTimer || (next.mode === 'training' && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
+  next.timer = infiniteTimer || (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
   const ko = next.fighters.find((fighter) => fighter.hp <= 0);
-  if (next.mode === 'training' && next.trainingInfiniteHealth) {
+  if (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) {
     refillTrainingHealth(next);
   } else if (ko || (!infiniteTimer && next.timer <= 0)) {
     finishRound(next);
@@ -4159,7 +4160,7 @@ function beginRoundFinisher(
   impactId: number,
   impactPosition: [number, number, number]
 ) {
-  if (match.mode === 'training' && match.trainingInfiniteHealth) return false;
+  if (isTrainingInfiniteHealthMode(match) && match.trainingInfiniteHealth) return false;
   if (match.phase === 'roundFinisher' || match.phase === 'roundOver' || match.phase === 'matchOver') return false;
   match.phase = 'roundFinisher';
   match.countdown = ROUND_FINISHER_SECONDS;
@@ -4226,6 +4227,10 @@ function refillTrainingHealth(match: MatchSnapshot) {
     fighter.tookDamageThisRound = false;
     fighter.visualHitstop = createEmptyVisualHitstop();
   });
+}
+
+function isTrainingInfiniteHealthMode(match: MatchSnapshot) {
+  return match.mode === 'training' || match.mode === 'trainingOnline';
 }
 
 function beginRoundIntro(match: MatchSnapshot) {
@@ -4850,6 +4855,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
         usedFamilies: ai.aiRecentComboFamilies,
         usedVisualFamilies: ai.aiRecentComboVisualFamilies,
         activeRouteId: ai.aiActiveComboRouteId,
+        availableKi: ai.ki,
         selector,
         routeRoll
       });
@@ -4917,7 +4923,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     if (pressureCrouchInput) {
       applyAiFullCrouchAttack(input, pressureCrouchInput, towardKey, awayKey);
     } else if (pressureCatalogStep && !pressureKiBurst) {
-      applyAiCatalogRouteStep(input, pressureCatalogStep, towardKey, awayKey);
+      applyAiCatalogRouteStep(ai, input, pressureCatalogStep, towardKey, awayKey);
     } else {
       input.charge = pressureKiBurst;
       input[pressureMoveInput] = true;
@@ -5001,6 +5007,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
           usedFamilies: ai.aiRecentComboFamilies,
           usedVisualFamilies: ai.aiRecentComboVisualFamilies,
           activeRouteId: ai.aiActiveComboRouteId,
+          availableKi: ai.ki,
           selector: selector + 41,
           routeRoll: routeRoll + 29
         })
@@ -5046,7 +5053,7 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
       }
       input.charge = shouldAiUseKiBurst(ai, opponent, selectedMoveInput, difficulty, shouldContinueCombo ? 'pressure' : 'neutral', selector + 29, routeRoll + 41, leaderCloseout);
       if (neutralCatalogRoute && isAiCatalogStepSpendable(ai, neutralCatalogRoute.step) && !input.charge) {
-        applyAiCatalogRouteStep(input, neutralCatalogRoute.step, towardKey, awayKey);
+        applyAiCatalogRouteStep(ai, input, neutralCatalogRoute.step, towardKey, awayKey);
       } else {
         input[selectedMoveInput] = true;
       }
@@ -5637,7 +5644,7 @@ function applyAiFullCrouchAttack(input: InputFrame, moveInput: MoveInput, toward
   input[moveInput] = true;
 }
 
-function applyAiCatalogRouteStep(input: InputFrame, step: ComboTrialStep, towardKey: 'left' | 'right', awayKey: 'left' | 'right') {
+function applyAiCatalogRouteStep(ai: FighterRuntime, input: InputFrame, step: ComboTrialStep, towardKey: 'left' | 'right', awayKey: 'left' | 'right') {
   input.block = false;
   input.charge = false;
   input.up = false;
@@ -5650,11 +5657,18 @@ function applyAiCatalogRouteStep(input: InputFrame, step: ComboTrialStep, toward
   input.sidewalkDown = false;
 
   const command = step.command ?? '';
+  const family = commandRouteFamily(command);
   const [prefix = ''] = command.split('+');
-  if (command.startsWith('O+')) input.charge = true;
-  if (command.startsWith('FC+')) input.down = true;
-  if (command.startsWith('SS+') || command.startsWith('SSL+')) input.sidestepUp = true;
+  if (family === 'ki') input.charge = true;
+  if (family === 'crouch') input.down = true;
+  if (family === 'sidestep' && !command.startsWith('SSR+')) input.sidestepUp = true;
   if (command.startsWith('SSR+')) input.sidestepDown = true;
+  if (family === 'motion') seedAiMotionCommandHistory(ai, command);
+  if (family === 'motion') {
+    input.down = /^(qcf|qcb|hcf|hcb|dp|rdp|cd)\+/.test(command);
+    if (/^(qcb|hcb|rdp|b,b)\+/.test(command)) input[awayKey] = true;
+    else input[towardKey] = true;
+  }
   if (prefix.includes('f')) input[towardKey] = true;
   if (prefix.includes('b')) input[awayKey] = true;
   if (prefix.includes('d')) input.down = true;
@@ -5668,6 +5682,23 @@ function applyAiCatalogRouteStep(input: InputFrame, step: ComboTrialStep, toward
   for (const button of buttons) {
     input[buttonToInput[button] ?? step.input] = true;
   }
+}
+
+function seedAiMotionCommandHistory(ai: FighterRuntime, command: string) {
+  const sequence =
+    command.startsWith('qcf+') ? ['d', 'd/f', 'f'] :
+    command.startsWith('qcb+') ? ['d', 'd/b', 'b'] :
+    command.startsWith('hcf+') ? ['b', 'd/b', 'd', 'd/f', 'f'] :
+    command.startsWith('hcb+') ? ['f', 'd/f', 'd', 'd/b', 'b'] :
+    command.startsWith('dp+') ? ['f', 'd', 'd/f'] :
+    command.startsWith('rdp+') ? ['b', 'd', 'd/b'] :
+    command.startsWith('cd+') ? ['d', 'd/f'] :
+    command.startsWith('WR+') || command.startsWith('iWR+') || command.startsWith('f,f+') ? ['f', 'f'] :
+    command.startsWith('b,b+') ? ['b', 'b'] :
+    [];
+  if (sequence.length === 0) return;
+  ai.commandHistory = sequence.map((token, index) => ({ token, age: (sequence.length - index) * 0.016 }));
+  ai.previousDirectionToken = sequence[sequence.length - 1] ?? ai.previousDirectionToken;
 }
 
 function rememberAiCatalogRecommendation(ai: FighterRuntime, recommendation: CpuRouteRecommendation | null, routeWindowOpen: boolean) {

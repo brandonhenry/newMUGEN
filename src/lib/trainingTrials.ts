@@ -1,5 +1,6 @@
 import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, MatchSnapshot, MoveInput } from '../types';
 import { emptyInputFrame } from '../types';
+import { commandRouteFamily, commandToActions as commandRouteToActions } from './commandRoutes';
 import {
   comboTrialCategoryLabels,
   comboTrialStepMatchesImpact,
@@ -9,7 +10,7 @@ import {
   type GeneratedComboRoute
 } from './comboRoutes';
 
-export type TrainingTrialMode = 'free' | 'basics' | 'combos';
+export type TrainingTrialMode = 'free' | 'basics' | 'combos' | 'online';
 export type TrainingTrialCategory = 'movement' | 'defense' | 'punish' | 'jumpIn' | 'corner' | 'crouch' | 'ki' | 'launcher' | 'tornado' | 'oki' | 'combo';
 export type TrainingTrialStepStatus = 'pending' | 'current' | 'early' | 'perfect' | 'late' | 'missed' | 'confirmed' | 'correct';
 export type TrainingTrialTimingRating = 'Ready' | 'Perfect' | 'Too early' | 'Late' | 'Confirmed' | 'Missed';
@@ -19,6 +20,8 @@ export type TrainingTrialStepKind = 'input' | 'state' | 'impact';
 
 export type TrainingTrialStep = {
   id: string;
+  routeKey?: string;
+  animationKey?: string;
   notation: string[];
   label: string;
   input?: MoveInput;
@@ -63,7 +66,7 @@ export type TrainingTrialDefinition = {
   title: string;
   characterId: string;
   category: TrainingTrialCategory;
-  mode: Exclude<TrainingTrialMode, 'free'>;
+  mode: Exclude<TrainingTrialMode, 'free' | 'online'>;
   difficulty: number;
   stageId: string;
   dummyCharacterId?: string;
@@ -226,6 +229,8 @@ export function generateComboTrainingTrials(character: CharacterDefinition): Tra
       id: `${route.id}:step:${index}`,
       notation: step.notation,
       label: step.label,
+      routeKey: step.routeKey,
+      animationKey: step.animationKey,
       input: step.input,
       command: step.command,
       actions: stepToActions(step),
@@ -249,7 +254,8 @@ export function generateComboTrainingTrials(character: CharacterDefinition): Tra
         stageId: 'the-chamber',
         dummyScript: route.steps[0]?.counterHit ? 'counterHit' : 'idle',
         p1Position: { x: -0.45, z: 0 },
-        p2Position: { x: 0.45, z: 0 }
+        p2Position: { x: 0.45, z: 0 },
+        p1Ki: route.requiresKi ? 100 : undefined
       },
       steps,
       lesson: `${comboTrialCategoryLabels[route.category]}: ${route.reason}`,
@@ -610,9 +616,11 @@ function makeRouteStarterTrial(
     id: `${id}:step`,
     notation: route.notation,
     label: route.label,
+    routeKey: route.routeKey,
+    animationKey: route.animationKey,
     input: route.input,
     command: route.command,
-    actions: commandToActions(route.command, route.input),
+    actions: commandRouteToActions(route.command, route.input),
     kind: options.expectDummyState ? 'state' : 'impact',
     targetFrame: 18,
     windowBefore: 7,
@@ -718,52 +726,72 @@ function makeSetup(dummy: CharacterDefinition | undefined, dummyScript: Training
   };
 }
 
-function makePreviewScript(steps: Array<Pick<TrainingTrialStep, 'actions' | 'targetFrame'>>): TrainingPreviewFrame[] {
+function makePreviewScript(steps: Array<Pick<TrainingTrialStep, 'actions' | 'targetFrame'> & Partial<Pick<TrainingTrialStep, 'command'>>>): TrainingPreviewFrame[] {
   const script: TrainingPreviewFrame[] = [];
   let cursor = 12;
   for (const step of steps) {
-    script.push({ frame: cursor + (step.targetFrame ?? 12), duration: 8, actions: step.actions });
+    script.push(...makeCommandPreviewFrames(step, cursor));
     cursor += Math.max(28, (step.targetFrame ?? 12) + 18);
   }
   return script;
 }
 
-function stepToActions(step: ComboTrialStep) {
-  return commandToActions(step.command, step.input);
-}
+function makeCommandPreviewFrames(
+  step: Pick<TrainingTrialStep, 'actions' | 'targetFrame'> & Partial<Pick<TrainingTrialStep, 'command'>>,
+  cursor: number
+): TrainingPreviewFrame[] {
+  const target = cursor + (step.targetFrame ?? 12);
+  const command = step.command ?? '';
+  const frames: TrainingPreviewFrame[] = [];
+  const push = (frame: number, actions: ActionName[], duration = 5) => {
+    frames.push({ frame: Math.max(cursor, frame), duration, actions });
+  };
 
-function commandToActions(command: string | undefined, input: MoveInput): ActionName[] {
-  const actions = new Set<ActionName>();
-  const notation = command ?? inputToButton[input];
-  if (notation.includes('O+')) actions.add('charge');
-  if (notation.includes('FC+')) actions.add('down');
-  if (notation.includes('SS+') || notation.includes('SSL+')) actions.add('sidestepUp');
-  if (notation.includes('SSR+')) actions.add('sidestepDown');
-  const prefix = notation.split('+')[0] ?? '';
-  if (prefix.includes('f')) actions.add('right');
-  if (prefix.includes('b')) actions.add('left');
-  if (prefix.includes('d')) actions.add('down');
-  if (prefix.includes('u')) actions.add('up');
-  for (const button of notation.match(/[1-4]/g) ?? [inputToButton[input]]) {
-    const moveInput = buttonToInput(button);
-    if (moveInput) actions.add(inputToAction[moveInput]);
+  if (/^(qcf|qcb|hcf|hcb|dp|rdp|cd)\+/.test(command)) {
+    const toward: ActionName = command.startsWith('qcb') || command.startsWith('hcb') || command.startsWith('rdp') ? 'left' : 'right';
+    const away: ActionName = toward === 'right' ? 'left' : 'right';
+    if (command.startsWith('hcf') || command.startsWith('hcb')) {
+      push(target - 18, [away], 4);
+      push(target - 14, [away, 'down'], 4);
+    }
+    push(target - 12, ['down'], 4);
+    push(target - 8, ['down', toward], 4);
+    if (command.startsWith('dp') || command.startsWith('rdp')) push(target - 16, [toward], 4);
+    push(target - 4, [toward, ...step.actions], 8);
+    return frames;
   }
-  return [...actions];
+
+  if (/^(f,f|WR|iWR)\+/.test(command)) {
+    push(target - 14, ['right'], 4);
+    push(target - 8, ['right'], 4);
+  } else if (/^b,b\+/.test(command)) {
+    push(target - 14, ['left'], 4);
+    push(target - 8, ['left'], 4);
+  } else if (/^(SS|SSL)\+/.test(command)) {
+    push(target - 10, ['sidestepUp'], 5);
+  } else if (/^SSR\+/.test(command)) {
+    push(target - 10, ['sidestepDown'], 5);
+  } else if (/^WS\+/.test(command)) {
+    push(target - 12, ['down'], 5);
+  }
+
+  push(target, step.actions, 8);
+  return frames;
 }
 
-function buttonToInput(button: string): MoveInput | null {
-  if (button === '1') return 'jab';
-  if (button === '2') return 'heavy';
-  if (button === '3') return 'kick';
-  if (button === '4') return 'special';
-  return null;
+function stepToActions(step: ComboTrialStep) {
+  return commandRouteToActions(step.command, step.input);
 }
 
 function stepToComboStep(step: TrainingTrialStep): ComboTrialStep {
+  const input = step.input ?? 'jab';
   return {
+    routeKey: step.routeKey ?? step.id,
+    animationKey: step.animationKey ?? (step.command ? `cmd:${step.command}` : input),
+    family: commandRouteFamily(step.command),
     notation: step.notation,
     label: step.label,
-    input: step.input ?? 'jab',
+    input,
     command: step.command,
     startupFrames: 1,
     counterHit: step.counterHit,

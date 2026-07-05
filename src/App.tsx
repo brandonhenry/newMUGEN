@@ -54,12 +54,13 @@ import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
+import { botCpuDifficulty, type OnlineBotOpponent } from './lib/online/bots';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
-import { fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
+import { emptyRankedKrScores, fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedKrScores, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import { createRollbackSession, type RollbackSession } from './lib/online/rollback';
 import {
@@ -179,7 +180,18 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
+type OnlineTrainingChatEntry = {
+  id: string;
+  text: string;
+  sentAt: number;
+  senderName: string;
+  local: boolean;
+};
 const ONLINE_INPUT_REDUNDANT_FRAMES = 8;
+const ONLINE_TRAINING_CHAT_MAX_LENGTH = 160;
+const BOT_REMATCH_READY_MS = 5_000;
+const BOT_REMATCH_LEAVE_MS = 10_000;
+const RANKED_REMATCH_LIMIT = 2;
 type RandomCharacterSlots = Record<1 | 2, boolean>;
 type TournamentSelectMode = 'free' | 'online' | 'paid';
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
@@ -974,9 +986,9 @@ function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, An
 
 function normalizeAnimationScale(size?: AnimationScale): Required<AnimationScale> {
   return {
-    width: Number(clamp(Number(size?.width) || 1, 0.25, 5).toFixed(2)),
-    height: Number(clamp(Number(size?.height) || 1, 0.25, 5).toFixed(2)),
-    offsetX: Number(clamp(Number(size?.offsetX) || 0, -6, 6).toFixed(2))
+    width: Number(clamp(Number(size?.width) || 1, 0.1, 10).toFixed(3)),
+    height: Number(clamp(Number(size?.height) || 1, 0.1, 10).toFixed(3)),
+    offsetX: Number(clamp(Number(size?.offsetX) || 0, -6, 6).toFixed(3))
   };
 }
 
@@ -2650,7 +2662,12 @@ export default function App() {
       kind: paid ? 'paidOnline' : 'freeOnline',
       playerId: profile.playerId,
       displayName: profile.displayName,
-      characterId
+      characterId,
+      kp: rankedProfile?.kp,
+      kr: rankedProfile?.kr,
+      availableCharacterIds: roster
+        .filter((character) => isCharacterUnlocked(character, effectiveUnlockedCharacterIds))
+        .map((character) => character.id)
     });
     const payment = result.entry.paymentState === 'invoicePending'
       ? {
@@ -2693,7 +2710,7 @@ export default function App() {
       });
       window.open(payment.checkoutUrl, '_blank', 'noopener,noreferrer');
     }
-  }, [captureAppAnalytics, onlineProfile]);
+  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, rankedProfile?.kp, rankedProfile?.kr, roster]);
 
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
@@ -3413,7 +3430,7 @@ export default function App() {
             onTraining={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'training' });
               resetRandomSelections();
-              setMode('training');
+              setMode(selectedTrainingMode === 'online' ? 'trainingOnline' : 'training');
               setSelectedTrainingMode('free');
               const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
@@ -3847,12 +3864,13 @@ export default function App() {
             getLastInput={getLastInput}
             onlineProfile={onlineProfile}
             rankedProfile={rankedProfile}
+            tournamentBotOpponent={mode === 'tournamentOnline' ? makeTournamentBotOpponent(onlineTournamentStatus) : null}
             onRankedProfileChange={setRankedProfile}
             privateRoomIntent={privateRoomIntent}
             onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
             initialTrainingMode={selectedTrainingMode}
-            onCharacterSelect={() => setScreen(mode === 'training' ? 'training' : 'select')}
+            onCharacterSelect={() => setScreen(mode === 'training' || mode === 'trainingOnline' ? 'training' : 'select')}
             onTournamentMatchComplete={handleTournamentMatchComplete}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
@@ -5004,9 +5022,8 @@ function TrainingSelect({
   );
   const canStart = Boolean(
     p1Character &&
-    p2Character &&
     isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
-    isCharacterUnlocked(p2Character, unlockedCharacterIds)
+    (trainingMode === 'online' || (p2Character && isCharacterUnlocked(p2Character, unlockedCharacterIds)))
   );
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
@@ -5224,7 +5241,7 @@ function TrainingSelect({
             onBack();
           }}
           onNext={onStart}
-          nextLabel={trainingMode === 'free' ? 'Start Training' : trainingMode === 'basics' ? 'Start Basics' : 'Start Combos'}
+          nextLabel={trainingMode === 'online' ? 'Find Partner' : trainingMode === 'free' ? 'Start Training' : trainingMode === 'basics' ? 'Start Basics' : 'Start Combos'}
           nextDisabled={!canStart}
         />
       </section>
@@ -5881,6 +5898,33 @@ function confirmedTournamentEntryCount(bracket: TournamentBracket | null | undef
   return bracket.entries.filter((entry) => entry.paymentState === 'paid' || entry.paymentState === 'entryLocked').length;
 }
 
+function makeTournamentBotOpponent(status: TournamentStatusResult | null): OnlineBotOpponent | null {
+  const match = status?.assignedMatch;
+  const entry = status?.entry;
+  if (!status || !match || !entry) return null;
+  const opponent = getTournamentOpponentEntry(status.bracket, match, entry.id);
+  if (!opponent?.isBot) return null;
+  const kr = normalizeRankedKrScores(opponent.botKr);
+  const kp = Math.max(0, Math.round(Number(opponent.botKp) || 1200));
+  return {
+    playerId: opponent.playerId,
+    displayName: opponent.displayName,
+    characterId: opponent.characterId,
+    kp,
+    kr,
+    cpuDifficulty: botCpuDifficulty(kp, kr),
+    isBot: true
+  };
+}
+
+function normalizeRankedKrScores(value: Partial<RankedKrScores> | undefined): RankedKrScores {
+  const base = emptyRankedKrScores();
+  return rankedKrKeys.reduce((next, key) => {
+    next[key] = Math.max(0, Math.min(100, Math.round(Number(value?.[key] ?? base[key]) || 0)));
+    return next;
+  }, {} as RankedKrScores);
+}
+
 function isPaidTournamentUiEnabled(summary?: TournamentSummary) {
   return import.meta.env.VITE_TOURNAMENT_PAID_ENABLED === 'true' && Boolean(summary?.paidEnabled);
 }
@@ -5915,7 +5959,8 @@ function TrainingModeCarousel({
   const options: Array<{ mode: TrainingTrialMode; label: string; icon: ReactNode; count?: number }> = [
     { mode: 'free', label: 'Training', icon: <Target size={18} /> },
     { mode: 'basics', label: 'Basics', icon: <List size={18} />, count: basicsCount },
-    { mode: 'combos', label: 'Combos', icon: <Swords size={18} />, count: combosCount }
+    { mode: 'combos', label: 'Combos', icon: <Swords size={18} />, count: combosCount },
+    { mode: 'online', label: 'Online', icon: <Wifi size={18} /> }
   ];
   const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));
   const activeOption = options[activeIndex] ?? options[0];
@@ -6674,6 +6719,7 @@ function CpuDifficultyControl({
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
+  if (mode === 'trainingOnline') return slot === 1 ? 'You' : 'Sparring Partner';
   if (mode === 'ranked') return slot === 1 ? 'You' : 'Ranked Opponent';
   if (mode === 'tournamentOnline') return slot === 1 ? 'You' : 'Tournament Opponent';
   if (mode === 'tournamentLocal') return slot === 1 ? 'You' : 'CPU';
@@ -6686,6 +6732,7 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
   if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
+  if (mode === 'trainingOnline') return slot === 1 ? 'YOU' : 'SPAR';
   if (mode === 'ranked') return slot === 1 ? 'YOU' : 'RANKED';
   if (mode === 'tournamentOnline') return slot === 1 ? 'YOU' : 'BRACKET';
   if (mode === 'tournamentLocal') return slot === 1 ? 'YOU' : 'CPU';
@@ -6736,6 +6783,8 @@ function VersusSplashScreen({
   const p1Label = getSlotLabel(mode, 1);
   const p2Label = mode === 'online'
     ? 'Matchmaking Opponent'
+    : mode === 'trainingOnline'
+      ? 'Sparring Partner'
     : mode === 'ranked'
       ? 'Ranked Opponent'
     : mode === 'tournamentOnline'
@@ -6748,6 +6797,8 @@ function VersusSplashScreen({
   const p1Short = getSlotShortLabel(mode, 1);
   const p2Short = mode === 'online'
     ? 'ONLINE'
+    : mode === 'trainingOnline'
+      ? 'SPAR'
     : mode === 'ranked'
       ? 'RANKED'
     : mode === 'tournamentOnline'
@@ -6757,6 +6808,8 @@ function VersusSplashScreen({
       : getSlotShortLabel(mode, 2);
   const battleKicker = mode === 'online'
     ? 'Online Search'
+    : mode === 'trainingOnline'
+      ? 'Training Online'
     : mode === 'ranked'
       ? 'Ranked Search'
     : mode === 'tournamentOnline'
@@ -6768,6 +6821,8 @@ function VersusSplashScreen({
       : 'Next Battle';
   const battleHint = mode === 'online'
     ? 'Looking for match after splash'
+    : mode === 'trainingOnline'
+      ? 'Finding a sparring partner'
     : mode === 'ranked'
       ? 'KP-based match after splash'
     : mode === 'tournamentOnline'
@@ -9976,6 +10031,7 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'versusCpu') return '1P vs CPU';
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
+  if (mode === 'trainingOnline') return 'Training Online';
   if (mode === 'online') return 'Online';
   if (mode === 'ranked') return 'Ranked';
   if (mode === 'private') return 'Private';
@@ -11924,9 +11980,9 @@ function CharacterViewer({
                         <input
                           aria-label={`${selectedSlot.label} animation width scale`}
                           type="range"
-                          min="0.25"
-                          max="5"
-                          step="0.01"
+                          min="0.1"
+                          max="10"
+                          step="0.001"
                           value={selectedSizeScale.width}
                           onChange={(event) => updateSelectedAnimationScaleAxis('width', Number(event.target.value))}
                           data-testid="animation-width-slider"
@@ -11934,9 +11990,9 @@ function CharacterViewer({
                         <input
                           aria-label={`${selectedSlot.label} animation width scale value`}
                           type="number"
-                          min="0.25"
-                          max="5"
-                          step="0.01"
+                          min="0.1"
+                          max="10"
+                          step="0.001"
                           value={selectedSizeScale.width}
                           onChange={(event) => updateSelectedAnimationScaleAxis('width', Number(event.target.value))}
                           data-testid="animation-width-input"
@@ -11947,9 +12003,9 @@ function CharacterViewer({
                         <input
                           aria-label={`${selectedSlot.label} animation height scale`}
                           type="range"
-                          min="0.25"
-                          max="5"
-                          step="0.01"
+                          min="0.1"
+                          max="10"
+                          step="0.001"
                           value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScaleAxis('height', Number(event.target.value))}
                           data-testid="animation-height-slider"
@@ -11957,9 +12013,9 @@ function CharacterViewer({
                         <input
                           aria-label={`${selectedSlot.label} animation height scale value`}
                           type="number"
-                          min="0.25"
-                          max="5"
-                          step="0.01"
+                          min="0.1"
+                          max="10"
+                          step="0.001"
                           value={selectedSizeScale.height}
                           onChange={(event) => updateSelectedAnimationScaleAxis('height', Number(event.target.value))}
                           data-testid="animation-height-input"
@@ -17212,6 +17268,7 @@ function FightScreen({
   getLastInput,
   onlineProfile,
   rankedProfile,
+  tournamentBotOpponent,
   onRankedProfileChange,
   privateRoomIntent,
   initialTrainingMode = 'free',
@@ -17236,6 +17293,7 @@ function FightScreen({
   getLastInput: () => string;
   onlineProfile: OnlinePlayerProfile | null;
   rankedProfile: RankedProfile | null;
+  tournamentBotOpponent?: OnlineBotOpponent | null;
   onRankedProfileChange: (profile: RankedProfile) => void;
   privateRoomIntent: PrivateRoomIntent | null;
   initialTrainingMode?: TrainingTrialMode;
@@ -17263,21 +17321,22 @@ function FightScreen({
   const activeTrainingTrialRef = useRef<TrainingTrialDefinition | null>(activeTrainingTrial);
   const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
   const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
+  const isTrainingOnline = mode === 'trainingOnline';
   const isRanked = mode === 'ranked';
-  const isOnline = mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'tournamentOnline';
+  const isOnline = mode === 'online' || isTrainingOnline || mode === 'ranked' || mode === 'private' || mode === 'tournamentOnline';
   const isPrivate = mode === 'private';
   const gameplayAudioEnabled = mode !== 'cpu';
   const matchOptions = useMemo(
     () => ({
-      roundTime: isOnline ? 60 : settings.game.roundTimer,
+      roundTime: isTrainingOnline ? 0 : isOnline ? 60 : settings.game.roundTimer,
       maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       playIntro: true,
       roster
     }),
-    [isOnline, roster, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [isOnline, isTrainingOnline, roster, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
-  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
+  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
   const pausedRef = useRef(paused);
   const pauseLatch = useRef(false);
@@ -17304,7 +17363,7 @@ function FightScreen({
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
-  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH') : '');
+  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH') : '');
   const onlineStatusTextRef = useRef(onlineStatusText);
   const [privateRoomPassword, setPrivateRoomPassword] = useState('');
   const [privateRoomName, setPrivateRoomName] = useState('');
@@ -17317,6 +17376,10 @@ function FightScreen({
   const onlineSuppressSideEffectsRef = useRef(false);
   const onlineWinsRef = useRef<OnlineWins>([0, 0]);
   const onlineRematchReadyRef = useRef({ local: false, remote: false });
+  const onlineRematchCountRef = useRef(0);
+  const [onlineRematchCount, setOnlineRematchCount] = useState(0);
+  const botRematchReadyTimerRef = useRef(0);
+  const botRematchLeaveTimerRef = useRef(0);
   const onlineWinnerRecordedRef = useRef(false);
   const onlineSnapshotSequenceRef = useRef(0);
   const onlineInputSequenceRef = useRef(0);
@@ -17324,6 +17387,8 @@ function FightScreen({
   const onlineClosingRef = useRef(false);
   const onlineLocalProfileRef = useRef<OnlinePlayerProfile | null>(onlineProfile);
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
+  const [onlineTrainingChatMessages, setOnlineTrainingChatMessages] = useState<OnlineTrainingChatEntry[]>([]);
+  const onlineBotOpponentRef = useRef<OnlineBotOpponent | null>(null);
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
   const rankedProfileRef = useRef<RankedProfile | null>(rankedProfile);
   const rankedSubmitResultRef = useRef<RankedSubmitResult | null>(null);
@@ -17875,8 +17940,53 @@ function FightScreen({
     const hostCharacter = roster.find((character) => character.id === hostCharacterId) ?? p1;
     const guestCharacter = roster.find((character) => character.id === guestCharacterId) ?? p2;
     const onlineStage = stages.find((item) => item.id === onlineStageId) ?? stage;
-    return createMatch(hostCharacter, guestCharacter, onlineStage, 'online', cpuDifficulty, withFreshAiSeed(matchOptions));
-  }, [cpuDifficulty, matchOptions, p1, p2, roster, stage, stages]);
+    return createMatch(hostCharacter, guestCharacter, onlineStage, isTrainingOnline ? 'trainingOnline' : 'online', cpuDifficulty, withFreshAiSeed(matchOptions));
+  }, [cpuDifficulty, isTrainingOnline, matchOptions, p1, p2, roster, stage, stages]);
+
+  const makeOnlineBotMatch = useCallback((bot: OnlineBotOpponent, onlineStageId: string) => {
+    const botCharacter = roster.find((character) => character.id === bot.characterId) ?? p2;
+    const onlineStage = stages.find((item) => item.id === onlineStageId) ?? stage;
+    return createMatch(p1, botCharacter, onlineStage, 'versusCpu', bot.cpuDifficulty, withFreshAiSeed(matchOptions));
+  }, [matchOptions, p1, p2, roster, stage, stages]);
+
+  const startOnlineBotMatch = useCallback((bot: OnlineBotOpponent, room: OnlineMatchResult | null, resetWins = true) => {
+    const nextRoom = room ?? {
+      role: 'host' as const,
+      status: 'matched' as const,
+      roomId: `bot-${bot.playerId}`,
+      ownerToken: `bot-${bot.playerId}`,
+      hostPeerId: onlineSessionRef.current?.peerId ?? onlineProfile?.playerId ?? 'local-player',
+      guestPeerId: bot.playerId,
+      hostCharacterId: p1.id,
+      guestCharacterId: bot.characterId,
+      stageId: stage.id,
+      queue: mode === 'ranked' ? 'ranked' as const : 'casual' as const,
+      hostKp: rankedProfileRef.current?.kp,
+      guestKp: bot.kp,
+      opponentKind: 'bot' as const,
+      botOpponent: bot
+    };
+    const fresh = makeOnlineBotMatch(bot, nextRoom.stageId);
+    resetTrackedMatchAnalytics(fresh);
+    onlineBotOpponentRef.current = bot;
+    onlineRemoteProfileRef.current = { playerId: bot.playerId, displayName: bot.displayName };
+    onlineRoomRef.current = nextRoom;
+    onlineRoleRef.current = 'host';
+    onlineRollbackRef.current = null;
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    onlineWinnerRecordedRef.current = false;
+    if (resetWins) {
+      onlineWinsRef.current = [0, 0];
+      setOnlineWins([0, 0]);
+    }
+    matchRef.current = fresh;
+    setMatch(fresh);
+    setOnlineRole('host');
+    onlineStateRef.current = 'connected';
+    setOnlineState('connected');
+    setOnlineStatusText('CONNECTED');
+  }, [makeOnlineBotMatch, mode, onlineProfile?.playerId, p1.id, resetTrackedMatchAnalytics, stage.id]);
 
   const startOnlineRollback = useCallback((baseMatch: MatchSnapshot, role: OnlineRole | null = onlineRoleRef.current) => {
     if (!role) {
@@ -17907,7 +18017,40 @@ function FightScreen({
     });
   }, []);
 
+  const clearBotRematchTimers = useCallback(() => {
+    window.clearTimeout(botRematchReadyTimerRef.current);
+    window.clearTimeout(botRematchLeaveTimerRef.current);
+    botRematchReadyTimerRef.current = 0;
+    botRematchLeaveTimerRef.current = 0;
+  }, []);
+
+  const rankedRematchLimitReached = useCallback(() => mode === 'ranked' && onlineRematchCountRef.current >= RANKED_REMATCH_LIMIT, [mode]);
+
+  const incrementOnlineRematchCount = useCallback(() => {
+    onlineRematchCountRef.current += 1;
+    setOnlineRematchCount(onlineRematchCountRef.current);
+  }, []);
+
   const startOnlineRematch = useCallback(() => {
+    if (rankedRematchLimitReached()) {
+      setOnlineStatusText('RANKED SET COMPLETE');
+      return;
+    }
+    clearBotRematchTimers();
+    incrementOnlineRematchCount();
+    const bot = onlineBotOpponentRef.current;
+    if (bot) {
+      captureFightAnalytics('online_rematch_started', {
+        online_role: onlineRoleRef.current,
+        p1_wins: onlineWinsRef.current[0],
+        p2_wins: onlineWinsRef.current[1]
+      });
+      startOnlineBotMatch(bot, onlineRoomRef.current, false);
+      rankedSubmitResultRef.current = null;
+      setRankedPlayerResult(null);
+      setRankedPromotionAccepted(false);
+      return;
+    }
     const current = matchRef.current;
     const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
     resetTrackedMatchAnalytics(fresh);
@@ -17936,7 +18079,7 @@ function FightScreen({
     setOnlineStatusText('CONNECTED');
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
     publishOnlineSnapshot(true, 'rematch');
-  }, [captureFightAnalytics, makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics, startOnlineRollback]);
+  }, [captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, makeOnlineMatch, publishOnlineSnapshot, rankedRematchLimitReached, resetTrackedMatchAnalytics, startOnlineBotMatch, startOnlineRollback]);
 
   const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
@@ -17973,7 +18116,11 @@ function FightScreen({
     onlineRoomRef.current = null;
     onlineRollbackRef.current = null;
     onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineRematchCountRef.current = 0;
+    setOnlineRematchCount(0);
+    clearBotRematchTimers();
     onlineRemoteProfileRef.current = null;
+    onlineBotOpponentRef.current = null;
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
@@ -17984,10 +18131,11 @@ function FightScreen({
     setOnlineState('disconnected');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
+    setOnlineTrainingChatMessages([]);
     setOnlineStatusText(message);
     setPrivateRoomPassword('');
     setPrivateRoomName('');
-  }, []);
+  }, [clearBotRematchTimers]);
 
   const cleanupOnline = useCallback((notifyOpponent = true) => {
     if (!isOnline) return;
@@ -18012,12 +18160,16 @@ function FightScreen({
     onlineStateRef.current = 'idle';
     onlineRollbackRef.current = null;
     onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineRematchCountRef.current = 0;
+    setOnlineRematchCount(0);
+    clearBotRematchTimers();
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
     setRankedPlayerResult(null);
     setRankedPromotionAccepted(false);
+    setOnlineTrainingChatMessages([]);
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
     if (room || session?.peerId) {
@@ -18026,7 +18178,7 @@ function FightScreen({
     }
     setPrivateRoomPassword('');
     setPrivateRoomName('');
-  }, [isOnline, isPrivate]);
+  }, [clearBotRematchTimers, isOnline, isPrivate]);
 
   const recordOnlineMatchWin = useCallback((candidate: MatchSnapshot) => {
     if (candidate.phase !== 'matchOver' || !candidate.winnerSlot || onlineWinnerRecordedRef.current) return;
@@ -18035,7 +18187,22 @@ function FightScreen({
     onlineWinsRef.current = wins;
     onlineWinnerRecordedRef.current = true;
     setOnlineWins(wins);
-    setOnlineStatusText('REMATCH?');
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    const rematchLimitReached = rankedRematchLimitReached();
+    setOnlineStatusText(rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
+    if (onlineBotOpponentRef.current && !rematchLimitReached) {
+      clearBotRematchTimers();
+      botRematchReadyTimerRef.current = window.setTimeout(() => {
+        if (!onlineBotOpponentRef.current || onlineWinnerRecordedRef.current !== true || onlineStateRef.current !== 'connected') return;
+        onlineRematchReadyRef.current.remote = true;
+        setOnlineStatusText(onlineRematchReadyRef.current.local ? 'REMATCH STARTING' : 'OPPONENT WANTS REMATCH');
+        if (onlineRematchReadyRef.current.local) startOnlineRematch();
+      }, BOT_REMATCH_READY_MS);
+      botRematchLeaveTimerRef.current = window.setTimeout(() => {
+        if (!onlineBotOpponentRef.current || onlineStateRef.current !== 'connected' || onlineRematchReadyRef.current.local) return;
+        markOnlineDisconnected('Opponent left');
+      }, BOT_REMATCH_LEAVE_MS);
+    }
     if (mode === 'online' && onlineRoleRef.current === 'host') {
       const localProfile = onlineLocalProfileRef.current;
       const remoteProfile = onlineRemoteProfileRef.current;
@@ -18043,11 +18210,14 @@ function FightScreen({
         const [p1Stats, p2Stats] = onlinePerformanceRef.current;
         const p1Points = calculateOnlinePerformancePoints(p1Stats, candidate.fighters[0].roundsWon, candidate.winnerSlot === 1);
         const p2Points = calculateOnlinePerformancePoints(p2Stats, candidate.fighters[1].roundsWon, candidate.winnerSlot === 2);
+        const bot = onlineBotOpponentRef.current;
         void submitLeaderboardResult({
-          players: [
-            { profile: localProfile, points: p1Points },
-            { profile: remoteProfile, points: p2Points }
-          ]
+          players: bot
+            ? [{ profile: localProfile, points: Math.max(1, Math.round(p1Points * 0.5)) }]
+            : [
+              { profile: localProfile, points: p1Points },
+              { profile: remoteProfile, points: p2Points }
+            ]
         }).then(() => {
           captureFightAnalytics('leaderboard_result_submitted', {
             status: 'success',
@@ -18066,6 +18236,7 @@ function FightScreen({
       const room = onlineRoomRef.current;
       if (localProfile && remoteProfile && room) {
         const [p1Stats, p2Stats] = onlinePerformanceRef.current;
+        const bot = onlineBotOpponentRef.current;
         const report: RankedMatchReport = {
           reportId: `${room.roomId}:${candidate.winnerSlot}:${localProfile.playerId}:${remoteProfile.playerId}`,
           roomId: room.roomId,
@@ -18083,7 +18254,10 @@ function FightScreen({
               profile: remoteProfile,
               characterId: candidate.fighters[1].baseCharacter.id,
               stats: setOnlinePerformanceRoundsWon(p2Stats, candidate.fighters[1].roundsWon),
-              roundsWon: candidate.fighters[1].roundsWon
+              roundsWon: candidate.fighters[1].roundsWon,
+              isBot: Boolean(bot),
+              botKp: bot?.kp,
+              botKr: bot?.kr
             }
           ]
         };
@@ -18110,7 +18284,7 @@ function FightScreen({
       }
     }
     publishOnlineSnapshot(true, 'result');
-  }, [captureFightAnalytics, mode, onRankedProfileChange, publishOnlineSnapshot]);
+  }, [captureFightAnalytics, clearBotRematchTimers, markOnlineDisconnected, mode, onRankedProfileChange, publishOnlineSnapshot, rankedRematchLimitReached, startOnlineRematch]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
     if (message.type === 'hello') {
@@ -18178,7 +18352,7 @@ function FightScreen({
         current.fighters[0].baseCharacter.id !== (message.snapshot.p1BaseCharacterId ?? message.snapshot.p1CharacterId) ||
         current.fighters[1].baseCharacter.id !== (message.snapshot.p2BaseCharacterId ?? message.snapshot.p2CharacterId) ||
         current.stage.id !== message.snapshot.stageId ||
-        current.mode !== 'online';
+        current.mode !== (isTrainingOnline ? 'trainingOnline' : 'online');
       const base = needsBase
         ? makeOnlineMatch(
             message.snapshot.p1BaseCharacterId ?? message.snapshot.p1CharacterId,
@@ -18199,11 +18373,20 @@ function FightScreen({
       return;
     }
     if (message.type === 'rematchReady') {
+      if (rankedRematchLimitReached()) {
+        setOnlineStatusText('RANKED SET COMPLETE');
+        return;
+      }
       onlineRematchReadyRef.current.remote = true;
       if (onlineRoleRef.current === 'host' && onlineRematchReadyRef.current.local) startOnlineRematch();
       return;
     }
     if (message.type === 'rematchStart') {
+      if (rankedRematchLimitReached()) {
+        setOnlineStatusText('RANKED SET COMPLETE');
+        return;
+      }
+      incrementOnlineRematchCount();
       onlineRematchReadyRef.current = { local: false, remote: false };
       onlineWinnerRecordedRef.current = false;
       onlineRollbackRef.current = null;
@@ -18238,8 +18421,24 @@ function FightScreen({
           demoted: localResult.demoted
         });
       }
+      return;
     }
-  }, [captureFightAnalytics, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
+    if (message.type === 'chat') {
+      if (!isTrainingOnline || onlineStateRef.current !== 'connected') return;
+      const text = sanitizeOnlineTrainingChatText(message.text);
+      if (!text) return;
+      setOnlineTrainingChatMessages((current) => [
+        ...current,
+        {
+          id: message.id,
+          text,
+          sentAt: message.sentAt,
+          senderName: sanitizeOnlineTrainingChatName(message.senderName) || 'Partner',
+          local: false
+        }
+      ].slice(-8));
+    }
+  }, [captureFightAnalytics, incrementOnlineRematchCount, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -18252,9 +18451,13 @@ function FightScreen({
     onlineRollbackRef.current = null;
     onlineWinsRef.current = [0, 0];
     onlineRematchReadyRef.current = { local: false, remote: false };
+    onlineRematchCountRef.current = 0;
+    setOnlineRematchCount(0);
+    clearBotRematchTimers();
     onlineWinnerRecordedRef.current = false;
     onlineLatestSnapshotRef.current = -1;
     onlineSnapshotSequenceRef.current = 0;
+    onlineBotOpponentRef.current = null;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
     setRankedPlayerResult(null);
@@ -18270,14 +18473,23 @@ function FightScreen({
     setOnlineState('searching');
     setOnlineRole(null);
     setOnlineWins([0, 0]);
-    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
+    setOnlineTrainingChatMessages([]);
+    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
     setPrivateRoomPassword('');
     setPrivateRoomName('');
     captureFightAnalytics('online_search_started', {
       online_mode: mode,
-      queue: isRanked ? 'ranked' : isPrivate ? 'private' : 'casual',
+      queue: isRanked ? 'ranked' : isPrivate ? 'private' : isTrainingOnline ? 'training' : 'casual',
       private_intent: privateRoomIntent?.kind ?? null
     });
+
+    if (mode === 'tournamentOnline' && tournamentBotOpponent) {
+      startOnlineBotMatch(tournamentBotOpponent, null);
+      return () => {
+        cancelled = true;
+        cleanupOnline(true);
+      };
+    }
 
     const start = async () => {
       try {
@@ -18296,7 +18508,7 @@ function FightScreen({
             if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'connecting') {
               markOnlineDisconnected(error.message || 'Online connection error');
             } else {
-              setOnlineStatusText(isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
+              setOnlineStatusText(isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
             }
           }
         });
@@ -18369,8 +18581,11 @@ function FightScreen({
             peerId: session.peerId,
             characterId: p1.id,
             stageId: stage.id,
-            queue: isRanked ? 'ranked' : 'casual',
+            queue: isRanked ? 'ranked' : isTrainingOnline ? 'training' : 'casual',
             kp: isRanked ? rankedProfileRef.current?.kp ?? 1200 : undefined,
+            kr: isRanked ? rankedProfileRef.current?.kr : undefined,
+            allowBotFallback: !isTrainingOnline,
+            availableCharacterIds: roster.map((character) => character.id),
             roomId: currentRoom?.role === 'host' ? currentRoom.roomId : undefined,
             ownerToken: currentRoom?.role === 'host' ? currentRoom.ownerToken : undefined
           });
@@ -18378,7 +18593,9 @@ function FightScreen({
           onlineRoomRef.current = result;
           onlineRoleRef.current = result.role;
           setOnlineRole(result.role);
-          if (result.role === 'guest') {
+          if (result.opponentKind === 'bot' && result.botOpponent) {
+            startOnlineBotMatch(result.botOpponent, result);
+          } else if (result.role === 'guest') {
             onlineStateRef.current = 'connecting';
             setOnlineState('connecting');
             setOnlineStatusText('MATCH FOUND');
@@ -18386,7 +18603,7 @@ function FightScreen({
           } else {
             onlineStateRef.current = 'searching';
             setOnlineState('searching');
-            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH');
+            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
           }
         };
 
@@ -18411,7 +18628,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [captureFightAnalytics, cleanupOnline, handleOnlineMessage, isOnline, isPrivate, isRanked, markOnlineDisconnected, mode, p1.displayName, p1.id, privateRoomIntent, stage.id]);
+  }, [captureFightAnalytics, cleanupOnline, clearBotRematchTimers, handleOnlineMessage, isOnline, isPrivate, isRanked, isTrainingOnline, markOnlineDisconnected, mode, p1.displayName, p1.id, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -18505,8 +18722,13 @@ function FightScreen({
           const [p1Input, p2Input] = readInputsForStep();
           const localOnlineInput = mergeInputFrames(p1Input, p2Input);
           if (isOnline && onlineStateRef.current === 'connected') {
-            const rollback = onlineRollbackRef.current;
-            if (rollback) {
+            if (onlineBotOpponentRef.current) {
+              matchRef.current = stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+              trackOnlinePerformanceFrame(matchRef.current);
+              recordOnlineMatchWin(matchRef.current);
+            } else {
+              const rollback = onlineRollbackRef.current;
+              if (rollback) {
               const localPlayerIndex = onlineRoleRef.current === 'guest' ? 1 : 0;
               rollback.addLocalInput(localPlayerIndex, localOnlineInput);
               const result = rollback.advanceFrame();
@@ -18530,6 +18752,7 @@ function FightScreen({
               if (onlineRoleRef.current === 'host' && result.advanced && result.executionMode === 'normal') {
                 trackOnlinePerformanceFrame(matchRef.current);
                 recordOnlineMatchWin(matchRef.current);
+              }
               }
             }
           } else if (isOnline) {
@@ -18607,6 +18830,17 @@ function FightScreen({
       const warmup = createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions));
       matchRef.current = warmup;
       setMatch(warmup);
+      setPaused(false);
+      return;
+    }
+    if (rankedRematchLimitReached()) {
+      setOnlineStatusText('RANKED SET COMPLETE');
+      return;
+    }
+    if (onlineBotOpponentRef.current) {
+      onlineRematchReadyRef.current.local = true;
+      setOnlineStatusText(onlineRematchReadyRef.current.remote ? 'REMATCH STARTING' : 'WAITING FOR REMATCH');
+      if (onlineRematchReadyRef.current.remote) startOnlineRematch();
       setPaused(false);
       return;
     }
@@ -18771,6 +19005,26 @@ function FightScreen({
     onCharacterSelect();
   };
 
+  const sendOnlineTrainingChatMessage = useCallback((draft: string) => {
+    if (!isTrainingOnline || onlineStateRef.current !== 'connected') return;
+    const text = sanitizeOnlineTrainingChatText(draft);
+    if (!text) return;
+    const senderName = sanitizeOnlineTrainingChatName(onlineLocalProfileRef.current?.displayName) || 'You';
+    const message = {
+      type: 'chat' as const,
+      id: makeOnlineTrainingChatId(),
+      text,
+      sentAt: Date.now(),
+      senderName
+    };
+    setOnlineTrainingChatMessages((current) => [
+      ...current,
+      { ...message, senderName, local: true }
+    ].slice(-8));
+    onlineSessionRef.current?.send(message);
+    captureFightAnalytics('online_training_chat_sent', { text_length: text.length });
+  }, [captureFightAnalytics, isTrainingOnline]);
+
   const toggleFullscreen = () => {
     captureFightAnalytics('fullscreen_clicked', { entering_fullscreen: !document.fullscreenElement });
     const target = screenRef.current;
@@ -18797,6 +19051,13 @@ function FightScreen({
   }, [captureFightAnalytics]);
 
   const winnerFighter = match.winnerSlot ? match.fighters[match.winnerSlot - 1] : null;
+  const rankedRematchCapReached = isRanked && onlineRematchCount >= RANKED_REMATCH_LIMIT;
+  const rematchDisabled = Boolean(isRanked && ((rankedPlayerResult?.promoted && !rankedPromotionAccepted) || rankedRematchCapReached));
+  const rematchButtonLabel = rankedRematchCapReached
+    ? 'Ranked Set Complete'
+    : isOnline && onlineRematchReadyRef.current.local
+      ? 'Waiting'
+      : 'Rematch';
 
   return (
     <div
@@ -18843,8 +19104,25 @@ function FightScreen({
       )}
       {isOnline && onlineState === 'connected' && (
         <div className="online-status-pill">
-          {onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE
+          {isTrainingOnline ? `${onlineRole === 'host' ? 'HOST' : 'GUEST'} SPARRING` : `${onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE`}
         </div>
+      )}
+      {isTrainingOnline && onlineState === 'connected' && (
+        <>
+          <OnlineTrainingChat
+            messages={onlineTrainingChatMessages}
+            localName={sanitizeOnlineTrainingChatName(onlineLocalProfileRef.current?.displayName) || 'You'}
+            remoteName={sanitizeOnlineTrainingChatName(onlineRemoteProfileRef.current?.displayName) || 'Partner'}
+            onSend={sendOnlineTrainingChatMessage}
+          />
+          <button
+            type="button"
+            className="online-training-leave-button"
+            onClick={leaveToCharacterSelect}
+          >
+            Leave Sparring
+          </button>
+        </>
       )}
       {mode === 'training' && trainingMode !== 'free' && activeTrainingTrial && trainingTrialProgress && !paused && (
         <TrainingTrialHud
@@ -19021,9 +19299,9 @@ function FightScreen({
             </section>
           )}
           <div className="overlay-actions pause-menu-actions results-actions">
-            <button className="primary-button" onClick={reset} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
+            <button className="primary-button" onClick={reset} disabled={rematchDisabled}>
               <RotateCcw size={18} />
-              {isOnline && onlineRematchReadyRef.current.local ? 'Waiting' : 'Rematch'}
+              {rematchButtonLabel}
             </button>
             <button className="secondary-button" onClick={leaveToCharacterSelect} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
               <Users size={18} />
@@ -19038,6 +19316,95 @@ function FightScreen({
       )}
     </div>
   );
+}
+
+function OnlineTrainingChat({
+  messages,
+  localName,
+  remoteName,
+  onSend
+}: {
+  messages: OnlineTrainingChatEntry[];
+  localName: string;
+  remoteName: string;
+  onSend: (text: string) => void;
+}) {
+  const [draft, setDraft] = useState('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' || event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTextEntryElement(event.target)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      inputRef.current?.focus();
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, []);
+
+  const send = () => {
+    const text = sanitizeOnlineTrainingChatText(draft);
+    if (!text) return;
+    onSend(text);
+    setDraft('');
+  };
+
+  return (
+    <section className="online-training-chat" aria-label="Training online chat">
+      <div className="online-training-chat-log" aria-live="polite">
+        {messages.length === 0 ? (
+          <p><strong>{remoteName}</strong> is ready to spar.</p>
+        ) : messages.map((message) => (
+          <p key={message.id} className={message.local ? 'local' : 'remote'}>
+            <strong>{message.local ? localName : message.senderName}</strong>
+            <span>{message.text}</span>
+          </p>
+        ))}
+      </div>
+      <label className="online-training-chat-entry">
+        <span>Chat</span>
+        <input
+          ref={inputRef}
+          value={draft}
+          maxLength={ONLINE_TRAINING_CHAT_MAX_LENGTH}
+          placeholder="Press Enter to chat"
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            event.stopPropagation();
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              send();
+              return;
+            }
+            if (event.key === 'Escape') {
+              event.preventDefault();
+              setDraft('');
+              inputRef.current?.blur();
+            }
+          }}
+        />
+      </label>
+    </section>
+  );
+}
+
+function sanitizeOnlineTrainingChatText(value: unknown) {
+  return typeof value === 'string'
+    ? value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, ONLINE_TRAINING_CHAT_MAX_LENGTH)
+    : '';
+}
+
+function sanitizeOnlineTrainingChatName(value: unknown) {
+  return typeof value === 'string'
+    ? value.replace(/[\u0000-\u001f\u007f]/g, '').replace(/\s+/g, ' ').trim().slice(0, 16)
+    : '';
+}
+
+function makeOnlineTrainingChatId() {
+  return globalThis.crypto?.randomUUID?.() ?? `chat-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
 function RankedResultPanel({ result, accepted }: { result: RankedPlayerResult; accepted: boolean }) {
@@ -19130,11 +19497,11 @@ function ConfiguredMoveList({
               <p>No combo routes configured.</p>
             ) : (
               <div>
-                {comboRoutes.slice(0, 36).map((route) => (
+                {comboRoutes.map((route) => (
                   <span key={route.id}>
                     <NotationGroup tokens={route.steps.flatMap((step, index) => index === 0 ? step.notation : ['>', ...step.notation])} />
                     {route.title}
-                    <small>{comboTrialCategoryLabels[route.category]} Lv {route.level} | {route.estimatedHits} hits | {route.tier} | {route.reason}</small>
+                    <small>{comboTrialCategoryLabels[route.category]} Lv {route.level} | {route.estimatedHits} hits | {route.tier} | {route.families.join('/')} | {route.reason}</small>
                   </span>
                 ))}
               </div>
@@ -19247,12 +19614,12 @@ function TrainingTrialPanel({
     category,
     trials: trials.filter((trial) => trial.category === category)
   })).filter((group) => group.trials.length > 0);
-  const modeLabels: Record<TrainingTrialMode, string> = {
+  const modeLabels: Partial<Record<TrainingTrialMode, string>> = {
     free: 'Free Training',
     basics: 'Basics',
     combos: 'Combos'
   };
-  const modeCounts: Record<TrainingTrialMode, number | null> = {
+  const modeCounts: Partial<Record<TrainingTrialMode, number | null>> = {
     free: null,
     basics: basicsCount,
     combos: combosCount

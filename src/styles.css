@@ -251,7 +251,8 @@ button {
   justify-items: center;
   align-content: start;
   min-height: 100vh;
-  padding: clamp(18px, 4.2vh, 42px) clamp(16px, 4vw, 52px);
+  min-height: 100dvh;
+  padding: clamp(12px, 2.8vh, 32px) clamp(16px, 4vw, 52px);
 }
 
 .menu-chrome-toggle {
@@ -297,10 +298,12 @@ button {
 
 .kore-menu-logo {
   display: block;
-  width: min(760px, 68vw);
-  max-height: min(34vh, 300px);
+  width: min(680px, 62vw, 58vh);
+  width: min(680px, 62vw, 58dvh);
+  max-height: clamp(116px, 24vh, 240px);
+  max-height: clamp(116px, 24dvh, 240px);
   object-fit: contain;
-  margin-top: clamp(0px, 2vh, 18px);
+  margin-top: clamp(0px, 1.2vh, 12px);
   filter:
     drop-shadow(0 26px 42px rgba(0, 0, 0, 0.72))
     drop-shadow(0 0 22px rgba(46, 230, 255, 0.38));
@@ -319,8 +322,8 @@ button {
 .arcade-menu-list {
   display: grid;
   width: min(460px, 88vw);
-  margin-top: clamp(34px, 8vh, 94px);
-  padding: 8px 0;
+  margin-top: clamp(18px, 4.4vh, 58px);
+  padding: clamp(4px, 0.8vh, 8px) 0;
   border-radius: 0;
   background: linear-gradient(180deg, rgba(10, 22, 70, 0.7), rgba(7, 11, 38, 0.78));
   box-shadow:
@@ -330,12 +333,12 @@ button {
 }
 
 .arcade-menu-list button {
-  min-height: 54px;
+  min-height: clamp(40px, 5.6vh, 54px);
   border: 0;
   border-radius: 0;
   color: rgba(247, 247, 242, 0.82);
   background: transparent;
-  font-size: clamp(18px, 2.2vw, 26px);
+  font-size: clamp(16px, min(2.2vw, 2.8vh), 26px);
   font-weight: 950;
   letter-spacing: 0.04em;
   text-align: center;
