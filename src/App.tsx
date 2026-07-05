@@ -4501,11 +4501,12 @@ function MenuAttractBackground({
   reducedMotion: boolean;
 }) {
   const makeFreshMatch = useCallback(
-    () => createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }),
+    (stageOverride?: StageDefinition) => createMatch(p1, p2, stageOverride ?? pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }),
     [p1, p2, roster, stageRoster]
   );
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => makeFreshMatch());
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
+  const [sceneTick, setSceneTick] = useState(0);
 
   useEffect(() => {
     const fresh = makeFreshMatch();
@@ -4519,7 +4520,7 @@ function MenuAttractBackground({
     let lastPublish = last;
     let accumulator = 0;
     const fixedStep = 1 / 30;
-    const publishStepMs = 1000 / 20;
+    const publishStepMs = 1000 / 30;
 
     const tick = (now: number) => {
       accumulator += Math.min(0.05, (now - last) / 1000);
@@ -4527,15 +4528,15 @@ function MenuAttractBackground({
       while (accumulator >= fixedStep) {
         const current = matchRef.current ?? makeFreshMatch();
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = makeFreshMatch();
+          copyMenuAttractMatchInto(current, makeFreshMatch(current.stage));
         } else {
-          matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
+          copyMenuAttractMatchInto(current, stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep));
         }
         accumulator -= fixedStep;
       }
       if (now - lastPublish >= publishStepMs) {
         lastPublish = now;
-        setAttractMatch(matchRef.current);
+        setSceneTick((tick) => (tick + 1) % 3600);
       }
       frame = requestAnimationFrame(tick);
     };
@@ -4547,9 +4548,20 @@ function MenuAttractBackground({
   if (!attractMatch) return null;
   return (
     <div className="menu-attract-background" aria-hidden="true">
-      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} />
+      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} sceneTick={sceneTick} />
     </div>
   );
+}
+
+function copyMenuAttractMatchInto(target: MatchSnapshot, source: MatchSnapshot) {
+  const stableFighters = target.fighters;
+  const stableStage = target.stage;
+  Object.assign(stableFighters[0], source.fighters[0]);
+  Object.assign(stableFighters[1], source.fighters[1]);
+  Object.assign(target, source, {
+    fighters: stableFighters,
+    stage: stableStage
+  });
 }
 
 function MenuScreen({

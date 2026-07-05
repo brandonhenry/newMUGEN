@@ -2089,19 +2089,26 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
   );
 }
 
-export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
+export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false, sceneTick: _sceneTick = 0 }: GameSceneProps & { sceneTick?: number }) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
+  const stableScene = useMemo(() => (
+    <>
+      {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+      <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
+      <MenuAttractCamera match={match} />
+      <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
+      <StageCameraOcclusionFader />
+      <group scale={0.82}>
+        <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
+        <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
+      </group>
+    </>
+  ), [match, match.fighters, match.stage]);
   return (
     <Canvas frameloop="always" dpr={[0.75, 1]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
-        <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
-        <MenuAttractCamera match={match} />
-        <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
-        <StageCameraOcclusionFader />
+        {stableScene}
         <group scale={0.82}>
-          <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
-          <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
           <EffectLayer match={match} reducedMotion={reducedMotion} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         </group>
