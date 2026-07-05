@@ -10479,6 +10479,10 @@ function CharacterViewer({
     if (!showIdleGhost || !hasIdleGhostFrame) setShowIdleGhostSideView(false);
   }, [hasIdleGhostFrame, showIdleGhost]);
   useEffect(() => {
+    if (!isEditingAnimation || !frameScaleMode || selectedPreviewAnimationKey !== 'knockdown' || sideViewCurrentFrameIndex < 0) return;
+    setSelectedSpriteFrameIndex(sideViewCurrentFrameIndex);
+  }, [frameScaleMode, isEditingAnimation, selectedPreviewAnimationKey, sideViewCurrentFrameIndex]);
+  useEffect(() => {
     if (!isEditingAnimation || !animationPreviewPlaying) return undefined;
     const timer = window.setInterval(() => {
       setAnimationPreviewFrame((frame) => (frame + 1) % Math.max(1, selectedAnimationPreviewTotalFrames));
@@ -12239,7 +12243,7 @@ function CharacterViewer({
                       type="button"
                       className="selected-frame-thumb"
                       onClick={() => {
-                        if (frameScaleMode) setSelectedSpriteFrameIndex(getFrameIndex(frame));
+                        if (frameScaleMode) jumpToAnimationSequenceFrame(frame, index);
                         else removeSelectedFrameAt(index);
                       }}
                       onContextMenu={(event) => appendDuplicateFrame(frame, event)}
