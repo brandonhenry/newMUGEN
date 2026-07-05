@@ -4245,6 +4245,7 @@ function FighterRig({
   renderStyle?: Partial<FighterRenderStyle>;
 }) {
   const group = useRef<THREE.Group>(null);
+  const yawInitialized = useRef(false);
   const scaledTime = useRef(0);
   const progress = getFighterRenderProgress(fighter);
   useFrame((_, delta) => {
@@ -4264,8 +4265,13 @@ function FighterRig({
     const shake = fighter.state === 'throwHeld' && fighter.throwShakeFrames > 0 ? Math.min(0.12, 0.024 + fighter.throwShakeFrames * 0.006) : 0;
     const shakeX = shake ? Math.sin(renderTime * 88 + fighter.slot * 1.7) * shake : 0;
     const shakeZ = shake ? Math.cos(renderTime * 76 + fighter.slot * 2.1) * shake * 0.45 : 0;
+    const targetYaw = fighter.facingYaw;
+    const currentYaw = yawInitialized.current ? group.current.rotation.y : targetYaw;
+    const yawDelta = Math.atan2(Math.sin(targetYaw - currentYaw), Math.cos(targetYaw - currentYaw));
+    const yaw = currentYaw + yawDelta * (1 - Math.pow(0.0001, delta));
+    yawInitialized.current = true;
     group.current.position.set(fighter.position.x + offsetX + shakeX, fighter.position.y + bob, fighter.position.z + shakeZ);
-    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, fighter.facingYaw, hitLean + attackLean + juggleRoll);
+    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, yaw, hitLean + attackLean + juggleRoll);
   });
 
   const color = fighter.character.colors.primary;

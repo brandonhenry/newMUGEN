@@ -1708,7 +1708,6 @@ describe('fight engine', () => {
       match.fighters[fighterIndex].stunTimer = 0;
       const sideBefore = match.fighters[fighterIndex].controlSideSign;
       const facingBefore = match.fighters[fighterIndex].facing;
-      const yawBefore = match.fighters[fighterIndex].facingYaw;
       const zBefore = match.fighters[fighterIndex].position.z;
 
       for (let frame = 0; frame < 42; frame += 1) {
@@ -1721,7 +1720,9 @@ describe('fight engine', () => {
         expect(fighter.facing).toBe(facingBefore);
         expect(stageSideDelta(match.stage, fighter, opponent) * sideBefore).toBeGreaterThan(0.001);
         if (fighter.state === 'getup') {
-          expect(fighter.facingYaw).toBeCloseTo(yawBefore, 6);
+          const targetYaw = Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
+          expect(Math.abs(unwrappedAngleDelta(fighter.facingYaw, targetYaw))).toBeLessThan(0.000001);
+          expect(Math.abs(Math.abs(unwrappedAngleDelta(fighter.facingYaw, opponent.facingYaw)) - Math.PI)).toBeLessThan(0.000001);
         }
       }
 
@@ -1732,6 +1733,35 @@ describe('fight engine', () => {
 
     runRoll(0, { ...emptyInputFrame(), sidewalkUp: true });
     runRoll(1, { ...emptyInputFrame(), sidewalkDown: true });
+  });
+
+  it('keeps recovering fighters visually squared to the opponent without changing control sides', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.08;
+    match.fighters[0].position.z = 0.55;
+    match.fighters[1].position.x = 0.08;
+    match.fighters[1].position.z = -0.35;
+    match.fighters[0].facingYaw = -Math.PI / 2;
+    match.fighters[0].state = 'knockdown';
+    match.fighters[0].actionFramesRemaining = 0;
+    match.fighters[0].actionTimer = 0;
+    match.fighters[0].stunFramesRemaining = 0;
+    match.fighters[0].stunTimer = 0;
+    const sideBefore = match.fighters[0].controlSideSign;
+    const facingBefore = match.fighters[0].facing;
+
+    match = stepMatch(match, { ...emptyInputFrame(), confirm: true }, emptyInputFrame(), 1 / 60);
+    const recovering = match.fighters[0];
+    const standing = match.fighters[1];
+    const targetYaw = Math.atan2(standing.position.x - recovering.position.x, standing.position.z - recovering.position.z);
+
+    expect(recovering.state).toBe('getup');
+    expect(recovering.controlSideSign).toBe(sideBefore);
+    expect(recovering.facing).toBe(facingBefore);
+    expect(Math.abs(unwrappedAngleDelta(recovering.facingYaw, targetYaw))).toBeLessThan(0.000001);
+    expect(Math.abs(Math.abs(unwrappedAngleDelta(recovering.facingYaw, standing.facingYaw)) - Math.PI)).toBeLessThan(0.000001);
   });
 
   it('keeps training mode infinite by refilling zero health without ending the round', () => {

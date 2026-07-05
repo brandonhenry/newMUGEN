@@ -4344,9 +4344,10 @@ function resolveFacing(match: MatchSnapshot) {
 }
 
 function resolveFighterFacing(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime) {
-  if (isRecoverySideLocked(fighter)) return;
-  fighter.facing = getOpponentSideSign(fighter, opponent, stage);
-  fighter.facingYaw = Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
+  if (!isRecoverySideLocked(fighter)) {
+    fighter.facing = getOpponentSideSign(fighter, opponent, stage);
+  }
+  fighter.facingYaw = getFacingYawTowardOpponent(fighter, opponent);
 }
 
 function updateControlSideSigns(match: MatchSnapshot) {
@@ -4638,6 +4639,10 @@ function getStageSideCoordinate(position: { x: number; z: number }, stage?: Stag
 
 function getControlSideSign(fighter: FighterRuntime, opponent: FighterRuntime, stage?: StageDefinition): 1 | -1 {
   return fighter.controlSideSign || getOpponentSideSign(fighter, opponent, stage);
+}
+
+function getFacingYawTowardOpponent(fighter: FighterRuntime, opponent: FighterRuntime) {
+  return Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
 }
 
 function moveAlongOpponentLateralAxis(
