@@ -159,7 +159,18 @@
       "/characters/vegeta-super-saiyan/frames/frame-077.png",
       "/characters/vegeta-super-saiyan/frames/frame-078.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/vegeta-super-saiyan/frames/frame-143.png",
+      "/characters/vegeta-super-saiyan/frames/frame-144.png",
+      "/characters/vegeta-super-saiyan/frames/frame-145.png",
+      "/characters/vegeta-super-saiyan/frames/frame-146.png",
+      "/characters/vegeta-super-saiyan/frames/frame-147.png",
+      "/characters/vegeta-super-saiyan/frames/frame-148.png",
+      "/characters/vegeta-super-saiyan/frames/frame-149.png",
+      "/characters/vegeta-super-saiyan/frames/frame-150.png",
+      "/characters/vegeta-super-saiyan/frames/frame-151.png",
+      "/characters/vegeta-super-saiyan/frames/frame-152.png"
+    ],
     "cmd:FC+2": [
       "/characters/vegeta-super-saiyan/frames/frame-000.png",
       "/characters/vegeta-super-saiyan/frames/frame-080.png",
@@ -204,7 +215,18 @@
       "/characters/vegeta-super-saiyan/frames/frame-077.png",
       "/characters/vegeta-super-saiyan/frames/frame-078.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/vegeta-super-saiyan/frames/frame-153.png",
+      "/characters/vegeta-super-saiyan/frames/frame-154.png",
+      "/characters/vegeta-super-saiyan/frames/frame-155.png",
+      "/characters/vegeta-super-saiyan/frames/frame-156.png",
+      "/characters/vegeta-super-saiyan/frames/frame-157.png",
+      "/characters/vegeta-super-saiyan/frames/frame-158.png",
+      "/characters/vegeta-super-saiyan/frames/frame-159.png",
+      "/characters/vegeta-super-saiyan/frames/frame-160.png",
+      "/characters/vegeta-super-saiyan/frames/frame-161.png",
+      "/characters/vegeta-super-saiyan/frames/frame-162.png"
+    ],
     "cmd:1+4": [
       "/characters/vegeta-super-saiyan/frames/frame-073.png",
       "/characters/vegeta-super-saiyan/frames/frame-074.png",
@@ -755,8 +777,8 @@
     },
     "cmd:FC+1": {
       "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 15,
+      "recoveryFrames": 2,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -897,9 +919,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 18,
+      "activeFrames": 36,
+      "recoveryFrames": 6,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

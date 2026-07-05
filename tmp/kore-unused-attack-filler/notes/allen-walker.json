@@ -1,0 +1,242 @@
+[
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "single neutral/ready pose; no sequence"
+  },
+  {
+    "start": 23,
+    "end": 25,
+    "kind": "non-attack",
+    "reason": "short crouch/turn transition without a clear strike"
+  },
+  {
+    "start": 27,
+    "end": 27,
+    "kind": "ambiguous",
+    "reason": "single dramatic pose could be wind-up or hit reaction; no sequence"
+  },
+  {
+    "start": 29,
+    "end": 29,
+    "kind": "non-attack",
+    "reason": "single knockdown/fall pose"
+  },
+  {
+    "start": 35,
+    "end": 39,
+    "kind": "non-attack",
+    "reason": "hurt/knockdown and getup-like recovery poses"
+  },
+  {
+    "start": 40,
+    "end": 49,
+    "kind": "non-attack",
+    "reason": "fall/getup recovery strip with no coherent attack"
+  },
+  {
+    "start": 50,
+    "end": 52,
+    "kind": "non-attack",
+    "reason": "grounded recovery/getup fragment"
+  },
+  {
+    "start": 58,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "idle/stance frames"
+  },
+  {
+    "start": 64,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "standing idle loop frames"
+  },
+  {
+    "start": 70,
+    "end": 73,
+    "kind": "ambiguous",
+    "reason": "attack-looking crouch swipe, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 79,
+    "end": 79,
+    "kind": "non-attack",
+    "reason": "single idle/stance frame"
+  },
+  {
+    "start": 90,
+    "end": 90,
+    "kind": "ambiguous",
+    "reason": "single claw pose has no wind-up or recovery context"
+  },
+  {
+    "start": 120,
+    "end": 129,
+    "kind": "ambiguous",
+    "reason": "attack-looking claw/aura sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 140,
+    "end": 144,
+    "kind": "ambiguous",
+    "reason": "attack-looking weapon/beam sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 160,
+    "end": 169,
+    "kind": "ambiguous",
+    "reason": "attack-looking rush and recovery sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 170,
+    "end": 170,
+    "kind": "non-attack",
+    "reason": "single grounded recovery frame"
+  },
+  {
+    "start": 171,
+    "end": 180,
+    "kind": "ambiguous",
+    "reason": "run/rush-looking strip, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 181,
+    "end": 190,
+    "kind": "non-attack",
+    "reason": "mixed movement, stance, and recovery poses without one clear attack"
+  },
+  {
+    "start": 191,
+    "end": 200,
+    "kind": "non-attack",
+    "reason": "movement into knockdown/recovery poses"
+  },
+  {
+    "start": 201,
+    "end": 210,
+    "kind": "non-attack",
+    "reason": "hurt/knockdown recovery duplicate strip"
+  },
+  {
+    "start": 211,
+    "end": 220,
+    "kind": "non-attack",
+    "reason": "fall/getup recovery duplicate strip"
+  },
+  {
+    "start": 221,
+    "end": 230,
+    "kind": "non-attack",
+    "reason": "getup-to-idle recovery strip"
+  },
+  {
+    "start": 231,
+    "end": 240,
+    "kind": "non-attack",
+    "reason": "standing pose/charge loop with no release or contact frame"
+  },
+  {
+    "start": 241,
+    "end": 250,
+    "kind": "ambiguous",
+    "reason": "crouch and claw-swipe-looking strip, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 271,
+    "end": 280,
+    "kind": "ambiguous",
+    "reason": "attack-looking extended claw sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 291,
+    "end": 300,
+    "kind": "ambiguous",
+    "reason": "attack-looking claw/impact sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 331,
+    "end": 340,
+    "kind": "ambiguous",
+    "reason": "attack-looking rush/recovery sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 341,
+    "end": 341,
+    "kind": "non-attack",
+    "reason": "single grounded recovery frame"
+  },
+  {
+    "start": 352,
+    "end": 361,
+    "kind": "ambiguous",
+    "reason": "attack-looking slash/beast-arm sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 362,
+    "end": 366,
+    "kind": "ambiguous",
+    "reason": "continuation/recovery fragment from slash sequence with no eligible empty slot"
+  },
+  {
+    "start": 377,
+    "end": 386,
+    "kind": "ambiguous",
+    "reason": "attack-looking slash/beast-arm sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 387,
+    "end": 391,
+    "kind": "ambiguous",
+    "reason": "continuation/recovery fragment from slash sequence with no eligible empty slot"
+  },
+  {
+    "start": 392,
+    "end": 401,
+    "kind": "ambiguous",
+    "reason": "attack-looking beam/rush sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 402,
+    "end": 411,
+    "kind": "ambiguous",
+    "reason": "attack-looking beam into slash sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 412,
+    "end": 417,
+    "kind": "ambiguous",
+    "reason": "low recovery/continuation fragment after attack-looking sequence; no eligible empty slot"
+  },
+  {
+    "start": 418,
+    "end": 427,
+    "kind": "ambiguous",
+    "reason": "attack-looking beam/rush sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 428,
+    "end": 437,
+    "kind": "ambiguous",
+    "reason": "attack-looking beam into slash sequence, but no eligible empty attack slot remains"
+  },
+  {
+    "start": 438,
+    "end": 443,
+    "kind": "ambiguous",
+    "reason": "low recovery/continuation fragment after attack-looking sequence; no eligible empty slot"
+  },
+  {
+    "start": 444,
+    "end": 453,
+    "kind": "bad-source",
+    "reason": "multi-character/collapsed source strip needs splitting before it can be assigned"
+  },
+  {
+    "start": 454,
+    "end": 464,
+    "kind": "bad-source",
+    "reason": "multi-character/collapsed strip plus text/UI source cell needs splitting before use"
+  }
+]

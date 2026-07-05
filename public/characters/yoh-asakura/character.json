@@ -66,7 +66,12 @@
     "chargeKi": [
       "/characters/yoh-asakura/frames/frame-171.png"
     ],
-    "jableft": [],
+    "jableft": [
+      "/characters/yoh-asakura/frames/frame-140.png",
+      "/characters/yoh-asakura/frames/frame-141.png",
+      "/characters/yoh-asakura/frames/frame-142.png",
+      "/characters/yoh-asakura/frames/frame-143.png"
+    ],
     "jabright": [
       "/characters/yoh-asakura/frames/frame-144.png",
       "/characters/yoh-asakura/frames/frame-145.png",
@@ -75,8 +80,29 @@
       "/characters/yoh-asakura/frames/frame-148.png",
       "/characters/yoh-asakura/frames/frame-149.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/yoh-asakura/frames/frame-154.png",
+      "/characters/yoh-asakura/frames/frame-155.png",
+      "/characters/yoh-asakura/frames/frame-156.png",
+      "/characters/yoh-asakura/frames/frame-157.png",
+      "/characters/yoh-asakura/frames/frame-158.png",
+      "/characters/yoh-asakura/frames/frame-159.png",
+      "/characters/yoh-asakura/frames/frame-160.png",
+      "/characters/yoh-asakura/frames/frame-161.png",
+      "/characters/yoh-asakura/frames/frame-162.png",
+      "/characters/yoh-asakura/frames/frame-163.png"
+    ],
+    "kickright": [
+      "/characters/yoh-asakura/frames/frame-172.png",
+      "/characters/yoh-asakura/frames/frame-173.png",
+      "/characters/yoh-asakura/frames/frame-174.png",
+      "/characters/yoh-asakura/frames/frame-175.png",
+      "/characters/yoh-asakura/frames/frame-176.png",
+      "/characters/yoh-asakura/frames/frame-177.png",
+      "/characters/yoh-asakura/frames/frame-178.png",
+      "/characters/yoh-asakura/frames/frame-179.png",
+      "/characters/yoh-asakura/frames/frame-180.png"
+    ],
     "hitLight": [
       "/characters/yoh-asakura/frames/frame-026.png"
     ],
@@ -106,7 +132,15 @@
     "lose": [
       "/characters/yoh-asakura/frames/frame-029.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/yoh-asakura/frames/frame-133.png",
+      "/characters/yoh-asakura/frames/frame-134.png",
+      "/characters/yoh-asakura/frames/frame-135.png",
+      "/characters/yoh-asakura/frames/frame-136.png",
+      "/characters/yoh-asakura/frames/frame-137.png",
+      "/characters/yoh-asakura/frames/frame-138.png",
+      "/characters/yoh-asakura/frames/frame-139.png"
+    ],
     "cmd:d/f+2": [
       "/characters/yoh-asakura/frames/frame-144.png",
       "/characters/yoh-asakura/frames/frame-145.png",
@@ -126,9 +160,38 @@
       "/characters/yoh-asakura/frames/frame-188.png",
       "/characters/yoh-asakura/frames/frame-189.png"
     ],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
+    "cmd:WS+4": [
+      "/characters/yoh-asakura/frames/frame-120.png",
+      "/characters/yoh-asakura/frames/frame-121.png",
+      "/characters/yoh-asakura/frames/frame-122.png",
+      "/characters/yoh-asakura/frames/frame-123.png",
+      "/characters/yoh-asakura/frames/frame-124.png",
+      "/characters/yoh-asakura/frames/frame-125.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/yoh-asakura/frames/frame-060.png",
+      "/characters/yoh-asakura/frames/frame-061.png",
+      "/characters/yoh-asakura/frames/frame-062.png",
+      "/characters/yoh-asakura/frames/frame-063.png",
+      "/characters/yoh-asakura/frames/frame-064.png",
+      "/characters/yoh-asakura/frames/frame-065.png",
+      "/characters/yoh-asakura/frames/frame-066.png",
+      "/characters/yoh-asakura/frames/frame-067.png",
+      "/characters/yoh-asakura/frames/frame-068.png",
+      "/characters/yoh-asakura/frames/frame-069.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/yoh-asakura/frames/frame-070.png",
+      "/characters/yoh-asakura/frames/frame-071.png",
+      "/characters/yoh-asakura/frames/frame-072.png",
+      "/characters/yoh-asakura/frames/frame-073.png",
+      "/characters/yoh-asakura/frames/frame-074.png",
+      "/characters/yoh-asakura/frames/frame-075.png",
+      "/characters/yoh-asakura/frames/frame-076.png",
+      "/characters/yoh-asakura/frames/frame-077.png",
+      "/characters/yoh-asakura/frames/frame-078.png",
+      "/characters/yoh-asakura/frames/frame-079.png"
+    ],
     "cmd:1+2": [
       "/characters/yoh-asakura/frames/frame-087.png",
       "/characters/yoh-asakura/frames/frame-088.png",
@@ -172,7 +235,15 @@
       "/characters/yoh-asakura/frames/frame-131.png",
       "/characters/yoh-asakura/frames/frame-132.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/yoh-asakura/frames/frame-080.png",
+      "/characters/yoh-asakura/frames/frame-081.png",
+      "/characters/yoh-asakura/frames/frame-082.png",
+      "/characters/yoh-asakura/frames/frame-083.png",
+      "/characters/yoh-asakura/frames/frame-084.png",
+      "/characters/yoh-asakura/frames/frame-085.png",
+      "/characters/yoh-asakura/frames/frame-086.png"
+    ],
     "cmd:1+4": [
       "/characters/yoh-asakura/frames/frame-100.png",
       "/characters/yoh-asakura/frames/frame-101.png",
@@ -480,9 +551,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "startupFrames": 0,
+      "activeFrames": 25,
+      "recoveryFrames": 1,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -516,9 +587,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 32,
+      "recoveryFrames": 13,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -533,9 +604,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 42,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -550,9 +621,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 7,
+      "activeFrames": 36,
+      "recoveryFrames": 1,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -607,9 +678,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -624,9 +695,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 6,
+      "activeFrames": 22,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -641,9 +712,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 19,
+      "activeFrames": 24,
+      "recoveryFrames": 4,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -754,9 +825,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 18,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

@@ -96,8 +96,30 @@
       "/characters/toshiro-hitsugaya/frames/frame-148.png",
       "/characters/toshiro-hitsugaya/frames/frame-149.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/toshiro-hitsugaya/frames/frame-160.png",
+      "/characters/toshiro-hitsugaya/frames/frame-161.png",
+      "/characters/toshiro-hitsugaya/frames/frame-162.png",
+      "/characters/toshiro-hitsugaya/frames/frame-163.png",
+      "/characters/toshiro-hitsugaya/frames/frame-164.png",
+      "/characters/toshiro-hitsugaya/frames/frame-165.png",
+      "/characters/toshiro-hitsugaya/frames/frame-166.png",
+      "/characters/toshiro-hitsugaya/frames/frame-167.png",
+      "/characters/toshiro-hitsugaya/frames/frame-168.png",
+      "/characters/toshiro-hitsugaya/frames/frame-169.png"
+    ],
+    "kickright": [
+      "/characters/toshiro-hitsugaya/frames/frame-200.png",
+      "/characters/toshiro-hitsugaya/frames/frame-201.png",
+      "/characters/toshiro-hitsugaya/frames/frame-202.png",
+      "/characters/toshiro-hitsugaya/frames/frame-203.png",
+      "/characters/toshiro-hitsugaya/frames/frame-204.png",
+      "/characters/toshiro-hitsugaya/frames/frame-205.png",
+      "/characters/toshiro-hitsugaya/frames/frame-206.png",
+      "/characters/toshiro-hitsugaya/frames/frame-207.png",
+      "/characters/toshiro-hitsugaya/frames/frame-208.png",
+      "/characters/toshiro-hitsugaya/frames/frame-209.png"
+    ],
     "hitLight": [
       "/characters/toshiro-hitsugaya/frames/frame-026.png"
     ],
@@ -150,9 +172,41 @@
       "/characters/toshiro-hitsugaya/frames/frame-148.png",
       "/characters/toshiro-hitsugaya/frames/frame-149.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/toshiro-hitsugaya/frames/frame-150.png",
+      "/characters/toshiro-hitsugaya/frames/frame-151.png",
+      "/characters/toshiro-hitsugaya/frames/frame-152.png",
+      "/characters/toshiro-hitsugaya/frames/frame-153.png",
+      "/characters/toshiro-hitsugaya/frames/frame-154.png",
+      "/characters/toshiro-hitsugaya/frames/frame-155.png",
+      "/characters/toshiro-hitsugaya/frames/frame-156.png",
+      "/characters/toshiro-hitsugaya/frames/frame-157.png",
+      "/characters/toshiro-hitsugaya/frames/frame-158.png",
+      "/characters/toshiro-hitsugaya/frames/frame-159.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/toshiro-hitsugaya/frames/frame-111.png",
+      "/characters/toshiro-hitsugaya/frames/frame-112.png",
+      "/characters/toshiro-hitsugaya/frames/frame-113.png",
+      "/characters/toshiro-hitsugaya/frames/frame-114.png",
+      "/characters/toshiro-hitsugaya/frames/frame-115.png",
+      "/characters/toshiro-hitsugaya/frames/frame-116.png",
+      "/characters/toshiro-hitsugaya/frames/frame-117.png",
+      "/characters/toshiro-hitsugaya/frames/frame-118.png",
+      "/characters/toshiro-hitsugaya/frames/frame-119.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/toshiro-hitsugaya/frames/frame-070.png",
+      "/characters/toshiro-hitsugaya/frames/frame-071.png",
+      "/characters/toshiro-hitsugaya/frames/frame-072.png",
+      "/characters/toshiro-hitsugaya/frames/frame-073.png",
+      "/characters/toshiro-hitsugaya/frames/frame-074.png",
+      "/characters/toshiro-hitsugaya/frames/frame-075.png",
+      "/characters/toshiro-hitsugaya/frames/frame-076.png",
+      "/characters/toshiro-hitsugaya/frames/frame-077.png",
+      "/characters/toshiro-hitsugaya/frames/frame-078.png",
+      "/characters/toshiro-hitsugaya/frames/frame-079.png"
+    ],
     "cmd:FC+2": [
       "/characters/toshiro-hitsugaya/frames/frame-142.png",
       "/characters/toshiro-hitsugaya/frames/frame-143.png",
@@ -219,7 +273,18 @@
       "/characters/toshiro-hitsugaya/frames/frame-105.png",
       "/characters/toshiro-hitsugaya/frames/frame-102.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/toshiro-hitsugaya/frames/frame-090.png",
+      "/characters/toshiro-hitsugaya/frames/frame-091.png",
+      "/characters/toshiro-hitsugaya/frames/frame-092.png",
+      "/characters/toshiro-hitsugaya/frames/frame-093.png",
+      "/characters/toshiro-hitsugaya/frames/frame-094.png",
+      "/characters/toshiro-hitsugaya/frames/frame-095.png",
+      "/characters/toshiro-hitsugaya/frames/frame-096.png",
+      "/characters/toshiro-hitsugaya/frames/frame-097.png",
+      "/characters/toshiro-hitsugaya/frames/frame-098.png",
+      "/characters/toshiro-hitsugaya/frames/frame-099.png"
+    ],
     "cmd:f+2": [
       "/characters/toshiro-hitsugaya/frames/frame-142.png",
       "/characters/toshiro-hitsugaya/frames/frame-143.png",
@@ -598,9 +663,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 4,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -615,9 +680,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 45,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -672,9 +737,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 44,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -690,9 +755,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 10,
+      "activeFrames": 31,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -707,9 +772,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 3,
+      "activeFrames": 24,
+      "recoveryFrames": 2,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -844,9 +909,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 59,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

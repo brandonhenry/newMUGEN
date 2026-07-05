@@ -1,0 +1,98 @@
+[
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "single neutral stance frame"
+  },
+  {
+    "start": 19,
+    "end": 19,
+    "kind": "non-attack",
+    "reason": "single crouch/low movement frame without strike"
+  },
+  {
+    "start": 20,
+    "end": 22,
+    "kind": "non-attack",
+    "reason": "short crouch-to-stand transition with no contact frame"
+  },
+  {
+    "start": 24,
+    "end": 24,
+    "kind": "ambiguous",
+    "reason": "single bent pose could be hit reaction or wind-up but no sequence"
+  },
+  {
+    "start": 26,
+    "end": 26,
+    "kind": "non-attack",
+    "reason": "single falling/recovery pose"
+  },
+  {
+    "start": 32,
+    "end": 39,
+    "kind": "ambiguous",
+    "reason": "aura/pose sequence lacks a clear release or hit frame"
+  },
+  {
+    "start": 40,
+    "end": 49,
+    "kind": "ambiguous",
+    "reason": "mixed leap/fall/ground poses read more like movement or recovery than one coherent attack"
+  },
+  {
+    "start": 58,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "two-frame idle or charge pose without release"
+  },
+  {
+    "start": 60,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "power-up to crouch/guard state with no visible attack"
+  },
+  {
+    "start": 82,
+    "end": 82,
+    "kind": "non-attack",
+    "reason": "single neutral stance frame"
+  },
+  {
+    "start": 130,
+    "end": 131,
+    "kind": "ambiguous",
+    "reason": "two-frame low motion lacks enough contact/recovery to form a move"
+  },
+  {
+    "start": 139,
+    "end": 139,
+    "kind": "non-attack",
+    "reason": "single neutral stance frame"
+  },
+  {
+    "start": 150,
+    "end": 150,
+    "kind": "non-attack",
+    "reason": "single grounded/fall frame after special sequence"
+  },
+  {
+    "start": 169,
+    "end": 178,
+    "kind": "ambiguous",
+    "reason": "near-duplicate rush sequence after available fitting slots were filled"
+  },
+  {
+    "start": 179,
+    "end": 187,
+    "kind": "ambiguous",
+    "reason": "near-duplicate rush sequence after available fitting slots were filled"
+  },
+  {
+    "start": 225,
+    "end": 225,
+    "kind": "bad-source",
+    "reason": "source cell contains text/UI fragment instead of a character attack frame"
+  }
+]

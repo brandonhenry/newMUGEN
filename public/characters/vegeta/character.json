@@ -152,7 +152,18 @@
       "/characters/vegeta/frames/frame-077.png",
       "/characters/vegeta/frames/frame-078.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/vegeta/frames/frame-090.png",
+      "/characters/vegeta/frames/frame-091.png",
+      "/characters/vegeta/frames/frame-092.png",
+      "/characters/vegeta/frames/frame-093.png",
+      "/characters/vegeta/frames/frame-094.png",
+      "/characters/vegeta/frames/frame-095.png",
+      "/characters/vegeta/frames/frame-096.png",
+      "/characters/vegeta/frames/frame-097.png",
+      "/characters/vegeta/frames/frame-098.png",
+      "/characters/vegeta/frames/frame-099.png"
+    ],
     "cmd:FC+2": [
       "/characters/vegeta/frames/frame-080.png",
       "/characters/vegeta/frames/frame-081.png",
@@ -199,7 +210,18 @@
       "/characters/vegeta/frames/frame-126.png",
       "/characters/vegeta/frames/frame-127.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/vegeta/frames/frame-100.png",
+      "/characters/vegeta/frames/frame-101.png",
+      "/characters/vegeta/frames/frame-102.png",
+      "/characters/vegeta/frames/frame-103.png",
+      "/characters/vegeta/frames/frame-104.png",
+      "/characters/vegeta/frames/frame-105.png",
+      "/characters/vegeta/frames/frame-106.png",
+      "/characters/vegeta/frames/frame-107.png",
+      "/characters/vegeta/frames/frame-108.png",
+      "/characters/vegeta/frames/frame-109.png"
+    ],
     "cmd:1+4": [
       "/characters/vegeta/frames/frame-073.png",
       "/characters/vegeta/frames/frame-074.png",
@@ -747,9 +769,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 3,
+      "activeFrames": 25,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -890,9 +912,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 54,
+      "recoveryFrames": 6,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

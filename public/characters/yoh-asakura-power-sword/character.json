@@ -64,7 +64,10 @@
     "chargeKi": [
       "/characters/yoh-asakura-power-sword/frames/frame-105.png"
     ],
-    "jableft": [],
+    "jableft": [
+      "/characters/yoh-asakura-power-sword/frames/frame-140.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-141.png"
+    ],
     "jabright": [
       "/characters/yoh-asakura-power-sword/frames/frame-142.png",
       "/characters/yoh-asakura-power-sword/frames/frame-143.png",
@@ -105,7 +108,12 @@
     "lose": [
       "/characters/yoh-asakura-power-sword/frames/frame-027.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/yoh-asakura-power-sword/frames/frame-080.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-081.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-082.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-083.png"
+    ],
     "cmd:d/f+2": [
       "/characters/yoh-asakura-power-sword/frames/frame-142.png",
       "/characters/yoh-asakura-power-sword/frames/frame-143.png",
@@ -126,9 +134,39 @@
       "/characters/yoh-asakura-power-sword/frames/frame-160.png",
       "/characters/yoh-asakura-power-sword/frames/frame-161.png"
     ],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
+    "cmd:WS+4": [
+      "/characters/yoh-asakura-power-sword/frames/frame-070.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-071.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-072.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-073.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-074.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-075.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-076.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-077.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-078.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-079.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/yoh-asakura-power-sword/frames/frame-040.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-041.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-042.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-043.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-044.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-045.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-046.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-047.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-048.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-049.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/yoh-asakura-power-sword/frames/frame-050.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-051.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-052.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-053.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-054.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-055.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-056.png"
+    ],
     "cmd:1+2": [
       "/characters/yoh-asakura-power-sword/frames/frame-084.png",
       "/characters/yoh-asakura-power-sword/frames/frame-085.png",
@@ -177,7 +215,15 @@
       "/characters/yoh-asakura-power-sword/frames/frame-116.png",
       "/characters/yoh-asakura-power-sword/frames/frame-117.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/yoh-asakura-power-sword/frames/frame-063.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-064.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-065.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-066.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-067.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-068.png",
+      "/characters/yoh-asakura-power-sword/frames/frame-069.png"
+    ],
     "cmd:1+2+3": [
       "/characters/yoh-asakura-power-sword/frames/frame-117.png",
       "/characters/yoh-asakura-power-sword/frames/frame-118.png",
@@ -504,9 +550,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "startupFrames": 0,
+      "activeFrames": 25,
+      "recoveryFrames": 1,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -574,9 +620,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 43,
+      "recoveryFrames": 1,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -635,9 +681,9 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 17,
+      "recoveryFrames": 12,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -652,9 +698,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 3,
+      "activeFrames": 25,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -669,9 +715,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 14,
+      "activeFrames": 27,
+      "recoveryFrames": 6,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -784,9 +830,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 52,
+      "recoveryFrames": 8,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

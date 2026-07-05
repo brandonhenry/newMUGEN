@@ -1,0 +1,80 @@
+[
+  {
+    "start": 14,
+    "end": 15,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 21,
+    "end": 21,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 23,
+    "end": 24,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 26,
+    "end": 27,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 29,
+    "end": 29,
+    "kind": "non-attack",
+    "reason": "hurt, fall, knockdown, getup, or recovery material"
+  },
+  {
+    "start": 31,
+    "end": 34,
+    "kind": "non-attack",
+    "reason": "hurt, fall, knockdown, getup, or recovery material"
+  },
+  {
+    "start": 39,
+    "end": 39,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 40,
+    "end": 49,
+    "kind": "non-attack",
+    "reason": "hurt, fall, knockdown, getup, or recovery material"
+  },
+  {
+    "start": 50,
+    "end": 52,
+    "kind": "non-attack",
+    "reason": "hurt, fall, knockdown, getup, or recovery material"
+  },
+  {
+    "start": 62,
+    "end": 62,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 70,
+    "end": 72,
+    "kind": "ambiguous",
+    "reason": "single pose or short fragment without a coherent attack sequence"
+  },
+  {
+    "start": 120,
+    "end": 126,
+    "kind": "non-attack",
+    "reason": "hurt, fall, knockdown, getup, or recovery material"
+  },
+  {
+    "start": 147,
+    "end": 149,
+    "kind": "bad-source",
+    "reason": "source text tail after non-attack pose frames"
+  }
+]

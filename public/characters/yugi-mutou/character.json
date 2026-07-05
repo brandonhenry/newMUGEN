@@ -147,8 +147,26 @@
       "/characters/yugi-mutou/frames/frame-082.png"
     ],
     "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:WS+4": [
+      "/characters/yugi-mutou/frames/frame-137.png",
+      "/characters/yugi-mutou/frames/frame-138.png",
+      "/characters/yugi-mutou/frames/frame-139.png",
+      "/characters/yugi-mutou/frames/frame-140.png",
+      "/characters/yugi-mutou/frames/frame-141.png",
+      "/characters/yugi-mutou/frames/frame-142.png",
+      "/characters/yugi-mutou/frames/frame-143.png",
+      "/characters/yugi-mutou/frames/frame-144.png",
+      "/characters/yugi-mutou/frames/frame-145.png",
+      "/characters/yugi-mutou/frames/frame-146.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/yugi-mutou/frames/frame-114.png",
+      "/characters/yugi-mutou/frames/frame-115.png",
+      "/characters/yugi-mutou/frames/frame-116.png",
+      "/characters/yugi-mutou/frames/frame-117.png",
+      "/characters/yugi-mutou/frames/frame-118.png",
+      "/characters/yugi-mutou/frames/frame-119.png"
+    ],
     "cmd:FC+2": [
       "/characters/yugi-mutou/frames/frame-073.png",
       "/characters/yugi-mutou/frames/frame-074.png",
@@ -182,7 +200,15 @@
       "/characters/yugi-mutou/frames/frame-098.png",
       "/characters/yugi-mutou/frames/frame-099.png"
     ],
-    "cmd:2+4": [],
+    "cmd:2+4": [
+      "/characters/yugi-mutou/frames/frame-100.png",
+      "/characters/yugi-mutou/frames/frame-101.png",
+      "/characters/yugi-mutou/frames/frame-102.png",
+      "/characters/yugi-mutou/frames/frame-103.png",
+      "/characters/yugi-mutou/frames/frame-104.png",
+      "/characters/yugi-mutou/frames/frame-105.png",
+      "/characters/yugi-mutou/frames/frame-106.png"
+    ],
     "cmd:3+4": [
       "/characters/yugi-mutou/frames/frame-107.png",
       "/characters/yugi-mutou/frames/frame-108.png",
@@ -192,7 +218,18 @@
       "/characters/yugi-mutou/frames/frame-112.png",
       "/characters/yugi-mutou/frames/frame-113.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/yugi-mutou/frames/frame-127.png",
+      "/characters/yugi-mutou/frames/frame-128.png",
+      "/characters/yugi-mutou/frames/frame-129.png",
+      "/characters/yugi-mutou/frames/frame-130.png",
+      "/characters/yugi-mutou/frames/frame-131.png",
+      "/characters/yugi-mutou/frames/frame-132.png",
+      "/characters/yugi-mutou/frames/frame-133.png",
+      "/characters/yugi-mutou/frames/frame-134.png",
+      "/characters/yugi-mutou/frames/frame-135.png",
+      "/characters/yugi-mutou/frames/frame-136.png"
+    ],
     "cmd:1+4": [
       "/characters/yugi-mutou/frames/frame-090.png",
       "/characters/yugi-mutou/frames/frame-091.png",
@@ -666,9 +703,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 21,
+      "activeFrames": 13,
+      "recoveryFrames": 8,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -683,9 +720,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 5,
+      "activeFrames": 20,
+      "recoveryFrames": 4,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -773,9 +810,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 7,
+      "activeFrames": 40,
+      "recoveryFrames": 1,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -810,8 +847,8 @@
     },
     "cmd:O+2": {
       "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "activeFrames": 35,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
