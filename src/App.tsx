@@ -6174,6 +6174,7 @@ function CashAppCheckoutPopup({
   onClose: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [showRules, setShowRules] = useState(false);
   const shortInvoice = shortenLightningInvoice(paymentRequest);
   const statusText = state === 'success'
     ? 'Success. You entered.'
@@ -6223,9 +6224,31 @@ function CashAppCheckoutPopup({
             <Copy size={18} />
             {copied ? 'Copied' : 'Copy Invoice'}
           </button>
+          <button type="button" className="secondary-button" onClick={() => setShowRules((value) => !value)}>
+            {showRules ? 'Hide Terms' : 'Rules & Terms'}
+          </button>
         </div>
         <small className="cashapp-start-note">{startsWhenFullLabel}</small>
       </div>
+
+      {showRules && (
+        <div className="cashapp-terms-panel">
+          <div>
+            <span>Rules & Terms</span>
+            <strong>Skill tournament entry agreement</strong>
+          </div>
+          <ul>
+            <li>Paid brackets are for real human contestants age 18 or older and only where allowed.</li>
+            <li>The entry fee is $2. Fixed prizes are disclosed before entry: $15, $10, and $5 Lightning rewards.</li>
+            <li>Remaining entry fees are retained as the platform fee for hosting, processing, and operations.</li>
+            <li>Winners are determined by match performance under the same published game rules for every entrant.</li>
+            <li>No CPU entrants, random prize pools, or chance-based reward changes are used in paid brackets.</li>
+            <li>One account per player. Collusion, automation, chargebacks, or exploit abuse can void an entry or prize.</li>
+            <li>Payments are final after confirmation unless KORE cancels or voids the tournament.</li>
+          </ul>
+          <small>By paying this invoice, you agree to these tournament terms.</small>
+        </div>
+      )}
 
       {state === 'success' && (
         <button type="button" className="cashapp-checkout-close" onClick={onClose}>

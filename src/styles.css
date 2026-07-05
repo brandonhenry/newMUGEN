@@ -2268,6 +2268,60 @@ button {
   padding: 0 13px;
 }
 
+.cashapp-terms-panel {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 13px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.cashapp-terms-panel > div {
+  display: grid;
+  gap: 3px;
+}
+
+.cashapp-terms-panel span {
+  color: #00d660;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.cashapp-terms-panel strong {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.cashapp-terms-panel ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.cashapp-terms-panel li,
+.cashapp-terms-panel small {
+  color: rgba(247, 247, 242, 0.76);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.cashapp-terms-panel small {
+  color: #f7d45a;
+  font-weight: 900;
+}
+
 .cashapp-checkout-close {
   position: absolute;
   right: 14px;
