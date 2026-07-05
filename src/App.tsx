@@ -1323,10 +1323,10 @@ function pickRandomStage(stageRoster: StageDefinition[]) {
 function pickMenuAttractStage(stageRoster: StageDefinition[]) {
   const visibleStages = stageRoster.filter((stage) => !stage.hidden);
   const preferredModelStageIds = [
-    'naruto-naruto-slugfest-konohagakure-entrance',
-    'dbz-galactic-arena-stage',
-    'one-piece-opfp-wano-side-street',
-    'bleach-bleach-soul-reaper-karakura-town-intersection'
+    'one-punch-man-opmje-combat-experimentation-room-2',
+    'dbz-other-world-tournament',
+    'naruto-prison-large',
+    'bleach-soul-society-courtyard-battle-scene'
   ];
   const preferredModelStage = preferredModelStageIds
     .map((id) => visibleStages.find((stage) => stage.id === id && (stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url))))

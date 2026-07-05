@@ -218,6 +218,15 @@ test.describe('menu attract performance', () => {
     await installLongTaskCollector(page);
     await openMenuAttract(page);
     await page.waitForTimeout(5_000);
+    const loadedAttractAssets = responses
+      .map((entry) => entry.url)
+      .filter((url) => url.includes('/stages/') || url.includes('/voxels'));
+    testInfo.attach('loaded-attract-assets.json', {
+      body: JSON.stringify(loadedAttractAssets.slice(-80), null, 2),
+      contentType: 'application/json'
+    });
+    expect(loadedAttractAssets.some((url) => url.includes('/stages/') && url.includes('.glb')), loadedAttractAssets.join('\n')).toBe(true);
+    expect(loadedAttractAssets.filter((url) => url.includes('/voxels') && url.includes('.json')).length, loadedAttractAssets.join('\n')).toBeGreaterThan(0);
     await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
     testInfo.attach('frame-stats.json', {
