@@ -33,6 +33,7 @@ export type TrainingTrialStep = {
   windowAfter?: number;
   requireState?: FighterRuntime['state'];
   requireDummyState?: FighterRuntime['state'];
+  requireGetupAction?: FighterRuntime['getupAction'];
   expectImpact?: ComboTrialStep['expect'];
   expectImpactKinds?: ImpactSparkEvent['kind'][];
   expectImpactAttackerSlot?: 1 | 2;
@@ -50,6 +51,7 @@ export type TrainingTrialSetup = {
   dummyScript: TrainingDummyScript;
   p1Position?: { x: number; z: number };
   p2Position?: { x: number; z: number };
+  p1State?: FighterRuntime['state'];
   p1Ki?: number;
   p2Ki?: number;
   corner?: 'left' | 'right';
@@ -263,6 +265,13 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   trials.push(makeImpactOnlyTrial(character, dummy, 'ki', 'ki:perfect-block', 'Ki Perfect Block', ['B'], ['block'], 'Time your guard against ki attacks. A close block earns Perfect timing here.', 'Meet power with timing, not panic.', 'Ki attack blocked.', { dummyScript: 'kiAttack', setup: { p2Ki: 100, p1Position: { x: -0.55, z: 0 }, p2Position: { x: 0.55, z: 0 } }, expectImpactKinds: ['block'], expectImpactAttackerSlot: 2, expectImpactDefenderSlot: 1, requireImpactKiBurst: true, targetFrame: 20, windowBefore: 8, windowAfter: 12, missAfterFrame: 80 }));
   if (ki) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:route', 'Ki Route', ki, 'Ki routes spend charge for a stronger route.', 'Spend power only when the cut matters.', 'Use the ki route.', { setup: { p1Ki: 100, dummyScript: 'idle' } }));
   trials.push(makeSimpleTrial(character, dummy, 'corner', 'corner:carry', 'Corner Space', ['f', '1'], ['right', 'jab'], 'Corner pressure starts by taking space before attacking.', 'Put their back to the wall, then make it count.', 'Walk in and jab.', { setup: { p1Position: { x: -1.1, z: 0 }, p2Position: { x: -0.18, z: 0 }, corner: 'left', dummyScript: 'guard' } }));
+  trials.push(
+    makeGetupTrial(character, dummy, 'oki:knockdown-state', 'Knockdown Choice', ['KD'], [], 'Knockdown holds you on the floor until you choose a wakeup. The simple rule: stand up in place, side roll to change lanes, or back roll to make space.', 'First lesson: do not panic on the floor. Choose the rise.', 'Knockdown recognized.', { requireState: 'knockdown', targetFrame: 8, windowBefore: 0 }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-stand', 'Stand Wakeup', ['OK'], ['confirm'], 'Stand wakeup gets up in place. Use it when you want the fastest, simplest return to neutral after knockdown.', 'Rise where you fell. Guard comes next.', 'Stand wakeup complete.', { requireState: 'getup', requireGetupAction: 'stand' }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-roll-up', 'Roll Up Wakeup', ['SSL'], ['sidestepUp'], 'Roll up from knockdown to move lanes during getup. Side rolls help avoid straight oki pressure, but they can be chased.', 'Leave the line while you rise.', 'Roll up wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollUp' }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-roll-down', 'Roll Down Wakeup', ['SSR'], ['sidestepDown'], 'Roll down from knockdown to move lanes the other way. Side rolls are a wakeup choice, not automatic safety.', 'Pick the other line and stand ready.', 'Roll down wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollDown' }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-roll-back', 'Back Roll Wakeup', ['b'], ['left'], 'Back roll from knockdown to create space before you stand. It can escape close pressure, but it gives up ground.', 'Make distance, then fight your way back in.', 'Back roll wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollBack' })
+  );
   if (knockdown) trials.push(makeRouteStarterTrial(character, dummy, 'oki', 'oki:knockdown', 'Oki Knockdown', knockdown, 'Oki starts after knockdown, when the defender must get up.', 'Knock them down. Be there when they rise.', 'Score the knockdown.', { expectDummyState: 'knockdown' }));
 
   return dedupeTrials(trials);
@@ -345,6 +354,7 @@ export function advanceTrainingTrialWithInput(progress: TrainingTrialProgress, t
   const next = { ...progress, statuses: [...progress.statuses], ratings: [...progress.ratings], stepFrame: progress.stepFrame + 1 };
   const pressed = step.actions.length > 0 && step.actions.every((action) => input[action]);
   const stateMatches = matchesStateStep(step, match);
+  if (step.requireGetupAction && (!pressed || !stateMatches)) return next;
   if (!pressed && !stateMatches) return next;
 
   const target = step.targetFrame ?? 12;
@@ -758,6 +768,55 @@ function makeImpactOnlyTrial(
   };
 }
 
+function makeGetupTrial(
+  character: CharacterDefinition,
+  dummy: CharacterDefinition | undefined,
+  id: string,
+  title: string,
+  notation: string[],
+  actions: ActionName[],
+  lesson: string,
+  zoroLine: string,
+  successText: string,
+  options: {
+    requireState: FighterRuntime['state'];
+    requireGetupAction?: FighterRuntime['getupAction'];
+    targetFrame?: number;
+    windowBefore?: number;
+  }
+): TrainingTrialDefinition {
+  const setup = makeSetup(dummy, 'idle', { p1State: 'knockdown' });
+  const step: TrainingTrialStep = {
+    id: `${id}:step`,
+    notation,
+    label: title,
+    actions,
+    kind: 'state',
+    targetFrame: options.targetFrame ?? 14,
+    windowBefore: options.windowBefore ?? 8,
+    windowAfter: 20,
+    requireState: options.requireState,
+    requireGetupAction: options.requireGetupAction,
+    reason: lesson
+  };
+  return {
+    id: `basic:${character.id}:${id}`,
+    title,
+    characterId: character.id,
+    category: 'oki',
+    mode: 'basics',
+    difficulty: 1,
+    stageId: setup.stageId,
+    dummyCharacterId: dummy?.id,
+    setup,
+    steps: [step],
+    lesson,
+    zoroLine,
+    successText,
+    previewScript: makePreviewScript([{ actions, targetFrame: 10 } as TrainingTrialStep])
+  };
+}
+
 function makeSetup(dummy: CharacterDefinition | undefined, dummyScript: TrainingDummyScript, override: Partial<TrainingTrialSetup> = {}): TrainingTrialSetup {
   return {
     stageId: override.stageId ?? 'the-chamber',
@@ -765,6 +824,7 @@ function makeSetup(dummy: CharacterDefinition | undefined, dummyScript: Training
     dummyScript,
     p1Position: override.p1Position ?? { x: -0.45, z: 0 },
     p2Position: override.p2Position ?? { x: 0.45, z: 0 },
+    p1State: override.p1State,
     p1Ki: override.p1Ki,
     p2Ki: override.p2Ki,
     corner: override.corner
@@ -863,7 +923,8 @@ function matchesStateStep(step: TrainingTrialStep, match: MatchSnapshot) {
   const dummy = match.fighters[1];
   if (step.requireState && player.state !== step.requireState) return false;
   if (step.requireDummyState && dummy.state !== step.requireDummyState) return false;
-  if (!step.requireState && !step.requireDummyState) return false;
+  if (step.requireGetupAction && player.getupAction !== step.requireGetupAction) return false;
+  if (!step.requireState && !step.requireDummyState && !step.requireGetupAction) return false;
   return true;
 }
 

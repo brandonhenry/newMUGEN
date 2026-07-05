@@ -228,6 +228,74 @@ describe('training trial catalog', () => {
     expect(byId('punish:counter-hit')?.steps[0].expectImpactKinds).toEqual(['counterHit']);
   });
 
+  it('adds wakeup basics that start the player knocked down', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const byId = (suffix: string) => trials.find((trial) => trial.id.endsWith(suffix));
+    const knockdownState = byId('oki:knockdown-state');
+    const stand = byId('oki:wakeup-stand');
+    const rollUp = byId('oki:wakeup-roll-up');
+    const rollDown = byId('oki:wakeup-roll-down');
+    const rollBack = byId('oki:wakeup-roll-back');
+
+    for (const trial of [knockdownState, stand, rollUp, rollDown, rollBack]) {
+      expect(trial).toBeTruthy();
+      if (!trial) continue;
+      expect(trial.category).toBe('oki');
+      expect(trial.setup.p1State).toBe('knockdown');
+      expect(trial.lesson.toLowerCase()).toContain('knockdown');
+    }
+
+    expect(knockdownState?.lesson.toLowerCase()).toContain('stand');
+    expect(knockdownState?.lesson.toLowerCase()).toContain('roll');
+    expect(stand?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'stand' });
+    expect(rollUp?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'rollUp', actions: ['sidestepUp'] });
+    expect(rollDown?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'rollDown', actions: ['sidestepDown'] });
+    expect(rollBack?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'rollBack', actions: ['left'] });
+  });
+
+  it('requires the matching getup action for wakeup basics', () => {
+    const character = readRosterCharacters().find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+    const trial = generateBasicTrainingTrials(character, readRosterCharacters()).find((item) => item.id.endsWith('oki:wakeup-roll-up'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    const input = emptyInputFrame();
+    input.sidestepUp = true;
+    let wrongProgress = makeTrainingTrialProgress(trial)!;
+    let rightProgress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 13; frame += 1) {
+      wrongProgress = advanceTrainingTrialWithInput(wrongProgress, trial, emptyInputFrame(), mockMatch('knockdown'));
+      rightProgress = advanceTrainingTrialWithInput(rightProgress, trial, emptyInputFrame(), mockMatch('knockdown'));
+    }
+
+    const wrongMatch = {
+      fighters: [
+        { state: 'getup', getupAction: 'rollDown' } as FighterRuntime,
+        { state: 'idle' } as FighterRuntime
+      ]
+    } as MatchSnapshot;
+    wrongProgress = advanceTrainingTrialWithInput(wrongProgress, trial, input, wrongMatch);
+    expect(wrongProgress.completed).toBe(false);
+    expect(wrongProgress.statuses[0]).toBe('current');
+
+    const rightMatch = {
+      fighters: [
+        { state: 'getup', getupAction: 'rollUp' } as FighterRuntime,
+        { state: 'idle' } as FighterRuntime
+      ]
+    } as MatchSnapshot;
+    rightProgress = advanceTrainingTrialWithInput(rightProgress, trial, input, rightMatch);
+    expect(rightProgress.completed).toBe(true);
+    expect(rightProgress.statuses[0]).toBe('perfect');
+  });
+
   it('grades a timed ki block from a blocked ki impact', () => {
     const character = readRosterCharacters().find((candidate) => hasAttackAnimation(candidate));
     expect(character).toBeTruthy();

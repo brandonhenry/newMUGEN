@@ -19067,14 +19067,29 @@ function FightScreen({
   const prepareTrainingTrialMatch = useCallback((fresh: MatchSnapshot, trial: TrainingTrialDefinition | null) => {
     if (!trial) return fresh;
     const setup = trial.setup;
+    const p1StartsKnockedDown = setup.p1State === 'knockdown';
     const fighters: MatchSnapshot['fighters'] = [
       {
         ...fresh.fighters[0],
-        position: { ...fresh.fighters[0].position, x: setup.p1Position?.x ?? -0.45, z: setup.p1Position?.z ?? 0 },
+        position: { ...fresh.fighters[0].position, x: setup.p1Position?.x ?? -0.45, y: p1StartsKnockedDown ? 0 : fresh.fighters[0].position.y, z: setup.p1Position?.z ?? 0 },
         facing: 1,
         facingYaw: Math.PI / 2,
         commandHistory: [],
-        ki: setup.p1Ki ?? fresh.fighters[0].ki
+        ki: setup.p1Ki ?? fresh.fighters[0].ki,
+        state: setup.p1State ?? fresh.fighters[0].state,
+        velocityY: p1StartsKnockedDown ? 0 : fresh.fighters[0].velocityY,
+        actionFramesRemaining: p1StartsKnockedDown ? 0 : fresh.fighters[0].actionFramesRemaining,
+        actionTimer: p1StartsKnockedDown ? 0 : fresh.fighters[0].actionTimer,
+        stunFramesRemaining: p1StartsKnockedDown ? 0 : fresh.fighters[0].stunFramesRemaining,
+        stunTimer: p1StartsKnockedDown ? 0 : fresh.fighters[0].stunTimer,
+        blockstunFramesRemaining: p1StartsKnockedDown ? 0 : fresh.fighters[0].blockstunFramesRemaining,
+        blockPunishWindowFrames: p1StartsKnockedDown ? 0 : fresh.fighters[0].blockPunishWindowFrames,
+        getupInvulnerableFrames: p1StartsKnockedDown ? 0 : fresh.fighters[0].getupInvulnerableFrames,
+        getupForward: p1StartsKnockedDown ? 0 : fresh.fighters[0].getupForward,
+        getupLane: p1StartsKnockedDown ? 0 : fresh.fighters[0].getupLane,
+        getupStarted: p1StartsKnockedDown ? false : fresh.fighters[0].getupStarted,
+        getupAction: p1StartsKnockedDown ? 'none' : fresh.fighters[0].getupAction,
+        getupTotalFrames: p1StartsKnockedDown ? 0 : fresh.fighters[0].getupTotalFrames
       },
       {
         ...fresh.fighters[1],
