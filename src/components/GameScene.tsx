@@ -2096,7 +2096,7 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
 export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   return (
-    <Canvas frameloop="always" dpr={[0.85, 1]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
+    <Canvas frameloop="always" dpr={[0.6, 0.75]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
@@ -4635,6 +4635,7 @@ type ImageVoxelPartRender = {
 };
 
 const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
+const imageVoxelRenderMeshCache = new Map<string, THREE.InstancedMesh>();
 
 type HdImageVoxelPayload = {
   format: 'kore-hd-voxels-v1';
@@ -4665,6 +4666,16 @@ export function clearImageVoxelCacheForFrame(characterId: string, frameIndex?: n
   Array.from(imageVoxelCache.keys()).forEach((key) => {
     if (key.includes(`:${framePrefix}`)) {
       imageVoxelCache.delete(key);
+    }
+  });
+  Array.from(imageVoxelRenderMeshCache.keys()).forEach((key) => {
+    if (key.includes(framePrefix)) {
+      imageVoxelRenderMeshCache.delete(key);
+    }
+  });
+  Array.from(imageVoxelOutlineMeshCache.keys()).forEach((key) => {
+    if (key.includes(framePrefix)) {
+      imageVoxelOutlineMeshCache.delete(key);
     }
   });
 }
@@ -5109,6 +5120,18 @@ function makeImageVoxelOutlineMeshCacheKey(part: ImageVoxelPartRender, outlineSt
   ].join('|');
 }
 
+function makeImageVoxelRenderMeshCacheKey(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
+  if (!part.cacheKey) return null;
+  return [
+    part.cacheKey,
+    'sidefill-shader-v1',
+    renderStyle.opacity,
+    renderStyle.tint,
+    renderStyle.hueShiftDegrees,
+    renderStyle.depthWrite ? 'dw1' : 'dw0'
+  ].join('|');
+}
+
 function buildInstancedVoxelOutlineMesh(part: ImageVoxelPartRender, outlineStyle?: FighterOutlineStyle) {
   if (!outlineStyle?.enabled || part.voxels.length === 0) return null;
   const cacheKey = makeImageVoxelOutlineMeshCacheKey(part, outlineStyle);
@@ -5171,64 +5194,98 @@ function buildInstancedVoxelOutlineMesh(part: ImageVoxelPartRender, outlineStyle
 
 function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
   if (part.voxels.length === 0) return null;
-  const groupedVoxels = new Map<string, ImageVoxel[]>();
-  for (const voxel of part.voxels) {
-    const renderVoxel = normalizeImageVoxelForRender(voxel);
-    const color = renderStyleColor(renderVoxel.color, renderStyle);
-    const sideColor = renderStyleColor(renderVoxel.sideColor ?? renderVoxel.color, renderStyle);
-    const groupKey = `${color}|${sideColor}`;
-    const group = groupedVoxels.get(groupKey);
-    if (group) group.push(renderVoxel);
-    else groupedVoxels.set(groupKey, [renderVoxel]);
-  }
-  const group = new THREE.Group();
+  const cacheKey = makeImageVoxelRenderMeshCacheKey(part, renderStyle);
+  const cached = cacheKey ? imageVoxelRenderMeshCache.get(cacheKey) : undefined;
+  if (cached) return cloneCachedImageVoxelMesh(cached, renderStyle);
+
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = makeImageVoxelSideFillMaterial(renderStyle);
+  const mesh = new THREE.InstancedMesh(geometry, material, part.voxels.length);
   const matrix = new THREE.Matrix4();
   const position = new THREE.Vector3();
   const scale = new THREE.Vector3();
   const rotation = new THREE.Quaternion();
+  const frontColors = new Float32Array(part.voxels.length * 3);
+  const sideColors = new Float32Array(part.voxels.length * 3);
 
-  Array.from(groupedVoxels.entries()).forEach(([colorPair, voxels]) => {
-    const [frontColor, sideColor] = colorPair.split('|');
-    const geometry = makeSideFilledVoxelGeometry();
-    const material = [
-      makeImageVoxelMaterial(frontColor, renderStyle),
-      makeImageVoxelMaterial(sideColor ?? frontColor, renderStyle)
-    ];
-    const mesh = new THREE.InstancedMesh(geometry, material, voxels.length);
-    voxels.forEach((renderVoxel, index) => {
-      position.set(
-        renderVoxel.position[0] - part.anchor[0],
-        renderVoxel.position[1] - part.anchor[1],
-        renderVoxel.position[2] - part.anchor[2]
-      );
-      scale.set(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2]);
-      matrix.compose(position, rotation, scale);
-      mesh.setMatrixAt(index, matrix);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.castShadow = renderStyle.castShadow;
-    mesh.receiveShadow = renderStyle.receiveShadow;
-    mesh.renderOrder = renderStyle.renderOrder;
-    mesh.frustumCulled = false;
-    group.add(mesh);
+  part.voxels.forEach((voxel, index) => {
+    const renderVoxel = normalizeImageVoxelForRender(voxel);
+    const frontColor = new THREE.Color(renderStyleColor(renderVoxel.color, renderStyle));
+    const sideColor = new THREE.Color(renderStyleColor(renderVoxel.sideColor ?? renderVoxel.color, renderStyle));
+    position.set(
+      renderVoxel.position[0] - part.anchor[0],
+      renderVoxel.position[1] - part.anchor[1],
+      renderVoxel.position[2] - part.anchor[2]
+    );
+    scale.set(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2]);
+    matrix.compose(position, rotation, scale);
+    mesh.setMatrixAt(index, matrix);
+    frontColors[index * 3] = frontColor.r;
+    frontColors[index * 3 + 1] = frontColor.g;
+    frontColors[index * 3 + 2] = frontColor.b;
+    sideColors[index * 3] = sideColor.r;
+    sideColors[index * 3 + 1] = sideColor.g;
+    sideColors[index * 3 + 2] = sideColor.b;
   });
 
-  return group.children.length > 0 ? group : null;
+  geometry.setAttribute('instanceFrontColor', new THREE.InstancedBufferAttribute(frontColors, 3));
+  geometry.setAttribute('instanceSideColor', new THREE.InstancedBufferAttribute(sideColors, 3));
+  mesh.instanceMatrix.needsUpdate = true;
+  mesh.castShadow = renderStyle.castShadow;
+  mesh.receiveShadow = renderStyle.receiveShadow;
+  mesh.renderOrder = renderStyle.renderOrder;
+  mesh.frustumCulled = false;
+  if (cacheKey) {
+    mesh.userData.koreCachedVoxelMesh = true;
+    imageVoxelRenderMeshCache.set(cacheKey, mesh);
+    return cloneCachedImageVoxelMesh(mesh, renderStyle);
+  }
+  return mesh;
 }
 
-function makeSideFilledVoxelGeometry() {
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  geometry.groups.forEach((group, index) => {
-    group.materialIndex = index >= 4 ? 0 : 1;
-  });
-  return geometry;
+function cloneCachedImageVoxelMesh(cached: THREE.InstancedMesh, renderStyle: FighterRenderStyle) {
+  const clone = new THREE.InstancedMesh(cached.geometry, cached.material, cached.count);
+  clone.instanceMatrix = cached.instanceMatrix;
+  clone.castShadow = renderStyle.castShadow;
+  clone.receiveShadow = renderStyle.receiveShadow;
+  clone.renderOrder = renderStyle.renderOrder;
+  clone.frustumCulled = false;
+  clone.userData.koreCachedVoxelMesh = true;
+  return clone;
 }
 
-function makeImageVoxelMaterial(color: string, renderStyle: FighterRenderStyle) {
-  return new THREE.MeshBasicMaterial({
-    color,
+function makeImageVoxelSideFillMaterial(renderStyle: FighterRenderStyle) {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      opacity: { value: renderStyle.opacity }
+    },
+    vertexShader: `
+      attribute vec3 instanceFrontColor;
+      attribute vec3 instanceSideColor;
+      varying vec3 vFrontColor;
+      varying vec3 vSideColor;
+      varying vec3 vLocalNormal;
+
+      void main() {
+        vFrontColor = instanceFrontColor;
+        vSideColor = instanceSideColor;
+        vLocalNormal = normal;
+        vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform float opacity;
+      varying vec3 vFrontColor;
+      varying vec3 vSideColor;
+      varying vec3 vLocalNormal;
+
+      void main() {
+        vec3 color = abs(vLocalNormal.z) > 0.5 ? vFrontColor : vSideColor;
+        gl_FragColor = vec4(color, opacity);
+      }
+    `,
     transparent: renderStyle.opacity < 1,
-    opacity: renderStyle.opacity,
     depthWrite: renderStyle.depthWrite,
     toneMapped: false
   });

@@ -1817,6 +1817,8 @@ button {
 .versus-roster-tile {
   position: relative;
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: center;
   justify-items: center;
   gap: clamp(3px, 0.65vh, 6px);
   min-height: clamp(78px, 12vh, 118px);
@@ -1840,7 +1842,7 @@ button {
 .versus-roster-tile:focus-visible {
   outline: 0;
   box-shadow:
-    0 0 0 2px var(--fighter-color),
+    0 0 0 2px var(--fighter-color) inset,
     0 14px 32px rgba(0, 0, 0, 0.38),
     0 1px 0 rgba(255, 255, 255, 0.12) inset;
 }
@@ -1860,7 +1862,7 @@ button {
 .versus-roster-tile.is-locked:hover,
 .versus-roster-tile.is-locked:focus-visible {
   box-shadow:
-    0 0 0 2px rgba(247, 212, 90, 0.62),
+    0 0 0 2px rgba(247, 212, 90, 0.62) inset,
     0 14px 32px rgba(0, 0, 0, 0.38),
     0 1px 0 rgba(255, 255, 255, 0.12) inset;
 }
@@ -1876,16 +1878,17 @@ button {
 .versus-random-tile:focus-visible,
 .versus-random-tile.is-random-selected {
   box-shadow:
-    0 0 0 2px #ffffff,
-    0 0 0 4px rgba(247, 212, 90, 0.72),
+    0 0 0 2px #ffffff inset,
+    0 0 0 4px rgba(247, 212, 90, 0.72) inset,
     0 14px 32px rgba(0, 0, 0, 0.38);
 }
 
 .versus-random-tile-icon {
   display: grid;
   place-items: center;
-  width: clamp(42px, 8vh, 56px);
-  height: clamp(42px, 8vh, 64px);
+  align-self: center;
+  width: clamp(68px, 13vh, 118px);
+  height: clamp(68px, 13vh, 118px);
 }
 
 .versus-random-tile small {
@@ -1928,34 +1931,35 @@ button {
 
 .versus-roster-tile.is-p1 {
   box-shadow:
-    -4px 0 0 #e4474d,
-    0 0 0 2px rgba(228, 71, 77, 0.5),
+    0 0 0 3px #e4474d inset,
+    0 0 22px rgba(228, 71, 77, 0.24),
     0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
 .versus-roster-tile.is-p2 {
   box-shadow:
-    4px 0 0 #397bff,
-    0 0 0 2px rgba(57, 123, 255, 0.52),
+    0 0 0 3px #397bff inset,
+    0 0 22px rgba(57, 123, 255, 0.24),
     0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
 .versus-roster-tile.is-p1.is-p2 {
   box-shadow:
-    -4px 0 0 #e4474d,
-    4px 0 0 #397bff,
-    0 0 0 2px #f7d45a,
+    -4px 0 0 #e4474d inset,
+    4px 0 0 #397bff inset,
+    0 0 0 2px #f7d45a inset,
     0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
 .versus-roster-tile img {
-  width: 100%;
-  max-width: clamp(42px, 8vh, 56px);
-  height: clamp(42px, 8vh, 64px);
+  align-self: center;
+  width: auto;
+  max-width: min(100%, clamp(78px, 13vh, 124px));
+  height: clamp(78px, 13vh, 124px);
   object-fit: contain;
   image-rendering: pixelated;
   filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.42));
-  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline: 0;
 }
 
 .versus-roster-tile span,
@@ -1973,11 +1977,7 @@ button {
 }
 
 .versus-roster-tile small {
-  min-height: clamp(10px, 1.8vh, 14px);
-  color: #f7d45a;
-  font-size: clamp(8px, 1.45vh, 10px);
-  font-weight: 950;
-  letter-spacing: 0.04em;
+  display: none;
 }
 
 .versus-roster-panel .footer-actions {
@@ -9571,8 +9571,8 @@ button {
 
   .versus-random-tile-icon,
   .versus-roster-tile img {
-    max-width: clamp(34px, 6.5vh, 48px);
-    height: clamp(34px, 6.5vh, 48px);
+    max-width: min(100%, clamp(48px, 7.5vh, 64px));
+    height: clamp(48px, 7.5vh, 64px);
   }
 
   .settings-strip {
