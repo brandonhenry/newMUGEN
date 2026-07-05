@@ -90,7 +90,15 @@
       "/characters/fuusuke/frames/frame-135.png",
       "/characters/fuusuke/frames/frame-136.png"
     ],
-    "kickleft": [],
+    "kickleft": [
+      "/characters/fuusuke/frames/frame-189.png",
+      "/characters/fuusuke/frames/frame-190.png",
+      "/characters/fuusuke/frames/frame-191.png",
+      "/characters/fuusuke/frames/frame-192.png",
+      "/characters/fuusuke/frames/frame-193.png",
+      "/characters/fuusuke/frames/frame-194.png",
+      "/characters/fuusuke/frames/frame-195.png"
+    ],
     "kickright": [
       "/characters/fuusuke/frames/frame-076.png",
       "/characters/fuusuke/frames/frame-077.png",
@@ -171,7 +179,16 @@
       "/characters/fuusuke/frames/frame-083.png",
       "/characters/fuusuke/frames/frame-084.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/fuusuke/frames/frame-142.png",
+      "/characters/fuusuke/frames/frame-143.png",
+      "/characters/fuusuke/frames/frame-144.png",
+      "/characters/fuusuke/frames/frame-145.png",
+      "/characters/fuusuke/frames/frame-146.png",
+      "/characters/fuusuke/frames/frame-147.png",
+      "/characters/fuusuke/frames/frame-148.png",
+      "/characters/fuusuke/frames/frame-149.png"
+    ],
     "cmd:FC+2": [
       "/characters/fuusuke/frames/frame-129.png",
       "/characters/fuusuke/frames/frame-130.png",
@@ -191,7 +208,24 @@
       "/characters/fuusuke/frames/frame-120.png",
       "/characters/fuusuke/frames/frame-121.png"
     ],
-    "cmd:1+3": [],
+    "cmd:1+3": [
+      "/characters/fuusuke/frames/frame-085.png",
+      "/characters/fuusuke/frames/frame-086.png",
+      "/characters/fuusuke/frames/frame-087.png",
+      "/characters/fuusuke/frames/frame-088.png",
+      "/characters/fuusuke/frames/frame-089.png",
+      "/characters/fuusuke/frames/frame-090.png",
+      "/characters/fuusuke/frames/frame-091.png",
+      "/characters/fuusuke/frames/frame-092.png",
+      "/characters/fuusuke/frames/frame-093.png",
+      "/characters/fuusuke/frames/frame-094.png",
+      "/characters/fuusuke/frames/frame-095.png",
+      "/characters/fuusuke/frames/frame-096.png",
+      "/characters/fuusuke/frames/frame-097.png",
+      "/characters/fuusuke/frames/frame-098.png",
+      "/characters/fuusuke/frames/frame-099.png",
+      "/characters/fuusuke/frames/frame-100.png"
+    ],
     "cmd:2+3": [
       "/characters/fuusuke/frames/frame-136.png",
       "/characters/fuusuke/frames/frame-137.png",
@@ -219,7 +253,13 @@
       "/characters/fuusuke/frames/frame-105.png",
       "/characters/fuusuke/frames/frame-106.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/fuusuke/frames/frame-176.png",
+      "/characters/fuusuke/frames/frame-177.png",
+      "/characters/fuusuke/frames/frame-178.png",
+      "/characters/fuusuke/frames/frame-179.png",
+      "/characters/fuusuke/frames/frame-180.png"
+    ],
     "cmd:1+4": [
       "/characters/fuusuke/frames/frame-076.png",
       "/characters/fuusuke/frames/frame-077.png",
@@ -616,9 +656,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -729,9 +769,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 7,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -784,9 +824,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 28,
+      "startupFrames": 13,
+      "activeFrames": 30,
+      "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -864,9 +904,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 59,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

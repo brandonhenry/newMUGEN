@@ -88,8 +88,40 @@
       "/characters/franky/frames/frame-161.png",
       "/characters/franky/frames/frame-162.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/franky/frames/frame-197.png",
+      "/characters/franky/frames/frame-198.png",
+      "/characters/franky/frames/frame-199.png",
+      "/characters/franky/frames/frame-200.png",
+      "/characters/franky/frames/frame-201.png",
+      "/characters/franky/frames/frame-202.png",
+      "/characters/franky/frames/frame-203.png",
+      "/characters/franky/frames/frame-204.png",
+      "/characters/franky/frames/frame-205.png",
+      "/characters/franky/frames/frame-206.png",
+      "/characters/franky/frames/frame-207.png",
+      "/characters/franky/frames/frame-208.png",
+      "/characters/franky/frames/frame-209.png",
+      "/characters/franky/frames/frame-210.png",
+      "/characters/franky/frames/frame-211.png",
+      "/characters/franky/frames/frame-212.png",
+      "/characters/franky/frames/frame-213.png",
+      "/characters/franky/frames/frame-214.png",
+      "/characters/franky/frames/frame-215.png",
+      "/characters/franky/frames/frame-216.png"
+    ],
+    "kickright": [
+      "/characters/franky/frames/frame-223.png",
+      "/characters/franky/frames/frame-224.png",
+      "/characters/franky/frames/frame-225.png",
+      "/characters/franky/frames/frame-226.png",
+      "/characters/franky/frames/frame-227.png",
+      "/characters/franky/frames/frame-228.png",
+      "/characters/franky/frames/frame-229.png",
+      "/characters/franky/frames/frame-230.png",
+      "/characters/franky/frames/frame-231.png",
+      "/characters/franky/frames/frame-232.png"
+    ],
     "hitLight": [
       "/characters/franky/frames/frame-026.png"
     ],
@@ -139,9 +171,47 @@
       "/characters/franky/frames/frame-161.png",
       "/characters/franky/frames/frame-162.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/franky/frames/frame-180.png",
+      "/characters/franky/frames/frame-181.png",
+      "/characters/franky/frames/frame-182.png",
+      "/characters/franky/frames/frame-183.png",
+      "/characters/franky/frames/frame-184.png",
+      "/characters/franky/frames/frame-185.png",
+      "/characters/franky/frames/frame-186.png",
+      "/characters/franky/frames/frame-187.png",
+      "/characters/franky/frames/frame-188.png",
+      "/characters/franky/frames/frame-189.png",
+      "/characters/franky/frames/frame-190.png",
+      "/characters/franky/frames/frame-191.png",
+      "/characters/franky/frames/frame-192.png",
+      "/characters/franky/frames/frame-193.png",
+      "/characters/franky/frames/frame-194.png",
+      "/characters/franky/frames/frame-195.png",
+      "/characters/franky/frames/frame-196.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/franky/frames/frame-170.png",
+      "/characters/franky/frames/frame-171.png",
+      "/characters/franky/frames/frame-172.png",
+      "/characters/franky/frames/frame-173.png",
+      "/characters/franky/frames/frame-174.png",
+      "/characters/franky/frames/frame-175.png",
+      "/characters/franky/frames/frame-176.png",
+      "/characters/franky/frames/frame-177.png",
+      "/characters/franky/frames/frame-178.png",
+      "/characters/franky/frames/frame-179.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/franky/frames/frame-150.png",
+      "/characters/franky/frames/frame-151.png",
+      "/characters/franky/frames/frame-152.png",
+      "/characters/franky/frames/frame-153.png",
+      "/characters/franky/frames/frame-154.png",
+      "/characters/franky/frames/frame-155.png",
+      "/characters/franky/frames/frame-156.png",
+      "/characters/franky/frames/frame-157.png"
+    ],
     "cmd:FC+2": [
       "/characters/franky/frames/frame-158.png",
       "/characters/franky/frames/frame-159.png",
@@ -185,7 +255,15 @@
       "/characters/franky/frames/frame-129.png",
       "/characters/franky/frames/frame-130.png"
     ],
-    "cmd:2+4": [],
+    "cmd:2+4": [
+      "/characters/franky/frames/frame-111.png",
+      "/characters/franky/frames/frame-112.png",
+      "/characters/franky/frames/frame-113.png",
+      "/characters/franky/frames/frame-114.png",
+      "/characters/franky/frames/frame-115.png",
+      "/characters/franky/frames/frame-116.png",
+      "/characters/franky/frames/frame-117.png"
+    ],
     "cmd:3+4": [
       "/characters/franky/frames/frame-138.png",
       "/characters/franky/frames/frame-139.png",
@@ -204,7 +282,15 @@
       "/characters/franky/frames/frame-139.png",
       "/characters/franky/frames/frame-138.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/franky/frames/frame-163.png",
+      "/characters/franky/frames/frame-164.png",
+      "/characters/franky/frames/frame-165.png",
+      "/characters/franky/frames/frame-166.png",
+      "/characters/franky/frames/frame-167.png",
+      "/characters/franky/frames/frame-168.png",
+      "/characters/franky/frames/frame-169.png"
+    ],
     "cmd:1+4": [
       "/characters/franky/frames/frame-096.png",
       "/characters/franky/frames/frame-097.png",
@@ -579,9 +665,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 7,
+      "activeFrames": 23,
+      "recoveryFrames": 15,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -596,9 +682,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 14,
+      "activeFrames": 28,
+      "recoveryFrames": 4,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -653,9 +739,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 4,
+      "activeFrames": 32,
+      "recoveryFrames": 19,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -671,9 +757,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 16,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -688,9 +774,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 15,
+      "activeFrames": 13,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -781,9 +867,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 28,
+      "activeFrames": 19,
+      "recoveryFrames": 1,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -818,9 +904,9 @@
       "tornado": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 43,
+      "recoveryFrames": 17,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

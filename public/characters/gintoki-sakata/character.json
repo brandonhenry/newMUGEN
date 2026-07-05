@@ -98,7 +98,15 @@
       "/characters/gintoki-sakata/frames/frame-082.png",
       "/characters/gintoki-sakata/frames/frame-083.png"
     ],
-    "kickright": [],
+    "kickright": [
+      "/characters/gintoki-sakata/frames/frame-272.png",
+      "/characters/gintoki-sakata/frames/frame-273.png",
+      "/characters/gintoki-sakata/frames/frame-274.png",
+      "/characters/gintoki-sakata/frames/frame-275.png",
+      "/characters/gintoki-sakata/frames/frame-276.png",
+      "/characters/gintoki-sakata/frames/frame-277.png",
+      "/characters/gintoki-sakata/frames/frame-278.png"
+    ],
     "hitLight": [
       "/characters/gintoki-sakata/frames/frame-026.png"
     ],
@@ -152,9 +160,45 @@
       "/characters/gintoki-sakata/frames/frame-109.png",
       "/characters/gintoki-sakata/frames/frame-110.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/gintoki-sakata/frames/frame-231.png",
+      "/characters/gintoki-sakata/frames/frame-232.png",
+      "/characters/gintoki-sakata/frames/frame-233.png",
+      "/characters/gintoki-sakata/frames/frame-234.png",
+      "/characters/gintoki-sakata/frames/frame-235.png",
+      "/characters/gintoki-sakata/frames/frame-236.png",
+      "/characters/gintoki-sakata/frames/frame-237.png",
+      "/characters/gintoki-sakata/frames/frame-238.png",
+      "/characters/gintoki-sakata/frames/frame-239.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/gintoki-sakata/frames/frame-221.png",
+      "/characters/gintoki-sakata/frames/frame-222.png",
+      "/characters/gintoki-sakata/frames/frame-223.png",
+      "/characters/gintoki-sakata/frames/frame-224.png",
+      "/characters/gintoki-sakata/frames/frame-225.png",
+      "/characters/gintoki-sakata/frames/frame-226.png",
+      "/characters/gintoki-sakata/frames/frame-227.png",
+      "/characters/gintoki-sakata/frames/frame-228.png",
+      "/characters/gintoki-sakata/frames/frame-229.png",
+      "/characters/gintoki-sakata/frames/frame-230.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/gintoki-sakata/frames/frame-178.png",
+      "/characters/gintoki-sakata/frames/frame-179.png",
+      "/characters/gintoki-sakata/frames/frame-180.png",
+      "/characters/gintoki-sakata/frames/frame-181.png",
+      "/characters/gintoki-sakata/frames/frame-182.png",
+      "/characters/gintoki-sakata/frames/frame-183.png",
+      "/characters/gintoki-sakata/frames/frame-184.png",
+      "/characters/gintoki-sakata/frames/frame-185.png",
+      "/characters/gintoki-sakata/frames/frame-186.png",
+      "/characters/gintoki-sakata/frames/frame-187.png",
+      "/characters/gintoki-sakata/frames/frame-188.png",
+      "/characters/gintoki-sakata/frames/frame-189.png",
+      "/characters/gintoki-sakata/frames/frame-190.png",
+      "/characters/gintoki-sakata/frames/frame-191.png"
+    ],
     "cmd:FC+2": [
       "/characters/gintoki-sakata/frames/frame-100.png",
       "/characters/gintoki-sakata/frames/frame-101.png",
@@ -191,9 +235,44 @@
       "/characters/gintoki-sakata/frames/frame-082.png",
       "/characters/gintoki-sakata/frames/frame-083.png"
     ],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:2+4": [
+      "/characters/gintoki-sakata/frames/frame-040.png",
+      "/characters/gintoki-sakata/frames/frame-041.png",
+      "/characters/gintoki-sakata/frames/frame-042.png",
+      "/characters/gintoki-sakata/frames/frame-043.png",
+      "/characters/gintoki-sakata/frames/frame-044.png",
+      "/characters/gintoki-sakata/frames/frame-045.png",
+      "/characters/gintoki-sakata/frames/frame-046.png",
+      "/characters/gintoki-sakata/frames/frame-047.png",
+      "/characters/gintoki-sakata/frames/frame-048.png",
+      "/characters/gintoki-sakata/frames/frame-049.png",
+      "/characters/gintoki-sakata/frames/frame-050.png",
+      "/characters/gintoki-sakata/frames/frame-051.png"
+    ],
+    "cmd:3+4": [
+      "/characters/gintoki-sakata/frames/frame-168.png",
+      "/characters/gintoki-sakata/frames/frame-169.png",
+      "/characters/gintoki-sakata/frames/frame-170.png",
+      "/characters/gintoki-sakata/frames/frame-171.png",
+      "/characters/gintoki-sakata/frames/frame-172.png",
+      "/characters/gintoki-sakata/frames/frame-173.png",
+      "/characters/gintoki-sakata/frames/frame-174.png",
+      "/characters/gintoki-sakata/frames/frame-175.png",
+      "/characters/gintoki-sakata/frames/frame-176.png",
+      "/characters/gintoki-sakata/frames/frame-177.png"
+    ],
+    "cmd:O+2": [
+      "/characters/gintoki-sakata/frames/frame-211.png",
+      "/characters/gintoki-sakata/frames/frame-212.png",
+      "/characters/gintoki-sakata/frames/frame-213.png",
+      "/characters/gintoki-sakata/frames/frame-214.png",
+      "/characters/gintoki-sakata/frames/frame-215.png",
+      "/characters/gintoki-sakata/frames/frame-216.png",
+      "/characters/gintoki-sakata/frames/frame-217.png",
+      "/characters/gintoki-sakata/frames/frame-218.png",
+      "/characters/gintoki-sakata/frames/frame-219.png",
+      "/characters/gintoki-sakata/frames/frame-220.png"
+    ],
     "cmd:1+4": [
       "/characters/gintoki-sakata/frames/frame-192.png",
       "/characters/gintoki-sakata/frames/frame-193.png",
@@ -633,9 +712,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 14,
+      "activeFrames": 19,
+      "recoveryFrames": 13,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -690,9 +769,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 41,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -708,9 +787,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 40,
+      "recoveryFrames": 4,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -725,9 +804,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 16,
-      "activeFrames": 2,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 39,
+      "recoveryFrames": 3,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -824,9 +903,9 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 16,
+      "activeFrames": 31,
+      "recoveryFrames": 1,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -842,9 +921,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 6,
+      "activeFrames": 49,
+      "recoveryFrames": 1,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -860,9 +939,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 6,
+      "activeFrames": 53,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
