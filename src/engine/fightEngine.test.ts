@@ -1599,6 +1599,21 @@ describe('fight engine', () => {
     expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
   });
 
+  it('uses human p2 input in training online sparring', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'trainingOnline', 5, { roundTime: 0 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.72;
+    match.fighters[1].position.x = 0.72;
+    const p2Attack = emptyInputFrame();
+    p2Attack.jab = true;
+
+    match = stepMatch(match, emptyInputFrame(), p2Attack, 1 / 60);
+
+    expect(match.fighters[1].state).toBe('attack');
+    expect(match.fighters[1].currentMove).not.toBeNull();
+  });
+
   it('does not clear player attacks every frame in training mode', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
     match.phase = 'fighting';
@@ -1690,6 +1705,25 @@ describe('fight engine', () => {
     expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
     expect(match.timer).toBe(60);
+  });
+
+  it('keeps training online sparring infinite without ending the round', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'trainingOnline', 5, { roundTime: 0 });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.timer = 0;
+    match.fighters[0].hp = 0;
+    match.fighters[1].hp = -4;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('fighting');
+    expect(match.winnerSlot).toBeNull();
+    expect(match.fighters[0].roundsWon).toBe(0);
+    expect(match.fighters[1].roundsWon).toBe(0);
+    expect(match.fighters[0].hp).toBe(starterCharacters[0].stats.health);
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health);
+    expect(match.timer).toBe(0);
   });
 
   it('refills a lethal direct training hit without starting a round finisher', () => {
@@ -7303,5 +7337,16 @@ describe('fight engine', () => {
     expect(hydrated.fighters[0].transformStartupFrames).toBe(33);
     expect(hydrated.fighters[0].transformTargetId).toBe(base.id);
     expect(hydrated.fighters[0].transformSmokeFrames).toBe(18);
+  });
+
+  it('preserves training online mode in compact snapshots', () => {
+    const host = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'trainingOnline', 3, { roundTime: 0 });
+    const guestBase = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3);
+    const snapshot = compactMatchSnapshot(host, 12);
+    const hydrated = hydrateMatchSnapshot(guestBase, snapshot);
+
+    expect(snapshot.mode).toBe('trainingOnline');
+    expect(hydrated.mode).toBe('trainingOnline');
+    expect(hydrated.roundTime).toBe(0);
   });
 });

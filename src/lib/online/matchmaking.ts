@@ -5,6 +5,7 @@ import {
   createOnlineBotOpponent,
   type OnlineBotOpponent
 } from './bots';
+import { selectBotOpponentForMatch } from './botMemory';
 import type { RankedKrScores } from './ranked';
 
 export type OnlineMatchQueue = 'casual' | 'ranked' | 'training';
@@ -58,7 +59,7 @@ export async function matchmakeOnline(request: OnlineMatchRequest): Promise<Onli
     if (isLocalFallbackAllowed()) return localMatchmake(request);
     throw error;
   });
-  return response;
+  return selectBotOpponentForMatch(request, response);
 }
 
 export async function leaveOnlineRoom(request: OnlineLeaveRequest): Promise<void> {

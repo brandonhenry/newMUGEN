@@ -55,6 +55,7 @@ import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
 import { botCpuDifficulty, type OnlineBotOpponent } from './lib/online/bots';
+import { recordOnlineBotMatchOutcome } from './lib/online/botMemory';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
@@ -18189,8 +18190,16 @@ function FightScreen({
     setOnlineWins(wins);
     onlineRematchReadyRef.current = { local: false, remote: false };
     const rematchLimitReached = rankedRematchLimitReached();
+    const bot = onlineBotOpponentRef.current;
     setOnlineStatusText(rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
-    if (onlineBotOpponentRef.current && !rematchLimitReached) {
+    if (bot && (mode === 'online' || mode === 'ranked')) {
+      recordOnlineBotMatchOutcome(bot, {
+        queue: mode === 'ranked' ? 'ranked' : 'casual',
+        playerKp: rankedProfileRef.current?.kp ?? onlineRoomRef.current?.hostKp,
+        playerDidWin: candidate.winnerSlot === 1
+      });
+    }
+    if (bot && !rematchLimitReached) {
       clearBotRematchTimers();
       botRematchReadyTimerRef.current = window.setTimeout(() => {
         if (!onlineBotOpponentRef.current || onlineWinnerRecordedRef.current !== true || onlineStateRef.current !== 'connected') return;
@@ -18210,7 +18219,6 @@ function FightScreen({
         const [p1Stats, p2Stats] = onlinePerformanceRef.current;
         const p1Points = calculateOnlinePerformancePoints(p1Stats, candidate.fighters[0].roundsWon, candidate.winnerSlot === 1);
         const p2Points = calculateOnlinePerformancePoints(p2Stats, candidate.fighters[1].roundsWon, candidate.winnerSlot === 2);
-        const bot = onlineBotOpponentRef.current;
         void submitLeaderboardResult({
           players: bot
             ? [{ profile: localProfile, points: Math.max(1, Math.round(p1Points * 0.5)) }]
@@ -18236,7 +18244,6 @@ function FightScreen({
       const room = onlineRoomRef.current;
       if (localProfile && remoteProfile && room) {
         const [p1Stats, p2Stats] = onlinePerformanceRef.current;
-        const bot = onlineBotOpponentRef.current;
         const report: RankedMatchReport = {
           reportId: `${room.roomId}:${candidate.winnerSlot}:${localProfile.playerId}:${remoteProfile.playerId}`,
           roomId: room.roomId,
@@ -18759,9 +18766,15 @@ function FightScreen({
             const shouldRefreshWarmup =
               matchRef.current.phase === 'matchOver' ||
               matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.maxHp * 0.2);
-            matchRef.current = shouldRefreshWarmup
-              ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, withFreshAiSeed(matchOptions))
-              : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+            if (isTrainingOnline) {
+              matchRef.current = shouldRefreshWarmup
+                ? createMatch(p1, p2, stage, 'trainingOnline', cpuDifficulty, withFreshAiSeed(matchOptions))
+                : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+            } else {
+              matchRef.current = shouldRefreshWarmup
+                ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, withFreshAiSeed(matchOptions))
+                : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+            }
           } else {
             if (mode === 'training') {
               const currentTrial = activeTrainingTrialRef.current;
@@ -18819,7 +18832,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
 
   const requestOnlineRematch = () => {
     captureFightAnalytics('online_rematch_requested', {
@@ -18827,7 +18840,7 @@ function FightScreen({
       online_role: onlineRoleRef.current
     });
     if (!isOnline || onlineStateRef.current !== 'connected') {
-      const warmup = createMatch(p1, p2, stage, isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions));
+      const warmup = createMatch(p1, p2, stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions));
       matchRef.current = warmup;
       setMatch(warmup);
       setPaused(false);
@@ -19022,8 +19035,7 @@ function FightScreen({
       { ...message, senderName, local: true }
     ].slice(-8));
     onlineSessionRef.current?.send(message);
-    captureFightAnalytics('online_training_chat_sent', { text_length: text.length });
-  }, [captureFightAnalytics, isTrainingOnline]);
+  }, [isTrainingOnline]);
 
   const toggleFullscreen = () => {
     captureFightAnalytics('fullscreen_clicked', { entering_fullscreen: !document.fullscreenElement });

@@ -12,12 +12,12 @@ function installLocalMatchmakingEnvironment() {
       removeItem: (key: string) => storage.delete(key)
     }
   });
+  let uuid = 0;
   vi.stubGlobal('crypto', {
-    randomUUID: vi.fn()
-      .mockReturnValueOnce('room-1')
-      .mockReturnValueOnce('owner-1')
-      .mockReturnValueOnce('room-2')
-      .mockReturnValueOnce('owner-2')
+    randomUUID: vi.fn(() => {
+      uuid += 1;
+      return uuid % 2 === 1 ? `room-${Math.ceil(uuid / 2)}` : `owner-${uuid / 2}`;
+    })
   });
 }
 
@@ -30,6 +30,7 @@ describe('online matchmaking', () => {
 
   afterEach(() => {
     vi.useRealTimers();
+    vi.restoreAllMocks();
     vi.unstubAllGlobals();
   });
 
@@ -40,6 +41,52 @@ describe('online matchmaking', () => {
     expect(ranked.status).toBe('waiting');
     expect(casual.role).toBe('host');
     expect(casual.status).toBe('waiting');
+  });
+
+  it('keeps training sparring separate from casual and ranked queues', async () => {
+    const training = await matchmakeOnline({ peerId: 'training-host', characterId: 'astra', stageId: 'dojo', queue: 'training' });
+    const casual = await matchmakeOnline({ peerId: 'casual-guest', characterId: 'dax', stageId: 'dojo', queue: 'casual' });
+    const ranked = await matchmakeOnline({ peerId: 'ranked-guest', characterId: 'kiro', stageId: 'dojo', queue: 'ranked', kp: 1200 });
+
+    expect(training.status).toBe('waiting');
+    expect(casual.role).toBe('host');
+    expect(casual.status).toBe('waiting');
+    expect(ranked.role).toBe('host');
+    expect(ranked.status).toBe('waiting');
+  });
+
+  it('matches training sparring with humans and never fills with a bot', async () => {
+    const host = await matchmakeOnline({
+      peerId: 'training-host',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'training',
+      allowBotFallback: true,
+      availableCharacterIds: ['astra', 'dax']
+    });
+
+    vi.setSystemTime(9_001);
+    const stillWaiting = await matchmakeOnline({
+      peerId: 'training-host',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'training',
+      allowBotFallback: true,
+      roomId: host.roomId,
+      ownerToken: host.ownerToken,
+      availableCharacterIds: ['astra', 'dax']
+    });
+    const guest = await matchmakeOnline({
+      peerId: 'training-guest',
+      characterId: 'dax',
+      stageId: 'dojo',
+      queue: 'training'
+    });
+
+    expect(stillWaiting.status).toBe('waiting');
+    expect(stillWaiting.botOpponent).toBeUndefined();
+    expect(guest.role).toBe('guest');
+    expect(guest.opponentKind).toBe('human');
   });
 
   it('matches a waiting casual room with a human before bot fallback', async () => {
@@ -136,5 +183,102 @@ describe('online matchmaking', () => {
     expect(tooSoon.botOpponent).toBeUndefined();
     expect(filled.opponentKind).toBe('bot');
     expect(Math.abs((filled.botOpponent?.kp ?? 0) - 1500)).toBeLessThanOrEqual(120);
+  });
+
+  it('can reuse a remembered bot near the same casual KP band', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.1);
+    const firstHost = await matchmakeOnline({
+      peerId: 'host-a',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1220,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+    vi.setSystemTime(9_001);
+    const firstFilled = await matchmakeOnline({
+      peerId: 'host-a',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1220,
+      roomId: firstHost.roomId,
+      ownerToken: firstHost.ownerToken,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+
+    vi.setSystemTime(12_000);
+    const secondHost = await matchmakeOnline({
+      peerId: 'host-b',
+      characterId: 'dax',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1240,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+    vi.setSystemTime(21_001);
+    const secondFilled = await matchmakeOnline({
+      peerId: 'host-b',
+      characterId: 'dax',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1240,
+      roomId: secondHost.roomId,
+      ownerToken: secondHost.ownerToken,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+
+    expect(firstFilled.opponentKind).toBe('bot');
+    expect(secondFilled.opponentKind).toBe('bot');
+    expect(secondFilled.botOpponent?.playerId).toBe(firstFilled.botOpponent?.playerId);
+    expect(secondFilled.guestPeerId).toBe(firstFilled.botOpponent?.playerId);
+  });
+
+  it('keeps generating fresh bots when memory reuse does not roll', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.99);
+    const firstHost = await matchmakeOnline({
+      peerId: 'host-a',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1220,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+    vi.setSystemTime(9_001);
+    const firstFilled = await matchmakeOnline({
+      peerId: 'host-a',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1220,
+      roomId: firstHost.roomId,
+      ownerToken: firstHost.ownerToken,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+
+    vi.setSystemTime(12_000);
+    const secondHost = await matchmakeOnline({
+      peerId: 'host-b',
+      characterId: 'dax',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1240,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+    vi.setSystemTime(21_001);
+    const secondFilled = await matchmakeOnline({
+      peerId: 'host-b',
+      characterId: 'dax',
+      stageId: 'dojo',
+      queue: 'casual',
+      kp: 1240,
+      roomId: secondHost.roomId,
+      ownerToken: secondHost.ownerToken,
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+
+    expect(firstFilled.opponentKind).toBe('bot');
+    expect(secondFilled.opponentKind).toBe('bot');
+    expect(secondFilled.botOpponent?.playerId).not.toBe(firstFilled.botOpponent?.playerId);
   });
 });
