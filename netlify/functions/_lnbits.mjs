@@ -43,17 +43,27 @@ export function paidTournamentConfig() {
 
 export async function usdToSats(usd) {
   const { url, invoiceKey } = lnbitsConfig();
-  const payload = await lnbitsFetch('/api/v1/conversion', {
-    method: 'POST',
-    headers: { 'x-api-key': invoiceKey },
-    body: JSON.stringify({ from: 'USD', to: 'sat', amount: usd })
-  }, { url });
-  const sats = Math.floor(Number(payload.result ?? payload.sats ?? payload.amount));
+  const lnbitsAttempts = [
+    { from: 'USD', to: 'sat', amount: usd },
+    { from: 'USD', to: 'sats', amount: usd }
+  ];
+  for (const body of lnbitsAttempts) {
+    const payload = await lnbitsFetch('/api/v1/conversion', {
+      method: 'POST',
+      headers: { 'x-api-key': invoiceKey },
+      body: JSON.stringify(body)
+    }, { url, tolerateError: true });
+    const sats = satsFromConversionPayload(payload);
+    if (sats > 0) return sats;
+  }
+
+  const btcUsd = await fetchBtcUsdRate();
+  const sats = Math.floor((Number(usd) / btcUsd) * 100_000_000);
   if (!Number.isFinite(sats) || sats <= 0) {
-    throw Object.assign(new Error('LNbits conversion did not return a positive sat amount'), {
+    throw Object.assign(new Error('Could not convert USD entry fee to sats'), {
       statusCode: 502,
       code: 'lnbits_conversion_failed',
-      payload
+      btcUsd
     });
   }
   return sats;
@@ -125,7 +135,7 @@ export function paymentIsPaid(payload) {
   return status === 'success' || status === 'paid' || status === 'complete' || status === 'completed';
 }
 
-async function lnbitsFetch(path, init, { url }) {
+async function lnbitsFetch(path, init, { url, tolerateError = false }) {
   const response = await fetch(`${url}${path}`, {
     ...init,
     headers: {
@@ -136,12 +146,60 @@ async function lnbitsFetch(path, init, { url }) {
   const text = await response.text();
   const payload = text ? JSON.parse(text) : {};
   if (!response.ok) {
+    if (tolerateError) return { __lnbitsError: true, status: response.status, payload };
     throw Object.assign(new Error(payload?.message || payload?.detail || payload?.error || `LNbits request failed: ${response.status}`), {
       statusCode: 502,
       code: 'lnbits_request_failed',
       lnbitsStatus: response.status,
       payload
     });
+  }
+  return payload;
+}
+
+function satsFromConversionPayload(payload) {
+  if (!payload || payload.__lnbitsError) return 0;
+  const raw = payload.result ?? payload.sats ?? payload.sat ?? payload.amount;
+  const sats = Math.floor(Number(raw));
+  return Number.isFinite(sats) && sats > 0 ? sats : 0;
+}
+
+async function fetchBtcUsdRate() {
+  const configured = Number(process.env.BTC_USD_RATE);
+  if (Number.isFinite(configured) && configured > 0) return configured;
+
+  const providers = [
+    async () => {
+      const payload = await fetchJson('https://mempool.space/api/v1/prices');
+      return Number(payload?.USD);
+    },
+    async () => {
+      const payload = await fetchJson('https://api.coinbase.com/v2/exchange-rates?currency=BTC');
+      return Number(payload?.data?.rates?.USD);
+    }
+  ];
+  const errors = [];
+  for (const provider of providers) {
+    try {
+      const rate = await provider();
+      if (Number.isFinite(rate) && rate > 0) return rate;
+    } catch (error) {
+      errors.push(error instanceof Error ? error.message : String(error));
+    }
+  }
+  throw Object.assign(new Error('Could not fetch BTC/USD rate for Lightning invoice'), {
+    statusCode: 502,
+    code: 'btc_usd_rate_unavailable',
+    errors
+  });
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, { method: 'GET' });
+  const text = await response.text();
+  const payload = text ? JSON.parse(text) : {};
+  if (!response.ok) {
+    throw new Error(payload?.message || payload?.error || `Rate request failed: ${response.status}`);
   }
   return payload;
 }

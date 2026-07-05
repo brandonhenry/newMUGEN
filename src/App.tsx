@@ -403,17 +403,15 @@ const ROUND_ANNOUNCER_SFX = [
 const KI_CHARGE_SFX = '/sounds/ki/charge.wav';
 const KI_MAX_CHARGE_SFX = '/sounds/ki/max-charge.wav';
 const KI_MAX_VALUE = 100;
-const GAME_SFX_URLS = [...new Set([
-  ...Object.values(HIT_SFX),
-  ...Object.values(CHARACTER_ATTACK_VOICE_SFX).flat(),
-  ...Object.values(CHARACTER_HURT_VOICE_SFX),
-  ...Object.values(CHARACTER_WIN_VOICE_SFX),
-  ...Object.values(CHARACTER_SPECIAL_ABILITY_VOICE_SFX),
-  ...ROUND_ANNOUNCER_SFX,
-  KI_CHARGE_SFX,
-  KI_MAX_CHARGE_SFX
+const CRITICAL_GAME_SFX_URLS = [...new Set([
+  KORE_MENU_HOVER_SOUND_URL,
+  KORE_MENU_SELECT_SOUND_URL,
+  KORE_INNER_MENU_SELECT_SOUND_URL,
+  HIT_SFX.punch1,
+  HIT_SFX.heavy2,
+  ROUND_ANNOUNCER_SFX[0]
 ])];
-const SFX_POOL_SIZE = 4;
+const SFX_POOL_SIZE = 2;
 const sfxPools = new Map<string, { audios: HTMLAudioElement[]; cursor: number }>();
 const sfxBuffers = new Map<string, { buffer: AudioBuffer | null; promise: Promise<AudioBuffer | null> | null }>();
 let sfxAudioContext: AudioContext | null = null;
@@ -465,10 +463,7 @@ function playBufferedSfx(url: string, volume: number, playbackRate = 1) {
   if (!context) return false;
   if (context.state === 'suspended') void context.resume().catch(() => undefined);
   const entry = sfxBuffers.get(url);
-  if (!entry?.buffer) {
-    preloadSfxBuffer(url);
-    return false;
-  }
+  if (!entry?.buffer) return false;
   const source = context.createBufferSource();
   const gain = context.createGain();
   source.buffer = entry.buffer;
@@ -505,8 +500,7 @@ function getSfxPool(url: string) {
     pool = {
       audios: Array.from({ length: SFX_POOL_SIZE }, () => {
         const audio = new Audio(url);
-        audio.preload = 'auto';
-        audio.load();
+        audio.preload = 'metadata';
         return audio;
       }),
       cursor: 0
@@ -518,29 +512,12 @@ function getSfxPool(url: string) {
 
 function preloadSfxPool(urls: string[]) {
   urls.forEach((url) => {
-    getSfxPool(url);
     preloadSfxBuffer(url);
   });
 }
 
 function unlockSfxPool(urls: string[]) {
-  const bufferedUnlock = unlockBufferedSfx(urls);
-  urls.forEach((url) => {
-    const pool = getSfxPool(url);
-    const audio = pool.audios[0];
-    if (!audio) return;
-    audio.muted = true;
-    audio.volume = 0;
-    audio.currentTime = 0;
-    void audio.play().then(() => {
-      audio.pause();
-      audio.currentTime = 0;
-      audio.muted = false;
-    }).catch(() => {
-      audio.muted = false;
-    });
-  });
-  return bufferedUnlock;
+  return unlockBufferedSfx(urls);
 }
 
 function playPooledSfx(url: string, volume: number, playbackRate = 1) {
@@ -1343,6 +1320,8 @@ function pickRandomStage(stageRoster: StageDefinition[]) {
 }
 
 function pickMenuAttractStage(stageRoster: StageDefinition[]) {
+  const lightweightStages = stageRoster.filter((stage) => !stage.hidden && stage.renderMode !== 'model' && !stage.model?.path && !stage.model?.url);
+  if (lightweightStages.length > 0) return pickRandomStage(lightweightStages) ?? lightweightStages[0];
   return pickRandomStage(stageRoster) ?? stages[0];
 }
 
@@ -3059,7 +3038,7 @@ export default function App() {
     hoverAudio.load();
     selectAudio.load();
     innerSelectAudio.load();
-    preloadSfxPool(GAME_SFX_URLS);
+    preloadSfxPool(CRITICAL_GAME_SFX_URLS);
     menuHoverAudioRef.current = hoverAudio;
     menuSelectAudioRef.current = selectAudio;
     innerMenuSelectAudioRef.current = innerSelectAudio;
@@ -3075,7 +3054,7 @@ export default function App() {
 
   const unlockGameAudio = useCallback(() => {
     if (typeof window === 'undefined' || audioUnlockedRef.current) return;
-    void unlockSfxPool(GAME_SFX_URLS).then((unlocked) => {
+    void unlockSfxPool(CRITICAL_GAME_SFX_URLS).then((unlocked) => {
       if (unlocked) audioUnlockedRef.current = true;
     });
     const audio = new Audio(KORE_MENU_SELECT_SOUND_URL);
@@ -4466,6 +4445,73 @@ function UnlockRevealScreen({
   );
 }
 
+function MenuAttractBackground({
+  p1,
+  p2,
+  roster,
+  stages: stageRoster,
+  sparkSettings,
+  reducedMotion
+}: {
+  p1: CharacterDefinition;
+  p2: CharacterDefinition;
+  roster: CharacterDefinition[];
+  stages: StageDefinition[];
+  sparkSettings: GameSettings['display']['impactSparks'];
+  reducedMotion: boolean;
+}) {
+  const makeFreshMatch = useCallback(
+    () => createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }),
+    [p1, p2, roster, stageRoster]
+  );
+  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => makeFreshMatch());
+  const matchRef = useRef<MatchSnapshot | null>(attractMatch);
+
+  useEffect(() => {
+    const fresh = makeFreshMatch();
+    matchRef.current = fresh;
+    setAttractMatch(fresh);
+  }, [makeFreshMatch]);
+
+  useEffect(() => {
+    let frame = 0;
+    let last = performance.now();
+    let lastPublish = last;
+    let accumulator = 0;
+    const fixedStep = 1 / 30;
+    const publishStepMs = 1000 / 20;
+
+    const tick = (now: number) => {
+      accumulator += Math.min(0.05, (now - last) / 1000);
+      last = now;
+      while (accumulator >= fixedStep) {
+        const current = matchRef.current ?? makeFreshMatch();
+        if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
+          matchRef.current = makeFreshMatch();
+        } else {
+          matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
+        }
+        accumulator -= fixedStep;
+      }
+      if (now - lastPublish >= publishStepMs) {
+        lastPublish = now;
+        setAttractMatch(matchRef.current);
+      }
+      frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [makeFreshMatch]);
+
+  if (!attractMatch) return null;
+  return (
+    <div className="menu-attract-background" aria-hidden="true">
+      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} />
+    </div>
+  );
+}
+
 function MenuScreen({
   roster,
   stages: stageRoster,
@@ -4504,10 +4550,8 @@ function MenuScreen({
   const [attractIds] = useState(() => pickAttractCharacterIds(roster, unlockedCharacterIds));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => (p1 && p2 ? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }) : null));
   const [activeMenuIndex, setActiveMenuIndex] = useState(1);
   const [menuChromeHidden, setMenuChromeHidden] = useState(false);
-  const matchRef = useRef<MatchSnapshot | null>(attractMatch);
   const activeMenuIndexRef = useRef(1);
   const menuChromeHiddenRef = useRef(false);
   const hiddenMenuGamepadPressedRef = useRef(false);
@@ -4555,40 +4599,6 @@ function MenuScreen({
     hideMenuChrome();
     onMenuHover();
   }, [hideMenuChrome, onMenuHover, revealMenuChrome]);
-
-  useEffect(() => {
-    if (!p1 || !p2) return;
-    const fresh = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster });
-    matchRef.current = fresh;
-    setAttractMatch(fresh);
-  }, [p1, p2, roster, stageRoster]);
-
-  useEffect(() => {
-    if (!p1 || !p2) return;
-    let frame = 0;
-    let last = performance.now();
-    let accumulator = 0;
-    const fixedStep = 1 / 60;
-
-    const tick = (now: number) => {
-      accumulator += Math.min(0.05, (now - last) / 1000);
-      last = now;
-      while (accumulator >= fixedStep) {
-        const current = matchRef.current ?? createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster });
-        if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
-          matchRef.current = createMatch(p1, p2, pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster });
-        } else {
-          matchRef.current = stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep);
-        }
-        accumulator -= fixedStep;
-      }
-      setAttractMatch(matchRef.current);
-      frame = requestAnimationFrame(tick);
-    };
-
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [p1, p2, roster, stageRoster]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -4723,10 +4733,15 @@ function MenuScreen({
       tabIndex={-1}
       onKeyDown={handleHiddenMenuSurfaceKey}
     >
-      {attractMatch && (
-        <div className="menu-attract-background" aria-hidden="true">
-          <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} />
-        </div>
+      {p1 && p2 && (
+        <MenuAttractBackground
+          p1={p1}
+          p2={p2}
+          roster={roster}
+          stages={stageRoster}
+          sparkSettings={sparkSettings}
+          reducedMotion={reducedMotion}
+        />
       )}
       <div className="menu-vignette" />
       {!menuChromeHidden && <section className="kore-menu-overlay" aria-label="KORE main menu">

@@ -14,8 +14,10 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 
 export async function loadStageRoster(): Promise<StageLoadResult> {
   try {
-    const cacheBust = Date.now().toString(36);
-    const index = (await fetch(`/stages/index.json?v=${cacheBust}`, { cache: 'no-store' }).then((response) => response.json())) as {
+    const cacheBust = import.meta.env.DEV ? Date.now().toString(36) : '';
+    const manifestFetchOptions: RequestInit | undefined = import.meta.env.DEV ? { cache: 'no-store' } : undefined;
+    const withCacheBust = (path: string) => (cacheBust ? `${path}?v=${cacheBust}` : path);
+    const index = (await fetch(withCacheBust('/stages/index.json'), manifestFetchOptions).then((response) => response.json())) as {
       stages?: string[];
     };
     const ids = Array.isArray(index.stages) ? index.stages : [];
@@ -28,7 +30,7 @@ export async function loadStageRoster(): Promise<StageLoadResult> {
       await Promise.all(
         ids.map(async (id) => {
           try {
-            const response = await fetch(`/stages/${id}/stage.json?v=${cacheBust}`, { cache: 'no-store' });
+            const response = await fetch(withCacheBust(`/stages/${id}/stage.json`), manifestFetchOptions);
             if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return null;
             const stage = await response.json() as StageDefinition;
             if (id === 'hidden-leaf-village') {

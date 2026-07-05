@@ -82,6 +82,10 @@ const defaultCameraSettings: GameSettings['camera'] = {
   smoothing: 1,
   zoomBias: 1
 };
+const MENU_ATTRACT_FIGHTER_RENDER_STYLE: Partial<FighterRenderStyle> = {
+  castShadow: false,
+  receiveShadow: false
+};
 
 const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
 const MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -822,7 +826,7 @@ function StageVisualStyleRig({
         <ambientLight color={style.lighting.skyColor} intensity={style.lighting.ambientIntensity * previewScale} />
       )}
       <directionalLight
-        castShadow
+        castShadow={!preview}
         position={style.lighting.keyPosition}
         color={style.lighting.keyColor}
         intensity={style.lighting.keyIntensity * previewScale}
@@ -960,14 +964,26 @@ function TransformSmoke({ framesRemaining }: { framesRemaining: number }) {
   );
 }
 
-function ShadowCloneLayer({ fighter, timeScale, stage, renderStyle }: { fighter: FighterRuntime; timeScale: number; stage?: StageDefinition; renderStyle?: Partial<FighterRenderStyle> }) {
+function ShadowCloneLayer({
+  fighter,
+  timeScale,
+  stage,
+  renderStyle,
+  preferProcedural = false
+}: {
+  fighter: FighterRuntime;
+  timeScale: number;
+  stage?: StageDefinition;
+  renderStyle?: Partial<FighterRenderStyle>;
+  preferProcedural?: boolean;
+}) {
   const clone = fighter.shadowClone;
   if (!clone) return null;
   const cloneFighter = clone.phase === 'active' ? makeShadowCloneRenderFighter(fighter) : null;
   const showSmoke = clone.spawnSmokeFrames > 0 || clone.vanishSmokeFrames > 0;
   return (
     <>
-      {cloneFighter ? <FighterRig fighter={cloneFighter} timeScale={timeScale} stage={stage} renderStyle={renderStyle} /> : null}
+      {cloneFighter ? <FighterRig fighter={cloneFighter} timeScale={timeScale} stage={stage} renderStyle={renderStyle} preferProcedural={preferProcedural} /> : null}
       {showSmoke ? <ShadowCloneSmoke clone={clone} /> : null}
     </>
   );
@@ -2072,25 +2088,34 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
 
 export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
   return (
-    <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
-      {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+    <Canvas frameloop="always" dpr={[1, 1.15]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       <StageVisualStyleRig stage={match.stage} fighters={match.fighters} preview />
       <MenuAttractCamera match={match} />
-      <group position={[0, 0, 1.75]}>
-        <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
-      </group>
+      <MenuAttractArenaLite stage={match.stage} />
       <group position={[0, 0, 1.75]} scale={0.82}>
-        <FighterRig fighter={match.fighters[0]} stage={match.stage} />
-        <FighterRig fighter={match.fighters[1]} stage={match.stage} />
+        <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
+        <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
         <TransformEffectLayer fighter={match.fighters[0]} />
         <TransformEffectLayer fighter={match.fighters[1]} />
-        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
-        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
+        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} preferProcedural />
         <EffectLayer match={match} reducedMotion={reducedMotion} />
         <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       </group>
-      <ContactShadows position={[0, -0.01, 1.75]} opacity={0.32} scale={10} blur={3} far={3.5} />
     </Canvas>
+  );
+}
+
+function MenuAttractArenaLite({ stage }: { stage: StageDefinition }) {
+  const style = resolveStageVisualStyle(stage);
+  return (
+    <group position={[0, 0, 1.75]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]}>
+        <planeGeometry args={[13, 8]} />
+        <meshBasicMaterial color={stage.floor} toneMapped={false} />
+      </mesh>
+      <gridHelper args={[13, 12, stage.rail, style.lighting.fogColor]} position={[0, -0.045, 0]} />
+    </group>
   );
 }
 
@@ -4384,13 +4409,15 @@ function FighterRig({
   timeScale = 1,
   frameTimeOverride,
   stage,
-  renderStyle
+  renderStyle,
+  preferProcedural = false
 }: {
   fighter: FighterRuntime;
   timeScale?: number;
   frameTimeOverride?: number;
   stage?: StageDefinition;
   renderStyle?: Partial<FighterRenderStyle>;
+  preferProcedural?: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
   const yawInitialized = useRef(false);
@@ -4409,7 +4436,7 @@ function FighterRig({
     const getupProgress = getGetupRenderProgress(fighter);
     const juggleRoll = juggle * Math.sin(renderTime * 3.8 + fighter.slot) * 0.34;
     const attackLean = fighter.state === 'attack' || fighter.state === 'throwHold' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
-    const offsetX = getFighterRenderOffsetX(fighter, liveProgress, renderTime);
+    const offsetX = preferProcedural ? 0 : getFighterRenderOffsetX(fighter, liveProgress, renderTime);
     const shake = fighter.state === 'throwHeld' && fighter.throwShakeFrames > 0 ? Math.min(0.12, 0.024 + fighter.throwShakeFrames * 0.006) : 0;
     const shakeX = shake ? Math.sin(renderTime * 88 + fighter.slot * 1.7) * shake : 0;
     const shakeZ = shake ? Math.cos(renderTime * 76 + fighter.slot * 2.1) * shake * 0.45 : 0;
@@ -4430,7 +4457,9 @@ function FighterRig({
   return (
     <group ref={group} scale={[globalScale.width, globalScale.height, globalScale.width]}>
       <Bounds fit={false}>
-        {fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
+        {preferProcedural ? (
+          <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={effectiveOutlineStyle} renderStyle={materialStyle} />
+        ) : fighter.character.renderMode === 'spriteVoxel' || fighter.character.modelPath.startsWith('spritevoxel://') ? (
           fighter.character.voxelProfile === 'image-source' || fighter.character.voxelProfile === 'hd-image-source' ? (
             <ImageVoxelFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={effectiveOutlineStyle} renderStyle={materialStyle} />
           ) : (

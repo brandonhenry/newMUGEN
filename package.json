@@ -10,6 +10,8 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:perf": "npm run build && KORE_RUN_PERF_TESTS=1 PLAYWRIGHT_WEB_SERVER_COMMAND='npx vite preview --host 127.0.0.1 --port 4177' playwright test tests/performance.spec.ts --project=chromium",
+    "test:perf:live": "KORE_RUN_PERF_TESTS=1 KORE_LIVE_PERF_TEST=1 PLAYWRIGHT_NO_SERVER=1 PLAYWRIGHT_BASE_URL=https://playkore.com playwright test tests/performance.spec.ts --project=chromium",
     "audit:knockdown": "node scripts/audit-knockdown-scale-continuity.mjs",
     "import:kore-stages": "node scripts/import-kore-stages.mjs",
     "import:naruto-stages": "node scripts/import-naruto-stages.mjs",

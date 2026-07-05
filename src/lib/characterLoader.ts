@@ -315,13 +315,14 @@ function hasAttackAnimationFrames(character: CharacterDefinition, move: MoveDefi
 
 export async function loadCharacterRoster(): Promise<CharacterLoadResult> {
   try {
-    const index = (await fetch('/characters/index.json', { cache: 'no-store' }).then((response) => response.json())) as {
+    const manifestFetchOptions: RequestInit | undefined = import.meta.env.DEV ? { cache: 'no-store' } : undefined;
+    const index = (await fetch('/characters/index.json', manifestFetchOptions).then((response) => response.json())) as {
       characters: string[];
     };
     debugLog(2, 'character index fetched', { characterIds: index.characters });
     const loaded = await Promise.all(
       index.characters.map((id) =>
-        fetch(`/characters/${id}/character.json`, { cache: 'no-store' }).then((response) => response.json() as Promise<CharacterDefinition>)
+        fetch(`/characters/${id}/character.json`, manifestFetchOptions).then((response) => response.json() as Promise<CharacterDefinition>)
       )
     );
     const characters = (loaded.length > 0 ? loaded : starterCharacters).map(normalizeCharacter);
