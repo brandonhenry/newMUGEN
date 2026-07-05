@@ -1,0 +1,796 @@
+[
+  {
+    "type": "keep-swap",
+    "characterId": "franky",
+    "moveKey": "kickleft",
+    "family": "blaster",
+    "reason": "arm cannon/blaster visibly releases from the cyborg arm",
+    "projectileId": "mechanical-blaster-projectile",
+    "flags": {},
+    "index": 0,
+    "displayName": "Franky",
+    "strip": "item-000/move.png",
+    "proposal": [
+      {
+        "url": "item-000/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-000/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png"
+      },
+      {
+        "url": "item-000/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "mechanical blaster bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": "mechanical-blaster-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "franky",
+    "moveKey": "kickright",
+    "family": "blaster",
+    "reason": "arm cannon/blaster visibly releases from the cyborg arm",
+    "projectileId": "mechanical-blaster-projectile",
+    "flags": {},
+    "index": 1,
+    "displayName": "Franky",
+    "strip": "item-001/move.png",
+    "proposal": [
+      {
+        "url": "item-001/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-001/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png"
+      },
+      {
+        "url": "item-001/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "mechanical blaster bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": "mechanical-blaster-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:1+3",
+    "family": "firearm",
+    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
+    "projectileId": "firearm-bullet-projectile",
+    "flags": {},
+    "index": 2,
+    "displayName": "Train Heartnet",
+    "strip": "item-002/move.png",
+    "proposal": [
+      {
+        "url": "item-002/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-002/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-002/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": "firearm-bullet-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:O+2",
+    "family": "firearm",
+    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
+    "projectileId": "firearm-bullet-projectile",
+    "flags": {},
+    "index": 3,
+    "displayName": "Train Heartnet",
+    "strip": "item-003/move.png",
+    "proposal": [
+      {
+        "url": "item-003/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-003/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-003/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": "firearm-bullet-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:WS+4",
+    "family": "firearm",
+    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
+    "projectileId": "firearm-bullet-projectile",
+    "flags": {},
+    "index": 4,
+    "displayName": "Train Heartnet",
+    "strip": "item-004/move.png",
+    "proposal": [
+      {
+        "url": "item-004/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-004/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-004/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": "firearm-bullet-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "train-heartnet",
+    "moveKey": "kickleft",
+    "family": "firearm",
+    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
+    "projectileId": "firearm-bullet-projectile",
+    "flags": {},
+    "index": 5,
+    "displayName": "Train Heartnet",
+    "strip": "item-005/move.png",
+    "proposal": [
+      {
+        "url": "item-005/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-005/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-005/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": "firearm-bullet-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "train-heartnet",
+    "moveKey": "kickright",
+    "family": "firearm",
+    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
+    "projectileId": "firearm-bullet-projectile",
+    "flags": {},
+    "index": 6,
+    "displayName": "Train Heartnet",
+    "strip": "item-006/move.png",
+    "proposal": [
+      {
+        "url": "item-006/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-006/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-006/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": "firearm-bullet-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "train-heartnet",
+    "moveKey": "jabright",
+    "family": "firearm",
+    "reason": "gun is aimed or muzzle flash appears; projectile should be a bullet/tracer",
+    "projectileId": "firearm-bullet-projectile",
+    "flags": {},
+    "index": 7,
+    "displayName": "Train Heartnet",
+    "strip": "item-007/move.png",
+    "proposal": [
+      {
+        "url": "item-007/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-007/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-007/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": "firearm-bullet-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "piccolo",
+    "moveKey": "cmd:f+1",
+    "family": "kiGreen",
+    "reason": "finger/hand beam reads as a Namekian ki projectile",
+    "projectileId": "ki-energy-projectile",
+    "flags": {},
+    "index": 8,
+    "displayName": "Piccolo",
+    "strip": "item-008/move.png",
+    "proposal": [
+      {
+        "url": "item-008/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/16.png"
+      },
+      {
+        "url": "item-008/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/17.png"
+      },
+      {
+        "url": "item-008/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/62.png"
+      }
+    ],
+    "source": {
+      "label": "green ki beam",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/16.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/17.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/62.png"
+      ]
+    },
+    "current": "ki-energy-projectile"
+  },
+  {
+    "type": "unique-update",
+    "characterId": "yugi-mutou",
+    "moveKey": "cmd:O+2",
+    "family": "card",
+    "reason": "Special behavior: projectile/effect should auto-land on the enemy location rather than fire forward; it can still be sidestepped by lane separation.",
+    "projectileId": "card-magic-projectile",
+    "flags": {
+      "targetLocation": true
+    },
+    "index": 9,
+    "displayName": "Yugi Mutou",
+    "strip": "item-009/move.png",
+    "proposal": [
+      {
+        "url": "item-009/proposal-0.png",
+        "file": "tmp/projectile-specific-sources/kenney/extracted/PNG (Transparent)/magic_01.png"
+      },
+      {
+        "url": "item-009/proposal-1.png",
+        "file": "tmp/projectile-specific-sources/kenney/extracted/PNG (Transparent)/magic_02.png"
+      },
+      {
+        "url": "item-009/proposal-2.png",
+        "file": "tmp/projectile-specific-sources/kenney/extracted/PNG (Transparent)/magic_03.png"
+      }
+    ],
+    "source": {
+      "label": "target-location duel spell glyph",
+      "page": "https://kenney.nl/assets/particle-pack",
+      "files": [
+        "tmp/projectile-specific-sources/kenney/extracted/PNG (Transparent)/magic_01.png",
+        "tmp/projectile-specific-sources/kenney/extracted/PNG (Transparent)/magic_02.png",
+        "tmp/projectile-specific-sources/kenney/extracted/PNG (Transparent)/magic_03.png"
+      ]
+    },
+    "current": "card-magic-projectile"
+  },
+  {
+    "type": "keep-swap",
+    "characterId": "yusuke-urameshi",
+    "moveKey": "cmd:qcf+4",
+    "family": "spirit",
+    "reason": "finger-gun pose is the correct Spirit Gun projectile; frame-149 was removed from the sequence.",
+    "projectileId": "spirit-energy-projectile",
+    "flags": {},
+    "index": 10,
+    "displayName": "Yusuke Urameshi",
+    "strip": "item-010/move.png",
+    "proposal": [
+      {
+        "url": "item-010/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/19.png"
+      },
+      {
+        "url": "item-010/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/18.png"
+      },
+      {
+        "url": "item-010/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      }
+    ],
+    "source": {
+      "label": "spirit gun shot",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/19.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/18.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      ]
+    },
+    "current": "spirit-energy-projectile"
+  },
+  {
+    "type": "add",
+    "characterId": "franky",
+    "moveKey": "cmd:2+4",
+    "family": "blaster",
+    "reason": "additional Franky cannon/blaster release pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 11,
+    "displayName": "Franky",
+    "strip": "item-011/move.png",
+    "proposal": [
+      {
+        "url": "item-011/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-011/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png"
+      },
+      {
+        "url": "item-011/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "mechanical blaster bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "franky",
+    "moveKey": "cmd:f+1",
+    "family": "blaster",
+    "reason": "additional Franky cannon/blaster release pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 12,
+    "displayName": "Franky",
+    "strip": "item-012/move.png",
+    "proposal": [
+      {
+        "url": "item-012/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-012/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png"
+      },
+      {
+        "url": "item-012/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "mechanical blaster bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/56.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:O+1",
+    "family": "firearm",
+    "reason": "additional gun-aim/fire pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 13,
+    "displayName": "Train Heartnet",
+    "strip": "item-013/move.png",
+    "proposal": [
+      {
+        "url": "item-013/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-013/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-013/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:d+1",
+    "family": "firearm",
+    "reason": "additional gun-aim/fire pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 14,
+    "displayName": "Train Heartnet",
+    "strip": "item-014/move.png",
+    "proposal": [
+      {
+        "url": "item-014/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-014/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-014/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:f+1",
+    "family": "firearm",
+    "reason": "additional gun-aim/fire pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 15,
+    "displayName": "Train Heartnet",
+    "strip": "item-015/move.png",
+    "proposal": [
+      {
+        "url": "item-015/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-015/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-015/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "train-heartnet",
+    "moveKey": "cmd:qcf+1",
+    "family": "firearm",
+    "reason": "additional gun-aim/fire pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 16,
+    "displayName": "Train Heartnet",
+    "strip": "item-016/move.png",
+    "proposal": [
+      {
+        "url": "item-016/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-016/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-016/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "train-heartnet",
+    "moveKey": "jableft",
+    "family": "firearm",
+    "reason": "additional gun-aim/fire pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 17,
+    "displayName": "Train Heartnet",
+    "strip": "item-017/move.png",
+    "proposal": [
+      {
+        "url": "item-017/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-017/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-017/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "dr-mashirito",
+    "moveKey": "cmd:O+2",
+    "family": "robot",
+    "reason": "robot/cannon barrel pose reads as a projectile shot",
+    "projectileId": null,
+    "flags": {},
+    "index": 18,
+    "displayName": "Dr. Mashirito",
+    "strip": "item-018/move.png",
+    "proposal": [
+      {
+        "url": "item-018/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-018/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/48.png"
+      },
+      {
+        "url": "item-018/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "robot cannon bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/48.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "dr-mashirito",
+    "moveKey": "cmd:f+1",
+    "family": "robot",
+    "reason": "robot/cannon barrel pose reads as a projectile shot",
+    "projectileId": null,
+    "flags": {},
+    "index": 19,
+    "displayName": "Dr. Mashirito",
+    "strip": "item-019/move.png",
+    "proposal": [
+      {
+        "url": "item-019/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-019/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/48.png"
+      },
+      {
+        "url": "item-019/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "robot cannon bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/48.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "dr-mashirito",
+    "moveKey": "kickleft",
+    "family": "robot",
+    "reason": "robot/cannon barrel pose reads as a projectile shot",
+    "projectileId": null,
+    "flags": {},
+    "index": 20,
+    "displayName": "Dr. Mashirito",
+    "strip": "item-020/move.png",
+    "proposal": [
+      {
+        "url": "item-020/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png"
+      },
+      {
+        "url": "item-020/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/48.png"
+      },
+      {
+        "url": "item-020/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      }
+    ],
+    "source": {
+      "label": "robot cannon bolt",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/55.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/48.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/63.png"
+      ]
+    },
+    "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "gohan-super-saiyan-2",
+    "moveKey": "cmd:1+2",
+    "family": "firearm",
+    "reason": "hand-fired Dragon Ball ki blast pose found visually",
+    "projectileId": null,
+    "flags": {},
+    "index": 21,
+    "displayName": "Gohan (Super Saiyan 2)",
+    "strip": "item-021/move.png",
+    "proposal": [
+      {
+        "url": "item-021/proposal-0.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png"
+      },
+      {
+        "url": "item-021/proposal-1.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png"
+      },
+      {
+        "url": "item-021/proposal-2.png",
+        "file": "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      }
+    ],
+    "source": {
+      "label": "firearm bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/65.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/64.png",
+        "tmp/projectile-sourced-swap/oga-lasers/extracted/Laser Sprites/66.png"
+      ]
+    },
+    "current": ""
+  }
+]

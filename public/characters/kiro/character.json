@@ -10727,48 +10727,5 @@
       ],
       "color": "#b8f4ff"
     }
-  ],
-  "moveProjectiles": {
-    "kickright": [
-      {
-        "id": "kickright-shot",
-        "projectileId": "chakra-or-tool-projectile",
-        "label": "Wind Release: Rasenshuriken Chakra Shot",
-        "spawnFrame": 2,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 96,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 108,
-        "speed": 12,
-        "forwardVelocity": 12,
-        "homingMode": "limited",
-        "homingStrength": 3.2,
-        "homingTurnRate": 3.8,
-        "homingEndFrame": 54,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.42,
-            0.38,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true
-      }
-    ]
-  }
+  ]
 }

@@ -165,8 +165,7 @@
       "/characters/yusuke-urameshi/frames/frame-145.png",
       "/characters/yusuke-urameshi/frames/frame-146.png",
       "/characters/yusuke-urameshi/frames/frame-147.png",
-      "/characters/yusuke-urameshi/frames/frame-148.png",
-      "/characters/yusuke-urameshi/frames/frame-149.png"
+      "/characters/yusuke-urameshi/frames/frame-148.png"
     ],
     "cmd:WS+4": [
       "/characters/yusuke-urameshi/frames/frame-100.png",
@@ -2546,47 +2545,6 @@
     }
   ],
   "moveProjectiles": {
-    "cmd:O+2": [
-      {
-        "id": "cmd-o-2-shot",
-        "projectileId": "spirit-energy-projectile",
-        "label": "Yusuke Urameshi Aura Drive Spirit Shot",
-        "spawnFrame": 18,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 96,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 108,
-        "speed": 13.5,
-        "forwardVelocity": 13.5,
-        "homingMode": "limited",
-        "homingStrength": 2.4,
-        "homingTurnRate": 3.2,
-        "homingEndFrame": 54,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.38,
-            0.34,
-            0.66
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true
-      }
-    ],
     "cmd:qcf+4": [
       {
         "id": "cmd-qcf-4-shot",
