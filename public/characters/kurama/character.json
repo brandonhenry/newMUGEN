@@ -18,6 +18,48 @@
   ],
   "spriteFrameCount": 220,
   "voxelProfile": "hd-image-source",
+  "projectiles": [
+    {
+      "id": "finger-gun-bullet-projectile",
+      "name": "Finger Gun Bullet",
+      "sourcePath": "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/kurama/projectiles/finger-gun-bullet-projectile/source/raw/65.png",
+      "frames": [
+        "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.92,
+        0.92,
+        0.26
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe06e"
+    }
+  ],
   "animationFrames": {
     "idle": [
       "/characters/kurama/frames/frame-000.png",
@@ -244,12 +286,6 @@
       "/characters/kurama/frames/frame-179.png",
       "/characters/kurama/frames/frame-180.png"
     ],
-    "cmd:2+4": [
-      "/characters/kurama/frames/frame-036.png",
-      "/characters/kurama/frames/frame-037.png",
-      "/characters/kurama/frames/frame-038.png",
-      "/characters/kurama/frames/frame-039.png"
-    ],
     "cmd:3+4": [
       "/characters/kurama/frames/frame-070.png",
       "/characters/kurama/frames/frame-071.png",
@@ -360,7 +396,6 @@
     "cmd:1+2": 8,
     "cmd:1+3": 8,
     "cmd:2+3": 8,
-    "cmd:2+4": 8,
     "cmd:3+4": 8,
     "cmd:O+2": 8,
     "cmd:f+2": 10,
@@ -606,6 +641,722 @@
     "secondary": "#db1a7f",
     "accent": "#df47dd"
   },
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama jableft Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.72,
+        "blockDamageScale": 0.72,
+        "pushbackScale": 0.72,
+        "blockPushbackScale": 0.72,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "jabright": [
+      {
+        "id": "jabright-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama jabright Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.78,
+        "blockDamageScale": 0.78,
+        "pushbackScale": 0.72,
+        "blockPushbackScale": 0.72,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "kickleft": [
+      {
+        "id": "kickleft-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama kickleft Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.78,
+        "blockDamageScale": 0.78,
+        "pushbackScale": 0.72,
+        "blockPushbackScale": 0.72,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd-f-1-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:f+1 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:d/f+2": [
+      {
+        "id": "cmd-d-f-2-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:d/f+2 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:FC+1": [
+      {
+        "id": "cmd-fc-1-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:FC+1 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:FC+2": [
+      {
+        "id": "cmd-fc-2-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:FC+2 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:1+2": [
+      {
+        "id": "cmd-1-2-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:1+2 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:1+3": [
+      {
+        "id": "cmd-1-3-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:1+3 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:2+3": [
+      {
+        "id": "cmd-2-3-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:2+3 Finger Gun Bullet",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.92,
+        "blockDamageScale": 0.92,
+        "pushbackScale": 0.86,
+        "blockPushbackScale": 0.86,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:3+4 Finger Gun Bullet",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.92,
+        "blockDamageScale": 0.92,
+        "pushbackScale": 0.86,
+        "blockPushbackScale": 0.86,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:O+2 Finger Gun Bullet",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.92,
+        "blockDamageScale": 0.92,
+        "pushbackScale": 0.86,
+        "blockPushbackScale": 0.86,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:f+2": [
+      {
+        "id": "cmd-f-2-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:f+2 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:d+1": [
+      {
+        "id": "cmd-d-1-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:d+1 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:qcf+1": [
+      {
+        "id": "cmd-qcf-1-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:qcf+1 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:WS+2": [
+      {
+        "id": "cmd-ws-2-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:WS+2 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ],
+    "cmd:O+1": [
+      {
+        "id": "cmd-o-1-finger-gun-shot",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama cmd:O+1 Finger Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 13.5,
+        "forwardVelocity": 13.5,
+        "homingMode": "limited",
+        "homingStrength": 1.6,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.84,
+        "blockDamageScale": 0.84,
+        "pushbackScale": 0.8,
+        "blockPushbackScale": 0.8,
+        "mirrorWithFacing": true,
+        "clash": false
+      }
+    ]
+  },
   "moveOverrides": {
     "jableft": {
       "startupFrames": 4,
@@ -843,24 +1594,6 @@
       "forwardForceEndFrame": 29,
       "label": "Kurama Low Feint",
       "hitLevel": "low"
-    },
-    "cmd:2+4": {
-      "startupFrames": 0,
-      "activeFrames": 47,
-      "recoveryFrames": 1,
-      "damage": 15,
-      "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 12,
-      "range": 1.74,
-      "forwardForce": 1.49,
-      "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 25,
-      "label": "Kurama Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -1700,6 +2433,11 @@
       }
     },
     "backHop": {
+      "22": {
+        "width": 1.442,
+        "height": 0.92,
+        "offsetX": 0
+      },
       "40": {
         "width": 0.98,
         "height": 0.98,
@@ -1733,11 +2471,6 @@
       "48": {
         "width": 1.09,
         "height": 1.09,
-        "offsetX": 0
-      },
-      "22": {
-        "width": 1.442,
-        "height": 0.92,
         "offsetX": 0
       }
     },
@@ -1891,32 +2624,32 @@
     "jableft": {
       "129": {
         "width": 1.041,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "130": {
         "width": 1.242,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "131": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "132": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "133": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "134": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2014,7 +2747,7 @@
       },
       "111": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "112": {
@@ -2039,7 +2772,7 @@
       },
       "116": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "117": {
@@ -2071,7 +2804,7 @@
       },
       "165": {
         "width": 1.202,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "166": {
@@ -2106,12 +2839,12 @@
       },
       "172": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "173": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "174": {
@@ -2160,32 +2893,32 @@
     "cmd:f+1": {
       "129": {
         "width": 1.041,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "130": {
         "width": 1.242,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "131": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "132": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "133": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "134": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2378,64 +3111,64 @@
     "cmd:d+1": {
       "129": {
         "width": 1.041,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "130": {
         "width": 1.242,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "131": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "132": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "133": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "134": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
     "cmd:qcf+1": {
       "129": {
         "width": 1.041,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "130": {
         "width": 1.242,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "131": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "132": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "133": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "134": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2504,32 +3237,32 @@
     "cmd:O+1": {
       "129": {
         "width": 1.041,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "130": {
         "width": 1.242,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "131": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "132": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "133": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "134": {
         "width": 0.981,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       }
     },
@@ -2567,17 +3300,17 @@
     "cmd:WS+4": {
       "196": {
         "width": 1.202,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "197": {
         "width": 1.282,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "198": {
         "width": 1.362,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "199": {
@@ -2614,12 +3347,12 @@
       },
       "143": {
         "width": 1.322,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "144": {
         "width": 1.362,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "145": {
@@ -2629,12 +3362,12 @@
       },
       "146": {
         "width": 1.562,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "147": {
         "width": 1.482,
-        "height": 1.0,
+        "height": 1,
         "offsetX": 0
       },
       "148": {
@@ -2644,29 +3377,7 @@
       },
       "149": {
         "width": 1.442,
-        "height": 1.0,
-        "offsetX": 0
-      }
-    },
-    "cmd:2+4": {
-      "36": {
-        "width": 0.804,
-        "height": 0.82,
-        "offsetX": 0
-      },
-      "37": {
-        "width": 0.804,
-        "height": 0.82,
-        "offsetX": 0
-      },
-      "38": {
-        "width": 0.706,
-        "height": 0.72,
-        "offsetX": 0
-      },
-      "39": {
-        "width": 0.706,
-        "height": 0.72,
+        "height": 1,
         "offsetX": 0
       }
     },

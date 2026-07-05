@@ -384,7 +384,7 @@ test('opens tournament mode above characters and shows paid beta disabled', asyn
 
   await tournamentButton.click();
   await expect(page.locator('.tournament-select-screen')).toBeVisible();
-  await expect(page.getByRole('button', { name: /\$2 BTC/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /\$2 Lightning/i })).toBeDisabled();
   await expect(page.getByText('Paid beta unavailable')).toBeVisible();
 });
 

@@ -5,9 +5,11 @@ import {
   ChevronDown,
   Award,
   BarChart3,
+  Copy,
   Download,
   Eye,
   EyeOff,
+  ExternalLink,
   Gamepad2,
   Home,
   History,
@@ -153,6 +155,7 @@ import {
 } from './lib/voxelBodyNormalization';
 import {
   advanceTournamentBracket,
+  claimTournamentPrize,
   createInfiniteTournamentBracket,
   createLocalTournamentBracket,
   enterTournament,
@@ -2718,7 +2721,7 @@ export default function App() {
     const profile = onlineProfile ?? writeOnlineProfile({ displayName: 'PLAYER' });
     if (!onlineProfile) setOnlineProfile(profile);
     const paid = tournamentMode === 'paid';
-    setTournamentStatusText(paid ? 'Creating BTCPay invoice' : 'Entering free online tournament');
+    setTournamentStatusText(paid ? 'Creating Lightning invoice' : 'Entering free online tournament');
     const result = await enterTournament({
       kind: paid ? 'paidOnline' : 'freeOnline',
       playerId: profile.playerId,
@@ -2736,6 +2739,10 @@ export default function App() {
         checkoutUrl: result.checkoutUrl ?? result.entry.checkoutUrl,
         provider: result.entry.paymentProvider,
         invoiceId: result.entry.paymentInvoiceId,
+        checkingId: result.checkingId ?? result.entry.checkingId,
+        amountSats: result.amountSats ?? result.entry.amountSats,
+        paymentRequest: result.paymentRequest ?? result.entry.paymentRequest,
+        lightningUrl: result.lightningUrl ?? result.entry.lightningUrl,
         paidAt: result.entry.paidAt
       }
       : undefined;
@@ -2763,15 +2770,33 @@ export default function App() {
       character_id: characterId,
       payment_state: result.entry.paymentState
     });
-    if (paid && payment?.state === 'invoicePending' && payment.checkoutUrl) {
-      captureAppAnalytics('tournament_payment_opened', {
-        tournament_id: result.bracket.id,
-        entry_id: result.entry.id,
-        provider: payment.provider ?? null
-      });
-      window.open(payment.checkoutUrl, '_blank', 'noopener,noreferrer');
-    }
   }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, rankedProfile?.kp, rankedProfile?.kr, roster]);
+
+  const claimPaidTournamentPrize = useCallback(async (bolt11: string) => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    if (!current || !profile) throw new Error('Tournament entry unavailable');
+    setTournamentStatusText('Submitting prize invoice');
+    const result = await claimTournamentPrize({
+      tournamentId: current.bracket.id,
+      playerId: profile.playerId,
+      bolt11
+    });
+    setOnlineTournamentStatus({
+      bracket: result.bracket,
+      entry: result.entry,
+      assignedMatch: undefined,
+      payment: current.payment,
+      statusText: 'Prize sent'
+    });
+    setTournamentStatusText('Prize sent');
+    captureAppAnalytics('tournament_prize_claimed', {
+      tournament_id: result.bracket.id,
+      status: result.payout.status,
+      amount_sats: result.payout.amountSats ?? null
+    });
+    return 'Prize sent';
+  }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus]);
 
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
@@ -3623,6 +3648,7 @@ export default function App() {
               });
               startOnlineTournamentMatch();
             }}
+            onClaimPrize={(bolt11) => claimPaidTournamentPrize(bolt11)}
           />
         )}
         {screen === 'tournamentBracket' && (
@@ -5404,7 +5430,7 @@ function TournamentSelect({
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
   const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
-  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Pay $2 BTC' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Pay $2 Lightning' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
 
   useEffect(() => {
@@ -5577,9 +5603,9 @@ function TournamentSelect({
             onClick={() => paidEnabled && selectTournamentMode('paid')}
             disabled={!paidEnabled}
           >
-            <strong>{paidSummary?.entryFeeLabel ?? '$2 BTC'}</strong>
+            <strong>{paidSummary?.entryFeeLabel ?? '$2 Lightning'}</strong>
             <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} paid` : 'Paid beta unavailable'}</span>
-            <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 BTC'}</small>
+            <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
           </button>
           {isDevHost && (
             <button
@@ -5689,7 +5715,7 @@ function TournamentModeCarousel({
   const options: Array<{ mode: TournamentSelectMode; label: string; icon: ReactNode }> = [
     { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
     { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
-    { mode: 'paid', label: '$2 BTC', icon: <Trophy size={18} /> },
+    { mode: 'paid', label: '$2 Lightning', icon: <Trophy size={18} /> },
     ...(isDevHost ? [{ mode: 'infinite' as const, label: 'Infinite', icon: <Swords size={18} /> }] : [])
   ];
   const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));
@@ -5738,7 +5764,8 @@ function TournamentLobbyScreen({
   onBack,
   onMenu,
   onRefresh,
-  onStartOnlineMatch
+  onStartOnlineMatch,
+  onClaimPrize
 }: {
   localBracket: TournamentBracket | null;
   onlineStatus: TournamentStatusResult | null;
@@ -5748,19 +5775,24 @@ function TournamentLobbyScreen({
   onMenu: () => void;
   onRefresh: () => void;
   onStartOnlineMatch: () => void;
+  onClaimPrize: (bolt11: string) => Promise<string>;
 }) {
   const bracket = onlineStatus?.bracket ?? localBracket;
   const assignedMatch = onlineStatus?.assignedMatch;
   const payment = onlineStatus?.payment;
-  const title = bracket?.id.startsWith('infinite-') ? 'Infinite Tournament' : bracket?.kind === 'paidOnline' ? 'Paid BTC Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
+  const title = bracket?.id.startsWith('infinite-') ? 'Infinite Tournament' : bracket?.kind === 'paidOnline' ? 'Lightning Beta Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
   const finalRound = getTournamentTotalRounds(bracket);
   const confirmedEntries = confirmedTournamentEntryCount(bracket);
   const winner = bracket?.matches.find((match) => match.round === finalRound && match.winnerEntryId)?.winnerEntryId;
   const winnerEntry = getTournamentEntry(bracket ?? null, winner);
   const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry);
   const paymentConfirmed = payment?.state === 'paid' || payment?.state === 'entryLocked' || onlineStatus?.entry?.paymentState === 'paid' || onlineStatus?.entry?.paymentState === 'entryLocked';
-  const checkoutUrl = payment?.checkoutUrl ?? onlineStatus?.entry?.checkoutUrl;
+  const lightningUrl = payment?.lightningUrl ?? onlineStatus?.entry?.lightningUrl;
+  const paymentRequest = payment?.paymentRequest ?? onlineStatus?.entry?.paymentRequest;
+  const amountSats = payment?.amountSats ?? onlineStatus?.entry?.amountSats;
   const paymentProcessing = payment?.state === 'invoiceProcessing' || onlineStatus?.entry?.paymentState === 'invoiceProcessing';
+  const prizeEntry = onlineStatus?.entry;
+  const canClaimPrize = bracket?.kind === 'paidOnline' && bracket.status === 'completed' && prizeEntry?.payoutState === 'rewardPending' && Boolean(prizeEntry.payoutAmountSats);
 
   return (
     <div className="leaderboard-screen tournament-lobby-screen">
@@ -5783,21 +5815,40 @@ function TournamentLobbyScreen({
             </div>
             {payment?.state === 'invoicePending' && (
               <div className="tournament-payment-strip">
-                <span>Waiting for BTCPay payment</span>
-                {checkoutUrl && (
-                  <button type="button" className="primary-button" onClick={() => window.open(checkoutUrl, '_blank', 'noopener,noreferrer')}>
-                    Pay Now
-                  </button>
-                )}
+                <div>
+                  <span>Waiting for Lightning payment</span>
+                  {amountSats ? <small>{amountSats.toLocaleString()} sats</small> : null}
+                  {paymentRequest ? <code className="tournament-lightning-invoice">{paymentRequest}</code> : null}
+                </div>
+                <div className="tournament-payment-actions">
+                  {lightningUrl && (
+                    <button type="button" className="primary-button" onClick={() => window.open(lightningUrl, '_blank', 'noopener,noreferrer')}>
+                      <ExternalLink size={18} />
+                      Open
+                    </button>
+                  )}
+                  {paymentRequest && (
+                    <button type="button" className="secondary-button" onClick={() => void copyLightningInvoice(paymentRequest)}>
+                      <Copy size={18} />
+                      Copy
+                    </button>
+                  )}
+                </div>
               </div>
             )}
-            {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Waiting for BTCPay settlement.</div>}
+            {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Waiting for confirmation.</div>}
             {paymentConfirmed && <div className="tournament-status-strip">Payment confirmed. Tournament starts at {bracket.minEntries} paid players.</div>}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
               <div className="tournament-status-strip">
                 Winner: {winnerEntry.displayName}
               </div>
+            )}
+            {canClaimPrize && (
+              <TournamentPrizeClaim
+                amountSats={prizeEntry?.payoutAmountSats ?? 0}
+                onClaimPrize={onClaimPrize}
+              />
             )}
           </>
         ) : (
@@ -5828,6 +5879,54 @@ function TournamentLobbyScreen({
         </button>
       </div>
     </div>
+  );
+}
+
+function TournamentPrizeClaim({
+  amountSats,
+  onClaimPrize
+}: {
+  amountSats: number;
+  onClaimPrize: (bolt11: string) => Promise<string>;
+}) {
+  const [bolt11, setBolt11] = useState('');
+  const [claimStatus, setClaimStatus] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const canSubmit = bolt11.trim().length > 20 && !submitting;
+
+  return (
+    <form
+      className="tournament-claim-form"
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (!canSubmit) return;
+        setSubmitting(true);
+        setClaimStatus('Sending prize');
+        void onClaimPrize(bolt11.trim())
+          .then((message) => setClaimStatus(message))
+          .catch((error) => setClaimStatus(error instanceof Error ? error.message : 'Prize claim failed'))
+          .finally(() => setSubmitting(false));
+      }}
+    >
+      <div>
+        <span>Prize ready</span>
+        <strong>{amountSats.toLocaleString()} sats</strong>
+      </div>
+      <label>
+        <span>Lightning invoice</span>
+        <input
+          value={bolt11}
+          onChange={(event) => setBolt11(event.target.value)}
+          placeholder={`Invoice for ${amountSats} sats`}
+          spellCheck={false}
+        />
+      </label>
+      <button type="submit" className="primary-button" disabled={!canSubmit}>
+        <Trophy size={18} />
+        Claim
+      </button>
+      {claimStatus && <small>{claimStatus}</small>}
+    </form>
   );
 }
 
@@ -5878,7 +5977,7 @@ function TournamentBracketIntroScreen({
       <div className="fight-versus-stage">
         <span>{match ? getTournamentRoundLabel(match.round, getTournamentTotalRounds(bracket)) : 'Tournament'}</span>
         <strong>Winner Advances</strong>
-        <small>{localEntryId ? bracket?.kind === 'paidOnline' ? 'Paid BTC bracket match' : bracket?.kind === 'freeOnline' ? 'Online bracket match' : 'Local bracket match' : 'Infinite bracket match'}</small>
+        <small>{localEntryId ? bracket?.kind === 'paidOnline' ? 'Lightning bracket match' : bracket?.kind === 'freeOnline' ? 'Online bracket match' : 'Local bracket match' : 'Infinite bracket match'}</small>
       </div>
 
       <section className="tournament-intro-grid" aria-label="Tournament match bracket">
@@ -6015,9 +6114,15 @@ function confirmedTournamentEntryCount(bracket: TournamentBracket | null | undef
 }
 
 function getTournamentPaymentStatusText(state: string, minEntries: number) {
-  if (state === 'invoiceProcessing') return 'Payment received. Waiting for BTCPay settlement.';
+  if (state === 'invoiceProcessing') return 'Payment received. Waiting for confirmation.';
   if (state === 'paid' || state === 'entryLocked') return `Payment confirmed. Tournament starts at ${minEntries} paid players.`;
-  return 'Waiting for BTCPay payment';
+  return 'Waiting for Lightning payment';
+}
+
+async function copyLightningInvoice(paymentRequest: string) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(paymentRequest);
+  }
 }
 
 function makeTournamentBotOpponent(status: TournamentStatusResult | null): OnlineBotOpponent | null {

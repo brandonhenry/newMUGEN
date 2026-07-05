@@ -2,6 +2,8 @@ import type {
   TournamentEnterRequest,
   TournamentEnterResult,
   TournamentBracket,
+  TournamentClaimPrizeRequest,
+  TournamentClaimPrizeResult,
   TournamentEntry,
   TournamentReportRequest,
   TournamentStatusResult,
@@ -36,6 +38,10 @@ export async function reportTournamentMatch(request: TournamentReportRequest): P
     if (isLocalFallbackAllowed()) return localReportTournament(request);
     throw error;
   });
+}
+
+export async function claimTournamentPrize(request: TournamentClaimPrizeRequest): Promise<TournamentClaimPrizeResult> {
+  return postJson<TournamentClaimPrizeResult>('/.netlify/functions/tournament-claim-prize', request);
 }
 
 async function getJson<T>(url: string): Promise<T> {
@@ -85,15 +91,15 @@ function localTournamentList() {
         startsLabel: 'Starts when full'
       },
       {
-        id: 'paid-btc-daily',
+        id: 'paid-lightning-beta',
         kind: 'paidOnline' as const,
         status: 'cancelled' as const,
         entryFeeUsd: 2,
-        entryFeeLabel: '$2 BTC',
-        prizeLabel: '$15 / $10 / $5 BTC',
+        entryFeeLabel: '$2 Lightning',
+        prizeLabel: '$15 / $10 / $5 Lightning',
         entries: 0,
         minEntries: 25,
-        capacity: 32,
+        capacity: 25,
         paidEnabled: false,
         startsLabel: 'Paid beta unavailable'
       }
@@ -104,7 +110,7 @@ function localTournamentList() {
 const LOCAL_TOURNAMENT_KEY = 'kore.tournament.localOnline';
 
 function localEnterTournament(request: TournamentEnterRequest): TournamentEnterResult {
-  if (request.kind === 'paidOnline') throw new Error('Paid BTC tournaments are not enabled yet.');
+  if (request.kind === 'paidOnline') throw new Error('Paid Lightning tournaments are not enabled yet.');
   const bracket = readLocalTournament();
   const existing = bracket.entries.find((entry) => entry.playerId === request.playerId);
   if (existing) return { bracket, entry: existing };

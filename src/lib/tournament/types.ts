@@ -34,12 +34,18 @@ export type TournamentEntry = {
   botKr?: RankedKrScores;
   isLocalPlayer?: boolean;
   paymentState: TournamentPaymentState;
-  paymentProvider?: 'btcpay';
+  paymentProvider?: 'lnbits';
   paymentInvoiceId?: string;
   checkoutUrl?: string;
+  checkingId?: string;
+  amountSats?: number;
+  paymentHash?: string;
+  paymentRequest?: string;
+  lightningUrl?: string;
   paidAt?: number;
   payoutState?: TournamentPaymentState;
   payoutAmountUsd?: number;
+  payoutAmountSats?: number;
   payoutInvoice?: string;
   payoutId?: string;
   joinedAt: number;
@@ -60,7 +66,7 @@ export type TournamentMatch = {
 };
 
 export type TournamentReward = {
-  kind: 'localTrophy' | 'profilePoints' | 'btcPending';
+  kind: 'localTrophy' | 'profilePoints' | 'lightningPending';
   label: string;
   state: 'locked' | 'earned' | 'pending' | 'blocked';
 };
@@ -97,8 +103,12 @@ export type TournamentSummary = {
 export type TournamentPaymentSummary = {
   state: TournamentPaymentState;
   checkoutUrl?: string;
-  provider?: 'btcpay';
+  provider?: 'lnbits';
   invoiceId?: string;
+  checkingId?: string;
+  amountSats?: number;
+  paymentRequest?: string;
+  lightningUrl?: string;
   paidAt?: number;
 };
 
@@ -117,6 +127,10 @@ export type TournamentEnterResult = {
   bracket: TournamentBracket;
   entry: TournamentEntry;
   checkoutUrl?: string;
+  amountSats?: number;
+  paymentRequest?: string;
+  checkingId?: string;
+  lightningUrl?: string;
   paidDisabledReason?: string;
 };
 
@@ -133,4 +147,22 @@ export type TournamentReportRequest = {
   matchId: string;
   reporterPlayerId: string;
   winnerEntryId: string;
+};
+
+export type TournamentClaimPrizeRequest = {
+  tournamentId: string;
+  playerId: string;
+  bolt11: string;
+};
+
+export type TournamentClaimPrizeResult = {
+  bracket: TournamentBracket;
+  entry: TournamentEntry;
+  payout: {
+    status: 'pending' | 'paid' | 'blocked';
+    amountSats?: number;
+    checkingId?: string;
+    payoutHash?: string;
+    paidAt?: number;
+  };
 };

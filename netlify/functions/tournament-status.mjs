@@ -10,6 +10,11 @@ import {
   readTournament,
   statusText
 } from './_tournament-store.mjs';
+import {
+  getPaidTournamentStatus,
+  getPaidTournamentStores,
+  PAID_LIGHTNING_TOURNAMENT_ID
+} from './_paid-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -18,6 +23,9 @@ export async function handler(event) {
     const tournamentId = cleanId(params.tournamentId);
     const playerId = cleanId(params.playerId);
     if (!tournamentId) return json(400, { error: 'missing_tournament_id' });
+    if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
+      return json(200, await getPaidTournamentStatus(getPaidTournamentStores(event), playerId));
+    }
     const store = getTournamentStore(event);
     const bracket = tournamentId === FREE_ONLINE_TOURNAMENT_ID
       ? await getOrCreateFreeTournament(store)

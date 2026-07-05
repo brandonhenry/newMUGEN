@@ -65,6 +65,7 @@ export type AnalyticsEventName =
   | 'tournament_lobby_refreshed'
   | 'tournament_match_started'
   | 'tournament_match_reported'
+  | 'tournament_prize_claimed'
   | 'tournament_completed'
   | 'setting_changed'
   | 'settings_reset_clicked'

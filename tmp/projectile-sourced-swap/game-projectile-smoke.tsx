@@ -74,6 +74,17 @@ const scenarios: SmokeScenario[] = [
     fireFrame: 24,
     holdEndFrame: 112,
     resetFrame: 220
+  },
+  {
+    id: 'kurama-finger-gun-bullet',
+    label: 'Kurama finger-gun bullet',
+    p1Path: '/characters/kurama/character.json',
+    p2Path: '/characters/don-patch-poppa-rocks/character.json',
+    fireInputs: ['jab'],
+    p1X: -4.2,
+    p2X: 4.2,
+    fireFrame: 24,
+    resetFrame: 168
   }
 ];
 

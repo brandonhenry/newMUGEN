@@ -165,7 +165,7 @@ export function simulateCpuTournamentMatches(bracket: TournamentBracket, protect
 }
 
 export function makeDefaultReward(kind: TournamentKind): TournamentReward {
-  if (kind === 'paidOnline') return { kind: 'btcPending', label: 'BTC prize pending provider setup', state: 'blocked' };
+  if (kind === 'paidOnline') return { kind: 'lightningPending', label: 'Lightning prize pending provider setup', state: 'blocked' };
   if (kind === 'freeOnline') return { kind: 'profilePoints', label: 'Tournament profile trophy', state: 'locked' };
   return { kind: 'localTrophy', label: 'Local tournament crown', state: 'locked' };
 }
@@ -173,7 +173,7 @@ export function makeDefaultReward(kind: TournamentKind): TournamentReward {
 export function makePaidDisabledSummary(): TournamentBracket {
   const now = Date.now();
   return {
-    id: 'paid-btc-disabled',
+    id: 'paid-lightning-disabled',
     kind: 'paidOnline',
     status: 'cancelled',
     entries: [],

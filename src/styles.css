@@ -2089,9 +2089,96 @@ button {
   text-transform: uppercase;
 }
 
-.tournament-payment-strip .primary-button {
+.tournament-payment-strip > div:first-child {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.tournament-payment-strip small {
+  color: rgba(16, 17, 20, 0.72);
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.tournament-payment-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.tournament-payment-strip .primary-button,
+.tournament-payment-strip .secondary-button {
   min-height: 34px;
   padding: 0 12px;
+}
+
+.tournament-lightning-invoice {
+  display: block;
+  overflow: auto hidden;
+  max-width: min(66vw, 760px);
+  border-radius: 5px;
+  padding: 7px 8px;
+  color: #f7d45a;
+  background: rgba(16, 17, 20, 0.86);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.tournament-claim-form {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.7fr) minmax(220px, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+  border-radius: 7px;
+  padding: 12px;
+  background: rgba(46, 230, 255, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(46, 230, 255, 0.28) inset,
+    0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+.tournament-claim-form > div,
+.tournament-claim-form label {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.tournament-claim-form span {
+  color: rgba(247, 247, 242, 0.62);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tournament-claim-form strong {
+  color: #2ee6ff;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.tournament-claim-form input {
+  min-height: 40px;
+  border: 1px solid rgba(247, 247, 242, 0.18);
+  border-radius: 6px;
+  padding: 0 10px;
+  color: #f7f7f2;
+  background: rgba(8, 10, 15, 0.72);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.tournament-claim-form small {
+  grid-column: 1 / -1;
+  color: #f7d45a;
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .tournament-preview-hero {

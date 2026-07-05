@@ -10,6 +10,11 @@ import {
   statusText,
   writeTournament
 } from './_tournament-store.mjs';
+import {
+  getPaidTournamentStores,
+  PAID_LIGHTNING_TOURNAMENT_ID,
+  reportPaidTournamentWinner
+} from './_paid-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -20,6 +25,9 @@ export async function handler(event) {
     const reporterPlayerId = cleanId(body.reporterPlayerId);
     const winnerEntryId = cleanId(body.winnerEntryId);
     if (!tournamentId || !matchId || !reporterPlayerId || !winnerEntryId) return json(400, { error: 'missing_fields' });
+    if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
+      return json(200, await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, Date.now()));
+    }
     const store = getTournamentStore(event);
     const bracket = await readTournament(store, tournamentId);
     if (!bracket) return json(404, { error: 'tournament_not_found' });

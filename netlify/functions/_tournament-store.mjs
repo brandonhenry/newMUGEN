@@ -3,11 +3,11 @@ import { TOURNAMENT_BOT_FILL_MS, cleanCharacterIds, cleanKrScores, createOnlineB
 
 export const TOURNAMENT_STORE_NAME = 'kore-tournaments';
 export const FREE_ONLINE_TOURNAMENT_ID = 'free-online-daily';
-export const PAID_BTC_TOURNAMENT_ID = 'paid-btc-daily';
+export const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 export const FREE_ONLINE_CAPACITY = 8;
 export const FREE_ONLINE_MIN_ENTRIES = 8;
-export const PAID_BTC_CAPACITY = 32;
-export const PAID_BTC_MIN_ENTRIES = 25;
+export const PAID_LIGHTNING_CAPACITY = 25;
+export const PAID_LIGHTNING_MIN_ENTRIES = 25;
 const DEFAULT_BOT_CHARACTER_IDS = ['kiro', 'riven'];
 
 export function getTournamentStore(event) {
@@ -42,7 +42,7 @@ export async function getOrCreateFreeTournament(store, now = Date.now()) {
 }
 
 export async function getOrCreatePaidTournament(store, now = Date.now()) {
-  const existing = await readTournament(store, PAID_BTC_TOURNAMENT_ID);
+  const existing = await readTournament(store, PAID_LIGHTNING_TOURNAMENT_ID);
   if (existing?.id) return sanitizeBracket(existing);
   const bracket = makeOpenPaidTournament(now);
   await writeTournament(store, bracket);
@@ -69,44 +69,44 @@ export function makeOpenFreeTournament(now = Date.now()) {
 export function paidEnabled() {
   return Boolean(
     process.env.TOURNAMENT_PAID_ENABLED === 'true' &&
-    process.env.TOURNAMENT_BTC_PROVIDER === 'btcpay' &&
-    process.env.BTCPAY_INSTANCE_URL &&
-    process.env.BTCPAY_STORE_ID &&
-    process.env.BTCPAY_API_KEY &&
-    process.env.BTCPAY_WEBHOOK_SECRET
+    process.env.TOURNAMENT_LIGHTNING_PROVIDER === 'lnbits' &&
+    process.env.LNBITS_URL &&
+    process.env.LNBITS_INVOICE_KEY &&
+    process.env.LNBITS_ADMIN_KEY &&
+    process.env.LNBITS_WEBHOOK_SECRET
   );
 }
 
 export function makeOpenPaidTournament(now = Date.now()) {
   return {
-    id: PAID_BTC_TOURNAMENT_ID,
+    id: PAID_LIGHTNING_TOURNAMENT_ID,
     kind: 'paidOnline',
     status: 'open',
     entries: [],
     matches: [],
     currentRound: 1,
-    capacity: PAID_BTC_CAPACITY,
-    minEntries: PAID_BTC_MIN_ENTRIES,
+    capacity: PAID_LIGHTNING_CAPACITY,
+    minEntries: PAID_LIGHTNING_MIN_ENTRIES,
     paidEnabled: paidEnabled(),
     createdAt: now,
     updatedAt: now,
-    reward: { kind: 'btcPending', label: '$15 / $10 / $5 BTC rewards', state: 'locked' }
+    reward: { kind: 'lightningPending', label: '$15 / $10 / $5 Lightning rewards', state: 'locked' }
   };
 }
 
 export function paidDisabledSummary() {
   return {
-    id: PAID_BTC_TOURNAMENT_ID,
+    id: PAID_LIGHTNING_TOURNAMENT_ID,
     kind: 'paidOnline',
     status: paidEnabled() ? 'open' : 'cancelled',
     entryFeeUsd: 2,
-    entryFeeLabel: '$2 BTC',
-    prizeLabel: '$15 / $10 / $5 BTC',
+    entryFeeLabel: '$2 Lightning',
+    prizeLabel: '$15 / $10 / $5 Lightning',
     entries: 0,
-    minEntries: PAID_BTC_MIN_ENTRIES,
-    capacity: PAID_BTC_CAPACITY,
+    minEntries: PAID_LIGHTNING_MIN_ENTRIES,
+    capacity: PAID_LIGHTNING_CAPACITY,
     paidEnabled: paidEnabled(),
-    startsLabel: paidEnabled() ? 'Paid beta provider configured' : 'Paid beta unavailable'
+    startsLabel: paidEnabled() ? 'Lightning beta configured' : 'Lightning beta unavailable'
   };
 }
 
@@ -117,8 +117,8 @@ export function toSummary(bracket) {
     kind: bracket.kind,
     status: bracket.status,
     entryFeeUsd: bracket.kind === 'paidOnline' ? 2 : 0,
-    entryFeeLabel: bracket.kind === 'paidOnline' ? '$2 BTC' : 'Free',
-    prizeLabel: bracket.kind === 'paidOnline' ? '$15 / $10 / $5 BTC' : 'Profile trophy',
+    entryFeeLabel: bracket.kind === 'paidOnline' ? '$2 Lightning' : 'Free',
+    prizeLabel: bracket.kind === 'paidOnline' ? '$15 / $10 / $5 Lightning' : 'Profile trophy',
     entries: confirmedEntries.length,
     minEntries: bracket.minEntries,
     capacity: bracket.capacity,
@@ -165,7 +165,7 @@ export function enterFreeTournament(bracket, entryRequest, now = Date.now()) {
 
 export function createPendingPaidEntry(bracket, entryRequest, now = Date.now()) {
   if (!paidEnabled()) {
-    throw Object.assign(new Error('Paid BTC tournaments are not enabled yet'), { statusCode: 409, code: 'paid_tournament_unavailable' });
+    throw Object.assign(new Error('Paid Lightning tournaments are not enabled yet'), { statusCode: 409, code: 'paid_tournament_unavailable' });
   }
   if (bracket.status !== 'open') {
     throw Object.assign(new Error('Tournament is already locked'), { statusCode: 409, code: 'tournament_locked' });
@@ -182,7 +182,7 @@ export function createPendingPaidEntry(bracket, entryRequest, now = Date.now()) 
     characterId: cleanId(entryRequest.characterId),
     seed: 0,
     paymentState: 'invoicePending',
-    paymentProvider: 'btcpay',
+    paymentProvider: 'lnbits',
     joinedAt: now
   };
   const next = {
@@ -199,7 +199,7 @@ export function attachPaidInvoice(bracket, entryId, invoice, now = Date.now()) {
     if (entry.id !== entryId) return entry;
     updatedEntry = {
       ...entry,
-      paymentProvider: 'btcpay',
+      paymentProvider: 'lnbits',
       paymentState: 'invoicePending',
       paymentInvoiceId: invoice.invoiceId,
       checkoutUrl: invoice.checkoutUrl

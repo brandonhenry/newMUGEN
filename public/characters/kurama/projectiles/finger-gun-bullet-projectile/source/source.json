@@ -1,0 +1,309 @@
+{
+  "generatedAt": "2026-07-05T00:00:00.000Z",
+  "characterId": "kurama",
+  "projectileId": "finger-gun-bullet-projectile",
+  "sourceLabel": "finger-gun bullet / tracer",
+  "sourcePage": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+  "sourceFiles": [
+    {
+      "frame": "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+      "sourceFile": "65.png",
+      "sourcePage": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "derivedFromCharacterAsset": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png"
+    },
+    {
+      "frame": "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+      "sourceFile": "64.png",
+      "sourcePage": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "derivedFromCharacterAsset": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-001.png"
+    },
+    {
+      "frame": "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png",
+      "sourceFile": "66.png",
+      "sourcePage": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "derivedFromCharacterAsset": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
+    }
+  ],
+  "visualDecision": {
+    "sourcePriority": "projectile-specific fallback reused from Train-style bullet asset",
+    "loreNote": "The user requested every Kurama attack receive a Train-like bullet/tracer projectile instead of using Kurama's original sprite sheet. This asset is kept local to Kurama and bound across all playable base and command attacks.",
+    "noKuramaSheetCrop": true
+  },
+  "boundMoveSequences": [
+    {
+      "moveKey": "jableft",
+      "frames": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "jabright",
+      "frames": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "kickleft",
+      "frames": [],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:f+1",
+      "frames": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:d/f+2",
+      "frames": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:FC+1",
+      "frames": [
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:FC+2",
+      "frames": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:1+2",
+      "frames": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:1+3",
+      "frames": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:2+3",
+      "frames": [
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:3+4",
+      "frames": [
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:O+2",
+      "frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:f+2",
+      "frames": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:d+1",
+      "frames": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:qcf+1",
+      "frames": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:WS+2",
+      "frames": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    },
+    {
+      "moveKey": "cmd:O+1",
+      "frames": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "reason": "User requested every Kurama attack use this projectile; base-input bindings also cover generated string routes."
+    }
+  ],
+  "removedAfterReview": [
+    {
+      "moveKey": "kickright",
+      "reason": "User reviewed and requested no projectile."
+    },
+    {
+      "moveKey": "cmd:qcf+4",
+      "reason": "User reviewed and requested no projectile."
+    },
+    {
+      "moveKey": "cmd:WS+4",
+      "reason": "User reviewed and requested no projectile."
+    },
+    {
+      "moveKey": "cmd:2+4",
+      "reason": "User requested this attack be removed entirely from Kurama."
+    }
+  ]
+}

@@ -756,5 +756,855 @@
       ]
     },
     "current": ""
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "jableft",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 22,
+    "displayName": "Kurama",
+    "strip": "item-022/move.png",
+    "proposal": [
+      {
+        "url": "item-022/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-022/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-022/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.72,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "jabright",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 23,
+    "displayName": "Kurama",
+    "strip": "item-023/move.png",
+    "proposal": [
+      {
+        "url": "item-023/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-023/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-023/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.78,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "kickleft",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 24,
+    "displayName": "Kurama",
+    "strip": "item-024/move.png",
+    "proposal": [
+      {
+        "url": "item-024/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-024/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-024/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.78,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:f+1",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 26,
+    "displayName": "Kurama",
+    "strip": "item-026/move.png",
+    "proposal": [
+      {
+        "url": "item-026/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-026/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-026/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:d/f+2",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 27,
+    "displayName": "Kurama",
+    "strip": "item-027/move.png",
+    "proposal": [
+      {
+        "url": "item-027/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-027/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-027/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:FC+1",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 30,
+    "displayName": "Kurama",
+    "strip": "item-030/move.png",
+    "proposal": [
+      {
+        "url": "item-030/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-030/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-030/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:FC+2",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 31,
+    "displayName": "Kurama",
+    "strip": "item-031/move.png",
+    "proposal": [
+      {
+        "url": "item-031/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-031/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-031/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:1+2",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 32,
+    "displayName": "Kurama",
+    "strip": "item-032/move.png",
+    "proposal": [
+      {
+        "url": "item-032/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-032/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-032/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:1+3",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 33,
+    "displayName": "Kurama",
+    "strip": "item-033/move.png",
+    "proposal": [
+      {
+        "url": "item-033/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-033/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-033/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:2+3",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 34,
+    "displayName": "Kurama",
+    "strip": "item-034/move.png",
+    "proposal": [
+      {
+        "url": "item-034/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-034/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-034/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 4,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.92,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:3+4",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 36,
+    "displayName": "Kurama",
+    "strip": "item-036/move.png",
+    "proposal": [
+      {
+        "url": "item-036/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-036/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-036/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 4,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.92,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:O+2",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 37,
+    "displayName": "Kurama",
+    "strip": "item-037/move.png",
+    "proposal": [
+      {
+        "url": "item-037/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-037/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-037/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 4,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.92,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:f+2",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 38,
+    "displayName": "Kurama",
+    "strip": "item-038/move.png",
+    "proposal": [
+      {
+        "url": "item-038/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-038/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-038/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:d+1",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 39,
+    "displayName": "Kurama",
+    "strip": "item-039/move.png",
+    "proposal": [
+      {
+        "url": "item-039/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-039/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-039/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:qcf+1",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 40,
+    "displayName": "Kurama",
+    "strip": "item-040/move.png",
+    "proposal": [
+      {
+        "url": "item-040/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-040/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-040/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:WS+2",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 41,
+    "displayName": "Kurama",
+    "strip": "item-041/move.png",
+    "proposal": [
+      {
+        "url": "item-041/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-041/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-041/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
+  },
+  {
+    "type": "add",
+    "characterId": "kurama",
+    "moveKey": "cmd:O+1",
+    "family": "fingerGunBullet",
+    "reason": "user requested every Kurama attack receive a Train-style bullet/tracer projectile; remove individual moves after review if they do not need it",
+    "projectileId": "finger-gun-bullet-projectile",
+    "flags": {
+      "broadReviewPass": true,
+      "noKuramaSheetCrop": true
+    },
+    "index": 42,
+    "displayName": "Kurama",
+    "strip": "item-042/move.png",
+    "proposal": [
+      {
+        "url": "item-042/proposal-0.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+      },
+      {
+        "url": "item-042/proposal-1.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png"
+      },
+      {
+        "url": "item-042/proposal-2.png",
+        "file": "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      }
+    ],
+    "source": {
+      "label": "Train-style bullet / tracer",
+      "page": "https://opengameart.org/content/assets-free-laser-bullets-pack-2020",
+      "files": [
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "public/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ]
+    },
+    "current": "finger-gun-bullet-projectile",
+    "gameplay": {
+      "spawnFrame": 3,
+      "spawnOffset": [
+        0,
+        1.02,
+        0.92
+      ],
+      "damageScale": 0.84,
+      "homingMode": "limited",
+      "homingEndFrame": 40
+    }
   }
 ]
