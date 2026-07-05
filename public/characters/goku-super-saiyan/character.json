@@ -166,7 +166,14 @@
       "/characters/goku-super-saiyan/frames/frame-103.png",
       "/characters/goku-super-saiyan/frames/frame-104.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/goku-super-saiyan/frames/frame-130.png",
+      "/characters/goku-super-saiyan/frames/frame-131.png",
+      "/characters/goku-super-saiyan/frames/frame-132.png",
+      "/characters/goku-super-saiyan/frames/frame-133.png",
+      "/characters/goku-super-saiyan/frames/frame-134.png",
+      "/characters/goku-super-saiyan/frames/frame-135.png"
+    ],
     "cmd:FC+2": [
       "/characters/goku-super-saiyan/frames/frame-065.png",
       "/characters/goku-super-saiyan/frames/frame-066.png",
@@ -229,7 +236,18 @@
       "/characters/goku-super-saiyan/frames/frame-111.png",
       "/characters/goku-super-saiyan/frames/frame-112.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/goku-super-saiyan/frames/frame-171.png",
+      "/characters/goku-super-saiyan/frames/frame-172.png",
+      "/characters/goku-super-saiyan/frames/frame-173.png",
+      "/characters/goku-super-saiyan/frames/frame-174.png",
+      "/characters/goku-super-saiyan/frames/frame-175.png",
+      "/characters/goku-super-saiyan/frames/frame-176.png",
+      "/characters/goku-super-saiyan/frames/frame-177.png",
+      "/characters/goku-super-saiyan/frames/frame-178.png",
+      "/characters/goku-super-saiyan/frames/frame-179.png",
+      "/characters/goku-super-saiyan/frames/frame-180.png"
+    ],
     "cmd:1+4": [
       "/characters/goku-super-saiyan/frames/frame-096.png",
       "/characters/goku-super-saiyan/frames/frame-097.png",
@@ -798,9 +816,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 0,
+      "activeFrames": 20,
+      "recoveryFrames": 9,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -942,9 +960,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 30,
+      "activeFrames": 29,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

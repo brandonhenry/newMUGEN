@@ -1,0 +1,152 @@
+[
+  {
+    "start": 12,
+    "end": 12,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 14,
+    "end": 14,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 19,
+    "end": 19,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 20,
+    "end": 20,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 22,
+    "end": 22,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 24,
+    "end": 29,
+    "kind": "ambiguous",
+    "reason": "rush or hit-reaction-like movement without a clean attack boundary"
+  },
+  {
+    "start": 34,
+    "end": 39,
+    "kind": "non-attack",
+    "reason": "standing and pose transition frames"
+  },
+  {
+    "start": 40,
+    "end": 48,
+    "kind": "ambiguous",
+    "reason": "tumble or acrobatic movement sequence, not a clear attack"
+  },
+  {
+    "start": 55,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "standing, charge, and crouch transition poses"
+  },
+  {
+    "start": 60,
+    "end": 63,
+    "kind": "non-attack",
+    "reason": "standing, charge, and crouch transition poses"
+  },
+  {
+    "start": 69,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "standing, charge, and crouch transition poses"
+  },
+  {
+    "start": 72,
+    "end": 79,
+    "kind": "ambiguous",
+    "reason": "movement and recovery poses with no clear hit or release frame"
+  },
+  {
+    "start": 80,
+    "end": 89,
+    "kind": "ambiguous",
+    "reason": "movement and recovery poses with no clear hit or release frame"
+  },
+  {
+    "start": 100,
+    "end": 109,
+    "kind": "ambiguous",
+    "reason": "attack-like movement, but no empty attack slot remains after clearer assignments"
+  },
+  {
+    "start": 117,
+    "end": 119,
+    "kind": "non-attack",
+    "reason": "short stance and movement transition poses"
+  },
+  {
+    "start": 120,
+    "end": 122,
+    "kind": "non-attack",
+    "reason": "short stance and movement transition poses"
+  },
+  {
+    "start": 129,
+    "end": 129,
+    "kind": "non-attack",
+    "reason": "single stance and neutral pose changes"
+  },
+  {
+    "start": 130,
+    "end": 132,
+    "kind": "non-attack",
+    "reason": "single stance and neutral pose changes"
+  },
+  {
+    "start": 137,
+    "end": 139,
+    "kind": "ambiguous",
+    "reason": "fall, flip, and recovery-like motion without a coherent direct attack"
+  },
+  {
+    "start": 140,
+    "end": 149,
+    "kind": "ambiguous",
+    "reason": "fall, flip, and recovery-like motion without a coherent direct attack"
+  },
+  {
+    "start": 150,
+    "end": 159,
+    "kind": "ambiguous",
+    "reason": "fall, flip, and recovery-like motion without a coherent direct attack"
+  },
+  {
+    "start": 160,
+    "end": 167,
+    "kind": "non-attack",
+    "reason": "Super Saiyan stance or transformation poses"
+  },
+  {
+    "start": 190,
+    "end": 199,
+    "kind": "ambiguous",
+    "reason": "extra rush or fall material after selected attacks, no empty slot remains"
+  },
+  {
+    "start": 208,
+    "end": 208,
+    "kind": "bad-source",
+    "reason": "source text or UI fragment, not a playable attack frame"
+  }
+]

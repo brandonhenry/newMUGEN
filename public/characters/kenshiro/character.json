@@ -183,7 +183,15 @@
       "/characters/kenshiro/frames/frame-122.png",
       "/characters/kenshiro/frames/frame-123.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/kenshiro/frames/frame-150.png",
+      "/characters/kenshiro/frames/frame-151.png",
+      "/characters/kenshiro/frames/frame-152.png",
+      "/characters/kenshiro/frames/frame-153.png",
+      "/characters/kenshiro/frames/frame-154.png",
+      "/characters/kenshiro/frames/frame-155.png",
+      "/characters/kenshiro/frames/frame-156.png"
+    ],
     "cmd:FC+2": [
       "/characters/kenshiro/frames/frame-182.png",
       "/characters/kenshiro/frames/frame-183.png",
@@ -256,7 +264,13 @@
       "/characters/kenshiro/frames/frame-165.png",
       "/characters/kenshiro/frames/frame-166.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/kenshiro/frames/frame-187.png",
+      "/characters/kenshiro/frames/frame-188.png",
+      "/characters/kenshiro/frames/frame-189.png",
+      "/characters/kenshiro/frames/frame-190.png",
+      "/characters/kenshiro/frames/frame-191.png"
+    ],
     "cmd:1+4": [
       "/characters/kenshiro/frames/frame-114.png",
       "/characters/kenshiro/frames/frame-115.png",
@@ -839,9 +853,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 9,
+      "activeFrames": 12,
+      "recoveryFrames": 8,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -973,9 +987,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 48,
+      "recoveryFrames": 12,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

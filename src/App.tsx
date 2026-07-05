@@ -41,7 +41,7 @@ import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
 import { KORE_CURSOR_OPTIONS, getKoreCursorOption, isKoreCursorId, type KoreCursorOption, type KoreCursorScale, type KoreCursorStyle } from './data/cursors';
-import { createMatch, stepMatch } from './engine/fightEngine';
+import { cloneMatchSnapshot, createMatch, stepMatch } from './engine/fightEngine';
 import { useAnyInputActivation } from './hooks/useAnyInputActivation';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
@@ -61,6 +61,7 @@ import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFra
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import { fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
+import { createRollbackController, type RollbackController } from './lib/online/rollback';
 import {
   ROUNDS_TO_WIN,
   emptyInputFrame,
@@ -178,6 +179,7 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type OnlineWins = [number, number];
+const ONLINE_INPUT_REDUNDANT_FRAMES = 8;
 type RandomCharacterSlots = Record<1 | 2, boolean>;
 type TournamentSelectMode = 'free' | 'online' | 'paid';
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
@@ -17303,6 +17305,7 @@ function FightScreen({
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
   const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? 'LOOKING FOR RANKED MATCH' : 'LOOKING FOR MATCH') : '');
+  const onlineStatusTextRef = useRef(onlineStatusText);
   const [privateRoomPassword, setPrivateRoomPassword] = useState('');
   const [privateRoomName, setPrivateRoomName] = useState('');
   const [onlineWins, setOnlineWins] = useState<OnlineWins>([0, 0]);
@@ -17310,14 +17313,13 @@ function FightScreen({
   const onlineRoomRef = useRef<OnlineMatchResult | null>(null);
   const onlineRoleRef = useRef<OnlineRole | null>(null);
   const onlineStateRef = useRef<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
-  const remoteInputRef = useRef<InputFrame>(emptyInputFrame());
+  const onlineRollbackRef = useRef<RollbackController | null>(null);
   const onlineWinsRef = useRef<OnlineWins>([0, 0]);
   const onlineRematchReadyRef = useRef({ local: false, remote: false });
   const onlineWinnerRecordedRef = useRef(false);
   const onlineSnapshotSequenceRef = useRef(0);
   const onlineInputSequenceRef = useRef(0);
   const onlineLatestSnapshotRef = useRef(-1);
-  const onlineLastSnapshotAtRef = useRef(0);
   const onlineClosingRef = useRef(false);
   const onlineLocalProfileRef = useRef<OnlinePlayerProfile | null>(onlineProfile);
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
@@ -17330,7 +17332,6 @@ function FightScreen({
     { attacking: false, hitConnected: false },
     { attacking: false, hitConnected: false }
   ]);
-  const onlineLastClashInputRef = useRef<{ clashId: number; button: MoveInput | null }>({ clashId: 0, button: null });
   const arcadeAdvanceRef = useRef(false);
   const fightAnalyticsStateRef = useRef(createFightAnalyticsState());
   const matchStartedTrackedRef = useRef(false);
@@ -17442,6 +17443,7 @@ function FightScreen({
 
   useEffect(() => {
     if (!isOnline) return;
+    onlineStatusTextRef.current = onlineStatusText;
     const statusKey = `${onlineState}:${onlineRole ?? 'none'}:${onlineStatusText}`;
     if (onlineStatusAnalyticsRef.current === statusKey) return;
     onlineStatusAnalyticsRef.current = statusKey;
@@ -17864,15 +17866,29 @@ function FightScreen({
     return createMatch(hostCharacter, guestCharacter, onlineStage, 'online', cpuDifficulty, withFreshAiSeed(matchOptions));
   }, [cpuDifficulty, matchOptions, p1, p2, roster, stage, stages]);
 
-  const publishOnlineSnapshot = useCallback((force = false) => {
+  const startOnlineRollback = useCallback((baseMatch: MatchSnapshot, role: OnlineRole | null = onlineRoleRef.current) => {
+    if (!role) {
+      onlineRollbackRef.current = null;
+      return;
+    }
+    onlineRollbackRef.current = createRollbackController({
+      initialMatch: baseMatch,
+      localPlayerIndex: role === 'host' ? 0 : 1,
+      stepMatch,
+      cloneMatch: cloneMatchSnapshot,
+      encodeInput: encodeInputFrame,
+      decodeInput: decodeInputFrame
+    });
+  }, []);
+
+  const publishOnlineSnapshot = useCallback((force = false, reason: 'start' | 'rematch' | 'resync' | 'result' = 'resync') => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
-    const now = performance.now();
-    if (!force && now - onlineLastSnapshotAtRef.current < 33) return;
-    onlineLastSnapshotAtRef.current = now;
+    if (!force) return;
     onlineSessionRef.current?.send({
       type: 'snapshot',
       snapshot: compactMatchSnapshot(matchRef.current, onlineSnapshotSequenceRef.current += 1),
-      wins: onlineWinsRef.current
+      wins: onlineWinsRef.current,
+      reason
     });
   }, []);
 
@@ -17887,6 +17903,7 @@ function FightScreen({
     });
     matchRef.current = fresh;
     setMatch(fresh);
+    startOnlineRollback(fresh, onlineRoleRef.current);
     onlineWinnerRecordedRef.current = false;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
@@ -17903,8 +17920,8 @@ function FightScreen({
     onlineRematchReadyRef.current = { local: false, remote: false };
     setOnlineStatusText('CONNECTED');
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
-    publishOnlineSnapshot(true);
-  }, [captureFightAnalytics, makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics]);
+    publishOnlineSnapshot(true, 'rematch');
+  }, [captureFightAnalytics, makeOnlineMatch, publishOnlineSnapshot, resetTrackedMatchAnalytics, startOnlineRollback]);
 
   const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
@@ -17939,7 +17956,7 @@ function FightScreen({
     onlineStateRef.current = 'disconnected';
     onlineRoleRef.current = null;
     onlineRoomRef.current = null;
-    remoteInputRef.current = emptyInputFrame();
+    onlineRollbackRef.current = null;
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
@@ -17978,7 +17995,7 @@ function FightScreen({
     onlineRoomRef.current = null;
     onlineRoleRef.current = null;
     onlineStateRef.current = 'idle';
-    remoteInputRef.current = emptyInputFrame();
+    onlineRollbackRef.current = null;
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRemoteProfileRef.current = null;
     onlineWinsRef.current = [0, 0];
@@ -18077,7 +18094,7 @@ function FightScreen({
         });
       }
     }
-    publishOnlineSnapshot(true);
+    publishOnlineSnapshot(true, 'result');
   }, [captureFightAnalytics, mode, onRankedProfileChange, publishOnlineSnapshot]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
@@ -18093,6 +18110,7 @@ function FightScreen({
         resetTrackedMatchAnalytics(onlineMatch);
         matchRef.current = onlineMatch;
         setMatch(onlineMatch);
+        startOnlineRollback(onlineMatch, 'host');
         onlinePerformanceRef.current = emptyOnlinePerformancePair();
         seenCombatEventIds.current.clear();
         seenImpactScoreEventIds.current.clear();
@@ -18101,18 +18119,36 @@ function FightScreen({
         onlineStateRef.current = 'connected';
         setOnlineState('connected');
         setOnlineStatusText('CONNECTED');
-        publishOnlineSnapshot(true);
+        publishOnlineSnapshot(true, 'start');
       }
       return;
     }
     if (message.type === 'input') {
-      if (onlineRoleRef.current === 'host') remoteInputRef.current = decodeInputFrame(message.frame);
+      return;
+    }
+    if (message.type === 'inputBatch') {
+      const rollback = onlineRollbackRef.current;
+      if (!rollback) return;
+      rollback.receiveRemoteInputBatch({
+        startFrame: message.startFrame,
+        masks: message.masks,
+        ackFrame: message.ackFrame,
+        checksum: message.checksum,
+        sentAt: message.sentAt
+      });
+      matchRef.current = rollback.getMatch();
+      setMatch(matchRef.current);
+      const stats = rollback.getStats();
+      if (stats.needsResync) {
+        setOnlineStatusText('SYNCING');
+        if (onlineRoleRef.current === 'host') {
+          publishOnlineSnapshot(true, 'resync');
+          rollback.clearResyncRequest();
+        }
+      }
       return;
     }
     if (message.type === 'clashInput') {
-      const current = matchRef.current.clashState;
-      if (onlineRoleRef.current !== 'host' || current.id !== message.clashId || current.status !== 'input') return;
-      remoteInputRef.current = mergeInputFrames(remoteInputRef.current, clashButtonInputFrame(message.button));
       return;
     }
     if (message.type === 'snapshot') {
@@ -18135,6 +18171,7 @@ function FightScreen({
       if (needsBase) resetTrackedMatchAnalytics(hydrated);
       matchRef.current = hydrated;
       onlineWinsRef.current = message.wins;
+      startOnlineRollback(hydrated, 'guest');
       setMatch(hydrated);
       setOnlineWins(message.wins);
       onlineStateRef.current = 'connected';
@@ -18150,6 +18187,7 @@ function FightScreen({
     if (message.type === 'rematchStart') {
       onlineRematchReadyRef.current = { local: false, remote: false };
       onlineWinnerRecordedRef.current = false;
+      onlineRollbackRef.current = null;
       resetTrackedMatchAnalytics();
       onlineWinsRef.current = message.wins;
       setOnlineWins(message.wins);
@@ -18182,7 +18220,7 @@ function FightScreen({
         });
       }
     }
-  }, [captureFightAnalytics, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch]);
+  }, [captureFightAnalytics, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -18192,7 +18230,7 @@ function FightScreen({
     onlineStateRef.current = 'searching';
     onlineRoleRef.current = null;
     onlineRoomRef.current = null;
-    remoteInputRef.current = emptyInputFrame();
+    onlineRollbackRef.current = null;
     onlineWinsRef.current = [0, 0];
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineWinnerRecordedRef.current = false;
@@ -18447,29 +18485,28 @@ function FightScreen({
         while (accumulator >= fixedStep) {
           const [p1Input, p2Input] = readInputsForStep();
           const localOnlineInput = mergeInputFrames(p1Input, p2Input);
-          if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'guest') {
-            onlineSessionRef.current?.send({ type: 'input', sequence: onlineInputSequenceRef.current += 1, frame: encodeInputFrame(localOnlineInput) });
-            const clash = matchRef.current.clashState;
-            const clashButton = clash.status === 'input' ? getClashInputButton(localOnlineInput) : null;
-            const lastClashInput = onlineLastClashInputRef.current;
-            if (clashButton && (lastClashInput.clashId !== clash.id || lastClashInput.button !== clashButton)) {
-              onlineLastClashInputRef.current = { clashId: clash.id, button: clashButton };
-              onlineSessionRef.current?.send({
-                type: 'clashInput',
-                clashId: clash.id,
-                button: clashButton,
-                elapsedFrame: clash.elapsedFrames,
-                sequence: onlineInputSequenceRef.current += 1
-              });
+          if (isOnline && onlineStateRef.current === 'connected') {
+            const rollback = onlineRollbackRef.current;
+            if (rollback) {
+              matchRef.current = rollback.advance(localOnlineInput);
+              const batch = rollback.makeInputBatch(ONLINE_INPUT_REDUNDANT_FRAMES, Date.now());
+              onlineInputSequenceRef.current += 1;
+              onlineSessionRef.current?.send({ type: 'inputBatch', ...batch });
+              const stats = rollback.getStats();
+              if (stats.needsResync) {
+                setOnlineStatusText('SYNCING');
+                if (onlineRoleRef.current === 'host') {
+                  publishOnlineSnapshot(true, 'resync');
+                  rollback.clearResyncRequest();
+                }
+              } else if (onlineStatusTextRef.current !== 'CONNECTED') {
+                setOnlineStatusText('CONNECTED');
+              }
+              if (onlineRoleRef.current === 'host') {
+                trackOnlinePerformanceFrame(matchRef.current);
+                recordOnlineMatchWin(matchRef.current);
+              }
             }
-            if (!clashButton && lastClashInput.clashId === clash.id) {
-              onlineLastClashInputRef.current = { clashId: clash.id, button: null };
-            }
-          } else if (isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'host') {
-            matchRef.current = stepMatch(matchRef.current, localOnlineInput, remoteInputRef.current, fixedStep);
-            trackOnlinePerformanceFrame(matchRef.current);
-            recordOnlineMatchWin(matchRef.current);
-            publishOnlineSnapshot(matchRef.current.phase !== 'fighting');
           } else if (isOnline) {
             const shouldRefreshWarmup =
               matchRef.current.phase === 'matchOver' ||
@@ -18527,7 +18564,7 @@ function FightScreen({
           }
           accumulator -= fixedStep;
         }
-        if (!(isOnline && onlineStateRef.current === 'connected' && onlineRoleRef.current === 'guest')) setMatch(matchRef.current);
+        setMatch(matchRef.current);
       }
       frame = requestAnimationFrame(tick);
     };
@@ -19343,18 +19380,6 @@ const clashButtonLabels: Record<MoveInput, string> = {
   kick: '3',
   special: '4'
 };
-
-const clashButtonOrder: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
-
-function getClashInputButton(input: InputFrame): MoveInput | null {
-  return clashButtonOrder.find((action) => input[action]) ?? null;
-}
-
-function clashButtonInputFrame(button: MoveInput): InputFrame {
-  const frame = emptyInputFrame();
-  frame[button] = true;
-  return frame;
-}
 
 function BreakTargetMiniGameScreen({
   character,

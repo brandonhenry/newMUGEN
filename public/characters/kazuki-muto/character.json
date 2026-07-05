@@ -91,8 +91,30 @@
       "/characters/kazuki-muto/frames/frame-111.png",
       "/characters/kazuki-muto/frames/frame-112.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/kazuki-muto/frames/frame-160.png",
+      "/characters/kazuki-muto/frames/frame-161.png",
+      "/characters/kazuki-muto/frames/frame-162.png",
+      "/characters/kazuki-muto/frames/frame-163.png",
+      "/characters/kazuki-muto/frames/frame-164.png",
+      "/characters/kazuki-muto/frames/frame-165.png",
+      "/characters/kazuki-muto/frames/frame-166.png",
+      "/characters/kazuki-muto/frames/frame-167.png",
+      "/characters/kazuki-muto/frames/frame-168.png",
+      "/characters/kazuki-muto/frames/frame-169.png"
+    ],
+    "kickright": [
+      "/characters/kazuki-muto/frames/frame-220.png",
+      "/characters/kazuki-muto/frames/frame-221.png",
+      "/characters/kazuki-muto/frames/frame-222.png",
+      "/characters/kazuki-muto/frames/frame-223.png",
+      "/characters/kazuki-muto/frames/frame-224.png",
+      "/characters/kazuki-muto/frames/frame-225.png",
+      "/characters/kazuki-muto/frames/frame-226.png",
+      "/characters/kazuki-muto/frames/frame-227.png",
+      "/characters/kazuki-muto/frames/frame-228.png",
+      "/characters/kazuki-muto/frames/frame-229.png"
+    ],
     "hitLight": [
       "/characters/kazuki-muto/frames/frame-028.png"
     ],
@@ -154,8 +176,30 @@
       "/characters/kazuki-muto/frames/frame-319.png",
       "/characters/kazuki-muto/frames/frame-320.png"
     ],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:WS+4": [
+      "/characters/kazuki-muto/frames/frame-150.png",
+      "/characters/kazuki-muto/frames/frame-151.png",
+      "/characters/kazuki-muto/frames/frame-152.png",
+      "/characters/kazuki-muto/frames/frame-153.png",
+      "/characters/kazuki-muto/frames/frame-154.png",
+      "/characters/kazuki-muto/frames/frame-155.png",
+      "/characters/kazuki-muto/frames/frame-156.png",
+      "/characters/kazuki-muto/frames/frame-157.png",
+      "/characters/kazuki-muto/frames/frame-158.png",
+      "/characters/kazuki-muto/frames/frame-159.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/kazuki-muto/frames/frame-130.png",
+      "/characters/kazuki-muto/frames/frame-131.png",
+      "/characters/kazuki-muto/frames/frame-132.png",
+      "/characters/kazuki-muto/frames/frame-133.png",
+      "/characters/kazuki-muto/frames/frame-134.png",
+      "/characters/kazuki-muto/frames/frame-135.png",
+      "/characters/kazuki-muto/frames/frame-136.png",
+      "/characters/kazuki-muto/frames/frame-137.png",
+      "/characters/kazuki-muto/frames/frame-138.png",
+      "/characters/kazuki-muto/frames/frame-139.png"
+    ],
     "cmd:FC+2": [
       "/characters/kazuki-muto/frames/frame-104.png",
       "/characters/kazuki-muto/frames/frame-105.png",
@@ -183,10 +227,49 @@
       "/characters/kazuki-muto/frames/frame-210.png",
       "/characters/kazuki-muto/frames/frame-211.png"
     ],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:2+3": [
+      "/characters/kazuki-muto/frames/frame-034.png",
+      "/characters/kazuki-muto/frames/frame-035.png",
+      "/characters/kazuki-muto/frames/frame-036.png",
+      "/characters/kazuki-muto/frames/frame-037.png"
+    ],
+    "cmd:2+4": [
+      "/characters/kazuki-muto/frames/frame-042.png",
+      "/characters/kazuki-muto/frames/frame-043.png",
+      "/characters/kazuki-muto/frames/frame-044.png",
+      "/characters/kazuki-muto/frames/frame-045.png",
+      "/characters/kazuki-muto/frames/frame-046.png",
+      "/characters/kazuki-muto/frames/frame-047.png",
+      "/characters/kazuki-muto/frames/frame-048.png",
+      "/characters/kazuki-muto/frames/frame-049.png",
+      "/characters/kazuki-muto/frames/frame-050.png",
+      "/characters/kazuki-muto/frames/frame-051.png",
+      "/characters/kazuki-muto/frames/frame-052.png",
+      "/characters/kazuki-muto/frames/frame-053.png",
+      "/characters/kazuki-muto/frames/frame-054.png",
+      "/characters/kazuki-muto/frames/frame-055.png"
+    ],
+    "cmd:3+4": [
+      "/characters/kazuki-muto/frames/frame-113.png",
+      "/characters/kazuki-muto/frames/frame-114.png",
+      "/characters/kazuki-muto/frames/frame-115.png",
+      "/characters/kazuki-muto/frames/frame-116.png",
+      "/characters/kazuki-muto/frames/frame-117.png",
+      "/characters/kazuki-muto/frames/frame-118.png",
+      "/characters/kazuki-muto/frames/frame-119.png"
+    ],
+    "cmd:O+2": [
+      "/characters/kazuki-muto/frames/frame-140.png",
+      "/characters/kazuki-muto/frames/frame-141.png",
+      "/characters/kazuki-muto/frames/frame-142.png",
+      "/characters/kazuki-muto/frames/frame-143.png",
+      "/characters/kazuki-muto/frames/frame-144.png",
+      "/characters/kazuki-muto/frames/frame-145.png",
+      "/characters/kazuki-muto/frames/frame-146.png",
+      "/characters/kazuki-muto/frames/frame-147.png",
+      "/characters/kazuki-muto/frames/frame-148.png",
+      "/characters/kazuki-muto/frames/frame-149.png"
+    ],
     "cmd:1+4": [
       "/characters/kazuki-muto/frames/frame-273.png",
       "/characters/kazuki-muto/frames/frame-274.png",
@@ -564,9 +647,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 4,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -581,9 +664,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 45,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -656,9 +739,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 37,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -673,9 +756,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 16,
-      "activeFrames": 2,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -750,9 +833,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,
@@ -767,9 +850,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 14,
+      "activeFrames": 28,
+      "recoveryFrames": 6,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -785,9 +868,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 55,
+      "recoveryFrames": 1,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -803,9 +886,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 54,
+      "recoveryFrames": 6,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

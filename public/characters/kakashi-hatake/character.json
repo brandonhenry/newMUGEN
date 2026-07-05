@@ -89,7 +89,18 @@
       "/characters/kakashi-hatake/frames/frame-127.png",
       "/characters/kakashi-hatake/frames/frame-128.png"
     ],
-    "kickright": [],
+    "kickright": [
+      "/characters/kakashi-hatake/frames/frame-258.png",
+      "/characters/kakashi-hatake/frames/frame-259.png",
+      "/characters/kakashi-hatake/frames/frame-260.png",
+      "/characters/kakashi-hatake/frames/frame-261.png",
+      "/characters/kakashi-hatake/frames/frame-262.png",
+      "/characters/kakashi-hatake/frames/frame-263.png",
+      "/characters/kakashi-hatake/frames/frame-264.png",
+      "/characters/kakashi-hatake/frames/frame-265.png",
+      "/characters/kakashi-hatake/frames/frame-266.png",
+      "/characters/kakashi-hatake/frames/frame-267.png"
+    ],
     "hitLight": [
       "/characters/kakashi-hatake/frames/frame-026.png"
     ],
@@ -139,9 +150,47 @@
       "/characters/kakashi-hatake/frames/frame-123.png",
       "/characters/kakashi-hatake/frames/frame-124.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/kakashi-hatake/frames/frame-239.png",
+      "/characters/kakashi-hatake/frames/frame-240.png",
+      "/characters/kakashi-hatake/frames/frame-241.png",
+      "/characters/kakashi-hatake/frames/frame-242.png",
+      "/characters/kakashi-hatake/frames/frame-243.png",
+      "/characters/kakashi-hatake/frames/frame-244.png",
+      "/characters/kakashi-hatake/frames/frame-245.png",
+      "/characters/kakashi-hatake/frames/frame-246.png",
+      "/characters/kakashi-hatake/frames/frame-247.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/kakashi-hatake/frames/frame-153.png",
+      "/characters/kakashi-hatake/frames/frame-154.png",
+      "/characters/kakashi-hatake/frames/frame-155.png",
+      "/characters/kakashi-hatake/frames/frame-156.png",
+      "/characters/kakashi-hatake/frames/frame-157.png",
+      "/characters/kakashi-hatake/frames/frame-158.png",
+      "/characters/kakashi-hatake/frames/frame-159.png",
+      "/characters/kakashi-hatake/frames/frame-160.png",
+      "/characters/kakashi-hatake/frames/frame-161.png",
+      "/characters/kakashi-hatake/frames/frame-162.png",
+      "/characters/kakashi-hatake/frames/frame-163.png",
+      "/characters/kakashi-hatake/frames/frame-164.png",
+      "/characters/kakashi-hatake/frames/frame-165.png",
+      "/characters/kakashi-hatake/frames/frame-166.png",
+      "/characters/kakashi-hatake/frames/frame-167.png",
+      "/characters/kakashi-hatake/frames/frame-168.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/kakashi-hatake/frames/frame-089.png",
+      "/characters/kakashi-hatake/frames/frame-090.png",
+      "/characters/kakashi-hatake/frames/frame-091.png",
+      "/characters/kakashi-hatake/frames/frame-092.png",
+      "/characters/kakashi-hatake/frames/frame-093.png",
+      "/characters/kakashi-hatake/frames/frame-094.png",
+      "/characters/kakashi-hatake/frames/frame-095.png",
+      "/characters/kakashi-hatake/frames/frame-096.png",
+      "/characters/kakashi-hatake/frames/frame-097.png",
+      "/characters/kakashi-hatake/frames/frame-098.png"
+    ],
     "cmd:FC+2": [
       "/characters/kakashi-hatake/frames/frame-119.png",
       "/characters/kakashi-hatake/frames/frame-120.png",
@@ -178,8 +227,30 @@
       "/characters/kakashi-hatake/frames/frame-151.png",
       "/characters/kakashi-hatake/frames/frame-152.png"
     ],
-    "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:3+4": [
+      "/characters/kakashi-hatake/frames/frame-079.png",
+      "/characters/kakashi-hatake/frames/frame-080.png",
+      "/characters/kakashi-hatake/frames/frame-081.png",
+      "/characters/kakashi-hatake/frames/frame-082.png",
+      "/characters/kakashi-hatake/frames/frame-083.png",
+      "/characters/kakashi-hatake/frames/frame-084.png",
+      "/characters/kakashi-hatake/frames/frame-085.png",
+      "/characters/kakashi-hatake/frames/frame-086.png",
+      "/characters/kakashi-hatake/frames/frame-087.png",
+      "/characters/kakashi-hatake/frames/frame-088.png"
+    ],
+    "cmd:O+2": [
+      "/characters/kakashi-hatake/frames/frame-099.png",
+      "/characters/kakashi-hatake/frames/frame-100.png",
+      "/characters/kakashi-hatake/frames/frame-101.png",
+      "/characters/kakashi-hatake/frames/frame-102.png",
+      "/characters/kakashi-hatake/frames/frame-103.png",
+      "/characters/kakashi-hatake/frames/frame-104.png",
+      "/characters/kakashi-hatake/frames/frame-105.png",
+      "/characters/kakashi-hatake/frames/frame-106.png",
+      "/characters/kakashi-hatake/frames/frame-107.png",
+      "/characters/kakashi-hatake/frames/frame-108.png"
+    ],
     "cmd:1+4": [
       "/characters/kakashi-hatake/frames/frame-119.png",
       "/characters/kakashi-hatake/frames/frame-120.png",
@@ -610,9 +681,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 10,
+      "activeFrames": 18,
+      "recoveryFrames": 18,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -667,9 +738,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 19,
+      "activeFrames": 18,
+      "recoveryFrames": 18,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -685,9 +756,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 8,
+      "activeFrames": 24,
+      "recoveryFrames": 10,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -702,9 +773,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 15,
+      "activeFrames": 12,
+      "recoveryFrames": 2,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -815,9 +886,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 28,
+      "activeFrames": 27,
+      "recoveryFrames": 1,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -833,9 +904,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 18,
+      "activeFrames": 36,
+      "recoveryFrames": 6,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

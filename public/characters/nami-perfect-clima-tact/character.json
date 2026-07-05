@@ -84,8 +84,30 @@
       "/characters/nami-perfect-clima-tact/frames/frame-070.png",
       "/characters/nami-perfect-clima-tact/frames/frame-071.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/nami-perfect-clima-tact/frames/frame-153.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-154.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-155.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-156.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-157.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-158.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-159.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-160.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-161.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-162.png"
+    ],
+    "kickright": [
+      "/characters/nami-perfect-clima-tact/frames/frame-163.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-164.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-165.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-166.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-167.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-168.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-169.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-170.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-171.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-172.png"
+    ],
     "hitLight": [
       "/characters/nami-perfect-clima-tact/frames/frame-024.png"
     ],
@@ -132,9 +154,42 @@
       "/characters/nami-perfect-clima-tact/frames/frame-070.png",
       "/characters/nami-perfect-clima-tact/frames/frame-071.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/nami-perfect-clima-tact/frames/frame-141.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-142.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-143.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-144.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-145.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-146.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-147.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-148.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-149.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-150.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/nami-perfect-clima-tact/frames/frame-131.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-132.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-133.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-134.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-135.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-136.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-137.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-138.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-139.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-140.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/nami-perfect-clima-tact/frames/frame-111.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-112.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-113.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-114.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-115.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-116.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-117.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-118.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-119.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-120.png"
+    ],
     "cmd:FC+2": [
       "/characters/nami-perfect-clima-tact/frames/frame-067.png",
       "/characters/nami-perfect-clima-tact/frames/frame-068.png",
@@ -190,7 +245,18 @@
       "/characters/nami-perfect-clima-tact/frames/frame-109.png",
       "/characters/nami-perfect-clima-tact/frames/frame-110.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/nami-perfect-clima-tact/frames/frame-121.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-122.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-123.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-124.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-125.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-126.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-127.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-128.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-129.png",
+      "/characters/nami-perfect-clima-tact/frames/frame-130.png"
+    ],
     "cmd:1+4": [
       "/characters/nami-perfect-clima-tact/frames/frame-081.png",
       "/characters/nami-perfect-clima-tact/frames/frame-082.png",
@@ -565,8 +631,8 @@
     },
     "kickleft": {
       "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "activeFrames": 14,
+      "recoveryFrames": 13,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -581,9 +647,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 22,
+      "activeFrames": 17,
+      "recoveryFrames": 4,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -638,9 +704,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 44,
+      "recoveryFrames": 5,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -656,9 +722,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 21,
+      "activeFrames": 13,
+      "recoveryFrames": 8,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -674,8 +740,8 @@
     },
     "cmd:FC+1": {
       "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 12,
+      "recoveryFrames": 5,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -801,9 +867,9 @@
       "tornado": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 18,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

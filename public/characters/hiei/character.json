@@ -81,8 +81,30 @@
       "/characters/hiei/frames/frame-084.png",
       "/characters/hiei/frames/frame-085.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/hiei/frames/frame-157.png",
+      "/characters/hiei/frames/frame-158.png",
+      "/characters/hiei/frames/frame-159.png",
+      "/characters/hiei/frames/frame-160.png",
+      "/characters/hiei/frames/frame-161.png",
+      "/characters/hiei/frames/frame-162.png",
+      "/characters/hiei/frames/frame-163.png",
+      "/characters/hiei/frames/frame-164.png",
+      "/characters/hiei/frames/frame-165.png",
+      "/characters/hiei/frames/frame-166.png"
+    ],
+    "kickright": [
+      "/characters/hiei/frames/frame-167.png",
+      "/characters/hiei/frames/frame-168.png",
+      "/characters/hiei/frames/frame-169.png",
+      "/characters/hiei/frames/frame-170.png",
+      "/characters/hiei/frames/frame-171.png",
+      "/characters/hiei/frames/frame-172.png",
+      "/characters/hiei/frames/frame-173.png",
+      "/characters/hiei/frames/frame-174.png",
+      "/characters/hiei/frames/frame-175.png",
+      "/characters/hiei/frames/frame-176.png"
+    ],
     "hitLight": [
       "/characters/hiei/frames/frame-025.png"
     ],
@@ -127,9 +149,39 @@
       "/characters/hiei/frames/frame-084.png",
       "/characters/hiei/frames/frame-085.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/hiei/frames/frame-142.png",
+      "/characters/hiei/frames/frame-143.png",
+      "/characters/hiei/frames/frame-144.png",
+      "/characters/hiei/frames/frame-145.png",
+      "/characters/hiei/frames/frame-146.png",
+      "/characters/hiei/frames/frame-147.png",
+      "/characters/hiei/frames/frame-148.png",
+      "/characters/hiei/frames/frame-149.png",
+      "/characters/hiei/frames/frame-150.png",
+      "/characters/hiei/frames/frame-151.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/hiei/frames/frame-130.png",
+      "/characters/hiei/frames/frame-131.png",
+      "/characters/hiei/frames/frame-132.png",
+      "/characters/hiei/frames/frame-133.png",
+      "/characters/hiei/frames/frame-134.png",
+      "/characters/hiei/frames/frame-135.png",
+      "/characters/hiei/frames/frame-136.png",
+      "/characters/hiei/frames/frame-137.png",
+      "/characters/hiei/frames/frame-138.png",
+      "/characters/hiei/frames/frame-139.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/hiei/frames/frame-113.png",
+      "/characters/hiei/frames/frame-114.png",
+      "/characters/hiei/frames/frame-115.png",
+      "/characters/hiei/frames/frame-116.png",
+      "/characters/hiei/frames/frame-117.png",
+      "/characters/hiei/frames/frame-118.png",
+      "/characters/hiei/frames/frame-119.png"
+    ],
     "cmd:FC+2": [
       "/characters/hiei/frames/frame-080.png",
       "/characters/hiei/frames/frame-081.png",
@@ -179,7 +231,18 @@
       "/characters/hiei/frames/frame-105.png",
       "/characters/hiei/frames/frame-106.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/hiei/frames/frame-120.png",
+      "/characters/hiei/frames/frame-121.png",
+      "/characters/hiei/frames/frame-122.png",
+      "/characters/hiei/frames/frame-123.png",
+      "/characters/hiei/frames/frame-124.png",
+      "/characters/hiei/frames/frame-125.png",
+      "/characters/hiei/frames/frame-126.png",
+      "/characters/hiei/frames/frame-127.png",
+      "/characters/hiei/frames/frame-128.png",
+      "/characters/hiei/frames/frame-129.png"
+    ],
     "cmd:1+4": [
       "/characters/hiei/frames/frame-080.png",
       "/characters/hiei/frames/frame-081.png",
@@ -544,9 +607,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 21,
+      "recoveryFrames": 17,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -561,9 +624,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 23,
+      "recoveryFrames": 23,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -618,9 +681,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 6,
+      "activeFrames": 22,
+      "recoveryFrames": 27,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -636,9 +699,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 5,
+      "activeFrames": 25,
+      "recoveryFrames": 12,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -653,9 +716,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 9,
+      "activeFrames": 16,
+      "recoveryFrames": 4,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -787,9 +850,9 @@
       "tornado": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 30,
+      "recoveryFrames": 30,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

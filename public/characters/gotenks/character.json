@@ -70,7 +70,18 @@
       "/characters/gotenks/frames/frame-067.png",
       "/characters/gotenks/frames/frame-068.png"
     ],
-    "kickleft": [],
+    "kickleft": [
+      "/characters/gotenks/frames/frame-180.png",
+      "/characters/gotenks/frames/frame-181.png",
+      "/characters/gotenks/frames/frame-182.png",
+      "/characters/gotenks/frames/frame-183.png",
+      "/characters/gotenks/frames/frame-184.png",
+      "/characters/gotenks/frames/frame-185.png",
+      "/characters/gotenks/frames/frame-186.png",
+      "/characters/gotenks/frames/frame-187.png",
+      "/characters/gotenks/frames/frame-188.png",
+      "/characters/gotenks/frames/frame-189.png"
+    ],
     "kickright": [
       "/characters/gotenks/frames/frame-168.png",
       "/characters/gotenks/frames/frame-169.png",
@@ -140,7 +151,18 @@
       "/characters/gotenks/frames/frame-173.png",
       "/characters/gotenks/frames/frame-174.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/gotenks/frames/frame-090.png",
+      "/characters/gotenks/frames/frame-091.png",
+      "/characters/gotenks/frames/frame-092.png",
+      "/characters/gotenks/frames/frame-093.png",
+      "/characters/gotenks/frames/frame-094.png",
+      "/characters/gotenks/frames/frame-095.png",
+      "/characters/gotenks/frames/frame-096.png",
+      "/characters/gotenks/frames/frame-097.png",
+      "/characters/gotenks/frames/frame-098.png",
+      "/characters/gotenks/frames/frame-099.png"
+    ],
     "cmd:FC+2": [
       "/characters/gotenks/frames/frame-064.png",
       "/characters/gotenks/frames/frame-065.png",
@@ -188,7 +210,13 @@
       "/characters/gotenks/frames/frame-173.png",
       "/characters/gotenks/frames/frame-174.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/gotenks/frames/frame-175.png",
+      "/characters/gotenks/frames/frame-176.png",
+      "/characters/gotenks/frames/frame-177.png",
+      "/characters/gotenks/frames/frame-178.png",
+      "/characters/gotenks/frames/frame-179.png"
+    ],
     "cmd:1+4": [
       "/characters/gotenks/frames/frame-123.png",
       "/characters/gotenks/frames/frame-124.png",
@@ -563,9 +591,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 27,
+      "recoveryFrames": 18,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -676,9 +704,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 3,
+      "activeFrames": 18,
+      "recoveryFrames": 8,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -817,9 +845,9 @@
       "cancelable": false
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 12,
+      "activeFrames": 47,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

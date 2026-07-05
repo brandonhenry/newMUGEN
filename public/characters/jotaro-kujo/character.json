@@ -152,7 +152,12 @@
       "/characters/jotaro-kujo/frames/frame-163.png",
       "/characters/jotaro-kujo/frames/frame-164.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/jotaro-kujo/frames/frame-037.png",
+      "/characters/jotaro-kujo/frames/frame-038.png",
+      "/characters/jotaro-kujo/frames/frame-039.png",
+      "/characters/jotaro-kujo/frames/frame-040.png"
+    ],
     "cmd:FC+2": [
       "/characters/jotaro-kujo/frames/frame-095.png",
       "/characters/jotaro-kujo/frames/frame-096.png",
@@ -209,7 +214,20 @@
       "/characters/jotaro-kujo/frames/frame-163.png",
       "/characters/jotaro-kujo/frames/frame-164.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/jotaro-kujo/frames/frame-140.png",
+      "/characters/jotaro-kujo/frames/frame-141.png",
+      "/characters/jotaro-kujo/frames/frame-142.png",
+      "/characters/jotaro-kujo/frames/frame-143.png",
+      "/characters/jotaro-kujo/frames/frame-144.png",
+      "/characters/jotaro-kujo/frames/frame-145.png",
+      "/characters/jotaro-kujo/frames/frame-146.png",
+      "/characters/jotaro-kujo/frames/frame-147.png",
+      "/characters/jotaro-kujo/frames/frame-148.png",
+      "/characters/jotaro-kujo/frames/frame-149.png",
+      "/characters/jotaro-kujo/frames/frame-150.png",
+      "/characters/jotaro-kujo/frames/frame-151.png"
+    ],
     "cmd:1+4": [
       "/characters/jotaro-kujo/frames/frame-162.png",
       "/characters/jotaro-kujo/frames/frame-163.png",
@@ -738,9 +756,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 0,
+      "activeFrames": 28,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -868,9 +886,9 @@
       "cancelable": false
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 20,
+      "activeFrames": 39,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

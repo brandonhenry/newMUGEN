@@ -6029,7 +6029,7 @@ function applyGravity(fighter: FighterRuntime, dt: number, gravityScale = 1) {
   return false;
 }
 
-function cloneMatch(match: MatchSnapshot): MatchSnapshot {
+export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
   return {
     ...match,
     roster: [...match.roster],
@@ -6080,6 +6080,8 @@ function cloneMatch(match: MatchSnapshot): MatchSnapshot {
     })) as [FighterRuntime, FighterRuntime]
   };
 }
+
+const cloneMatch = cloneMatchSnapshot;
 
 function cloneClashState(clashState: ClashState): ClashState {
   return {

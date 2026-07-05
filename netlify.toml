@@ -6,7 +6,12 @@
   for = "/stages/**/*.glb"
   [headers.values]
     Content-Type = "model/gltf-binary"
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[redirects]]
+  from = "/stages/*/stage.glb"
+  to = "/404.html"
+  status = 404
 
 [[headers]]
   for = "/stages/**/*.png"

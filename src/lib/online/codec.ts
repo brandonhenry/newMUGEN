@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 10;
+export const ONLINE_PROTOCOL_VERSION = 11;
 
 export const inputActions: ActionName[] = [
   'up',

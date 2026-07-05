@@ -8,7 +8,7 @@ export type StageLoadResult = {
 };
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
-  if (!import.meta.env.DEV) return;
+  if (!import.meta.env.DEV && !event.startsWith('GLB')) return;
   console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
 }
 
@@ -53,6 +53,17 @@ export async function loadStageRoster(): Promise<StageLoadResult> {
       )
     ).filter((stage): stage is StageDefinition => Boolean(stage));
     const normalizedLoaded = loaded.map(normalizeStage);
+    const modelStages = normalizedLoaded.filter((stage) => stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url));
+    logStageModelDebug('GLB stage roster loaded', {
+      cacheBust,
+      stageCount: normalizedLoaded.length,
+      modelStageCount: modelStages.length,
+      modelStageSamples: modelStages.slice(0, 12).map((stage) => ({
+        id: stage.id,
+        modelPath: stage.model?.path,
+        modelUrl: stage.model?.url
+      }))
+    });
     const normalizedHiddenLeaf = normalizedLoaded.find((stage) => stage.id === 'hidden-leaf-village');
     if (normalizedHiddenLeaf) {
       logStageModelDebug('H5 normalized stage', {

@@ -1,0 +1,128 @@
+[
+  {
+    "start": 12,
+    "end": 14,
+    "kind": "non-attack",
+    "reason": "stance, run, and fall transition poses without a coherent attack"
+  },
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "stance, run, and fall transition poses without a coherent attack"
+  },
+  {
+    "start": 18,
+    "end": 18,
+    "kind": "non-attack",
+    "reason": "stance, run, and fall transition poses without a coherent attack"
+  },
+  {
+    "start": 20,
+    "end": 21,
+    "kind": "non-attack",
+    "reason": "stance, run, and fall transition poses without a coherent attack"
+  },
+  {
+    "start": 23,
+    "end": 23,
+    "kind": "non-attack",
+    "reason": "stance, run, and fall transition poses without a coherent attack"
+  },
+  {
+    "start": 25,
+    "end": 28,
+    "kind": "ambiguous",
+    "reason": "dash or hit-reaction-like motion with energy but no clear standalone hit"
+  },
+  {
+    "start": 33,
+    "end": 39,
+    "kind": "ambiguous",
+    "reason": "acrobatic flip and roll sequence, could be movement or recovery rather than a direct attack"
+  },
+  {
+    "start": 40,
+    "end": 46,
+    "kind": "ambiguous",
+    "reason": "acrobatic flip and roll sequence, could be movement or recovery rather than a direct attack"
+  },
+  {
+    "start": 53,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "standing and crouch transition poses"
+  },
+  {
+    "start": 60,
+    "end": 64,
+    "kind": "non-attack",
+    "reason": "standing and crouch transition poses"
+  },
+  {
+    "start": 77,
+    "end": 77,
+    "kind": "bad-source",
+    "reason": "tiny blue source fragment with no character body"
+  },
+  {
+    "start": 105,
+    "end": 105,
+    "kind": "non-attack",
+    "reason": "single crouched pose, not enough for an attack sequence"
+  },
+  {
+    "start": 113,
+    "end": 113,
+    "kind": "ambiguous",
+    "reason": "energy-rise fragment is attack-like but too short/unclear after chosen slots are filled"
+  },
+  {
+    "start": 115,
+    "end": 119,
+    "kind": "ambiguous",
+    "reason": "energy-rise fragment is attack-like but too short/unclear after chosen slots are filled"
+  },
+  {
+    "start": 120,
+    "end": 129,
+    "kind": "ambiguous",
+    "reason": "rush and hand motion could be attack windup but lacks a clear hit/release boundary"
+  },
+  {
+    "start": 136,
+    "end": 139,
+    "kind": "ambiguous",
+    "reason": "fall, dash, and recovery-like movement after attack material, not a clean standalone move"
+  },
+  {
+    "start": 140,
+    "end": 149,
+    "kind": "ambiguous",
+    "reason": "fall, dash, and recovery-like movement after attack material, not a clean standalone move"
+  },
+  {
+    "start": 150,
+    "end": 157,
+    "kind": "ambiguous",
+    "reason": "fall, dash, and recovery-like movement with one tiny source fragment; not a clean standalone move"
+  },
+  {
+    "start": 158,
+    "end": 167,
+    "kind": "ambiguous",
+    "reason": "afterimage movement and slash-like poses, attack-like but no empty attack slot remains"
+  },
+  {
+    "start": 168,
+    "end": 170,
+    "kind": "ambiguous",
+    "reason": "afterimage movement and slash-like poses, attack-like but no empty attack slot remains"
+  },
+  {
+    "start": 190,
+    "end": 190,
+    "kind": "bad-source",
+    "reason": "source text or UI fragment, not a playable attack frame"
+  }
+]

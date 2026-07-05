@@ -80,7 +80,13 @@
       "/characters/lenalee-lee/frames/frame-084.png",
       "/characters/lenalee-lee/frames/frame-085.png"
     ],
-    "jabright": [],
+    "jabright": [
+      "/characters/lenalee-lee/frames/frame-180.png",
+      "/characters/lenalee-lee/frames/frame-181.png",
+      "/characters/lenalee-lee/frames/frame-182.png",
+      "/characters/lenalee-lee/frames/frame-183.png",
+      "/characters/lenalee-lee/frames/frame-184.png"
+    ],
     "kickleft": [
       "/characters/lenalee-lee/frames/frame-080.png",
       "/characters/lenalee-lee/frames/frame-081.png",
@@ -135,7 +141,18 @@
       "/characters/lenalee-lee/frames/frame-084.png",
       "/characters/lenalee-lee/frames/frame-085.png"
     ],
-    "cmd:d/f+2": [],
+    "cmd:d/f+2": [
+      "/characters/lenalee-lee/frames/frame-150.png",
+      "/characters/lenalee-lee/frames/frame-151.png",
+      "/characters/lenalee-lee/frames/frame-152.png",
+      "/characters/lenalee-lee/frames/frame-153.png",
+      "/characters/lenalee-lee/frames/frame-154.png",
+      "/characters/lenalee-lee/frames/frame-155.png",
+      "/characters/lenalee-lee/frames/frame-156.png",
+      "/characters/lenalee-lee/frames/frame-157.png",
+      "/characters/lenalee-lee/frames/frame-158.png",
+      "/characters/lenalee-lee/frames/frame-159.png"
+    ],
     "cmd:qcf+4": [
       "/characters/lenalee-lee/frames/frame-113.png",
       "/characters/lenalee-lee/frames/frame-114.png",
@@ -158,8 +175,22 @@
       "/characters/lenalee-lee/frames/frame-243.png",
       "/characters/lenalee-lee/frames/frame-244.png"
     ],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
+    "cmd:FC+1": [
+      "/characters/lenalee-lee/frames/frame-036.png",
+      "/characters/lenalee-lee/frames/frame-037.png",
+      "/characters/lenalee-lee/frames/frame-038.png",
+      "/characters/lenalee-lee/frames/frame-039.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/lenalee-lee/frames/frame-096.png",
+      "/characters/lenalee-lee/frames/frame-097.png",
+      "/characters/lenalee-lee/frames/frame-098.png",
+      "/characters/lenalee-lee/frames/frame-099.png",
+      "/characters/lenalee-lee/frames/frame-100.png",
+      "/characters/lenalee-lee/frames/frame-101.png",
+      "/characters/lenalee-lee/frames/frame-102.png",
+      "/characters/lenalee-lee/frames/frame-103.png"
+    ],
     "cmd:1+2": [
       "/characters/lenalee-lee/frames/frame-216.png",
       "/characters/lenalee-lee/frames/frame-217.png",
@@ -205,7 +236,16 @@
       "/characters/lenalee-lee/frames/frame-067.png",
       "/characters/lenalee-lee/frames/frame-068.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/lenalee-lee/frames/frame-130.png",
+      "/characters/lenalee-lee/frames/frame-131.png",
+      "/characters/lenalee-lee/frames/frame-132.png",
+      "/characters/lenalee-lee/frames/frame-133.png",
+      "/characters/lenalee-lee/frames/frame-134.png",
+      "/characters/lenalee-lee/frames/frame-135.png",
+      "/characters/lenalee-lee/frames/frame-136.png",
+      "/characters/lenalee-lee/frames/frame-137.png"
+    ],
     "cmd:1+4": [
       "/characters/lenalee-lee/frames/frame-104.png",
       "/characters/lenalee-lee/frames/frame-105.png",
@@ -604,9 +644,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 7,
+      "activeFrames": 18,
+      "recoveryFrames": 6,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -677,9 +717,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 10,
+      "activeFrames": 32,
+      "recoveryFrames": 4,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -742,9 +782,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 0,
+      "activeFrames": 28,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -760,9 +800,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 5,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -883,9 +923,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 15,
+      "activeFrames": 38,
+      "recoveryFrames": 7,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

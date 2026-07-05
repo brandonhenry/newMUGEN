@@ -1,0 +1,140 @@
+[
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 22,
+    "end": 22,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 24,
+    "end": 26,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 28,
+    "end": 28,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 30,
+    "end": 30,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 40,
+    "end": 49,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 50,
+    "end": 53,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 59,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 60,
+    "end": 63,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 69,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 70,
+    "end": 73,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 129,
+    "end": 129,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 138,
+    "end": 139,
+    "kind": "non-attack",
+    "reason": "reset frames after selected projectile/kick sequence"
+  },
+  {
+    "start": 140,
+    "end": 149,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 160,
+    "end": 169,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 170,
+    "end": 179,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 185,
+    "end": 194,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 195,
+    "end": 204,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 205,
+    "end": 214,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 215,
+    "end": 215,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 223,
+    "end": 224,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 225,
+    "end": 234,
+    "kind": "ambiguous",
+    "reason": "acrobatic kick/combo fragment, but less coherent or more mixed than selected attack sequences"
+  },
+  {
+    "start": 245,
+    "end": 246,
+    "kind": "bad-source",
+    "reason": "source text tail or leftover crouch frame, not an attack sequence"
+  }
+]

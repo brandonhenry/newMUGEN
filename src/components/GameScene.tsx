@@ -40,6 +40,7 @@ import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
+import { KORE_APP_VERSION } from '../appVersion';
 
 type GameSceneProps = {
   match: MatchSnapshot;
@@ -149,8 +150,9 @@ const MODEL_STAGE_DEV_EDITOR_HYPOTHESES_2 = [
 ];
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
-  if (!import.meta.env.DEV) return;
   const stageId = payload.stageId;
+  const productionEvent = event.startsWith('GLB') || event.startsWith('H11') || event.startsWith('H49');
+  if (!import.meta.env.DEV && !productionEvent) return;
   if (
     typeof stageId === 'string' &&
     !MODEL_STAGE_IDS.has(stageId) &&
@@ -160,6 +162,48 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
     !payload.hasModelDefinition
   ) return;
   console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
+}
+
+function withStageAssetVersion(path: string) {
+  if (!path || path.startsWith('data:') || path.startsWith('blob:')) return path;
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}v=${encodeURIComponent(KORE_APP_VERSION)}`;
+}
+
+function bytesToHex(bytes: Uint8Array) {
+  return Array.from(bytes).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function bytesToAscii(bytes: Uint8Array) {
+  return Array.from(bytes).map((byte) => (byte >= 32 && byte <= 126 ? String.fromCharCode(byte) : '.')).join('');
+}
+
+async function probeStageModelAsset(stageId: string, modelPath: string, signal: AbortSignal) {
+  const startedAt = performance.now();
+  const response = await fetch(modelPath, {
+    cache: 'no-store',
+    headers: { Range: 'bytes=0-31' },
+    signal
+  });
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  const ascii = bytesToAscii(bytes);
+  const htmlFallback = ascii.trimStart().startsWith('<!doctype html') || ascii.trimStart().startsWith('<html');
+  const glbMagic = ascii.startsWith('glTF');
+  logStageModelDebug(htmlFallback || !glbMagic ? 'GLB asset probe failed' : 'GLB asset probe passed', {
+    stageId,
+    modelPath,
+    ok: response.ok,
+    status: response.status,
+    contentType: response.headers.get('content-type'),
+    contentLength: response.headers.get('content-length'),
+    contentRange: response.headers.get('content-range'),
+    byteLength: bytes.byteLength,
+    firstBytesHex: bytesToHex(bytes.slice(0, 12)),
+    firstBytesAscii: ascii.slice(0, 32),
+    glbMagic,
+    htmlFallback,
+    elapsedMs: Math.round(performance.now() - startedAt)
+  });
 }
 
 function isModelStage(stage: Pick<StageDefinition, 'id' | 'renderMode' | 'model'>) {
@@ -3109,35 +3153,21 @@ function ModelStage({
       stageId: stage.id,
       hypotheses: MODEL_STAGE_DEV_EDITOR_HYPOTHESES
     });
-    if (!modelPath || !import.meta.env.DEV) return;
+    if (!modelPath) return;
     let cancelled = false;
-    const startedAt = performance.now();
-    fetch(modelPath, { cache: 'no-store' })
-      .then(async (response) => {
-        const bytes = await response.arrayBuffer();
-        if (cancelled) return;
-        logStageModelDebug('H11 raw GLB fetch probe completed', {
-          stageId: stage.id,
-          modelPath,
-          ok: response.ok,
-          status: response.status,
-          contentType: response.headers.get('content-type'),
-          contentLength: response.headers.get('content-length'),
-          byteLength: bytes.byteLength,
-          elapsedMs: Math.round(performance.now() - startedAt)
-        });
-      })
+    const controller = new AbortController();
+    probeStageModelAsset(stage.id, withStageAssetVersion(modelPath), controller.signal)
       .catch((error) => {
         if (cancelled) return;
-        logStageModelDebug('H11 raw GLB fetch probe failed', {
+        logStageModelDebug('GLB asset probe threw', {
           stageId: stage.id,
           modelPath,
-          elapsedMs: Math.round(performance.now() - startedAt),
           error: error instanceof Error ? error.message : String(error)
         });
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, [modelPath, stage.id]);
   if (!modelPath || !modelDefinition) {
@@ -3358,7 +3388,7 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       renderMode: stage.renderMode,
       modelPath
     });
-    return modelPath;
+    return withStageAssetVersion(modelPath);
   }, [modelPath, stage.id, stage.renderMode]);
   const gltf = useGLTF(gltfRequestPath);
   useEffect(() => {

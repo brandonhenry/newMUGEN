@@ -1,0 +1,122 @@
+[
+  {
+    "start": 12,
+    "end": 12,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 14,
+    "end": 14,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 19,
+    "end": 19,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 20,
+    "end": 20,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 22,
+    "end": 22,
+    "kind": "non-attack",
+    "reason": "single stance, movement, or grounded transition poses"
+  },
+  {
+    "start": 24,
+    "end": 29,
+    "kind": "ambiguous",
+    "reason": "rush or hit-reaction-like movement without a clean attack boundary"
+  },
+  {
+    "start": 34,
+    "end": 39,
+    "kind": "non-attack",
+    "reason": "standing and pose transition frames"
+  },
+  {
+    "start": 40,
+    "end": 48,
+    "kind": "ambiguous",
+    "reason": "tumble or acrobatic movement sequence, not a clear direct attack"
+  },
+  {
+    "start": 55,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "standing, charge, and crouch transition poses"
+  },
+  {
+    "start": 60,
+    "end": 63,
+    "kind": "non-attack",
+    "reason": "standing, charge, and crouch transition poses"
+  },
+  {
+    "start": 69,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "standing, charge, and crouch transition poses"
+  },
+  {
+    "start": 70,
+    "end": 70,
+    "kind": "ambiguous",
+    "reason": "single running pose, not enough for an attack sequence"
+  },
+  {
+    "start": 72,
+    "end": 79,
+    "kind": "ambiguous",
+    "reason": "movement and recovery poses with no clear hit or release frame"
+  },
+  {
+    "start": 80,
+    "end": 89,
+    "kind": "ambiguous",
+    "reason": "movement and recovery poses with no clear hit or release frame"
+  },
+  {
+    "start": 99,
+    "end": 99,
+    "kind": "non-attack",
+    "reason": "single crouch pose between attack rows"
+  },
+  {
+    "start": 140,
+    "end": 149,
+    "kind": "ambiguous",
+    "reason": "fall, flip, and recovery-like motion without a coherent direct attack"
+  },
+  {
+    "start": 160,
+    "end": 169,
+    "kind": "non-attack",
+    "reason": "long-hair stance or transformation/charge poses, not a direct attack"
+  },
+  {
+    "start": 170,
+    "end": 179,
+    "kind": "non-attack",
+    "reason": "long-hair stance or transformation/charge poses, not a direct attack"
+  },
+  {
+    "start": 180,
+    "end": 182,
+    "kind": "ambiguous",
+    "reason": "reviewed unused frames do not form a high-confidence attack assignment"
+  }
+]

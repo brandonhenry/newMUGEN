@@ -20,6 +20,15 @@ export type OnlineInputMessage = {
   sequence: number;
 };
 
+export type OnlineInputBatchMessage = {
+  type: 'inputBatch';
+  startFrame: number;
+  masks: number[];
+  ackFrame: number;
+  checksum?: number;
+  sentAt?: number;
+};
+
 export type OnlineClashInputMessage = {
   type: 'clashInput';
   clashId: number;
@@ -32,6 +41,7 @@ export type OnlineSnapshotMessage = {
   type: 'snapshot';
   snapshot: CompactMatchSnapshot;
   wins: [number, number];
+  reason?: 'start' | 'rematch' | 'resync' | 'result';
 };
 
 export type OnlineRematchReadyMessage = {
@@ -71,6 +81,7 @@ export type OnlineRankedResultMessage = {
 export type OnlineMessage =
   | OnlineHelloMessage
   | OnlineInputMessage
+  | OnlineInputBatchMessage
   | OnlineClashInputMessage
   | OnlineSnapshotMessage
   | OnlineRematchReadyMessage
@@ -87,6 +98,7 @@ export function isOnlineMessage(value: unknown): value is OnlineMessage {
   return (
     type === 'hello' ||
     type === 'input' ||
+    type === 'inputBatch' ||
     type === 'clashInput' ||
     type === 'snapshot' ||
     type === 'rematchReady' ||

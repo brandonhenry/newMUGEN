@@ -1,0 +1,140 @@
+[
+  {
+    "start": 2,
+    "end": 3,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 14,
+    "end": 14,
+    "kind": "ambiguous",
+    "reason": "single pose could be an attack wind-up, but lacks a coherent sequence"
+  },
+  {
+    "start": 17,
+    "end": 17,
+    "kind": "ambiguous",
+    "reason": "single pose could be an attack wind-up, but lacks a coherent sequence"
+  },
+  {
+    "start": 24,
+    "end": 25,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 27,
+    "end": 28,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 30,
+    "end": 30,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 40,
+    "end": 49,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 50,
+    "end": 52,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 57,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 60,
+    "end": 60,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 67,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 80,
+    "end": 81,
+    "kind": "ambiguous",
+    "reason": "movement or pose sequence with no clearer hit frame than selected attacks"
+  },
+  {
+    "start": 100,
+    "end": 107,
+    "kind": "ambiguous",
+    "reason": "movement or pose sequence with no clearer hit frame than selected attacks"
+  },
+  {
+    "start": 119,
+    "end": 119,
+    "kind": "ambiguous",
+    "reason": "single pose could be an attack wind-up, but lacks a coherent sequence"
+  },
+  {
+    "start": 120,
+    "end": 120,
+    "kind": "ambiguous",
+    "reason": "single pose could be an attack wind-up, but lacks a coherent sequence"
+  },
+  {
+    "start": 135,
+    "end": 139,
+    "kind": "ambiguous",
+    "reason": "movement or pose sequence with no clearer hit frame than selected attacks"
+  },
+  {
+    "start": 158,
+    "end": 159,
+    "kind": "non-attack",
+    "reason": "fall/knockdown tail after selected red-form slash"
+  },
+  {
+    "start": 160,
+    "end": 161,
+    "kind": "non-attack",
+    "reason": "downed recovery frames after selected red-form slash"
+  },
+  {
+    "start": 181,
+    "end": 181,
+    "kind": "ambiguous",
+    "reason": "single pose could be an attack wind-up, but lacks a coherent sequence"
+  },
+  {
+    "start": 182,
+    "end": 191,
+    "kind": "non-attack",
+    "reason": "idle, crouch, movement, hurt, getup, pose, or transition material without a clean attack sequence"
+  },
+  {
+    "start": 192,
+    "end": 195,
+    "kind": "ambiguous",
+    "reason": "white-form flash/transition before selected blue-form attack"
+  },
+  {
+    "start": 206,
+    "end": 211,
+    "kind": "non-attack",
+    "reason": "standing/reset frames after selected blue-form low slash"
+  },
+  {
+    "start": 212,
+    "end": 218,
+    "kind": "bad-source",
+    "reason": "blue-form stance leftovers and source text fragment, not a clean attack sequence"
+  }
+]

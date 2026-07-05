@@ -98,7 +98,16 @@
       "/characters/kagura/frames/frame-130.png",
       "/characters/kagura/frames/frame-131.png"
     ],
-    "kickright": [],
+    "kickright": [
+      "/characters/kagura/frames/frame-160.png",
+      "/characters/kagura/frames/frame-161.png",
+      "/characters/kagura/frames/frame-162.png",
+      "/characters/kagura/frames/frame-163.png",
+      "/characters/kagura/frames/frame-164.png",
+      "/characters/kagura/frames/frame-165.png",
+      "/characters/kagura/frames/frame-166.png",
+      "/characters/kagura/frames/frame-167.png"
+    ],
     "hitLight": [
       "/characters/kagura/frames/frame-026.png"
     ],
@@ -148,9 +157,31 @@
       "/characters/kagura/frames/frame-096.png",
       "/characters/kagura/frames/frame-097.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/kagura/frames/frame-151.png",
+      "/characters/kagura/frames/frame-152.png",
+      "/characters/kagura/frames/frame-153.png",
+      "/characters/kagura/frames/frame-154.png",
+      "/characters/kagura/frames/frame-155.png",
+      "/characters/kagura/frames/frame-156.png",
+      "/characters/kagura/frames/frame-157.png",
+      "/characters/kagura/frames/frame-158.png",
+      "/characters/kagura/frames/frame-159.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/kagura/frames/frame-098.png",
+      "/characters/kagura/frames/frame-099.png",
+      "/characters/kagura/frames/frame-100.png",
+      "/characters/kagura/frames/frame-101.png",
+      "/characters/kagura/frames/frame-102.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/kagura/frames/frame-035.png",
+      "/characters/kagura/frames/frame-036.png",
+      "/characters/kagura/frames/frame-037.png",
+      "/characters/kagura/frames/frame-038.png",
+      "/characters/kagura/frames/frame-039.png"
+    ],
     "cmd:FC+2": [
       "/characters/kagura/frames/frame-093.png",
       "/characters/kagura/frames/frame-094.png",
@@ -204,7 +235,21 @@
       "/characters/kagura/frames/frame-149.png",
       "/characters/kagura/frames/frame-150.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/kagura/frames/frame-040.png",
+      "/characters/kagura/frames/frame-041.png",
+      "/characters/kagura/frames/frame-042.png",
+      "/characters/kagura/frames/frame-043.png",
+      "/characters/kagura/frames/frame-044.png",
+      "/characters/kagura/frames/frame-045.png",
+      "/characters/kagura/frames/frame-046.png",
+      "/characters/kagura/frames/frame-047.png",
+      "/characters/kagura/frames/frame-048.png",
+      "/characters/kagura/frames/frame-049.png",
+      "/characters/kagura/frames/frame-050.png",
+      "/characters/kagura/frames/frame-051.png",
+      "/characters/kagura/frames/frame-052.png"
+    ],
     "cmd:1+4": [
       "/characters/kagura/frames/frame-140.png",
       "/characters/kagura/frames/frame-141.png",
@@ -664,9 +709,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 29,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -721,9 +766,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 7,
+      "activeFrames": 42,
+      "recoveryFrames": 6,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -739,9 +784,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -756,9 +801,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 0,
+      "activeFrames": 24,
+      "recoveryFrames": 5,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -896,9 +941,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 47,
+      "recoveryFrames": 13,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

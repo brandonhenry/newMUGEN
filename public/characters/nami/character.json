@@ -136,9 +136,38 @@
       "/characters/nami/frames/frame-068.png",
       "/characters/nami/frames/frame-069.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/nami/frames/frame-162.png",
+      "/characters/nami/frames/frame-163.png",
+      "/characters/nami/frames/frame-164.png",
+      "/characters/nami/frames/frame-165.png",
+      "/characters/nami/frames/frame-166.png",
+      "/characters/nami/frames/frame-167.png",
+      "/characters/nami/frames/frame-168.png",
+      "/characters/nami/frames/frame-169.png",
+      "/characters/nami/frames/frame-170.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/nami/frames/frame-153.png",
+      "/characters/nami/frames/frame-154.png",
+      "/characters/nami/frames/frame-155.png",
+      "/characters/nami/frames/frame-156.png",
+      "/characters/nami/frames/frame-157.png",
+      "/characters/nami/frames/frame-158.png",
+      "/characters/nami/frames/frame-159.png",
+      "/characters/nami/frames/frame-160.png",
+      "/characters/nami/frames/frame-161.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/nami/frames/frame-132.png",
+      "/characters/nami/frames/frame-133.png",
+      "/characters/nami/frames/frame-134.png",
+      "/characters/nami/frames/frame-135.png",
+      "/characters/nami/frames/frame-136.png",
+      "/characters/nami/frames/frame-137.png",
+      "/characters/nami/frames/frame-138.png",
+      "/characters/nami/frames/frame-139.png"
+    ],
     "cmd:FC+2": [
       "/characters/nami/frames/frame-065.png",
       "/characters/nami/frames/frame-066.png",
@@ -187,8 +216,24 @@
       "/characters/nami/frames/frame-130.png",
       "/characters/nami/frames/frame-131.png"
     ],
-    "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:3+4": [
+      "/characters/nami/frames/frame-033.png",
+      "/characters/nami/frames/frame-034.png",
+      "/characters/nami/frames/frame-035.png",
+      "/characters/nami/frames/frame-036.png"
+    ],
+    "cmd:O+2": [
+      "/characters/nami/frames/frame-143.png",
+      "/characters/nami/frames/frame-144.png",
+      "/characters/nami/frames/frame-145.png",
+      "/characters/nami/frames/frame-146.png",
+      "/characters/nami/frames/frame-147.png",
+      "/characters/nami/frames/frame-148.png",
+      "/characters/nami/frames/frame-149.png",
+      "/characters/nami/frames/frame-150.png",
+      "/characters/nami/frames/frame-151.png",
+      "/characters/nami/frames/frame-152.png"
+    ],
     "cmd:1+4": [
       "/characters/nami/frames/frame-095.png",
       "/characters/nami/frames/frame-096.png",
@@ -646,9 +691,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 31,
+      "activeFrames": 18,
+      "recoveryFrames": 6,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -664,9 +709,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 19,
+      "activeFrames": 22,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -681,9 +726,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 4,
+      "activeFrames": 22,
+      "recoveryFrames": 3,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -789,9 +834,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 55,
+      "recoveryFrames": 1,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -807,9 +852,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 18,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

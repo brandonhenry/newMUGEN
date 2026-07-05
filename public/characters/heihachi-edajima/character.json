@@ -87,7 +87,18 @@
       "/characters/heihachi-edajima/frames/frame-094.png",
       "/characters/heihachi-edajima/frames/frame-095.png"
     ],
-    "kickleft": [],
+    "kickleft": [
+      "/characters/heihachi-edajima/frames/frame-177.png",
+      "/characters/heihachi-edajima/frames/frame-178.png",
+      "/characters/heihachi-edajima/frames/frame-179.png",
+      "/characters/heihachi-edajima/frames/frame-180.png",
+      "/characters/heihachi-edajima/frames/frame-181.png",
+      "/characters/heihachi-edajima/frames/frame-182.png",
+      "/characters/heihachi-edajima/frames/frame-183.png",
+      "/characters/heihachi-edajima/frames/frame-184.png",
+      "/characters/heihachi-edajima/frames/frame-185.png",
+      "/characters/heihachi-edajima/frames/frame-186.png"
+    ],
     "kickright": [],
     "hitLight": [
       "/characters/heihachi-edajima/frames/frame-039.png"
@@ -137,9 +148,37 @@
       "/characters/heihachi-edajima/frames/frame-094.png",
       "/characters/heihachi-edajima/frames/frame-095.png"
     ],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:qcf+4": [
+      "/characters/heihachi-edajima/frames/frame-160.png",
+      "/characters/heihachi-edajima/frames/frame-161.png",
+      "/characters/heihachi-edajima/frames/frame-162.png",
+      "/characters/heihachi-edajima/frames/frame-163.png",
+      "/characters/heihachi-edajima/frames/frame-164.png",
+      "/characters/heihachi-edajima/frames/frame-165.png",
+      "/characters/heihachi-edajima/frames/frame-166.png",
+      "/characters/heihachi-edajima/frames/frame-167.png",
+      "/characters/heihachi-edajima/frames/frame-168.png",
+      "/characters/heihachi-edajima/frames/frame-169.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/heihachi-edajima/frames/frame-150.png",
+      "/characters/heihachi-edajima/frames/frame-151.png",
+      "/characters/heihachi-edajima/frames/frame-152.png",
+      "/characters/heihachi-edajima/frames/frame-153.png",
+      "/characters/heihachi-edajima/frames/frame-154.png",
+      "/characters/heihachi-edajima/frames/frame-155.png",
+      "/characters/heihachi-edajima/frames/frame-156.png",
+      "/characters/heihachi-edajima/frames/frame-157.png",
+      "/characters/heihachi-edajima/frames/frame-158.png",
+      "/characters/heihachi-edajima/frames/frame-159.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/heihachi-edajima/frames/frame-023.png",
+      "/characters/heihachi-edajima/frames/frame-024.png",
+      "/characters/heihachi-edajima/frames/frame-025.png",
+      "/characters/heihachi-edajima/frames/frame-026.png",
+      "/characters/heihachi-edajima/frames/frame-027.png"
+    ],
     "cmd:FC+2": [
       "/characters/heihachi-edajima/frames/frame-092.png",
       "/characters/heihachi-edajima/frames/frame-093.png",
@@ -187,7 +226,10 @@
       "/characters/heihachi-edajima/frames/frame-135.png",
       "/characters/heihachi-edajima/frames/frame-137.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/heihachi-edajima/frames/frame-138.png",
+      "/characters/heihachi-edajima/frames/frame-139.png"
+    ],
     "cmd:1+4": [
       "/characters/heihachi-edajima/frames/frame-100.png",
       "/characters/heihachi-edajima/frames/frame-101.png",
@@ -552,9 +594,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -626,9 +668,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 28,
+      "activeFrames": 26,
+      "recoveryFrames": 1,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -644,9 +686,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 34,
+      "recoveryFrames": 8,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -661,9 +703,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 6,
+      "activeFrames": 22,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -791,9 +833,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 59,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,

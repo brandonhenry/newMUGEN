@@ -1,0 +1,92 @@
+[
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "ambiguous",
+    "reason": "single or very short staff pose without enough frames for a standalone attack"
+  },
+  {
+    "start": 20,
+    "end": 20,
+    "kind": "ambiguous",
+    "reason": "single or very short staff pose without enough frames for a standalone attack"
+  },
+  {
+    "start": 22,
+    "end": 22,
+    "kind": "ambiguous",
+    "reason": "single or very short staff pose without enough frames for a standalone attack"
+  },
+  {
+    "start": 24,
+    "end": 25,
+    "kind": "ambiguous",
+    "reason": "single or very short staff pose without enough frames for a standalone attack"
+  },
+  {
+    "start": 27,
+    "end": 27,
+    "kind": "ambiguous",
+    "reason": "single or very short staff pose without enough frames for a standalone attack"
+  },
+  {
+    "start": 37,
+    "end": 39,
+    "kind": "non-attack",
+    "reason": "standing recovery after selected afterimage burst"
+  },
+  {
+    "start": 40,
+    "end": 41,
+    "kind": "non-attack",
+    "reason": "idle, walking, crouch, roll, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 43,
+    "end": 49,
+    "kind": "non-attack",
+    "reason": "idle, walking, crouch, roll, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 50,
+    "end": 50,
+    "kind": "non-attack",
+    "reason": "idle, walking, crouch, roll, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 58,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "idle, walking, crouch, roll, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 60,
+    "end": 64,
+    "kind": "non-attack",
+    "reason": "idle, walking, crouch, roll, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 70,
+    "end": 70,
+    "kind": "ambiguous",
+    "reason": "single or very short staff pose without enough frames for a standalone attack"
+  },
+  {
+    "start": 110,
+    "end": 116,
+    "kind": "non-attack",
+    "reason": "idle, walking, crouch, roll, hurt, getup, or pose material without a clean attack sequence"
+  },
+  {
+    "start": 140,
+    "end": 142,
+    "kind": "non-attack",
+    "reason": "knockdown/recovery after selected umbrella attack"
+  },
+  {
+    "start": 171,
+    "end": 175,
+    "kind": "bad-source",
+    "reason": "recovery pose plus source text tail, not a clean attack sequence"
+  }
+]

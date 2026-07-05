@@ -88,8 +88,30 @@
       "/characters/ichigo-kurosaki/frames/frame-079.png",
       "/characters/ichigo-kurosaki/frames/frame-080.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/ichigo-kurosaki/frames/frame-221.png",
+      "/characters/ichigo-kurosaki/frames/frame-222.png",
+      "/characters/ichigo-kurosaki/frames/frame-223.png",
+      "/characters/ichigo-kurosaki/frames/frame-224.png",
+      "/characters/ichigo-kurosaki/frames/frame-225.png",
+      "/characters/ichigo-kurosaki/frames/frame-226.png",
+      "/characters/ichigo-kurosaki/frames/frame-227.png",
+      "/characters/ichigo-kurosaki/frames/frame-228.png",
+      "/characters/ichigo-kurosaki/frames/frame-229.png",
+      "/characters/ichigo-kurosaki/frames/frame-230.png"
+    ],
+    "kickright": [
+      "/characters/ichigo-kurosaki/frames/frame-261.png",
+      "/characters/ichigo-kurosaki/frames/frame-262.png",
+      "/characters/ichigo-kurosaki/frames/frame-263.png",
+      "/characters/ichigo-kurosaki/frames/frame-264.png",
+      "/characters/ichigo-kurosaki/frames/frame-265.png",
+      "/characters/ichigo-kurosaki/frames/frame-266.png",
+      "/characters/ichigo-kurosaki/frames/frame-267.png",
+      "/characters/ichigo-kurosaki/frames/frame-268.png",
+      "/characters/ichigo-kurosaki/frames/frame-269.png",
+      "/characters/ichigo-kurosaki/frames/frame-270.png"
+    ],
     "hitLight": [
       "/characters/ichigo-kurosaki/frames/frame-027.png"
     ],
@@ -156,8 +178,30 @@
       "/characters/ichigo-kurosaki/frames/frame-169.png",
       "/characters/ichigo-kurosaki/frames/frame-170.png"
     ],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:WS+4": [
+      "/characters/ichigo-kurosaki/frames/frame-171.png",
+      "/characters/ichigo-kurosaki/frames/frame-172.png",
+      "/characters/ichigo-kurosaki/frames/frame-173.png",
+      "/characters/ichigo-kurosaki/frames/frame-174.png",
+      "/characters/ichigo-kurosaki/frames/frame-175.png",
+      "/characters/ichigo-kurosaki/frames/frame-176.png",
+      "/characters/ichigo-kurosaki/frames/frame-177.png",
+      "/characters/ichigo-kurosaki/frames/frame-178.png",
+      "/characters/ichigo-kurosaki/frames/frame-179.png",
+      "/characters/ichigo-kurosaki/frames/frame-180.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/ichigo-kurosaki/frames/frame-120.png",
+      "/characters/ichigo-kurosaki/frames/frame-121.png",
+      "/characters/ichigo-kurosaki/frames/frame-122.png",
+      "/characters/ichigo-kurosaki/frames/frame-123.png",
+      "/characters/ichigo-kurosaki/frames/frame-124.png",
+      "/characters/ichigo-kurosaki/frames/frame-125.png",
+      "/characters/ichigo-kurosaki/frames/frame-126.png",
+      "/characters/ichigo-kurosaki/frames/frame-127.png",
+      "/characters/ichigo-kurosaki/frames/frame-128.png",
+      "/characters/ichigo-kurosaki/frames/frame-129.png"
+    ],
     "cmd:FC+2": [
       "/characters/ichigo-kurosaki/frames/frame-077.png",
       "/characters/ichigo-kurosaki/frames/frame-078.png",
@@ -203,8 +247,26 @@
       "/characters/ichigo-kurosaki/frames/frame-158.png",
       "/characters/ichigo-kurosaki/frames/frame-159.png"
     ],
-    "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:3+4": [
+      "/characters/ichigo-kurosaki/frames/frame-114.png",
+      "/characters/ichigo-kurosaki/frames/frame-115.png",
+      "/characters/ichigo-kurosaki/frames/frame-116.png",
+      "/characters/ichigo-kurosaki/frames/frame-117.png",
+      "/characters/ichigo-kurosaki/frames/frame-118.png",
+      "/characters/ichigo-kurosaki/frames/frame-119.png"
+    ],
+    "cmd:O+2": [
+      "/characters/ichigo-kurosaki/frames/frame-140.png",
+      "/characters/ichigo-kurosaki/frames/frame-141.png",
+      "/characters/ichigo-kurosaki/frames/frame-142.png",
+      "/characters/ichigo-kurosaki/frames/frame-143.png",
+      "/characters/ichigo-kurosaki/frames/frame-144.png",
+      "/characters/ichigo-kurosaki/frames/frame-145.png",
+      "/characters/ichigo-kurosaki/frames/frame-146.png",
+      "/characters/ichigo-kurosaki/frames/frame-147.png",
+      "/characters/ichigo-kurosaki/frames/frame-148.png",
+      "/characters/ichigo-kurosaki/frames/frame-149.png"
+    ],
     "cmd:1+4": [
       "/characters/ichigo-kurosaki/frames/frame-100.png",
       "/characters/ichigo-kurosaki/frames/frame-101.png",
@@ -573,9 +635,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 36,
+      "recoveryFrames": 9,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -590,9 +652,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 5,
+      "activeFrames": 37,
+      "recoveryFrames": 4,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -668,9 +730,9 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 43,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -685,9 +747,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 16,
-      "activeFrames": 2,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -800,9 +862,9 @@
       "jumpBeforeMove": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 18,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -818,9 +880,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 32,
+      "startupFrames": 6,
+      "activeFrames": 53,
+      "recoveryFrames": 1,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
