@@ -1,0 +1,170 @@
+[
+  {
+    "start": 16,
+    "end": 16,
+    "kind": "non-attack",
+    "reason": "single standing pose"
+  },
+  {
+    "start": 22,
+    "end": 22,
+    "kind": "non-attack",
+    "reason": "single crouch or guard pose"
+  },
+  {
+    "start": 25,
+    "end": 26,
+    "kind": "non-attack",
+    "reason": "short movement transition"
+  },
+  {
+    "start": 28,
+    "end": 28,
+    "kind": "non-attack",
+    "reason": "single prone transition frame"
+  },
+  {
+    "start": 30,
+    "end": 30,
+    "kind": "non-attack",
+    "reason": "single facial pose without attack follow-through"
+  },
+  {
+    "start": 54,
+    "end": 59,
+    "kind": "non-attack",
+    "reason": "stance and breathing poses"
+  },
+  {
+    "start": 65,
+    "end": 67,
+    "kind": "non-attack",
+    "reason": "idle or guarded stance poses"
+  },
+  {
+    "start": 72,
+    "end": 79,
+    "kind": "non-attack",
+    "reason": "run cycle without visible strike or release"
+  },
+  {
+    "start": 80,
+    "end": 86,
+    "kind": "ambiguous",
+    "reason": "running hand extension with no clear contact frame"
+  },
+  {
+    "start": 88,
+    "end": 89,
+    "kind": "non-attack",
+    "reason": "short idle or walk transition"
+  },
+  {
+    "start": 104,
+    "end": 109,
+    "kind": "ambiguous",
+    "reason": "pose and arm motion without clear hit or projectile release"
+  },
+  {
+    "start": 110,
+    "end": 119,
+    "kind": "ambiguous",
+    "reason": "mixed stance strip with no single readable attack"
+  },
+  {
+    "start": 120,
+    "end": 122,
+    "kind": "non-attack",
+    "reason": "inverted movement or fall transition"
+  },
+  {
+    "start": 147,
+    "end": 156,
+    "kind": "non-attack",
+    "reason": "run cycle and single effect pose without full attack sequence"
+  },
+  {
+    "start": 157,
+    "end": 160,
+    "kind": "ambiguous",
+    "reason": "short arm extension strip lacks a clear complete attack"
+  },
+  {
+    "start": 184,
+    "end": 193,
+    "kind": "ambiguous",
+    "reason": "alternate costume transformation or pose strip"
+  },
+  {
+    "start": 194,
+    "end": 203,
+    "kind": "ambiguous",
+    "reason": "alternate costume gestures without clear release/contact sequence"
+  },
+  {
+    "start": 204,
+    "end": 213,
+    "kind": "ambiguous",
+    "reason": "mixed transformation and effect poses"
+  },
+  {
+    "start": 214,
+    "end": 222,
+    "kind": "ambiguous",
+    "reason": "mixed alternate costume poses and white silhouettes"
+  },
+  {
+    "start": 243,
+    "end": 252,
+    "kind": "needs-split",
+    "reason": "mixed run, fall, and possible strike poses need manual split before use"
+  },
+  {
+    "start": 253,
+    "end": 262,
+    "kind": "needs-split",
+    "reason": "mixed reaction and movement poses need manual split before use"
+  },
+  {
+    "start": 263,
+    "end": 272,
+    "kind": "needs-split",
+    "reason": "mixed acrobatic movement and knockdown poses need manual split before use"
+  },
+  {
+    "start": 273,
+    "end": 282,
+    "kind": "non-attack",
+    "reason": "fall, recovery, and stance transitions"
+  },
+  {
+    "start": 283,
+    "end": 292,
+    "kind": "non-attack",
+    "reason": "stance and head movement poses without attack release"
+  },
+  {
+    "start": 293,
+    "end": 302,
+    "kind": "ambiguous",
+    "reason": "short red-form hand motion but no full attack slot remains"
+  },
+  {
+    "start": 303,
+    "end": 312,
+    "kind": "ambiguous",
+    "reason": "short red-form rush strip but no full attack slot remains"
+  },
+  {
+    "start": 363,
+    "end": 372,
+    "kind": "needs-split",
+    "reason": "mixed red-form acrobatic and fall poses need a separate slot/split later"
+  },
+  {
+    "start": 403,
+    "end": 403,
+    "kind": "bad-source",
+    "reason": "text or UI fragment, not a playable attack frame"
+  }
+]

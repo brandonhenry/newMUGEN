@@ -1,0 +1,86 @@
+[
+  {
+    "start": 8,
+    "end": 9,
+    "kind": "ambiguous",
+    "reason": "fiery stance or transformation with no clear attack release"
+  },
+  {
+    "start": 10,
+    "end": 12,
+    "kind": "non-attack",
+    "reason": "small walk or stance transition"
+  },
+  {
+    "start": 14,
+    "end": 19,
+    "kind": "non-attack",
+    "reason": "stance and crouch transition poses"
+  },
+  {
+    "start": 20,
+    "end": 20,
+    "kind": "non-attack",
+    "reason": "single crouched transition frame"
+  },
+  {
+    "start": 22,
+    "end": 22,
+    "kind": "non-attack",
+    "reason": "single standing pose"
+  },
+  {
+    "start": 64,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "walk and stance transition"
+  },
+  {
+    "start": 79,
+    "end": 79,
+    "kind": "non-attack",
+    "reason": "single standing pose"
+  },
+  {
+    "start": 80,
+    "end": 89,
+    "kind": "non-attack",
+    "reason": "idle walk and pointing gestures without hit or release"
+  },
+  {
+    "start": 120,
+    "end": 129,
+    "kind": "ambiguous",
+    "reason": "fiery charge or transformation-only strip"
+  },
+  {
+    "start": 170,
+    "end": 170,
+    "kind": "non-attack",
+    "reason": "single raised-arm pose"
+  },
+  {
+    "start": 171,
+    "end": 180,
+    "kind": "non-attack",
+    "reason": "stance and movement cycle without clear strike"
+  },
+  {
+    "start": 186,
+    "end": 190,
+    "kind": "non-attack",
+    "reason": "knockdown or fall transition"
+  },
+  {
+    "start": 191,
+    "end": 196,
+    "kind": "non-attack",
+    "reason": "prone and getup lead-in frames before the slash"
+  },
+  {
+    "start": 201,
+    "end": 208,
+    "kind": "ambiguous",
+    "reason": "teleport or intro strip ending in text fragment"
+  }
+]

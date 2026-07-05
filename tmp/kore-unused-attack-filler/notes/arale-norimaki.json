@@ -1,0 +1,98 @@
+[
+  {
+    "start": 16,
+    "end": 18,
+    "kind": "non-attack",
+    "reason": "standing and pointing poses without strike follow-through"
+  },
+  {
+    "start": 23,
+    "end": 25,
+    "kind": "non-attack",
+    "reason": "small run or crouch transition"
+  },
+  {
+    "start": 27,
+    "end": 28,
+    "kind": "ambiguous",
+    "reason": "short falling or reaction strip with unclear attack intent"
+  },
+  {
+    "start": 30,
+    "end": 30,
+    "kind": "non-attack",
+    "reason": "single prone or crouched transition frame"
+  },
+  {
+    "start": 58,
+    "end": 58,
+    "kind": "ambiguous",
+    "reason": "single crouched frame cannot define an attack sequence"
+  },
+  {
+    "start": 61,
+    "end": 61,
+    "kind": "non-attack",
+    "reason": "single running frame"
+  },
+  {
+    "start": 63,
+    "end": 69,
+    "kind": "non-attack",
+    "reason": "idle and costume or stance poses"
+  },
+  {
+    "start": 70,
+    "end": 79,
+    "kind": "non-attack",
+    "reason": "transformation, stance, and small movement poses"
+  },
+  {
+    "start": 80,
+    "end": 82,
+    "kind": "non-attack",
+    "reason": "standing turn or walk transition"
+  },
+  {
+    "start": 84,
+    "end": 85,
+    "kind": "non-attack",
+    "reason": "running transition frames"
+  },
+  {
+    "start": 89,
+    "end": 89,
+    "kind": "non-attack",
+    "reason": "single idle or run frame"
+  },
+  {
+    "start": 90,
+    "end": 99,
+    "kind": "non-attack",
+    "reason": "run and stance cycle without visible hit or release"
+  },
+  {
+    "start": 100,
+    "end": 101,
+    "kind": "non-attack",
+    "reason": "short run transition"
+  },
+  {
+    "start": 120,
+    "end": 126,
+    "kind": "non-attack",
+    "reason": "standing and gesture poses without attack contact"
+  },
+  {
+    "start": 171,
+    "end": 172,
+    "kind": "ambiguous",
+    "reason": "short follow-up pose strip with no clear attack sequence"
+  },
+  {
+    "start": 183,
+    "end": 183,
+    "kind": "bad-source",
+    "reason": "text or UI fragment, not a playable attack frame"
+  }
+]

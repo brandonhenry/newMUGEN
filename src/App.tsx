@@ -10318,6 +10318,8 @@ function CharacterViewer({
   const [unlockedScaleRatioKeys, setUnlockedScaleRatioKeys] = useState<Set<string>>(() => new Set());
   const [heightSheetStatus, setHeightSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
   const [frameSheetStatus, setFrameSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
+  const [unusedFrameSheetStatus, setUnusedFrameSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
+  const [movesSheetStatus, setMovesSheetStatus] = useState<'idle' | 'generating' | 'error'>('idle');
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
@@ -11202,6 +11204,166 @@ function CharacterViewer({
       }
       setFrameSheetStatus('error');
       window.setTimeout(() => setFrameSheetStatus('idle'), 2200);
+    }
+  };
+
+  const buildUnusedFrameSheetCharacters = async (): Promise<UnusedFrameSheetCharacterEntry[]> => Promise.all(
+    roster.map(async (character) => {
+      const usedFrameIndices = new Set(
+        Object.values(character.animationFrames ?? {})
+          .flat()
+          .map(getFrameIndex)
+          .filter((index) => index >= 0)
+      );
+      const fallbackFrameCount =
+        character.spriteFrameCount ??
+        Math.max(0, ...Object.values(character.animationFrames ?? {}).flat().map(getFrameIndex)) + 1;
+      const framesData = await fetch(`/characters/${character.id}/frames/frames.json`)
+        .then((response) => (response.ok ? response.json() : null))
+        .catch(() => null) as { frames?: SpriteFrameEdit[] } | null;
+      const metadataByIndex = new Map(
+        (framesData?.frames ?? [])
+          .filter((frame) => Number.isFinite(frame.index))
+          .map((frame) => [Math.max(0, Math.round(frame.index)), frame])
+      );
+      const frameIndices = metadataByIndex.size > 0
+        ? [...metadataByIndex.keys()].sort((a, b) => a - b)
+        : Array.from({ length: Math.max(0, fallbackFrameCount) }, (_, frameIndex) => frameIndex);
+      return {
+        characterId: character.id,
+        displayName: character.displayName,
+        totalFrames: frameIndices.length,
+        usedFrames: usedFrameIndices.size,
+        frames: frameIndices
+          .filter((frameIndex) => !usedFrameIndices.has(frameIndex))
+          .map((frameIndex) => {
+            const meta = metadataByIndex.get(frameIndex);
+            return {
+              frameIndex,
+              frame: new URL(framePath(character, frameIndex), window.location.href).href,
+              sheetId: typeof meta?.sheetId === 'string' ? meta.sheetId : undefined,
+              row: Number.isFinite(meta?.row) ? Number(meta?.row) : undefined
+            };
+          })
+      };
+    })
+  );
+
+  const generateUnusedFramesSheet = async () => {
+    if (!isLocalDev || unusedFrameSheetStatus === 'generating') return;
+    const popup = window.open('', '_blank');
+    if (popup) {
+      popup.document.title = 'Generating Unused Frames Sheet';
+      popup.document.body.style.margin = '0';
+      popup.document.body.style.background = '#07090c';
+      popup.document.body.style.color = '#f7f7f2';
+      popup.document.body.style.fontFamily = 'system-ui, sans-serif';
+      popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center"><strong>Generating unused frames sheet...</strong></main>';
+    }
+    setUnusedFrameSheetStatus('generating');
+    try {
+      const html = buildUnusedFramesSheetHtml(await buildUnusedFrameSheetCharacters());
+      const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+      if (popup && !popup.closed) popup.location.href = url;
+      else window.open(url, '_blank');
+      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setUnusedFrameSheetStatus('idle');
+    } catch (error) {
+      console.error('Failed to generate unused frames sheet', error);
+      if (popup && !popup.closed) {
+        popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center;color:#ffb9b9;background:#07090c;font-family:system-ui,sans-serif"><strong>Unused frames sheet failed.</strong></main>';
+      }
+      setUnusedFrameSheetStatus('error');
+      window.setTimeout(() => setUnusedFrameSheetStatus('idle'), 2200);
+    }
+  };
+
+  const buildMovesSheetCharacters = (): MovesSheetCharacterEntry[] => roster.map((character) => {
+    const seenKeys = new Set<string>();
+    const moveRows = animationSlots.flatMap((slot) => {
+      const dataKey = getSlotDataKey(slot);
+      const frames = character.animationFrames?.[dataKey] ?? [];
+      if (frames.length === 0) return [];
+      seenKeys.add(dataKey);
+      const move = resolveSlotMove(character, slot);
+      const frameRate = character.animationFrameRates?.[dataKey] ?? character.animationFps ?? 8;
+      return [{
+        animationKey: dataKey,
+        slotKey: slot.key,
+        label: formatMoveSlotLabel(slot, move),
+        category: slot.category,
+        notation: slot.notation,
+        command: slot.command,
+        frameRate,
+        durationFrames: getAnimationDurationFrames(frames.length, frameRate),
+        frameData: move ? formatFrameSummary(move) : formatAnimationTimingSummary(frames.length, frameRate),
+        frames: frames.map((frame, sequenceIndex) => ({
+          sequenceIndex,
+          frameIndex: getFrameIndex(frame),
+          frame: new URL(frame, window.location.href).href
+        }))
+      }];
+    });
+    const extraRows = Object.entries(character.animationFrames ?? {})
+      .filter(([animationKey, frames]) => !seenKeys.has(animationKey) && frames.length > 0)
+      .map(([animationKey, frames]) => {
+        const frameRate = character.animationFrameRates?.[animationKey] ?? character.animationFps ?? 8;
+        return {
+          animationKey,
+          slotKey: animationKey,
+          label: animationKey,
+          category: 'extra' as const,
+          notation: [animationKey],
+          frameRate,
+          durationFrames: getAnimationDurationFrames(frames.length, frameRate),
+          frameData: formatAnimationTimingSummary(frames.length, frameRate),
+          frames: frames.map((frame, sequenceIndex) => ({
+            sequenceIndex,
+            frameIndex: getFrameIndex(frame),
+            frame: new URL(frame, window.location.href).href
+          }))
+        };
+      });
+    const rows = [...moveRows, ...extraRows];
+    const uniqueFrameCount = new Set(rows.flatMap((row) => row.frames.map((frame) => frame.frameIndex).filter((frameIndex) => frameIndex >= 0))).size;
+    return {
+      characterId: character.id,
+      displayName: character.displayName,
+      rows,
+      uniqueFrameCount,
+      categoryCounts: rows.reduce<Record<string, number>>((counts, row) => {
+        counts[row.category] = (counts[row.category] ?? 0) + 1;
+        return counts;
+      }, {})
+    };
+  });
+
+  const generateMovesSheet = async () => {
+    if (!isLocalDev || movesSheetStatus === 'generating') return;
+    const popup = window.open('', '_blank');
+    if (popup) {
+      popup.document.title = 'Generating Moves Sheet';
+      popup.document.body.style.margin = '0';
+      popup.document.body.style.background = '#07090c';
+      popup.document.body.style.color = '#f7f7f2';
+      popup.document.body.style.fontFamily = 'system-ui, sans-serif';
+      popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center"><strong>Generating moves sheet...</strong></main>';
+    }
+    setMovesSheetStatus('generating');
+    try {
+      const html = buildMovesSheetHtml(buildMovesSheetCharacters());
+      const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+      if (popup && !popup.closed) popup.location.href = url;
+      else window.open(url, '_blank');
+      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setMovesSheetStatus('idle');
+    } catch (error) {
+      console.error('Failed to generate moves sheet', error);
+      if (popup && !popup.closed) {
+        popup.document.body.innerHTML = '<main style="min-height:100vh;display:grid;place-items:center;color:#ffb9b9;background:#07090c;font-family:system-ui,sans-serif"><strong>Moves sheet failed.</strong></main>';
+      }
+      setMovesSheetStatus('error');
+      window.setTimeout(() => setMovesSheetStatus('idle'), 2200);
     }
   };
 
@@ -12112,6 +12274,24 @@ function CharacterViewer({
             <List size={18} />
             {frameSheetStatus === 'generating' ? 'Generating Frame Sheet' : 'Generate Frame Sheet'}
           </button>
+          <button
+            className="secondary-button"
+            onClick={() => void generateMovesSheet()}
+            disabled={movesSheetStatus === 'generating'}
+            data-testid="generate-moves-sheet"
+          >
+            <Gamepad2 size={18} />
+            {movesSheetStatus === 'generating' ? 'Generating Moves Sheet' : 'Generate Moves Sheet'}
+          </button>
+          <button
+            className="secondary-button"
+            onClick={() => void generateUnusedFramesSheet()}
+            disabled={unusedFrameSheetStatus === 'generating'}
+            data-testid="generate-unused-frames-sheet"
+          >
+            <EyeOff size={18} />
+            {unusedFrameSheetStatus === 'generating' ? 'Generating Unused Frames' : 'Generate Unused Frames Sheet'}
+          </button>
         </>
       )}
       <button className="secondary-button" onClick={() => {
@@ -12159,6 +12339,42 @@ type FrameSheetCharacterEntry = {
       height: number;
     };
     scaleLabel: string;
+  }>;
+};
+
+type UnusedFrameSheetCharacterEntry = {
+  characterId: string;
+  displayName: string;
+  totalFrames: number;
+  usedFrames: number;
+  frames: Array<{
+    frameIndex: number;
+    frame: string;
+    sheetId?: string;
+    row?: number;
+  }>;
+};
+
+type MovesSheetCharacterEntry = {
+  characterId: string;
+  displayName: string;
+  uniqueFrameCount: number;
+  categoryCounts: Record<string, number>;
+  rows: Array<{
+    animationKey: string;
+    slotKey: string;
+    label: string;
+    category: AnimationSlot['category'] | 'extra';
+    notation: NotationToken[];
+    command?: string;
+    frameRate: number;
+    durationFrames: number;
+    frameData: string;
+    frames: Array<{
+      sequenceIndex: number;
+      frameIndex: number;
+      frame: string;
+    }>;
   }>;
 };
 
@@ -13134,6 +13350,608 @@ function buildFrameComparisonSheetHtml(characters: FrameSheetCharacterEntry[]) {
 
     characters.forEach(createCharacterSection);
     void runQueue();
+  </script>
+</body>
+</html>`;
+}
+
+function buildUnusedFramesSheetHtml(characters: UnusedFrameSheetCharacterEntry[]) {
+  const generatedAt = new Date().toLocaleString();
+  const charactersJson = JSON.stringify(characters).replace(/</g, '\\u003c');
+  const unusedTotal = characters.reduce((sum, character) => sum + character.frames.length, 0);
+  const charactersWithUnused = characters.filter((character) => character.frames.length > 0).length;
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unused Character Frames Sheet</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #07090c;
+      color: #f7f7f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 18px;
+      background: #07090c;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      display: grid;
+      gap: 18px;
+    }
+    .sheet-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 0 12px;
+      background: linear-gradient(#07090c 78%, rgba(7, 9, 12, 0));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    h1, h2 {
+      margin: 0;
+      line-height: 1;
+      text-wrap: balance;
+    }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; }
+    p, small {
+      margin: 0;
+      color: rgba(247, 247, 242, 0.64);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .character-sheet {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 14px 30px rgba(0, 0, 0, 0.16);
+    }
+    .character-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .strip-stack {
+      display: grid;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      border-radius: 6px;
+      background: #0a0f13;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    }
+    .empty-unused {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: #8fffc1;
+      background: rgba(93, 244, 176, 0.1);
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 0 0 1px rgba(143, 255, 193, 0.18) inset;
+    }
+  </style>
+</head>
+<body data-testid="unused-frame-sheet-page">
+  <main>
+    <section class="sheet-header">
+      <div>
+        <h1>Unused Character Frames Sheet</h1>
+        <p>${charactersWithUnused} characters with unused frames &middot; ${unusedTotal} unused frames &middot; generated ${escapeHtml(generatedAt)}</p>
+      </div>
+      <p>Frames not referenced by any animation key</p>
+    </section>
+    <section id="sheet-root"></section>
+  </main>
+  <script>
+    const characters = ${charactersJson};
+    const CELL_WIDTH = 112;
+    const CELL_HEIGHT = 132;
+    const STRIP_FRAMES = 30;
+    const DRAW_MAX_WIDTH = 84;
+    const DRAW_MAX_HEIGHT = 76;
+    const BASELINE = 92;
+    const root = document.getElementById('sheet-root');
+    const tasks = [];
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('Image failed'));
+        image.src = src;
+      });
+    }
+
+    function getOpaqueImageBounds(image) {
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, image.naturalWidth || image.width || 1);
+      canvas.height = Math.max(1, image.naturalHeight || image.height || 1);
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      if (!context) return { left: 0, top: 0, width: canvas.width, height: canvas.height };
+      context.drawImage(image, 0, 0);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      let left = imageData.width;
+      let right = -1;
+      let top = imageData.height;
+      let bottom = -1;
+      for (let y = 0; y < imageData.height; y += 1) {
+        for (let x = 0; x < imageData.width; x += 1) {
+          if (data[(y * imageData.width + x) * 4 + 3] <= 8) continue;
+          left = Math.min(left, x);
+          right = Math.max(right, x);
+          top = Math.min(top, y);
+          bottom = Math.max(bottom, y);
+        }
+      }
+      if (right < left || bottom < top) return { left: 0, top: 0, width: imageData.width, height: imageData.height };
+      return { left, top, width: right - left + 1, height: bottom - top + 1 };
+    }
+
+    function cropSprite(image) {
+      const bounds = getOpaqueImageBounds(image);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(bounds.width));
+      canvas.height = Math.max(1, Math.round(bounds.height));
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Canvas unavailable');
+      context.imageSmoothingEnabled = false;
+      context.drawImage(image, bounds.left, bounds.top, bounds.width, bounds.height, 0, 0, canvas.width, canvas.height);
+      return canvas;
+    }
+
+    function drawCellBase(context, column, frame) {
+      const x = column * CELL_WIDTH;
+      context.fillStyle = column % 2 === 0 ? '#10161d' : '#0d1319';
+      context.fillRect(x, 0, CELL_WIDTH - 4, CELL_HEIGHT);
+      context.strokeStyle = 'rgba(255,255,255,0.08)';
+      context.strokeRect(x + 0.5, 0.5, CELL_WIDTH - 5, CELL_HEIGHT - 1);
+      context.fillStyle = '#f7f7f2';
+      context.font = '800 12px ui-sans-serif, system-ui';
+      context.fillText('frame ' + String(frame.frameIndex).padStart(3, '0'), x + 8, 18);
+      context.fillStyle = 'rgba(247,247,242,0.52)';
+      context.font = '700 9px ui-sans-serif, system-ui';
+      const source = [frame.sheetId ? 'sheet ' + frame.sheetId : '', Number.isFinite(frame.row) ? 'row ' + frame.row : ''].filter(Boolean).join(' / ');
+      context.fillText(source.slice(0, 28), x + 8, 34);
+      context.strokeStyle = '#ffb000';
+      context.beginPath();
+      context.moveTo(x + 8, BASELINE + 0.5);
+      context.lineTo(x + CELL_WIDTH - 12, BASELINE + 0.5);
+      context.stroke();
+    }
+
+    function drawResult(canvas, column, frame, spriteCanvas) {
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      drawCellBase(context, column, frame);
+      const x = column * CELL_WIDTH;
+      const drawScale = Math.min(1, DRAW_MAX_WIDTH / Math.max(1, spriteCanvas.width), DRAW_MAX_HEIGHT / Math.max(1, spriteCanvas.height));
+      const width = Math.max(1, Math.round(spriteCanvas.width * drawScale));
+      const height = Math.max(1, Math.round(spriteCanvas.height * drawScale));
+      context.imageSmoothingEnabled = false;
+      context.drawImage(spriteCanvas, x + (CELL_WIDTH - 4 - width) / 2, BASELINE - height, width, height);
+      context.fillStyle = 'rgba(247,247,242,0.64)';
+      context.font = '800 10px ui-sans-serif, system-ui';
+      context.fillText(spriteCanvas.width + 'x' + spriteCanvas.height + 'px', x + 8, BASELINE + 18);
+    }
+
+    function drawFailure(canvas, column, frame, message) {
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      drawCellBase(context, column, frame);
+      const x = column * CELL_WIDTH;
+      context.fillStyle = '#ffb9b9';
+      context.font = '800 11px ui-sans-serif, system-ui';
+      context.fillText(message.slice(0, 24), x + 8, 58);
+    }
+
+    function createCharacterSection(character) {
+      const section = document.createElement('section');
+      section.className = 'character-sheet';
+      section.setAttribute('data-testid', 'unused-frame-character');
+      const header = document.createElement('div');
+      header.className = 'character-header';
+      const title = document.createElement('h2');
+      title.textContent = character.displayName;
+      const progress = document.createElement('small');
+      progress.setAttribute('data-testid', 'unused-frame-summary');
+      progress.textContent = character.frames.length + ' unused / ' + character.totalFrames + ' total';
+      header.append(title, progress);
+      const stack = document.createElement('div');
+      stack.className = 'strip-stack';
+      section.append(header, stack);
+      root.append(section);
+
+      if (character.frames.length === 0) {
+        const empty = document.createElement('span');
+        empty.className = 'empty-unused';
+        empty.textContent = 'No unused frames';
+        stack.append(empty);
+        return;
+      }
+
+      let done = 0;
+      character.frames.forEach((frame, index) => {
+        const stripIndex = Math.floor(index / STRIP_FRAMES);
+        const column = index % STRIP_FRAMES;
+        let canvas = stack.querySelector('[data-strip="' + stripIndex + '"]');
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          const framesInStrip = Math.min(STRIP_FRAMES, character.frames.length - stripIndex * STRIP_FRAMES);
+          canvas.width = framesInStrip * CELL_WIDTH;
+          canvas.height = CELL_HEIGHT;
+          canvas.dataset.strip = String(stripIndex);
+          canvas.setAttribute('data-testid', 'unused-frame-canvas');
+          stack.append(canvas);
+          const context = canvas.getContext('2d');
+          for (let placeholder = 0; placeholder < framesInStrip; placeholder += 1) {
+            drawCellBase(context, placeholder, character.frames[stripIndex * STRIP_FRAMES + placeholder]);
+          }
+        }
+        tasks.push(async () => {
+          try {
+            const image = await loadImage(frame.frame);
+            drawResult(canvas, column, frame, cropSprite(image));
+          } catch (error) {
+            drawFailure(canvas, column, frame, error instanceof Error ? error.message : 'failed');
+          } finally {
+            done += 1;
+            progress.textContent = done + '/' + character.frames.length + ' drawn / ' + character.totalFrames + ' total';
+          }
+        });
+      });
+    }
+
+    async function runQueue(concurrency = 12) {
+      let cursor = 0;
+      const workers = Array.from({ length: concurrency }, async () => {
+        while (cursor < tasks.length) {
+          const task = tasks[cursor];
+          cursor += 1;
+          await task();
+          await new Promise((resolve) => window.setTimeout(resolve, 0));
+        }
+      });
+      await Promise.all(workers);
+    }
+
+    characters.forEach(createCharacterSection);
+    void runQueue();
+  </script>
+</body>
+</html>`;
+}
+
+function buildMovesSheetHtml(characters: MovesSheetCharacterEntry[]) {
+  const generatedAt = new Date().toLocaleString();
+  const charactersJson = JSON.stringify(characters).replace(/</g, '\\u003c');
+  const rowTotal = characters.reduce((sum, character) => sum + character.rows.length, 0);
+  const frameUseTotal = characters.reduce((sum, character) => sum + character.rows.reduce((rowSum, row) => rowSum + row.frames.length, 0), 0);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character Moves Sheet</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #07090c;
+      color: #f7f7f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 18px;
+      background: #07090c;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      display: grid;
+      gap: 18px;
+    }
+    .sheet-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 0 12px;
+      background: linear-gradient(#07090c 78%, rgba(7, 9, 12, 0));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1;
+      text-wrap: balance;
+    }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; }
+    h3 { font-size: 13px; }
+    p, small {
+      margin: 0;
+      color: rgba(247, 247, 242, 0.64);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .character-sheet {
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 14px 30px rgba(0, 0, 0, 0.16);
+    }
+    .character-header {
+      display: grid;
+      gap: 6px;
+    }
+    .character-header-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .category-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pill,
+    .notation-token {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      padding: 3px 7px;
+      border-radius: 5px;
+      color: #f7f7f2;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      font-size: 10px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .move-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 240px) minmax(220px, 300px) minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+      padding: 10px;
+      border-radius: 7px;
+      background: rgba(0, 0, 0, 0.18);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.075) inset;
+    }
+    .move-meta {
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      min-width: 0;
+    }
+    .move-meta strong,
+    .move-meta span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .move-meta strong {
+      font-size: 13px;
+      line-height: 1.15;
+    }
+    .move-meta span {
+      color: rgba(247, 247, 242, 0.6);
+      font-size: 11px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .notation-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: start;
+      gap: 5px;
+    }
+    .frame-strip {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 3px;
+    }
+    .frame-card {
+      flex: 0 0 76px;
+      display: grid;
+      grid-template-rows: 72px auto;
+      gap: 3px;
+      padding: 4px;
+      border-radius: 6px;
+      background: #0d1319;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    }
+    .frame-card img {
+      width: 68px;
+      height: 72px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      align-self: end;
+      border-radius: 4px;
+      background:
+        linear-gradient(rgba(255, 176, 0, 0), rgba(255, 176, 0, 0) 64px, rgba(255, 176, 0, 0.9) 64px, rgba(255, 176, 0, 0.9) 66px, rgba(255, 176, 0, 0) 66px),
+        rgba(255, 255, 255, 0.035);
+    }
+    .frame-card span {
+      color: rgba(247, 247, 242, 0.68);
+      font-size: 10px;
+      font-weight: 900;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .empty-moves {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: #ffdf8f;
+      background: rgba(255, 176, 0, 0.1);
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 0 0 1px rgba(255, 176, 0, 0.18) inset;
+    }
+    @media (max-width: 900px) {
+      .move-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-testid="moves-sheet-page">
+  <main>
+    <section class="sheet-header">
+      <div>
+        <h1>Character Moves Sheet</h1>
+        <p>${characters.length} characters &middot; ${rowTotal} configured move/state rows &middot; ${frameUseTotal} frame uses &middot; generated ${escapeHtml(generatedAt)}</p>
+      </div>
+      <p>Includes stances, states, raw buttons, directions, motions, and specials</p>
+    </section>
+    <section id="sheet-root"></section>
+  </main>
+  <script>
+    const characters = ${charactersJson};
+    const root = document.getElementById('sheet-root');
+    const categoryLabels = {
+      stance: 'Stance / State',
+      raw: 'Raw Button',
+      direction: 'Direction',
+      motion: 'Motion',
+      state: 'State',
+      special: 'Ki / Heat / Rage',
+      extra: 'Extra Key'
+    };
+    const categoryOrder = ['stance', 'raw', 'direction', 'motion', 'state', 'special', 'extra'];
+
+    function text(tag, className, value) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      element.textContent = value;
+      return element;
+    }
+
+    function createNotation(tokens) {
+      const group = document.createElement('div');
+      group.className = 'notation-group';
+      for (const token of tokens) {
+        group.append(text('span', 'notation-token', token));
+      }
+      return group;
+    }
+
+    function createFrameCard(frame) {
+      const card = document.createElement('div');
+      card.className = 'frame-card';
+      const image = document.createElement('img');
+      image.loading = 'lazy';
+      image.alt = 'frame ' + frame.frameIndex;
+      image.src = frame.frame;
+      const label = text('span', '', '#' + frame.sequenceIndex + ' f' + String(frame.frameIndex).padStart(3, '0'));
+      card.append(image, label);
+      return card;
+    }
+
+    function createMoveRow(row) {
+      const article = document.createElement('article');
+      article.className = 'move-row';
+      article.setAttribute('data-testid', 'moves-sheet-row');
+
+      const title = document.createElement('div');
+      title.className = 'move-meta';
+      title.append(
+        text('strong', '', row.label),
+        text('span', '', categoryLabels[row.category] || row.category),
+        text('span', '', row.animationKey)
+      );
+
+      const details = document.createElement('div');
+      details.className = 'move-meta';
+      details.append(
+        createNotation(row.notation),
+        text('span', '', row.command ? 'command ' + row.command : 'state input'),
+        text('span', '', row.frames.length + ' frames / ' + row.frameRate + ' FPS / ' + row.durationFrames + 'f'),
+        text('span', '', row.frameData)
+      );
+
+      const strip = document.createElement('div');
+      strip.className = 'frame-strip';
+      for (const frame of row.frames) {
+        strip.append(createFrameCard(frame));
+      }
+
+      article.append(title, details, strip);
+      return article;
+    }
+
+    function createCharacterSection(character) {
+      const section = document.createElement('section');
+      section.className = 'character-sheet';
+      section.setAttribute('data-testid', 'moves-sheet-character');
+
+      const header = document.createElement('header');
+      header.className = 'character-header';
+      const top = document.createElement('div');
+      top.className = 'character-header-top';
+      top.append(
+        text('h2', '', character.displayName),
+        text('small', '', character.rows.length + ' rows / ' + character.uniqueFrameCount + ' unique used frames')
+      );
+      const summary = document.createElement('div');
+      summary.className = 'category-summary';
+      for (const category of categoryOrder) {
+        const count = character.categoryCounts[category] || 0;
+        if (count > 0) summary.append(text('span', 'pill', (categoryLabels[category] || category) + ' ' + count));
+      }
+      header.append(top, summary);
+      section.append(header);
+
+      if (character.rows.length === 0) {
+        section.append(text('span', 'empty-moves', 'No configured animation rows'));
+      } else {
+        for (const row of character.rows) {
+          section.append(createMoveRow(row));
+        }
+      }
+      root.append(section);
+    }
+
+    characters.forEach(createCharacterSection);
   </script>
 </body>
 </html>`;
