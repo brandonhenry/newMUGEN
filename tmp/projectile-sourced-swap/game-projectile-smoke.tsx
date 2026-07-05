@@ -22,6 +22,7 @@ type SmokeScenario = {
   p2Z?: number;
   p1Ki?: number;
   fireFrame: number;
+  holdEndFrame?: number;
   resetFrame: number;
 };
 
@@ -59,6 +60,20 @@ const scenarios: SmokeScenario[] = [
     p2X: 4.2,
     fireFrame: 24,
     resetFrame: 180
+  },
+  {
+    id: 'dr-mashirito-bolt-scatter-hold',
+    label: 'Dr. Mashirito holdable bolt scatter',
+    p1Path: '/characters/dr-mashirito/character.json',
+    p2Path: '/characters/don-patch-poppa-rocks/character.json',
+    fireInputs: ['kick', 'special'],
+    holdInputs: ['kick', 'special'],
+    p1X: -4.2,
+    p2X: 4.2,
+    p2Z: 0.8,
+    fireFrame: 24,
+    holdEndFrame: 112,
+    resetFrame: 220
   }
 ];
 
@@ -159,7 +174,7 @@ function ProjectileSmokeApp() {
         }
         const p1 = emptyInputFrame();
         const p2 = emptyInputFrame();
-        if (scenario.holdInputs && frameRef.current >= scenario.fireFrame - 10 && frameRef.current < scenario.fireFrame + 8) {
+        if (scenario.holdInputs && frameRef.current >= scenario.fireFrame - 10 && frameRef.current < (scenario.holdEndFrame ?? scenario.fireFrame + 8)) {
           for (const input of scenario.holdInputs) p1[input] = true;
         }
         if (frameRef.current >= scenario.fireFrame && frameRef.current < scenario.fireFrame + 2) {

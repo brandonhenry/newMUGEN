@@ -7002,6 +7002,34 @@ describe('fight engine', () => {
     expect(match.projectiles[0].position.y).toBeLessThan(peakY);
   });
 
+  it('keeps holdable attacks active until the button is released', () => {
+    const shooter = makeProjectileCharacter('holdable-projectile-test', {
+      holdable: true,
+      startupFrames: 1,
+      activeFrames: 1,
+      recoveryFrames: 2
+    }, {
+      homingMode: 'none',
+      repeatStartFrame: 2,
+      repeatEveryFrames: 3,
+      lifetimeFrames: 120
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 5;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 16, makeInput('jab'));
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].moveFrame).toBeGreaterThan(4);
+    expect(match.projectiles.length).toBeGreaterThan(2);
+    expect(new Set(match.projectiles.map((projectile) => projectile.instanceId)).size).toBe(match.projectiles.length);
+
+    match = stepFrames(match, 4);
+    expect(match.fighters[0].state).not.toBe('attack');
+  });
+
   it('lets active projectiles hit once and emit normal combat feedback', () => {
     const shooter = makeProjectileCharacter('projectile-hit-test');
     const defender = normalizeCharacter(starterCharacters[1]);

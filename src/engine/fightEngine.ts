@@ -811,6 +811,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     applyAttackForwardForce(fighter, opponent, previousMoveFrame, fighter.moveFrame);
     spawnMoveProjectiles(match, fighter, opponent, previousMoveFrame, fighter.moveFrame);
     fighter.actionFramesRemaining = Math.max(0, fighter.actionFramesRemaining - frameDelta);
+    if (shouldHoldCurrentAttack(fighter, input)) {
+      fighter.actionFramesRemaining = Math.max(fighter.actionFramesRemaining, 2);
+    }
     applyWhiffRecoveryIfNeeded(fighter);
     fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
     if (fighter.actionFramesRemaining === 0 && fighter.state !== 'knockdown' && fighter.state !== 'getup') {
@@ -1935,6 +1938,13 @@ function canComboCancel(fighter: FighterRuntime) {
   return Boolean(move.cancelable) && fighter.hitConfirmed && fighter.moveFrame >= move.startupFrames + move.activeFrames;
 }
 
+function shouldHoldCurrentAttack(fighter: FighterRuntime, input: InputFrame) {
+  const move = fighter.currentMove;
+  if (fighter.state !== 'attack' || !move?.holdable) return false;
+  if (!input[move.input]) return false;
+  return fighter.moveFrame >= Math.max(1, totalMoveFrames(move) - 2);
+}
+
 function startComboAttack(
   fighter: FighterRuntime,
   opponent: FighterRuntime,
@@ -2479,6 +2489,7 @@ function applyMoveOverrides(
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
     juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2),
     throwCapture: Boolean(merged.throwCapture),
+    holdable: Boolean(merged.holdable),
     cancelable: Boolean(merged.cancelable),
     healsHp: Boolean(merged.healsHp),
     healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100)
@@ -3135,16 +3146,39 @@ function spawnMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, op
     .flatMap((moveKey) => attacker.character.moveProjectiles?.[moveKey] ?? [])
     .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index);
   for (const instance of instances) {
-    const spawnFrame = Math.max(0, Math.round(instance.spawnFrame ?? move.startupFrames));
-    if (previousMoveFrame >= spawnFrame || currentMoveFrame < spawnFrame) continue;
-    const duplicate = match.projectiles.some((projectile) => (
-      projectile.ownerSlot === attacker.slot &&
-      projectile.moveInstanceId === attacker.moveInstanceId &&
-      projectile.instanceId === instance.id
-    ));
-    if (duplicate) continue;
-    match.projectiles = [...match.projectiles, createProjectileRuntime(match, attacker, opponent, move, instance)];
+    for (const spawn of getProjectileSpawnEvents(instance, move, previousMoveFrame, currentMoveFrame)) {
+      const runtimeInstanceId = spawn.repeatIndex === 0 && !instance.repeatEveryFrames ? instance.id : `${instance.id}@${spawn.repeatIndex}`;
+      const duplicate = match.projectiles.some((projectile) => (
+        projectile.ownerSlot === attacker.slot &&
+        projectile.moveInstanceId === attacker.moveInstanceId &&
+        projectile.instanceId === runtimeInstanceId
+      ));
+      if (duplicate) continue;
+      match.projectiles = [...match.projectiles, createProjectileRuntime(match, attacker, opponent, move, instance, runtimeInstanceId)];
+    }
   }
+}
+
+function getProjectileSpawnEvents(instance: MoveProjectileInstance, move: MoveDefinition, previousMoveFrame: number, currentMoveFrame: number) {
+  const spawnFrame = Math.max(0, Math.round(instance.spawnFrame ?? move.startupFrames));
+  const repeatEvery = instance.repeatEveryFrames ? Math.max(1, Math.round(instance.repeatEveryFrames)) : 0;
+  if (!repeatEvery) {
+    return previousMoveFrame < spawnFrame && currentMoveFrame >= spawnFrame
+      ? [{ frame: spawnFrame, repeatIndex: 0 }]
+      : [];
+  }
+  const repeatStart = Math.max(spawnFrame, Math.round(instance.repeatStartFrame ?? spawnFrame));
+  if (currentMoveFrame < repeatStart) return [];
+  const limit = instance.repeatLimit === undefined ? Number.POSITIVE_INFINITY : Math.max(1, Math.round(instance.repeatLimit));
+  const firstIndex = Math.max(0, Math.floor((Math.max(previousMoveFrame + 0.0001, repeatStart) - repeatStart) / repeatEvery));
+  const events: Array<{ frame: number; repeatIndex: number }> = [];
+  for (let index = firstIndex; index < limit && events.length < 24; index += 1) {
+    const frame = repeatStart + index * repeatEvery;
+    if (frame <= previousMoveFrame) continue;
+    if (frame > currentMoveFrame) break;
+    events.push({ frame, repeatIndex: index });
+  }
+  return events;
 }
 
 function createProjectileRuntime(
@@ -3152,7 +3186,8 @@ function createProjectileRuntime(
   attacker: FighterRuntime,
   opponent: FighterRuntime,
   move: MoveDefinition,
-  instance: MoveProjectileInstance
+  instance: MoveProjectileInstance,
+  runtimeInstanceId = instance.id
 ): ProjectileRuntime {
   const facing = attacker.facing || getOpponentSideSign(attacker, opponent, match.stage);
   const attackerPosition = getFighterCombatPosition(attacker);
@@ -3172,7 +3207,7 @@ function createProjectileRuntime(
     id: nextHitEventId(match),
     ownerSlot: attacker.slot,
     projectileId: instance.projectileId,
-    instanceId: instance.id,
+    instanceId: runtimeInstanceId,
     moveInstanceId: attacker.moveInstanceId,
     move: { ...move, label: instance.label ?? move.label, kiBurst: Boolean(move.kiBurst || instance.kiBurst), hitbox: instance.hitbox },
     position: { x: spawnX, y: spawnY, z: spawnZ },
@@ -4570,10 +4605,21 @@ function resolveAnimationFrameSequence(frames: NonNullable<CharacterDefinition['
 function getFighterAnimationFrameIndex(fighter: FighterRuntime, key: string, sequenceLength: number) {
   if (sequenceLength <= 1) return 0;
   if (fighter.state === 'chargeKi') return getChargeKiAnimationFrameIndex(fighter, sequenceLength);
-  if (fighter.state === 'attack') return Math.min(sequenceLength - 1, Math.floor(activeMoveProgress(fighter) * sequenceLength));
+  if (fighter.state === 'attack') return getAttackAnimationFrameIndex(fighter, sequenceLength);
   if (fighter.state === 'getup') return Math.min(sequenceLength - 1, Math.floor(getFighterGetupProgress(fighter) * sequenceLength));
   if (key === 'idle' || key === 'crouch' || key === 'block' || key === 'crouchBlock' || key === 'hitLight' || key === 'win' || key === 'lose') return 0;
   return 0;
+}
+
+function getAttackAnimationFrameIndex(fighter: FighterRuntime, sequenceLength: number) {
+  const move = fighter.currentMove;
+  if (move?.holdable && sequenceLength >= 2) {
+    const holdStartFrame = Math.max(1, totalMoveFrames(move) - 2);
+    if (fighter.moveFrame >= holdStartFrame) {
+      return sequenceLength - 2 + (Math.floor((fighter.moveFrame - holdStartFrame) / 8) % 2);
+    }
+  }
+  return Math.min(sequenceLength - 1, Math.floor(activeMoveProgress(fighter) * sequenceLength));
 }
 
 function getChargeKiAnimationFrameIndex(fighter: FighterRuntime, sequenceLength: number) {

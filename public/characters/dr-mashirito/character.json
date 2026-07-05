@@ -878,9 +878,10 @@
       "forwardForce": 3.35,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
-      "label": "Dr. Mashirito Power Crush",
+      "label": "Dr. Mashirito Bolt Scatter",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "holdable": true
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -3197,6 +3198,96 @@
         "blockDamageScale": 0.85,
         "pushbackScale": 0.75,
         "blockPushbackScale": 0.75,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd:3-4-thrown-bolt-upper",
+        "projectileId": "thrown-bolt-projectile",
+        "label": "Dr. Mashirito Bolt Scatter Upper",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0.32,
+          0.92,
+          0.55
+        ],
+        "startupFrames": 1,
+        "activeFrames": 86,
+        "recoveryFrames": 8,
+        "lifetimeFrames": 104,
+        "speed": 5.8,
+        "forwardVelocity": 5.8,
+        "verticalVelocity": 4.9,
+        "gravity": 8.2,
+        "repeatStartFrame": 4,
+        "repeatEveryFrames": 12,
+        "homingMode": "limited",
+        "homingStrength": 0.75,
+        "homingTurnRate": 1.3,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.48,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.34,
+            0.34,
+            0.38
+          ]
+        },
+        "damageScale": 0.55,
+        "blockDamageScale": 0.55,
+        "pushbackScale": 0.55,
+        "blockPushbackScale": 0.55,
+        "mirrorWithFacing": true,
+        "clash": true
+      },
+      {
+        "id": "cmd:3-4-thrown-bolt-lower",
+        "projectileId": "thrown-bolt-projectile",
+        "label": "Dr. Mashirito Bolt Scatter Lower",
+        "spawnFrame": 10,
+        "spawnOffset": [
+          -0.32,
+          0.88,
+          0.55
+        ],
+        "startupFrames": 1,
+        "activeFrames": 86,
+        "recoveryFrames": 8,
+        "lifetimeFrames": 104,
+        "speed": 5.6,
+        "forwardVelocity": 5.6,
+        "verticalVelocity": 4.5,
+        "gravity": 8,
+        "repeatStartFrame": 10,
+        "repeatEveryFrames": 12,
+        "homingMode": "limited",
+        "homingStrength": 0.75,
+        "homingTurnRate": 1.3,
+        "homingEndFrame": 40,
+        "nearMissRadius": 0.48,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.34,
+            0.34,
+            0.38
+          ]
+        },
+        "damageScale": 0.55,
+        "blockDamageScale": 0.55,
+        "pushbackScale": 0.55,
+        "blockPushbackScale": 0.55,
         "mirrorWithFacing": true,
         "clash": true
       }

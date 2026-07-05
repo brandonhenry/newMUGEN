@@ -130,6 +130,7 @@ export type MoveDefinition = {
   tornado?: boolean;
   throwCapture?: boolean;
   endsInCrouch?: boolean;
+  holdable?: boolean;
   cancelable?: boolean;
   tracking: MoveTracking;
   armorStartFrame?: number | null;
@@ -335,6 +336,9 @@ export type MoveProjectileInstance = {
   forwardVelocity: number;
   verticalVelocity?: number;
   gravity?: number;
+  repeatStartFrame?: number;
+  repeatEveryFrames?: number;
+  repeatLimit?: number;
   homingMode: ProjectileHomingMode;
   homingStrength: number;
   homingTurnRate: number;

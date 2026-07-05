@@ -30,7 +30,8 @@ import type {
   StageDefinition,
   StageLayerDefinition,
   StageModelDefinition,
-  StagePropDefinition
+  StagePropDefinition,
+  Vec3Tuple
 } from '../types';
 import { emptyInputFrame } from '../types';
 import { activeMoveProgress, createMatch, stepMatch } from '../engine/fightEngine';
@@ -892,6 +893,7 @@ const SHADOW_CLONE_SMOKE_COLUMNS = 4;
 const SHADOW_CLONE_SMOKE_ROWS = 3;
 const SHADOW_CLONE_SMOKE_TOTAL_FRAMES = SHADOW_CLONE_SMOKE_COLUMNS * SHADOW_CLONE_SMOKE_ROWS;
 const SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES = 24;
+const PROJECTILE_VISUAL_FRONT_BIAS = 0.22;
 
 function TransformEffectLayer({ fighter }: { fighter: FighterRuntime }) {
   const active = fighter.state === 'transform' || fighter.transformSmokeFrames > 0;
@@ -1308,6 +1310,7 @@ function ProjectileVisual({
   definition: CharacterProjectileDefinition;
   stage: StageDefinition;
 }) {
+  const camera = useThree((state) => state.camera);
   const source = getProjectileFrameSource(projectile, definition);
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
   const character = useMemo(() => ({
@@ -1340,9 +1343,10 @@ function ProjectileVisual({
   }), [definition.color, projectile.phase]);
   if (!source || voxels.length === 0) return null;
   const yaw = getProjectileVisualYaw(projectile);
+  const position = getProjectileVisualPosition(projectile, camera);
   return (
     <group
-      position={[projectile.position.x, projectile.position.y, projectile.position.z]}
+      position={position}
       rotation={[definition.defaultRotation[0], yaw + definition.defaultRotation[1], definition.defaultRotation[2]]}
       scale={definition.defaultScale}
     >
@@ -1358,6 +1362,18 @@ function ProjectileVisual({
 
 function getProjectileVisualYaw(projectile: ProjectileRuntime) {
   return projectile.facing >= 0 ? 0 : Math.PI;
+}
+
+function getProjectileVisualPosition(projectile: ProjectileRuntime, camera: THREE.Camera): Vec3Tuple {
+  const cameraDx = camera.position.x - projectile.position.x;
+  const cameraDz = camera.position.z - projectile.position.z;
+  const distance = Math.hypot(cameraDx, cameraDz);
+  if (distance <= 0.001) return [projectile.position.x, projectile.position.y, projectile.position.z + PROJECTILE_VISUAL_FRONT_BIAS];
+  return [
+    projectile.position.x + (cameraDx / distance) * PROJECTILE_VISUAL_FRONT_BIAS,
+    projectile.position.y,
+    projectile.position.z + (cameraDz / distance) * PROJECTILE_VISUAL_FRONT_BIAS
+  ];
 }
 
 function getProjectileFrameSource(projectile: ProjectileRuntime, definition: CharacterProjectileDefinition) {
@@ -4657,7 +4673,7 @@ function getImageVoxelFrameSelection(fighter: FighterRuntime, progress: number, 
   const idleFlourishActive = isIdleFlourishActive(fighter);
   let frameIndex = Math.floor(elapsedTime * fps) % sequence.length;
   if (visualHitstopActive || fighter.state === 'attack' || fighter.state === 'throwHold') {
-    frameIndex = Math.min(sequence.length - 1, Math.floor(progress * sequence.length));
+    frameIndex = getAttackFrameIndex(fighter, sequence.length, fps, progress);
   } else if (idleFlourishActive) {
     frameIndex = Math.min(sequence.length - 1, Math.floor(getIdleFlourishProgress(fighter) * sequence.length));
   } else if (fighter.state === 'chargeKi') {
@@ -4691,6 +4707,20 @@ function getImageVoxelFrameSelection(fighter: FighterRuntime, progress: number, 
     animationKey: resolvedKey,
     frameSource: versionEditedSpriteFrameSource(frameSource, fighter.character)
   };
+}
+
+function getAttackFrameIndex(fighter: FighterRuntime, sequenceLength: number, fps: number, progress: number) {
+  const move = fighter.currentMove;
+  if (move?.holdable && fighter.state === 'attack' && sequenceLength >= 2) {
+    const totalFrames = move.startupFrames + move.activeFrames + move.recoveryFrames;
+    const holdStartFrame = Math.max(1, totalFrames - 2);
+    if (fighter.moveFrame >= holdStartFrame) {
+      const frameDuration = Math.max(1, Math.round(60 / Math.max(1, fps)));
+      const heldFrame = Math.floor((fighter.moveFrame - holdStartFrame) / frameDuration) % 2;
+      return sequenceLength - 2 + heldFrame;
+    }
+  }
+  return Math.min(sequenceLength - 1, Math.floor(progress * sequenceLength));
 }
 
 function resolveAnimationFrameSequence(frames: NonNullable<CharacterDefinition['animationFrames']>, key: string) {
