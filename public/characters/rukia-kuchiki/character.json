@@ -1425,7 +1425,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 17
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1436,7 +1439,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 22,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 7,
+      "recoveryFrames": 9
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1447,7 +1453,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 9,
+      "recoveryFrames": 16
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1458,7 +1467,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 8,
+      "recoveryFrames": 8
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1469,7 +1481,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 9,
+      "recoveryFrames": 16
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1480,7 +1495,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 9,
+      "recoveryFrames": 16
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1491,7 +1509,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 8,
+      "recoveryFrames": 8
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1502,7 +1523,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 9,
+      "recoveryFrames": 16
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1513,7 +1537,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 22,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 7,
+      "recoveryFrames": 9
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1524,7 +1551,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 9,
+      "recoveryFrames": 16
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1535,7 +1565,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 17
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1546,7 +1579,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 8,
+      "recoveryFrames": 8
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1557,7 +1593,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 17
     }
   },
   "effects": [],

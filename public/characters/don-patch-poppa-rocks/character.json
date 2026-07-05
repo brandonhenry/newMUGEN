@@ -1398,7 +1398,10 @@
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 42,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 12,
+      "recoveryFrames": 24
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1409,7 +1412,10 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 12,
+      "activeFrames": 6,
+      "recoveryFrames": 12
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1420,7 +1426,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1431,7 +1440,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 6,
+      "activeFrames": 5,
+      "recoveryFrames": 15
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1442,7 +1454,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1453,7 +1468,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1464,7 +1482,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 6,
+      "activeFrames": 5,
+      "recoveryFrames": 15
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1475,7 +1496,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1486,7 +1510,10 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 12,
+      "activeFrames": 6,
+      "recoveryFrames": 12
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1497,7 +1524,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1508,7 +1538,10 @@
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 42,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 12,
+      "recoveryFrames": 24
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1519,7 +1552,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 6,
+      "activeFrames": 5,
+      "recoveryFrames": 15
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1530,7 +1566,10 @@
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 42,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 25,
+      "recoveryFrames": 24
     }
   },
   "effects": [],

@@ -1443,7 +1443,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22,
+      "activeFrames": 6,
+      "recoveryFrames": 21
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1454,7 +1457,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 18,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 9,
+      "recoveryFrames": 9
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1468,7 +1474,10 @@
       "moveJumpGravity": 24,
       "label": "f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1479,7 +1488,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 12,
+      "recoveryFrames": 1
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1493,7 +1505,10 @@
       "moveJumpGravity": 26,
       "label": "d+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1507,7 +1522,10 @@
       "moveJumpGravity": 24,
       "label": "d/f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1518,7 +1536,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 12,
+      "recoveryFrames": 1
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1532,7 +1553,10 @@
       "moveJumpGravity": 24,
       "label": "qcf+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1543,7 +1567,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 18,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 9,
+      "recoveryFrames": 9
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1557,7 +1584,10 @@
       "moveJumpGravity": 24,
       "label": "SS+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1568,7 +1598,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22,
+      "activeFrames": 6,
+      "recoveryFrames": 21
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1579,7 +1612,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 12,
+      "recoveryFrames": 1
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1590,7 +1626,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22,
+      "activeFrames": 6,
+      "recoveryFrames": 21
     }
   },
   "effects": [],

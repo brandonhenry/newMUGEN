@@ -1368,15 +1368,16 @@
       "label": "Kazuki Muto Kick Ender"
     },
     "cmd:1+4": {
-      "activeFrames": 6,
-      "recoveryFrames": 19,
+      "activeFrames": 12,
+      "recoveryFrames": 11,
       "onBlockFrames": -12,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.48,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "startupFrames": 18
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1387,7 +1388,10 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 7,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 15,
+      "recoveryFrames": 3
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1398,7 +1402,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 4,
+      "recoveryFrames": 9
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1409,7 +1416,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 4,
+      "recoveryFrames": 9
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1420,7 +1430,10 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 7,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 15,
+      "recoveryFrames": 3
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1431,7 +1444,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 4,
+      "recoveryFrames": 9
     }
   },
   "effects": [],

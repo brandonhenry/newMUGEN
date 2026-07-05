@@ -1284,7 +1284,7 @@
     },
     "cmd:1+4": {
       "startupFrames": 13,
-      "recoveryFrames": 13,
+      "recoveryFrames": 8,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1292,7 +1292,8 @@
       "forwardForce": 2.29,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
-      "tornado": true
+      "tornado": true,
+      "activeFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1303,7 +1304,10 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 5,
+      "recoveryFrames": 13
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1314,7 +1318,10 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 5,
+      "recoveryFrames": 13
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1325,7 +1332,10 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 5,
+      "recoveryFrames": 13
     }
   },
   "effects": [],

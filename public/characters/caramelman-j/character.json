@@ -1672,7 +1672,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "startupFrames": 43,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1688,7 +1691,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 8
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1704,7 +1710,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "startupFrames": 42,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1720,7 +1729,10 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "startupFrames": 27,
+      "activeFrames": 2,
+      "recoveryFrames": 1
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1736,7 +1748,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "startupFrames": 42,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1752,7 +1767,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "startupFrames": 42,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1768,7 +1786,10 @@
       "onComboHitFrames": 11,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "startupFrames": 23,
+      "activeFrames": 6,
+      "recoveryFrames": 1
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1784,7 +1805,10 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 7,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "startupFrames": 42,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1800,7 +1824,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 8
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1816,7 +1843,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "startupFrames": 42,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1832,7 +1862,10 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "startupFrames": 43,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1848,7 +1881,10 @@
       "onComboHitFrames": 11,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "startupFrames": 23,
+      "activeFrames": 6,
+      "recoveryFrames": 1
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1864,7 +1900,10 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "startupFrames": 43,
+      "activeFrames": 5,
+      "recoveryFrames": 1
     }
   },
   "effects": [],

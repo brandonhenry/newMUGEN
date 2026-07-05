@@ -1388,7 +1388,10 @@
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 5,
+      "recoveryFrames": 5
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1402,7 +1405,10 @@
       "moveJumpGravity": 24,
       "label": "f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 16
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1413,7 +1419,10 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 8,
+      "activeFrames": 8,
+      "recoveryFrames": 8
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1427,7 +1436,10 @@
       "moveJumpGravity": 26,
       "label": "d+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 16
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1441,7 +1453,10 @@
       "moveJumpGravity": 24,
       "label": "d/f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 16
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1452,7 +1467,10 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 8,
+      "activeFrames": 8,
+      "recoveryFrames": 8
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1466,7 +1484,10 @@
       "moveJumpGravity": 24,
       "label": "qcf+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 16
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1477,7 +1498,10 @@
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 5,
+      "recoveryFrames": 5
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1491,7 +1515,10 @@
       "moveJumpGravity": 24,
       "label": "SS+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 17,
+      "recoveryFrames": 16
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1502,7 +1529,10 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 8,
+      "activeFrames": 8,
+      "recoveryFrames": 8
     }
   },
   "effects": [],

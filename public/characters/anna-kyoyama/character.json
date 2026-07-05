@@ -1300,7 +1300,10 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 4,
+      "recoveryFrames": 17
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1311,7 +1314,10 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 4,
+      "recoveryFrames": 17
     }
   },
   "effects": [],

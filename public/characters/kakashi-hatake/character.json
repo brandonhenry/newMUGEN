@@ -1386,15 +1386,16 @@
       "label": "Kakashi Hatake Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 12,
-      "activeFrames": 7,
+      "startupFrames": 13,
+      "activeFrames": 5,
       "onBlockFrames": -13,
       "onHitFrames": 14,
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 29,
       "forwardForce": 2.49,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "recoveryFrames": 25
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1405,7 +1406,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 5,
+      "recoveryFrames": 10
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1416,7 +1420,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 17,
+      "recoveryFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1427,7 +1434,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 11,
+      "activeFrames": 5,
+      "recoveryFrames": 10
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1438,7 +1448,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 17,
+      "recoveryFrames": 8
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1449,7 +1462,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 17,
+      "recoveryFrames": 8
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1460,7 +1476,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 11,
+      "activeFrames": 5,
+      "recoveryFrames": 10
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1471,7 +1490,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 17,
+      "recoveryFrames": 8
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1482,7 +1504,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 5,
+      "recoveryFrames": 10
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1493,7 +1518,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 17,
+      "recoveryFrames": 8
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1504,7 +1532,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 11,
+      "activeFrames": 5,
+      "recoveryFrames": 10
     }
   },
   "effects": [],

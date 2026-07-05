@@ -1450,7 +1450,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22,
+      "activeFrames": 6,
+      "recoveryFrames": 21
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1461,7 +1464,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 11,
+      "activeFrames": 10,
+      "recoveryFrames": 10
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1475,7 +1481,10 @@
       "moveJumpGravity": 24,
       "label": "f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1486,7 +1495,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 9,
+      "recoveryFrames": 9
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1500,7 +1512,10 @@
       "moveJumpGravity": 26,
       "label": "d+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1514,7 +1529,10 @@
       "moveJumpGravity": 24,
       "label": "d/f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1525,7 +1543,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 9,
+      "recoveryFrames": 9
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1539,7 +1560,10 @@
       "moveJumpGravity": 24,
       "label": "qcf+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1550,7 +1574,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 11,
+      "activeFrames": 10,
+      "recoveryFrames": 10
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1564,7 +1591,10 @@
       "moveJumpGravity": 24,
       "label": "SS+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 30,
+      "recoveryFrames": 6
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1575,7 +1605,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22,
+      "activeFrames": 6,
+      "recoveryFrames": 21
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1586,7 +1619,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 9,
+      "recoveryFrames": 9
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1597,7 +1633,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22,
+      "activeFrames": 11,
+      "recoveryFrames": 16
     }
   },
   "effects": [],

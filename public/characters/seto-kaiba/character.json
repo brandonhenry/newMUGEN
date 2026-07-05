@@ -1222,7 +1222,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 7,
+      "recoveryFrames": 21
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1233,7 +1236,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 7,
+      "recoveryFrames": 21
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1244,7 +1250,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 14,
+      "recoveryFrames": 14
     }
   },
   "effects": [],

@@ -1399,7 +1399,10 @@
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 34,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 12
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1410,7 +1413,10 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 7,
+      "activeFrames": 13,
+      "recoveryFrames": 6
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1421,7 +1427,10 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 7,
+      "activeFrames": 13,
+      "recoveryFrames": 6
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1432,7 +1441,10 @@
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 34,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 12
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1443,7 +1455,10 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 7,
+      "activeFrames": 13,
+      "recoveryFrames": 6
     }
   },
   "effects": [],

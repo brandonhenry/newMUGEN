@@ -1328,7 +1328,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 5,
+      "recoveryFrames": 5
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1339,7 +1342,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 5,
+      "recoveryFrames": 5
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1350,7 +1356,10 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 5,
+      "recoveryFrames": 5
     }
   },
   "effects": [],

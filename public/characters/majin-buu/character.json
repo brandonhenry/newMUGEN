@@ -1403,7 +1403,10 @@
       "label": "1+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 19,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1414,7 +1417,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 13,
+      "recoveryFrames": 1
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1425,7 +1431,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 9,
+      "recoveryFrames": 4
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1436,7 +1445,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 9,
+      "recoveryFrames": 4
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1447,7 +1459,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 13,
+      "recoveryFrames": 1
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1462,7 +1477,10 @@
       "label": "SS+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 19,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1473,7 +1491,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 9,
+      "recoveryFrames": 4
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1488,7 +1509,10 @@
       "label": "O+4 Frame Link",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 19,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     }
   },
   "effects": [],

@@ -1376,7 +1376,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
       "label": "1+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 14,
+      "recoveryFrames": 13
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1387,7 +1390,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "f+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 6,
+      "activeFrames": 6,
+      "recoveryFrames": 18
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1398,7 +1404,10 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 13,
+      "recoveryFrames": 12
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1409,7 +1418,10 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 1
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1420,7 +1432,10 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 13,
+      "recoveryFrames": 12
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1431,7 +1446,10 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 13,
+      "recoveryFrames": 12
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1442,7 +1460,10 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 1
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1453,7 +1474,10 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 13,
+      "recoveryFrames": 12
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1464,7 +1488,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "WS+2 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 6,
+      "activeFrames": 6,
+      "recoveryFrames": 18
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1475,7 +1502,10 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 13,
+      "recoveryFrames": 12
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1486,7 +1516,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
       "label": "SS+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 14,
+      "recoveryFrames": 13
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1497,7 +1530,10 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 1
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1508,7 +1544,10 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
       "label": "O+4 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 14,
+      "recoveryFrames": 13
     }
   },
   "effects": [],

@@ -1400,7 +1400,7 @@
       "label": "Sakura Haruno Kick Ender"
     },
     "cmd:d+3+4": {
-      "startupFrames": 21,
+      "startupFrames": 8,
       "recoveryFrames": 28,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -1416,7 +1416,8 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "activeFrames": 16
     },
     "cmd:f+3": {
       "onBlockFrames": -7,
@@ -1430,7 +1431,10 @@
       "moveJumpGravity": 24,
       "label": "f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 36,
+      "recoveryFrames": 8
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1441,7 +1445,10 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
       "label": "d+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 3,
+      "recoveryFrames": 8
     },
     "cmd:d+3": {
       "onBlockFrames": -7,
@@ -1455,7 +1462,10 @@
       "moveJumpGravity": 26,
       "label": "d+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 36,
+      "recoveryFrames": 8
     },
     "cmd:d/f+3": {
       "onBlockFrames": -7,
@@ -1469,7 +1479,10 @@
       "moveJumpGravity": 24,
       "label": "d/f+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 36,
+      "recoveryFrames": 8
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1480,7 +1493,10 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
       "label": "qcf+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 6,
+      "recoveryFrames": 8
     },
     "cmd:qcf+3": {
       "onBlockFrames": -7,
@@ -1494,7 +1510,10 @@
       "moveJumpGravity": 24,
       "label": "qcf+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 36,
+      "recoveryFrames": 8
     },
     "cmd:SS+3": {
       "onBlockFrames": -7,
@@ -1508,7 +1527,10 @@
       "moveJumpGravity": 24,
       "label": "SS+3 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 9,
+      "activeFrames": 36,
+      "recoveryFrames": 8
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1519,7 +1541,10 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
       "label": "O+1 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 6,
+      "recoveryFrames": 8
     }
   },
   "effects": [],

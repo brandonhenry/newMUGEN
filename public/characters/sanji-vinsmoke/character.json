@@ -1429,7 +1429,10 @@
       "label": "1+4 Frame Link",
       "endsInCrouch": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 7
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1440,7 +1443,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1451,7 +1457,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "d+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1462,7 +1471,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "d/f+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1473,7 +1485,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "qcf+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 12,
+      "recoveryFrames": 18
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1484,7 +1499,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "label": "SS+3 Frame Link",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 18,
+      "activeFrames": 6,
+      "recoveryFrames": 24
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1498,7 +1516,10 @@
       "moveJumpGravity": 24,
       "label": "SS+4 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 15,
+      "activeFrames": 15,
+      "recoveryFrames": 15
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1512,7 +1533,10 @@
       "moveJumpGravity": 24,
       "label": "O+4 Frame Link",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 15,
+      "activeFrames": 15,
+      "recoveryFrames": 15
     }
   },
   "effects": [],
