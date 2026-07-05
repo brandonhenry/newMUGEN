@@ -6984,22 +6984,26 @@ describe('fight engine', () => {
   it('supports floaty arcing projectiles with vertical velocity and gravity', () => {
     const shooter = makeProjectileCharacter('projectile-arc-test', {}, {
       homingMode: 'none',
+      speed: 0,
+      forwardVelocity: 0,
       verticalVelocity: 5,
       gravity: 9,
       lifetimeFrames: 120
     });
     const defender = normalizeCharacter(starterCharacters[1]);
     let match = createMatch(shooter, defender, stages[0], 'training');
-    match.fighters[1].position.z = 8;
+    match.fighters[1].position.x = 5;
     match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     match = stepFrames(match, 2);
     expect(match.projectiles).toHaveLength(1);
     const spawnY = match.projectiles[0].position.y;
     match = stepFrames(match, 12);
-    const peakY = match.projectiles[0].position.y;
-    expect(peakY).toBeGreaterThan(spawnY);
-    match = stepFrames(match, 42);
-    expect(match.projectiles[0].position.y).toBeLessThan(peakY);
+    expect(match.projectiles[0].position.y).toBeGreaterThan(spawnY);
+    match = stepFrames(match, 36);
+    const fallingY = match.projectiles[0].position.y;
+    expect(match.projectiles[0].velocity.y).toBeLessThan(0);
+    match = stepFrames(match, 8);
+    expect(match.projectiles[0].position.y).toBeLessThan(fallingY);
   });
 
   it('keeps holdable attacks active until the button is released', () => {
