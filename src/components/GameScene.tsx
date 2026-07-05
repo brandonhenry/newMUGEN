@@ -2096,7 +2096,7 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
 export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   return (
-    <Canvas frameloop="always" dpr={[1, 1.15]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
+    <Canvas frameloop="always" dpr={[0.85, 1]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         <Suspense fallback={null}>
           <Environment preset="city" />
@@ -4637,7 +4637,7 @@ type ImageVoxelPartRender = {
   cacheKey?: string;
 };
 
-const imageVoxelMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
+const imageVoxelMeshCache = new Map<string, THREE.InstancedMesh>();
 const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
 
 type HdImageVoxelPayload = {
@@ -4675,10 +4675,7 @@ export function clearImageVoxelCacheForFrame(characterId: string, frameIndex?: n
 
 function getImageVoxelLodStep(character: CharacterDefinition) {
   if (character.voxelProfile !== 'hd-image-source') return 1;
-  if (typeof window === 'undefined') return 1;
-  const mobileStep = character.voxelFidelity?.lod?.mobileStep ?? 2;
-  const runtimeStep = character.voxelFidelity?.lod?.farStep ?? mobileStep;
-  return window.innerWidth < 760 ? Math.max(3, Math.round(mobileStep)) : Math.max(3, Math.round(runtimeStep));
+  return 1;
 }
 
 function ImageVoxelFighter({
@@ -5107,6 +5104,16 @@ function makeCachedVoxelMesh(
   return mesh;
 }
 
+function cloneCachedInstancedVoxelMesh(cached: THREE.InstancedMesh, renderStyle: FighterRenderStyle) {
+  const mesh = cached.clone() as THREE.InstancedMesh;
+  mesh.castShadow = renderStyle.castShadow;
+  mesh.receiveShadow = renderStyle.receiveShadow;
+  mesh.renderOrder = renderStyle.renderOrder;
+  mesh.frustumCulled = false;
+  mesh.userData.koreCachedVoxelMesh = true;
+  return mesh;
+}
+
 function makeImageVoxelMeshCacheKey(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
   if (!part.cacheKey) return null;
   return [
@@ -5194,48 +5201,9 @@ function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: Fighte
   if (part.voxels.length === 0) return null;
   const cacheKey = makeImageVoxelMeshCacheKey(part, renderStyle);
   const cached = cacheKey ? imageVoxelMeshCache.get(cacheKey) : undefined;
-  if (cached) {
-    const mesh = makeCachedVoxelMesh(cached, {
-      castShadow: renderStyle.castShadow,
-      receiveShadow: renderStyle.receiveShadow,
-      renderOrder: renderStyle.renderOrder
-    });
-    return mesh;
-  }
-  const baseGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const geometries = part.voxels.map((voxel) => {
-    const geometry = baseGeometry.clone();
-    const renderVoxel = normalizeImageVoxelForRender(voxel);
-    const color = new THREE.Color(renderStyleColor(renderVoxel.color, renderStyle));
-    const sideColor = new THREE.Color(renderStyleColor(renderVoxel.sideColor ?? renderVoxel.color, renderStyle));
-    const normals = geometry.getAttribute('normal');
-    const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
-    for (let index = 0; index < colors.length; index += 3) {
-      const vertexIndex = index / 3;
-      const useSideColor = Math.abs(normals.getZ(vertexIndex)) < 0.5;
-      const vertexColor = useSideColor ? sideColor : color;
-      colors[index] = vertexColor.r;
-      colors[index + 1] = vertexColor.g;
-      colors[index + 2] = vertexColor.b;
-    }
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    geometry.applyMatrix4(
-      new THREE.Matrix4().compose(
-        new THREE.Vector3(
-          renderVoxel.position[0] - part.anchor[0],
-          renderVoxel.position[1] - part.anchor[1],
-          renderVoxel.position[2] - part.anchor[2]
-        ),
-        new THREE.Quaternion(),
-        new THREE.Vector3(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2])
-      )
-    );
-    return geometry;
-  });
-  baseGeometry.dispose();
-  const geometry = mergeGeometries(geometries, false);
-  geometries.forEach((entry) => entry.dispose());
-  if (!geometry) return null;
+  if (cached) return cloneCachedInstancedVoxelMesh(cached, renderStyle);
+
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
   const material = new THREE.MeshBasicMaterial({
     color: renderStyleColor(renderStyle.tint, renderStyle),
     vertexColors: true,
@@ -5244,12 +5212,34 @@ function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: Fighte
     depthWrite: renderStyle.depthWrite,
     toneMapped: false
   });
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new THREE.InstancedMesh(geometry, material, part.voxels.length);
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const rotation = new THREE.Quaternion();
+
+  part.voxels.forEach((voxel, index) => {
+    const renderVoxel = normalizeImageVoxelForRender(voxel);
+    const color = new THREE.Color(renderStyleColor(renderVoxel.color, renderStyle));
+    position.set(
+      renderVoxel.position[0] - part.anchor[0],
+      renderVoxel.position[1] - part.anchor[1],
+      renderVoxel.position[2] - part.anchor[2]
+    );
+    scale.set(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2]);
+    matrix.compose(position, rotation, scale);
+    mesh.setMatrixAt(index, matrix);
+    mesh.setColorAt(index, color);
+  });
+
+  mesh.instanceMatrix.needsUpdate = true;
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
   mesh.castShadow = renderStyle.castShadow;
   mesh.receiveShadow = renderStyle.receiveShadow;
   mesh.renderOrder = renderStyle.renderOrder;
+  mesh.frustumCulled = false;
   if (cacheKey) {
-    imageVoxelMeshCache.set(cacheKey, { geometry, material });
+    imageVoxelMeshCache.set(cacheKey, mesh);
     mesh.userData.koreCachedVoxelMesh = true;
   }
   return mesh;
