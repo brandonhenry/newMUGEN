@@ -40,6 +40,7 @@ import { findCameraSightlineBlockers, isCameraNearStageSafetyEnvelope, resolveCa
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
+import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 import { KORE_APP_VERSION } from '../appVersion';
@@ -564,6 +565,10 @@ export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
+  const fighterRenderStyles = useMemo(() => ([
+    makeDuplicateFighterRenderStyle(match, 1),
+    makeDuplicateFighterRenderStyle(match, 2)
+  ] as const), [match]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
@@ -575,12 +580,12 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <CameraRig match={match} settings={cameraSettings} />
         <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
         <StageCameraOcclusionFader />
-        <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
-        <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+        <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
         <TransformEffectLayer fighter={match.fighters[0]} />
         <TransformEffectLayer fighter={match.fighters[1]} />
-        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
-        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
+        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
         <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
         <ProjectileLayer match={match} stage={match.stage} />
         <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
@@ -589,6 +594,11 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
+}
+
+function makeDuplicateFighterRenderStyle(match: MatchSnapshot, slot: 1 | 2): Partial<FighterRenderStyle> | undefined {
+  const hueShiftDegrees = getDuplicateFighterHueShift(match, slot);
+  return hueShiftDegrees ? { hueShiftDegrees } : undefined;
 }
 
 export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: BreakTargetMiniGameSnapshot; reducedMotion?: boolean }) {
@@ -945,14 +955,14 @@ function TransformSmoke({ framesRemaining }: { framesRemaining: number }) {
   );
 }
 
-function ShadowCloneLayer({ fighter, timeScale, stage }: { fighter: FighterRuntime; timeScale: number; stage?: StageDefinition }) {
+function ShadowCloneLayer({ fighter, timeScale, stage, renderStyle }: { fighter: FighterRuntime; timeScale: number; stage?: StageDefinition; renderStyle?: Partial<FighterRenderStyle> }) {
   const clone = fighter.shadowClone;
   if (!clone) return null;
   const cloneFighter = clone.phase === 'active' ? makeShadowCloneRenderFighter(fighter) : null;
   const showSmoke = clone.spawnSmokeFrames > 0 || clone.vanishSmokeFrames > 0;
   return (
     <>
-      {cloneFighter ? <FighterRig fighter={cloneFighter} timeScale={timeScale} stage={stage} /> : null}
+      {cloneFighter ? <FighterRig fighter={cloneFighter} timeScale={timeScale} stage={stage} renderStyle={renderStyle} /> : null}
       {showSmoke ? <ShadowCloneSmoke clone={clone} /> : null}
     </>
   );
@@ -2480,6 +2490,7 @@ function PreviewFloor({ color }: { color: string }) {
 type FighterRenderStyle = {
   opacity: number;
   tint: string;
+  hueShiftDegrees: number;
   depthWrite: boolean;
   renderOrder: number;
   castShadow: boolean;
@@ -2489,6 +2500,7 @@ type FighterRenderStyle = {
 const DEFAULT_FIGHTER_RENDER_STYLE: FighterRenderStyle = {
   opacity: 1,
   tint: '#ffffff',
+  hueShiftDegrees: 0,
   depthWrite: true,
   renderOrder: 0,
   castShadow: true,
@@ -2498,6 +2510,7 @@ const DEFAULT_FIGHTER_RENDER_STYLE: FighterRenderStyle = {
 const IDLE_GHOST_RENDER_STYLE: FighterRenderStyle = {
   opacity: 0.28,
   tint: '#d8fbff',
+  hueShiftDegrees: 0,
   depthWrite: false,
   renderOrder: -6,
   castShadow: false,
@@ -2506,6 +2519,22 @@ const IDLE_GHOST_RENDER_STYLE: FighterRenderStyle = {
 
 function withDefaultRenderStyle(renderStyle?: Partial<FighterRenderStyle>): FighterRenderStyle {
   return { ...DEFAULT_FIGHTER_RENDER_STYLE, ...(renderStyle ?? {}) };
+}
+
+function renderStyleColor(source: string, renderStyle: FighterRenderStyle) {
+  const color = renderStyle.opacity < 1 ? renderStyle.tint : source;
+  return shiftHueColor(color, renderStyle.hueShiftDegrees);
+}
+
+function applyRenderStyleToMaterialColor(color: THREE.Color, renderStyle: FighterRenderStyle) {
+  if (renderStyle.opacity < 1) {
+    color.set(renderStyleColor(renderStyle.tint, renderStyle));
+    return;
+  }
+  if (!renderStyle.hueShiftDegrees) return;
+  const hsl = { h: 0, s: 0, l: 0 };
+  color.getHSL(hsl);
+  color.setHSL(THREE.MathUtils.euclideanModulo(hsl.h + renderStyle.hueShiftDegrees / 360, 1), hsl.s, hsl.l);
 }
 
 function PreviewFighter({
@@ -4893,8 +4922,8 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
   const geometries = part.voxels.map((voxel) => {
     const geometry = baseGeometry.clone();
     const renderVoxel = normalizeImageVoxelForRender(voxel);
-    const color = new THREE.Color(renderVoxel.color);
-    const sideColor = new THREE.Color(renderVoxel.sideColor ?? renderVoxel.color);
+    const color = new THREE.Color(renderStyleColor(renderVoxel.color, renderStyle));
+    const sideColor = new THREE.Color(renderStyleColor(renderVoxel.sideColor ?? renderVoxel.color, renderStyle));
     const normals = geometry.getAttribute('normal');
     const colors = new Float32Array((geometry.getAttribute('position').count ?? 0) * 3);
     for (let index = 0; index < colors.length; index += 3) {
@@ -4924,7 +4953,7 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
   geometries.forEach((entry) => entry.dispose());
   if (!geometry) return null;
   const material = new THREE.MeshBasicMaterial({
-    color: renderStyle.tint,
+    color: renderStyleColor(renderStyle.tint, renderStyle),
     vertexColors: true,
     transparent: renderStyle.opacity < 1,
     opacity: renderStyle.opacity,
@@ -5330,7 +5359,7 @@ function VoxelBox({
 }) {
   const outlineColor = useMemo(() => outlineColorForVoxel(color), [color]);
   const showOutline = outlineStyle?.enabled && shouldRenderVoxelOutline(color);
-  const materialColor = renderStyle.opacity < 1 ? renderStyle.tint : color;
+  const materialColor = renderStyleColor(color, renderStyle);
   return (
     <group position={position}>
       {showOutline && (
@@ -5395,8 +5424,8 @@ function ExternalFighter({ fighter, url, timeScale = 1, renderStyle }: { fighter
         styled.transparent = renderStyle.opacity < 1 || styled.transparent;
         styled.opacity = renderStyle.opacity;
         styled.depthWrite = renderStyle.depthWrite;
-        if ('color' in styled && styled.color instanceof THREE.Color && renderStyle.opacity < 1) {
-          styled.color.set(renderStyle.tint);
+        if ('color' in styled && styled.color instanceof THREE.Color) {
+          applyRenderStyleToMaterialColor(styled.color, renderStyle);
         }
         return styled;
       });
@@ -5508,7 +5537,7 @@ function ProceduralFighter({
     opacity: renderStyle.opacity,
     depthWrite: renderStyle.depthWrite
   };
-  const styledColor = (source: string) => renderStyle.opacity < 1 ? renderStyle.tint : source;
+  const styledColor = (source: string) => renderStyleColor(source, renderStyle);
   const meshShadowProps = {
     castShadow: renderStyle.castShadow,
     receiveShadow: renderStyle.receiveShadow,
