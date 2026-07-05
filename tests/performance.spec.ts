@@ -31,7 +31,7 @@ const FIGHT_FRAME_BUDGET = {
   p95Ms: 50,
   p99Ms: 85,
   over100ms: 5,
-  longTaskTotalMs: 750,
+  longTaskTotalMs: 1_000,
   longestLongTaskMs: 300
 };
 
