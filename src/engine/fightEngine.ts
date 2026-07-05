@@ -274,16 +274,18 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const input1 = next.mode === 'cpu' ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
+  const cpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'tournamentInfinite';
+  const cpuControlsP2 = next.mode === 'ai' || next.mode === 'versusCpu' || cpuControlsBothFighters;
+  const input1 = cpuControlsBothFighters ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =
     next.mode === 'training'
       ? next.trainingDummyInput ?? makeTrainingDummyInput(next.fighters[1])
-      : next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu'
-        ? makeAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, next.mode === 'cpu', next.aiSeed, next.roundAiSeed)
+      : cpuControlsP2
+        ? makeAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuControlsBothFighters, next.aiSeed, next.roundAiSeed)
         : p2Input;
   if (isClashActive(next.clashState)) {
-    const clashInput1 = next.mode === 'cpu' ? makeAiClashInput(next, 1) : input1;
-    const clashInput2 = next.mode === 'ai' || next.mode === 'versusCpu' || next.mode === 'cpu' ? makeAiClashInput(next, 2) : input2;
+    const clashInput1 = cpuControlsBothFighters ? makeAiClashInput(next, 1) : input1;
+    const clashInput2 = cpuControlsP2 ? makeAiClashInput(next, 2) : input2;
     handleClashStep(next, clashInput1, clashInput2, dt);
     constrainFightersToStageBounds(next);
     resetIdleQuietState(next);

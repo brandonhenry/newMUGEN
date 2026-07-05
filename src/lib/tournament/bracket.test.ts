@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   advanceTournamentBracket,
+  createInfiniteTournamentBracket,
   createLocalTournamentBracket,
   getAssignedTournamentMatch,
+  getNextReadyTournamentMatch,
   getTournamentOpponentEntry,
   simulateCpuTournamentMatches
 } from './bracket';
@@ -45,5 +47,32 @@ describe('tournament bracket', () => {
     expect(bracket.status).toBe('completed');
     expect(bracket.reward?.state).toBe('earned');
     expect(bracket.matches.find((match) => match.round === 3)?.winnerEntryId).toBe('local-player');
+  });
+
+  it('creates an 8-player infinite bracket with bot-only ready matches', () => {
+    const bracket = createInfiniteTournamentBracket(roster, 2000);
+    const nextMatch = getNextReadyTournamentMatch(bracket);
+
+    expect(bracket.id).toBe('infinite-2000');
+    expect(bracket.entries).toHaveLength(8);
+    expect(bracket.entries.every((entry) => entry.isCpu && entry.isBot && entry.botKp && entry.botKr)).toBe(true);
+    expect(nextMatch?.id).toBe('r1m1');
+  });
+
+  it('advances an infinite bracket through every played bot match', () => {
+    let bracket = createInfiniteTournamentBracket(roster, 3000);
+    let completedMatches = 0;
+
+    while (bracket.status !== 'completed') {
+      const match = getNextReadyTournamentMatch(bracket);
+      expect(match?.entryAId).toBeTruthy();
+      expect(match?.entryBId).toBeTruthy();
+      bracket = advanceTournamentBracket(bracket, match!.id, match!.entryAId!, 3000 + completedMatches + 1);
+      completedMatches += 1;
+    }
+
+    expect(completedMatches).toBe(7);
+    expect(bracket.matches.every((match) => match.status === 'completed')).toBe(true);
+    expect(bracket.matches.find((match) => match.round === 3)?.winnerEntryId).toBeTruthy();
   });
 });

@@ -1,4 +1,5 @@
 import type { TournamentBracket, TournamentEntry, TournamentKind, TournamentMatch, TournamentPaymentState, TournamentReward } from './types';
+import { createOnlineBotOpponent } from '../online/bots';
 
 export type TournamentCharacterSeed = {
   id: string;
@@ -44,9 +45,61 @@ export function createLocalTournamentBracket(
   };
 }
 
+export function createInfiniteTournamentBracket(
+  fighters: TournamentCharacterSeed[],
+  now = Date.now()
+): TournamentBracket {
+  const characterIds = fighters.map((fighter) => fighter.id).filter(Boolean);
+  const fallback = fighters[0] ?? { id: 'astra', displayName: 'Astra' };
+  const entries: TournamentEntry[] = Array.from({ length: LOCAL_TOURNAMENT_CAPACITY }, (_, index) => {
+    const bot = createOnlineBotOpponent({
+      seed: `infinite-${now}-${index + 1}`,
+      queue: 'tournament',
+      availableCharacterIds: characterIds,
+      fallbackCharacterId: fallback.id
+    });
+    return {
+      id: `bot-${index + 1}`,
+      playerId: bot.playerId,
+      displayName: bot.displayName,
+      characterId: bot.characterId,
+      seed: index + 1,
+      isCpu: true,
+      isBot: true,
+      botKp: bot.kp,
+      botKr: bot.kr,
+      paymentState: 'notRequired',
+      joinedAt: now
+    };
+  });
+  const matches = makeEightPlayerMatches(entries);
+
+  return {
+    id: `infinite-${now}`,
+    kind: 'freeLocal',
+    status: 'roundActive',
+    entries,
+    matches,
+    currentRound: 1,
+    capacity: LOCAL_TOURNAMENT_CAPACITY,
+    minEntries: LOCAL_TOURNAMENT_CAPACITY,
+    paidEnabled: false,
+    createdAt: now,
+    updatedAt: now,
+    reward: { ...makeDefaultReward('freeLocal'), label: 'Infinite tournament crown' }
+  };
+}
+
 export function getTournamentEntry(bracket: TournamentBracket | null, entryId: string | undefined) {
   if (!bracket || !entryId) return undefined;
   return bracket.entries.find((entry) => entry.id === entryId);
+}
+
+export function getNextReadyTournamentMatch(bracket: TournamentBracket | null) {
+  if (!bracket) return undefined;
+  return bracket.matches
+    .filter((match) => match.status === 'ready' && match.entryAId && match.entryBId)
+    .sort((left, right) => left.round - right.round || left.index - right.index)[0];
 }
 
 export function getAssignedTournamentMatch(bracket: TournamentBracket | null, entryId: string | undefined) {

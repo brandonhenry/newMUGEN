@@ -1564,6 +1564,21 @@ describe('fight engine', () => {
     expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
   });
 
+  it('drives both fighters from AI in infinite tournament mode', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'tournamentInfinite');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const p1StartX = match.fighters[0].position.x;
+    const p2StartX = match.fighters[1].position.x;
+
+    for (let i = 0; i < 6; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].position.x).toBeGreaterThan(p1StartX);
+    expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
+  });
+
   it('drives only the selected opponent from AI in 1P vs CPU mode', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'versusCpu');
     match.phase = 'fighting';
