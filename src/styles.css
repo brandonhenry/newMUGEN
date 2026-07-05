@@ -3597,6 +3597,7 @@ button {
 .stage-screen .arcade-footer-actions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  align-self: end;
   justify-content: center;
   gap: 0;
   width: min(100%, 560px);
@@ -9561,7 +9562,17 @@ button {
   }
 
   .versus-roster-grid {
-    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(64px, 100%), 1fr));
+  }
+
+  .versus-roster-tile {
+    min-height: clamp(64px, 9vh, 86px);
+  }
+
+  .versus-random-tile-icon,
+  .versus-roster-tile img {
+    max-width: clamp(34px, 6.5vh, 48px);
+    height: clamp(34px, 6.5vh, 48px);
   }
 
   .settings-strip {

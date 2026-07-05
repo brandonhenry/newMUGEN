@@ -5175,9 +5175,11 @@ function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: Fighte
   for (const voxel of part.voxels) {
     const renderVoxel = normalizeImageVoxelForRender(voxel);
     const color = renderStyleColor(renderVoxel.color, renderStyle);
-    const group = groupedVoxels.get(color);
+    const sideColor = renderStyleColor(renderVoxel.sideColor ?? renderVoxel.color, renderStyle);
+    const groupKey = `${color}|${sideColor}`;
+    const group = groupedVoxels.get(groupKey);
     if (group) group.push(renderVoxel);
-    else groupedVoxels.set(color, [renderVoxel]);
+    else groupedVoxels.set(groupKey, [renderVoxel]);
   }
   const group = new THREE.Group();
   const matrix = new THREE.Matrix4();
@@ -5185,15 +5187,13 @@ function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: Fighte
   const scale = new THREE.Vector3();
   const rotation = new THREE.Quaternion();
 
-  Array.from(groupedVoxels.entries()).forEach(([color, voxels]) => {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({
-      color,
-      transparent: renderStyle.opacity < 1,
-      opacity: renderStyle.opacity,
-      depthWrite: renderStyle.depthWrite,
-      toneMapped: false
-    });
+  Array.from(groupedVoxels.entries()).forEach(([colorPair, voxels]) => {
+    const [frontColor, sideColor] = colorPair.split('|');
+    const geometry = makeSideFilledVoxelGeometry();
+    const material = [
+      makeImageVoxelMaterial(frontColor, renderStyle),
+      makeImageVoxelMaterial(sideColor ?? frontColor, renderStyle)
+    ];
     const mesh = new THREE.InstancedMesh(geometry, material, voxels.length);
     voxels.forEach((renderVoxel, index) => {
       position.set(
@@ -5214,6 +5214,24 @@ function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: Fighte
   });
 
   return group.children.length > 0 ? group : null;
+}
+
+function makeSideFilledVoxelGeometry() {
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  geometry.groups.forEach((group, index) => {
+    group.materialIndex = index >= 4 ? 0 : 1;
+  });
+  return geometry;
+}
+
+function makeImageVoxelMaterial(color: string, renderStyle: FighterRenderStyle) {
+  return new THREE.MeshBasicMaterial({
+    color,
+    transparent: renderStyle.opacity < 1,
+    opacity: renderStyle.opacity,
+    depthWrite: renderStyle.depthWrite,
+    toneMapped: false
+  });
 }
 
 function normalizeImageVoxelForRender(voxel: ImageVoxel): ImageVoxel {
