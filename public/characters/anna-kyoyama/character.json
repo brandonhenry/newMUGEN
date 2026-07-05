@@ -64,7 +64,15 @@
     "chargeKi": [
       "/characters/anna-kyoyama/frames/frame-016.png"
     ],
-    "jableft": [],
+    "jableft": [
+      "/characters/anna-kyoyama/frames/frame-170.png",
+      "/characters/anna-kyoyama/frames/frame-171.png",
+      "/characters/anna-kyoyama/frames/frame-172.png",
+      "/characters/anna-kyoyama/frames/frame-173.png",
+      "/characters/anna-kyoyama/frames/frame-174.png",
+      "/characters/anna-kyoyama/frames/frame-175.png",
+      "/characters/anna-kyoyama/frames/frame-176.png"
+    ],
     "jabright": [
       "/characters/anna-kyoyama/frames/frame-084.png",
       "/characters/anna-kyoyama/frames/frame-085.png",
@@ -74,8 +82,21 @@
       "/characters/anna-kyoyama/frames/frame-089.png",
       "/characters/anna-kyoyama/frames/frame-090.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/anna-kyoyama/frames/frame-176.png",
+      "/characters/anna-kyoyama/frames/frame-177.png",
+      "/characters/anna-kyoyama/frames/frame-178.png",
+      "/characters/anna-kyoyama/frames/frame-179.png"
+    ],
+    "kickright": [
+      "/characters/anna-kyoyama/frames/frame-112.png",
+      "/characters/anna-kyoyama/frames/frame-113.png",
+      "/characters/anna-kyoyama/frames/frame-114.png",
+      "/characters/anna-kyoyama/frames/frame-115.png",
+      "/characters/anna-kyoyama/frames/frame-116.png",
+      "/characters/anna-kyoyama/frames/frame-117.png",
+      "/characters/anna-kyoyama/frames/frame-118.png"
+    ],
     "hitLight": [
       "/characters/anna-kyoyama/frames/frame-025.png"
     ],
@@ -459,7 +480,7 @@
   "moveOverrides": {
     "jableft": {
       "startupFrames": 11,
-      "activeFrames": 2,
+      "activeFrames": 5,
       "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
@@ -494,9 +515,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
+      "startupFrames": 11,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 11,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -511,9 +532,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 15,
+      "activeFrames": 4,
+      "recoveryFrames": 16,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -524,6 +545,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Anna Kyoyama Right Kick",
       "hitLevel": "mid"
     },
@@ -1303,8 +1328,8 @@
         "offsetX": 0
       },
       "190": {
-        "width": 0.79,
-        "height": 0.81,
+        "width": 0.82,
+        "height": 0.84,
         "offsetX": 0
       }
     },
@@ -1559,7 +1584,7 @@
     "crouch": {
       "22": {
         "width": 1.39,
-        "height": 0.94,
+        "height": 0.74,
         "offsetX": 0
       }
     },

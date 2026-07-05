@@ -17,7 +17,7 @@ GENERATED_SOURCE = "Generated Crouch Composite"
 ALPHA_THRESHOLD = 24
 DEFAULT_CROUCH_BLOCK_FPS = 5
 WORLD_PX_PER_UNIT = 23.804193890891682
-CROUCH_BLOCK_WIDTH_SCALE = 0.92
+CROUCH_BLOCK_WIDTH_SCALE = 0.96
 CROUCH_INTENT_KEYS = {"crouch", "crouchBlock"}
 GENERATED_FC_ROLES = {"cmd:FC+1", "cmd:FC+2"}
 
@@ -479,7 +479,7 @@ def character_global_scale(manifest: dict[str, Any]) -> tuple[float, float]:
     return finite_number(model_scale.get("width"), fallback), finite_number(model_scale.get("height"), fallback)
 
 
-def apply_crouch_intent_height_scales(repo: Path, selected: list[str], include_unplayable: bool = False, apply: bool = False) -> dict[str, Any]:
+def apply_crouch_intent_scales(repo: Path, selected: list[str], include_unplayable: bool = False, apply: bool = False) -> dict[str, Any]:
     ids = character_ids(repo, selected, include_unplayable=include_unplayable)
     summary = {
         "characters": 0,
@@ -520,23 +520,30 @@ def apply_crouch_intent_height_scales(repo: Path, selected: list[str], include_u
                     summary["missing"] += 1
                     continue
                 summary["frameUsages"] += 1
-                intended_height = Image.open(png_path).convert("RGBA").height
+                image = Image.open(png_path).convert("RGBA")
+                visible_bounds = alpha_bounds(image)
+                intended_width = (visible_bounds[2] - visible_bounds[0]) if visible_bounds else image.width
+                intended_height = image.height
+                raw_width = intended_width / (bounds[0] * global_width * WORLD_PX_PER_UNIT)
                 raw_height = intended_height / (bounds[1] * global_height * WORLD_PX_PER_UNIT)
+                next_width = round(clamp(raw_width, 0.25, 5), 2)
                 next_height = round(clamp(raw_height, 0.25, 5), 2)
                 existing = animation_map.get(str(frame_index)) if isinstance(animation_map.get(str(frame_index)), dict) else {}
                 next_scale = {
-                    "width": finite_number(existing.get("width"), 1),
+                    "width": next_width,
                     "height": next_height,
                     "offsetX": existing.get("offsetX", 0),
                 }
-                if existing.get("height") != next_height:
+                if existing.get("width") != next_width or existing.get("height") != next_height:
                     summary["updated"] += 1
                     if len(summary["samples"]) < 16:
                         summary["samples"].append({
                             "character": character_id,
                             "animation": animation_key,
                             "frame": frame_index,
+                            "pngWidth": intended_width,
                             "pngHeight": intended_height,
+                            "width": next_width,
                             "height": next_height,
                         })
                 animation_map[str(frame_index)] = next_scale
@@ -576,8 +583,8 @@ def main() -> None:
             raise SystemExit("--proof-sheet requires --apply")
         generate_proof_sheet(args.repo, results, args.proof_sheet)
     if args.fix_crouch_intent_scales:
-        fix_summary = apply_crouch_intent_height_scales(args.repo, args.character, include_unplayable=args.include_unplayable, apply=apply)
-        print(json.dumps({"crouchIntentHeightScales": fix_summary}, indent=2))
+        fix_summary = apply_crouch_intent_scales(args.repo, args.character, include_unplayable=args.include_unplayable, apply=apply)
+        print(json.dumps({"crouchIntentScales": fix_summary}, indent=2))
 
 
 if __name__ == "__main__":
