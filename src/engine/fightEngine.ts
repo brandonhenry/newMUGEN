@@ -5037,7 +5037,12 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const pressureKiBurst =
     !pressureCrouchInput &&
     shouldAiUseKiBurst(ai, opponent, pressureMoveInput, difficulty, opening.kind === 'whiff' ? 'whiff' : 'pressure', selector + 11, routeRoll + 19, leaderCloseout);
-  const pressureReach = (pressureMove?.range ?? 1.28) + settings.rangeBuffer + (pressureKiBurst ? 0.18 : 0) + (opening.kind === 'hitstun' ? 0.36 + settings.hitstunReachBonus : 0);
+  const pressureReach =
+    (pressureMove?.range ?? 1.28) +
+    settings.rangeBuffer +
+    (pressureKiBurst ? 0.18 : 0) +
+    (opening.kind === 'hitstun' ? 0.36 + settings.hitstunReachBonus : 0) +
+    (opening.kind === 'whiff' ? settings.whiffPunishChaseBonus : 0);
   const pressureLaneTolerance = PRESSURE_LANE_TOLERANCE + (difficulty >= 4 ? 0.16 : 0);
   const pressureInRange = distance <= pressureReach && Math.abs(laneDiff) <= pressureReach * pressureLaneTolerance;
   if (!closeoutComboCapped && opening.kind !== 'none' && pressureAccepted && canStartAction && canAct && pressureInRange && !tooClose) {
@@ -5089,6 +5094,33 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
     return input;
   }
   const missedKnownOpening = opening.kind !== 'none' && canStartAction && canAct && !pressureAccepted;
+
+  if (shouldAiBackHopThreat(ai, opponent, difficulty, settings, danger, isIncomingSoon, distance, laneDiff, elapsed, selector, routeRoll, roundAiSeed) && canStartAction && canAct) {
+    applyAiBackHopRetreat(input, towardKey, awayKey);
+    return input;
+  }
+
+  if (
+    shouldAiBackHopForSpace(ai, opponent, difficulty, settings, opening, {
+      distance,
+      laneDiff,
+      selectedMoveReach,
+      desiredSpacing,
+      tooClose,
+      farAway,
+      danger,
+      leaderCloseout,
+      elapsed,
+      selector,
+      routeRoll,
+      roundAiSeed
+    }) &&
+    canStartAction &&
+    canAct
+  ) {
+    applyAiBackHopRetreat(input, towardKey, awayKey);
+    return input;
+  }
 
   const defensiveSidestep = chooseAiDefensiveSidestep(ai, opponent, difficulty, danger, isIncomingSoon, distance, laneDiff, evadeRoll);
   if (defensiveSidestep !== 'none' && canStartAction && canAct) {
@@ -5251,6 +5283,122 @@ function applyAiJumpTakeoff(input: InputFrame, towardKey: 'left' | 'right', away
   for (const moveInput of moveInputs) {
     input[moveInput] = false;
   }
+}
+
+function applyAiBackHopRetreat(input: InputFrame, towardKey: 'left' | 'right', awayKey: 'left' | 'right') {
+  input.block = false;
+  input.charge = false;
+  input.down = false;
+  input.up = false;
+  input[towardKey] = false;
+  input[awayKey] = true;
+  input.dashBack = true;
+  input.dashForward = false;
+  input.sidestepUp = false;
+  input.sidestepDown = false;
+  input.sidewalkUp = false;
+  input.sidewalkDown = false;
+  for (const moveInput of moveInputs) {
+    input[moveInput] = false;
+  }
+}
+
+function canAiBackHop(ai: FighterRuntime) {
+  return (
+    ai.position.y === 0 &&
+    ai.velocityY === 0 &&
+    ai.backHopCooldownFrames === 0 &&
+    ai.actionFramesRemaining === 0 &&
+    ai.actionTimer === 0 &&
+    ai.stunFramesRemaining === 0 &&
+    ai.blockstunFramesRemaining === 0 &&
+    ai.state !== 'attack' &&
+    ai.state !== 'chargeKi' &&
+    ai.state !== 'transform' &&
+    ai.state !== 'knockdown' &&
+    ai.state !== 'getup' &&
+    ai.state !== 'juggle' &&
+    ai.state !== 'throwHold' &&
+    ai.state !== 'throwHeld'
+  );
+}
+
+function shouldAiBackHopThreat(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  settings: ReturnType<typeof getCpuDifficultySettings>,
+  danger: boolean,
+  isIncomingSoon: boolean,
+  distance: number,
+  laneDiff: number,
+  elapsed: number,
+  selector: number,
+  routeRoll: number,
+  roundAiSeed: number
+) {
+  if (difficulty <= 1 || !danger || !canAiBackHop(ai)) return false;
+  if (!isIncomingSoon && difficulty < 4) return false;
+  const move = opponent.currentMove;
+  if (!move) return false;
+  if (move.hitLevel === 'low') return false;
+  if (move.tracking === 'homing' || move.tracking === 'strong') return false;
+  if (Math.abs(laneDiff) > Math.max(0.48, move.range * 0.38)) return false;
+  if (distance > move.range + settings.backHopThreatRangeBonus) return false;
+
+  const trackingScale = move.tracking === 'none'
+    ? 1
+    : move.tracking === 'weakLeft' || move.tracking === 'weakRight'
+      ? 0.68
+      : 0.36;
+  const timingScale = isIncomingSoon ? 1 : 0.58;
+  const crowdBonus = distance < move.range * 0.72 ? 0.1 : 0;
+  const chance = clamp(settings.backHopThreatChance * trackingScale * timingScale + crowdBonus, 0.01, 0.82);
+  const roll = positiveModulo(
+    Math.floor(aiDecisionRoll(ai, opponent, elapsed, 22, roundAiSeed) * 1000) + selector * 5 + routeRoll * 7 + opponent.moveFrame * 11,
+    100
+  ) / 100;
+  return roll < chance;
+}
+
+function shouldAiBackHopForSpace(
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  difficulty: CpuDifficulty,
+  settings: ReturnType<typeof getCpuDifficultySettings>,
+  opening: AiOpening,
+  context: {
+    distance: number;
+    laneDiff: number;
+    selectedMoveReach: number;
+    desiredSpacing: number;
+    tooClose: boolean;
+    farAway: boolean;
+    danger: boolean;
+    leaderCloseout: boolean;
+    elapsed: number;
+    selector: number;
+    routeRoll: number;
+    roundAiSeed: number;
+  }
+) {
+  if (difficulty < 4 || !canAiBackHop(ai)) return false;
+  if (opening.kind !== 'none' || context.farAway || context.danger || context.leaderCloseout) return false;
+  if (Math.abs(context.laneDiff) > 0.72) return false;
+  if (ai.comboTimer > 0 || ai.comboHits > 0 || opponent.getupInvulnerableFrames > 0) return false;
+  if (opponent.state === 'knockdown' || opponent.state === 'getup' || opponent.state === 'juggle') return false;
+
+  const baitRangeMax = Math.max(context.selectedMoveReach + 0.32, context.desiredSpacing + 0.62);
+  const inBaitRange = context.distance >= 0.62 && context.distance <= baitRangeMax;
+  if (!context.tooClose && !inBaitRange) return false;
+
+  const spacingUrgency = context.tooClose ? settings.backHopSpaceChance : settings.backHopBaitChance;
+  const rangeScale = context.distance < context.desiredSpacing ? 1.14 : 0.82;
+  const roll = positiveModulo(
+    Math.floor(aiDecisionRoll(ai, opponent, context.elapsed, 23, context.roundAiSeed) * 1000) + context.selector * 3 + context.routeRoll * 13 + Math.floor(ai.hp),
+    100
+  ) / 100;
+  return roll < clamp(spacingUrgency * rangeScale, 0.01, 0.64);
 }
 
 function applyAiThrowEscapeInput(input: InputFrame, ai: FighterRuntime, opponent: FighterRuntime, difficulty: CpuDifficulty, elapsed: number, roundAiSeed: number) {
@@ -6114,6 +6262,11 @@ function getCpuDifficultySettings(difficulty: CpuDifficulty) {
     hitstunReachBonus: lerp(0.035, 0.175, t),
     rangeBuffer: lerp(0.08, 0.28, t),
     runInBuffer: lerp(0.92, 0.36, t),
+    backHopSpaceChance: lerp(0.01, 0.24, t),
+    backHopBaitChance: lerp(0, 0.16, t),
+    backHopThreatChance: lerp(0.02, 0.34, t),
+    backHopThreatRangeBonus: lerp(0.18, 0.64, t),
+    whiffPunishChaseBonus: lerp(0, 0.34, t),
     specialScale: lerp(0.35, 1.55, t),
     recentPenalty: lerp(0.26, 0.54, t),
     varietyRoll: lerp(0.18, 0.42, t),

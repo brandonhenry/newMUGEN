@@ -2628,6 +2628,7 @@ describe('fight engine', () => {
       match.fighters[1].actionTimer = 3;
       let peakStep = match.fighters[0].comboStep;
       const seen = new Set<string>(['neutral:jab']);
+      let maxUniqueMoves = seen.size;
       let repeats = 0;
       let lastMoveInstanceId = match.fighters[0].moveInstanceId;
 
@@ -2641,11 +2642,12 @@ describe('fight engine', () => {
           const key = fighter.currentMove.command ?? `${fighter.currentMove.route ?? 'neutral'}:${fighter.currentMove.input}`;
           if (seen.has(key)) repeats += 1;
           seen.add(key);
+          maxUniqueMoves = Math.max(maxUniqueMoves, seen.size);
         }
         lastMoveInstanceId = fighter.moveInstanceId;
       }
 
-      return { peakStep, uniqueMoves: seen.size, repeats };
+      return { peakStep, uniqueMoves: maxUniqueMoves, repeats };
     };
 
     const hard = simulatePressure(5);
@@ -2724,7 +2726,7 @@ describe('fight engine', () => {
 
     for (let i = 0; i < 720; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
-      if (match.fighters.some((fighter) => fighter.state === 'jump')) {
+      if (match.fighters.some((fighter) => fighter.state === 'jump' && fighter.backHopTotalFrames === 0)) {
         jumpFrames += 1;
       }
       if (match.phase !== 'fighting') break;
@@ -3034,6 +3036,171 @@ describe('fight engine', () => {
     const homing = sample('homing');
     expect(linear.sidesteps).toBeGreaterThan(homing.sidesteps);
     expect(homing.blocks).toBeGreaterThan(homing.sidesteps);
+  });
+
+  it('makes high difficulty CPU back-hop for neutral space more often than easy CPU', () => {
+    const sample = (difficulty: 1 | 5) => {
+      let backHops = 0;
+      for (let index = 0; index < 72; index += 1) {
+        let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'versusCpu', difficulty, { aiSeed: 1300 + index * 17 });
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.timer = 60 - index * 0.061;
+        match.fighters[0].hp = 999;
+        match.fighters[1].hp = 999;
+        match.fighters[0].position.x = -0.48;
+        match.fighters[1].position.x = 0.48;
+        match.fighters[0].position.z = 0;
+        match.fighters[1].position.z = 0;
+
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        if (match.fighters[1].backHopTotalFrames > 0) backHops += 1;
+      }
+      return backHops;
+    };
+
+    const easy = sample(1);
+    const kore = sample(5);
+    expect(kore).toBeGreaterThan(easy);
+    expect(kore).toBeGreaterThan(0);
+  });
+
+  it('lets KORE CPU back-hop to bait close linear pressure', () => {
+    const sample = (difficulty: 1 | 5) => {
+      let backHops = 0;
+      for (let index = 0; index < 72; index += 1) {
+        const attacker: CharacterDefinition = {
+          ...starterCharacters[0],
+          moves: starterCharacters[0].moves.map((move) =>
+            move.input === 'jab'
+              ? {
+                  ...move,
+                  startupFrames: 5,
+                  activeFrames: 18,
+                  recoveryFrames: 22,
+                  hitLevel: 'mid' as const,
+                  tracking: 'none' as const,
+                  range: 2.05
+                }
+              : move
+          )
+        };
+        let match = createMatch(attacker, starterCharacters[1], stages[0], 'versusCpu', difficulty, { aiSeed: 1440 + index * 19 });
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.timer = 60 - index * 0.053;
+        match.fighters[0].position.x = -0.68;
+        match.fighters[1].position.x = 0.68;
+        match.fighters[0].position.z = 0;
+        match.fighters[1].position.z = 0;
+        const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+        match.fighters[0].state = 'attack';
+        match.fighters[0].currentMove = move;
+        match.fighters[0].moveFrame = move.startupFrames;
+        match.fighters[0].actionFramesRemaining = 24;
+        match.fighters[0].actionTimer = 24 / 60;
+
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        if (match.fighters[1].backHopTotalFrames > 0) backHops += 1;
+      }
+      return backHops;
+    };
+
+    const easy = sample(1);
+    const kore = sample(5);
+    expect(kore).toBeGreaterThan(easy);
+    expect(kore).toBeGreaterThan(0);
+  });
+
+  it('does not back-hop as a bait against lows or homing pressure', () => {
+    const sample = (movePatch: Partial<MoveDefinition>) => {
+      let backHops = 0;
+      for (let index = 0; index < 48; index += 1) {
+        const attacker: CharacterDefinition = {
+          ...starterCharacters[0],
+          moves: starterCharacters[0].moves.map((move) =>
+            move.input === 'jab'
+              ? {
+                  ...move,
+                  startupFrames: 5,
+                  activeFrames: 18,
+                  recoveryFrames: 22,
+                  range: 2.05,
+                  ...movePatch
+                }
+              : move
+          )
+        };
+        let match = createMatch(attacker, starterCharacters[1], stages[0], 'versusCpu', 5, { aiSeed: 1580 + index * 23 });
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.timer = 60 - index * 0.049;
+        match.fighters[0].position.x = -0.68;
+        match.fighters[1].position.x = 0.68;
+        match.fighters[0].position.z = 0;
+        match.fighters[1].position.z = 0;
+        const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+        match.fighters[0].state = 'attack';
+        match.fighters[0].currentMove = move;
+        match.fighters[0].moveFrame = move.startupFrames;
+        match.fighters[0].actionFramesRemaining = 24;
+        match.fighters[0].actionTimer = 24 / 60;
+
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        if (match.fighters[1].backHopTotalFrames > 0) backHops += 1;
+      }
+      return backHops;
+    };
+
+    expect(sample({ hitLevel: 'low' })).toBe(0);
+    expect(sample({ hitLevel: 'mid', tracking: 'homing', homingSpeed: 12 })).toBe(0);
+    expect(sample({ hitLevel: 'mid', tracking: 'strong' })).toBe(0);
+  });
+
+  it('lets CPU chase whiff-punish windows after a back-hop bait', () => {
+    let chaseOrAttackFrames = 0;
+    for (let index = 0; index < 48; index += 1) {
+      const attacker: CharacterDefinition = {
+        ...starterCharacters[0],
+        moves: starterCharacters[0].moves.map((move) =>
+          move.input === 'jab'
+            ? {
+                ...move,
+                startupFrames: 3,
+                activeFrames: 3,
+                recoveryFrames: 28,
+                whiffRecoveryFrames: 12,
+                hitLevel: 'mid' as const,
+                tracking: 'none' as const,
+                range: 1.0
+              }
+            : move
+        )
+      };
+      let match = createMatch(attacker, starterCharacters[1], stages[0], 'versusCpu', 5, { aiSeed: 1700 + index * 29 });
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.timer = 60 - index * 0.057;
+      match.fighters[0].position.x = -0.9;
+      match.fighters[1].position.x = 0.9;
+      match.fighters[0].position.z = 0;
+      match.fighters[1].position.z = 0;
+      const move = match.fighters[0].character.moves.find((candidate) => candidate.input === 'jab')!;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = move;
+      match.fighters[0].moveFrame = move.startupFrames + move.activeFrames + 1;
+      match.fighters[0].actionFramesRemaining = 24;
+      match.fighters[0].actionTimer = 24 / 60;
+      match.fighters[0].whiffRecoveryApplied = true;
+      match.fighters[1].backHopCooldownFrames = 8;
+
+      const beforeX = match.fighters[1].position.x;
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const cpu = match.fighters[1];
+      if (cpu.state === 'attack' || cpu.position.x < beforeX) chaseOrAttackFrames += 1;
+    }
+
+    expect(chaseOrAttackFrames).toBeGreaterThan(0);
   });
 
   it('makes KORE CPU crouch-block incoming lows more often than easy CPU', () => {

@@ -157,7 +157,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const trials: TrainingTrialDefinition[] = [
     makeSimpleTrial(character, dummy, 'movement', 'movement:walk', 'Walk In', ['f'], ['right'], 'Close space without swinging.', 'First, take the space. No wasted cuts.', 'Step forward and hold your ground.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:dash', 'Dash In', ['F'], ['dashForward'], 'Dash to punish distance quickly.', 'When the opening is far, move first.', 'Dash forward cleanly.', { requireState: 'walk' }),
-    makeSimpleTrial(character, dummy, 'movement', 'movement:back-hop', 'Back Hop', ['b,b'], ['dashBack'], 'Back-back is a quick retreat, but it is unsafe if the enemy reads it or hits you during startup or airtime.', 'Retreat with care. Air has no guard.', 'Back hop complete.', { requireState: 'jump' }),
+    makeSimpleTrial(character, dummy, 'movement', 'movement:back-hop', 'Back Hop', ['b,b'], ['dashBack'], 'Back-back is a quick retreat for neutral spacing and whiff bait. Use it to make short attacks miss, then whiff punish, but it is unsafe if the enemy reads it or hits you during startup or airtime.', 'Retreat with care. Air has no guard.', 'Back hop complete.', { requireState: 'jump' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line to move or defend against linear pressure.', "Don't stand where the blade is falling.", 'Sidestep once.'),
     makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Standing guard is your default answer to high, special, and unknown pressure.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
     makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block low pressure; standing guard loses to lows.', 'Low strikes need low guard. Simple.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' }),
@@ -191,6 +191,51 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
       'High blade, high guard. Low blade, low guard.',
       'Guard switch complete.',
       { dummyScript: 'attack' }
+    ),
+    makeSequenceTrial(
+      character,
+      dummy,
+      'defense',
+      'defense:neutral-control',
+      'Neutral Control',
+      [
+        {
+          id: 'back-hop',
+          notation: ['b,b'],
+          label: 'Back Hop',
+          actions: ['dashBack'],
+          requireState: 'jump',
+          reason: 'Back-hop creates space and can bait short attacks into whiffing.'
+        },
+        {
+          id: 'sidestep',
+          notation: ['SSL'],
+          label: 'Sidestep',
+          actions: ['sidestepUp'],
+          requireState: 'sidestep',
+          reason: 'Sidestep linear, non-tracking pressure instead of blocking every approach.'
+        },
+        {
+          id: 'block',
+          notation: ['B'],
+          label: 'Stand Block',
+          actions: ['block'],
+          requireState: 'block',
+          reason: 'Block unknown, high, and special pressure when movement is risky.'
+        },
+        {
+          id: 'low-block',
+          notation: ['d', 'B'],
+          label: 'Crouch Block',
+          actions: ['down', 'block'],
+          requireState: 'crouchBlock',
+          reason: 'Crouch block lows; standing guard loses to low pressure.'
+        }
+      ],
+      'Neutral is controlled by choosing the right answer: back-hop to create space and bait a whiff, sidestep linear attacks, block unknown pressure, crouch block lows, anti-air jump-ins, then whiff punish when the opponent misses.',
+      'Control the space first. The punish comes after.',
+      'Neutral control complete.',
+      { dummyScript: 'attack' }
     )
   ];
 
@@ -206,7 +251,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const counterHit = routes.find((route) => route.move.counterHit && route.move.damage > 0) ?? antiAir ?? routes.find((route) => route.move.damage > 0);
 
   if (fastest) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:fastest', 'Fast Punish', fastest.label, [inputToButton[fastest.input]], [inputToAction[fastest.input]], fastest.input, 'Use your fastest button when the enemy is stuck.', 'Small opening, small cut. Take it.', 'Land the fast punish.', { dummyScript: 'attack' }));
-  if (fastest) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:whiff', 'Whiff Punish', fastest.label, [inputToButton[fastest.input]], [inputToAction[fastest.input]], fastest.input, 'Let the enemy miss, then hit their recovery before they can guard.', 'When they cut empty air, answer immediately.', 'Whiff punish landed.', { dummyScript: 'whiff', setup: { p1Position: { x: -0.25, z: 0 }, p2Position: { x: 1.15, z: 0 } }, expectImpactKinds: ['whiffPunish'], missAfterFrame: 72 }));
+  if (fastest) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:whiff', 'Whiff Punish', fastest.label, [inputToButton[fastest.input]], [inputToAction[fastest.input]], fastest.input, 'Use back-hop or sidestep to make the enemy whiff, then hit their recovery before they can guard.', 'When they cut empty air, answer immediately.', 'Whiff punish landed.', { dummyScript: 'whiff', setup: { p1Position: { x: -0.25, z: 0 }, p2Position: { x: 1.15, z: 0 } }, expectImpactKinds: ['whiffPunish'], missAfterFrame: 72 }));
   if (safe) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:safe', 'Safe Check', safe.label, [inputToButton[safe.input]], [inputToAction[safe.input]], safe.input, 'Use a safer check when you are not sure.', 'A safe cut beats a greedy one.', 'Land the safe check.'));
   if (advanced) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:command', 'Command Punish', advanced, 'Use a committed command route for bigger openings.', 'Bigger opening. Sharper answer.', 'Land the command starter.', { dummyScript: 'attack' }));
   trials.push(makeSimpleTrial(character, dummy, 'jumpIn', 'jump:starter', 'Jump-In Starter', ['u', '1'], ['up', 'jab'], 'Jump in to start pressure from above.', 'Come down with purpose.', 'Jump, then press 1.', { requireState: 'jump' }));

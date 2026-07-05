@@ -107,6 +107,9 @@ describe('training trial catalog', () => {
     });
     expect(trial.lesson.toLowerCase()).toContain('unsafe');
     expect(trial.lesson.toLowerCase()).toContain('airtime');
+    expect(trial.lesson.toLowerCase()).toContain('neutral');
+    expect(trial.lesson.toLowerCase()).toContain('whiff bait');
+    expect(trial.lesson.toLowerCase()).toContain('whiff punish');
 
     const previewInput = makePreviewInput(trial.previewScript, trial.previewScript[0].frame);
     expect(previewInput.dashBack).toBe(true);
@@ -137,6 +140,40 @@ describe('training trial catalog', () => {
     expect(switchTrial?.steps.map((step) => step.requireState)).toEqual(['block', 'crouchBlock']);
     expect(switchTrial?.lesson.toLowerCase()).toContain('stand guard');
     expect(switchTrial?.lesson.toLowerCase()).toContain('crouch block');
+  });
+
+  it('teaches neutral control with back-hop, sidestep, block, anti-air, and whiff punish concepts', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const neutral = trials.find((trial) => trial.id.endsWith('defense:neutral-control'));
+    const whiff = trials.find((trial) => trial.id.endsWith('punish:whiff'));
+    expect(neutral).toBeTruthy();
+    expect(whiff).toBeTruthy();
+    if (!neutral || !whiff) return;
+
+    expect(neutral.steps.map((step) => step.actions)).toEqual([
+      ['dashBack'],
+      ['sidestepUp'],
+      ['block'],
+      ['down', 'block']
+    ]);
+    const neutralLesson = neutral.lesson.toLowerCase();
+    expect(neutralLesson).toContain('neutral');
+    expect(neutralLesson).toContain('back-hop');
+    expect(neutralLesson).toContain('whiff');
+    expect(neutralLesson).toContain('sidestep');
+    expect(neutralLesson).toContain('block');
+    expect(neutralLesson).toContain('anti-air');
+    expect(neutralLesson).toContain('whiff punish');
+
+    const whiffLesson = whiff.lesson.toLowerCase();
+    expect(whiffLesson).toContain('back-hop');
+    expect(whiffLesson).toContain('sidestep');
+    expect(whiffLesson).toContain('whiff');
   });
 
   it('skips character-specific fundamentals unless real route properties exist', () => {
