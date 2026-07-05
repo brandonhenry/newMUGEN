@@ -9594,6 +9594,11 @@
       }
     },
     "cmd:WR+4": {
+      "0": {
+        "width": 1.163,
+        "height": 0.979,
+        "offsetX": 0
+      },
       "106": {
         "width": 1.395,
         "height": 0.942,
@@ -9602,11 +9607,6 @@
       "107": {
         "width": 1.229,
         "height": 0.942,
-        "offsetX": 0
-      },
-      "0": {
-        "width": 1.163,
-        "height": 0.979,
         "offsetX": 0
       }
     },
@@ -10108,13 +10108,13 @@
         "height": 0.979,
         "offsetX": 0
       },
-      "59": {
-        "width": 1.13,
+      "58": {
+        "width": 1.163,
         "height": 0.979,
         "offsetX": 0
       },
-      "58": {
-        "width": 1.163,
+      "59": {
+        "width": 1.13,
         "height": 0.979,
         "offsetX": 0
       }
@@ -10257,6 +10257,11 @@
       }
     },
     "backHop": {
+      "20": {
+        "width": 1.13,
+        "height": 0.979,
+        "offsetX": 0
+      },
       "43": {
         "width": 1.09,
         "height": 1.09,
@@ -10270,11 +10275,6 @@
       "45": {
         "width": 1.14,
         "height": 1.14,
-        "offsetX": 0
-      },
-      "20": {
-        "width": 1.13,
-        "height": 0.979,
         "offsetX": 0
       }
     },
@@ -10316,6 +10316,11 @@
       }
     },
     "idle": {
+      "0": {
+        "width": 1.163,
+        "height": 0.979,
+        "offsetX": 0
+      },
       "1": {
         "width": 1.229,
         "height": 0.979,
@@ -10329,11 +10334,6 @@
       "3": {
         "width": 1.163,
         "height": 0.961,
-        "offsetX": 0
-      },
-      "0": {
-        "width": 1.163,
-        "height": 0.979,
         "offsetX": 0
       }
     },
@@ -10687,5 +10687,88 @@
   "modelScale": {
     "width": 0.89,
     "height": 1.08
+  },
+  "projectiles": [
+    {
+      "id": "chakra-or-tool-projectile",
+      "name": "Wind Release: Rasenshuriken Chakra Shot",
+      "frames": [
+        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png",
+        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-001.png",
+        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png",
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-001.png",
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.38,
+        0.38,
+        0.38
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#b8f4ff"
+    }
+  ],
+  "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "kickright-shot",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Wind Release: Rasenshuriken Chakra Shot",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingMode": "limited",
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
   }
 }

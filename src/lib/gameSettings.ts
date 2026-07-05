@@ -4,7 +4,7 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 5;
+const settingsVersion = 6;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -67,7 +67,8 @@ export const defaultGameSettings: GameSettings = {
     roundTimer: 60,
     maxHealth: 200,
     trainingInfiniteHealth: true,
-    inputAssist: true
+    inputAssist: true,
+    controlScheme: 'kore'
   },
   controls: {
     keyboard: [p1Keyboard, p2Keyboard],
@@ -148,7 +149,8 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       roundTimer: sanitizeRoundTimer(game.roundTimer, defaults.game.roundTimer),
       maxHealth: sanitizeMaxHealth(game.maxHealth, defaults.game.maxHealth),
       trainingInfiniteHealth: booleanOr(game.trainingInfiniteHealth, defaults.game.trainingInfiniteHealth),
-      inputAssist: booleanOr(game.inputAssist, defaults.game.inputAssist)
+      inputAssist: booleanOr(game.inputAssist, defaults.game.inputAssist),
+      controlScheme: game.controlScheme === 'beginner' ? 'beginner' : defaults.game.controlScheme
     },
     controls: {
       keyboard: [

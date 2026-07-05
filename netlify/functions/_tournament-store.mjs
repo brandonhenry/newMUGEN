@@ -215,6 +215,10 @@ export function confirmPaidInvoice(bracket, invoiceId, now = Date.now()) {
   const alreadyConfirmedCount = confirmedTournamentEntries(bracket).length;
   const entries = bracket.entries.map((entry) => {
     if (entry.paymentInvoiceId !== invoiceId) return entry;
+    if (entry.paymentState === 'expired' || entry.paymentState === 'invalid') {
+      confirmedEntry = entry;
+      return entry;
+    }
     if (entry.paymentState === 'paid' || entry.paymentState === 'entryLocked') {
       confirmedEntry = entry;
       return entry;
@@ -233,6 +237,24 @@ export function confirmPaidInvoice(bracket, invoiceId, now = Date.now()) {
     next = generateOnlineBracket(next, now);
   }
   return { bracket: next, entry: confirmedEntry };
+}
+
+export function processPaidInvoice(bracket, invoiceId, now = Date.now()) {
+  let processingEntry = null;
+  const entries = bracket.entries.map((entry) => {
+    if (entry.paymentInvoiceId !== invoiceId) return entry;
+    if (['paid', 'entryLocked', 'expired', 'invalid'].includes(entry.paymentState)) {
+      processingEntry = entry;
+      return entry;
+    }
+    processingEntry = {
+      ...entry,
+      paymentState: 'invoiceProcessing'
+    };
+    return processingEntry;
+  });
+  if (!processingEntry) throw Object.assign(new Error('Invoice entry not found'), { statusCode: 404, code: 'invoice_entry_not_found' });
+  return { bracket: { ...bracket, entries, updatedAt: now }, entry: processingEntry };
 }
 
 export function expirePaidInvoice(bracket, invoiceId, state = 'expired', now = Date.now()) {

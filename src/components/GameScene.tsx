@@ -11,6 +11,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import type {
   CharacterDefinition,
   CharacterEffectDefinition,
+  CharacterProjectileDefinition,
   BreakTargetMiniGameSnapshot,
   BreakTargetRuntime,
   EffectSoundCue,
@@ -25,6 +26,7 @@ import type {
   MoveEffectInstance,
   MoveDefinition,
   MoveInput,
+  ProjectileRuntime,
   StageDefinition,
   StageLayerDefinition,
   StageModelDefinition,
@@ -580,6 +582,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} />
         <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} />
         <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
+        <ProjectileLayer match={match} stage={match.stage} />
         <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
         <StagePostProcessing stage={match.stage} reducedMotion={reducedMotion} />
@@ -1263,6 +1266,99 @@ function EffectLayer({
       ))}
     </group>
   );
+}
+
+function ProjectileLayer({ match, stage }: { match: MatchSnapshot; stage: StageDefinition }) {
+  const projectiles = match.projectiles ?? [];
+  if (projectiles.length === 0) return null;
+  return (
+    <group>
+      {projectiles.map((projectile) => {
+        const owner = match.fighters[projectile.ownerSlot - 1];
+        const definition = owner.character.projectiles?.find((candidate) => candidate.id === projectile.projectileId);
+        return definition ? (
+          <ProjectileVisual
+            key={`${projectile.id}-${projectile.projectileId}`}
+            projectile={projectile}
+            definition={definition}
+            stage={stage}
+          />
+        ) : null;
+      })}
+    </group>
+  );
+}
+
+function ProjectileVisual({
+  projectile,
+  definition,
+  stage
+}: {
+  projectile: ProjectileRuntime;
+  definition: CharacterProjectileDefinition;
+  stage: StageDefinition;
+}) {
+  const source = getProjectileFrameSource(projectile, definition);
+  const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
+  const character = useMemo(() => ({
+    id: `projectile-${definition.id}`,
+    voxelProfile: definition.voxelProfile ?? 'image-source',
+    voxelFidelity: definition.voxelFidelity
+  }) as CharacterDefinition, [definition.id, definition.voxelFidelity, definition.voxelProfile]);
+  useEffect(() => {
+    let canceled = false;
+    if (!source) {
+      setVoxels([]);
+      return;
+    }
+    getCachedImageVoxels(source, character).then((nextVoxels) => {
+      if (!canceled) setVoxels(nextVoxels);
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [character, source]);
+  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 900 ? 2 : 1), [voxels]);
+  const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
+  const renderStyle = useMemo(() => withDefaultRenderStyle({
+    tint: definition.color ?? '#ffffff',
+    opacity: projectile.phase === 'recovery' ? 0.72 : 1,
+    renderOrder: 35,
+    depthWrite: false,
+    castShadow: false,
+    receiveShadow: false
+  }), [definition.color, projectile.phase]);
+  if (!source || voxels.length === 0) return null;
+  const yaw = Math.atan2(projectile.velocity.x || projectile.facing, projectile.velocity.z || 0);
+  return (
+    <group
+      position={[projectile.position.x, projectile.position.y, projectile.position.z]}
+      rotation={[definition.defaultRotation[0], yaw + definition.defaultRotation[1], definition.defaultRotation[2]]}
+      scale={definition.defaultScale}
+    >
+      <ImageVoxelPartGroup part={parts.head} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.torso} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+    </group>
+  );
+}
+
+function getProjectileFrameSource(projectile: ProjectileRuntime, definition: CharacterProjectileDefinition) {
+  const phaseFrames = definition.animationFrames?.[projectile.phase] ?? [];
+  const fallbackFrames = definition.animationFrames?.active ?? definition.frames ?? [];
+  const frames = phaseFrames.length > 0 ? phaseFrames : fallbackFrames;
+  if (frames.length === 0) return definition.sourcePath ?? definition.spriteSheetPath;
+  const phaseStart =
+    projectile.phase === 'startup' ? 0 :
+      projectile.phase === 'active' ? projectile.startupFrames :
+        projectile.startupFrames + projectile.activeFrames;
+  const phaseAge = Math.max(0, projectile.ageFrames - phaseStart);
+  const rawIndex = Math.floor((phaseAge / 60) * Math.max(1, definition.fps));
+  const frameIndex = definition.loop ? rawIndex % frames.length : Math.min(frames.length - 1, rawIndex);
+  return frames[frameIndex] ?? frames[0];
 }
 
 function useEffectAudioCues(bindings: ActiveEffectBinding[], audioSettings?: GameSettings['audio']) {
@@ -4976,7 +5072,8 @@ async function loadPrecomputedImageVoxels(src: string, character: CharacterDefin
 
 function getPrecomputedVoxelPath(src: string, hd = false) {
   const cleanSrc = src.split('?')[0] ?? src;
-  const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
+  const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/)
+    ?? cleanSrc.match(/^(\/characters\/[\w-]+\/projectiles\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
   if (!match) return null;
   const queryIndex = src.indexOf('?');
   const cacheBust = queryIndex >= 0 ? src.slice(queryIndex) : '';

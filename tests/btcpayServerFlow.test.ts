@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const originalEnv = { ...process.env };
 
@@ -14,6 +14,10 @@ beforeEach(() => {
 
 afterEach(() => {
   process.env = { ...originalEnv };
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+  vi.resetModules();
+  vi.doUnmock('../netlify/functions/_blob-store.mjs');
 });
 
 describe('BTCPay paid tournament flow', () => {
@@ -38,6 +42,25 @@ describe('BTCPay paid tournament flow', () => {
     expect(store.toSummary(confirmed.bracket).entries).toBe(1);
     expect(confirmed.entry.paymentState).toBe('paid');
     expect(confirmed.entry.seed).toBe(1);
+  });
+
+  it('marks InvoiceProcessing without counting the paid entry as confirmed', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    const bracket = store.makeOpenPaidTournament(1000);
+    const pending = store.createPendingPaidEntry(bracket, {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro'
+    }, 1001);
+    const invoiced = store.attachPaidInvoice(pending.bracket, pending.entry.id, {
+      invoiceId: 'invoice-1',
+      checkoutUrl: 'https://btcpay.example/i/invoice-1'
+    }, 1002);
+    const processing = store.processPaidInvoice(invoiced.bracket, 'invoice-1', 1003);
+
+    expect(processing.entry.paymentState).toBe('invoiceProcessing');
+    expect(processing.entry.seed).toBe(0);
+    expect(store.toSummary(processing.bracket).entries).toBe(0);
   });
 
   it('reuses a duplicate pending paid invoice entry for the same player', async () => {
@@ -115,6 +138,26 @@ describe('BTCPay paid tournament flow', () => {
 
     expect(expired.entry.paymentState).toBe('expired');
     expect(store.toSummary(expired.bracket).entries).toBe(0);
+  });
+
+  it('keeps settled webhook confirmation idempotent', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    const bracket = store.makeOpenPaidTournament(1000);
+    const pending = store.createPendingPaidEntry(bracket, {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro'
+    }, 1001);
+    const invoiced = store.attachPaidInvoice(pending.bracket, pending.entry.id, {
+      invoiceId: 'invoice-1',
+      checkoutUrl: 'https://btcpay.example/i/invoice-1'
+    }, 1002);
+    const confirmed = store.confirmPaidInvoice(invoiced.bracket, 'invoice-1', 1003);
+    const duplicate = store.confirmPaidInvoice(confirmed.bracket, 'invoice-1', 1004);
+
+    expect(duplicate.entry.paymentState).toBe('paid');
+    expect(duplicate.entry.seed).toBe(1);
+    expect(store.toSummary(duplicate.bracket).entries).toBe(1);
   });
 
   it('records manual BTC reward obligations for the top three after a paid final', async () => {
@@ -207,6 +250,49 @@ describe('free online tournament bot fill', () => {
 });
 
 describe('BTCPay webhook verification', () => {
+  it('creates a Voltage-compatible invoice and returns BTCPay checkoutLink', async () => {
+    const { createEntryInvoice } = await import('../netlify/functions/_btcpay.mjs');
+    const fetchMock = vi.fn(async (_url: string, init?: RequestInit) => ({
+      ok: true,
+      text: async () => JSON.stringify({
+        id: 'invoice-1',
+        checkoutLink: 'https://btcpay.example/i/invoice-1'
+      }),
+      status: 200
+    }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const invoice = await createEntryInvoice({
+      tournamentId: 'paid-btc-daily',
+      entryId: 'entry-1',
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro'
+    });
+    const body = JSON.parse(String(fetchMock.mock.calls[0][1]?.body));
+
+    expect(invoice.checkoutUrl).toBe('https://btcpay.example/i/invoice-1');
+    expect(fetchMock.mock.calls[0][0]).toBe('https://btcpay.example/api/v1/stores/store-1/invoices');
+    expect(fetchMock.mock.calls[0][1]?.headers).toMatchObject({ authorization: 'token api-key' });
+    expect(body.amount).toBe('2.00');
+    expect(body.currency).toBe('USD');
+    expect(body.metadata).toMatchObject({
+      tournamentId: 'paid-btc-daily',
+      entryId: 'entry-1',
+      playerId: 'player-1',
+      characterId: 'kiro'
+    });
+  });
+
+  it('classifies BTCPay invoice events without treating processing as settled', async () => {
+    const { classifyInvoiceEvent } = await import('../netlify/functions/_btcpay.mjs');
+
+    expect(classifyInvoiceEvent({ type: 'InvoiceProcessing' }, { status: 'Processing' })).toBe('processing');
+    expect(classifyInvoiceEvent({ type: 'InvoiceSettled' }, { status: 'Settled' })).toBe('settled');
+    expect(classifyInvoiceEvent({ type: 'InvoiceExpired' }, { status: 'Expired' })).toBe('expired');
+    expect(classifyInvoiceEvent({ type: 'InvoiceInvalid' }, { status: 'Invalid' })).toBe('invalid');
+  });
+
   it('accepts a valid BTCPay-SIG and rejects an invalid one', async () => {
     const { verifyBtcpayWebhook } = await import('../netlify/functions/_btcpay.mjs');
     const rawBody = JSON.stringify({ type: 'InvoiceSettled', invoiceId: 'invoice-1' });
@@ -227,4 +313,142 @@ describe('BTCPay webhook verification', () => {
 
     expect(response.statusCode).toBe(401);
   });
+
+  it('handles processing then settled webhook states with a mocked tournament store', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    let stored = store.attachPaidInvoice(store.createPendingPaidEntry(store.makeOpenPaidTournament(1000), {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro'
+    }, 1001).bracket, 'paid-player-1-1001', {
+      invoiceId: 'invoice-1',
+      checkoutUrl: 'https://btcpay.example/i/invoice-1'
+    }, 1002).bracket;
+    vi.resetModules();
+    vi.doMock('../netlify/functions/_blob-store.mjs', () => ({
+      getBlobStore: () => ({
+        get: async () => stored,
+        setJSON: async (_key: string, value: unknown) => {
+          stored = value;
+        }
+      })
+    }));
+    const fetchMock = vi.fn(async () => ({
+      ok: true,
+      text: async () => JSON.stringify({
+        id: 'invoice-1',
+        status: 'Processing',
+        metadata: { tournamentId: 'paid-btc-daily', entryId: 'paid-player-1-1001' }
+      }),
+      status: 200
+    }));
+    vi.stubGlobal('fetch', fetchMock);
+    const { handler } = await import('../netlify/functions/btcpay-webhook.mjs');
+
+    const processingResponse = await handler(makeSignedWebhookEvent({ type: 'InvoiceProcessing', invoiceId: 'invoice-1' }));
+    expect(processingResponse.statusCode).toBe(200);
+    expect(stored.entries[0].paymentState).toBe('invoiceProcessing');
+    expect(store.toSummary(stored).entries).toBe(0);
+
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      text: async () => JSON.stringify({
+        id: 'invoice-1',
+        status: 'Settled',
+        metadata: { tournamentId: 'paid-btc-daily', entryId: 'paid-player-1-1001' }
+      }),
+      status: 200
+    });
+    const settledResponse = await handler(makeSignedWebhookEvent({ type: 'InvoiceSettled', invoiceId: 'invoice-1' }));
+
+    expect(settledResponse.statusCode).toBe(200);
+    expect(stored.entries[0].paymentState).toBe('paid');
+    expect(stored.entries[0].seed).toBe(1);
+    expect(store.toSummary(stored).entries).toBe(1);
+  });
+
+  it('handles expired and invalid webhooks without locking seats', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    let stored = store.attachPaidInvoice(store.createPendingPaidEntry(store.makeOpenPaidTournament(1000), {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro'
+    }, 1001).bracket, 'paid-player-1-1001', {
+      invoiceId: 'invoice-1',
+      checkoutUrl: 'https://btcpay.example/i/invoice-1'
+    }, 1002).bracket;
+    vi.resetModules();
+    vi.doMock('../netlify/functions/_blob-store.mjs', () => ({
+      getBlobStore: () => ({
+        get: async () => stored,
+        setJSON: async (_key: string, value: unknown) => {
+          stored = value;
+        }
+      })
+    }));
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      text: async () => JSON.stringify({
+        id: 'invoice-1',
+        status: 'Invalid',
+        metadata: { tournamentId: 'paid-btc-daily', entryId: 'paid-player-1-1001' }
+      }),
+      status: 200
+    })));
+    const { handler } = await import('../netlify/functions/btcpay-webhook.mjs');
+
+    const response = await handler(makeSignedWebhookEvent({ type: 'InvoiceInvalid', invoiceId: 'invoice-1' }));
+
+    expect(response.statusCode).toBe(200);
+    expect(stored.entries[0].paymentState).toBe('invalid');
+    expect(store.toSummary(stored).entries).toBe(0);
+  });
+
+  it('rejects webhook invoices whose metadata does not match the stored entry', async () => {
+    const store = await import('../netlify/functions/_tournament-store.mjs');
+    let stored = store.attachPaidInvoice(store.createPendingPaidEntry(store.makeOpenPaidTournament(1000), {
+      playerId: 'player-1',
+      displayName: 'P1',
+      characterId: 'kiro'
+    }, 1001).bracket, 'paid-player-1-1001', {
+      invoiceId: 'invoice-1',
+      checkoutUrl: 'https://btcpay.example/i/invoice-1'
+    }, 1002).bracket;
+    vi.resetModules();
+    vi.doMock('../netlify/functions/_blob-store.mjs', () => ({
+      getBlobStore: () => ({
+        get: async () => stored,
+        setJSON: async (_key: string, value: unknown) => {
+          stored = value;
+        }
+      })
+    }));
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      text: async () => JSON.stringify({
+        id: 'invoice-1',
+        status: 'Settled',
+        metadata: { tournamentId: 'paid-btc-daily', entryId: 'wrong-entry' }
+      }),
+      status: 200
+    })));
+    const { handler } = await import('../netlify/functions/btcpay-webhook.mjs');
+
+    const response = await handler(makeSignedWebhookEvent({ type: 'InvoiceSettled', invoiceId: 'invoice-1' }));
+
+    expect(response.statusCode).toBe(409);
+    expect(stored.entries[0].paymentState).toBe('invoicePending');
+  });
 });
+
+function makeSignedWebhookEvent(payload: object) {
+  const body = JSON.stringify(payload);
+  return {
+    httpMethod: 'POST',
+    headers: {
+      'btcpay-sig': `sha256=${crypto.createHmac('sha256', 'test-webhook-secret').update(body).digest('hex')}`
+    },
+    body,
+    isBase64Encoded: false
+  };
+}

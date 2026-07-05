@@ -1615,6 +1615,11 @@
       }
     },
     "backHop": {
+      "17": {
+        "width": 1.395,
+        "height": 0.925,
+        "offsetX": 0
+      },
       "40": {
         "width": 0.97,
         "height": 0.97,
@@ -1653,11 +1658,6 @@
       "48": {
         "width": 1.13,
         "height": 1.13,
-        "offsetX": 0
-      },
-      "17": {
-        "width": 1.395,
-        "height": 0.925,
         "offsetX": 0
       }
     },
@@ -1793,11 +1793,6 @@
       }
     },
     "cmd:1+2": {
-      "61": {
-        "width": 1.216,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "58": {
         "width": 1.001,
         "height": 1.001,
@@ -1810,6 +1805,11 @@
       },
       "60": {
         "width": 1.001,
+        "height": 1.001,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 1.216,
         "height": 1.001,
         "offsetX": 0
       },
@@ -1993,6 +1993,11 @@
       }
     },
     "cmd:1+4": {
+      "81": {
+        "width": 1.001,
+        "height": 1.001,
+        "offsetX": 0
+      },
       "82": {
         "width": 0.944,
         "height": 0.944,
@@ -2026,11 +2031,6 @@
       "89": {
         "width": 0.963,
         "height": 0.963,
-        "offsetX": 0
-      },
-      "81": {
-        "width": 1.001,
-        "height": 1.001,
         "offsetX": 0
       }
     },
@@ -2637,5 +2637,129 @@
         "offsetX": 0
       }
     }
+  },
+  "projectiles": [
+    {
+      "id": "weather-lightning-projectile",
+      "name": "Nami (Perfect Clima-Tact) Burst Weather Bolt",
+      "frames": [
+        "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-000.png",
+        "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-001.png",
+        "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-000.png",
+          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-001.png",
+          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/nami-perfect-clima-tact/projectiles/weather-lightning-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.44,
+        0.44,
+        0.44
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#fff06a"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-shot",
+        "projectileId": "weather-lightning-projectile",
+        "label": "Nami (Perfect Clima-Tact) Aura Drive Weather Bolt",
+        "spawnFrame": 21,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 13,
+        "forwardVelocity": 13,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.4,
+            0.74
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-shot",
+        "projectileId": "weather-lightning-projectile",
+        "label": "Nami (Perfect Clima-Tact) Burst Weather Bolt",
+        "spawnFrame": 22,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 13,
+        "forwardVelocity": 13,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.4,
+            0.74
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
   }
 }

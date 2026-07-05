@@ -75,6 +75,7 @@ import {
   type CharacterModelScale,
   type CharacterSpriteSheet,
   type CombatPopupEvent,
+  type ControlScheme,
   type CpuDifficulty,
   type EffectAnchor,
   type EffectBlendMode,
@@ -2728,7 +2729,7 @@ export default function App() {
         .filter((character) => isCharacterUnlocked(character, effectiveUnlockedCharacterIds))
         .map((character) => character.id)
     });
-    const payment = result.entry.paymentState === 'invoicePending'
+    const payment = result.entry.paymentState === 'invoicePending' || result.entry.paymentState === 'invoiceProcessing'
       ? {
         state: result.entry.paymentState,
         checkoutUrl: result.checkoutUrl ?? result.entry.checkoutUrl,
@@ -2742,8 +2743,8 @@ export default function App() {
       entry: result.entry,
       assignedMatch: getAssignedTournamentMatch(result.bracket, result.entry.id),
       payment,
-      statusText: paid && payment?.state === 'invoicePending'
-        ? 'Waiting for BTCPay payment'
+      statusText: paid && payment
+        ? getTournamentPaymentStatusText(payment.state, result.bracket.minEntries)
         : result.bracket.status === 'open'
           ? `${confirmedTournamentEntryCount(result.bracket)} / ${result.bracket.minEntries} entered`
           : 'Tournament ready'
@@ -2761,7 +2762,7 @@ export default function App() {
       character_id: characterId,
       payment_state: result.entry.paymentState
     });
-    if (paid && payment?.checkoutUrl) {
+    if (paid && payment?.state === 'invoicePending' && payment.checkoutUrl) {
       captureAppAnalytics('tournament_payment_opened', {
         tournament_id: result.bracket.id,
         entry_id: result.entry.id,
@@ -5758,6 +5759,7 @@ function TournamentLobbyScreen({
   const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry);
   const paymentConfirmed = payment?.state === 'paid' || payment?.state === 'entryLocked' || onlineStatus?.entry?.paymentState === 'paid' || onlineStatus?.entry?.paymentState === 'entryLocked';
   const checkoutUrl = payment?.checkoutUrl ?? onlineStatus?.entry?.checkoutUrl;
+  const paymentProcessing = payment?.state === 'invoiceProcessing' || onlineStatus?.entry?.paymentState === 'invoiceProcessing';
 
   return (
     <div className="leaderboard-screen tournament-lobby-screen">
@@ -5788,6 +5790,7 @@ function TournamentLobbyScreen({
                 )}
               </div>
             )}
+            {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Waiting for BTCPay settlement.</div>}
             {paymentConfirmed && <div className="tournament-status-strip">Payment confirmed. Tournament starts at {bracket.minEntries} paid players.</div>}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
@@ -6008,6 +6011,12 @@ function confirmedTournamentEntryCount(bracket: TournamentBracket | null | undef
   if (!bracket) return 0;
   if (bracket.kind !== 'paidOnline') return bracket.entries.filter((entry) => entry.paymentState !== 'expired' && entry.paymentState !== 'invalid').length;
   return bracket.entries.filter((entry) => entry.paymentState === 'paid' || entry.paymentState === 'entryLocked').length;
+}
+
+function getTournamentPaymentStatusText(state: string, minEntries: number) {
+  if (state === 'invoiceProcessing') return 'Payment received. Waiting for BTCPay settlement.';
+  if (state === 'paid' || state === 'entryLocked') return `Payment confirmed. Tournament starts at ${minEntries} paid players.`;
+  return 'Waiting for BTCPay payment';
 }
 
 function makeTournamentBotOpponent(status: TournamentStatusResult | null): OnlineBotOpponent | null {
@@ -9123,6 +9132,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('game', 'max_health', previous.game.maxHealth, next.game.maxHealth);
   add('game', 'training_infinite_health', previous.game.trainingInfiniteHealth, next.game.trainingInfiniteHealth);
   add('game', 'input_assist', previous.game.inputAssist, next.game.inputAssist);
+  add('game', 'control_scheme', previous.game.controlScheme, next.game.controlScheme);
   add('camera', 'distance', previous.camera.distance, next.camera.distance);
   add('camera', 'height', previous.camera.height, next.camera.height);
   add('camera', 'smoothing', previous.camera.smoothing, next.camera.smoothing);
@@ -9155,7 +9165,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   return changes;
 }
 const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
-const actionLabels: Record<ActionName, string> = {
+const koreActionLabels: Record<ActionName, string> = {
   up: 'Up / Jump',
   down: 'Down / Crouch',
   left: 'Left',
@@ -9176,6 +9186,24 @@ const actionLabels: Record<ActionName, string> = {
   back: 'Back',
   pause: 'Pause'
 };
+const beginnerActionLabelOverrides: Partial<Record<ActionName, string>> = {
+  jab: '1 Light',
+  heavy: '2 Medium',
+  kick: '3 Heavy',
+  special: '4 Special / Ki'
+};
+const beginnerComboButtonLabels: Record<string, string> = {
+  '1': '1 Light',
+  '2': '2 Medium',
+  '3': '3 Heavy',
+  '4': '4 Special'
+};
+
+function formatActionLabel(action: ActionName, scheme: ControlScheme) {
+  return scheme === 'beginner'
+    ? beginnerActionLabelOverrides[action] ?? koreActionLabels[action]
+    : koreActionLabels[action];
+}
 
 function SettingsScreen({
   mode,
@@ -9301,10 +9329,10 @@ function SettingsScreen({
       }
       if ('comboId' in target) {
         updateSettings((current) => setKeyboardComboBinding(current, target.player, target.comboId, nextKey));
-        setInputTest(`P${target.player} ${formatButtonComboLabel(target.comboId)} = ${formatKeyName(nextKey)}`);
+        setInputTest(`P${target.player} ${formatButtonComboLabel(target.comboId, settings.game.controlScheme)} = ${formatKeyName(nextKey)}`);
       } else {
         updateSettings((current) => setKeyboardBinding(current, target.player, target.action, nextKey));
-        setInputTest(`P${target.player} ${actionLabels[target.action]} = ${formatKeyName(nextKey)}`);
+        setInputTest(`P${target.player} ${formatActionLabel(target.action, settings.game.controlScheme)} = ${formatKeyName(nextKey)}`);
       }
       setRemapRequest(null);
       setComboRemapRequest(null);
@@ -9328,11 +9356,11 @@ function SettingsScreen({
         return;
       }
       const bindings = getKeyboardBindingsForEvent(event, mode, settings.controls);
-      setInputTest(bindings.length > 0 ? bindings.map((binding) => `P${binding.player} ${actionLabels[binding.action]}`).join(' / ') : `Unbound: ${formatKeyName(event.code || event.key)}`);
+      setInputTest(bindings.length > 0 ? bindings.map((binding) => `P${binding.player} ${formatActionLabel(binding.action, settings.game.controlScheme)}`).join(' / ') : `Unbound: ${formatKeyName(event.code || event.key)}`);
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [comboRemapRequest, cycleOptionsTab, mode, onOptionsShortcut, remapRequest, settings.controls]);
+  }, [comboRemapRequest, cycleOptionsTab, mode, onOptionsShortcut, remapRequest, settings.controls, settings.game.controlScheme]);
 
   const renderEditor = () => {
     if (activeTab === 'game') {
@@ -9399,6 +9427,12 @@ function SettingsScreen({
         <div className="settings-section-stack">
           {duplicateRequest && <p className="settings-warning">{duplicateRequest.key} is already bound to {duplicateRequest.owner}. Press it again to replace that binding.</p>}
           <SettingsSection index={0} title="Keyboard Mapping" active={activeSectionIndex === 0}>
+            <SettingRow label="Control Scheme" value={settings.game.controlScheme === 'beginner' ? 'BEGINNER' : 'KORE'}>
+              <div className="mini-segmented">
+                <button className={settings.game.controlScheme === 'kore' ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, game: { ...current.game, controlScheme: 'kore' } }))}>KORE</button>
+                <button className={settings.game.controlScheme === 'beginner' ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, game: { ...current.game, controlScheme: 'beginner' } }))}>BEGINNER</button>
+              </div>
+            </SettingRow>
             <SettingRow label="Player" value={`P${activePlayer}`}>
               <div className="mini-segmented">
                 <button className={activePlayer === 1 ? 'active' : ''} onClick={() => setActivePlayer(1)}>P1</button>
@@ -9408,7 +9442,7 @@ function SettingsScreen({
             {controlActions.map((action) => (
               <div className="binding-row" key={action}>
                 <div>
-                  <strong>{actionLabels[action]}</strong>
+                  <strong>{formatActionLabel(action, settings.game.controlScheme)}</strong>
                   <small>{keyboard[action].map(formatKeyName).join(' / ') || 'Unbound'}</small>
                 </div>
                 <button className={remapRequest?.player === activePlayer && remapRequest.action === action ? 'capture' : ''} onClick={() => {
@@ -9426,7 +9460,7 @@ function SettingsScreen({
             {buttonComboHotkeys.map((combo) => (
               <div className="binding-row" key={combo.id}>
                 <div>
-                  <strong>{combo.label}</strong>
+                  <strong>{formatButtonComboLabel(combo.id, settings.game.controlScheme)}</strong>
                   <small>{(keyboardCombos[combo.id] ?? []).map(formatKeyName).join(' / ') || 'Unbound'}</small>
                 </div>
                 <button className={comboRemapRequest?.player === activePlayer && comboRemapRequest.comboId === combo.id ? 'capture' : ''} onClick={() => {
@@ -9444,10 +9478,10 @@ function SettingsScreen({
             {controlActions.map((action) => (
               <div className="binding-row" key={action}>
                 <div>
-                  <strong>{actionLabels[action]}</strong>
+                  <strong>{formatActionLabel(action, settings.game.controlScheme)}</strong>
                   <small>{formatGamepadButtonName(gamepad[action]?.[0])}</small>
                 </div>
-                <div className="gamepad-stepper" aria-label={`${actionLabels[action]} gamepad button`}>
+                <div className="gamepad-stepper" aria-label={`${formatActionLabel(action, settings.game.controlScheme)} gamepad button`}>
                   <button aria-label="Previous gamepad button" onClick={() => updateSettings((current) => adjustGamepadButton(current, activePlayer, action, -1))}>
                     <ChevronLeft size={18} />
                   </button>
@@ -9463,10 +9497,10 @@ function SettingsScreen({
             {buttonComboHotkeys.map((combo) => (
               <div className="binding-row" key={combo.id}>
                 <div>
-                  <strong>{combo.label}</strong>
+                  <strong>{formatButtonComboLabel(combo.id, settings.game.controlScheme)}</strong>
                   <small>{formatGamepadButtonName(gamepadCombos[combo.id]?.[0])}</small>
                 </div>
-                <div className="gamepad-stepper" aria-label={`${combo.label} gamepad button`}>
+                <div className="gamepad-stepper" aria-label={`${formatButtonComboLabel(combo.id, settings.game.controlScheme)} gamepad button`}>
                   <button aria-label="Previous gamepad button" onClick={() => updateSettings((current) => adjustGamepadComboButton(current, activePlayer, combo.id, -1))}>
                     <ChevronLeft size={18} />
                   </button>
@@ -10055,12 +10089,12 @@ function findDuplicateKeyboardBinding(settings: GameSettings, key: string, targe
     const keyboard = settings.controls.keyboard[player - 1];
     for (const action of Object.keys(keyboard) as ActionName[]) {
       if (!('comboId' in target) && player === target.player && action === target.action) continue;
-      if (keyboard[action].includes(key)) return { owner: `P${player} ${actionLabels[action]}` };
+      if (keyboard[action].includes(key)) return { owner: `P${player} ${formatActionLabel(action, settings.game.controlScheme)}` };
     }
     const keyboardCombos = settings.controls.keyboardCombos[player - 1];
     for (const comboId of Object.keys(keyboardCombos) as ButtonComboId[]) {
       if ('comboId' in target && player === target.player && comboId === target.comboId) continue;
-      if (keyboardCombos[comboId]?.includes(key)) return { owner: `P${player} ${formatButtonComboLabel(comboId)}` };
+      if (keyboardCombos[comboId]?.includes(key)) return { owner: `P${player} ${formatButtonComboLabel(comboId, settings.game.controlScheme)}` };
     }
   }
   return null;
@@ -10115,8 +10149,12 @@ function adjustGamepadComboButton(settings: GameSettings, player: 1 | 2, comboId
   return next;
 }
 
-function formatButtonComboLabel(comboId: ButtonComboId) {
-  return getButtonComboDefinition(comboId)?.label ?? comboId;
+function formatButtonComboLabel(comboId: ButtonComboId, scheme: ControlScheme = 'kore') {
+  if (scheme !== 'beginner') return getButtonComboDefinition(comboId)?.label ?? comboId;
+  return comboId
+    .split('+')
+    .map((button) => beginnerComboButtonLabels[button] ?? button)
+    .join(' + ');
 }
 
 function nextMenuConfigurableGamepadButton(current: number, delta: number) {
@@ -17454,10 +17492,11 @@ function FightScreen({
       roundTime: isTrainingOnline ? 0 : isOnline ? 60 : settings.game.roundTimer,
       maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
+      controlScheme: settings.game.controlScheme,
       playIntro: true,
       roster
     }),
-    [isOnline, isTrainingOnline, roster, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [isOnline, isTrainingOnline, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
@@ -19220,7 +19259,7 @@ function FightScreen({
         {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
       </button>
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
-      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} />}
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {match.message && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
@@ -20041,7 +20080,7 @@ function BreakTargetMiniGameScreen({
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
       <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
-      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} />}
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
           <div className="pause-panel">

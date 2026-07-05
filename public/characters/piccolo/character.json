@@ -1853,6 +1853,11 @@
       }
     },
     "backHop": {
+      "18": {
+        "width": 0.834,
+        "height": 0.981,
+        "offsetX": 0
+      },
       "40": {
         "width": 0.92,
         "height": 0.92,
@@ -1891,11 +1896,6 @@
       "48": {
         "width": 0.92,
         "height": 0.92,
-        "offsetX": 0
-      },
-      "18": {
-        "width": 0.834,
-        "height": 0.981,
         "offsetX": 0
       }
     },
@@ -2802,5 +2802,170 @@
         "offsetX": 0
       }
     }
+  },
+  "projectiles": [
+    {
+      "id": "ki-energy-projectile",
+      "name": "Piccolo Right Check Ki Shot",
+      "frames": [
+        "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-000.png",
+        "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-001.png",
+        "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-000.png",
+          "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-001.png",
+          "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/piccolo/projectiles/ki-energy-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.46,
+        0.46,
+        0.46
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#72ff66"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:f+1": [
+      {
+        "id": "cmd-f-1-shot",
+        "projectileId": "ki-energy-projectile",
+        "label": "f+1 Frame Link Ki Shot",
+        "spawnFrame": 14,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingMode": "limited",
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-shot",
+        "projectileId": "ki-energy-projectile",
+        "label": "Piccolo Aura Drive Ki Shot",
+        "spawnFrame": 24,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingMode": "limited",
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "jabright": [
+      {
+        "id": "jabright-shot",
+        "projectileId": "ki-energy-projectile",
+        "label": "Piccolo Right Check Ki Shot",
+        "spawnFrame": 11,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingMode": "limited",
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
   }
 }

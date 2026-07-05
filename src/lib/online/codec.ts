@@ -1,6 +1,6 @@
-import { emptyInputFrame, type ActionName, type CharacterDefinition, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
+import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 12;
+export const ONLINE_PROTOCOL_VERSION = 13;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -122,6 +122,7 @@ export type CompactMatchSnapshot = {
   roundTime: number;
   maxHealth?: number;
   trainingInfiniteHealth: boolean;
+  controlScheme?: ControlScheme;
   introEnabled: boolean;
   timer: number;
   round: number;
@@ -130,6 +131,7 @@ export type CompactMatchSnapshot = {
   phase: MatchSnapshot['phase'];
   message: string;
   lastHitId: number;
+  projectiles: MatchSnapshot['projectiles'];
   combatEvents: MatchSnapshot['combatEvents'];
   impactEvents: MatchSnapshot['impactEvents'];
   clashState: MatchSnapshot['clashState'];
@@ -169,6 +171,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     roundTime: match.roundTime,
     maxHealth: match.maxHealth,
     trainingInfiniteHealth: match.trainingInfiniteHealth,
+    controlScheme: match.controlScheme,
     introEnabled: match.introEnabled,
     timer: match.timer,
     round: match.round,
@@ -177,6 +180,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     phase: match.phase,
     message: match.message,
     lastHitId: match.lastHitId,
+    projectiles: (match.projectiles ?? []).map(compactProjectile),
     combatEvents: match.combatEvents.slice(-8),
     impactEvents: match.impactEvents.slice(-12),
     clashState: match.clashState,
@@ -204,6 +208,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     roundTime: snapshot.roundTime,
     maxHealth: snapshot.maxHealth ?? base.maxHealth,
     trainingInfiniteHealth: snapshot.trainingInfiniteHealth,
+    controlScheme: snapshot.controlScheme === 'beginner' ? 'beginner' : 'kore',
     introEnabled: snapshot.introEnabled,
     timer: snapshot.timer,
     round: snapshot.round,
@@ -212,6 +217,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     phase: snapshot.phase,
     message: snapshot.message,
     lastHitId: snapshot.lastHitId,
+    projectiles: (snapshot.projectiles ?? []).map(hydrateProjectile),
     combatEvents: snapshot.combatEvents,
     impactEvents: snapshot.impactEvents,
     clashState: snapshot.clashState ?? base.clashState,
@@ -227,6 +233,21 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     idleQuietLockFrames: snapshot.idleQuietLockFrames ?? base.idleQuietLockFrames,
     fighters: [hydrateFighter(base.fighters[0], snapshot.fighters[0], base.roster), hydrateFighter(base.fighters[1], snapshot.fighters[1], base.roster)]
   };
+}
+
+function compactProjectile(projectile: MatchSnapshot['projectiles'][number]): MatchSnapshot['projectiles'][number] {
+  return {
+    ...projectile,
+    move: { ...projectile.move, hitbox: { offset: [...projectile.move.hitbox.offset], size: [...projectile.move.hitbox.size] } },
+    position: { ...projectile.position },
+    previousPosition: { ...projectile.previousPosition },
+    velocity: { ...projectile.velocity },
+    hitbox: { offset: [...projectile.hitbox.offset], size: [...projectile.hitbox.size] }
+  };
+}
+
+function hydrateProjectile(projectile: MatchSnapshot['projectiles'][number]): MatchSnapshot['projectiles'][number] {
+  return compactProjectile(projectile);
 }
 
 function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {

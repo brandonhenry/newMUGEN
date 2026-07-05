@@ -29,6 +29,8 @@ type DevManifestPayload = {
   getupFrameOverrides?: Record<string, unknown>;
   effects?: Array<Record<string, unknown>>;
   moveEffects?: Record<string, Array<Record<string, unknown>>>;
+  projectiles?: Array<Record<string, unknown>>;
+  moveProjectiles?: Record<string, Array<Record<string, unknown>>>;
   spriteFrameEdits?: Record<string, Record<string, unknown>>;
   spriteSheets?: Array<Record<string, unknown>>;
   voxelProfile?: string;
@@ -368,6 +370,8 @@ function koreDevManifestWriter() {
           else delete manifest.getupFrameOverrides;
           manifest.effects = sanitizeCharacterEffects(payload.effects ?? []);
           manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
+          manifest.projectiles = sanitizeCharacterProjectiles(payload.projectiles ?? []);
+          manifest.moveProjectiles = sanitizeCharacterMoveProjectiles(payload.moveProjectiles ?? {});
           manifest.spriteFrameEdits = sanitizeSpriteFrameEditMap(payload.spriteFrameEdits ?? {});
           manifest.spriteSheets = sanitizeSpriteSheets(payload.spriteSheets, manifest.spriteSheetPath, characterId, Number(manifest.spriteFrameCount) || 0);
           if (payload.voxelProfile) manifest.voxelProfile = sanitizeVoxelProfile(payload.voxelProfile);
@@ -402,6 +406,29 @@ function koreDevManifestWriter() {
           const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
           manifest.effects = sanitizeCharacterEffects(payload.effects ?? []);
           manifest.moveEffects = sanitizeCharacterMoveEffects(payload.moveEffects ?? {});
+          await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+          sendJson(response, 200, { ok: true, characterId, manifestPath });
+        } catch (error) {
+          sendJson(response, 500, { ok: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/save-character-projectiles', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { ok: false, error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevManifestPayload;
+          const characterId = payload.characterId ?? '';
+          if (!/^[a-z0-9-]+$/i.test(characterId)) {
+            sendJson(response, 400, { ok: false, error: 'Invalid character id' });
+            return;
+          }
+          const manifestPath = resolve(server.config.root, 'public', 'characters', characterId, 'character.json');
+          const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+          manifest.projectiles = sanitizeCharacterProjectiles(payload.projectiles ?? []);
+          manifest.moveProjectiles = sanitizeCharacterMoveProjectiles(payload.moveProjectiles ?? {});
           await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
           sendJson(response, 200, { ok: true, characterId, manifestPath });
         } catch (error) {
@@ -1975,6 +2002,107 @@ function sanitizeMoveEffectInstance(instance: Record<string, unknown>, index: nu
     loop: Boolean(instance.loop),
     keyframes,
     soundCues: sanitizeEffectSoundCues(instance.soundCues)
+  };
+}
+
+function sanitizeCharacterProjectiles(projectiles: Array<Record<string, unknown>>) {
+  return projectiles
+    .filter((projectile) => projectile && typeof projectile === 'object')
+    .map((projectile, index) => sanitizeCharacterProjectile(projectile, index))
+    .filter((projectile) => projectile.id);
+}
+
+function sanitizeCharacterProjectile(projectile: Record<string, unknown>, index: number) {
+  const id = sanitizeAssetId(projectile.id) || `projectile-${index + 1}`;
+  const frames = sanitizeProjectileFrameList(projectile.frames);
+  return {
+    id,
+    name: typeof projectile.name === 'string' && projectile.name.trim() ? projectile.name.trim().slice(0, 120) : id,
+    spriteSheetPath: typeof projectile.spriteSheetPath === 'string' && projectile.spriteSheetPath.startsWith('/characters/') ? projectile.spriteSheetPath : undefined,
+    sourcePath: typeof projectile.sourcePath === 'string' && projectile.sourcePath.startsWith('/characters/') ? projectile.sourcePath : undefined,
+    frames,
+    animationFrames: sanitizeProjectileAnimationFrames(projectile.animationFrames, frames),
+    fps: Math.max(1, Math.min(60, finiteOr(projectile.fps, 18))),
+    loop: projectile.loop !== false,
+    billboard: Boolean(projectile.billboard),
+    blendMode: safeBlendMode(projectile.blendMode),
+    voxelProfile: projectile.voxelProfile === 'hd-image-source' ? 'hd-image-source' : 'image-source',
+    voxelFidelity: sanitizeVoxelFidelity(
+      projectile.voxelFidelity && typeof projectile.voxelFidelity === 'object'
+        ? projectile.voxelFidelity as Record<string, unknown>
+        : {}
+    ),
+    defaultScale: normalizeVec3(projectile.defaultScale, [0.55, 0.55, 0.55]),
+    defaultRotation: normalizeVec3(projectile.defaultRotation, [0, 0, 0]),
+    color: sanitizeColor(projectile.color, '#ffffff'),
+    soundCues: sanitizeEffectSoundCues(projectile.soundCues),
+    proceduralLayers: sanitizeProceduralLayers(projectile.proceduralLayers)
+  };
+}
+
+function sanitizeCharacterMoveProjectiles(moveProjectiles: Record<string, Array<Record<string, unknown>>>) {
+  return Object.fromEntries(
+    Object.entries(moveProjectiles)
+      .filter(([key, value]) => key.length > 0 && Array.isArray(value))
+      .map(([key, value]) => [key, value.map((instance, index) => sanitizeMoveProjectileInstance(instance, index)).filter((instance) => instance.projectileId)])
+      .filter(([, value]) => value.length > 0)
+  );
+}
+
+function sanitizeMoveProjectileInstance(instance: Record<string, unknown>, index: number) {
+  const startupFrames = Math.max(0, Math.min(180, Math.round(finiteOr(instance.startupFrames, 0))));
+  const activeFrames = Math.max(1, Math.min(600, Math.round(finiteOr(instance.activeFrames, 90))));
+  const recoveryFrames = Math.max(0, Math.min(180, Math.round(finiteOr(instance.recoveryFrames, 8))));
+  return {
+    id: sanitizeAssetId(instance.id) || `projectile-${index + 1}`,
+    projectileId: sanitizeAssetId(instance.projectileId),
+    label: typeof instance.label === 'string' && instance.label.trim() ? instance.label.trim().slice(0, 120) : undefined,
+    spawnFrame: instance.spawnFrame === undefined ? undefined : Math.max(0, Math.min(600, Math.round(finiteOr(instance.spawnFrame, 0)))),
+    spawnOffset: normalizeVec3(instance.spawnOffset, [0, 1.1, 0.75]),
+    startupFrames,
+    activeFrames,
+    recoveryFrames,
+    lifetimeFrames: Math.max(startupFrames + activeFrames + recoveryFrames, Math.min(720, Math.round(finiteOr(instance.lifetimeFrames, startupFrames + activeFrames + recoveryFrames)))),
+    speed: Math.max(0, Math.min(28, finiteOr(instance.speed, 8.5))),
+    forwardVelocity: Math.max(-8, Math.min(28, finiteOr(instance.forwardVelocity, finiteOr(instance.speed, 8.5)))),
+    homingMode: instance.homingMode === 'none' ? 'none' : 'limited',
+    homingStrength: Math.max(0, Math.min(20, finiteOr(instance.homingStrength, 4.2))),
+    homingTurnRate: Math.max(0, Math.min(18, finiteOr(instance.homingTurnRate, 5.5))),
+    homingEndFrame: instance.homingEndFrame === undefined ? undefined : Math.max(0, Math.min(720, Math.round(finiteOr(instance.homingEndFrame, activeFrames)))),
+    nearMissRadius: Math.max(0.05, Math.min(3, finiteOr(instance.nearMissRadius, 0.62))),
+    hitbox: sanitizeProjectileHitbox(instance.hitbox),
+    damageScale: Math.max(0, Math.min(5, finiteOr(instance.damageScale, 1))),
+    blockDamageScale: Math.max(0, Math.min(5, finiteOr(instance.blockDamageScale, 1))),
+    pushbackScale: Math.max(0, Math.min(5, finiteOr(instance.pushbackScale, 1))),
+    blockPushbackScale: Math.max(0, Math.min(5, finiteOr(instance.blockPushbackScale, 1))),
+    mirrorWithFacing: instance.mirrorWithFacing !== false,
+    pierce: Boolean(instance.pierce),
+    clash: Boolean(instance.clash),
+    kiBurst: Boolean(instance.kiBurst)
+  };
+}
+
+function sanitizeProjectileAnimationFrames(value: unknown, fallbackFrames: string[]) {
+  const source = value && typeof value === 'object' ? value as Record<string, unknown> : {};
+  const active = sanitizeProjectileFrameList(source.active);
+  return {
+    startup: sanitizeProjectileFrameList(source.startup),
+    active: active.length > 0 ? active : fallbackFrames,
+    recovery: sanitizeProjectileFrameList(source.recovery)
+  };
+}
+
+function sanitizeProjectileFrameList(value: unknown) {
+  return Array.isArray(value)
+    ? value.filter((frame): frame is string => typeof frame === 'string' && frame.startsWith('/characters/') && /\.(png|webp|jpg|jpeg)$/i.test(frame)).slice(0, 1000)
+    : [];
+}
+
+function sanitizeProjectileHitbox(value: unknown) {
+  const source = value && typeof value === 'object' ? value as Record<string, unknown> : {};
+  return {
+    offset: normalizeVec3(source.offset, [0, 0, 0]),
+    size: normalizeVec3(source.size, [0.42, 0.42, 0.55]).map((entry) => Math.max(0.01, Math.abs(entry)))
   };
 }
 

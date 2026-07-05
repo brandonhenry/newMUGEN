@@ -16,7 +16,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
-import { emptyInputFrame, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput, type StageDefinition } from '../types';
+import { emptyInputFrame, type ActionName, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput, type MoveProjectileInstance, type StageDefinition } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, getFighterAnimationFrameSource, stepMatch } from './fightEngine';
 
 function unwrappedAngleDelta(next: number, previous: number) {
@@ -38,6 +38,145 @@ const visualFamilyByInput: Record<MoveInput, string> = {
   kick: 'visual:kickleft',
   special: 'visual:kickright'
 };
+
+function makeBeginnerSchemeCharacter(options: { includeFinisherCommands?: boolean } = {}): CharacterDefinition {
+  const includeFinisherCommands = options.includeFinisherCommands ?? true;
+  const base = starterCharacters[0];
+  return {
+    ...base,
+    id: `${base.id}-beginner-scheme-test${includeFinisherCommands ? '' : '-fallback'}`,
+    displayName: 'Beginner Scheme Test',
+    animationFrames: {
+      ...(base.animationFrames ?? {}),
+      jableft: ['/test-jableft.png'],
+      jabright: ['/test-jabright.png'],
+      kickleft: ['/test-kickleft.png'],
+      kickright: ['/test-kickright.png'],
+      ...(includeFinisherCommands
+        ? {
+            'cmd:qcf+4': ['/test-qcf4.png'],
+            'cmd:1+2': ['/test-12.png'],
+            'cmd:2+3': ['/test-23.png'],
+            'cmd:O+4': ['/test-o4.png']
+          }
+        : {
+            'cmd:qcf+4': [],
+            'cmd:1+2': [],
+            'cmd:2+3': [],
+            'cmd:O+4': []
+          })
+    },
+    moveOverrides: {
+      jableft: { damage: 10, blockDamage: 5 },
+      jabright: { damage: 20, blockDamage: 5 },
+      kickleft: { damage: 30, blockDamage: 5 },
+      kickright: { damage: 40, blockDamage: 5 },
+      ...(includeFinisherCommands
+        ? {
+            'cmd:qcf+4': { damage: 50, blockDamage: 5, label: 'Test qcf+4' },
+            'cmd:1+2': { damage: 55, blockDamage: 5, label: 'Test 1+2' },
+            'cmd:2+3': { damage: 58, blockDamage: 5, label: 'Test 2+3' },
+            'cmd:O+4': { damage: 60, blockDamage: 5, label: 'Test O+4', usesKi: true, kiCost: 35 }
+          }
+        : {})
+    }
+  };
+}
+
+function makeInput(...actions: ActionName[]) {
+  const input = emptyInputFrame();
+  actions.forEach((action) => {
+    input[action] = true;
+  });
+  return input;
+}
+
+function makeProjectileCharacter(id: string, options: Partial<MoveDefinition> = {}, projectileOptions: Partial<MoveProjectileInstance> = {}): CharacterDefinition {
+  const base = normalizeCharacter(starterCharacters[0]);
+  const jab = normalizeMove({
+    ...base.moves.find((move) => move.input === 'jab')!,
+    id: `${id}-shot`,
+    label: 'Test Shot',
+    input: 'jab',
+    animationKey: 'jableft',
+    startupFrames: 2,
+    activeFrames: 1,
+    recoveryFrames: 4,
+    damage: 10,
+    blockDamage: 2,
+    range: 0.1,
+    hitbox: { offset: [0, 1, 0.2], size: [0.1, 0.1, 0.1] },
+    ...options
+  });
+  return normalizeCharacter({
+    ...base,
+    id,
+    displayName: id,
+    animationFrames: {
+      ...(base.animationFrames ?? {}),
+      jableft: ['/test-jab.png']
+    },
+    moves: [jab, ...base.moves.filter((move) => move.input !== 'jab')],
+    projectiles: [{
+      id: 'test-bullet',
+      name: 'Test Bullet',
+      frames: ['/characters/test/projectiles/test-bullet/frames/frame-000.png'],
+      animationFrames: { active: ['/characters/test/projectiles/test-bullet/frames/frame-000.png'] },
+      fps: 12,
+      loop: true,
+      billboard: false,
+      blendMode: 'additive',
+      voxelProfile: 'image-source',
+      defaultScale: [0.35, 0.35, 0.35],
+      defaultRotation: [0, 0, 0]
+    }],
+    moveProjectiles: {
+      jableft: [{
+        id: 'jab-shot',
+        projectileId: 'test-bullet',
+        label: 'Test Shot',
+        spawnFrame: 2,
+        spawnOffset: [0, 1, 0.7],
+        startupFrames: 0,
+        activeFrames: 90,
+        recoveryFrames: 4,
+        lifetimeFrames: 94,
+        speed: 12,
+        forwardVelocity: 12,
+        homingMode: 'limited',
+        homingStrength: 3,
+        homingTurnRate: 4,
+        nearMissRadius: 0.52,
+        hitbox: { offset: [0, 0, 0], size: [0.42, 0.42, 0.5] },
+        damageScale: 1,
+        blockDamageScale: 1,
+        pushbackScale: 1,
+        blockPushbackScale: 1,
+        mirrorWithFacing: true,
+        ...projectileOptions
+      }]
+    }
+  });
+}
+
+function stepFrames(match: MatchSnapshot, frames: number, p1 = emptyInputFrame(), p2 = emptyInputFrame()) {
+  let next = match;
+  for (let frame = 0; frame < frames; frame += 1) next = stepMatch(next, p1, p2, 1 / 60);
+  return next;
+}
+
+function readyForBeginnerAutoComboLink(match: MatchSnapshot) {
+  match.fighters[0].state = 'idle';
+  match.fighters[0].currentMove = null;
+  match.fighters[0].actionFramesRemaining = 0;
+  match.fighters[0].actionTimer = 0;
+  match.fighters[0].hitConfirmed = true;
+  match.fighters[0].comboTimer = 0.5;
+  match.fighters[0].comboHits = 1;
+  match.fighters[0].previousAttackInputs.special = false;
+  match.fighters[1].stunFramesRemaining = 30;
+  match.fighters[1].stunTimer = 0.5;
+}
 
 function boundsLocalPosition(stage: StageDefinition, position: { x: number; z: number }) {
   const center = stage.fightPlane?.center ?? [0, 0, 0];
@@ -771,6 +910,86 @@ describe('character manifests', () => {
     expect(match.fighters[0].currentMove?.hitLevel).toBe('low');
   });
 
+  it('keeps KORE move damage unchanged', () => {
+    const character = makeBeginnerSchemeCharacter();
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p');
+
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+
+    expect(match.controlScheme).toBe('kore');
+    expect(match.fighters[0].currentMove?.input).toBe('special');
+    expect(match.fighters[0].currentMove?.animationKey).toBe('kickright');
+    expect(match.fighters[0].currentMove?.damage).toBe(40);
+    expect(match.fighters[0].currentMove?.blockDamage).toBe(5);
+  });
+
+  it('scales Beginner simple attack damage', () => {
+    const character = makeBeginnerSchemeCharacter();
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+
+    expect(match.controlScheme).toBe('beginner');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].currentMove?.damage).toBe(6);
+    expect(match.fighters[0].currentMove?.blockDamage).toBe(3);
+  });
+
+  it('lets actual KORE qcf inputs keep full damage in Beginner', () => {
+    const character = makeBeginnerSchemeCharacter();
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+    match.fighters[0].commandHistory = [
+      { token: 'd', age: 0.05 },
+      { token: 'd/f', age: 0.03 },
+      { token: 'f', age: 0.01 }
+    ];
+
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.command).toBe('qcf+4');
+    expect(match.fighters[0].currentMove?.damage).toBe(50);
+  });
+
+  it('makes Beginner button 4 advance a scaled auto-combo into an authored finisher', () => {
+    const character = makeBeginnerSchemeCharacter();
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].currentMove?.damage).toBe(6);
+
+    readyForBeginnerAutoComboLink(match);
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('heavy');
+    expect(match.fighters[0].currentMove?.damage).toBe(12);
+
+    readyForBeginnerAutoComboLink(match);
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('kick');
+    expect(match.fighters[0].currentMove?.damage).toBe(18);
+
+    readyForBeginnerAutoComboLink(match);
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove?.input).toBe('special');
+    expect(match.fighters[0].currentMove?.command).toBe('qcf+4');
+    expect(match.fighters[0].currentMove?.damage).toBe(30);
+  });
+
+  it('falls Beginner auto-combo finishers back to base special when preferred commands are missing', () => {
+    const character = makeBeginnerSchemeCharacter({ includeFinisherCommands: false });
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+
+    for (let step = 0; step < 4; step += 1) {
+      if (step > 0) readyForBeginnerAutoComboLink(match);
+      match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].currentMove?.input).toBe('special');
+    expect(match.fighters[0].currentMove?.command).toBeUndefined();
+    expect(match.fighters[0].currentMove?.animationKey).toBe('kickright');
+    expect(match.fighters[0].currentMove?.damage).toBe(24);
+  });
+
   it('lets low attacks catch foot-space that the same high attack box would miss', () => {
     const makeFootCheckMove = (hitLevel: MoveDefinition['hitLevel']): MoveDefinition => ({
       ...starterCharacters[0].moves.find((move) => move.input === 'kick')!,
@@ -928,6 +1147,7 @@ describe('character manifests', () => {
     });
 
     expect(settings.game.roundTimer).toBe(75);
+    expect(settings.game.controlScheme).toBe('kore');
     expect(settings.controls.keyboard[0].jab).toEqual(['KeyP']);
     expect(settings.controls.keyboard[0].up).toEqual(defaultGameSettings.controls.keyboard[0].up);
     expect(settings.controls.keyboard[1].right).toEqual(defaultGameSettings.controls.keyboard[1].right);
@@ -943,6 +1163,12 @@ describe('character manifests', () => {
     expect(settings.camera.distance).toBe(defaultGameSettings.camera.distance);
     expect(settings.audio.bgmTrackIndex).toBe(99);
     expect(settings.audio.hitSfx).toBe(2);
+  });
+
+  it('sanitizes control scheme settings', () => {
+    expect(sanitizeGameSettings({ game: { controlScheme: 'beginner' } }).game.controlScheme).toBe('beginner');
+    expect(sanitizeGameSettings({ game: { controlScheme: 'expert' } }).game.controlScheme).toBe('kore');
+    expect(cloneSettings(defaultGameSettings).game.controlScheme).toBe('kore');
   });
 
   it('keeps infinite round timer settings as a real option', () => {
@@ -1859,6 +2085,14 @@ describe('fight engine', () => {
 
     expect(match.roundTime).toBe(45);
     expect(match.timer).toBe(45);
+  });
+
+  it('uses KORE controls by default and Beginner controls when requested', () => {
+    const kore = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const beginner = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+
+    expect(kore.controlScheme).toBe('kore');
+    expect(beginner.controlScheme).toBe('beginner');
   });
 
   it('uses custom max health settings for new matches', () => {
@@ -6730,6 +6964,169 @@ describe('fight engine', () => {
     expect(whiff.impactEvents).toHaveLength(0);
   });
 
+  it('spawns projectile moves on authored spawn frames and keeps them moving after attacker recovery', () => {
+    const shooter = makeProjectileCharacter('projectile-spawn-test');
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 5;
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    expect(match.projectiles).toHaveLength(0);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.projectiles).toHaveLength(0);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.projectiles).toHaveLength(1);
+    const spawnedX = match.projectiles[0].position.x;
+    match = stepFrames(match, 20);
+    expect(match.fighters[0].state).not.toBe('attack');
+    expect(match.projectiles[0]?.position.x).toBeGreaterThan(spawnedX);
+  });
+
+  it('lets active projectiles hit once and emit normal combat feedback', () => {
+    const shooter = makeProjectileCharacter('projectile-hit-test');
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 20);
+    expect(match.fighters[1].hp).toBeLessThan(match.fighters[1].maxHp);
+    expect(match.projectiles).toHaveLength(0);
+    expect(match.impactEvents[match.impactEvents.length - 1]?.moveLabel).toBe('Test Shot');
+    const hpAfterHit = match.fighters[1].hp;
+    match = stepFrames(match, 20);
+    expect(match.fighters[1].hp).toBe(hpAfterHit);
+  });
+
+  it('applies short hit-stun knockback without knockdown for projectile hits', () => {
+    const shooter = makeProjectileCharacter('projectile-hitstun-knockback-test', {
+      knockdown: true,
+      launchHeight: 2.4,
+      tornado: true,
+      pushback: 0,
+      onHitFrames: 40
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    const defenderStartX = match.fighters[1].position.x;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 20);
+
+    expect(match.fighters[1].state).toBe('hit');
+    expect(match.fighters[1].position.x).toBeGreaterThan(defenderStartX + 0.08);
+    expect(match.fighters[1].position.y).toBe(0);
+    expect(match.fighters[1].stunFramesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[1].stunFramesRemaining).toBeLessThanOrEqual(24);
+    expect(match.fighters[1].actionFramesRemaining).toBe(match.fighters[1].stunFramesRemaining);
+  });
+
+  it('allows blocking projectile hits', () => {
+    const shooter = makeProjectileCharacter('projectile-block-test');
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'local2p');
+    match.fighters[1].state = 'block';
+    match = stepMatch(match, makeInput('jab'), makeInput('block', 'right'), 1 / 60);
+    match = stepFrames(match, 20, emptyInputFrame(), makeInput('block', 'right'));
+    expect(match.fighters[1].state).toBe('block');
+    expect(match.impactEvents[match.impactEvents.length - 1]?.kind).toBe('block');
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+  });
+
+  it('lets sidestep lane separation dodge limited-homing projectiles', () => {
+    const shooter = makeProjectileCharacter('projectile-dodge-test');
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.projectiles).toHaveLength(1);
+    match.fighters[1].position.z = 8;
+    match = stepFrames(match, 40);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+  });
+
+  it('expires projectile runtimes after their lifetime', () => {
+    const shooter = makeProjectileCharacter('projectile-expiry-test');
+    const defender = makeProjectileCharacter('projectile-expiry-defender');
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 3;
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 120);
+    expect(match.projectiles).toHaveLength(0);
+  });
+
+  it('removes opposing clash-enabled projectiles when they overlap', () => {
+    const p1 = makeProjectileCharacter('projectile-clash-p1', {}, { clash: true, homingMode: 'none', hitbox: { offset: [0, 0, 0], size: [0.65, 0.65, 0.75] } });
+    const p2 = makeProjectileCharacter('projectile-clash-p2', {}, { clash: true, homingMode: 'none', hitbox: { offset: [0, 0, 0], size: [0.65, 0.65, 0.75] } });
+    let match = createMatch(p1, p2, stages[0], 'local2p');
+    match.fighters[0].position.x = -2;
+    match.fighters[1].position.x = 2;
+
+    match = stepMatch(match, makeInput('jab'), makeInput('jab'), 1 / 60);
+    match = stepFrames(match, 24);
+
+    expect(match.projectiles).toHaveLength(0);
+    expect(match.impactEvents.some((event) => event.kind === 'clash' && event.moveLabel === 'Projectile Clash')).toBe(true);
+  });
+
+  it('lets active ki-burst attacks remove clash-enabled projectiles', () => {
+    const shooter = makeProjectileCharacter(
+      'projectile-attack-clash-test',
+      {},
+      {
+        clash: true,
+        homingMode: 'none',
+        speed: 0,
+        forwardVelocity: 0,
+        spawnOffset: [0, 1, 1.1],
+        hitbox: { offset: [0, 0, 0], size: [0.7, 0.7, 0.7] }
+      }
+    );
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'local2p');
+    match.fighters[0].position.x = -1;
+    match.fighters[1].position.x = 0.4;
+    match.fighters[1].position.z = 4;
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 2);
+    expect(match.projectiles).toHaveLength(1);
+    match.fighters[1].position.z = 0;
+
+    const antiProjectileMove = normalizeMove({
+      ...defender.moves[0],
+      label: 'Anti Projectile Burst',
+      startupFrames: 0,
+      activeFrames: 20,
+      recoveryFrames: 1,
+      range: 2,
+      kiBurst: true,
+      hitbox: { offset: [0, 1, 0.3], size: [0.8, 0.8, 0.9] }
+    });
+    match.fighters[1].state = 'attack';
+    match.fighters[1].currentMove = antiProjectileMove;
+    match.fighters[1].moveFrame = 1;
+    match.fighters[1].actionFramesRemaining = 20;
+    match.fighters[1].actionTimer = 20 / 60;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.projectiles).toHaveLength(0);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+    expect(match.impactEvents[match.impactEvents.length - 1]?.kind).toBe('clash');
+  });
+
+  it('compacts and hydrates active projectiles for online snapshots', () => {
+    const shooter = makeProjectileCharacter('projectile-codec-test');
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'online');
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.projectiles).toHaveLength(1);
+    const hydrated = hydrateMatchSnapshot(createMatch(shooter, defender, stages[0], 'online'), compactMatchSnapshot(match, 12));
+    expect(hydrated.projectiles).toHaveLength(1);
+    expect(hydrated.projectiles[0].position).toEqual(match.projectiles[0].position);
+    expect(hydrated.projectiles[0].move.label).toBe('Test Shot');
+  });
+
   it('emits counter hit events and uses counter-hit advantage only for eligible moves', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -7636,5 +8033,17 @@ describe('fight engine', () => {
     expect(snapshot.mode).toBe('trainingOnline');
     expect(hydrated.mode).toBe('trainingOnline');
     expect(hydrated.roundTime).toBe(0);
+  });
+
+  it('round-trips control scheme in compact snapshots and defaults legacy snapshots to KORE', () => {
+    const host = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { controlScheme: 'beginner' });
+    const guestBase = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3);
+    const snapshot = compactMatchSnapshot(host, 14);
+    const hydrated = hydrateMatchSnapshot(guestBase, snapshot);
+    const legacyHydrated = hydrateMatchSnapshot(guestBase, { ...snapshot, controlScheme: undefined });
+
+    expect(snapshot.controlScheme).toBe('beginner');
+    expect(hydrated.controlScheme).toBe('beginner');
+    expect(legacyHydrated.controlScheme).toBe('kore');
   });
 });

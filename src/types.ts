@@ -294,6 +294,60 @@ export type MoveEffectInstance = {
   soundCues?: EffectSoundCue[];
 };
 
+export type ProjectileAnimationPhase = 'startup' | 'active' | 'recovery';
+
+export type ProjectileAnimationFrames = Partial<Record<ProjectileAnimationPhase, string[]>>;
+
+export type CharacterProjectileDefinition = {
+  id: string;
+  name: string;
+  spriteSheetPath?: string;
+  sourcePath?: string;
+  frames?: string[];
+  animationFrames?: ProjectileAnimationFrames;
+  fps: number;
+  loop: boolean;
+  billboard: boolean;
+  blendMode: EffectBlendMode;
+  voxelProfile?: 'image-source' | 'hd-image-source';
+  voxelFidelity?: VoxelFidelitySettings;
+  defaultScale: Vec3Tuple;
+  defaultRotation: Vec3Tuple;
+  color?: string;
+  soundCues?: EffectSoundCue[];
+  proceduralLayers?: ProceduralEffectLayer[];
+};
+
+export type ProjectileHomingMode = 'none' | 'limited';
+
+export type MoveProjectileInstance = {
+  id: string;
+  projectileId: string;
+  label?: string;
+  spawnFrame?: number;
+  spawnOffset: Vec3Tuple;
+  startupFrames: number;
+  activeFrames: number;
+  recoveryFrames: number;
+  lifetimeFrames: number;
+  speed: number;
+  forwardVelocity: number;
+  homingMode: ProjectileHomingMode;
+  homingStrength: number;
+  homingTurnRate: number;
+  homingEndFrame?: number;
+  nearMissRadius: number;
+  hitbox: BoxSpec;
+  damageScale: number;
+  blockDamageScale: number;
+  pushbackScale: number;
+  blockPushbackScale: number;
+  mirrorWithFacing: boolean;
+  pierce?: boolean;
+  clash?: boolean;
+  kiBurst?: boolean;
+};
+
 export type VoxelFidelitySettings = {
   resolutionScale?: number;
   maxRows?: number;
@@ -364,6 +418,8 @@ export type CharacterDefinition = {
   getupFrameOverrides?: GetupFrameOverrides;
   effects?: CharacterEffectDefinition[];
   moveEffects?: Record<string, MoveEffectInstance[]>;
+  projectiles?: CharacterProjectileDefinition[];
+  moveProjectiles?: Record<string, MoveProjectileInstance[]>;
   hurtboxes: BoxSpec[];
   inputMap: Record<string, string>;
   colors: {
@@ -809,10 +865,13 @@ export type BufferedMoveIntent = {
   inputSnapshot: InputFrame;
   framesRemaining: number;
   sequence: number;
+  beginnerDamageScale?: number;
+  beginnerForcedCommand?: string;
 };
 
 export type MatchMode = 'ai' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
+export type ControlScheme = 'kore' | 'beginner';
 
 export type PlayerControlBindings = Record<ActionName, string[]>;
 export type PlayerGamepadBindings = Partial<Record<ActionName, number[]>>;
@@ -843,6 +902,7 @@ export type GameSettings = {
     maxHealth: number;
     trainingInfiniteHealth: boolean;
     inputAssist: boolean;
+    controlScheme: ControlScheme;
   };
   controls: ControlBindingMap;
   camera: {
@@ -902,10 +962,46 @@ export type VisualHitstopRuntime = {
   progress: number;
 };
 
+export type ProjectileRuntime = {
+  id: number;
+  ownerSlot: 1 | 2;
+  projectileId: string;
+  instanceId: string;
+  moveInstanceId: number;
+  move: MoveDefinition;
+  position: { x: number; y: number; z: number };
+  previousPosition: { x: number; y: number; z: number };
+  velocity: { x: number; y: number; z: number };
+  facing: 1 | -1;
+  phase: ProjectileAnimationPhase;
+  ageFrames: number;
+  startupFrames: number;
+  activeFrames: number;
+  recoveryFrames: number;
+  lifetimeFrames: number;
+  homingMode: ProjectileHomingMode;
+  homingStrength: number;
+  homingTurnRate: number;
+  homingEndFrame?: number;
+  nearMissRadius: number;
+  hitbox: BoxSpec;
+  damageScale: number;
+  blockDamageScale: number;
+  pushbackScale: number;
+  blockPushbackScale: number;
+  mirrorWithFacing: boolean;
+  pierce: boolean;
+  clash: boolean;
+  hitConnected: boolean;
+  expired: boolean;
+  trailSeed: number;
+};
+
 export type MatchOptions = {
   roundTime?: number;
   maxHealth?: number;
   trainingInfiniteHealth?: boolean;
+  controlScheme?: ControlScheme;
   playIntro?: boolean;
   aiSeed?: number;
   roster?: CharacterDefinition[];
@@ -1022,6 +1118,7 @@ export type MatchSnapshot = {
   roundTime: number;
   maxHealth?: number;
   trainingInfiniteHealth: boolean;
+  controlScheme: ControlScheme;
   trainingDummyInput?: InputFrame | null;
   introEnabled: boolean;
   timer: number;
@@ -1031,6 +1128,7 @@ export type MatchSnapshot = {
   phase: 'intro' | 'fighting' | 'roundFinisher' | 'roundOver' | 'matchOver';
   message: string;
   lastHitId: number;
+  projectiles: ProjectileRuntime[];
   combatEvents: CombatPopupEvent[];
   impactEvents: ImpactSparkEvent[];
   clashState: ClashState;

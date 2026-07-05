@@ -1601,6 +1601,11 @@
       }
     },
     "backHop": {
+      "17": {
+        "width": 1.446,
+        "height": 0.966,
+        "offsetX": 0
+      },
       "40": {
         "width": 1.01,
         "height": 1.01,
@@ -1639,11 +1644,6 @@
       "48": {
         "width": 1.1,
         "height": 1.1,
-        "offsetX": 0
-      },
-      "17": {
-        "width": 1.446,
-        "height": 0.966,
         "offsetX": 0
       }
     },
@@ -2555,5 +2555,88 @@
         "offsetX": 0
       }
     }
+  },
+  "projectiles": [
+    {
+      "id": "card-magic-projectile",
+      "name": "Yugi Mutou Aura Drive Card Shot",
+      "frames": [
+        "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png",
+        "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-001.png",
+        "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png",
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-001.png",
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.42,
+        0.42,
+        0.42
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#8fd3ff"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-shot",
+        "projectileId": "card-magic-projectile",
+        "label": "Yugi Mutou Aura Drive Card Shot",
+        "spawnFrame": 18,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 9.5,
+        "forwardVelocity": 9.5,
+        "homingMode": "limited",
+        "homingStrength": 3.4,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.42,
+            0.54
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
   }
 }

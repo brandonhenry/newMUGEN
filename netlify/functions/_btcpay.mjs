@@ -90,22 +90,27 @@ export function verifyBtcpayWebhook(rawBody, signatureHeader) {
   return true;
 }
 
-export function isPaidInvoiceEvent(payload, invoice) {
+export function classifyInvoiceEvent(payload, invoice) {
   const type = cleanString(payload?.type).toLowerCase();
   const status = cleanString(invoice?.status || payload?.status).toLowerCase();
-  return (
-    type.includes('settled') ||
-    type.includes('processing') ||
-    type.includes('paid') ||
-    status === 'settled' ||
-    status === 'processing'
-  );
+  if (type.includes('invalid') || status === 'invalid') return 'invalid';
+  if (type.includes('expired') || status === 'expired') return 'expired';
+  if (type.includes('settled') || status === 'settled') return 'settled';
+  if (type.includes('processing') || status === 'processing') return 'processing';
+  return 'ignored';
+}
+
+export function isSettledInvoiceEvent(payload, invoice) {
+  return classifyInvoiceEvent(payload, invoice) === 'settled';
+}
+
+export function isProcessingInvoiceEvent(payload, invoice) {
+  return classifyInvoiceEvent(payload, invoice) === 'processing';
 }
 
 export function isExpiredInvoiceEvent(payload, invoice) {
-  const type = cleanString(payload?.type).toLowerCase();
-  const status = cleanString(invoice?.status || payload?.status).toLowerCase();
-  return type.includes('expired') || type.includes('invalid') || status === 'expired' || status === 'invalid';
+  const eventClass = classifyInvoiceEvent(payload, invoice);
+  return eventClass === 'expired' || eventClass === 'invalid';
 }
 
 function btcpayFetch(path, init, { instanceUrl, apiKey }) {

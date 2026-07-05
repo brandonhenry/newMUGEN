@@ -1,19 +1,27 @@
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import { useCallback, useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react';
-import type { ActionName } from '../types';
+import type { ActionName, ControlScheme } from '../types';
 
 type TouchControlsProps = {
   onAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   onUse?: (action: ActionName) => void;
   forceVisible?: boolean;
+  controlScheme?: ControlScheme;
 };
 
 const movement: ActionName[] = ['up', 'left', 'right', 'down'];
-const attacks: Array<{ action: ActionName; label: string }> = [
+const koreAttacks: Array<{ action: ActionName; label: string }> = [
   { action: 'jab', label: '1 LH' },
   { action: 'heavy', label: '2 RH' },
   { action: 'kick', label: '3 LF' },
   { action: 'special', label: '4 RF' },
+  { action: 'charge', label: 'KI' }
+];
+const beginnerAttacks: Array<{ action: ActionName; label: string }> = [
+  { action: 'jab', label: '1 Light' },
+  { action: 'heavy', label: '2 Med' },
+  { action: 'kick', label: '3 Heavy' },
+  { action: 'special', label: '4 Special' },
   { action: 'charge', label: 'KI' }
 ];
 const movementIcons = {
@@ -27,8 +35,9 @@ function activeActionKey(player: 1 | 2, action: ActionName) {
   return `${player}:${action}` as const;
 }
 
-export function TouchControls({ onAction, onUse, forceVisible = false }: TouchControlsProps) {
+export function TouchControls({ onAction, onUse, forceVisible = false, controlScheme = 'kore' }: TouchControlsProps) {
   const activeActionsRef = useRef(new Map<string, { player: 1 | 2; action: ActionName }>());
+  const attacks = controlScheme === 'beginner' ? beginnerAttacks : koreAttacks;
 
   const releaseAction = useCallback((player: 1 | 2, action: ActionName) => {
     const key = activeActionKey(player, action);

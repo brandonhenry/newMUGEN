@@ -13,6 +13,7 @@ export type TournamentStatus =
 export type TournamentPaymentState =
   | 'notRequired'
   | 'invoicePending'
+  | 'invoiceProcessing'
   | 'paid'
   | 'entryLocked'
   | 'expired'

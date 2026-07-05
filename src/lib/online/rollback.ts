@@ -454,6 +454,21 @@ export function checksumMatch(match: MatchSnapshot) {
     timer: roundNumber(match.timer),
     winnerSlot: match.winnerSlot,
     lastHitId: match.lastHitId,
+    projectiles: (match.projectiles ?? []).map((projectile) => ({
+      id: projectile.id,
+      ownerSlot: projectile.ownerSlot,
+      projectileId: projectile.projectileId,
+      phase: projectile.phase,
+      ageFrames: roundNumber(projectile.ageFrames),
+      x: roundNumber(projectile.position.x),
+      y: roundNumber(projectile.position.y),
+      z: roundNumber(projectile.position.z),
+      vx: roundNumber(projectile.velocity.x),
+      vy: roundNumber(projectile.velocity.y),
+      vz: roundNumber(projectile.velocity.z),
+      hitConnected: projectile.hitConnected,
+      expired: projectile.expired
+    })),
     combatEvents: match.combatEvents.map((event) => ({ id: event.id, slot: event.slot, hits: event.hits, damage: roundNumber(event.damage) })),
     impactEvents: match.impactEvents.map((event) => ({ id: event.id, kind: event.kind, attackerSlot: event.attackerSlot, defenderSlot: event.defenderSlot })),
     clashState: {
