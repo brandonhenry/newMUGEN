@@ -6968,7 +6968,7 @@ describe('fight engine', () => {
     const shooter = makeProjectileCharacter('projectile-spawn-test');
     const defender = normalizeCharacter(starterCharacters[1]);
     let match = createMatch(shooter, defender, stages[0], 'training');
-    match.fighters[1].position.z = 5;
+    match.fighters[1].position.z = 8;
     match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     expect(match.projectiles).toHaveLength(0);
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -6990,7 +6990,7 @@ describe('fight engine', () => {
     });
     const defender = normalizeCharacter(starterCharacters[1]);
     let match = createMatch(shooter, defender, stages[0], 'training');
-    match.fighters[1].position.z = 5;
+    match.fighters[1].position.z = 8;
     match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     match = stepFrames(match, 2);
     expect(match.projectiles).toHaveLength(1);

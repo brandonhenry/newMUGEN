@@ -893,7 +893,10 @@ const SHADOW_CLONE_SMOKE_COLUMNS = 4;
 const SHADOW_CLONE_SMOKE_ROWS = 3;
 const SHADOW_CLONE_SMOKE_TOTAL_FRAMES = SHADOW_CLONE_SMOKE_COLUMNS * SHADOW_CLONE_SMOKE_ROWS;
 const SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES = 24;
-const PROJECTILE_VISUAL_FRONT_BIAS = 0.22;
+const PROJECTILE_VISUAL_FRONT_BIAS = 0.12;
+const PROJECTILE_REVEAL_FRAMES = 10;
+const PROJECTILE_REVEAL_MIN_SCALE = 0.16;
+const PROJECTILE_REVEAL_FORWARD_OFFSET = 0.42;
 
 function TransformEffectLayer({ fighter }: { fighter: FighterRuntime }) {
   const active = fighter.state === 'transform' || fighter.transformSmokeFrames > 0;
@@ -1343,12 +1346,14 @@ function ProjectileVisual({
   }), [definition.color, projectile.phase]);
   if (!source || voxels.length === 0) return null;
   const yaw = getProjectileVisualYaw(projectile);
-  const position = getProjectileVisualPosition(projectile, camera);
+  const reveal = getProjectileRevealProgress(projectile);
+  const position = getProjectileVisualPosition(projectile, camera, reveal);
+  const scale = getProjectileVisualScale(definition, reveal);
   return (
     <group
       position={position}
       rotation={[definition.defaultRotation[0], yaw + definition.defaultRotation[1], definition.defaultRotation[2]]}
-      scale={definition.defaultScale}
+      scale={scale}
     >
       <ImageVoxelPartGroup part={parts.head} outlineStyle={outlineStyle} renderStyle={renderStyle} />
       <ImageVoxelPartGroup part={parts.torso} outlineStyle={outlineStyle} renderStyle={renderStyle} />
@@ -1364,13 +1369,30 @@ function getProjectileVisualYaw(projectile: ProjectileRuntime) {
   return projectile.facing >= 0 ? 0 : Math.PI;
 }
 
-function getProjectileVisualPosition(projectile: ProjectileRuntime, camera: THREE.Camera): Vec3Tuple {
+function getProjectileRevealProgress(projectile: ProjectileRuntime) {
+  return THREE.MathUtils.clamp(PROJECTILE_REVEAL_MIN_SCALE + (projectile.ageFrames / PROJECTILE_REVEAL_FRAMES) * (1 - PROJECTILE_REVEAL_MIN_SCALE), PROJECTILE_REVEAL_MIN_SCALE, 1);
+}
+
+function getProjectileVisualScale(definition: CharacterProjectileDefinition, reveal: number): Vec3Tuple {
+  return [
+    definition.defaultScale[0] * reveal,
+    definition.defaultScale[1],
+    definition.defaultScale[2]
+  ];
+}
+
+function getProjectileVisualPosition(projectile: ProjectileRuntime, camera: THREE.Camera, reveal: number): Vec3Tuple {
   const cameraDx = camera.position.x - projectile.position.x;
   const cameraDz = camera.position.z - projectile.position.z;
   const distance = Math.hypot(cameraDx, cameraDz);
-  if (distance <= 0.001) return [projectile.position.x, projectile.position.y, projectile.position.z + PROJECTILE_VISUAL_FRONT_BIAS];
+  const forwardRevealOffset = projectile.facing * (1 - reveal) * PROJECTILE_REVEAL_FORWARD_OFFSET;
+  if (distance <= 0.001) return [
+    projectile.position.x + forwardRevealOffset,
+    projectile.position.y,
+    projectile.position.z + PROJECTILE_VISUAL_FRONT_BIAS
+  ];
   return [
-    projectile.position.x + (cameraDx / distance) * PROJECTILE_VISUAL_FRONT_BIAS,
+    projectile.position.x + forwardRevealOffset + (cameraDx / distance) * PROJECTILE_VISUAL_FRONT_BIAS,
     projectile.position.y,
     projectile.position.z + (cameraDz / distance) * PROJECTILE_VISUAL_FRONT_BIAS
   ];

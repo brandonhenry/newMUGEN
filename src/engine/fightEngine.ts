@@ -160,6 +160,7 @@ const PROJECTILE_HITSTUN_MIN_FRAMES = 14;
 const PROJECTILE_HITSTUN_MAX_FRAMES = 24;
 const PROJECTILE_MIN_HIT_PUSHBACK = 0.42;
 const PROJECTILE_MAX_HIT_PUSHBACK = 0.78;
+const PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET = 0.28;
 const BEGINNER_DAMAGE_SCALE = 0.6;
 const BEGINNER_AUTO_COMBO_FINISHERS = ['O+4', 'qcf+4', '1+2', '2+3', '4'] as const;
 const beginnerAutoComboInputs: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
@@ -3196,7 +3197,7 @@ function createProjectileRuntime(
   const targetMode = instance.targetMode ?? 'forward';
   const spawnX = targetMode === 'targetLocation' ? targetPosition.x : attackerPosition.x + facing * instance.spawnOffset[2] * scale.width;
   const spawnY = targetMode === 'targetLocation' ? targetPosition.y + instance.spawnOffset[1] * scale.height : attackerPosition.y + instance.spawnOffset[1] * scale.height;
-  const spawnZ = targetMode === 'targetLocation' ? targetPosition.z + instance.spawnOffset[0] * scale.width : attackerPosition.z + instance.spawnOffset[0] * scale.width;
+  const spawnZ = (targetMode === 'targetLocation' ? targetPosition.z : attackerPosition.z) + instance.spawnOffset[0] * scale.width + PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET;
   const forward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
   const velocity = {
     x: targetMode === 'targetLocation' ? 0 : forward.x * instance.forwardVelocity,
