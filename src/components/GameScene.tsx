@@ -4637,7 +4637,6 @@ type ImageVoxelPartRender = {
   cacheKey?: string;
 };
 
-const imageVoxelMeshCache = new Map<string, THREE.InstancedMesh>();
 const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
 
 type HdImageVoxelPayload = {
@@ -5104,28 +5103,6 @@ function makeCachedVoxelMesh(
   return mesh;
 }
 
-function cloneCachedInstancedVoxelMesh(cached: THREE.InstancedMesh, renderStyle: FighterRenderStyle) {
-  const mesh = cached.clone() as THREE.InstancedMesh;
-  mesh.castShadow = renderStyle.castShadow;
-  mesh.receiveShadow = renderStyle.receiveShadow;
-  mesh.renderOrder = renderStyle.renderOrder;
-  mesh.frustumCulled = false;
-  mesh.userData.koreCachedVoxelMesh = true;
-  return mesh;
-}
-
-function makeImageVoxelMeshCacheKey(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
-  if (!part.cacheKey) return null;
-  return [
-    part.cacheKey,
-    'mesh',
-    renderStyle.opacity,
-    renderStyle.tint,
-    renderStyle.hueShiftDegrees,
-    renderStyle.depthWrite ? 'dw1' : 'dw0'
-  ].join('|');
-}
-
 function makeImageVoxelOutlineMeshCacheKey(part: ImageVoxelPartRender, outlineStyle?: FighterOutlineStyle) {
   if (!part.cacheKey || !outlineStyle?.enabled) return null;
   return [
@@ -5199,13 +5176,9 @@ function buildInstancedVoxelOutlineMesh(part: ImageVoxelPartRender, outlineStyle
 
 function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
   if (part.voxels.length === 0) return null;
-  const cacheKey = makeImageVoxelMeshCacheKey(part, renderStyle);
-  const cached = cacheKey ? imageVoxelMeshCache.get(cacheKey) : undefined;
-  if (cached) return cloneCachedInstancedVoxelMesh(cached, renderStyle);
-
   const geometry = new THREE.BoxGeometry(1, 1, 1);
   const material = new THREE.MeshBasicMaterial({
-    color: renderStyleColor(renderStyle.tint, renderStyle),
+    color: '#ffffff',
     vertexColors: true,
     transparent: renderStyle.opacity < 1,
     opacity: renderStyle.opacity,
@@ -5238,10 +5211,6 @@ function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: Fighte
   mesh.receiveShadow = renderStyle.receiveShadow;
   mesh.renderOrder = renderStyle.renderOrder;
   mesh.frustumCulled = false;
-  if (cacheKey) {
-    imageVoxelMeshCache.set(cacheKey, mesh);
-    mesh.userData.koreCachedVoxelMesh = true;
-  }
   return mesh;
 }
 

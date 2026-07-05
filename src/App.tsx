@@ -5485,7 +5485,7 @@ function TournamentSelect({
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
   const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
-  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Pay $2 Via Cash App' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
 
   useEffect(() => {
