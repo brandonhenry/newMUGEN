@@ -1501,7 +1501,7 @@ button {
   isolation: isolate;
   height: 100%;
   min-height: 0;
-  grid-template-columns: minmax(180px, 1fr) minmax(300px, 520px) minmax(180px, 1fr);
+  grid-template-columns: minmax(160px, 1fr) minmax(360px, 640px) minmax(160px, 1fr);
   align-items: stretch;
   gap: clamp(8px, min(1.55vw, 2vh), 24px);
   overflow: hidden;
@@ -1806,7 +1806,7 @@ button {
 
 .versus-roster-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(64px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(86px, 100%), 1fr));
   grid-auto-rows: minmax(0, 1fr);
   align-content: start;
   min-height: 0;
@@ -1817,14 +1817,15 @@ button {
 .versus-roster-tile {
   position: relative;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr);
   align-items: center;
   justify-items: center;
   gap: clamp(3px, 0.65vh, 6px);
   min-height: clamp(78px, 12vh, 118px);
   border: 0;
   border-radius: 7px;
-  padding: clamp(6px, 1vh, 10px) 6px clamp(5px, 0.9vh, 8px);
+  padding: clamp(6px, 1vh, 10px) 6px clamp(24px, 3.3vh, 34px);
+  overflow: hidden;
   color: #f7f7f2;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05)),
@@ -1887,8 +1888,9 @@ button {
   display: grid;
   place-items: center;
   align-self: center;
-  width: clamp(68px, 13vh, 118px);
-  height: clamp(68px, 13vh, 118px);
+  width: min(100%, clamp(86px, 16vh, 150px));
+  height: clamp(92px, 14vh, 170px);
+  transform: translateY(-6px) scale(1.14);
 }
 
 .versus-random-tile small {
@@ -1954,15 +1956,16 @@ button {
 .versus-roster-tile img {
   align-self: center;
   width: auto;
-  max-width: min(100%, clamp(78px, 13vh, 124px));
-  height: clamp(78px, 13vh, 124px);
+  max-width: min(100%, clamp(86px, 16vh, 150px));
+  height: clamp(92px, 14vh, 170px);
   object-fit: contain;
   image-rendering: pixelated;
+  transform: translateY(-6px) scale(1.14);
   filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.42));
   outline: 0;
 }
 
-.versus-roster-tile span,
+.versus-roster-tile > span:not(.versus-random-tile-icon),
 .versus-roster-tile small {
   overflow: hidden;
   max-width: 100%;
@@ -1971,9 +1974,14 @@ button {
   text-align: center;
 }
 
-.versus-roster-tile span {
+.versus-roster-tile > span:not(.versus-random-tile-icon) {
+  position: absolute;
+  right: 6px;
+  bottom: clamp(6px, 0.9vh, 8px);
+  left: 6px;
   font-size: clamp(10px, 1.65vh, 12px);
   font-weight: 900;
+  line-height: 1.1;
 }
 
 .versus-roster-tile small {

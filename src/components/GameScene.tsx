@@ -1285,10 +1285,6 @@ function EffectLayer({
   audioSettings?: GameSettings['audio'];
   reducedMotion: boolean;
 }) {
-  const [, setEffectFrameTick] = useState(0);
-  useFrame(() => {
-    setEffectFrameTick((tick) => (tick + 1) % 3600);
-  });
   const bindings = getActiveEffectBindings(match);
   useEffectAudioCues(bindings, audioSettings);
   useMoveAudioCues(getActiveMoveSoundBindings(match), audioSettings);
@@ -2106,7 +2102,6 @@ export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, 
         <group scale={0.82}>
           <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
           <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
-          <EffectLayer match={match} reducedMotion={reducedMotion} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         </group>
       </StageCameraCollisionContext.Provider>
