@@ -48,6 +48,17 @@ const scenarios: SmokeScenario[] = [
     p1Ki: 100,
     fireFrame: 180,
     resetFrame: 360
+  },
+  {
+    id: 'dr-mashirito-thrown-bolt',
+    label: 'Dr. Mashirito thrown bolt arc',
+    p1Path: '/characters/dr-mashirito/character.json',
+    p2Path: '/characters/don-patch-poppa-rocks/character.json',
+    fireInputs: ['kick', 'heavy'],
+    p1X: -4.2,
+    p2X: 4.2,
+    fireFrame: 24,
+    resetFrame: 180
   }
 ];
 
@@ -118,6 +129,7 @@ function ProjectileSmokeApp() {
       const next = makeScenarioMatch(p1, p2, scenario);
       frameRef.current = 0;
       matchRef.current = next;
+      frozenRef.current = false;
       setMatch(next);
     });
     return () => {
@@ -171,7 +183,7 @@ function ProjectileSmokeApp() {
   const projectileSummary = useMemo(() => {
     const projectiles = match?.projectiles ?? [];
     return projectiles.map((projectile) => (
-      `${projectile.projectileId}:${projectile.phase}@${projectile.position.x.toFixed(2)},${projectile.position.z.toFixed(2)}`
+      `${projectile.projectileId}:${projectile.phase}@${projectile.position.x.toFixed(2)},${projectile.position.y.toFixed(2)},${projectile.position.z.toFixed(2)}`
     )).join(' | ') || 'none';
   }, [match]);
 

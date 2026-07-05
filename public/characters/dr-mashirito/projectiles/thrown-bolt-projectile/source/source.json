@@ -1,0 +1,23 @@
+{
+  "projectileId": "thrown-bolt-projectile",
+  "source": "Dr. Mashirito original sprite sheet",
+  "sourceFrame": "/characters/dr-mashirito/frames/frame-065.png",
+  "sourceSheetPath": "/characters/dr-mashirito/animation-sheet.png",
+  "sourceFrameIndex": 65,
+  "sourceCropBox": [
+    496,
+    551,
+    513,
+    567
+  ],
+  "outputFrames": [
+    "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+  ],
+  "cropRect": {
+    "x": 496,
+    "y": 551,
+    "width": 17,
+    "height": 16
+  },
+  "loreNote": "Non-robot Dr. Mashirito throws small mechanical bolts; the projectile uses the original standalone bolt sprite and travels as a floaty arcing thrown object instead of a straight cannon beam."
+}

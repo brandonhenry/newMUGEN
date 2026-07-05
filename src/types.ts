@@ -333,6 +333,8 @@ export type MoveProjectileInstance = {
   lifetimeFrames: number;
   speed: number;
   forwardVelocity: number;
+  verticalVelocity?: number;
+  gravity?: number;
   homingMode: ProjectileHomingMode;
   homingStrength: number;
   homingTurnRate: number;
@@ -974,6 +976,7 @@ export type ProjectileRuntime = {
   position: { x: number; y: number; z: number };
   previousPosition: { x: number; y: number; z: number };
   velocity: { x: number; y: number; z: number };
+  gravity?: number;
   facing: 1 | -1;
   phase: ProjectileAnimationPhase;
   ageFrames: number;

@@ -3024,8 +3024,8 @@
       "blendMode": "additive",
       "voxelProfile": "image-source",
       "defaultScale": [
-        0.44,
-        0.44,
+        1,
+        1,
         0.44
       ],
       "defaultRotation": [
@@ -3034,6 +3034,42 @@
         0
       ],
       "color": "#9eeeff"
+    },
+    {
+      "id": "thrown-bolt-projectile",
+      "name": "Thrown Bolt",
+      "sourcePath": "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png",
+      "spriteSheetPath": "/characters/dr-mashirito/animation-sheet.png",
+      "frames": [
+        "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+        ],
+        "recovery": [
+          "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+        ]
+      },
+      "fps": 12,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "normal",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        0.34
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#d7d1bd"
     }
   ],
   "moveProjectiles": {
@@ -3117,6 +3153,50 @@
         "blockDamageScale": 1,
         "pushbackScale": 1,
         "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "clash": true
+      }
+    ],
+    "cmd:2+3": [
+      {
+        "id": "cmd:2-3-thrown-bolt",
+        "projectileId": "thrown-bolt-projectile",
+        "label": "Dr. Mashirito Thrown Bolt",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          0.95,
+          0.62
+        ],
+        "startupFrames": 2,
+        "activeFrames": 86,
+        "recoveryFrames": 8,
+        "lifetimeFrames": 104,
+        "speed": 6.2,
+        "forwardVelocity": 6.2,
+        "verticalVelocity": 4.8,
+        "gravity": 8.4,
+        "homingMode": "limited",
+        "homingStrength": 0.85,
+        "homingTurnRate": 1.4,
+        "homingEndFrame": 42,
+        "nearMissRadius": 0.48,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.34,
+            0.34,
+            0.38
+          ]
+        },
+        "damageScale": 0.85,
+        "blockDamageScale": 0.85,
+        "pushbackScale": 0.75,
+        "blockPushbackScale": 0.75,
         "mirrorWithFacing": true,
         "clash": true
       }

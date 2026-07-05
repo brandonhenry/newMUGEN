@@ -96,6 +96,8 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
     lifetimeFrames: clampFrame(source.lifetimeFrames, Math.max(1, startupFrames + activeFrames + recoveryFrames), 720, startupFrames + activeFrames + recoveryFrames),
     speed: clampNumber(source.speed, 0, 28, 8.5),
     forwardVelocity: clampNumber(source.forwardVelocity, -8, 28, clampNumber(source.speed, 0, 28, 8.5)),
+    verticalVelocity: source.verticalVelocity === undefined ? undefined : clampNumber(source.verticalVelocity, -16, 24, 0),
+    gravity: source.gravity === undefined ? undefined : clampNumber(source.gravity, 0, 80, 0),
     homingMode: homingModes.has(source.homingMode as ProjectileHomingMode) ? source.homingMode as ProjectileHomingMode : 'limited',
     homingStrength: clampNumber(source.homingStrength, 0, 20, 4.2),
     homingTurnRate: clampNumber(source.homingTurnRate, 0, 18, 5.5),

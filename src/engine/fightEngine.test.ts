@@ -6981,6 +6981,27 @@ describe('fight engine', () => {
     expect(match.projectiles[0]?.position.x).toBeGreaterThan(spawnedX);
   });
 
+  it('supports floaty arcing projectiles with vertical velocity and gravity', () => {
+    const shooter = makeProjectileCharacter('projectile-arc-test', {}, {
+      homingMode: 'none',
+      verticalVelocity: 5,
+      gravity: 9,
+      lifetimeFrames: 120
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 5;
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 2);
+    expect(match.projectiles).toHaveLength(1);
+    const spawnY = match.projectiles[0].position.y;
+    match = stepFrames(match, 12);
+    const peakY = match.projectiles[0].position.y;
+    expect(peakY).toBeGreaterThan(spawnY);
+    match = stepFrames(match, 42);
+    expect(match.projectiles[0].position.y).toBeLessThan(peakY);
+  });
+
   it('lets active projectiles hit once and emit normal combat feedback', () => {
     const shooter = makeProjectileCharacter('projectile-hit-test');
     const defender = normalizeCharacter(starterCharacters[1]);

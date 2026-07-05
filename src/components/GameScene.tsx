@@ -1339,7 +1339,7 @@ function ProjectileVisual({
     receiveShadow: false
   }), [definition.color, projectile.phase]);
   if (!source || voxels.length === 0) return null;
-  const yaw = Math.atan2(projectile.velocity.x || projectile.facing, projectile.velocity.z || 0);
+  const yaw = getProjectileVisualYaw(projectile);
   return (
     <group
       position={[projectile.position.x, projectile.position.y, projectile.position.z]}
@@ -1354,6 +1354,10 @@ function ProjectileVisual({
       <ImageVoxelPartGroup part={parts.rearLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
     </group>
   );
+}
+
+function getProjectileVisualYaw(projectile: ProjectileRuntime) {
+  return projectile.facing >= 0 ? 0 : Math.PI;
 }
 
 function getProjectileFrameSource(projectile: ProjectileRuntime, definition: CharacterProjectileDefinition) {

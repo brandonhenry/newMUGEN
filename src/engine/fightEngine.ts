@@ -3165,7 +3165,7 @@ function createProjectileRuntime(
   const forward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
   const velocity = {
     x: targetMode === 'targetLocation' ? 0 : forward.x * instance.forwardVelocity,
-    y: 0,
+    y: targetMode === 'targetLocation' ? 0 : instance.verticalVelocity ?? 0,
     z: targetMode === 'targetLocation' ? 0 : forward.z * instance.forwardVelocity
   };
   return {
@@ -3178,6 +3178,7 @@ function createProjectileRuntime(
     position: { x: spawnX, y: spawnY, z: spawnZ },
     previousPosition: { x: spawnX, y: spawnY, z: spawnZ },
     velocity,
+    gravity: targetMode === 'targetLocation' ? undefined : instance.gravity,
     facing,
     phase: instance.startupFrames > 0 ? 'startup' : 'active',
     ageFrames: 0,
@@ -3215,6 +3216,9 @@ function updateProjectiles(match: MatchSnapshot, frameDelta: number) {
     const owner = match.fighters[projectile.ownerSlot - 1];
     const target = match.fighters[projectile.ownerSlot === 1 ? 1 : 0];
     applyProjectileHoming(projectile, target, dt);
+    if (projectile.gravity && projectile.gravity > 0) {
+      projectile.velocity.y -= projectile.gravity * dt;
+    }
     projectile.position.x += projectile.velocity.x * dt;
     projectile.position.y += projectile.velocity.y * dt;
     projectile.position.z += projectile.velocity.z * dt;

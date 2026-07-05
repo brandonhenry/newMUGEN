@@ -466,6 +466,7 @@ export function checksumMatch(match: MatchSnapshot) {
       vx: roundNumber(projectile.velocity.x),
       vy: roundNumber(projectile.velocity.y),
       vz: roundNumber(projectile.velocity.z),
+      gravity: projectile.gravity === undefined ? undefined : roundNumber(projectile.gravity),
       targetMode: projectile.targetMode,
       targetX: projectile.targetPoint ? roundNumber(projectile.targetPoint.x) : undefined,
       targetY: projectile.targetPoint ? roundNumber(projectile.targetPoint.y) : undefined,
