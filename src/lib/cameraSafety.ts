@@ -130,6 +130,7 @@ export function findCameraSightlineBlockers<T extends CameraSafetyCollider>(
   const ray = new THREE.Ray();
   const direction = new THREE.Vector3();
   const hitPoint = new THREE.Vector3();
+  const expandedBox = new THREE.Box3();
 
   visibilityPoints.forEach((point) => {
     direction.copy(point).sub(cameraPosition);
@@ -139,13 +140,13 @@ export function findCameraSightlineBlockers<T extends CameraSafetyCollider>(
     ray.set(cameraPosition, direction);
 
     for (const collider of colliders) {
-      const box = collider.box.clone().expandByScalar(padding);
-      if (box.containsPoint(point)) continue;
-      if (box.containsPoint(cameraPosition)) {
+      expandedBox.copy(collider.box).expandByScalar(padding);
+      if (expandedBox.containsPoint(point)) continue;
+      if (expandedBox.containsPoint(cameraPosition)) {
         blockers.add(collider);
         continue;
       }
-      const hit = ray.intersectBox(box, hitPoint);
+      const hit = ray.intersectBox(expandedBox, hitPoint);
       if (!hit) continue;
       const hitDistance = cameraPosition.distanceTo(hit);
       if (hitDistance > minDistanceFromPoint && hitDistance < totalDistance - minDistanceFromPoint) {

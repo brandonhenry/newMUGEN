@@ -37,7 +37,7 @@ import { emptyInputFrame } from '../types';
 import { activeMoveProgress, createMatch, stepMatch } from '../engine/fightEngine';
 import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
-import { findCameraSightlineBlockers, isCameraNearStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
+import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
@@ -83,6 +83,10 @@ const defaultCameraSettings: GameSettings['camera'] = {
   zoomBias: 1
 };
 const MENU_ATTRACT_FIGHTER_RENDER_STYLE: Partial<FighterRenderStyle> = {
+  castShadow: false,
+  receiveShadow: false
+};
+const FULL_FIGHT_FIGHTER_RENDER_STYLE: Partial<FighterRenderStyle> = {
   castShadow: false,
   receiveShadow: false
 };
@@ -571,11 +575,11 @@ export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const fighterRenderStyles = useMemo(() => ([
-    makeDuplicateFighterRenderStyle(match, 1),
-    makeDuplicateFighterRenderStyle(match, 2)
-  ] as const), [match]);
+    makeFightFighterRenderStyle(match, 1),
+    makeFightFighterRenderStyle(match, 2)
+  ] as const), [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id]);
   return (
-    <Canvas shadows dpr={[1, 1.75]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
+    <Canvas dpr={[1, 1.25]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         <Suspense fallback={null}>
           <Environment preset="city" />
@@ -594,11 +598,14 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
         <ProjectileLayer match={match} stage={match.stage} />
         <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
-        <ContactShadows position={[0, -0.01, 0]} opacity={0.45} scale={18} blur={2.4} far={3} />
-        <StagePostProcessing stage={match.stage} reducedMotion={reducedMotion} />
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
+}
+
+function makeFightFighterRenderStyle(match: MatchSnapshot, slot: 1 | 2): Partial<FighterRenderStyle> {
+  const hueShiftDegrees = getDuplicateFighterHueShift(match, slot);
+  return hueShiftDegrees ? { ...FULL_FIGHT_FIGHTER_RENDER_STYLE, hueShiftDegrees } : FULL_FIGHT_FIGHTER_RENDER_STYLE;
 }
 
 function makeDuplicateFighterRenderStyle(match: MatchSnapshot, slot: 1 | 2): Partial<FighterRenderStyle> | undefined {
@@ -697,7 +704,7 @@ function BreakTargetVoxelTarget({ target }: { target: BreakTargetRuntime }) {
     groupRef.current.scale.setScalar((target.destroyed ? 0.001 : target.radius * 0.92) + pulse);
     groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.85 + target.position.x) * 0.18;
   });
-  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 700 ? 2 : 1), [voxels]);
+  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 700 ? 2 : 1, source), [source, voxels]);
   const outlineStyle = useMemo<FighterOutlineStyle>(() => ({
     enabled: true,
     color: '#111318',
@@ -848,7 +855,7 @@ function StagePostProcessing({
   reducedMotion: boolean;
 }) {
   const { gl, scene, camera, size } = useThree();
-  const style = resolveStageVisualStyle(stage);
+  const style = useMemo(() => resolveStageVisualStyle(stage), [stage]);
   const disabled = reducedMotion || !style.post.enabled || size.width < 420 || size.height < 280;
   const composerSetup = useMemo(() => {
     if (disabled) return null;
@@ -1350,7 +1357,7 @@ function ProjectileVisual({
       canceled = true;
     };
   }, [character, source]);
-  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 900 ? 2 : 1), [voxels]);
+  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 900 ? 2 : 1, source), [source, voxels]);
   const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
   const renderStyle = useMemo(() => withDefaultRenderStyle({
     tint: definition.color ?? '#ffffff',
@@ -2875,6 +2882,8 @@ const MIN_FIGHT_CAMERA_DISTANCE = 4.85;
 const MIN_CLASH_CAMERA_DISTANCE = 4.85;
 const MODEL_CAMERA_COLLISION_PADDING = 0.38;
 const MODEL_CAMERA_COLLISION_MIN_DISTANCE = 2.35;
+const CAMERA_VISIBILITY_SOLVER_PADDING = 0.56;
+const CAMERA_VISIBILITY_FADE_PADDING = 0.42;
 
 function finiteOr(value: number, fallback: number) {
   return Number.isFinite(value) ? value : fallback;
@@ -2939,6 +2948,88 @@ function resolveCameraModelCollision(
   return true;
 }
 
+function resolveCameraVisibilityCandidate(
+  focus: THREE.Vector3,
+  preferred: THREE.Vector3,
+  relaxedPreferred: THREE.Vector3,
+  fallbackSide: THREE.Vector3,
+  colliders: Set<StageCameraColliderEntry> | undefined,
+  visibilityPoints: THREE.Vector3[],
+  output: THREE.Vector3,
+  minDistance: number
+) {
+  output.copy(preferred);
+  if (!colliders?.size || visibilityPoints.length === 0) return new Set<StageCameraColliderEntry>();
+
+  const baseOffset = preferred.clone().sub(focus);
+  baseOffset.y = 0;
+  let baseDistance = baseOffset.length();
+  if (baseDistance < 0.001) {
+    baseOffset.set(fallbackSide.x, 0, fallbackSide.z);
+    baseDistance = baseOffset.length();
+  }
+  if (baseDistance < 0.001) {
+    baseOffset.set(0, 0, 1);
+    baseDistance = 1;
+  }
+  const baseDirection = baseOffset.multiplyScalar(1 / baseDistance);
+  const rightDirection = new THREE.Vector3(baseDirection.z, 0, -baseDirection.x);
+  const safeDistance = Math.max(minDistance, baseDistance);
+  const candidate = new THREE.Vector3();
+  const direction = new THREE.Vector3();
+  let bestScore = Number.POSITIVE_INFINITY;
+  let bestBlockers = new Set<StageCameraColliderEntry>();
+
+  const evaluate = (position: THREE.Vector3, preferencePenalty: number) => {
+    const blockers = findCameraSightlineBlockers(position, visibilityPoints, colliders, {
+      padding: CAMERA_VISIBILITY_SOLVER_PADDING,
+      minDistanceFromPoint: 0.12
+    });
+    const horizontalDistance = Math.hypot(position.x - focus.x, position.z - focus.z);
+    const distancePenalty = Math.max(0, minDistance - horizontalDistance) * 220;
+    const movementPenalty = position.distanceTo(preferred) * 0.85;
+    const heightPenalty = Math.max(0, position.y - preferred.y) * 0.18;
+    const score = blockers.size * 10000 + distancePenalty + movementPenalty + heightPenalty + preferencePenalty;
+    if (score < bestScore) {
+      bestScore = score;
+      bestBlockers = blockers;
+      output.copy(position);
+    }
+  };
+
+  const addPolarCandidate = (angle: number, distanceScale: number, heightOffset: number, preferencePenalty: number) => {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    direction.set(
+      baseDirection.x * cos + rightDirection.x * sin,
+      0,
+      baseDirection.z * cos + rightDirection.z * sin
+    ).normalize();
+    candidate.set(
+      focus.x + direction.x * safeDistance * distanceScale,
+      preferred.y + heightOffset,
+      focus.z + direction.z * safeDistance * distanceScale
+    );
+    evaluate(candidate, preferencePenalty);
+  };
+
+  evaluate(preferred, 0);
+  if (bestBlockers.size === 0) return bestBlockers;
+  if (preferred.distanceToSquared(relaxedPreferred) > 0.0025) evaluate(relaxedPreferred, 1.4);
+  evaluate(candidate.copy(preferred).addScaledVector(rightDirection, 1.25), 1.8);
+  evaluate(candidate.copy(preferred).addScaledVector(rightDirection, -1.25), 1.8);
+  evaluate(candidate.copy(preferred).setY(preferred.y + 0.85), 1.2);
+  evaluate(candidate.copy(preferred).setY(preferred.y + 1.55), 2.2);
+
+  addPolarCandidate(0, 1.16, 0.35, 1.6);
+  addPolarCandidate(0, 1.3, 0.62, 2.8);
+  [-0.62, -0.42, -0.24, 0.24, 0.42, 0.62].forEach((angle, index) => {
+    addPolarCandidate(angle, 1.05 + (index % 2) * 0.08, 0.35 + Math.abs(angle) * 0.42, 2.4 + Math.abs(angle) * 2.8);
+  });
+
+  return bestBlockers;
+}
+
 function updateCameraStageOccluders(
   registry: StageCameraCollisionRegistry | null,
   stage: StageDefinition,
@@ -2948,18 +3039,17 @@ function updateCameraStageOccluders(
   if (!registry) return;
   registry.occluders.clear();
   if (!registry.colliders.size) return;
-  if (isCameraNearStageSafetyEnvelope(stage, cameraPosition)) {
+  if (visibilityPoints.length === 0) return;
+  const blockers = findCameraSightlineBlockers(cameraPosition, visibilityPoints, registry.colliders, { padding: CAMERA_VISIBILITY_FADE_PADDING, minDistanceFromPoint: 0.12 });
+  blockers.forEach((entry) => registry.occluders.add(entry));
+  if (blockers.size > 0 && isCameraOutsideStageSafetyEnvelope(stage, cameraPosition)) {
     registry.colliders.forEach((entry) => {
       if (!entry.boundaryFade) return;
       registry.occluders.add(entry);
       entry.fade = 1;
       applyStageCameraFade(entry);
     });
-    return;
   }
-  if (visibilityPoints.length === 0) return;
-  const blockers = findCameraSightlineBlockers(cameraPosition, visibilityPoints, registry.colliders, { padding: 0.72, minDistanceFromPoint: 0.12 });
-  blockers.forEach((entry) => registry.occluders.add(entry));
 }
 
 function fillCameraVisibilityPoints(
@@ -3032,7 +3122,9 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   const rawLookFocus = useMemo(() => new THREE.Vector3(), []);
   const rawSide = useMemo(() => new THREE.Vector3(), []);
   const desired = useMemo(() => new THREE.Vector3(), []);
+  const relaxedDesired = useMemo(() => new THREE.Vector3(), []);
   const boundaryAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
+  const visibilityAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
   const collisionAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
   const visibilityPoints = useMemo(() => Array.from({ length: 5 }, () => new THREE.Vector3()), []);
   const initializedRef = useRef(false);
@@ -3104,14 +3196,29 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
         cameraHeightRef.current,
         focus.z + side.z * cameraDistanceRef.current
       );
+      relaxedDesired.copy(desired);
+      enforceVectorHorizontalDistance(relaxedDesired, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
       resolveCameraBoundaryNudge(match.stage, lookFocus, desired, boundaryAdjustedDesired);
       enforceVectorHorizontalDistance(boundaryAdjustedDesired, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
-      const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_FIGHT_CAMERA_DISTANCE);
+      const targetBlockers = resolveCameraVisibilityCandidate(
+        lookFocus,
+        boundaryAdjustedDesired,
+        relaxedDesired,
+        side,
+        cameraCollisionRegistry?.colliders,
+        fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus),
+        visibilityAdjustedDesired,
+        MIN_FIGHT_CAMERA_DISTANCE
+      );
+      const collided = targetBlockers.size > 0
+        ? resolveCameraModelCollision(lookFocus, visibilityAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_FIGHT_CAMERA_DISTANCE)
+        : false;
+      if (!collided) collisionAdjustedDesired.copy(visibilityAdjustedDesired);
       camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 6.2 * smoothing));
       const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_FIGHT_CAMERA_DISTANCE);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
       camera.lookAt(lookFocus);
-      updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
+      updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, visibilityPoints);
       return;
     }
     if (match.clashState?.status !== 'none') {
@@ -3137,14 +3244,29 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       );
       desired.set(contactX + cameraX * cameraDistance, Math.max(2.15, contactY + 1.15), contactZ + cameraZ * cameraDistance);
       target.set(contactX, Math.max(1.12, contactY), contactZ);
+      relaxedDesired.copy(desired);
+      enforceVectorHorizontalDistance(relaxedDesired, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       resolveCameraBoundaryNudge(match.stage, target, desired, boundaryAdjustedDesired);
       enforceVectorHorizontalDistance(boundaryAdjustedDesired, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
-      const collided = resolveCameraModelCollision(target, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_CLASH_CAMERA_DISTANCE);
+      const targetBlockers = resolveCameraVisibilityCandidate(
+        target,
+        boundaryAdjustedDesired,
+        relaxedDesired,
+        rawSide,
+        cameraCollisionRegistry?.colliders,
+        fillCameraVisibilityPoints(visibilityPoints, p1, p2, target),
+        visibilityAdjustedDesired,
+        MIN_CLASH_CAMERA_DISTANCE
+      );
+      const collided = targetBlockers.size > 0
+        ? resolveCameraModelCollision(target, visibilityAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_CLASH_CAMERA_DISTANCE)
+        : false;
+      if (!collided) collisionAdjustedDesired.copy(visibilityAdjustedDesired);
       camera.position.lerp(collisionAdjustedDesired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
       const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_CLASH_CAMERA_DISTANCE);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
       camera.lookAt(target);
-      updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, target));
+      updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, visibilityPoints);
       return;
     }
     const p1x = finiteOr(p1.position.x, focus.x - 0.65);
@@ -3209,14 +3331,29 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       cameraHeightRef.current,
       focus.z + side.z * cameraDistanceRef.current
     );
+    relaxedDesired.copy(desired);
+    enforceVectorHorizontalDistance(relaxedDesired, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     resolveCameraBoundaryNudge(match.stage, lookFocus, desired, boundaryAdjustedDesired);
     enforceVectorHorizontalDistance(boundaryAdjustedDesired, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
-    const collided = resolveCameraModelCollision(lookFocus, boundaryAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_FIGHT_CAMERA_DISTANCE);
+    const targetBlockers = resolveCameraVisibilityCandidate(
+      lookFocus,
+      boundaryAdjustedDesired,
+      relaxedDesired,
+      side,
+      cameraCollisionRegistry?.colliders,
+      fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus),
+      visibilityAdjustedDesired,
+      MIN_FIGHT_CAMERA_DISTANCE
+    );
+    const collided = targetBlockers.size > 0
+      ? resolveCameraModelCollision(lookFocus, visibilityAdjustedDesired, cameraCollisionRegistry?.colliders, collisionAdjustedDesired, MIN_FIGHT_CAMERA_DISTANCE)
+      : false;
+    if (!collided) collisionAdjustedDesired.copy(visibilityAdjustedDesired);
     camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
     const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_FIGHT_CAMERA_DISTANCE);
     if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
     camera.lookAt(lookFocus);
-    updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, fillCameraVisibilityPoints(visibilityPoints, p1, p2, lookFocus));
+    updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, visibilityPoints);
   });
   return null;
 }
@@ -4453,7 +4590,7 @@ function FighterRig({
   const globalScale = getCharacterGlobalScale(fighter.character);
   const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
   const materialStyle = useMemo(() => withDefaultRenderStyle(renderStyle), [renderStyle]);
-  const effectiveOutlineStyle = materialStyle.opacity < 1 ? undefined : outlineStyle;
+  const effectiveOutlineStyle = materialStyle.opacity < 1 || renderStyle?.castShadow === false ? undefined : outlineStyle;
   return (
     <group ref={group} scale={[globalScale.width, globalScale.height, globalScale.width]}>
       <Bounds fit={false}>
@@ -4503,6 +4640,15 @@ type ImageVoxel = {
   source?: 'hd' | 'legacy';
 };
 
+type ImageVoxelPartRender = {
+  anchor: [number, number, number];
+  voxels: ImageVoxel[];
+  cacheKey?: string;
+};
+
+const imageVoxelMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
+const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
+
 type HdImageVoxelPayload = {
   format: 'kore-hd-voxels-v1';
   palette: string[];
@@ -4540,7 +4686,8 @@ function getImageVoxelLodStep(character: CharacterDefinition) {
   if (character.voxelProfile !== 'hd-image-source') return 1;
   if (typeof window === 'undefined') return 1;
   const mobileStep = character.voxelFidelity?.lod?.mobileStep ?? 2;
-  return window.innerWidth < 760 ? Math.max(1, Math.round(mobileStep)) : 1;
+  const runtimeStep = character.voxelFidelity?.lod?.farStep ?? mobileStep;
+  return window.innerWidth < 760 ? Math.max(3, Math.round(mobileStep)) : Math.max(3, Math.round(runtimeStep));
 }
 
 function ImageVoxelFighter({
@@ -4587,7 +4734,7 @@ function ImageVoxelFighter({
     };
   }, [fighter.character, frameRequest]);
 
-  const parts = useMemo(() => buildVoxelParts(voxels, lodStep), [lodStep, voxels]);
+  const parts = useMemo(() => buildVoxelParts(voxels, lodStep, loadedFrameSelection.frameSource), [loadedFrameSelection.frameSource, lodStep, voxels]);
 
   useFrame((_, delta) => {
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
@@ -4917,7 +5064,7 @@ function ImageVoxelPartGroup({
   outlineStyle,
   renderStyle
 }: {
-  part: { anchor: [number, number, number]; voxels: ImageVoxel[] };
+  part: ImageVoxelPartRender;
   groupRef?: React.RefObject<THREE.Group>;
   outlineStyle?: FighterOutlineStyle;
   renderStyle: FighterRenderStyle;
@@ -4927,19 +5074,23 @@ function ImageVoxelPartGroup({
 
   useEffect(() => {
     return () => {
-      outlineMesh?.geometry.dispose();
-      const outlineMaterial = outlineMesh?.material;
-      if (Array.isArray(outlineMaterial)) {
-        outlineMaterial.forEach((entry) => entry.dispose());
-      } else {
-        outlineMaterial?.dispose();
+      if (outlineMesh && !outlineMesh.userData.koreCachedVoxelMesh) {
+        outlineMesh.geometry.dispose();
+        const outlineMaterial = outlineMesh.material;
+        if (Array.isArray(outlineMaterial)) {
+          outlineMaterial.forEach((entry) => entry.dispose());
+        } else {
+          outlineMaterial.dispose();
+        }
       }
-      mesh?.geometry.dispose();
-      const material = mesh?.material;
-      if (Array.isArray(material)) {
-        material.forEach((entry) => entry.dispose());
-      } else {
-        material?.dispose();
+      if (mesh && !mesh.userData.koreCachedVoxelMesh) {
+        mesh.geometry.dispose();
+        const material = mesh.material;
+        if (Array.isArray(material)) {
+          material.forEach((entry) => entry.dispose());
+        } else {
+          material.dispose();
+        }
       }
     };
   }, [mesh, outlineMesh]);
@@ -4952,8 +5103,51 @@ function ImageVoxelPartGroup({
   );
 }
 
-function buildInstancedVoxelOutlineMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }, outlineStyle?: FighterOutlineStyle) {
+function makeCachedVoxelMesh(
+  cached: { geometry: THREE.BufferGeometry; material: THREE.Material },
+  options: Partial<Pick<THREE.Mesh, 'castShadow' | 'receiveShadow' | 'renderOrder' | 'frustumCulled'>>
+) {
+  const mesh = new THREE.Mesh(cached.geometry, cached.material);
+  if (options.castShadow !== undefined) mesh.castShadow = options.castShadow;
+  if (options.receiveShadow !== undefined) mesh.receiveShadow = options.receiveShadow;
+  if (options.renderOrder !== undefined) mesh.renderOrder = options.renderOrder;
+  if (options.frustumCulled !== undefined) mesh.frustumCulled = options.frustumCulled;
+  mesh.userData.koreCachedVoxelMesh = true;
+  return mesh;
+}
+
+function makeImageVoxelMeshCacheKey(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
+  if (!part.cacheKey) return null;
+  return [
+    part.cacheKey,
+    'mesh',
+    renderStyle.opacity,
+    renderStyle.tint,
+    renderStyle.hueShiftDegrees,
+    renderStyle.depthWrite ? 'dw1' : 'dw0'
+  ].join('|');
+}
+
+function makeImageVoxelOutlineMeshCacheKey(part: ImageVoxelPartRender, outlineStyle?: FighterOutlineStyle) {
+  if (!part.cacheKey || !outlineStyle?.enabled) return null;
+  return [
+    part.cacheKey,
+    'outline',
+    outlineStyle.color,
+    outlineStyle.opacity,
+    outlineStyle.scale
+  ].join('|');
+}
+
+function buildInstancedVoxelOutlineMesh(part: ImageVoxelPartRender, outlineStyle?: FighterOutlineStyle) {
   if (!outlineStyle?.enabled || part.voxels.length === 0) return null;
+  const cacheKey = makeImageVoxelOutlineMeshCacheKey(part, outlineStyle);
+  const cached = cacheKey ? imageVoxelOutlineMeshCache.get(cacheKey) : undefined;
+  if (cached) {
+    const outline = makeCachedVoxelMesh(cached, { renderOrder: -8, frustumCulled: false });
+    outline.scale.setScalar(outlineStyle.scale);
+    return outline;
+  }
   const outlinedVoxels = part.voxels
     .map(normalizeImageVoxelForRender)
     .filter((voxel) => shouldRenderVoxelOutline(voxel.color));
@@ -4998,11 +5192,25 @@ function buildInstancedVoxelOutlineMesh(part: { anchor: [number, number, number]
   outline.scale.setScalar(outlineStyle.scale);
   outline.renderOrder = -8;
   outline.frustumCulled = false;
+  if (cacheKey) {
+    imageVoxelOutlineMeshCache.set(cacheKey, { geometry, material });
+    outline.userData.koreCachedVoxelMesh = true;
+  }
   return outline;
 }
 
-function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxels: ImageVoxel[] }, renderStyle: FighterRenderStyle) {
+function buildInstancedVoxelMesh(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
   if (part.voxels.length === 0) return null;
+  const cacheKey = makeImageVoxelMeshCacheKey(part, renderStyle);
+  const cached = cacheKey ? imageVoxelMeshCache.get(cacheKey) : undefined;
+  if (cached) {
+    const mesh = makeCachedVoxelMesh(cached, {
+      castShadow: renderStyle.castShadow,
+      receiveShadow: renderStyle.receiveShadow,
+      renderOrder: renderStyle.renderOrder
+    });
+    return mesh;
+  }
   const baseGeometry = new THREE.BoxGeometry(1, 1, 1);
   const geometries = part.voxels.map((voxel) => {
     const geometry = baseGeometry.clone();
@@ -5049,6 +5257,10 @@ function buildInstancedVoxelMesh(part: { anchor: [number, number, number]; voxel
   mesh.castShadow = renderStyle.castShadow;
   mesh.receiveShadow = renderStyle.receiveShadow;
   mesh.renderOrder = renderStyle.renderOrder;
+  if (cacheKey) {
+    imageVoxelMeshCache.set(cacheKey, { geometry, material });
+    mesh.userData.koreCachedVoxelMesh = true;
+  }
   return mesh;
 }
 
@@ -5093,14 +5305,18 @@ function outlineColorForVoxel(color: string) {
   return source;
 }
 
-function buildVoxelParts(voxels: ImageVoxel[], lodStep = 1) {
+function buildVoxelParts(voxels: ImageVoxel[], lodStep = 1, sourceKey?: string) {
   const partNames: ImageVoxelPart[] = ['head', 'torso', 'leadArm', 'rearArm', 'leadLeg', 'rearLeg'];
   return Object.fromEntries(
     partNames.map((part) => {
       const partVoxels = voxels.filter((voxel, index) => voxel.part === part && (lodStep <= 1 || index % lodStep === 0));
-      return [part, { anchor: getPartAnchor(part, partVoxels), voxels: partVoxels }];
+      return [part, {
+        anchor: getPartAnchor(part, partVoxels),
+        voxels: partVoxels,
+        cacheKey: sourceKey ? `${sourceKey}|lod:${lodStep}|part:${part}` : undefined
+      }];
     })
-  ) as Record<ImageVoxelPart, { anchor: [number, number, number]; voxels: ImageVoxel[] }>;
+  ) as Record<ImageVoxelPart, ImageVoxelPartRender>;
 }
 
 function getPartAnchor(part: ImageVoxelPart, voxels: ImageVoxel[]): [number, number, number] {

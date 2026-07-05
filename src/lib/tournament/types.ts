@@ -94,9 +94,13 @@ export type TournamentSummary = {
   entryFeeLabel: string;
   prizeLabel: string;
   entries: number;
+  confirmedEntries?: number;
+  entriesNeeded?: number;
   minEntries: number;
   capacity: number;
   paidEnabled: boolean;
+  estimatedStartLabel?: string;
+  startsWhenFullLabel?: string;
   startsLabel: string;
 };
 
@@ -139,6 +143,10 @@ export type TournamentStatusResult = {
   entry?: TournamentEntry;
   assignedMatch?: TournamentMatch;
   payment?: TournamentPaymentSummary;
+  confirmedEntries?: number;
+  entriesNeeded?: number;
+  estimatedStartLabel?: string;
+  startsWhenFullLabel?: string;
   statusText: string;
 };
 

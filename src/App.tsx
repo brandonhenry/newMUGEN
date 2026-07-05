@@ -37,6 +37,7 @@ import {
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
@@ -2700,7 +2701,7 @@ export default function App() {
     const profile = onlineProfile ?? writeOnlineProfile({ displayName: 'PLAYER' });
     if (!onlineProfile) setOnlineProfile(profile);
     const paid = tournamentMode === 'paid';
-    setTournamentStatusText(paid ? 'Creating Lightning invoice' : 'Entering free online tournament');
+    setTournamentStatusText(paid ? 'Creating Cash App checkout' : 'Entering free online tournament');
     const result = await enterTournament({
       kind: paid ? 'paidOnline' : 'freeOnline',
       playerId: profile.playerId,
@@ -2730,6 +2731,10 @@ export default function App() {
       entry: result.entry,
       assignedMatch: getAssignedTournamentMatch(result.bracket, result.entry.id),
       payment,
+      confirmedEntries: confirmedTournamentEntryCount(result.bracket),
+      entriesNeeded: Math.max(0, result.bracket.minEntries - confirmedTournamentEntryCount(result.bracket)),
+      estimatedStartLabel: getEstimatedTournamentStartLabel(result.bracket),
+      startsWhenFullLabel: `Tournament starts once ${result.bracket.minEntries} entries enter`,
       statusText: paid && payment
         ? getTournamentPaymentStatusText(payment.state, result.bracket.minEntries)
         : result.bracket.status === 'open'
@@ -2791,6 +2796,30 @@ export default function App() {
       assigned_match: Boolean(status.assignedMatch)
     });
   }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus]);
+
+  useEffect(() => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    const paymentState = current?.payment?.state ?? current?.entry?.paymentState;
+    if (!current || !profile || (paymentState !== 'invoicePending' && paymentState !== 'invoiceProcessing')) return;
+    let cancelled = false;
+    const pollStatus = async () => {
+      try {
+        const status = await fetchTournamentStatus(current.bracket.id, profile.playerId);
+        if (cancelled) return;
+        setOnlineTournamentStatus(status);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(status.statusText);
+      } catch (error) {
+        if (!cancelled) console.error('Failed to poll tournament payment status', error);
+      }
+    };
+    const interval = window.setInterval(() => void pollStatus(), 3000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [onlineProfile, onlineTournamentStatus]);
 
   const startOnlineTournamentMatch = useCallback(() => {
     const status = onlineTournamentStatus;
@@ -5445,7 +5474,7 @@ function TournamentSelect({
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
   const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
-  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Pay $2 Lightning' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Pay $2 Via Cash App' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
 
   useEffect(() => {
@@ -5618,8 +5647,8 @@ function TournamentSelect({
             onClick={() => paidEnabled && selectTournamentMode('paid')}
             disabled={!paidEnabled}
           >
-            <strong>{paidSummary?.entryFeeLabel ?? '$2 Lightning'}</strong>
-            <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} paid` : 'Paid beta unavailable'}</span>
+            <strong>{paidSummary?.entryFeeLabel ?? '$2 Via Cash App'}</strong>
+            <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
             <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
           </button>
           {isDevHost && (
@@ -5730,7 +5759,7 @@ function TournamentModeCarousel({
   const options: Array<{ mode: TournamentSelectMode; label: string; icon: ReactNode }> = [
     { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
     { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
-    { mode: 'paid', label: '$2 Lightning', icon: <Trophy size={18} /> },
+    { mode: 'paid', label: '$2 Cash App', icon: <Trophy size={18} /> },
     ...(isDevHost ? [{ mode: 'infinite' as const, label: 'Infinite', icon: <Swords size={18} /> }] : [])
   ];
   const activeIndex = Math.max(0, options.findIndex((option) => option.mode === value));
@@ -5795,7 +5824,7 @@ function TournamentLobbyScreen({
   const bracket = onlineStatus?.bracket ?? localBracket;
   const assignedMatch = onlineStatus?.assignedMatch;
   const payment = onlineStatus?.payment;
-  const title = bracket?.id.startsWith('infinite-') ? 'Infinite Tournament' : bracket?.kind === 'paidOnline' ? 'Lightning Beta Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
+  const title = bracket?.id.startsWith('infinite-') ? 'Infinite Tournament' : bracket?.kind === 'paidOnline' ? 'Cash App Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
   const finalRound = getTournamentTotalRounds(bracket);
   const confirmedEntries = confirmedTournamentEntryCount(bracket);
   const winner = bracket?.matches.find((match) => match.round === finalRound && match.winnerEntryId)?.winnerEntryId;
@@ -5808,6 +5837,27 @@ function TournamentLobbyScreen({
   const paymentProcessing = payment?.state === 'invoiceProcessing' || onlineStatus?.entry?.paymentState === 'invoiceProcessing';
   const prizeEntry = onlineStatus?.entry;
   const canClaimPrize = bracket?.kind === 'paidOnline' && bracket.status === 'completed' && prizeEntry?.payoutState === 'rewardPending' && Boolean(prizeEntry.payoutAmountSats);
+  const estimatedStartLabel = onlineStatus?.estimatedStartLabel ?? getEstimatedTournamentStartLabel(bracket);
+  const startsWhenFullLabel = onlineStatus?.startsWhenFullLabel ?? (bracket ? `Tournament starts once ${bracket.minEntries} entries enter` : 'Tournament starts once enough players enter');
+  const checkoutKey = payment?.checkingId ?? onlineStatus?.entry?.checkingId ?? '';
+  const [cashAppCheckoutDismissed, setCashAppCheckoutDismissed] = useState(false);
+
+  useEffect(() => {
+    setCashAppCheckoutDismissed(false);
+  }, [checkoutKey]);
+
+  useEffect(() => {
+    if (!paymentConfirmed || cashAppCheckoutDismissed) return;
+    const timer = window.setTimeout(() => setCashAppCheckoutDismissed(true), 2400);
+    return () => window.clearTimeout(timer);
+  }, [cashAppCheckoutDismissed, paymentConfirmed]);
+
+  const showCashAppCheckout = Boolean(
+    bracket?.kind === 'paidOnline' &&
+    paymentRequest &&
+    !cashAppCheckoutDismissed &&
+    (payment?.state === 'invoicePending' || paymentProcessing || paymentConfirmed)
+  );
 
   return (
     <div className="leaderboard-screen tournament-lobby-screen">
@@ -5826,33 +5876,22 @@ function TournamentLobbyScreen({
             <div className="tournament-lobby-summary">
               <TournamentStat label="Status" value={bracket.status} />
               <TournamentStat label="Players" value={`${confirmedEntries}/${bracket.capacity}`} />
+              <TournamentStat label="Estimated start" value={estimatedStartLabel} />
               <TournamentStat label="Reward" value={bracket.reward?.label ?? 'Profile trophy'} />
             </div>
-            {payment?.state === 'invoicePending' && (
-              <div className="tournament-payment-strip">
-                <div>
-                  <span>Waiting for Lightning payment</span>
-                  {amountSats ? <small>{amountSats.toLocaleString()} sats</small> : null}
-                  {paymentRequest ? <code className="tournament-lightning-invoice">{paymentRequest}</code> : null}
-                </div>
-                <div className="tournament-payment-actions">
-                  {lightningUrl && (
-                    <button type="button" className="primary-button" onClick={() => window.open(lightningUrl, '_blank', 'noopener,noreferrer')}>
-                      <ExternalLink size={18} />
-                      Open
-                    </button>
-                  )}
-                  {paymentRequest && (
-                    <button type="button" className="secondary-button" onClick={() => void copyLightningInvoice(paymentRequest)}>
-                      <Copy size={18} />
-                      Copy
-                    </button>
-                  )}
-                </div>
-              </div>
+            {showCashAppCheckout && (
+              <CashAppCheckoutPopup
+                amountSats={amountSats}
+                paymentRequest={paymentRequest ?? ''}
+                lightningUrl={lightningUrl}
+                state={paymentConfirmed ? 'success' : paymentProcessing ? 'processing' : 'pending'}
+                estimatedStartLabel={estimatedStartLabel}
+                startsWhenFullLabel={startsWhenFullLabel}
+                onClose={() => setCashAppCheckoutDismissed(true)}
+              />
             )}
-            {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Waiting for confirmation.</div>}
-            {paymentConfirmed && <div className="tournament-status-strip">Payment confirmed. Tournament starts at {bracket.minEntries} paid players.</div>}
+            {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Confirming entry.</div>}
+            {paymentConfirmed && <div className="tournament-status-strip">Success. You entered. Tournament starts once enough players enter.</div>}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
               <div className="tournament-status-strip">
@@ -6117,6 +6156,86 @@ function TournamentStat({ label, value }: { label: string; value: string }) {
   );
 }
 
+function CashAppCheckoutPopup({
+  amountSats,
+  paymentRequest,
+  lightningUrl,
+  state,
+  estimatedStartLabel,
+  startsWhenFullLabel,
+  onClose
+}: {
+  amountSats?: number;
+  paymentRequest: string;
+  lightningUrl?: string;
+  state: 'pending' | 'processing' | 'success';
+  estimatedStartLabel: string;
+  startsWhenFullLabel: string;
+  onClose: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const shortInvoice = shortenLightningInvoice(paymentRequest);
+  const statusText = state === 'success'
+    ? 'Success. You entered.'
+    : state === 'processing'
+      ? 'Payment received. Confirming entry.'
+      : 'Waiting for Cash App payment';
+
+  const copyInvoice = async () => {
+    await copyLightningInvoice(paymentRequest);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1400);
+  };
+
+  return (
+    <div className={`cashapp-checkout-popup is-${state}`} role="dialog" aria-label="Pay $2 with Cash App" aria-live="polite">
+      <div className="cashapp-checkout-copy">
+        <span>{statusText}</span>
+        <h3>Pay $2 with Cash App</h3>
+        <p>Scan this Bitcoin Lightning invoice with Cash App or any Lightning wallet.</p>
+        <div className="cashapp-checkout-meta">
+          <strong>{amountSats ? `${amountSats.toLocaleString()} sats` : '$2 entry'}</strong>
+          <small>{estimatedStartLabel}</small>
+        </div>
+        <ol>
+          <li>Open Cash App.</li>
+          <li>Tap the QR scanner or Bitcoin QR.</li>
+          <li>Scan this code and confirm.</li>
+        </ol>
+      </div>
+
+      <div className="cashapp-qr-panel">
+        <div className="cashapp-qr-code" aria-label="Lightning invoice QR code">
+          <QRCodeSVG value={paymentRequest} size={218} level="M" />
+        </div>
+        <label>
+          <span>Send to</span>
+          <code>{shortInvoice}</code>
+        </label>
+        <div className="cashapp-checkout-actions">
+          {lightningUrl && (
+            <button type="button" className="primary-button" onClick={() => window.open(lightningUrl, '_blank', 'noopener,noreferrer')}>
+              <ExternalLink size={18} />
+              Open Cash App / Lightning Wallet
+            </button>
+          )}
+          <button type="button" className="secondary-button" onClick={() => void copyInvoice()}>
+            <Copy size={18} />
+            {copied ? 'Copied' : 'Copy Invoice'}
+          </button>
+        </div>
+        <small className="cashapp-start-note">{startsWhenFullLabel}</small>
+      </div>
+
+      {state === 'success' && (
+        <button type="button" className="cashapp-checkout-close" onClick={onClose}>
+          Continue
+        </button>
+      )}
+    </div>
+  );
+}
+
 function tournamentEntryCharacter(roster: CharacterDefinition[], entry?: TournamentEntry) {
   if (!entry) return undefined;
   return roster.find((character) => character.id === entry.characterId);
@@ -6128,10 +6247,43 @@ function confirmedTournamentEntryCount(bracket: TournamentBracket | null | undef
   return bracket.entries.filter((entry) => entry.paymentState === 'paid' || entry.paymentState === 'entryLocked').length;
 }
 
-function getTournamentPaymentStatusText(state: string, minEntries: number) {
-  if (state === 'invoiceProcessing') return 'Payment received. Waiting for confirmation.';
-  if (state === 'paid' || state === 'entryLocked') return `Payment confirmed. Tournament starts at ${minEntries} paid players.`;
-  return 'Waiting for Lightning payment';
+function getEstimatedTournamentStartLabel(bracket: TournamentBracket | null | undefined) {
+  if (!bracket) return 'Starts once enough players enter';
+  const confirmed = bracket.kind === 'paidOnline'
+    ? bracket.entries.filter((entry) => entry.paymentState === 'paid' || entry.paymentState === 'entryLocked')
+    : bracket.entries.filter((entry) => entry.paymentState !== 'expired' && entry.paymentState !== 'invalid');
+  const entriesNeeded = Math.max(0, bracket.minEntries - confirmed.length);
+  if (entriesNeeded <= 0) return 'Tournament ready';
+  const paidTimes = confirmed
+    .map((entry) => Number(entry.paidAt || entry.joinedAt))
+    .filter((time) => Number.isFinite(time) && time > 0)
+    .sort((a, b) => a - b);
+  if (paidTimes.length < 2) return `Starts once ${bracket.minEntries} entries enter`;
+  const intervals = paidTimes.slice(1).map((time, index) => time - paidTimes[index]).filter((interval) => interval > 0);
+  if (!intervals.length) return `Starts once ${bracket.minEntries} entries enter`;
+  const averageMs = intervals.reduce((total, interval) => total + interval, 0) / intervals.length;
+  return `~${formatTournamentDuration(averageMs * entriesNeeded)}`;
+}
+
+function getTournamentPaymentStatusText(state: string, _minEntries: number) {
+  if (state === 'invoiceProcessing') return 'Payment received. Confirming entry.';
+  if (state === 'paid' || state === 'entryLocked') return 'Success. You entered.';
+  return 'Waiting for Cash App payment';
+}
+
+function formatTournamentDuration(ms: number) {
+  const totalMinutes = Math.max(1, Math.round(ms / 60000));
+  const days = Math.floor(totalMinutes / 1440);
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  const minutes = totalMinutes % 60;
+  if (days > 0) return `${days}d ${hours}h`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
+}
+
+function shortenLightningInvoice(paymentRequest: string) {
+  if (paymentRequest.length <= 34) return paymentRequest;
+  return `${paymentRequest.slice(0, 18)}...${paymentRequest.slice(-12)}`;
 }
 
 async function copyLightningInvoice(paymentRequest: string) {

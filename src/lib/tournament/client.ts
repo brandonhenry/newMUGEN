@@ -95,12 +95,16 @@ function localTournamentList() {
         kind: 'paidOnline' as const,
         status: 'cancelled' as const,
         entryFeeUsd: 2,
-        entryFeeLabel: '$2 Lightning',
+        entryFeeLabel: '$2 Via Cash App',
         prizeLabel: '$15 / $10 / $5 Lightning',
         entries: 0,
+        confirmedEntries: 0,
+        entriesNeeded: 25,
         minEntries: 25,
         capacity: 25,
         paidEnabled: false,
+        estimatedStartLabel: 'Starts once 25 entries enter',
+        startsWhenFullLabel: 'Tournament starts once 25 entries enter',
         startsLabel: 'Paid beta unavailable'
       }
     ]

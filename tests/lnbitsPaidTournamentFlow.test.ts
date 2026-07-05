@@ -167,6 +167,86 @@ describe('LNbits paid tournament flow', () => {
     }
   });
 
+  it('confirms paid entries from LNbits payment hash webhook payloads', async () => {
+    const paidChecks = new Set<string>();
+    installLnbitsFetch(paidChecks);
+    const stores = makeStores();
+    const { confirmPaidEntryByCheckingId, enterPaidTournament } = await import('../netlify/functions/_paid-tournament-store.mjs');
+
+    const entered = await enterPaidTournament(stores, { playerId: 'player-1', displayName: 'P1', characterId: 'kiro' }, 1000);
+    paidChecks.add(entered.entry.checkingId);
+    const confirmed = await confirmPaidEntryByCheckingId(stores, entered.entry.paymentHash, 1002);
+
+    expect(confirmed.paid).toBe(true);
+    expect(confirmed.entry.paymentState).toBe('paid');
+    expect(confirmed.entry.seed).toBe(1);
+  });
+
+  it('returns Cash App labels and estimated start metadata for paid tournament status', async () => {
+    installLnbitsFetch();
+    const stores = makeStores();
+    const { getPaidTournamentStatus, paidSummary } = await import('../netlify/functions/_paid-tournament-store.mjs');
+    const bracket = {
+      id: PAID_ID,
+      kind: 'paidOnline',
+      status: 'open',
+      entries: [
+        {
+          id: 'entry-player-1',
+          playerId: 'player-1',
+          displayName: 'P1',
+          characterId: 'kiro',
+          seed: 1,
+          paymentState: 'paid',
+          paidAt: 1_000,
+          joinedAt: 1_000
+        },
+        {
+          id: 'entry-player-2',
+          playerId: 'player-2',
+          displayName: 'P2',
+          characterId: 'riven',
+          seed: 2,
+          paymentState: 'entryLocked',
+          paidAt: 601_000,
+          joinedAt: 601_000
+        },
+        {
+          id: 'entry-player-3',
+          playerId: 'player-3',
+          displayName: 'P3',
+          characterId: 'kiro',
+          seed: 0,
+          paymentState: 'invoicePending',
+          joinedAt: 700_000
+        }
+      ],
+      matches: [],
+      currentRound: 1,
+      capacity: 5,
+      minEntries: 5,
+      paidEnabled: true,
+      entryUsd: 2,
+      prizeUsd: { 1: 15, 2: 10, 3: 5 },
+      prizeSats: {},
+      createdAt: 1_000,
+      updatedAt: 700_000,
+      reward: { kind: 'lightningPending', label: 'Lightning rewards', state: 'locked' }
+    };
+    await stores.tournaments.setJSON(`${PAID_ID}.json`, bracket);
+    await stores.tournaments.setJSON('active.json', { id: PAID_ID, updatedAt: 700_000 });
+
+    const summary = paidSummary(bracket);
+    const status = await getPaidTournamentStatus(stores, 'player-1');
+
+    expect(summary.entryFeeLabel).toBe('$2 Via Cash App');
+    expect(summary.confirmedEntries).toBe(2);
+    expect(summary.entriesNeeded).toBe(3);
+    expect(summary.estimatedStartLabel).toBe('~30m');
+    expect(status.statusText).toBe('2 / 5 entries');
+    expect(status.startsWhenFullLabel).toBe('Tournament starts once 5 entries enter');
+  });
+
   it('rejects bad LNbits webhook tokens before checking payment state', async () => {
     const fetchMock = installLnbitsFetch();
     const { handler } = await import('../netlify/functions/lnbits-webhook.mjs');

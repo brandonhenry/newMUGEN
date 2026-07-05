@@ -2113,6 +2113,193 @@ button {
   padding: 0 12px;
 }
 
+.cashapp-checkout-popup {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(260px, 1fr);
+  gap: 16px;
+  border-radius: 8px;
+  padding: 16px;
+  color: #f7f7f2;
+  background:
+    linear-gradient(135deg, rgba(0, 214, 96, 0.22), rgba(247, 212, 90, 0.12)),
+    rgba(13, 16, 18, 0.94);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 18px 44px rgba(0, 0, 0, 0.34);
+}
+
+.cashapp-checkout-copy {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cashapp-checkout-copy > span {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 9px;
+  color: #101114;
+  background: #f7d45a;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cashapp-checkout-popup.is-success .cashapp-checkout-copy > span {
+  background: #00d660;
+}
+
+.cashapp-checkout-copy h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.25rem, 2.4vw, 2rem);
+  font-weight: 950;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.cashapp-checkout-copy p,
+.cashapp-checkout-copy li,
+.cashapp-start-note {
+  color: rgba(247, 247, 242, 0.76);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.cashapp-checkout-copy p {
+  margin: 0;
+}
+
+.cashapp-checkout-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.cashapp-checkout-meta strong,
+.cashapp-checkout-meta small {
+  border-radius: 7px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+}
+
+.cashapp-checkout-meta small {
+  color: rgba(247, 247, 242, 0.74);
+}
+
+.cashapp-checkout-copy ol {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 19px;
+}
+
+.cashapp-qr-panel {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  min-width: 0;
+}
+
+.cashapp-qr-code {
+  display: grid;
+  place-items: center;
+  width: min(100%, 250px);
+  aspect-ratio: 1;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 12px 24px rgba(0, 0, 0, 0.28);
+}
+
+.cashapp-qr-panel label {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cashapp-qr-panel label span {
+  color: rgba(247, 247, 242, 0.62);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cashapp-qr-panel code {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 7px;
+  padding: 9px 10px;
+  color: #f7d45a;
+  background: rgba(0, 0, 0, 0.38);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cashapp-checkout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.cashapp-checkout-actions .primary-button,
+.cashapp-checkout-actions .secondary-button,
+.cashapp-checkout-close {
+  min-height: 40px;
+  padding: 0 13px;
+}
+
+.cashapp-checkout-close {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  border: 0;
+  border-radius: 7px;
+  color: #101114;
+  background: #00d660;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition-property: transform, filter;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.cashapp-checkout-close:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 760px) {
+  .cashapp-checkout-popup {
+    grid-template-columns: 1fr;
+  }
+
+  .cashapp-checkout-close {
+    position: static;
+    justify-self: center;
+  }
+}
+
 .tournament-lightning-invoice {
   display: block;
   overflow: auto hidden;

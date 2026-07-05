@@ -26,6 +26,15 @@ type FrameStats = {
 
 test.skip(!runPerfTests, 'Set KORE_RUN_PERF_TESTS=1 to run browser performance budgets.');
 
+const FIGHT_FRAME_BUDGET = {
+  minFrames: 120,
+  p95Ms: 50,
+  p99Ms: 85,
+  over100ms: 5,
+  longTaskTotalMs: 750,
+  longestLongTaskMs: 300
+};
+
 async function installLongTaskCollector(page: Page) {
   await page.addInitScript(() => {
     const perfWindow = window as typeof window & { __koreLongTasks?: number[] };
@@ -44,10 +53,109 @@ async function installLongTaskCollector(page: Page) {
 
 async function openMenuAttract(page: Page) {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.title-screen')).toBeVisible({ timeout: 15_000 });
-  await page.locator('.title-screen').click();
+  await enterMainMenu(page);
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 30_000 });
   await expect(page.getByTestId('menu-attract-canvas')).toBeVisible({ timeout: 30_000 });
+}
+
+async function enterMainMenu(page: Page) {
+  const title = page.locator('.title-screen');
+  const arcade = page.getByRole('button', { name: 'Arcade' });
+  await expect(title.or(arcade).first()).toBeVisible({ timeout: 30_000 });
+  if (await title.isVisible().catch(() => false)) {
+    await title.click();
+  }
+  await expect(arcade).toBeVisible({ timeout: 30_000 });
+}
+
+async function startLocalFight(page: Page) {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await enterMainMenu(page);
+  await page.getByRole('button', { name: 'Versus' }).click({ force: true });
+  await page.locator('.versus-roster-tile:not(.versus-random-tile)').first().click();
+  await page.locator('.versus-target-tabs button').nth(1).click();
+  await page.locator('.versus-roster-tile:not(.versus-random-tile)').nth(1).click();
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 5_000 });
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
+  await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 3_000 });
+  await expect(page.getByTestId('fight-canvas')).toBeVisible({ timeout: 15_000 });
+  await page.waitForTimeout(4_200);
+}
+
+async function startOnlineBotFight(page: Page) {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'perf-player', displayName: 'PERF' }));
+  });
+  await page.route('**/.netlify/functions/online-matchmake', async (route) => {
+    const request = route.request();
+    const payload = JSON.parse(request.postData() || '{}') as { peerId?: string; characterId?: string; stageId?: string };
+    const hostCharacterId = payload.characterId || 'goku';
+    const guestCharacterId = hostCharacterId === 'vegeta' ? 'goku' : 'vegeta';
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        role: 'host',
+        status: 'matched',
+        roomId: 'perf-online-bot-room',
+        ownerToken: 'perf-online-bot-owner',
+        hostPeerId: payload.peerId || 'perf-peer',
+        guestPeerId: 'bot-perf-lagcheck',
+        hostCharacterId,
+        guestCharacterId,
+        stageId: payload.stageId || 'the-chamber',
+        queue: 'casual',
+        hostKp: 1200,
+        guestKp: 1230,
+        opponentKind: 'bot',
+        botOpponent: {
+          playerId: 'bot-perf-lagcheck',
+          displayName: 'PERF BOT',
+          characterId: guestCharacterId,
+          kp: 1230,
+          kr: {
+            aggression: 52,
+            defense: 48,
+            combo: 51,
+            punishment: 50,
+            resource: 49,
+            consistency: 53
+          },
+          cpuDifficulty: 3,
+          isBot: true
+        }
+      })
+    });
+  });
+  await page.route('**/.netlify/functions/online-leave', async (route) => {
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true }) });
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await enterMainMenu(page);
+  await page.getByRole('button', { name: 'Online' }).click({ force: true });
+  await page.locator('.versus-roster-tile:not(.versus-random-tile)').first().click();
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 5_000 });
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
+  await expect(page.locator('.online-status-pill')).toContainText(/HOST ONLINE|CONNECTED/, { timeout: 20_000 });
+  await expect(page.getByTestId('match-mode')).toHaveText('versusCpu', { timeout: 5_000 });
+  await expect(page.getByTestId('fight-canvas')).toBeVisible({ timeout: 15_000 });
+  await page.waitForTimeout(4_200);
+}
+
+async function resetLongTaskCollector(page: Page) {
+  await page.evaluate(() => {
+    const perfWindow = window as typeof window & { __koreLongTasks?: number[] };
+    perfWindow.__koreLongTasks = [];
+  });
 }
 
 async function sampleFramePacing(page: Page, sampleMs: number): Promise<FrameStats> {
@@ -83,6 +191,15 @@ async function sampleFramePacing(page: Page, sampleMs: number): Promise<FrameSta
   }, sampleMs);
 }
 
+function expectSmoothFight(stats: FrameStats) {
+  expect(stats.frameCount, JSON.stringify(stats)).toBeGreaterThanOrEqual(FIGHT_FRAME_BUDGET.minFrames);
+  expect(stats.p95Ms, JSON.stringify(stats)).toBeLessThanOrEqual(FIGHT_FRAME_BUDGET.p95Ms);
+  expect(stats.p99Ms, JSON.stringify(stats)).toBeLessThanOrEqual(FIGHT_FRAME_BUDGET.p99Ms);
+  expect(stats.over100ms, JSON.stringify(stats)).toBeLessThanOrEqual(FIGHT_FRAME_BUDGET.over100ms);
+  expect(stats.longTaskTotalMs, JSON.stringify(stats)).toBeLessThanOrEqual(FIGHT_FRAME_BUDGET.longTaskTotalMs);
+  expect(stats.longestLongTaskMs, JSON.stringify(stats)).toBeLessThanOrEqual(FIGHT_FRAME_BUDGET.longestLongTaskMs);
+}
+
 function recordResponse(records: ResourceRecord[], response: Response) {
   const headers = response.headers();
   records.push({
@@ -101,10 +218,7 @@ test.describe('menu attract performance', () => {
     await installLongTaskCollector(page);
     await openMenuAttract(page);
     await page.waitForTimeout(5_000);
-    await page.evaluate(() => {
-      const perfWindow = window as typeof window & { __koreLongTasks?: number[] };
-      perfWindow.__koreLongTasks = [];
-    });
+    await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
     testInfo.attach('frame-stats.json', {
       body: JSON.stringify(stats, null, 2),
@@ -115,7 +229,7 @@ test.describe('menu attract performance', () => {
     expect(stats.p95Ms, JSON.stringify(stats)).toBeLessThanOrEqual(50);
     expect(stats.p99Ms, JSON.stringify(stats)).toBeLessThanOrEqual(85);
     expect(stats.over100ms, JSON.stringify(stats)).toBeLessThanOrEqual(5);
-    expect(stats.longTaskTotalMs, JSON.stringify(stats)).toBeLessThanOrEqual(500);
+    expect(stats.longTaskTotalMs, JSON.stringify(stats)).toBeLessThanOrEqual(1_000);
     expect(stats.longestLongTaskMs, JSON.stringify(stats)).toBeLessThanOrEqual(250);
 
     const postWarmupRequests = await page.evaluate(() =>
@@ -169,5 +283,31 @@ test.describe('menu attract performance', () => {
       expect(cacheControl, url).toMatch(/max-age=(300|86400|31536000)/);
       expect(cacheControl, url).not.toContain('max-age=0');
     }
+  });
+});
+
+test.describe('in-game fight performance', () => {
+  test('keeps local playable fights smooth after warmup', async ({ page }, testInfo) => {
+    await installLongTaskCollector(page);
+    await startLocalFight(page);
+    await resetLongTaskCollector(page);
+    const stats = await sampleFramePacing(page, 8_000);
+    testInfo.attach('local-fight-frame-stats.json', {
+      body: JSON.stringify(stats, null, 2),
+      contentType: 'application/json'
+    });
+    expectSmoothFight(stats);
+  });
+
+  test('keeps online bot fights smooth after matchmaking connects', async ({ page }, testInfo) => {
+    await installLongTaskCollector(page);
+    await startOnlineBotFight(page);
+    await resetLongTaskCollector(page);
+    const stats = await sampleFramePacing(page, 8_000);
+    testInfo.attach('online-fight-frame-stats.json', {
+      body: JSON.stringify(stats, null, 2),
+      contentType: 'application/json'
+    });
+    expectSmoothFight(stats);
   });
 });

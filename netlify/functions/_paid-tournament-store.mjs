@@ -42,34 +42,44 @@ export function paidEnabled() {
 
 export function paidDisabledSummary() {
   const config = paidTournamentConfig();
+  const timing = paidTimingSummary({ entries: [], minEntries: config.maxPlayers });
   return {
     id: PAID_LIGHTNING_TOURNAMENT_ID,
     kind: 'paidOnline',
     status: paidEnabled() ? 'open' : 'cancelled',
     entryFeeUsd: config.entryUsd,
-    entryFeeLabel: `$${formatUsd(config.entryUsd)} Lightning`,
+    entryFeeLabel: `$${formatUsd(config.entryUsd)} Via Cash App`,
     prizeLabel: `$${formatUsd(config.prizeUsd[1])} / $${formatUsd(config.prizeUsd[2])} / $${formatUsd(config.prizeUsd[3])} Lightning`,
     entries: 0,
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
     minEntries: config.maxPlayers,
     capacity: config.maxPlayers,
     paidEnabled: paidEnabled(),
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
     startsLabel: paidEnabled() ? 'Lightning beta configured' : 'Lightning beta unavailable'
   };
 }
 
 export function paidSummary(bracket) {
   const confirmed = confirmedPaidEntries(bracket);
+  const timing = paidTimingSummary(bracket);
   return {
     id: bracket.id,
     kind: 'paidOnline',
     status: bracket.status,
     entryFeeUsd: bracket.entryUsd,
-    entryFeeLabel: `$${formatUsd(bracket.entryUsd)} Lightning`,
+    entryFeeLabel: `$${formatUsd(bracket.entryUsd)} Via Cash App`,
     prizeLabel: `$${formatUsd(bracket.prizeUsd?.[1] ?? 15)} / $${formatUsd(bracket.prizeUsd?.[2] ?? 10)} / $${formatUsd(bracket.prizeUsd?.[3] ?? 5)} Lightning`,
     entries: confirmed.length,
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
     minEntries: bracket.minEntries,
     capacity: bracket.capacity,
     paidEnabled: Boolean(bracket.paidEnabled),
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
     startsLabel: bracket.status === 'open' ? 'Starts when full' : bracket.status === 'roundActive' ? 'Bracket active' : 'Completed'
   };
 }
@@ -154,7 +164,11 @@ export async function enterPaidTournament(stores, entryRequest, now = Date.now()
     updatedAt: now
   };
   await writeEntry(stores, nextBracket.id, invoicedEntry);
-  await stores.checking.setJSON(checkingKey(invoice.checkingId), { tournamentId: nextBracket.id, playerId, entryId: invoicedEntry.id, createdAt: now });
+  const paymentIndex = { tournamentId: nextBracket.id, playerId, entryId: invoicedEntry.id, checkingId: invoice.checkingId, paymentHash: invoice.paymentHash, createdAt: now };
+  await stores.checking.setJSON(checkingKey(invoice.checkingId), paymentIndex);
+  if (invoice.paymentHash && invoice.paymentHash !== invoice.checkingId) {
+    await stores.checking.setJSON(checkingKey(invoice.paymentHash), paymentIndex);
+  }
   await writeLedgerEvent(stores, 'entry_invoice_created', { tournamentId: nextBracket.id, playerId, entryId: invoicedEntry.id, checkingId: invoice.checkingId, amountSats }, now);
   await writePaidTournament(stores, nextBracket);
   return { bracket: nextBracket, entry: invoicedEntry, reused: false };
@@ -165,7 +179,8 @@ export async function confirmPaidEntryByCheckingId(stores, checkingId, now = Dat
   if (!index?.tournamentId || !index?.playerId) {
     throw Object.assign(new Error('Paid entry not found for LNbits checking id'), { statusCode: 404, code: 'paid_entry_not_found' });
   }
-  const payment = await checkPayment(checkingId);
+  const canonicalCheckingId = index.checkingId || checkingId;
+  const payment = await checkPayment(canonicalCheckingId);
   await writeLedgerEvent(stores, 'lnbits_webhook_checked', { checkingId, paid: paymentIsPaid(payment), raw: payment }, now);
   if (!paymentIsPaid(payment)) {
     const bracket = await readPaidTournament(stores, index.tournamentId);
@@ -201,11 +216,16 @@ export async function getPaidTournamentStatus(stores, playerId) {
   const bracket = await getOrCreatePaidTournament(stores);
   const assignment = playerId ? assignedMatch(bracket, playerId) : { entry: undefined, match: undefined };
   const entry = assignment.entry || (playerId ? await readEntry(stores, bracket.id, playerId) : undefined);
+  const timing = paidTimingSummary(bracket);
   return {
     bracket,
     entry,
     assignedMatch: assignment.match,
     payment: paidPaymentSummary(entry),
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
     statusText: paidStatusText(bracket, assignment.match)
   };
 }
@@ -218,11 +238,16 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
   }
   await writePaidTournament(stores, bracket);
   const assignment = assignedMatch(bracket, reporterPlayerId);
+  const timing = paidTimingSummary(bracket);
   return {
     bracket,
     entry: assignment.entry,
     assignedMatch: assignment.match,
     payment: paidPaymentSummary(assignment.entry),
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
     statusText: paidStatusText(bracket, assignment.match)
   };
 }
@@ -323,6 +348,48 @@ function confirmedPaidEntries(bracket) {
   return (bracket.entries || []).filter((entry) => entry.paymentState === 'paid' || entry.paymentState === 'entryLocked');
 }
 
+function paidTimingSummary(bracket) {
+  const confirmed = confirmedPaidEntries(bracket);
+  const minEntries = Math.max(2, Math.round(Number(bracket.minEntries) || paidTournamentConfig().maxPlayers));
+  const entriesNeeded = Math.max(0, minEntries - confirmed.length);
+  const startsWhenFullLabel = `Tournament starts once ${minEntries} entries enter`;
+  return {
+    confirmedEntries: confirmed.length,
+    entriesNeeded,
+    estimatedStartLabel: estimateStartLabel(confirmed, entriesNeeded, startsWhenFullLabel),
+    startsWhenFullLabel
+  };
+}
+
+function estimateStartLabel(confirmed, entriesNeeded, fallback) {
+  if (entriesNeeded <= 0) return 'Tournament ready';
+  const paidTimes = confirmed
+    .map((entry) => Number(entry.paidAt || entry.joinedAt))
+    .filter((time) => Number.isFinite(time) && time > 0)
+    .sort((a, b) => a - b);
+  if (paidTimes.length < 2) return fallback;
+  const intervals = [];
+  for (let index = 1; index < paidTimes.length; index += 1) {
+    const interval = paidTimes[index] - paidTimes[index - 1];
+    if (interval > 0) intervals.push(interval);
+  }
+  if (!intervals.length) return fallback;
+  const averageMs = intervals.reduce((total, interval) => total + interval, 0) / intervals.length;
+  const estimatedMs = averageMs * entriesNeeded;
+  if (!Number.isFinite(estimatedMs) || estimatedMs <= 0) return fallback;
+  return `~${formatDuration(estimatedMs)}`;
+}
+
+function formatDuration(ms) {
+  const totalMinutes = Math.max(1, Math.round(ms / 60000));
+  const days = Math.floor(totalMinutes / 1440);
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  const minutes = totalMinutes % 60;
+  if (days > 0) return `${days}d ${hours}h`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
+}
+
 async function writePaidTournament(stores, bracket) {
   await stores.tournaments.setJSON(tournamentKey(bracket.id), bracket);
   await stores.tournaments.setJSON(ACTIVE_KEY, { id: bracket.id, updatedAt: bracket.updatedAt });
@@ -360,7 +427,7 @@ function sanitizePaidBracket(value) {
 }
 
 function paidStatusText(bracket, match) {
-  if (bracket.status === 'open') return `${confirmedPaidEntries(bracket).length} / ${bracket.minEntries} paid players`;
+  if (bracket.status === 'open') return `${confirmedPaidEntries(bracket).length} / ${bracket.minEntries} entries`;
   if (bracket.status === 'completed') return 'Tournament complete';
   if (match) return 'Match ready';
   return 'Waiting for next round';
