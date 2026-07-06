@@ -4,6 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  CheckCircle2,
   Award,
   BarChart3,
   Copy,
@@ -37,6 +38,7 @@ import {
   Upload,
   Users,
   Wifi,
+  XCircle,
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
@@ -57,7 +59,7 @@ import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSetti
 import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/stageLoader';
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
-import { detectGameplaySupport, type SupportWarning } from './lib/gameplaySupport';
+import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -9644,7 +9646,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
   audio: ['Menu Music', 'Stage Music', 'Mix'],
-  console: ['Terminal', 'Memory Card', 'Installers', 'About']
+  console: ['Terminal', 'Memory Card', 'Installers', 'Debug', 'About']
 };
 
 function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings): AnalyticsProperties[] {
@@ -10469,7 +10471,10 @@ function OptionsConsole({
       <SettingsSection index={2} title="Installers" active={activeSectionIndex === 2} showTitle={false}>
         <OptionsInstallersPanel installers={installers} manifestFailed={installerManifestFailed} />
       </SettingsSection>
-      <SettingsSection index={3} title="About" active={activeSectionIndex === 3} showTitle={false}>
+      <SettingsSection index={3} title="Debug" active={activeSectionIndex === 3} showTitle={false}>
+        <OptionsDebugPanel />
+      </SettingsSection>
+      <SettingsSection index={4} title="About" active={activeSectionIndex === 4} showTitle={false}>
         <article className="about-kore-panel" aria-label="About game">
           <div className="about-kore-heading">
             <img src="/brand/kore-logo-generated.png" alt="Game logo" />
@@ -10483,6 +10488,44 @@ function OptionsConsole({
           </p>
         </article>
       </SettingsSection>
+    </div>
+  );
+}
+
+function OptionsDebugPanel() {
+  const checks = useMemo(() => getGameplaySupportChecks(), []);
+  const allPassed = checks.length > 0 && checks.every((check) => check.passed);
+  return (
+    <article className="debug-panel" aria-label="Device debug checks">
+      <div className="debug-panel-heading">
+        <span><Terminal size={18} /> DEBUG</span>
+        <strong>{allPassed ? 'SUPPORTED' : 'REVIEW'}</strong>
+      </div>
+      <p>
+        {allPassed
+          ? 'This browser and device passed the gameplay support checks.'
+          : 'One or more support checks may affect gameplay on this browser or device.'}
+      </p>
+      <div className="debug-check-list">
+        {checks.map((check) => (
+          <DebugCheckRow key={check.id} check={check} />
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function DebugCheckRow({ check }: { check: SupportCheck }) {
+  return (
+    <div className={`debug-check-row ${check.passed ? 'is-passed' : 'is-failed'}`}>
+      <span className="debug-check-icon" aria-hidden="true">
+        {check.passed ? <CheckCircle2 size={21} /> : <XCircle size={21} />}
+      </span>
+      <div>
+        <strong>{check.label}</strong>
+        <small>{check.detail}</small>
+      </div>
+      <em>{check.passed ? 'Pass' : check.level === 'unsupported' ? 'Unsupported' : 'Warning'}</em>
     </div>
   );
 }

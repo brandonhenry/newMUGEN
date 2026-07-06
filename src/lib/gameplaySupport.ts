@@ -3,6 +3,14 @@ export type SupportWarning = {
   reason: string;
 };
 
+export type SupportCheck = {
+  id: string;
+  label: string;
+  detail: string;
+  passed: boolean;
+  level: 'caution' | 'unsupported';
+};
+
 type NavigatorWithHints = Navigator & {
   deviceMemory?: number;
 };
@@ -18,35 +26,65 @@ export function detectGameplaySupport(): SupportWarning | null {
     if (testWarning !== undefined) return testWarning;
   }
 
+  const failedCheck = getGameplaySupportChecks().find((check) => !check.passed);
+  return failedCheck ? { level: failedCheck.level, reason: failedCheck.id } : null;
+}
+
+export function getGameplaySupportChecks(): SupportCheck[] {
+  if (typeof document === 'undefined' || typeof navigator === 'undefined') return [];
+
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
-  if (!context) {
-    return { level: 'unsupported', reason: 'webgl-unavailable' };
-  }
-
-  const maxTextureSize = Number(context.getParameter(context.MAX_TEXTURE_SIZE));
-  if (Number.isFinite(maxTextureSize) && maxTextureSize > 0 && maxTextureSize < 4096) {
-    return { level: 'caution', reason: 'low-texture-size' };
-  }
-
+  const isWebGL2 = Boolean(canvas.getContext('webgl2'));
+  const maxTextureSize = context ? Number(context.getParameter(context.MAX_TEXTURE_SIZE)) : 0;
   const hintedNavigator = navigator as NavigatorWithHints;
-  if (typeof hintedNavigator.deviceMemory === 'number' && hintedNavigator.deviceMemory <= 2) {
-    return { level: 'caution', reason: 'low-device-memory' };
-  }
-  if (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 2) {
-    return { level: 'caution', reason: 'low-cpu-cores' };
-  }
-
+  const memory = hintedNavigator.deviceMemory;
+  const cores = navigator.hardwareConcurrency;
   const userAgent = navigator.userAgent;
   const iosVersion = userAgent.match(/OS (\d+)_/);
-  if (/iPhone|iPad|iPod/.test(userAgent) && iosVersion && Number(iosVersion[1]) < 15) {
-    return { level: 'caution', reason: 'old-ios-browser' };
-  }
-
   const androidVersion = userAgent.match(/Android (\d+)/);
-  if (androidVersion && Number(androidVersion[1]) < 9) {
-    return { level: 'caution', reason: 'old-android-browser' };
-  }
+  const oldIos = Boolean(/iPhone|iPad|iPod/.test(userAgent) && iosVersion && Number(iosVersion[1]) < 15);
+  const oldAndroid = Boolean(androidVersion && Number(androidVersion[1]) < 9);
 
-  return null;
+  return [
+    {
+      id: 'webgl-unavailable',
+      label: 'WebGL rendering',
+      detail: context ? `${isWebGL2 ? 'WebGL2' : 'WebGL'} context available` : 'WebGL context unavailable',
+      passed: Boolean(context),
+      level: 'unsupported'
+    },
+    {
+      id: 'low-texture-size',
+      label: 'Texture capacity',
+      detail: context ? `Max texture size ${maxTextureSize || 'unknown'}px` : 'Cannot check without WebGL',
+      passed: Boolean(context) && (!Number.isFinite(maxTextureSize) || maxTextureSize >= 4096),
+      level: 'caution'
+    },
+    {
+      id: 'low-device-memory',
+      label: 'Memory hint',
+      detail: typeof memory === 'number' ? `${memory} GB reported` : 'Not reported by browser',
+      passed: typeof memory === 'number' ? memory > 2 : true,
+      level: 'caution'
+    },
+    {
+      id: 'low-cpu-cores',
+      label: 'CPU cores',
+      detail: typeof cores === 'number' ? `${cores} logical cores reported` : 'Not reported by browser',
+      passed: typeof cores === 'number' ? cores > 2 : true,
+      level: 'caution'
+    },
+    {
+      id: oldIos ? 'old-ios-browser' : oldAndroid ? 'old-android-browser' : 'modern-browser',
+      label: 'Browser version',
+      detail: oldIos
+        ? `iOS ${iosVersion?.[1]} may struggle with browser WebGL`
+        : oldAndroid
+          ? `Android ${androidVersion?.[1]} may struggle with browser WebGL`
+          : 'No known browser version risk detected',
+      passed: !oldIos && !oldAndroid,
+      level: 'caution'
+    }
+  ];
 }

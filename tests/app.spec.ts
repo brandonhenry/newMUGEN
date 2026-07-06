@@ -611,6 +611,18 @@ test('shows installer preparation state when manifest is unavailable', async ({ 
   await expect(page.getByText('Windows, Mac, Steam Deck, and Linux builds will appear here once the release files are published.')).toBeVisible();
 });
 
+test('shows device support debug checks from console sidebar', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Debug' }).click();
+
+  await expect(page.getByLabel('Device debug checks')).toBeVisible();
+  await expect(page.getByText('WebGL rendering')).toBeVisible();
+  await expect(page.getByText('Texture capacity')).toBeVisible();
+  await expect(page.getByText('Browser version', { exact: true })).toBeVisible();
+});
+
 test('opens tournament mode above characters and shows paid beta disabled', async ({ page }) => {
   await startFromSplash(page);
   const tournamentButton = page.getByRole('button', { name: 'Tournament' });
