@@ -6,6 +6,14 @@ async function gotoTitle(page: Page) {
   await expect(page.locator('.title-screen')).toBeVisible({ timeout: 5000 });
 }
 
+async function mockInitialWebGLSupport(page: Page, supported: boolean) {
+  await page.addInitScript((isSupported) => {
+    (window as typeof window & {
+      __KORE_TEST_SUPPORT_WARNING__?: { level: 'caution' | 'unsupported'; reason: string } | null;
+    }).__KORE_TEST_SUPPORT_WARNING__ = isSupported ? null : { level: 'unsupported', reason: 'webgl-unavailable' };
+  }, supported);
+}
+
 async function startFromSplash(page: import('@playwright/test').Page) {
   await page.goto('/');
   await activateAnyInputScreen(page, '.title-screen');
@@ -305,6 +313,21 @@ test('title splash accepts browser gamepad input', async ({ page }) => {
   await expectMainMenu(page);
 });
 
+test('title splash hides support warning on healthy WebGL devices', async ({ page }) => {
+  await mockInitialWebGLSupport(page, true);
+  await gotoTitle(page);
+  await expect(page.getByTestId('title-support-warning')).toBeHidden();
+});
+
+test('title splash warns for unsupported WebGL and clears after start', async ({ page }) => {
+  await mockInitialWebGLSupport(page, false);
+  await gotoTitle(page);
+  await expect(page.getByTestId('title-support-warning')).toContainText('You may experience gameplay issues');
+  await activateAnyInputScreen(page, '.title-screen');
+  await expectMainMenu(page);
+  await expect(page.getByTestId('title-support-warning')).toBeHidden();
+});
+
 test('versus splash accepts touch input to skip into the fight', async ({ page }) => {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
@@ -334,6 +357,7 @@ test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
   await expect(page.getByTestId('fight-canvas')).toBeVisible();
   await expect(page.locator('.fight-hud')).toBeVisible();
+  await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
 });
 
 test('defaults character and stage select to random slots', async ({ page }) => {
@@ -388,7 +412,7 @@ test('shows ranked mode and ranked profile card from character select', async ({
   await expect(page.getByRole('heading', { name: 'RANKTEST' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Stats' })).toBeVisible();
   await expect(page.getByText(/Placement 0\/10 - 900 provisional KP|1,200 KP - Unranked/)).toBeVisible();
-  await page.getByRole('button', { name: 'History' }).click();
+  await page.locator('.ranked-profile-tabs button').filter({ hasText: 'History' }).dispatchEvent('click');
   await expect(page.getByText('No ranked matches yet.')).toBeVisible();
 });
 

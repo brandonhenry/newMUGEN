@@ -42,7 +42,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -57,6 +57,7 @@ import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSetti
 import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/stageLoader';
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
+import { detectGameplaySupport, type SupportWarning } from './lib/gameplaySupport';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -4458,10 +4459,12 @@ function handleLocalAnyInputKeyDown(event: ReactKeyboardEvent<HTMLElement>, acce
 
 function TitleScreen({ onStart }: { onStart: () => void }) {
   const titleRef = useRef<HTMLDivElement>(null);
+  const [supportWarning, setSupportWarning] = useState<SupportWarning | null>(null);
   const acceptTitleInput = useAnyInputActivation({ onAccept: onStart });
 
   useEffect(() => {
     titleRef.current?.focus();
+    setSupportWarning(detectGameplaySupport());
   }, []);
 
   return (
@@ -4472,6 +4475,11 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptTitleInput)}
       aria-label="KORE title screen. Press any key."
     >
+      {supportWarning && (
+        <div className={`title-support-warning title-support-warning-${supportWarning.level}`} data-testid="title-support-warning">
+          You may experience gameplay issues on this browser or device. Consider switching.
+        </div>
+      )}
       <img className="title-logo" src="/brand/kore-logo-generated.png" alt="KORE" draggable={false} />
       <span className="press-any-key">PRESS ANY KEY</span>
     </div>
@@ -18190,6 +18198,18 @@ function safeClassToken(token: string) {
   return token.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'symbol';
 }
 
+function FightAssetLoadingOverlay({ state }: { state: AssetLoadingState }) {
+  const progress = Number.isFinite(state.progress) ? Math.max(0, Math.min(100, Math.round(state.progress))) : 0;
+  const status = state.errors.length > 0 ? 'Still loading fight assets' : 'Loading fight assets';
+  return (
+    <div className="fight-asset-loading-overlay" aria-live="polite" data-testid="fight-asset-loading-overlay">
+      <img src="/ui/kore-loading-target.png" alt="" draggable={false} />
+      <span>{status}</span>
+      <strong>{progress}%</strong>
+    </div>
+  );
+}
+
 function FightScreen({
   p1,
   p2,
@@ -18348,6 +18368,13 @@ function FightScreen({
   const moveListTabAnalyticsRef = useRef('');
   const completedTrainingTrialAnalyticsRef = useRef<Set<string>>(new Set());
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [assetLoadingState, setAssetLoadingState] = useState<AssetLoadingState>({
+    active: true,
+    progress: 0,
+    item: '',
+    errors: [],
+    ready: false
+  });
 
   const captureFightAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
     captureAnalyticsEvent(name, {
@@ -18371,6 +18398,16 @@ function FightScreen({
     }
     matchStartedTrackedRef.current = false;
   }, []);
+
+  useEffect(() => {
+    setAssetLoadingState({
+      active: true,
+      progress: 0,
+      item: '',
+      errors: [],
+      ready: false
+    });
+  }, [mode, p1.id, p2.id, stage.id]);
 
   useEffect(() => {
     matchRef.current = match;
@@ -20172,6 +20209,7 @@ function FightScreen({
         sparkSettings={settings.display.impactSparks}
         audioSettings={gameplayAudioEnabled ? settings.audio : undefined}
         reducedMotion={settings.display.reducedMotion}
+        onAssetLoadingChange={setAssetLoadingState}
       />
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
       <CombatPopupLayer popups={combatPopups} />
@@ -20187,6 +20225,7 @@ function FightScreen({
       </button>
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
+      {(assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
       {match.message && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}

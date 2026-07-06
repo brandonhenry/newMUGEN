@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { Component, Suspense, createContext, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
+import { Component, Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -53,6 +53,15 @@ type GameSceneProps = {
   sparkSettings?: GameSettings['display']['impactSparks'];
   audioSettings?: GameSettings['audio'];
   reducedMotion?: boolean;
+  onAssetLoadingChange?: (state: AssetLoadingState) => void;
+};
+
+export type AssetLoadingState = {
+  active: boolean;
+  progress: number;
+  item: string;
+  errors: string[];
+  ready: boolean;
 };
 
 type KoreHealth = {
@@ -597,7 +606,7 @@ const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
 
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
-export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false }: GameSceneProps) {
+export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const fighterRenderStyles = useMemo(() => ([
     makeFightFighterRenderStyle(match, 1),
@@ -605,6 +614,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
   ] as const), [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id]);
   return (
     <Canvas dpr={[1, 1.25]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
+      <AssetLoadingReporter onAssetLoadingChange={onAssetLoadingChange} />
       {import.meta.env.DEV && <KoreHealthReporter match={match} />}
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         <Suspense fallback={null}>
@@ -627,6 +637,39 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
+}
+
+function AssetLoadingReporter({ onAssetLoadingChange }: { onAssetLoadingChange?: (state: AssetLoadingState) => void }) {
+  const progress = useProgress();
+  const readyRef = useRef(false);
+  const lastReportRef = useRef('');
+
+  const report = useCallback((ready: boolean) => {
+    if (!onAssetLoadingChange) return;
+    const state: AssetLoadingState = {
+      active: progress.active || !ready,
+      progress: ready && !progress.active ? 100 : Math.round(progress.progress),
+      item: progress.item,
+      errors: [...progress.errors],
+      ready
+    };
+    const reportKey = JSON.stringify(state);
+    if (reportKey === lastReportRef.current) return;
+    lastReportRef.current = reportKey;
+    onAssetLoadingChange(state);
+  }, [onAssetLoadingChange, progress.active, progress.errors, progress.item, progress.progress]);
+
+  useEffect(() => {
+    report(readyRef.current);
+  }, [report]);
+
+  useFrame(() => {
+    if (readyRef.current) return;
+    readyRef.current = true;
+    report(true);
+  });
+
+  return null;
 }
 
 function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
