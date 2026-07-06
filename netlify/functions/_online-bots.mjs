@@ -28,7 +28,7 @@ export function createOnlineBotOpponent(input = {}) {
   const kpOffset = input.queue === 'ranked'
     ? Math.round((seededUnit(seed, 23) * 240) - 120)
     : Math.round((seededUnit(seed, 23) * 180) - 90);
-  const kp = Math.max(0, playerKp + kpOffset);
+  const kp = Math.max(0, cleanKp(input.targetKp ?? (playerKp + kpOffset)));
   const kr = Object.fromEntries(rankedKrKeys.map((key, index) => [
     key,
     clampScore(playerKr[key] + Math.round((seededUnit(seed, 41 + index * 17) * 20) - 10))

@@ -29,12 +29,26 @@ export async function handler(event) {
     const queue = body.queue === 'ranked' ? 'ranked' : body.queue === 'training' ? 'training' : 'casual';
     const kp = cleanKp(body.kp);
     const kr = cleanKrScores(body.kr);
+    const placement = cleanPlacement(body.placement);
     const allowBotFallback = body.allowBotFallback !== false;
     const availableCharacterIds = cleanCharacterIds(body.availableCharacterIds);
+    const now = Date.now();
     if (!peerId || !characterId || !stageId) return json(400, { error: 'missing_fields' });
 
+    if (queue === 'ranked' && placement?.complete === false) {
+      return json(200, placementBotResult({
+        peerId,
+        characterId,
+        stageId,
+        kp,
+        kr,
+        placement,
+        availableCharacterIds,
+        now
+      }));
+    }
+
     const store = getBlobStore(STORE_NAME, event);
-    const now = Date.now();
     const rooms = await listRooms(store);
     await pruneExpiredRooms(store, rooms, now);
 
@@ -90,6 +104,35 @@ export async function handler(event) {
   }
 }
 
+function placementBotResult({ peerId, characterId, stageId, kp, kr, placement, availableCharacterIds, now }) {
+  const bot = createOnlineBotOpponent({
+    seed: `${peerId}:${characterId}:placement:${placement.matchesPlayed}`,
+    queue: 'ranked',
+    playerKp: placement.ratingEstimate || kp,
+    targetKp: placement.nextBotKp,
+    playerKr: kr,
+    availableCharacterIds,
+    fallbackCharacterId: characterId
+  });
+  return {
+    role: 'host',
+    status: 'matched',
+    roomId: `placement-${peerId}-${placement.matchesPlayed + 1}-${now}`,
+    ownerToken: `placement-${peerId}-${placement.matchesPlayed + 1}`,
+    hostPeerId: peerId,
+    guestPeerId: bot.playerId,
+    hostCharacterId: characterId,
+    guestCharacterId: bot.characterId,
+    stageId,
+    queue: 'ranked',
+    hostKp: placement.ratingEstimate || kp,
+    guestKp: bot.kp,
+    opponentKind: 'bot',
+    botOpponent: bot,
+    placement
+  };
+}
+
 async function listRooms(store) {
   const listed = await store.list({ prefix: ROOM_PREFIX });
   const rooms = [];
@@ -125,7 +168,8 @@ function roomResult(room, role) {
     hostKp: room.hostKp,
     guestKp: room.guestKp,
     opponentKind: room.opponentKind,
-    botOpponent: room.botOpponent
+    botOpponent: room.botOpponent,
+    placement: room.placement
   };
 }
 
@@ -145,6 +189,23 @@ function cleanToken(value) {
 
 function cleanKp(value) {
   return Math.max(0, Math.round(Number(value) || 0));
+}
+
+function cleanPlacement(value) {
+  if (!value || typeof value !== 'object') return undefined;
+  const requiredMatches = Math.max(1, cleanKp(value.requiredMatches || 10));
+  const matchesPlayed = Math.min(requiredMatches, cleanKp(value.matchesPlayed));
+  return {
+    requiredMatches,
+    matchesPlayed,
+    complete: Boolean(value.complete),
+    ratingEstimate: clampKp(value.ratingEstimate ?? 900, 650, 2200),
+    nextBotKp: clampKp(value.nextBotKp ?? 650, 650, 2200)
+  };
+}
+
+function clampKp(value, min, max) {
+  return Math.max(min, Math.min(max, cleanKp(value)));
 }
 
 function rankedKpMatches(room, guestKp, now) {

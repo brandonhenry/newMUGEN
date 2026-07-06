@@ -1,5 +1,5 @@
 import { getBlobStore } from './_blob-store.mjs';
-import { applyRankedMatchReport, cleanRankedReport, makeDefaultRankedProfile, normalizeRankedProfile } from './_online-ranked.mjs';
+import { RANKED_PLACEMENT_MATCHES, applyRankedMatchReport, cleanRankedReport, makeDefaultRankedProfile, normalizeRankedProfile } from './_online-ranked.mjs';
 
 const STORE_NAME = 'kore-online-ranked';
 const PROFILE_PREFIX = 'profiles/';
@@ -23,7 +23,14 @@ export async function handler(event) {
         return normalizeRankedProfile({
           ...makeDefaultRankedProfile(player.profile),
           kp: player.botKp,
-          kr: player.botKr
+          kr: player.botKr,
+          placement: {
+            requiredMatches: RANKED_PLACEMENT_MATCHES,
+            matchesPlayed: RANKED_PLACEMENT_MATCHES,
+            complete: true,
+            ratingEstimate: player.botKp,
+            nextBotKp: player.botKp
+          }
         });
       }
       const existingProfile = await store.get(profileKey(player.profile.playerId), { type: 'json' }).catch(() => null);

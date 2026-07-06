@@ -1,5 +1,10 @@
 export const RANKED_STARTING_KP = 1200;
+export const RANKED_PLACEMENT_MATCHES = 10;
+export const RANKED_PLACEMENT_START_ESTIMATE = 900;
+export const RANKED_PLACEMENT_START_BOT_KP = 650;
 const HISTORY_LIMIT = 25;
+const RANKED_PLACEMENT_MIN_KP = 650;
+const RANKED_PLACEMENT_MAX_KP = 2200;
 
 export const RANKED_TIERS = [
   { id: 'unranked', name: 'Unranked', badgeId: 'badge-unranked', minKp: 0, maxKp: 1299 },
@@ -46,8 +51,19 @@ export function makeDefaultRankedProfile(profile, now = Date.now()) {
       maxComboHits: 0
     },
     kr: emptyRankedKrScores(),
+    placement: makeDefaultRankedPlacement(),
     history: [],
     updatedAt: now
+  };
+}
+
+export function makeDefaultRankedPlacement() {
+  return {
+    requiredMatches: RANKED_PLACEMENT_MATCHES,
+    matchesPlayed: 0,
+    complete: false,
+    ratingEstimate: RANKED_PLACEMENT_START_ESTIMATE,
+    nextBotKp: RANKED_PLACEMENT_START_BOT_KP
   };
 }
 
@@ -57,6 +73,20 @@ export function normalizeRankedProfile(value, now = Date.now()) {
   const base = makeDefaultRankedProfile(profile, now);
   const kp = cleanKp(value?.kp || base.kp);
   const tier = getRankedTier(kp);
+  const totals = {
+    ...base.totals,
+    ...value?.totals,
+    matches: cleanCount(value?.totals?.matches),
+    wins: cleanCount(value?.totals?.wins),
+    losses: cleanCount(value?.totals?.losses),
+    damageDealt: cleanCount(value?.totals?.damageDealt),
+    damageTaken: cleanCount(value?.totals?.damageTaken),
+    cleanHits: cleanCount(value?.totals?.cleanHits),
+    attacksAttempted: cleanCount(value?.totals?.attacksAttempted),
+    blocks: cleanCount(value?.totals?.blocks),
+    maxComboHits: cleanCount(value?.totals?.maxComboHits)
+  };
+  const history = Array.isArray(value?.history) ? value.history.slice(0, HISTORY_LIMIT) : [];
   return {
     ...base,
     ...value,
@@ -64,21 +94,10 @@ export function normalizeRankedProfile(value, now = Date.now()) {
     kp,
     rank: tier,
     badgeId: tier.badgeId,
-    totals: {
-      ...base.totals,
-      ...value?.totals,
-      matches: cleanCount(value?.totals?.matches),
-      wins: cleanCount(value?.totals?.wins),
-      losses: cleanCount(value?.totals?.losses),
-      damageDealt: cleanCount(value?.totals?.damageDealt),
-      damageTaken: cleanCount(value?.totals?.damageTaken),
-      cleanHits: cleanCount(value?.totals?.cleanHits),
-      attacksAttempted: cleanCount(value?.totals?.attacksAttempted),
-      blocks: cleanCount(value?.totals?.blocks),
-      maxComboHits: cleanCount(value?.totals?.maxComboHits)
-    },
+    totals,
     kr: normalizeKrScores(value?.kr),
-    history: Array.isArray(value?.history) ? value.history.slice(0, HISTORY_LIMIT) : [],
+    placement: normalizePlacementState(value?.placement, kp, totals.matches, history.length),
+    history,
     updatedAt: cleanCount(value?.updatedAt || now)
   };
 }
@@ -93,19 +112,27 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
   const perfScores = report.players.map((player, index) => calculateMechanicScores(player.stats, player.profile.playerId === report.winnerPlayerId, report.players[index].roundsWon));
   const deltas = report.players.map((player, index) => {
     const opponent = beforeProfiles[index === 0 ? 1 : 0];
+    const opponentReport = report.players[index === 0 ? 1 : 0];
     const didWin = player.profile.playerId === report.winnerPlayerId;
     const mechanicEdge = averageKr(perfScores[index]) - averageKr(perfScores[index === 0 ? 1 : 0]);
+    if (isPlacementReportForPlayer(report, player.profile.playerId, opponentReport)) {
+      return calculatePlacementKpDelta(beforeProfiles[index].placement.ratingEstimate, opponent.kp, didWin, mechanicEdge, player.roundsWon - opponentReport.roundsWon);
+    }
     const rawDelta = calculateRankedKpDelta(beforeProfiles[index].kp, opponent.kp, didWin, mechanicEdge);
-    return report.players[index === 0 ? 1 : 0].isBot ? reduceBotKpDelta(rawDelta, didWin) : rawDelta;
+    return opponentReport.isBot ? reduceBotKpDelta(rawDelta, didWin) : rawDelta;
   });
   const players = beforeProfiles.map((before, index) => {
     const playerReport = report.players[index];
     const opponentBefore = beforeProfiles[index === 0 ? 1 : 0];
     const opponentReport = report.players[index === 0 ? 1 : 0];
     const didWin = playerReport.profile.playerId === report.winnerPlayerId;
-    const afterKp = Math.max(0, before.kp + deltas[index]);
-    const beforeRank = getRankedTier(before.kp);
-    const afterRank = getRankedTier(afterKp);
+    const placementResult = makePlacementResult(before.placement, report, playerReport, opponentReport, perfScores[index], perfScores[index === 0 ? 1 : 0], didWin);
+    const beforeDisplayKp = placementResult ? placementResult.beforeRatingEstimate : before.kp;
+    const afterDisplayKp = placementResult ? placementResult.afterRatingEstimate : Math.max(0, before.kp + deltas[index]);
+    const profileKp = placementResult ? (placementResult.complete ? placementResult.afterRatingEstimate : before.kp) : afterDisplayKp;
+    const beforeRank = getRankedTier(beforeDisplayKp);
+    const afterRank = getRankedTier(afterDisplayKp);
+    const profileRank = getRankedTier(profileKp);
     const afterKr = rollKrScores(before.kr, perfScores[index], Boolean(opponentReport.isBot));
     const krDelta = diffKrScores(before.kr, afterKr);
     const historyEntry = {
@@ -114,15 +141,15 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
       stageId: report.stageId,
       result: didWin ? 'win' : 'loss',
       kpDelta: deltas[index],
-      beforeKp: before.kp,
-      afterKp,
+      beforeKp: beforeDisplayKp,
+      afterKp: afterDisplayKp,
       beforeRankName: beforeRank.name,
       afterRankName: afterRank.name,
       left: {
         playerId: before.playerId,
         displayName: before.displayName,
         characterId: playerReport.characterId,
-        kp: afterKp,
+        kp: afterDisplayKp,
         rankName: afterRank.name,
         roundsWon: playerReport.roundsWon
       },
@@ -138,9 +165,9 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
     const profile = {
       ...before,
       displayName: playerReport.profile.displayName,
-      kp: afterKp,
-      rank: afterRank,
-      badgeId: afterRank.badgeId,
+      kp: profileKp,
+      rank: profileRank,
+      badgeId: profileRank.badgeId,
       totals: {
         matches: before.totals.matches + 1,
         wins: before.totals.wins + (didWin ? 1 : 0),
@@ -153,6 +180,15 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
         maxComboHits: Math.max(before.totals.maxComboHits, cleanCount(playerReport.stats.maxComboHits))
       },
       kr: afterKr,
+      placement: placementResult
+        ? {
+          requiredMatches: placementResult.requiredMatches,
+          matchesPlayed: placementResult.afterMatchesPlayed,
+          complete: placementResult.complete,
+          ratingEstimate: placementResult.afterRatingEstimate,
+          nextBotKp: placementResult.nextBotKp
+        }
+        : before.placement,
       history: [historyEntry, ...before.history.filter((item) => item.id !== historyEntry.id)].slice(0, HISTORY_LIMIT),
       updatedAt: now
     };
@@ -160,16 +196,17 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
       playerId: before.playerId,
       displayName: profile.displayName,
       didWin,
-      beforeKp: before.kp,
-      afterKp,
+      beforeKp: beforeDisplayKp,
+      afterKp: afterDisplayKp,
       kpDelta: deltas[index],
       beforeRank,
       afterRank,
       beforeKr: before.kr,
       afterKr,
       krDelta,
-      promoted: tierIndex(afterRank) > tierIndex(beforeRank),
-      demoted: tierIndex(afterRank) < tierIndex(beforeRank),
+      promoted: placementResult?.complete ? tierIndex(afterRank) > tierIndex(beforeRank) : !placementResult && tierIndex(afterRank) > tierIndex(beforeRank),
+      demoted: placementResult?.complete ? tierIndex(afterRank) < tierIndex(beforeRank) : !placementResult && tierIndex(afterRank) < tierIndex(beforeRank),
+      placement: placementResult,
       historyEntry,
       profile
     };
@@ -183,13 +220,31 @@ export function cleanRankedReport(value) {
   const roomId = cleanId(value?.roomId);
   const stageId = cleanId(value?.stageId);
   if (players.length !== 2 || !winnerPlayerId || !roomId || !stageId || !players.some((player) => player.profile.playerId === winnerPlayerId)) return null;
+  const placement = cleanPlacementReport(value?.placement, players);
+  if (value?.placement && !placement) return null;
   return {
     reportId: cleanId(value?.reportId) || [roomId, winnerPlayerId, ...players.map((player) => player.profile.playerId).sort()].join(':'),
     roomId,
     stageId,
     winnerPlayerId,
     submittedAt: cleanCount(value?.submittedAt || Date.now()),
+    placement,
     players
+  };
+}
+
+function cleanPlacementReport(value, players) {
+  if (!value) return undefined;
+  const playerId = cleanId(value?.playerId);
+  const playerIndex = players.findIndex((player) => player.profile.playerId === playerId);
+  const opponent = playerIndex >= 0 ? players[playerIndex === 0 ? 1 : 0] : null;
+  if (!playerId || !opponent?.isBot) return null;
+  return {
+    playerId,
+    matchNumber: cleanCount(value?.matchNumber),
+    requiredMatches: cleanCount(value?.requiredMatches || RANKED_PLACEMENT_MATCHES),
+    botKp: cleanKp(value?.botKp),
+    ratingEstimate: cleanKp(value?.ratingEstimate)
   };
 }
 
@@ -268,6 +323,75 @@ function rollKrScores(current, matchScores, reduced = false) {
     const capped = reduced ? current[key] + clampNumber(blended - current[key], -4, 4) : blended;
     return [key, clampScore(capped)];
   }));
+}
+
+function makePlacementResult(before, report, playerReport, opponentReport, playerScores, opponentScores, didWin) {
+  if (!isPlacementReportForPlayer(report, playerReport.profile.playerId, opponentReport)) return undefined;
+  const beforeRatingEstimate = before.ratingEstimate;
+  const mechanicEdge = averageKr(playerScores) - averageKr(opponentScores);
+  const roundEdge = playerReport.roundsWon - opponentReport.roundsWon;
+  const delta = calculatePlacementKpDelta(beforeRatingEstimate, cleanKp(opponentReport.botKp), didWin, mechanicEdge, roundEdge);
+  const afterRatingEstimate = clampNumber(beforeRatingEstimate + delta, RANKED_PLACEMENT_MIN_KP, RANKED_PLACEMENT_MAX_KP);
+  const requiredMatches = Math.max(1, before.requiredMatches || RANKED_PLACEMENT_MATCHES);
+  const afterMatchesPlayed = Math.min(requiredMatches, before.matchesPlayed + 1);
+  const complete = afterMatchesPlayed >= requiredMatches;
+  return {
+    requiredMatches,
+    beforeMatchesPlayed: before.matchesPlayed,
+    afterMatchesPlayed,
+    complete,
+    beforeRatingEstimate,
+    afterRatingEstimate,
+    nextBotKp: complete
+      ? afterRatingEstimate
+      : calculateNextPlacementBotKp(afterRatingEstimate, didWin, mechanicEdge, roundEdge)
+  };
+}
+
+function isPlacementReportForPlayer(report, playerId, opponentReport) {
+  return Boolean(report.placement && report.placement.playerId === playerId && opponentReport.isBot);
+}
+
+function calculatePlacementKpDelta(playerKp, opponentKp, didWin, mechanicEdge, roundEdge) {
+  const expected = 1 / (1 + Math.pow(10, (cleanKp(opponentKp) - cleanKp(playerKp)) / 400));
+  const mechanicModifier = clampNumber(mechanicEdge * 0.55, -22, 22);
+  const roundModifier = clampNumber(roundEdge * 14, -28, 28);
+  return clampNumber(Math.round(110 * ((didWin ? 1 : 0) - expected) + mechanicModifier + roundModifier), -95, 155);
+}
+
+function calculateNextPlacementBotKp(ratingEstimate, didWin, mechanicEdge, roundEdge) {
+  const directionalStep = didWin ? 110 : -90;
+  const performanceStep = clampNumber(mechanicEdge * 1.1 + roundEdge * 24, -90, 90);
+  return clampNumber(ratingEstimate + directionalStep + performanceStep, RANKED_PLACEMENT_MIN_KP, RANKED_PLACEMENT_MAX_KP);
+}
+
+function normalizePlacementState(value, kp, matches, historyLength) {
+  const base = makeDefaultRankedPlacement();
+  if (!value) {
+    const legacyComplete = matches > 0 || historyLength > 0;
+    return legacyComplete
+      ? {
+        requiredMatches: RANKED_PLACEMENT_MATCHES,
+        matchesPlayed: RANKED_PLACEMENT_MATCHES,
+        complete: true,
+        ratingEstimate: kp,
+        nextBotKp: kp
+      }
+      : base;
+  }
+  const requiredMatches = Math.max(1, cleanCount(value.requiredMatches || RANKED_PLACEMENT_MATCHES));
+  const matchesPlayed = Math.min(requiredMatches, cleanCount(value.matchesPlayed));
+  const complete = Boolean(value.complete) || matchesPlayed >= requiredMatches;
+  const ratingEstimate = clampNumber(cleanKp(value.ratingEstimate ?? (complete ? kp : base.ratingEstimate)), RANKED_PLACEMENT_MIN_KP, RANKED_PLACEMENT_MAX_KP);
+  return {
+    requiredMatches,
+    matchesPlayed,
+    complete,
+    ratingEstimate,
+    nextBotKp: complete
+      ? ratingEstimate
+      : clampNumber(cleanKp(value.nextBotKp ?? base.nextBotKp), RANKED_PLACEMENT_MIN_KP, RANKED_PLACEMENT_MAX_KP)
+  };
 }
 
 function reduceBotKpDelta(delta, didWin) {

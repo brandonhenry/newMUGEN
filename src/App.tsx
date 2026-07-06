@@ -1036,6 +1036,7 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     }
   }
   if (override.label) next.label = override.label;
+  if (override.description) next.description = override.description;
   if (override.hitLevel && hitLevelOptions.includes(override.hitLevel)) next.hitLevel = override.hitLevel;
   if (override.tracking && trackingOptions.includes(override.tracking)) next.tracking = override.tracking;
   if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
@@ -6873,6 +6874,8 @@ function RankedProfileCard({
   const [tab, setTab] = useState<'stats' | 'history'>('stats');
   const ranked = profile;
   const matches = ranked?.totals.matches ?? 0;
+  const placement = ranked?.placement;
+  const placementActive = Boolean(placement && !placement.complete);
   const wins = ranked?.totals.wins ?? 0;
   const winRate = matches > 0 ? Math.round((wins / matches) * 100) : 0;
   const hitRate = ranked && ranked.totals.attacksAttempted > 0 ? Math.round((ranked.totals.cleanHits / ranked.totals.attacksAttempted) * 100) : 0;
@@ -6890,7 +6893,13 @@ function RankedProfileCard({
         <div>
           <span>Ranked Profile</span>
           <h3>{onlineProfile.displayName}</h3>
-          <p>{ranked ? `${ranked.kp.toLocaleString()} KP - ${ranked.rank.name}` : 'Loading KP'}</p>
+          <p>
+            {ranked
+              ? placementActive && placement
+                ? `Placement ${placement.matchesPlayed}/${placement.requiredMatches} - ${placement.ratingEstimate.toLocaleString()} provisional KP`
+                : `${ranked.kp.toLocaleString()} KP - ${ranked.rank.name}`
+              : 'Loading KP'}
+          </p>
         </div>
         <button className="secondary-button compact-button" type="button" onClick={onClose}>
           <ChevronDown size={18} />
@@ -6911,8 +6920,8 @@ function RankedProfileCard({
         <div className="ranked-stats-grid">
           <div className="ranked-stat-tile"><span>Win Rate</span><strong>{winRate}%</strong></div>
           <div className="ranked-stat-tile"><span>Hit Rate</span><strong>{hitRate}%</strong></div>
-          <div className="ranked-stat-tile"><span>Avg DMG</span><strong>{averageDamage}</strong></div>
-          <div className="ranked-stat-tile"><span>Trend</span><strong>{recentTrend >= 0 ? '+' : ''}{recentTrend} KP</strong></div>
+          <div className="ranked-stat-tile"><span>{placementActive ? 'Placement' : 'Avg DMG'}</span><strong>{placementActive && placement ? `${placement.matchesPlayed}/${placement.requiredMatches}` : averageDamage}</strong></div>
+          <div className="ranked-stat-tile"><span>{placementActive ? 'Next Bot' : 'Trend'}</span><strong>{placementActive && placement ? `${placement.nextBotKp} KP` : `${recentTrend >= 0 ? '+' : ''}${recentTrend} KP`}</strong></div>
           <div className="ranked-kr-list">
             {rankedKrKeys.map((key) => {
               const value = ranked?.kr[key] ?? 50;
@@ -6952,6 +6961,16 @@ function RankedProfileCard({
       )}
     </section>
   );
+}
+
+function isRankedPlacementActive(profile: RankedProfile | null | undefined) {
+  return Boolean(profile?.placement && !profile.placement.complete);
+}
+
+function rankedPlacementStatus(profile: RankedProfile | null | undefined) {
+  const placement = profile?.placement;
+  if (!placement || placement.complete) return 'LOOKING FOR RANKED MATCH';
+  return `PLACEMENT ${placement.matchesPlayed + 1}/${placement.requiredMatches}`;
 }
 
 function CharacterSelectModeCarousel({
@@ -10767,6 +10786,27 @@ function formatFrameSummary(move: MoveDefinition | null) {
     move.endsInCrouch ? 'FC End' : null
   ].filter(Boolean);
   return `i${move.startupFrames} | ${capitalize(move.hitLevel)} | ${signedFrame(move.onBlockFrames)} OB | ${hitParts.join(' / ')} OH`;
+}
+
+function movePropertyBadges(move: MoveDefinition | null) {
+  if (!move) return [];
+  return [
+    move.hitLevel === 'low' ? 'Low' : move.hitLevel === 'throw' || move.throwCapture ? 'Throw' : capitalize(move.hitLevel),
+    (move.launchHeight ?? 0) > 0 ? 'Launcher' : null,
+    move.tornado ? 'Tornado' : null,
+    move.knockdown ? 'KD' : null,
+    move.endsInCrouch ? 'FC End' : null,
+    move.jumpBeforeMove ? 'Jump' : null,
+    move.counterHit ? 'Counter Hit' : null,
+    move.usesKi || move.kiBurst ? 'Ki' : null,
+    move.tracking && move.tracking !== 'none' ? trackingBadgeLabel(move.tracking) : null
+  ].filter((badge): badge is string => Boolean(badge));
+}
+
+function trackingBadgeLabel(tracking: MoveTracking) {
+  if (tracking === 'weakLeft') return 'Tracks Left';
+  if (tracking === 'weakRight') return 'Tracks Right';
+  return tracking === 'homing' ? 'Homing' : `${capitalize(tracking)} Tracking`;
 }
 
 function formatAnimationTimingSummary(frameCount: number, fps: number) {
@@ -17865,7 +17905,7 @@ function FightScreen({
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
-  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH') : '');
+  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? rankedPlacementStatus(rankedProfile) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH') : '');
   const onlineStatusTextRef = useRef(onlineStatusText);
   const [privateRoomPassword, setPrivateRoomPassword] = useState('');
   const [privateRoomName, setPrivateRoomName] = useState('');
@@ -17891,6 +17931,7 @@ function FightScreen({
   const onlineRemoteProfileRef = useRef<OnlinePlayerProfile | null>(null);
   const [onlineTrainingChatMessages, setOnlineTrainingChatMessages] = useState<OnlineTrainingChatEntry[]>([]);
   const onlineBotOpponentRef = useRef<OnlineBotOpponent | null>(null);
+  const onlinePlacementMatchRef = useRef(false);
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
   const rankedProfileRef = useRef<RankedProfile | null>(rankedProfile);
   const rankedSubmitResultRef = useRef<RankedSubmitResult | null>(null);
@@ -18471,6 +18512,7 @@ function FightScreen({
     const fresh = makeOnlineBotMatch(bot, nextRoom.stageId);
     resetTrackedMatchAnalytics(fresh);
     onlineBotOpponentRef.current = bot;
+    onlinePlacementMatchRef.current = Boolean(nextRoom.placement && mode === 'ranked' && isRankedPlacementActive(rankedProfileRef.current));
     onlineRemoteProfileRef.current = { playerId: bot.playerId, displayName: bot.displayName };
     onlineRoomRef.current = nextRoom;
     onlineRoleRef.current = 'host';
@@ -18487,8 +18529,47 @@ function FightScreen({
     setOnlineRole('host');
     onlineStateRef.current = 'connected';
     setOnlineState('connected');
-    setOnlineStatusText('CONNECTED');
+    setOnlineStatusText(onlinePlacementMatchRef.current ? rankedPlacementStatus(rankedProfileRef.current) : 'CONNECTED');
   }, [makeOnlineBotMatch, mode, onlineProfile?.playerId, p1.id, resetTrackedMatchAnalytics, stage.id]);
+
+  const startNextPlacementMatch = useCallback(async () => {
+    const session = onlineSessionRef.current;
+    const profile = rankedProfileRef.current;
+    const placement = profile?.placement;
+    if (!session || !profile || !placement || placement.complete) return;
+    window.clearTimeout(botRematchReadyTimerRef.current);
+    window.clearTimeout(botRematchLeaveTimerRef.current);
+    botRematchReadyTimerRef.current = 0;
+    botRematchLeaveTimerRef.current = 0;
+    onlineStateRef.current = 'searching';
+    setOnlineState('searching');
+    setOnlineStatusText(rankedPlacementStatus(profile));
+    onlineBotOpponentRef.current = null;
+    onlinePlacementMatchRef.current = false;
+    rankedSubmitResultRef.current = null;
+    setRankedPlayerResult(null);
+    setRankedPromotionAccepted(false);
+    try {
+      const result = await matchmakeOnline({
+        peerId: session.peerId,
+        characterId: p1.id,
+        stageId: stage.id,
+        queue: 'ranked',
+        kp: placement.ratingEstimate,
+        kr: profile.kr,
+        placement,
+        allowBotFallback: true,
+        availableCharacterIds: roster.map((character) => character.id)
+      });
+      if (result.opponentKind === 'bot' && result.botOpponent) {
+        startOnlineBotMatch(result.botOpponent, result);
+        return;
+      }
+      setOnlineStatusText('MATCHMAKING ERROR');
+    } catch (error) {
+      setOnlineStatusText(error instanceof Error ? error.message : 'MATCHMAKING ERROR');
+    }
+  }, [p1.id, roster, stage.id, startOnlineBotMatch]);
 
   const startOnlineRollback = useCallback((baseMatch: MatchSnapshot, role: OnlineRole | null = onlineRoleRef.current) => {
     if (!role) {
@@ -18623,6 +18704,7 @@ function FightScreen({
     clearBotRematchTimers();
     onlineRemoteProfileRef.current = null;
     onlineBotOpponentRef.current = null;
+    onlinePlacementMatchRef.current = false;
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
@@ -18666,6 +18748,7 @@ function FightScreen({
     setOnlineRematchCount(0);
     clearBotRematchTimers();
     onlineRemoteProfileRef.current = null;
+    onlinePlacementMatchRef.current = false;
     onlineWinsRef.current = [0, 0];
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
@@ -18692,15 +18775,16 @@ function FightScreen({
     onlineRematchReadyRef.current = { local: false, remote: false };
     const rematchLimitReached = rankedRematchLimitReached();
     const bot = onlineBotOpponentRef.current;
-    setOnlineStatusText(rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
-    if (bot && (mode === 'online' || mode === 'ranked')) {
+    const isPlacementMatch = onlinePlacementMatchRef.current;
+    setOnlineStatusText(isPlacementMatch ? 'PLACEMENT RESULT' : rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
+    if (bot && !isPlacementMatch && (mode === 'online' || mode === 'ranked')) {
       recordOnlineBotMatchOutcome(bot, {
         queue: mode === 'ranked' ? 'ranked' : 'casual',
         playerKp: rankedProfileRef.current?.kp ?? onlineRoomRef.current?.hostKp,
         playerDidWin: candidate.winnerSlot === 1
       });
     }
-    if (bot && !rematchLimitReached) {
+    if (bot && !isPlacementMatch && !rematchLimitReached) {
       clearBotRematchTimers();
       botRematchReadyTimerRef.current = window.setTimeout(() => {
         if (!onlineBotOpponentRef.current || onlineWinnerRecordedRef.current !== true || onlineStateRef.current !== 'connected') return;
@@ -18745,12 +18829,24 @@ function FightScreen({
       const room = onlineRoomRef.current;
       if (localProfile && remoteProfile && room) {
         const [p1Stats, p2Stats] = onlinePerformanceRef.current;
+        const placement = isPlacementMatch && rankedProfileRef.current?.placement && !rankedProfileRef.current.placement.complete
+          ? rankedProfileRef.current.placement
+          : undefined;
         const report: RankedMatchReport = {
           reportId: `${room.roomId}:${candidate.winnerSlot}:${localProfile.playerId}:${remoteProfile.playerId}`,
           roomId: room.roomId,
           stageId: candidate.stage.id,
           winnerPlayerId: candidate.winnerSlot === 1 ? localProfile.playerId : remoteProfile.playerId,
           submittedAt: Date.now(),
+          placement: placement && bot
+            ? {
+              playerId: localProfile.playerId,
+              matchNumber: placement.matchesPlayed + 1,
+              requiredMatches: placement.requiredMatches,
+              botKp: bot.kp,
+              ratingEstimate: placement.ratingEstimate
+            }
+            : undefined,
           players: [
             {
               profile: localProfile,
@@ -18776,6 +18872,7 @@ function FightScreen({
           if (localResult) {
             setRankedPlayerResult(localResult);
             setRankedPromotionAccepted(!localResult.promoted);
+            rankedProfileRef.current = localResult.profile;
             onRankedProfileChange(localResult.profile);
             captureFightAnalytics('ranked_result_received', {
               did_win: localResult.didWin,
@@ -18921,6 +19018,7 @@ function FightScreen({
       if (localResult) {
         setRankedPlayerResult(localResult);
         setRankedPromotionAccepted(!localResult.promoted);
+        rankedProfileRef.current = localResult.profile;
         onRankedProfileChange(localResult.profile);
         captureFightAnalytics('ranked_result_received', {
           did_win: localResult.didWin,
@@ -18966,6 +19064,7 @@ function FightScreen({
     onlineLatestSnapshotRef.current = -1;
     onlineSnapshotSequenceRef.current = 0;
     onlineBotOpponentRef.current = null;
+    onlinePlacementMatchRef.current = false;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
     setRankedPlayerResult(null);
@@ -18982,7 +19081,7 @@ function FightScreen({
     setOnlineRole(null);
     setOnlineWins([0, 0]);
     setOnlineTrainingChatMessages([]);
-    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
+    setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? rankedPlacementStatus(rankedProfileRef.current) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
     setPrivateRoomPassword('');
     setPrivateRoomName('');
     captureFightAnalytics('online_search_started', {
@@ -19016,7 +19115,7 @@ function FightScreen({
             if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'connecting') {
               markOnlineDisconnected(error.message || 'Online connection error');
             } else {
-              setOnlineStatusText(isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
+              setOnlineStatusText(isRanked ? rankedPlacementStatus(rankedProfileRef.current) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
             }
           }
         });
@@ -19085,13 +19184,15 @@ function FightScreen({
             return;
           }
           const currentRoom = onlineRoomRef.current;
+          const rankedPlacement = isRankedPlacementActive(rankedProfileRef.current) ? rankedProfileRef.current?.placement : undefined;
           const result = await matchmakeOnline({
             peerId: session.peerId,
             characterId: p1.id,
             stageId: stage.id,
             queue: isRanked ? 'ranked' : isTrainingOnline ? 'training' : 'casual',
-            kp: isRanked ? rankedProfileRef.current?.kp ?? 1200 : undefined,
+            kp: isRanked ? rankedPlacement?.ratingEstimate ?? rankedProfileRef.current?.kp ?? 1200 : undefined,
             kr: isRanked ? rankedProfileRef.current?.kr : undefined,
+            placement: rankedPlacement,
             allowBotFallback: !isTrainingOnline,
             availableCharacterIds: roster.map((character) => character.id),
             roomId: currentRoom?.role === 'host' ? currentRoom.roomId : undefined,
@@ -19111,7 +19212,7 @@ function FightScreen({
           } else {
             onlineStateRef.current = 'searching';
             setOnlineState('searching');
-            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : isRanked ? 'LOOKING FOR RANKED MATCH' : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
+            setOnlineStatusText(result.status === 'matched' ? 'MATCH FOUND' : isRanked ? rankedPlacementStatus(rankedProfileRef.current) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
           }
         };
 
@@ -19349,6 +19450,11 @@ function FightScreen({
     }
     if (rankedRematchLimitReached()) {
       setOnlineStatusText('RANKED SET COMPLETE');
+      return;
+    }
+    if (onlinePlacementMatchRef.current && isRankedPlacementActive(rankedProfileRef.current)) {
+      void startNextPlacementMatch();
+      setPaused(false);
       return;
     }
     if (onlineBotOpponentRef.current) {
@@ -19598,6 +19704,8 @@ function FightScreen({
   const rematchDisabled = Boolean(isRanked && ((rankedPlayerResult?.promoted && !rankedPromotionAccepted) || rankedRematchCapReached));
   const rematchButtonLabel = rankedRematchCapReached
     ? 'Ranked Set Complete'
+    : rankedPlayerResult?.placement && !rankedPlayerResult.placement.complete
+      ? 'Next Placement'
     : isOnline && onlineRematchReadyRef.current.local
       ? 'Waiting'
       : 'Rematch';
@@ -19647,7 +19755,9 @@ function FightScreen({
       )}
       {isOnline && onlineState === 'connected' && (
         <div className="online-status-pill">
-          {isTrainingOnline ? `${onlineRole === 'host' ? 'HOST' : 'GUEST'} SPARRING` : `${onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE`}
+          {onlinePlacementMatchRef.current
+            ? rankedPlacementStatus(rankedProfileRef.current)
+            : isTrainingOnline ? `${onlineRole === 'host' ? 'HOST' : 'GUEST'} SPARRING` : `${onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE`}
         </div>
       )}
       {isTrainingOnline && onlineState === 'connected' && (
@@ -19952,18 +20062,24 @@ function makeOnlineTrainingChatId() {
 
 function RankedResultPanel({ result, accepted }: { result: RankedPlayerResult; accepted: boolean }) {
   const title = result.didWin ? 'VICTORY' : 'DEFEAT';
+  const placement = result.placement;
+  const placementActive = Boolean(placement && !placement.complete);
   return (
     <section className="results-panel ranked-results-panel" aria-label="Ranked match result">
       <div className="ranked-result-hero">
         <span className="results-eyebrow">
           <Award size={18} />
-          Ranked Battle
+          {placement ? `Placement ${placement.afterMatchesPlayed}/${placement.requiredMatches}` : 'Ranked Battle'}
         </span>
-        <h2>{title}</h2>
+        <h2>{placementActive ? 'PLACEMENT' : title}</h2>
         <div className={`ranked-kp-delta ${result.kpDelta >= 0 ? 'is-positive' : 'is-negative'}`}>
-          {result.kpDelta >= 0 ? '+' : ''}{result.kpDelta} KP
+          {result.kpDelta >= 0 ? '+' : ''}{result.kpDelta} {placementActive ? 'PROVISIONAL' : 'KP'}
         </div>
-        <p>{result.beforeKp.toLocaleString()} KP {'->'} {result.afterKp.toLocaleString()} KP</p>
+        <p>
+          {placementActive
+            ? `${result.beforeKp.toLocaleString()} provisional KP -> ${result.afterKp.toLocaleString()}`
+            : `${result.beforeKp.toLocaleString()} KP -> ${result.afterKp.toLocaleString()} KP`}
+        </p>
       </div>
       <div className={`ranked-rank-morph ${result.promoted ? 'is-promoted' : result.demoted ? 'is-demoted' : ''}`}>
         <div className="ranked-badge-mark" data-rank={result.beforeRank.id}>
@@ -19991,6 +20107,12 @@ function RankedResultPanel({ result, accepted }: { result: RankedPlayerResult; a
           );
         })}
       </div>
+      {placement && placementActive && (
+        <div className="ranked-promotion-confirm">
+          <strong>{placement.requiredMatches - placement.afterMatchesPlayed} placement matches left</strong>
+          <span>Next bot target: {placement.nextBotKp.toLocaleString()} KP</span>
+        </div>
+      )}
       {result.promoted && !accepted && (
         <div className="ranked-promotion-confirm">
           <strong>Rank Promotion</strong>
@@ -20055,11 +20177,18 @@ function ConfiguredMoveList({
             <div>
               {configured.slice(0, 36).map((slot) => {
                 const move = resolveSlotMove(character, slot);
+                const propertyBadges = movePropertyBadges(move);
                 return (
                   <span key={slot.key}>
                     <NotationGroup tokens={slot.notation} />
-                    {formatMoveSlotLabel(slot, move)}
+                    <span className="pause-move-name">{formatMoveSlotLabel(slot, move)}</span>
+                    {move?.description && <em className="pause-move-description">{move.description}</em>}
                     <small>{formatFrameSummary(move)}</small>
+                    {propertyBadges.length > 0 && (
+                      <span className="pause-move-properties" aria-label="Move properties">
+                        {propertyBadges.map((badge) => <b key={badge}>{badge}</b>)}
+                      </span>
+                    )}
                   </span>
                 );
               })}

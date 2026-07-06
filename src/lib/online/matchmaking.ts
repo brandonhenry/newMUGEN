@@ -6,7 +6,7 @@ import {
   type OnlineBotOpponent
 } from './bots';
 import { selectBotOpponentForMatch } from './botMemory';
-import type { RankedKrScores } from './ranked';
+import type { RankedKrScores, RankedPlacementState } from './ranked';
 
 export type OnlineMatchQueue = 'casual' | 'ranked' | 'training';
 
@@ -17,6 +17,7 @@ export type OnlineMatchRequest = {
   queue?: OnlineMatchQueue;
   kp?: number;
   kr?: Partial<RankedKrScores>;
+  placement?: Partial<RankedPlacementState>;
   allowBotFallback?: boolean;
   availableCharacterIds?: string[];
   roomId?: string;
@@ -38,6 +39,7 @@ export type OnlineMatchResult = {
   guestKp?: number;
   opponentKind?: 'human' | 'bot';
   botOpponent?: OnlineBotOpponent;
+  placement?: Partial<RankedPlacementState>;
 };
 
 export type OnlineLeaveRequest = {
@@ -59,6 +61,7 @@ export async function matchmakeOnline(request: OnlineMatchRequest): Promise<Onli
     if (isLocalFallbackAllowed()) return localMatchmake(request);
     throw error;
   });
+  if (isPlacementRequest(request)) return response;
   return selectBotOpponentForMatch(request, response);
 }
 
@@ -111,6 +114,9 @@ type LocalRoom = {
 function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
   const now = Date.now();
   const queue = normalizeQueue(request.queue);
+  if (queue === 'ranked' && isPlacementRequest(request)) {
+    return createLocalPlacementBotMatch(request, now);
+  }
   const rooms = readLocalRooms().filter((room) => now - room.updatedAt <= localRoomTtlMs(room));
   const existing = request.roomId ? rooms.find((room) => room.roomId === request.roomId && room.ownerToken === request.ownerToken) : undefined;
   if (existing) {
@@ -154,6 +160,36 @@ function localMatchmake(request: OnlineMatchRequest): OnlineMatchResult {
   };
   writeLocalRooms([...rooms, room]);
   return roomToResult(room, 'host');
+}
+
+function createLocalPlacementBotMatch(request: OnlineMatchRequest, now: number): OnlineMatchResult {
+  const placement = normalizePlacement(request.placement);
+  const bot = createOnlineBotOpponent({
+    seed: `${request.peerId}:${request.characterId}:placement:${placement.matchesPlayed}`,
+    queue: 'ranked',
+    playerKp: placement.ratingEstimate,
+    targetKp: placement.nextBotKp,
+    playerKr: request.kr,
+    availableCharacterIds: request.availableCharacterIds,
+    fallbackCharacterId: request.characterId
+  });
+  return {
+    role: 'host',
+    status: 'matched',
+    roomId: `placement-${request.peerId}-${placement.matchesPlayed + 1}-${now}`,
+    ownerToken: `placement-${request.peerId}-${placement.matchesPlayed + 1}`,
+    hostPeerId: request.peerId,
+    guestPeerId: bot.playerId,
+    hostCharacterId: request.characterId,
+    guestCharacterId: bot.characterId,
+    stageId: request.stageId,
+    queue: 'ranked',
+    hostKp: placement.ratingEstimate,
+    guestKp: bot.kp,
+    opponentKind: 'bot',
+    botOpponent: bot,
+    placement
+  };
 }
 
 function localLeave(request: OnlineLeaveRequest) {
@@ -237,6 +273,27 @@ function maybeFillLocalRoomWithBot(room: LocalRoom, request: OnlineMatchRequest,
 
 function normalizeQueue(value: unknown): OnlineMatchQueue {
   return value === 'ranked' || value === 'training' ? value : 'casual';
+}
+
+function isPlacementRequest(request: OnlineMatchRequest) {
+  return request.queue === 'ranked' && request.placement?.complete === false;
+}
+
+function normalizePlacement(value: Partial<RankedPlacementState> | undefined): RankedPlacementState {
+  const requiredMatches = Math.max(1, normalizeKp(value?.requiredMatches ?? 10));
+  const matchesPlayed = Math.min(requiredMatches, normalizeKp(value?.matchesPlayed ?? 0));
+  const ratingEstimate = clampKp(value?.ratingEstimate ?? 900, 650, 2200);
+  return {
+    requiredMatches,
+    matchesPlayed,
+    complete: false,
+    ratingEstimate,
+    nextBotKp: clampKp(value?.nextBotKp ?? 650, 650, 2200)
+  };
+}
+
+function clampKp(value: unknown, min: number, max: number) {
+  return Math.max(min, Math.min(max, normalizeKp(value)));
 }
 
 function normalizeCharacterIds(value: unknown) {

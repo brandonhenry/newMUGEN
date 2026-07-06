@@ -19,6 +19,7 @@ export type OnlineBotGenerationInput = {
   seed: string;
   queue?: 'casual' | 'ranked' | 'tournament';
   playerKp?: number;
+  targetKp?: number;
   playerKr?: Partial<RankedKrScores>;
   availableCharacterIds?: string[];
   fallbackCharacterId?: string;
@@ -48,7 +49,7 @@ export function createOnlineBotOpponent(input: OnlineBotGenerationInput): Online
   const kpOffset = input.queue === 'ranked'
     ? Math.round((seededUnit(seed, 23) * 240) - 120)
     : Math.round((seededUnit(seed, 23) * 180) - 90);
-  const kp = Math.max(0, playerKp + kpOffset);
+  const kp = Math.max(0, normalizeKp(input.targetKp ?? (playerKp + kpOffset)));
   const kr = rankedKrKeys.reduce((next, key, index) => {
     next[key] = clampScore(playerKr[key] + Math.round((seededUnit(seed, 41 + index * 17) * 20) - 10));
     return next;

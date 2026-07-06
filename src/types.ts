@@ -85,6 +85,7 @@ export type BoxSpec = {
 export type MoveDefinition = {
   id: string;
   label: string;
+  description?: string;
   input: MoveInput;
   command?: string;
   notation?: string;

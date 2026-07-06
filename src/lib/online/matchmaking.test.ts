@@ -185,6 +185,96 @@ describe('online matchmaking', () => {
     expect(Math.abs((filled.botOpponent?.kp ?? 0) - 1500)).toBeLessThanOrEqual(120);
   });
 
+  it('immediately fills ranked placement with the requested low KP bot', async () => {
+    const result = await matchmakeOnline({
+      peerId: 'placement-host',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'ranked',
+      kp: 900,
+      placement: {
+        requiredMatches: 10,
+        matchesPlayed: 0,
+        complete: false,
+        ratingEstimate: 900,
+        nextBotKp: 650
+      },
+      availableCharacterIds: ['astra', 'dax', 'kiro']
+    });
+
+    expect(result.role).toBe('host');
+    expect(result.status).toBe('matched');
+    expect(result.opponentKind).toBe('bot');
+    expect(result.botOpponent?.kp).toBe(650);
+    expect(result.placement?.matchesPlayed).toBe(0);
+  });
+
+  it('keeps ranked placement players out of human ranked rooms', async () => {
+    const placement = await matchmakeOnline({
+      peerId: 'placement-host',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'ranked',
+      kp: 900,
+      placement: {
+        requiredMatches: 10,
+        matchesPlayed: 0,
+        complete: false,
+        ratingEstimate: 900,
+        nextBotKp: 650
+      },
+      availableCharacterIds: ['astra', 'dax']
+    });
+    const human = await matchmakeOnline({
+      peerId: 'ranked-human',
+      characterId: 'dax',
+      stageId: 'dojo',
+      queue: 'ranked',
+      kp: 900
+    });
+
+    expect(placement.opponentKind).toBe('bot');
+    expect(human.role).toBe('host');
+    expect(human.status).toBe('waiting');
+  });
+
+  it('uses updated placement nextBotKp for later adaptive bots', async () => {
+    const harder = await matchmakeOnline({
+      peerId: 'placement-host',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'ranked',
+      kp: 1040,
+      placement: {
+        requiredMatches: 10,
+        matchesPlayed: 1,
+        complete: false,
+        ratingEstimate: 1040,
+        nextBotKp: 1180
+      },
+      availableCharacterIds: ['astra', 'dax']
+    });
+    const easier = await matchmakeOnline({
+      peerId: 'placement-host',
+      characterId: 'astra',
+      stageId: 'dojo',
+      queue: 'ranked',
+      kp: 820,
+      placement: {
+        requiredMatches: 10,
+        matchesPlayed: 2,
+        complete: false,
+        ratingEstimate: 820,
+        nextBotKp: 700
+      },
+      availableCharacterIds: ['astra', 'dax']
+    });
+
+    expect(harder.botOpponent?.kp).toBe(1180);
+    expect(easier.botOpponent?.kp).toBe(700);
+    expect(harder.botOpponent?.playerId).not.toBe(easier.botOpponent?.playerId);
+  });
+
   it('can reuse a remembered bot near the same casual KP band', async () => {
     vi.spyOn(Math, 'random').mockReturnValue(0.1);
     const firstHost = await matchmakeOnline({
