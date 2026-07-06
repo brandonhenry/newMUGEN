@@ -3,7 +3,7 @@ set -euo pipefail
 
 APP_NAME="KORE"
 APP_ID="com.bggames.kore"
-APPIMAGE_URL="${KORE_APPIMAGE_URL:-https://playkore.com/installers/KORE-0.1.0-linux-x64.AppImage}"
+APPIMAGE_URL="${KORE_APPIMAGE_URL:-https://playkore.com/installers/KORE-0.1.0-linux-x86_64.AppImage}"
 INSTALL_DIR="${KORE_INSTALL_DIR:-$HOME/Games/KORE}"
 APPIMAGE_PATH="$INSTALL_DIR/KORE.AppImage"
 ICON_PATH="$INSTALL_DIR/kore.png"

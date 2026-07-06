@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "node scripts/validate-stage-assets.mjs && tsc -b && vite build",
+    "build": "node scripts/ensure-public-installers.mjs && node scripts/validate-stage-assets.mjs && tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -b",
     "test": "vitest run",

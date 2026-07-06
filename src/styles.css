@@ -610,6 +610,7 @@ button {
 
 .options-console,
 .memory-card-panel,
+.installer-panel,
 .about-kore-panel {
   border-radius: 8px;
   background:
@@ -767,6 +768,253 @@ button {
   gap: 14px;
   min-height: 0;
   padding: 14px;
+}
+
+.installer-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  min-height: 100%;
+  padding: 14px;
+  overflow: hidden;
+}
+
+.installer-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 5px;
+  padding: 0 14px;
+  color: rgba(247, 247, 242, 0.82);
+  background:
+    linear-gradient(90deg, rgba(46, 230, 255, 0.18), rgba(0, 0, 0, 0.22)),
+    rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.installer-panel-heading span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.installer-panel-heading strong {
+  color: #2ee6ff;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  font-weight: 950;
+  text-shadow: 0 0 18px rgba(46, 230, 255, 0.5);
+}
+
+.installer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 2px;
+  scrollbar-color: rgba(46, 230, 255, 0.42) transparent;
+}
+
+.installer-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 286px;
+  border-radius: 6px;
+  padding: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 18px 34px rgba(0, 0, 0, 0.2);
+  transition-property: transform, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.installer-card:hover,
+.installer-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(46, 230, 255, 0.24) inset,
+    0 22px 42px rgba(0, 0, 0, 0.28);
+}
+
+.installer-card-recommended {
+  background:
+    linear-gradient(135deg, rgba(46, 230, 255, 0.2), transparent 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
+    rgba(0, 0, 0, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(46, 230, 255, 0.42) inset,
+    0 0 28px rgba(46, 230, 255, 0.12),
+    0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.installer-card-title {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+}
+
+.installer-card-title > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  color: #08101c;
+  background: #f7f7f2;
+  box-shadow: 0 0 22px rgba(46, 230, 255, 0.2);
+}
+
+.installer-card-title strong {
+  display: block;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 950;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.installer-card-title small {
+  display: block;
+  margin-top: 4px;
+  color: #9eeeff;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.installer-card p {
+  margin: 0;
+  color: rgba(247, 247, 242, 0.72);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.installer-card dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.installer-card dl div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-height: 30px;
+  border-radius: 5px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.installer-card dt,
+.installer-card dd {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.installer-card dt {
+  color: rgba(247, 247, 242, 0.58);
+  text-transform: uppercase;
+}
+
+.installer-card dd {
+  overflow: hidden;
+  color: rgba(247, 247, 242, 0.86);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.installer-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.installer-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border-radius: 5px;
+  padding: 0 13px 0 15px;
+  color: #08101c;
+  background: #f7f7f2;
+  font-size: 13px;
+  font-weight: 950;
+  text-align: center;
+  text-decoration: none;
+  transition-property: transform, filter;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.installer-actions a span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.installer-actions a:hover,
+.installer-actions a:focus-visible {
+  filter: drop-shadow(0 0 14px rgba(46, 230, 255, 0.28));
+}
+
+.installer-actions a:active {
+  transform: scale(0.96);
+}
+
+.installer-empty-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  min-height: 260px;
+  border-radius: 6px;
+  padding: 24px;
+  color: rgba(247, 247, 242, 0.76);
+  background: rgba(0, 0, 0, 0.24);
+  text-align: center;
+}
+
+.installer-empty-state svg {
+  color: #2ee6ff;
+  filter: drop-shadow(0 0 16px rgba(46, 230, 255, 0.32));
+}
+
+.installer-empty-state strong {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 950;
+  text-wrap: balance;
+}
+
+.installer-empty-state p {
+  max-width: 520px;
+  margin: 0;
+  color: rgba(247, 247, 242, 0.68);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-wrap: pretty;
 }
 
 .about-kore-panel {
@@ -9766,6 +10014,22 @@ button {
 
   .memory-card-panel {
     grid-template-rows: auto minmax(320px, 1fr) auto;
+  }
+
+  .installer-panel {
+    min-height: 480px;
+  }
+
+  .installer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .installer-card {
+    min-height: 0;
+  }
+
+  .installer-card dl div {
+    grid-template-columns: 62px minmax(0, 1fr);
   }
 
   .memory-card-actions {

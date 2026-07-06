@@ -10,7 +10,7 @@ asar: true
 compression: maximum
 mac:
   category: public.app-category.games
-  icon: public/brand/kore-favicon.png
+  identity: null
   hardenedRuntime: false
   gatekeeperAssess: false
   target:
@@ -20,7 +20,6 @@ mac:
 pkg:
   scripts: build/installer/mac/scripts
 win:
-  icon: public/brand/kore-favicon.png
   target:
     - target: nsis
       arch:

@@ -374,6 +374,106 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.28');
 });
 
+test('shows desktop installer downloads from the console installers tab', async ({ page }) => {
+  await page.route('**/installers/manifest.json', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        version: '1.2.0',
+        generatedAt: '2026-07-06T00:00:00.000Z',
+        installers: [
+          {
+            id: 'windows',
+            label: 'Windows PC',
+            version: '1.2.0',
+            filename: 'KORE-1.2.0-win-x64.exe',
+            url: '/installers/KORE-1.2.0-win-x64.exe',
+            size: 104857600,
+            sha256: 'abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
+            recommended: true,
+            notes: 'Unsigned Windows installer.'
+          },
+          {
+            id: 'mac',
+            label: 'Mac',
+            version: '1.2.0',
+            filename: 'KORE-1.2.0-mac-universal.pkg',
+            url: '/installers/KORE-1.2.0-mac-universal.pkg',
+            size: 125829120,
+            sha256: 'bbbbbb1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
+            notes: 'Unsigned macOS package.'
+          },
+          {
+            id: 'steamdeck',
+            label: 'Steam Deck',
+            version: '1.2.0',
+            filename: 'KORE-1.2.0-linux-x64.AppImage',
+            url: '/installers/KORE-1.2.0-linux-x64.AppImage',
+            size: 136314880,
+            sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
+            notes: 'SteamOS shortcut installer.',
+            assets: [
+              {
+                label: 'Steam Deck AppImage',
+                filename: 'KORE-1.2.0-linux-x64.AppImage',
+                url: '/installers/KORE-1.2.0-linux-x64.AppImage',
+                size: 136314880,
+                sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890'
+              },
+              {
+                label: 'Deck shortcut script',
+                filename: 'install-kore-steamdeck.sh',
+                url: '/installers/install-kore-steamdeck.sh',
+                size: 12000,
+                sha256: 'dddddd1234567890abcdef1234567890abcdef1234567890abcdef1234567890'
+              }
+            ]
+          },
+          {
+            id: 'linux',
+            label: 'Linux AppImage',
+            version: '1.2.0',
+            filename: 'KORE-1.2.0-linux-x64.AppImage',
+            url: '/installers/KORE-1.2.0-linux-x64.AppImage',
+            size: 136314880,
+            sha256: 'eeeeee1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
+            notes: 'Generic Linux AppImage.'
+          }
+        ]
+      })
+    });
+  });
+
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Installers' }).click();
+
+  await expect(page.getByLabel('Desktop installers')).toBeVisible();
+  await expect(page.locator('.installer-card-title strong', { hasText: 'Windows PC' })).toBeVisible();
+  await expect(page.locator('.installer-card-title strong', { hasText: 'Mac' })).toBeVisible();
+  await expect(page.locator('.installer-card-title strong', { hasText: 'Steam Deck' })).toBeVisible();
+  await expect(page.locator('.installer-card-title strong', { hasText: 'Linux AppImage' })).toBeVisible();
+  await expect(page.getByText('Recommended for this device').first()).toBeVisible();
+  await expect(page.getByRole('link', { name: /Deck shortcut script/ })).toHaveAttribute('href', /\/installers\/install-kore-steamdeck\.sh$/);
+  await expect(page.locator('a[href$="/installers/KORE-1.2.0-win-x64.exe"]')).toHaveAttribute('href', /\/installers\/KORE-1\.2\.0-win-x64\.exe$/);
+});
+
+test('shows installer preparation state when manifest is unavailable', async ({ page }) => {
+  await page.route('**/installers/manifest.json', async (route) => {
+    await route.fulfill({ status: 404, contentType: 'text/plain', body: 'not found' });
+  });
+
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Installers' }).click();
+
+  await expect(page.getByText('Installers are being prepared')).toBeVisible();
+  await expect(page.getByText('Windows, Mac, Steam Deck, and Linux builds will appear here once the release files are published.')).toBeVisible();
+});
+
 test('opens tournament mode above characters and shows paid beta disabled', async ({ page }) => {
   await startFromSplash(page);
   const tournamentButton = page.getByRole('button', { name: 'Tournament' });
