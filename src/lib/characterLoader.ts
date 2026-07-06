@@ -69,6 +69,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     moveEffects: sanitizeMoveEffects(canonicalizeBaseButtonRecord(character.moveEffects ?? {})),
     projectiles: sanitizeProjectiles(character.projectiles ?? []),
     moveProjectiles: sanitizeMoveProjectiles(canonicalizeBaseButtonRecord(character.moveProjectiles ?? {})),
+    voice: sanitizeCharacterVoice(character.voice),
     hurtboxes:
       Array.isArray(character.hurtboxes) && character.hurtboxes.length > 0
         ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))
@@ -213,6 +214,18 @@ function sanitizeGetupFrameOverrides(overrides: CharacterDefinition['getupFrameO
     if (frames > 0) next[action] = clamp(frames, 12, 96);
   });
   return next;
+}
+
+function sanitizeCharacterVoice(voice: CharacterDefinition['voice']): CharacterDefinition['voice'] {
+  if (!voice || typeof voice !== 'object') return undefined;
+  const next: NonNullable<CharacterDefinition['voice']> = {};
+  (['hit', 'attackLand', 'launcher', 'tornado', 'win', 'stageIntro', 'shadowClone'] as const).forEach((key) => {
+    const clips = Array.isArray(voice[key])
+      ? [...new Set(voice[key].filter((clip): clip is string => typeof clip === 'string').map((clip) => clip.trim()).filter(Boolean))]
+      : [];
+    if (clips.length > 0) next[key] = clips;
+  });
+  return Object.keys(next).length > 0 ? next : undefined;
 }
 
 function canonicalizeBaseButtonRecord<T>(record: Record<string, T> = {}) {

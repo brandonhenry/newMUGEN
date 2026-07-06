@@ -3068,5 +3068,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/sakura-haruno/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/sakura-haruno/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/sakura-haruno/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/sakura-haruno/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/sakura-haruno/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/sakura-haruno/sounds/voices/win-01.wav"
+    ]
   }
 }

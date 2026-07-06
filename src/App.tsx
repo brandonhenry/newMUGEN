@@ -387,32 +387,6 @@ const HIT_SFX = {
   bigLauncher: '/sounds/hits/generated/hit-019.wav',
   counterHit: '/sounds/hits/generated/hit-028.wav'
 } as const;
-const NARUTO_VOICE_SFX = [
-  '/characters/kiro/sounds/voices/C1.wav',
-  '/characters/kiro/sounds/voices/C2.wav',
-  '/characters/kiro/sounds/voices/C3.wav'
-] as const;
-const SASUKE_VOICE_SFX = [
-  '/characters/riven/sounds/voices/C1.wav',
-  '/characters/riven/sounds/voices/C2.wav',
-  '/characters/riven/sounds/voices/C3.wav'
-] as const;
-const CHARACTER_ATTACK_VOICE_SFX = {
-  naruto: NARUTO_VOICE_SFX,
-  sasuke: SASUKE_VOICE_SFX
-} satisfies Record<string, readonly string[]>;
-const CHARACTER_HURT_VOICE_SFX = {
-  naruto: '/characters/kiro/sounds/voices/C4.wav',
-  sasuke: '/characters/riven/sounds/voices/C4.wav'
-} satisfies Record<keyof typeof CHARACTER_ATTACK_VOICE_SFX, string>;
-const CHARACTER_WIN_VOICE_SFX = {
-  naruto: '/characters/kiro/sounds/voices/Win.wav',
-  sasuke: '/characters/riven/sounds/voices/Win.wav'
-} satisfies Partial<Record<keyof typeof CHARACTER_ATTACK_VOICE_SFX, string>>;
-const characterWinVoiceSfx: Partial<Record<keyof typeof CHARACTER_ATTACK_VOICE_SFX, string>> = CHARACTER_WIN_VOICE_SFX;
-const CHARACTER_SPECIAL_ABILITY_VOICE_SFX = {
-  narutoShadowClone: '/characters/kiro/sounds/voices/S2.wav'
-} as const;
 const ROUND_ANNOUNCER_SFX = [
   '/sounds/announcer/rounds/round-1.wav',
   '/sounds/announcer/rounds/round-2.wav',
@@ -435,8 +409,12 @@ const SFX_POOL_SIZE = 2;
 const sfxPools = new Map<string, { audios: HTMLAudioElement[]; cursor: number }>();
 const sfxBuffers = new Map<string, { buffer: AudioBuffer | null; promise: Promise<AudioBuffer | null> | null }>();
 let sfxAudioContext: AudioContext | null = null;
-type AttackVoiceCharacterKey = keyof typeof CHARACTER_ATTACK_VOICE_SFX;
-const lastCharacterAttackVoiceSfxIndices: Partial<Record<AttackVoiceCharacterKey, number>> = {};
+type CharacterVoiceCategory = NonNullable<CharacterDefinition['voice']> extends infer Voice ? keyof Voice : never;
+const lastCharacterVoiceSfxIndices = new Map<string, number>();
+const lastCharacterVoicePlayedAt = new Map<string, number>();
+const CHARACTER_ATTACK_VOICE_COOLDOWN_MS = 2500;
+const CHARACTER_HURT_VOICE_COOLDOWN_MS = 3000;
+const CHARACTER_SPECIAL_VOICE_COOLDOWN_MS = 2400;
 
 type WebAudioWindow = Window & typeof globalThis & {
   webkitAudioContext?: typeof AudioContext;
@@ -3925,6 +3903,12 @@ export default function App() {
               if (isArcadeMatchMode(mode)) {
                 const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
                 if (opponent) setP2Id(opponent.id);
+              }
+              if (mode !== 'cpu') {
+                playCharacterStageIntroVoiceSfx(p1, settings.audio);
+                if (mode === 'local2p') {
+                  window.setTimeout(() => playCharacterStageIntroVoiceSfx(p2, settings.audio), 650);
+                }
               }
               setVersusReturnScreen('stage');
               setScreen(mode === 'training' ? 'fight' : 'versus');
@@ -11233,53 +11217,72 @@ function playHitSfx(event: ImpactSparkEvent, audioSettings: GameSettings['audio'
   playPooledSfx(chooseHitSfx(event), volume, playbackRate);
 }
 
-function getAttackVoiceCharacterKey(character: CharacterDefinition): AttackVoiceCharacterKey | null {
-  const id = character.id.toLowerCase();
-  const name = character.displayName.toLowerCase();
-  if (id === 'kiro' || id === 'naruto' || name === 'naruto') return 'naruto';
-  if (id === 'riven' || id === 'sasuke' || name === 'sasuke') return 'sasuke';
-  return null;
+function getCharacterVoicePool(character: CharacterDefinition, category: CharacterVoiceCategory, fallbackCategory?: CharacterVoiceCategory) {
+  const voice = character.voice;
+  const clips = voice?.[category] ?? [];
+  if (clips.length > 0) return clips;
+  return fallbackCategory ? voice?.[fallbackCategory] ?? [] : [];
 }
 
-function chooseCharacterAttackVoiceSfx(characterKey: AttackVoiceCharacterKey) {
-  const voiceSfx = CHARACTER_ATTACK_VOICE_SFX[characterKey];
+function chooseCharacterVoiceSfx(character: CharacterDefinition, category: CharacterVoiceCategory, fallbackCategory?: CharacterVoiceCategory) {
+  const voiceSfx = getCharacterVoicePool(character, category, fallbackCategory);
+  if (voiceSfx.length === 0) return null;
+  const key = `${character.id}:${category}`;
   let index = Math.floor(Math.random() * voiceSfx.length);
-  if (index === lastCharacterAttackVoiceSfxIndices[characterKey]) index = (index + 1 + Math.floor(Math.random() * (voiceSfx.length - 1))) % voiceSfx.length;
-  lastCharacterAttackVoiceSfxIndices[characterKey] = index;
+  const lastIndex = lastCharacterVoiceSfxIndices.get(key);
+  if (voiceSfx.length > 1 && index === lastIndex) index = (index + 1 + Math.floor(Math.random() * (voiceSfx.length - 1))) % voiceSfx.length;
+  lastCharacterVoiceSfxIndices.set(key, index);
   return voiceSfx[index];
 }
 
-function playCharacterAttackVoiceSfx(attacker: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
-  const characterKey = getAttackVoiceCharacterKey(attacker);
-  if (!characterKey || event.kind === 'clash') return;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.54, 0, 0.76);
-  playPooledSfx(chooseCharacterAttackVoiceSfx(characterKey), volume, 1);
+function canPlayCharacterVoice(character: CharacterDefinition, category: CharacterVoiceCategory, cooldownMs: number) {
+  if (typeof performance === 'undefined') return true;
+  const key = `${character.id}:${category}`;
+  const now = performance.now();
+  const lastPlayedAt = lastCharacterVoicePlayedAt.get(key) ?? -Number.POSITIVE_INFINITY;
+  if (now - lastPlayedAt < cooldownMs) return false;
+  lastCharacterVoicePlayedAt.set(key, now);
+  return true;
 }
 
-function playCharacterHurtVoiceSfx(defender: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
-  const characterKey = getAttackVoiceCharacterKey(defender);
-  if (!characterKey || event.kind === 'block' || event.kind === 'clash' || event.comboHits !== 1) return;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.58, 0, 0.78);
-  playPooledSfx(CHARACTER_HURT_VOICE_SFX[characterKey], volume, 1);
-}
-
-function playCharacterWinVoiceSfx(winner: CharacterDefinition, audioSettings: GameSettings['audio']) {
+function playCharacterVoiceSfx(character: CharacterDefinition, category: CharacterVoiceCategory, audioSettings: GameSettings['audio'], volumeScale: number, fallbackCategory?: CharacterVoiceCategory) {
   if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return false;
-  const characterKey = getAttackVoiceCharacterKey(winner);
-  const voiceSfx = characterKey ? characterWinVoiceSfx[characterKey] : undefined;
+  const voiceSfx = chooseCharacterVoiceSfx(character, category, fallbackCategory);
   if (!voiceSfx) return false;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.68, 0, 0.86);
+  const volume = clamp(audioSettings.master * audioSettings.sfx * volumeScale, 0, 0.88);
   playPooledSfx(voiceSfx, volume, 1);
   return true;
 }
 
+function playCharacterAttackVoiceSfx(attacker: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (event.kind === 'block' || event.kind === 'clash') return;
+  const category: CharacterVoiceCategory = event.tornado ? 'tornado' : event.launched ? 'launcher' : 'attackLand';
+  const cooldown = category === 'attackLand' ? CHARACTER_ATTACK_VOICE_COOLDOWN_MS : CHARACTER_SPECIAL_VOICE_COOLDOWN_MS;
+  if (!canPlayCharacterVoice(attacker, category, cooldown)) return;
+  if (category === 'attackLand' && Math.random() > 0.32) return;
+  playCharacterVoiceSfx(attacker, category, audioSettings, category === 'attackLand' ? 0.5 : 0.58, 'attackLand');
+}
+
+function playCharacterHurtVoiceSfx(defender: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (event.kind === 'block' || event.kind === 'clash' || event.comboHits !== 1) return;
+  if (!canPlayCharacterVoice(defender, 'hit', CHARACTER_HURT_VOICE_COOLDOWN_MS)) return;
+  playCharacterVoiceSfx(defender, 'hit', audioSettings, 0.56);
+}
+
+function playCharacterWinVoiceSfx(winner: CharacterDefinition, audioSettings: GameSettings['audio']) {
+  return playCharacterVoiceSfx(winner, 'win', audioSettings, 0.68);
+}
+
+function playCharacterStageIntroVoiceSfx(character: CharacterDefinition, audioSettings: GameSettings['audio']) {
+  return playCharacterVoiceSfx(character, 'stageIntro', audioSettings, 0.68, 'win');
+}
+
 function playNarutoShadowCloneVoiceSfx(character: CharacterDefinition, audioSettings: GameSettings['audio']) {
   if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
-  if (getAttackVoiceCharacterKey(character) !== 'naruto') return;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.62, 0, 0.82);
-  playPooledSfx(CHARACTER_SPECIAL_ABILITY_VOICE_SFX.narutoShadowClone, volume, 1);
+  if (!canPlayCharacterVoice(character, 'shadowClone', CHARACTER_SPECIAL_VOICE_COOLDOWN_MS)) return;
+  playCharacterVoiceSfx(character, 'shadowClone', audioSettings, 0.62);
 }
 
 function playRoundAnnouncerSfx(round: number, audioSettings: GameSettings['audio']) {

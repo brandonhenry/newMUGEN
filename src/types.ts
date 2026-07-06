@@ -256,6 +256,16 @@ export type EffectSoundCue = {
   retrigger?: boolean;
 };
 
+export type CharacterVoiceDefinition = {
+  hit?: string[];
+  attackLand?: string[];
+  launcher?: string[];
+  tornado?: string[];
+  win?: string[];
+  stageIntro?: string[];
+  shadowClone?: string[];
+};
+
 export type ProceduralEffectLayer = {
   id: string;
   kind: ProceduralEffectKind;
@@ -429,6 +439,7 @@ export type CharacterDefinition = {
   moveEffects?: Record<string, MoveEffectInstance[]>;
   projectiles?: CharacterProjectileDefinition[];
   moveProjectiles?: Record<string, MoveProjectileInstance[]>;
+  voice?: CharacterVoiceDefinition;
   hurtboxes: BoxSpec[];
   inputMap: Record<string, string>;
   colors: {

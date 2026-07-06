@@ -2577,5 +2577,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/hiei/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/hiei/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/hiei/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/hiei/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/hiei/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/hiei/sounds/voices/win-01.wav"
+    ]
   }
 }

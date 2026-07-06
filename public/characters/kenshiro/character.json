@@ -3361,5 +3361,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/kenshiro/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/kenshiro/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/kenshiro/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/kenshiro/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/kenshiro/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/kenshiro/sounds/voices/win-01.wav"
+    ]
   }
 }

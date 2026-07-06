@@ -2704,5 +2704,25 @@
         "clash": true
       }
     ]
+  },
+  "voice": {
+    "hit": [
+      "/characters/yugi-mutou/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/yugi-mutou/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/yugi-mutou/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/yugi-mutou/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/yugi-mutou/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/yugi-mutou/sounds/voices/win-01.wav"
+    ]
   }
 }

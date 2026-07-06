@@ -2702,5 +2702,25 @@
   "modelScale": {
     "width": 1.25,
     "height": 1.21
+  },
+  "voice": {
+    "hit": [
+      "/characters/ichigo-kurosaki/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/ichigo-kurosaki/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/ichigo-kurosaki/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/ichigo-kurosaki/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/ichigo-kurosaki/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/ichigo-kurosaki/sounds/voices/win-01.wav"
+    ]
   }
 }

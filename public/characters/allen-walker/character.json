@@ -2548,5 +2548,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/allen-walker/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/allen-walker/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/allen-walker/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/allen-walker/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/allen-walker/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/allen-walker/sounds/voices/win-01.wav"
+    ]
   }
 }

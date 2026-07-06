@@ -2802,5 +2802,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/pegasus-seiya/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/pegasus-seiya/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/pegasus-seiya/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/pegasus-seiya/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/pegasus-seiya/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/pegasus-seiya/sounds/voices/win-01.wav"
+    ]
   }
 }

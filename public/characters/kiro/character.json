@@ -10790,5 +10790,28 @@
     "height": 1.08
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "voice": {
+    "hit": [
+      "/characters/kiro/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/kiro/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/kiro/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/kiro/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/kiro/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/kiro/sounds/voices/win-01.wav"
+    ],
+    "shadowClone": [
+      "/characters/kiro/sounds/voices/S2.wav"
+    ]
+  }
 }

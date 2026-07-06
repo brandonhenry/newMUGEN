@@ -2781,5 +2781,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/jotaro-kujo/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/jotaro-kujo/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/jotaro-kujo/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/jotaro-kujo/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/jotaro-kujo/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/jotaro-kujo/sounds/voices/win-01.wav"
+    ]
   }
 }

@@ -2712,5 +2712,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/renji-abarai/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/renji-abarai/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/renji-abarai/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/renji-abarai/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/renji-abarai/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/renji-abarai/sounds/voices/win-01.wav"
+    ]
   }
 }

@@ -2834,5 +2834,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/majin-buu/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/majin-buu/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/majin-buu/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/majin-buu/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/majin-buu/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/majin-buu/sounds/voices/win-01.wav"
+    ]
   }
 }

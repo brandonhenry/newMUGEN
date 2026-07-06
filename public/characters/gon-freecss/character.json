@@ -2921,5 +2921,25 @@
         "offsetX": 0
       }
     }
+  },
+  "voice": {
+    "hit": [
+      "/characters/gon-freecss/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/gon-freecss/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/gon-freecss/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/gon-freecss/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/gon-freecss/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/gon-freecss/sounds/voices/win-01.wav"
+    ]
   }
 }
