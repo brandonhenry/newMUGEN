@@ -881,6 +881,8 @@ export type BufferedMoveIntent = {
 export type MatchMode = 'ai' | 'cpuArcade' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 export type ControlScheme = 'kore' | 'beginner';
+export type MenuAttractPerformanceMode = 'full' | 'snappy';
+export type MenuMotionPerformanceMode = 'full' | 'snappy';
 
 export type PlayerControlBindings = Record<ActionName, string[]>;
 export type PlayerGamepadBindings = Partial<Record<ActionName, number[]>>;
@@ -934,6 +936,11 @@ export type GameSettings = {
       size: number;
       intensity: number;
     };
+  };
+  performance: {
+    autoDetectMenuLag: boolean;
+    menuAttractMode: MenuAttractPerformanceMode;
+    menuMotionMode: MenuMotionPerformanceMode;
   };
   audio: {
     master: number;

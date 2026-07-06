@@ -8,6 +8,7 @@ export type AnalyticsEventName =
   | 'game_loaded'
   | 'screen_viewed'
   | 'menu_item_selected'
+  | 'menu_lag_prompt'
   | 'navigation_clicked'
   | 'game_start_clicked'
   | 'match_mode_changed'

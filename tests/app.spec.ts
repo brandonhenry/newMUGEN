@@ -14,6 +14,29 @@ async function mockInitialWebGLSupport(page: Page, supported: boolean) {
   }, supported);
 }
 
+async function forceMenuLagDetection(page: Page) {
+  await page.addInitScript(() => {
+    (window as typeof window & {
+      __KORE_FORCE_MENU_LAG_RESULT__?: unknown;
+    }).__KORE_FORCE_MENU_LAG_RESULT__ = {
+      laggy: true,
+      reasons: ['forced'],
+      stats: {
+        sampleMs: 3200,
+        frameCount: 90,
+        averageMs: 36,
+        p95Ms: 42,
+        p99Ms: 76,
+        maxMs: 96,
+        averageFps: 27.8,
+        longTaskCount: 2,
+        longTaskTotalMs: 140,
+        longestLongTaskMs: 80
+      }
+    };
+  });
+}
+
 async function startFromSplash(page: import('@playwright/test').Page) {
   await page.goto('/');
   await activateAnyInputScreen(page, '.title-screen');
@@ -342,6 +365,38 @@ test('title splash warns for unsupported WebGL and clears after start', async ({
   await expect(page.getByTestId('title-support-warning')).toBeHidden();
 });
 
+test('menu lag prompt can be skipped once per detector version', async ({ page }) => {
+  await forceMenuLagDetection(page);
+  await startFromSplash(page);
+  const dialog = page.getByTestId('menu-lag-dialog');
+  await expect(dialog).toBeVisible({ timeout: 8_000 });
+
+  await page.getByRole('button', { name: 'Skip' }).click();
+  await expect(dialog).toBeHidden();
+  await expect.poll(() => page.evaluate(() => Object.keys(window.localStorage).some((key) => key.startsWith('kore.menuLagPrompt.dismissed.') && window.localStorage.getItem(key) === '1'))).toBe(true);
+
+  await startFromSplash(page);
+  await expect(dialog).toBeHidden({ timeout: 2_500 });
+});
+
+test('menu lag prompt applies recommended menu-only settings', async ({ page }) => {
+  await forceMenuLagDetection(page);
+  await startFromSplash(page);
+  await expect(page.getByTestId('menu-lag-dialog')).toBeVisible({ timeout: 8_000 });
+
+  await page.getByRole('button', { name: 'Use recommended settings' }).click();
+
+  await expect.poll(() => page.evaluate(() => {
+    const stored = JSON.parse(window.localStorage.getItem('kore.gameSettings') ?? '{}');
+    return stored.settings?.performance ?? null;
+  })).toEqual({
+    autoDetectMenuLag: true,
+    menuAttractMode: 'snappy',
+    menuMotionMode: 'snappy'
+  });
+  await expect(page.getByTestId('menu-lag-dialog')).toBeHidden();
+});
+
 test('versus splash accepts touch input to skip into the fight', async ({ page }) => {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
@@ -539,6 +594,18 @@ test('opens controls and character viewer', async ({ page }) => {
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.46');
   await page.getByTestId('viewer-zoom-out').click();
   await expect(page.getByTestId('viewer-zoom-slider')).toHaveValue('0.28');
+});
+
+test('shows performance settings inside the Game options sidebar', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+
+  await expect(page.locator('.options-tabs button').filter({ hasText: /^Performance$/ })).toHaveCount(0);
+  await page.locator('.options-tabs button').filter({ hasText: /^Game$/ }).click();
+  await expect(page.locator('.options-sidebar button').filter({ hasText: /^Performance$/ })).toBeVisible();
+  await page.locator('.options-sidebar button').filter({ hasText: /^Performance$/ }).click();
+  await expect(page.getByText('Auto Detect Menu Lag')).toBeVisible();
+  await expect(page.getByText('Main Menu Fight')).toBeVisible();
 });
 
 test('shows desktop installer downloads from the console installers tab', async ({ page }) => {

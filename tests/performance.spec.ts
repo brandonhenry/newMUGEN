@@ -224,6 +224,35 @@ function recordResponse(records: ResourceRecord[], response: Response) {
 }
 
 test.describe('menu attract performance', () => {
+  test('keeps Chamber stage and HD voxel assets with recommended menu performance settings', async ({ page }, testInfo) => {
+    const responses: ResourceRecord[] = [];
+    page.on('response', (response) => recordResponse(responses, response));
+    await page.addInitScript(() => {
+      window.localStorage.setItem('kore.gameSettings', JSON.stringify({
+        version: 7,
+        settings: {
+          performance: {
+            autoDetectMenuLag: true,
+            menuAttractMode: 'snappy',
+            menuMotionMode: 'snappy'
+          }
+        }
+      }));
+    });
+
+    await openMenuAttract(page);
+    await page.waitForTimeout(5_000);
+    const loadedAttractAssets = responses
+      .map((entry) => entry.url)
+      .filter((url) => url.includes('/stages/') || url.includes('/voxels'));
+    testInfo.attach('recommended-menu-assets.json', {
+      body: JSON.stringify(loadedAttractAssets.slice(-80), null, 2),
+      contentType: 'application/json'
+    });
+    expect(loadedAttractAssets.some((url) => url.includes('/stages/the-chamber/stage.json') || url.includes('/stages/chamber/')), loadedAttractAssets.join('\n')).toBe(true);
+    expect(loadedAttractAssets.filter((url) => url.includes('/voxels-hd') && url.includes('.json')).length, loadedAttractAssets.join('\n')).toBeGreaterThan(0);
+  });
+
   test('keeps the CPU-vs-CPU menu fight smooth after warmup', async ({ page }, testInfo) => {
     const responses: ResourceRecord[] = [];
     page.on('response', (response) => recordResponse(responses, response));

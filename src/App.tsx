@@ -13,6 +13,7 @@ import {
   EyeOff,
   ExternalLink,
   Gamepad2,
+  Gauge,
   Home,
   History,
   KeyRound,
@@ -62,6 +63,7 @@ import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetL
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
 import { getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readPageGamepadState } from './lib/gamepads';
+import { clearMenuLagPromptDismissed, getMenuLagPromptDismissed, sampleMenuLandingLag, setMenuLagPromptDismissed, type MenuLagReport } from './lib/menuLagDetector';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -96,6 +98,8 @@ import {
   type GetupAction,
   type GetupFrameOverrides,
   type GameSettings,
+  type MenuAttractPerformanceMode,
+  type MenuMotionPerformanceMode,
   type BreakTargetMiniGameSnapshot,
   type HitLevel,
   type ImpactSparkEvent,
@@ -1340,8 +1344,16 @@ function pickRandomStage(stageRoster: StageDefinition[]) {
   return pool[Math.floor(Math.random() * pool.length)] ?? pool[0];
 }
 
-function pickMenuAttractStage(stageRoster: StageDefinition[]) {
+function pickMenuAttractStage(stageRoster: StageDefinition[], attractMode: MenuAttractPerformanceMode = 'full') {
   const visibleStages = stageRoster.filter((stage) => !stage.hidden);
+  if (attractMode === 'snappy') {
+    return (
+      visibleStages.find((stage) => stage.id === 'the-chamber') ??
+      stageRoster.find((stage) => stage.id === 'the-chamber') ??
+      pickRandomStage(stageRoster) ??
+      stages[0]
+    );
+  }
   const preferredModelStageIds = [
     'one-punch-man-opmje-combat-experimentation-room-2',
     'dbz-other-world-tournament',
@@ -3475,8 +3487,17 @@ export default function App() {
     }
   };
 
+  const applyRecommendedMenuPerformanceSettings = useCallback(() => {
+    setSettings((current) => {
+      const next = cloneSettings(current);
+      next.performance.menuAttractMode = 'snappy';
+      next.performance.menuMotionMode = 'snappy';
+      return sanitizeGameSettings(next);
+    });
+  }, []);
+
   useEffect(() => {
-    if (settings.display.reducedMotion) return;
+    if (settings.display.reducedMotion || (screen === 'menu' && settings.performance.menuMotionMode === 'snappy')) return;
     anime.remove('.screen-panel > *');
     anime({
       targets: '.screen-panel > *',
@@ -3486,7 +3507,7 @@ export default function App() {
       duration: 460,
       easing: 'easeOutCubic'
     });
-  }, [screen, settings.display.reducedMotion]);
+  }, [screen, settings.display.reducedMotion, settings.performance.menuMotionMode]);
 
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
@@ -3586,6 +3607,9 @@ export default function App() {
             unlockedCharacterIds={effectiveUnlockedCharacterIds}
             sparkSettings={settings.display.impactSparks}
             reducedMotion={settings.display.reducedMotion}
+            performanceSettings={settings.performance}
+            onApplyRecommendedPerformance={applyRecommendedMenuPerformanceSettings}
+            onAnalytics={captureAppAnalytics}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
             onArcade={() => {
@@ -4531,7 +4555,8 @@ function MenuAttractBackground({
   roster,
   stages: stageRoster,
   sparkSettings,
-  reducedMotion
+  reducedMotion,
+  attractMode
 }: {
   p1: CharacterDefinition;
   p2: CharacterDefinition;
@@ -4539,10 +4564,11 @@ function MenuAttractBackground({
   stages: StageDefinition[];
   sparkSettings: GameSettings['display']['impactSparks'];
   reducedMotion: boolean;
+  attractMode: MenuAttractPerformanceMode;
 }) {
   const makeFreshMatch = useCallback(
-    (stageOverride?: StageDefinition) => createMatch(p1, p2, stageOverride ?? pickMenuAttractStage(stageRoster), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }),
-    [p1, p2, roster, stageRoster]
+    (stageOverride?: StageDefinition) => createMatch(p1, p2, stageOverride ?? pickMenuAttractStage(stageRoster, attractMode), 'cpu', KORE_CPU_DIFFICULTY, { aiSeed: freshAiSeed(), roster }),
+    [attractMode, p1, p2, roster, stageRoster]
   );
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => makeFreshMatch());
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
@@ -4561,11 +4587,13 @@ function MenuAttractBackground({
     let accumulator = 0;
     const fixedStep = 1 / 60;
     const publishStepMs = 1000 / 60;
+    const maxStepsPerFrame = attractMode === 'snappy' ? 2 : 4;
 
     const tick = (now: number) => {
-      accumulator += Math.min(0.05, (now - last) / 1000);
+      accumulator += Math.min(attractMode === 'snappy' ? 0.034 : 0.05, (now - last) / 1000);
       last = now;
-      while (accumulator >= fixedStep) {
+      let steps = 0;
+      while (accumulator >= fixedStep && steps < maxStepsPerFrame) {
         const current = matchRef.current ?? makeFreshMatch();
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
           copyMenuAttractMatchInto(current, makeFreshMatch(current.stage));
@@ -4573,7 +4601,9 @@ function MenuAttractBackground({
           copyMenuAttractMatchInto(current, stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep));
         }
         accumulator -= fixedStep;
+        steps += 1;
       }
+      if (steps >= maxStepsPerFrame) accumulator = 0;
       if (now - lastPublish >= publishStepMs) {
         lastPublish = now;
         setSceneTick((tick) => (tick + 1) % 3600);
@@ -4583,7 +4613,7 @@ function MenuAttractBackground({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [makeFreshMatch]);
+  }, [attractMode, makeFreshMatch]);
 
   if (!attractMatch) return null;
   return (
@@ -4610,6 +4640,9 @@ function MenuScreen({
   unlockedCharacterIds,
   sparkSettings,
   reducedMotion,
+  performanceSettings,
+  onApplyRecommendedPerformance,
+  onAnalytics,
   onMenuSelect,
   onMenuHover,
   onArcade,
@@ -4627,6 +4660,9 @@ function MenuScreen({
   unlockedCharacterIds: Set<string>;
   sparkSettings: GameSettings['display']['impactSparks'];
   reducedMotion: boolean;
+  performanceSettings: GameSettings['performance'];
+  onApplyRecommendedPerformance: () => void;
+  onAnalytics: AnalyticsCapture;
   onMenuSelect: () => void;
   onMenuHover: () => void;
   onArcade: () => void;
@@ -4650,10 +4686,66 @@ function MenuScreen({
   const menuScreenRef = useRef<HTMLDivElement>(null);
   const menuIdleTimerRef = useRef<number | null>(null);
   const menuIdleGamepadActiveRef = useRef(false);
+  const [menuLagReport, setMenuLagReport] = useState<MenuLagReport | null>(null);
+  const recommendedPerformanceActive = performanceSettings.menuAttractMode === 'snappy' && performanceSettings.menuMotionMode === 'snappy';
 
   useEffect(() => {
     menuChromeHiddenRef.current = menuChromeHidden;
   }, [menuChromeHidden]);
+
+  useEffect(() => {
+    setMenuLagReport(null);
+    if (!performanceSettings.autoDetectMenuLag || recommendedPerformanceActive || getMenuLagPromptDismissed()) return undefined;
+    let cancelled = false;
+    let timeout = 0;
+    const sample = () => {
+      const canvas = menuScreenRef.current?.querySelector<HTMLCanvasElement>('[data-testid="menu-attract-canvas"]');
+      if (!canvas) {
+        timeout = window.setTimeout(sample, 250);
+        return;
+      }
+      void sampleMenuLandingLag(canvas).then((report) => {
+        if (cancelled || !report.laggy || recommendedPerformanceActive || getMenuLagPromptDismissed()) return;
+        setMenuLagReport(report);
+        onAnalytics('menu_lag_prompt', {
+          action: 'shown',
+          detector_version: report.detectorVersion,
+          reasons: report.reasons.join(','),
+          p95_ms: report.stats.p95Ms,
+          p99_ms: report.stats.p99Ms,
+          average_fps: report.stats.averageFps,
+          long_task_count: report.stats.longTaskCount,
+          linux_firefox: report.device.linuxFirefox,
+          steam_deck_like: report.device.steamDeckLike
+        });
+      });
+    };
+    timeout = window.setTimeout(sample, 900);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, [onAnalytics, performanceSettings.autoDetectMenuLag, recommendedPerformanceActive]);
+
+  const applyMenuLagRecommendation = useCallback(() => {
+    onApplyRecommendedPerformance();
+    setMenuLagReport(null);
+    onAnalytics('menu_lag_prompt', {
+      action: 'accepted',
+      detector_version: menuLagReport?.detectorVersion ?? null,
+      reasons: menuLagReport?.reasons.join(',') ?? null
+    });
+  }, [menuLagReport, onAnalytics, onApplyRecommendedPerformance]);
+
+  const skipMenuLagRecommendation = useCallback(() => {
+    setMenuLagPromptDismissed();
+    setMenuLagReport(null);
+    onAnalytics('menu_lag_prompt', {
+      action: 'skipped',
+      detector_version: menuLagReport?.detectorVersion ?? null,
+      reasons: menuLagReport?.reasons.join(',') ?? null
+    });
+  }, [menuLagReport, onAnalytics]);
 
   const clearMenuIdleTimer = useCallback(() => {
     if (menuIdleTimerRef.current === null) return;
@@ -4826,6 +4918,7 @@ function MenuScreen({
           stages={stageRoster}
           sparkSettings={sparkSettings}
           reducedMotion={reducedMotion}
+          attractMode={performanceSettings.menuAttractMode}
         />
       )}
       <div className="menu-vignette" />
@@ -4872,8 +4965,51 @@ function MenuScreen({
           <span>Select</span>
         </div>
       </section>}
+      {menuLagReport && (
+        <MenuLagRecommendationDialog
+          report={menuLagReport}
+          onApply={applyMenuLagRecommendation}
+          onSkip={skipMenuLagRecommendation}
+        />
+      )}
     </div>
   );
+}
+
+function MenuLagRecommendationDialog({
+  report,
+  onApply,
+  onSkip
+}: {
+  report: MenuLagReport;
+  onApply: () => void;
+  onSkip: () => void;
+}) {
+  return (
+    <section className="menu-lag-dialog" role="dialog" aria-modal="true" aria-label="Main menu performance recommendation" data-testid="menu-lag-dialog">
+      <div className="menu-lag-dialog-icon" aria-hidden="true">
+        <Gauge size={22} />
+      </div>
+      <div className="menu-lag-dialog-copy">
+        <strong>Main menu is running slowly</strong>
+        <p>The CPU fight is making the menu less responsive. Recommended settings can improve menu snappiness while keeping HD voxels and fight rendering intact.</p>
+        <small>{formatMenuLagSummary(report)}</small>
+      </div>
+      <div className="menu-lag-dialog-actions">
+        <button type="button" className="primary-button" onClick={onApply}>
+          Use recommended settings
+        </button>
+        <button type="button" className="secondary-button" onClick={onSkip}>
+          Skip
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function formatMenuLagSummary(report: MenuLagReport) {
+  const reasons = report.reasons.length > 0 ? report.reasons.join(', ') : 'runtime pacing';
+  return `Detected ${reasons}. ${Math.round(report.stats.averageFps)} FPS average, ${Math.round(report.stats.p95Ms)}ms p95.`;
 }
 
 function pickAttractCharacterIds(roster: CharacterDefinition[], unlockedCharacterIds: Set<string>): [string, string] {
@@ -9592,7 +9728,7 @@ const tabLabels: Record<SettingsTab, string> = {
   console: 'Console'
 };
 const sidebars: Record<SettingsTab, string[]> = {
-  game: ['Match Rules', 'Training', 'Assist', 'Defaults'],
+  game: ['Match Rules', 'Training', 'Assist', 'Performance', 'Defaults'],
   controls: ['Keyboard Mapping', 'Keyboard Combos', 'Gamepad Mapping', 'Gamepad Combos', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
@@ -9630,6 +9766,9 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('display', 'cursor_id', previous.display.cursorId, next.display.cursorId);
   add('display', 'reduced_motion', previous.display.reducedMotion, next.display.reducedMotion);
   add('display', 'debug_overlay', previous.display.debugOverlay, next.display.debugOverlay);
+  add('game', 'auto_detect_menu_lag', previous.performance.autoDetectMenuLag, next.performance.autoDetectMenuLag);
+  add('game', 'menu_attract_mode', previous.performance.menuAttractMode, next.performance.menuAttractMode);
+  add('game', 'menu_motion_mode', previous.performance.menuMotionMode, next.performance.menuMotionMode);
   add('audio', 'menu_music', previous.audio.menuMusic, next.audio.menuMusic);
   add('audio', 'bgm_track_index', previous.audio.bgmTrackIndex, next.audio.bgmTrackIndex);
   add('audio', 'master', previous.audio.master, next.audio.master);
@@ -9889,10 +10028,49 @@ function SettingsScreen({
           <SettingsSection index={2} title="Assist" active={activeSectionIndex === 2}>
             <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
           </SettingsSection>
-          <SettingsSection index={3} title="Defaults" active={activeSectionIndex === 3}>
+          <SettingsSection index={3} title="Performance" active={activeSectionIndex === 3}>
+            <SettingToggle
+              label="Auto Detect Menu Lag"
+              checked={settings.performance.autoDetectMenuLag}
+              onChange={(checked) => updateSettings((current) => ({ ...current, performance: { ...current.performance, autoDetectMenuLag: checked } }))}
+            />
+            <SettingRow label="Main Menu Fight" value={settings.performance.menuAttractMode === 'snappy' ? 'SNAPPY' : 'FULL'}>
+              <PerformanceModeSegmented<MenuAttractPerformanceMode>
+                value={settings.performance.menuAttractMode}
+                options={[
+                  { value: 'full', label: 'Full' },
+                  { value: 'snappy', label: 'Snappy' }
+                ]}
+                onChange={(menuAttractMode) => updateSettings((current) => ({ ...current, performance: { ...current.performance, menuAttractMode } }))}
+              />
+            </SettingRow>
+            <SettingRow label="Menu Motion" value={settings.performance.menuMotionMode === 'snappy' ? 'SNAPPY' : 'FULL'}>
+              <PerformanceModeSegmented<MenuMotionPerformanceMode>
+                value={settings.performance.menuMotionMode}
+                options={[
+                  { value: 'full', label: 'Full' },
+                  { value: 'snappy', label: 'Snappy' }
+                ]}
+                onChange={(menuMotionMode) => updateSettings((current) => ({ ...current, performance: { ...current.performance, menuMotionMode } }))}
+              />
+            </SettingRow>
+            <button className="secondary-button" onClick={() => {
+              onAnalytics('settings_reset_clicked', { settings_tab: 'game', action: 'apply_recommended_performance' });
+              updateSettings((current) => ({ ...current, performance: { ...current.performance, menuAttractMode: 'snappy', menuMotionMode: 'snappy' } }));
+            }}>
+              <Gauge size={16} />
+              Apply Recommended
+            </button>
+          </SettingsSection>
+          <SettingsSection index={4} title="Defaults" active={activeSectionIndex === 4}>
             <button className="secondary-button" onClick={() => {
               onAnalytics('settings_reset_clicked', { settings_tab: 'game' });
-              updateSettings((current) => ({ ...current, game: cloneSettings(defaultGameSettings).game }));
+              clearMenuLagPromptDismissed();
+              updateSettings((current) => ({
+                ...current,
+                game: cloneSettings(defaultGameSettings).game,
+                performance: cloneSettings(defaultGameSettings).performance
+              }));
             }}>
               <RotateCcw size={16} />
               Reset Game Settings
@@ -10772,6 +10950,26 @@ function CursorPicker({
         ))}
       </div>
     </article>
+  );
+}
+
+function PerformanceModeSegmented<T extends string>({
+  value,
+  options,
+  onChange
+}: {
+  value: T;
+  options: Array<{ value: T; label: string }>;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <div className="mini-segmented">
+      {options.map((option) => (
+        <button key={option.value} className={value === option.value ? 'active' : ''} onClick={() => onChange(option.value)}>
+          {option.label}
+        </button>
+      ))}
+    </div>
   );
 }
 

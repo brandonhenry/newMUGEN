@@ -1,10 +1,10 @@
-import type { ActionName, GameSettings, PlayerControlBindings, PlayerGamepadBindings, PlayerGamepadComboBindings, PlayerKeyboardComboBindings } from '../types';
+import type { ActionName, GameSettings, MenuAttractPerformanceMode, MenuMotionPerformanceMode, PlayerControlBindings, PlayerGamepadBindings, PlayerGamepadComboBindings, PlayerKeyboardComboBindings } from '../types';
 import { KORE_DEFAULT_CURSOR_ID, isKoreCursorId } from '../data/cursors';
 import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 6;
+const settingsVersion = 7;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -97,6 +97,11 @@ export const defaultGameSettings: GameSettings = {
       intensity: 1
     }
   },
+  performance: {
+    autoDetectMenuLag: true,
+    menuAttractMode: 'full',
+    menuMotionMode: 'full'
+  },
   audio: {
     master: 1,
     music: 0.72,
@@ -137,6 +142,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
   const camera = isRecord(source.camera) ? source.camera : {};
   const display = isRecord(source.display) ? source.display : {};
   const impactSparks = isRecord(display.impactSparks) ? display.impactSparks : {};
+  const performance = isRecord(source.performance) ? source.performance : {};
   const audio = isRecord(source.audio) ? source.audio : {};
   const controls = isRecord(source.controls) ? source.controls : {};
   const keyboard = Array.isArray(controls.keyboard) ? controls.keyboard : [];
@@ -191,6 +197,11 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
         intensity: clampNumber(impactSparks.intensity, 0.35, 2, defaults.display.impactSparks.intensity)
       }
     },
+    performance: {
+      autoDetectMenuLag: booleanOr(performance.autoDetectMenuLag, defaults.performance.autoDetectMenuLag),
+      menuAttractMode: sanitizeMenuAttractPerformanceMode(performance.menuAttractMode, defaults.performance.menuAttractMode),
+      menuMotionMode: sanitizeMenuMotionPerformanceMode(performance.menuMotionMode, defaults.performance.menuMotionMode)
+    },
     audio: {
       master: clampNumber(audio.master, 0, 1, defaults.audio.master),
       music: clampNumber(audio.music, 0, 1, defaults.audio.music),
@@ -227,6 +238,7 @@ export function cloneSettings(settings: GameSettings): GameSettings {
     },
     camera: { ...settings.camera },
     display: { ...settings.display, impactSparks: { ...settings.display.impactSparks } },
+    performance: { ...settings.performance },
     audio: { ...settings.audio }
   };
 }
@@ -383,6 +395,14 @@ function sanitizeHexColor(value: unknown, fallback: string) {
   if (typeof value !== 'string') return fallback;
   const trimmed = value.trim();
   return /^#[0-9a-fA-F]{6}$/.test(trimmed) ? trimmed : fallback;
+}
+
+function sanitizeMenuAttractPerformanceMode(value: unknown, fallback: MenuAttractPerformanceMode): MenuAttractPerformanceMode {
+  return value === 'snappy' || value === 'full' ? value : fallback;
+}
+
+function sanitizeMenuMotionPerformanceMode(value: unknown, fallback: MenuMotionPerformanceMode): MenuMotionPerformanceMode {
+  return value === 'snappy' || value === 'full' ? value : fallback;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
