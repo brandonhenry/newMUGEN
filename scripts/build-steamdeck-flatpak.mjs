@@ -21,6 +21,7 @@ const desktopPath = resolve(generatedDir, `${appId}.desktop`);
 const metainfoPath = resolve(generatedDir, `${appId}.metainfo.xml`);
 const iconSourcePath = resolve('public/brand/kore-favicon.png');
 const iconPath = resolve(generatedDir, `${appId}.png`);
+const iconThemeSize = '512x512';
 const appVersionSource = await readFile('src/appVersion.ts', 'utf8').catch(() => '');
 const packageSource = await readFile('package.json', 'utf8').catch(() => '{}');
 const sourceVersion = appVersionSource.match(/KORE_APP_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
@@ -45,7 +46,9 @@ async function ensureLinuxUnpacked() {
 async function writeBuildFiles() {
   await rm(generatedDir, { recursive: true, force: true });
   await mkdir(generatedDir, { recursive: true });
-  await cp(iconSourcePath, iconPath);
+  if (!(await resizeIconWithImageMagick())) {
+    await cp(iconSourcePath, iconPath);
+  }
   await writeFile(launcherPath, `#!/usr/bin/env bash
 set -euo pipefail
 export KORE_DESKTOP_URL="\${KORE_DESKTOP_URL:-https://playkore.com}"
@@ -86,6 +89,18 @@ StartupNotify=true
 `);
 }
 
+async function resizeIconWithImageMagick() {
+  for (const command of ['magick', 'convert']) {
+    try {
+      await execFileAsync(command, [iconSourcePath, '-resize', iconThemeSize, iconPath]);
+      return true;
+    } catch {
+      // Try the next ImageMagick command name, then fall back to copying the source icon.
+    }
+  }
+  return false;
+}
+
 async function buildBundle() {
   const manifest = {
     appId,
@@ -115,12 +130,12 @@ async function buildBundle() {
       [launcherPath, 'bin/kore'],
       [desktopPath, `share/applications/${appId}.desktop`],
       [metainfoPath, `share/metainfo/${appId}.metainfo.xml`],
-      [iconPath, `share/icons/hicolor/1254x1254/apps/${appId}.png`]
+      [iconPath, `share/icons/hicolor/${iconThemeSize}/apps/${appId}.png`]
     ],
     extraExports: [
       `share/applications/${appId}.desktop`,
       `share/metainfo/${appId}.metainfo.xml`,
-      `share/icons/hicolor/1254x1254/apps/${appId}.png`
+      `share/icons/hicolor/${iconThemeSize}/apps/${appId}.png`
     ]
   });
   const stats = await stat(bundlePath);
