@@ -959,9 +959,16 @@ export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: B
 }
 
 function MiniGameCameraRig({ snapshot }: { snapshot: BreakTargetMiniGameSnapshot }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const smoothedTarget = useRef(new THREE.Vector3(snapshot.player.position.x, 1.1, snapshot.player.position.z));
   useFrame((_, delta) => {
+    const aspect = size.width / Math.max(1, size.height);
+    const isNarrow = aspect < 0.75;
+    const desiredFov = isNarrow ? 64 : 46;
+    if ('fov' in camera && Math.abs(camera.fov - desiredFov) > 0.1) {
+      camera.fov = desiredFov;
+      camera.updateProjectionMatrix();
+    }
     const aliveTargets = snapshot.targets.filter((target) => !target.destroyed);
     const targetCenter = aliveTargets.reduce(
       (sum, target) => sum.add(new THREE.Vector3(target.position.x, Math.max(1, target.position.y), target.position.z)),
@@ -969,9 +976,13 @@ function MiniGameCameraRig({ snapshot }: { snapshot: BreakTargetMiniGameSnapshot
     );
     if (aliveTargets.length > 0) targetCenter.multiplyScalar(1 / (aliveTargets.length + 1));
     const player = new THREE.Vector3(snapshot.player.position.x, 1.08, snapshot.player.position.z);
-    const focus = player.lerp(targetCenter, 0.38);
+    const focus = player.lerp(targetCenter, isNarrow ? 0.34 : 0.38);
     smoothedTarget.current.lerp(focus, 1 - Math.pow(0.001, delta));
-    const desired = new THREE.Vector3(smoothedTarget.current.x, smoothedTarget.current.y + 2.35, smoothedTarget.current.z + 6.8);
+    const desired = new THREE.Vector3(
+      smoothedTarget.current.x,
+      smoothedTarget.current.y + (isNarrow ? 3.2 : 2.35),
+      smoothedTarget.current.z + (isNarrow ? 12.2 : 6.8)
+    );
     camera.position.lerp(desired, 1 - Math.pow(0.002, delta));
     camera.lookAt(smoothedTarget.current);
   });

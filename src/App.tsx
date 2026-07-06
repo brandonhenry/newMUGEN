@@ -227,6 +227,7 @@ type ArcadeMiniGameLaunch = {
   kind: MiniGameKind;
   stage: StageDefinition;
   seed: number;
+  durationSeconds?: number;
 };
 
 type CharacterAnimationOverride = {
@@ -3548,8 +3549,14 @@ export default function App() {
 	    if (params.get('debugMiniGame') !== '1') return;
 	    debugMiniGameStartedRef.current = true;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
+	    const debugDuration = Number(params.get('debugMiniGameTimer'));
 	    setMode('ai');
-	    setActiveArcadeMiniGame({ kind: BREAK_TARGET_GAME_ID, stage: miniGameStage, seed: freshAiSeed() });
+	    setActiveArcadeMiniGame({
+	      kind: BREAK_TARGET_GAME_ID,
+	      stage: miniGameStage,
+	      seed: freshAiSeed(),
+	      durationSeconds: Number.isFinite(debugDuration) && debugDuration > 0 ? Math.min(45, debugDuration) : undefined
+	    });
 	    setLastMiniGameResult(null);
 	    setScreen('miniGame');
 	  }, [p1, playableStageRoster, screen, selectedStage]);
@@ -21428,7 +21435,7 @@ function BreakTargetMiniGameScreen({
   onComplete: (result: MiniGameResult) => void;
   onAnalytics: AnalyticsCapture;
 }) {
-  const [snapshot, setSnapshot] = useState<BreakTargetMiniGameSnapshot>(() => createBreakTargetMiniGame(character, launch.stage, launch.seed));
+  const [snapshot, setSnapshot] = useState<BreakTargetMiniGameSnapshot>(() => createBreakTargetMiniGame(character, launch.stage, launch.seed, launch.durationSeconds));
   const [paused, setPaused] = useState(false);
   const screenRef = useRef<HTMLDivElement>(null);
   const snapshotRef = useRef(snapshot);
@@ -21438,7 +21445,7 @@ function BreakTargetMiniGameScreen({
   const mobileControlsTrackedRef = useRef(false);
 
   useEffect(() => {
-    const fresh = createBreakTargetMiniGame(character, launch.stage, launch.seed);
+    const fresh = createBreakTargetMiniGame(character, launch.stage, launch.seed, launch.durationSeconds);
     snapshotRef.current = fresh;
     setSnapshot(fresh);
     setPaused(false);
@@ -21454,7 +21461,7 @@ function BreakTargetMiniGameScreen({
     });
     const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
     return () => window.cancelAnimationFrame(focusFrame);
-  }, [character, launch.stage, launch.seed, onAnalytics]);
+  }, [character, launch.stage, launch.seed, launch.durationSeconds, onAnalytics]);
 
   useEffect(() => {
     pausedRef.current = paused;

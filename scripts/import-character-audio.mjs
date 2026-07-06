@@ -11,6 +11,7 @@ const reviewAssetRoot = path.join(reviewRoot, 'assets');
 const selectionsPath = path.join(reviewRoot, 'selections.json');
 const audioExtensions = new Set(['.wav', '.mp3', '.ogg', '.flac', '.m4a', '.aac', '.webm']);
 const voiceCategories = ['hit', 'attackLand', 'launcher', 'tornado', 'win'];
+const requiredVoiceCategories = [...voiceCategories, 'stageIntro'];
 const finalNames = {
   hit: 'hit-01',
   attackLand: 'attack-land-01',
@@ -129,6 +130,7 @@ function main() {
   }
   writeReviewPage(reviewRows);
   pruneSavedSelections(reviewRows);
+  writeMissingAudioPage(loadCharacters());
   console.log(`Imported character audio for ${reviewRows.length} characters.`);
   if (skippedUnplayable > 0) console.log(`Skipped ${skippedUnplayable} unplayable characters.`);
   if (skippedFallbacks > 0) console.log(`Skipped ${skippedFallbacks} fallback-only characters with no reviewed pick.`);
@@ -510,6 +512,95 @@ function writeReviewPage(rows) {
     }
   }
   writeFileSync(path.join(reviewRoot, 'index.html'), renderReviewHtml(rows));
+}
+
+function writeMissingAudioPage(characters) {
+  const playableCharacters = characters.filter((character) => !character.manifest.unplayable);
+  const rows = playableCharacters
+    .map((character) => {
+      const missingCategories = requiredVoiceCategories.filter((category) => {
+        const clips = character.manifest.voice?.[category];
+        return !Array.isArray(clips) || clips.length === 0;
+      });
+      return {
+        id: character.id,
+        displayName: character.displayName,
+        hasAnyVoice: Boolean(character.manifest.voice),
+        missingCategories
+      };
+    })
+    .filter((row) => row.missingCategories.length > 0);
+  writeFileSync(path.join(reviewRoot, 'missing.html'), renderMissingAudioHtml(rows, playableCharacters.length));
+}
+
+function renderMissingAudioHtml(rows, playableCount) {
+  const noVoiceCount = rows.filter((row) => !row.hasAnyVoice).length;
+  const partialCount = rows.length - noVoiceCount;
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KORE Missing Character Voices</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111318; color: #f3f3f4; }
+    body { margin: 0; background: #111318; }
+    header { position: sticky; top: 0; z-index: 2; padding: 16px 22px; background: rgba(17, 19, 24, 0.94); border-bottom: 1px solid #2b2f38; backdrop-filter: blur(12px); }
+    h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: 0; }
+    header p { margin: 0; color: #b8bdc7; font-size: 13px; }
+    main { padding: 18px; display: grid; gap: 12px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge { border: 1px solid #454c57; border-radius: 999px; padding: 4px 9px; color: #d8dce4; font-size: 12px; }
+    .empty { border-color: #a55d67; color: #ff9caa; }
+    .partial { border-color: #c9a24e; color: #ffd977; }
+    table { width: 100%; border-collapse: collapse; border: 1px solid #2d333d; border-radius: 8px; overflow: hidden; background: #181b22; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #2d333d; text-align: left; vertical-align: top; }
+    th { color: #f5d36b; font-size: 12px; text-transform: uppercase; letter-spacing: 0; background: #12151b; }
+    td { font-size: 13px; }
+    tr:last-child td { border-bottom: 0; }
+    code { color: #aeb8c8; font-size: 12px; }
+    .missing { color: #ffb3bd; }
+    .covered { color: #9ce6b6; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KORE Missing Character Voices</h1>
+    <p>Playable characters that are missing reviewed voice sound bites.</p>
+  </header>
+  <main>
+    <div class="stats">
+      <span class="badge">${playableCount} playable characters</span>
+      <span class="badge covered">${playableCount - rows.length} fully covered</span>
+      <span class="badge empty">${noVoiceCount} with no voice</span>
+      <span class="badge partial">${partialCount} partial</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Character</th>
+          <th>ID</th>
+          <th>Status</th>
+          <th>Missing</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(renderMissingAudioRow).join('\n')}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
+`;
+}
+
+function renderMissingAudioRow(row) {
+  return `<tr>
+  <td>${escapeHtml(row.displayName)}</td>
+  <td><code>${escapeHtml(row.id)}</code></td>
+  <td><span class="badge ${row.hasAnyVoice ? 'partial' : 'empty'}">${row.hasAnyVoice ? 'Partial voice' : 'No voice'}</span></td>
+  <td class="missing">${escapeHtml(row.missingCategories.join(', '))}</td>
+</tr>`;
 }
 
 function renderReviewHtml(rows) {

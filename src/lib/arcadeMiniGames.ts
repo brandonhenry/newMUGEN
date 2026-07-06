@@ -73,8 +73,10 @@ export function shouldStartArcadeMiniGame(random = Math.random()) {
 export function createBreakTargetMiniGame(
   character: CharacterDefinition,
   stage: StageDefinition,
-  seed = Date.now()
+  seed = Date.now(),
+  durationSeconds = BREAK_TARGET_ROUND_TIME
 ): BreakTargetMiniGameSnapshot {
+  const roundTime = Math.max(1, Math.min(BREAK_TARGET_ROUND_TIME, durationSeconds));
   const bounds = resolveMiniGameStageBounds(stage, PLAYER_RADIUS);
   const fallbackSpawn = stageBoundsLocalToWorld({ x: -Math.min(2.8, bounds.halfWidth * 0.45), z: 0 }, bounds);
   const spawn = stage.spawns?.p1
@@ -86,8 +88,8 @@ export function createBreakTargetMiniGame(
     stage,
     player: createMiniGameFighter(character, spawn),
     seed,
-    roundTime: BREAK_TARGET_ROUND_TIME,
-    timer: BREAK_TARGET_ROUND_TIME,
+    roundTime,
+    timer: roundTime,
     score: 0,
     targets: generateBreakTargets(stage, seed),
     explosions: [],
