@@ -276,6 +276,6 @@ describe('ranked local fallback', () => {
         botKp: 650,
         ratingEstimate: 900
       }
-    }))).rejects.toThrow(/bot opponent/i);
+    }))).rejects.toThrow(/CPU opponent/i);
   });
 });

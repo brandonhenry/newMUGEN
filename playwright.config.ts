@@ -19,6 +19,11 @@ export default defineConfig({
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile', use: { ...devices['Pixel 7'] } }
+    { name: 'mobile', use: { ...devices['Pixel 7'] } },
+    { name: 'compat-iphone-se', testMatch: /device-compat\.spec\.ts/, use: { ...devices['iPhone SE'] } },
+    { name: 'compat-iphone-13', testMatch: /device-compat\.spec\.ts/, use: { ...devices['iPhone 13'] } },
+    { name: 'compat-pixel-5', testMatch: /device-compat\.spec\.ts/, use: { ...devices['Pixel 5'] } },
+    { name: 'compat-galaxy-s9', testMatch: /device-compat\.spec\.ts/, use: { ...devices['Galaxy S9+'] } },
+    { name: 'compat-ipad-pro', testMatch: /device-compat\.spec\.ts/, use: { ...devices['iPad Pro 11'] } }
   ]
 });

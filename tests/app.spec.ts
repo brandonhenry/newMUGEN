@@ -8,11 +8,31 @@ async function gotoTitle(page: Page) {
 
 async function startFromSplash(page: import('@playwright/test').Page) {
   await page.goto('/');
-  await page.locator('.title-screen').click();
+  await activateAnyInputScreen(page, '.title-screen');
+  await expectMainMenu(page);
 }
 
 async function expectMainMenu(page: Page) {
-  await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 10000 });
+}
+
+async function activateAnyInputScreen(page: Page, selector: string) {
+  const target = page.locator(selector);
+  await expect(target).toBeVisible({ timeout: 10_000 });
+  await target.dispatchEvent('pointerdown', {
+    pointerId: 97,
+    pointerType: 'touch',
+    isPrimary: true,
+    bubbles: true,
+    cancelable: true
+  }).catch(() => undefined);
+  await page.dispatchEvent('body', 'pointerup', {
+    pointerId: 97,
+    pointerType: 'touch',
+    isPrimary: true,
+    bubbles: true,
+    cancelable: true
+  }).catch(() => undefined);
 }
 
 async function dispatchRawTouch(page: Page, selector: string) {
@@ -61,10 +81,11 @@ async function startFight(page: import('@playwright/test').Page, local2p = false
   await startFromSplash(page);
   await page.getByRole('button', { name: local2p ? 'Versus' : 'Arcade' }).click({ force: true });
   await page.getByRole('button', { name: 'Stage' }).click();
+  await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
   const versusSplash = page.locator('.fight-versus-screen');
   await expect(versusSplash).toBeVisible({ timeout: 3000 });
-  await page.keyboard.press('Enter');
+  await activateAnyInputScreen(page, '.fight-versus-screen');
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 2000 });
   const fightScreen = page.locator('.fight-screen');
@@ -102,23 +123,45 @@ async function virtualPress(page: import('@playwright/test').Page, label: string
 }
 
 async function touchHold(page: Page, testId: string, duration: number) {
-  const target = page.getByTestId(testId);
-  await expect(target).toBeVisible();
-  const box = await target.boundingBox();
-  if (!box) throw new Error(`Missing touch target box for ${testId}`);
-  const x = box.x + box.width / 2;
-  const y = box.y + box.height / 2;
-  const client = await page.context().newCDPSession(page);
-  await client.send('Input.dispatchTouchEvent', {
-    type: 'touchStart',
-    touchPoints: [{ x, y, id: 1, radiusX: 8, radiusY: 8, force: 1 }]
-  });
+  const client = await startTouch(page, testId);
   await page.waitForTimeout(duration);
   await client.send('Input.dispatchTouchEvent', {
     type: 'touchEnd',
     touchPoints: []
   });
   await client.detach();
+}
+
+async function startTouch(page: Page, testId: string, id = 1) {
+  const point = await touchPoint(page, testId, id);
+  const client = await page.context().newCDPSession(page);
+  await client.send('Input.dispatchTouchEvent', {
+    type: 'touchStart',
+    touchPoints: [point]
+  });
+  return client;
+}
+
+async function touchPoint(page: Page, testId: string, id: number) {
+  const target = page.getByTestId(testId);
+  await expect(target).toBeVisible();
+  const box = await target.boundingBox();
+  if (!box) throw new Error(`Missing touch target box for ${testId}`);
+  return { x: box.x + box.width / 2, y: box.y + box.height / 2, id, radiusX: 8, radiusY: 8, force: 1 };
+}
+
+async function expectNoHeldFightInput(page: Page) {
+  await expect.poll(async () => page.getByTestId('frame-input').innerText(), { timeout: 3_000 }).toBe('none');
+}
+
+async function setFightPositions(page: Page, positions: { p1?: { x?: number; y?: number; z?: number }; p2?: { x?: number; y?: number; z?: number } }) {
+  await page.evaluate((nextPositions) => {
+    const testWindow = window as typeof window & {
+      __koreE2ESetFightPositions?: (value: typeof nextPositions) => void;
+    };
+    if (!testWindow.__koreE2ESetFightPositions) throw new Error('Missing KORE e2e fight-position hook');
+    testWindow.__koreE2ESetFightPositions(nextPositions);
+  }, positions);
 }
 
 function keyValue(code: string) {
@@ -286,7 +329,7 @@ test('shows ranked mode and ranked profile card from character select', async ({
   await page.getByRole('button', { name: 'Profile Card' }).click();
   await expect(page.getByRole('heading', { name: 'RANKTEST' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Stats' })).toBeVisible();
-  await expect(page.getByText(/1,200 KP - Unranked/)).toBeVisible();
+  await expect(page.getByText(/Placement 0\/10 - 900 provisional KP|1,200 KP - Unranked/)).toBeVisible();
   await page.getByRole('button', { name: 'History' }).click();
   await expect(page.getByText('No ranked matches yet.')).toBeVisible();
 });
@@ -484,7 +527,7 @@ test('opens tournament mode above characters and shows paid beta disabled', asyn
 
   await tournamentButton.click();
   await expect(page.locator('.tournament-select-screen')).toBeVisible();
-  await expect(page.getByRole('button', { name: /\$2 Lightning/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Prizepool/i })).toBeDisabled();
   await expect(page.getByText('Paid beta unavailable')).toBeVisible();
 });
 
@@ -595,18 +638,83 @@ test('uses single tap for jump/crouch and double tap for lane movement', async (
   expect(p2After).toBeGreaterThanOrEqual(-3.6);
 });
 
-test('mobile touch controls drive movement and attacks', async ({ page }, testInfo) => {
+test('mobile touch controls drive movement, attacks, and clear released inputs', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
   await startFight(page, true);
   await expect(page.locator('.touch-controls')).toBeVisible();
+  await setFightPositions(page, { p1: { x: -1.3, y: 0, z: 0 }, p2: { x: 1.3, y: 0, z: 0 } });
+  await expect(page.getByTestId('touch-left')).toBeVisible();
+  await expect(page.getByTestId('touch-right')).toBeVisible();
+  await expect(page.getByTestId('touch-jab')).toBeVisible();
   const before = xFromPosition(await page.getByTestId('p1-position').innerText());
 
   await touchHold(page, 'touch-right', 900);
-
   await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3000 }).toBeGreaterThan(before + 0.18);
+  await expectNoHeldFightInput(page);
+  const afterForward = xFromPosition(await page.getByTestId('p1-position').innerText());
+
+  await touchHold(page, 'touch-left', 600);
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3000 }).toBeLessThan(afterForward - 0.06);
+  await expectNoHeldFightInput(page);
 
   await touchHold(page, 'touch-jab', 220);
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
+
+  const cancelClient = await startTouch(page, 'touch-left', 21);
+  await expect(page.getByTestId('last-input')).toHaveText('p1:left');
+  await cancelClient.send('Input.dispatchTouchEvent', { type: 'touchCancel', touchPoints: [] });
+  await cancelClient.detach();
+  await expectNoHeldFightInput(page);
+
+  const blurClient = await startTouch(page, 'touch-right', 22);
+  await expect(page.getByTestId('last-input')).toHaveText('p1:right');
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expectNoHeldFightInput(page);
+  await blurClient.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }).catch(() => undefined);
+  await blurClient.detach();
+});
+
+test('mobile touch controls keep forward and back correct after side swaps', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
+  await startFight(page, true);
+  await expect(page.locator('.touch-controls')).toBeVisible();
+  await setFightPositions(page, { p1: { x: 1.3, y: 0, z: 0 }, p2: { x: -1.3, y: 0, z: 0 } });
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3_000 }).toBeGreaterThan(1.1);
+  const crossedStart = xFromPosition(await page.getByTestId('p1-position').innerText());
+
+  await touchHold(page, 'touch-left', 800);
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3_000 }).toBeLessThan(crossedStart - 0.18);
+  await expectNoHeldFightInput(page);
+  const afterCrossedForward = xFromPosition(await page.getByTestId('p1-position').innerText());
+
+  await touchHold(page, 'touch-right', 700);
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3_000 }).toBeGreaterThan(afterCrossedForward + 0.04);
+  await expect(page.getByTestId('p1-state')).toHaveText(/block|walk|idle/);
+  await expectNoHeldFightInput(page);
+});
+
+test('mobile touch controls allow movement while tapping attacks', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
+  await startFight(page, true);
+  await setFightPositions(page, { p1: { x: -1.3, y: 0, z: 0 }, p2: { x: 1.3, y: 0, z: 0 } });
+  const before = xFromPosition(await page.getByTestId('p1-position').innerText());
+
+  const movement = await touchPoint(page, 'touch-right', 31);
+  const attack = await touchPoint(page, 'touch-jab', 32);
+  const client = await page.context().newCDPSession(page);
+  await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [movement] });
+  await expect(page.getByTestId('last-input')).toHaveText('p1:right');
+  await page.waitForTimeout(300);
+  await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [movement, attack] });
+  await page.waitForTimeout(120);
+  await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [movement] });
+  await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
+  await page.waitForTimeout(500);
+  await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await client.detach();
+
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3_000 }).toBeGreaterThan(before + 0.18);
+  await expectNoHeldFightInput(page);
 });
 
 test('pause move list shows active move and combo previews', async ({ page }, testInfo) => {

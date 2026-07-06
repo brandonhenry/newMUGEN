@@ -182,6 +182,10 @@ import {
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
+type E2EFightPosition = { x?: number; y?: number; z?: number };
+type E2EWindow = Window & {
+  __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
+};
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
@@ -7230,6 +7234,10 @@ function usesCpuDifficulty(mode: MatchMode) {
 
 const VERSUS_SPLASH_DURATION_MS = 2600;
 
+function canSkipVersusSplash(mode: MatchMode) {
+  return mode !== 'online' && mode !== 'ranked';
+}
+
 function VersusSplashScreen({
   p1,
   p2,
@@ -7254,7 +7262,8 @@ function VersusSplashScreen({
     advancedRef.current = true;
     onReady();
   }, [onReady]);
-  const acceptVersusInput = useAnyInputActivation({ onAccept: advance, onBack });
+  const skipEnabled = canSkipVersusSplash(mode);
+  const acceptVersusInput = useAnyInputActivation({ enabled: skipEnabled, onAccept: advance, onBack });
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -7327,7 +7336,7 @@ function VersusSplashScreen({
       className="fight-versus-screen any-input-screen"
       tabIndex={-1}
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptVersusInput, onBack)}
-      aria-label={`${p1.displayName} versus ${p2.displayName}. Press any key to skip.`}
+      aria-label={`${p1.displayName} versus ${p2.displayName}. ${skipEnabled ? 'Press any key to skip.' : 'Match starts after the versus screen.'}`}
     >
       <div className="fight-versus-stage">
         <span>{battleKicker}</span>
@@ -7375,7 +7384,7 @@ function VersusSplashScreen({
         </article>
       </section>
 
-      <div className="fight-versus-hint">Press any key to skip</div>
+      <div className="fight-versus-hint">{skipEnabled ? 'Press any key to skip' : 'Match starts after the versus screen'}</div>
     </div>
   );
 }
@@ -18199,6 +18208,57 @@ function FightScreen({
   }, [match]);
 
   useEffect(() => {
+    if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
+    const testWindow = window as E2EWindow;
+    testWindow.__koreE2ESetFightPositions = ({ p1: p1Position, p2: p2Position }) => {
+      const next = cloneMatchSnapshot(matchRef.current);
+      const [fighter1, fighter2] = next.fighters;
+      const applyPosition = (fighter: MatchSnapshot['fighters'][number], position?: E2EFightPosition) => {
+        if (!position) return;
+        if (Number.isFinite(position.x)) fighter.position.x = Number(position.x);
+        if (Number.isFinite(position.y)) fighter.position.y = Math.max(0, Number(position.y));
+        if (Number.isFinite(position.z)) fighter.position.z = Number(position.z);
+      };
+      applyPosition(fighter1, p1Position);
+      applyPosition(fighter2, p2Position);
+      next.phase = 'fighting';
+      next.countdown = 0;
+      next.message = '';
+      next.roundFinisher = null;
+      next.projectiles = [];
+      next.combatEvents = [];
+      next.impactEvents = [];
+      next.fighters.forEach((fighter, index) => {
+        const opponent = next.fighters[index === 0 ? 1 : 0];
+        fighter.state = 'idle';
+        fighter.currentMove = null;
+        fighter.actionTimer = 0;
+        fighter.actionFramesRemaining = 0;
+        fighter.stunFramesRemaining = 0;
+        fighter.stunTimer = 0;
+        fighter.blockstunFramesRemaining = 0;
+        fighter.velocityY = 0;
+        fighter.position.y = Math.max(0, fighter.position.y);
+        fighter.sidestepTimer = 0;
+        fighter.sidestepDirection = 0;
+        fighter.sidestepRepeatGraceFrames = 0;
+        fighter.laneOrbitControlLocked = false;
+        const side = opponent.position.x - fighter.position.x;
+        if (Math.abs(side) > 0.001) {
+          fighter.controlSideSign = side > 0 ? 1 : -1;
+          fighter.facing = fighter.controlSideSign;
+        }
+        fighter.facingYaw = Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
+      });
+      matchRef.current = next;
+      setMatch(next);
+    };
+    return () => {
+      if (testWindow.__koreE2ESetFightPositions) delete testWindow.__koreE2ESetFightPositions;
+    };
+  }, []);
+
+  useEffect(() => {
     setCompletedTrainingTrialIds(readTrainingTrialCompletion(p1.id));
   }, [p1.id]);
 
@@ -18712,11 +18772,12 @@ function FightScreen({
   }, [matchOptions, p1, p2, roster, stage, stages]);
 
   const startOnlineBotMatch = useCallback((bot: OnlineBotOpponent, room: OnlineMatchResult | null, resetWins = true) => {
+    const opponentRoomId = `opponent-${bot.playerId.replace(/^bot-/i, 'rival-')}`;
     const nextRoom = room ?? {
       role: 'host' as const,
       status: 'matched' as const,
-      roomId: `bot-${bot.playerId}`,
-      ownerToken: `bot-${bot.playerId}`,
+      roomId: opponentRoomId,
+      ownerToken: opponentRoomId,
       hostPeerId: onlineSessionRef.current?.peerId ?? onlineProfile?.playerId ?? 'local-player',
       guestPeerId: bot.playerId,
       hostCharacterId: p1.id,

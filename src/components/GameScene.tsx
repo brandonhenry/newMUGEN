@@ -55,6 +55,28 @@ type GameSceneProps = {
   reducedMotion?: boolean;
 };
 
+type KoreHealth = {
+  ready: boolean;
+  frameCount: number;
+  canvasSize: { width: number; height: number; clientWidth: number; clientHeight: number };
+  webglSupported: boolean;
+  webgl2: boolean;
+  vendor: string | null;
+  renderer: string | null;
+  maxTextureSize: number | null;
+  contextLost: boolean;
+  lastError: string | null;
+  failedAssets: string[];
+  matchPhase: MatchSnapshot['phase'];
+  playerCanMove: boolean;
+  attackCanStart: boolean;
+  activeFrameReached: boolean;
+};
+
+type KoreHealthWindow = Window & {
+  __KORE_HEALTH__?: KoreHealth;
+};
+
 type StageCameraMaterialState = {
   material: THREE.Material & { opacity?: number };
   transparent: boolean;
@@ -581,6 +603,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
   ] as const), [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id]);
   return (
     <Canvas dpr={[1, 1.25]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
+      {import.meta.env.DEV && <KoreHealthReporter match={match} />}
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         <Suspense fallback={null}>
           <Environment preset="city" />
@@ -602,6 +625,121 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
+}
+
+function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
+  const { gl } = useThree();
+  const frameCountRef = useRef(0);
+  const contextLostRef = useRef(false);
+  const failedAssetsRef = useRef<string[]>([]);
+  const lastErrorRef = useRef<string | null>(null);
+  const playerCanMoveRef = useRef(false);
+  const attackCanStartRef = useRef(false);
+  const activeFrameReachedRef = useRef(false);
+  const initialP1PositionRef = useRef({ x: match.fighters[0].position.x, z: match.fighters[0].position.z });
+  const webglInfo = useMemo(() => getKoreWebGLInfo(gl), [gl]);
+
+  useEffect(() => {
+    initialP1PositionRef.current = { x: match.fighters[0].position.x, z: match.fighters[0].position.z };
+    playerCanMoveRef.current = false;
+    attackCanStartRef.current = false;
+    activeFrameReachedRef.current = false;
+  }, [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id, match.stage.id]);
+
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const recordFailedAsset = (url: string) => {
+      if (!url || failedAssetsRef.current.includes(url)) return;
+      failedAssetsRef.current = [...failedAssetsRef.current, url].slice(-40);
+    };
+    const onContextLost = (event: Event) => {
+      contextLostRef.current = true;
+      lastErrorRef.current = 'WebGL context lost';
+      event.preventDefault();
+    };
+    const onContextRestored = () => {
+      contextLostRef.current = false;
+      lastErrorRef.current = null;
+    };
+    const onResourceError = (event: ErrorEvent | Event) => {
+      const target = event.target as Partial<HTMLImageElement & HTMLScriptElement & HTMLLinkElement & HTMLAudioElement & HTMLSourceElement> | null;
+      const source = target?.src || target?.href;
+      if (source) recordFailedAsset(source);
+      if (event instanceof ErrorEvent && event.message) lastErrorRef.current = event.message;
+    };
+    canvas.addEventListener('webglcontextlost', onContextLost);
+    canvas.addEventListener('webglcontextrestored', onContextRestored);
+    window.addEventListener('error', onResourceError, true);
+    return () => {
+      canvas.removeEventListener('webglcontextlost', onContextLost);
+      canvas.removeEventListener('webglcontextrestored', onContextRestored);
+      window.removeEventListener('error', onResourceError, true);
+      delete (window as KoreHealthWindow).__KORE_HEALTH__;
+    };
+  }, [gl]);
+
+  useFrame(() => {
+    frameCountRef.current += 1;
+    const p1 = match.fighters[0];
+    const initial = initialP1PositionRef.current;
+    if (Math.hypot(p1.position.x - initial.x, p1.position.z - initial.z) > 0.08) playerCanMoveRef.current = true;
+    if (p1.state === 'attack' || p1.currentMove) attackCanStartRef.current = true;
+    if (
+      p1.currentMove &&
+      p1.moveFrame >= p1.currentMove.startupFrames &&
+      p1.moveFrame <= p1.currentMove.startupFrames + p1.currentMove.activeFrames
+    ) {
+      activeFrameReachedRef.current = true;
+    }
+
+    const canvas = gl.domElement;
+    const context = gl.getContext();
+    (window as KoreHealthWindow).__KORE_HEALTH__ = {
+      ready: frameCountRef.current > 0,
+      frameCount: frameCountRef.current,
+      canvasSize: {
+        width: canvas.width,
+        height: canvas.height,
+        clientWidth: canvas.clientWidth,
+        clientHeight: canvas.clientHeight
+      },
+      ...webglInfo,
+      contextLost: contextLostRef.current || Boolean(context.isContextLost?.()),
+      lastError: lastErrorRef.current,
+      failedAssets: failedAssetsRef.current,
+      matchPhase: match.phase,
+      playerCanMove: playerCanMoveRef.current,
+      attackCanStart: attackCanStartRef.current,
+      activeFrameReached: activeFrameReachedRef.current
+    };
+  });
+
+  return null;
+}
+
+function getKoreWebGLInfo(gl: THREE.WebGLRenderer) {
+  try {
+    const context = gl.getContext();
+    const debugInfo = context.getExtension('WEBGL_debug_renderer_info') as {
+      UNMASKED_VENDOR_WEBGL: number;
+      UNMASKED_RENDERER_WEBGL: number;
+    } | null;
+    return {
+      webglSupported: true,
+      webgl2: Boolean((gl.capabilities as { isWebGL2?: boolean }).isWebGL2),
+      vendor: debugInfo ? String(context.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)) : String(context.getParameter(context.VENDOR)),
+      renderer: debugInfo ? String(context.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)) : String(context.getParameter(context.RENDERER)),
+      maxTextureSize: Number(context.getParameter(context.MAX_TEXTURE_SIZE))
+    };
+  } catch (error) {
+    return {
+      webglSupported: false,
+      webgl2: false,
+      vendor: null,
+      renderer: null,
+      maxTextureSize: null
+    };
+  }
 }
 
 export function MoveDemoCanvas({

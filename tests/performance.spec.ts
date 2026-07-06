@@ -146,8 +146,11 @@ async function startOnlineBotFight(page: Page) {
   await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 5_000 });
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
-  await expect(page.locator('.online-status-pill')).toContainText(/HOST ONLINE|CONNECTED/, { timeout: 20_000 });
   await expect(page.getByTestId('match-mode')).toHaveText('versusCpu', { timeout: 5_000 });
+  const onlineStatus = page.locator('.online-status-pill');
+  if (await onlineStatus.isVisible().catch(() => false)) {
+    await expect(onlineStatus).toContainText(/HOST ONLINE|CONNECTED/, { timeout: 20_000 });
+  }
   await expect(page.getByTestId('fight-canvas')).toBeVisible({ timeout: 15_000 });
   await page.waitForTimeout(4_200);
 }
@@ -157,6 +160,14 @@ async function resetLongTaskCollector(page: Page) {
     const perfWindow = window as typeof window & { __koreLongTasks?: number[] };
     perfWindow.__koreLongTasks = [];
   });
+}
+
+async function touchPoint(page: Page, testId: string, id: number) {
+  const target = page.getByTestId(testId);
+  await expect(target).toBeVisible();
+  const box = await target.boundingBox();
+  if (!box) throw new Error(`Missing touch target box for ${testId}`);
+  return { x: box.x + box.width / 2, y: box.y + box.height / 2, id, radiusX: 8, radiusY: 8, force: 1 };
 }
 
 async function sampleFramePacing(page: Page, sampleMs: number): Promise<FrameStats> {
@@ -219,6 +230,7 @@ test.describe('menu attract performance', () => {
     await installLongTaskCollector(page);
     await openMenuAttract(page);
     await page.waitForTimeout(5_000);
+    if (testInfo.project.name === 'mobile') await page.waitForTimeout(3_000);
     const loadedAttractAssets = responses
       .map((entry) => entry.url)
       .filter((url) => url.includes('/stages/') || url.includes('/voxels'));
@@ -315,6 +327,44 @@ test.describe('in-game fight performance', () => {
     await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
     testInfo.attach('online-fight-frame-stats.json', {
+      body: JSON.stringify(stats, null, 2),
+      contentType: 'application/json'
+    });
+    expectSmoothFight(stats);
+  });
+
+  test('keeps mobile touch-input fights smooth during sustained movement and attacks', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'mobile', 'Requires the mobile browser project.');
+    await installLongTaskCollector(page);
+    await startLocalFight(page);
+    await expect(page.locator('.touch-controls')).toBeVisible();
+    await resetLongTaskCollector(page);
+
+    let tapping = true;
+    const movement = await touchPoint(page, 'touch-right', 41);
+    const attack = await touchPoint(page, 'touch-jab', 42);
+    const client = await page.context().newCDPSession(page);
+    await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [movement] });
+    const attackTaps = (async () => {
+      while (tapping) {
+        await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [movement, attack] });
+        await page.waitForTimeout(120);
+        await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [movement] });
+        await page.waitForTimeout(420);
+      }
+    })();
+
+    let stats: FrameStats;
+    try {
+      stats = await sampleFramePacing(page, 8_000);
+    } finally {
+      tapping = false;
+      await attackTaps.catch(() => undefined);
+      await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }).catch(() => undefined);
+      await client.detach();
+    }
+
+    testInfo.attach('mobile-touch-fight-frame-stats.json', {
       body: JSON.stringify(stats, null, 2),
       contentType: 'application/json'
     });

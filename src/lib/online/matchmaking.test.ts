@@ -124,6 +124,7 @@ describe('online matchmaking', () => {
     expect(filled.status).toBe('matched');
     expect(filled.opponentKind).toBe('bot');
     expect(filled.botOpponent?.displayName).toBeTruthy();
+    expect(filled.botOpponent?.playerId).not.toMatch(/bot/i);
     expect(filled.guestPeerId).toBe(filled.botOpponent?.playerId);
   });
 
@@ -206,6 +207,7 @@ describe('online matchmaking', () => {
     expect(result.status).toBe('matched');
     expect(result.opponentKind).toBe('bot');
     expect(result.botOpponent?.kp).toBe(650);
+    expect(result.botOpponent?.playerId).not.toMatch(/bot/i);
     expect(result.placement?.matchesPlayed).toBe(0);
   });
 

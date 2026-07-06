@@ -2,7 +2,8 @@ import type { OnlineBotOpponent } from './bots';
 import type { OnlineMatchQueue, OnlineMatchRequest, OnlineMatchResult } from './matchmaking';
 import { emptyRankedKrScores, rankedKrKeys, type RankedKrScores } from './ranked';
 
-const BOT_MEMORY_KEY = 'kore.online.botMemory.v1';
+const BOT_MEMORY_KEY = 'kore.online.opponentMemory.v1';
+const LEGACY_BOT_MEMORY_KEY = 'kore.online.botMemory.v1';
 const BOT_MEMORY_LIMIT = 80;
 const BOT_MEMORY_REUSE_CHANCE = 0.34;
 const BOT_MEMORY_RIVAL_REUSE_CHANCE = 0.46;
@@ -181,11 +182,14 @@ function readBotMemory(): OnlineBotMemoryStore {
   const fallback = { bots: [], updatedAt: Date.now() };
   if (!canUseLocalStorage()) return fallback;
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(BOT_MEMORY_KEY) ?? 'null') as Partial<OnlineBotMemoryStore> | null;
+    const legacyRaw = window.localStorage.getItem(LEGACY_BOT_MEMORY_KEY);
+    const raw = window.localStorage.getItem(BOT_MEMORY_KEY) ?? legacyRaw;
+    if (legacyRaw) window.localStorage.removeItem(LEGACY_BOT_MEMORY_KEY);
+    const parsed = JSON.parse(raw ?? 'null') as Partial<OnlineBotMemoryStore> | null;
     if (!parsed || !Array.isArray(parsed.bots)) return fallback;
     return {
       bots: parsed.bots.map(normalizeStoredBot).filter((bot): bot is StoredOnlineBot => Boolean(bot)),
-      lastBotPlayerId: typeof parsed.lastBotPlayerId === 'string' ? parsed.lastBotPlayerId : undefined,
+      lastBotPlayerId: typeof parsed.lastBotPlayerId === 'string' ? normalizeOpponentPlayerId(parsed.lastBotPlayerId) : undefined,
       updatedAt: normalizeKp(parsed.updatedAt ?? fallback.updatedAt)
     };
   } catch {
@@ -207,7 +211,7 @@ function normalizeStoredBot(value: unknown): StoredOnlineBot | null {
   const bot = value as Partial<StoredOnlineBot>;
   if (typeof bot.playerId !== 'string' || typeof bot.displayName !== 'string' || typeof bot.characterId !== 'string') return null;
   return {
-    playerId: bot.playerId,
+    playerId: normalizeOpponentPlayerId(bot.playerId),
     displayName: bot.displayName,
     characterId: bot.characterId,
     kp: normalizeKp(bot.kp),
@@ -223,6 +227,10 @@ function normalizeStoredBot(value: unknown): StoredOnlineBot | null {
     queues: Array.isArray(bot.queues) ? bot.queues.filter((queue): queue is OnlineMatchQueue => queue === 'casual' || queue === 'ranked' || queue === 'training') : [],
     lastPlayerKp: normalizeKp(bot.lastPlayerKp ?? bot.kp)
   };
+}
+
+function normalizeOpponentPlayerId(playerId: string) {
+  return playerId.replace(/^bot-/i, 'rival-');
 }
 
 function canUseLocalStorage() {

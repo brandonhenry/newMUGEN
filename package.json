@@ -11,6 +11,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:devices": "playwright test tests/device-compat.spec.ts --project='compat-*'",
     "desktop:dev": "node scripts/start-electron-dev.mjs",
     "desktop:dist:win": "electron-builder --win nsis --x64",
     "desktop:dist:mac": "electron-builder --mac pkg --universal",

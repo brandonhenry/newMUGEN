@@ -59,7 +59,7 @@ export function createInfiniteTournamentBracket(
       fallbackCharacterId: fallback.id
     });
     return {
-      id: `bot-${index + 1}`,
+      id: `cpu-${index + 1}`,
       playerId: bot.playerId,
       displayName: bot.displayName,
       characterId: bot.characterId,

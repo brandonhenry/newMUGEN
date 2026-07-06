@@ -598,7 +598,7 @@ function validatePlacementReport(report: RankedMatchReport) {
   if (!report.placement) return;
   const placementPlayerIndex = report.players.findIndex((player) => player.profile.playerId === report.placement?.playerId);
   const opponent = placementPlayerIndex >= 0 ? report.players[placementPlayerIndex === 0 ? 1 : 0] : undefined;
-  if (!opponent?.isBot) throw new Error('Placement ranked reports require a bot opponent');
+  if (!opponent?.isBot) throw new Error('Placement ranked reports require a CPU opponent');
 }
 
 function readLocalRankedStore(): RankedLocalStore {

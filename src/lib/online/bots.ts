@@ -40,7 +40,7 @@ const BOT_LAST_NAMES = [
 ];
 
 export function createOnlineBotOpponent(input: OnlineBotGenerationInput): OnlineBotOpponent {
-  const seed = input.seed || 'kore-bot';
+  const seed = input.seed || 'kore-rival';
   const playerKp = normalizeKp(input.playerKp ?? 1200);
   const playerKr = normalizeKr(input.playerKr);
   const characterIds = normalizeCharacterIds(input.availableCharacterIds);
@@ -60,7 +60,7 @@ export function createOnlineBotOpponent(input: OnlineBotGenerationInput): Online
     : fallbackCharacterId;
 
   return {
-    playerId: `bot-${hashString(`${seed}:player`).toString(36)}`,
+    playerId: `rival-${hashString(`${seed}:player`).toString(36)}`,
     displayName: `${firstName} ${lastName}`.slice(0, 12),
     characterId,
     kp,
