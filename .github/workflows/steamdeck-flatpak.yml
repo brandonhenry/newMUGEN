@@ -25,10 +25,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y flatpak flatpak-builder
           sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          sudo flatpak install -y flathub org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08
+          sudo flatpak install -y --no-related flathub org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08
+
+      - name: Build Linux AppImage fallback
+        run: npm run desktop:dist:linux
 
       - name: Build Steam Deck Flatpak bundle
-        run: npm run desktop:dist:deck-flatpak
+        run: node scripts/build-steamdeck-flatpak.mjs
 
       - name: Regenerate installer manifest
         run: npm run desktop:publish-installers
@@ -40,5 +43,7 @@ jobs:
           if-no-files-found: error
           path: |
             release/desktop/KORE-SteamDeck.flatpak
+            release/desktop/*.AppImage
             public/installers/KORE-SteamDeck.flatpak
+            public/installers/*.AppImage
             public/installers/manifest.json
