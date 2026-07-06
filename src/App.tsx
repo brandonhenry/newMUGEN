@@ -19408,6 +19408,7 @@ function FightScreen({
     if (!trial) return fresh;
     const setup = trial.setup;
     const p1StartsKnockedDown = setup.p1State === 'knockdown';
+    const p2StartsKnockedDown = setup.p2State === 'knockdown';
     const fighters: MatchSnapshot['fighters'] = [
       {
         ...fresh.fighters[0],
@@ -19433,11 +19434,25 @@ function FightScreen({
       },
       {
         ...fresh.fighters[1],
-        position: { ...fresh.fighters[1].position, x: setup.p2Position?.x ?? 0.45, z: setup.p2Position?.z ?? 0 },
+        position: { ...fresh.fighters[1].position, x: setup.p2Position?.x ?? 0.45, y: p2StartsKnockedDown ? 0 : fresh.fighters[1].position.y, z: setup.p2Position?.z ?? 0 },
         facing: -1,
         facingYaw: -Math.PI / 2,
         commandHistory: [],
-        ki: setup.p2Ki ?? fresh.fighters[1].ki
+        ki: setup.p2Ki ?? fresh.fighters[1].ki,
+        state: setup.p2State ?? fresh.fighters[1].state,
+        velocityY: p2StartsKnockedDown ? 0 : fresh.fighters[1].velocityY,
+        actionFramesRemaining: p2StartsKnockedDown ? 0 : fresh.fighters[1].actionFramesRemaining,
+        actionTimer: p2StartsKnockedDown ? 0 : fresh.fighters[1].actionTimer,
+        stunFramesRemaining: p2StartsKnockedDown ? 0 : fresh.fighters[1].stunFramesRemaining,
+        stunTimer: p2StartsKnockedDown ? 0 : fresh.fighters[1].stunTimer,
+        blockstunFramesRemaining: p2StartsKnockedDown ? 0 : fresh.fighters[1].blockstunFramesRemaining,
+        blockPunishWindowFrames: p2StartsKnockedDown ? 0 : fresh.fighters[1].blockPunishWindowFrames,
+        getupInvulnerableFrames: p2StartsKnockedDown ? 0 : fresh.fighters[1].getupInvulnerableFrames,
+        getupForward: p2StartsKnockedDown ? 0 : fresh.fighters[1].getupForward,
+        getupLane: p2StartsKnockedDown ? 0 : fresh.fighters[1].getupLane,
+        getupStarted: p2StartsKnockedDown ? false : fresh.fighters[1].getupStarted,
+        getupAction: p2StartsKnockedDown ? 'none' : fresh.fighters[1].getupAction,
+        getupTotalFrames: p2StartsKnockedDown ? 0 : fresh.fighters[1].getupTotalFrames
       }
     ];
     const prepared: MatchSnapshot = {
@@ -20127,6 +20142,7 @@ function TrainingTrialPanel({
 }) {
   const categoryOrder: TrainingTrialDefinition['category'][] = [
     'movement',
+    'offense',
     'defense',
     'punish',
     'jumpIn',

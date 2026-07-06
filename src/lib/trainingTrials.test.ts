@@ -14,6 +14,7 @@ import {
   makeTrainingTrialProgress,
   previewScriptLength,
   readTrainingTrialCompletion,
+  trainingTrialCategoryLabels,
   writeTrainingTrialCompletion
 } from './trainingTrials';
 
@@ -80,6 +81,8 @@ describe('training trial catalog', () => {
       expect(trials.length, character.id).toBeGreaterThanOrEqual(8);
       expect(trials.filter((trial) => trial.category === 'movement' || trial.category === 'defense').length, character.id).toBeGreaterThanOrEqual(5);
       expect(trials.some((trial) => trial.id.endsWith('movement:back-hop')), character.id).toBe(true);
+      expect(trials.some((trial) => trial.category === 'offense'), character.id).toBe(true);
+      expect(trainingTrialCategoryLabels.offense).toBe('Offense');
       for (const trial of trials) {
         expect(trial.characterId).toBe(character.id);
         expect(trial.stageId).toBeTruthy();
@@ -115,6 +118,32 @@ describe('training trial catalog', () => {
     expect(previewInput.dashBack).toBe(true);
   });
 
+  it('adds basic offense drills for button feel, dash checks, and guarded pressure', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const byId = (suffix: string) => trials.find((trial) => trial.id.endsWith(suffix));
+    const buttonFeel = byId('offense:button-feel');
+    const dashCheck = byId('offense:dash-check');
+    const guardedCheck = byId('offense:guarded-check');
+
+    expect(buttonFeel?.category).toBe('offense');
+    expect(buttonFeel?.steps.length).toBeGreaterThan(1);
+    expect(buttonFeel?.steps.every((step) => step.kind === 'state' && step.requireState === 'attack')).toBe(true);
+    expect(dashCheck?.steps.map((step) => step.kind)).toEqual(['state', 'impact']);
+    expect(dashCheck?.steps[0]).toMatchObject({ actions: ['dashForward'], requireState: 'walk' });
+    expect(guardedCheck?.setup.dummyScript).toBe('guard');
+    expect(guardedCheck?.steps[0].expectImpactKinds).toEqual(['block']);
+    expect(guardedCheck?.lesson.toLowerCase()).toContain('blocked');
+
+    for (const trial of [buttonFeel, dashCheck, guardedCheck]) {
+      expect(trial?.previewScript.length, trial?.id).toBeGreaterThan(0);
+    }
+  });
+
   it('teaches blocking fundamentals in the basic defense list', () => {
     const roster = readRosterCharacters();
     const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
@@ -128,9 +157,11 @@ describe('training trial catalog', () => {
     const duck = byId('defense:duck-high');
     const sidestep = byId('defense:sidestep-linear');
     const switchTrial = byId('defense:guard-switch');
+    const lowLimit = byId('defense:low-guard-limit');
 
     expect(standing?.lesson.toLowerCase()).toContain('unknown');
     expect(low?.lesson.toLowerCase()).toContain('lows');
+    expect(low?.lesson.toLowerCase()).toContain('mids beat crouch block');
     expect(low?.steps[0].requireState).toBe('crouchBlock');
     expect(duck?.lesson.toLowerCase()).toContain('duck');
     expect(duck?.steps[0].actions).toEqual(['down']);
@@ -140,6 +171,9 @@ describe('training trial catalog', () => {
     expect(switchTrial?.steps.map((step) => step.requireState)).toEqual(['block', 'crouchBlock']);
     expect(switchTrial?.lesson.toLowerCase()).toContain('stand guard');
     expect(switchTrial?.lesson.toLowerCase()).toContain('crouch block');
+    expect(switchTrial?.lesson.toLowerCase()).toContain('mids beat crouch block');
+    expect(lowLimit?.steps.map((step) => step.requireState)).toEqual(['crouchBlock', 'block']);
+    expect(lowLimit?.lesson.toLowerCase()).toContain('mids beat crouch block');
   });
 
   it('teaches neutral control with back-hop, sidestep, block, anti-air, and whiff punish concepts', () => {
@@ -176,6 +210,23 @@ describe('training trial catalog', () => {
     expect(whiffLesson).toContain('whiff');
   });
 
+  it('keeps basic trial copy generic to KORE instead of source-game terminology', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const bannedTerms = ['guilty', 'strive', 'roman', 'burst', 'dust', 'tension', 'safe jump'];
+    const copy = generateBasicTrainingTrials(character, roster)
+      .flatMap((trial) => [trial.title, trial.lesson, trial.zoroLine, trial.successText, ...trial.steps.flatMap((step) => [step.label, step.reason ?? ''])])
+      .join(' ')
+      .toLowerCase();
+
+    for (const term of bannedTerms) {
+      expect(copy).not.toContain(term);
+    }
+  });
+
   it('skips character-specific fundamentals unless real route properties exist', () => {
     const roster = readRosterCharacters();
     for (const character of roster) {
@@ -196,7 +247,7 @@ describe('training trial catalog', () => {
           expect(trial.steps[0].command, `${character.id}:${trial.id}`).toMatch(/^(FC|WS)\+/);
         }
         if (trial.category === 'ki') {
-          if (trial.id.endsWith('ki:perfect-block')) continue;
+          if (trial.id.endsWith('ki:perfect-block') || trial.id.endsWith('ki:charge')) continue;
           const step = trial.steps[0];
           const route = routes.find((item) => step.routeKey ? item.routeKey === step.routeKey : item.command === step.command || (!step.command && item.input === step.input));
           expect(Boolean(route?.command?.startsWith('O+') || route?.move.usesKi || route?.move.kiBurst), `${character.id}:${trial.id}`).toBe(true);
@@ -205,7 +256,7 @@ describe('training trial catalog', () => {
     }
   });
 
-  it('adds basics for ki block, whiff punish, anti-air, and counter-hit fundamentals', () => {
+  it('adds basics for ki charge, ki block, whiff punish, anti-air, block punish, and counter-hit fundamentals', () => {
     const roster = readRosterCharacters();
     const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
     expect(character).toBeTruthy();
@@ -220,7 +271,13 @@ describe('training trial catalog', () => {
       expectImpactDefenderSlot: 1,
       requireImpactKiBurst: true
     });
+    expect(byId('ki:charge')?.steps[0]).toMatchObject({
+      actions: ['charge'],
+      requireState: 'chargeKi'
+    });
     expect(byId('punish:whiff')?.steps[0].expectImpactKinds).toEqual(['whiffPunish']);
+    expect(byId('defense:block-punish')?.steps.map((step) => step.kind)).toEqual(['state', 'impact']);
+    expect(byId('defense:block-punish')?.steps[1].expectImpactKinds).toEqual(['punish']);
     expect(byId('defense:anti-air')?.steps[0]).toMatchObject({
       expectImpactKinds: ['hit', 'counterHit'],
       requireAirborneDefender: true
@@ -256,6 +313,37 @@ describe('training trial catalog', () => {
     expect(rollUp?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'rollUp', actions: ['sidestepUp'] });
     expect(rollDown?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'rollDown', actions: ['sidestepDown'] });
     expect(rollBack?.steps[0]).toMatchObject({ requireState: 'getup', requireGetupAction: 'rollBack', actions: ['left'] });
+  });
+
+  it('adds Oki basics that start the dummy knocked down and teach wakeup pressure', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const byId = (suffix: string) => trials.find((trial) => trial.id.endsWith(suffix));
+    const takeSpace = byId('oki:take-space');
+    const meaty = byId('oki:meaty-check');
+    const bait = byId('oki:wakeup-block-bait');
+
+    expect(takeSpace?.setup.p2State).toBe('knockdown');
+    expect(takeSpace?.setup.dummyScript).toBe('getup');
+    expect(takeSpace?.lesson.toLowerCase()).toContain('offense after knockdown');
+    expect(takeSpace?.lesson.toLowerCase()).toContain('cannot be hit yet');
+    expect(meaty?.setup.p2State).toBe('knockdown');
+    expect(meaty?.setup.dummyScript).toBe('wakeupMash');
+    expect(meaty?.steps[0]).toMatchObject({
+      kind: 'impact',
+      expectImpactKinds: ['hit', 'counterHit'],
+      expectImpactAttackerSlot: 1
+    });
+    expect(meaty?.lesson.toLowerCase()).toContain('invulnerable');
+    expect(bait?.setup.p2State).toBe('knockdown');
+    expect(bait?.setup.dummyScript).toBe('wakeupMash');
+    expect(bait?.steps.map((step) => step.kind)).toEqual(['state', 'impact']);
+    expect(bait?.steps[0]).toMatchObject({ actions: ['block'], requireState: 'block' });
+    expect(bait?.steps[1].expectImpactKinds).toEqual(['punish']);
   });
 
   it('requires the matching getup action for wakeup basics', () => {

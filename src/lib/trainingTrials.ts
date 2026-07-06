@@ -11,10 +11,10 @@ import {
 } from './comboRoutes';
 
 export type TrainingTrialMode = 'free' | 'basics' | 'combos' | 'online';
-export type TrainingTrialCategory = 'movement' | 'defense' | 'punish' | 'jumpIn' | 'corner' | 'crouch' | 'ki' | 'launcher' | 'tornado' | 'oki' | 'combo';
+export type TrainingTrialCategory = 'movement' | 'offense' | 'defense' | 'punish' | 'jumpIn' | 'corner' | 'crouch' | 'ki' | 'launcher' | 'tornado' | 'oki' | 'combo';
 export type TrainingTrialStepStatus = 'pending' | 'current' | 'early' | 'perfect' | 'late' | 'missed' | 'confirmed' | 'correct';
 export type TrainingTrialTimingRating = 'Ready' | 'Perfect' | 'Too early' | 'Late' | 'Confirmed' | 'Missed';
-export type TrainingDummyScript = 'idle' | 'attack' | 'guard' | 'lowGuard' | 'getup' | 'counterHit' | 'kiAttack' | 'whiff' | 'jumpIn';
+export type TrainingDummyScript = 'idle' | 'attack' | 'guard' | 'lowGuard' | 'getup' | 'wakeupMash' | 'counterHit' | 'kiAttack' | 'whiff' | 'jumpIn';
 
 export type TrainingTrialStepKind = 'input' | 'state' | 'impact';
 
@@ -52,6 +52,7 @@ export type TrainingTrialSetup = {
   p1Position?: { x: number; z: number };
   p2Position?: { x: number; z: number };
   p1State?: FighterRuntime['state'];
+  p2State?: FighterRuntime['state'];
   p1Ki?: number;
   p2Ki?: number;
   corner?: 'left' | 'right';
@@ -130,6 +131,7 @@ const inputToButton: Record<MoveInput, string> = {
 
 const categoryLabels: Record<TrainingTrialCategory, string> = {
   movement: 'Movement',
+  offense: 'Offense',
   defense: 'Defense',
   punish: 'Punish',
   jumpIn: 'Jump-In',
@@ -156,13 +158,20 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   if (!isRoutableCharacter(character)) return [];
   const routes = resolveMoveRoutes(character);
   const dummy = pickDummy(character, roster);
+  const damagingRoutes = routes.filter((route) => route.move.damage > 0);
+  const basicDamagingRoutes = damagingRoutes.filter((route) => !route.command);
+  const beginnerRoutes = basicDamagingRoutes.length > 0 ? basicDamagingRoutes : damagingRoutes;
+  const fastestRoute = [...beginnerRoutes].sort((a, b) => a.move.startupFrames - b.move.startupFrames)[0];
+  const safeRoute = [...beginnerRoutes].sort((a, b) => b.move.onBlockFrames - a.move.onBlockFrames || a.move.startupFrames - b.move.startupFrames)[0];
+  const basicButtonSteps = makeBasicButtonSteps(character);
   const trials: TrainingTrialDefinition[] = [
     makeSimpleTrial(character, dummy, 'movement', 'movement:walk', 'Walk In', ['f'], ['right'], 'Close space without swinging.', 'First, take the space. No wasted cuts.', 'Step forward and hold your ground.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:dash', 'Dash In', ['F'], ['dashForward'], 'Dash to punish distance quickly.', 'When the opening is far, move first.', 'Dash forward cleanly.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:back-hop', 'Back Hop', ['b,b'], ['dashBack'], 'Back-back is a quick retreat for neutral spacing and whiff bait. Use it to make short attacks miss, then whiff punish, but it is unsafe if the enemy reads it or hits you during startup or airtime.', 'Retreat with care. Air has no guard.', 'Back hop complete.', { requireState: 'jump' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line to move or defend against linear pressure.', "Don't stand where the blade is falling.", 'Sidestep once.'),
-    makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Standing guard is your default answer to high, special, and unknown pressure.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
-    makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block low pressure; standing guard loses to lows.', 'Low strikes need low guard. Simple.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' }),
+    ...(basicButtonSteps.length > 0 ? [makeSequenceTrial(character, dummy, 'offense', 'offense:button-feel', 'Button Feel', basicButtonSteps, 'Press each basic attack button one at a time. Learn what your character feels like before worrying about combos.', 'One button. One result. Remember the feel.', 'Button feel complete.')] : []),
+    makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Standing guard is your default answer to high, special, and unknown pressure in KORE.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
+    makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block is for lows. In KORE, mids beat crouch block, so return to standing guard when the threat is unknown.', 'Low strikes need low guard. Mids punish low guard.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' }),
     makeSimpleTrial(character, dummy, 'defense', 'defense:duck-high', 'Duck Highs', ['d'], ['down'], 'Crouch without blocking to duck high strikes and throw-like pressure.', 'Some attacks pass over a low stance.', 'Duck under the high threat.', { dummyScript: 'attack', requireState: 'crouch' }),
     makeSimpleTrial(character, dummy, 'defense', 'defense:sidestep-linear', 'Sidestep Linear', ['SSL'], ['sidestepUp'], 'Sidestep is defense against straight, non-tracking attacks; homing pressure must be guarded instead.', 'A straight cut can miss if you leave the line.', 'Sidestep the linear threat.', { dummyScript: 'attack', requireState: 'sidestep' }),
     makeSequenceTrial(
@@ -186,12 +195,41 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
           label: 'Low Guard',
           actions: ['down', 'block'],
           requireState: 'crouchBlock',
-          reason: 'Switch to crouch block when the threat is low.'
+          reason: 'Switch to crouch block only when the threat is low; mids beat crouch block.'
         }
       ],
-      'Blocking is a read: stand guard for highs or unknowns, crouch block lows, and crouch without block to duck highs or throws.',
+      'Blocking is a read: stand guard for highs, special, or unknown pressure; crouch block lows; and remember that mids beat crouch block in KORE.',
       'High blade, high guard. Low blade, low guard.',
       'Guard switch complete.',
+      { dummyScript: 'attack' }
+    ),
+    makeSequenceTrial(
+      character,
+      dummy,
+      'defense',
+      'defense:low-guard-limit',
+      'Low Guard Limit',
+      [
+        {
+          id: 'low',
+          notation: ['d', 'B'],
+          label: 'Low Guard',
+          actions: ['down', 'block'],
+          requireState: 'crouchBlock',
+          reason: 'Crouch block when you are reading a low.'
+        },
+        {
+          id: 'stand',
+          notation: ['B'],
+          label: 'Return To Stand Guard',
+          actions: ['block'],
+          requireState: 'block',
+          reason: 'Stand guard after the low read because mids beat crouch block in KORE.'
+        }
+      ],
+      'Low guard solves lows, not everything. In KORE, mids beat crouch block, so use low guard on purpose and return to standing guard for unknown pressure.',
+      'Low when it is low. Stand when you do not know.',
+      'Low guard limit complete.',
       { dummyScript: 'attack' }
     ),
     makeSequenceTrial(
@@ -241,8 +279,6 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
     )
   ];
 
-  const fastest = [...character.moves].filter((move) => move.damage > 0).sort((a, b) => a.startupFrames - b.startupFrames)[0];
-  const safe = [...character.moves].filter((move) => move.damage > 0).sort((a, b) => b.onBlockFrames - a.onBlockFrames || a.startupFrames - b.startupFrames)[0];
   const knockdown = routes.find((route) => route.move.knockdown);
   const launcher = routes.find((route) => (route.move.launchHeight ?? 0) > 0);
   const tornado = routes.find((route) => route.move.tornado);
@@ -252,9 +288,65 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const antiAir = pickAntiAirRoute(routes);
   const counterHit = routes.find((route) => route.move.counterHit && route.move.damage > 0) ?? antiAir ?? routes.find((route) => route.move.damage > 0);
 
-  if (fastest) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:fastest', 'Fast Punish', fastest.label, [inputToButton[fastest.input]], [inputToAction[fastest.input]], fastest.input, 'Use your fastest button when the enemy is stuck.', 'Small opening, small cut. Take it.', 'Land the fast punish.', { dummyScript: 'attack' }));
-  if (fastest) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:whiff', 'Whiff Punish', fastest.label, [inputToButton[fastest.input]], [inputToAction[fastest.input]], fastest.input, 'Use back-hop or sidestep to make the enemy whiff, then hit their recovery before they can guard.', 'When they cut empty air, answer immediately.', 'Whiff punish landed.', { dummyScript: 'whiff', setup: { p1Position: { x: -0.25, z: 0 }, p2Position: { x: 1.15, z: 0 } }, expectImpactKinds: ['whiffPunish'], missAfterFrame: 72 }));
-  if (safe) trials.push(makeMoveTrial(character, dummy, 'punish', 'punish:safe', 'Safe Check', safe.label, [inputToButton[safe.input]], [inputToAction[safe.input]], safe.input, 'Use a safer check when you are not sure.', 'A safe cut beats a greedy one.', 'Land the safe check.'));
+  if (safeRoute) {
+    trials.push(makeMixedTrial(
+      character,
+      dummy,
+      'offense',
+      'offense:dash-check',
+      'Dash Check',
+      [
+        {
+          id: 'dash',
+          notation: ['F'],
+          label: 'Dash In',
+          actions: ['dashForward'],
+          kind: 'state',
+          requireState: 'walk',
+          reason: 'Use dash to take space before you swing.'
+        },
+        routeToTrialStep('check', safeRoute, {
+          expectImpactKinds: ['hit', 'counterHit'],
+          reason: 'Land one simple check after moving in.'
+        })
+      ],
+      'Take space first, then check. This teaches one clean approach before any combo plan.',
+      'Feet first. Button second.',
+      'Dash check landed.'
+    ));
+    trials.push(makeRouteStarterTrial(character, dummy, 'offense', 'offense:guarded-check', 'Guarded Check', safeRoute, 'Attack a guarding dummy to feel blocked pressure. A blocked check still tells you the opponent is defending.', 'If they guard, you learned something.', 'Guarded check complete.', { dummyScript: 'guard', expectImpactKinds: ['block'] }));
+  }
+  if (fastestRoute) {
+    trials.push(makeMixedTrial(
+      character,
+      dummy,
+      'defense',
+      'defense:block-punish',
+      'Block Punish',
+      [
+        {
+          id: 'block',
+          notation: ['B'],
+          label: 'Block',
+          actions: ['block'],
+          kind: 'state',
+          requireState: 'block',
+          reason: 'Hold standing guard against the incoming attack.'
+        },
+        routeToTrialStep('punish', fastestRoute, {
+          expectImpactKinds: ['punish'],
+          reason: 'After blockstun ends, answer while the enemy is still recovering.'
+        })
+      ],
+      'Block first, then punish. Some attacks leave the opponent stuck long enough for your fastest answer.',
+      'Guard the cut. Then cut back.',
+      'Block punish landed.',
+      { dummyScript: 'attack' }
+    ));
+  }
+  if (fastestRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:fastest', 'Fast Punish', fastestRoute, 'Use your fastest button when the enemy is stuck.', 'Small opening, small cut. Take it.', 'Land the fast punish.', { dummyScript: 'attack' }));
+  if (fastestRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:whiff', 'Whiff Punish', fastestRoute, 'Use back-hop or sidestep to make the enemy whiff, then hit their recovery before they can guard.', 'When they cut empty air, answer immediately.', 'Whiff punish landed.', { dummyScript: 'whiff', setup: { p1Position: { x: -0.25, z: 0 }, p2Position: { x: 1.15, z: 0 } }, expectImpactKinds: ['whiffPunish'], missAfterFrame: 72 }));
+  if (safeRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:safe', 'Safe Check', safeRoute, 'Use a safer check when you are not sure.', 'A safe cut beats a greedy one.', 'Land the safe check.'));
   if (advanced) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:command', 'Command Punish', advanced, 'Use a committed command route for bigger openings.', 'Bigger opening. Sharper answer.', 'Land the command starter.', { dummyScript: 'attack' }));
   trials.push(makeSimpleTrial(character, dummy, 'jumpIn', 'jump:starter', 'Jump-In Starter', ['u', '1'], ['up', 'jab'], 'Jump in to start pressure from above.', 'Come down with purpose.', 'Jump, then press 1.', { requireState: 'jump' }));
   if (antiAir) trials.push(makeRouteStarterTrial(character, dummy, 'defense', 'defense:anti-air', 'Anti-Air Jump-In', antiAir, 'Stay grounded and interrupt jump-ins before they land.', 'Do not chase the sky. Cut it down.', 'Anti-air landed.', { dummyScript: 'jumpIn', setup: { p1Position: { x: -0.45, z: 0 }, p2Position: { x: 0.62, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], requireAirborneDefender: true, missAfterFrame: 96 }));
@@ -262,17 +354,48 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   if (launcher) trials.push(makeRouteStarterTrial(character, dummy, 'launcher', 'launcher:starter', 'Launch Starter', launcher, 'Launchers start longer air routes.', 'Lift them first. The combo starts in the air.', 'Launch the dummy.', { expectImpact: { launched: true } }));
   if (tornado) trials.push(makeRouteStarterTrial(character, dummy, 'tornado', 'tornado:extender', 'Tornado Extender', tornado, 'Tornado keeps a juggle alive once the route is airborne.', 'When they fall, spin them back into the fight.', 'Use the tornado extender.', { setup: { p2Position: { x: 0.45, z: 0 }, dummyScript: 'idle' }, expectImpact: { tornado: true, juggled: true } }));
   if (crouch) trials.push(makeRouteStarterTrial(character, dummy, 'crouch', 'crouch:route', 'FC / WS Route', crouch, 'Crouch routes teach stance-specific followups.', 'Low stance. Different blade.', 'Use the crouch route.'));
+  trials.push(makeSimpleTrial(character, dummy, 'ki', 'ki:charge', 'Ki Charge', ['O'], ['charge'], 'Hold charge to build ki. Get used to checking your resource before spending it.', 'Power is only useful when you know you have it.', 'Ki charge started.', { requireState: 'chargeKi' }));
   trials.push(makeImpactOnlyTrial(character, dummy, 'ki', 'ki:perfect-block', 'Ki Perfect Block', ['B'], ['block'], 'Time your guard against ki attacks. A close block earns Perfect timing here.', 'Meet power with timing, not panic.', 'Ki attack blocked.', { dummyScript: 'kiAttack', setup: { p2Ki: 100, p1Position: { x: -0.55, z: 0 }, p2Position: { x: 0.55, z: 0 } }, expectImpactKinds: ['block'], expectImpactAttackerSlot: 2, expectImpactDefenderSlot: 1, requireImpactKiBurst: true, targetFrame: 20, windowBefore: 8, windowAfter: 12, missAfterFrame: 80 }));
   if (ki) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:route', 'Ki Route', ki, 'Ki routes spend charge for a stronger route.', 'Spend power only when the cut matters.', 'Use the ki route.', { setup: { p1Ki: 100, dummyScript: 'idle' } }));
   trials.push(makeSimpleTrial(character, dummy, 'corner', 'corner:carry', 'Corner Space', ['f', '1'], ['right', 'jab'], 'Corner pressure starts by taking space before attacking.', 'Put their back to the wall, then make it count.', 'Walk in and jab.', { setup: { p1Position: { x: -1.1, z: 0 }, p2Position: { x: -0.18, z: 0 }, corner: 'left', dummyScript: 'guard' } }));
   trials.push(
-    makeGetupTrial(character, dummy, 'oki:knockdown-state', 'Knockdown Choice', ['KD'], [], 'Knockdown holds you on the floor until you choose a wakeup. The simple rule: stand up in place, side roll to change lanes, or back roll to make space.', 'First lesson: do not panic on the floor. Choose the rise.', 'Knockdown recognized.', { requireState: 'knockdown', targetFrame: 8, windowBefore: 0 }),
-    makeGetupTrial(character, dummy, 'oki:wakeup-stand', 'Stand Wakeup', ['OK'], ['confirm'], 'Stand wakeup gets up in place. Use it when you want the fastest, simplest return to neutral after knockdown.', 'Rise where you fell. Guard comes next.', 'Stand wakeup complete.', { requireState: 'getup', requireGetupAction: 'stand' }),
-    makeGetupTrial(character, dummy, 'oki:wakeup-roll-up', 'Roll Up Wakeup', ['SSL'], ['sidestepUp'], 'Roll up from knockdown to move lanes during getup. Side rolls help avoid straight oki pressure, but they can be chased.', 'Leave the line while you rise.', 'Roll up wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollUp' }),
-    makeGetupTrial(character, dummy, 'oki:wakeup-roll-down', 'Roll Down Wakeup', ['SSR'], ['sidestepDown'], 'Roll down from knockdown to move lanes the other way. Side rolls are a wakeup choice, not automatic safety.', 'Pick the other line and stand ready.', 'Roll down wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollDown' }),
-    makeGetupTrial(character, dummy, 'oki:wakeup-roll-back', 'Back Roll Wakeup', ['b'], ['left'], 'Back roll from knockdown to create space before you stand. It can escape close pressure, but it gives up ground.', 'Make distance, then fight your way back in.', 'Back roll wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollBack' })
+    makeGetupTrial(character, dummy, 'oki:knockdown-state', 'Knockdown Choice', ['KD'], [], 'Knockdown means you are on the floor until you choose a wakeup: stand in place, side roll to change lanes, or back roll to make space.', 'First lesson: do not panic on the floor. Choose the rise.', 'Knockdown recognized.', { requireState: 'knockdown', targetFrame: 8, windowBefore: 0 }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-stand', 'Stand Wakeup', ['OK'], ['confirm'], 'Stand wakeup gets up in place. It is the simplest return from knockdown when you want to guard right away.', 'Rise where you fell. Guard comes next.', 'Stand wakeup complete.', { requireState: 'getup', requireGetupAction: 'stand' }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-roll-up', 'Roll Up Wakeup', ['SSL'], ['sidestepUp'], 'Side roll from knockdown to change lanes during wakeup. It can avoid straight Oki pressure, but it can be chased.', 'Leave the line while you rise.', 'Roll up wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollUp' }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-roll-down', 'Roll Down Wakeup', ['SSR'], ['sidestepDown'], 'Side roll from knockdown to change lanes the other way. It is a wakeup choice, not automatic safety.', 'Pick the other line and stand ready.', 'Roll down wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollDown' }),
+    makeGetupTrial(character, dummy, 'oki:wakeup-roll-back', 'Back Roll Wakeup', ['b'], ['left'], 'Back roll from knockdown to create space before you stand. It can escape close Oki pressure, but it gives up ground.', 'Make distance, then fight your way back in.', 'Back roll wakeup complete.', { requireState: 'getup', requireGetupAction: 'rollBack' })
   );
-  if (knockdown) trials.push(makeRouteStarterTrial(character, dummy, 'oki', 'oki:knockdown', 'Oki Knockdown', knockdown, 'Oki starts after knockdown, when the defender must get up.', 'Knock them down. Be there when they rise.', 'Score the knockdown.', { expectDummyState: 'knockdown' }));
+  trials.push(makeSimpleTrial(character, dummy, 'oki', 'oki:take-space', 'Take Oki Space', ['F'], ['dashForward'], 'Oki means offense after knockdown. The grounded opponent cannot be hit yet, but they must get up, so move into range instead of waiting.', 'Do not let them rise for free.', 'Oki space taken.', { setup: { p2State: 'knockdown', p1Position: { x: -0.85, z: 0 }, p2Position: { x: 0.35, z: 0 }, dummyScript: 'getup' }, requireState: 'walk' }));
+  if (fastestRoute) {
+    trials.push(makeRouteStarterTrial(character, dummy, 'oki', 'oki:meaty-check', 'Meaty Check', fastestRoute, 'Time your attack for wakeup. The grounded opponent is invulnerable at first, so hit as they become vulnerable; if they mash, your meaty can catch them.', 'Be there when they rise.', 'Meaty check landed.', { dummyScript: 'wakeupMash', setup: { p2State: 'knockdown', p1Position: { x: -0.42, z: 0 }, p2Position: { x: 0.34, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], missAfterFrame: 130 }));
+    trials.push(makeMixedTrial(
+      character,
+      dummy,
+      'oki',
+      'oki:wakeup-block-bait',
+      'Wakeup Block Bait',
+      [
+        {
+          id: 'block',
+          notation: ['B'],
+          label: 'Block Wakeup Attack',
+          actions: ['block'],
+          kind: 'state',
+          requireState: 'block',
+          reason: 'Walk into range, then block if you expect a wakeup attack.'
+        },
+        routeToTrialStep('punish', fastestRoute, {
+          expectImpactKinds: ['punish'],
+          reason: 'After the wakeup attack is blocked, punish the recovery.'
+        })
+      ],
+      'Oki does not mean swinging every time. If you expect a wakeup attack, block first and punish after it fails.',
+      'Let them swing into guard. Then answer.',
+      'Wakeup bait complete.',
+      { dummyScript: 'wakeupMash', setup: { p2State: 'knockdown', p1Position: { x: -0.46, z: 0 }, p2Position: { x: 0.34, z: 0 } } }
+    ));
+  }
+  if (knockdown) trials.push(makeRouteStarterTrial(character, dummy, 'oki', 'oki:knockdown', 'Oki Knockdown', knockdown, 'Oki starts after knockdown, when the defender must get up. Score the knockdown, then take your offense after knockdown.', 'Knock them down. Be there when they rise.', 'Score the knockdown.', { expectDummyState: 'knockdown' }));
 
   return dedupeTrials(trials);
 }
@@ -453,6 +576,7 @@ export function makeTrialDummyInput(trial: TrainingTrialDefinition | null, match
     input.down = true;
   }
   if (script === 'getup' && dummy.state === 'knockdown') input.confirm = true;
+  if (script === 'wakeupMash' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle' && dummy.state !== 'knockdown') input.jab = true;
   if (script === 'attack' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle') input.heavy = true;
   if (script === 'kiAttack' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle') {
     input.charge = true;
@@ -508,7 +632,7 @@ function makeSimpleTrial(
     characterId: character.id,
     category,
     mode: 'basics',
-    difficulty: category === 'movement' || category === 'defense' ? 1 : 2,
+    difficulty: category === 'movement' || category === 'offense' || category === 'defense' ? 1 : 2,
     stageId: setup.stageId,
     dummyCharacterId: dummy?.id,
     setup,
@@ -572,7 +696,86 @@ function makeSequenceTrial(
     characterId: character.id,
     category,
     mode: 'basics',
-    difficulty: category === 'movement' || category === 'defense' ? 1 : 2,
+    difficulty: category === 'movement' || category === 'offense' || category === 'defense' ? 1 : 2,
+    stageId: setup.stageId,
+    dummyCharacterId: dummy?.id,
+    setup,
+    steps,
+    lesson,
+    zoroLine,
+    successText,
+    previewScript: makePreviewScript(steps)
+  };
+}
+
+type MixedTrialStepInput = {
+  id: string;
+  routeKey?: string;
+  animationKey?: string;
+  notation: string[];
+  label: string;
+  input?: MoveInput;
+  command?: string;
+  actions: ActionName[];
+  kind: TrainingTrialStepKind;
+  requireState?: FighterRuntime['state'];
+  requireDummyState?: FighterRuntime['state'];
+  expectImpact?: ComboTrialStep['expect'];
+  expectImpactKinds?: ImpactSparkEvent['kind'][];
+  expectImpactAttackerSlot?: 1 | 2;
+  expectImpactDefenderSlot?: 1 | 2;
+  requireImpactKiBurst?: boolean;
+  requireAirborneDefender?: boolean;
+  missAfterFrame?: number;
+  counterHit?: boolean;
+  reason: string;
+};
+
+function makeMixedTrial(
+  character: CharacterDefinition,
+  dummy: CharacterDefinition | undefined,
+  category: TrainingTrialCategory,
+  id: string,
+  title: string,
+  stepInputs: MixedTrialStepInput[],
+  lesson: string,
+  zoroLine: string,
+  successText: string,
+  options: { dummyScript?: TrainingDummyScript; setup?: Partial<TrainingTrialSetup> } = {}
+): TrainingTrialDefinition {
+  const setup = makeSetup(dummy, options.dummyScript ?? options.setup?.dummyScript ?? 'idle', options.setup);
+  const steps: TrainingTrialStep[] = stepInputs.map((step, index) => ({
+    id: `${id}:${step.id}`,
+    routeKey: step.routeKey,
+    animationKey: step.animationKey,
+    notation: step.notation,
+    label: step.label,
+    input: step.input,
+    command: step.command,
+    actions: step.actions,
+    kind: step.kind,
+    targetFrame: index === 0 ? 14 : 18,
+    windowBefore: step.kind === 'impact' ? 7 : 8,
+    windowAfter: step.kind === 'impact' ? 12 : 20,
+    requireState: step.requireState,
+    requireDummyState: step.requireDummyState,
+    expectImpact: step.expectImpact,
+    expectImpactKinds: step.expectImpactKinds,
+    expectImpactAttackerSlot: step.expectImpactAttackerSlot,
+    expectImpactDefenderSlot: step.expectImpactDefenderSlot,
+    requireImpactKiBurst: step.requireImpactKiBurst,
+    requireAirborneDefender: step.requireAirborneDefender,
+    missAfterFrame: step.missAfterFrame,
+    counterHit: step.counterHit,
+    reason: step.reason
+  }));
+  return {
+    id: `basic:${character.id}:${id}`,
+    title,
+    characterId: character.id,
+    category,
+    mode: 'basics',
+    difficulty: category === 'movement' || category === 'offense' || category === 'defense' ? 1 : category === 'oki' ? 3 : 2,
     stageId: setup.stageId,
     dummyCharacterId: dummy?.id,
     setup,
@@ -825,6 +1028,7 @@ function makeSetup(dummy: CharacterDefinition | undefined, dummyScript: Training
     p1Position: override.p1Position ?? { x: -0.45, z: 0 },
     p2Position: override.p2Position ?? { x: 0.45, z: 0 },
     p1State: override.p1State,
+    p2State: override.p2State,
     p1Ki: override.p1Ki,
     p2Ki: override.p2Ki,
     corner: override.corner
@@ -932,6 +1136,63 @@ function pickDummy(character: CharacterDefinition, roster: CharacterDefinition[]
   return roster.find((candidate) => candidate.id !== character.id && !candidate.unplayable && !candidate.locked) ??
     roster.find((candidate) => candidate.id !== character.id && !candidate.unplayable) ??
     undefined;
+}
+
+function makeBasicButtonSteps(character: CharacterDefinition): Array<{
+  id: string;
+  notation: string[];
+  label: string;
+  actions: ActionName[];
+  requireState: FighterRuntime['state'];
+  reason: string;
+}> {
+  return (['jab', 'heavy', 'kick', 'special'] as MoveInput[])
+    .filter((input) => character.moves.some((move) => move.input === input && !move.command))
+    .map((input) => ({
+      id: input,
+      notation: [inputToButton[input]],
+      label: `${inputToButton[input]} Button`,
+      actions: [inputToAction[input]],
+      requireState: 'attack',
+      reason: `Press ${inputToButton[input]} and notice its range, speed, and recovery.`
+    }));
+}
+
+function routeToTrialStep(
+  id: string,
+  route: ReturnType<typeof resolveMoveRoutes>[number],
+  options: {
+    expectImpact?: ComboTrialStep['expect'];
+    expectImpactKinds?: ImpactSparkEvent['kind'][];
+    expectImpactAttackerSlot?: 1 | 2;
+    expectImpactDefenderSlot?: 1 | 2;
+    requireImpactKiBurst?: boolean;
+    requireAirborneDefender?: boolean;
+    missAfterFrame?: number;
+    counterHit?: boolean;
+    reason: string;
+  }
+): MixedTrialStepInput {
+  return {
+    id,
+    notation: route.notation,
+    label: route.label,
+    routeKey: route.routeKey,
+    animationKey: route.animationKey,
+    input: route.input,
+    command: route.command,
+    actions: commandRouteToActions(route.command, route.input),
+    kind: 'impact',
+    expectImpact: options.expectImpact,
+    expectImpactKinds: options.expectImpactKinds,
+    expectImpactAttackerSlot: options.expectImpactAttackerSlot ?? 1,
+    expectImpactDefenderSlot: options.expectImpactDefenderSlot,
+    requireImpactKiBurst: options.requireImpactKiBurst,
+    requireAirborneDefender: options.requireAirborneDefender,
+    missAfterFrame: options.missAfterFrame,
+    counterHit: options.counterHit,
+    reason: options.reason
+  };
 }
 
 function isRoutableCharacter(character: CharacterDefinition) {
