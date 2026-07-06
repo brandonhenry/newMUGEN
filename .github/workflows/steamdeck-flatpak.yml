@@ -1,0 +1,44 @@
+name: Build Steam Deck Flatpak
+
+on:
+  workflow_dispatch:
+
+jobs:
+  flatpak:
+    name: Build KORE-SteamDeck.flatpak
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Install Flatpak tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak install -y flathub org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08
+
+      - name: Build Steam Deck Flatpak bundle
+        run: npm run desktop:dist:deck-flatpak
+
+      - name: Regenerate installer manifest
+        run: npm run desktop:publish-installers
+
+      - name: Upload Steam Deck installer artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kore-steamdeck-flatpak
+          if-no-files-found: error
+          path: |
+            release/desktop/KORE-SteamDeck.flatpak
+            public/installers/KORE-SteamDeck.flatpak
+            public/installers/manifest.json

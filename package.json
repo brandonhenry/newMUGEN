@@ -16,6 +16,8 @@
     "desktop:dist:win": "electron-builder --win nsis --x64",
     "desktop:dist:mac": "electron-builder --mac pkg --universal",
     "desktop:dist:linux": "electron-builder --linux AppImage --x64",
+    "desktop:dist:linux-dir": "electron-builder --linux dir --x64",
+    "desktop:dist:deck-flatpak": "npm run desktop:dist:linux-dir && node scripts/build-steamdeck-flatpak.mjs",
     "desktop:publish-installers": "node scripts/publish-installers.mjs",
     "test:perf": "npm run build && KORE_RUN_PERF_TESTS=1 PLAYWRIGHT_WEB_SERVER_COMMAND='npx vite preview --host 127.0.0.1 --port 4177' playwright test tests/performance.spec.ts --project=chromium",
     "test:perf:live": "KORE_RUN_PERF_TESTS=1 KORE_LIVE_PERF_TEST=1 PLAYWRIGHT_NO_SERVER=1 PLAYWRIGHT_BASE_URL=https://playkore.com playwright test tests/performance.spec.ts --project=chromium",
@@ -43,6 +45,7 @@
   },
   "devDependencies": {
     "@gltf-transform/cli": "^4.4.0",
+    "@malept/flatpak-bundler": "^0.4.0",
     "@playwright/test": "^1.49.1",
     "@testing-library/react": "^16.1.0",
     "@types/animejs": "^3.1.12",

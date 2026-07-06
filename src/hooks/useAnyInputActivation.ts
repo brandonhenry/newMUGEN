@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { hasActiveGamepadInput } from '../lib/gamepads';
 
 type AnyInputActivationOptions = {
   enabled?: boolean;
@@ -6,8 +7,6 @@ type AnyInputActivationOptions = {
   onAccept: () => void;
   onBack?: () => void;
 };
-
-const GAMEPAD_AXIS_DEADZONE = 0.55;
 
 export function useAnyInputActivation({
   enabled = true,
@@ -62,18 +61,21 @@ export function useAnyInputActivation({
     };
     const onTouchStart = (event: TouchEvent) => accept(event);
     const onClick = (event: MouseEvent) => accept(event);
+    const onGamepadConnected = (event: GamepadEvent) => accept(event);
 
     window.addEventListener('keydown', onKeyDown, true);
     window.addEventListener('pointerdown', onPointerDown, true);
     window.addEventListener('mousedown', onMouseDown, true);
     window.addEventListener('touchstart', onTouchStart, { capture: true, passive: false });
     window.addEventListener('click', onClick, true);
+    window.addEventListener('gamepadconnected', onGamepadConnected, true);
     return () => {
       window.removeEventListener('keydown', onKeyDown, true);
       window.removeEventListener('pointerdown', onPointerDown, true);
       window.removeEventListener('mousedown', onMouseDown, true);
       window.removeEventListener('touchstart', onTouchStart, true);
       window.removeEventListener('click', onClick, true);
+      window.removeEventListener('gamepadconnected', onGamepadConnected, true);
     };
   }, [accept, enabled]);
 
@@ -89,14 +91,6 @@ export function useAnyInputActivation({
   }, [accept, enabled, ready]);
 
   return accept;
-}
-
-function hasActiveGamepadInput() {
-  const pads = navigator.getGamepads?.() ?? [];
-  return Array.from(pads).some((pad) => {
-    if (!pad) return false;
-    return pad.buttons.some((button) => button.pressed) || pad.axes.some((axis) => Math.abs(axis) > GAMEPAD_AXIS_DEADZONE);
-  });
 }
 
 function isTextEntryTarget(target: EventTarget | null) {

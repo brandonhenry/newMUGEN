@@ -80,9 +80,13 @@ async function installMockGamepad(page: Page) {
         if (!connected) return [];
         const pressedButtons = testWindow.__koreMockGamepadButtons ?? [];
         if (testWindow.__koreMockGamepadPressed) pressedButtons[0] = true;
-        return [{
+        return [null, {
+          id: 'Sparse Slot Test Gamepad',
+          index: 1,
           connected: true,
-          buttons: Array.from({ length: 16 }, (_, index) => ({ pressed: Boolean(pressedButtons[index]) })),
+          mapping: 'standard',
+          timestamp: performance.now(),
+          buttons: Array.from({ length: 17 }, (_, index) => ({ pressed: Boolean(pressedButtons[index]), touched: Boolean(pressedButtons[index]), value: pressedButtons[index] ? 1 : 0 })),
           axes: testWindow.__koreMockGamepadAxes ?? [0, 0]
         }];
       }
@@ -353,6 +357,16 @@ test('versus splash accepts browser gamepad input to skip into the fight', async
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
 });
 
+test('fight reads browser gamepad input from sparse slot', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFight(page);
+
+  await setMockGamepadButton(page, 0, true);
+  await expect(page.getByTestId('frame-input')).toHaveText('p1:jab', { timeout: 3000 });
+  await setMockGamepadButton(page, 0, false);
+  await expectNoHeldFightInput(page);
+});
+
 test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
   await expect(page.getByTestId('fight-canvas')).toBeVisible();
@@ -545,21 +559,36 @@ test('shows desktop installer downloads from the console installers tab', async 
             id: 'steamdeck',
             label: 'Steam Deck',
             version: '1.2.0',
-            filename: 'KORE-1.2.0-linux-x64.AppImage',
-            url: '/installers/KORE-1.2.0-linux-x64.AppImage',
-            size: 136314880,
+            type: 'flatpak',
+            filename: 'KORE-SteamDeck.flatpak',
+            url: '/installers/KORE-SteamDeck.flatpak',
+            size: 125829120,
             sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-            notes: 'SteamOS shortcut installer.',
+            notes: 'Best for Steam Deck Desktop Mode: download the Flatpak bundle and open it with Discover.',
+            installCommand: 'curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash',
             assets: [
               {
-                label: 'Steam Deck AppImage',
+                type: 'flatpak',
+                primary: true,
+                label: 'Install with Discover (.flatpak)',
+                filename: 'KORE-SteamDeck.flatpak',
+                url: '/installers/KORE-SteamDeck.flatpak',
+                size: 125829120,
+                sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890'
+              },
+              {
+                type: 'appimage',
+                primary: false,
+                label: 'AppImage fallback',
                 filename: 'KORE-1.2.0-linux-x64.AppImage',
                 url: '/installers/KORE-1.2.0-linux-x64.AppImage',
                 size: 136314880,
                 sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890'
               },
               {
-                label: 'Deck shortcut script',
+                type: 'script',
+                primary: false,
+                label: 'Konsole fallback script',
                 filename: 'install-kore-steamdeck.sh',
                 url: '/installers/install-kore-steamdeck.sh',
                 size: 12000,
@@ -593,7 +622,10 @@ test('shows desktop installer downloads from the console installers tab', async 
   await expect(page.locator('.installer-card-title strong', { hasText: 'Steam Deck' })).toBeVisible();
   await expect(page.locator('.installer-card-title strong', { hasText: 'Linux AppImage' })).toBeVisible();
   await expect(page.getByText('Recommended for this device').first()).toBeVisible();
-  await expect(page.getByRole('link', { name: /Deck shortcut script/ })).toHaveAttribute('href', /\/installers\/install-kore-steamdeck\.sh$/);
+  await expect(page.getByRole('link', { name: /Install with Discover/ })).toHaveAttribute('href', /\/installers\/KORE-SteamDeck\.flatpak$/);
+  await expect(page.getByText('Open it with Discover.', { exact: true })).toBeVisible();
+  await expect(page.getByText('curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash')).toBeVisible();
+  await expect(page.getByRole('link', { name: /Konsole fallback script/ })).toHaveAttribute('href', /\/installers\/install-kore-steamdeck\.sh$/);
   await expect(page.locator('a[href$="/installers/KORE-1.2.0-win-x64.exe"]')).toHaveAttribute('href', /\/installers\/KORE-1\.2\.0-win-x64\.exe$/);
 });
 

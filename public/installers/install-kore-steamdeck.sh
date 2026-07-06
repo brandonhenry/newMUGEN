@@ -8,17 +8,55 @@ INSTALL_DIR="${KORE_INSTALL_DIR:-$HOME/Games/KORE}"
 APPIMAGE_PATH="$INSTALL_DIR/KORE.AppImage"
 ICON_PATH="$INSTALL_DIR/kore.png"
 DESKTOP_FILE="$HOME/.local/share/applications/${APP_ID}.desktop"
-DESKTOP_SHORTCUT="$HOME/Desktop/KORE.desktop"
+DESKTOP_SHORTCUT=""
 DRY_RUN=0
+ADD_STEAM_SHORTCUT=0
+PROMPT_STEAM_SHORTCUT=0
+
+usage() {
+  cat <<EOF
+KORE Steam Deck fallback installer
+
+Usage:
+  curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash
+  ./install-kore-steamdeck.sh [options]
+
+Options:
+  --dry-run                 Print planned paths and commands without writing files.
+  --appimage-url=URL        Download a specific KORE AppImage URL.
+  --install-dir=PATH        Install KORE.AppImage into PATH.
+  --add-steam-shortcut      Advanced: edit Steam shortcuts.vdf after backing it up.
+  --prompt-steam-shortcut   Advanced: ask before editing Steam shortcuts.vdf.
+  --no-steam-shortcut       Do not edit Steam shortcuts.vdf. This is the default.
+  --help                    Show this help.
+EOF
+}
+
+desktop_dir() {
+  local resolved=""
+  if command -v xdg-user-dir >/dev/null 2>&1; then
+    resolved="$(xdg-user-dir DESKTOP 2>/dev/null || true)"
+  fi
+  if [ -z "$resolved" ] || [ "$resolved" = "$HOME" ]; then
+    resolved="$HOME/Desktop"
+  fi
+  printf '%s\n' "$resolved"
+}
 
 for arg in "$@"; do
   case "$arg" in
     --dry-run) DRY_RUN=1 ;;
     --appimage-url=*) APPIMAGE_URL="${arg#*=}" ;;
     --install-dir=*) INSTALL_DIR="${arg#*=}"; APPIMAGE_PATH="$INSTALL_DIR/KORE.AppImage"; ICON_PATH="$INSTALL_DIR/kore.png" ;;
+    --add-steam-shortcut) ADD_STEAM_SHORTCUT=1 ;;
+    --prompt-steam-shortcut) PROMPT_STEAM_SHORTCUT=1 ;;
+    --no-steam-shortcut) ADD_STEAM_SHORTCUT=0; PROMPT_STEAM_SHORTCUT=0 ;;
+    --help|-h) usage; exit 0 ;;
     *) echo "Unknown option: $arg" >&2; exit 2 ;;
   esac
 done
+
+DESKTOP_SHORTCUT="$(desktop_dir)/KORE.desktop"
 
 run() {
   if [ "$DRY_RUN" -eq 1 ]; then
@@ -71,7 +109,7 @@ install_icon() {
 
 create_desktop_entries() {
   run mkdir -p "$HOME/.local/share/applications"
-  run mkdir -p "$HOME/Desktop"
+  run mkdir -p "$(dirname "$DESKTOP_SHORTCUT")"
   write_file "$DESKTOP_FILE" 755 <<EOF
 [Desktop Entry]
 Type=Application
@@ -109,6 +147,8 @@ add_steam_shortcut() {
   local backup_path="${shortcuts_path}.kore-backup-$(date +%Y%m%d%H%M%S)"
   if [ "$DRY_RUN" -eq 1 ]; then
     echo "[dry-run] would back up $shortcuts_path to $backup_path"
+    echo "[dry-run] would add or update KORE in $shortcuts_path"
+    return
   else
     cp "$shortcuts_path" "$backup_path"
   fi
@@ -213,10 +253,35 @@ offer_steam_shortcut() {
   esac
 }
 
+maybe_install_steam_shortcut() {
+  if [ "$ADD_STEAM_SHORTCUT" -eq 1 ]; then
+    if ! command -v python3 >/dev/null 2>&1; then
+      echo "python3 is required for binary shortcuts.vdf editing. Use the manual Steam path instead."
+      return
+    fi
+    shortcuts_path="$(find_steam_shortcuts || true)"
+    if [ -z "$shortcuts_path" ]; then
+      echo "Could not find Steam shortcuts.vdf. Use Steam > Games > Add a Non-Steam Game to My Library > KORE."
+      return
+    fi
+    add_steam_shortcut "$shortcuts_path"
+    echo "Restart Steam to see KORE in your library."
+    return
+  fi
+  if [ "$PROMPT_STEAM_SHORTCUT" -eq 1 ]; then
+    offer_steam_shortcut
+    return
+  fi
+  echo "Steam Library integration skipped."
+  echo "Manual Steam path: Steam > Games > Add a Non-Steam Game to My Library > KORE."
+  echo "Advanced automatic Steam shortcut option: rerun with --add-steam-shortcut."
+}
+
 echo "Installing KORE for Steam Deck / SteamOS"
 echo "Install path: $APPIMAGE_PATH"
+echo "Desktop shortcut: $DESKTOP_SHORTCUT"
 download_appimage
 install_icon
 create_desktop_entries
-offer_steam_shortcut
+maybe_install_steam_shortcut
 echo "Done."

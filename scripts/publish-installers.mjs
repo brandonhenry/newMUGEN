@@ -16,24 +16,28 @@ const platforms = [
     id: 'windows',
     label: 'Windows PC',
     match: (name) => /\.exe$/i.test(name),
+    type: 'installer',
     notes: 'Unsigned Windows installer. Creates desktop and Start Menu shortcuts.'
   },
   {
     id: 'mac',
     label: 'Mac',
     match: (name) => /\.pkg$/i.test(name),
+    type: 'installer',
     notes: 'Unsigned macOS package. Installs KORE and adds a desktop launcher for the active user.'
   },
   {
     id: 'steamdeck',
     label: 'Steam Deck',
-    match: (name) => /\.AppImage$/i.test(name),
-    notes: 'SteamOS/Linux AppImage plus Deck shortcut installer script.'
+    match: (name) => /KORE-SteamDeck\.flatpak$/i.test(name),
+    type: 'flatpak',
+    notes: 'Best for Steam Deck Desktop Mode: download the Flatpak bundle and open it with Discover.'
   },
   {
     id: 'linux',
     label: 'Linux AppImage',
     match: (name) => /\.AppImage$/i.test(name),
+    type: 'appimage',
     notes: 'Generic Linux AppImage for desktop distributions.'
   }
 ];
@@ -57,7 +61,7 @@ async function findArtifacts() {
     if (!entry.isFile()) continue;
     const name = entry.name;
     if (name.endsWith('.blockmap') || name.endsWith('.yml') || name.endsWith('.yaml')) continue;
-    if (!['.exe', '.pkg', '.AppImage'].includes(extname(name))) continue;
+    if (!['.exe', '.pkg', '.AppImage', '.flatpak'].includes(extname(name))) continue;
     files.push(join(sourceDir, name));
   }
   return files;
@@ -74,6 +78,7 @@ for (const artifactPath of artifactPaths) {
   await copyFile(artifactPath, target);
   const stats = await stat(target);
   copied.push({
+    type: filename.endsWith('.flatpak') ? 'flatpak' : filename.endsWith('.AppImage') ? 'appimage' : 'installer',
     filename,
     url: `${publicBase}/${filename}`,
     size: stats.size,
@@ -89,6 +94,7 @@ for (const platform of platforms) {
     id: platform.id,
     label: platform.label,
     version: appVersion,
+    type: platform.type,
     filename: artifact.filename,
     url: artifact.url,
     size: artifact.size,
@@ -97,18 +103,38 @@ for (const platform of platforms) {
     notes: platform.notes
   };
   if (platform.id === 'steamdeck') {
+    const appImageAsset = copied.find((item) => /\.AppImage$/i.test(item.filename));
     const scriptPath = join(outputDir, 'install-kore-steamdeck.sh');
     const scriptStats = await stat(scriptPath).catch(() => null);
     const scriptAsset = scriptStats
       ? {
-          label: 'Steam Deck shortcut installer',
+          type: 'script',
+          primary: false,
+          label: 'Konsole fallback script',
           filename: 'install-kore-steamdeck.sh',
           url: `${publicBase}/install-kore-steamdeck.sh`,
           size: scriptStats.size,
           sha256: await fileSha256(scriptPath)
         }
       : null;
-    entry.assets = scriptAsset ? [artifact, scriptAsset] : [artifact];
+    entry.assets = [
+      {
+        ...artifact,
+        type: 'flatpak',
+        primary: true,
+        label: 'Install with Discover (.flatpak)'
+      },
+      appImageAsset
+        ? {
+            ...appImageAsset,
+            type: 'appimage',
+            primary: false,
+            label: 'AppImage fallback'
+          }
+        : null,
+      scriptAsset
+    ].filter(Boolean);
+    entry.installCommand = 'curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash';
   }
   installerEntries.push(entry);
 }

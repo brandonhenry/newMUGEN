@@ -3,6 +3,7 @@ import type { ActionName, ControlBindingMap, InputFrame, InputFrameWithMetadata,
 import { emptyInputFrame } from '../types';
 import { keybindableButtonComboDefinitions } from '../lib/buttonCombos';
 import { defaultGameSettings } from '../lib/gameSettings';
+import { getPlayerGamepad, readFightGamepadInput } from '../lib/gamepads';
 
 const aiModeArrowKeys: Record<string, ActionName> = {
   ArrowUp: 'up',
@@ -375,34 +376,12 @@ function refreshGamepadInputs(
   sequenceRef: { current: number },
   controls: ControlBindingMap
 ) {
-  const pads = navigator.getGamepads?.() ?? [];
   const now = performance.now();
   for (let player = 0; player < 2; player += 1) {
     const previous = gamepadInputs[player];
-    const next = emptyInputFrame();
-    const pad = pads[player];
-    if (pad) {
-      const horizontal = pad.axes[0] ?? 0;
-      const vertical = pad.axes[1] ?? 0;
-      applyHorizontalTap(next, horizontalTapStates[player], 'left', horizontal < -0.35, 'gamepad', now);
-      applyHorizontalTap(next, horizontalTapStates[player], 'right', horizontal > 0.35, 'gamepad', now);
-      next.up = vertical < -0.35;
-      next.down = vertical > 0.35;
-      const gamepadBindings = controls.gamepad[player];
-      for (const action of Object.keys(gamepadBindings) as ActionName[]) {
-        if (gamepadBindings[action]?.some((index) => pad.buttons[index]?.pressed)) next[action] = true;
-      }
-      const comboBindings = controls.gamepadCombos[player];
-      for (const combo of keybindableButtonComboDefinitions) {
-        if (!comboBindings[combo.id]?.some((index) => pad.buttons[index]?.pressed)) continue;
-        combo.actions.forEach((action) => {
-          next[action] = true;
-        });
-      }
-    } else {
-      applyHorizontalTap(next, horizontalTapStates[player], 'left', false, 'gamepad', now);
-      applyHorizontalTap(next, horizontalTapStates[player], 'right', false, 'gamepad', now);
-    }
+    const next = readFightGamepadInput(getPlayerGamepad(player as 0 | 1), controls, player as 0 | 1);
+    applyHorizontalTap(next, horizontalTapStates[player], 'left', next.left, 'gamepad', now);
+    applyHorizontalTap(next, horizontalTapStates[player], 'right', next.right, 'gamepad', now);
     if (!initialized[player]) {
       initialized[player] = true;
     } else {

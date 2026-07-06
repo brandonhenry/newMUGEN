@@ -963,6 +963,10 @@ button {
     0 20px 42px rgba(0, 0, 0, 0.28);
 }
 
+.installer-card-steamdeck {
+  gap: 11px;
+}
+
 .installer-card-title {
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr);
@@ -1073,6 +1077,20 @@ button {
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
+.installer-actions a.installer-action-primary {
+  color: #06111c;
+  background: linear-gradient(180deg, #f7f7f2, #bff5ff);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.36) inset,
+    0 0 18px rgba(46, 230, 255, 0.18);
+}
+
+.installer-actions a.installer-action-secondary {
+  color: rgba(247, 247, 242, 0.86);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
 .installer-actions a span {
   min-width: 0;
   overflow: hidden;
@@ -1087,6 +1105,77 @@ button {
 
 .installer-actions a:active {
   transform: scale(0.96);
+}
+
+.installer-deck-help {
+  display: grid;
+  gap: 7px;
+  border-radius: 6px;
+  padding: 10px;
+  background: rgba(46, 230, 255, 0.08);
+  box-shadow: 0 0 0 1px rgba(46, 230, 255, 0.14) inset;
+}
+
+.installer-deck-help strong,
+.installer-command > span {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.installer-deck-help ol {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(247, 247, 242, 0.76);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.installer-command {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  border-radius: 6px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.installer-command > span {
+  grid-column: 1 / -1;
+  color: #9eeeff;
+}
+
+.installer-command code {
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(247, 247, 242, 0.84);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 11px;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.installer-command button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0 10px;
+  color: #08101c;
+  background: #f7f7f2;
+  font-size: 12px;
+  font-weight: 950;
+  cursor: pointer;
 }
 
 .installer-empty-state {

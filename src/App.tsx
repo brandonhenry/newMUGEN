@@ -60,6 +60,7 @@ import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/sta
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
+import { getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readPageGamepadState } from './lib/gamepads';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -273,8 +274,6 @@ type AnimationSlot = {
 };
 type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special' | 'combo';
 const CHARACTER_SELECT_PAGE_SIZE = 12;
-const CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON = 6;
-const CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON = 7;
 
 type HdVoxelRun = {
   part: 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
@@ -4090,9 +4089,7 @@ type MenuNavigationDirection = 'up' | 'down' | 'left' | 'right';
 type MenuNavigationDevice = 'keyboard' | 'gamepad';
 
 const MAIN_MENU_CHROME_TOGGLE_EVENT = 'kore:main-menu-chrome-toggle';
-const MENU_GAMEPAD_SELECT_BUTTON = 8;
 const MAIN_MENU_SCREENSAVER_IDLE_MS = 15000;
-const MAIN_MENU_GAMEPAD_IDLE_DEADZONE = 0.45;
 const ARCADE_NAME_MAX_LENGTH = 12;
 const ARCADE_NAME_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'.split('');
 
@@ -4188,10 +4185,10 @@ function useMenuNavigation(screen: Screen) {
     const repeatDelayMs = 170;
 
     const tick = () => {
-      const pad = getPrimaryMenuGamepad();
+      const pad = getPrimaryGamepad();
       if (pad) {
         const now = performance.now();
-        const current = readMenuGamepadState(pad, screenRef.current);
+        const current = readMenuGamepadState(pad, screenRef.current !== 'menu');
         const previous = previousPadStateRef.current;
         const edge = {
           up: current.up && !previous.up,
@@ -4279,26 +4276,6 @@ function isTextEntryElement(target: EventTarget | null) {
   const input = target as HTMLInputElement;
   const type = (input.type || 'text').toLowerCase();
   return !['button', 'checkbox', 'color', 'file', 'image', 'radio', 'range', 'reset', 'submit'].includes(type);
-}
-
-function getPrimaryMenuGamepad() {
-  const pads = navigator.getGamepads?.() ?? [];
-  return pads.find((pad): pad is Gamepad => Boolean(pad?.connected)) ?? null;
-}
-
-function readMenuGamepadState(pad: Gamepad, screen: Screen) {
-  const horizontal = pad.axes[0] ?? 0;
-  const vertical = pad.axes[1] ?? 0;
-  const selectPressed = Boolean(pad.buttons[MENU_GAMEPAD_SELECT_BUTTON]?.pressed);
-  return {
-    up: Boolean(pad.buttons[12]?.pressed) || vertical < -0.45,
-    down: Boolean(pad.buttons[13]?.pressed) || vertical > 0.45,
-    left: Boolean(pad.buttons[14]?.pressed) || horizontal < -0.45,
-    right: Boolean(pad.buttons[15]?.pressed) || horizontal > 0.45,
-    confirm: Boolean(pad.buttons[0]?.pressed),
-    back: Boolean(pad.buttons[1]?.pressed) || (screen !== 'menu' && selectPressed),
-    select: selectPressed
-  };
 }
 
 function getMenuRoot() {
@@ -4749,8 +4726,7 @@ function MenuScreen({
 
     let frame = 0;
     const tick = () => {
-      const pads = navigator.getGamepads?.() ?? [];
-      const pressed = Array.from(pads).some((pad) => Boolean(pad?.buttons.some((button) => button.pressed)));
+      const pressed = hasActiveGamepadInput();
       if (pressed && !hiddenMenuGamepadPressedRef.current) revealMenuChrome();
       hiddenMenuGamepadPressedRef.current = pressed;
       frame = window.requestAnimationFrame(tick);
@@ -4783,13 +4759,7 @@ function MenuScreen({
 
     let frame = 0;
     const tick = () => {
-      const pads = navigator.getGamepads?.() ?? [];
-      const active = Array.from(pads).some((pad) => {
-        if (!pad) return false;
-        const axisActive = Array.from(pad.axes).some((axis) => Math.abs(axis) > MAIN_MENU_GAMEPAD_IDLE_DEADZONE);
-        const buttonActive = pad.buttons.some((button) => button.pressed);
-        return axisActive || buttonActive;
-      });
+      const active = hasActiveGamepadInput(0.45);
       if (active && !menuIdleGamepadActiveRef.current) noteMenuActivity();
       menuIdleGamepadActiveRef.current = active;
       frame = window.requestAnimationFrame(tick);
@@ -5243,7 +5213,7 @@ function ArcadeNameCard({
     const tick = () => {
       const input = inputRef.current;
       const active = document.activeElement === input;
-      const pad = getPrimaryMenuGamepad();
+      const pad = getPrimaryGamepad();
       if (!input || !active || !pad) {
         controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false };
         if (!active && controllerEditingRef.current) setControllerEditing(false);
@@ -5252,16 +5222,7 @@ function ArcadeNameCard({
       }
 
       const now = performance.now();
-      const horizontal = pad.axes[0] ?? 0;
-      const vertical = pad.axes[1] ?? 0;
-      const current = {
-        up: Boolean(pad.buttons[12]?.pressed) || vertical < -0.45,
-        down: Boolean(pad.buttons[13]?.pressed) || vertical > 0.45,
-        left: Boolean(pad.buttons[14]?.pressed) || horizontal < -0.45,
-        right: Boolean(pad.buttons[15]?.pressed) || horizontal > 0.45,
-        confirm: Boolean(pad.buttons[0]?.pressed),
-        back: Boolean(pad.buttons[1]?.pressed)
-      };
+      const current = readMenuGamepadState(pad, false);
       const previous = controllerPadStateRef.current;
       const edge = {
         up: current.up && !previous.up,
@@ -5319,7 +5280,7 @@ function ArcadeNameCard({
           autoComplete="nickname"
           onChange={(event) => setDraft(sanitizeDisplayName(event.target.value))}
           onFocus={() => {
-            if (getPrimaryMenuGamepad()) setControllerEditing(true);
+            if (getPrimaryGamepad()) setControllerEditing(true);
             setControllerCursor((cursor) => Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, cursor)));
           }}
           onKeyDown={(event) => {
@@ -5458,16 +5419,13 @@ function TrainingSelect({
   useEffect(() => {
     let frame = 0;
     const tick = () => {
-      const pad = getPrimaryMenuGamepad();
+      const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         pageGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = {
-        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
-        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
-      };
+      const current = readPageGamepadState(pad);
       const previous = pageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleRosterPage(-1);
       if (current.next && !previous.next) cycleRosterPage(1);
@@ -5770,16 +5728,13 @@ function TournamentSelect({
   useEffect(() => {
     let frame = 0;
     const tick = () => {
-      const pad = getPrimaryMenuGamepad();
+      const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         pageGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = {
-        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
-        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
-      };
+      const current = readPageGamepadState(pad);
       const previous = pageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleRosterPage(-1);
       if (current.next && !previous.next) cycleRosterPage(1);
@@ -6782,16 +6737,13 @@ function CharacterSelect({
   useEffect(() => {
     let frame = 0;
     const tick = () => {
-      const pad = getPrimaryMenuGamepad();
+      const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         pageGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = {
-        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
-        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
-      };
+      const current = readPageGamepadState(pad);
       const previous = pageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleRosterPage(-1);
       if (current.next && !previous.next) cycleRosterPage(1);
@@ -7625,16 +7577,13 @@ function StageSelect({
   useEffect(() => {
     let frame = 0;
     const tick = () => {
-      const pad = getPrimaryMenuGamepad();
+      const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         stageGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = {
-        previous: Boolean(pad.buttons[CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON]?.pressed),
-        next: Boolean(pad.buttons[CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON]?.pressed)
-      };
+      const current = readPageGamepadState(pad);
       const previous = stageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleStage(-1);
       if (current.next && !previous.next) cycleStage(1);
@@ -10255,7 +10204,10 @@ type ConsoleLine = {
 };
 
 type InstallerPlatformId = 'windows' | 'mac' | 'steamdeck' | 'linux';
+type InstallerAssetType = 'installer' | 'flatpak' | 'appimage' | 'script';
 type InstallerAsset = {
+  type?: InstallerAssetType;
+  primary?: boolean;
   label?: string;
   filename: string;
   url: string;
@@ -10268,6 +10220,7 @@ type InstallerEntry = InstallerAsset & {
   version: string;
   recommended?: boolean;
   notes?: string;
+  installCommand?: string;
   assets?: InstallerAsset[];
 };
 
@@ -10556,6 +10509,9 @@ function normalizeInstallerManifest(payload: unknown): InstallerEntry[] {
         sha256: typeof record.sha256 === 'string' ? record.sha256 : undefined,
         recommended: record.recommended === true,
         notes: typeof record.notes === 'string' ? record.notes : undefined,
+        type: isInstallerAssetType(record.type) ? record.type : undefined,
+        primary: record.primary === true,
+        installCommand: typeof record.installCommand === 'string' ? record.installCommand : undefined,
         assets: Array.isArray(record.assets)
           ? record.assets
               .map((asset) => normalizeInstallerAsset(asset))
@@ -10572,12 +10528,18 @@ function normalizeInstallerAsset(asset: unknown): InstallerAsset | null {
   const record = asset as Record<string, unknown>;
   if (typeof record.filename !== 'string' || typeof record.url !== 'string') return null;
   return {
+    type: isInstallerAssetType(record.type) ? record.type : undefined,
+    primary: record.primary === true,
     label: typeof record.label === 'string' ? record.label : undefined,
     filename: record.filename,
     url: record.url,
     size: typeof record.size === 'number' ? record.size : undefined,
     sha256: typeof record.sha256 === 'string' ? record.sha256 : undefined
   };
+}
+
+function isInstallerAssetType(value: unknown): value is InstallerAssetType {
+  return value === 'installer' || value === 'flatpak' || value === 'appimage' || value === 'script';
 }
 
 function isInstallerPlatformId(value: unknown): value is InstallerPlatformId {
@@ -10617,6 +10579,12 @@ function installerIcon(id: InstallerPlatformId) {
   return <Laptop size={20} />;
 }
 
+function installerAssetIcon(type?: InstallerAssetType) {
+  if (type === 'script') return <Terminal size={15} />;
+  if (type === 'flatpak' || type === 'appimage') return <Package size={15} />;
+  return <Download size={15} />;
+}
+
 function OptionsInstallersPanel({
   installers,
   manifestFailed
@@ -10626,6 +10594,14 @@ function OptionsInstallersPanel({
 }) {
   const detectedPlatform = useMemo(() => detectInstallerPlatform(), []);
   const hasInstallers = Boolean(installers?.length);
+  const [copiedCommandKey, setCopiedCommandKey] = useState<string | null>(null);
+
+  const copyInstallCommand = useCallback(async (key: string, command: string) => {
+    if (!navigator.clipboard?.writeText) return;
+    await navigator.clipboard.writeText(command);
+    setCopiedCommandKey(key);
+    window.setTimeout(() => setCopiedCommandKey((current) => current === key ? null : current), 1600);
+  }, []);
 
   if (installers === null) {
     return (
@@ -10669,8 +10645,12 @@ function OptionsInstallersPanel({
         {installers.map((installer) => {
           const recommended = installer.recommended || installer.id === detectedPlatform;
           const assets = installer.assets?.length ? installer.assets : [installer];
+          const sortedAssets = [...assets].sort((left, right) => Number(Boolean(right.primary)) - Number(Boolean(left.primary)));
+          const primaryAsset = sortedAssets.find((asset) => asset.primary) ?? sortedAssets[0];
+          const isSteamDeckFlatpak = installer.id === 'steamdeck' && primaryAsset?.type === 'flatpak';
+          const commandKey = `${installer.id}-install-command`;
           return (
-            <section key={installer.id} className={`installer-card ${recommended ? 'installer-card-recommended' : ''}`}>
+            <section key={installer.id} className={`installer-card ${installer.id === 'steamdeck' ? 'installer-card-steamdeck' : ''} ${recommended ? 'installer-card-recommended' : ''}`}>
               <div className="installer-card-title">
                 <span>{installerIcon(installer.id)}</span>
                 <div>
@@ -10684,14 +10664,34 @@ function OptionsInstallersPanel({
                 <div><dt>Size</dt><dd>{formatInstallerSize(installer.size)}</dd></div>
                 <div><dt>SHA</dt><dd>{installer.sha256 ? installer.sha256.slice(0, 12) : 'Pending'}</dd></div>
               </dl>
+              {isSteamDeckFlatpak && (
+                <div className="installer-deck-help" aria-label="Steam Deck install steps">
+                  <strong>Steam Deck install</strong>
+                  <ol>
+                    <li>Download KORE-SteamDeck.flatpak.</li>
+                    <li>Open it with Discover.</li>
+                    <li>Install and launch KORE from the app launcher.</li>
+                  </ol>
+                </div>
+              )}
               <div className="installer-actions">
-                {assets.map((asset) => (
-                  <a key={asset.url} href={asset.url} download onClick={() => undefined}>
-                    <Download size={15} />
+                {sortedAssets.map((asset) => (
+                  <a key={asset.url} className={asset.primary ? 'installer-action-primary' : 'installer-action-secondary'} href={asset.url} download onClick={() => undefined}>
+                    {installerAssetIcon(asset.type)}
                     <span>{asset.label ?? asset.filename}</span>
                   </a>
                 ))}
               </div>
+              {installer.id === 'steamdeck' && installer.installCommand && (
+                <div className="installer-command">
+                  <span>Konsole fallback</span>
+                  <code>{installer.installCommand}</code>
+                  <button type="button" onClick={() => void copyInstallCommand(commandKey, installer.installCommand!)}>
+                    <Copy size={14} />
+                    {copiedCommandKey === commandKey ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+              )}
             </section>
           );
         })}
