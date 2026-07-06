@@ -440,7 +440,7 @@ export function getKeyboardBindingsForEvent(
   const p2Action = findActionForKey(controls.keyboard[1], keyIds);
   const p1ComboActions = findComboActionsForKey(controls.keyboardCombos[0], keyIds);
   const p2ComboActions = findComboActionsForKey(controls.keyboardCombos[1], keyIds);
-  const aiAction = mode === 'ai' || mode === 'versusCpu' ? findActionForKey(aiModeArrowKeys, keyIds) : undefined;
+  const aiAction = mode === 'ai' || mode === 'cpuArcade' || mode === 'versusCpu' ? findActionForKey(aiModeArrowKeys, keyIds) : undefined;
   if (p1Action) pushUniqueBinding(matches, 1, p1Action);
   p1ComboActions.forEach((action) => pushUniqueBinding(matches, 1, action));
   if (aiAction) pushUniqueBinding(matches, 1, aiAction);

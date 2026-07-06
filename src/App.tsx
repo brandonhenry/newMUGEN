@@ -788,6 +788,10 @@ function getEffectiveCpuDifficulty(mode: MatchMode, cpuDifficulty: CpuDifficulty
   return mode === 'cpu' || mode === 'tournamentInfinite' ? KORE_CPU_DIFFICULTY : cpuDifficulty;
 }
 
+function isArcadeMatchMode(mode: MatchMode) {
+  return mode === 'ai' || mode === 'cpuArcade';
+}
+
 function buildAnimationSlots(): AnimationSlot[] {
   const commandSlots: AnimationSlot[] = [];
   const pushCommand = (command: string, category: AnimationSlot['category'], label = command) => {
@@ -2616,7 +2620,7 @@ export default function App() {
       const nextP1 = pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds);
       if (nextP1) nextP1Id = nextP1.id;
     }
-    if (targetMode !== 'ai' && randomCharacterSlots[2]) {
+    if (!isArcadeMatchMode(targetMode) && randomCharacterSlots[2]) {
       const nextP2 = pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds, nextP1Id);
       if (nextP2) nextP2Id = nextP2.id;
     }
@@ -3066,7 +3070,7 @@ export default function App() {
   }, [effectiveUnlockedCharacterIds, p1Id, roster]);
 
   useEffect(() => {
-    if (roster.length === 0 || mode === 'ai') return;
+    if (roster.length === 0 || isArcadeMatchMode(mode)) return;
     const selected = roster.find((character) => character.id === p2Id);
     if (selected && isCharacterUnlocked(selected, effectiveUnlockedCharacterIds)) return;
     const firstUnlockedOpponent = findFirstUnlockedCharacter(roster, effectiveUnlockedCharacterIds, p1Id);
@@ -3828,7 +3832,7 @@ export default function App() {
                 p1_character_id: resolvedCharacters.p1Id,
                 p2_character_id: resolvedCharacters.p2Id,
                 p1_random: randomCharacterSlots[1],
-                p2_random: mode !== 'ai' && randomCharacterSlots[2]
+                p2_random: !isArcadeMatchMode(mode) && randomCharacterSlots[2]
               });
               if (mode !== 'private') setPrivateRoomIntent(null);
               setScreen('stage');
@@ -3861,7 +3865,7 @@ export default function App() {
                 }
               }
               captureAppAnalytics('stage_selected', { stage_id: fightStage.id, stage_random: randomStageSelected });
-              if (mode === 'ai') {
+              if (isArcadeMatchMode(mode)) {
                 const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
                 if (opponent) setP2Id(opponent.id);
               }
@@ -4032,7 +4036,7 @@ export default function App() {
               }
               const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlocks, cpuDifficulty);
               if (nextOpponent) setP2Id(nextOpponent.id);
-              const nextMiniGame = winnerSlot === 1 ? makeArcadeMiniGameLaunch() : null;
+              const nextMiniGame = mode === 'ai' && winnerSlot === 1 ? makeArcadeMiniGameLaunch() : null;
               setActiveArcadeMiniGame(nextMiniGame);
               setLastMiniGameResult(null);
               setVersusReturnScreen('stage');
@@ -6446,8 +6450,9 @@ function TrainingModeCarousel({
   );
 }
 
-const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode }> = [
+const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: ReactNode; devOnly?: boolean }> = [
   { mode: 'ai', label: 'Arcade', icon: <Gamepad2 size={18} /> },
+  { mode: 'cpuArcade', label: 'CPU Arcade', icon: <Swords size={18} />, devOnly: true },
   { mode: 'local2p', label: 'Local 2P', icon: <Users size={18} /> },
   { mode: 'versusCpu', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
@@ -6513,7 +6518,7 @@ function CharacterSelect({
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const rosterPageStart = visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE;
   const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + CHARACTER_SELECT_PAGE_SIZE);
-  const isArcadeMode = mode === 'ai';
+  const isArcadeMode = isArcadeMatchMode(mode);
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const targetIsRandom = randomCharacterSlots[selectTarget];
   const assignCharacter = (id: string) => {
@@ -6958,11 +6963,15 @@ function CharacterSelectModeCarousel({
   setValue: (mode: MatchMode) => void;
   onNavigate?: () => void;
 }) {
-  const activeIndex = Math.max(0, characterSelectModeOptions.findIndex((option) => option.mode === value));
-  const activeOption = characterSelectModeOptions[activeIndex] ?? characterSelectModeOptions[0];
+  const modeOptions = useMemo(
+    () => characterSelectModeOptions.filter((option) => !option.devOnly || isLocalDevHost()),
+    []
+  );
+  const activeIndex = Math.max(0, modeOptions.findIndex((option) => option.mode === value));
+  const activeOption = modeOptions[activeIndex] ?? modeOptions[0];
   const cycleMode = (direction: -1 | 1, withSound = true) => {
-    const nextIndex = (activeIndex + direction + characterSelectModeOptions.length) % characterSelectModeOptions.length;
-    const next = characterSelectModeOptions[nextIndex];
+    const nextIndex = (activeIndex + direction + modeOptions.length) % modeOptions.length;
+    const next = modeOptions[nextIndex];
     if (!next) return;
     if (withSound) onNavigate?.();
     setValue(next.mode);
@@ -7163,6 +7172,7 @@ function CpuDifficultyControl({
 
 function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (mode === 'cpuArcade') return slot === 1 ? 'CPU Player' : 'CPU';
   if (mode === 'tournamentInfinite') return slot === 1 ? 'Player 1' : 'Player 2';
   if (mode === 'online') return slot === 1 ? 'You' : 'Opponent';
   if (mode === 'trainingOnline') return slot === 1 ? 'You' : 'Sparring Partner';
@@ -7171,12 +7181,13 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'tournamentLocal') return slot === 1 ? 'You' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'You' : 'Private Guest';
   if (slot === 2 && mode === 'training') return 'Dummy';
-  if (slot === 2 && (mode === 'ai' || mode === 'versusCpu')) return 'CPU';
+  if (slot === 2 && (isArcadeMatchMode(mode) || mode === 'versusCpu')) return 'CPU';
   return slot === 1 ? 'Player 1' : 'Player 2';
 }
 
 function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'cpu') return slot === 1 ? 'CPU 1' : 'CPU 2';
+  if (mode === 'cpuArcade') return slot === 1 ? 'CPU P1' : 'CPU';
   if (mode === 'tournamentInfinite') return slot === 1 ? 'P1' : 'P2';
   if (mode === 'online') return slot === 1 ? 'YOU' : 'ONLINE';
   if (mode === 'trainingOnline') return slot === 1 ? 'YOU' : 'SPAR';
@@ -7185,12 +7196,12 @@ function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'tournamentLocal') return slot === 1 ? 'YOU' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'YOU' : 'GUEST';
   if (slot === 2 && mode === 'training') return 'Dummy';
-  if (slot === 2 && (mode === 'ai' || mode === 'versusCpu')) return 'CPU';
+  if (slot === 2 && (isArcadeMatchMode(mode) || mode === 'versusCpu')) return 'CPU';
   return slot === 1 ? 'P1' : 'P2';
 }
 
 function usesCpuDifficulty(mode: MatchMode) {
-  return mode === 'ai' || mode === 'versusCpu' || mode === 'cpu' || mode === 'tournamentLocal' || mode === 'tournamentInfinite';
+  return isArcadeMatchMode(mode) || mode === 'versusCpu' || mode === 'cpu' || mode === 'tournamentLocal' || mode === 'tournamentInfinite';
 }
 
 const VERSUS_SPLASH_DURATION_MS = 2600;
@@ -10508,6 +10519,7 @@ function formatGamepadButtonName(button?: number) {
 
 function modeLabel(mode: MatchMode) {
   if (mode === 'ai') return 'Arcade';
+  if (mode === 'cpuArcade') return 'CPU Arcade';
   if (mode === 'versusCpu') return '1P vs CPU';
   if (mode === 'local2p') return 'Local 2P';
   if (mode === 'training') return 'Training';
@@ -19359,7 +19371,7 @@ function FightScreen({
   const tournamentWinnerSlot = match.winnerSlot;
 
   useEffect(() => {
-    if (mode !== 'ai' || arcadeMatchPhase !== 'matchOver' || !arcadeWinnerSlot || arcadeAdvanceRef.current) return undefined;
+    if (!isArcadeMatchMode(mode) || arcadeMatchPhase !== 'matchOver' || !arcadeWinnerSlot || arcadeAdvanceRef.current) return undefined;
     arcadeAdvanceRef.current = true;
     const timeout = window.setTimeout(() => {
       onArcadeAdvance?.({ winnerSlot: arcadeWinnerSlot, defeatedCharacterId: arcadeDefeatedCharacterId });
@@ -19744,7 +19756,7 @@ function FightScreen({
                     Training Mode
                   </button>
                 )}
-                {mode !== 'ai' && (
+                {!isArcadeMatchMode(mode) && (
                   <button className="secondary-button" onClick={() => {
                     captureFightAnalytics('pause_menu_action_clicked', { action: 'restart', phase: match.phase });
                     reset();
@@ -19782,7 +19794,7 @@ function FightScreen({
           </div>
         </div>
       )}
-      {match.phase === 'matchOver' && mode !== 'ai' && (!isOnline || onlineState === 'connected') && winnerFighter && (
+      {match.phase === 'matchOver' && !isArcadeMatchMode(mode) && (!isOnline || onlineState === 'connected') && winnerFighter && (
         <div
           className={`pause-overlay results-overlay ${isRanked ? 'ranked-results-overlay' : ''} ${rankedPlayerResult?.didWin ? 'is-ranked-win' : 'is-ranked-loss'}`}
           style={{

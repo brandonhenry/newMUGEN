@@ -290,7 +290,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const cpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'tournamentInfinite';
+  const cpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'cpuArcade' || next.mode === 'tournamentInfinite';
   const cpuControlsP2 = next.mode === 'ai' || next.mode === 'versusCpu' || cpuControlsBothFighters;
   const input1 = cpuControlsBothFighters ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const input2 =

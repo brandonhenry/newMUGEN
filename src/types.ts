@@ -877,7 +877,7 @@ export type BufferedMoveIntent = {
   beginnerForcedCommand?: string;
 };
 
-export type MatchMode = 'ai' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
+export type MatchMode = 'ai' | 'cpuArcade' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 export type ControlScheme = 'kore' | 'beginner';
 
