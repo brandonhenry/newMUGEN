@@ -4363,12 +4363,12 @@ button {
   display: contents;
 }
 
-.model-viewer-panel.is-dev-sticky {
+.model-viewer-panel.is-compact-view {
   grid-template-columns: minmax(360px, 0.78fr) minmax(420px, 1fr);
   align-items: start;
 }
 
-.model-viewer-panel.is-dev-sticky .model-viewer-preview-column {
+.model-viewer-panel.is-compact-view .model-viewer-preview-column {
   display: block;
   position: sticky;
   top: 16px;
@@ -4376,13 +4376,13 @@ button {
   z-index: 2;
 }
 
-.model-viewer-panel.is-dev-sticky .model-viewer-controls-column {
+.model-viewer-panel.is-compact-view .model-viewer-controls-column {
   display: grid;
   gap: 14px;
   min-width: 0;
 }
 
-.model-viewer-panel.is-dev-sticky .model-viewer-preview-actions {
+.model-viewer-panel.is-compact-view .model-viewer-preview-actions {
   margin-top: 14px;
 }
 
@@ -9841,11 +9841,11 @@ button {
 }
 
 @media (max-width: 1120px) {
-  .model-viewer-panel.is-dev-sticky {
+  .model-viewer-panel.is-compact-view {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .model-viewer-panel.is-dev-sticky .model-viewer-preview-column {
+  .model-viewer-panel.is-compact-view .model-viewer-preview-column {
     position: static;
   }
 

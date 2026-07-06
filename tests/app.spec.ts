@@ -341,6 +341,18 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByRole('button', { name: 'Back' }).click();
   await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Compact');
+  await page.getByTestId('change-character-view').click();
+  await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Display');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('kore.characterViewer.viewMode.v1'))).toBe('compact');
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await expectMainMenu(page);
+  await page.getByRole('button', { name: 'Characters' }).click();
+  await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Display');
+  await page.getByTestId('change-character-view').click();
+  await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Compact');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('kore.characterViewer.viewMode.v1'))).toBe('display');
   await expect(page.getByTestId('generate-height-sheet')).toBeVisible();
   const heightSheetPopupPromise = page.waitForEvent('popup');
   await page.getByTestId('generate-height-sheet').click({ force: true });

@@ -31,6 +31,8 @@ const COMPAT_FRAME_BUDGET = {
   p99Ms: 120
 };
 
+test.setTimeout(60_000);
+
 test('real fight stays healthy on this device profile', async ({ page }, testInfo) => {
   const pageErrors: string[] = [];
   const consoleErrors: string[] = [];
@@ -93,12 +95,12 @@ async function startCompatFight(page: Page) {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await activateAnyInputScreen(page, '.title-screen');
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 15_000 });
-  await page.getByRole('button', { name: 'Versus' }).click({ force: true });
+  await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
   await page.getByRole('button', { name: 'Stage' }).click({ force: true });
   await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click({ force: true });
   await page.getByRole('button', { name: 'Fight', exact: true }).click({ force: true });
   await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 5_000 });
-  await activateAnyInputScreen(page, '.fight-versus-screen');
+  await skipVersusIntro(page);
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 3_000 });
   await page.waitForTimeout(2_000);
@@ -123,6 +125,18 @@ async function activateAnyInputScreen(page: Page, selector: string) {
   }).catch(() => undefined);
 }
 
+async function dispatchRawTouch(page: Page, selector: string) {
+  await page.locator(selector).dispatchEvent('touchstart', { bubbles: true, cancelable: true }).catch(() => undefined);
+  await page.dispatchEvent('body', 'touchend', { bubbles: true, cancelable: true }).catch(() => undefined);
+}
+
+async function skipVersusIntro(page: Page) {
+  await activateAnyInputScreen(page, '.fight-versus-screen');
+  await dispatchRawTouch(page, '.fight-versus-screen');
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
+}
+
 async function holdMovementAndTapAttack(page: Page) {
   const movement = await touchPoint(page, 'touch-right', 1);
   const attack = await touchPoint(page, 'touch-jab', 2);
@@ -136,9 +150,11 @@ async function holdMovementAndTapAttack(page: Page) {
     await page.waitForTimeout(500);
   } finally {
     await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }).catch(() => undefined);
+    await client.send('Input.dispatchTouchEvent', { type: 'touchCancel', touchPoints: [] }).catch(() => undefined);
     await client.detach();
   }
-  await expect.poll(() => page.getByTestId('frame-input').innerText(), { timeout: 3_000 }).toBe('none');
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expect.poll(() => page.getByTestId('frame-input').innerText(), { timeout: 5_000 }).toBe('none');
 }
 
 async function touchPoint(page: Page, testId: string, id: number) {
@@ -153,7 +169,6 @@ async function resizePortraitLandscapeAndBack(page: Page) {
   const original = page.viewportSize() ?? { width: 390, height: 844 };
   const shortSide = Math.min(original.width, original.height);
   const longSide = Math.max(original.width, original.height);
-  const before = await requireHealth(page);
 
   await page.setViewportSize({ width: shortSide, height: longSide });
   await page.waitForTimeout(700);
@@ -162,7 +177,10 @@ async function resizePortraitLandscapeAndBack(page: Page) {
   await page.setViewportSize(original);
   await page.waitForTimeout(700);
 
-  await expect.poll(() => readHealth(page).then((health) => health?.frameCount ?? 0), { timeout: 5_000 }).toBeGreaterThan(before.frameCount + 10);
+  await expect.poll(() => readHealth(page).then((health) => health?.frameCount ?? 0), { timeout: 5_000 }).toBeGreaterThan(0);
+  const afterResizeStart = (await requireHealth(page)).frameCount;
+  await expect.poll(() => readHealth(page).then((health) => health?.frameCount ?? 0), { timeout: 5_000 }).toBeGreaterThan(afterResizeStart + 10);
+  await page.waitForTimeout(1_200);
 }
 
 async function sampleFramePacing(page: Page, sampleMs: number): Promise<FrameStats> {

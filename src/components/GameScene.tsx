@@ -638,6 +638,7 @@ function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
   const activeFrameReachedRef = useRef(false);
   const initialP1PositionRef = useRef({ x: match.fighters[0].position.x, z: match.fighters[0].position.z });
   const webglInfo = useMemo(() => getKoreWebGLInfo(gl), [gl]);
+  const healthRef = useRef<KoreHealth | null>(null);
 
   useEffect(() => {
     initialP1PositionRef.current = { x: match.fighters[0].position.x, z: match.fighters[0].position.z };
@@ -694,24 +695,42 @@ function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
 
     const canvas = gl.domElement;
     const context = gl.getContext();
-    (window as KoreHealthWindow).__KORE_HEALTH__ = {
-      ready: frameCountRef.current > 0,
-      frameCount: frameCountRef.current,
-      canvasSize: {
-        width: canvas.width,
-        height: canvas.height,
-        clientWidth: canvas.clientWidth,
-        clientHeight: canvas.clientHeight
-      },
-      ...webglInfo,
-      contextLost: contextLostRef.current || Boolean(context.isContextLost?.()),
-      lastError: lastErrorRef.current,
-      failedAssets: failedAssetsRef.current,
-      matchPhase: match.phase,
-      playerCanMove: playerCanMoveRef.current,
-      attackCanStart: attackCanStartRef.current,
-      activeFrameReached: activeFrameReachedRef.current
-    };
+    if (!healthRef.current) {
+      healthRef.current = {
+        ready: false,
+        frameCount: 0,
+        canvasSize: {
+          width: 0,
+          height: 0,
+          clientWidth: 0,
+          clientHeight: 0
+        },
+        ...webglInfo,
+        contextLost: false,
+        lastError: null,
+        failedAssets: [],
+        matchPhase: match.phase,
+        playerCanMove: false,
+        attackCanStart: false,
+        activeFrameReached: false
+      };
+      (window as KoreHealthWindow).__KORE_HEALTH__ = healthRef.current;
+    }
+
+    const health = healthRef.current;
+    health.ready = frameCountRef.current > 0;
+    health.frameCount = frameCountRef.current;
+    health.canvasSize.width = canvas.width;
+    health.canvasSize.height = canvas.height;
+    health.canvasSize.clientWidth = canvas.clientWidth;
+    health.canvasSize.clientHeight = canvas.clientHeight;
+    health.contextLost = contextLostRef.current || Boolean(context.isContextLost?.());
+    health.lastError = lastErrorRef.current;
+    health.failedAssets = failedAssetsRef.current;
+    health.matchPhase = match.phase;
+    health.playerCanMove = playerCanMoveRef.current;
+    health.attackCanStart = attackCanStartRef.current;
+    health.activeFrameReached = activeFrameReachedRef.current;
   });
 
   return null;

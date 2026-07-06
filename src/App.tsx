@@ -186,6 +186,7 @@ type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
   __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
 };
+type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 
 function logStageModelDebug(event: string, payload: Record<string, unknown>) {
@@ -248,6 +249,7 @@ const UNLOCKED_CHARACTERS_KEY = 'kore.unlockedCharacters.v1';
 const GAME_SETTINGS_STORAGE_KEY = 'kore.gameSettings';
 const ONLINE_PROFILE_STORAGE_KEY = 'kore.online.profile';
 const LOCAL_LEADERBOARD_STORAGE_KEY = 'kore.online.localLeaderboard';
+const CHARACTER_VIEWER_VIEW_MODE_STORAGE_KEY = 'kore.characterViewer.viewMode.v1';
 const MEMORY_CARD_FORMAT = 'kore.memorycard';
 const MEMORY_CARD_VERSION = 1;
 const MEMORY_CARD_SAVE_KEYS = [
@@ -2448,6 +2450,23 @@ function getVariantFamily(roster: CharacterDefinition[], baseId: string, unlocke
 function isLocalDevHost() {
   const isViteDev = Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
   return isViteDev && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+}
+
+function readCharacterViewerViewMode(): CharacterViewerViewMode {
+  try {
+    const stored = window.localStorage.getItem(CHARACTER_VIEWER_VIEW_MODE_STORAGE_KEY);
+    return stored === 'compact' || stored === 'display' ? stored : 'display';
+  } catch {
+    return 'display';
+  }
+}
+
+function writeCharacterViewerViewMode(viewMode: CharacterViewerViewMode) {
+  try {
+    window.localStorage.setItem(CHARACTER_VIEWER_VIEW_MODE_STORAGE_KEY, viewMode);
+  } catch {
+    // Ignore storage failures; the in-memory view mode still updates for this session.
+  }
 }
 
 function freshAiSeed() {
@@ -7235,7 +7254,7 @@ function usesCpuDifficulty(mode: MatchMode) {
 const VERSUS_SPLASH_DURATION_MS = 2600;
 
 function canSkipVersusSplash(mode: MatchMode) {
-  return mode !== 'online' && mode !== 'ranked';
+  return !['online', 'ranked', 'trainingOnline', 'private', 'tournamentOnline'].includes(mode);
 }
 
 function VersusSplashScreen({
@@ -11111,6 +11130,7 @@ function CharacterViewer({
   const [slotCategory, setSlotCategory] = useState<AnimationSlot['category'] | 'all'>('stance');
   const [slotSearch, setSlotSearch] = useState('');
   const [rotationTurn, setRotationTurn] = useState(0);
+  const [viewMode, setViewMode] = useState<CharacterViewerViewMode>(() => readCharacterViewerViewMode());
   const [zoom, setZoom] = useState(0.28);
   const [editorMode, setEditorMode] = useState<'browse' | 'animation' | 'sprite' | 'effectsLibrary' | 'moveEffects'>('browse');
   const [showImporter, setShowImporter] = useState(false);
@@ -11149,6 +11169,7 @@ function CharacterViewer({
   const isEditingSpriteSheet = editorMode === 'sprite';
   const isEditingEffectsLibrary = editorMode === 'effectsLibrary';
   const isEditingMoveEffects = editorMode === 'moveEffects';
+  const isCompactView = viewMode === 'compact';
   const selectedSlot = animationSlots.find((slot) => slot.key === selectedAnimationKey) ?? animationSlots[0];
   const frameCount =
     active.spriteFrameCount ??
@@ -12520,6 +12541,14 @@ function CharacterViewer({
       <span>Drag to rotate. Scroll or pinch to zoom.</span>
     </>
   );
+  const toggleViewMode = () => {
+    setViewMode((current) => {
+      const next = current === 'display' ? 'compact' : 'display';
+      writeCharacterViewerViewMode(next);
+      return next;
+    });
+  };
+  const changeViewLabel = viewMode === 'display' ? 'Change View: Compact' : 'Change View: Display';
 
   if (showImporter && isLocalDev) {
     return (
@@ -12559,7 +12588,7 @@ function CharacterViewer({
             </button>
           ))}
         </div>
-        <article className={`model-viewer-panel ${isLocalDev && !isEditingSpriteSheet ? 'is-dev-sticky' : ''} ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
+        <article className={`model-viewer-panel ${isCompactView && !isEditingSpriteSheet ? 'is-compact-view' : ''} ${isEditingSpriteSheet ? 'is-sprite-editing' : ''}`}>
           {!isEditingSpriteSheet && (
             <div className="model-viewer-preview-column">
               <div className={`model-viewer-stage ${hasSelectedFrameData ? '' : 'is-empty-preview'} ${isIdleGhostSideView ? 'is-side-view' : ''}`}>
@@ -12582,17 +12611,17 @@ function CharacterViewer({
                     previewEffectFrame={isEditingAnimation ? clampedAnimationPreviewFrame : undefined}
                     rotationTurn={rotationTurn}
                     zoom={zoom}
-                    preserveCameraFrame={isLocalDev}
+                    preserveCameraFrame={isCompactView}
                     showIdleGhost={showIdleGhost && hasIdleGhostFrame}
                   />
                 ) : (
                   <NoFrameDataPreview />
                 )}
               </div>
-              {isLocalDev && (
+              {isCompactView && (
                 <div className="viewer-actions model-viewer-preview-actions">
                   <div className="viewer-action-row">
-                    {devPreviewActionControls}
+                    {isLocalDev && devPreviewActionControls}
                     {!isIdleGhostSideView && zoomActionControls}
                   </div>
                 </div>
@@ -12608,8 +12637,12 @@ function CharacterViewer({
                     <Rotate3D size={18} />
                     Rotate
                   </button>
+                  <button className="secondary-button" onClick={toggleViewMode} data-testid="change-character-view">
+                    {changeViewLabel}
+                  </button>
+                  {isLocalDev && !isCompactView && devPreviewActionControls}
                   {variantActionControls}
-                  {!isLocalDev && zoomActionControls}
+                  {!isCompactView && !isIdleGhostSideView && zoomActionControls}
                 </>
               )}
               {isEditingSpriteSheet && (
