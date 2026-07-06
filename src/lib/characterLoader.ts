@@ -47,6 +47,7 @@ const rawButtonCommandToBaseAnimationKey: Record<string, string> = {
 export function normalizeCharacter(character: CharacterDefinition): CharacterDefinition {
   return {
     ...character,
+    displayName: normalizeCharacterDisplayName(character.displayName),
     locked: Boolean(character.locked),
     unplayable: Boolean(character.unplayable),
     variant: Boolean(character.variant),
@@ -73,6 +74,10 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
         ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))
         : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }]
   };
+}
+
+function normalizeCharacterDisplayName(displayName: string) {
+  return displayName.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function normalizeCharacterStats(stats: CharacterDefinition['stats']): CharacterDefinition['stats'] {
