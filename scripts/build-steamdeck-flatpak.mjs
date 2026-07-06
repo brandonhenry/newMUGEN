@@ -114,7 +114,8 @@ async function buildBundle() {
       '--socket=wayland',
       '--socket=fallback-x11',
       '--socket=pulseaudio',
-      '--device=dri'
+      '--device=dri',
+      '--device=input'
     ],
     modules: []
   };

@@ -1,4 +1,5 @@
 import { execFile } from 'node:child_process';
+import { readFile } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
 
@@ -20,5 +21,14 @@ describe('Steam Deck fallback installer script', () => {
     expect(stdout).toContain('Advanced automatic Steam shortcut option: rerun with --add-steam-shortcut.');
     expect(stdout).not.toContain('/home/deck/Download');
     expect(stdout).not.toContain('Try advanced automatic Steam Library integration now?');
+  });
+});
+
+describe('Steam Deck Flatpak bundle permissions', () => {
+  it('exposes graphics and controller input devices to the Electron shell', async () => {
+    const script = await readFile('scripts/build-steamdeck-flatpak.mjs', 'utf8');
+
+    expect(script).toContain("'--device=dri'");
+    expect(script).toContain("'--device=input'");
   });
 });
