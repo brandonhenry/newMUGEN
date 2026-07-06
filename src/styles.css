@@ -433,6 +433,10 @@ button {
   margin: 0 auto;
 }
 
+.viewer-screen {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
 .settings-screen {
   height: calc(100vh - clamp(32px, 4vw, 64px));
   min-height: 0;
@@ -3004,6 +3008,12 @@ button {
 .viewer-layout {
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  scroll-padding-bottom: 18px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .roster-column {
@@ -4313,6 +4323,7 @@ button {
 .model-viewer-panel {
   display: grid;
   gap: 14px;
+  min-height: 0;
 }
 
 .model-viewer-panel.is-sprite-editing {
