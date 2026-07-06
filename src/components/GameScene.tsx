@@ -58,6 +58,7 @@ type GameSceneProps = {
 type KoreHealth = {
   ready: boolean;
   frameCount: number;
+  timestampMs: number;
   canvasSize: { width: number; height: number; clientWidth: number; clientHeight: number };
   webglSupported: boolean;
   webgl2: boolean;
@@ -75,6 +76,7 @@ type KoreHealth = {
 
 type KoreHealthWindow = Window & {
   __KORE_HEALTH__?: KoreHealth;
+  __KORE_ENABLE_HEALTH_LOG__?: boolean;
 };
 
 type StageCameraMaterialState = {
@@ -699,6 +701,7 @@ function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
       healthRef.current = {
         ready: false,
         frameCount: 0,
+        timestampMs: 0,
         canvasSize: {
           width: 0,
           height: 0,
@@ -720,6 +723,7 @@ function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
     const health = healthRef.current;
     health.ready = frameCountRef.current > 0;
     health.frameCount = frameCountRef.current;
+    health.timestampMs = performance.now();
     health.canvasSize.width = canvas.width;
     health.canvasSize.height = canvas.height;
     health.canvasSize.clientWidth = canvas.clientWidth;
@@ -731,6 +735,9 @@ function KoreHealthReporter({ match }: { match: MatchSnapshot }) {
     health.playerCanMove = playerCanMoveRef.current;
     health.attackCanStart = attackCanStartRef.current;
     health.activeFrameReached = activeFrameReachedRef.current;
+    if ((window as KoreHealthWindow).__KORE_ENABLE_HEALTH_LOG__ && frameCountRef.current % 60 === 0) {
+      console.info(`[KORE_HEALTH] ${JSON.stringify(health)}`);
+    }
   });
 
   return null;

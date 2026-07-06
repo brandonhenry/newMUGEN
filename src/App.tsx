@@ -4090,6 +4090,8 @@ const MAIN_MENU_CHROME_TOGGLE_EVENT = 'kore:main-menu-chrome-toggle';
 const MENU_GAMEPAD_SELECT_BUTTON = 8;
 const MAIN_MENU_SCREENSAVER_IDLE_MS = 15000;
 const MAIN_MENU_GAMEPAD_IDLE_DEADZONE = 0.45;
+const ARCADE_NAME_MAX_LENGTH = 12;
+const ARCADE_NAME_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'.split('');
 
 const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
   KeyW: 'up',
@@ -4201,6 +4203,11 @@ function useMenuNavigation(screen: Screen) {
         const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
 
         if (isMenuNavigationActive(screenRef.current)) {
+          if (isTextEntryElement(document.activeElement)) {
+            previousPadStateRef.current = current;
+            frame = window.requestAnimationFrame(tick);
+            return;
+          }
           if (screenRef.current === 'menu' && edge.select) {
             lastDeviceRef.current = 'gamepad';
             window.dispatchEvent(new CustomEvent(MAIN_MENU_CHROME_TOGGLE_EVENT));
@@ -4319,7 +4326,13 @@ function isVisibleMenuElement(element: HTMLElement) {
   const style = window.getComputedStyle(element);
   if (style.display === 'none' || style.visibility === 'hidden' || style.pointerEvents === 'none') return false;
   const rect = element.getBoundingClientRect();
-  return rect.width > 1 && rect.height > 1 && rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
+  if (rect.width <= 1 || rect.height <= 1) return false;
+  const scrollRoot = element.closest<HTMLElement>('.versus-roster-scroll, .pause-movelist, .viewer-layout');
+  if (scrollRoot) {
+    const rootRect = scrollRoot.getBoundingClientRect();
+    return rootRect.bottom >= 0 && rootRect.right >= 0 && rootRect.top <= window.innerHeight && rootRect.left <= window.innerWidth;
+  }
+  return rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
 }
 
 function focusMenuElement(element: HTMLElement, scroll = true) {
@@ -5165,24 +5178,122 @@ function ArcadeNameCard({
   autoFocus?: boolean;
 }) {
   const [draft, setDraft] = useState(profile?.displayName ?? '');
+  const [controllerEditing, setControllerEditing] = useState(false);
+  const [controllerCursor, setControllerCursor] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const controllerEditingRef = useRef(false);
+  const controllerPadStateRef = useRef({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    confirm: false,
+    back: false
+  });
+  const controllerLastMoveAtRef = useRef(0);
 
   useEffect(() => {
     setDraft(profile?.displayName ?? '');
   }, [profile?.displayName]);
 
   useEffect(() => {
+    controllerEditingRef.current = controllerEditing;
+  }, [controllerEditing]);
+
+  useEffect(() => {
     if (autoFocus) inputRef.current?.focus();
   }, [autoFocus]);
 
-  const save = () => {
+  const save = useCallback(() => {
     const displayName = sanitizeDisplayName(draft);
     if (!displayName) return;
     onProfileChange({ playerId: profile?.playerId, displayName });
-  };
+  }, [draft, onProfileChange, profile?.playerId]);
+
+  const moveControllerCursor = useCallback((direction: -1 | 1) => {
+    setControllerCursor((cursor) => Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, cursor + direction)));
+  }, []);
+
+  const cycleControllerCharacter = useCallback((direction: -1 | 1) => {
+    setDraft((currentDraft) => {
+      const cursor = Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, controllerCursor));
+      const nextCharacters = currentDraft.padEnd(cursor + 1, ' ').slice(0, ARCADE_NAME_MAX_LENGTH).split('');
+      const currentCharacter = nextCharacters[cursor] ?? ' ';
+      const currentIndex = Math.max(0, ARCADE_NAME_CONTROLLER_CHARACTERS.indexOf(currentCharacter));
+      nextCharacters[cursor] = ARCADE_NAME_CONTROLLER_CHARACTERS[
+        (currentIndex + direction + ARCADE_NAME_CONTROLLER_CHARACTERS.length) % ARCADE_NAME_CONTROLLER_CHARACTERS.length
+      ];
+      return sanitizeDisplayName(nextCharacters.join(''));
+    });
+  }, [controllerCursor]);
+
+  useEffect(() => {
+    let frame = 0;
+    const repeatDelayMs = 170;
+    const tick = () => {
+      const input = inputRef.current;
+      const active = document.activeElement === input;
+      const pad = getPrimaryMenuGamepad();
+      if (!input || !active || !pad) {
+        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false };
+        if (!active && controllerEditingRef.current) setControllerEditing(false);
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const now = performance.now();
+      const horizontal = pad.axes[0] ?? 0;
+      const vertical = pad.axes[1] ?? 0;
+      const current = {
+        up: Boolean(pad.buttons[12]?.pressed) || vertical < -0.45,
+        down: Boolean(pad.buttons[13]?.pressed) || vertical > 0.45,
+        left: Boolean(pad.buttons[14]?.pressed) || horizontal < -0.45,
+        right: Boolean(pad.buttons[15]?.pressed) || horizontal > 0.45,
+        confirm: Boolean(pad.buttons[0]?.pressed),
+        back: Boolean(pad.buttons[1]?.pressed)
+      };
+      const previous = controllerPadStateRef.current;
+      const edge = {
+        up: current.up && !previous.up,
+        down: current.down && !previous.down,
+        left: current.left && !previous.left,
+        right: current.right && !previous.right,
+        confirm: current.confirm && !previous.confirm,
+        back: current.back && !previous.back
+      };
+      const repeatedMove = now - controllerLastMoveAtRef.current > repeatDelayMs;
+      const heldHorizontal = current.left ? 'left' : current.right ? 'right' : null;
+      const heldVertical = current.up ? 'up' : current.down ? 'down' : null;
+
+      if (!controllerEditingRef.current) setControllerEditing(true);
+      if (edge.confirm) {
+        save();
+        input.blur();
+        setControllerEditing(false);
+      } else if (edge.back) {
+        setDraft(profile?.displayName ?? '');
+        input.blur();
+        setControllerEditing(false);
+      } else if (edge.left || edge.right || (heldHorizontal && repeatedMove)) {
+        moveControllerCursor(edge.left || heldHorizontal === 'left' ? -1 : 1);
+        controllerLastMoveAtRef.current = now;
+      } else if (edge.up || edge.down || (heldVertical && repeatedMove)) {
+        cycleControllerCharacter(edge.up || heldVertical === 'up' ? 1 : -1);
+        controllerLastMoveAtRef.current = now;
+      }
+
+      controllerPadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleControllerCharacter, moveControllerCursor, profile?.displayName, save]);
+
+  const controllerCharacters = Array.from({ length: ARCADE_NAME_MAX_LENGTH }, (_, index) => draft[index] ?? ' ');
 
   return (
-    <div className="arcade-name-card">
+    <div className={`arcade-name-card ${controllerEditing ? 'is-controller-editing' : ''}`}>
       <div>
         <span>Player Name</span>
         <strong>{profile?.displayName ?? 'ENTER NAME'}</strong>
@@ -5191,9 +5302,16 @@ function ArcadeNameCard({
         <input
           ref={inputRef}
           value={draft}
-          maxLength={12}
+          maxLength={ARCADE_NAME_MAX_LENGTH}
           placeholder="AAA"
+          aria-label="Player name"
+          inputMode="text"
+          autoComplete="nickname"
           onChange={(event) => setDraft(sanitizeDisplayName(event.target.value))}
+          onFocus={() => {
+            if (getPrimaryMenuGamepad()) setControllerEditing(true);
+            setControllerCursor((cursor) => Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, cursor)));
+          }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               event.preventDefault();
@@ -5205,6 +5323,18 @@ function ArcadeNameCard({
           Enter
         </button>
       </label>
+      {controllerEditing && (
+        <div className="arcade-name-controller-editor" aria-hidden="true">
+          <div className="arcade-name-controller-slots">
+            {controllerCharacters.map((character, index) => (
+              <span key={index} className={index === controllerCursor ? 'is-active' : ''}>
+                {character === ' ' ? '\u00a0' : character}
+              </span>
+            ))}
+          </div>
+          <small>D-pad edit / A enter / B cancel</small>
+        </div>
+      )}
     </div>
   );
 }
@@ -5385,83 +5515,85 @@ function TrainingSelect({
           </div>
         </div>
 
-        <div className="versus-target-tabs" aria-label="Choose training selection target">
-          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
-            setSelectTarget(1);
-            onAnalytics('character_target_changed', { source: 'training_select_target', slot: 1 });
-          }}>
-            P1
-          </button>
-          <button className={selectTarget === 2 ? 'active' : ''} onClick={() => {
-            setSelectTarget(2);
-            onAnalytics('character_target_changed', { source: 'training_select_target', slot: 2 });
-          }}>
-            Dummy
-          </button>
-        </div>
+        <div className="versus-roster-scroll" data-testid="select-roster-scroll">
+          <div className="versus-target-tabs" aria-label="Choose training selection target">
+            <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
+              setSelectTarget(1);
+              onAnalytics('character_target_changed', { source: 'training_select_target', slot: 1 });
+            }}>
+              P1
+            </button>
+            <button className={selectTarget === 2 ? 'active' : ''} onClick={() => {
+              setSelectTarget(2);
+              onAnalytics('character_target_changed', { source: 'training_select_target', slot: 2 });
+            }}>
+              Dummy
+            </button>
+          </div>
 
-        <div className="versus-roster-pager" aria-label="Character roster pages">
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => {
-              onAnalytics('roster_page_changed', { source: 'training_select', direction: -1, page: visibleRosterPage + 1 });
-              cycleRosterPage(-1);
-            }}
-            disabled={totalRosterPages <= 1}
-          >
-            <ChevronLeft size={18} />
-            Prev
-          </button>
-          <span className="versus-page-indicator">
-            Page {visibleRosterPage + 1} / {totalRosterPages}
-          </span>
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => {
-              onAnalytics('roster_page_changed', { source: 'training_select', direction: 1, page: visibleRosterPage + 1 });
-              cycleRosterPage(1);
-            }}
-            disabled={totalRosterPages <= 1}
-          >
-            Next
-            <ChevronRight size={18} />
-          </button>
-        </div>
+          <div className="versus-roster-pager" aria-label="Character roster pages">
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => {
+                onAnalytics('roster_page_changed', { source: 'training_select', direction: -1, page: visibleRosterPage + 1 });
+                cycleRosterPage(-1);
+              }}
+              disabled={totalRosterPages <= 1}
+            >
+              <ChevronLeft size={18} />
+              Prev
+            </button>
+            <span className="versus-page-indicator">
+              Page {visibleRosterPage + 1} / {totalRosterPages}
+            </span>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => {
+                onAnalytics('roster_page_changed', { source: 'training_select', direction: 1, page: visibleRosterPage + 1 });
+                cycleRosterPage(1);
+              }}
+              disabled={totalRosterPages <= 1}
+            >
+              Next
+              <ChevronRight size={18} />
+            </button>
+          </div>
 
-        <div className="versus-roster-grid">
-          {pagedBaseRoster.map((character) => {
-            const baseId = character.id;
-            const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
-            const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
-            const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
-            const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
-            const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
-            const isP1 = getCharacterBaseId(p1Character) === baseId;
-            const isP2 = getCharacterBaseId(p2Character) === baseId;
-            const isLocked = family.length === 0;
-            const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
-            return (
-              <button
-                key={character.id}
-                type="button"
-                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
-                style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
-                onClick={() => assignCharacter(assignId)}
-                onMouseEnter={() => setHoveredBaseId(baseId)}
-                onFocus={() => setHoveredBaseId(baseId)}
-                aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
-                aria-disabled={isLocked}
-              >
-                <img src={characterPortraitPath(displayedCharacter)} alt="" />
-                {isLocked && <em className="character-lock-badge">Locked</em>}
-                {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
-                <span>{displayedCharacter.displayName}</span>
-                <small>{isP1 ? 'P1' : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? 'Dummy' : ''}</small>
-              </button>
-            );
-          })}
+          <div className="versus-roster-grid">
+            {pagedBaseRoster.map((character) => {
+              const baseId = character.id;
+              const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+              const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
+              const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
+              const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
+              const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
+              const isP1 = getCharacterBaseId(p1Character) === baseId;
+              const isP2 = getCharacterBaseId(p2Character) === baseId;
+              const isLocked = family.length === 0;
+              const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
+              return (
+                <button
+                  key={character.id}
+                  type="button"
+                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                  style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
+                  onClick={() => assignCharacter(assignId)}
+                  onMouseEnter={() => setHoveredBaseId(baseId)}
+                  onFocus={() => setHoveredBaseId(baseId)}
+                  aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
+                  aria-disabled={isLocked}
+                >
+                  <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                  {isLocked && <em className="character-lock-badge">Locked</em>}
+                  {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
+                  <span>{displayedCharacter.displayName}</span>
+                  <small>{isP1 ? 'P1' : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? 'Dummy' : ''}</small>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <FooterActions
@@ -5683,108 +5815,110 @@ function TournamentSelect({
           </div>
         </div>
 
-        <div className="tournament-entry-options" aria-label="Tournament options">
-          <button
-            type="button"
-            className={`tournament-entry-option ${tournamentMode === 'free' ? 'is-selected' : ''}`}
-            onClick={() => selectTournamentMode('free')}
-          >
-            <strong>FREE</strong>
-            <span>Local 1P vs CPU</span>
-            <small>8-player bracket</small>
-          </button>
-          <button
-            type="button"
-            className={`tournament-entry-option ${tournamentMode === 'online' ? 'is-selected' : ''}`}
-            onClick={() => selectTournamentMode('online')}
-          >
-            <strong>ONLINE</strong>
-            <span>{summaryStatus === 'loading' ? 'Loading tourneys' : freeOnlineSummary ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entered` : 'Free bracket queue'}</span>
-            <small>Free entry</small>
-          </button>
-          <button
-            type="button"
-            className={`tournament-entry-option ${tournamentMode === 'paid' ? 'is-selected' : ''} ${paidEnabled ? '' : 'is-disabled'}`}
-            onClick={() => paidEnabled && selectTournamentMode('paid')}
-            disabled={!paidEnabled}
-          >
-            <strong>Prizepool</strong>
-            <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
-            <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
-          </button>
-          {isDevHost && (
+        <div className="versus-roster-scroll" data-testid="select-roster-scroll">
+          <div className="tournament-entry-options" aria-label="Tournament options">
             <button
               type="button"
-              className={`tournament-entry-option ${tournamentMode === 'infinite' ? 'is-selected' : ''}`}
-              onClick={() => selectTournamentMode('infinite')}
+              className={`tournament-entry-option ${tournamentMode === 'free' ? 'is-selected' : ''}`}
+              onClick={() => selectTournamentMode('free')}
             >
-              <strong>INFINITE</strong>
-              <span>Live player bracket</span>
-              <small>Endless matchups</small>
+              <strong>FREE</strong>
+              <span>Local 1P vs CPU</span>
+              <small>8-player bracket</small>
             </button>
-          )}
-        </div>
-
-        {(tournamentMode === 'online' || tournamentMode === 'paid') && !onlineProfile && (
-          <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} autoFocus />
-        )}
-
-        {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}
-
-        <div className="versus-roster-pager" aria-label="Character roster pages">
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => cycleRosterPage(-1)}
-            disabled={totalRosterPages <= 1}
-          >
-            <ChevronLeft size={18} />
-            Prev
-          </button>
-          <span className="versus-page-indicator">
-            Page {visibleRosterPage + 1} / {totalRosterPages}
-          </span>
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => cycleRosterPage(1)}
-            disabled={totalRosterPages <= 1}
-          >
-            Next
-            <ChevronRight size={18} />
-          </button>
-        </div>
-
-        <div className="versus-roster-grid">
-          {pagedBaseRoster.map((character) => {
-            const baseId = character.id;
-            const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
-            const selectedTargetMember = getCharacterBaseId(p1Character) === baseId ? p1Character : null;
-            const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
-            const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
-            const isP1 = getCharacterBaseId(p1Character) === baseId;
-            const isLocked = family.length === 0;
-            const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
-            return (
+            <button
+              type="button"
+              className={`tournament-entry-option ${tournamentMode === 'online' ? 'is-selected' : ''}`}
+              onClick={() => selectTournamentMode('online')}
+            >
+              <strong>ONLINE</strong>
+              <span>{summaryStatus === 'loading' ? 'Loading tourneys' : freeOnlineSummary ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entered` : 'Free bracket queue'}</span>
+              <small>Free entry</small>
+            </button>
+            <button
+              type="button"
+              className={`tournament-entry-option ${tournamentMode === 'paid' ? 'is-selected' : ''} ${paidEnabled ? '' : 'is-disabled'}`}
+              onClick={() => paidEnabled && selectTournamentMode('paid')}
+              disabled={!paidEnabled}
+            >
+              <strong>Prizepool</strong>
+              <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
+              <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
+            </button>
+            {isDevHost && (
               <button
-                key={character.id}
                 type="button"
-                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
-                style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
-                onClick={() => assignCharacter(assignId)}
-                onMouseEnter={() => setHoveredBaseId(baseId)}
-                onFocus={() => setHoveredBaseId(baseId)}
-                aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
-                aria-disabled={isLocked}
+                className={`tournament-entry-option ${tournamentMode === 'infinite' ? 'is-selected' : ''}`}
+                onClick={() => selectTournamentMode('infinite')}
               >
-                <img src={characterPortraitPath(displayedCharacter)} alt="" />
-                {isLocked && <em className="character-lock-badge">Locked</em>}
-                {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
-                <span>{displayedCharacter.displayName}</span>
-                <small>{isP1 ? 'Entry' : ''}</small>
+                <strong>INFINITE</strong>
+                <span>Live player bracket</span>
+                <small>Endless matchups</small>
               </button>
-            );
-          })}
+            )}
+          </div>
+
+          {(tournamentMode === 'online' || tournamentMode === 'paid') && !onlineProfile && (
+            <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} autoFocus />
+          )}
+
+          {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}
+
+          <div className="versus-roster-pager" aria-label="Character roster pages">
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => cycleRosterPage(-1)}
+              disabled={totalRosterPages <= 1}
+            >
+              <ChevronLeft size={18} />
+              Prev
+            </button>
+            <span className="versus-page-indicator">
+              Page {visibleRosterPage + 1} / {totalRosterPages}
+            </span>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => cycleRosterPage(1)}
+              disabled={totalRosterPages <= 1}
+            >
+              Next
+              <ChevronRight size={18} />
+            </button>
+          </div>
+
+          <div className="versus-roster-grid">
+            {pagedBaseRoster.map((character) => {
+              const baseId = character.id;
+              const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+              const selectedTargetMember = getCharacterBaseId(p1Character) === baseId ? p1Character : null;
+              const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
+              const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
+              const isP1 = getCharacterBaseId(p1Character) === baseId;
+              const isLocked = family.length === 0;
+              const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
+              return (
+                <button
+                  key={character.id}
+                  type="button"
+                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                  style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
+                  onClick={() => assignCharacter(assignId)}
+                  onMouseEnter={() => setHoveredBaseId(baseId)}
+                  onFocus={() => setHoveredBaseId(baseId)}
+                  aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
+                  aria-disabled={isLocked}
+                >
+                  <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                  {isLocked && <em className="character-lock-badge">Locked</em>}
+                  {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
+                  <span>{displayedCharacter.displayName}</span>
+                  <small>{isP1 ? 'Entry' : ''}</small>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <FooterActions
@@ -6726,106 +6860,108 @@ function CharacterSelect({
           </div>
         </div>
 
-        <div className={`versus-target-tabs ${isArcadeMode ? 'is-arcade-targets' : ''}`} aria-label="Choose selection target">
-          <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
-            setSelectTarget(1);
-            onAnalytics('character_target_changed', { source: 'character_select_target', slot: 1 });
-          }}>
-            {getSlotShortLabel(mode, 1)}
-          </button>
-          {!isArcadeMode && (
-            <button className={selectTarget === 2 ? 'active' : ''} onClick={() => {
-              setSelectTarget(2);
-              onAnalytics('character_target_changed', { source: 'character_select_target', slot: 2 });
+        <div className="versus-roster-scroll" data-testid="select-roster-scroll">
+          <div className={`versus-target-tabs ${isArcadeMode ? 'is-arcade-targets' : ''}`} aria-label="Choose selection target">
+            <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
+              setSelectTarget(1);
+              onAnalytics('character_target_changed', { source: 'character_select_target', slot: 1 });
             }}>
-              {getSlotShortLabel(mode, 2)}
+              {getSlotShortLabel(mode, 1)}
             </button>
-          )}
-        </div>
+            {!isArcadeMode && (
+              <button className={selectTarget === 2 ? 'active' : ''} onClick={() => {
+                setSelectTarget(2);
+                onAnalytics('character_target_changed', { source: 'character_select_target', slot: 2 });
+              }}>
+                {getSlotShortLabel(mode, 2)}
+              </button>
+            )}
+          </div>
 
-        <div className="versus-roster-pager" aria-label="Character roster pages">
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => cycleRosterPage(-1)}
-            disabled={totalRosterPages <= 1}
-          >
-            <ChevronLeft size={18} />
-            Prev
-          </button>
-          <span className="versus-page-indicator">
-            Page {visibleRosterPage + 1} / {totalRosterPages}
-          </span>
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => cycleRosterPage(1)}
-            disabled={totalRosterPages <= 1}
-          >
-            Next
-            <ChevronRight size={18} />
-          </button>
-        </div>
-
-        <div className="versus-roster-grid">
-          {visibleRosterPage === 0 && (
+          <div className="versus-roster-pager" aria-label="Character roster pages">
             <button
               type="button"
-              className={`versus-roster-tile versus-random-tile ${targetIsRandom ? 'is-random-selected' : ''}`}
-              style={{ '--fighter-color': '#f7d45a' } as CSSProperties}
-              onClick={assignRandomCharacter}
-              onMouseEnter={() => setHoveredBaseId('')}
-              onFocus={() => setHoveredBaseId('')}
-              aria-label={`Select random ${getSlotLabel(mode, selectTarget)}`}
-              aria-pressed={targetIsRandom}
+              className="secondary-button"
+              onClick={() => cycleRosterPage(-1)}
+              disabled={totalRosterPages <= 1}
             >
-              <span className="versus-random-tile-icon" aria-hidden="true">
-                <Shuffle size={30} />
-              </span>
-              <span>Random</span>
-              <small>{targetIsRandom ? getSlotShortLabel(mode, selectTarget) : 'Surprise'}</small>
+              <ChevronLeft size={18} />
+              Prev
             </button>
-          )}
-          {pagedBaseRoster.map((character) => {
-            const baseId = character.id;
-            const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
-            const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
-            const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
-            const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
-            const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
-            const isP1 = !randomCharacterSlots[1] && getCharacterBaseId(p1Character) === baseId;
-            const isP2 = !randomCharacterSlots[2] && getCharacterBaseId(p2Character) === baseId;
-            const isLocked = family.length === 0;
-            const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
-            return (
+            <span className="versus-page-indicator">
+              Page {visibleRosterPage + 1} / {totalRosterPages}
+            </span>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => cycleRosterPage(1)}
+              disabled={totalRosterPages <= 1}
+            >
+              Next
+              <ChevronRight size={18} />
+            </button>
+          </div>
+
+          <div className="versus-roster-grid">
+            {visibleRosterPage === 0 && (
               <button
-                key={character.id}
                 type="button"
-                className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
-                style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
-                onClick={() => assignCharacter(assignId)}
-                onMouseEnter={() => setHoveredBaseId(baseId)}
-                onFocus={() => setHoveredBaseId(baseId)}
-                aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
-                aria-disabled={isLocked}
+                className={`versus-roster-tile versus-random-tile ${targetIsRandom ? 'is-random-selected' : ''}`}
+                style={{ '--fighter-color': '#f7d45a' } as CSSProperties}
+                onClick={assignRandomCharacter}
+                onMouseEnter={() => setHoveredBaseId('')}
+                onFocus={() => setHoveredBaseId('')}
+                aria-label={`Select random ${getSlotLabel(mode, selectTarget)}`}
+                aria-pressed={targetIsRandom}
               >
-                <img src={characterPortraitPath(displayedCharacter)} alt="" />
-                {isLocked && <em className="character-lock-badge">Locked</em>}
-                {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
-                <span>{displayedCharacter.displayName}</span>
-                <small>{isP1 ? getSlotShortLabel(mode, 1) : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? getSlotShortLabel(mode, 2) : ''}</small>
+                <span className="versus-random-tile-icon" aria-hidden="true">
+                  <Shuffle size={30} />
+                </span>
+                <span>Random</span>
+                <small>{targetIsRandom ? getSlotShortLabel(mode, selectTarget) : 'Surprise'}</small>
               </button>
-            );
-          })}
+            )}
+            {pagedBaseRoster.map((character) => {
+              const baseId = character.id;
+              const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+              const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
+              const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
+              const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
+              const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
+              const isP1 = !randomCharacterSlots[1] && getCharacterBaseId(p1Character) === baseId;
+              const isP2 = !randomCharacterSlots[2] && getCharacterBaseId(p2Character) === baseId;
+              const isLocked = family.length === 0;
+              const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
+              return (
+                <button
+                  key={character.id}
+                  type="button"
+                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                  style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
+                  onClick={() => assignCharacter(assignId)}
+                  onMouseEnter={() => setHoveredBaseId(baseId)}
+                  onFocus={() => setHoveredBaseId(baseId)}
+                  aria-label={isLocked ? `${character.displayName} locked` : `Select ${displayedCharacter.displayName}`}
+                  aria-disabled={isLocked}
+                >
+                  <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                  {isLocked && <em className="character-lock-badge">Locked</em>}
+                  {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
+                  <span>{displayedCharacter.displayName}</span>
+                  <small>{isP1 ? getSlotShortLabel(mode, 1) : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? getSlotShortLabel(mode, 2) : ''}</small>
+                </button>
+              );
+            })}
+          </div>
+
+          {(mode === 'online' || mode === 'ranked') && !onlineProfile && onOnlineProfileChange && (
+            <ArcadeNameCard profile={onlineProfile ?? null} onProfileChange={onOnlineProfileChange} autoFocus />
+          )}
+
+          {mode === 'ranked' && onlineProfile && rankedProfileOpen && (
+            <RankedProfileCard profile={rankedProfile ?? null} onlineProfile={onlineProfile} onClose={() => setRankedProfileOpen(false)} />
+          )}
         </div>
-
-        {(mode === 'online' || mode === 'ranked') && !onlineProfile && onOnlineProfileChange && (
-          <ArcadeNameCard profile={onlineProfile ?? null} onProfileChange={onOnlineProfileChange} autoFocus />
-        )}
-
-        {mode === 'ranked' && onlineProfile && rankedProfileOpen && (
-          <RankedProfileCard profile={rankedProfile ?? null} onlineProfile={onlineProfile} onClose={() => setRankedProfileOpen(false)} />
-        )}
 
         <FooterActions
           onBack={() => {

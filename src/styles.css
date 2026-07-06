@@ -1974,8 +1974,9 @@ button {
 }
 
 .versus-roster-panel {
+  --select-roster-tile-min: clamp(84px, 12vh, 122px);
   display: grid;
-  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   align-content: start;
   gap: clamp(7px, 1.25vh, 14px);
   height: 100%;
@@ -1986,6 +1987,20 @@ button {
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
     rgba(9, 10, 15, 0.72);
   backdrop-filter: blur(10px);
+}
+
+.versus-roster-scroll {
+  display: grid;
+  align-content: start;
+  gap: clamp(7px, 1.25vh, 14px);
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 4px 8px;
+  scroll-padding-block: 12px;
+  scrollbar-color: rgba(247, 247, 242, 0.26) transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .versus-select-top {
@@ -2067,11 +2082,11 @@ button {
 .versus-roster-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(86px, 100%), 1fr));
-  grid-auto-rows: minmax(0, 1fr);
+  grid-auto-rows: minmax(var(--select-roster-tile-min), auto);
   align-content: start;
   min-height: 0;
   gap: clamp(6px, 1vh, 10px);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .versus-roster-tile {
@@ -2081,7 +2096,7 @@ button {
   align-items: center;
   justify-items: center;
   gap: clamp(3px, 0.65vh, 6px);
-  min-height: clamp(78px, 12vh, 118px);
+  min-height: var(--select-roster-tile-min);
   border: 0;
   border-radius: 7px;
   padding: clamp(14px, 2.2vh, 22px) clamp(10px, 1.2vw, 16px);
@@ -2245,13 +2260,32 @@ button {
 }
 
 .versus-roster-panel .arcade-name-card {
-  grid-template-columns: minmax(150px, 1fr) minmax(210px, 360px);
-  padding: 14px;
+  grid-template-columns: minmax(128px, 0.84fr) minmax(180px, 1.16fr);
+  gap: clamp(8px, 1.2vh, 12px);
+  padding: clamp(10px, 1.4vh, 14px);
   border-radius: 8px;
 }
 
 .versus-roster-panel .arcade-name-card strong {
-  font-size: clamp(1.35rem, 2.8vw, 2.4rem);
+  font-size: clamp(1.18rem, min(2.4vw, 4vh), 2rem);
+  overflow-wrap: anywhere;
+}
+
+.versus-roster-panel .arcade-name-entry {
+  grid-template-columns: minmax(0, 1fr) minmax(92px, auto);
+  gap: 8px;
+}
+
+.versus-roster-panel .arcade-name-entry input {
+  height: clamp(48px, 7.6vh, 64px);
+  padding-inline: clamp(10px, 1.2vw, 14px);
+  font-size: clamp(1.18rem, min(3vw, 4.5vh), 2rem);
+}
+
+.versus-roster-panel .arcade-name-entry button {
+  min-width: 92px;
+  min-height: 48px;
+  padding-inline: clamp(12px, 1.3vw, 18px);
 }
 
 .tournament-select-screen {
@@ -2259,10 +2293,6 @@ button {
     linear-gradient(90deg, rgba(158, 28, 42, 0.62) 0%, rgba(32, 29, 20, 0.36) 36%, rgba(8, 9, 15, 0.72) 50%, rgba(28, 100, 96, 0.34) 68%, rgba(17, 154, 125, 0.48) 100%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 28%),
     #07090f;
-}
-
-.tournament-roster-panel {
-  grid-template-rows: auto auto auto auto 1fr auto;
 }
 
 .tournament-entry-options {
@@ -9175,8 +9205,10 @@ button {
   gap: 12px;
   min-height: 0;
   overflow: auto;
+  overscroll-behavior: contain;
   margin: 0;
   padding: 14px;
+  scroll-padding-block: 12px;
   text-align: left;
   border-radius: 8px;
   background:
@@ -9185,6 +9217,7 @@ button {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08) inset,
     0 24px 60px rgba(0, 0, 0, 0.3);
+  -webkit-overflow-scrolling: touch;
 }
 
 .pause-movelist section {
@@ -9905,8 +9938,13 @@ button {
   }
 
   .versus-roster-panel {
+    --select-roster-tile-min: clamp(76px, 12vh, 100px);
     order: -1;
     height: 100%;
+  }
+
+  .versus-roster-scroll {
+    padding: 2px 2px 8px;
   }
 
   .versus-select-top {
@@ -9951,7 +9989,7 @@ button {
   }
 
   .versus-roster-tile {
-    min-height: clamp(64px, 9vh, 86px);
+    min-height: var(--select-roster-tile-min);
     padding: clamp(10px, 1.5vh, 14px) 8px;
   }
 
@@ -9959,6 +9997,18 @@ button {
   .versus-roster-tile img {
     max-width: min(100%, clamp(42px, 6.2vh, 58px));
     height: min(100%, clamp(42px, 6.2vh, 58px));
+  }
+
+  .versus-roster-panel .arcade-name-card {
+    grid-template-columns: 1fr;
+  }
+
+  .versus-roster-panel .arcade-name-entry {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .versus-roster-panel .arcade-name-entry button {
+    width: 100%;
   }
 
   .settings-strip {
@@ -10464,6 +10514,13 @@ button {
     0 0 34px rgba(45, 227, 255, 0.08) inset;
 }
 
+.arcade-name-card.is-controller-editing {
+  box-shadow:
+    0 24px 58px rgba(0, 0, 0, 0.34),
+    0 0 0 2px rgba(45, 227, 255, 0.22) inset,
+    0 0 34px rgba(45, 227, 255, 0.12) inset;
+}
+
 .arcade-name-card span {
   display: block;
   color: rgba(255, 255, 255, 0.62);
@@ -10543,6 +10600,53 @@ button {
     inset 0 1px 0 rgba(255, 255, 255, 0.82),
     inset 0 -3px 0 rgba(0, 0, 0, 0.2);
   outline: none;
+}
+
+.arcade-name-controller-editor {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.arcade-name-controller-slots {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.arcade-name-controller-slots span {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: clamp(30px, 5vh, 42px);
+  border-radius: 5px;
+  color: rgba(247, 247, 242, 0.76);
+  background: rgba(3, 8, 14, 0.78);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  font-size: clamp(0.88rem, min(2.8vw, 3.5vh), 1.28rem);
+  font-weight: 950;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.arcade-name-controller-slots span.is-active {
+  color: #071018;
+  background: linear-gradient(180deg, #fff9dc, #ffd863);
+  box-shadow:
+    0 0 0 2px #ffffff inset,
+    0 0 18px rgba(255, 216, 99, 0.42);
+}
+
+.arcade-name-controller-editor small {
+  color: rgba(247, 247, 242, 0.62);
+  font-size: clamp(0.68rem, min(1.7vw, 2.2vh), 0.82rem);
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .arcade-name-entry button:active:not(:disabled) {
@@ -10762,6 +10866,14 @@ button {
   .private-room-row {
     grid-template-columns: 1fr;
     display: grid;
+  }
+
+  .arcade-name-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .arcade-name-entry button {
+    width: 100%;
   }
 
   .leaderboard-row {
@@ -11103,6 +11215,28 @@ button {
   }
   to {
     transform: translateY(-2px);
+  }
+}
+
+@media (max-height: 720px) {
+  .versus-roster-panel {
+    --select-roster-tile-min: clamp(72px, 15vh, 96px);
+  }
+
+  .versus-select-top {
+    gap: 6px;
+  }
+
+  .versus-roster-panel .arcade-name-card {
+    padding: 10px;
+  }
+
+  .versus-roster-panel .arcade-name-entry input {
+    height: clamp(44px, 9vh, 58px);
+  }
+
+  .versus-roster-panel .arcade-name-entry button {
+    min-height: 44px;
   }
 }
 

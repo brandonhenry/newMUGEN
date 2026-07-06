@@ -62,10 +62,21 @@ async function installMockGamepad(page: Page) {
     Object.defineProperty(navigator, 'getGamepads', {
       configurable: true,
       value: () => {
-        const state = (window as unknown as { __koreMockGamepadPressed?: boolean }).__koreMockGamepadPressed;
-        return state
-          ? [{ connected: true, buttons: [{ pressed: true }], axes: [0, 0] }]
-          : [];
+        const testWindow = window as unknown as {
+          __koreMockGamepadConnected?: boolean;
+          __koreMockGamepadPressed?: boolean;
+          __koreMockGamepadButtons?: boolean[];
+          __koreMockGamepadAxes?: [number, number];
+        };
+        const connected = testWindow.__koreMockGamepadConnected ?? testWindow.__koreMockGamepadPressed;
+        if (!connected) return [];
+        const pressedButtons = testWindow.__koreMockGamepadButtons ?? [];
+        if (testWindow.__koreMockGamepadPressed) pressedButtons[0] = true;
+        return [{
+          connected: true,
+          buttons: Array.from({ length: 16 }, (_, index) => ({ pressed: Boolean(pressedButtons[index]) })),
+          axes: testWindow.__koreMockGamepadAxes ?? [0, 0]
+        }];
       }
     });
   });
@@ -75,6 +86,29 @@ async function setMockGamepadPressed(page: Page, pressed: boolean) {
   await page.evaluate((nextPressed) => {
     (window as unknown as { __koreMockGamepadPressed?: boolean }).__koreMockGamepadPressed = nextPressed;
   }, pressed);
+}
+
+async function setMockGamepadButton(page: Page, buttonIndex: number, pressed: boolean) {
+  await page.evaluate(
+    ({ buttonIndex, pressed }) => {
+      const testWindow = window as unknown as {
+        __koreMockGamepadConnected?: boolean;
+        __koreMockGamepadButtons?: boolean[];
+      };
+      testWindow.__koreMockGamepadConnected = true;
+      const buttons = [...(testWindow.__koreMockGamepadButtons ?? [])];
+      buttons[buttonIndex] = pressed;
+      testWindow.__koreMockGamepadButtons = buttons;
+    },
+    { buttonIndex, pressed }
+  );
+}
+
+async function tapMockGamepadButton(page: Page, buttonIndex: number) {
+  await setMockGamepadButton(page, buttonIndex, true);
+  await page.waitForTimeout(120);
+  await setMockGamepadButton(page, buttonIndex, false);
+  await page.waitForTimeout(120);
 }
 
 async function startFight(page: import('@playwright/test').Page, local2p = false) {
@@ -105,6 +139,30 @@ async function startTraining(page: import('@playwright/test').Page) {
   const fightScreen = page.locator('.fight-screen');
   await fightScreen.click({ position: { x: 24, y: 24 } });
   await fightScreen.focus();
+}
+
+async function expectDocumentLocked(page: Page) {
+  const metrics = await page.evaluate(() => {
+    const scrollingElement = document.scrollingElement ?? document.documentElement;
+    return {
+      scrollHeight: scrollingElement.scrollHeight,
+      clientHeight: scrollingElement.clientHeight
+    };
+  });
+  expect(metrics.scrollHeight).toBeLessThanOrEqual(metrics.clientHeight + 2);
+}
+
+async function readSelectScrollMetrics(page: Page) {
+  return page.getByTestId('select-roster-scroll').evaluate((element) => ({
+    scrollTop: element.scrollTop,
+    scrollHeight: element.scrollHeight,
+    clientHeight: element.clientHeight,
+    tileHeights: Array.from(element.querySelectorAll<HTMLElement>('.versus-roster-tile')).map((tile) => tile.getBoundingClientRect().height),
+    visibleImages: Array.from(element.querySelectorAll<HTMLImageElement>('.versus-roster-tile img')).filter((image) => {
+      const rect = image.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+    }).length
+  }));
 }
 
 function xFromPosition(value: string) {
@@ -541,6 +599,85 @@ test('opens tournament mode above characters and shows paid beta disabled', asyn
   await expect(page.locator('.tournament-select-screen')).toBeVisible();
   await expect(page.getByRole('button', { name: /Prizepool/i })).toBeDisabled();
   await expect(page.getByText('Paid beta unavailable')).toBeVisible();
+});
+
+test('tournament select keeps the page locked while roster content scrolls internally', async ({ page }) => {
+  const viewports = [
+    { name: 'short desktop', width: 1100, height: 560 },
+    { name: 'mobile portrait', width: 390, height: 740 },
+    { name: 'mobile landscape', width: 740, height: 390 }
+  ];
+  let sawScrollablePanel = false;
+
+  for (const viewport of viewports) {
+    await test.step(viewport.name, async () => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await startFromSplash(page);
+      await page.getByRole('button', { name: 'Tournament' }).click();
+      await page.getByRole('button', { name: /^ONLINE/i }).click();
+
+      await expect(page.locator('.tournament-select-screen')).toBeVisible();
+      await expect(page.getByLabel('Player name')).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Enter Online' })).toBeVisible();
+      await expectDocumentLocked(page);
+
+      const before = await readSelectScrollMetrics(page);
+      expect(Math.min(...before.tileHeights)).toBeGreaterThanOrEqual(68);
+      expect(before.visibleImages).toBeGreaterThan(0);
+      sawScrollablePanel ||= before.scrollHeight > before.clientHeight + 2;
+
+      const afterScrollTop = await page.getByTestId('select-roster-scroll').evaluate((element) => {
+        element.scrollTop = element.scrollHeight;
+        return element.scrollTop;
+      });
+      if (before.scrollHeight > before.clientHeight + 2) expect(afterScrollTop).toBeGreaterThan(0);
+      await expectDocumentLocked(page);
+    });
+  }
+
+  expect(sawScrollablePanel).toBe(true);
+});
+
+test('keyboard navigation scrolls hidden character rows into view', async ({ page }) => {
+  await page.setViewportSize({ width: 740, height: 390 });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click({ force: true });
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await expect(page.locator('.tournament-select-screen')).toBeVisible();
+
+  const scroll = page.getByTestId('select-roster-scroll');
+  await expect.poll(() => scroll.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
+  await page.locator('.versus-roster-tile:not(.versus-random-tile)').first().focus();
+  await scroll.evaluate((element) => {
+    element.scrollTop = 0;
+  });
+  await expect.poll(() => scroll.evaluate((element) => element.scrollTop)).toBe(0);
+  for (let index = 0; index < 10; index += 1) await page.keyboard.press('s');
+
+  await expect.poll(() => scroll.evaluate((element) => element.scrollTop), { timeout: 3_000 }).toBeGreaterThan(0);
+  await expectDocumentLocked(page);
+});
+
+test('controller can edit and save tournament player name without moving menu focus away', async ({ page }) => {
+  await installMockGamepad(page);
+  await page.setViewportSize({ width: 1100, height: 560 });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+
+  const input = page.getByLabel('Player name');
+  await expect(input).toBeVisible();
+  await input.focus();
+
+  await tapMockGamepadButton(page, 12);
+  await expect(input).toHaveValue('A');
+  await expect(page.locator('.arcade-name-card.is-controller-editing')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => document.activeElement?.getAttribute('aria-label'))).toBe('Player name');
+
+  await tapMockGamepadButton(page, 0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.online.profile') ?? '{}').displayName)).toBe('A');
+  await expect(page.locator('.arcade-name-card.is-controller-editing')).toHaveCount(0);
+  await expectDocumentLocked(page);
 });
 
 test('starts a free local tournament with bracket intro', async ({ page }) => {
