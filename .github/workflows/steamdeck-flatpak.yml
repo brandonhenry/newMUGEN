@@ -42,6 +42,8 @@ jobs:
         run: npm run desktop:dist:linux
 
       - name: Build Steam Deck Flatpak bundle
+        env:
+          DEBUG: "@malept/flatpak-bundler"
         run: node scripts/build-steamdeck-flatpak.mjs
 
       - name: Regenerate installer manifest
