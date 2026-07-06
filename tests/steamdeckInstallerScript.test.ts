@@ -29,6 +29,7 @@ describe('Steam Deck Flatpak bundle permissions', () => {
     const script = await readFile('scripts/build-steamdeck-flatpak.mjs', 'utf8');
 
     expect(script).toContain("'--device=dri'");
-    expect(script).toContain("'--device=input'");
+    expect(script).toContain("'--device=all'");
+    expect(script).not.toContain("'--device=input'");
   });
 });
