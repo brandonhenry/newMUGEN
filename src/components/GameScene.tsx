@@ -1049,7 +1049,7 @@ function EnemyRushLayer({ snapshot, reducedMotion }: { snapshot: EnemyRushMiniGa
   return (
     <group>
       {snapshot.enemies.map((enemy) => (
-        <EnemyRushVoxelEnemy key={enemy.id} enemy={enemy} playerFacing={snapshot.player.facing} />
+        <EnemyRushVoxelEnemy key={enemy.id} enemy={enemy} playerFacing={snapshot.player.facing} locked={snapshot.lockedEnemyId === enemy.id} />
       ))}
       {snapshot.coins.map((coin) => (
         <EnemyRushCoin key={coin.id} coin={coin} />
@@ -1064,7 +1064,7 @@ function EnemyRushLayer({ snapshot, reducedMotion }: { snapshot: EnemyRushMiniGa
   );
 }
 
-function EnemyRushVoxelEnemy({ enemy, playerFacing }: { enemy: EnemyRushRuntime; playerFacing: 1 | -1 }) {
+function EnemyRushVoxelEnemy({ enemy, playerFacing, locked }: { enemy: EnemyRushRuntime; playerFacing: 1 | -1; locked: boolean }) {
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
   const groupRef = useRef<THREE.Group>(null);
   const source = enemyRushAssetByKind[enemy.kind];
@@ -1095,6 +1095,12 @@ function EnemyRushVoxelEnemy({ enemy, playerFacing }: { enemy: EnemyRushRuntime;
   if (enemy.defeated) return null;
   return (
     <group ref={groupRef} position={[enemy.position.x, enemy.position.y, enemy.position.z]} rotation={[0, playerFacing >= 0 ? 0 : Math.PI, 0]}>
+      {locked && (
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.035, 0]}>
+          <torusGeometry args={[enemy.radius * 1.15, 0.035, 8, 36]} />
+          <meshStandardMaterial color="#8ef9ff" emissive="#35dfff" emissiveIntensity={1.4} roughness={0.28} />
+        </mesh>
+      )}
       <ImageVoxelPartGroup part={parts.head} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
       <ImageVoxelPartGroup part={parts.torso} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
       <ImageVoxelPartGroup part={parts.leadArm} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />

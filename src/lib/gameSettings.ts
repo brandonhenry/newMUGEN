@@ -27,7 +27,10 @@ const p1Keyboard: PlayerControlBindings = {
   block: [],
   confirm: ['Enter'],
   back: [],
-  pause: ['Escape']
+  pause: ['Escape'],
+  lockTarget: ['Period'],
+  cycleTargetUp: [],
+  cycleTargetDown: []
 };
 
 const p2Keyboard: PlayerControlBindings = {
@@ -49,7 +52,10 @@ const p2Keyboard: PlayerControlBindings = {
   block: ['Numpad5', 'Digit5', 'ShiftRight'],
   confirm: [],
   back: [],
-  pause: ['Escape']
+  pause: ['Escape'],
+  lockTarget: [],
+  cycleTargetUp: [],
+  cycleTargetDown: []
 };
 
 const defaultGamepad: PlayerGamepadBindings = {
@@ -59,7 +65,8 @@ const defaultGamepad: PlayerGamepadBindings = {
   special: [3],
   charge: [6],
   block: [4, 5],
-  pause: [9]
+  pause: [9],
+  lockTarget: [11]
 };
 
 export const defaultGameSettings: GameSettings = {

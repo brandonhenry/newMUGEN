@@ -49,7 +49,7 @@ export type HorizontalTapState = {
 const DOUBLE_TAP_MS = 460;
 const VERTICAL_HOLD_MS = 185;
 const menuQueuedActions = new Set<ActionName>(['confirm', 'pause']);
-const queuedPulseActions = new Set<ActionName>(['jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back']);
+const queuedPulseActions = new Set<ActionName>(['jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown']);
 
 function inputDebugEnabled() {
   return Boolean(

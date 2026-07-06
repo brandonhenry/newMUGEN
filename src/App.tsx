@@ -9888,7 +9888,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
 
   return changes;
 }
-const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause'];
+const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown'];
 const koreActionLabels: Record<ActionName, string> = {
   up: 'Up / Jump',
   down: 'Down / Crouch',
@@ -9908,7 +9908,10 @@ const koreActionLabels: Record<ActionName, string> = {
   block: 'Block',
   confirm: 'Confirm',
   back: 'Back',
-  pause: 'Pause'
+  pause: 'Pause',
+  lockTarget: 'Lock NPC',
+  cycleTargetUp: 'Cycle NPC Up',
+  cycleTargetDown: 'Cycle NPC Down'
 };
 const beginnerActionLabelOverrides: Partial<Record<ActionName, string>> = {
   jab: '1 Light',
@@ -11151,7 +11154,7 @@ const gamepadButtonPrompts: Record<number, { label: string; shape: 'south' | 'ea
   15: { label: '→', shape: 'dpad', caption: 'D-Pad Right' },
   16: { label: '⌂', shape: 'system', caption: 'Home' }
 };
-const menuReservedGamepadButtons = new Set([11]);
+const menuReservedGamepadButtons = new Set<number>();
 const minConfigurableGamepadButton = 0;
 const maxConfigurableGamepadButton = 16;
 
@@ -21667,7 +21670,7 @@ function BreakTargetMiniGameScreen({
       onPointerDown={() => screenRef.current?.focus()}
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
-      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} arcadeRun={arcadeRun} />
+      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
@@ -21833,7 +21836,7 @@ function EnemyRushMiniGameScreen({
       onPointerDown={() => screenRef.current?.focus()}
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
-      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} arcadeRun={arcadeRun} />
+      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
@@ -21863,38 +21866,17 @@ function EnemyRushMiniGameScreen({
   );
 }
 
-function MiniGameHud({ snapshot, hudScale, arcadeRun }: { snapshot: BreakTargetMiniGameSnapshot | EnemyRushMiniGameSnapshot; hudScale: number; arcadeRun: ArcadeRunState }) {
+function MiniGameHud({ snapshot, hudScale }: { snapshot: BreakTargetMiniGameSnapshot | EnemyRushMiniGameSnapshot; hudScale: number }) {
   const remaining = snapshot.kind === 'break-target'
     ? snapshot.targets.filter((target) => !target.destroyed).length
     : snapshot.enemies.filter((enemy) => !enemy.defeated).length;
   const total = snapshot.kind === 'break-target' ? snapshot.targets.length : snapshot.enemies.length;
   const label = snapshot.kind === 'break-target' ? 'Targets' : 'Enemies';
-  const centerLabel = snapshot.kind === 'break-target' ? Math.ceil(snapshot.timer) : `HP ${Math.max(0, Math.round(snapshot.player.hp))}`;
   return (
     <div className="mini-game-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
       <div className="mini-game-hud-card">
         <span>{label}</span>
         <strong>{remaining}/{total}</strong>
-      </div>
-      <div className="mini-game-hud-card timer">
-        {snapshot.kind === 'break-target' ? <Timer size={18} /> : <Swords size={18} />}
-        <strong>{centerLabel}</strong>
-      </div>
-      <div className="mini-game-hud-card score">
-        <span>Points</span>
-        <strong>{Math.round(snapshot.score)}</strong>
-      </div>
-      <div className="mini-game-hud-card arcade-score">
-        <span>Arcade</span>
-        <strong>{arcadeRun.score}</strong>
-      </div>
-      <div className="mini-game-hud-card arcade-lives">
-        <span>Lives</span>
-        <strong>{arcadeRun.livesRemaining}</strong>
-      </div>
-      <div className="mini-game-hud-card arcade-level">
-        <span>Level</span>
-        <strong>{arcadeRun.level}</strong>
       </div>
     </div>
   );

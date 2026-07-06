@@ -182,6 +182,35 @@ describe('arcade mini games', () => {
     expect(result.completedReason).toBe('player-death');
     expect(result.cleared).toBe(false);
   });
+
+  it('enemy rush supports lock toggle and depth cycling', () => {
+    let snapshot = createEnemyRushMiniGame(character, stage, 707, 3);
+    const lockInput = emptyInputFrame();
+    lockInput.lockTarget = true;
+    (lockInput as typeof lockInput & { __pressedActions?: string[] }).__pressedActions = ['lockTarget'];
+    snapshot = stepEnemyRushMiniGame(snapshot, lockInput, 1 / 60);
+    expect(snapshot.lockedEnemyId).toBeTruthy();
+    const firstLock = snapshot.lockedEnemyId;
+    const cycleInput = emptyInputFrame();
+    cycleInput.cycleTargetDown = true;
+    (cycleInput as typeof cycleInput & { __pressedActions?: string[] }).__pressedActions = ['cycleTargetDown'];
+    snapshot = stepEnemyRushMiniGame(snapshot, cycleInput, 1 / 60);
+    expect(snapshot.lockedEnemyId).toBeTruthy();
+    expect(snapshot.lockedEnemyId).not.toBe(firstLock);
+    const unlockInput = emptyInputFrame();
+    unlockInput.lockTarget = true;
+    (unlockInput as typeof unlockInput & { __pressedActions?: string[] }).__pressedActions = ['lockTarget'];
+    snapshot = stepEnemyRushMiniGame(snapshot, unlockInput, 1 / 60);
+    expect(snapshot.lockedEnemyId).toBeNull();
+  });
+
+  it('enemy rush level pool includes varied behavior and stronger enemies', () => {
+    const low = generateEnemyRushEnemies(stage, 808, 1);
+    const high = generateEnemyRushEnemies(stage, 808, 4);
+    expect(new Set(low.map((enemy) => enemy.behavior)).size).toBeGreaterThan(1);
+    expect(high.some((enemy) => enemy.elite || enemy.projectileKind)).toBe(true);
+    expect(Math.max(...high.map((enemy) => enemy.maxHp))).toBeGreaterThan(Math.max(...low.map((enemy) => enemy.maxHp)));
+  });
 });
 
 function summarizeTarget(target: ReturnType<typeof generateBreakTargets>[number]) {

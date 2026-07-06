@@ -80,10 +80,13 @@ export function readFightGamepadInput(pad: Gamepad | null, controls: ControlBind
 
   const horizontal = pad.axes[0] ?? 0;
   const vertical = pad.axes[1] ?? 0;
+  const rightVertical = pad.axes[3] ?? 0;
   next.left = isGamepadButtonPressed(pad, 14) || horizontal < -FIGHT_GAMEPAD_DEADZONE;
   next.right = isGamepadButtonPressed(pad, 15) || horizontal > FIGHT_GAMEPAD_DEADZONE;
   next.up = isGamepadButtonPressed(pad, 12) || vertical < -FIGHT_GAMEPAD_DEADZONE;
   next.down = isGamepadButtonPressed(pad, 13) || vertical > FIGHT_GAMEPAD_DEADZONE;
+  next.cycleTargetUp = rightVertical < -FIGHT_GAMEPAD_DEADZONE;
+  next.cycleTargetDown = rightVertical > FIGHT_GAMEPAD_DEADZONE;
 
   const gamepadBindings = controls.gamepad[playerIndex];
   for (const action of Object.keys(gamepadBindings) as ActionName[]) {

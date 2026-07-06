@@ -21,7 +21,10 @@ export type ActionName =
   | 'block'
   | 'confirm'
   | 'back'
-  | 'pause';
+  | 'pause'
+  | 'lockTarget'
+  | 'cycleTargetUp'
+  | 'cycleTargetDown';
 
 export type FighterState =
   | 'idle'
@@ -897,6 +900,9 @@ export type EnemyRushRuntime = {
   hitFlash: number;
   defeated: boolean;
   elite: boolean;
+  behavior: 'chaser' | 'bruiser' | 'ambusher' | 'sentry' | 'caster';
+  awareness: number;
+  attackRange: number;
   projectileKind?: string;
 };
 
@@ -931,6 +937,7 @@ export type EnemyRushMiniGameSnapshot = {
   coins: EnemyRushCoinRuntime[];
   projectiles: EnemyRushProjectileRuntime[];
   explosions: BreakTargetExplosionRuntime[];
+  lockedEnemyId: string | null;
   phase: 'playing' | 'complete';
   completedReason: 'all-clear' | 'player-death' | null;
 };
@@ -1276,5 +1283,8 @@ export const emptyInputFrame = (): InputFrame => ({
   block: false,
   confirm: false,
   back: false,
-  pause: false
+  pause: false,
+  lockTarget: false,
+  cycleTargetUp: false,
+  cycleTargetDown: false
 });

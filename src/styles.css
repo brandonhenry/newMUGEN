@@ -8046,9 +8046,9 @@ button {
   left: 50%;
   z-index: 12;
   display: grid;
-  grid-template-columns: repeat(6, minmax(74px, 1fr));
+  grid-template-columns: minmax(112px, 1fr);
   gap: 10px;
-  width: min(94vw, 820px);
+  width: min(42vw, 180px);
   transform: translateX(-50%) scale(var(--hud-scale, 1));
   transform-origin: top center;
   pointer-events: none;
@@ -11747,9 +11747,9 @@ button {
 
 @media (max-width: 760px) {
   .mini-game-hud {
-    grid-template-columns: repeat(3, minmax(78px, 1fr));
+    grid-template-columns: minmax(104px, 1fr);
     gap: 7px;
-    width: min(94vw, 390px);
+    width: min(42vw, 144px);
   }
 
   .mini-game-hud-card {

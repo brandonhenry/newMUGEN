@@ -73,6 +73,7 @@ type EnemyRushDefinition = {
   kind: EnemyRushEnemyKind;
   name: string;
   minLevel: number;
+  behavior: EnemyRushRuntime['behavior'];
   hp: number;
   damage: number;
   speed: number;
@@ -80,23 +81,25 @@ type EnemyRushDefinition = {
   radius: number;
   height: number;
   elite: boolean;
+  awareness: number;
+  attackRange: number;
   projectileKind?: string;
 };
 
 export const ENEMY_RUSH_ENEMY_DEFINITIONS: EnemyRushDefinition[] = [
-  { kind: 'zombie-small', name: 'Zombie', minLevel: 1, hp: 24, damage: 7, speed: 1.15, points: 100, radius: 0.38, height: 1.05, elite: false },
-  { kind: 'skeleton-small', name: 'Skeleton', minLevel: 1, hp: 28, damage: 8, speed: 1.28, points: 135, radius: 0.36, height: 1.08, elite: false },
-  { kind: 'pig-small', name: 'Pig', minLevel: 1, hp: 34, damage: 9, speed: 1.05, points: 175, radius: 0.44, height: 0.95, elite: false },
-  { kind: 'orc-small', name: 'Orc', minLevel: 2, hp: 48, damage: 11, speed: 1.16, points: 250, radius: 0.46, height: 1.15, elite: false },
-  { kind: 'zombie-big', name: 'Big Zombie', minLevel: 2, hp: 58, damage: 13, speed: 0.95, points: 300, radius: 0.52, height: 1.28, elite: false },
-  { kind: 'skeleton-big', name: 'Big Skeleton', minLevel: 2, hp: 54, damage: 13, speed: 1.1, points: 340, radius: 0.5, height: 1.3, elite: false },
-  { kind: 'samurai', name: 'Samurai', minLevel: 3, hp: 72, damage: 17, speed: 1.35, points: 400, radius: 0.48, height: 1.34, elite: false },
-  { kind: 'pig-big', name: 'Big Pig', minLevel: 3, hp: 78, damage: 18, speed: 1.08, points: 380, radius: 0.56, height: 1.24, elite: false },
-  { kind: 'orc-big', name: 'Big Orc', minLevel: 3, hp: 92, damage: 20, speed: 1.04, points: 500, radius: 0.58, height: 1.4, elite: true, projectileKind: 'orc-b' },
-  { kind: 'wizzart-a', name: 'Wizzart A', minLevel: 4, hp: 70, damage: 18, speed: 1.0, points: 560, radius: 0.46, height: 1.38, elite: true, projectileKind: 'wizzart-a' },
-  { kind: 'wizzart-b', name: 'Wizzart B', minLevel: 4, hp: 76, damage: 20, speed: 1.0, points: 640, radius: 0.46, height: 1.38, elite: true, projectileKind: 'wizzart-b' },
-  { kind: 'wizzart-c', name: 'Wizzart C', minLevel: 4, hp: 82, damage: 22, speed: 1.0, points: 700, radius: 0.46, height: 1.38, elite: true, projectileKind: 'wizzart-c' },
-  { kind: 'dark-knight', name: 'Dark Knight', minLevel: 4, hp: 125, damage: 26, speed: 1.2, points: 800, radius: 0.58, height: 1.48, elite: true }
+  { kind: 'zombie-small', name: 'Zombie', minLevel: 1, behavior: 'chaser', hp: 24, damage: 7, speed: 1.15, points: 100, radius: 0.38, height: 1.05, elite: false, awareness: 5.4, attackRange: 0.9 },
+  { kind: 'skeleton-small', name: 'Skeleton', minLevel: 1, behavior: 'ambusher', hp: 28, damage: 8, speed: 1.28, points: 135, radius: 0.36, height: 1.08, elite: false, awareness: 3.4, attackRange: 1.0 },
+  { kind: 'pig-small', name: 'Pig', minLevel: 1, behavior: 'sentry', hp: 34, damage: 9, speed: 1.05, points: 175, radius: 0.44, height: 0.95, elite: false, awareness: 2.8, attackRange: 1.05 },
+  { kind: 'orc-small', name: 'Orc', minLevel: 2, behavior: 'bruiser', hp: 48, damage: 11, speed: 1.16, points: 250, radius: 0.46, height: 1.15, elite: false, awareness: 5.6, attackRange: 1.08 },
+  { kind: 'zombie-big', name: 'Big Zombie', minLevel: 2, behavior: 'bruiser', hp: 58, damage: 13, speed: 0.95, points: 300, radius: 0.52, height: 1.28, elite: false, awareness: 5.2, attackRange: 1.15 },
+  { kind: 'skeleton-big', name: 'Big Skeleton', minLevel: 2, behavior: 'ambusher', hp: 54, damage: 13, speed: 1.1, points: 340, radius: 0.5, height: 1.3, elite: false, awareness: 4.6, attackRange: 1.12 },
+  { kind: 'samurai', name: 'Samurai', minLevel: 3, behavior: 'chaser', hp: 72, damage: 17, speed: 1.35, points: 400, radius: 0.48, height: 1.34, elite: false, awareness: 7.2, attackRange: 1.18 },
+  { kind: 'pig-big', name: 'Big Pig', minLevel: 3, behavior: 'sentry', hp: 78, damage: 18, speed: 1.08, points: 380, radius: 0.56, height: 1.24, elite: false, awareness: 3.4, attackRange: 1.18 },
+  { kind: 'orc-big', name: 'Big Orc', minLevel: 3, behavior: 'bruiser', hp: 92, damage: 20, speed: 1.04, points: 500, radius: 0.58, height: 1.4, elite: true, awareness: 6.2, attackRange: 1.22, projectileKind: 'orc-b' },
+  { kind: 'wizzart-a', name: 'Wizzart A', minLevel: 4, behavior: 'caster', hp: 70, damage: 18, speed: 1.0, points: 560, radius: 0.46, height: 1.38, elite: true, awareness: 8.4, attackRange: 5.2, projectileKind: 'wizzart-a' },
+  { kind: 'wizzart-b', name: 'Wizzart B', minLevel: 4, behavior: 'caster', hp: 76, damage: 20, speed: 1.0, points: 640, radius: 0.46, height: 1.38, elite: true, awareness: 8.8, attackRange: 5.6, projectileKind: 'wizzart-b' },
+  { kind: 'wizzart-c', name: 'Wizzart C', minLevel: 4, behavior: 'caster', hp: 82, damage: 22, speed: 1.0, points: 700, radius: 0.46, height: 1.38, elite: true, awareness: 9.2, attackRange: 6.0, projectileKind: 'wizzart-c' },
+  { kind: 'dark-knight', name: 'Dark Knight', minLevel: 4, behavior: 'chaser', hp: 125, damage: 26, speed: 1.2, points: 800, radius: 0.58, height: 1.48, elite: true, awareness: 8.2, attackRange: 1.3 }
 ];
 
 export function shouldStartArcadeMiniGame(random = Math.random()) {
@@ -258,6 +261,7 @@ export function createEnemyRushMiniGame(
     coins: [],
     projectiles: [],
     explosions: [],
+    lockedEnemyId: null,
     phase: 'playing',
     completedReason: null
   };
@@ -306,6 +310,9 @@ export function generateEnemyRushEnemies(
       hitFlash: 0,
       defeated: false,
       elite: definition.elite,
+      behavior: definition.behavior,
+      awareness: definition.awareness + Math.min(2.2, (safeLevel - 1) * 0.45),
+      attackRange: definition.attackRange + Math.min(0.4, (safeLevel - 1) * 0.06),
       projectileKind: definition.projectileKind
     });
   }
@@ -322,12 +329,14 @@ export function stepEnemyRushMiniGame(
   const player = next.player;
   const frameDelta = Math.max(1, Math.round(dt * FRAMES_PER_SECOND));
   const sanitized = sanitizeMiniGameInput(input);
+  updateEnemyRushLock(next, sanitized);
   tickAttack(player, frameDelta);
   const freshMove = getFreshMoveInput(player, sanitized);
   if (freshMove && canStartMiniGameAttack(player)) startMiniGameAttack(player, freshMove);
   if (player.state !== 'attack' || player.actionFramesRemaining <= 0) applyMiniGameMovement(next, sanitized, dt);
   applyMiniGameGravity(player, dt);
   constrainMiniGamePlayer(next);
+  faceEnemyRushLockTarget(next);
   resolveEnemyRushPlayerHits(next);
   stepEnemyRushEnemies(next, dt);
   stepEnemyRushProjectiles(next, dt);
@@ -728,6 +737,53 @@ function cloneEnemyRushMiniGame(snapshot: EnemyRushMiniGameSnapshot): EnemyRushM
   };
 }
 
+function updateEnemyRushLock(snapshot: EnemyRushMiniGameSnapshot, input: InputFrame) {
+  const pressed = (input as InputFrame & { __pressedActions?: string[] }).__pressedActions ?? [];
+  const aliveEnemies = snapshot.enemies.filter((enemy) => !enemy.defeated);
+  if (aliveEnemies.length === 0) {
+    snapshot.lockedEnemyId = null;
+    return;
+  }
+  if (snapshot.lockedEnemyId && !aliveEnemies.some((enemy) => enemy.id === snapshot.lockedEnemyId)) snapshot.lockedEnemyId = null;
+  if (pressed.includes('lockTarget')) {
+    snapshot.lockedEnemyId = snapshot.lockedEnemyId ? null : nearestEnemyRushEnemy(snapshot)?.id ?? null;
+  }
+  if (pressed.includes('cycleTargetUp')) cycleEnemyRushLock(snapshot, -1);
+  if (pressed.includes('cycleTargetDown')) cycleEnemyRushLock(snapshot, 1);
+}
+
+function nearestEnemyRushEnemy(snapshot: EnemyRushMiniGameSnapshot) {
+  return snapshot.enemies
+    .filter((enemy) => !enemy.defeated)
+    .sort((left, right) => {
+      const leftDistance = Math.hypot(left.position.x - snapshot.player.position.x, left.position.z - snapshot.player.position.z);
+      const rightDistance = Math.hypot(right.position.x - snapshot.player.position.x, right.position.z - snapshot.player.position.z);
+      return leftDistance - rightDistance;
+    })[0] ?? null;
+}
+
+function cycleEnemyRushLock(snapshot: EnemyRushMiniGameSnapshot, direction: -1 | 1) {
+  const ordered = snapshot.enemies
+    .filter((enemy) => !enemy.defeated)
+    .sort((left, right) => left.position.z - right.position.z || left.position.x - right.position.x);
+  if (ordered.length === 0) {
+    snapshot.lockedEnemyId = null;
+    return;
+  }
+  const currentIndex = Math.max(0, ordered.findIndex((enemy) => enemy.id === snapshot.lockedEnemyId));
+  const nextIndex = (currentIndex + direction + ordered.length) % ordered.length;
+  snapshot.lockedEnemyId = ordered[nextIndex]?.id ?? ordered[0].id;
+}
+
+function faceEnemyRushLockTarget(snapshot: EnemyRushMiniGameSnapshot) {
+  const enemy = snapshot.enemies.find((candidate) => candidate.id === snapshot.lockedEnemyId && !candidate.defeated);
+  if (!enemy) return;
+  const dx = enemy.position.x - snapshot.player.position.x;
+  if (Math.abs(dx) <= 0.05) return;
+  snapshot.player.facing = dx >= 0 ? 1 : -1;
+  snapshot.player.facingYaw = snapshot.player.facing > 0 ? Math.PI / 2 : -Math.PI / 2;
+}
+
 function resolveEnemyRushPlayerHits(snapshot: EnemyRushMiniGameSnapshot) {
   const player = snapshot.player;
   const move = player.currentMove;
@@ -756,31 +812,47 @@ function stepEnemyRushEnemies(snapshot: EnemyRushMiniGameSnapshot, dt: number) {
     const distance = Math.max(0.001, Math.hypot(dx, dz));
     enemy.facing = dx >= 0 ? 1 : -1;
     enemy.attackCooldown = Math.max(0, enemy.attackCooldown - dt);
-    const ranged = Boolean(enemy.projectileKind);
-    const attackRange = ranged ? 4.8 : enemy.radius + ENEMY_RUSH_PLAYER_RADIUS + 0.48;
-    if (distance > attackRange * 0.72) {
-      const chaseSpeed = ranged && distance < attackRange ? enemy.speed * 0.25 : enemy.speed;
-      const laneCorrection = Math.min(0.35, Math.abs(dx) / Math.max(1, distance));
+    const intelligence = Math.min(1, Math.max(0, (snapshot.level - 1) / 4));
+    const ranged = enemy.behavior === 'caster' || Boolean(enemy.projectileKind);
+    const attackRange = ranged ? enemy.attackRange : enemy.radius + ENEMY_RUSH_PLAYER_RADIUS + enemy.attackRange * 0.42;
+    const awake = enemy.behavior === 'chaser' || enemy.behavior === 'bruiser' || distance <= enemy.awareness;
+    const shouldChase =
+      awake &&
+      enemy.behavior !== 'sentry' &&
+      (enemy.behavior !== 'caster' ? distance > attackRange * 0.72 : distance > attackRange * 1.08 || distance < attackRange * 0.52);
+    if (shouldChase) {
+      const casterRetreat = enemy.behavior === 'caster' && distance < attackRange * 0.52 ? -1 : 1;
+      const behaviorSpeed =
+        enemy.behavior === 'bruiser' ? 0.72 :
+          enemy.behavior === 'ambusher' ? 0.9 :
+            enemy.behavior === 'caster' ? 0.62 :
+              1;
+      const chaseSpeed = enemy.speed * behaviorSpeed * (0.72 + intelligence * 0.38);
+      const laneCorrection = Math.min(0.16 + intelligence * 0.42, Math.abs(dx) / Math.max(1, distance));
       enemy.position.x += Math.sign(dx) * chaseSpeed * laneCorrection * dt;
-      enemy.position.z += Math.sign(dz || 1) * chaseSpeed * dt;
+      enemy.position.z += Math.sign(dz || 1) * chaseSpeed * casterRetreat * dt;
       constrainPointToBounds(enemy.position, bounds);
     }
-    if (distance <= attackRange && enemy.attackCooldown <= 0) {
+    const canAttack = awake && distance <= attackRange && Math.abs(dx) <= enemy.radius + ENEMY_RUSH_PLAYER_RADIUS + 0.8 + intelligence * 0.5 && enemy.attackCooldown <= 0;
+    if (canAttack) {
       if (ranged && enemy.projectileKind) {
+        const aimX = dx * (0.72 + intelligence * 0.28);
+        const aimZ = dz;
+        const aimDistance = Math.max(0.001, Math.hypot(aimX, aimZ));
         snapshot.projectiles.push({
           id: `projectile-${enemy.id}-${snapshot.projectiles.length + 1}`,
           ownerId: enemy.id,
           kind: enemy.projectileKind,
           damage: Math.max(1, Math.round(enemy.damage * 0.85)),
           position: { x: enemy.position.x, y: 0.85, z: enemy.position.z },
-          velocity: { x: (dx / distance) * ENEMY_RUSH_PROJECTILE_SPEED, z: (dz / distance) * ENEMY_RUSH_PROJECTILE_SPEED },
+          velocity: { x: (aimX / aimDistance) * ENEMY_RUSH_PROJECTILE_SPEED, z: (aimZ / aimDistance) * ENEMY_RUSH_PROJECTILE_SPEED },
           radius: ENEMY_RUSH_PROJECTILE_RADIUS,
           age: 0
         });
-        enemy.attackCooldown = 1.65;
+        enemy.attackCooldown = 1.9 - intelligence * 0.55;
       } else if (boxesIntersect(enemyToAabb(enemy), playerToAabb(player))) {
         damageEnemyRushPlayer(snapshot, enemy.damage);
-        enemy.attackCooldown = 0.95;
+        enemy.attackCooldown = 1.15 - intelligence * 0.32;
       }
     }
   }

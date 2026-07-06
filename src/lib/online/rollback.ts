@@ -1,4 +1,4 @@
-import type { InputFrame, MatchSnapshot } from '../../types';
+import { emptyInputFrame, type InputFrame, type MatchSnapshot } from '../../types';
 
 export type RollbackPlayerIndex = 0 | 1;
 export type RollbackExecutionMode = 'normal' | 'rollback';
@@ -547,25 +547,5 @@ function roundNumber(value: number) {
 }
 
 function emptyDecodedInput(): InputFrame {
-  return {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    dashForward: false,
-    dashBack: false,
-    sidestepUp: false,
-    sidestepDown: false,
-    sidewalkUp: false,
-    sidewalkDown: false,
-    jab: false,
-    kick: false,
-    heavy: false,
-    special: false,
-    charge: false,
-    block: false,
-    confirm: false,
-    back: false,
-    pause: false
-  };
+  return emptyInputFrame();
 }
