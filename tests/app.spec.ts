@@ -509,6 +509,23 @@ test('mobile touch controls drive movement and attacks', async ({ page }, testIn
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
 });
 
+test('pause move list shows active move and combo previews', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Desktop pause move-list preview is covered by the chromium project');
+  await startFight(page, true);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Move List' }).click();
+  await expect(page.getByRole('heading', { name: 'Move List' })).toBeVisible();
+  await expect(page.getByTestId('pause-move-active-preview')).toBeVisible({ timeout: 10000 });
+  await expect(page.locator('.pause-move-row.is-active').first()).toBeVisible();
+
+  await page.getByRole('button', { name: 'Directions' }).click();
+  await expect(page.getByTestId('pause-move-active-preview')).toBeVisible({ timeout: 10000 });
+
+  await page.getByRole('button', { name: 'Combo Routes' }).click();
+  test.skip(await page.locator('.pause-move-row').count() === 0, 'Selected character has no combo routes');
+  await expect(page.getByTestId('pause-move-active-preview')).toBeVisible({ timeout: 10000 });
+});
+
 test('opens training modes, starts a basic trial, and previews combo routes', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Keyboard training-trial route is covered by the desktop project');
   await startTraining(page);

@@ -1,0 +1,42 @@
+appId: com.bggames.kore
+productName: KORE
+artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
+directories:
+  output: release/desktop
+files:
+  - electron/**
+  - package.json
+asar: true
+compression: maximum
+mac:
+  category: public.app-category.games
+  icon: public/brand/kore-favicon.png
+  hardenedRuntime: false
+  gatekeeperAssess: false
+  target:
+    - target: pkg
+      arch:
+        - universal
+pkg:
+  scripts: build/installer/mac/scripts
+win:
+  icon: public/brand/kore-favicon.png
+  target:
+    - target: nsis
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: KORE
+linux:
+  icon: public/brand/kore-favicon.png
+  category: Game
+  executableName: kore
+  target:
+    - target: AppImage
+      arch:
+        - x64

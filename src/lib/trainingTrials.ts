@@ -64,6 +64,12 @@ export type TrainingPreviewFrame = {
   actions: ActionName[];
 };
 
+export type TrainingPreviewStep = {
+  actions: ActionName[];
+  targetFrame?: number;
+  command?: string;
+};
+
 export type TrainingTrialDefinition = {
   id: string;
   title: string;
@@ -1035,7 +1041,7 @@ function makeSetup(dummy: CharacterDefinition | undefined, dummyScript: Training
   };
 }
 
-function makePreviewScript(steps: Array<Pick<TrainingTrialStep, 'actions' | 'targetFrame'> & Partial<Pick<TrainingTrialStep, 'command'>>>): TrainingPreviewFrame[] {
+export function makeTrainingPreviewScript(steps: TrainingPreviewStep[]): TrainingPreviewFrame[] {
   const script: TrainingPreviewFrame[] = [];
   let cursor = 12;
   for (const step of steps) {
@@ -1045,8 +1051,36 @@ function makePreviewScript(steps: Array<Pick<TrainingTrialStep, 'actions' | 'tar
   return script;
 }
 
-function makeCommandPreviewFrames(
-  step: Pick<TrainingTrialStep, 'actions' | 'targetFrame'> & Partial<Pick<TrainingTrialStep, 'command'>>,
+function makePreviewScript(steps: Array<Pick<TrainingTrialStep, 'actions' | 'targetFrame'> & Partial<Pick<TrainingTrialStep, 'command'>>>): TrainingPreviewFrame[] {
+  return makeTrainingPreviewScript(steps);
+}
+
+export function makeMovePreviewScript({
+  input,
+  command,
+  targetFrame = 12
+}: {
+  input: MoveInput;
+  command?: string;
+  targetFrame?: number;
+}): TrainingPreviewFrame[] {
+  return makeTrainingPreviewScript([{
+    actions: commandRouteToActions(command, input),
+    command,
+    targetFrame
+  }]);
+}
+
+export function makeComboRoutePreviewScript(route: Pick<GeneratedComboRoute, 'steps'>): TrainingPreviewFrame[] {
+  return makeTrainingPreviewScript(route.steps.map((step, index) => ({
+    actions: stepToActions(step),
+    command: step.command,
+    targetFrame: index === 0 ? 18 : 14
+  })));
+}
+
+export function makeCommandPreviewFrames(
+  step: TrainingPreviewStep,
   cursor: number
 ): TrainingPreviewFrame[] {
   const target = cursor + (step.targetFrame ?? 12);

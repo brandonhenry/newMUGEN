@@ -45,6 +45,7 @@ import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 import { KORE_APP_VERSION } from '../appVersion';
+import { makePreviewInput, previewScriptLength, type TrainingPreviewFrame } from '../lib/trainingTrials';
 
 type GameSceneProps = {
   match: MatchSnapshot;
@@ -601,6 +602,121 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
+}
+
+export function MoveDemoCanvas({
+  character,
+  stage,
+  script,
+  durationFrames,
+  dummyCharacter,
+  label = `${character.displayName} move preview`,
+  testId = 'move-demo-canvas'
+}: {
+  character: CharacterDefinition;
+  stage: StageDefinition;
+  script: TrainingPreviewFrame[];
+  durationFrames: number;
+  dummyCharacter?: CharacterDefinition;
+  label?: string;
+  testId?: string;
+}) {
+  const initialMatch = useMemo(
+    () => buildMoveDemoMatch(stage, character, dummyCharacter ?? character),
+    [character, dummyCharacter, stage]
+  );
+  const [previewMatch, setPreviewMatch] = useState(initialMatch);
+  const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [stage.id]);
+  const fighterRenderStyles = useMemo(() => ([
+    makeFightFighterRenderStyle(previewMatch, 1),
+    makeFightFighterRenderStyle(previewMatch, 2)
+  ] as const), [previewMatch.fighters[0].baseCharacter.id, previewMatch.fighters[1].baseCharacter.id]);
+
+  useEffect(() => {
+    setPreviewMatch(initialMatch);
+  }, [initialMatch]);
+
+  return (
+    <Canvas shadows dpr={[1, 1.25]} camera={{ position: [0, 2.35, 5.4], fov: 44 }} data-testid={testId} aria-label={label}>
+      <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+        <Suspense fallback={null}>
+          <Environment preset="city" />
+        </Suspense>
+        {!isModelStage(stage) && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+        <StageVisualStyleRig stage={stage} fighters={previewMatch.fighters} preview />
+        <MoveDemoCamera match={previewMatch} />
+        <Arena stage={stage} fighters={previewMatch.fighters} impactEvents={previewMatch.impactEvents} />
+        <StageCameraOcclusionFader />
+        <FighterRig fighter={previewMatch.fighters[0]} timeScale={previewMatch.visualTimeScale} stage={stage} renderStyle={fighterRenderStyles[0]} />
+        <FighterRig fighter={previewMatch.fighters[1]} timeScale={previewMatch.visualTimeScale} stage={stage} renderStyle={fighterRenderStyles[1]} />
+        <EffectLayer match={previewMatch} reducedMotion />
+        <ProjectileLayer match={previewMatch} stage={stage} />
+        <ImpactSparkLayer events={previewMatch.impactEvents} settings={defaultSparkSettings} reducedMotion />
+        <MoveDemoPlayback
+          initialMatch={initialMatch}
+          script={script}
+          durationFrames={durationFrames}
+          onMatchChange={setPreviewMatch}
+        />
+      </StageCameraCollisionContext.Provider>
+    </Canvas>
+  );
+}
+
+function MoveDemoPlayback({
+  initialMatch,
+  script,
+  durationFrames,
+  onMatchChange
+}: {
+  initialMatch: MatchSnapshot;
+  script: TrainingPreviewFrame[];
+  durationFrames: number;
+  onMatchChange: (match: MatchSnapshot) => void;
+}) {
+  const matchRef = useRef(initialMatch);
+  const frameRef = useRef(0);
+  const totalFrames = Math.max(1, durationFrames, previewScriptLength(script) + 24);
+
+  useEffect(() => {
+    matchRef.current = initialMatch;
+    frameRef.current = 0;
+    onMatchChange(initialMatch);
+  }, [initialMatch, onMatchChange, script]);
+
+  useFrame(() => {
+    if (frameRef.current > totalFrames) {
+      matchRef.current = initialMatch;
+      frameRef.current = 0;
+      onMatchChange(initialMatch);
+      return;
+    }
+    const input = makePreviewInput(script, frameRef.current);
+    matchRef.current = stepMatch(matchRef.current, input, emptyInputFrame(), 1 / 60);
+    frameRef.current += 1;
+    onMatchChange(matchRef.current);
+  });
+
+  return null;
+}
+
+function MoveDemoCamera({ match }: { match: MatchSnapshot }) {
+  const { camera } = useThree();
+  const focus = useMemo(() => new THREE.Vector3(0, 1.1, 0), []);
+  useFrame((_, delta) => {
+    const [p1, p2] = match.fighters;
+    const midX = (p1.position.x + p2.position.x) / 2;
+    const midZ = (p1.position.z + p2.position.z) / 2;
+    focus.lerp(new THREE.Vector3(midX, 1.08, midZ), cameraDamp(delta, 5.8));
+    const desired = new THREE.Vector3(focus.x, 2.1, focus.z + 4.9);
+    camera.position.lerp(desired, cameraDamp(delta, 7.2));
+    if ('fov' in camera) {
+      camera.fov = 44;
+      camera.updateProjectionMatrix();
+    }
+    camera.lookAt(focus);
+  });
+  return null;
 }
 
 function makeFightFighterRenderStyle(match: MatchSnapshot, slot: 1 | 2): Partial<FighterRenderStyle> {
@@ -2034,6 +2150,31 @@ export function buildStagePreviewMatch(stage: StageDefinition, p1: CharacterDefi
   match.fighters[1].facing = -1;
   match.fighters[1].facingYaw = -Math.PI / 2 - rotationY;
   match.fighters[1].state = 'idle';
+  return match;
+}
+
+function buildMoveDemoMatch(stage: StageDefinition, p1: CharacterDefinition, p2: CharacterDefinition) {
+  const match = createMatch(p1, p2, stage, 'local2p', 3, {
+    roster: [p1, p2],
+    playIntro: false,
+    roundTime: 0,
+    maxHealth: 999,
+    trainingInfiniteHealth: true
+  });
+  const floorY = stage.fightPlane?.y ?? stage.world?.floorY ?? 0;
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  match.fighters[0].position = { x: -0.48, y: floorY, z: 0 };
+  match.fighters[0].facing = 1;
+  match.fighters[0].facingYaw = Math.PI / 2 - rotationY;
+  match.fighters[0].ki = 100;
+  match.fighters[0].state = 'idle';
+  match.fighters[1].position = { x: 0.48, y: floorY, z: 0 };
+  match.fighters[1].facing = -1;
+  match.fighters[1].facingYaw = -Math.PI / 2 - rotationY;
+  match.fighters[1].state = 'idle';
+  match.projectiles = [];
+  match.impactEvents = [];
+  match.combatEvents = [];
   return match;
 }
 

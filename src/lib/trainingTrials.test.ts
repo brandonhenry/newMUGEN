@@ -10,6 +10,8 @@ import {
   advanceTrainingTrialWithInput,
   generateBasicTrainingTrials,
   generateComboTrainingTrials,
+  makeComboRoutePreviewScript,
+  makeMovePreviewScript,
   makePreviewInput,
   makeTrainingTrialProgress,
   previewScriptLength,
@@ -451,6 +453,22 @@ describe('training trial catalog', () => {
     expect(trials.every((trial) => trial.steps.every((step) => step.routeKey && step.animationKey))).toBe(true);
   });
 
+  it('surfaces reviewed move labels in training and combo trial steps', () => {
+    const roster = readRosterCharacters();
+    const yusuke = roster.find((character) => character.id === 'yusuke-urameshi');
+    expect(yusuke).toBeTruthy();
+    if (!yusuke) return;
+
+    const basicStepLabels = generateBasicTrainingTrials(yusuke, roster).flatMap((trial) => trial.steps.map((step) => step.label));
+    const comboTrials = generateComboTrainingTrials(yusuke);
+    const comboStepLabels = comboTrials.flatMap((trial) => trial.steps.map((step) => step.label));
+
+    expect(basicStepLabels).toContain('Spirit Wave Drive');
+    expect(comboStepLabels).toContain('Spirit Gun Burst');
+    expect([...basicStepLabels, ...comboStepLabels].some((label) => /Frame Link/.test(label))).toBe(false);
+    expect(comboTrials.find((trial) => trial.steps[0]?.label === 'Spirit Gun Burst')?.title).toContain('Spirit Gun Burst');
+  });
+
   it('sets up ki and command-family combo trials with executable previews', () => {
     const character = readRosterCharacters().find((candidate) =>
       generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute?.requiresKi)
@@ -537,5 +555,44 @@ describe('training trial catalog', () => {
     const previewInput = makePreviewInput(trial.previewScript, activeFrame);
     expect(trial.previewScript[0].actions.some((action) => previewInput[action])).toBe(true);
     expect(readTrainingTrialCompletion(character.id)).toEqual(new Set());
+  });
+
+  it('builds raw button move preview input windows', () => {
+    const script = makeMovePreviewScript({ input: 'jab', command: '1' });
+    const activeFrame = script.find((frame) => frame.actions.includes('jab'))?.frame ?? 0;
+
+    expect(activeFrame).toBeGreaterThan(0);
+    expect(makePreviewInput(script, activeFrame).jab).toBe(true);
+    expect(makePreviewInput(script, Math.max(0, activeFrame - 1)).jab).toBe(false);
+  });
+
+  it('builds motion command previews with directional timing before the attack', () => {
+    const script = makeMovePreviewScript({ input: 'jab', command: 'qcf+1' });
+    const downFrame = script.find((frame) => frame.actions.includes('down') && !frame.actions.includes('jab'));
+    const attackFrame = script.find((frame) => frame.actions.includes('jab'));
+
+    expect(downFrame).toBeTruthy();
+    expect(attackFrame).toBeTruthy();
+    expect(downFrame!.frame).toBeLessThan(attackFrame!.frame);
+    expect(makePreviewInput(script, downFrame!.frame).down).toBe(true);
+    expect(makePreviewInput(script, attackFrame!.frame).right).toBe(true);
+    expect(makePreviewInput(script, attackFrame!.frame).jab).toBe(true);
+  });
+
+  it('builds combo route preview scripts in ordered step timing', () => {
+    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate)[0]?.sourceComboRoute);
+    expect(character).toBeTruthy();
+    if (!character) return;
+    const route = generateComboTrainingTrials(character)[0]?.sourceComboRoute;
+    expect(route).toBeTruthy();
+    if (!route) return;
+
+    const script = makeComboRoutePreviewScript(route);
+    const attackFrames = script
+      .filter((frame) => frame.actions.some((action) => action === 'jab' || action === 'heavy' || action === 'kick' || action === 'special'))
+      .map((frame) => frame.frame);
+
+    expect(attackFrames.length).toBeGreaterThanOrEqual(2);
+    expect(attackFrames[1]).toBeGreaterThan(attackFrames[0]);
   });
 });

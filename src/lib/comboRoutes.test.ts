@@ -66,6 +66,21 @@ describe('combo route catalog', () => {
     expect(routableCharacters).toBeGreaterThan(0);
   });
 
+  it('uses reviewed move labels in routes and combo titles', () => {
+    const yusuke = readRosterCharacters().find((character) => character.id === 'yusuke-urameshi');
+    expect(yusuke).toBeTruthy();
+    if (!yusuke) return;
+
+    const routes = resolveMoveRoutes(yusuke);
+    expect(routes.find((route) => route.command === 'qcf+4')?.label).toBe('Spirit Gun Burst');
+    expect(routes.some((route) => /Frame Link/.test(route.label))).toBe(false);
+
+    const comboRoutes = generateCharacterComboRoutes(yusuke);
+    const spiritGunRoute = comboRoutes.find((route) => route.steps[0]?.label === 'Spirit Gun Burst');
+    expect(spiritGunRoute?.title).toContain('Spirit Gun Burst');
+    expect(spiritGunRoute?.title).not.toContain('qcf+4');
+  });
+
   it('never turns neutral 1/2/3/4 into counter-hit trial starters', () => {
     for (const character of readRosterCharacters()) {
       const trials = generateCharacterComboRoutes(character).filter((trial) => trial.category === 'counterHit');

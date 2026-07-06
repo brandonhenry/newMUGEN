@@ -504,7 +504,7 @@ function isValidNextRoute(route: ResolvedMoveRoute, state: RoutePlannerState, al
   const previousIdentity = state.identities[state.identities.length - 1];
   const previousFamily = state.families[state.families.length - 1];
   if (identity === previousIdentity) return false;
-  if (family === previousFamily && state.comboHits >= 2) return false;
+  if (family === previousFamily) return false;
   if (identityUseCount(state.identities, identity) >= maxIdentityUsesForRoute(state.comboHits + 1)) return false;
   if (identityUseCount(state.families, family) >= maxFamilyUsesForRoute(state.comboHits + 1)) return false;
   if ((route.move.launchHeight ?? 0) > 0 && state.launcherCount >= MAX_LAUNCHERS_PER_ROUTE) return false;
@@ -698,7 +698,7 @@ function makeRouteTrial(
   const launchRouteStyle = explicitLaunchRouteStyle ?? ((starter.move.launchHeight ?? 0) > 0 ? launchRouteStyleForSequence(sequence) : undefined);
   return {
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${reason}`,
-    title: category === 'counterHit' ? `${starter.command ?? starter.label} Counter Hit` : routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
+    title: category === 'counterHit' ? `${starter.label} Counter Hit` : routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
     category,
     families: routeFamiliesForSequence(sequence),
     requiresKi: sequence.some((route) => route.requiresKi),
@@ -729,7 +729,7 @@ function routeToStep(route: ResolvedMoveRoute, counterHit = false, reason?: stri
 }
 
 function routeTitleForSequence(category: ComboRouteCategory, sequence: ResolvedMoveRoute[], estimatedHits: number, launchRouteStyle?: LaunchRouteStyle) {
-  const starterName = sequence[0].command ?? sequence[0].label;
+  const starterName = sequence[0].label;
   if (category === 'launcher' || launchRouteStyle) {
     const label = launchRouteStyle === 'airChase' ? 'Air Chase Launcher' : launchRouteStyle === 'hybrid' ? 'Hybrid Launcher' : 'Grounded Launcher';
     return estimatedHits > 2 ? `${starterName} ${label} ${estimatedHits}-Hit Route` : `${starterName} ${label} Route`;

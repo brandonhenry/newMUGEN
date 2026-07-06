@@ -39,7 +39,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -125,6 +125,8 @@ import {
   advanceTrainingTrialWithInput,
   generateBasicTrainingTrials,
   generateComboTrainingTrials,
+  makeComboRoutePreviewScript,
+  makeMovePreviewScript,
   makePreviewInput,
   makeTrainingTrialProgress,
   makeTrialDummyInput,
@@ -20132,12 +20134,25 @@ function ConfiguredMoveList({
   activeTab: MoveListTab;
   onTabChange: (tab: MoveListTab) => void;
 }) {
-  const configured = animationSlots.filter((slot) => (
+  const [activePreviewKey, setActivePreviewKey] = useState<string | null>(null);
+  const previewStage = useMemo(
+    () => stages.find((item) => item.id === 'the-chamber') ?? stages[0],
+    []
+  );
+  const configured = useMemo(() => animationSlots.filter((slot) => (
     slot.command &&
     slot.category === activeTab &&
     (character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0) > 0
-  ));
+  )), [activeTab, character]);
   const comboRoutes = useMemo(() => generateCharacterComboRoutes(character), [character]);
+  const rows = useMemo(() => buildPauseMovePreviewRows(character, activeTab, configured, comboRoutes), [activeTab, character, comboRoutes, configured]);
+  const activeRow = rows.find((row) => row.id === activePreviewKey) ?? rows[0] ?? null;
+
+  useEffect(() => {
+    setActivePreviewKey((current) => rows.some((row) => row.id === current) ? current : rows[0]?.id ?? null);
+  }, [rows]);
+
+  const activateRow = (rowId: string) => setActivePreviewKey(rowId);
 
   return (
     <div className="pause-movelist-panel">
@@ -20157,39 +20172,59 @@ function ConfiguredMoveList({
       <div className="pause-movelist">
         <section>
           <h3>{character.displayName}</h3>
-          {activeTab === 'combo' ? (
-            comboRoutes.length === 0 ? (
-              <p>No combo routes configured.</p>
-            ) : (
-              <div>
-                {comboRoutes.map((route) => (
-                  <span key={route.id}>
-                    <NotationGroup tokens={route.steps.flatMap((step, index) => index === 0 ? step.notation : ['>', ...step.notation])} />
-                    {route.title}
-                    <small>{comboTrialCategoryLabels[route.category]} Lv {route.level} | {route.estimatedHits} hits | {route.tier} | {route.families.join('/')} | {route.reason}</small>
-                  </span>
-                ))}
-              </div>
-            )
-          ) : configured.length === 0 ? (
+          {rows.length === 0 && activeTab === 'combo' ? (
+            <p>No combo routes configured.</p>
+          ) : rows.length === 0 ? (
             <p>No {moveListTabLabels[activeTab].toLowerCase()} commands configured.</p>
           ) : (
-            <div>
-              {configured.slice(0, 36).map((slot) => {
-                const move = resolveSlotMove(character, slot);
-                const propertyBadges = movePropertyBadges(move);
+            <div className="pause-move-row-list">
+              {rows.map((row) => {
+                const active = activeRow?.id === row.id;
                 return (
-                  <span key={slot.key}>
-                    <NotationGroup tokens={slot.notation} />
-                    <span className="pause-move-name">{formatMoveSlotLabel(slot, move)}</span>
-                    {move?.description && <em className="pause-move-description">{move.description}</em>}
-                    <small>{formatFrameSummary(move)}</small>
-                    {propertyBadges.length > 0 && (
-                      <span className="pause-move-properties" aria-label="Move properties">
-                        {propertyBadges.map((badge) => <b key={badge}>{badge}</b>)}
-                      </span>
-                    )}
-                  </span>
+                  <article
+                    key={row.id}
+                    className={`pause-move-row ${active ? 'is-active' : ''}`}
+                    role="button"
+                    tabIndex={0}
+                    data-testid={`pause-move-row-${safeTestId(row.id)}`}
+                    onMouseEnter={() => activateRow(row.id)}
+                    onFocus={() => activateRow(row.id)}
+                    onClick={() => activateRow(row.id)}
+                    onKeyDown={(event) => {
+                      if (event.key !== 'Enter' && event.key !== ' ') return;
+                      event.preventDefault();
+                      activateRow(row.id);
+                    }}
+                  >
+                    <div className="pause-move-copy">
+                      <div className="pause-move-title-line">
+                        <NotationGroup tokens={row.notation} />
+                        <span className="pause-move-name">{row.title}</span>
+                      </div>
+                      {row.description && <em className="pause-move-description">{row.description}</em>}
+                      <small>{row.summary}</small>
+                      {row.badges.length > 0 && (
+                        <span className="pause-move-properties" aria-label="Move properties">
+                          {row.badges.map((badge) => <b key={badge}>{badge}</b>)}
+                        </span>
+                      )}
+                    </div>
+                    <div className={`pause-move-preview ${active ? 'is-live' : ''}`} aria-label={`${row.title} preview`}>
+                      {active && previewStage ? (
+                        <MoveDemoCanvas
+                          key={`${character.id}:${row.id}`}
+                          character={character}
+                          stage={previewStage}
+                          script={row.script}
+                          durationFrames={row.durationFrames}
+                          label={`${row.title} move preview`}
+                          testId="pause-move-active-preview"
+                        />
+                      ) : (
+                        <span>Preview</span>
+                      )}
+                    </div>
+                  </article>
                 );
               })}
             </div>
@@ -20198,6 +20233,61 @@ function ConfiguredMoveList({
       </div>
     </div>
   );
+}
+
+type PauseMovePreviewRow = {
+  id: string;
+  title: string;
+  notation: string[];
+  description?: string;
+  summary: string;
+  badges: string[];
+  script: ReturnType<typeof makeMovePreviewScript>;
+  durationFrames: number;
+};
+
+function buildPauseMovePreviewRows(
+  character: CharacterDefinition,
+  activeTab: MoveListTab,
+  configured: AnimationSlot[],
+  comboRoutes: ReturnType<typeof generateCharacterComboRoutes>
+): PauseMovePreviewRow[] {
+  if (activeTab === 'combo') {
+    return comboRoutes.map((route) => {
+      const script = makeComboRoutePreviewScript(route);
+      return {
+        id: `combo:${route.id}`,
+        title: route.title,
+        notation: route.steps.flatMap((step, index) => index === 0 ? step.notation : ['>', ...step.notation]),
+        summary: `${comboTrialCategoryLabels[route.category]} Lv ${route.level} | ${route.estimatedHits} hits | ${route.tier} | ${route.families.join('/')} | ${route.reason}`,
+        badges: [comboTrialCategoryLabels[route.category], `${route.estimatedHits} hits`, route.tier, ...route.families],
+        script,
+        durationFrames: previewScriptLength(script) + 96
+      };
+    });
+  }
+
+  return configured.slice(0, 36).map((slot) => {
+    const move = resolveSlotMove(character, slot);
+    const input = move?.input ?? commandPose(slot.command ?? '') as MoveInput;
+    const script = makeMovePreviewScript({ input, command: slot.command });
+    const frameCount = character.animationFrames?.[getSlotDataKey(slot)]?.length ?? 0;
+    const moveDuration = getAnimationPreviewTotalFrames(slot, move, frameCount);
+    return {
+      id: `move:${slot.key}`,
+      title: formatMoveSlotLabel(slot, move),
+      notation: slot.notation,
+      description: move?.description,
+      summary: formatFrameSummary(move),
+      badges: movePropertyBadges(move),
+      script,
+      durationFrames: previewScriptLength(script) + Math.max(42, moveDuration + 18)
+    };
+  });
+}
+
+function safeTestId(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'move';
 }
 
 function TrainingTrialHud({
