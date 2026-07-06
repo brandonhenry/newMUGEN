@@ -1,0 +1,270 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "kagura",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Umbrella Jab",
+        "description": "Fast high umbrella jab with a short active window and heavy recovery.",
+        "hitLevel": "high"
+      },
+      "reason": "Standing umbrella poke aimed high."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Yato Slide",
+        "description": "Slow low slide with moderate active time from Kagura's forward dash.",
+        "hitLevel": "low"
+      },
+      "reason": "Low forward slide at shin height."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Umbrella Body Swing",
+        "description": "Quick mid umbrella swing with a short active window and steady recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Mid-height umbrella arc."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Yato Dash Kick",
+        "description": "Fast mid dash kick with long active coverage and heavy recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward-moving kick and tumble sequence."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Umbrella Guard Break",
+        "description": "Slow mid umbrella sequence that winds into a controlled forward strike.",
+        "hitLevel": "mid"
+      },
+      "reason": "Delayed umbrella poke and spin at mid height."
+    },
+    {
+      "key": "cmd:1+2+3",
+      "patch": {
+        "label": "Low Yato Slide",
+        "description": "Slow low slide with moderate active time and measured recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Three-button command uses the low slide animation."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Umbrella Tornado Launcher",
+        "description": "Slow mid jumping launcher tornado with long active coverage from a spinning umbrella.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true
+      },
+      "reason": "Jumping umbrella spin has launcher and tornado data."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Yato Dash Kick",
+        "description": "Fast mid dash kick with long active coverage and heavy recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Same rushing kick family as the right kick."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Umbrella Feint",
+        "description": "Slow low feint with moderate active time and quick recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Low command stays compact and grounded."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Yato Drive",
+        "description": "Slow low jumping knockdown drive with long active coverage and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "knockdown": true
+      },
+      "reason": "Long umbrella drive has low, jump, and knockdown data."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Homing Umbrella Tornado",
+        "description": "Slow mid jumping tornado knockdown with homing coverage from a spinning umbrella.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true,
+        "knockdown": true
+      },
+      "reason": "Spinning umbrella flip has tornado, jump, knockdown, and homing data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Yato Roll",
+        "description": "Fast mid crouch attack with long active coverage from a low rolling strike.",
+        "hitLevel": "mid"
+      },
+      "reason": "Low-starting roll and red impact frames."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Umbrella Launcher",
+        "description": "Steady mid launcher with a short active window from a crouching umbrella lift.",
+        "hitLevel": "mid"
+      },
+      "reason": "Crouch-starting umbrella swing with launcher data."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Quick Umbrella Check",
+        "description": "Fast high umbrella check with a modest active window and steady recovery.",
+        "hitLevel": "high"
+      },
+      "reason": "Compact high umbrella poke."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Yato Aura Drive",
+        "description": "Fast special knockdown rush with long active coverage from a tumbling umbrella charge.",
+        "hitLevel": "special",
+        "knockdown": true
+      },
+      "reason": "Special rush has long active time and knockdown data."
+    },
+    {
+      "key": "cmd:SS+3",
+      "patch": {
+        "label": "Sidestep Low Slide",
+        "description": "Fast low sidestep slide with a short active window and heavy recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Sidestep low uses the sliding attack."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "While Rising Umbrella",
+        "description": "Steady mid while-rising umbrella swing with a modest active window and quick recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Rising transition into a mid umbrella arc."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Yato Kick",
+        "description": "Fast mid rising strike with very long active coverage and quick recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "While-rising command becomes a long active kick."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Quick Umbrella Check",
+        "description": "Fast high umbrella check with a modest active window and steady recovery.",
+        "hitLevel": "high"
+      },
+      "reason": "Same high umbrella check as O+1."
+    },
+    {
+      "key": "cmd:d+3",
+      "patch": {
+        "label": "Low Yato Slide",
+        "description": "Fast low slide with a short active window and heavy recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Down kick repeats the low slide visual."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Forward Umbrella Launcher",
+        "description": "Slow mid launcher with a short active window from a forward umbrella lift.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward-reaching launcher data."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "patch": {
+        "label": "Forward Low Slide",
+        "description": "Fast low slide with a short active window and heavy recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Forward-low command repeats the low slide."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Umbrella Poke",
+        "description": "Slow mid umbrella poke with a short active window and high commitment.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command uses a compact mid umbrella strike."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Umbrella Swing",
+        "description": "Steady mid umbrella swing with a modest active window and quick recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command repeats the mid umbrella arc."
+    },
+    {
+      "key": "cmd:f+3",
+      "patch": {
+        "label": "Forward Low Slide",
+        "description": "Fast low slide with a short active window and heavy recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Forward kick repeats the low slide."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Quick Umbrella Check",
+        "description": "Fast high umbrella check with a modest active window for close pressure.",
+        "hitLevel": "high"
+      },
+      "reason": "Quarter-circle punch repeats the high umbrella check."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "patch": {
+        "label": "Low Yato Slide",
+        "description": "Fast low slide with a short active window and heavy recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Quarter-circle kick repeats the low slide."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Yato Umbrella Burst",
+        "description": "Fast mid knockdown burst with very long active coverage and quick recovery.",
+        "hitLevel": "mid",
+        "knockdown": true
+      },
+      "reason": "Burst ender uses a long active umbrella spin and has knockdown data."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

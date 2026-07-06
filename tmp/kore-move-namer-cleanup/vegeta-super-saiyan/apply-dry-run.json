@@ -1,0 +1,326 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "vegeta-super-saiyan",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Super Saiyan Jab",
+        "description": "Fast high jab with a tiny active window and guarded recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Short standing punch hits high and matches the base Vegeta jab family."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Super Saiyan Sweep",
+        "description": "Slow low kick with a long active sweep and measured recovery.",
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low sliding kick attacks across the shin line."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Super Saiyan Body Blow",
+        "description": "Quick mid body blow with a brief active hit and steady recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Compact forward punch travels through the torso line."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Heavy Super Saiyan Kick",
+        "description": "Slow mid kick with a long active swing and measured recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Standing kick arc hits through the body line."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Super Saiyan Cross Strike",
+        "description": "Slow mid cross strike with a tiny active hit and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Short command route is a committed body-height strike."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Rising Super Saiyan Launcher",
+        "description": "Quick mid jumping launcher with a long active lift and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tracking": "medium",
+        "launchHeight": 2.2
+      },
+      "reason": "Hop into upward strike carries authored launcher height."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Super Saiyan Tornado Kick",
+        "description": "Slow mid jumping kick that works as a tornado extender.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true,
+        "tracking": "medium"
+      },
+      "reason": "Hop-kick route is authored as tornado and visually rotates through the strike."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Super Saiyan Hop",
+        "description": "Slow low jumping kick with a tiny active hit and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low route leaves the ground without knockdown or launcher data."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Super Saiyan Knockdown",
+        "description": "Slow low jumping kick that knocks down with a brief active hit.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "knockdown": true,
+        "tracking": "medium"
+      },
+      "reason": "Low hop-kick route is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Super Saiyan Tornado Crush",
+        "description": "Slow mid jumping tornado kick that knocks down after a brief active hit.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "knockdown": true,
+        "tornado": true,
+        "tracking": "medium"
+      },
+      "reason": "Airborne kick route carries tornado, knockdown, and jump flags."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Super Saiyan Rush",
+        "description": "Quick mid crouch rush with long active pressure and fast recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Full-crouch route advances through repeated mid strikes."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Super Saiyan Launcher",
+        "description": "Steady mid crouch launcher with a tiny active lift and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium",
+        "launchHeight": 2.0
+      },
+      "reason": "Crouch-to-rising strike is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Super Saiyan Jab",
+        "description": "Fast high overdrive jab with a modest active window and steady recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Overdrive route reuses the high jab family."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Final Flash Drive",
+        "description": "Slow special knockdown drive with huge active Super Saiyan pressure.",
+        "hitLevel": "special",
+        "knockdown": true,
+        "tracking": "medium"
+      },
+      "reason": "Long charged special sequence is authored as a knockdown drive."
+    },
+    {
+      "key": "cmd:O+4",
+      "patch": {
+        "label": "Overdrive Super Tornado",
+        "description": "Slow mid overdrive jump kick that works as a tornado extender.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true,
+        "tracking": "medium"
+      },
+      "reason": "Overdrive route shares the authored tornado hop-kick family."
+    },
+    {
+      "key": "cmd:SS+3",
+      "patch": {
+        "label": "Sidestep Low Hop Kick",
+        "description": "Slow low sidestep jump kick with a long active sweep and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Sidestep low kick leaves the ground and attacks low."
+    },
+    {
+      "key": "cmd:SS+4",
+      "patch": {
+        "label": "Sidestep Super Tornado",
+        "description": "Slow mid sidestep jump kick that works as a tornado extender.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true,
+        "tracking": "medium"
+      },
+      "reason": "Sidestep route shares the tornado hop-kick animation."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "Rising Super Saiyan Blow",
+        "description": "Slow mid while-rising strike with a modest active window and quick finish.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "While-standing command uses a mid body-blow silhouette."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Super Tornado",
+        "description": "Steady mid while-rising jump kick that works as a tornado extender.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true,
+        "tracking": "medium"
+      },
+      "reason": "While-standing kick has authored tornado and jump flags."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Super Saiyan Jab",
+        "description": "Fast high ducking jab with a modest active window and steady recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Down jab repeats the high punch frames."
+    },
+    {
+      "key": "cmd:d+3",
+      "patch": {
+        "label": "Ducking Low Hop Kick",
+        "description": "Slow low ducking jump kick with a long active sweep and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Down kick shares the low jumping kick animation."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Super Launcher",
+        "description": "Slow mid diagonal launcher with a tiny active lift and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium",
+        "launchHeight": 2.1
+      },
+      "reason": "Down-forward strike carries authored launcher height."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "patch": {
+        "label": "Diagonal Low Hop Kick",
+        "description": "Slow low diagonal jump kick with a long active sweep and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Down-forward kick shares the low jumping kick animation."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Super Saiyan Strike",
+        "description": "Slow mid forward strike with a tiny active hit and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward command is a compact body-height strike."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Super Saiyan Blow",
+        "description": "Slow mid forward body blow with a modest active window and quick finish.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward-heavy route uses the mid body-blow animation."
+    },
+    {
+      "key": "cmd:f+3",
+      "patch": {
+        "label": "Advancing Low Hop Kick",
+        "description": "Slow low advancing jump kick with a long active sweep and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Forward kick uses the low jumping kick family."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Super Saiyan Quick Jab",
+        "description": "Fast high quarter-circle jab with a modest active window and steady recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle jab repeats the high punch frames."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "patch": {
+        "label": "Super Saiyan Low Hop",
+        "description": "Steady low jumping kick with long active pressure and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle kick is the longer low jump-kick variant."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Final Flash Tornado",
+        "description": "Steady mid jumping tornado kick that knocks down with huge active pressure.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "knockdown": true,
+        "tornado": true,
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle route is authored as tornado, jump, and knockdown."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

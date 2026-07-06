@@ -434,7 +434,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Lenalee Lee Left Check",
+      "label": "Quick Dark Boots Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -471,11 +471,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high boot-check jab with a tiny active window for close pressure."
     },
     {
       "id": "kick",
-      "label": "Lenalee Lee Left Kick",
+      "label": "Low Dark Boots Sweep",
       "input": "kick",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -512,11 +513,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low sweep with a moderate active window and steady recovery."
     },
     {
       "id": "heavy",
-      "label": "Lenalee Lee Right Check",
+      "label": "Dark Boots Body Kick",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -553,11 +555,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast mid kick with long active pressure and quick recovery."
     },
     {
       "id": "special",
-      "label": "Lenalee Lee Right Kick",
+      "label": "Heavy Dark Boots Kick",
       "input": "special",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -594,7 +597,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "description": "Slow mid kick with moderate active time and committed recovery."
     }
   ],
   "hurtboxes": [
@@ -638,10 +642,11 @@
       "forwardForce": 0.45,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "Lenalee Lee Left Check",
+      "label": "Quick Dark Boots Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high boot-check jab with a tiny active window for close pressure."
     },
     "jabright": {
       "startupFrames": 7,
@@ -657,8 +662,10 @@
       "forwardForce": 0.71,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 20,
-      "label": "Lenalee Lee Right Check",
-      "hitLevel": "mid"
+      "label": "Dark Boots Body Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid kick with long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "kickleft": {
       "startupFrames": 23,
@@ -674,10 +681,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "Lenalee Lee Left Kick",
+      "label": "Low Dark Boots Sweep",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low sweep with a moderate active window and steady recovery."
     },
     "kickright": {
       "startupFrames": 24,
@@ -693,10 +701,11 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 36,
-      "label": "Lenalee Lee Right Kick",
+      "label": "Heavy Dark Boots Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid kick with moderate active time and committed recovery."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -712,9 +721,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 44,
-      "label": "f+1 Frame Link",
+      "label": "Forward Boot Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward check with a tiny active window and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 10,
@@ -734,8 +745,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Lenalee Lee Launcher",
-      "hitLevel": "mid"
+      "label": "Diagonal Dark Boots Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with very long active lift and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -753,12 +766,14 @@
       "forwardForceEndFrame": 41,
       "moveJumpForce": 9.4,
       "moveJumpGravity": 24,
-      "label": "qcf+4 Frame Link",
+      "label": "Dark Boots Tornado Ender",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado ender that knocks down after a brief active hit.",
+      "tracking": "weakRight"
     },
     "cmd:WS+4": {
       "startupFrames": 9,
@@ -776,10 +791,12 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "WS+4 Frame Link",
+      "label": "While-Rising Sky Kick",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Fast mid jumping sky kick with very long active coverage and quick recovery.",
+      "tracking": "weakRight"
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -795,9 +812,11 @@
       "forwardForce": 0.99,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 29,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Innocence Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching rush with very long active afterimage pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 12,
@@ -814,8 +833,10 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 31,
       "launchHeight": 2,
-      "label": "Lenalee Lee Crouch Launcher",
-      "hitLevel": "mid"
+      "label": "Crouch Boot Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher with very long active lift and fast recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -833,9 +854,11 @@
       "forwardForceEndFrame": 25,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Lenalee Lee Twin Assault",
+      "label": "Dark Boots Twin Assault",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping twin assault with a long active window and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -854,10 +877,12 @@
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Dark Boots Launcher",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping launcher with long active lift and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -873,9 +898,11 @@
       "forwardForce": 1.07,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
-      "label": "2+3 Frame Link",
+      "label": "Low Boot Feint",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low feint with a moderate active window and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -893,11 +920,13 @@
       "forwardForceEndFrame": 14,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "2+4 Frame Link",
+      "label": "Low Skyfall Kick",
       "hitLevel": "low",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping knockdown kick with extended active time and quick recovery.",
+      "tracking": "weakRight"
     },
     "cmd:3+4": {
       "startupFrames": 13,
@@ -915,12 +944,14 @@
       "forwardForceEndFrame": 19,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "3+4 Frame Link",
+      "label": "Dark Boots Tornado Crush",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping tornado that knocks down after a short active burst.",
+      "tracking": "weakRight"
     },
     "cmd:O+2": {
       "startupFrames": 15,
@@ -936,9 +967,11 @@
       "forwardForce": 2.72,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 39,
-      "label": "Lenalee Lee Aura Drive",
+      "label": "Dark Boots Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady special knockdown drive with very long active boot pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1414,13 +1447,16 @@
       "forwardForceEndFrame": 32,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "1+4 Frame Link",
+      "label": "Dark Boots Tornado",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 28,
       "activeFrames": 11,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Slow mid jumping tornado kick with long active spin pressure.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1432,12 +1468,15 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 24,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Boot",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 7,
-      "recoveryFrames": 22
+      "recoveryFrames": 22,
+      "description": "Steady low jumping boot with a short active window and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1447,11 +1486,14 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Boot Jab",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 7,
-      "recoveryFrames": 19
+      "recoveryFrames": 19,
+      "description": "Fast high ducking jab with a short active window and heavy recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1463,12 +1505,15 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "d+3 Frame Link",
+      "label": "Low Jump Boot",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 7,
-      "recoveryFrames": 22
+      "recoveryFrames": 22,
+      "description": "Steady low jumping boot with a short active window and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1480,12 +1525,15 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 24,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Low Boot",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 7,
-      "recoveryFrames": 22
+      "recoveryFrames": 22,
+      "description": "Steady low jumping boot with a short active window and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1495,11 +1543,14 @@
       "forwardForce": 1.51,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "qcf+1 Frame Link",
+      "label": "Dark Boots Rush Jab",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 7,
-      "recoveryFrames": 19
+      "recoveryFrames": 19,
+      "description": "Fast high rush jab with a short active window and heavy recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1511,12 +1562,15 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "qcf+3 Frame Link",
+      "label": "Dark Boots Low Rush",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 7,
-      "recoveryFrames": 22
+      "recoveryFrames": 22,
+      "description": "Steady low jumping rush kick with a short active window and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1528,12 +1582,15 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 24,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Boot",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 7,
-      "recoveryFrames": 22
+      "recoveryFrames": 22,
+      "description": "Steady low jumping sidestep boot with a short active window and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1545,13 +1602,16 @@
       "forwardForceEndFrame": 36,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Tornado Kick",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 31,
       "activeFrames": 6,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Slow mid jumping tornado kick with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1561,11 +1621,14 @@
       "forwardForce": 1.57,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Boot Jab",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 7,
-      "recoveryFrames": 19
+      "recoveryFrames": 19,
+      "description": "Fast high overdrive jab with a short active window and heavy recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1577,13 +1640,16 @@
       "forwardForceEndFrame": 36,
       "moveJumpForce": 9.4,
       "moveJumpGravity": 24,
-      "label": "O+4 Frame Link",
+      "label": "Overdrive Tornado Kick",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 31,
       "activeFrames": 6,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Slow mid jumping tornado kick with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     }
   },
   "effects": [],

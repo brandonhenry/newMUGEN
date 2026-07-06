@@ -421,7 +421,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Raoh Left Check",
+      "label": "Conqueror High Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -458,11 +458,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny active window and a heavy crescent-fist follow-through."
     },
     {
       "id": "kick",
-      "label": "Raoh Left Kick",
+      "label": "Raoh Low Sweep",
       "input": "kick",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -499,7 +500,8 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low sweep with long active slide frames that checks legs from a seated stance."
     },
     {
       "id": "heavy",
@@ -625,10 +627,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 18,
-      "label": "Raoh Left Check",
+      "label": "Conqueror High Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny active window and a heavy crescent-fist follow-through."
     },
     "jabright": {
       "startupFrames": 13,
@@ -661,10 +664,11 @@
       "forwardForce": 0.86,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "Raoh Left Kick",
+      "label": "Raoh Low Sweep",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low sweep with long active slide frames that checks legs from a seated stance."
     },
     "kickright": {
       "startupFrames": 16,
@@ -697,9 +701,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 27,
-      "label": "f+1 Frame Link",
+      "label": "Forward Crescent Fist",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward fist with a brief active crescent swing and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -754,8 +760,10 @@
       "forwardForce": 1.43,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 20,
-      "label": "Raoh Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Body Strike",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with a long active shove and high recovery afterward.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 6,
@@ -771,9 +779,11 @@
       "forwardForce": 1.57,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 18,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Wheel Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch rush with long active rolling kicks and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 15,
@@ -789,9 +799,11 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 23,
-      "launchHeight": 2,
-      "label": "Raoh Crouch Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.0,
+      "label": "Crouch Hokuto Launcher",
+      "hitLevel": "mid",
+      "description": "Steady mid launcher with long active rising pressure that flips into a pop-up.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 24,
@@ -809,10 +821,12 @@
       "forwardForceEndFrame": 37,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Raoh Twin Assault",
+      "label": "Conqueror Leaping Clinch",
       "hitLevel": "throw",
       "throwCapture": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow jumping throw that steps in with a long capture window before Raoh resets.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -829,10 +843,12 @@
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 38,
       "launchHeight": 0,
-      "label": "1+3 Frame Link",
+      "label": "Hokuto Iron Grip",
       "hitLevel": "throw",
       "throwCapture": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow standing throw with a long active capture window and compact recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -848,10 +864,12 @@
       "forwardForce": 2,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 37,
-      "label": "2+3 Frame Link",
+      "label": "Hokuto Crushing Hold",
       "hitLevel": "throw",
       "throwCapture": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow throw with a long active hold as Raoh raises his arms into a capture stance.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 15,
@@ -867,10 +885,12 @@
       "forwardForce": 1.7,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 23,
-      "label": "Raoh Driving Kick",
+      "label": "Conqueror Driving Sweep",
       "hitLevel": "low",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "description": "Steady low knockdown sweep with very long active travel that ends crouched.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 0,
@@ -886,9 +906,11 @@
       "forwardForce": 2.9,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 27,
-      "label": "Raoh Power Crush",
+      "label": "Hokuto Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Instant mid knockdown crush with long active force and a deliberate recovery.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -904,9 +926,11 @@
       "forwardForce": 2.7,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "label": "Raoh Aura Drive",
+      "label": "Conqueror Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with very long active aura pressure and quick recovery.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1383,7 +1407,11 @@
       "forwardForce": 2,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "label": "Seated King's Kick",
+      "description": "Slow mid kick that drops into a seated strike and leaves Raoh in crouch.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1393,12 +1421,15 @@
       "forwardForce": 1.34,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Slide",
       "endsInCrouch": true,
       "cancelable": false,
       "startupFrames": 30,
       "activeFrames": 13,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow low advancing slide with long active reach that finishes in crouch.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1408,11 +1439,14 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 18,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Crescent Jab",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 4,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "description": "Steady high ducking jab with a brief active crescent swing and moderate recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1422,12 +1456,15 @@
       "forwardForce": 1.06,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "d+3 Frame Link",
+      "label": "Ducking Low Slide",
       "endsInCrouch": true,
       "cancelable": false,
       "startupFrames": 30,
       "activeFrames": 13,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow low slide kick with long active reach that leaves Raoh crouched.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1437,12 +1474,15 @@
       "forwardForce": 1.34,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "d/f+3 Frame Link",
+      "label": "Forward Low Slide",
       "endsInCrouch": true,
       "cancelable": false,
       "startupFrames": 30,
       "activeFrames": 13,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow low forward slide with long active leg pressure and full-crouch finish.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1452,11 +1492,14 @@
       "forwardForce": 2.09,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 18,
-      "label": "qcf+1 Frame Link",
+      "label": "Hokuto Crescent Fist",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 7,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "description": "Quick high quarter-circle fist with a short active crescent arc and steady recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1466,12 +1509,15 @@
       "forwardForce": 1.92,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "qcf+3 Frame Link",
+      "label": "Hokuto Low Slide",
       "endsInCrouch": true,
       "cancelable": false,
       "startupFrames": 30,
       "activeFrames": 13,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow low quarter-circle slide with long active reach that ends in full crouch.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1481,12 +1527,15 @@
       "forwardForce": 1.4,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Slide",
       "endsInCrouch": true,
       "cancelable": false,
       "startupFrames": 30,
       "activeFrames": 13,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow low sidestep slide with long active reach that ends in full crouch.",
+      "hitLevel": "low",
+      "tracking": "medium"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1496,11 +1545,14 @@
       "forwardForce": 2.15,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 18,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Crescent Jab",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 7,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "description": "Quick high overdrive jab with a short active swipe and measured recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     }
   },
   "effects": [],

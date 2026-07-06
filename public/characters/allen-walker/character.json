@@ -394,7 +394,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Allen Walker Left Check",
+      "label": "Quick Exorcist Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -431,11 +431,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a short active window that checks close pressure."
     },
     {
       "id": "kick",
-      "label": "Allen Walker Left Kick",
+      "label": "Low Claw Rake",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -472,11 +473,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick low claw rush with long active pressure across the shins."
     },
     {
       "id": "heavy",
-      "label": "Allen Walker Right Check",
+      "label": "Crown Clown Swipe",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -513,11 +515,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast mid claw swipe that stays active through a forward raking motion."
     },
     {
       "id": "special",
-      "label": "Allen Walker Right Kick",
+      "label": "Innocence Rush",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -554,7 +557,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid rush with a long active claw sequence for close-range pressure."
     }
   ],
   "hurtboxes": [
@@ -598,10 +602,11 @@
       "forwardForce": 0.42,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "Allen Walker Left Check",
+      "label": "Quick Exorcist Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a short active window that checks close pressure."
     },
     "jabright": {
       "startupFrames": 7,
@@ -617,8 +622,9 @@
       "forwardForce": 0.48,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
-      "label": "Allen Walker Right Check",
-      "hitLevel": "mid"
+      "label": "Crown Clown Swipe",
+      "hitLevel": "mid",
+      "description": "Fast mid claw swipe that stays active through a forward raking motion."
     },
     "kickleft": {
       "startupFrames": 14,
@@ -634,8 +640,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Allen Walker Left Kick",
-      "hitLevel": "low"
+      "label": "Low Claw Rake",
+      "hitLevel": "low",
+      "description": "Quick low claw rush with long active pressure across the shins."
     },
     "kickright": {
       "startupFrames": 14,
@@ -651,8 +658,9 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Allen Walker Right Kick",
-      "hitLevel": "mid"
+      "label": "Innocence Rush",
+      "hitLevel": "mid",
+      "description": "Quick mid rush with a long active claw sequence for close-range pressure."
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -668,9 +676,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 44,
-      "label": "f+1 Frame Link",
+      "label": "Forward Innocence Slash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid advancing slash with long active coverage from Allen's weapon arm."
     },
     "cmd:d/f+2": {
       "startupFrames": 25,
@@ -690,8 +699,9 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Allen Walker Launcher",
-      "hitLevel": "mid"
+      "label": "Crown Clown Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher that winds into a sweeping Crown Clown uppercut."
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -709,10 +719,11 @@
       "forwardForceEndFrame": 55,
       "moveJumpForce": 9.4,
       "moveJumpGravity": 24,
-      "label": "Allen Walker Burst",
+      "label": "Crown Clown Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Fast mid jumping knockdown that bursts forward through a weapon-arm slash."
     },
     "cmd:WS+4": {
       "startupFrames": 21,
@@ -728,8 +739,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Allen Walker Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Exorcist Blade",
+      "hitLevel": "mid",
+      "description": "Slow mid rising strike that lifts Allen into a green-bladed weapon swing.",
+      "jumpBeforeMove": true
     },
     "cmd:FC+1": {
       "startupFrames": 6,
@@ -745,9 +758,10 @@
       "forwardForce": 0.96,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Claw Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch check that snaps into a short claw swipe."
     },
     "cmd:FC+2": {
       "startupFrames": 19,
@@ -763,9 +777,10 @@
       "forwardForce": 1.26,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "launchHeight": 2,
-      "label": "Allen Walker Crouch Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.1,
+      "label": "Crouch Grave Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher that rises from crouch into a sweeping Innocence strike."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -781,8 +796,9 @@
       "forwardForce": 1.58,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "label": "Allen Walker Twin Assault",
-      "hitLevel": "mid"
+      "label": "Twin Claw Assault",
+      "hitLevel": "mid",
+      "description": "Slow mid string that chains a step-in strike into Allen's claw rush."
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -798,9 +814,10 @@
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "launchHeight": 2.2,
-      "label": "Allen Walker Cross Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.1,
+      "label": "Cross Grave Launcher",
+      "hitLevel": "mid",
+      "description": "Steady mid launcher that carves upward with Allen's white Innocence arm."
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -816,8 +833,9 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Allen Walker Low Feint",
-      "hitLevel": "low"
+      "label": "Low Innocence Feint",
+      "hitLevel": "low",
+      "description": "Steady low feint that dips into a sweeping claw follow-through."
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -833,9 +851,10 @@
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Allen Walker Driving Kick",
+      "label": "Driving Sword Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown that drives forward before Allen rises into a weapon strike."
     },
     "cmd:3+4": {
       "startupFrames": 0,
@@ -851,9 +870,10 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Allen Walker Power Crush",
+      "label": "Crown Clown Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Long-active mid knockdown that swings Allen's Innocence through a heavy arc."
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -869,9 +889,11 @@
       "forwardForce": 2.49,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "label": "Allen Walker Aura Drive",
+      "label": "Innocence Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown that channels Allen's Innocence into a low driving rush.",
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1345,11 +1367,13 @@
       "forwardForce": 0.62,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "d+1 Frame Link",
+      "label": "Low-Step Jab",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 15,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Fast high poke from a low command that checks opponents with quick recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1359,11 +1383,13 @@
       "forwardForce": 1.48,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "qcf+1 Frame Link",
+      "label": "Cross Step Jab",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 21,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Fast high motion jab that keeps the active window short and simple.",
+      "hitLevel": "high"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1373,11 +1399,14 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "O+1 Frame Link",
+      "label": "Charged Exorcist Jab",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 21,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Fast high charge jab with a short active check from close range.",
+      "usesKi": true,
+      "hitLevel": "high"
     }
   },
   "effects": [],

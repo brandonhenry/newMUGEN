@@ -435,7 +435,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Franky Left Check",
+      "label": "Quick Cyborg Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -472,11 +472,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a short active window from Franky's compact mechanical fist."
     },
     {
       "id": "kick",
-      "label": "Franky Left Kick",
+      "label": "Low Weapons Left",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -513,11 +514,13 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick low cyborg strike with long active coverage as Franky drops and drives forward.",
+      "endsInCrouch": true
     },
     {
       "id": "heavy",
-      "label": "Franky Right Check",
+      "label": "Strong Right Hook",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -554,11 +557,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid hook with a brief active window that swings Franky's heavy right arm."
     },
     {
       "id": "special",
-      "label": "Franky Right Kick",
+      "label": "Cyborg Wheel Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -595,7 +599,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid wheel kick with long active frames as Franky rolls his body through the target."
     }
   ],
   "hurtboxes": [
@@ -639,10 +644,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 20,
-      "label": "Franky Left Check",
+      "label": "Quick Cyborg Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a short active window from Franky's compact mechanical fist."
     },
     "jabright": {
       "startupFrames": 11,
@@ -658,10 +664,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 30,
-      "label": "Franky Right Check",
+      "label": "Strong Right Hook",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid hook with a brief active window that swings Franky's heavy right arm."
     },
     "kickleft": {
       "startupFrames": 7,
@@ -677,8 +684,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Franky Left Kick",
-      "hitLevel": "low"
+      "label": "Low Weapons Left",
+      "hitLevel": "low",
+      "description": "Quick low cyborg strike with long active coverage as Franky drops and drives forward.",
+      "endsInCrouch": true
     },
     "kickright": {
       "startupFrames": 14,
@@ -694,8 +703,9 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Franky Right Kick",
-      "hitLevel": "mid"
+      "label": "Cyborg Wheel Kick",
+      "hitLevel": "mid",
+      "description": "Quick mid wheel kick with long active frames as Franky rolls his body through the target."
     },
     "cmd:f+1": {
       "startupFrames": 8,
@@ -711,9 +721,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "f+1 Frame Link",
+      "label": "Franky Guard Pump",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid pressure tool with long active frames as Franky pumps his arms forward."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -729,13 +740,14 @@
       "forwardForce": 2.12,
       "forwardForceStartFrame": 40,
       "forwardForceEndFrame": 50,
-      "launchHeight": 2.1,
+      "launchHeight": 1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Strong Right",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a heavy right-arm punch."
     },
     "cmd:qcf+4": {
       "startupFrames": 4,
@@ -751,9 +763,10 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Franky Burst",
+      "label": "Franky Burst Drive",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown finisher that powers up before a long forward cyborg rush."
     },
     "cmd:WS+4": {
       "startupFrames": 5,
@@ -769,8 +782,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Franky Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Cyborg Wheel",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with long active coverage as Franky flips through the hit.",
+      "jumpBeforeMove": true
     },
     "cmd:FC+1": {
       "startupFrames": 15,
@@ -786,9 +801,11 @@
       "forwardForce": 1.62,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 20,
-      "label": "FC+1 Frame Link",
+      "label": "Full Crouch Upper",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch attack that rises from a low stance into a compact punch.",
+      "endsInCrouch": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -804,10 +821,11 @@
       "forwardForce": 2.03,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 47,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 1,
+      "label": "Crouch Strong Right",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching right-arm swing."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -823,9 +841,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 28,
-      "label": "1+2 Frame Link",
+      "label": "Strong Right Drive",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid lunging punch that stretches Franky forward for a committed body check."
     },
     "cmd:1+3": {
       "startupFrames": 12,
@@ -843,10 +862,11 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 9.4,
       "moveJumpGravity": 24,
-      "launchHeight": 2.2,
-      "label": "Franky Cross Launcher",
+      "launchHeight": 1,
+      "label": "Franky Rocket Upper",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick jumping launcher that sends Franky upward behind a rising cyborg punch."
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -862,8 +882,10 @@
       "forwardForce": 1.28,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 9,
-      "label": "Franky Low Feint",
-      "hitLevel": "low"
+      "label": "Low Cyborg Shuffle",
+      "hitLevel": "low",
+      "description": "Slow low feint that keeps Franky crouched while threatening a delayed strike.",
+      "endsInCrouch": true
     },
     "cmd:2+4": {
       "startupFrames": 28,
@@ -879,9 +901,11 @@
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Franky Driving Kick",
+      "label": "Low Strong Right",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown drive that reaches forward with Franky's extended fist.",
+      "endsInCrouch": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -897,10 +921,11 @@
       "forwardForce": 3.15,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 10,
-      "label": "Franky Power Crush",
+      "label": "Franky Ball Tornado",
       "hitLevel": "mid",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "description": "Slow mid tornado knockdown that curls Franky into a rolling cyborg ball."
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -916,9 +941,10 @@
       "forwardForce": 3.26,
       "forwardForceStartFrame": 48,
       "forwardForceEndFrame": 60,
-      "label": "Franky Aura Drive",
+      "label": "Franky Arm Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with long active frames from Franky's extended arm."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1392,11 +1418,13 @@
       "forwardForce": 1.73,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 30,
-      "label": "f+2 Frame Link",
+      "label": "Strong Right Hook",
       "cancelable": false,
       "startupFrames": 24,
       "activeFrames": 5,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick mid hook with a short active window from Franky's heavy right fist.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1406,11 +1434,13 @@
       "forwardForce": 1.28,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 20,
-      "label": "d+1 Frame Link",
+      "label": "Quick Cyborg Jab",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Quick high jab with a short active window that checks space from a small step.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1420,11 +1450,13 @@
       "forwardForce": 2.14,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 20,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Weapons Check",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 8,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Steady high arm check that reaches out and recovers without a big commitment.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1434,11 +1466,13 @@
       "forwardForce": 1.79,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 30,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Right",
       "cancelable": false,
       "startupFrames": 24,
       "activeFrames": 5,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow mid while-rising punch with a brief active window and heavy recovery.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1448,11 +1482,18 @@
       "forwardForce": 2.2,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 20,
-      "label": "O+1 Frame Link",
+      "label": "Quick Weapons Check",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 8,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Steady high poke that snaps Franky's arm out and recovers quickly.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Cyborg Wheel Kick",
+      "description": "Quick mid rolling kick with long active coverage from Franky's spinning body.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

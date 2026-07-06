@@ -438,7 +438,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Gon Freecss Left Check",
+      "label": "Quick Rod Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -475,11 +475,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high fishing-rod jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Gon Freecss Left Kick",
+      "label": "Low Hunter Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -516,11 +517,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low sweep with steady active time from Gon's grounded kick."
     },
     {
       "id": "heavy",
-      "label": "Gon Freecss Right Check",
+      "label": "Fishing Line Arc",
       "input": "heavy",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -557,11 +559,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid rod swing with a short active window and a wide line arc."
     },
     {
       "id": "special",
-      "label": "Gon Freecss Right Kick",
+      "label": "Hunter Dash Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -598,7 +601,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow mid dash kick with a brief active window and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -642,10 +646,11 @@
       "forwardForce": 0.42,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "Gon Freecss Left Check",
+      "label": "Quick Rod Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high fishing-rod jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 14,
@@ -661,10 +666,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 34,
-      "label": "Gon Freecss Right Check",
+      "label": "Fishing Line Arc",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid rod swing with a short active window and a wide line arc."
     },
     "kickleft": {
       "startupFrames": 20,
@@ -680,8 +686,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Gon Freecss Left Kick",
-      "hitLevel": "low"
+      "label": "Low Hunter Sweep",
+      "hitLevel": "low",
+      "description": "Slow low sweep with steady active time from Gon's grounded kick."
     },
     "kickright": {
       "startupFrames": 31,
@@ -697,8 +704,9 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Gon Freecss Right Kick",
-      "hitLevel": "mid"
+      "label": "Hunter Dash Kick",
+      "hitLevel": "mid",
+      "description": "Slow mid dash kick with a brief active window and quick recovery."
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -714,9 +722,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 14,
-      "label": "f+1 Frame Link",
+      "label": "Hunter Rush Punch",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid rush with very long active coverage from repeated forward strikes."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -736,9 +745,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Line Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a lifting fishing-line arc."
     },
     "cmd:qcf+4": {
       "startupFrames": 0,
@@ -754,9 +764,10 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Gon Freecss Burst",
+      "label": "Jajanken Rock Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with long active coverage and heavy recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -772,8 +783,9 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Gon Freecss Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Hunter Strike",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with very long active coverage and quick recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 5,
@@ -789,9 +801,10 @@
       "forwardForce": 0.96,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Hunter Jab",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch poke with steady active time and measured recovery."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -808,9 +821,10 @@
       "forwardForceStartFrame": 39,
       "forwardForceEndFrame": 41,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Line Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a rising fishing-line swing."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -826,9 +840,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 32,
-      "label": "1+2 Frame Link",
+      "label": "Rod Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid rod strike that winds up before a forward hook swing."
     },
     "cmd:1+3": {
       "startupFrames": 16,
@@ -845,8 +860,9 @@
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 26,
       "launchHeight": 2.2,
-      "label": "Gon Freecss Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Hunter Cross Launcher",
+      "hitLevel": "mid",
+      "description": "Steady mid launcher with long active time from a rushing body strike."
     },
     "cmd:2+3": {
       "startupFrames": 14,
@@ -864,9 +880,10 @@
       "forwardForceEndFrame": 12,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "Gon Freecss Low Feint",
+      "label": "Low Rod Feint",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick low jumping feint with a short active window from a low rod swing."
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -884,11 +901,12 @@
       "forwardForceEndFrame": 9,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Gon Freecss Driving Kick",
+      "label": "Fishing Line Cyclone",
       "hitLevel": "low",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low tornado knockdown that jumps into a wide spinning rod arc."
     },
     "cmd:3+4": {
       "startupFrames": 40,
@@ -904,9 +922,10 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Gon Freecss Power Crush",
+      "label": "Hunter Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown rush with long active coverage from a heavy body drive."
     },
     "cmd:O+2": {
       "startupFrames": 12,
@@ -922,9 +941,10 @@
       "forwardForce": 3.71,
       "forwardForceStartFrame": 49,
       "forwardForceEndFrame": 52,
-      "label": "Gon Freecss Aura Drive",
+      "label": "Jajanken Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick special knockdown rush with long active coverage from Gon's charging attack."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1398,11 +1418,13 @@
       "forwardForce": 2.33,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 34,
-      "label": "f+2 Frame Link",
+      "label": "Forward Line Arc",
       "cancelable": false,
       "startupFrames": 23,
       "activeFrames": 5,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Slow mid rod swing with a short active window and steady recovery.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1412,11 +1434,13 @@
       "forwardForce": 0.62,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Quick Rod Check",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 13,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast high rod check with long active time and quick recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1426,11 +1450,13 @@
       "forwardForce": 1.48,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Rod Check",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 13,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast high rod check with long active time for a close-range poke.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1440,11 +1466,13 @@
       "forwardForce": 2.39,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 34,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Line",
       "cancelable": false,
       "startupFrames": 23,
       "activeFrames": 5,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Slow mid while-rising rod swing with a short active window.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1454,11 +1482,18 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Quick Rod Check",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 13,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast high rod check with long active time and quick recovery.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Hunter Dash Kick",
+      "description": "Slow mid dash kick with a short active window and quick recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

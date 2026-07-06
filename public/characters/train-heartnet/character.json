@@ -404,7 +404,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Train Heartnet Left Check",
+      "label": "Quick Hades Shot",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -441,11 +441,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high pistol check with a tiny active window and guarded recovery."
     },
     {
       "id": "kick",
-      "label": "Train Heartnet Left Kick",
+      "label": "Low Gunner Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -482,11 +483,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Steady low sweep with huge active movement and quick recovery."
     },
     {
       "id": "heavy",
-      "label": "Train Heartnet Right Check",
+      "label": "Hades Body Shot",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -523,11 +525,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid pistol shot with a brief active hit and steady recovery."
     },
     {
       "id": "special",
-      "label": "Train Heartnet Right Kick",
+      "label": "Sweeper Slide Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -564,7 +567,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow mid slide kick with huge active travel and quick finish."
     }
   ],
   "hurtboxes": [
@@ -608,10 +612,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
-      "label": "Train Heartnet Left Check",
+      "label": "Quick Hades Shot",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high pistol check with a tiny active window and guarded recovery."
     },
     "jabright": {
       "startupFrames": 11,
@@ -627,10 +632,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
-      "label": "Train Heartnet Right Check",
+      "label": "Hades Body Shot",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid pistol shot with a brief active hit and steady recovery."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -646,8 +652,10 @@
       "forwardForce": 0.62,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 22,
-      "label": "Train Heartnet Left Kick",
-      "hitLevel": "low"
+      "label": "Low Gunner Sweep",
+      "hitLevel": "low",
+      "description": "Steady low sweep with huge active movement and quick recovery.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 19,
@@ -663,8 +671,10 @@
       "forwardForce": 0.9,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 22,
-      "label": "Train Heartnet Right Kick",
-      "hitLevel": "mid"
+      "label": "Sweeper Slide Kick",
+      "hitLevel": "mid",
+      "description": "Slow mid slide kick with huge active travel and quick finish.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -680,9 +690,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 44,
-      "label": "f+1 Frame Link",
+      "label": "Forward Hades Shot",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward shot with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -702,9 +714,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Hades Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid diagonal launcher with a tiny active shot and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 15,
@@ -722,10 +736,12 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "Train Heartnet Burst",
+      "label": "Black Cat Knockdown",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping knockdown with huge active acrobatic travel.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -741,8 +757,10 @@
       "forwardForce": 1.29,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
-      "label": "Train Heartnet Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Sweeper Rush",
+      "hitLevel": "mid",
+      "description": "Instant mid while-rising rush with long active movement and high recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -758,9 +776,11 @@
       "forwardForce": 1.86,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Hades Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid crouch rush with long active pistol pressure and fast recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -776,10 +796,12 @@
       "forwardForce": 1.89,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 31,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.0,
+      "label": "Crouch Hades Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch launcher with a tiny active shot and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -795,9 +817,11 @@
       "forwardForce": 1.9,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "1+2 Frame Link",
+      "label": "Sweeper Slide Shot",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid sliding shot with a long active path and measured recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -814,8 +838,10 @@
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 38,
       "launchHeight": 2.2,
-      "label": "Train Heartnet Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Hades Launcher Shot",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active pistol pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -831,10 +857,11 @@
       "forwardForce": 1.31,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
-      "label": "Train Heartnet Low Feint",
+      "label": "Homing Low Feint",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "description": "Slow low homing feint that ends crouched after a long active step."
     },
     "cmd:2+4": {
       "startupFrames": 29,
@@ -850,9 +877,11 @@
       "forwardForce": 1.56,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
-      "label": "Train Heartnet Driving Kick",
+      "label": "Low Sweeper Knockdown",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown kick with long active reach and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 17,
@@ -874,11 +903,13 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Train Heartnet Power Crush",
+      "label": "Black Cat Tornado Launcher",
       "hitLevel": "mid",
       "knockdown": false,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping tornado launcher with a modest active spin.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -894,9 +925,11 @@
       "forwardForce": 3.12,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
-      "label": "Train Heartnet Aura Drive",
+      "label": "Hades Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with huge active pistol pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1376,7 +1409,11 @@
       "jumpBeforeMove": true,
       "startupFrames": 13,
       "activeFrames": 5,
-      "recoveryFrames": 25
+      "recoveryFrames": 25,
+      "label": "Black Cat Tornado Kick",
+      "description": "Quick mid jumping tornado kick with a tiny active hit and heavy recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1386,11 +1423,14 @@
       "forwardForce": 1.59,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
-      "label": "f+2 Frame Link",
+      "label": "Forward Hades Burst",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 10,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady mid forward burst with a long active shot and quick finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1400,11 +1440,14 @@
       "forwardForce": 1.52,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Hades Shot",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 21,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high ducking shot with very long active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1414,11 +1457,14 @@
       "forwardForce": 2.38,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
-      "label": "qcf+1 Frame Link",
+      "label": "Hades Quick Shot",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 21,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high quarter-circle shot with very long active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1428,11 +1474,14 @@
       "forwardForce": 1.65,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Hades Shot",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 10,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady mid while-rising shot with a long active burst and quick finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1442,11 +1491,14 @@
       "forwardForce": 2.44,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Hades Shot",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 21,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high overdrive shot with very long active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

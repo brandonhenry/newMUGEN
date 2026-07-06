@@ -1,0 +1,297 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "pegasus-seiya",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Pegasus Jab",
+        "description": "Fast high Pegasus jab with a tiny active window for close checks.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Compact bronze-cloth punch at upper-body height."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Pegasus Kick",
+        "description": "Fast low kick with extended active time and steady recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Short low kick sequence stays near leg height."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Pegasus Body Punch",
+        "description": "Quick mid body punch with a short active window and steady recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward punch lands around the torso."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Golden Pegasus Rush",
+        "description": "Fast mid gold-cloth rush with very long active pressure and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Gold Pegasus aura rush covers mid range."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Pegasus Guard Break",
+        "description": "Slow mid guard break with a long active wind-up and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Delayed grounded punch sequence."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Pegasus Flash Knockdown",
+        "description": "Fast mid knockdown flash with a short active burst and steady recovery.",
+        "tracking": "medium",
+        "knockdown": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Quick crescent flash is authored as a knockdown."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Pegasus Step Kick",
+        "description": "Steady mid step kick with very long active pressure and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Command reuses the advancing kick family."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Pegasus Feint",
+        "description": "Slow low feint with a moderate active window and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Low movement feint stays grounded."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Pegasus Low Drive",
+        "description": "Slow low knockdown drive with long active gold-cloth pressure.",
+        "tracking": "medium",
+        "knockdown": true,
+        "hitLevel": "low"
+      },
+      "reason": "Gold low drive is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Pegasus Rolling Crush",
+        "description": "Fast mid knockdown crush with very long active golden rush pressure.",
+        "tracking": "medium",
+        "knockdown": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Rolling gold Pegasus rush is authored as a knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouching Pegasus Rush",
+        "description": "Fast mid crouching rush with long active golden pressure.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Full-crouch gold rush travels forward at mid height."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Pegasus Launcher",
+        "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "launchHeight": 2
+      },
+      "reason": "Crouch-to-punch hit is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Pegasus Jab",
+        "description": "Quick high overdrive jab with extended active time and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Overdrive command uses the quick Pegasus jab."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Pegasus Aura Drive",
+        "description": "Slow special knockdown drive with very long active gold-cloth pressure.",
+        "tracking": "medium",
+        "knockdown": true,
+        "hitLevel": "special"
+      },
+      "reason": "Gold aura drive is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:SS+3",
+      "patch": {
+        "label": "Sidestep Low Pegasus",
+        "description": "Quick low sidestep kick with long active coverage and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Sidestep command reuses the low kick family."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "While-Rising Body Punch",
+        "description": "Steady mid while-rising punch with a short active window and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "While-rising command uses the mid body punch."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Pegasus Rising Rush",
+        "description": "Fast mid rising rush with long active golden coverage and steady recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Gold rising rush sweeps forward at mid height."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Pegasus Jab",
+        "description": "Quick high ducking jab with extended active time and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Down jab reuses the quick Pegasus jab."
+    },
+    {
+      "key": "cmd:d+2",
+      "patch": {
+        "label": "Pegasus Clinch Toss",
+        "description": "Quick throw attempt with a moderate active capture window.",
+        "tracking": "medium",
+        "hitLevel": "throw",
+        "throwCapture": true
+      },
+      "reason": "Command is authored as a throw capture."
+    },
+    {
+      "key": "cmd:d+3",
+      "patch": {
+        "label": "Low Pegasus Step",
+        "description": "Quick low step kick with long active coverage and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Down kick uses the low Pegasus kick family."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Pegasus Launcher",
+        "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "launchHeight": 2.1
+      },
+      "reason": "Diagonal punch is authored as a launcher."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "patch": {
+        "label": "Diagonal Low Pegasus",
+        "description": "Quick low diagonal kick with long active coverage and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Diagonal low command uses the low kick family."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Pegasus Jab",
+        "description": "Slow mid forward jab with a tiny active window and heavy recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command is a delayed mid punch."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Body Punch",
+        "description": "Steady mid forward punch with a short active window and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command uses the mid body punch."
+    },
+    {
+      "key": "cmd:f+3",
+      "patch": {
+        "label": "Advancing Low Pegasus",
+        "description": "Quick low advancing kick with long active coverage and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Forward low command uses the low kick family."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Pegasus Rush Jab",
+        "description": "Quick high rush jab with extended active time and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Quarter-circle jab reuses the high Pegasus jab."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "patch": {
+        "label": "Pegasus Low Rush",
+        "description": "Quick low rush kick with long active coverage and fast recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Quarter-circle kick uses the low Pegasus kick."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Pegasus Meteor Burst",
+        "description": "Slow mid knockdown burst with extended active golden rush pressure.",
+        "tracking": "medium",
+        "knockdown": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Gold Pegasus burst is authored as a knockdown."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

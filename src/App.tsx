@@ -6921,7 +6921,7 @@ function RankedProfileCard({
           <div className="ranked-stat-tile"><span>Win Rate</span><strong>{winRate}%</strong></div>
           <div className="ranked-stat-tile"><span>Hit Rate</span><strong>{hitRate}%</strong></div>
           <div className="ranked-stat-tile"><span>{placementActive ? 'Placement' : 'Avg DMG'}</span><strong>{placementActive && placement ? `${placement.matchesPlayed}/${placement.requiredMatches}` : averageDamage}</strong></div>
-          <div className="ranked-stat-tile"><span>{placementActive ? 'Next Bot' : 'Trend'}</span><strong>{placementActive && placement ? `${placement.nextBotKp} KP` : `${recentTrend >= 0 ? '+' : ''}${recentTrend} KP`}</strong></div>
+          <div className="ranked-stat-tile"><span>{placementActive ? 'Next Match' : 'Trend'}</span><strong>{placementActive && placement ? `${placement.nextBotKp} KP` : `${recentTrend >= 0 ? '+' : ''}${recentTrend} KP`}</strong></div>
           <div className="ranked-kr-list">
             {rankedKrKeys.map((key) => {
               const value = ranked?.kr[key] ?? 50;
@@ -20110,7 +20110,7 @@ function RankedResultPanel({ result, accepted }: { result: RankedPlayerResult; a
       {placement && placementActive && (
         <div className="ranked-promotion-confirm">
           <strong>{placement.requiredMatches - placement.afterMatchesPlayed} placement matches left</strong>
-          <span>Next bot target: {placement.nextBotKp.toLocaleString()} KP</span>
+          <span>Next opponent target: {placement.nextBotKp.toLocaleString()} KP</span>
         </div>
       )}
       {result.promoted && !accepted && (

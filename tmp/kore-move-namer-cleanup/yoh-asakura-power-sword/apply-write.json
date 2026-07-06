@@ -1,0 +1,212 @@
+{
+  "ok": true,
+  "write": true,
+  "character": "yoh-asakura-power-sword",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Power Slash",
+        "description": "Fast high power-sword check with long active coverage at close range.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Short upper-body sword poke with the enlarged blade."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Power Sword Body Cut",
+        "description": "Quick mid sword thrust with a short active window and clean recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward thrust travels through the body line."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Overhead Power Cleave",
+        "description": "Slow mid overhead cleave with a moderate active window after the wind-up.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Large vertical blade swing drops into a grounded slash."
+    },
+    {
+      "key": "cmd:1+2+3",
+      "patch": {
+        "label": "Low Power Sword Slide",
+        "description": "Steady low blade slide with a tiny active window and long recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Sliding sword path stays near the opponent's legs."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Power Cross Launcher",
+        "description": "Slow mid launcher that drives the oversized blade through the body line.",
+        "tracking": "medium",
+        "launchHeight": 2.2,
+        "hitLevel": "mid"
+      },
+      "reason": "Cross-slash route is authored as a launcher."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Spirit Wheel",
+        "description": "Slow low rolling slash with steady active time along the ground.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Low rotating blade arc repeatedly travels around shin height."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Leaping Blade Sweep",
+        "description": "Slow low jumping sweep that knocks down after the rising blade path.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Low sweep leaves the ground and is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Oversoul Sword Tornado",
+        "description": "Slow mid sword tornado that jumps through a spinning knockdown arc.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "tracking": "medium",
+        "tornado": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Clear airborne rotating power-sword sequence with tornado and knockdown behavior."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Guardian Flurry",
+        "description": "Fast mid crouch flurry with long active power-sword pressure.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Starts low and chains into repeated guardian-assisted blade swings."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Oversoul Launcher",
+        "description": "Quick mid launcher with long active spirit pressure from crouch.",
+        "tracking": "medium",
+        "launchHeight": 2,
+        "hitLevel": "mid"
+      },
+      "reason": "Crouch route rises through a white spirit-blade lift."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Giant Oversoul Drive",
+        "description": "Fast special drive with very long active time that ends in knockdown.",
+        "knockdown": true,
+        "tracking": "medium",
+        "hitLevel": "special"
+      },
+      "reason": "Special command shows an extended Oversoul stance and sword drive."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "Rising Power Cut",
+        "description": "Fast mid while-standing cut with a brief active window and measured recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "While-standing route rises into the same direct body-level thrust."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Guardian Strike",
+        "description": "Quick mid rising strike with steady active sword coverage.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Rising command brings the guardian blade up through mid height."
+    },
+    {
+      "key": "cmd:d+1+2",
+      "patch": {
+        "label": "Ducking Power Check",
+        "description": "Quick mid ducking sword check with a tiny active window.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Down command crouches under before a compact mid blade check."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Blade Launcher",
+        "description": "Slow mid launcher with a tiny active window and high whiff commitment.",
+        "tracking": "medium",
+        "launchHeight": 2.1,
+        "hitLevel": "mid"
+      },
+      "reason": "Forward-diagonal body thrust is authored as a launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Power Sword Rush",
+        "description": "Fast mid rush with very long active blade pressure and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Advancing slash rush uses the enlarged blade for sustained pressure."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Power Cut",
+        "description": "Fast mid forward cut with a brief active hit and measured recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command repeats the direct mid sword thrust."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Giant Sword Tornado",
+        "description": "Fast mid tornado burst with long active blade reach that knocks down after the jump.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "tracking": "medium",
+        "tornado": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Quarter-circle burst shows an oversized spinning sword path and authored tornado behavior."
+    },
+    {
+      "key": "cmd:u+1+2",
+      "patch": {
+        "label": "Upward Guardian Ender",
+        "description": "Fast mid rising sword ender with long active coverage that knocks down.",
+        "knockdown": true,
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Up command rises through a guardian-assisted slash and is authored as knockdown."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

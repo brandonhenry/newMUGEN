@@ -378,7 +378,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Piccolo Left Check",
+      "label": "Quick Namekian Jab",
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
@@ -415,11 +415,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a short active window that snaps out a close-range arm check."
     },
     {
       "id": "kick",
-      "label": "Piccolo Left Kick",
+      "label": "Low Namekian Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -456,11 +457,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low kick with long active reach that sweeps across the shin line before recovering."
     },
     {
       "id": "heavy",
-      "label": "Piccolo Right Check",
+      "label": "Stretch Arm Body Blow",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -497,11 +499,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast mid stretch punch with a long active window that keeps pressure in front of Piccolo."
     },
     {
       "id": "special",
-      "label": "Piccolo Right Kick",
+      "label": "Heavy Namekian Kick",
       "input": "special",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -538,7 +541,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "description": "Slow mid rising kick with a committed arc and weak right tracking on whiff."
     }
   ],
   "hurtboxes": [
@@ -582,10 +586,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "Piccolo Left Check",
+      "label": "Quick Namekian Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a short active window that snaps out a close-range arm check."
     },
     "jabright": {
       "startupFrames": 8,
@@ -601,8 +606,10 @@
       "forwardForce": 0.48,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
-      "label": "Piccolo Right Check",
-      "hitLevel": "mid"
+      "label": "Stretch Arm Body Blow",
+      "hitLevel": "mid",
+      "description": "Fast mid stretch punch with a long active window that keeps pressure in front of Piccolo.",
+      "tracking": "medium"
     },
     "kickleft": {
       "startupFrames": 25,
@@ -618,8 +625,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Piccolo Left Kick",
-      "hitLevel": "low"
+      "label": "Low Namekian Sweep",
+      "hitLevel": "low",
+      "description": "Slow low kick with long active reach that sweeps across the shin line before recovering.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 24,
@@ -635,10 +644,11 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 18,
-      "label": "Piccolo Right Kick",
+      "label": "Heavy Namekian Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid rising kick with a committed arc and weak right tracking on whiff."
     },
     "cmd:f+1": {
       "startupFrames": 8,
@@ -654,9 +664,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 26,
-      "label": "f+1 Frame Link",
+      "label": "Forward Stretch Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid forward rush with long active stretch-arm reach for sustained pressure.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 0,
@@ -676,8 +688,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Piccolo Launcher",
-      "hitLevel": "mid"
+      "label": "Demon Rising Launcher",
+      "hitLevel": "mid",
+      "description": "Instant mid launcher with long active rising pressure that pops foes high.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -695,11 +709,13 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "qcf+4 Frame Link",
+      "label": "Demon Aerial Knockdown",
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jump kick with brief active impact and heavy knockdown recovery.",
+      "tracking": "weakRight"
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -717,10 +733,12 @@
       "forwardForceEndFrame": 15,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "WS+4 Frame Link",
+      "label": "Rising Flying Kick",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid while-rising jump kick with a brief active hit and high recovery.",
+      "tracking": "weakRight"
     },
     "cmd:FC+1": {
       "startupFrames": 10,
@@ -736,9 +754,11 @@
       "forwardForce": 2.04,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Aura Burst",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch strike with a long active flare that recovers almost immediately.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 19,
@@ -754,9 +774,11 @@
       "forwardForce": 1.26,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "launchHeight": 2,
-      "label": "Piccolo Crouch Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.0,
+      "label": "Crouch Demon Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active rising pressure that lifts from a low stance.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 14,
@@ -772,8 +794,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "Piccolo Twin Assault",
-      "hitLevel": "mid"
+      "label": "Namekian Twin Assault",
+      "hitLevel": "mid",
+      "description": "Quick mid two-hit assault that chains a hand feint into a forward kick with modest recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -792,10 +816,12 @@
       "launchHeight": 0,
       "kiCost": 35,
       "healAmount": 8,
-      "label": "Piccolo Cross Launcher",
+      "label": "Demon Cross Rush",
       "hitLevel": "mid",
       "usesKi": true,
-      "healsHp": true
+      "healsHp": true,
+      "description": "Steady mid ki rush with a long active sequence of cross-body strikes and quick finish.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -817,9 +843,11 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Piccolo Low Feint",
+      "label": "Low Demon Pop-Up",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low launcher that dips under pressure, kicks upward, and jumps into the lift.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -837,11 +865,13 @@
       "forwardForceEndFrame": 17,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "2+4 Frame Link",
+      "label": "Low Aerial Knockdown",
       "hitLevel": "low",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low hop kick with a tiny active window that commits into a knockdown ender.",
+      "tracking": "weakRight"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -859,11 +889,13 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "3+4 Frame Link",
+      "label": "Demon Flying Crush",
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping crush with brief active frames and heavy knockdown recovery.",
+      "tracking": "weakRight"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -879,9 +911,11 @@
       "forwardForce": 2.49,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "label": "Piccolo Aura Drive",
+      "label": "Mystic Arm Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Instant special knockdown drive with very long active stretch-arm pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1359,11 +1393,14 @@
       "forwardForceEndFrame": 10,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "1+4 Frame Link",
+      "label": "Namekian Tornado Kick",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
-      "activeFrames": 11
+      "activeFrames": 11,
+      "description": "Fast jumping mid spin kick that works as a tornado extender with a short recovery.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1373,11 +1410,14 @@
       "forwardForce": 1.7,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Namekian Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high ducking jab with even timing and a short forward swipe.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1387,11 +1427,14 @@
       "forwardForce": 2.56,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "qcf+1 Frame Link",
+      "label": "Demon Jab Swipe",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high quarter-circle jab with steady timing and a compact arm swipe.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1403,12 +1446,15 @@
       "forwardForceEndFrame": 18,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Flying Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 13,
       "activeFrames": 30,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid sidestep jump kick with long active travel and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1418,11 +1464,14 @@
       "forwardForce": 2.62,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Jab Swipe",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high overdrive jab with balanced timing and a compact arm swipe.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1434,12 +1483,15 @@
       "forwardForceEndFrame": 18,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "O+4 Frame Link",
+      "label": "Overdrive Flying Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 13,
       "activeFrames": 30,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid overdrive jump kick with long active travel and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

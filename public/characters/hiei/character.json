@@ -378,7 +378,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Hiei Left Check",
+      "label": "Quick Katana Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -415,11 +415,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Hiei Left Kick",
+      "label": "Low Shadow Slash",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -456,11 +457,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low slash with long active coverage and heavy recovery."
     },
     {
       "id": "heavy",
-      "label": "Hiei Right Check",
+      "label": "Katana Body Cut",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -497,11 +499,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid sword cut with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Hiei Right Kick",
+      "label": "Shadow Step Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -538,7 +541,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid step kick with long active coverage and heavy recovery."
     }
   ],
   "hurtboxes": [
@@ -582,10 +586,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "Hiei Left Check",
+      "label": "Quick Katana Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high sword jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -601,10 +606,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "Hiei Right Check",
+      "label": "Katana Body Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid sword cut with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 5,
@@ -620,8 +626,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Hiei Left Kick",
-      "hitLevel": "low"
+      "label": "Low Shadow Slash",
+      "hitLevel": "low",
+      "description": "Fast low slash with long active coverage and heavy recovery."
     },
     "kickright": {
       "startupFrames": 0,
@@ -637,8 +644,9 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Hiei Right Kick",
-      "hitLevel": "mid"
+      "label": "Shadow Step Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid step kick with long active coverage and heavy recovery."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -654,9 +662,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "f+1 Frame Link",
+      "label": "Shadow Body Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid body poke with a tiny active window and high commitment."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -676,9 +685,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Katana Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a lifting sword cut."
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -694,9 +704,10 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Hiei Burst",
+      "label": "Dark Flame Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with long active coverage and heavy recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 5,
@@ -712,8 +723,9 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Hiei Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Shadow Strike",
+      "hitLevel": "mid",
+      "description": "Fast mid rising rush with long active coverage and committed recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 9,
@@ -729,9 +741,10 @@
       "forwardForce": 1.52,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Dark Slash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch slash with long active coverage and quick recovery."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -748,9 +761,10 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Katana Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching sword lift."
     },
     "cmd:1+2": {
       "startupFrames": 10,
@@ -770,9 +784,10 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "1+2 Frame Link",
+      "label": "Katana Rising Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid launcher with a tiny active window and heavy recovery."
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -791,9 +806,10 @@
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "Hiei Cross Launcher",
+      "label": "Dark Flame Launcher",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping launcher with long active coverage from a purple slash."
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -809,8 +825,9 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 37,
-      "label": "Hiei Low Feint",
-      "hitLevel": "low"
+      "label": "Low Katana Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with moderate active time and steady recovery."
     },
     "cmd:2+4": {
       "startupFrames": 21,
@@ -826,9 +843,10 @@
       "forwardForce": 2.12,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Hiei Driving Kick",
+      "label": "Low Shadow Trip",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown slash with a steady active window and quick recovery."
     },
     "cmd:3+4": {
       "startupFrames": 15,
@@ -844,10 +862,11 @@
       "forwardForce": 3.21,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "Hiei Power Crush",
+      "label": "Dark Flame Tornado",
       "hitLevel": "mid",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "description": "Steady mid tornado knockdown that drives through a purple shadow slash."
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -863,9 +882,10 @@
       "forwardForce": 3.75,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Hiei Aura Drive",
+      "label": "Jagan Shadow Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with long active coverage and heavy recovery."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1339,11 +1359,13 @@
       "forwardForce": 2.22,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "f+2 Frame Link",
+      "label": "Forward Katana Cut",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 15,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Fast mid sword cut with steady active time and recovery.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1353,11 +1375,13 @@
       "forwardForce": 1.18,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Quick Low-Angle Cut",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 6,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "description": "Fast high sword cut with a short active window and heavier recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1367,11 +1391,13 @@
       "forwardForce": 2.04,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Katana Check",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 13,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast high sword check with long active time for close pressure.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1381,11 +1407,13 @@
       "forwardForce": 2.28,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Katana",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 15,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Fast mid while-rising sword cut with steady active time and recovery.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1395,11 +1423,18 @@
       "forwardForce": 2.1,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Quick Katana Check",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 13,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast high sword check with long active time and quick recovery.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Shadow Step Kick",
+      "description": "Fast mid step kick with long active coverage and heavy recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

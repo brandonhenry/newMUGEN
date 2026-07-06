@@ -356,7 +356,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Arale Norimaki Left Check",
+      "label": "Ncha Quick Jab",
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
@@ -393,11 +393,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny robot poke and a short active window."
     },
     {
       "id": "kick",
-      "label": "Arale Norimaki Left Kick",
+      "label": "Low Robot Slide",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -434,11 +435,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low slide that sends Arale skimming forward for long active pressure."
     },
     {
       "id": "heavy",
-      "label": "Arale Norimaki Right Check",
+      "label": "Windup Robot Hook",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -475,11 +477,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid hook with a cartoon windup and compact recovery."
     },
     {
       "id": "special",
-      "label": "Arale Norimaki Right Kick",
+      "label": "Gatchan Flip Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -516,7 +519,9 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid flip kick that stays active through Arale's tumbling recovery.",
+      "jumpBeforeMove": true
     }
   ],
   "hurtboxes": [
@@ -560,10 +565,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "Arale Norimaki Left Check",
+      "label": "Ncha Quick Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny robot poke and a short active window."
     },
     "jabright": {
       "startupFrames": 11,
@@ -579,10 +585,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "Arale Norimaki Right Check",
+      "label": "Windup Robot Hook",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid hook with a cartoon windup and compact recovery."
     },
     "kickleft": {
       "startupFrames": 8,
@@ -598,8 +605,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Arale Norimaki Left Kick",
-      "hitLevel": "low"
+      "label": "Low Robot Slide",
+      "hitLevel": "low",
+      "description": "Fast low slide that sends Arale skimming forward for long active pressure."
     },
     "kickright": {
       "startupFrames": 10,
@@ -615,8 +623,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Arale Norimaki Right Kick",
-      "hitLevel": "mid"
+      "label": "Gatchan Flip Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid flip kick that stays active through Arale's tumbling recovery.",
+      "jumpBeforeMove": true
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -632,9 +642,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 30,
-      "label": "f+1 Frame Link",
+      "label": "Forward Robot Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward poke that trades speed for a committed step-in hit."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -654,9 +665,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Spin Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that steps forward into Arale's spinning hit."
     },
     "cmd:qcf+4": {
       "startupFrames": 10,
@@ -672,9 +684,10 @@
       "forwardForce": 3.53,
       "forwardForceStartFrame": 44,
       "forwardForceEndFrame": 49,
-      "label": "Arale Norimaki Burst",
+      "label": "Penguin Village Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown that bursts through a tumbling robot strike."
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -690,8 +703,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Arale Norimaki Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Robot Tumble",
+      "hitLevel": "mid",
+      "description": "Quick mid rising tumble that carries Arale upward through active frames.",
+      "jumpBeforeMove": true
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -707,9 +722,11 @@
       "forwardForce": 1.25,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 27,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Robot Pester",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid crouch poke that scoots forward with playful pressure.",
+      "endsInCrouch": true
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -725,10 +742,11 @@
       "forwardForce": 1.87,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.1,
+      "label": "Crouch Spin Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher that rises from crouch into a spinning hit."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -744,9 +762,10 @@
       "forwardForce": 1.77,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "1+2 Frame Link",
+      "label": "Penguin Village Link",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid link that shoulder-checks forward before Arale resets."
     },
     "cmd:1+3": {
       "startupFrames": 14,
@@ -762,9 +781,11 @@
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "launchHeight": 2.2,
-      "label": "Arale Norimaki Cross Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.1,
+      "label": "Robot Spin Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher that spins Arale through a rising cartoon arc.",
+      "jumpBeforeMove": true
     },
     "cmd:2+3": {
       "startupFrames": 6,
@@ -780,8 +801,10 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Arale Norimaki Low Feint",
-      "hitLevel": "low"
+      "label": "Low Gadget Feint",
+      "hitLevel": "low",
+      "description": "Fast low feint that ducks under pressure before Arale pops back up.",
+      "endsInCrouch": true
     },
     "cmd:2+4": {
       "startupFrames": 16,
@@ -797,9 +820,10 @@
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Arale Norimaki Driving Kick",
+      "label": "Flying Robot Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady low knockdown that launches Arale sideways like a tiny missile."
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -815,9 +839,10 @@
       "forwardForce": 3.15,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 33,
-      "label": "Arale Norimaki Power Crush",
+      "label": "Norimaki Power Crash",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown that drives Arale forward with a committed body check."
     },
     "cmd:O+2": {
       "startupFrames": 12,
@@ -833,9 +858,11 @@
       "forwardForce": 3.1,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "label": "Arale Norimaki Aura Drive",
+      "label": "Robot Aura Bonk",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick special knockdown that spins Arale into a long active bonk.",
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1309,11 +1336,13 @@
       "forwardForce": 1.57,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "f+2 Frame Link",
+      "label": "Forward Robot Hook",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 6,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Quick mid forward hook with compact active timing.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1323,11 +1352,13 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "d+1 Frame Link",
+      "label": "Low-Step Ncha Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 15,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high poke from a low command that still strikes at head height.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1337,11 +1368,13 @@
       "forwardForce": 1.75,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "qcf+1 Frame Link",
+      "label": "Ncha Dash Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 15,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high motion jab with quick startup and tiny recovery.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1351,11 +1384,13 @@
       "forwardForce": 1.63,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Hook",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 6,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Quick mid while-standing hook with a short active window.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1365,11 +1400,14 @@
       "forwardForce": 1.81,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "O+1 Frame Link",
+      "label": "Charged Ncha Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 15,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high charged poke with a simple short active strike.",
+      "usesKi": true,
+      "hitLevel": "high"
     }
   },
   "effects": [],

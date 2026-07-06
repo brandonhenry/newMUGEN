@@ -1,0 +1,197 @@
+{
+  "character": "piccolo",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Namekian Jab",
+      "description": "Fast high jab with a short active window that snaps out a close-range arm check.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Three-frame standing poke with a high arm swipe and quick recovery."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Namekian Sweep",
+      "description": "Slow low kick with long active reach that sweeps across the shin line before recovering.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Extended crouched leg path clearly attacks low across several active frames."
+    },
+    {
+      "key": "jabright",
+      "label": "Stretch Arm Body Blow",
+      "description": "Fast mid stretch punch with a long active window that keeps pressure in front of Piccolo.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Arm extends forward at torso height and stays active for most of the sequence."
+    },
+    {
+      "key": "kickright",
+      "label": "Heavy Namekian Kick",
+      "description": "Slow mid rising kick with a committed arc and weak right tracking on whiff.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Tall kicking sequence rises through the body line and matches existing weak-right tracking."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Namekian Twin Assault",
+      "description": "Quick mid two-hit assault that chains a hand feint into a forward kick with modest recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Two-limb standing attack sequence reads as a compact mid string."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Demon Cross Rush",
+      "description": "Steady mid ki rush with a long active sequence of cross-body strikes and quick finish.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Uses ki and shows a long forward striking chain without a clear pop-up visual."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Namekian Tornado Kick",
+      "description": "Fast jumping mid spin kick that works as a tornado extender with a short recovery.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "The airborne twisting kick visually supports both jump and tornado properties."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Demon Pop-Up",
+      "description": "Slow low launcher that dips under pressure, kicks upward, and jumps into the lift.",
+      "hitLevel": "low",
+      "launchHeight": 2.2,
+      "jumpBeforeMove": true,
+      "tracking": "medium",
+      "reason": "Starts low and transitions into an upward aerial kick, matching low launcher flags."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Aerial Knockdown",
+      "description": "Slow low hop kick with a tiny active window that commits into a knockdown ender.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Low start, airborne kick path, and heavy landing frames support low knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Demon Flying Crush",
+      "description": "Slow mid jumping crush with brief active frames and heavy knockdown recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Shared jump-kick body shape hits mid and ends as a committed knockdown finisher."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Aura Burst",
+      "description": "Fast mid crouch strike with a long active flare that recovers almost immediately.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Full-crouch command shows a compact burst around Piccolo rather than a high poke."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Demon Launcher",
+      "description": "Slow mid launcher with long active rising pressure that lifts from a low stance.",
+      "hitLevel": "mid",
+      "launchHeight": 2.0,
+      "tracking": "medium",
+      "reason": "Crouching startup rises into a lifting arm/body sequence, matching authored launch height."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Jab Swipe",
+      "description": "Fast high overdrive jab with balanced timing and a compact arm swipe.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Overdrive variant reuses the short high swipe silhouette."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Mystic Arm Drive",
+      "description": "Instant special knockdown drive with very long active stretch-arm pressure.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Piccolo's elastic arm extends far across the screen and has the existing knockdown role."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Overdrive Flying Kick",
+      "description": "Quick mid overdrive jump kick with long active travel and weak right tracking.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Airborne kick sequence travels forward without a clear launcher or knockdown finish."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Flying Kick",
+      "description": "Quick mid sidestep jump kick with long active travel and weak right tracking.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Same airborne kick family as the overdrive version, entered from sidestep."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Flying Kick",
+      "description": "Steady mid while-rising jump kick with a brief active hit and high recovery.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "While-standing command leaves the ground into the same flying kick posture."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Namekian Jab",
+      "description": "Fast high ducking jab with even timing and a short forward swipe.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "The move uses the high jab swipe frames from a crouch/down input."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Demon Rising Launcher",
+      "description": "Instant mid launcher with long active rising pressure that pops foes high.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "medium",
+      "reason": "Rising strike and follow-through clearly support the existing launcher height."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Forward Stretch Rush",
+      "description": "Fast mid forward rush with long active stretch-arm reach for sustained pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward-input sequence extends Piccolo's arm through several body-height frames."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Demon Jab Swipe",
+      "description": "Fast high quarter-circle jab with steady timing and a compact arm swipe.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle version visually matches the high jab swipe frames."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Demon Aerial Knockdown",
+      "description": "Slow mid jump kick with brief active impact and heavy knockdown recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Aerial kick sequence ends in a committed finisher and retains authored knockdown."
+    }
+  ]
+}

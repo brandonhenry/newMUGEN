@@ -1,0 +1,496 @@
+{
+  "character": "kenshiro",
+  "notes": "Copy reviewed moves from candidates into moves, then edit label/description/properties.",
+  "moves": [],
+  "candidates": [
+    {
+      "key": "jableft",
+      "currentLabel": "Kenshiro Left Check",
+      "currentDescription": "",
+      "notation": [
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 5,
+        "activeFrames": 2,
+        "recoveryFrames": 23,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "kickleft",
+      "currentLabel": "Kenshiro Left Kick",
+      "currentDescription": "",
+      "notation": [
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 25,
+        "activeFrames": 10,
+        "recoveryFrames": 13,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "jabright",
+      "currentLabel": "Kenshiro Right Check",
+      "currentDescription": "",
+      "notation": [
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 11,
+        "activeFrames": 4,
+        "recoveryFrames": 15,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "kickright",
+      "currentLabel": "Kenshiro Right Kick",
+      "currentDescription": "",
+      "notation": [
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 24,
+        "activeFrames": 12,
+        "recoveryFrames": 15,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:weakRight"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:1+2",
+      "currentLabel": "1+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "1",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 21,
+        "activeFrames": 9,
+        "recoveryFrames": 7,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 12
+    },
+    {
+      "key": "cmd:1+3",
+      "currentLabel": "1+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "1",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 20,
+        "activeFrames": 22,
+        "recoveryFrames": 7,
+        "hitLevel": "mid",
+        "properties": "mid, launcher, tracking:weakLeft"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "cmd:1+4",
+      "currentLabel": "1+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "1",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 16,
+        "activeFrames": 10,
+        "recoveryFrames": 25,
+        "hitLevel": "mid",
+        "properties": "mid, tornado, jump, tracking:weakRight"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:2+3",
+      "currentLabel": "2+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "2",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 29,
+        "activeFrames": 10,
+        "recoveryFrames": 4,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:2+4",
+      "currentLabel": "2+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "2",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 23,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "hitLevel": "low",
+        "properties": "low, knockdown, tracking:weakRight"
+      },
+      "frameCount": 17
+    },
+    {
+      "key": "cmd:3+4",
+      "currentLabel": "3+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "3",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 12,
+        "activeFrames": 7,
+        "recoveryFrames": 11,
+        "hitLevel": "mid",
+        "properties": "mid, knockdown, jump, tracking:homing"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:FC+1",
+      "currentLabel": "FC+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "FC",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 9,
+        "activeFrames": 12,
+        "recoveryFrames": 8,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 7
+    },
+    {
+      "key": "cmd:FC+2",
+      "currentLabel": "FC+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "FC",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 17,
+        "activeFrames": 3,
+        "recoveryFrames": 27,
+        "hitLevel": "mid",
+        "properties": "mid, launcher, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "cmd:O+1",
+      "currentLabel": "O+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "O",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 8,
+        "activeFrames": 11,
+        "recoveryFrames": 11,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:O+2",
+      "currentLabel": "Kenshiro Aura Drive",
+      "currentDescription": "",
+      "notation": [
+        "O",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 0,
+        "activeFrames": 48,
+        "recoveryFrames": 12,
+        "hitLevel": "special",
+        "properties": "special, knockdown, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "cmd:O+4",
+      "currentLabel": "O+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "O",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 16,
+        "activeFrames": 10,
+        "recoveryFrames": 25,
+        "hitLevel": "mid",
+        "properties": "mid, tornado, jump, tracking:weakRight"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:SS+3",
+      "currentLabel": "SS+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "SS",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 6,
+        "activeFrames": 18,
+        "recoveryFrames": 24,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:SS+4",
+      "currentLabel": "SS+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "SS",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 16,
+        "activeFrames": 10,
+        "recoveryFrames": 25,
+        "hitLevel": "mid",
+        "properties": "mid, jump, tracking:weakRight"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:WS+2",
+      "currentLabel": "WS+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "WS",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 18,
+        "activeFrames": 6,
+        "recoveryFrames": 6,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "cmd:WS+4",
+      "currentLabel": "WS+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "WS",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 17,
+        "activeFrames": 3,
+        "recoveryFrames": 22,
+        "hitLevel": "mid",
+        "properties": "mid, jump, tracking:weakRight"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:d+1",
+      "currentLabel": "d+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "d",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 8,
+        "activeFrames": 11,
+        "recoveryFrames": 11,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:d+3",
+      "currentLabel": "d+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "d",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 6,
+        "activeFrames": 18,
+        "recoveryFrames": 24,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:d/f+2",
+      "currentLabel": "d/f+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "d/f",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 20,
+        "activeFrames": 3,
+        "recoveryFrames": 27,
+        "hitLevel": "mid",
+        "properties": "mid, launcher, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "cmd:d/f+3",
+      "currentLabel": "d/f+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "d/f",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 6,
+        "activeFrames": 18,
+        "recoveryFrames": 24,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:f+1",
+      "currentLabel": "f+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "f",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 9,
+        "activeFrames": 31,
+        "recoveryFrames": 4,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:f+2",
+      "currentLabel": "f+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "f",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 18,
+        "activeFrames": 6,
+        "recoveryFrames": 6,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "cmd:f+3",
+      "currentLabel": "f+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "f",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 6,
+        "activeFrames": 18,
+        "recoveryFrames": 24,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:qcf+1",
+      "currentLabel": "qcf+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "qcf",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 8,
+        "activeFrames": 11,
+        "recoveryFrames": 11,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:qcf+3",
+      "currentLabel": "qcf+3 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "qcf",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 6,
+        "activeFrames": 24,
+        "recoveryFrames": 18,
+        "hitLevel": "low",
+        "properties": "low, tracking:weakLeft"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:qcf+4",
+      "currentLabel": "qcf+4 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "qcf",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 19,
+        "activeFrames": 4,
+        "recoveryFrames": 29,
+        "hitLevel": "mid",
+        "properties": "mid, tornado, knockdown, jump, tracking:weakRight"
+      },
+      "frameCount": 10
+    }
+  ]
+}

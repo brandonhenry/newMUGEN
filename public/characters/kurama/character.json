@@ -452,7 +452,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Kurama Left Check",
+      "label": "Quick Rose Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -489,7 +489,8 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high rose jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
@@ -534,7 +535,7 @@
     },
     {
       "id": "heavy",
-      "label": "Kurama Right Check",
+      "label": "Rose Whip Slash",
       "input": "heavy",
       "startupFrames": 14,
       "activeFrames": 3,
@@ -571,7 +572,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid rose-whip slash with a brief active window and steady recovery."
     },
     {
       "id": "special",
@@ -1372,10 +1374,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "Kurama Left Check",
+      "label": "Quick Rose Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high rose jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 13,
@@ -1391,10 +1394,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "Kurama Right Check",
+      "label": "Rose Whip Slash",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid rose-whip slash with a brief active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -1444,9 +1448,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "f+1 Frame Link",
+      "label": "Forward Rose Jab",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward jab with a tiny active window and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -1466,9 +1472,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Whip Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active lift and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:qcf+4": {
       "startupFrames": 0,
@@ -1484,9 +1492,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Kurama Burst",
+      "label": "Youko Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with very long active pressure and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 21,
@@ -1502,8 +1512,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Kurama Rising Strike",
-      "hitLevel": "mid"
+      "label": "Youko Rising Strike",
+      "hitLevel": "mid",
+      "description": "Slow mid rising strike with long active coverage and very quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 18,
@@ -1519,9 +1531,11 @@
       "forwardForce": 1.48,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Rose Lash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouching lash with extended active frames and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -1538,9 +1552,11 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 23,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Whip Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active lift and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -1556,9 +1572,11 @@
       "forwardForce": 2.31,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
-      "label": "1+2 Frame Link",
+      "label": "Demon Rose Step",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid advancing step with a long active pressure window and quick recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -1575,8 +1593,10 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
       "launchHeight": 2.2,
-      "label": "Kurama Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Rose Whip Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active whip coverage and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 31,
@@ -1592,8 +1612,10 @@
       "forwardForce": 1.81,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 29,
-      "label": "Kurama Low Feint",
-      "hitLevel": "low"
+      "label": "Low Rose Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with a long active rose arc and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -1609,9 +1631,11 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Kurama Power Crush",
+      "label": "Demon Rose Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown crush with long active forward pressure.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 23,
@@ -1627,9 +1651,11 @@
       "forwardForce": 3.05,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 29,
-      "label": "Kurama Aura Drive",
+      "label": "Rose Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown drive with long active demon-rose pressure.",
+      "tracking": "weakRight"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -2103,11 +2129,14 @@
       "forwardForce": 1.67,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "f+2 Frame Link",
+      "label": "Forward Rose Slash",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 18,
-      "recoveryFrames": 3
+      "recoveryFrames": 3,
+      "description": "Steady mid forward slash with extended active whip coverage.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -2117,11 +2146,14 @@
       "forwardForce": 1.14,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Rose Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 14,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Fast high ducking rose jab with extended active pressure and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -2131,11 +2163,14 @@
       "forwardForce": 2,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "qcf+1 Frame Link",
+      "label": "Rose Rush Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 14,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Fast high rush jab with extended active pressure and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -2145,11 +2180,14 @@
       "forwardForce": 1.73,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Rose Slash",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 18,
-      "recoveryFrames": 3
+      "recoveryFrames": 3,
+      "description": "Steady mid while-rising slash with extended active whip coverage.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -2159,11 +2197,14 @@
       "forwardForce": 2.06,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Rose Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 14,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Fast high overdrive jab with extended active pressure and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     }
   },
   "effects": [],

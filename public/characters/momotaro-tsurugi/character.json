@@ -396,7 +396,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Momotaro Tsurugi Left Check",
+      "label": "Quick Tsurugi Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -433,11 +433,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Momotaro Tsurugi Left Kick",
+      "label": "Low School Flip",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -474,11 +475,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low flip kick with long active coverage and steady recovery."
     },
     {
       "id": "heavy",
-      "label": "Momotaro Tsurugi Right Check",
+      "label": "Tsurugi Body Thrust",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -515,11 +517,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid sword thrust with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Momotaro Tsurugi Right Kick",
+      "label": "Otokojuku Sword Arc",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -556,7 +559,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid sword arc with very long active coverage and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -600,10 +604,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "Momotaro Tsurugi Left Check",
+      "label": "Quick Tsurugi Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high sword jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -619,10 +624,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 30,
-      "label": "Momotaro Tsurugi Right Check",
+      "label": "Tsurugi Body Thrust",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid sword thrust with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 9,
@@ -638,8 +644,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Momotaro Tsurugi Left Kick",
-      "hitLevel": "low"
+      "label": "Low School Flip",
+      "hitLevel": "low",
+      "description": "Fast low flip kick with long active coverage and steady recovery.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 5,
@@ -655,8 +663,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Momotaro Tsurugi Right Kick",
-      "hitLevel": "mid"
+      "label": "Otokojuku Sword Arc",
+      "hitLevel": "mid",
+      "description": "Fast mid sword arc with very long active coverage and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 8,
@@ -672,9 +682,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 19,
-      "label": "f+1 Frame Link",
+      "label": "Forward Sword Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid forward rush with very long active sword pressure.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -694,9 +706,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Sword Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 16,
@@ -712,9 +726,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Momotaro Tsurugi Burst",
+      "label": "Otokojuku Burst Slash",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady mid knockdown burst with very long active sword coverage.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 3,
@@ -730,8 +746,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Momotaro Tsurugi Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Tsurugi Arc",
+      "hitLevel": "mid",
+      "description": "Fast mid rising sword arc with very long active coverage and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -747,9 +765,11 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 9,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Aura Dash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching dash with very long active aura pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -766,9 +786,11 @@
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 47,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Sword Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active sword pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -784,9 +806,11 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "1+2 Frame Link",
+      "label": "Tsurugi Guard Cut",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid guard cut with a long active wind-up and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -803,8 +827,10 @@
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 41,
       "launchHeight": 2.2,
-      "label": "Momotaro Tsurugi Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Sword Thrust Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active sword reach and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -820,8 +846,10 @@
       "forwardForce": 1.81,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 30,
-      "label": "Momotaro Tsurugi Low Feint",
-      "hitLevel": "low"
+      "label": "Low Tsurugi Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with moderate active time and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -839,10 +867,12 @@
       "forwardForceEndFrame": 48,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Momotaro Tsurugi Driving Kick",
+      "label": "Low Jumping Blade",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping knockdown kick with extended active time and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -860,11 +890,13 @@
       "forwardForceEndFrame": 18,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Momotaro Tsurugi Power Crush",
+      "label": "Otokojuku Tornado Crush",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado that knocks down after a strong sword spin.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 20,
@@ -880,9 +912,11 @@
       "forwardForce": 3.44,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 60,
-      "label": "Momotaro Tsurugi Aura Drive",
+      "label": "Otokojuku Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown drive with very long active sword pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1356,11 +1390,14 @@
       "forwardForce": 1.91,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 30,
-      "label": "f+2 Frame Link",
+      "label": "Forward Sword Thrust",
       "cancelable": false,
       "startupFrames": 24,
       "activeFrames": 5,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow mid forward thrust with a brief active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1370,11 +1407,14 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Tsurugi Jab",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 4,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Fast high ducking sword jab with a short active window and heavy recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1384,11 +1424,14 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "qcf+1 Frame Link",
+      "label": "Tsurugi Rush Jab",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 4,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Fast high rush jab with a short active window and heavy recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1398,11 +1441,14 @@
       "forwardForce": 1.97,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 30,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Sword Thrust",
       "cancelable": false,
       "startupFrames": 24,
       "activeFrames": 5,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow mid while-rising thrust with a brief active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1412,11 +1458,20 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Tsurugi Jab",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 4,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Fast high overdrive jab with a short active window and heavy recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Driving Sword Arc",
+      "description": "Fast mid sword arc with very long active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

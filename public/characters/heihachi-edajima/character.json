@@ -365,7 +365,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Heihachi Edajima Left Check",
+      "label": "Quick Principal Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -402,11 +402,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny active window from Heihachi's straight punch."
     },
     {
       "id": "kick",
-      "label": "Heihachi Edajima Left Kick",
+      "label": "Low Otokojuku Roll",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -443,11 +444,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low rolling attack with very long active coverage and quick recovery."
     },
     {
       "id": "heavy",
-      "label": "Heihachi Edajima Right Check",
+      "label": "Principal Body Blow",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -484,7 +486,8 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body blow with a short active window and steady recovery."
     },
     {
       "id": "special",
@@ -569,10 +572,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Heihachi Edajima Left Check",
+      "label": "Quick Principal Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny active window from Heihachi's straight punch."
     },
     "jabright": {
       "startupFrames": 11,
@@ -588,10 +592,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Heihachi Edajima Right Check",
+      "label": "Principal Body Blow",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body blow with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -607,8 +612,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Heihachi Edajima Left Kick",
-      "hitLevel": "low"
+      "label": "Low Otokojuku Roll",
+      "hitLevel": "low",
+      "description": "Fast low rolling attack with very long active coverage and quick recovery."
     },
     "kickright": {
       "startupFrames": 19,
@@ -641,9 +647,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "f+1 Frame Link",
+      "label": "Principal Roll Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid rush with very long active coverage from a rolling body attack."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -663,9 +670,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Edajima Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a lifting punch."
     },
     "cmd:qcf+4": {
       "startupFrames": 28,
@@ -681,9 +689,10 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Burst",
+      "label": "Otokojuku Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown burst with long active coverage and fast recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -699,8 +708,9 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Heihachi Edajima Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Otokojuku Roll",
+      "hitLevel": "mid",
+      "description": "Fast mid rising roll with very long active coverage and steady recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 6,
@@ -716,9 +726,10 @@
       "forwardForce": 2.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Principal Hook",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch attack with long active time and quick recovery."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -735,9 +746,10 @@
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Edajima Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching upper strike."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -753,9 +765,10 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 16,
-      "label": "1+2 Frame Link",
+      "label": "Otokojuku Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid strike that winds up before a deliberate forward punch."
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -772,8 +785,9 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 49,
       "launchHeight": 2.2,
-      "label": "Heihachi Edajima Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Edajima Cross Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher with steady active time from a sharp rising strike."
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -789,8 +803,9 @@
       "forwardForce": 1.07,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 32,
-      "label": "Heihachi Edajima Low Feint",
-      "hitLevel": "low"
+      "label": "Low Discipline Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with moderate active time from a crouched weapon-like pose."
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -806,9 +821,10 @@
       "forwardForce": 2.09,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 35,
-      "label": "Heihachi Edajima Driving Kick",
+      "label": "Low Principal Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown strike with long active coverage from a heavy forward blow."
     },
     "cmd:3+4": {
       "startupFrames": 14,
@@ -826,11 +842,12 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Heihachi Edajima Power Crush",
+      "label": "Otokojuku Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid tornado knockdown that jumps into a rolling body strike."
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -846,9 +863,10 @@
       "forwardForce": 2.98,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 44,
-      "label": "Heihachi Edajima Aura Drive",
+      "label": "Edajima Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with very long active coverage from a tumbling charge."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1322,11 +1340,13 @@
       "forwardForce": 1.45,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "f+2 Frame Link",
+      "label": "Forward Principal Punch",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 8,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Steady mid punch with a moderate active window and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1336,11 +1356,13 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Quick Principal Check",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high check with long active time and fast recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1350,11 +1372,13 @@
       "forwardForce": 2.66,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Principal Check",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high check with long active time for close pressure.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1364,11 +1388,13 @@
       "forwardForce": 1.51,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Punch",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 8,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Steady mid while-rising punch with a moderate active window and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1378,11 +1404,18 @@
       "forwardForce": 2.72,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Quick Principal Check",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high check with long active time and fast recovery.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Long Principal Kick",
+      "description": "Slow mid lunging kick with a tiny active window and heavy recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

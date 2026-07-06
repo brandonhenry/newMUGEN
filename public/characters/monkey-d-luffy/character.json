@@ -342,7 +342,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Monkey D. Luffy Left Check",
+      "label": "Gum-Gum Pistol",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -379,7 +379,8 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high stretchy jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
@@ -546,10 +547,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "Monkey D. Luffy Left Check",
+      "label": "Gum-Gum Pistol",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high stretchy jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 13,
@@ -616,9 +618,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 39,
-      "label": "f+1 Frame Link",
+      "label": "Gum-Gum Spear Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid advancing stretch rush with very long active reach.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -673,8 +677,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Monkey D. Luffy Rising Strike",
-      "hitLevel": "mid"
+      "label": "Gum-Gum Rising Stamp",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with very long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 4,
@@ -690,9 +696,11 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 14,
-      "label": "FC+1 Frame Link",
+      "label": "Gum-Gum Stamp Barrage",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching barrage with long active giant-fist pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 0,
@@ -709,8 +717,10 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "launchHeight": 2,
-      "label": "Monkey D. Luffy Crouch Launcher",
-      "hitLevel": "mid"
+      "label": "Crouch Gum-Gum Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with very long active lift and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 20,
@@ -726,8 +736,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
-      "label": "Monkey D. Luffy Twin Assault",
-      "hitLevel": "mid"
+      "label": "Gum-Gum Gatling",
+      "hitLevel": "mid",
+      "description": "Slow mid twin assault with a long active rush of stretched punches.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 7,
@@ -744,8 +756,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
       "launchHeight": 2.2,
-      "label": "Monkey D. Luffy Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Gum-Gum Upper Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with a moderate active uppercut and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 19,
@@ -761,8 +775,10 @@
       "forwardForce": 2.25,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 12,
-      "label": "Monkey D. Luffy Low Feint",
-      "hitLevel": "low"
+      "label": "Low Gum-Gum Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with a short active burst and very quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 23,
@@ -778,9 +794,11 @@
       "forwardForce": 2.34,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 24,
-      "label": "Monkey D. Luffy Driving Kick",
+      "label": "Gum-Gum Red Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown drive with extended active red-streak pressure.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 5,
@@ -796,9 +814,11 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Monkey D. Luffy Power Crush",
+      "label": "Gum-Gum Giant Rifle",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown punch with very long active rubber-arm reach.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -814,9 +834,11 @@
       "forwardForce": 2.49,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "label": "Monkey D. Luffy Aura Drive",
+      "label": "Gum-Gum Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown dash with very long active rubber-body pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1293,7 +1315,11 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
       "tornado": true,
-      "activeFrames": 8
+      "activeFrames": 8,
+      "label": "Gum-Gum Balloon Tornado",
+      "description": "Quick mid tornado spin with a moderate active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1303,11 +1329,14 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Gum-Gum Pistol",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 5,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "description": "Fast high ducking Pistol with a brief active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1317,11 +1346,14 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "qcf+1 Frame Link",
+      "label": "Gum-Gum Rush Pistol",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 5,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "description": "Fast high rush Pistol with a brief active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1331,11 +1363,14 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Pistol",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 5,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "description": "Fast high overdrive Pistol with a brief active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

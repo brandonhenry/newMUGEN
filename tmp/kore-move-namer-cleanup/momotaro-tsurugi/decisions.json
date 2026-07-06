@@ -1,0 +1,191 @@
+{
+  "character": "momotaro-tsurugi",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Tsurugi Jab",
+      "description": "Fast high sword jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Compact high blade check."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low School Flip",
+      "description": "Fast low flip kick with long active coverage and steady recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low kick drops into a flipping leg attack."
+    },
+    {
+      "key": "jabright",
+      "label": "Tsurugi Body Thrust",
+      "description": "Quick mid sword thrust with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward blade thrust hits at body height."
+    },
+    {
+      "key": "kickright",
+      "label": "Otokojuku Sword Arc",
+      "description": "Fast mid sword arc with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Broad sword swing and arc effect cover mid space."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Tsurugi Guard Cut",
+      "description": "Slow mid guard cut with a long active wind-up and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Delayed grounded sword cut."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Sword Thrust Launcher",
+      "description": "Slow mid launcher with long active sword reach and quick recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "medium",
+      "reason": "Forward sword thrust is authored as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Driving Sword Arc",
+      "description": "Fast mid sword arc with very long active pressure and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Command reuses the broad mid sword-arc kick family."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Tsurugi Feint",
+      "description": "Slow low feint with moderate active time and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low sword-step feint stays near the legs."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Jumping Blade",
+      "description": "Slow low jumping knockdown kick with extended active time and quick recovery.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "medium",
+      "reason": "Low jump attack flips forward and is authored as knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Otokojuku Tornado Crush",
+      "description": "Slow mid jumping tornado that knocks down after a strong sword spin.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "medium",
+      "reason": "Upward spin has tornado, jump, and knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouching Aura Dash",
+      "description": "Fast mid crouching dash with very long active aura pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Blue-yellow crouch dash effect drives forward at mid height."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Sword Launcher",
+      "description": "Steady mid launcher with a tiny active sword pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2,
+      "tracking": "medium",
+      "reason": "Crouch-to-thrust hit is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Tsurugi Jab",
+      "description": "Fast high overdrive jab with a short active window and heavy recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Overdrive command uses the quick sword jab."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Otokojuku Aura Drive",
+      "description": "Slow special knockdown drive with very long active sword pressure.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Aura drive is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While-Rising Sword Thrust",
+      "description": "Slow mid while-rising thrust with a brief active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "While-rising command uses a mid sword thrust."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Tsurugi Arc",
+      "description": "Fast mid rising sword arc with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Rising command sweeps through a wide sword arc."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Tsurugi Jab",
+      "description": "Fast high ducking sword jab with a short active window and heavy recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down jab reuses the quick sword jab."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Sword Launcher",
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "medium",
+      "reason": "Diagonal thrust is authored as a launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Forward Sword Rush",
+      "description": "Fast mid forward rush with very long active sword pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command rushes through repeated sword arcs."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Sword Thrust",
+      "description": "Slow mid forward thrust with a brief active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command uses the mid sword thrust."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Tsurugi Rush Jab",
+      "description": "Fast high rush jab with a short active window and heavy recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle jab reuses the quick sword jab."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Otokojuku Burst Slash",
+      "description": "Steady mid knockdown burst with very long active sword coverage.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Burst slash is authored as a knockdown."
+    }
+  ]
+}

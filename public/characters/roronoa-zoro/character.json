@@ -418,7 +418,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Roronoa Zoro Left Check",
+      "label": "Quick Sword Check",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -455,11 +455,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword check with a tiny active window and clean recovery."
     },
     {
       "id": "kick",
-      "label": "Roronoa Zoro Left Kick",
+      "label": "Low Santoryu Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -496,11 +497,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low three-sword sweep with very long active blade pressure."
     },
     {
       "id": "heavy",
-      "label": "Roronoa Zoro Right Check",
+      "label": "Oni Giri Body Slash",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -537,11 +539,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body slash with a brief active cut and weak right tracking."
     },
     {
       "id": "special",
-      "label": "Roronoa Zoro Right Kick",
+      "label": "Three-Sword Driving Cut",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -578,7 +581,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Instant mid driving cut with very long active blade travel and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -622,10 +626,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "Roronoa Zoro Left Check",
+      "label": "Quick Sword Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high sword check with a tiny active window and clean recovery."
     },
     "jabright": {
       "startupFrames": 12,
@@ -641,10 +646,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "Roronoa Zoro Right Check",
+      "label": "Oni Giri Body Slash",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body slash with a brief active cut and weak right tracking."
     },
     "kickleft": {
       "startupFrames": 5,
@@ -660,8 +666,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Roronoa Zoro Left Kick",
-      "hitLevel": "low"
+      "label": "Low Santoryu Sweep",
+      "hitLevel": "low",
+      "description": "Fast low three-sword sweep with very long active blade pressure.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 0,
@@ -677,8 +685,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Roronoa Zoro Right Kick",
-      "hitLevel": "mid"
+      "label": "Three-Sword Driving Cut",
+      "hitLevel": "mid",
+      "description": "Instant mid driving cut with very long active blade travel and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -694,9 +704,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "f+1 Frame Link",
+      "label": "Forward Sword Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward check with a brief active sword poke and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -716,9 +728,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Oni Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid diagonal launcher with a tiny active cut and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:qcf+4": {
       "startupFrames": 7,
@@ -734,9 +748,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Roronoa Zoro Burst",
+      "label": "Three-Sword Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with long active sword pressure and measured recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 9,
@@ -752,8 +768,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Roronoa Zoro Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Three-Sword Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rising rush with long active sword travel and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 8,
@@ -769,9 +787,11 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Pressure Burst",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch burst with long active pressure and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -787,10 +807,12 @@
       "forwardForce": 1.72,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.0,
+      "label": "Crouch Oni Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch launcher with a tiny active cut and high recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -806,9 +828,11 @@
       "forwardForce": 1.67,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 25,
-      "label": "1+2 Frame Link",
+      "label": "Two-Sword Cross Cut",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid cross cut with a long active blade path and weak right tracking.",
+      "tracking": "weakRight"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -825,8 +849,10 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 24,
       "launchHeight": 2.2,
-      "label": "Roronoa Zoro Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Oni Giri Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active rising blades that pop the opponent up.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -842,8 +868,10 @@
       "forwardForce": 1.73,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 19,
-      "label": "Roronoa Zoro Low Feint",
-      "hitLevel": "low"
+      "label": "Low Sword Feint",
+      "hitLevel": "low",
+      "description": "Slow low sword feint with a long active window and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -861,13 +889,14 @@
       "forwardForceEndFrame": 28,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Roronoa Zoro Driving Kick",
+      "label": "Dragon Twister Sweep",
       "hitLevel": "mid",
       "tracking": "homing",
       "knockdown": true,
       "tornado": true,
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid homing tornado sweep that knocks down and ends in crouch."
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -885,11 +914,13 @@
       "forwardForceEndFrame": 32,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Roronoa Zoro Power Crush",
+      "label": "Santoryu Tatsumaki",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado slash that knocks down after a long active spin.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 26,
@@ -905,9 +936,11 @@
       "forwardForce": 2.95,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "Roronoa Zoro Aura Drive",
+      "label": "Santoryu Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown drive with long active aura-backed sword pressure.",
+      "tracking": "weakRight"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1383,7 +1416,11 @@
       "forwardForceEndFrame": 28,
       "startupFrames": 26,
       "activeFrames": 10,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "label": "Three-Sword Low Draw",
+      "description": "Slow low draw slash with a long active sweep and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1393,11 +1430,14 @@
       "forwardForce": 1.42,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "f+2 Frame Link",
+      "label": "Forward Body Slash",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 17,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Fast mid forward slash with long active reach and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1407,11 +1447,14 @@
       "forwardForce": 1.13,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Sword Jab",
       "cancelable": false,
       "startupFrames": 11,
       "activeFrames": 5,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Quick high ducking sword check with a short active window.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1421,11 +1464,14 @@
       "forwardForce": 1.99,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "qcf+1 Frame Link",
+      "label": "Santoryu Quick Check",
       "cancelable": false,
       "startupFrames": 11,
       "activeFrames": 5,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Quick high quarter-circle sword check with a short active window.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1435,11 +1481,14 @@
       "forwardForce": 1.48,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Body Slash",
       "cancelable": false,
       "startupFrames": 5,
       "activeFrames": 17,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Fast mid while-rising slash with long active reach and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1449,11 +1498,20 @@
       "forwardForce": 2.05,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Sword Jab",
       "cancelable": false,
       "startupFrames": 11,
       "activeFrames": 5,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Quick high overdrive sword check with a short active window.",
+      "tracking": "medium",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Santoryu Driving Cut",
+      "description": "Instant mid driving cut with very long active reach and quick finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

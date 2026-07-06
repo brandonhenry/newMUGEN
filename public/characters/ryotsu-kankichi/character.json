@@ -405,7 +405,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Ryotsu Kankichi Left Check",
+      "label": "Quick Baton Swipe",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -442,11 +442,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high baton swipe with a tiny active window and clean recovery."
     },
     {
       "id": "kick",
-      "label": "Ryotsu Kankichi Left Kick",
+      "label": "Low Patrol Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -483,11 +484,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Instant low sweep with huge active baton pressure across the floor."
     },
     {
       "id": "heavy",
-      "label": "Ryotsu Kankichi Right Check",
+      "label": "Police Body Jab",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -524,11 +526,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body jab with a brief active hit and steady recovery."
     },
     {
       "id": "special",
-      "label": "Ryotsu Kankichi Right Kick",
+      "label": "Heavy Patrol Kick",
       "input": "special",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -565,7 +568,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow mid kick with a long active leg swing and measured recovery."
     }
   ],
   "hurtboxes": [
@@ -609,10 +613,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "Ryotsu Kankichi Left Check",
+      "label": "Quick Baton Swipe",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high baton swipe with a tiny active window and clean recovery."
     },
     "jabright": {
       "startupFrames": 11,
@@ -628,10 +633,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "Ryotsu Kankichi Right Check",
+      "label": "Police Body Jab",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body jab with a brief active hit and steady recovery."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -647,8 +653,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Ryotsu Kankichi Left Kick",
-      "hitLevel": "low"
+      "label": "Low Patrol Sweep",
+      "hitLevel": "low",
+      "description": "Instant low sweep with huge active baton pressure across the floor.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 22,
@@ -664,10 +672,11 @@
       "forwardForce": 1.12,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29,
-      "label": "Ryotsu Kankichi Right Kick",
+      "label": "Heavy Patrol Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid kick with a long active leg swing and measured recovery."
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -683,9 +692,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 29,
-      "label": "f+1 Frame Link",
+      "label": "Patrol Rushdown",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid rushdown with huge active running pressure and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -705,9 +716,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Police Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid diagonal launcher with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -725,12 +738,14 @@
       "forwardForceEndFrame": 36,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "qcf+4 Frame Link",
+      "label": "Police Flip Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado flip that knocks down after a tiny active hit.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -748,11 +763,13 @@
       "forwardForceEndFrame": 29,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "WS+4 Frame Link",
+      "label": "Rising Flip Tornado",
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping tornado flip with a tiny active hit and high recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -768,9 +785,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "FC+1 Frame Link",
+      "label": "Grounded Panic Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Instant mid grounded rush with long active sliding pressure and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -786,10 +805,12 @@
       "forwardForce": 1.84,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.0,
+      "label": "Crouch Police Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch launcher with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 17,
@@ -805,9 +826,11 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 14,
-      "label": "1+2 Frame Link",
+      "label": "Sliding Baton Hook",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid sliding hook with a modest active swing and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -826,10 +849,12 @@
       "launchHeight": 0,
       "kiCost": 35,
       "healAmount": 8,
-      "label": "Ryotsu Kankichi Cross Launcher",
+      "label": "Kankichi Coin Flourish",
       "hitLevel": "mid",
       "usesKi": true,
-      "healsHp": true
+      "healsHp": true,
+      "description": "Slow mid ki flourish with long active prop pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 24,
@@ -845,8 +870,10 @@
       "forwardForce": 1.57,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Ryotsu Kankichi Low Feint",
-      "hitLevel": "low"
+      "label": "Low Comic Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with a long active tumble and measured recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -866,10 +893,12 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "2+4 Frame Link",
+      "label": "Low Flip Launcher",
       "hitLevel": "low",
       "knockdown": false,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low launcher with a long active flip that pops opponents up.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 13,
@@ -887,11 +916,13 @@
       "forwardForceEndFrame": 23,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "3+4 Frame Link",
+      "label": "Patrol Cartwheel Knockdown",
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping knockdown with a modest active flip and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 12,
@@ -907,9 +938,11 @@
       "forwardForce": 3.07,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "label": "Ryotsu Kankichi Aura Drive",
+      "label": "Kankichi Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick special knockdown drive with huge active baton-aura pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1383,11 +1416,14 @@
       "forwardForce": 2.11,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "1+4 Frame Link",
+      "label": "Baton Step Combo",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 23,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast mid baton combo with long active pressure and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1397,11 +1433,14 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "f+2 Frame Link",
+      "label": "Forward Police Jab",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid forward jab with a long active shove and quick finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1411,11 +1450,14 @@
       "forwardForce": 1.46,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Baton Swipe",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high ducking baton swipe with a modest active arc.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1425,11 +1467,14 @@
       "forwardForce": 2.32,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Baton Quick Swipe",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high quarter-circle baton swipe with a modest active arc.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1439,11 +1484,14 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Police Jab",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid while-rising jab with a long active shove and quick finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1455,13 +1503,16 @@
       "forwardForceEndFrame": 29,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Flip Tornado",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 0,
       "activeFrames": 30,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Instant mid sidestep flip that works as a tornado extender.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1471,11 +1522,14 @@
       "forwardForce": 2.38,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Baton Swipe",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high overdrive baton swipe with a modest active arc.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1487,13 +1541,16 @@
       "forwardForceEndFrame": 29,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "O+4 Frame Link",
+      "label": "Overdrive Flip Tornado",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 0,
       "activeFrames": 30,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Instant mid jumping flip that works as a tornado extender.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

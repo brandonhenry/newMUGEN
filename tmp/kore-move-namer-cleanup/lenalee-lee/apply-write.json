@@ -1,0 +1,305 @@
+{
+  "ok": true,
+  "write": true,
+  "character": "lenalee-lee",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Dark Boots Jab",
+        "description": "Fast high boot-check jab with a tiny active window for close pressure.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Compact standing strike from the Dark Boots stance."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Dark Boots Sweep",
+        "description": "Slow low sweep with a moderate active window and steady recovery.",
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low sliding boot path travels near the ground."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Dark Boots Body Kick",
+        "description": "Fast mid kick with long active pressure and quick recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Mid-height boot strike hits through the body line."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Heavy Dark Boots Kick",
+        "description": "Slow mid kick with moderate active time and committed recovery.",
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Delayed arcing boot strike stays at mid height."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Dark Boots Twin Assault",
+        "description": "Slow mid jumping twin assault with a long active window and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Existing twin assault leaves the ground into paired boot strikes."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Dark Boots Launcher",
+        "description": "Slow mid jumping launcher with long active lift and quick recovery.",
+        "jumpBeforeMove": true,
+        "launchHeight": 2.2,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Jumping boot rise is authored as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Dark Boots Tornado",
+        "description": "Slow mid jumping tornado kick with long active spin pressure.",
+        "jumpBeforeMove": true,
+        "tornado": true,
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Aerial boot spin is authored as a tornado."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Boot Feint",
+        "description": "Slow low feint with a moderate active window and steady recovery.",
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low boot movement stays near leg height."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Skyfall Kick",
+        "description": "Slow low jumping knockdown kick with extended active time and quick recovery.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "hitLevel": "low",
+        "tracking": "weakRight"
+      },
+      "reason": "Low aerial boot dive is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Dark Boots Tornado Crush",
+        "description": "Quick mid jumping tornado that knocks down after a short active burst.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "tornado": true,
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Compact aerial spin carries tornado, knockdown, and jump data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouching Innocence Rush",
+        "description": "Fast mid crouching rush with very long active afterimage pressure.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "White afterimage crouch sequence rushes forward at mid height."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Boot Launcher",
+        "description": "Quick mid launcher with very long active lift and fast recovery.",
+        "launchHeight": 2,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Crouch launcher visibly carries the opponent upward."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Boot Jab",
+        "description": "Fast high overdrive jab with a short active window and heavy recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Overdrive command uses the compact high check."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Dark Boots Aura Drive",
+        "description": "Steady special knockdown drive with very long active boot pressure.",
+        "knockdown": true,
+        "hitLevel": "special",
+        "tracking": "medium"
+      },
+      "reason": "Long aura drive is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:O+4",
+      "patch": {
+        "label": "Overdrive Tornado Kick",
+        "description": "Slow mid jumping tornado kick with a short active window and steady recovery.",
+        "jumpBeforeMove": true,
+        "tornado": true,
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Overdrive kick mirrors the aerial tornado family."
+    },
+    {
+      "key": "cmd:SS+3",
+      "patch": {
+        "label": "Sidestep Low Boot",
+        "description": "Steady low jumping sidestep boot with a short active window and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Sidestep low boot leaves the ground."
+    },
+    {
+      "key": "cmd:SS+4",
+      "patch": {
+        "label": "Sidestep Tornado Kick",
+        "description": "Slow mid jumping tornado kick with a short active window and steady recovery.",
+        "jumpBeforeMove": true,
+        "tornado": true,
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Sidestep kick uses the aerial tornado motion."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "While-Rising Sky Kick",
+        "description": "Fast mid jumping sky kick with very long active coverage and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "While-rising boot lift clearly leaves the ground."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Boot Jab",
+        "description": "Fast high ducking jab with a short active window and heavy recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Down jab reuses the compact high check."
+    },
+    {
+      "key": "cmd:d+3",
+      "patch": {
+        "label": "Low Jump Boot",
+        "description": "Steady low jumping boot with a short active window and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low boot command is marked as a jump attack."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Dark Boots Launcher",
+        "description": "Fast mid launcher with very long active lift and quick recovery.",
+        "launchHeight": 2.1,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Diagonal launcher uses the rising Dark Boots sequence."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "patch": {
+        "label": "Diagonal Low Boot",
+        "description": "Steady low jumping boot with a short active window and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Diagonal low boot keeps the jumping low-kick family."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Boot Check",
+        "description": "Slow mid forward check with a tiny active window and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward command is a delayed mid boot check."
+    },
+    {
+      "key": "cmd:f+3",
+      "patch": {
+        "label": "Advancing Low Boot",
+        "description": "Steady low jumping boot with a short active window and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Forward low command uses the jumping low-boot sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Dark Boots Rush Jab",
+        "description": "Fast high rush jab with a short active window and heavy recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle jab reuses the high boot-check pose."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "patch": {
+        "label": "Dark Boots Low Rush",
+        "description": "Steady low jumping rush kick with a short active window and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle kick uses the jumping low-boot family."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Dark Boots Tornado Ender",
+        "description": "Slow mid jumping tornado ender that knocks down after a brief active hit.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "tornado": true,
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Quarter-circle kick has tornado, knockdown, and jump data."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

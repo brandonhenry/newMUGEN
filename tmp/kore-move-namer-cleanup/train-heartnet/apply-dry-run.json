@@ -1,0 +1,242 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "train-heartnet",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Hades Shot",
+        "description": "Fast high pistol check with a tiny active window and guarded recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Train visibly aims Hades forward for a quick high check."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Gunner Sweep",
+        "description": "Steady low sweep with huge active movement and quick recovery.",
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low sweeping motion attacks along the leg line."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Hades Body Shot",
+        "description": "Quick mid pistol shot with a brief active hit and steady recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward pistol shot targets the torso line."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Sweeper Slide Kick",
+        "description": "Slow mid slide kick with huge active travel and quick finish.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Train slides forward through a body-height kick sequence."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Sweeper Slide Shot",
+        "description": "Slow mid sliding shot with a long active path and measured recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Sliding gun stance moves forward without launcher or knockdown flags."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Hades Launcher Shot",
+        "description": "Slow mid launcher with long active pistol pressure and quick recovery.",
+        "launchHeight": 2.2,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Gun sequence is authored as a launcher and rises into the final shot."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Black Cat Tornado Kick",
+        "description": "Quick mid jumping tornado kick with a tiny active hit and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tracking": "medium",
+        "tornado": true
+      },
+      "reason": "Acrobatic spinning kick supports tornado and jump properties."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Homing Low Feint",
+        "description": "Slow low homing feint that ends crouched after a long active step.",
+        "endsInCrouch": true,
+        "hitLevel": "low",
+        "tracking": "homing"
+      },
+      "reason": "Low route is authored with homing tracking and crouch-end."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Sweeper Knockdown",
+        "description": "Slow low knockdown kick with long active reach and quick recovery.",
+        "knockdown": true,
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low forward kick is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Black Cat Tornado Launcher",
+        "description": "Steady mid jumping tornado launcher with a modest active spin.",
+        "launchHeight": 2.2,
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tracking": "medium",
+        "tornado": true
+      },
+      "reason": "Airborne spin is authored as both launcher and tornado."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Hades Rush",
+        "description": "Quick mid crouch rush with long active pistol pressure and fast recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Full-crouch route advances into repeated pistol poses."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Hades Launcher",
+        "description": "Steady mid crouch launcher with a tiny active shot and heavy recovery.",
+        "launchHeight": 2.0,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Crouch-to-shot motion is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Hades Shot",
+        "description": "Fast high overdrive shot with very long active pressure and quick recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Overdrive route reuses Train's high pistol check."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Hades Aura Drive",
+        "description": "Fast special knockdown drive with huge active pistol pressure.",
+        "knockdown": true,
+        "hitLevel": "special",
+        "tracking": "medium"
+      },
+      "reason": "Long pistol-pressure special is authored as a knockdown drive."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "Rising Hades Shot",
+        "description": "Steady mid while-rising shot with a long active burst and quick finish.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "While-standing command fires through the torso line."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Sweeper Rush",
+        "description": "Instant mid while-rising rush with long active movement and high recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Rising route advances through repeated pistol/kick poses."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Hades Shot",
+        "description": "Fast high ducking shot with very long active pressure and quick recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Down jab repeats the high pistol-check frames."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Hades Launcher",
+        "description": "Slow mid diagonal launcher with a tiny active shot and heavy recovery.",
+        "launchHeight": 2.1,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Down-forward shot is authored as a launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Hades Shot",
+        "description": "Slow mid forward shot with a tiny active hit and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward input uses a body-height pistol shot."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Hades Burst",
+        "description": "Steady mid forward burst with a long active shot and quick finish.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward-heavy command extends the pistol-pressure sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Hades Quick Shot",
+        "description": "Fast high quarter-circle shot with very long active pressure and quick recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle jab repeats the high Hades shot animation."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Black Cat Knockdown",
+        "description": "Steady mid jumping knockdown with huge active acrobatic travel.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Acrobatic kick route leaves the ground and is authored as knockdown."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

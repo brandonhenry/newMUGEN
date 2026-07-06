@@ -479,7 +479,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Bobobo-bo Bo-bobo Left Check",
+      "label": "Quick Nose-Hair Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -516,11 +516,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny close-range poke and short active timing."
     },
     {
       "id": "kick",
-      "label": "Bobobo-bo Bo-bobo Left Kick",
+      "label": "Low Plank Bonk",
       "input": "kick",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -557,11 +558,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low swing that drags a plank-like strike through the shins."
     },
     {
       "id": "heavy",
-      "label": "Bobobo-bo Bo-bobo Right Check",
+      "label": "Hajike Head Rush",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -598,11 +600,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast mid rush with a long active scramble of cartoon body pressure."
     },
     {
       "id": "special",
-      "label": "Bobobo-bo Bo-bobo Right Kick",
+      "label": "Nose-Hair Sweep Rush",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -639,7 +642,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid rush that whips forward with extended green nose-hair arcs."
     }
   ],
   "hurtboxes": [
@@ -683,10 +687,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Bobobo-bo Bo-bobo Left Check",
+      "label": "Quick Nose-Hair Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny close-range poke and short active timing."
     },
     "jabright": {
       "startupFrames": 3,
@@ -702,8 +707,9 @@
       "forwardForce": 0.61,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
-      "label": "Bobobo-bo Bo-bobo Right Check",
-      "hitLevel": "mid"
+      "label": "Hajike Head Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rush with a long active scramble of cartoon body pressure."
     },
     "kickleft": {
       "startupFrames": 23,
@@ -719,10 +725,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "Bobobo-bo Bo-bobo Left Kick",
+      "label": "Low Plank Bonk",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low swing that drags a plank-like strike through the shins."
     },
     "kickright": {
       "startupFrames": 5,
@@ -738,8 +745,9 @@
       "forwardForce": 0.96,
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 38,
-      "label": "Bobobo-bo Bo-bobo Right Kick",
-      "hitLevel": "mid"
+      "label": "Nose-Hair Sweep Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rush that whips forward with extended green nose-hair arcs."
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -755,9 +763,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "label": "f+1 Frame Link",
+      "label": "Forward Nose-Hair Wheel",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid advancing strike that spins nose-hair loops in front of Bobobo."
     },
     "cmd:d/f+2": {
       "startupFrames": 10,
@@ -777,8 +786,9 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Bobobo-bo Bo-bobo Launcher",
-      "hitLevel": "mid"
+      "label": "Forward Hajike Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher that surges forward with long active pressure."
     },
     "cmd:qcf+4": {
       "startupFrames": 5,
@@ -796,10 +806,11 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 9.6,
       "moveJumpGravity": 24,
-      "label": "Bobobo-bo Bo-bobo Burst",
+      "label": "Bo-bobo World Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Fast mid jumping knockdown that dives forward in a surreal cape-like rush."
     },
     "cmd:WS+4": {
       "startupFrames": 4,
@@ -815,8 +826,9 @@
       "forwardForce": 1.35,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 34,
-      "label": "Bobobo-bo Bo-bobo Rising Strike",
-      "hitLevel": "mid"
+      "label": "Motorcycle Rising Strike",
+      "hitLevel": "mid",
+      "description": "Fast mid while-standing rush that rides through with a motorcycle hit."
     },
     "cmd:FC+1": {
       "startupFrames": 8,
@@ -832,9 +844,11 @@
       "forwardForce": 1.69,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Nose-Hair Wheel",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch attack that rolls nose-hair arcs across the body.",
+      "endsInCrouch": true
     },
     "cmd:FC+2": {
       "startupFrames": 4,
@@ -850,9 +864,10 @@
       "forwardForce": 1.39,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 39,
-      "launchHeight": 2,
-      "label": "Bobobo-bo Bo-bobo Crouch Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.1,
+      "label": "Crouch Hajike Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher that bursts up from crouch with wild arm pressure."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -870,9 +885,10 @@
       "forwardForceEndFrame": 25,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Bobobo-bo Bo-bobo Twin Assault",
+      "label": "Twin Hajike Dive",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping assault that dives forward into a spinning impact."
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -888,10 +904,11 @@
       "forwardForce": 1.99,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "launchHeight": 2.1,
+      "label": "Plank Pop Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher that pops forward from a goofy plank windup."
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -907,9 +924,10 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "2+3 Frame Link",
+      "label": "Low Plank Fakeout",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady low feint that threatens a plank swing before resetting."
     },
     "cmd:2+4": {
       "startupFrames": 18,
@@ -925,9 +943,10 @@
       "forwardForce": 1.62,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 39,
-      "label": "Bobobo-bo Bo-bobo Driving Kick",
+      "label": "Flying Nose-Hair Trip",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady low knockdown that flips Bobobo into a sliding tumble."
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -943,9 +962,10 @@
       "forwardForce": 3.4,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 33,
-      "label": "Bobobo-bo Bo-bobo Power Crush",
+      "label": "Hajike Power Bonk",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown that commits to a heavy gag-style body blow."
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -961,9 +981,11 @@
       "forwardForce": 3.08,
       "forwardForceStartFrame": 48,
       "forwardForceEndFrame": 60,
-      "label": "Bobobo-bo Bo-bobo Aura Drive",
+      "label": "Hajike Sun Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown that launches a giant sun-faced rush forward.",
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1437,11 +1459,13 @@
       "forwardForce": 1.66,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "f+3 Frame Link",
+      "label": "Forward Plank Low",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 14
+      "recoveryFrames": 14,
+      "description": "Steady low forward strike with a committed plank swing.",
+      "hitLevel": "low"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1451,11 +1475,13 @@
       "forwardForce": 1.35,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Low-Step Nose Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high poke from a low command that still checks head height.",
+      "hitLevel": "high"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1465,11 +1491,13 @@
       "forwardForce": 1.38,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "d+3 Frame Link",
+      "label": "Down Plank Trip",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 14
+      "recoveryFrames": 14,
+      "description": "Steady low plank strike that clips the legs from a crouched route.",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1479,11 +1507,13 @@
       "forwardForce": 1.66,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Plank Low",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 14
+      "recoveryFrames": 14,
+      "description": "Steady low diagonal strike that swings the plank through the legs.",
+      "hitLevel": "low"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1493,11 +1523,13 @@
       "forwardForce": 2.21,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Hajike Dash Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high motion jab with compact active timing.",
+      "hitLevel": "high"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1507,11 +1539,13 @@
       "forwardForce": 2.24,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "qcf+3 Frame Link",
+      "label": "Hajike Plank Low",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 14
+      "recoveryFrames": 14,
+      "description": "Steady low motion strike that sweeps the plank forward.",
+      "hitLevel": "low"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1521,11 +1555,13 @@
       "forwardForce": 1.72,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Plank Low",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 14
+      "recoveryFrames": 14,
+      "description": "Steady low sidestep strike that swings the plank from an angle.",
+      "hitLevel": "low"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1535,11 +1571,14 @@
       "forwardForce": 2.27,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Charged Nose Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high charged jab with a simple close poke.",
+      "usesKi": true,
+      "hitLevel": "high"
     }
   },
   "effects": [],

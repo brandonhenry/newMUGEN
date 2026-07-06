@@ -392,7 +392,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Kinnikuman Left Check",
+      "label": "Quick Muscle Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -429,11 +429,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high wrestler jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Kinnikuman Left Kick",
+      "label": "Low Leg Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -470,11 +471,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low sweep with extended active time and quick recovery."
     },
     {
       "id": "heavy",
-      "label": "Kinnikuman Right Check",
+      "label": "Muscle Body Punch",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -511,11 +513,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body punch with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Kinnikuman Right Kick",
+      "label": "Quick Knee Check",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -552,7 +555,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid knee check with very long active pressure and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -596,10 +600,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "Kinnikuman Left Check",
+      "label": "Quick Muscle Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high wrestler jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -615,10 +620,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "Kinnikuman Right Check",
+      "label": "Muscle Body Punch",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body punch with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 23,
@@ -634,8 +640,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Kinnikuman Left Kick",
-      "hitLevel": "low"
+      "label": "Low Leg Sweep",
+      "hitLevel": "low",
+      "description": "Slow low sweep with extended active time and quick recovery.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 0,
@@ -651,8 +659,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Kinnikuman Right Kick",
-      "hitLevel": "mid"
+      "label": "Quick Knee Check",
+      "hitLevel": "mid",
+      "description": "Fast mid knee check with very long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -668,9 +678,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 46,
-      "label": "f+1 Frame Link",
+      "label": "Muscle Step Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid advancing rush with long active body pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -690,9 +702,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Body Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 25,
@@ -708,9 +722,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Kinnikuman Burst",
+      "label": "Kinniku Burst Lariat",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown lariat with long active forward pressure and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 26,
@@ -726,8 +742,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Kinnikuman Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Body Splash",
+      "hitLevel": "mid",
+      "description": "Slow mid rising body splash with extended active time and short recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 16,
@@ -743,9 +761,11 @@
       "forwardForce": 1.37,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 25,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Lariat",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouching lariat with extended active frames and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -762,9 +782,11 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Body Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -780,9 +802,11 @@
       "forwardForce": 1.7,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 10,
-      "label": "1+2 Frame Link",
+      "label": "Rolling Muscle Press",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid rolling body press with a long active crawl and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -801,9 +825,11 @@
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "Kinnikuman Cross Launcher",
+      "label": "Kinniku Lift-Off",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping launcher with long active lift and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 24,
@@ -825,10 +851,12 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Kinnikuman Low Feint",
+      "label": "Low Kinniku Tumble",
       "hitLevel": "low",
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping launcher that tumbles forward and ends crouched.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -850,11 +878,13 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Kinnikuman Driving Kick",
+      "label": "Kinniku Tornado Kick",
       "hitLevel": "low",
       "knockdown": false,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping tornado launcher with extended active spin pressure.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 17,
@@ -872,11 +902,13 @@
       "forwardForceEndFrame": 27,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Kinnikuman Power Crush",
+      "label": "Muscle Spark Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping tornado that knocks down after a strong spinning finish.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 44,
@@ -892,9 +924,11 @@
       "forwardForce": 2.91,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "label": "Kinnikuman Aura Drive",
+      "label": "Muscle Spark Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Very slow special knockdown drive with extended active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1370,7 +1404,11 @@
       "forwardForce": 1.62,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
-      "activeFrames": 6
+      "activeFrames": 6,
+      "label": "Muscle Step Kick",
+      "description": "Quick mid step kick with a short active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1380,11 +1418,14 @@
       "forwardForce": 1.38,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "f+2 Frame Link",
+      "label": "Forward Body Punch",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid forward punch with extended active time and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1394,11 +1435,14 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Muscle Jab",
       "cancelable": false,
       "startupFrames": 11,
       "activeFrames": 10,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Quick high ducking jab with extended active time and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1408,11 +1452,14 @@
       "forwardForce": 1.89,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "qcf+1 Frame Link",
+      "label": "Muscle Rush Jab",
       "cancelable": false,
       "startupFrames": 11,
       "activeFrames": 10,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Quick high rush jab with extended active time and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1422,11 +1469,14 @@
       "forwardForce": 1.44,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Body Punch",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid while-rising punch with extended active time and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1436,11 +1486,14 @@
       "forwardForce": 1.95,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Muscle Jab",
       "cancelable": false,
       "startupFrames": 11,
       "activeFrames": 10,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Quick high overdrive jab with extended active time and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

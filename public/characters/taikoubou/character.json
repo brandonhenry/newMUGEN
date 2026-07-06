@@ -398,7 +398,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Taikoubou Left Check",
+      "label": "Quick Dashinben Check",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -435,11 +435,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high staff check with a tiny active window and guarded recovery."
     },
     {
       "id": "kick",
-      "label": "Taikoubou Left Kick",
+      "label": "Low Dashinben Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -476,11 +477,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Steady low staff sweep with long active reach and quick recovery."
     },
     {
       "id": "heavy",
-      "label": "Taikoubou Right Check",
+      "label": "Dashinben Body Strike",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -517,11 +519,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid staff strike with a brief active hit and steady recovery."
     },
     {
       "id": "special",
-      "label": "Taikoubou Right Kick",
+      "label": "Spirit Beast Rush",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -558,7 +561,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow mid rush with huge active travel and almost no recovery."
     }
   ],
   "hurtboxes": [
@@ -602,10 +606,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 26,
-      "label": "Taikoubou Left Check",
+      "label": "Quick Dashinben Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high staff check with a tiny active window and guarded recovery."
     },
     "jabright": {
       "startupFrames": 11,
@@ -621,10 +626,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 25,
-      "label": "Taikoubou Right Check",
+      "label": "Dashinben Body Strike",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid staff strike with a brief active hit and steady recovery."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -640,8 +646,10 @@
       "forwardForce": 0.68,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
-      "label": "Taikoubou Left Kick",
-      "hitLevel": "low"
+      "label": "Low Dashinben Sweep",
+      "hitLevel": "low",
+      "description": "Steady low staff sweep with long active reach and quick recovery.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 19,
@@ -657,8 +665,10 @@
       "forwardForce": 0.96,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 46,
-      "label": "Taikoubou Right Kick",
-      "hitLevel": "mid"
+      "label": "Spirit Beast Rush",
+      "hitLevel": "mid",
+      "description": "Slow mid rush with huge active travel and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -674,9 +684,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 27,
       "forwardForceEndFrame": 44,
-      "label": "f+1 Frame Link",
+      "label": "Forward Staff Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward staff check with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -696,9 +708,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Dashinben Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid diagonal launcher with a tiny active lift and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 14,
@@ -714,9 +728,11 @@
       "forwardForce": 3.4,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 55,
-      "label": "Taikoubou Burst",
+      "label": "Paopei Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown burst with huge active staff pressure and short recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -732,8 +748,10 @@
       "forwardForce": 1.35,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 42,
-      "label": "Taikoubou Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Wind Rush",
+      "hitLevel": "mid",
+      "description": "Steady mid while-rising rush with long active wind-swept travel.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 18,
@@ -749,9 +767,11 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 29,
-      "label": "FC+1 Frame Link",
+      "label": "Ground-Skimming Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch rush with a long active slide and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -767,10 +787,12 @@
       "forwardForce": 1.91,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 39,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.0,
+      "label": "Crouch Dashinben Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch launcher with a tiny active lift and high recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -788,11 +810,13 @@
       "forwardForceEndFrame": 38,
       "kiCost": 35,
       "healAmount": 8,
-      "label": "1+2 Frame Link",
+      "label": "Paopei Ki Stance",
       "hitLevel": "mid",
       "cancelable": false,
       "usesKi": true,
-      "healsHp": true
+      "healsHp": true,
+      "description": "Slow mid ki technique with a long active stance and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -809,8 +833,10 @@
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 49,
       "launchHeight": 2.2,
-      "label": "Taikoubou Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Dashinben Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher with a long active lift and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -826,8 +852,10 @@
       "forwardForce": 1.53,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 14,
-      "label": "Taikoubou Low Feint",
-      "hitLevel": "low"
+      "label": "Low Paopei Feint",
+      "hitLevel": "low",
+      "description": "Steady low feint with a modest active sweep and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -843,9 +871,11 @@
       "forwardForce": 2.13,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
-      "label": "Taikoubou Driving Kick",
+      "label": "Low Dashinben Knockdown",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown sweep with a long active cut and measured recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 14,
@@ -861,9 +891,11 @@
       "forwardForce": 2.82,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 56,
-      "label": "Taikoubou Power Crush",
+      "label": "Paopei Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown crush with huge active pressure and instant finish.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -879,9 +911,11 @@
       "forwardForce": 3.14,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 49,
-      "label": "Taikoubou Aura Drive",
+      "label": "Paopei Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Instant special knockdown drive with very long active paopei pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1355,11 +1389,14 @@
       "forwardForce": 1.61,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 25,
-      "label": "f+2 Frame Link",
+      "label": "Forward Staff Strike",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Slow mid forward strike with a modest active hit and quick finish.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1369,11 +1406,14 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 26,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Staff Check",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow high ducking staff check with a brief active hit and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1383,11 +1423,14 @@
       "forwardForce": 2.06,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 26,
-      "label": "qcf+1 Frame Link",
+      "label": "Paopei Quick Check",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow high quarter-circle staff check with a brief active hit and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1397,11 +1440,14 @@
       "forwardForce": 1.67,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 25,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Staff Check",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Slow mid while-rising staff check with a modest active hit and quick finish.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1411,11 +1457,20 @@
       "forwardForce": 2.12,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 26,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Staff Check",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow high overdrive staff check with a brief active hit and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
+    },
+    "cmd:1+4": {
+      "label": "Spirit Beast Rush",
+      "description": "Slow mid spirit-beast rush with huge active travel and quick finish.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     }
   },
   "effects": [],

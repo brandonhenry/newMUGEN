@@ -362,7 +362,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Gotenks Left Check",
+      "label": "Quick Fusion Jab",
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
@@ -399,11 +399,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Gotenks Left Kick",
+      "label": "Low Fusion Roll",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -440,11 +441,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low rolling kick with long active coverage and heavier recovery."
     },
     {
       "id": "heavy",
-      "label": "Gotenks Right Check",
+      "label": "Fusion Body Check",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -481,11 +483,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body check with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Gotenks Right Kick",
+      "label": "Heavy Fusion Kick",
       "input": "special",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -522,7 +525,8 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "description": "Slow mid kick with a wide arc and committed recovery."
     }
   ],
   "hurtboxes": [
@@ -566,10 +570,11 @@
       "forwardForce": 0.35,
       "forwardForceStartFrame": 2,
       "forwardForceEndFrame": 7,
-      "label": "Gotenks Left Check",
+      "label": "Quick Fusion Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -585,10 +590,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "Gotenks Right Check",
+      "label": "Fusion Body Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body check with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -604,8 +610,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Gotenks Left Kick",
-      "hitLevel": "low"
+      "label": "Low Fusion Roll",
+      "hitLevel": "low",
+      "description": "Fast low rolling kick with long active coverage and heavier recovery."
     },
     "kickright": {
       "startupFrames": 22,
@@ -621,10 +628,11 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "Gotenks Right Kick",
+      "label": "Heavy Fusion Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid kick with a wide arc and committed recovery."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -640,9 +648,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "f+1 Frame Link",
+      "label": "Fusion Body Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid body poke with a tiny active window and heavy recovery."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -662,9 +671,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Fusion Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a lifting strike."
     },
     "cmd:qcf+4": {
       "startupFrames": 13,
@@ -680,10 +690,11 @@
       "forwardForce": 3.52,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 48,
-      "label": "qcf+4 Frame Link",
+      "label": "Galactic Fusion Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid knockdown burst with very long active coverage and fast recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -699,9 +710,10 @@
       "forwardForce": 2.37,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "WS+4 Frame Link",
+      "label": "Rising Fusion Kick",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid rising kick with a brief active window and heavy recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 3,
@@ -717,9 +729,10 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 15,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Fusion Flurry",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch attack with long active coverage from a quick low flurry."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -736,9 +749,10 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Fusion Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching strike."
     },
     "cmd:1+2": {
       "startupFrames": 16,
@@ -756,10 +770,11 @@
       "forwardForceEndFrame": 10,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "1+2 Frame Link",
+      "label": "Fusion Hop Strike",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping strike with a short active window and quick recovery."
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -780,7 +795,8 @@
       "launchHeight": 2.2,
       "label": "Gotenks Cross Launcher",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping launcher with long active coverage from a rushing kick."
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -802,9 +818,10 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Gotenks Low Feint",
+      "label": "Low Fusion Pop-Up",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady low jumping launcher with a short active window and quick recovery."
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -820,10 +837,11 @@
       "forwardForce": 2.64,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 27,
-      "label": "2+4 Frame Link",
+      "label": "Low Fusion Trip",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low knockdown kick with a short active window and heavy recovery."
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -839,10 +857,11 @@
       "forwardForce": 2.64,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 31,
-      "label": "3+4 Frame Link",
+      "label": "Fusion Knockdown Kick",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid knockdown kick with a brief active window and high commitment."
     },
     "cmd:O+2": {
       "startupFrames": 12,
@@ -858,9 +877,10 @@
       "forwardForce": 3.61,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "label": "Gotenks Aura Drive",
+      "label": "Fusion Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick special knockdown rush with very long active coverage from a golden charge."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1336,13 +1356,15 @@
       "forwardForceEndFrame": 22,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "1+4 Frame Link",
+      "label": "Galactic Spin Kick",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 7,
-      "recoveryFrames": 23
+      "recoveryFrames": 23,
+      "description": "Steady mid tornado kick that hops into a circular strike.",
+      "hitLevel": "mid"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1352,11 +1374,13 @@
       "forwardForce": 2.08,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "f+2 Frame Link",
+      "label": "Forward Fusion Check",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid strike with balanced active time and fast recovery.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1366,11 +1390,13 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Instant Fusion Check",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 22,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high check with long active time and quick recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1380,11 +1406,13 @@
       "forwardForce": 1.41,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Instant Fusion Check",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 22,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high check with long active time for quick close pressure.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1394,11 +1422,13 @@
       "forwardForce": 2.14,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Fusion",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid while-rising strike with balanced active time and fast recovery.",
+      "hitLevel": "mid"
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1408,11 +1438,13 @@
       "forwardForce": 2.52,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Fusion Kick",
       "cancelable": false,
       "startupFrames": 20,
       "activeFrames": 7,
-      "recoveryFrames": 19
+      "recoveryFrames": 19,
+      "description": "Slow mid sidestep kick with a steady active window and committed recovery.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1422,11 +1454,13 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Instant Fusion Check",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 22,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high check with long active time from a compact single-frame poke.",
+      "hitLevel": "high"
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1436,11 +1470,13 @@
       "forwardForce": 3.1,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
-      "label": "O+4 Frame Link",
+      "label": "Heavy Fusion Kick",
       "cancelable": false,
       "startupFrames": 20,
       "activeFrames": 7,
-      "recoveryFrames": 19
+      "recoveryFrames": 19,
+      "description": "Slow mid kick with a steady active window and committed recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

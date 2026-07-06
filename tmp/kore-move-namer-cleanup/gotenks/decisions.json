@@ -1,0 +1,182 @@
+{
+  "character": "gotenks",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Fusion Jab",
+      "description": "Fast high jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "reason": "Single compact high punch frame."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Fusion Roll",
+      "description": "Fast low rolling kick with long active coverage and heavier recovery.",
+      "hitLevel": "low",
+      "reason": "Gotenks drops into a low rolling attack."
+    },
+    {
+      "key": "jabright",
+      "label": "Fusion Body Check",
+      "description": "Quick mid body check with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "reason": "Compact mid-height punch sequence."
+    },
+    {
+      "key": "kickright",
+      "label": "Heavy Fusion Kick",
+      "description": "Slow mid kick with a wide arc and committed recovery.",
+      "hitLevel": "mid",
+      "reason": "Broad mid kick swing."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Fusion Hop Strike",
+      "description": "Steady mid jumping strike with a short active window and quick recovery.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "reason": "The move has a hop/jump property and a mid strike pose."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Gotenks Cross Launcher",
+      "description": "Slow mid jumping launcher with long active coverage from a rushing kick.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "reason": "Forward rush carries launcher and jump data."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Galactic Spin Kick",
+      "description": "Steady mid tornado kick that hops into a circular strike.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "reason": "Jumping circular kick with tornado data."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Fusion Pop-Up",
+      "description": "Steady low jumping launcher with a short active window and quick recovery.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "reason": "Low feint has launcher and jump data."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Fusion Trip",
+      "description": "Slow low knockdown kick with a short active window and heavy recovery.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "reason": "Low kick with knockdown data."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Fusion Knockdown Kick",
+      "description": "Slow mid knockdown kick with a brief active window and high commitment.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "reason": "Committed mid kick ender with knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Fusion Flurry",
+      "description": "Fast mid crouch attack with long active coverage from a quick low flurry.",
+      "hitLevel": "mid",
+      "reason": "Low-starting sequence with a sweeping slash-like arc."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Fusion Launcher",
+      "description": "Steady mid launcher with a short active window from a crouching strike.",
+      "hitLevel": "mid",
+      "reason": "Crouch-starting launcher data."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Instant Fusion Check",
+      "description": "Fast high check with long active time from a compact single-frame poke.",
+      "hitLevel": "high",
+      "reason": "One-frame high attack with long active data."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Fusion Aura Drive",
+      "description": "Quick special knockdown rush with very long active coverage from a golden charge.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "reason": "Special rush has Super Saiyan hair frames and knockdown data."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Heavy Fusion Kick",
+      "description": "Slow mid kick with a steady active window and committed recovery.",
+      "hitLevel": "mid",
+      "reason": "Repeats the heavy kick sequence."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Fusion Kick",
+      "description": "Slow mid sidestep kick with a steady active window and committed recovery.",
+      "hitLevel": "mid",
+      "reason": "Sidestep command uses the heavy kick sequence."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While Rising Fusion",
+      "description": "Quick mid while-rising strike with balanced active time and fast recovery.",
+      "hitLevel": "mid",
+      "reason": "Rising transition into the compact mid strike."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Fusion Kick",
+      "description": "Steady mid rising kick with a brief active window and heavy recovery.",
+      "hitLevel": "mid",
+      "reason": "While-rising command ends in the heavy kick pose."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "description": "Fast high check with long active time and quick recovery.",
+      "hitLevel": "high",
+      "reason": "Same single-frame high check as O+1."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Forward Fusion Launcher",
+      "description": "Slow mid launcher that reaches forward with a lifting strike.",
+      "hitLevel": "mid",
+      "reason": "Forward-reaching launcher data."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "description": "Slow mid body poke with a tiny active window and heavy recovery.",
+      "hitLevel": "mid",
+      "reason": "Single compact forward strike frame."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "description": "Quick mid strike with balanced active time and fast recovery.",
+      "hitLevel": "mid",
+      "reason": "Forward command uses the mid body-check sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "description": "Fast high check with long active time for quick close pressure.",
+      "hitLevel": "high",
+      "reason": "Quarter-circle punch repeats the high one-frame check."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Galactic Fusion Burst",
+      "description": "Quick mid knockdown burst with very long active coverage and fast recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "reason": "Fast rush ender with knockdown data and a big golden charge."
+    }
+  ]
+}

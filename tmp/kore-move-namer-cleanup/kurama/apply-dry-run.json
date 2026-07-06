@@ -1,0 +1,195 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "kurama",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Rose Jab",
+        "description": "Fast high rose jab with a tiny active window for close checks.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Compact hand strike with Kurama's rose held forward."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Rose Whip Slash",
+        "description": "Quick mid rose-whip slash with a brief active window and steady recovery.",
+        "tracking": "weakRight",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward whip-like hand arc cuts through mid space."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Demon Rose Step",
+        "description": "Slow mid advancing step with a long active pressure window and quick recovery.",
+        "tracking": "weakRight",
+        "hitLevel": "mid"
+      },
+      "reason": "Low forward demon step transitions into a rose-hand strike."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Rose Whip Launcher",
+        "description": "Slow mid launcher with long active whip coverage and quick recovery.",
+        "launchHeight": 2.2,
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Rising rose-whip arc is authored as a launcher."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Rose Feint",
+        "description": "Slow low feint with a long active rose arc and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Crouched step and low slash path read as a low feint."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Demon Rose Crush",
+        "description": "Quick mid knockdown crush with long active forward pressure.",
+        "knockdown": true,
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward lunging strike is authored as a knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouching Rose Lash",
+        "description": "Steady mid crouching lash with extended active frames and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Full-crouch sequence sweeps the rose whip through mid height."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Whip Launcher",
+        "description": "Steady mid launcher with a tiny active lift and heavy recovery.",
+        "launchHeight": 2,
+        "tracking": "weakRight",
+        "hitLevel": "mid"
+      },
+      "reason": "Crouch-to-whip arc is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Rose Jab",
+        "description": "Fast high overdrive jab with extended active pressure and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Overdrive command uses the rose jab sequence."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Rose Aura Drive",
+        "description": "Slow special knockdown drive with long active demon-rose pressure.",
+        "knockdown": true,
+        "tracking": "weakRight",
+        "hitLevel": "special"
+      },
+      "reason": "Long rushing aura move is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "While-Rising Rose Slash",
+        "description": "Steady mid while-rising slash with extended active whip coverage.",
+        "tracking": "weakRight",
+        "hitLevel": "mid"
+      },
+      "reason": "While-rising command uses the rose-whip slash family."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Youko Rising Strike",
+        "description": "Slow mid rising strike with long active coverage and very quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Blue Youko-form frames rise into a forward strike."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Rose Jab",
+        "description": "Fast high ducking rose jab with extended active pressure and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Down jab reuses the quick rose-jab sequence."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Whip Launcher",
+        "description": "Slow mid launcher with a tiny active lift and heavy recovery.",
+        "launchHeight": 2.1,
+        "tracking": "weakRight",
+        "hitLevel": "mid"
+      },
+      "reason": "Diagonal command uses the rose-whip launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Rose Jab",
+        "description": "Slow mid forward jab with a tiny active window and heavy recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command is a delayed rose-hand strike."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Rose Slash",
+        "description": "Steady mid forward slash with extended active whip coverage.",
+        "tracking": "weakRight",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command uses the rose-whip slash."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Rose Rush Jab",
+        "description": "Fast high rush jab with extended active pressure and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Quarter-circle jab keeps the rose-jab sequence."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Youko Burst",
+        "description": "Fast mid knockdown burst with very long active pressure and steady recovery.",
+        "knockdown": true,
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Blue Youko-form burst is authored as a knockdown."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

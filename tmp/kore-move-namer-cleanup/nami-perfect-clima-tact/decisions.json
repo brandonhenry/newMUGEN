@@ -1,0 +1,190 @@
+{
+  "character": "nami-perfect-clima-tact",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Perfect Clima Jab",
+      "description": "Fast high Clima-Tact jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Compact blue staff poke at upper-body height."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Gust Sweep",
+      "description": "Steady low gust sweep with extended active staff coverage.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low spinning blue arc travels near leg height."
+    },
+    {
+      "key": "jabright",
+      "label": "Perfect Staff Swipe",
+      "description": "Quick mid staff swipe with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Blue Clima-Tact arc cuts through mid space."
+    },
+    {
+      "key": "kickright",
+      "label": "Weather Staff Kick",
+      "description": "Slow mid staff kick with long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Staff-assisted kick and slide stay around mid height."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "description": "Quick mid tornado twirl with a brief active window and fast recovery.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "tracking": "medium",
+      "reason": "Blue circular staff twirl is authored as a tornado."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Thunder Cloud Launcher",
+      "description": "Slow mid launcher with long active Clima-Tact lift and quick recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "medium",
+      "reason": "Rising blue staff arc is authored as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "description": "Slow mid staff kick with long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Command reuses the mid blue staff-kick sequence."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Mirage Feint",
+      "description": "Slow low feint with moderate active time and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low Clima-Tact feint starts grounded and sweeps low."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Gust Knockdown",
+      "description": "Slow low knockdown strike with extended active staff pressure.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Low driving staff strike is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "description": "Slow mid tornado crush that knocks down after extended staff pressure.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Blue spinning staff move is authored as tornado and knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouching Weather Staff",
+      "description": "Quick mid crouching staff swing with extended active coverage.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Crouched blue arc sweeps through mid range."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Cloud Launcher",
+      "description": "Steady mid launcher with a tiny active lift and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2,
+      "tracking": "medium",
+      "reason": "Full-crouch staff swipe is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Clima Jab",
+      "description": "Fast high overdrive jab with extended active staff pressure.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Overdrive command uses the high blue Clima-Tact jab."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Perfect Mirage Drive",
+      "description": "Steady special knockdown drive with very long active weather pressure.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Perfect Clima-Tact drive is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While-Rising Staff Swipe",
+      "description": "Fast mid while-rising swipe with a brief active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "While-rising command uses the blue staff swipe."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Gust Kick",
+      "description": "Slow mid rising kick with extended active blue-gust coverage.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Rising staff kick is framed by blue weather arcs."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "description": "Fast high ducking jab with extended active staff pressure.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down jab reuses the high blue Clima-Tact jab."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Cloud Launcher",
+      "description": "Slow mid launcher with a tiny active lift and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "medium",
+      "reason": "Diagonal staff swipe is authored as a launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Forward Clima Guard",
+      "description": "Slow mid forward guard with a tiny active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command uses the blue fan-like guard arc."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "description": "Fast mid forward swipe with a brief active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command uses the mid staff swipe."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "description": "Fast high rush jab with extended active staff pressure.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle jab reuses the high Perfect Clima-Tact poke."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "description": "Fast mid knockdown burst with very long active blue staff coverage.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Burst sequence spins through blue Clima-Tact arcs and knockdown data."
+    }
+  ]
+}

@@ -461,7 +461,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Kagura Left Check",
+      "label": "Quick Umbrella Jab",
       "input": "jab",
       "startupFrames": 12,
       "activeFrames": 3,
@@ -498,11 +498,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high umbrella jab with a short active window and heavy recovery."
     },
     {
       "id": "kick",
-      "label": "Kagura Left Kick",
+      "label": "Low Yato Slide",
       "input": "kick",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -539,11 +540,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low slide with moderate active time from Kagura's forward dash."
     },
     {
       "id": "heavy",
-      "label": "Kagura Right Check",
+      "label": "Umbrella Body Swing",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -580,11 +582,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid umbrella swing with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Kagura Right Kick",
+      "label": "Yato Dash Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -621,7 +624,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid dash kick with long active coverage and heavy recovery."
     }
   ],
   "hurtboxes": [
@@ -665,10 +669,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
-      "label": "Kagura Left Check",
+      "label": "Quick Umbrella Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high umbrella jab with a short active window and heavy recovery."
     },
     "jabright": {
       "startupFrames": 11,
@@ -684,10 +689,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
-      "label": "Kagura Right Check",
+      "label": "Umbrella Body Swing",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid umbrella swing with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 24,
@@ -703,10 +709,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "Kagura Left Kick",
+      "label": "Low Yato Slide",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low slide with moderate active time from Kagura's forward dash."
     },
     "kickright": {
       "startupFrames": 0,
@@ -722,8 +729,9 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 34,
-      "label": "Kagura Right Kick",
-      "hitLevel": "mid"
+      "label": "Yato Dash Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid dash kick with long active coverage and heavy recovery."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -739,9 +747,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 17,
-      "label": "f+1 Frame Link",
+      "label": "Forward Umbrella Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid umbrella poke with a short active window and high commitment."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -761,9 +770,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Umbrella Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a short active window from a forward umbrella lift."
     },
     "cmd:qcf+4": {
       "startupFrames": 7,
@@ -779,9 +789,10 @@
       "forwardForce": 3.39,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 41,
-      "label": "Kagura Burst",
+      "label": "Yato Umbrella Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with very long active coverage and quick recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -797,8 +808,9 @@
       "forwardForce": 1.34,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "Kagura Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Yato Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with very long active coverage and quick recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -814,9 +826,10 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 3,
       "forwardForceEndFrame": 11,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Yato Roll",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch attack with long active coverage from a low rolling strike."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -833,9 +846,10 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Umbrella Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching umbrella lift."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -851,9 +865,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 22,
-      "label": "1+2 Frame Link",
+      "label": "Umbrella Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid umbrella sequence that winds into a controlled forward strike."
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -872,11 +887,12 @@
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Umbrella Tornado Launcher",
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping launcher tornado with long active coverage from a spinning umbrella."
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -892,9 +908,10 @@
       "forwardForce": 1.23,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 37,
-      "label": "2+3 Frame Link",
+      "label": "Low Umbrella Feint",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low feint with moderate active time and quick recovery."
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -912,10 +929,11 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Kagura Driving Kick",
+      "label": "Low Yato Drive",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping knockdown drive with long active coverage and quick recovery."
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -933,12 +951,13 @@
       "forwardForceEndFrame": 44,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Kagura Power Crush",
+      "label": "Homing Umbrella Tornado",
       "hitLevel": "mid",
       "tracking": "homing",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado knockdown with homing coverage from a spinning umbrella."
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -954,9 +973,10 @@
       "forwardForce": 3.55,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 35,
-      "label": "Kagura Aura Drive",
+      "label": "Yato Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with long active coverage from a tumbling umbrella charge."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1430,11 +1450,13 @@
       "forwardForce": 2.02,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
-      "label": "f+2 Frame Link",
+      "label": "Forward Umbrella Swing",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Steady mid umbrella swing with a modest active window and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1444,11 +1466,13 @@
       "forwardForce": 1.62,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "f+3 Frame Link",
+      "label": "Forward Low Slide",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 6,
-      "recoveryFrames": 32
+      "recoveryFrames": 32,
+      "description": "Fast low slide with a short active window and heavy recovery.",
+      "hitLevel": "low"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1458,11 +1482,13 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Quick Umbrella Check",
       "cancelable": false,
       "startupFrames": 10,
       "activeFrames": 6,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast high umbrella check with a modest active window and steady recovery.",
+      "hitLevel": "high"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1472,11 +1498,13 @@
       "forwardForce": 1.34,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "d+3 Frame Link",
+      "label": "Low Yato Slide",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 6,
-      "recoveryFrames": 32
+      "recoveryFrames": 32,
+      "description": "Fast low slide with a short active window and heavy recovery.",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1486,11 +1514,13 @@
       "forwardForce": 1.62,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "d/f+3 Frame Link",
+      "label": "Forward Low Slide",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 6,
-      "recoveryFrames": 32
+      "recoveryFrames": 32,
+      "description": "Fast low slide with a short active window and heavy recovery.",
+      "hitLevel": "low"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1500,11 +1530,13 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Umbrella Check",
       "cancelable": false,
       "startupFrames": 10,
       "activeFrames": 6,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast high umbrella check with a modest active window for close pressure.",
+      "hitLevel": "high"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1514,11 +1546,13 @@
       "forwardForce": 2.2,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "qcf+3 Frame Link",
+      "label": "Low Yato Slide",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 6,
-      "recoveryFrames": 32
+      "recoveryFrames": 32,
+      "description": "Fast low slide with a short active window and heavy recovery.",
+      "hitLevel": "low"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1528,11 +1562,13 @@
       "forwardForce": 2.08,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Umbrella",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Steady mid while-rising umbrella swing with a modest active window and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1542,11 +1578,13 @@
       "forwardForce": 1.68,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Slide",
       "cancelable": false,
       "startupFrames": 7,
       "activeFrames": 6,
-      "recoveryFrames": 32
+      "recoveryFrames": 32,
+      "description": "Fast low sidestep slide with a short active window and heavy recovery.",
+      "hitLevel": "low"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1556,11 +1594,23 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Quick Umbrella Check",
       "cancelable": false,
       "startupFrames": 10,
       "activeFrames": 6,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast high umbrella check with a modest active window and steady recovery.",
+      "hitLevel": "high"
+    },
+    "cmd:1+2+3": {
+      "label": "Low Yato Slide",
+      "description": "Slow low slide with moderate active time and measured recovery.",
+      "hitLevel": "low"
+    },
+    "cmd:1+4": {
+      "label": "Yato Dash Kick",
+      "description": "Fast mid dash kick with long active coverage and heavy recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

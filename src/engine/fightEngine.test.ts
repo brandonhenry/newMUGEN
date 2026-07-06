@@ -7086,6 +7086,36 @@ describe('fight engine', () => {
     expect(match.fighters[1].actionFramesRemaining).toBe(match.fighters[1].stunFramesRemaining);
   });
 
+  it('gives projectile hits tornado extension while the defender is already juggled', () => {
+    const shooter = makeProjectileCharacter('projectile-juggle-tornado-test', {
+      damage: 9,
+      pushback: 0.3,
+      onHitFrames: 8
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 0.78;
+    match.fighters[1].velocityY = -0.4;
+    match.fighters[1].juggleDamage = 32;
+    match.fighters[1].juggleSequenceDamage = 86;
+    match.fighters[1].juggleTornadoCount = 0;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    const startingImpactCount = match.impactEvents.length;
+    for (let frame = 0; frame < 30 && match.impactEvents.length === startingImpactCount; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].juggleTornadoCount).toBe(1);
+    expect(match.fighters[1].juggleSequenceDamage).toBeLessThan(86);
+    expect(match.fighters[1].position.y).toBeGreaterThanOrEqual(1.26);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(4.2);
+    expect(match.fighters[1].stunFramesRemaining).toBeGreaterThanOrEqual(30);
+    expect(match.impactEvents[match.impactEvents.length - 1]).toMatchObject({ tornado: true, juggled: true });
+  });
+
   it('allows blocking projectile hits', () => {
     const shooter = makeProjectileCharacter('projectile-block-test');
     const defender = normalizeCharacter(starterCharacters[1]);

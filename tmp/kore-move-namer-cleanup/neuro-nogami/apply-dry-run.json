@@ -1,0 +1,169 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "neuro-nogami",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Demon Jab",
+        "description": "Fast high demon jab with a tiny active window for close checks.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Compact standing strike from Neuro's neutral pose."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Demonic Twin Drill",
+        "description": "Slow mid jumping twin assault with a long active rush and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "jumpBeforeMove": true
+      },
+      "reason": "Forward rush shows green demonic speed and jump data."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Demon Hand Launcher",
+        "description": "Slow mid launcher with long active claw lift and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "launchHeight": 2.2
+      },
+      "reason": "Raised demonic hand strike is authored as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Green Talon Kick",
+        "description": "Slow mid talon kick with a tiny active hit and heavy recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Green energy kick lashes forward at body height."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Mystery Snare",
+        "description": "Slow low snare feint with extended active time and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "low"
+      },
+      "reason": "Chain-like snare descends while Neuro stays low."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Demonic Tornado Kick",
+        "description": "Slow low jumping tornado kick that knocks down after extended active spin.",
+        "tracking": "medium",
+        "hitLevel": "low",
+        "knockdown": true,
+        "jumpBeforeMove": true,
+        "tornado": true
+      },
+      "reason": "Aerial green kick is authored as low, tornado, jump, and knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Demon Power Crush",
+        "description": "Quick mid jumping knockdown crush with a short active window and steady recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "knockdown": true,
+        "jumpBeforeMove": true
+      },
+      "reason": "Leaping green-energy crush is authored as knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouching Demon Blade",
+        "description": "Fast mid crouching blade rush with long active demonic coverage.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "Crouch sequence draws a green blade and rushes forward."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Talon Launcher",
+        "description": "Fast mid launcher with long active claw lift and steady recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "launchHeight": 2
+      },
+      "reason": "Crouching claw sweep is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Demon Jab",
+        "description": "Steady high overdrive jab with a brief active window and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Overdrive command uses the high demon jab."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Demon Aura Drive",
+        "description": "Fast special knockdown drive with very long active demonic pressure.",
+        "tracking": "medium",
+        "hitLevel": "special",
+        "knockdown": true
+      },
+      "reason": "Aura drive is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "While-Rising Demon Claw",
+        "description": "Fast mid while-rising claw with long active pressure and steady recovery.",
+        "tracking": "medium",
+        "hitLevel": "mid"
+      },
+      "reason": "While-rising command claws upward through mid space."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Demon Jab",
+        "description": "Steady high ducking jab with a brief active window and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Down jab reuses the high demon jab."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Demon Flight Rush",
+        "description": "Fast mid jumping rush with very long active demonic pressure.",
+        "tracking": "medium",
+        "hitLevel": "mid",
+        "jumpBeforeMove": true
+      },
+      "reason": "Forward command floats into a green rush and has jump data."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Demon Rush Jab",
+        "description": "Steady high rush jab with a brief active window and quick recovery.",
+        "tracking": "medium",
+        "hitLevel": "high"
+      },
+      "reason": "Quarter-circle jab uses the high demon jab."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

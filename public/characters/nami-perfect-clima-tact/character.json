@@ -401,7 +401,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Nami (Perfect Clima-Tact) Left Check",
+      "label": "Perfect Clima Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -438,11 +438,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high Clima-Tact jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Nami (Perfect Clima-Tact) Left Kick",
+      "label": "Low Gust Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -479,11 +480,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Steady low gust sweep with extended active staff coverage."
     },
     {
       "id": "heavy",
-      "label": "Nami (Perfect Clima-Tact) Right Check",
+      "label": "Perfect Staff Swipe",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -520,11 +522,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid staff swipe with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Nami (Perfect Clima-Tact) Right Kick",
+      "label": "Weather Staff Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -561,7 +564,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow mid staff kick with long active coverage and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -605,10 +609,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "Nami (Perfect Clima-Tact) Left Check",
+      "label": "Perfect Clima Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high Clima-Tact jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -624,10 +629,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "Nami (Perfect Clima-Tact) Right Check",
+      "label": "Perfect Staff Swipe",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid staff swipe with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -643,8 +649,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Nami (Perfect Clima-Tact) Left Kick",
-      "hitLevel": "low"
+      "label": "Low Gust Sweep",
+      "hitLevel": "low",
+      "description": "Steady low gust sweep with extended active staff coverage.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 22,
@@ -660,8 +668,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Nami (Perfect Clima-Tact) Right Kick",
-      "hitLevel": "mid"
+      "label": "Weather Staff Kick",
+      "hitLevel": "mid",
+      "description": "Slow mid staff kick with long active coverage and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -677,9 +687,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
-      "label": "f+1 Frame Link",
+      "label": "Forward Clima Guard",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward guard with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -699,9 +711,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Cloud Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active lift and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -717,9 +731,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Nami (Perfect Clima-Tact) Burst",
+      "label": "Perfect Cyclone Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with very long active blue staff coverage.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 21,
@@ -735,8 +751,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Nami (Perfect Clima-Tact) Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Gust Kick",
+      "hitLevel": "mid",
+      "description": "Slow mid rising kick with extended active blue-gust coverage.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -752,9 +770,11 @@
       "forwardForce": 1.79,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Weather Staff",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid crouching staff swing with extended active coverage.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -771,9 +791,11 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Cloud Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active lift and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 12,
@@ -789,10 +811,12 @@
       "forwardForce": 2.23,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
-      "label": "1+2 Frame Link",
+      "label": "Cyclone Tempo Twirl",
       "hitLevel": "mid",
       "tornado": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid tornado twirl with a brief active window and fast recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -809,8 +833,10 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
       "launchHeight": 2.2,
-      "label": "Nami (Perfect Clima-Tact) Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Thunder Cloud Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active Clima-Tact lift and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -826,8 +852,10 @@
       "forwardForce": 1.55,
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 30,
-      "label": "Nami (Perfect Clima-Tact) Low Feint",
-      "hitLevel": "low"
+      "label": "Low Mirage Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with moderate active time and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -843,9 +871,11 @@
       "forwardForce": 1.76,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 39,
-      "label": "Nami (Perfect Clima-Tact) Driving Kick",
+      "label": "Low Gust Knockdown",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown strike with extended active staff pressure.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -861,10 +891,12 @@
       "forwardForce": 3.28,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 41,
-      "label": "Nami (Perfect Clima-Tact) Power Crush",
+      "label": "Cyclone Tempo Crush",
       "hitLevel": "mid",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "description": "Slow mid tornado crush that knocks down after extended staff pressure.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -880,9 +912,11 @@
       "forwardForce": 2.92,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
-      "label": "Nami (Perfect Clima-Tact) Aura Drive",
+      "label": "Perfect Mirage Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady special knockdown drive with very long active weather pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1356,11 +1390,14 @@
       "forwardForce": 1.39,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "f+2 Frame Link",
+      "label": "Forward Staff Swipe",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 6,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Fast mid forward swipe with a brief active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1370,11 +1407,14 @@
       "forwardForce": 1.45,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Clima Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 12,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high ducking jab with extended active staff pressure.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1384,11 +1424,14 @@
       "forwardForce": 2.31,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Clima Rush Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 12,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high rush jab with extended active staff pressure.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1398,11 +1441,14 @@
       "forwardForce": 1.45,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Staff Swipe",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 6,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Fast mid while-rising swipe with a brief active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1412,11 +1458,20 @@
       "forwardForce": 2.37,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Clima Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 12,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high overdrive jab with extended active staff pressure.",
+      "tracking": "medium",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Blue Tempo Staff Kick",
+      "description": "Slow mid staff kick with long active coverage and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

@@ -1,0 +1,259 @@
+{
+  "ok": true,
+  "write": true,
+  "character": "gintoki-sakata",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Toyako Jab",
+        "description": "Fast high bokuto jab with a short active window for close checks.",
+        "hitLevel": "high"
+      },
+      "reason": "Compact wooden-sword poke aimed high."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Lazy Kick",
+        "description": "Fast low kick with steady active time from Gintoki's short step-in sweep.",
+        "hitLevel": "low"
+      },
+      "reason": "Small grounded kick path at shin height."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Toyako Backhand",
+        "description": "Quick mid bokuto swing with a short active window after a body turn.",
+        "hitLevel": "mid"
+      },
+      "reason": "Standing wooden-sword swing across the body."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Heavy Toyako Thrust",
+        "description": "Quick mid thrust with long active coverage from Gintoki's extended bokuto.",
+        "hitLevel": "mid"
+      },
+      "reason": "Direct forward sword extension."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Lazy Samurai Spin",
+        "description": "Slow mid tornado slash that hops into a spinning bokuto attack.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid",
+        "tornado": true
+      },
+      "reason": "The animation jumps and rotates through a visible spinning strike."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Toyako Rising Cut",
+        "description": "Slow mid launcher with long active time from a jumping rising sword cut.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid"
+      },
+      "reason": "The sequence lifts into a rising sword launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Toyako Step Thrust",
+        "description": "Quick mid thrust that steps in and keeps the bokuto extended.",
+        "hitLevel": "mid"
+      },
+      "reason": "Step-in version of the extended sword thrust."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Wooden Sweep",
+        "description": "Steady low kick with a short active window and heavier recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Grounded low kick sequence."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Toyako Slide",
+        "description": "Steady low knockdown slide with long active coverage as Gintoki drops forward.",
+        "knockdown": true,
+        "hitLevel": "low"
+      },
+      "reason": "Low sliding sword/body attack with knockdown data."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Toyako Power Crush",
+        "description": "Fast mid knockdown rush with very long active coverage from repeated bokuto swings.",
+        "knockdown": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Long-active forward sword rush with knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Toyako Drive",
+        "description": "Fast mid crouch attack with long active time from a low-to-high sword drive.",
+        "hitLevel": "mid"
+      },
+      "reason": "Starts low and carries the wooden sword through a long rising path."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Toyako Launcher",
+        "description": "Steady mid launcher with a short active window from a crouching bokuto lift.",
+        "hitLevel": "mid"
+      },
+      "reason": "Crouching sword swing with launcher data."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Quick Toyako Check",
+        "description": "Slow high sword check with brief active frames and quick recovery.",
+        "hitLevel": "high"
+      },
+      "reason": "Upper-body bokuto poke."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Shiroyasha Rush",
+        "description": "Fast special knockdown rush with very long active coverage from chained sword cuts.",
+        "knockdown": true,
+        "hitLevel": "special"
+      },
+      "reason": "Long special rush made of repeated sword attacks."
+    },
+    {
+      "key": "cmd:SS+3",
+      "patch": {
+        "label": "Sidestep Low Kick",
+        "description": "Slow low sidestep kick with moderate active time and measured recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Sidestep command uses the simple low kick visual."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "While Rising Toyako",
+        "description": "Slow mid while-rising sword cut with a short active window.",
+        "hitLevel": "mid"
+      },
+      "reason": "Rising transition into a mid bokuto swing."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Toyako Rush",
+        "description": "Fast mid rising strike with long active coverage from a low sword rush.",
+        "hitLevel": "mid"
+      },
+      "reason": "Starts low and rises through several sword poses."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Quick Toyako Check",
+        "description": "Slow high bokuto check with brief active frames and fast recovery.",
+        "hitLevel": "high"
+      },
+      "reason": "Same compact upper-body sword check as O+1."
+    },
+    {
+      "key": "cmd:d+3",
+      "patch": {
+        "label": "Low Lazy Kick",
+        "description": "Slow low kick with moderate active time from a short grounded step.",
+        "hitLevel": "low"
+      },
+      "reason": "Repeat low kick action."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Forward Toyako Launcher",
+        "description": "Slow mid launcher that lifts with a forward wooden-sword cut.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward-reaching sword lift with launcher data."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "patch": {
+        "label": "Low Forward Kick",
+        "description": "Slow low kick with moderate active time and steady recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Forward-low input uses the simple low kick sequence."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Toyako Body Poke",
+        "description": "Slow mid body poke with a short active window and high commitment.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command drives the bokuto into the body line."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Toyako Cut",
+        "description": "Slow mid sword cut with a short active window and quick recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward mid command uses the same sword-swing family."
+    },
+    {
+      "key": "cmd:f+3",
+      "patch": {
+        "label": "Forward Low Kick",
+        "description": "Slow low kick with moderate active time from a grounded step.",
+        "hitLevel": "low"
+      },
+      "reason": "Forward kick remains a plain low kick."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Toyako Quick Check",
+        "description": "Slow high sword check with brief active frames for a cautious poke.",
+        "hitLevel": "high"
+      },
+      "reason": "Quick quarter-circle poke is still a compact bokuto check."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "patch": {
+        "label": "Low Sugar Kick",
+        "description": "Slow low kick with moderate active time and simple grounded recovery.",
+        "hitLevel": "low"
+      },
+      "reason": "Low kick visual with a small Gintoki-flavored name."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Shiroyasha Burst",
+        "description": "Fast mid knockdown burst with long active coverage from a rushing sword finisher.",
+        "knockdown": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Named burst ender is a long-active forward sword finisher."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

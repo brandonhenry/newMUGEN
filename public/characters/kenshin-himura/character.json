@@ -407,7 +407,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Kenshin Himura Left Check",
+      "label": "Quick Sakabato Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -444,11 +444,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword jab with a tiny active window for close-range checks."
     },
     {
       "id": "kick",
-      "label": "Kenshin Himura Left Kick",
+      "label": "Low Sakabato Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -485,11 +486,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low sliding sword sweep with long active coverage near the ground."
     },
     {
       "id": "heavy",
-      "label": "Kenshin Himura Right Check",
+      "label": "Sakabato Body Cut",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -526,11 +528,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid sword cut with a short active window and clean recovery."
     },
     {
       "id": "special",
-      "label": "Kenshin Himura Right Kick",
+      "label": "Hiten Step Cut",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -567,7 +570,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid step cut with very long active pressure through the sword arc."
     }
   ],
   "hurtboxes": [
@@ -611,10 +615,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "Kenshin Himura Left Check",
+      "label": "Quick Sakabato Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high sword jab with a tiny active window for close-range checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -630,10 +635,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "Kenshin Himura Right Check",
+      "label": "Sakabato Body Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid sword cut with a short active window and clean recovery."
     },
     "kickleft": {
       "startupFrames": 5,
@@ -649,8 +655,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Kenshin Himura Left Kick",
-      "hitLevel": "low"
+      "label": "Low Sakabato Sweep",
+      "hitLevel": "low",
+      "description": "Fast low sliding sword sweep with long active coverage near the ground.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 0,
@@ -666,8 +674,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Kenshin Himura Right Kick",
-      "hitLevel": "mid"
+      "label": "Hiten Step Cut",
+      "hitLevel": "mid",
+      "description": "Fast mid step cut with very long active pressure through the sword arc.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -683,9 +693,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "f+1 Frame Link",
+      "label": "Hiten Step Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid advancing rush with long active sword coverage.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -705,9 +717,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Draw Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active lift and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -723,9 +737,11 @@
       "forwardForce": 3.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "Kenshin Himura Burst",
+      "label": "Hiten Burst Ender",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with long active movement and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 9,
@@ -741,8 +757,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Kenshin Himura Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Hiten Sweep",
+      "hitLevel": "mid",
+      "description": "Fast mid rising sweep with long active sword coverage out of crouch.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -758,9 +776,11 @@
       "forwardForce": 1.93,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "FC+1 Frame Link",
+      "label": "Full-Crouch Draw Cut",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching draw cut with long active coverage and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -777,9 +797,11 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouching Pop-Up",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a small active lift after a crouched draw.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 17,
@@ -795,9 +817,11 @@
       "forwardForce": 1.86,
       "forwardForceStartFrame": 3,
       "forwardForceEndFrame": 5,
-      "label": "1+2 Frame Link",
+      "label": "Hiten Cross Cut",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid cross slash with a moderate active window and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 4,
@@ -814,8 +838,10 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 19,
       "launchHeight": 2.2,
-      "label": "Kenshin Himura Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Sakabato Pop-Up",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with a brief active lift from a rising sword check.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -833,9 +859,11 @@
       "forwardForceEndFrame": 43,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
-      "label": "Kenshin Himura Low Feint",
+      "label": "Low Batto Feint",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping feint with moderate active time from a sliding sword approach.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -851,9 +879,11 @@
       "forwardForce": 1.99,
       "forwardForceStartFrame": 43,
       "forwardForceEndFrame": 48,
-      "label": "Kenshin Himura Driving Kick",
+      "label": "Low Driving Slash",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown slash that drives forward with extended active frames.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 11,
@@ -869,12 +899,14 @@
       "forwardForce": 3.69,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 20,
-      "label": "Kenshin Himura Power Crush",
+      "label": "Ryukansen Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping tornado slash that knocks down and ends in a crouched landing.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -890,9 +922,11 @@
       "forwardForce": 3.3,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29,
-      "label": "Kenshin Himura Aura Drive",
+      "label": "Hiten Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with long active sword pressure and minimal recovery.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1368,7 +1402,11 @@
       "whiffRecoveryFrames": 18,
       "forwardForce": 2.55,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Heavy Step Cut",
+      "description": "Slow mid step cut with a tiny active window and committed recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:1+2+3": {
       "startupFrames": 9,
@@ -1380,7 +1418,11 @@
       "whiffRecoveryFrames": 14,
       "forwardForce": 2.03,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "label": "Low Iai Sweep",
+      "description": "Fast low draw sweep with a short active window and measured recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1390,11 +1432,14 @@
       "forwardForce": 1.77,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "f+2 Frame Link",
+      "label": "Forward Draw Cut",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 7,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Fast mid forward draw cut with a short active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1404,11 +1449,14 @@
       "forwardForce": 1.59,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Sakabato Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high ducking jab with a short active window for fast checks.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1418,11 +1466,14 @@
       "forwardForce": 2.45,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Batto Rush Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high rush jab with a short active window for approach checks.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1432,11 +1483,14 @@
       "forwardForce": 1.83,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Draw Cut",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 7,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Fast mid while-rising cut with a short active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1446,11 +1500,14 @@
       "forwardForce": 2.51,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Sakabato Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high overdrive jab with a short active window and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

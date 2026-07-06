@@ -316,7 +316,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Gotenks (Super Saiyan) Left Check",
+      "label": "Quick Super Jab",
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
@@ -353,7 +353,8 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
@@ -398,7 +399,7 @@
     },
     {
       "id": "heavy",
-      "label": "Gotenks (Super Saiyan) Right Check",
+      "label": "Super Body Check",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -435,7 +436,8 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body check with a short active window and steady recovery."
     },
     {
       "id": "special",
@@ -520,10 +522,11 @@
       "forwardForce": 0.35,
       "forwardForceStartFrame": 2,
       "forwardForceEndFrame": 7,
-      "label": "Gotenks (Super Saiyan) Left Check",
+      "label": "Quick Super Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -539,10 +542,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "Gotenks (Super Saiyan) Right Check",
+      "label": "Super Body Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body check with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -592,9 +596,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "f+1 Frame Link",
+      "label": "Super Body Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid body poke with a tiny active window and high commitment."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -614,9 +619,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Super Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a lifting strike."
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -650,8 +656,9 @@
       "forwardForce": 1.33,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
-      "label": "Gotenks (Super Saiyan) Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Super Rush",
+      "hitLevel": "mid",
+      "description": "Slow mid rising strike with steady active time and quick recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -667,9 +674,10 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 15,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Super Flurry",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid crouch attack with moderate active time and clean recovery."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -686,9 +694,10 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Super Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching strike."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -704,9 +713,10 @@
       "forwardForce": 2.17,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "1+2 Frame Link",
+      "label": "Super Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid sequence that winds up into a controlled forward strike."
     },
     "cmd:1+3": {
       "startupFrames": 10,
@@ -723,8 +733,9 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
       "launchHeight": 2.2,
-      "label": "Gotenks (Super Saiyan) Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Super Fusion Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with very long active coverage from a charging strike."
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -742,9 +753,10 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "Gotenks (Super Saiyan) Low Feint",
+      "label": "Low Super Feint",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping feint with moderate active time and grounded recovery."
     },
     "cmd:2+4": {
       "startupFrames": 5,
@@ -760,9 +772,10 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "Gotenks (Super Saiyan) Driving Kick",
+      "label": "Low Super Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast low knockdown rush with very long active coverage and quick recovery."
     },
     "cmd:3+4": {
       "startupFrames": 6,
@@ -778,9 +791,10 @@
       "forwardForce": 2.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
-      "label": "Gotenks (Super Saiyan) Power Crush",
+      "label": "Super Fusion Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown rush with long active coverage and committed recovery."
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -796,9 +810,10 @@
       "forwardForce": 3.61,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29,
-      "label": "Gotenks (Super Saiyan) Aura Drive",
+      "label": "Super Fusion Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady special knockdown rush with long active coverage and heavy recovery."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1272,11 +1287,13 @@
       "forwardForce": 2.08,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "f+2 Frame Link",
+      "label": "Forward Super Check",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 15,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Fast mid strike with steady active time and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1286,11 +1303,13 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Instant Super Check",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 22,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high check with long active time and quick recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1300,11 +1319,13 @@
       "forwardForce": 1.41,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Instant Super Check",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 22,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high check with long active time for quick close pressure.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1314,11 +1335,13 @@
       "forwardForce": 2.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Super",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 15,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Fast mid while-rising strike with steady active time and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1328,11 +1351,13 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Instant Super Check",
       "cancelable": false,
       "startupFrames": 0,
       "activeFrames": 22,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high check with long active time from a compact single-frame poke.",
+      "hitLevel": "high"
     }
   },
   "effects": [],

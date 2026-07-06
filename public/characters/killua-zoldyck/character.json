@@ -390,7 +390,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Killua Zoldyck Left Check",
+      "label": "Quick Assassin Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -427,7 +427,8 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high assassin jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
@@ -472,7 +473,7 @@
     },
     {
       "id": "heavy",
-      "label": "Killua Zoldyck Right Check",
+      "label": "Assassin Palm Cut",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -509,7 +510,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid palm cut with a short active window and steady recovery."
     },
     {
       "id": "special",
@@ -594,10 +596,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "Killua Zoldyck Left Check",
+      "label": "Quick Assassin Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high assassin jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 12,
@@ -613,10 +616,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "Killua Zoldyck Right Check",
+      "label": "Assassin Palm Cut",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid palm cut with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -666,9 +670,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 41,
       "forwardForceEndFrame": 46,
-      "label": "f+1 Frame Link",
+      "label": "Rhythm Echo Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid rush with long active afterimage pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -688,9 +694,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Palm Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -706,9 +714,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Killua Zoldyck Burst",
+      "label": "Godspeed Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with long active movement and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 18,
@@ -724,8 +734,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Killua Zoldyck Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Rhythm Step",
+      "hitLevel": "mid",
+      "description": "Steady mid rising step with a moderate active window and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 21,
@@ -741,9 +753,11 @@
       "forwardForce": 1.5,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "FC+1 Frame Link",
+      "label": "Full-Crouch Afterimage",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid crouch strike with long active afterimage pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -760,9 +774,11 @@
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Palm Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -778,9 +794,11 @@
       "forwardForce": 1.4,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 22,
-      "label": "1+2 Frame Link",
+      "label": "Silent Step Feint",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid feint with a long active stance shift and quick recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -797,8 +815,10 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 6,
       "launchHeight": 2.2,
-      "label": "Killua Zoldyck Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Assassin Pop-Up",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with a long active lift from a low assassin step.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -814,8 +834,10 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "Killua Zoldyck Low Feint",
-      "hitLevel": "low"
+      "label": "Low Rhythm Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with a long active arc and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -831,9 +853,11 @@
       "forwardForce": 2.25,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 20,
-      "label": "Killua Zoldyck Driving Kick",
+      "label": "Low Assassin Drop",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown setup with extended active time and short recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -867,9 +891,11 @@
       "forwardForce": 3.78,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Killua Zoldyck Aura Drive",
+      "label": "Godspeed Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with long active speed pressure and heavy recovery.",
+      "tracking": "weakRight"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1343,11 +1369,14 @@
       "forwardForce": 2.25,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "f+2 Frame Link",
+      "label": "Forward Palm Cut",
       "cancelable": false,
       "startupFrames": 22,
       "activeFrames": 4,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Slow mid forward palm cut with a brief active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1357,11 +1386,14 @@
       "forwardForce": 1.16,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Assassin Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high ducking jab with a short active window and fast recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1371,11 +1403,14 @@
       "forwardForce": 2.02,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Assassin Rush Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high rush jab with a short active window and fast recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1385,11 +1420,14 @@
       "forwardForce": 2.31,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Palm Cut",
       "cancelable": false,
       "startupFrames": 22,
       "activeFrames": 4,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Slow mid while-rising palm cut with a brief active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1399,11 +1437,20 @@
       "forwardForce": 2.08,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Assassin Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 7,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick high overdrive jab with a short active window and fast recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
+    },
+    "cmd:1+4": {
+      "label": "Heavy Palm Cut",
+      "description": "Slow mid palm cut with a tiny active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     }
   },
   "effects": [],

@@ -424,7 +424,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Gohan (Super Saiyan 2) Left Check",
+      "label": "Quick Ascended Jab",
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
@@ -461,11 +461,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny active window for close pressure checks."
     },
     {
       "id": "kick",
-      "label": "Gohan (Super Saiyan 2) Left Kick",
+      "label": "Low Ascended Kick",
       "input": "kick",
       "startupFrames": 17,
       "activeFrames": 3,
@@ -502,11 +503,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low kick with moderate active time and grounded recovery."
     },
     {
       "id": "heavy",
-      "label": "Gohan (Super Saiyan 2) Right Check",
+      "label": "Ascended Body Hook",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -543,11 +545,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid hook with a short active window from a tight forward punch."
     },
     {
       "id": "special",
-      "label": "Gohan (Super Saiyan 2) Right Kick",
+      "label": "Lightning Step Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -584,7 +587,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid kick with very long active coverage as Gohan drives forward."
     }
   ],
   "hurtboxes": [
@@ -628,10 +632,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "Gohan (Super Saiyan 2) Left Check",
+      "label": "Quick Ascended Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny active window for close pressure checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -647,10 +652,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
-      "label": "Gohan (Super Saiyan 2) Right Check",
+      "label": "Ascended Body Hook",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid hook with a short active window from a tight forward punch."
     },
     "kickleft": {
       "startupFrames": 22,
@@ -666,10 +672,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
-      "label": "Gohan (Super Saiyan 2) Left Kick",
+      "label": "Low Ascended Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low kick with moderate active time and grounded recovery."
     },
     "kickright": {
       "startupFrames": 4,
@@ -685,8 +692,9 @@
       "forwardForce": 0.92,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 46,
-      "label": "Gohan (Super Saiyan 2) Right Kick",
-      "hitLevel": "mid"
+      "label": "Lightning Step Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid kick with very long active coverage as Gohan drives forward."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -702,9 +710,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 29,
-      "label": "f+1 Frame Link",
+      "label": "Ascended Body Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid body poke with a brief active window and high commitment."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -724,9 +733,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Ascended Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that reaches forward with a lifting punch."
     },
     "cmd:qcf+4": {
       "startupFrames": 11,
@@ -742,9 +752,10 @@
       "forwardForce": 3.36,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 55,
-      "label": "Gohan (Super Saiyan 2) Burst",
+      "label": "Ascended Saiyan Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown burst with very long active coverage and fast recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 5,
@@ -760,8 +771,9 @@
       "forwardForce": 1.31,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 42,
-      "label": "Gohan (Super Saiyan 2) Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Lightning Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with long active coverage and committed recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 6,
@@ -777,9 +789,10 @@
       "forwardForce": 1.08,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Lightning Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch attack with sustained active time from a low forward rush."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -796,9 +809,10 @@
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 39,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Ascended Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching upper strike."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -814,9 +828,10 @@
       "forwardForce": 1.51,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 24,
-      "label": "1+2 Frame Link",
+      "label": "Ascended Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid strike that winds up before a compact aura-backed blow."
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -835,10 +850,11 @@
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Ascended Rising Kick",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping launcher with a brief active window and heavy recovery."
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -856,10 +872,11 @@
       "forwardForceEndFrame": 17,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "2+3 Frame Link",
+      "label": "Low Vanish Sweep",
       "hitLevel": "low",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady low jumping sweep with a brief active window and committed recovery."
     },
     "cmd:2+4": {
       "startupFrames": 14,
@@ -875,9 +892,10 @@
       "forwardForce": 1.58,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 48,
-      "label": "Gohan (Super Saiyan 2) Driving Kick",
+      "label": "Low Lightning Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick low knockdown rush with long active coverage from a sliding kick."
     },
     "cmd:3+4": {
       "startupFrames": 6,
@@ -893,9 +911,10 @@
       "forwardForce": 2.78,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 56,
-      "label": "Gohan (Super Saiyan 2) Power Crush",
+      "label": "Ascended Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown rush with very long active coverage and slight recovery."
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -911,9 +930,10 @@
       "forwardForce": 2.95,
       "forwardForceStartFrame": 40,
       "forwardForceEndFrame": 49,
-      "label": "Gohan (Super Saiyan 2) Aura Drive",
+      "label": "Ascended Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with long active coverage from a golden aura charge."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1387,11 +1407,13 @@
       "forwardForce": 1.42,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
-      "label": "f+2 Frame Link",
+      "label": "Forward Aura Hook",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Slow mid hook with a short active window and fast recovery.",
+      "hitLevel": "mid"
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1403,12 +1425,14 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "f+3 Frame Link",
+      "label": "Forward Low Burst",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 17,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast low jumping kick with long active time from a forward slide.",
+      "hitLevel": "low"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1418,11 +1442,13 @@
       "forwardForce": 0.74,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "d+1 Frame Link",
+      "label": "Quick Aura Check",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high check with balanced active and recovery frames for close control.",
+      "hitLevel": "high"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1434,12 +1460,14 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "d+3 Frame Link",
+      "label": "Low Lightning Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 17,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast low jumping kick with long active time from a forward burst.",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1451,12 +1479,14 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "d/f+3 Frame Link",
+      "label": "Low Forward Burst",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 17,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast low jumping kick with long active time and forward reach.",
+      "hitLevel": "low"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1466,11 +1496,13 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Ascended Check",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high check with balanced active and recovery frames.",
+      "hitLevel": "high"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1482,12 +1514,14 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "qcf+3 Frame Link",
+      "label": "Low Ascended Burst",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 17,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast low jumping kick with long active time and simple recovery.",
+      "hitLevel": "low"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1497,11 +1531,13 @@
       "forwardForce": 1.48,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 25,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Hook",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Slow mid while-rising punch with a short active window and fast recovery.",
+      "hitLevel": "mid"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1513,12 +1549,14 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Burst",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 17,
-      "recoveryFrames": 16
+      "recoveryFrames": 16,
+      "description": "Fast low jumping kick with long active time from a quick sidestep entry.",
+      "hitLevel": "low"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1528,11 +1566,18 @@
       "forwardForce": 1.66,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "O+1 Frame Link",
+      "label": "Quick Aura Check",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high check with balanced active and recovery frames.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Lightning Step Kick",
+      "description": "Fast mid step kick with long active coverage and quick recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

@@ -3389,6 +3389,8 @@ function pushProjectileClashSpark(match: MatchSnapshot, first: ProjectileRuntime
 
 function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, projectile: ProjectileRuntime, position: [number, number, number]) {
   const sourceMove = projectile.move;
+  const wasJuggled = defender.state === 'juggle';
+  const tornadoExtendsJuggle = wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const move: MoveDefinition = {
     ...sourceMove,
     damage: Math.max(0, Math.round(sourceMove.damage * projectile.damageScale)),
@@ -3396,7 +3398,7 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     pushback: sourceMove.pushback * projectile.pushbackScale,
     blockPushback: sourceMove.blockPushback * projectile.blockPushbackScale,
     launchHeight: 0,
-    tornado: false,
+    tornado: tornadoExtendsJuggle,
     throwCapture: false,
     knockdown: false,
     hitbox: projectile.hitbox
@@ -3409,7 +3411,6 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const counterHit = isCounterHit(defender);
   const whiffPunish = isWhiffPunish(defender);
   const blockPunish = attacker.blockPunishWindowFrames > 0;
-  const wasJuggled = defender.state === 'juggle';
   const wasAirborne = isAirborne(defender) || wasJuggled;
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
   const impactId = nextHitEventId(match);
@@ -3418,7 +3419,7 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     comboHits,
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
-    tornado: Boolean(move.tornado && wasJuggled),
+    tornado: tornadoExtendsJuggle,
     kiBurst: Boolean(move.kiBurst)
   }, position);
   projectile.hitConnected = true;
@@ -3451,12 +3452,17 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   pushCombatPopupEvent(match, impactId, attacker, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
-    tornado: Boolean(move.tornado && wasJuggled),
+    tornado: tornadoExtendsJuggle,
     kiBurst: Boolean(move.kiBurst)
   });
   const frameData = contextualComboFrameData(move, { context: wasAirborne ? 'juggle' : defender.state === 'hit' ? 'combo' : 'neutral', counterHit: counterHit && Boolean(move.counterHit), comboHits: attacker.comboHits, repeatCount: 1 });
   const stunFrames = getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit);
   const entersJuggle = launchHeight > 0 || wasJuggled;
+  const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
+  const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, 1, tornadoExtendsJuggle);
+  const juggleSequenceDamage = tornadoExtendsJuggle
+    ? juggleDamageContribution
+    : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + juggleDamageContribution;
   applyFighterDamage(defender, move.damage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
@@ -3472,12 +3478,26 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     defender.actionFramesRemaining = stunFrames;
     defender.actionTimer = framesToSeconds(stunFrames);
     defender.state = entersJuggle ? 'juggle' : 'hit';
-    defender.juggleDamage = entersJuggle ? defender.juggleDamage + move.damage : 0;
-    defender.juggleSequenceDamage = entersJuggle ? defender.juggleSequenceDamage + move.damage : 0;
+    defender.juggleDamage = entersJuggle ? juggleTotalDamage : 0;
+    defender.juggleSequenceDamage = entersJuggle ? juggleSequenceDamage : 0;
+    if (tornadoExtendsJuggle) {
+      defender.juggleTornadoCount = Math.min(TORNADO_EXTENSION_LIMIT, defender.juggleTornadoCount + 1);
+    } else if (!entersJuggle) {
+      defender.juggleTornadoCount = 0;
+    }
     if (entersJuggle) {
-      defender.position.y = Math.max(defender.position.y, JUGGLE_MIN_START_HEIGHT);
-      defender.velocityY = Math.max(defender.velocityY, getJuggleVelocity(move, wasAirborne, attacker.comboHits));
+      const refloatVelocity = tornadoExtendsJuggle ? getTornadoRefloatVelocity(move) : getJuggleVelocity(move, wasAirborne, attacker.comboHits);
+      const minHeight = tornadoExtendsJuggle ? TORNADO_REFLOAT_MIN_HEIGHT : JUGGLE_MIN_START_HEIGHT;
+      defender.position.y = Math.min(Math.max(defender.position.y, minHeight), getJuggleRefloatMaxHeight(move, wasAirborne, attacker.comboHits, tornadoExtendsJuggle));
+      defender.velocityY = Math.max(defender.velocityY, refloatVelocity);
       defender.juggleGravityScale = getMoveJuggleGravityScale(move);
+      if (tornadoExtendsJuggle) {
+        defender.stunFramesRemaining = Math.max(defender.stunFramesRemaining, TORNADO_REFLOAT_STUN_FRAMES);
+        defender.stunTimer = framesToSeconds(defender.stunFramesRemaining);
+        defender.actionFramesRemaining = Math.max(defender.actionFramesRemaining, defender.stunFramesRemaining);
+        defender.actionTimer = framesToSeconds(defender.actionFramesRemaining);
+      }
+      applyJuggleFloatCorrection(attacker, defender);
     }
   }
   const hitPushback = clamp(Math.max(move.pushback, PROJECTILE_MIN_HIT_PUSHBACK), 0, PROJECTILE_MAX_HIT_PUSHBACK);

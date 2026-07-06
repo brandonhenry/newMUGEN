@@ -382,7 +382,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Yugi Mutou Left Check",
+      "label": "Quick Duel Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -419,7 +419,8 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a tiny active window and long recovery after the card-hand check."
     },
     {
       "id": "kick",
@@ -464,7 +465,7 @@
     },
     {
       "id": "heavy",
-      "label": "Yugi Mutou Right Check",
+      "label": "Duel Disk Body Check",
       "input": "heavy",
       "startupFrames": 14,
       "activeFrames": 3,
@@ -501,7 +502,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid check with a short active window and weak right-side tracking."
     },
     {
       "id": "special",
@@ -586,10 +588,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "Yugi Mutou Left Check",
+      "label": "Quick Duel Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a tiny active window and long recovery after the card-hand check."
     },
     "jabright": {
       "startupFrames": 13,
@@ -605,10 +608,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 10,
-      "label": "Yugi Mutou Right Check",
+      "label": "Duel Disk Body Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid check with a short active window and weak right-side tracking."
     },
     "kickleft": {
       "startupFrames": 18,
@@ -658,9 +662,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 18,
-      "label": "f+1 Frame Link",
+      "label": "Forward Card Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward check with a tiny active window and long recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -680,9 +686,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Draw Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active hit and high whiff commitment.",
+      "tracking": "weakRight"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -716,8 +724,10 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 31,
-      "label": "Yugi Mutou Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Duel Strike",
+      "hitLevel": "mid",
+      "description": "Slow mid rising strike with steady active coverage and controlled recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 5,
@@ -733,9 +743,11 @@
       "forwardForce": 1.31,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Card Jab",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch jab with long active coverage and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -752,9 +764,11 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 14,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Draw Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active hit and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -770,9 +784,11 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "1+2 Frame Link",
+      "label": "Card Guard Strike",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid card-hand strike with a moderate active window after the stance shift.",
+      "tracking": "weakRight"
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -789,8 +805,10 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 29,
       "launchHeight": 2.2,
-      "label": "Yugi Mutou Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Cross Draw Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher with a long recovery window after the card draw.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -806,8 +824,10 @@
       "forwardForce": 1.7,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "Yugi Mutou Low Feint",
-      "hitLevel": "low"
+      "label": "Low Card Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with a moderate active window for clipping movement.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 7,
@@ -823,9 +843,11 @@
       "forwardForce": 1.74,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 35,
-      "label": "Yugi Mutou Driving Kick",
+      "label": "Low Duel Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast low sweep with very long active time that knocks down.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -841,9 +863,11 @@
       "forwardForce": 3.14,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "Yugi Mutou Power Crush",
+      "label": "Trap Card Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid crush with a short active hit that knocks down.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -859,9 +883,11 @@
       "forwardForce": 3.22,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "Yugi Mutou Aura Drive",
+      "label": "Millennium Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special card drive with long active pressure that knocks down.",
+      "tracking": "weakRight"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1335,11 +1361,14 @@
       "forwardForce": 1.69,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 10,
-      "label": "f+2 Frame Link",
+      "label": "Forward Draw Check",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 21,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Fast mid forward check with long active time and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1349,11 +1378,14 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Downward Card Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 4
+      "recoveryFrames": 4,
+      "description": "Quick high card jab with steady active time and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1363,11 +1395,14 @@
       "forwardForce": 1.83,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Spell Flick",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 19,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high spell-card flick with long active time and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1377,11 +1412,14 @@
       "forwardForce": 1.75,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 10,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Draw Check",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 21,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Fast mid while-standing check with long active time and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1391,11 +1429,20 @@
       "forwardForce": 1.89,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Card Flick",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 19,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Fast high card flick with long active time and almost no recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Duelist Side Kick",
+      "description": "Steady mid kick with a tiny active window and high commitment.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

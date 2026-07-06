@@ -411,7 +411,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Eve Left Check",
+      "label": "Quick Nano Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -448,11 +448,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high jab with a short active window from Eve's morphing arm."
     },
     {
       "id": "kick",
-      "label": "Eve Left Kick",
+      "label": "Low Hair Blade",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -489,11 +490,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low slash with long active hair-blade pressure along the legs."
     },
     {
       "id": "heavy",
-      "label": "Eve Right Check",
+      "label": "Nano Claw Check",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -530,11 +532,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid check that angles forward with weak right-side tracking."
     },
     {
       "id": "special",
-      "label": "Eve Right Kick",
+      "label": "Transform Rush",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -571,7 +574,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid rush that blurs forward through a compact body transform."
     }
   ],
   "hurtboxes": [
@@ -615,10 +619,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "Eve Left Check",
+      "label": "Quick Nano Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high jab with a short active window from Eve's morphing arm."
     },
     "jabright": {
       "startupFrames": 12,
@@ -634,10 +639,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
-      "label": "Eve Right Check",
+      "label": "Nano Claw Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid check that angles forward with weak right-side tracking."
     },
     "kickleft": {
       "startupFrames": 5,
@@ -653,8 +659,9 @@
       "forwardForce": 0.66,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "label": "Eve Left Kick",
-      "hitLevel": "low"
+      "label": "Low Hair Blade",
+      "hitLevel": "low",
+      "description": "Fast low slash with long active hair-blade pressure along the legs."
     },
     "kickright": {
       "startupFrames": 5,
@@ -670,8 +677,9 @@
       "forwardForce": 0.94,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
-      "label": "Eve Right Kick",
-      "hitLevel": "mid"
+      "label": "Transform Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rush that blurs forward through a compact body transform."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -687,9 +695,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "f+1 Frame Link",
+      "label": "Forward Nano Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward check with a committed morphing-arm poke."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -709,9 +718,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Nano Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that angles in with a right-tracking hair-blade rush."
     },
     "cmd:qcf+4": {
       "startupFrames": 5,
@@ -729,10 +739,11 @@
       "forwardForceEndFrame": 32,
       "moveJumpForce": 9.8,
       "moveJumpGravity": 24,
-      "label": "Eve Burst",
+      "label": "Golden Transform Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Fast mid jumping knockdown that whips Eve through a large golden transform."
     },
     "cmd:WS+4": {
       "startupFrames": 10,
@@ -748,8 +759,9 @@
       "forwardForce": 1.33,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
-      "label": "Eve Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Nano Lance",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike that extends Eve's arm into a long lance."
     },
     "cmd:FC+1": {
       "startupFrames": 5,
@@ -765,9 +777,11 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 14,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Angel Sweep",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch strike that rises into white wing-blade frames.",
+      "endsInCrouch": true
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -783,10 +797,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 29,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.1,
+      "label": "Crouch Nano Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher from a crouched hair-blade rush."
     },
     "cmd:1+2": {
       "startupFrames": 20,
@@ -804,10 +819,11 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "1+2 Frame Link",
+      "label": "Winged Pierce",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping strike that extends Eve's arm into a piercing lance."
     },
     "cmd:1+3": {
       "startupFrames": 13,
@@ -823,9 +839,10 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "launchHeight": 2.2,
-      "label": "Eve Cross Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.1,
+      "label": "Angel Wing Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher that unfurls Eve's wings into an upward strike."
     },
     "cmd:2+3": {
       "startupFrames": 6,
@@ -841,8 +858,10 @@
       "forwardForce": 1.08,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "label": "Eve Low Feint",
-      "hitLevel": "low"
+      "label": "Low Hair Feint",
+      "hitLevel": "low",
+      "description": "Fast low feint that rolls Eve's hair-blade shape along the ground.",
+      "endsInCrouch": true
     },
     "cmd:2+4": {
       "startupFrames": 0,
@@ -858,9 +877,10 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Eve Driving Kick",
+      "label": "Low Transform Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast low knockdown that stretches Eve into a sliding hair-blade sweep."
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -876,10 +896,11 @@
       "forwardForce": 3.19,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 27,
-      "label": "Eve Power Crush",
+      "label": "Nano Hammer Crush",
       "hitLevel": "mid",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "description": "Slow mid tornado knockdown that morphs into a heavy hammer swing."
     },
     "cmd:O+2": {
       "startupFrames": 10,
@@ -895,9 +916,11 @@
       "forwardForce": 3.03,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 37,
-      "label": "Eve Aura Drive",
+      "label": "Nano Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown that curls Eve's body into a powered transform rush.",
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1371,11 +1394,13 @@
       "forwardForce": 1.5,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
-      "label": "f+2 Frame Link",
+      "label": "Forward Hair Blade",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 9,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady mid forward blade rush with weak right-side tracking.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1385,11 +1410,13 @@
       "forwardForce": 1.26,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "d+1 Frame Link",
+      "label": "Low-Step Nano Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 9,
-      "recoveryFrames": 9
+      "recoveryFrames": 9,
+      "description": "Fast high poke from a low command that still checks upper body.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1399,11 +1426,13 @@
       "forwardForce": 2.12,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "qcf+1 Frame Link",
+      "label": "Nano Dash Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 9,
-      "recoveryFrames": 9
+      "recoveryFrames": 9,
+      "description": "Fast high motion jab with balanced active and recovery timing.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1413,11 +1442,13 @@
       "forwardForce": 1.56,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Hair Blade",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 9,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady mid while-standing blade rush with weak right-side tracking.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1427,11 +1458,14 @@
       "forwardForce": 2.18,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "O+1 Frame Link",
+      "label": "Charged Nano Jab",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 9,
-      "recoveryFrames": 9
+      "recoveryFrames": 9,
+      "description": "Fast high charged jab with even timing across startup and recovery.",
+      "usesKi": true,
+      "hitLevel": "high"
     }
   },
   "effects": [],

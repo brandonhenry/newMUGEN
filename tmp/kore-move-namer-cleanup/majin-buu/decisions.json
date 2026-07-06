@@ -1,0 +1,214 @@
+{
+  "character": "majin-buu",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Majin Jab",
+      "description": "Fast high Majin jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Compact standing punch from Buu's soft-body stance."
+    },
+    {
+      "key": "kickleft",
+      "label": "Stretchy Low Kick",
+      "description": "Steady low kick with long active stretchy coverage and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low body stretch and ballooning frames stay near leg height."
+    },
+    {
+      "key": "jabright",
+      "label": "Stretch Arm Check",
+      "description": "Fast mid stretch punch with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Two-frame extended arm punch hits at body height."
+    },
+    {
+      "key": "kickright",
+      "label": "Majin Roundhouse",
+      "description": "Slow mid roundhouse with moderate active time and committed recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Arcing yellow kick effect reads as a mid roundhouse."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "description": "Slow mid stretch sweep with a long active reach and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Buu extends his body forward into a long arm sweep."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Stretch Arm Launcher",
+      "description": "Slow mid launcher with long active stretch reach and quick recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "medium",
+      "reason": "Extended arm hit is authored as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Majin Tornado Kick",
+      "description": "Slow mid jumping tornado kick with a brief active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Aerial roundhouse arc is authored as a tornado."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "description": "Fast low feint with very long active sliding coverage and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low feint drops candy-like bits and slides along the floor."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Buu Tornado Kick",
+      "description": "Slow low jumping knockdown kick with extended active time and quick recovery.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Low aerial roundhouse is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "description": "Slow mid knockdown body blow with extended active time and heavy recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "tracking": "weakRight",
+      "reason": "Heavy body-first strike is authored as a knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouching Stretch Punch",
+      "description": "Steady mid crouching stretch punch with extended active frames and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Crouching sequence extends Buu's arm forward."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Stretch Launcher",
+      "description": "Steady mid launcher with a tiny active stretch hit and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2,
+      "tracking": "medium",
+      "reason": "Crouch stretch punch is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Majin Jab",
+      "description": "Quick high overdrive jab with a moderate active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Overdrive command uses the compact high punch."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Majin Aura Tornado",
+      "description": "Fast special jumping tornado drive that knocks down with very long active pressure.",
+      "hitLevel": "special",
+      "tornado": true,
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "medium",
+      "reason": "Aura drive has tornado, knockdown, and jump data."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Overdrive Tornado Kick",
+      "description": "Slow mid jumping tornado kick with a brief active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Overdrive kick mirrors the tornado roundhouse."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "description": "Slow mid sidestep tornado kick with a brief active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Sidestep kick uses the same aerial tornado arc."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While-Rising Stretch Punch",
+      "description": "Quick mid while-rising stretch punch with extended active frames and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "While-rising command uses the extended arm punch."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "While-Rising Tornado Kick",
+      "description": "Steady mid while-rising kick with a tiny active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "While-rising command uses the roundhouse kick arc."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "description": "Quick high ducking jab with a moderate active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down jab reuses the high Majin punch."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Stretch Launcher",
+      "description": "Slow mid launcher with a tiny active stretch hit and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "medium",
+      "reason": "Diagonal stretch punch is authored as a launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Forward Majin Jab",
+      "description": "Slow mid forward jab with a tiny active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command is a delayed soft-body jab."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "description": "Quick mid forward stretch punch with extended active frames and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command uses the extended arm punch."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "description": "Quick high rush jab with a moderate active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle jab keeps the high Majin punch."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Buu Burst Roll",
+      "description": "Fast mid jumping knockdown roll with very long active movement and quick recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Burst roll leaves the ground and is authored as a knockdown."
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "ok": true,
+  "write": false,
+  "character": "toshiro-hitsugaya",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Ice Blade Check",
+        "description": "Fast high sword check with a short active window and heavy recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Short standing ice-sword poke hits high and returns to guard."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Hyorinmaru Sweep",
+        "description": "Instant low ice sweep with very long active blade pressure.",
+        "hitLevel": "low",
+        "tracking": "medium"
+      },
+      "reason": "Low sword/body path sweeps across the leg line."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Ice Body Slash",
+        "description": "Quick mid body slash with a brief active cut and weak right tracking.",
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Forward slash travels through the torso line."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Ice Dragon Rush",
+        "description": "Instant mid ice rush with huge active travel and almost no recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Long ice-cloaked dash sequence fits Toshiro's dragon-like sword pressure."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Frost Cross Cut",
+        "description": "Slow mid cross cut with a long active sword path and weak right tracking.",
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Committed cross-body sword route without special property flags."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Hyorinmaru Launcher",
+        "description": "Slow mid jumping launcher with long active ice pressure and quick recovery.",
+        "hitLevel": "mid",
+        "launchHeight": 2.2,
+        "tracking": "medium",
+        "jumpBeforeMove": true
+      },
+      "reason": "Forward ice rush lifts into an authored launcher and leaves the ground."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Homing Low Frost Sweep",
+        "description": "Steady low homing sweep that knocks down after a modest active spin.",
+        "knockdown": true,
+        "hitLevel": "low",
+        "tracking": "homing"
+      },
+      "reason": "Low spinning sword path is authored as homing knockdown."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Ice Dragon Knockdown",
+        "description": "Slow low jumping knockdown rush with a long active sword path.",
+        "knockdown": true,
+        "hitLevel": "low",
+        "tracking": "medium",
+        "jumpBeforeMove": true
+      },
+      "reason": "Low-starting ice rush leaves the ground and carries knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Ice Fang Crush",
+        "description": "Quick mid jumping knockdown crush with a modest active slash.",
+        "knockdown": true,
+        "hitLevel": "mid",
+        "tracking": "medium",
+        "jumpBeforeMove": true
+      },
+      "reason": "Airborne mid slash is authored as a knockdown crush."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Ice Rush",
+        "description": "Fast mid crouch rush with very long active sword pressure.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Full-crouch route advances through repeated ice-sword cuts."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Ice Launcher",
+        "description": "Steady mid crouch launcher with a tiny active lift and heavy recovery.",
+        "hitLevel": "mid",
+        "launchHeight": 2.0,
+        "tracking": "weakRight"
+      },
+      "reason": "Crouching sword lift is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Overdrive Ice Check",
+        "description": "Steady high overdrive check with a brief active hit and measured recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Overdrive route uses the high sword-check animation."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Hyorinmaru Aura Drive",
+        "description": "Instant special knockdown drive with huge active ice-sword pressure.",
+        "knockdown": true,
+        "hitLevel": "special",
+        "tracking": "weakRight"
+      },
+      "reason": "Long ice aura sequence is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "Rising Ice Slash",
+        "description": "Quick mid while-rising slash with a brief active cut and weak right tracking.",
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "While-standing command uses the mid ice body-slash family."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Ice Rush",
+        "description": "Fast mid while-rising rush with very long active sword pressure.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Rising route advances through repeated ice rush frames."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Ducking Ice Check",
+        "description": "Steady high ducking check with a brief active hit and measured recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Down jab repeats the high sword-check frames."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Diagonal Ice Launcher",
+        "description": "Slow mid diagonal launcher with a tiny active cut and heavy recovery.",
+        "hitLevel": "mid",
+        "launchHeight": 2.1,
+        "tracking": "weakRight"
+      },
+      "reason": "Down-forward slash carries authored launcher height."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Forward Ice Check",
+        "description": "Slow mid forward check with a tiny active hit and heavy recovery.",
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Forward input uses a compact body-height sword check."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Ice Slash",
+        "description": "Quick mid forward slash with a brief active cut and weak right tracking.",
+        "hitLevel": "mid",
+        "tracking": "weakRight"
+      },
+      "reason": "Forward-heavy command uses the mid body-slash sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Hyorinmaru Quick Check",
+        "description": "Steady high quarter-circle check with a brief active hit and measured recovery.",
+        "hitLevel": "high",
+        "tracking": "medium"
+      },
+      "reason": "Quarter-circle jab repeats the high ice-check frames."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Hyorinmaru Burst",
+        "description": "Fast mid knockdown burst with huge active ice pressure and quick recovery.",
+        "knockdown": true,
+        "hitLevel": "mid",
+        "tracking": "medium"
+      },
+      "reason": "Large ice rush burst is authored as a mid knockdown."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

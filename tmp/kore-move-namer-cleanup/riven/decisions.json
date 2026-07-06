@@ -1,0 +1,282 @@
+{
+  "character": "riven",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Lion Combo Jab",
+      "description": "Fast high jab with a short active window that opens Sasuke's close pressure.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Short standing taijutsu strike fits the existing Lion Combo base."
+    },
+    {
+      "key": "kickleft",
+      "label": "Windmill Blade Sweep",
+      "description": "Fast high blade sweep with a steady active arc and balanced recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "The crescent blade arc rides high across the upper body line."
+    },
+    {
+      "key": "jabright",
+      "label": "Chidori Thrust",
+      "description": "Quick mid lightning-style thrust with a brief active hit and weak right tracking.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Forward body thrust matches the Chidori label and mid contact height."
+    },
+    {
+      "key": "kickright",
+      "label": "Grand Fireball Wheel",
+      "description": "Fast high jumping fire-wheel slash with long active travel and strong tracking.",
+      "hitLevel": "high",
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Flip sequence with bright arc effect supports Fire Release flavor, jump, and strong tracking."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "description": "Slow mid blade rush with a long active string and weak right tracking.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Multi-pose sword rush stays at body height without a special property."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Rising Lion Launcher",
+      "description": "Quick high launcher with a long active rising arc that pops opponents up.",
+      "hitLevel": "high",
+      "launchHeight": 2.2,
+      "tracking": "medium",
+      "reason": "Rising arc and authored launch height support launcher naming."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Aerial Chidori Thrust",
+      "description": "Steady high jumping thrust with a tiny active hit and strong tracking.",
+      "hitLevel": "high",
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Horizontal airborne dash reads as a jumping thrust."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Sharingan Feint",
+      "description": "Slow low feint with a modest active window and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "The stance dips low before returning upright, matching low feint data."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Flame Wheel",
+      "description": "Quick low jumping knockdown with long active travel and high commitment.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Low-starting flip attack is authored as knockdown and visually leaves the ground."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "description": "Slow high jumping drop that leaves Sasuke crouched after a long active descent.",
+      "hitLevel": "high",
+      "endsInCrouch": true,
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Airborne descent settles into a crouched finish."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Chidori Dash",
+      "description": "Fast high crouch dash with long active pressure and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Full-crouch entry drives forward through a high rushing strike."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Chidori Launcher",
+      "description": "Quick mid crouch launcher with a brief active thrust and steady recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "weakRight",
+      "reason": "Crouch-to-thrust motion uses the same launcher-valued Chidori body shape."
+    },
+    {
+      "key": "cmd:FC+3",
+      "label": "Crouch Windmill Blade",
+      "description": "Fast high crouch blade check with a steady active arc and balanced recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Full-crouch command reuses the high windmill blade arc."
+    },
+    {
+      "key": "cmd:FC+3+4",
+      "label": "Crouch Fireball Wheel",
+      "description": "Fast high crouch-entry fire wheel with long active jump pressure.",
+      "hitLevel": "high",
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Crouch command transitions into the same Fire Release flip sequence."
+    },
+    {
+      "key": "cmd:FC+4",
+      "label": "Fire Release Flip Kick",
+      "description": "Fast mid jumping flip kick with long active travel and strong tracking.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Shorter Fire Release variant hits mid while airborne."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Low Cutter",
+      "description": "Slow mid knockdown cutter that ends in full crouch after a tiny active hit.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "endsInCrouch": true,
+      "tracking": "medium",
+      "reason": "Overdrive slash drops low, carries knockdown, and finishes crouched."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Overdrive Fire Tornado",
+      "description": "Fast high jumping fire wheel that works as a tornado extender.",
+      "hitLevel": "high",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Airborne spinning fire-wheel frames justify tornado and jump properties."
+    },
+    {
+      "key": "cmd:SS+3",
+      "label": "Sidestep Windmill Blade",
+      "description": "Fast high sidestep blade sweep with a steady active arc and balanced recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Sidestep variant uses the high windmill blade frames."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Chidori Lunge",
+      "description": "Steady mid sidestep lunge with a tiny active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Side-entry horizontal lunge appears airborne and tracks strongly."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "Rising Chidori Check",
+      "description": "Quick mid while-rising thrust with a brief active hit and weak right tracking.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "While-standing sequence uses the Chidori thrust silhouette."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Fire Launcher",
+      "description": "Fast high jumping launcher with long active fire-wheel pressure.",
+      "hitLevel": "high",
+      "launchHeight": 2.1,
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Rising input enters the airborne fire-wheel sequence with authored launch height."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "description": "Fast high ducking jab with a short active window and clean recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down jab reuses the quick high Lion Combo strike."
+    },
+    {
+      "key": "cmd:d+3",
+      "label": "Ducking Windmill Blade",
+      "description": "Fast high ducking blade sweep with a steady active arc.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down kick uses the same upper-body windmill blade arc."
+    },
+    {
+      "key": "cmd:d/f+1",
+      "label": "Phoenix Sage Slash",
+      "description": "Quick mid Fire Release slash with a tiny active cut and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Existing Phoenix Sage label fits the short fire-styled sword cut."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "description": "Quick mid diagonal thrust with a brief active hit and weak right tracking.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Down-forward input uses the same mid Chidori thrust frames."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "description": "Fast high diagonal blade sweep with a steady active arc and balanced recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down-forward kick variant shares the high windmill blade animation."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Forward Lion Jab",
+      "description": "Fast high forward jab with a short active window and clean recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Forward jab is the same quick high taijutsu poke."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "description": "Steady mid forward cut with a tiny active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Forward heavy has a compact mid thrust/cut and weak-right tracking."
+    },
+    {
+      "key": "cmd:f+3",
+      "label": "Advancing Windmill Blade",
+      "description": "Fast high advancing blade sweep with a steady active arc.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Forward kick uses the same windmill blade arc at high level."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "description": "Fast high quarter-circle jab with a short active window and clean recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle jab repeats the quick high strike."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "label": "Chidori Rising Launcher",
+      "description": "Slow mid jumping launcher with a brief active pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "jumpBeforeMove": true,
+      "tracking": "medium",
+      "reason": "Rising airborne lunge has authored launch height and jump property."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Fire Tornado Wheel",
+      "description": "Fast high jumping fire wheel that works as a tornado extender with strong tracking.",
+      "hitLevel": "high",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "strong",
+      "reason": "Quarter-circle version uses airborne spinning fire-wheel frames with tornado data."
+    }
+  ]
+}

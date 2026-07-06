@@ -406,7 +406,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Ichigo Kurosaki Left Check",
+      "label": "Quick Zangetsu Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -443,11 +443,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Ichigo Kurosaki Left Kick",
+      "label": "Low Soul Slash",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -484,11 +485,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low sliding slash with very long active coverage and steady recovery."
     },
     {
       "id": "heavy",
-      "label": "Ichigo Kurosaki Right Check",
+      "label": "Zangetsu Body Cut",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -525,11 +527,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid sword cut with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Ichigo Kurosaki Right Kick",
+      "label": "Flash Step Slash",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -566,7 +569,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -610,10 +614,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "label": "Ichigo Kurosaki Left Check",
+      "label": "Quick Zangetsu Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high sword jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -629,10 +634,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 30,
-      "label": "Ichigo Kurosaki Right Check",
+      "label": "Zangetsu Body Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid sword cut with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -648,8 +654,9 @@
       "forwardForce": 0.66,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 33,
-      "label": "Ichigo Kurosaki Left Kick",
-      "hitLevel": "low"
+      "label": "Low Soul Slash",
+      "hitLevel": "low",
+      "description": "Fast low sliding slash with very long active coverage and steady recovery."
     },
     "kickright": {
       "startupFrames": 5,
@@ -665,8 +672,9 @@
       "forwardForce": 0.94,
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 34,
-      "label": "Ichigo Kurosaki Right Kick",
-      "hitLevel": "mid"
+      "label": "Flash Step Slash",
+      "hitLevel": "mid",
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery."
     },
     "cmd:f+1": {
       "startupFrames": 5,
@@ -682,9 +690,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 37,
       "forwardForceEndFrame": 41,
-      "label": "f+1 Frame Link",
+      "label": "Forward Soul Slash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery."
     },
     "cmd:d/f+2": {
       "startupFrames": 5,
@@ -704,9 +713,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Zangetsu Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid launcher with very long active coverage from a forward rush cut."
     },
     "cmd:qcf+4": {
       "startupFrames": 15,
@@ -724,10 +734,11 @@
       "forwardForceEndFrame": 24,
       "moveJumpForce": 9.8,
       "moveJumpGravity": 24,
-      "label": "Ichigo Kurosaki Burst",
+      "label": "Getsuga Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping knockdown burst with very long active coverage and quick recovery."
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -743,8 +754,9 @@
       "forwardForce": 1.33,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 32,
-      "label": "Ichigo Kurosaki Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Zangetsu Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rising slash with very long active coverage and quick recovery."
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -760,9 +772,10 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 27,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Zangetsu Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch slash with very long active coverage and quick recovery."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -779,9 +792,10 @@
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 47,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Zangetsu Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching sword lift."
     },
     "cmd:1+2": {
       "startupFrames": 40,
@@ -797,10 +811,11 @@
       "forwardForce": 2.25,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
-      "label": "1+2 Frame Link",
+      "label": "Getsuga Wheel",
       "hitLevel": "mid",
       "tornado": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid tornado slash that drags a long white arc across the screen."
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -817,8 +832,9 @@
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 40,
       "launchHeight": 2.2,
-      "label": "Ichigo Kurosaki Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Rising Zangetsu Cut",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active coverage from a rising sword cut."
     },
     "cmd:2+3": {
       "startupFrames": 10,
@@ -836,9 +852,10 @@
       "forwardForceEndFrame": 7,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "Ichigo Kurosaki Low Feint",
+      "label": "Low Zangetsu Feint",
       "hitLevel": "low",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick low jumping feint with a short active window and fast recovery."
     },
     "cmd:2+4": {
       "startupFrames": 17,
@@ -856,10 +873,11 @@
       "forwardForceEndFrame": 30,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Ichigo Kurosaki Driving Kick",
+      "label": "Low Flash Step",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady low knockdown slash that jumps into a quick sliding cut."
     },
     "cmd:3+4": {
       "startupFrames": 0,
@@ -875,9 +893,10 @@
       "forwardForce": 2.8,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 41,
-      "label": "Ichigo Kurosaki Power Crush",
+      "label": "Soul Reaper Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown strike with long active coverage and heavy recovery."
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -893,9 +912,10 @@
       "forwardForce": 3.79,
       "forwardForceStartFrame": 45,
       "forwardForceEndFrame": 60,
-      "label": "Ichigo Kurosaki Aura Drive",
+      "label": "Getsuga Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with very long active coverage from chained sword arcs."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1369,11 +1389,13 @@
       "forwardForce": 2.26,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 30,
-      "label": "f+2 Frame Link",
+      "label": "Forward Zangetsu Cut",
       "cancelable": false,
       "startupFrames": 23,
       "activeFrames": 6,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow mid sword cut with a modest active window and fast recovery.",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1383,11 +1405,13 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "label": "d+1 Frame Link",
+      "label": "Quick Zangetsu Check",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 4,
-      "recoveryFrames": 9
+      "recoveryFrames": 9,
+      "description": "Quick high sword check with a brief active window and quick recovery.",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1397,11 +1421,13 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "label": "qcf+1 Frame Link",
+      "label": "Quick Zangetsu Check",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 4,
-      "recoveryFrames": 9
+      "recoveryFrames": 9,
+      "description": "Quick high sword check with a brief active window for close pressure.",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1411,11 +1437,13 @@
       "forwardForce": 2.32,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 30,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Cut",
       "cancelable": false,
       "startupFrames": 23,
       "activeFrames": 6,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Slow mid while-rising sword cut with a modest active window and fast recovery.",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1425,11 +1453,18 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "label": "O+1 Frame Link",
+      "label": "Quick Zangetsu Check",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 4,
-      "recoveryFrames": 9
+      "recoveryFrames": 9,
+      "description": "Quick high sword check with a brief active window and quick recovery.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Flash Step Slash",
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

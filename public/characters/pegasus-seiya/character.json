@@ -412,7 +412,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Pegasus Seiya Left Check",
+      "label": "Quick Pegasus Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -449,11 +449,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high Pegasus jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Pegasus Seiya Left Kick",
+      "label": "Low Pegasus Kick",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -490,11 +491,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast low kick with extended active time and steady recovery."
     },
     {
       "id": "heavy",
-      "label": "Pegasus Seiya Right Check",
+      "label": "Pegasus Body Punch",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -531,11 +533,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body punch with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Pegasus Seiya Right Kick",
+      "label": "Golden Pegasus Rush",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -572,7 +575,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid gold-cloth rush with very long active pressure and quick recovery."
     }
   ],
   "hurtboxes": [
@@ -616,10 +620,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "Pegasus Seiya Left Check",
+      "label": "Quick Pegasus Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high Pegasus jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -635,10 +640,11 @@
       "forwardForce": 0.73,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "Pegasus Seiya Right Check",
+      "label": "Pegasus Body Punch",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body punch with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 9,
@@ -654,10 +660,11 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
-      "label": "Pegasus Seiya Left Kick",
+      "label": "Low Pegasus Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast low kick with extended active time and steady recovery."
     },
     "kickright": {
       "startupFrames": 0,
@@ -673,8 +680,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Pegasus Seiya Right Kick",
-      "hitLevel": "mid"
+      "label": "Golden Pegasus Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid gold-cloth rush with very long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -690,9 +699,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 32,
-      "label": "f+1 Frame Link",
+      "label": "Forward Pegasus Jab",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward jab with a tiny active window and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -712,9 +723,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Pegasus Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -730,9 +743,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Pegasus Seiya Burst",
+      "label": "Pegasus Meteor Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown burst with extended active golden rush pressure.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -748,8 +763,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Pegasus Seiya Rising Strike",
-      "hitLevel": "mid"
+      "label": "Pegasus Rising Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rising rush with long active golden coverage and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 4,
@@ -765,9 +782,11 @@
       "forwardForce": 1.64,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 21,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Pegasus Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching rush with long active golden pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -784,9 +803,11 @@
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 37,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Pegasus Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -802,9 +823,11 @@
       "forwardForce": 2.1,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 37,
-      "label": "1+2 Frame Link",
+      "label": "Pegasus Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid guard break with a long active wind-up and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 5,
@@ -821,10 +844,12 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "launchHeight": 0,
-      "label": "1+3 Frame Link",
+      "label": "Pegasus Flash Knockdown",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid knockdown flash with a short active burst and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -840,9 +865,11 @@
       "forwardForce": 1.97,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 38,
-      "label": "2+3 Frame Link",
+      "label": "Low Pegasus Feint",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low feint with a moderate active window and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -858,9 +885,11 @@
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Pegasus Seiya Driving Kick",
+      "label": "Pegasus Low Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown drive with long active gold-cloth pressure.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 0,
@@ -876,9 +905,11 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Pegasus Seiya Power Crush",
+      "label": "Pegasus Rolling Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown crush with very long active golden rush pressure.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 20,
@@ -894,9 +925,11 @@
       "forwardForce": 2.74,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 47,
-      "label": "Pegasus Seiya Aura Drive",
+      "label": "Pegasus Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown drive with very long active gold-cloth pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1375,7 +1408,10 @@
       "throwCapture": true,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "label": "Pegasus Clinch Toss",
+      "description": "Quick throw attempt with a moderate active capture window.",
+      "tracking": "medium"
     },
     "cmd:1+4": {
       "onBlockFrames": -9,
@@ -1387,7 +1423,11 @@
       "forwardForceEndFrame": 28,
       "startupFrames": 15,
       "activeFrames": 27,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "label": "Pegasus Step Kick",
+      "description": "Steady mid step kick with very long active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1397,11 +1437,14 @@
       "forwardForce": 1.21,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "f+2 Frame Link",
+      "label": "Forward Body Punch",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Steady mid forward punch with a short active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1411,11 +1454,14 @@
       "forwardForce": 1.37,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Pegasus",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 25,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick low advancing kick with long active coverage and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1425,11 +1471,14 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Pegasus Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high ducking jab with extended active time and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1439,11 +1488,14 @@
       "forwardForce": 1.09,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
-      "label": "d+3 Frame Link",
+      "label": "Low Pegasus Step",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 25,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick low step kick with long active coverage and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1453,11 +1505,14 @@
       "forwardForce": 1.37,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Low Pegasus",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 25,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick low diagonal kick with long active coverage and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1467,11 +1522,14 @@
       "forwardForce": 2.16,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Pegasus Rush Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high rush jab with extended active time and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1481,11 +1539,14 @@
       "forwardForce": 1.95,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
-      "label": "qcf+3 Frame Link",
+      "label": "Pegasus Low Rush",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 25,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick low rush kick with long active coverage and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1495,11 +1556,14 @@
       "forwardForce": 1.27,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Body Punch",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Steady mid while-rising punch with a short active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1509,11 +1573,14 @@
       "forwardForce": 1.43,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 26,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Pegasus",
       "cancelable": false,
       "startupFrames": 14,
       "activeFrames": 25,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick low sidestep kick with long active coverage and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "low"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1523,11 +1590,14 @@
       "forwardForce": 2.22,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Pegasus Jab",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 12,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "description": "Quick high overdrive jab with extended active time and fast recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

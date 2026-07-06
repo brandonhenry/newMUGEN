@@ -1,0 +1,181 @@
+{
+  "character": "fuusuke",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Ninku Jab",
+      "description": "Fast high jab with a tiny active window for checking close pressure.",
+      "hitLevel": "high",
+      "reason": "Compact standing poke aimed high."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Wind Dash",
+      "description": "Fast low dash with very long active coverage as Fuusuke blurs forward.",
+      "hitLevel": "low",
+      "reason": "The frames show a low rushing blur and grounded recovery."
+    },
+    {
+      "key": "jabright",
+      "label": "Kunai Body Check",
+      "description": "Quick mid poke with a short active window from Fuusuke's outstretched blade hand.",
+      "hitLevel": "mid",
+      "reason": "The hand/knife silhouette reaches forward at mid height."
+    },
+    {
+      "key": "kickright",
+      "label": "Stepping Kunai Cut",
+      "description": "Slow mid stepping cut that commits to a small forward blade swing.",
+      "hitLevel": "mid",
+      "reason": "Stepping mid-height weapon swipe."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Ninku Palm Feint",
+      "description": "Slow mid feint that pauses before a short forward hand strike.",
+      "hitLevel": "mid",
+      "reason": "Small startup pose into a direct mid strike."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Windmill Launcher",
+      "description": "Quick mid launcher with long active time from a spinning windmill kick.",
+      "hitLevel": "mid",
+      "reason": "The green arc and rising spin clearly read as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Stepping Kunai Cut",
+      "description": "Slow mid blade cut with a small step and committed recovery.",
+      "hitLevel": "mid",
+      "reason": "Same mid weapon-swipe family as the right kick."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Ninku Sweep",
+      "description": "Steady low knockdown sweep that ends crouched after a compact sliding strike.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "endsInCrouch": true,
+      "reason": "Low crouching sweep with knockdown and full-crouch end data."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Kunai Trip",
+      "description": "Slow low knockdown cut with a short active window at shin height.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "reason": "Low forward cut with knockdown data."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Windwheel Knockdown",
+      "description": "Slow mid tornado knockdown that flips Fuusuke through a rolling wind arc.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "reason": "Cartwheel-like flip with a green arc, tornado, jump, and knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Wind Cut",
+      "description": "Fast mid crouch attack with long active time from a low spinning cut.",
+      "hitLevel": "mid",
+      "reason": "Starts low and rolls through a grounded blade action."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Kunai Launcher",
+      "description": "Steady mid launcher with a short active window from a crouching blade lift.",
+      "hitLevel": "mid",
+      "reason": "Crouch-starting mid cut with launcher data."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Quick Ninku Check",
+      "description": "Quick high check with a brief active window and fast recovery.",
+      "hitLevel": "high",
+      "reason": "Compact high poke with no special effect."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Ninku Aura Dash",
+      "description": "Fast special knockdown rush with very long active coverage from a speed blur.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "reason": "Special rush uses repeated blur frames and knockdown data."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Heavy Kunai Step",
+      "description": "Slow mid step-in cut with a long active window and measured recovery.",
+      "hitLevel": "mid",
+      "reason": "Step-forward mid weapon strike."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Kunai Cut",
+      "description": "Slow mid sidestep cut that recovers after a committed blade swing.",
+      "hitLevel": "mid",
+      "reason": "Sidestep command shares the stepping cut animation."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While Rising Kunai",
+      "description": "Steady mid while-rising cut with a short active window.",
+      "hitLevel": "mid",
+      "reason": "Rising transition into a mid blade poke."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Kunai Step",
+      "description": "Steady mid rising step cut with a brief active window and heavier recovery.",
+      "hitLevel": "mid",
+      "reason": "While-rising command settles into the same step-cut visual."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Quick Ninku Check",
+      "description": "Quick high check with a brief active window for close-range interrupts.",
+      "hitLevel": "high",
+      "reason": "Short upper-body poke."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Forward Kunai Launcher",
+      "description": "Slow mid launcher that reaches forward with a lifting kunai strike.",
+      "hitLevel": "mid",
+      "reason": "Forward-reaching mid cut with launcher data."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Ninku Body Poke",
+      "description": "Slow mid body poke with a short active window and careful recovery.",
+      "hitLevel": "mid",
+      "reason": "Simple forward mid poke."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Kunai Cut",
+      "description": "Steady mid kunai cut that reaches forward and recovers quickly.",
+      "hitLevel": "mid",
+      "reason": "Forward command uses the mid blade-poke sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Quick Wind Check",
+      "description": "Quick high check with a brief active window from Fuusuke's fast hand strike.",
+      "hitLevel": "high",
+      "reason": "Quick upper-body poke with Ninku flavor."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Wind Step Ender",
+      "description": "Slow mid knockdown ender with a short active window and high commitment.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "reason": "Committed step-in cut with knockdown data."
+    }
+  ]
+}

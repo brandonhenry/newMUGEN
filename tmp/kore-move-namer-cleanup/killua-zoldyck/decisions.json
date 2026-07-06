@@ -1,0 +1,163 @@
+{
+  "character": "killua-zoldyck",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Assassin Jab",
+      "description": "Fast high assassin jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Compact standing hand strike at upper-body height."
+    },
+    {
+      "key": "jabright",
+      "label": "Assassin Palm Cut",
+      "description": "Quick mid palm cut with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Short mid-height slash-like palm arc."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Silent Step Feint",
+      "description": "Slow mid feint with a long active stance shift and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Crouched silent-step movement stays at mid height."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Assassin Pop-Up",
+      "description": "Slow mid launcher with a long active lift from a low assassin step.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "medium",
+      "reason": "Low stepping sequence is authored as a launcher."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Heavy Palm Cut",
+      "description": "Slow mid palm cut with a tiny active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Delayed mid-height palm arc."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Rhythm Feint",
+      "description": "Slow low feint with a long active arc and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low command shifts into a low arc and evasive step."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Assassin Drop",
+      "description": "Slow low knockdown setup with extended active time and short recovery.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Low stance sequence is authored as a knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Full-Crouch Afterimage",
+      "description": "Slow mid crouch strike with long active afterimage pressure and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Crouched frames show speed-line afterimages."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Palm Launcher",
+      "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2,
+      "tracking": "weakRight",
+      "reason": "Crouch-to-palm arc is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Assassin Jab",
+      "description": "Quick high overdrive jab with a short active window and fast recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Overdrive command uses the compact high jab."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Godspeed Aura Drive",
+      "description": "Fast special knockdown drive with long active speed pressure and heavy recovery.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "tracking": "weakRight",
+      "reason": "Special rush has speed effects and knockdown data."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While-Rising Palm Cut",
+      "description": "Slow mid while-rising palm cut with a brief active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "While-rising command uses the mid palm arc."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Rhythm Step",
+      "description": "Steady mid rising step with a moderate active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Rising sequence shows speed-line stepping into a palm arc."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Assassin Jab",
+      "description": "Quick high ducking jab with a short active window and fast recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down jab reuses the compact high hand strike."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Palm Launcher",
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "weakRight",
+      "reason": "Diagonal command uses the palm launcher arc."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Rhythm Echo Rush",
+      "description": "Fast mid rush with long active afterimage pressure and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command shows repeated speed-line afterimages."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Palm Cut",
+      "description": "Slow mid forward palm cut with a brief active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Forward command uses the mid palm arc."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Assassin Rush Jab",
+      "description": "Quick high rush jab with a short active window and fast recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle jab keeps the compact high hand strike."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Godspeed Burst",
+      "description": "Fast mid knockdown burst with long active movement and heavy recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Burst sequence shows speed movement and is authored as a knockdown."
+    }
+  ]
+}

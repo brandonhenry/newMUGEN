@@ -1,0 +1,240 @@
+{
+  "character": "vegito",
+  "notes": "Reviewed against contact.png and review.html on 2026-07-06. Preserve timing, animation, hitboxes, effects, sounds, and projectiles.",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Fusion Jab",
+      "description": "Quick high jab with a long active check that keeps close pressure moving.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Standing left-hand poke at head and chest height with fast startup."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Fusion Sweep",
+      "description": "Slow low sliding kick that reaches the shin line with weak left-side coverage.",
+      "hitLevel": "low",
+      "tracking": "weakLeft",
+      "reason": "Extended crouching slide clearly attacks the lower body."
+    },
+    {
+      "key": "jabright",
+      "label": "Fusion Body Blow",
+      "description": "Quick mid punch with a short active window for checking step-ins.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Compact right-hand body strike, not a signature special."
+    },
+    {
+      "key": "kickright",
+      "label": "Heavy Fusion Kick",
+      "description": "Slow mid kick with a sweeping leg arc and enough recovery to feel committed.",
+      "hitLevel": "mid",
+      "tracking": "weakRight",
+      "reason": "Standing kick swings across the torso line with right-side coverage."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Fusion Cross Strike",
+      "description": "Steady mid two-hand strike with a brief active window after the step-in.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Short advancing upper-body strike sequence."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Rising Fusion Launcher",
+      "description": "Steady mid launcher that pops upward from a sliding kick sequence.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "weakLeft",
+      "reason": "Sliding attack is authored as a launcher and visually rises out of the low extension."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Vegito Sword Tornado",
+      "description": "Quick mid sword-spin tornado that hops forward as a juggle extender.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Airborne rotating slash with the blue Spirit Sword-style arc."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Fusion Feint",
+      "description": "Slow low step-in kick with a moderate active window for clipping grounded movement.",
+      "hitLevel": "low",
+      "tracking": "weakLeft",
+      "reason": "Forward lean and low leg extension read as a grounded shin attack."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Sword Tornado",
+      "description": "Slow low airborne tornado that flips through the legs and knocks down on hit.",
+      "hitLevel": "low",
+      "tornado": true,
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Low entry into a flipping blue-arc spin with knockdown behavior."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Spirit Sword Tornado",
+      "description": "Slow mid sword tornado with knockdown power after the airborne spin.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Clear airborne rotating sword arc that functions as a tornado ender."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Fusion Flurry",
+      "description": "Fast mid crouch flurry with very long active time and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Begins from a crouched stance and chains into a close-range hand rush."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Spirit Launcher",
+      "description": "Fast mid launcher that erupts with a blue sword pillar before recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2,
+      "tracking": "medium",
+      "reason": "Vertical blue energy blade clearly supports the launcher role."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Final Kamehameha Drive",
+      "description": "Fast special rush with very long active time that drives forward into a knockdown.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Signature fusion-special slot uses an extended aura rush and heavy finish."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Overdrive Sword Tornado",
+      "description": "Quick mid overdrive tornado that hops into a blue sword spin for juggle extension.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Overdrive command reuses the airborne Spirit Sword tornado pattern."
+    },
+    {
+      "key": "cmd:SS+3",
+      "label": "Sidestep Low Hop Kick",
+      "description": "Steady low hop kick with long active time after the sidestep entry.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "tracking": "weakLeft",
+      "reason": "Low sliding kick sequence starts after a lateral setup and leaves the ground."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Sword Tornado",
+      "description": "Quick mid sidestep tornado that jumps into a spinning sword arc.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Sidestep route clearly uses the airborne blue sword tornado."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "Rising Fusion Strike",
+      "description": "Quick mid while-standing strike with steady active time and clean recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "While-standing punch rises into a compact body-level hit."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Sword Tornado",
+      "description": "Steady mid while-standing tornado with a short active hit after the jump.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Rising route transitions into the airborne sword-spin animation."
+    },
+    {
+      "key": "cmd:d+3",
+      "label": "Ducking Low Hop Kick",
+      "description": "Steady low hop kick with long active time from a ducking approach.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "tracking": "weakLeft",
+      "reason": "Low command uses the sliding hop-kick pattern at shin height."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Fusion Launcher",
+      "description": "Slow mid launcher with a tiny active window and high commitment.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "medium",
+      "reason": "Forward-diagonal strike is authored as a launcher and visually lifts from a body blow."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "label": "Diagonal Low Hop Kick",
+      "description": "Steady low hop kick with long active time from a forward diagonal entry.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "tracking": "weakLeft",
+      "reason": "Forward-diagonal route uses the same low sliding hop-kick animation."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Fusion Rushdown",
+      "description": "Fast mid rush with very long active time and quick recovery on the finish.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Advancing close-range rush is a straightforward fusion pressure tool."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Fusion Strike",
+      "description": "Quick mid advancing strike with steady active time and compact recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command uses a direct body-level hand strike."
+    },
+    {
+      "key": "cmd:f+3",
+      "label": "Advancing Low Hop Kick",
+      "description": "Steady low hop kick with long active time after the forward step.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "tracking": "weakLeft",
+      "reason": "Forward route clearly attacks low with the sliding hop-kick animation."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "label": "Fusion Low Hop Kick",
+      "description": "Steady low quarter-circle hop kick with long active time and left-side tracking.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "tracking": "weakLeft",
+      "reason": "Quarter-circle kick uses the repeated low sliding hop-kick animation."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Final Sword Tornado",
+      "description": "Slow mid sword tornado with a brief hit window that knocks down after the jump.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "tracking": "weakRight",
+      "reason": "Quarter-circle finisher is a committed airborne sword-spin knockdown."
+    }
+  ]
+}

@@ -407,7 +407,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Nico Robin Left Check",
+      "label": "Quick Hana Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -444,7 +444,8 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high Hana-Hana jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
@@ -611,10 +612,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "Nico Robin Left Check",
+      "label": "Quick Hana Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high Hana-Hana jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 13,
@@ -681,9 +683,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "f+1 Frame Link",
+      "label": "Forward Hana Jab",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid forward jab with a tiny active window and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 5,
@@ -703,8 +707,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Nico Robin Launcher",
-      "hitLevel": "mid"
+      "label": "Diagonal Fleur Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with long active blooming-arm pressure and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 13,
@@ -720,9 +726,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Nico Robin Burst",
+      "label": "Cien Fleur Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown burst with very long active blooming-arm coverage.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -738,8 +746,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 18,
-      "label": "Nico Robin Rising Strike",
-      "hitLevel": "mid"
+      "label": "While-Rising Fleur Bloom",
+      "hitLevel": "mid",
+      "description": "Fast mid while-rising bloom with very long active arm coverage.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 11,
@@ -755,9 +765,11 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Fleur Guard",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid crouching guard with extended active arm coverage.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 30,
@@ -774,8 +786,10 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "launchHeight": 2,
-      "label": "Nico Robin Crouch Launcher",
-      "hitLevel": "mid"
+      "label": "Crouch Fleur Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with extended active bloom and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -791,8 +805,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 14,
-      "label": "Nico Robin Twin Assault",
-      "hitLevel": "mid"
+      "label": "Hana-Hana Twin Slap",
+      "hitLevel": "mid",
+      "description": "Slow mid twin assault with a long active fan of blooming arms.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -809,8 +825,10 @@
       "forwardForceStartFrame": 3,
       "forwardForceEndFrame": 10,
       "launchHeight": 2.2,
-      "label": "Nico Robin Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Hana-Hana Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active blooming-arm reach.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -826,8 +844,10 @@
       "forwardForce": 2.27,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 33,
-      "label": "Nico Robin Low Feint",
-      "hitLevel": "low"
+      "label": "Low Fleur Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint with moderate active time from a grounded arm fan.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -843,9 +863,11 @@
       "forwardForce": 2.79,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "label": "Nico Robin Driving Kick",
+      "label": "Low Clutch Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown sweep with extended active arm pressure.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -861,9 +883,11 @@
       "forwardForce": 3.97,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 15,
-      "label": "Nico Robin Power Crush",
+      "label": "Cien Fleur Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown crush with extended active blooming-arm pressure.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -879,9 +903,11 @@
       "forwardForce": 2.49,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 30,
-      "label": "Nico Robin Aura Drive",
+      "label": "Clutch Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with long active blooming-arm pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1358,7 +1384,11 @@
       "endsInCrouch": true,
       "startupFrames": 12,
       "activeFrames": 24,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "label": "Seis Fleur Flip",
+      "description": "Quick mid multi-arm flip that ends Robin in a crouched recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1368,11 +1398,14 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Hana Jab",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 4,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady high ducking jab with a brief active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1382,11 +1415,14 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "qcf+1 Frame Link",
+      "label": "Hana Rush Jab",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 4,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady high rush jab with a brief active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1396,11 +1432,20 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Hana Jab",
       "cancelable": false,
       "startupFrames": 17,
       "activeFrames": 4,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady high overdrive jab with a brief active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Cien Fleur Wheel",
+      "description": "Slow mid arm-wheel strike with a tiny active hit and heavy recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

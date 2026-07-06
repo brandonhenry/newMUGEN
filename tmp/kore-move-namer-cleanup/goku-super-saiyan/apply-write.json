@@ -1,0 +1,283 @@
+{
+  "ok": true,
+  "write": true,
+  "character": "goku-super-saiyan",
+  "applied": [
+    {
+      "key": "jableft",
+      "patch": {
+        "label": "Quick Super Jab",
+        "description": "Fast high jab with a tiny active window for close pressure checks.",
+        "hitLevel": "high"
+      },
+      "reason": "Compact upper-body punch."
+    },
+    {
+      "key": "kickleft",
+      "patch": {
+        "label": "Low Saiyan Sweep",
+        "description": "Slow low kick with moderate active time from a grounded sliding sweep.",
+        "hitLevel": "low"
+      },
+      "reason": "Low sweeping kick path."
+    },
+    {
+      "key": "jabright",
+      "patch": {
+        "label": "Super Body Check",
+        "description": "Quick mid body check with a short active window and steady recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward strike at mid height."
+    },
+    {
+      "key": "kickright",
+      "patch": {
+        "label": "Super Wheel Kick",
+        "description": "Slow mid wheel kick with a wide blue arc and committed recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Broad spinning kick arc."
+    },
+    {
+      "key": "cmd:1+2",
+      "patch": {
+        "label": "Super Guard Break",
+        "description": "Slow mid sequence that winds up into a controlled forward strike.",
+        "hitLevel": "mid"
+      },
+      "reason": "Longer grounded strike chain without beam visuals."
+    },
+    {
+      "key": "cmd:1+3",
+      "patch": {
+        "label": "Rising Super Launcher",
+        "description": "Steady mid jumping launcher with a brief active window and heavy recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "mid"
+      },
+      "reason": "The attack rises into launcher data."
+    },
+    {
+      "key": "cmd:1+4",
+      "patch": {
+        "label": "Heavy Super Wheel",
+        "description": "Slow mid wheel strike with a short active window and heavier recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Same broad blue-arc wheel family as the right kick."
+    },
+    {
+      "key": "cmd:2+3",
+      "patch": {
+        "label": "Low Vanish Sweep",
+        "description": "Steady low jumping sweep with a brief active window and committed recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low"
+      },
+      "reason": "Low sliding attack carries jump data."
+    },
+    {
+      "key": "cmd:2+4",
+      "patch": {
+        "label": "Low Knockdown Sweep",
+        "description": "Slow low knockdown sweep with a short active window at shin height.",
+        "knockdown": true,
+        "hitLevel": "low"
+      },
+      "reason": "Low sweep with knockdown data."
+    },
+    {
+      "key": "cmd:3+4",
+      "patch": {
+        "label": "Super Saiyan Cyclone",
+        "description": "Steady mid launcher tornado that flips Goku into a knockdown spin.",
+        "jumpBeforeMove": true,
+        "knockdown": true,
+        "tornado": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Clear flipping spin with launcher, tornado, jump, and knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "patch": {
+        "label": "Crouch Aura Burst",
+        "description": "Fast mid crouch burst with long active coverage from a low forward rush.",
+        "hitLevel": "mid"
+      },
+      "reason": "Starts low and drives forward through several aura-like poses."
+    },
+    {
+      "key": "cmd:FC+2",
+      "patch": {
+        "label": "Crouch Super Launcher",
+        "description": "Steady mid launcher with a short active window from a crouching lift.",
+        "hitLevel": "mid"
+      },
+      "reason": "Crouch-starting launcher sequence."
+    },
+    {
+      "key": "cmd:O+1",
+      "patch": {
+        "label": "Quick Aura Check",
+        "description": "Fast high check with balanced active and recovery frames.",
+        "hitLevel": "high"
+      },
+      "reason": "Compact high poke."
+    },
+    {
+      "key": "cmd:O+2",
+      "patch": {
+        "label": "Super Saiyan Aura Drive",
+        "description": "Slow special knockdown rush with long active coverage and afterimage force.",
+        "knockdown": true,
+        "hitLevel": "special"
+      },
+      "reason": "Special rush shows white afterimage frames and knockdown data."
+    },
+    {
+      "key": "cmd:O+4",
+      "patch": {
+        "label": "Heavy Super Wheel",
+        "description": "Slow mid wheel strike with long active time and committed recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "Repeats the heavy blue-arc wheel."
+    },
+    {
+      "key": "cmd:SS+3",
+      "patch": {
+        "label": "Sidestep Low Vanish",
+        "description": "Quick low jumping sweep with long active coverage from a sidestep entry.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low"
+      },
+      "reason": "Sidestep low kick carries jump data."
+    },
+    {
+      "key": "cmd:SS+4",
+      "patch": {
+        "label": "Sidestep Super Wheel",
+        "description": "Slow mid sidestep strike that turns into a committed wheel kick.",
+        "hitLevel": "mid"
+      },
+      "reason": "Sidestep command uses the heavy wheel animation."
+    },
+    {
+      "key": "cmd:WS+2",
+      "patch": {
+        "label": "While Rising Strike",
+        "description": "Quick mid while-rising strike with balanced active and recovery frames.",
+        "hitLevel": "mid"
+      },
+      "reason": "Rising transition into a mid strike."
+    },
+    {
+      "key": "cmd:WS+4",
+      "patch": {
+        "label": "Rising Super Wheel",
+        "description": "Steady mid rising wheel with a brief active window and heavy recovery.",
+        "hitLevel": "mid"
+      },
+      "reason": "While-rising command ends in the same wheel arc."
+    },
+    {
+      "key": "cmd:d+1",
+      "patch": {
+        "label": "Quick Aura Check",
+        "description": "Fast high check with balanced active and recovery frames.",
+        "hitLevel": "high"
+      },
+      "reason": "Same high check as O+1."
+    },
+    {
+      "key": "cmd:d+3",
+      "patch": {
+        "label": "Low Vanish Kick",
+        "description": "Quick low jumping sweep with long active coverage from a grounded burst.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low"
+      },
+      "reason": "Low sweep with jump data."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "patch": {
+        "label": "Forward Super Launcher",
+        "description": "Slow mid launcher that reaches forward with a lifting strike.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward-reaching launcher."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "patch": {
+        "label": "Low Forward Vanish",
+        "description": "Quick low jumping sweep with long active coverage and forward reach.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low"
+      },
+      "reason": "Forward-low version of the low vanish kick."
+    },
+    {
+      "key": "cmd:f+1",
+      "patch": {
+        "label": "Super Body Poke",
+        "description": "Slow mid body poke with a brief active window and high commitment.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command is a simple mid-height strike."
+    },
+    {
+      "key": "cmd:f+2",
+      "patch": {
+        "label": "Forward Super Strike",
+        "description": "Quick mid strike with balanced active and recovery frames.",
+        "hitLevel": "mid"
+      },
+      "reason": "Forward command uses a direct mid strike."
+    },
+    {
+      "key": "cmd:f+3",
+      "patch": {
+        "label": "Forward Low Vanish",
+        "description": "Quick low jumping sweep with long active coverage from a forward slide.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low"
+      },
+      "reason": "Forward kick uses the low vanish animation."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "patch": {
+        "label": "Quick Super Check",
+        "description": "Fast high check with balanced active and recovery frames.",
+        "hitLevel": "high"
+      },
+      "reason": "Quarter-circle punch remains a compact high check."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "patch": {
+        "label": "Low Super Vanish",
+        "description": "Quick low jumping sweep with long active coverage and quick recovery.",
+        "jumpBeforeMove": true,
+        "hitLevel": "low"
+      },
+      "reason": "Quarter-circle kick shares the low vanish visual."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "patch": {
+        "label": "Super Saiyan Burst",
+        "description": "Quick mid knockdown burst with very long active coverage and fast recovery.",
+        "knockdown": true,
+        "hitLevel": "mid"
+      },
+      "reason": "Afterimage burst ender with long active time and knockdown data."
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

@@ -434,7 +434,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Tōshirō Hitsugaya Left Check",
+      "label": "Quick Ice Blade Check",
       "input": "jab",
       "startupFrames": 12,
       "activeFrames": 3,
@@ -471,11 +471,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword check with a short active window and heavy recovery."
     },
     {
       "id": "kick",
-      "label": "Tōshirō Hitsugaya Left Kick",
+      "label": "Low Hyorinmaru Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -512,11 +513,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Instant low ice sweep with very long active blade pressure."
     },
     {
       "id": "heavy",
-      "label": "Tōshirō Hitsugaya Right Check",
+      "label": "Ice Body Slash",
       "input": "heavy",
       "startupFrames": 13,
       "activeFrames": 3,
@@ -553,11 +555,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body slash with a brief active cut and weak right tracking."
     },
     {
       "id": "special",
-      "label": "Tōshirō Hitsugaya Right Kick",
+      "label": "Ice Dragon Rush",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -594,7 +597,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Instant mid ice rush with huge active travel and almost no recovery."
     }
   ],
   "hurtboxes": [
@@ -638,10 +642,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 19,
-      "label": "Tōshirō Hitsugaya Left Check",
+      "label": "Quick Ice Blade Check",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high sword check with a short active window and heavy recovery."
     },
     "jabright": {
       "startupFrames": 12,
@@ -657,10 +662,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "Tōshirō Hitsugaya Right Check",
+      "label": "Ice Body Slash",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body slash with a brief active cut and weak right tracking."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -676,8 +682,10 @@
       "forwardForce": 0.65,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "label": "Tōshirō Hitsugaya Left Kick",
-      "hitLevel": "low"
+      "label": "Low Hyorinmaru Sweep",
+      "hitLevel": "low",
+      "description": "Instant low ice sweep with very long active blade pressure.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 0,
@@ -693,8 +701,10 @@
       "forwardForce": 0.93,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
-      "label": "Tōshirō Hitsugaya Right Kick",
-      "hitLevel": "mid"
+      "label": "Ice Dragon Rush",
+      "hitLevel": "mid",
+      "description": "Instant mid ice rush with huge active travel and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -710,9 +720,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 26,
-      "label": "f+1 Frame Link",
+      "label": "Forward Ice Check",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward check with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -732,9 +744,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Ice Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid diagonal launcher with a tiny active cut and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -750,9 +764,11 @@
       "forwardForce": 3.37,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 21,
-      "label": "Tōshirō Hitsugaya Burst",
+      "label": "Hyorinmaru Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with huge active ice pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 10,
@@ -768,8 +784,10 @@
       "forwardForce": 1.32,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 16,
-      "label": "Tōshirō Hitsugaya Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Ice Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid while-rising rush with very long active sword pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 3,
@@ -785,9 +803,11 @@
       "forwardForce": 1.44,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 17,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Ice Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch rush with very long active sword pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -803,10 +823,12 @@
       "forwardForce": 2.06,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.0,
+      "label": "Crouch Ice Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch launcher with a tiny active lift and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -822,9 +844,11 @@
       "forwardForce": 1.56,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "1+2 Frame Link",
+      "label": "Frost Cross Cut",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid cross cut with a long active sword path and weak right tracking.",
+      "tracking": "weakRight"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -843,9 +867,11 @@
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "Tōshirō Hitsugaya Cross Launcher",
+      "label": "Hyorinmaru Launcher",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping launcher with long active ice pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 16,
@@ -861,10 +887,11 @@
       "forwardForce": 1.33,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 19,
-      "label": "Tōshirō Hitsugaya Low Feint",
+      "label": "Homing Low Frost Sweep",
       "hitLevel": "low",
       "tracking": "homing",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady low homing sweep that knocks down after a modest active spin."
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -882,10 +909,12 @@
       "forwardForceEndFrame": 15,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Tōshirō Hitsugaya Driving Kick",
+      "label": "Low Ice Dragon Knockdown",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping knockdown rush with a long active sword path.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 13,
@@ -903,10 +932,12 @@
       "forwardForceEndFrame": 15,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Tōshirō Hitsugaya Power Crush",
+      "label": "Ice Fang Crush",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping knockdown crush with a modest active slash.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -922,9 +953,11 @@
       "forwardForce": 3.29,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Tōshirō Hitsugaya Aura Drive",
+      "label": "Hyorinmaru Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Instant special knockdown drive with huge active ice-sword pressure.",
+      "tracking": "weakRight"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1398,11 +1431,14 @@
       "forwardForce": 1.76,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "f+2 Frame Link",
+      "label": "Forward Ice Slash",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 4,
-      "recoveryFrames": 17
+      "recoveryFrames": 17,
+      "description": "Quick mid forward slash with a brief active cut and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1412,11 +1448,14 @@
       "forwardForce": 1.1,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 19,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Ice Check",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 4,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Steady high ducking check with a brief active hit and measured recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1426,11 +1465,14 @@
       "forwardForce": 1.96,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 19,
-      "label": "qcf+1 Frame Link",
+      "label": "Hyorinmaru Quick Check",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 4,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Steady high quarter-circle check with a brief active hit and measured recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1440,11 +1482,14 @@
       "forwardForce": 1.82,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Ice Slash",
       "cancelable": false,
       "startupFrames": 13,
       "activeFrames": 4,
-      "recoveryFrames": 17
+      "recoveryFrames": 17,
+      "description": "Quick mid while-rising slash with a brief active cut and weak right tracking.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1454,11 +1499,14 @@
       "forwardForce": 2.02,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 19,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Ice Check",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 4,
-      "recoveryFrames": 12
+      "recoveryFrames": 12,
+      "description": "Steady high overdrive check with a brief active hit and measured recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

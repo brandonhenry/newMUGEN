@@ -1,0 +1,377 @@
+{
+  "character": "ichigo-kurosaki",
+  "notes": "Copy reviewed moves from candidates into moves, then edit label/description/properties.",
+  "moves": [],
+  "candidates": [
+    {
+      "key": "jableft",
+      "currentLabel": "Ichigo Kurosaki Left Check",
+      "currentDescription": "",
+      "notation": [
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 21,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "kickleft",
+      "currentLabel": "Ichigo Kurosaki Left Kick",
+      "currentDescription": "",
+      "notation": [
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 0,
+        "activeFrames": 36,
+        "recoveryFrames": 9,
+        "hitLevel": "low",
+        "properties": "low, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "jabright",
+      "currentLabel": "Ichigo Kurosaki Right Check",
+      "currentDescription": "",
+      "notation": [
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 11,
+        "activeFrames": 4,
+        "recoveryFrames": 15,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 4
+    },
+    {
+      "key": "kickright",
+      "currentLabel": "Ichigo Kurosaki Right Kick",
+      "currentDescription": "",
+      "notation": [
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 5,
+        "activeFrames": 37,
+        "recoveryFrames": 4,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:1+2",
+      "currentLabel": "1+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "1",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 40,
+        "activeFrames": 17,
+        "recoveryFrames": 12,
+        "hitLevel": "mid",
+        "properties": "mid, tornado, tracking:medium"
+      },
+      "frameCount": 12
+    },
+    {
+      "key": "cmd:1+3",
+      "currentLabel": "Ichigo Kurosaki Cross Launcher",
+      "currentDescription": "",
+      "notation": [
+        "1",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 20,
+        "activeFrames": 22,
+        "recoveryFrames": 7,
+        "hitLevel": "mid",
+        "properties": "mid, launcher, tracking:medium"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "cmd:1+4",
+      "currentLabel": "Ichigo Kurosaki Right Kick",
+      "currentDescription": "",
+      "notation": [
+        "1",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 5,
+        "activeFrames": 37,
+        "recoveryFrames": 4,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:2+3",
+      "currentLabel": "Ichigo Kurosaki Low Feint",
+      "currentDescription": "",
+      "notation": [
+        "2",
+        "3"
+      ],
+      "frameData": {
+        "startupFrames": 10,
+        "activeFrames": 4,
+        "recoveryFrames": 5,
+        "hitLevel": "low",
+        "properties": "low, jump, tracking:medium"
+      },
+      "frameCount": 5
+    },
+    {
+      "key": "cmd:2+4",
+      "currentLabel": "Ichigo Kurosaki Driving Kick",
+      "currentDescription": "",
+      "notation": [
+        "2",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 17,
+        "activeFrames": 9,
+        "recoveryFrames": 4,
+        "hitLevel": "low",
+        "properties": "low, knockdown, jump, tracking:medium"
+      },
+      "frameCount": 8
+    },
+    {
+      "key": "cmd:3+4",
+      "currentLabel": "Ichigo Kurosaki Power Crush",
+      "currentDescription": "",
+      "notation": [
+        "3",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 0,
+        "activeFrames": 38,
+        "recoveryFrames": 18,
+        "hitLevel": "mid",
+        "properties": "mid, knockdown, tracking:medium"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "cmd:FC+1",
+      "currentLabel": "FC+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "FC",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 0,
+        "activeFrames": 41,
+        "recoveryFrames": 1,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:FC+2",
+      "currentLabel": "FC+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "FC",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 17,
+        "activeFrames": 3,
+        "recoveryFrames": 27,
+        "hitLevel": "mid",
+        "properties": "mid, launcher, tracking:medium"
+      },
+      "frameCount": 4
+    },
+    {
+      "key": "cmd:O+1",
+      "currentLabel": "O+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "O",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 14,
+        "activeFrames": 4,
+        "recoveryFrames": 9,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "cmd:O+2",
+      "currentLabel": "Ichigo Kurosaki Aura Drive",
+      "currentDescription": "",
+      "notation": [
+        "O",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 6,
+        "activeFrames": 53,
+        "recoveryFrames": 1,
+        "hitLevel": "special",
+        "properties": "special, knockdown, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:WS+2",
+      "currentLabel": "WS+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "WS",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 23,
+        "activeFrames": 6,
+        "recoveryFrames": 1,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 4
+    },
+    {
+      "key": "cmd:WS+4",
+      "currentLabel": "Ichigo Kurosaki Rising Strike",
+      "currentDescription": "",
+      "notation": [
+        "WS",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 0,
+        "activeFrames": 43,
+        "recoveryFrames": 1,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:d+1",
+      "currentLabel": "d+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "d",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 14,
+        "activeFrames": 4,
+        "recoveryFrames": 9,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "cmd:d/f+2",
+      "currentLabel": "d/f+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "d/f",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 5,
+        "activeFrames": 40,
+        "recoveryFrames": 5,
+        "hitLevel": "mid",
+        "properties": "mid, launcher, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:f+1",
+      "currentLabel": "f+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "f",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 5,
+        "activeFrames": 37,
+        "recoveryFrames": 4,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 10
+    },
+    {
+      "key": "cmd:f+2",
+      "currentLabel": "f+2 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "f",
+        "2"
+      ],
+      "frameData": {
+        "startupFrames": 23,
+        "activeFrames": 6,
+        "recoveryFrames": 1,
+        "hitLevel": "mid",
+        "properties": "mid, tracking:medium"
+      },
+      "frameCount": 4
+    },
+    {
+      "key": "cmd:qcf+1",
+      "currentLabel": "qcf+1 Frame Link",
+      "currentDescription": "",
+      "notation": [
+        "qcf",
+        "1"
+      ],
+      "frameData": {
+        "startupFrames": 14,
+        "activeFrames": 4,
+        "recoveryFrames": 9,
+        "hitLevel": "high",
+        "properties": "high, tracking:medium"
+      },
+      "frameCount": 6
+    },
+    {
+      "key": "cmd:qcf+4",
+      "currentLabel": "Ichigo Kurosaki Burst",
+      "currentDescription": "",
+      "notation": [
+        "qcf",
+        "4"
+      ],
+      "frameData": {
+        "startupFrames": 15,
+        "activeFrames": 39,
+        "recoveryFrames": 1,
+        "hitLevel": "mid",
+        "properties": "mid, knockdown, jump, tracking:medium"
+      },
+      "frameCount": 11
+    }
+  ]
+}

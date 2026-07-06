@@ -1,0 +1,172 @@
+{
+  "character": "monkey-d-luffy-2nd-gear",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Jet Pistol",
+      "description": "Fast high 2nd Gear jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quick stretched punch reads as a Jet Pistol."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Jet Stamp",
+      "description": "Fast low rubber kick with very long active coverage and quick recovery.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Low-to-vertical stretch kick stays in the low attack family."
+    },
+    {
+      "key": "jabright",
+      "label": "Jet Body Blow",
+      "description": "Quick mid body blow with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Short 2nd Gear body strike."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Jet Gatling",
+      "description": "Slow mid rush with a long active flurry of stretched punches.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Repeated smoke-trail punches match a Jet Gatling."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Jet Launcher",
+      "description": "Quick mid launcher with extended active pressure and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.2,
+      "tracking": "medium",
+      "reason": "Rushing 2nd Gear strike is authored as a launcher."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Jet Feint",
+      "description": "Fast low feint with very long active rubber-leg coverage.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "reason": "Long low stretch sequence stays grounded."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Balloon Drive",
+      "description": "Slow low knockdown drive with extended balloon-body pressure.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Inflated low body drive is authored as a knockdown."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Jet Giant Rifle",
+      "description": "Slow mid knockdown punch with extended giant-fist reach and heavy recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Huge 2nd Gear fist rush is authored as a knockdown."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouching Jet Rush",
+      "description": "Fast mid crouching rush with extended active steam-trail pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Full-crouch sequence rushes forward with 2nd Gear speed lines."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Jet Launcher",
+      "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2,
+      "tracking": "medium",
+      "reason": "Crouch-to-Jet strike is authored as a launcher."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Overdrive Jet Pistol",
+      "description": "Fast high overdrive jab with a moderate active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Overdrive command uses the quick Jet Pistol."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Jet Aura Drive",
+      "description": "Fast special knockdown drive with very long active 2nd Gear pressure.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Long aura drive is authored as a special knockdown."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While-Rising Jet Punch",
+      "description": "Fast mid while-rising punch with extended active pressure and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "While-rising command uses the mid Jet punch."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Jet Rising Stamp",
+      "description": "Fast mid rising stamp with long active rubber-leg coverage and steady recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Rising kick stretches through multiple active frames."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Ducking Jet Pistol",
+      "description": "Fast high ducking Pistol with a moderate active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Down jab reuses the quick Jet Pistol."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Diagonal Jet Launcher",
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "tracking": "medium",
+      "reason": "Diagonal Jet strike is authored as a launcher."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Jet Bazooka Rush",
+      "description": "Fast mid advancing rush with very long active twin-fist pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command drives in with enlarged twin fists and smoke trails."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Jet Punch",
+      "description": "Fast mid forward punch with extended active pressure and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "reason": "Forward command uses the mid Jet punch sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Jet Rush Pistol",
+      "description": "Fast high rush Pistol with a moderate active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "reason": "Quarter-circle jab uses the Jet Pistol."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Jet Burst Stamp",
+      "description": "Fast mid knockdown burst with very long active rubber-body pressure.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "tracking": "medium",
+      "reason": "Burst sequence stretches across the screen and is authored as a knockdown."
+    }
+  ]
+}

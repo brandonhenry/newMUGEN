@@ -366,7 +366,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Neuro Nogami Left Check",
+      "label": "Quick Demon Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -403,7 +403,8 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high demon jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
@@ -570,10 +571,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
-      "label": "Neuro Nogami Left Check",
+      "label": "Quick Demon Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high demon jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 13,
@@ -642,10 +644,12 @@
       "forwardForceEndFrame": 21,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "f+1 Frame Link",
+      "label": "Demon Flight Rush",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Fast mid jumping rush with very long active demonic pressure.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -700,8 +704,10 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 42,
-      "label": "Neuro Nogami Rising Strike",
-      "hitLevel": "mid"
+      "label": "While-Rising Demon Claw",
+      "hitLevel": "mid",
+      "description": "Fast mid while-rising claw with long active pressure and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 3,
@@ -717,9 +723,11 @@
       "forwardForce": 1.17,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Demon Blade",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching blade rush with long active demonic coverage.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 6,
@@ -736,8 +744,10 @@
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 47,
       "launchHeight": 2,
-      "label": "Neuro Nogami Crouch Launcher",
-      "hitLevel": "mid"
+      "label": "Crouch Talon Launcher",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher with long active claw lift and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -755,9 +765,11 @@
       "forwardForceEndFrame": 14,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Neuro Nogami Twin Assault",
+      "label": "Demonic Twin Drill",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping twin assault with a long active rush and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -774,8 +786,10 @@
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 34,
       "launchHeight": 2.2,
-      "label": "Neuro Nogami Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Demon Hand Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher with long active claw lift and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 26,
@@ -791,8 +805,10 @@
       "forwardForce": 1.29,
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 43,
-      "label": "Neuro Nogami Low Feint",
-      "hitLevel": "low"
+      "label": "Low Mystery Snare",
+      "hitLevel": "low",
+      "description": "Slow low snare feint with extended active time and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -810,11 +826,13 @@
       "forwardForceEndFrame": 38,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Neuro Nogami Driving Kick",
+      "label": "Demonic Tornado Kick",
       "hitLevel": "low",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping tornado kick that knocks down after extended active spin.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -832,10 +850,12 @@
       "forwardForceEndFrame": 23,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "Neuro Nogami Power Crush",
+      "label": "Demon Power Crush",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping knockdown crush with a short active window and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 9,
@@ -851,9 +871,11 @@
       "forwardForce": 2.81,
       "forwardForceStartFrame": 40,
       "forwardForceEndFrame": 60,
-      "label": "Neuro Nogami Aura Drive",
+      "label": "Demon Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with very long active demonic pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1327,11 +1349,14 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Demon Jab",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady high ducking jab with a brief active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1341,11 +1366,14 @@
       "forwardForce": 1.69,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
-      "label": "qcf+1 Frame Link",
+      "label": "Demon Rush Jab",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady high rush jab with a brief active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1355,11 +1383,20 @@
       "forwardForce": 1.75,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 20,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Demon Jab",
       "cancelable": false,
       "startupFrames": 16,
       "activeFrames": 5,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady high overdrive jab with a brief active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
+    },
+    "cmd:1+4": {
+      "label": "Green Talon Kick",
+      "description": "Slow mid talon kick with a tiny active hit and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     }
   },
   "effects": [],

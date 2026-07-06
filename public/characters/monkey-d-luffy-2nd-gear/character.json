@@ -389,7 +389,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Monkey D. Luffy (2nd Gear) Left Check",
+      "label": "Jet Pistol",
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 2,
@@ -426,11 +426,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high 2nd Gear jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Monkey D. Luffy (2nd Gear) Left Kick",
+      "label": "Low Jet Stamp",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -467,11 +468,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low rubber kick with very long active coverage and quick recovery."
     },
     {
       "id": "heavy",
-      "label": "Monkey D. Luffy (2nd Gear) Right Check",
+      "label": "Jet Body Blow",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -508,7 +510,8 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid body blow with a short active window and steady recovery."
     },
     {
       "id": "special",
@@ -593,10 +596,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "Monkey D. Luffy (2nd Gear) Left Check",
+      "label": "Jet Pistol",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high 2nd Gear jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -612,10 +616,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "Monkey D. Luffy (2nd Gear) Right Check",
+      "label": "Jet Body Blow",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid body blow with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 5,
@@ -631,8 +636,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Monkey D. Luffy (2nd Gear) Left Kick",
-      "hitLevel": "low"
+      "label": "Low Jet Stamp",
+      "hitLevel": "low",
+      "description": "Fast low rubber kick with very long active coverage and quick recovery.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 19,
@@ -665,9 +672,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 26,
-      "label": "f+1 Frame Link",
+      "label": "Jet Bazooka Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid advancing rush with very long active twin-fist pressure.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -687,9 +696,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Jet Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 0,
@@ -705,9 +716,11 @@
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Monkey D. Luffy (2nd Gear) Burst",
+      "label": "Jet Burst Stamp",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with very long active rubber-body pressure.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 7,
@@ -723,8 +736,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Monkey D. Luffy (2nd Gear) Rising Strike",
-      "hitLevel": "mid"
+      "label": "Jet Rising Stamp",
+      "hitLevel": "mid",
+      "description": "Fast mid rising stamp with long active rubber-leg coverage and steady recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 9,
@@ -740,9 +755,11 @@
       "forwardForce": 1.56,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Jet Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching rush with extended active steam-trail pressure.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -759,9 +776,11 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Jet Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -777,9 +796,11 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "1+2 Frame Link",
+      "label": "Jet Gatling",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid rush with a long active flurry of stretched punches.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 11,
@@ -796,8 +817,10 @@
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 39,
       "launchHeight": 2.2,
-      "label": "Monkey D. Luffy (2nd Gear) Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Jet Launcher",
+      "hitLevel": "mid",
+      "description": "Quick mid launcher with extended active pressure and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 0,
@@ -813,8 +836,10 @@
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Monkey D. Luffy (2nd Gear) Low Feint",
-      "hitLevel": "low"
+      "label": "Low Jet Feint",
+      "hitLevel": "low",
+      "description": "Fast low feint with very long active rubber-leg coverage.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -830,9 +855,11 @@
       "forwardForce": 2.09,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
-      "label": "Monkey D. Luffy (2nd Gear) Driving Kick",
+      "label": "Low Balloon Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown drive with extended balloon-body pressure.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -848,9 +875,11 @@
       "forwardForce": 3.99,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 24,
-      "label": "Monkey D. Luffy (2nd Gear) Power Crush",
+      "label": "Jet Giant Rifle",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid knockdown punch with extended giant-fist reach and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 3,
@@ -866,9 +895,11 @@
       "forwardForce": 3.07,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 23,
-      "label": "Monkey D. Luffy (2nd Gear) Aura Drive",
+      "label": "Jet Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with very long active 2nd Gear pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1342,11 +1373,14 @@
       "forwardForce": 1.54,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "f+2 Frame Link",
+      "label": "Forward Jet Punch",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 18,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast mid forward punch with extended active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1356,11 +1390,14 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Jet Pistol",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high ducking Pistol with a moderate active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1370,11 +1407,14 @@
       "forwardForce": 2.08,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "qcf+1 Frame Link",
+      "label": "Jet Rush Pistol",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high rush Pistol with a moderate active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1384,11 +1424,14 @@
       "forwardForce": 1.6,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Jet Punch",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 18,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Fast mid while-rising punch with extended active pressure and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1398,11 +1441,14 @@
       "forwardForce": 2.14,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Jet Pistol",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 8,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast high overdrive jab with a moderate active window and quick recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

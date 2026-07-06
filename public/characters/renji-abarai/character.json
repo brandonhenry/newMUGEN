@@ -401,7 +401,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Renji Abarai Left Check",
+      "label": "Quick Zabimaru Swipe",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -438,11 +438,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high blade swipe with a tiny active window and quick guarded recovery."
     },
     {
       "id": "kick",
-      "label": "Renji Abarai Left Kick",
+      "label": "Low Zabimaru Sweep",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -479,11 +480,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Instant low sweep with very long active blade pressure across the floor."
     },
     {
       "id": "heavy",
-      "label": "Renji Abarai Right Check",
+      "label": "Zabimaru Body Slash",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -520,11 +522,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid sword slash with a brief active cut and steady recovery."
     },
     {
       "id": "special",
-      "label": "Renji Abarai Right Kick",
+      "label": "Zabimaru Driving Cut",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -561,7 +564,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid driving slash with very long active blade travel and quick finish."
     }
   ],
   "hurtboxes": [
@@ -605,10 +609,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "Renji Abarai Left Check",
+      "label": "Quick Zabimaru Swipe",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high blade swipe with a tiny active window and quick guarded recovery."
     },
     "jabright": {
       "startupFrames": 11,
@@ -624,10 +629,11 @@
       "forwardForce": 0.81,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Renji Abarai Right Check",
+      "label": "Zabimaru Body Slash",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid sword slash with a brief active cut and steady recovery."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -643,8 +649,10 @@
       "forwardForce": 0.79,
       "forwardForceStartFrame": 34,
       "forwardForceEndFrame": 45,
-      "label": "Renji Abarai Left Kick",
-      "hitLevel": "low"
+      "label": "Low Zabimaru Sweep",
+      "hitLevel": "low",
+      "description": "Instant low sweep with very long active blade pressure across the floor.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 5,
@@ -660,8 +668,10 @@
       "forwardForce": 1.07,
       "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 46,
-      "label": "Renji Abarai Right Kick",
-      "hitLevel": "mid"
+      "label": "Zabimaru Driving Cut",
+      "hitLevel": "mid",
+      "description": "Fast mid driving slash with very long active blade travel and quick finish.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -677,9 +687,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "label": "f+1 Frame Link",
+      "label": "Forward Zabimaru Slash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward slash with a brief active blade arc and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -699,9 +711,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Blade Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid diagonal launcher with a tiny active cut and high recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -719,11 +733,13 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "Renji Abarai Burst",
+      "label": "Zabimaru Tornado Burst",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Fast jumping mid burst with huge active time that works as a tornado knockdown.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -739,8 +755,10 @@
       "forwardForce": 1.46,
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 42,
-      "label": "Renji Abarai Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Zabimaru Rush",
+      "hitLevel": "mid",
+      "description": "Instant mid rising rush with very long active blade travel and quick finish.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -756,9 +774,11 @@
       "forwardForce": 1.74,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Blade Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Instant mid crouch rush with long active blade pressure and short recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -774,10 +794,12 @@
       "forwardForce": 1.59,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.0,
+      "label": "Crouch Zabimaru Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid crouch launcher with a tiny active window and high recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 33,
@@ -793,9 +815,11 @@
       "forwardForce": 2.18,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 7,
-      "label": "1+2 Frame Link",
+      "label": "Heavy Zabimaru Cleave",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid cleave with a long active sword arc and punishable windup.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -812,8 +836,10 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 15,
       "launchHeight": 2.2,
-      "label": "Renji Abarai Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Zabimaru Rising Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher that lifts through a rising sword arc and recovers quickly.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -829,8 +855,10 @@
       "forwardForce": 1.21,
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
-      "label": "Renji Abarai Low Feint",
-      "hitLevel": "low"
+      "label": "Low Zabimaru Feint",
+      "hitLevel": "low",
+      "description": "Steady low blade feint with a long active sweep and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -846,9 +874,11 @@
       "forwardForce": 1.73,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 48,
-      "label": "Renji Abarai Driving Kick",
+      "label": "Zabimaru Driving Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown sweep with long active reach and a fast finish.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 14,
@@ -864,9 +894,11 @@
       "forwardForce": 2.93,
       "forwardForceStartFrame": 42,
       "forwardForceEndFrame": 56,
-      "label": "Renji Abarai Power Crush",
+      "label": "Zabimaru Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown crush with a very long active sword flourish.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -882,9 +914,11 @@
       "forwardForce": 2.82,
       "forwardForceStartFrame": 30,
       "forwardForceEndFrame": 44,
-      "label": "Renji Abarai Aura Drive",
+      "label": "Zabimaru Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Instant special knockdown drive with very long active snake-blade pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1362,7 +1396,10 @@
       "knockdown": true,
       "startupFrames": 4,
       "activeFrames": 4,
-      "recoveryFrames": 35
+      "recoveryFrames": 35,
+      "label": "Low Zabimaru Knockdown",
+      "description": "Fast low knockdown slash with a brief hit window and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1372,11 +1409,14 @@
       "forwardForce": 1.29,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "f+2 Frame Link",
+      "label": "Forward Blade Check",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 8,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Steady mid forward check with a modest active sword poke and quick finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1386,11 +1426,14 @@
       "forwardForce": 1.4,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Blade Jab",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 5,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Fast high ducking slash with a short active bite and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1400,11 +1443,14 @@
       "forwardForce": 2.26,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "qcf+1 Frame Link",
+      "label": "Zabimaru Quick Slash",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 5,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Fast high quarter-circle slash with a short active window and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1414,11 +1460,14 @@
       "forwardForce": 1.35,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Blade Check",
       "cancelable": false,
       "startupFrames": 15,
       "activeFrames": 8,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Steady mid while-rising sword check with a modest active window.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1428,11 +1477,14 @@
       "forwardForce": 2.32,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Blade Jab",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 5,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Fast high overdrive slash with a short active bite and steady recovery.",
+      "tracking": "medium",
+      "hitLevel": "high"
     }
   },
   "effects": [],

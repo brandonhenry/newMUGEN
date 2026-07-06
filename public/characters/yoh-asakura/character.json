@@ -360,7 +360,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Yoh Asakura Left Check",
+      "label": "Quick Harusame Slash",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -397,11 +397,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high sword check with long active coverage at close range."
     },
     {
       "id": "kick",
-      "label": "Yoh Asakura Left Kick",
+      "label": "Low Spirit Slide",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -438,11 +439,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast low sliding sword kick with long active time along the ground."
     },
     {
       "id": "heavy",
-      "label": "Yoh Asakura Right Check",
+      "label": "Amidamaru Body Cut",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -479,11 +481,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid sword thrust with a short active window for close confirms."
     },
     {
       "id": "special",
-      "label": "Yoh Asakura Right Kick",
+      "label": "Heavy Spirit Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -520,7 +523,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Fast mid kick sequence with very long active coverage before a quick reset."
     }
   ],
   "hurtboxes": [
@@ -564,8 +568,10 @@
       "forwardForce": 0.35,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
-      "label": "Yoh Asakura Left Check",
-      "hitLevel": "high"
+      "label": "Quick Harusame Slash",
+      "hitLevel": "high",
+      "description": "Fast high sword check with long active coverage at close range.",
+      "tracking": "medium"
     },
     "jabright": {
       "startupFrames": 11,
@@ -581,10 +587,11 @@
       "forwardForce": 0.76,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "Yoh Asakura Right Check",
+      "label": "Amidamaru Body Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid sword thrust with a short active window for close confirms."
     },
     "kickleft": {
       "startupFrames": 0,
@@ -600,8 +607,10 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Yoh Asakura Left Kick",
-      "hitLevel": "low"
+      "label": "Low Spirit Slide",
+      "hitLevel": "low",
+      "description": "Fast low sliding sword kick with long active time along the ground.",
+      "tracking": "medium"
     },
     "kickright": {
       "startupFrames": 0,
@@ -617,8 +626,10 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "Yoh Asakura Right Kick",
-      "hitLevel": "mid"
+      "label": "Heavy Spirit Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid kick sequence with very long active coverage before a quick reset.",
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 7,
@@ -634,8 +645,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
-      "label": "Yoh Asakura Rush",
-      "hitLevel": "mid"
+      "label": "Amidamaru Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid sword rush with very long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -655,9 +668,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Spirit Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active window and high commitment.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -673,9 +688,11 @@
       "forwardForce": 3.6,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
-      "label": "Yoh Asakura Burst",
+      "label": "Oversoul Burst Ender",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid spirit burst with long active time that knocks down at the end.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -691,8 +708,10 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Yoh Asakura Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Spirit Strike",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with very long active coverage and quick reset.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 6,
@@ -708,8 +727,10 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 15,
-      "label": "Yoh Asakura Crouch Jab",
-      "hitLevel": "mid"
+      "label": "Crouch Harusame Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid crouch rush with long active sword pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 19,
@@ -726,9 +747,11 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Amidamaru Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with long active spirit-sword coverage from crouch.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -744,11 +767,13 @@
       "forwardForce": 2.12,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "1+2 Frame Link",
+      "label": "Kneeling Harusame Ender",
       "hitLevel": "mid",
       "knockdown": true,
       "endsInCrouch": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid sword cut that knocks down and finishes in a crouched stance.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -765,8 +790,10 @@
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 24,
       "launchHeight": 2.2,
-      "label": "Yoh Asakura Cross Launcher",
-      "hitLevel": "mid"
+      "label": "Amidamaru Cross Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid cross slash launcher with long active sword coverage.",
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -782,8 +809,10 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 17,
-      "label": "Yoh Asakura Low Feint",
-      "hitLevel": "low"
+      "label": "Low Harusame Feint",
+      "hitLevel": "low",
+      "description": "Slow low sword feint with a moderate active window for clipping movement.",
+      "tracking": "medium"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -801,10 +830,12 @@
       "forwardForceEndFrame": 29,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Yoh Asakura Driving Kick",
+      "label": "Leaping Low Spirit Kick",
       "hitLevel": "low",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping kick that stays active before knocking the opponent down.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -820,9 +851,11 @@
       "forwardForce": 3.12,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
-      "label": "Yoh Asakura Power Crush",
+      "label": "Oversoul Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid spirit slash with knockdown force and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -838,9 +871,11 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 19,
-      "label": "Yoh Asakura Aura Drive",
+      "label": "Oversoul Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady special spirit rush with very long active time that knocks down.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1314,11 +1349,14 @@
       "forwardForce": 1.24,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "f+2 Frame Link",
+      "label": "Forward Harusame Cut",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 15,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Fast mid forward cut with steady active time and a compact finish.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1328,11 +1366,20 @@
       "forwardForce": 1.3,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Harusame Cut",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 15,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Fast mid while-standing cut with steady active time and controlled recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
+    },
+    "cmd:1+4": {
+      "label": "Spirit Crescent Kick",
+      "description": "Fast mid crescent kick and sword swing with long active coverage.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

@@ -1,0 +1,212 @@
+{
+  "character": "jotaro-kujo",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Jotaro Jab",
+      "description": "Fast high jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "reason": "Single compact standing punch frame."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Coat Sweep",
+      "description": "Slow low sweep with moderate active time and steady recovery.",
+      "hitLevel": "low",
+      "reason": "Low kick sequence with a sweeping leg path."
+    },
+    {
+      "key": "jabright",
+      "label": "Star Body Check",
+      "description": "Quick mid punch with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "reason": "Compact mid-height punch."
+    },
+    {
+      "key": "kickright",
+      "label": "Heavy Coat Kick",
+      "description": "Slow mid kick with steady active time and measured recovery.",
+      "hitLevel": "mid",
+      "reason": "Short heavy kick sequence."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Ora Guard Break",
+      "description": "Slow mid stance pressure with steady active time and quick recovery.",
+      "hitLevel": "mid",
+      "reason": "Long stance sequence reads as a deliberate pressure starter."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Star Platinum Launcher",
+      "description": "Slow mid launcher with long active coverage from a rising punch sequence.",
+      "hitLevel": "mid",
+      "reason": "Launcher data and upward punch motion."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Heavy Coat Kick",
+      "description": "Quick mid kick with steady active time and measured recovery.",
+      "hitLevel": "mid",
+      "reason": "Same heavy kick family as the right kick."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Coat Sweep",
+      "description": "Steady low sweep with a brief active window and heavy recovery.",
+      "hitLevel": "low",
+      "reason": "Low kick sequence."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Knockdown Kick",
+      "description": "Slow low knockdown kick with a short active window and high commitment.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "reason": "Low kick with knockdown data."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Star Knockdown Kick",
+      "description": "Slow mid knockdown kick with a brief active window and heavy recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "reason": "Committed mid kick with knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Star Flicker",
+      "description": "Fast mid crouch attack with long active coverage from Star Platinum frames.",
+      "hitLevel": "mid",
+      "reason": "Purple stand-like frames appear in this crouch move."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Ora Launcher",
+      "description": "Steady mid launcher with a short active window from a crouching punch.",
+      "hitLevel": "mid",
+      "reason": "Crouch-starting launcher data."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Instant Ora Check",
+      "description": "Fast high check with long active time from a compact single-frame poke.",
+      "hitLevel": "high",
+      "reason": "Single high attack frame with long active data."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Star Platinum Rush",
+      "description": "Slow special knockdown rush with very long active coverage and fast recovery.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "reason": "Special rush evokes a stand barrage and has knockdown data."
+    },
+    {
+      "key": "cmd:O+4",
+      "label": "Heavy Coat Kick",
+      "description": "Quick mid kick with steady active time and measured recovery.",
+      "hitLevel": "mid",
+      "reason": "Repeats the heavy kick sequence."
+    },
+    {
+      "key": "cmd:SS+3",
+      "label": "Sidestep Low Sweep",
+      "description": "Slow low sidestep sweep with steady active time and recovery.",
+      "hitLevel": "low",
+      "reason": "Sidestep command uses the low sweep sequence."
+    },
+    {
+      "key": "cmd:SS+4",
+      "label": "Sidestep Coat Kick",
+      "description": "Quick mid sidestep kick with steady active time and measured recovery.",
+      "hitLevel": "mid",
+      "reason": "Sidestep command uses the heavy kick sequence."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While Rising Ora",
+      "description": "Fast mid while-rising punch with a short active window and heavier recovery.",
+      "hitLevel": "mid",
+      "reason": "Rising transition into a mid punch."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Coat Kick",
+      "description": "Steady mid rising kick with a short active window and heavy recovery.",
+      "hitLevel": "mid",
+      "reason": "While-rising command uses a compact kick."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Instant Ora Check",
+      "description": "Fast high check with long active time and quick recovery.",
+      "hitLevel": "high",
+      "reason": "Same one-frame high check as O+1."
+    },
+    {
+      "key": "cmd:d+3",
+      "label": "Low Coat Sweep",
+      "description": "Slow low sweep with steady active time and recovery.",
+      "hitLevel": "low",
+      "reason": "Repeat low sweep action."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Forward Ora Launcher",
+      "description": "Slow mid launcher with a short active window and heavy recovery.",
+      "hitLevel": "mid",
+      "reason": "Forward-reaching launcher data."
+    },
+    {
+      "key": "cmd:d/f+3",
+      "label": "Forward Low Sweep",
+      "description": "Slow low sweep with steady active time and recovery.",
+      "hitLevel": "low",
+      "reason": "Forward-low command repeats the low sweep."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Jotaro Body Poke",
+      "description": "Slow mid body poke with a tiny active window and high commitment.",
+      "hitLevel": "mid",
+      "reason": "Single compact forward strike frame."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Ora Check",
+      "description": "Fast mid punch with a short active window and heavier recovery.",
+      "hitLevel": "mid",
+      "reason": "Forward command uses the mid punch sequence."
+    },
+    {
+      "key": "cmd:f+3",
+      "label": "Forward Low Sweep",
+      "description": "Slow low sweep with steady active time and recovery.",
+      "hitLevel": "low",
+      "reason": "Forward kick repeats the low sweep action."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Instant Ora Check",
+      "description": "Fast high check with long active time for close pressure.",
+      "hitLevel": "high",
+      "reason": "Quarter-circle punch repeats the high one-frame check."
+    },
+    {
+      "key": "cmd:qcf+3",
+      "label": "Low Ora Sweep",
+      "description": "Slow low sweep with steady active time and recovery.",
+      "hitLevel": "low",
+      "reason": "Quarter-circle kick repeats the low sweep action."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Star Knockdown Ender",
+      "description": "Slow mid knockdown ender with a brief active window and heavy recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "reason": "Committed mid kick ender with knockdown data."
+    }
+  ]
+}

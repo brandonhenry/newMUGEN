@@ -502,7 +502,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Kenshiro Left Check",
+      "label": "Quick Hokuto Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -539,11 +539,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high pressure-point jab with a tiny active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Kenshiro Left Kick",
+      "label": "Low Sweep Kick",
       "input": "kick",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -580,11 +581,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low sweep with moderate active time and a punishable recovery."
     },
     {
       "id": "heavy",
-      "label": "Kenshiro Right Check",
+      "label": "Hokuto Body Palm",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -621,11 +623,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid palm strike with a short active window and steady recovery."
     },
     {
       "id": "special",
-      "label": "Kenshiro Right Kick",
+      "label": "Heavy Roundhouse",
       "input": "special",
       "startupFrames": 20,
       "activeFrames": 4,
@@ -662,7 +665,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "description": "Slow mid roundhouse with moderate active time and committed recovery."
     }
   ],
   "hurtboxes": [
@@ -706,10 +710,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "Kenshiro Left Check",
+      "label": "Quick Hokuto Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high pressure-point jab with a tiny active window for close checks."
     },
     "jabright": {
       "startupFrames": 11,
@@ -725,10 +730,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "Kenshiro Right Check",
+      "label": "Hokuto Body Palm",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid palm strike with a short active window and steady recovery."
     },
     "kickleft": {
       "startupFrames": 25,
@@ -744,10 +750,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "Kenshiro Left Kick",
+      "label": "Low Sweep Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low sweep with moderate active time and a punishable recovery."
     },
     "kickright": {
       "startupFrames": 24,
@@ -763,10 +770,11 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
-      "label": "Kenshiro Right Kick",
+      "label": "Heavy Roundhouse",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid roundhouse with moderate active time and committed recovery."
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -782,9 +790,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 13,
-      "label": "f+1 Frame Link",
+      "label": "Hokuto Hundred Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid rush with long active speed-line pressure and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -804,9 +814,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Point Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active pop-up and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -824,12 +836,14 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "qcf+4 Frame Link",
+      "label": "Hokuto Tornado Ender",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado ender that knocks down after a brief active hit.",
+      "tracking": "weakRight"
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -847,10 +861,12 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "WS+4 Frame Link",
+      "label": "While-Rising Jump Kick",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid jumping kick with a tiny active window and heavy recovery.",
+      "tracking": "weakRight"
     },
     "cmd:FC+1": {
       "startupFrames": 9,
@@ -866,9 +882,11 @@
       "forwardForce": 1.65,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 10,
-      "label": "FC+1 Frame Link",
+      "label": "Crouching Crescent Palm",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouching palm arc with a long active window and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -885,9 +903,11 @@
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 37,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Point Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a tiny active pop-up after a crouched start.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 21,
@@ -903,9 +923,11 @@
       "forwardForce": 2.12,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 21,
-      "label": "1+2 Frame Link",
+      "label": "Hokuto Arc Smash",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid arc smash with a long active swing and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -922,9 +944,11 @@
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 24,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Pressure-Point Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that taps forward into a long active pop-up.",
+      "tracking": "weakLeft"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -940,9 +964,11 @@
       "forwardForce": 1.65,
       "forwardForceStartFrame": 31,
       "forwardForceEndFrame": 34,
-      "label": "2+3 Frame Link",
+      "label": "Low Shifting Kick",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low shifting kick with moderate active time and quick recovery.",
+      "tracking": "weakLeft"
     },
     "cmd:2+4": {
       "startupFrames": 23,
@@ -958,10 +984,12 @@
       "forwardForce": 2.32,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 16,
-      "label": "2+4 Frame Link",
+      "label": "Low Knockdown Rush",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low knockdown rush with moderate active time and short recovery.",
+      "tracking": "weakRight"
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -979,12 +1007,13 @@
       "forwardForceEndFrame": 8,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "3+4 Frame Link",
+      "label": "Homing Hokuto Drop",
       "hitLevel": "mid",
       "tracking": "homing",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping knockdown that homes in before the falling strike."
     },
     "cmd:O+2": {
       "startupFrames": 0,
@@ -1000,9 +1029,11 @@
       "forwardForce": 3.12,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 47,
-      "label": "Kenshiro Aura Drive",
+      "label": "Hokuto Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown drive with very long active pressure and punishable recovery.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1478,13 +1509,16 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "1+4 Frame Link",
+      "label": "Tornado Heel",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 10,
-      "recoveryFrames": 25
+      "recoveryFrames": 25,
+      "description": "Steady mid jumping tornado kick with a long active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1494,11 +1528,14 @@
       "forwardForce": 1.59,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "f+2 Frame Link",
+      "label": "Forward Body Palm",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Steady mid forward palm with a short active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1508,11 +1545,14 @@
       "forwardForce": 2.48,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Kick",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 18,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Fast low advancing kick with extended active frames and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1522,11 +1562,14 @@
       "forwardForce": 1.31,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Hokuto Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 11,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "description": "Fast high ducking jab with a long active check and steady recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1536,11 +1579,14 @@
       "forwardForce": 2.2,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "d+3 Frame Link",
+      "label": "Low Pressure Kick",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 18,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Fast low kick with extended active frames and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1550,11 +1596,14 @@
       "forwardForce": 2.48,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Low Kick",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 18,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Fast low diagonal kick with extended active frames and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1564,11 +1613,14 @@
       "forwardForce": 2.17,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "qcf+1 Frame Link",
+      "label": "Hokuto Rush Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 11,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "description": "Fast high rush jab with a long active check and steady recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1578,11 +1630,14 @@
       "forwardForce": 3.06,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "qcf+3 Frame Link",
+      "label": "Hokuto Low Rush",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 24,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Fast low rush kick with long active coverage and committed recovery.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1592,11 +1647,14 @@
       "forwardForce": 1.65,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Body Palm",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Steady mid while-rising palm with a short active window and quick recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1606,11 +1664,14 @@
       "forwardForce": 2.54,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Sweep",
       "cancelable": false,
       "startupFrames": 6,
       "activeFrames": 18,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Fast low sidestep sweep with extended active frames and heavy recovery.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:SS+4": {
       "onBlockFrames": -11,
@@ -1622,12 +1683,15 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Jump Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 10,
-      "recoveryFrames": 25
+      "recoveryFrames": 25,
+      "description": "Steady mid sidestep jump kick with a long active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1637,11 +1701,14 @@
       "forwardForce": 2.23,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Hokuto Jab",
       "cancelable": false,
       "startupFrames": 8,
       "activeFrames": 11,
-      "recoveryFrames": 11
+      "recoveryFrames": 11,
+      "description": "Fast high overdrive jab with a long active check and steady recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:O+4": {
       "onBlockFrames": -11,
@@ -1653,13 +1720,16 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "O+4 Frame Link",
+      "label": "Overdrive Tornado Heel",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 10,
-      "recoveryFrames": 25
+      "recoveryFrames": 25,
+      "description": "Steady mid jumping tornado kick with a long active window and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "weakRight"
     }
   },
   "effects": [],

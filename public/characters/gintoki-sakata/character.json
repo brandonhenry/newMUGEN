@@ -464,7 +464,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Gintoki Sakata Left Check",
+      "label": "Quick Toyako Jab",
       "input": "jab",
       "startupFrames": 11,
       "activeFrames": 3,
@@ -501,11 +501,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high bokuto jab with a short active window for close checks."
     },
     {
       "id": "kick",
-      "label": "Gintoki Sakata Left Kick",
+      "label": "Low Lazy Kick",
       "input": "kick",
       "startupFrames": 17,
       "activeFrames": 3,
@@ -542,11 +543,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast low kick with steady active time from Gintoki's short step-in sweep."
     },
     {
       "id": "heavy",
-      "label": "Gintoki Sakata Right Check",
+      "label": "Toyako Backhand",
       "input": "heavy",
       "startupFrames": 14,
       "activeFrames": 3,
@@ -583,11 +585,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid bokuto swing with a short active window after a body turn."
     },
     {
       "id": "special",
-      "label": "Gintoki Sakata Right Kick",
+      "label": "Heavy Toyako Thrust",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -624,7 +627,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick mid thrust with long active coverage from Gintoki's extended bokuto."
     }
   ],
   "hurtboxes": [
@@ -668,10 +672,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "Gintoki Sakata Left Check",
+      "label": "Quick Toyako Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high bokuto jab with a short active window for close checks."
     },
     "jabright": {
       "startupFrames": 13,
@@ -687,10 +692,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 6,
-      "label": "Gintoki Sakata Right Check",
+      "label": "Toyako Backhand",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid bokuto swing with a short active window after a body turn."
     },
     "kickleft": {
       "startupFrames": 9,
@@ -706,10 +712,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "Gintoki Sakata Left Kick",
+      "label": "Low Lazy Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast low kick with steady active time from Gintoki's short step-in sweep."
     },
     "kickright": {
       "startupFrames": 14,
@@ -725,8 +732,9 @@
       "forwardForce": 1.08,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 46,
-      "label": "Gintoki Sakata Right Kick",
-      "hitLevel": "mid"
+      "label": "Heavy Toyako Thrust",
+      "hitLevel": "mid",
+      "description": "Quick mid thrust with long active coverage from Gintoki's extended bokuto."
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -742,9 +750,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 17,
-      "label": "f+1 Frame Link",
+      "label": "Toyako Body Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid body poke with a short active window and high commitment."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -764,9 +773,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Toyako Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that lifts with a forward wooden-sword cut."
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -782,9 +792,10 @@
       "forwardForce": 3.52,
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 52,
-      "label": "Gintoki Sakata Burst",
+      "label": "Shiroyasha Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown burst with long active coverage from a rushing sword finisher."
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -800,8 +811,9 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 44,
-      "label": "Gintoki Sakata Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Toyako Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid rising strike with long active coverage from a low sword rush."
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -817,9 +829,10 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 15,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Toyako Drive",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid crouch attack with long active time from a low-to-high sword drive."
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -836,9 +849,10 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 8,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Toyako Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher with a short active window from a crouching bokuto lift."
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -856,11 +870,12 @@
       "forwardForceEndFrame": 29,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "1+2 Frame Link",
+      "label": "Lazy Samurai Spin",
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid tornado slash that hops into a spinning bokuto attack."
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -879,10 +894,11 @@
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Toyako Rising Cut",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid launcher with long active time from a jumping rising sword cut."
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -898,9 +914,10 @@
       "forwardForce": 1.78,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 33,
-      "label": "2+3 Frame Link",
+      "label": "Low Wooden Sweep",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady low kick with a short active window and heavier recovery."
     },
     "cmd:2+4": {
       "startupFrames": 16,
@@ -916,9 +933,10 @@
       "forwardForce": 1.74,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 48,
-      "label": "Gintoki Sakata Driving Kick",
+      "label": "Low Toyako Slide",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Steady low knockdown slide with long active coverage as Gintoki drops forward."
     },
     "cmd:3+4": {
       "startupFrames": 6,
@@ -934,9 +952,10 @@
       "forwardForce": 2.94,
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 56,
-      "label": "Gintoki Sakata Power Crush",
+      "label": "Toyako Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid knockdown rush with very long active coverage from repeated bokuto swings."
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -952,9 +971,10 @@
       "forwardForce": 3.74,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
-      "label": "Gintoki Sakata Aura Drive",
+      "label": "Shiroyasha Rush",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown rush with very long active coverage from chained sword cuts."
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1428,11 +1448,13 @@
       "forwardForce": 2.21,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 6,
-      "label": "f+2 Frame Link",
+      "label": "Forward Toyako Cut",
       "cancelable": false,
       "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "description": "Slow mid sword cut with a short active window and quick recovery.",
+      "hitLevel": "mid"
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1442,11 +1464,13 @@
       "forwardForce": 1.84,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "f+3 Frame Link",
+      "label": "Forward Low Kick",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 11,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Slow low kick with moderate active time from a grounded step.",
+      "hitLevel": "low"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1456,11 +1480,13 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "d+1 Frame Link",
+      "label": "Quick Toyako Check",
       "cancelable": false,
       "startupFrames": 19,
       "activeFrames": 4,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Slow high bokuto check with brief active frames and fast recovery.",
+      "hitLevel": "high"
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1470,11 +1496,13 @@
       "forwardForce": 1.56,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "d+3 Frame Link",
+      "label": "Low Lazy Kick",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 11,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Slow low kick with moderate active time from a short grounded step.",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1484,11 +1512,13 @@
       "forwardForce": 1.84,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "d/f+3 Frame Link",
+      "label": "Low Forward Kick",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 11,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Slow low kick with moderate active time and steady recovery.",
+      "hitLevel": "low"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1498,11 +1528,13 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "qcf+1 Frame Link",
+      "label": "Toyako Quick Check",
       "cancelable": false,
       "startupFrames": 19,
       "activeFrames": 4,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Slow high sword check with brief active frames for a cautious poke.",
+      "hitLevel": "high"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1512,11 +1544,13 @@
       "forwardForce": 2.42,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "qcf+3 Frame Link",
+      "label": "Low Sugar Kick",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 11,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Slow low kick with moderate active time and simple grounded recovery.",
+      "hitLevel": "low"
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1526,11 +1560,13 @@
       "forwardForce": 2.27,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 6,
-      "label": "WS+2 Frame Link",
+      "label": "While Rising Toyako",
       "cancelable": false,
       "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 13
+      "recoveryFrames": 13,
+      "description": "Slow mid while-rising sword cut with a short active window.",
+      "hitLevel": "mid"
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1540,11 +1576,13 @@
       "forwardForce": 1.9,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 31,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Kick",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 11,
-      "recoveryFrames": 10
+      "recoveryFrames": 10,
+      "description": "Slow low sidestep kick with moderate active time and measured recovery.",
+      "hitLevel": "low"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1554,11 +1592,18 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
-      "label": "O+1 Frame Link",
+      "label": "Quick Toyako Check",
       "cancelable": false,
       "startupFrames": 19,
       "activeFrames": 4,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Slow high sword check with brief active frames and quick recovery.",
+      "hitLevel": "high"
+    },
+    "cmd:1+4": {
+      "label": "Toyako Step Thrust",
+      "description": "Quick mid thrust that steps in and keeps the bokuto extended.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

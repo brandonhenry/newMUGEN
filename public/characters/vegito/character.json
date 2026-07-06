@@ -454,7 +454,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Vegito Left Check",
+      "label": "Quick Fusion Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -491,11 +491,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick high jab with a long active check that keeps close pressure moving."
     },
     {
       "id": "kick",
-      "label": "Vegito Left Kick",
+      "label": "Low Fusion Sweep",
       "input": "kick",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -532,11 +533,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low sliding kick that reaches the shin line with weak left-side coverage."
     },
     {
       "id": "heavy",
-      "label": "Vegito Right Check",
+      "label": "Fusion Body Blow",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -573,11 +575,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid punch with a short active window for checking step-ins."
     },
     {
       "id": "special",
-      "label": "Vegito Right Kick",
+      "label": "Heavy Fusion Kick",
       "input": "special",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -614,7 +617,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "description": "Slow mid kick with a sweeping leg arc and enough recovery to feel committed."
     }
   ],
   "hurtboxes": [
@@ -658,8 +662,10 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "Vegito Left Check",
-      "hitLevel": "high"
+      "label": "Quick Fusion Jab",
+      "hitLevel": "high",
+      "description": "Quick high jab with a long active check that keeps close pressure moving.",
+      "tracking": "medium"
     },
     "jabright": {
       "startupFrames": 11,
@@ -675,10 +681,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "Vegito Right Check",
+      "label": "Fusion Body Blow",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid punch with a short active window for checking step-ins."
     },
     "kickleft": {
       "startupFrames": 25,
@@ -694,10 +701,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 42,
-      "label": "Vegito Left Kick",
+      "label": "Low Fusion Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low sliding kick that reaches the shin line with weak left-side coverage."
     },
     "kickright": {
       "startupFrames": 24,
@@ -713,10 +721,11 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 16,
-      "label": "Vegito Right Kick",
+      "label": "Heavy Fusion Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid kick with a sweeping leg arc and enough recovery to feel committed."
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -732,8 +741,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 34,
-      "label": "Vegito Rush",
-      "hitLevel": "mid"
+      "label": "Fusion Rushdown",
+      "hitLevel": "mid",
+      "description": "Fast mid rush with very long active time and quick recovery on the finish.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -753,9 +764,11 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Diagonal Fusion Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active window and high commitment.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -773,12 +786,14 @@
       "forwardForceEndFrame": 18,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "qcf+4 Frame Link",
+      "label": "Final Sword Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid sword tornado with a brief hit window that knocks down after the jump.",
+      "tracking": "weakRight"
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -796,11 +811,13 @@
       "forwardForceEndFrame": 13,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "WS+4 Frame Link",
+      "label": "Rising Sword Tornado",
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid while-standing tornado with a short active hit after the jump.",
+      "tracking": "weakRight"
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -816,8 +833,10 @@
       "forwardForce": 1.07,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 21,
-      "label": "Vegito Crouch Jab",
-      "hitLevel": "mid"
+      "label": "Crouch Fusion Flurry",
+      "hitLevel": "mid",
+      "description": "Fast mid crouch flurry with very long active time and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 6,
@@ -834,9 +853,11 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
       "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "label": "Crouch Spirit Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Fast mid launcher that erupts with a blue sword pillar before recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -852,9 +873,11 @@
       "forwardForce": 1.68,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "1+2 Frame Link",
+      "label": "Fusion Cross Strike",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid two-hand strike with a brief active window after the step-in.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -871,9 +894,11 @@
       "forwardForceStartFrame": 39,
       "forwardForceEndFrame": 43,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Rising Fusion Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid launcher that pops upward from a sliding kick sequence.",
+      "tracking": "weakLeft"
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -889,9 +914,11 @@
       "forwardForce": 1.28,
       "forwardForceStartFrame": 22,
       "forwardForceEndFrame": 28,
-      "label": "2+3 Frame Link",
+      "label": "Low Fusion Feint",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low step-in kick with a moderate active window for clipping grounded movement.",
+      "tracking": "weakLeft"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -909,12 +936,14 @@
       "forwardForceEndFrame": 38,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "2+4 Frame Link",
+      "label": "Low Sword Tornado",
       "hitLevel": "low",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low airborne tornado that flips through the legs and knocks down on hit.",
+      "tracking": "weakRight"
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -932,12 +961,14 @@
       "forwardForceEndFrame": 20,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "3+4 Frame Link",
+      "label": "Spirit Sword Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid sword tornado with knockdown power after the airborne spin.",
+      "tracking": "weakRight"
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -953,9 +984,11 @@
       "forwardForce": 3.12,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 35,
-      "label": "Vegito Aura Drive",
+      "label": "Final Kamehameha Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special rush with very long active time that drives forward into a knockdown.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1431,13 +1464,16 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "1+4 Frame Link",
+      "label": "Vegito Sword Tornado",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 11,
       "activeFrames": 17,
-      "recoveryFrames": 21
+      "recoveryFrames": 21,
+      "description": "Quick mid sword-spin tornado that hops forward as a juggle extender.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1447,11 +1483,14 @@
       "forwardForce": 1.59,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "f+2 Frame Link",
+      "label": "Forward Fusion Strike",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid advancing strike with steady active time and compact recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1463,12 +1502,15 @@
       "forwardForceEndFrame": 42,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Hop Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 27,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady low hop kick with long active time after the forward step.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1480,12 +1522,15 @@
       "forwardForceEndFrame": 42,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
-      "label": "d+3 Frame Link",
+      "label": "Ducking Low Hop Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 27,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady low hop kick with long active time from a ducking approach.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1497,12 +1542,15 @@
       "forwardForceEndFrame": 42,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Low Hop Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 27,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady low hop kick with long active time from a forward diagonal entry.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1514,12 +1562,15 @@
       "forwardForceEndFrame": 42,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "qcf+3 Frame Link",
+      "label": "Fusion Low Hop Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 27,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady low quarter-circle hop kick with long active time and left-side tracking.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1529,11 +1580,14 @@
       "forwardForce": 1.65,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
-      "label": "WS+2 Frame Link",
+      "label": "Rising Fusion Strike",
       "cancelable": false,
       "startupFrames": 12,
       "activeFrames": 12,
-      "recoveryFrames": 6
+      "recoveryFrames": 6,
+      "description": "Quick mid while-standing strike with steady active time and clean recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1545,12 +1599,15 @@
       "forwardForceEndFrame": 42,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Hop Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 16,
       "activeFrames": 27,
-      "recoveryFrames": 5
+      "recoveryFrames": 5,
+      "description": "Steady low hop kick with long active time after the sidestep entry.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1562,13 +1619,16 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Sword Tornado",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 11,
       "activeFrames": 17,
-      "recoveryFrames": 21
+      "recoveryFrames": 21,
+      "description": "Quick mid sidestep tornado that jumps into a spinning sword arc.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
@@ -1580,13 +1640,16 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
-      "label": "O+4 Frame Link",
+      "label": "Overdrive Sword Tornado",
       "tornado": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 11,
       "activeFrames": 17,
-      "recoveryFrames": 21
+      "recoveryFrames": 21,
+      "description": "Quick mid overdrive tornado that hops into a blue sword spin for juggle extension.",
+      "tracking": "weakRight",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

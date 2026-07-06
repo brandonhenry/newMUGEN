@@ -451,7 +451,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Sakura Haruno Left Check",
+      "label": "Quick Chakra Jab",
       "input": "jab",
       "startupFrames": 12,
       "activeFrames": 3,
@@ -488,11 +488,12 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fast high chakra jab with a short active window and heavy recovery."
     },
     {
       "id": "kick",
-      "label": "Sakura Haruno Left Kick",
+      "label": "Low Heel Sweep",
       "input": "kick",
       "startupFrames": 21,
       "activeFrames": 4,
@@ -529,7 +530,8 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low heel sweep with a long active arc and weak left tracking."
     },
     {
       "id": "heavy",
@@ -655,10 +657,11 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
-      "label": "Sakura Haruno Left Check",
+      "label": "Quick Chakra Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Fast high chakra jab with a short active window and heavy recovery."
     },
     "jabright": {
       "startupFrames": 13,
@@ -691,10 +694,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 26,
-      "label": "Sakura Haruno Left Kick",
+      "label": "Low Heel Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low heel sweep with a long active arc and weak left tracking."
     },
     "kickright": {
       "startupFrames": 19,
@@ -727,9 +731,11 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 31,
-      "label": "f+1 Frame Link",
+      "label": "Forward Chakra Punch",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid forward punch with a tiny active hit and heavy recovery.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -801,9 +807,11 @@
       "forwardForce": 2.19,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
-      "label": "FC+1 Frame Link",
+      "label": "Crouch Chakra Hook",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Quick mid crouch hook with long active pressure and fast recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 21,
@@ -819,9 +827,11 @@
       "forwardForce": 1.46,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 35,
-      "launchHeight": 2,
-      "label": "Sakura Haruno Crouch Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.0,
+      "label": "Crouch Chakra Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid crouch launcher with long active lift and measured recovery.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -837,8 +847,10 @@
       "forwardForce": 2.27,
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 36,
-      "label": "Sakura Haruno Twin Assault",
-      "hitLevel": "mid"
+      "label": "Twin Chakra Assault",
+      "hitLevel": "mid",
+      "description": "Slow mid two-part assault with a long active follow-through and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -855,9 +867,11 @@
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 34,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Chakra Uppercut Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with long active lift and quick recovery.",
+      "tracking": "weakLeft"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -875,11 +889,13 @@
       "forwardForceEndFrame": 38,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
-      "label": "2+3 Frame Link",
+      "label": "Low Aerial Sweep",
       "hitLevel": "low",
       "endsInCrouch": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow low jumping sweep that ends crouched after a brief active hit.",
+      "tracking": "weakLeft"
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -895,9 +911,11 @@
       "forwardForce": 1.69,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 35,
-      "label": "Sakura Haruno Driving Kick",
+      "label": "Low Driving Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow low knockdown sweep with long active reach and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -913,9 +931,11 @@
       "forwardForce": 2.89,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 41,
-      "label": "Sakura Haruno Power Crush",
+      "label": "Monster Strength Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick mid knockdown crush with huge active pressure and short recovery.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -931,9 +951,11 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 44,
-      "label": "Sakura Haruno Aura Drive",
+      "label": "Chakra Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown drive with long active chakra pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1417,7 +1439,11 @@
       "juggleGravityScale": 0.52,
       "tornado": true,
       "jumpBeforeMove": true,
-      "activeFrames": 16
+      "activeFrames": 16,
+      "label": "Cherry Blossom Tornado",
+      "description": "Fast mid jumping tornado launcher with a long active spin and heavy recovery.",
+      "hitLevel": "mid",
+      "tracking": "medium"
     },
     "cmd:f+3": {
       "onBlockFrames": -7,
@@ -1429,12 +1455,15 @@
       "forwardForceEndFrame": 26,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Vault",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 36,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast low advancing vault with huge active leg pressure and weak left tracking.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1444,11 +1473,14 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
-      "label": "d+1 Frame Link",
+      "label": "Ducking Chakra Jab",
       "cancelable": false,
       "startupFrames": 21,
       "activeFrames": 3,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Slow high ducking jab with a tiny active hit and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:d+3": {
       "onBlockFrames": -7,
@@ -1460,12 +1492,15 @@
       "forwardForceEndFrame": 26,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
-      "label": "d+3 Frame Link",
+      "label": "Ducking Low Vault",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 36,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast low jumping vault with huge active leg pressure and weak left tracking.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -7,
@@ -1477,12 +1512,15 @@
       "forwardForceEndFrame": 26,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Low Vault",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 36,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast low diagonal vault with huge active leg pressure and weak left tracking.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1492,11 +1530,14 @@
       "forwardForce": 2.71,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
-      "label": "qcf+1 Frame Link",
+      "label": "Chakra Quick Jab",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady high quarter-circle jab with a modest active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -7,
@@ -1508,12 +1549,15 @@
       "forwardForceEndFrame": 26,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "qcf+3 Frame Link",
+      "label": "Cherry Blossom Low Vault",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 36,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast low quarter-circle vault with huge active leg pressure and weak left tracking.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:SS+3": {
       "onBlockFrames": -7,
@@ -1525,12 +1569,15 @@
       "forwardForceEndFrame": 26,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Vault",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 9,
       "activeFrames": 36,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Fast low jumping sidestep vault with huge active leg pressure.",
+      "hitLevel": "low",
+      "tracking": "weakLeft"
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1540,11 +1587,14 @@
       "forwardForce": 2.77,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 23,
-      "label": "O+1 Frame Link",
+      "label": "Overdrive Chakra Jab",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 8
+      "recoveryFrames": 8,
+      "description": "Steady high overdrive jab with a modest active window and quick recovery.",
+      "hitLevel": "high",
+      "tracking": "medium"
     }
   },
   "effects": [],

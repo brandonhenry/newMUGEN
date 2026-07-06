@@ -346,7 +346,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Anna Kyoyama Left Check",
+      "label": "Quick Itako Jab",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -383,11 +383,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick high jab that checks close range with a small forward hand strike."
     },
     {
       "id": "kick",
-      "label": "Anna Kyoyama Left Kick",
+      "label": "Low Sandal Kick",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -424,11 +425,12 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Quick low kick with a short active window for simple shin pressure."
     },
     {
       "id": "heavy",
-      "label": "Anna Kyoyama Right Check",
+      "label": "Rosary Arc",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -465,11 +467,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Quick mid bead swing that sweeps forward in a controlled arc."
     },
     {
       "id": "special",
-      "label": "Anna Kyoyama Right Kick",
+      "label": "Rising Bead Kick",
       "input": "special",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -506,7 +509,9 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Steady mid launcher that snaps upward after Anna steps in.",
+      "launchHeight": 2.1
     }
   ],
   "hurtboxes": [
@@ -550,8 +555,9 @@
       "forwardForce": 0.35,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 14,
-      "label": "Anna Kyoyama Left Check",
-      "hitLevel": "high"
+      "label": "Quick Itako Jab",
+      "hitLevel": "high",
+      "description": "Quick high jab that checks close range with a small forward hand strike."
     },
     "jabright": {
       "startupFrames": 11,
@@ -567,10 +573,11 @@
       "forwardForce": 0.85,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "Anna Kyoyama Right Check",
+      "label": "Rosary Arc",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Quick mid bead swing that sweeps forward in a controlled arc."
     },
     "kickleft": {
       "startupFrames": 11,
@@ -586,8 +593,9 @@
       "forwardForce": 0.55,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "label": "Anna Kyoyama Left Kick",
-      "hitLevel": "low"
+      "label": "Low Sandal Kick",
+      "hitLevel": "low",
+      "description": "Quick low kick with a short active window for simple shin pressure."
     },
     "kickright": {
       "startupFrames": 15,
@@ -603,12 +611,13 @@
       "forwardForce": 0.83,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "launchHeight": 2.2,
+      "launchHeight": 2.1,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "Anna Kyoyama Right Kick",
-      "hitLevel": "mid"
+      "label": "Rising Bead Kick",
+      "hitLevel": "mid",
+      "description": "Steady mid launcher that snaps upward after Anna steps in."
     },
     "cmd:f+1": {
       "startupFrames": 9,
@@ -624,8 +633,9 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 39,
-      "label": "Anna Kyoyama Rush",
-      "hitLevel": "mid"
+      "label": "Forward Bead Rush",
+      "hitLevel": "mid",
+      "description": "Fast mid advancing rush that drags Anna's rosary across space."
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -645,9 +655,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "d/f+2 Frame Link",
+      "label": "Forward Rosary Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that steps in behind Anna's sweeping bead arc."
     },
     "cmd:qcf+4": {
       "startupFrames": 6,
@@ -663,9 +674,11 @@
       "forwardForce": 4,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Burst",
+      "label": "Oni Hand Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast mid launcher knockdown that calls a huge guardian-hand strike forward.",
+      "launchHeight": 2.1
     },
     "cmd:WS+4": {
       "startupFrames": 6,
@@ -681,8 +694,11 @@
       "forwardForce": 1.22,
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
-      "label": "Anna Kyoyama Rising Strike",
-      "hitLevel": "mid"
+      "label": "Rising Spirit Kick",
+      "hitLevel": "mid",
+      "description": "Fast mid launcher that flips Anna upward before she crashes down.",
+      "jumpBeforeMove": true,
+      "launchHeight": 2.1
     },
     "cmd:FC+1": {
       "startupFrames": 0,
@@ -698,8 +714,10 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 15,
-      "label": "Anna Kyoyama Crouch Jab",
-      "hitLevel": "mid"
+      "label": "Crouching Bead Tap",
+      "hitLevel": "mid",
+      "description": "Fast mid crouch poke that snaps Anna's beads upward from close range.",
+      "endsInCrouch": true
     },
     "cmd:FC+2": {
       "startupFrames": 24,
@@ -715,10 +733,11 @@
       "forwardForce": 2.56,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 20,
-      "launchHeight": 2,
-      "label": "FC+2 Frame Link",
+      "launchHeight": 2.1,
+      "label": "Crouch Spirit Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher that rises out of crouch with a bead-led strike."
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -734,9 +753,10 @@
       "forwardForce": 2.35,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 19,
-      "label": "1+2 Frame Link",
+      "label": "Rosary Frame Strike",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Steady mid link that chains Anna's bead arc into a quick follow-up."
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -752,9 +772,11 @@
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
-      "launchHeight": 2.2,
-      "label": "Anna Kyoyama Cross Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.1,
+      "label": "Itako Flip Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid launcher that flips Anna through a rising bead-assisted kick.",
+      "jumpBeforeMove": true
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -770,8 +792,9 @@
       "forwardForce": 1.47,
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 34,
-      "label": "Anna Kyoyama Low Feint",
-      "hitLevel": "low"
+      "label": "Low Spirit Feint",
+      "hitLevel": "low",
+      "description": "Slow low feint that scatters spirit charms before a grounded step."
     },
     "cmd:2+4": {
       "startupFrames": 12,
@@ -787,9 +810,11 @@
       "forwardForce": 1.49,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 25,
-      "label": "Anna Kyoyama Driving Kick",
+      "label": "Bead Snare Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Quick low launcher knockdown that hooks forward with Anna's rosary.",
+      "launchHeight": 2.1
     },
     "cmd:3+4": {
       "startupFrames": 19,
@@ -805,9 +830,11 @@
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 28,
-      "label": "Anna Kyoyama Power Crush",
+      "label": "Rosary Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow mid launcher knockdown that drives Anna through a heavy bead swing.",
+      "launchHeight": 2.1
     },
     "cmd:O+2": {
       "startupFrames": 5,
@@ -823,9 +850,11 @@
       "forwardForce": 3.79,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 25,
-      "label": "Anna Kyoyama Aura Drive",
+      "label": "Itako Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Fast special knockdown that channels Anna's beads through a long active rush.",
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1299,11 +1328,13 @@
       "forwardForce": 2.26,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "f+2 Frame Link",
+      "label": "Forward Rosary Arc",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 4,
-      "recoveryFrames": 17
+      "recoveryFrames": 17,
+      "description": "Fast mid forward swing with a short active bead strike.",
+      "hitLevel": "mid"
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1313,11 +1344,13 @@
       "forwardForce": 2.32,
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 12,
-      "label": "WS+2 Frame Link",
+      "label": "While-Rising Rosary",
       "cancelable": false,
       "startupFrames": 9,
       "activeFrames": 4,
-      "recoveryFrames": 17
+      "recoveryFrames": 17,
+      "description": "Fast mid while-standing bead swing with a compact active window.",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

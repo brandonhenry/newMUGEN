@@ -447,7 +447,7 @@
   "moves": [
     {
       "id": "jab",
-      "label": "Sanji Vinsmoke Left Check",
+      "label": "Collier Spin Kick",
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
@@ -484,11 +484,12 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Instant high spin kick with long active pressure and quick recovery."
     },
     {
       "id": "kick",
-      "label": "Sanji Vinsmoke Left Kick",
+      "label": "Low Table Kick",
       "input": "kick",
       "startupFrames": 19,
       "activeFrames": 4,
@@ -525,11 +526,12 @@
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow low kick with a long active sweep and weak left tracking."
     },
     {
       "id": "heavy",
-      "label": "Sanji Vinsmoke Right Check",
+      "label": "Black Leg Rush",
       "input": "heavy",
       "startupFrames": 12,
       "activeFrames": 2,
@@ -566,11 +568,12 @@
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Instant mid kick rush with very long active pressure and quick recovery."
     },
     {
       "id": "special",
-      "label": "Sanji Vinsmoke Right Kick",
+      "label": "Heavy Chef Kick",
       "input": "special",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -607,7 +610,8 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "description": "Slow mid kick with a long active swing and measured recovery."
     }
   ],
   "hurtboxes": [
@@ -651,8 +655,10 @@
       "forwardForce": 0.44,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 14,
-      "label": "Sanji Vinsmoke Left Check",
-      "hitLevel": "high"
+      "label": "Collier Spin Kick",
+      "hitLevel": "high",
+      "description": "Instant high spin kick with long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "jabright": {
       "startupFrames": 0,
@@ -668,8 +674,10 @@
       "forwardForce": 0.57,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 17,
-      "label": "Sanji Vinsmoke Right Check",
-      "hitLevel": "mid"
+      "label": "Black Leg Rush",
+      "hitLevel": "mid",
+      "description": "Instant mid kick rush with very long active pressure and quick recovery.",
+      "tracking": "medium"
     },
     "kickleft": {
       "startupFrames": 25,
@@ -685,10 +693,11 @@
       "forwardForce": 0.95,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "Sanji Vinsmoke Left Kick",
+      "label": "Low Table Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow low kick with a long active sweep and weak left tracking."
     },
     "kickright": {
       "startupFrames": 22,
@@ -704,10 +713,11 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 14,
-      "label": "Sanji Vinsmoke Right Kick",
+      "label": "Heavy Chef Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "description": "Slow mid kick with a long active swing and measured recovery."
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -723,8 +733,10 @@
       "forwardForce": 0.6,
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 25,
-      "label": "Sanji Vinsmoke Rush",
-      "hitLevel": "mid"
+      "label": "Black Leg Rushdown",
+      "hitLevel": "mid",
+      "description": "Quick mid rushdown with very long active spin-kick pressure.",
+      "tracking": "medium"
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -744,8 +756,10 @@
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
-      "label": "Sanji Vinsmoke Launcher",
-      "hitLevel": "mid"
+      "label": "Diagonal Concasse Launcher",
+      "hitLevel": "mid",
+      "description": "Slow mid diagonal launcher with very long active kick pressure.",
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -763,11 +777,13 @@
       "forwardForceEndFrame": 18,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "qcf+4 Frame Link",
+      "label": "Diable Jambe Knockdown",
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping kick that knocks down after a tiny active hit.",
+      "tracking": "medium"
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -785,10 +801,12 @@
       "forwardForceEndFrame": 13,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "WS+4 Frame Link",
+      "label": "Rising Aerial Kick",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Steady mid while-rising jump kick with a tiny active hit and high recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 11,
@@ -804,8 +822,10 @@
       "forwardForce": 0.98,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 16,
-      "label": "Sanji Vinsmoke Crouch Jab",
-      "hitLevel": "mid"
+      "label": "Crouch Spin Kick",
+      "hitLevel": "mid",
+      "description": "Quick mid crouch spin with long active pressure and almost no recovery.",
+      "tracking": "medium"
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -821,9 +841,11 @@
       "forwardForce": 1.35,
       "forwardForceStartFrame": 21,
       "forwardForceEndFrame": 26,
-      "launchHeight": 2,
-      "label": "Sanji Vinsmoke Crouch Launcher",
-      "hitLevel": "mid"
+      "launchHeight": 2.0,
+      "label": "Crouch Concasse Launcher",
+      "hitLevel": "mid",
+      "description": "Steady mid crouch launcher with very long active kick pressure.",
+      "tracking": "medium"
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -841,10 +863,12 @@
       "forwardForceEndFrame": 16,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "Sanji Vinsmoke Twin Assault",
+      "label": "Mouton Shot Tornado",
       "hitLevel": "mid",
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Slow mid jumping tornado kick with long active spin pressure.",
+      "tracking": "medium"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -861,9 +885,11 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "launchHeight": 2.2,
-      "label": "1+3 Frame Link",
+      "label": "Concasse Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow mid launcher with a tiny active kick and heavy recovery.",
+      "tracking": "weakLeft"
     },
     "cmd:2+3": {
       "startupFrames": 29,
@@ -879,11 +905,13 @@
       "forwardForce": 2.27,
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 7,
-      "label": "2+3 Frame Link",
+      "label": "Low Table Tornado",
       "hitLevel": "low",
       "tornado": true,
       "endsInCrouch": true,
-      "cancelable": false
+      "cancelable": false,
+      "description": "Slow low tornado sweep that ends crouched after a long active spin.",
+      "tracking": "weakLeft"
     },
     "cmd:2+4": {
       "startupFrames": 12,
@@ -905,11 +933,13 @@
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
-      "label": "2+4 Frame Link",
+      "label": "Low Joue Launcher",
       "hitLevel": "low",
       "knockdown": false,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick low jumping launcher with a modest active kick and quick recovery.",
+      "tracking": "medium"
     },
     "cmd:3+4": {
       "startupFrames": 12,
@@ -927,12 +957,14 @@
       "forwardForceEndFrame": 5,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "3+4 Frame Link",
+      "label": "Diable Jambe Tornado",
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "description": "Quick mid jumping tornado kick that knocks down after a long active spin.",
+      "tracking": "medium"
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -948,9 +980,11 @@
       "forwardForce": 2.58,
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 34,
-      "label": "Sanji Vinsmoke Aura Drive",
+      "label": "Diable Jambe Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "description": "Slow special knockdown drive with huge active kicking pressure.",
+      "tracking": "medium"
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1426,13 +1460,16 @@
       "forwardForceEndFrame": 37,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
-      "label": "1+4 Frame Link",
+      "label": "Aerial Heel Drop",
       "endsInCrouch": true,
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 30,
       "activeFrames": 8,
-      "recoveryFrames": 7
+      "recoveryFrames": 7,
+      "description": "Slow mid jumping heel drop that ends crouched after a modest active hit.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:f+3": {
       "onBlockFrames": -6,
@@ -1442,11 +1479,14 @@
       "forwardForce": 2.38,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "f+3 Frame Link",
+      "label": "Advancing Low Sweep",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Steady low advancing sweep with a brief active kick and high recovery.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:d+3": {
       "onBlockFrames": -6,
@@ -1456,11 +1496,14 @@
       "forwardForce": 2.1,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "d+3 Frame Link",
+      "label": "Ducking Low Sweep",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Steady low ducking sweep with a brief active kick and high recovery.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:d/f+3": {
       "onBlockFrames": -6,
@@ -1470,11 +1513,14 @@
       "forwardForce": 2.38,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "d/f+3 Frame Link",
+      "label": "Diagonal Low Sweep",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Steady low diagonal sweep with a brief active kick and high recovery.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:qcf+3": {
       "onBlockFrames": -6,
@@ -1484,11 +1530,14 @@
       "forwardForce": 2.96,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "qcf+3 Frame Link",
+      "label": "Black Leg Low Sweep",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 12,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "description": "Steady low quarter-circle sweep with a longer active kick and heavy recovery.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:SS+3": {
       "onBlockFrames": -6,
@@ -1498,11 +1547,14 @@
       "forwardForce": 2.44,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 11,
-      "label": "SS+3 Frame Link",
+      "label": "Sidestep Low Sweep",
       "cancelable": false,
       "startupFrames": 18,
       "activeFrames": 6,
-      "recoveryFrames": 24
+      "recoveryFrames": 24,
+      "description": "Steady low sidestep sweep with a brief active kick and high recovery.",
+      "tracking": "weakLeft",
+      "hitLevel": "low"
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1514,12 +1566,15 @@
       "forwardForceEndFrame": 14,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "label": "SS+4 Frame Link",
+      "label": "Sidestep Aerial Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Steady mid sidestep jump kick with even timing and balanced recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1531,12 +1586,15 @@
       "forwardForceEndFrame": 14,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
-      "label": "O+4 Frame Link",
+      "label": "Overdrive Aerial Kick",
       "cancelable": false,
       "jumpBeforeMove": true,
       "startupFrames": 15,
       "activeFrames": 15,
-      "recoveryFrames": 15
+      "recoveryFrames": 15,
+      "description": "Steady mid overdrive jump kick with even timing and balanced recovery.",
+      "tracking": "medium",
+      "hitLevel": "mid"
     }
   },
   "effects": [],

@@ -1,0 +1,167 @@
+{
+  "character": "ichigo-kurosaki",
+  "moves": [
+    {
+      "key": "jableft",
+      "label": "Quick Zangetsu Jab",
+      "description": "Fast high sword jab with a tiny active window for close checks.",
+      "hitLevel": "high",
+      "reason": "Compact upper-body sword poke."
+    },
+    {
+      "key": "kickleft",
+      "label": "Low Soul Slash",
+      "description": "Fast low sliding slash with very long active coverage and steady recovery.",
+      "hitLevel": "low",
+      "reason": "Low forward sword slide with red trailing motion."
+    },
+    {
+      "key": "jabright",
+      "label": "Zangetsu Body Cut",
+      "description": "Quick mid sword cut with a short active window and steady recovery.",
+      "hitLevel": "mid",
+      "reason": "Mid-height sword slash."
+    },
+    {
+      "key": "kickright",
+      "label": "Flash Step Slash",
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "reason": "Forward-moving sword rush with black motion arcs."
+    },
+    {
+      "key": "cmd:1+2",
+      "label": "Getsuga Wheel",
+      "description": "Slow mid tornado slash that drags a long white arc across the screen.",
+      "hitLevel": "mid",
+      "tornado": true,
+      "reason": "Large rotating white slash arc supports tornado."
+    },
+    {
+      "key": "cmd:1+3",
+      "label": "Rising Zangetsu Cut",
+      "description": "Slow mid launcher with long active coverage from a rising sword cut.",
+      "hitLevel": "mid",
+      "reason": "Upward sword strike with launcher data."
+    },
+    {
+      "key": "cmd:1+4",
+      "label": "Flash Step Slash",
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "reason": "Same rushing sword slash family as the special button."
+    },
+    {
+      "key": "cmd:2+3",
+      "label": "Low Zangetsu Feint",
+      "description": "Quick low jumping feint with a short active window and fast recovery.",
+      "hitLevel": "low",
+      "jumpBeforeMove": true,
+      "reason": "Low feint has jump property and a low blade angle."
+    },
+    {
+      "key": "cmd:2+4",
+      "label": "Low Flash Step",
+      "description": "Steady low knockdown slash that jumps into a quick sliding cut.",
+      "hitLevel": "low",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "reason": "Low drive has knockdown and jump data."
+    },
+    {
+      "key": "cmd:3+4",
+      "label": "Soul Reaper Crush",
+      "description": "Fast mid knockdown strike with long active coverage and heavy recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "reason": "Heavy sword strike with knockdown data."
+    },
+    {
+      "key": "cmd:FC+1",
+      "label": "Crouch Zangetsu Rush",
+      "description": "Fast mid crouch slash with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "reason": "Low-starting sword sequence with a long active window."
+    },
+    {
+      "key": "cmd:FC+2",
+      "label": "Crouch Zangetsu Launcher",
+      "description": "Steady mid launcher with a short active window from a crouching sword lift.",
+      "hitLevel": "mid",
+      "reason": "Crouch-starting launcher data."
+    },
+    {
+      "key": "cmd:O+1",
+      "label": "Quick Zangetsu Check",
+      "description": "Quick high sword check with a brief active window and quick recovery.",
+      "hitLevel": "high",
+      "reason": "Compact high sword check."
+    },
+    {
+      "key": "cmd:O+2",
+      "label": "Getsuga Drive",
+      "description": "Fast special knockdown rush with very long active coverage from chained sword arcs.",
+      "hitLevel": "special",
+      "knockdown": true,
+      "reason": "Special rush is all sweeping sword arcs and has knockdown data."
+    },
+    {
+      "key": "cmd:WS+2",
+      "label": "While Rising Cut",
+      "description": "Slow mid while-rising sword cut with a modest active window and fast recovery.",
+      "hitLevel": "mid",
+      "reason": "Rising transition into a mid slash."
+    },
+    {
+      "key": "cmd:WS+4",
+      "label": "Rising Zangetsu Rush",
+      "description": "Fast mid rising slash with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "reason": "While-rising command runs through many sword frames."
+    },
+    {
+      "key": "cmd:d+1",
+      "label": "Quick Zangetsu Check",
+      "description": "Quick high sword check with a brief active window and quick recovery.",
+      "hitLevel": "high",
+      "reason": "Same compact high sword check as O+1."
+    },
+    {
+      "key": "cmd:d/f+2",
+      "label": "Forward Zangetsu Launcher",
+      "description": "Fast mid launcher with very long active coverage from a forward rush cut.",
+      "hitLevel": "mid",
+      "reason": "Forward-reaching launcher sequence with sword rush frames."
+    },
+    {
+      "key": "cmd:f+1",
+      "label": "Forward Soul Slash",
+      "description": "Fast mid rushing slash with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "reason": "Forward command uses a long red-black sword rush."
+    },
+    {
+      "key": "cmd:f+2",
+      "label": "Forward Zangetsu Cut",
+      "description": "Slow mid sword cut with a modest active window and fast recovery.",
+      "hitLevel": "mid",
+      "reason": "Forward command repeats the mid cut sequence."
+    },
+    {
+      "key": "cmd:qcf+1",
+      "label": "Quick Zangetsu Check",
+      "description": "Quick high sword check with a brief active window for close pressure.",
+      "hitLevel": "high",
+      "reason": "Quarter-circle punch repeats the high sword check."
+    },
+    {
+      "key": "cmd:qcf+4",
+      "label": "Getsuga Burst",
+      "description": "Steady mid jumping knockdown burst with very long active coverage and quick recovery.",
+      "hitLevel": "mid",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "reason": "Large white sword burst has jump and knockdown data."
+    }
+  ]
+}
