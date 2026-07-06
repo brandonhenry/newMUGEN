@@ -2,6 +2,17 @@ name: Build Steam Deck Flatpak
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/steamdeck-flatpak.yml
+      - electron/**
+      - electron-builder.yml
+      - package.json
+      - package-lock.json
+      - scripts/build-steamdeck-flatpak.mjs
+      - scripts/publish-installers.mjs
 
 jobs:
   flatpak:
