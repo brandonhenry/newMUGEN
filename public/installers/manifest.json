@@ -1,6 +1,6 @@
 {
   "version": "1.2.0",
-  "generatedAt": "2026-07-06T17:57:24.592Z",
+  "generatedAt": "2026-07-06T18:21:48.326Z",
   "installers": [
     {
       "id": "steamdeck",
@@ -9,8 +9,8 @@
       "type": "flatpak",
       "filename": "KORE-SteamDeck.flatpak",
       "url": "/installers/KORE-SteamDeck.flatpak",
-      "size": 89781768,
-      "sha256": "de64fc69b70c765295c27f6a38df4ae587bc55cd62f4a4551c97b9b757067293",
+      "size": 89787768,
+      "sha256": "8435a0675296123133f1cd08028f3b01589d27b02920def196581e1b0f9d5f97",
       "recommended": false,
       "notes": "Best for Steam Deck Desktop Mode: download the Flatpak bundle and open it with Discover.",
       "assets": [
@@ -18,8 +18,8 @@
           "type": "flatpak",
           "filename": "KORE-SteamDeck.flatpak",
           "url": "/installers/KORE-SteamDeck.flatpak",
-          "size": 89781768,
-          "sha256": "de64fc69b70c765295c27f6a38df4ae587bc55cd62f4a4551c97b9b757067293",
+          "size": 89787768,
+          "sha256": "8435a0675296123133f1cd08028f3b01589d27b02920def196581e1b0f9d5f97",
           "primary": true,
           "label": "Install with Discover (.flatpak)"
         },
@@ -28,7 +28,7 @@
           "filename": "KORE-0.1.0-linux-x86_64.AppImage",
           "url": "/installers/KORE-0.1.0-linux-x86_64.AppImage",
           "size": 114082665,
-          "sha256": "c19e855d52cf208cfcec367a75904239ce8e64d69750ab7433fae45ab5d19abb",
+          "sha256": "896e3a8ff3f459a268817b30525078f6a3e1883e82673bd61e5717267423a1fd",
           "primary": false,
           "label": "AppImage fallback"
         },
@@ -52,7 +52,7 @@
       "filename": "KORE-0.1.0-linux-x86_64.AppImage",
       "url": "/installers/KORE-0.1.0-linux-x86_64.AppImage",
       "size": 114082665,
-      "sha256": "c19e855d52cf208cfcec367a75904239ce8e64d69750ab7433fae45ab5d19abb",
+      "sha256": "896e3a8ff3f459a268817b30525078f6a3e1883e82673bd61e5717267423a1fd",
       "recommended": false,
       "notes": "Generic Linux AppImage for desktop distributions."
     }
