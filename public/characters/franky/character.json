@@ -3068,4 +3068,25 @@
         "clash": true
       }
     ]
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/franky/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/franky/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/franky/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/franky/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/franky/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/franky/sounds/voices/win-01.wav"
+    ]
+  }
+}

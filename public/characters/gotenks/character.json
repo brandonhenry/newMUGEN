@@ -2493,4 +2493,25 @@
         "offsetX": 0
       }
     }
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/gotenks/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/gotenks/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/gotenks/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/gotenks/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/gotenks/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/gotenks/sounds/voices/win-01.wav"
+    ]
+  }
+}

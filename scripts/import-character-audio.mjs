@@ -9,6 +9,7 @@ const characterRoot = path.join(repoRoot, 'public', 'characters');
 const reviewRoot = path.join(repoRoot, 'public', 'audio-review', 'character-voices');
 const reviewAssetRoot = path.join(reviewRoot, 'assets');
 const selectionsPath = path.join(reviewRoot, 'selections.json');
+const newCollectionSelectionsPath = path.join(reviewRoot, 'new-collection-selections.json');
 const audioExtensions = new Set(['.wav', '.mp3', '.ogg', '.flac', '.m4a', '.aac', '.webm']);
 const voiceCategories = ['hit', 'attackLand', 'launcher', 'tornado', 'win'];
 const requiredVoiceCategories = [...voiceCategories, 'stageIntro'];
@@ -102,6 +103,7 @@ function main() {
   const sources = buildAudioSources(audioRoot);
   if (sources.length === 0) throw new Error(`No audio files found under ${audioRoot}`);
   const existingSelections = loadSavedSelections();
+  const newCollectionCharacterIds = loadNewCollectionSelectionIds();
 
   const sourceMatchesByCharacter = new Map();
   for (const character of characters) {
@@ -116,6 +118,9 @@ function main() {
       removeCharacterVoice(character);
       removeGeneratedVoiceClips(character.id);
       skippedUnplayable += 1;
+      continue;
+    }
+    if (newCollectionCharacterIds.has(character.id)) {
       continue;
     }
     const selection = selectCharacterAudio(character, sources, sourceMatchesByCharacter, existingSelections);
@@ -320,6 +325,17 @@ function loadSavedSelections() {
     return parsed?.selections && typeof parsed.selections === 'object' ? parsed.selections : {};
   } catch {
     return {};
+  }
+}
+
+function loadNewCollectionSelectionIds() {
+  if (!existsSync(newCollectionSelectionsPath)) return new Set();
+  try {
+    const parsed = JSON.parse(readFileSync(newCollectionSelectionsPath, 'utf8'));
+    const selections = parsed?.selections && typeof parsed.selections === 'object' ? parsed.selections : {};
+    return new Set(Object.keys(selections));
+  } catch {
+    return new Set();
   }
 }
 

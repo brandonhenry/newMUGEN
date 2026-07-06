@@ -5,7 +5,9 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const reviewRoot = path.join(repoRoot, 'public', 'audio-review', 'character-voices');
-const selectionsPath = path.join(reviewRoot, 'selections.json');
+const selectionsPath = process.env.KORE_AUDIO_REVIEW_SELECTIONS_FILE
+  ? path.resolve(repoRoot, process.env.KORE_AUDIO_REVIEW_SELECTIONS_FILE)
+  : path.join(reviewRoot, 'selections.json');
 const port = Number(process.env.KORE_AUDIO_REVIEW_SAVE_PORT ?? 5174);
 
 mkdirSync(reviewRoot, { recursive: true });

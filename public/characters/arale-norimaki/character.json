@@ -2443,4 +2443,25 @@
         "offsetX": 0
       }
     }
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/arale-norimaki/sounds/voices/hit-01.ogg"
+    ],
+    "attackLand": [
+      "/characters/arale-norimaki/sounds/voices/attack-land-01.ogg"
+    ],
+    "launcher": [
+      "/characters/arale-norimaki/sounds/voices/launcher-01.ogg"
+    ],
+    "tornado": [
+      "/characters/arale-norimaki/sounds/voices/tornado-01.ogg"
+    ],
+    "win": [
+      "/characters/arale-norimaki/sounds/voices/win-01.ogg"
+    ],
+    "stageIntro": [
+      "/characters/arale-norimaki/sounds/voices/win-01.ogg"
+    ]
+  }
+}

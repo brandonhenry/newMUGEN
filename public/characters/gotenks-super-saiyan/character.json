@@ -2165,4 +2165,25 @@
         "offsetX": 0
       }
     }
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/gotenks-super-saiyan/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/gotenks-super-saiyan/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/gotenks-super-saiyan/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/gotenks-super-saiyan/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/gotenks-super-saiyan/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/gotenks-super-saiyan/sounds/voices/win-01.wav"
+    ]
+  }
+}

@@ -2461,4 +2461,25 @@
         "offsetX": 0
       }
     }
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/yoh-asakura/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/yoh-asakura/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/yoh-asakura/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/yoh-asakura/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/yoh-asakura/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/yoh-asakura/sounds/voices/win-01.wav"
+    ]
+  }
+}

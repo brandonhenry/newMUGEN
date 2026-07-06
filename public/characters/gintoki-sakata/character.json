@@ -3101,4 +3101,25 @@
         "offsetX": 0
       }
     }
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/gintoki-sakata/sounds/voices/hit-01.wav"
+    ],
+    "attackLand": [
+      "/characters/gintoki-sakata/sounds/voices/attack-land-01.wav"
+    ],
+    "launcher": [
+      "/characters/gintoki-sakata/sounds/voices/launcher-01.wav"
+    ],
+    "tornado": [
+      "/characters/gintoki-sakata/sounds/voices/tornado-01.wav"
+    ],
+    "win": [
+      "/characters/gintoki-sakata/sounds/voices/win-01.wav"
+    ],
+    "stageIntro": [
+      "/characters/gintoki-sakata/sounds/voices/win-01.wav"
+    ]
+  }
+}

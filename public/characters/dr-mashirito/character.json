@@ -3365,4 +3365,25 @@
         "clash": true
       }
     ]
-  }}
+  },
+  "voice": {
+    "hit": [
+      "/characters/dr-mashirito/sounds/voices/hit-01.ogg"
+    ],
+    "attackLand": [
+      "/characters/dr-mashirito/sounds/voices/attack-land-01.ogg"
+    ],
+    "launcher": [
+      "/characters/dr-mashirito/sounds/voices/launcher-01.ogg"
+    ],
+    "tornado": [
+      "/characters/dr-mashirito/sounds/voices/tornado-01.ogg"
+    ],
+    "win": [
+      "/characters/dr-mashirito/sounds/voices/win-01.ogg"
+    ],
+    "stageIntro": [
+      "/characters/dr-mashirito/sounds/voices/win-01.ogg"
+    ]
+  }
+}
